@@ -2,7 +2,7 @@
 
 <% if !user_signed_in? %>
 
-<p><%= t("myplaceonline.welcome.intro") %></p>
+<p><%= t("myplaceonline.welcome.intro_html", :opensourcelink => link_to(t("myplaceonline.welcome.opensourcelink"), "https://github.com/myplaceonline/myplaceonline")) %></p>
 
 <div style="text-align: center">
   <%= link_to t("myplaceonline.buttons.signin"), new_user_session_path, :class => 'ui-btn ui-btn-icon-left ui-icon-power ui-btn-inline'  %>

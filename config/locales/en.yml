@@ -33,7 +33,8 @@ en:
       name: "Menu"
       home: "Home"
     welcome:
-      intro: "myplaceonline is a virtual life assistant. It's free, secure, and open source. We will never sell your private data."
+      intro_html: "myplaceonline is a virtual life assistant. We'll never sell your private data. The code is %{opensourcelink} if you want to review it or run it on your computer."
+      opensourcelink: "open source"
       features:
         intro: "Features:"
         passwords: "Manage passwords."
