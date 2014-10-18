@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
 
   # User loaded from database
   after_initialize do |user|
-    if primary_identity.nil?
+    # If user.id is nil, then it's an anonymous user
+    if !user.id.nil? && primary_identity.nil?
       # No primary identity, so we create a default one
       user.transaction do
         @identity = Identity.new
