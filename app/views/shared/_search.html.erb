@@ -1,9 +1,12 @@
-<ul id="myplaceonline_search_list" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="<%= t("myplaceonline.search.placeholder") %>">
-</ul>
+<div id="myplaceonline_search_container">
+  <ul id="myplaceonline_search_list" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="<%= t("myplaceonline.search.placeholder") %>">
+  </ul>
+</div>
 
 <script type="text/javascript">
 $(document).one("pagecontainershow", $.mobile.pageContainer, function(event, ui) {
   var list = <%= raw(initialCategoryList) %>;
   jqmSetList($("#myplaceonline_search_list"), list);
+  $("#myplaceonline_search_container input").focus();
 });
 </script>
