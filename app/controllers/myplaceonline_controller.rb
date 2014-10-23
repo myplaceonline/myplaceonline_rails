@@ -1,5 +1,5 @@
 class MyplaceonlineController < ApplicationController
-  def categoriesForCurrentUser
+  def categoriesForCurrentUser(parent = nil)
     # We want all root categories, left outer joined with points for each of those for the current user, if available
     # Ideally we would use something like:
     #
@@ -20,7 +20,7 @@ class MyplaceonlineController < ApplicationController
       LEFT OUTER JOIN category_points_amounts
         ON category_points_amounts.category_id = categories.id
             AND category_points_amounts.identity_id = #{CategoryPointsAmount.sanitize(current_user.primary_identity.id)}
-      WHERE categories.parent_id IS NULL
+      WHERE categories.parent_id #{ parent.nil? ? "IS NULL" : "= " + parent.id.to_s }
       ORDER BY categories.position ASC
     }).map{ |category|
       CategoryForIdentity.new(
