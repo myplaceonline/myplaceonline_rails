@@ -50,3 +50,9 @@ en:
       joy: "Joy"
       work: "Work"
       meaning: "Meaning"
+    joy:
+      title: "Joy"
+    work:
+      title: "Work"
+    meaning:
+      title: "Meaning"
