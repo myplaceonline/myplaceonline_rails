@@ -56,3 +56,8 @@ en:
       title: "Work"
     meaning:
       title: "Meaning"
+    general:
+      email: "E-mail"
+      password: "Password"
+      remember: "Remember Me"
+      login: "Log In"
