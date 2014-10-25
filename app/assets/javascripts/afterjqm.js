@@ -1,6 +1,3 @@
-$(document).on("pageinit", $.mobile.pageContainer, function() {
-});
-
 // https://github.com/jquery/jquery-mobile/issues/3249
 $(document).on("pagecontainerhide.fixcache", $.mobile.pageContainer, function(event, ui) {
   if (ui.prevPage) { // prevPage null on the first request
