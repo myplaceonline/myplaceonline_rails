@@ -4,7 +4,26 @@
 </div>
 
 <script type="text/javascript">
-$(document).one("pagecontainershow", $.mobile.pageContainer, function(event, ui) {
+onPageLoad(function() {
+  // http://view.jquerymobile.com/master/demos/listview-autocomplete-remote/
+  $("#myplaceonline_search_list").on("listviewbeforefilter", function(e, data) {
+    var $ul = $(this);
+    var $input = $(data.input);
+    var value = $input.val();
+    if (value && value.length > 0) {
+      jqmSetListMessage($ul, "Loading...");
+      $.ajax({
+        url: "/api/categories.json",
+        dataType: "json",
+        context: $ul
+      }).done(function(data, textStatus, jqXHR) {
+        jqmSetList(this, $(data));
+      }).fail(function(jqXHR, textStatus, errorThrown) {
+        jqmSetListMessage($ul, "Error, please try again.");
+      });
+    }
+  });
+
   var list = <%= raw(initialCategoryList) %>;
   jqmSetList($("#myplaceonline_search_list"), list);
   $("#myplaceonline_search_container input").focus();

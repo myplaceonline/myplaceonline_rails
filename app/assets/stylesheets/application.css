@@ -22,3 +22,7 @@ a.headerlink:link, a.headerlink:visited, a.headerlink:hover, a.headerlink:active
 a.headerlink:hover {
   text-decoration: underline;
 }
+
+.ui-content h1 {
+  margin-top: 0;
+}

@@ -1,3 +1,6 @@
+$(document).on("pageinit", $.mobile.pageContainer, function() {
+});
+
 // https://github.com/jquery/jquery-mobile/issues/3249
 $(document).on("pagecontainerhide.fixcache", $.mobile.pageContainer, function(event, ui) {
   if (ui.prevPage) { // prevPage null on the first request
@@ -19,6 +22,12 @@ $(document).on("pagecontainerbeforeshow", $.mobile.pageContainer, function(event
   $.mobile.activePage.find('.ui-header a[data-rel=back]').buttonMarkup({iconpos: 'notext'});
 });
 
+// Function may optionally take event and ui parameters:
+// http://api.jquerymobile.com/pagecontainer/#event-show
+function onPageLoad(func) {
+  $(document).one("pagecontainershow", $.mobile.pageContainer, func);
+}
+
 function jqmSetListMessage(list, message) {
   list.html("<li>" + message + "</li>");
   list.listview("refresh");
@@ -35,23 +44,3 @@ function jqmSetList(list, items) {
   list.listview("refresh");
   list.trigger("updatelayout");
 }
-
-$(document).on("pageinit", $.mobile.pageContainer, function() {
-  $("#myplaceonline_search_list").on("listviewbeforefilter", function(e, data) {
-    var $ul = $(this);
-    var $input = $(data.input);
-    var value = $input.val();
-    if (value && value.length > 0) {
-      jqmSetListMessage($ul, "Loading...");
-      $.ajax({
-        url: "/api/categories.json",
-        dataType: "json",
-        context: $ul
-      }).done(function(data, textStatus, jqXHR) {
-        jqmSetList(this, $(data));
-      }).fail(function(jqXHR, textStatus, errorThrown) {
-        jqmSetListMessage($ul, "Error, please try again.");
-      });
-    }
-  });
-});
