@@ -50,12 +50,15 @@ en:
       order: "Order"
       joy: "Joy"
       meaning: "Meaning"
+      passwords: "Passwords"
     joy:
       title: "Joy"
     order:
       title: "Order"
     meaning:
       title: "Meaning"
+    passwords:
+      title: "Passwords"
     general:
       email: "E-mail"
       password: "Password"

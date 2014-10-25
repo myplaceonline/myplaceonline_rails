@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'passwords/index'
+
   get 'meaning/index'
 
   get 'order/index'
@@ -18,6 +20,7 @@ Rails.application.routes.draw do
   match '/joy', :to => 'joy#index', via: :get
   match '/order', :to => 'order#index', via: :get
   match '/meaning', :to => 'meaning#index', via: :get
+  match '/passwords', :to => 'passwords#index', via: :get
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

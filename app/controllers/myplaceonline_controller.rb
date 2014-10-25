@@ -1,6 +1,7 @@
 class MyplaceonlineController < ApplicationController
   
   # Return a list of CategoryForIdentity objects.
+  # Assumes user is logged in.
   #
   # If parent is nil, search for all categories.
   # If parent is -1, search for all root categories.
