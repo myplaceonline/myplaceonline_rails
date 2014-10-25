@@ -59,5 +59,8 @@ en:
     general:
       email: "E-mail"
       password: "Password"
+      passwordwithmin: "Password (min %{minchars} characters)"
+      password2: "Password Confirmation"
       remember: "Remember Me"
       login: "Log In"
+      signup: "Sign Up"
