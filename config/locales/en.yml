@@ -47,13 +47,13 @@ en:
     api:
       title: "API"
     category:
+      order: "Order"
       joy: "Joy"
-      work: "Work"
       meaning: "Meaning"
     joy:
       title: "Joy"
-    work:
-      title: "Work"
+    order:
+      title: "Order"
     meaning:
       title: "Meaning"
     general:
