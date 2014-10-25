@@ -1,5 +1,5 @@
 class JoyController < MyplaceonlineController
   def index
-    @initialCategoryList = categoriesForCurrentUser(Category.find(1)).to_json
+    @initialCategoryList = categoriesForCurrentUser(Category.find_by_name("joy")).to_json
   end
 end

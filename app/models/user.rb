@@ -20,4 +20,8 @@ class User < ActiveRecord::Base
       end
     end
   end
+  
+  def total_points
+    primary_identity.points.nil? ? 0 : primary_identity.points
+  end
 end

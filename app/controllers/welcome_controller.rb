@@ -3,6 +3,7 @@ class WelcomeController < MyplaceonlineController
   def index
     if user_signed_in?
       @initialCategoryList = categoriesForCurrentUser.to_json
+      @totalPoints = current_user.total_points
     end
   end
 end
