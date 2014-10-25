@@ -1,6 +1,12 @@
 class MyplaceonlineController < ApplicationController
+  
+  # Return a list of CategoryForIdentity objects.
+  #
+  # If parent is nil, search for all categories.
+  # If parent is -1, search for all root categories.
+  # Parent is is >= 0, search for all categories with a particular parent.
   def categoriesForCurrentUser(parent = nil)
-    # We want all root categories, left outer joined with points for each of those for the current user, if available
+    # We want a set of categories, left outer joined with points for each of those for the current user, if available
     # Ideally we would use something like:
     #
     # Category.where(parent: nil).order(:position).includes(:category_points_amounts).where(category_points_amounts: {identity: current_user.primary_identity})
@@ -20,7 +26,7 @@ class MyplaceonlineController < ApplicationController
       LEFT OUTER JOIN category_points_amounts
         ON category_points_amounts.category_id = categories.id
             AND category_points_amounts.identity_id = #{CategoryPointsAmount.sanitize(current_user.primary_identity.id)}
-      WHERE categories.parent_id #{ parent.nil? ? "IS NULL" : "= " + parent.id.to_s }
+      #{ parent.nil? ? "" : %{ WHERE categories.parent_id #{ parent == -1 ? "IS NULL" : "= " + parent.id.to_s } } }
       ORDER BY categories.position ASC
     }).map{ |category|
       CategoryForIdentity.new(

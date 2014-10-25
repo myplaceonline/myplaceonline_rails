@@ -4,7 +4,7 @@ class ApiController < MyplaceonlineController
   
   def categories
     respond_to do |format|
-      format.json { render json: categoriesForCurrentUser}
+      format.json { render json: categoriesForCurrentUser(nil)}
     end
   end
 end
