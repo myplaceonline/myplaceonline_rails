@@ -41,3 +41,14 @@ function jqmSetList(list, items) {
   list.listview("refresh");
   list.trigger("updatelayout");
 }
+
+function navigate(url, skipAjax) {
+  if ($.mobile.ajaxEnabled && !skipAjax) {
+    $.mobile.pageContainer.pagecontainer("change", url, {
+      allowSamePageTransition: true,
+      reloadPage: true
+    });
+  } else {
+    window.location = url;
+  }
+}
