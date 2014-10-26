@@ -13,7 +13,10 @@ Rails.application.routes.draw do
   get 'contact/index'
   get 'welcome/index'
 
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: 'users/registrations',
+    sessions: 'users/sessions'
+  }
 
   match '/contact', :to => 'contact#index', via: :get
   match '/search', :to => 'search#index', via: :get
