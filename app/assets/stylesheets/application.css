@@ -26,3 +26,7 @@ a.headerlink:hover {
 .ui-content h1 {
   margin-top: 0;
 }
+
+.error_explanation {
+  color: red;
+}
