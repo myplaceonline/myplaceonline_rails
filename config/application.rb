@@ -21,5 +21,9 @@ module Myplaceonline
     # config.i18n.default_locale = :de
 
     config.autoload_paths += %W(#{config.root}/lib)
+    
+    config.require_invite_code = ENV["REQUIRE_INVITE_CODE"].nil? ? false : ENV["REQUIRE_INVITE_CODE"].to_bool
+    
+    config.invite_code = ENV["INVITE_CODE"].nil? ? "invitecode" : ENV["INVITE_CODE"]
   end
 end

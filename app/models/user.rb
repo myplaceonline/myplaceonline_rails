@@ -6,6 +6,15 @@ class User < ActiveRecord::Base
          :confirmable, :lockable
 
   belongs_to :primary_identity, class_name: Identity
+  
+  attr_accessor :invite_code
+  
+  validates_each :invite_code, :on => :create do |record, attr, value|
+    if Rails.configuration.require_invite_code
+      record.errors.add attr, I18n.t("myplaceonline.users.invite_invalid") unless
+        value && value == Rails.configuration.invite_code
+    end
+  end
 
   # User loaded from database
   after_initialize do |user|
