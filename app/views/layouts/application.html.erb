@@ -25,6 +25,7 @@
     <% end %>
     <%= yield %>
   </div>
+  <%= yield(:footer) %>
   <%# We give a unique id to each popup because the menu may be different. %>
   <div data-role="popup" data-history="false" id="menuPopup<%= request.uuid %>">
     <% if user_signed_in? %>

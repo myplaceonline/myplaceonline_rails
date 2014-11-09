@@ -1,17 +1,14 @@
 Rails.application.routes.draw do
-  get 'passwords/index'
-
   get 'meaning/index'
-
   get 'order/index'
-
   get 'joy/index'
-
   get 'api/index'
   get 'api/categories'
   get 'search/index'
   get 'contact/index'
   get 'welcome/index'
+  
+  resources :passwords
 
   devise_for :users, controllers: {
     registrations: 'users/registrations',

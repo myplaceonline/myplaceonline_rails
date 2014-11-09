@@ -1,2 +1,33 @@
 <% content_for :heading do -%><%= t('myplaceonline.passwords.title') %><% end -%>
 <h1><%= t('myplaceonline.passwords.title') %></h1>
+
+<%
+if @resources.nil?
+%>
+<p><%= t('myplaceonline.passwords.none') %></p>
+<%
+else
+%>
+<ul data-role="listview" data-inset="true" data-filter="true">
+<%
+  @resources.each do |resource|
+%>
+  <li><%= link_to resource.name, password_path(resource) %></li>
+<%
+  end
+%>
+</ul>
+<%
+end
+%>
+
+<% content_for :footer do -%>
+<div data-role="footer" data-position="fixed">
+    <div data-role="navbar">
+        <ul>
+            <li><%= link_to t('myplaceonline.passwords.title_add'), new_password_path, "data-icon" => "plus" %></li>
+            <li><a href="#" data-icon="bars">Import</a></li>
+        </ul>
+    </div>
+</div>
+<% end -%>

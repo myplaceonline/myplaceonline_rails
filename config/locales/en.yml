@@ -67,6 +67,11 @@ en:
       title: "Meaning"
     passwords:
       title: "Passwords"
+      none: "No passwords"
+      title_add: "Add Password"
+      name: "Service Name"
+      user: "User ID"
+      password: "Password"
     users:
       invite: "Invite Code"
       invite_invalid: "invalid"

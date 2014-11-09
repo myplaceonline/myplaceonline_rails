@@ -1,0 +1,31 @@
+<% content_for :heading do -%><%= t('myplaceonline.passwords.title') %><% end -%>
+<h1><%= t('myplaceonline.passwords.title_add') %></h1>
+<% if @resource.errors.any? %>
+  <div class="errors">
+    <ul>
+    <% @resource.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_for :password, url: passwords_path do |f| %>
+  <p>
+    <%= f.label :name, class: "ui-hidden-accessible" %>
+    <%= f.text_field :name, autofocus: true, placeholder: t("myplaceonline.passwords.name") %>
+  </p>
+
+  <p>
+    <%= f.label :user, class: "ui-hidden-accessible" %>
+    <%= f.text_field :user, placeholder: t("myplaceonline.passwords.user") %>
+  </p>
+
+  <p>
+    <%= f.label :password, class: "ui-hidden-accessible" %>
+    <%= f.password_field :password, autocomplete: "off", placeholder: t("myplaceonline.passwords.password") %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
