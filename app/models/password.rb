@@ -1,5 +1,4 @@
-class Password < ActiveRecord::Base
-  
+class Password < ActiveRecord::Base  
   validates :name, presence: true
   validates :password, presence: true
   

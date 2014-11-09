@@ -1,0 +1,30 @@
+<%= form_for @password do |f| %>
+  <% if @password.errors.any? %>
+    <div class="errors">
+      <ul>
+      <% @password.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label :name, class: "ui-hidden-accessible" %>
+    <%= f.text_field :name, autofocus: true, placeholder: t("myplaceonline.passwords.name") %>
+  </p>
+
+  <p>
+    <%= f.label :user, class: "ui-hidden-accessible" %>
+    <%= f.text_field :user, placeholder: t("myplaceonline.passwords.user") %>
+  </p>
+
+  <p>
+    <%= f.label :password, class: "ui-hidden-accessible" %>
+    <%= f.password_field :password, autocomplete: "off", placeholder: t("myplaceonline.passwords.password") %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

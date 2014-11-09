@@ -41,4 +41,3 @@ gem 'spring',        group: :development
 gem 'jquery_mobile_rails'
 gem 'devise'
 gem 'thin'
-gem 'symmetric-encryption'

@@ -2,7 +2,7 @@
 <h1><%= t('myplaceonline.passwords.title') %></h1>
 
 <%
-if @resources.length == 0
+if @passwords.length == 0
 %>
 <p><%= t('myplaceonline.passwords.none') %></p>
 <%
@@ -10,9 +10,11 @@ else
 %>
 <ul data-role="listview" data-inset="true" data-filter="true">
 <%
-  @resources.each do |resource|
+  @passwords.each do |password|
 %>
-  <li><%= link_to resource.name, password_path(resource) %></li>
+  <li>
+    <%= link_to password.name, password %>
+  </li>
 <%
   end
 %>

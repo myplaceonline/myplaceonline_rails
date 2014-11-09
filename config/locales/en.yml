@@ -32,6 +32,8 @@ en:
       remember: "Remember Me"
       login: "Log In"
       signup: "Sign Up"
+      edit: "Edit"
+      delete: "Delete"
     buttons:
       signin: "Login"
       signup: "Register"

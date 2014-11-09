@@ -1,9 +1,14 @@
 <% content_for :heading do -%><%= t('myplaceonline.passwords.title') %><% end -%>
-<h1><%= @resource.name %></h1>
+<h1><%= @password.name %></h1>
+<p><b>User ID:</b> <%= @password.user %></p>
+<p><b>Password:</b> <%= @password.password %></p>
 <% content_for :footer do -%>
 <div data-role="footer" data-position="fixed">
     <div data-role="navbar">
         <ul>
+            <li><%= link_to t('myplaceonline.general.edit'), edit_password_path, "data-icon" => "edit" %></li>
+            <li><%= link_to t('myplaceonline.general.delete'), password_path(@password),
+                    method: :delete, data: { confirm: 'Are you sure?' }, "data-icon" => "delete" %></li>
             <li><%= link_to t('myplaceonline.passwords.back'), passwords_path, "data-icon" => "back" %></li>
         </ul>
     </div>

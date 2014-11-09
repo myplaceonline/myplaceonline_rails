@@ -11,7 +11,7 @@ class Users::SessionsController < Devise::SessionsController
     self.resource = warden.authenticate!(auth_options)
     
     # If we make it here, the login is succesful
-    session[:password] = params[:user][:password]
+    Myp.rememberPassword(session, params[:user][:password])
     
     set_flash_message(:notice, :signed_in) if is_flashing_format?
     sign_in(resource_name, resource)
