@@ -72,6 +72,7 @@ en:
       name: "Service Name"
       user: "User ID"
       password: "Password"
+      back: "Back to Passwords"
     users:
       invite: "Invite Code"
       invite_invalid: "invalid"

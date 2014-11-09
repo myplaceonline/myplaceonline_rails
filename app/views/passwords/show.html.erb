@@ -1,3 +1,12 @@
 <% content_for :heading do -%><%= t('myplaceonline.passwords.title') %><% end -%>
 <h1><%= t('myplaceonline.passwords.title') %></h1>
 <%= @resource.name %>
+<% content_for :footer do -%>
+<div data-role="footer" data-position="fixed">
+    <div data-role="navbar">
+        <ul>
+            <li><%= link_to t('myplaceonline.passwords.back'), passwords_path, "data-icon" => "back" %></li>
+        </ul>
+    </div>
+</div>
+<% end -%>

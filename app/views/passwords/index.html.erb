@@ -2,7 +2,7 @@
 <h1><%= t('myplaceonline.passwords.title') %></h1>
 
 <%
-if @resources.nil?
+if @resources.length == 0
 %>
 <p><%= t('myplaceonline.passwords.none') %></p>
 <%
