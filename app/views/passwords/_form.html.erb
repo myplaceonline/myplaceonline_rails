@@ -21,7 +21,7 @@
 
   <p>
     <%= f.label :password, class: "ui-hidden-accessible" %>
-    <%= f.password_field :password, autocomplete: "off", placeholder: t("myplaceonline.passwords.password") %>
+    <%= f.password_field :password, value: @password.password, autocomplete: "off", placeholder: t("myplaceonline.passwords.password") %>
   </p>
 
   <p>
