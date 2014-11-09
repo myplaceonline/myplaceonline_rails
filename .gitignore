@@ -30,3 +30,4 @@ config/initializers/secret_token.rb
 bower.json
 
 config/database.yml
+*swp
