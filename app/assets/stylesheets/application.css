@@ -30,3 +30,7 @@ a.headerlink:hover {
 .error_explanation {
   color: red;
 }
+
+div.ui-checkbox + label {
+  display: none;
+}

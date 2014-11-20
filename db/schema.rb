@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141109092616) do
+ActiveRecord::Schema.define(version: 20141120063112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,16 @@ ActiveRecord::Schema.define(version: 20141109092616) do
   add_index "category_points_amounts", ["category_id"], name: "index_category_points_amounts_on_category_id", using: :btree
   add_index "category_points_amounts", ["identity_id"], name: "index_category_points_amounts_on_identity_id", using: :btree
 
+  create_table "encrypted_values", force: true do |t|
+    t.string   "val"
+    t.binary   "salt"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "encrypted_values", ["user_id"], name: "index_encrypted_values_on_user_id", using: :btree
+
   create_table "identities", force: true do |t|
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -57,8 +67,11 @@ ActiveRecord::Schema.define(version: 20141109092616) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_encrypted_password"
+    t.integer  "encrypted_password_id"
   end
 
+  add_index "passwords", ["encrypted_password_id"], name: "index_passwords_on_encrypted_password_id", using: :btree
   add_index "passwords", ["identity_id"], name: "index_passwords_on_identity_id", using: :btree
 
   create_table "users", force: true do |t|

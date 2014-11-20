@@ -4,6 +4,9 @@ class Myp
   end
   
   def self.encrypt(session, message)
+    if !session.has_key?(:password)
+      raise I18n.t("myplaceonline.errors.nosessionpassword")
+    end
     salt = SecureRandom.random_bytes(64)
     key = ActiveSupport::KeyGenerator.new(session[:password]).generate_key(salt)
     crypt = ActiveSupport::MessageEncryptor.new(key)
@@ -12,6 +15,9 @@ class Myp
   end
   
   def self.decrypt(session, encryption_holder)
+    if !session.has_key?(:password)
+      raise I18n.t("myplaceonline.errors.nosessionpassword")
+    end
     key = ActiveSupport::KeyGenerator.new(session[:password])
             .generate_key(encryption_holder.salt)
     crypt = ActiveSupport::MessageEncryptor.new(key)

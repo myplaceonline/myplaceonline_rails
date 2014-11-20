@@ -34,6 +34,8 @@ en:
       signup: "Sign Up"
       edit: "Edit"
       delete: "Delete"
+    errors:
+      nosessionpassword: "No session password"
     buttons:
       signin: "Login"
       signup: "Register"
@@ -75,6 +77,7 @@ en:
       user: "User ID"
       password: "Password"
       back: "Back to Passwords"
+      encrypt: "Encrypt Password"
     users:
       invite: "Invite Code"
       invite_invalid: "invalid"

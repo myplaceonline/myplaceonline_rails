@@ -11,44 +11,45 @@ class PasswordsController < MyplaceonlineController
     @password = Password.new(password_params)
     @password.identity_id = current_user.primary_identity.id
     encryption_holder = Myp.encrypt(session, @password.password)
-    puts encryption_holder.inspect
-    #salt = SecureRandom.random_bytes(64)
-    #key = ActiveSupport::KeyGenerator.new('password').generate_key(salt)
-    # TODO: ActiveSupport::MessageEncryptor
     if @password.save
       redirect_to @password
     else
-      render "new"
+      render :new
     end
   end
     
   def show
-    @password = Password.find_by(id: params[:id], identity_id: current_user.primary_identity.id)
+    @password = findPassword
   end
   
   def edit
-    @password = Password.find_by(id: params[:id], identity_id: current_user.primary_identity.id)
+    @password = findPassword
   end
   
   def update
-    @password = Password.find_by(id: params[:id], identity_id: current_user.primary_identity.id)
+    @password = findPassword
 
     if @password.update(password_params)
       redirect_to @password
     else
-      render "edit"
+      render :edit
     end
   end
   
   def destroy
-    @article = Password.find_by(id: params[:id], identity_id: current_user.primary_identity.id)
+    @article = findPassword
     @article.destroy
 
     redirect_to passwords_path
   end
-
+  
   private
-  def password_params
-    params.require(:password).permit(:name, :user, :password)
-  end
+    def password_params
+      # Without the require call, render new in create doesn't persist values
+      params.require(:password).permit(:name, :user, :password, :is_encrypted_password)
+    end
+
+    def findPassword
+      Password.find_by(id: params[:id], identity_id: current_user.primary_identity.id)
+    end
 end
