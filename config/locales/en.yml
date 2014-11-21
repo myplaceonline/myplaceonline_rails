@@ -36,6 +36,7 @@ en:
       delete: "Delete"
     errors:
       nosessionpassword: "No session password"
+      couldnotencrypt: "Could not generate encrypted value"
     buttons:
       signin: "Login"
       signup: "Register"
@@ -78,6 +79,7 @@ en:
       password: "Password"
       back: "Back to Passwords"
       encrypt: "Encrypt Password"
+      isencrypted: "Is Encrypted?"
     users:
       invite: "Invite Code"
       invite_invalid: "invalid"

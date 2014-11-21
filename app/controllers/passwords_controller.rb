@@ -9,12 +9,24 @@ class PasswordsController < MyplaceonlineController
   
   def create
     @password = Password.new(password_params)
-    @password.identity_id = current_user.primary_identity.id
-    encryption_holder = Myp.encrypt(session, @password.password)
-    if @password.save
-      redirect_to @password
-    else
-      render :new
+    ActiveRecord::Base.transaction do
+      @password.identity_id = current_user.primary_identity.id
+      if @password.is_encrypted_password and @password.valid?
+        encrypted_value = Myp.encryptFromSession(session, @password.password)
+        if encrypted_value.save
+          @password.encrypted_password = encrypted_value
+          @password.password = nil
+        else
+          flash.now[:error] = t("myplaceonline.errors.couldnotencrypt")
+          return render :new
+        end
+      end
+      encrypted_value = Myp.encryptFromSession(session, @password.password)
+      if @password.save
+        redirect_to @password
+      else
+        render :new
+      end
     end
   end
     

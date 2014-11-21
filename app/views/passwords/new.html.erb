@@ -1,5 +1,6 @@
 <% content_for :heading do -%><%= t('myplaceonline.passwords.title') %><% end -%>
 <h1><%= t('myplaceonline.passwords.title_add') %></h1>
+<%= flashes! %>
 <%= render "form" %>
 <% content_for :footer do -%>
 <div data-role="footer" data-position="fixed">

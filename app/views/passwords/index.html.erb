@@ -1,5 +1,6 @@
 <% content_for :heading do -%><%= t('myplaceonline.passwords.title') %><% end -%>
 <h1><%= t('myplaceonline.passwords.title') %></h1>
+<%= flashes! %>
 
 <%
 if @passwords.length == 0

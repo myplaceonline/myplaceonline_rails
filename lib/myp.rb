@@ -1,33 +1,37 @@
-class Myp
+module Myp
   def self.rememberPassword(session, password)
     session[:password] = password
   end
   
-  def self.encrypt(session, message)
+  def self.encryptFromSession(session, message)
     if !session.has_key?(:password)
-      raise I18n.t("myplaceonline.errors.nosessionpassword")
+      raise Myp::DecryptionKeyUnavailableError
     end
-    salt = SecureRandom.random_bytes(64)
-    key = ActiveSupport::KeyGenerator.new(session[:password]).generate_key(salt)
-    crypt = ActiveSupport::MessageEncryptor.new(key)
-    encrypted_data = crypt.encrypt_and_sign(message)
-    EncryptionHolder.new(salt, encrypted_data)
+    return self.encrypt(message, session[:password])
   end
   
-  def self.decrypt(session, encryption_holder)
-    if !session.has_key?(:password)
-      raise I18n.t("myplaceonline.errors.nosessionpassword")
-    end
-    key = ActiveSupport::KeyGenerator.new(session[:password])
-            .generate_key(encryption_holder.salt)
-    crypt = ActiveSupport::MessageEncryptor.new(key)
-    crypt.decrypt_and_verify(encryption_holder.encrypted_data)
+  def self.encrypt(message, key)
+    result = EncryptedValue.new
+    result.salt = SecureRandom.random_bytes(64)
+    generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(result.salt)
+    crypt = ActiveSupport::MessageEncryptor.new(generated_key)
+    result.val = crypt.encrypt_and_sign(message)
+    return result
   end
   
-  class EncryptionHolder
-    def initialize(salt, encrypted_data)
-      @salt = salt
-      @encrypted_data = encrypted_data
+  def self.decryptFromSession(session, encrypted_value)
+    if !session.has_key?(:password)
+      raise Myp::DecryptionKeyUnavailableError
     end
+    return self.decrypt(encrypted_value, session[:password])
   end
+  
+  def self.decrypt(encrypted_value, key)
+    generated_key = ActiveSupport::KeyGenerator.new(key)
+            .generate_key(encrypted_value.salt)
+    crypt = ActiveSupport::MessageEncryptor.new(generated_key)
+    return crypt.decrypt_and_verify(encrypted_value.val)
+  end
+  
+  class DecryptionKeyUnavailableError < StandardError; end
 end
