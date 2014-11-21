@@ -11,17 +11,22 @@ class PasswordsController < MyplaceonlineController
     @password = Password.new(password_params)
     ActiveRecord::Base.transaction do
       @password.identity_id = current_user.primary_identity.id
-      if @password.is_encrypted_password and @password.valid?
-        encrypted_value = Myp.encryptFromSession(session, @password.password)
-        if encrypted_value.save
-          @password.encrypted_password = encrypted_value
-          @password.password = nil
-        else
-          flash.now[:error] = t("myplaceonline.errors.couldnotencrypt")
-          return render :new
+      
+      # Only bother checking encryption if the password is valid
+      # (i.e. the save will fail)
+      if @password.valid?
+        if @password.is_encrypted_password
+          encrypted_value = Myp.encryptFromSession(session, @password.password)
+          if encrypted_value.save
+            @password.encrypted_password = encrypted_value
+            @password.password = nil
+          else
+            flash.now[:error] = t("myplaceonline.errors.couldnotencrypt")
+            return render :new
+          end
         end
       end
-      encrypted_value = Myp.encryptFromSession(session, @password.password)
+      
       if @password.save
         redirect_to @password
       else
@@ -42,10 +47,18 @@ class PasswordsController < MyplaceonlineController
   def update
     @password = findPassword
 
-    if @password.update(password_params)
-      redirect_to @password
-    else
-      render :edit
+    ActiveRecord::Base.transaction do
+      
+      if @password.update(password_params)
+        # if there's an encrypted value and the user unchecked encrypt
+        # then we can delete the encrypted value
+        if !@password.is_encrypted_password && !@password.encrypted_password.nil?
+          @password.encrypted_password.destroy
+        end
+        redirect_to @password
+      else
+        render :edit
+      end
     end
   end
   
