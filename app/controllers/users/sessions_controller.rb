@@ -2,9 +2,12 @@ class Users::SessionsController < Devise::SessionsController
 # before_filter :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
-  # def new
-  #   super
-  # end
+  def new
+    self.resource = resource_class.new(sign_in_params)
+    self.resource.remember_me = true
+    clean_up_passwords(resource)
+    respond_with(resource, serialize_options(resource))
+  end
 
   # POST /resource/sign_in
   def create
