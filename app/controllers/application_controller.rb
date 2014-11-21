@@ -8,6 +8,6 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   
   rescue_from Myp::DecryptionKeyUnavailableError do |exception|
-    redirect_to "/passwords", :flash => { :error => I18n.t("myplaceonline.errors.nosessionpassword") }
+    redirect_to "/users/reenter", :flash => { :error => I18n.t("myplaceonline.errors.nosessionpassword") }
   end
 end

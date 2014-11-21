@@ -35,7 +35,7 @@ en:
       edit: "Edit"
       delete: "Delete"
     errors:
-      nosessionpassword: "No session password"
+      nosessionpassword: "You must re-enter your password to perform the decryption"
       couldnotencrypt: "Could not generate encrypted value"
     buttons:
       signin: "Login"
@@ -83,3 +83,4 @@ en:
     users:
       invite: "Invite Code"
       invite_invalid: "invalid"
+      reenterpassword: "Re-enter Password"
