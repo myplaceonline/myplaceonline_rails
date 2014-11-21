@@ -37,6 +37,7 @@ en:
     errors:
       nosessionpassword: "You must re-enter your password to perform the decryption"
       couldnotencrypt: "Could not generate encrypted value"
+      invalidpassword: "Invalid password"
     buttons:
       signin: "Login"
       signup: "Register"

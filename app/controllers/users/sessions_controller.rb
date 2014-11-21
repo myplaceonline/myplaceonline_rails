@@ -20,7 +20,23 @@ class Users::SessionsController < Devise::SessionsController
   end
   
   def reenter
-    render :template => "users/sessions/reenter"
+    if !user_signed_in?
+      return redirect_to "/users/sign_in"
+    end
+    
+    if params.has_key?(:redirect)
+      @redirect = URI.parse(params[:redirect]).path
+    end
+    
+    if request.post?
+      pwd = params[:password]
+      if current_user.valid_password?(pwd)
+        Myp.rememberPassword(session, pwd)
+        return redirect_to @redirect.nil? ? "/" : @redirect
+      else
+        flash.now[:error] = I18n.t("myplaceonline.errors.invalidpassword")
+      end
+    end
   end
 
   # DELETE /resource/sign_out

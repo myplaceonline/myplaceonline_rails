@@ -36,6 +36,7 @@ class PasswordsController < MyplaceonlineController
   
   def edit
     @password = findPassword
+    @password.password = @password.getPassword(session)
   end
   
   def update
