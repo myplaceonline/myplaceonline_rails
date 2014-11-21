@@ -1,9 +1,9 @@
 <% content_for :heading do -%><%= t('myplaceonline.passwords.title') %><% end -%>
 <h1><%= @password.name %></h1>
 <%= flashes! %>
+<p><b><%= t("myplaceonline.passwords.password") %>:</b> <%= @password.getPassword(session) %></p>
 <p><b><%= t("myplaceonline.passwords.name") %>:</b> <%= @password.name %></p>
 <p><b><%= t("myplaceonline.passwords.user") %>:</b> <%= @password.user %></p>
-<p><b><%= t("myplaceonline.passwords.password") %>:</b> <%= @password.getPassword(session) %></p>
 <p><b><%= t("myplaceonline.passwords.isencrypted") %></b> <%= @password.is_encrypted_password %></p>
 <% content_for :footer do -%>
 <div data-role="footer" data-position="fixed">
