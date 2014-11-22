@@ -1,6 +1,6 @@
 class CustomDeviseFailure < Devise::FailureApp
   def respond
-    super()
-    self.status = 200
+    flash[:alert] = i18n_message(:invalid)
+    redirect_to redirect_url
   end
 end
