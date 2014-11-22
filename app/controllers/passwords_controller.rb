@@ -27,6 +27,7 @@ class PasswordsController < MyplaceonlineController
       end
       
       if @password.save
+        Myp.addPoint(current_user, :passwords)
         redirect_to @password
       else
         render :new

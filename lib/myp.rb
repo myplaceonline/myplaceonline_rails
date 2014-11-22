@@ -40,10 +40,10 @@ module Myp
     return crypt.decrypt_and_verify(encrypted_value.val)
   end
   
-  def self.visit(user, category)
+  def self.visit(user, categoryName)
     cpa = CategoryPointsAmount.find_or_create_by(
       identity: user.primary_identity,
-      category: @categories[category]
+      category: @categories[categoryName]
     )
     if cpa.visits.nil?
       cpa.visits = 0
@@ -51,6 +51,31 @@ module Myp
     cpa.visits += 1
     cpa.last_visit = DateTime.now
     cpa.save
+  end
+  
+  def self.addPoint(user, categoryName)
+    ActiveRecord::Base.transaction do
+      if user.primary_identity.points.nil?
+        user.primary_identity.points = 0
+      end
+      user.primary_identity.points += 1
+      user.primary_identity.save
+      
+      category = @categories[categoryName]
+      
+      while !category.nil? do
+        cpa = CategoryPointsAmount.find_or_create_by(
+          identity: user.primary_identity,
+          category: category
+        )
+        if cpa.count.nil?
+          cpa.count = 0
+        end
+        cpa.count += 1
+        cpa.save
+        category = category.parent
+      end
+    end
   end
   
   class DecryptionKeyUnavailableError < StandardError; end
