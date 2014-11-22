@@ -84,7 +84,7 @@ class PasswordsController < MyplaceonlineController
     
     def encryptIfNeeded(password)
       if password.is_encrypted_password
-        encrypted_value = Myp.encryptFromSession(session, password.password)
+        encrypted_value = Myplaceonline.encryptFromSession(session, password.password)
         if encrypted_value.save
           password.encrypted_password = encrypted_value
           password.password = nil

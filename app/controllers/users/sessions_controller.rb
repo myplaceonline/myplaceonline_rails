@@ -14,7 +14,7 @@ class Users::SessionsController < Devise::SessionsController
     self.resource = warden.authenticate!(auth_options)
     
     # If we make it here, the login is succesful
-    Myp.rememberPassword(session, params[:user][:password])
+    Myplaceonline.rememberPassword(session, params[:user][:password])
     
     set_flash_message(:notice, :signed_in) if is_flashing_format?
     sign_in(resource_name, resource)
@@ -34,7 +34,7 @@ class Users::SessionsController < Devise::SessionsController
     if request.post?
       pwd = params[:password]
       if current_user.valid_password?(pwd)
-        Myp.rememberPassword(session, pwd)
+        Myplaceonline.rememberPassword(session, pwd)
         return redirect_to @redirect.nil? ? "/" : @redirect
       else
         flash.now[:error] = I18n.t("myplaceonline.errors.invalidpassword")

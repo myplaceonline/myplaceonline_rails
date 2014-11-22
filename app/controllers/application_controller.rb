@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   #   skip_before_filter :authenticate_user!
   before_action :authenticate_user!
   
-  rescue_from Myp::DecryptionKeyUnavailableError do |exception|
+  rescue_from Myplaceonline::DecryptionKeyUnavailableError do |exception|
     redirect_to "/users/reenter?redirect=" + URI.encode(request.path),
         :flash => { :error => I18n.t("myplaceonline.errors.nosessionpassword") }
   end
