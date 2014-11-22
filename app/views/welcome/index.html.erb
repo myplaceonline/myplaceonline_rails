@@ -1,5 +1,7 @@
 <% content_for :heading do -%><%= t('myplaceonline.siteTitle') %><% end -%>
 
+<%= flashes! %>
+
 <% if !user_signed_in? %>
 
 <p><%= t("myplaceonline.welcome.intro_html", :opensourcelink => link_to(t("myplaceonline.welcome.opensourcelink"), "https://github.com/myplaceonline/myplaceonline")) %></p>
