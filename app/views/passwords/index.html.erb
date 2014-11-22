@@ -9,20 +9,43 @@ if @passwords.length == 0
 <%
 else
 %>
-<ul data-role="listview" data-inset="true" data-filter="true">
+<div class="searchable_container">
+  <ul class="searchable" data-role="listview" data-inset="true" data-filter="true">
 <%
-  @passwords.each do |password|
+    @passwords.each do |password|
 %>
-  <li>
-    <%= link_to password.name, password %>
-  </li>
+    <li>
+      <%= link_to password.name, password %>
+    </li>
 <%
-  end
+    end
 %>
-</ul>
+  </ul>
+</div>
 <%
 end
 %>
+
+<script type="text/javascript">
+onPageLoad(function() {
+
+  var input = $(".searchable_container input");
+  
+  input.keyup(function(e) {
+    if(e.which == 13) {
+      var searchList = $(".searchable li:not(.ui-screen-hidden)");
+      if (searchList.size() > 0) {
+        e.preventDefault();
+        navigate(searchList.filter(":first").children("a").attr("href"));
+      }
+    }
+    return true;
+  });
+
+  input.focus();
+  
+});
+</script>
 
 <% content_for :footer do -%>
 <div data-role="footer" data-position="fixed">
