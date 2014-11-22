@@ -23,7 +23,8 @@ Rails.application.routes.draw do
   post 'passwords/new'
 
   devise_scope :user do
-    match "users/reenter", :to => "users/sessions#reenter", via: [:get, :post]
+    match 'users/reenter', :to => 'users/sessions#reenter', via: [:get, :post]
+    post 'users/sign_up', :to => 'users/registrations#new'
   end
 
   devise_for :users, controllers: {

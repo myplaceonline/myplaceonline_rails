@@ -1,6 +1,7 @@
-<h2>Sign up</h2>
+<% content_for :heading do -%><%= t("myplaceonline.general.register") %><% end -%>
+<h1><%= t("myplaceonline.general.register") %></h1>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+<%= form_for(resource, as: resource_name, url: new_registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
   <div><%= f.label :email, class: "ui-hidden-accessible" %>

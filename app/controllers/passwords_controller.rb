@@ -6,18 +6,13 @@ class PasswordsController < MyplaceonlineController
   def new
     @url = new_password_path
     if request.post?
-      processCreate
+      create
     else
       @password = Password.new
     end
   end
   
   def create
-    @url = new_password_path
-    processCreate
-  end
-  
-  def processCreate
     @password = Password.new(password_params)
     ActiveRecord::Base.transaction do
       @password.identity_id = current_user.primary_identity.id

@@ -40,6 +40,7 @@ en:
       delete: "Delete"
       deleteaccount: "Delete Account"
       changepassword: "Change Email and/or Password"
+      register: "Register"
     errors:
       nosessionpassword: "You must re-enter your password to perform the decryption"
       couldnotencrypt: "Could not generate encrypted value"
