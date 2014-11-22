@@ -4,22 +4,23 @@ Rails.application.routes.draw do
   get 'api/categories'
 
   get 'meaning/index'
-  match '/meaning', :to => 'meaning#index', via: :get
+  match 'meaning', :to => 'meaning#index', via: :get
 
   get 'order/index'
-  match '/order', :to => 'order#index', via: :get
+  match 'order', :to => 'order#index', via: :get
 
   get 'joy/index'
-  match '/joy', :to => 'joy#index', via: :get
+  match 'joy', :to => 'joy#index', via: :get
 
   get 'search/index'
-  match '/search', :to => 'search#index', via: :get
+  match 'search', :to => 'search#index', via: :get
 
   get 'contact/index'
-  match '/contact', :to => 'contact#index', via: :get
+  match 'contact', :to => 'contact#index', via: :get
   
   resources :passwords
-  match '/passwords', :to => 'passwords#index', via: :get
+  match 'passwords', :to => 'passwords#index', via: :get
+  post 'passwords/new'
 
   devise_scope :user do
     match "users/reenter", :to => "users/sessions#reenter", via: [:get, :post]

@@ -1,7 +1,7 @@
 <% content_for :heading do -%><%= t('myplaceonline.passwords.title') %><% end -%>
 <h1><%= @password.name %></h1>
 <%= flashes! %>
-<%= render "form" %>
+<%= render "form", :url => @url %>
 <% content_for :footer do -%>
 <div data-role="footer" data-position="fixed">
     <div data-role="navbar">
