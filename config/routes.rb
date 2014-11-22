@@ -19,8 +19,8 @@ Rails.application.routes.draw do
   match 'contact', :to => 'contact#index', via: :get
   
   resources :passwords
-  match 'passwords', :to => 'passwords#index', via: :get
   post 'passwords/new'
+  match 'passwords', :to => 'passwords#index', via: :get
 
   devise_scope :user do
     match 'users/reenter', :to => 'users/sessions#reenter', via: [:get, :post]
@@ -28,8 +28,12 @@ Rails.application.routes.draw do
   end
 
   devise_for :users, controllers: {
+    confirmations: 'users/confirmations',
+    #omniauth_callbacks: 'users/omniauth_callbacks',
+    passwords: 'users/passwords',
     registrations: 'users/registrations',
-    sessions: 'users/sessions'
+    sessions: 'users/sessions',
+    unlocks: 'users/unlocks'
   }
 
   root 'welcome#index'

@@ -92,3 +92,7 @@ en:
       invite: "Invite Code"
       invite_invalid: "invalid"
       reenterpassword: "Re-enter Password"
+      resendconfirmation: "Resend confirmation instructions"
+      resendunlock: "Resend unlock instructions"
+      forgotpassword: "Forgot your password?"
+      sendreset: "Send reset password instructions"
