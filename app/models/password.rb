@@ -14,7 +14,7 @@ class Password < ActiveRecord::Base
     if !is_encrypted_password
       return password
     else
-      return Myplaceonline.decryptFromSession(session, encrypted_password)
+      return Myp.decryptFromSession(session, encrypted_password)
     end
   end
 end

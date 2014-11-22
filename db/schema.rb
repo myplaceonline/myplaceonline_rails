@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141120063112) do
+ActiveRecord::Schema.define(version: 20141122051659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 20141120063112) do
     t.integer  "count"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "visits"
+    t.datetime "last_visit"
   end
 
   add_index "category_points_amounts", ["category_id"], name: "index_category_points_amounts_on_category_id", using: :btree

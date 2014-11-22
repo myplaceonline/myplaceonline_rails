@@ -1,5 +1,6 @@
 class PasswordsController < MyplaceonlineController
   def index
+    Myp.visit(current_user, :passwords)
     @passwords = Password.where(identity_id: current_user.primary_identity.id)
   end
   
@@ -90,7 +91,7 @@ class PasswordsController < MyplaceonlineController
     
     def encryptIfNeeded(password)
       if password.is_encrypted_password
-        encrypted_value = Myplaceonline.encryptFromSession(session, password.password)
+        encrypted_value = Myp.encryptFromSession(session, password.password)
         if encrypted_value.save
           password.encrypted_password = encrypted_value
           password.password = nil
