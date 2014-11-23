@@ -10,15 +10,17 @@ module Myp
     session[:password] = password
   end
   
-  def self.encryptFromSession(session, message)
+  def self.encryptFromSession(user, session, message)
     if !session.has_key?(:password)
       raise Myp::DecryptionKeyUnavailableError
     end
-    return self.encrypt(message, session[:password])
+    return self.encrypt(user, message, session[:password])
   end
   
-  def self.encrypt(message, key)
+  def self.encrypt(user, message, key)
     result = EncryptedValue.new
+    result.encryption_type = 1
+    result.user = user
     result.salt = SecureRandom.random_bytes(64)
     generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(result.salt)
     crypt = ActiveSupport::MessageEncryptor.new(generated_key)
