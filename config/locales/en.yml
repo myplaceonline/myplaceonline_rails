@@ -59,6 +59,7 @@ en:
         intro: "Features:"
         passwords: "Manage passwords."
       search: "Search"
+      recentlyused: "Recently Used"
     contact:
       title: "Contact"
     search:

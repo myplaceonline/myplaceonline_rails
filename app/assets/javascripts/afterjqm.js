@@ -32,8 +32,11 @@ function jqmSetListMessage(list, message) {
 }
 
 /* items: [{title: String, link: String, count: Integer}, ...] */
-function jqmSetList(list, items) {
+function jqmSetList(list, items, header) {
   var html = "";
+  if (header) {
+    html += "<li data-role='list-divider'>" + header + "</li>";
+  }
   $.each(items, function (i, x) {
     html += "<li><a href='" + x.link + "'>" + x.title + " <span class='ui-li-count'>" + x.count + "</span></a></li>";
   });

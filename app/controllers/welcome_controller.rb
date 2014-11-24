@@ -4,6 +4,7 @@ class WelcomeController < ApplicationController
     if user_signed_in?
       @initialCategoryList = Myp.categoriesForCurrentUser(current_user, -1).to_json
       @totalPoints = current_user.total_points
+      @usefulCategoryList = Myp.usefulCategories(current_user)
     end
   end
 end

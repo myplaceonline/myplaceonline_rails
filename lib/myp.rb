@@ -65,6 +65,39 @@ module Myp
       )
     }
   end
+  
+  def self.usefulCategories(user)
+    CategoryPointsAmount.find_by_sql(%{
+      (
+        SELECT category_points_amounts.*, categories.name as category_name, categories.link as category_link
+        FROM category_points_amounts
+        INNER JOIN categories ON category_points_amounts.category_id = categories.id
+        WHERE categories.parent_id IS NOT NULL AND category_points_amounts.identity_id = #{
+                CategoryPointsAmount.sanitize(user.primary_identity.id)
+              }
+        ORDER BY category_points_amounts.last_visit DESC
+        LIMIT 2
+      )
+      UNION
+      (
+        SELECT category_points_amounts.*, categories.name as category_name, categories.link as category_link
+        FROM category_points_amounts
+        INNER JOIN categories ON category_points_amounts.category_id = categories.id
+        WHERE categories.parent_id IS NOT NULL AND category_points_amounts.identity_id = #{
+                CategoryPointsAmount.sanitize(user.primary_identity.id)
+              }
+        ORDER BY category_points_amounts.visits DESC
+        LIMIT 2
+      )
+    })
+    .map{ |cpa|
+      CategoryForIdentity.new(
+        I18n.t("myplaceonline.category." + cpa.category_name.downcase),
+        cpa.category_link,
+        cpa.count
+      )
+    }
+  end
 
   class CategoryForIdentity
     def initialize(title, link, count)
