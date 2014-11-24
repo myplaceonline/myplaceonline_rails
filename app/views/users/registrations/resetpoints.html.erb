@@ -1,0 +1,8 @@
+<% content_for :heading do -%><%= t("myplaceonline.users.resetpoints") %><% end -%>
+<h1><%= t("myplaceonline.users.resetpoints") %></h1>
+
+<p><%= t("myplaceonline.users.resetpointsdesc") %></p>
+
+<%= form_tag do %>
+  <div><%= submit_tag t("myplaceonline.users.resetpoints") %></div>
+<% end %>

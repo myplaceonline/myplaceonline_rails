@@ -94,5 +94,14 @@ module Myp
     end
   end
   
+  def self.resetPoints(user)
+    ActiveRecord::Base.transaction do
+      user.primary_identity.points = 0
+      user.primary_identity.save
+      
+      CategoryPointsAmount.where(identity: user.primary_identity).update_all(count: 0)
+    end
+  end
+  
   class DecryptionKeyUnavailableError < StandardError; end
 end

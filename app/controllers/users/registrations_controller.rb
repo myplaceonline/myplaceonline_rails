@@ -1,4 +1,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  
+  # By default, authentication is required for all actions except net/create/cancel
+  
   # before_filter :configure_sign_up_params, only: [:create]
   # before_filter :configure_account_update_params, only: [:update]
   prepend_before_filter :authenticate_scope!, only: [:edit, :update, :destroy, :changepassword, :changeemail]
@@ -76,6 +79,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
     else
       clean_up_passwords resource
       render redirect
+    end
+  end
+  
+  def resetpoints
+    if request.post?
+      Myp.resetPoints(current_user)
+      redirect_to edit_user_registration_path,
+        :flash => { :notice => I18n.t("myplaceonline.users.resetpointssuccess") }
+    else
+      render :resetpoints
     end
   end
 

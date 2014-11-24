@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     get 'users/delete', :to => 'users/registrations#delete'
     match 'users/password/change', :to => 'users/registrations#changepassword', via: [:get, :put]
     match 'users/changeemail', :to => 'users/registrations#changeemail', via: [:get, :put]
+    match 'users/resetpoints', :to => 'users/registrations#resetpoints', via: [:get, :post]
   end
 
   devise_for :users, controllers: {

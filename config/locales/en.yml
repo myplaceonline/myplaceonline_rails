@@ -100,3 +100,6 @@ en:
       delete: "Delete Account"
       deletedetails: "Are you sure you want to permanently delete your account?"
       changeemail: "Change Email"
+      resetpoints: "Reset Points"
+      resetpointsdesc: "This will reset all of your points to 0."
+      resetpointssuccess: "Points successfully reset to 0."
