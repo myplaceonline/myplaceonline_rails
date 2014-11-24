@@ -15,3 +15,4 @@
 //= require beforejqm
 //= require jquery.mobile
 //= require afterjqm
+//= require jquery.remotipart

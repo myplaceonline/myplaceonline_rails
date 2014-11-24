@@ -87,6 +87,13 @@ class PasswordsController < ApplicationController
   end
   
   def importodf
+    if remotipart_submitted?
+      file = params[:file]
+      filename = file.original_filename
+      respond_to do |format|
+        format.js
+      end
+    end
   end
   
   private
