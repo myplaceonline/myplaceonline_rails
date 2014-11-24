@@ -1,2 +1,6 @@
 <% content_for :heading do -%><%= t('myplaceonline.general.import') + " " + t("myplaceonline.general.odfspreadsheet") %><% end -%>
 <h1><%= t('myplaceonline.general.import') + " " + t("myplaceonline.general.odfspreadsheet") %></h1>
+<%= form_tag multipart: true do %>
+  <%= file_field_tag 'file' %>
+  <%= submit_tag t("myplaceonline.general.next") %>
+<% end %>

@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get 'contact', :to => 'contact#index'
   
   get 'passwords/import'
-  get 'passwords/import/odf', :to => 'passwords#importodf'
+  match 'passwords/import/odf', :to => 'passwords#importodf', via: [:get, :post]
   resources :passwords
   post 'passwords/new'
   get 'passwords', :to => 'passwords#index'

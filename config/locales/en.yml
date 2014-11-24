@@ -42,6 +42,7 @@ en:
       register: "Register"
       import: "Import"
       odfspreadsheet: "OpenOffice, LibreOffice (.ods)"
+      next: "Next"
     errors:
       nosessionpassword: "You must re-enter your password to perform the decryption"
       couldnotencrypt: "Could not generate encrypted value"
