@@ -83,6 +83,12 @@ class PasswordsController < ApplicationController
     redirect_to passwords_path
   end
   
+  def import
+  end
+  
+  def importodf
+  end
+  
   private
     def password_params
       # Without the require call, render new in create doesn't persist values

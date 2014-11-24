@@ -52,7 +52,7 @@ onPageLoad(function() {
     <div data-role="navbar">
         <ul>
             <li><%= link_to t('myplaceonline.passwords.title_add'), new_password_path, "data-icon" => "plus" %></li>
-            <li><a href="#" data-icon="bars">Import</a></li>
+            <li><%= link_to t('myplaceonline.general.import'), passwords_import_path, "data-icon" => "bars" %></li>
         </ul>
     </div>
 </div>

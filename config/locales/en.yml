@@ -40,6 +40,8 @@ en:
       delete: "Delete"
       deleteaccount: "Delete Account"
       register: "Register"
+      import: "Import"
+      odfspreadsheet: "OpenOffice, LibreOffice (.ods)"
     errors:
       nosessionpassword: "You must re-enter your password to perform the decryption"
       couldnotencrypt: "Could not generate encrypted value"
