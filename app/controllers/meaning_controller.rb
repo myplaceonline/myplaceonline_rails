@@ -1,5 +1,5 @@
-class MeaningController < MyplaceonlineController
+class MeaningController < ApplicationController
   def index
-    @initialCategoryList = categoriesForCurrentUser(Category.find_by_name("meaning")).to_json
+    @initialCategoryList = Myp.categoriesForCurrentUser(current_user, Category.find_by_name("meaning")).to_json
   end
 end

@@ -1,4 +1,4 @@
-class PasswordsController < MyplaceonlineController
+class PasswordsController < ApplicationController
   def index
     Myp.visit(current_user, :passwords)
     @passwords = Password.where(identity_id: current_user.primary_identity.id)

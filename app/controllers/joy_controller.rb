@@ -1,5 +1,5 @@
-class JoyController < MyplaceonlineController
+class JoyController < ApplicationController
   def index
-    @initialCategoryList = categoriesForCurrentUser(Category.find_by_name("joy")).to_json
+    @initialCategoryList = Myp.categoriesForCurrentUser(current_user, Category.find_by_name("joy")).to_json
   end
 end
