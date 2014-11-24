@@ -1,0 +1,6 @@
+<% content_for :heading do -%><%= t("myplaceonline.users.delete") %><% end -%>
+<h1><%= t("myplaceonline.users.delete") %></h1>
+
+<%= t("myplaceonline.users.deletedetails") %>
+
+<p><%= button_to t("myplaceonline.general.deleteaccount"), registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>

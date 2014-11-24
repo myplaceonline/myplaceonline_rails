@@ -16,7 +16,7 @@ class Users::SessionsController < Devise::SessionsController
     # If we make it here, the login is succesful
     Myp.rememberPassword(session, params[:user][:password])
     
-    set_flash_message(:notice, :signed_in) if is_flashing_format?
+    #set_flash_message(:notice, :signed_in) if is_flashing_format?
     sign_in(resource_name, resource)
     yield resource if block_given?
     respond_with resource, location: after_sign_in_path_for(resource)
@@ -43,10 +43,13 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
-
+  def destroy
+    signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+    #set_flash_message :notice, :signed_out if signed_out && is_flashing_format?
+    yield if block_given?
+    respond_to_on_destroy
+  end
+  
   # protected
 
   # You can put the params you want to permit in the empty array.

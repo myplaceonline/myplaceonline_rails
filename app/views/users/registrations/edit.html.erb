@@ -1,36 +1,14 @@
-<% content_for :heading do -%><%= t("myplaceonline.general.edit") + " " + resource_name.to_s.humanize %><% end -%>
-<h1><%= t("myplaceonline.general.edit") + " " + resource_name.to_s.humanize %></h1>
+<% content_for :heading do -%><%= t("myplaceonline.users.settings") %><% end -%>
+<h1><%= t("myplaceonline.users.settings") %></h1>
 
-<h2><%= t("myplaceonline.general.changepassword") %></h2>
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
+<%= flashes! %>
 
-  <div><%= f.label :email, class: "ui-hidden-accessible" %>
-  <%= f.email_field :email, autofocus: true, placeholder: t("myplaceonline.general.email") %></div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div><%= f.label :current_password, class: "ui-hidden-accessible" %>
-    <%= f.password_field :current_password, autocomplete: "off", placeholder: t("myplaceonline.general.currentpassword") %></div>
-
-  <div><%= f.label :password, class: "ui-hidden-accessible" %>
-  <%=
-    if @validatable
-      f.password_field :password, autocomplete: "off", placeholder: t("myplaceonline.general.passwordwithminallowblank", minchars: @minimum_password_length)
-    else
-      f.password_field :password, autocomplete: "off", placeholder: t("myplaceonline.general.passwordallowblank")
-    end
-  %>
-  </div>
-
-  <div><%= f.label :password_confirmation, class: "ui-hidden-accessible" %>
-    <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: t("myplaceonline.general.password2allowblank") %></div>
-
-  <div><%= f.submit t("myplaceonline.general.changepassword") %></div>
+<% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+  <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
 <% end %>
 
-<h2><%= t("myplaceonline.general.deleteaccount") %></h2>
-
-<p><%= button_to t("myplaceonline.general.deleteaccount"), registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+<ul data-role="listview" data-inset="true">
+  <li><%= link_to t("myplaceonline.users.changeemail"), users_changeemail_path %></li>
+  <li><%= link_to t("myplaceonline.users.changepassword"), users_password_change_path %></li>
+  <li><%= link_to t("myplaceonline.general.deleteaccount"), users_delete_path %></li>
+</ul>

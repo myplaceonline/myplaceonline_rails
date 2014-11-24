@@ -1,6 +1,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   # before_filter :configure_sign_up_params, only: [:create]
   # before_filter :configure_account_update_params, only: [:update]
+  prepend_before_filter :authenticate_scope!, only: [:edit, :update, :destroy, :changepassword, :changeemail]
   
   before_filter :configure_permitted_parameters
   
@@ -35,6 +36,49 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  def delete
+  end
+  
+  def changepassword
+    if request.get?
+      render :changepassword
+    else
+      doUpdate(:changepassword)
+    end
+  end
+  
+  def changeemail
+    if request.get?
+      render :changeemail
+    else
+      doUpdate(:changeemail)
+    end
+  end
+  
+  def update
+    doUpdate(:changepassword)
+  end
+    
+  def doUpdate(redirect)
+    self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
+    prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
+
+    resource_updated = update_resource(resource, account_update_params)
+    yield resource if block_given?
+    if resource_updated
+      if is_flashing_format?
+        flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
+          :update_needs_confirmation : :updated
+        set_flash_message :notice, flash_key
+      end
+      sign_in resource_name, resource, bypass: true
+      redirect_to edit_user_registration_path
+    else
+      clean_up_passwords resource
+      render redirect
+    end
+  end
+
   # POST /resource
   # def create
   #   super
@@ -54,7 +98,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def destroy
   #   super
   # end
-
+  
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign
   # in to be expired now. This is useful if the user wants to

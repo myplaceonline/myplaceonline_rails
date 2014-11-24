@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   devise_scope :user do
     match 'users/reenter', :to => 'users/sessions#reenter', via: [:get, :post]
     post 'users/sign_up', :to => 'users/registrations#new'
+    get 'users/delete', :to => 'users/registrations#delete'
+    match 'users/password/change', :to => 'users/registrations#changepassword', via: [:get, :put]
+    match 'users/changeemail', :to => 'users/registrations#changeemail', via: [:get, :put]
   end
 
   devise_for :users, controllers: {

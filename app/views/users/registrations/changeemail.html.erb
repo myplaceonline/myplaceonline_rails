@@ -1,0 +1,14 @@
+<% content_for :heading do -%><%= t("myplaceonline.users.changeemail") %><% end -%>
+<h1><%= t("myplaceonline.users.changeemail") %></h1>
+
+<%= form_for(resource, as: resource_name, url: users_changeemail_path, html: { method: :put }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div><%= f.label :current_password, class: "ui-hidden-accessible" %>
+    <%= f.password_field :current_password, autofocus: "true", autocomplete: "off", placeholder: t("myplaceonline.general.currentpassword") %></div>
+
+  <div><%= f.label :email, class: "ui-hidden-accessible" %>
+  <%= f.email_field :email, placeholder: t("myplaceonline.general.email") %></div>
+
+  <div><%= f.submit t("myplaceonline.users.changeemail") %></div>
+<% end %>
