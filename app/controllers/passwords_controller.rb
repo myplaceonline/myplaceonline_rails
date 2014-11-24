@@ -75,7 +75,10 @@ class PasswordsController < MyplaceonlineController
   
   def destroy
     @article = findPassword
-    @article.destroy
+    ActiveRecord::Base.transaction do
+      @article.destroy
+      Myp.subtractPoint(current_user, :passwords)
+    end
 
     redirect_to passwords_path
   end

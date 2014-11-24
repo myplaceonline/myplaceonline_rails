@@ -56,11 +56,22 @@ module Myp
   end
   
   def self.addPoint(user, categoryName)
+    self.modifyPoints(user, categoryName, 1)
+  end
+  
+  def self.subtractPoint(user, categoryName)
+    self.modifyPoints(user, categoryName, -1)
+  end
+  
+  def self.modifyPoints(user, categoryName, amount)
     ActiveRecord::Base.transaction do
       if user.primary_identity.points.nil?
         user.primary_identity.points = 0
       end
-      user.primary_identity.points += 1
+      user.primary_identity.points += amount
+      if user.primary_identity.points < 0
+        user.primary_identity.points = 0
+      end
       user.primary_identity.save
       
       category = @categories[categoryName]
@@ -73,7 +84,10 @@ module Myp
         if cpa.count.nil?
           cpa.count = 0
         end
-        cpa.count += 1
+        cpa.count += amount
+        if cpa.count < 0
+          cpa.count = 0
+        end
         cpa.save
         category = category.parent
       end
