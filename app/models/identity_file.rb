@@ -1,0 +1,5 @@
+class IdentityFile < ActiveRecord::Base
+  belongs_to :identity
+  has_attached_file :file, :path => ":rails_root/storage/:rails_env/attachments/:id/:style/:basename.:extension"
+  do_not_validate_attachment_file_type :file
+end
