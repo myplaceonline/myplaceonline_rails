@@ -31,3 +31,5 @@ bower.json
 
 config/database.yml
 *swp
+
+/storage

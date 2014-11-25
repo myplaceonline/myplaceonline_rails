@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   
   get 'passwords/import'
   match 'passwords/import/odf', :to => 'passwords#importodf', via: [:get, :post]
+  match 'passwords/import/odf/:id/step1', :to => 'passwords#importodf1', via: [:get, :post], :as => "passwords_import_odf1"
   resources :passwords
   post 'passwords/new'
   get 'passwords', :to => 'passwords#index'

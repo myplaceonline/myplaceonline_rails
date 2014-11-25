@@ -1,3 +1,5 @@
+require 'roo'
+
 class PasswordsController < ApplicationController
   def index
     Myp.visit(current_user, :passwords)
@@ -87,11 +89,34 @@ class PasswordsController < ApplicationController
   end
   
   def importodf
-    if remotipart_submitted?
-      file = params[:file]
-      filename = file.original_filename
-      respond_to do |format|
-        format.js
+    if request.post?
+      if params.has_key?(:file)
+        begin
+          file = params[:file]
+          identity_file = IdentityFile.new()
+          identity_file.identity = current_user.primary_identity
+          identity_file.file = file
+          identity_file.save
+          @url = passwords_import_odf1_path(identity_file.id)
+        rescue StandardError => error
+          logger.error(error.inspect)
+          @error = error.inspect
+        end
+      else
+        @error = t("myplaceonline.import.nofile")
+      end
+    end
+  end
+  
+  def importodf1
+    ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
+    if !ifile.nil?
+      begin
+        s = Roo::OpenOffice.new(ifile.file.path)
+        puts s.sheets.inspect
+      rescue StandardError => error
+        logger.error(error.inspect)
+        @error = error.inspect
       end
     end
   end
