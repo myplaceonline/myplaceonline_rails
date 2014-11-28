@@ -55,3 +55,15 @@ function navigate(url, skipAjax) {
     window.location = url;
   }
 }
+
+function showLoading() {
+  $.mobile.loading("show");
+}
+
+function hideLoading() {
+  $.mobile.loading("hide");
+}
+
+$(document).on('ajax:remotipartSubmit', 'form', function() {
+  showLoading();
+});
