@@ -115,10 +115,14 @@ module Myp
     session[:password] = password
   end
   
-  def self.encryptFromSession(user, session, message)
+  def self.ensureEncryptionKey(session)
     if !session.has_key?(:password)
       raise Myp::DecryptionKeyUnavailableError
     end
+  end
+  
+  def self.encryptFromSession(user, session, message)
+    self.ensureEncryptionKey(session)
     return self.encrypt(user, message, session[:password])
   end
   
@@ -134,9 +138,7 @@ module Myp
   end
   
   def self.decryptFromSession(session, encrypted_value)
-    if !session.has_key?(:password)
-      raise Myp::DecryptionKeyUnavailableError
-    end
+    self.ensureEncryptionKey(session)
     return self.decrypt(encrypted_value, session[:password])
   end
   
@@ -206,6 +208,10 @@ module Myp
       
       CategoryPointsAmount.where(identity: user.primary_identity).update_all(count: 0)
     end
+  end
+  
+  def self.getReentryURL(request)
+    "/users/reenter?redirect=" + URI.encode(request.path)
   end
   
   class DecryptionKeyUnavailableError < StandardError; end

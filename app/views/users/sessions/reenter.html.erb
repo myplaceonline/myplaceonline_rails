@@ -1,6 +1,7 @@
 <% content_for :heading do -%><%= t('myplaceonline.users.reenterpassword') %><% end -%>
 <h1><%= t("myplaceonline.users.reenterpassword") %></h1>
 <%= flashes! %>
+<p><%= t("myplaceonline.errors.nosessionpassword") %></p>
 <%= form_tag do %>
   <div><%= label_tag :password, nil, class: "ui-hidden-accessible" %>
     <%= password_field_tag :password, nil, autofocus: true, autocomplete: "off", placeholder: t("myplaceonline.general.password") %></div>

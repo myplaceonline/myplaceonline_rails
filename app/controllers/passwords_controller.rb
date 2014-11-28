@@ -95,15 +95,26 @@ class PasswordsController < ApplicationController
         begin
           file = params[:file]
           @password = params[:password]
-          identity_file = IdentityFile.new()
-          identity_file.identity = current_user.primary_identity
-          identity_file.file = file
-          identity_file.save
           
-          # Try to read the file
-          s = Roo::OpenOffice.new(identity_file.file.path, :password => @password)
-          
-          @url = passwords_import_odf1_path(identity_file.id)
+          ActiveRecord::Base.transaction do
+            identity_file = IdentityFile.new()
+            identity_file.identity = current_user.primary_identity
+            identity_file.file = file
+            if !@password.to_s.empty?
+              encrypted_value = Myp.encryptFromSession(current_user, session, @password)
+              if encrypted_value.save
+                identity_file.encrypted_password = encrypted_value
+              end
+            end
+            identity_file.save
+            
+            # Try to read the file
+            s = Roo::OpenOffice.new(identity_file.file.path, :password => @password)
+            
+            @url = passwords_import_odf1_path(identity_file.id)
+          end
+        rescue Myp::DecryptionKeyUnavailableError
+          @url = Myp.getReentryURL(request)
         rescue StandardError => error
           logger.error(error.inspect)
           @error = error.to_s

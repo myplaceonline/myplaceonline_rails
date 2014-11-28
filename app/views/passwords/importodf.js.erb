@@ -1,5 +1,5 @@
 <% if @error.nil? %>
 navigate(<%= @url.to_json %>);
 <% else %>
-alert('Error: ' + <%= @error.to_json %>);
+alert('Error: ' + <%= @error.to_json.html_safe %>);
 <% end %>

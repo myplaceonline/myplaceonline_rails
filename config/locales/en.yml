@@ -44,7 +44,7 @@ en:
       odfspreadsheet: "OpenOffice, LibreOffice (.ods)"
       next: "Next"
     errors:
-      nosessionpassword: "You must re-enter your password to perform the decryption"
+      nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
       invalidpassword: "Invalid password"
     buttons:
