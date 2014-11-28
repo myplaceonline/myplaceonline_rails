@@ -89,18 +89,24 @@ class PasswordsController < ApplicationController
   end
   
   def importodf
+    @password = ""
     if request.post?
       if params.has_key?(:file)
         begin
           file = params[:file]
+          @password = params[:password]
           identity_file = IdentityFile.new()
           identity_file.identity = current_user.primary_identity
           identity_file.file = file
           identity_file.save
+          
+          # Try to read the file
+          s = Roo::OpenOffice.new(identity_file.file.path, :password => @password)
+          
           @url = passwords_import_odf1_path(identity_file.id)
         rescue StandardError => error
           logger.error(error.inspect)
-          @error = error.inspect
+          @error = error.to_s
         end
       else
         @error = t("myplaceonline.import.nofile")

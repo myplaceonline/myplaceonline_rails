@@ -5,7 +5,7 @@
   <%= file_field_tag 'file', autofocus: true %>
 
   <%= label_tag 'password', nil, class: "ui-hidden-accessible" %>
-  <%= text_field_tag 'password', nil, placeholder: t("myplaceonline.import.password") %>
+  <%= text_field_tag 'password', @password, placeholder: t("myplaceonline.import.password") %>
   
   <%= submit_tag t("myplaceonline.general.next") %>
 <% end %>
