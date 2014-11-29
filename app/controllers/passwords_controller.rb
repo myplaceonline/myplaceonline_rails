@@ -5,7 +5,9 @@ class PasswordsController < ApplicationController
   
   def index
     Myp.visit(current_user, :passwords)
-    @passwords = Password.where(identity_id: current_user.primary_identity.id)
+    @passwords = Password.where(
+      identity_id: current_user.primary_identity.id
+    ).order("lower(name) ASC", "lower(user) ASC")
   end
   
   def new
