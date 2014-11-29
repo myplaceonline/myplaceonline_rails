@@ -1,0 +1,14 @@
+<% content_for :heading do -%><%= t("myplaceonline.users.security_settings") %><% end -%>
+<h1><%= t("myplaceonline.users.security_settings") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag do %>
+  <fieldset>
+    <div data-role="fieldcontain">
+      <%= label_tag :encrypt_by_default, t("myplaceonline.users.encrypt_by_default") %>
+      <%= check_box_tag :encrypt_by_default, 1, @encrypt_by_default, data: { "role" => "flipswitch" } %>
+    </div>
+  </fieldset>
+  <div><%= submit_tag t("myplaceonline.general.save") %></div>
+<% end %>

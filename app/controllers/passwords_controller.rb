@@ -16,6 +16,7 @@ class PasswordsController < ApplicationController
       create
     else
       @password = Password.new
+      @password.is_encrypted_password = current_user.encrypt_by_default
     end
   end
   
@@ -143,6 +144,7 @@ class PasswordsController < ApplicationController
     ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
     if !ifile.nil?
       authorize! :manage, ifile
+      @encrypt = current_user.encrypt_by_default
       s = Roo::OpenOffice.new(ifile.file.path, :password => ifile.getPassword(session))
       @sheet = params[:sheet]
       s.default_sheet = s.sheets[s.sheets.index(@sheet)]
@@ -171,7 +173,7 @@ class PasswordsController < ApplicationController
       end
       last_row = last_row.to_i
       imported_count = 0
-      encrypt = "1".eql? params[:is_encrypted_password]
+      @encrypt = "1".eql? params[:is_encrypted_password]
       
       inputs = [
                 :password_column, :service_name_column, :user_name_column,
@@ -195,7 +197,7 @@ class PasswordsController < ApplicationController
               password.identity_id = current_user.primary_identity.id
 
               password.password = s.cell(i, colindices[:password_column]).to_s
-              if encrypt
+              if @encrypt
                 password.is_encrypted_password = true
                 password.encrypted_password = Myp.encryptFromSession(current_user, session, password.password)
                 password.password = nil
@@ -230,11 +232,11 @@ class PasswordsController < ApplicationController
               
               password.save!
 
-              addSecret(s, i, password, encrypt, colindices, :secret_question_1_column, :secret_answer_1_column)
-              addSecret(s, i, password, encrypt, colindices, :secret_question_2_column, :secret_answer_2_column)
-              addSecret(s, i, password, encrypt, colindices, :secret_question_3_column, :secret_answer_3_column)
-              addSecret(s, i, password, encrypt, colindices, :secret_question_4_column, :secret_answer_4_column)
-              addSecret(s, i, password, encrypt, colindices, :secret_question_5_column, :secret_answer_5_column)
+              addSecret(s, i, password, @encrypt, colindices, :secret_question_1_column, :secret_answer_1_column)
+              addSecret(s, i, password, @encrypt, colindices, :secret_question_2_column, :secret_answer_2_column)
+              addSecret(s, i, password, @encrypt, colindices, :secret_question_3_column, :secret_answer_3_column)
+              addSecret(s, i, password, @encrypt, colindices, :secret_question_4_column, :secret_answer_4_column)
+              addSecret(s, i, password, @encrypt, colindices, :secret_question_5_column, :secret_answer_5_column)
               
               Myp.addPoint(current_user, :passwords)
             end

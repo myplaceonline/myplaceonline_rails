@@ -43,6 +43,7 @@ en:
       import: "Import"
       odfspreadsheet: "OpenOffice, LibreOffice (.ods)"
       next: "Next"
+      save: "Save"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
@@ -118,6 +119,9 @@ en:
       delete_category_selection: "Select a category:"
       delete_category_missing: "Please select a category."
       deleted_category_items: "Deleted %{count} items from %{category}."
+      security_settings: "Security"
+      security_settings_saved: "Security settings saved."
+      encrypt_by_default: "Encrypt By Default"
     import:
       password: "Password (if any)"
       nofile: "No file selected"

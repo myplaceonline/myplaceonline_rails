@@ -7,7 +7,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_filter :configure_account_update_params, only: [:update]
   prepend_before_filter :authenticate_scope!, only: [
     :edit, :update, :destroy, :changepassword, :changeemail, :resetpoints,
-    :advanced, :deletecategory
+    :advanced, :deletecategory, :security
   ]
   
   before_filter :configure_permitted_parameters
@@ -134,6 +134,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
     else
       render :deletecategory
+    end
+  end
+
+  def security
+    @encrypt_by_default = current_user.encrypt_by_default
+    if request.post?
+      @encrypt_by_default = params[:encrypt_by_default]
+      current_user.encrypt_by_default = @encrypt_by_default
+      current_user.save!
+      redirect_to edit_user_registration_path,
+        :flash => { :notice => I18n.t("myplaceonline.users.security_settings_saved") }
+    else
+      render :security
     end
   end
 
