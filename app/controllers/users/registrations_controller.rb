@@ -1,4 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  skip_authorization_check
   
   # By default, authentication is required for all actions except net/create/cancel
   

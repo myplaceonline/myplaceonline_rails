@@ -1,4 +1,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  skip_authorization_check
+  
   # You should configure your model like this:
   # devise :omniauthable, omniauth_providers: [:twitter]
 

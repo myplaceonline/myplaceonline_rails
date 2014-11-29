@@ -7,7 +7,13 @@ class ApplicationController < ActionController::Base
   #   skip_before_filter :authenticate_user!
   before_action :authenticate_user!
   
+  check_authorization
+  
   rescue_from Myp::DecryptionKeyUnavailableError do |exception|
     redirect_to Myp.getReentryURL(request)
+  end
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => exception.message
   end
 end

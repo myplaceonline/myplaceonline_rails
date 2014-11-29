@@ -1,6 +1,8 @@
 require 'roo'
 
 class PasswordsController < ApplicationController
+  skip_authorization_check :only => [:index, :new, :create, :import, :importodf]
+  
   def index
     Myp.visit(current_user, :passwords)
     @passwords = Password.where(identity_id: current_user.primary_identity.id)
@@ -39,16 +41,19 @@ class PasswordsController < ApplicationController
   
   def show
     @password = findPassword
+    authorize! :manage, @password
   end
   
   def edit
     @password = findPassword
+    authorize! :manage, @password
     @password.password = @password.getPassword(session)
     @url = @password
   end
   
   def update
     @password = findPassword
+    authorize! :manage, @password
 
     ActiveRecord::Base.transaction do
       
@@ -76,9 +81,10 @@ class PasswordsController < ApplicationController
   end
   
   def destroy
-    @article = findPassword
+    @password = findPassword
+    authorize! :manage, @password
     ActiveRecord::Base.transaction do
-      @article.destroy
+      @password.destroy
       Myp.subtractPoint(current_user, :passwords)
     end
 
@@ -128,6 +134,7 @@ class PasswordsController < ApplicationController
   def importodf1
     ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
     if !ifile.nil?
+      authorize! :manage, ifile
       begin
         s = Roo::OpenOffice.new(ifile.file.path)
         puts s.sheets.inspect
