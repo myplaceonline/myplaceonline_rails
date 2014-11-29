@@ -13,10 +13,14 @@ else
   <ul class="searchable" data-role="listview" data-inset="true" data-filter="true">
 <%
     @passwords.each do |password|
+      name = password.name
+      if !password.user.to_s.empty?
+        name += " (" + password.user + ")"
+      end
 %>
-    <li>
-      <%= link_to password.name, password %>
-    </li>
+      <li>
+        <%= link_to name, password %>
+      </li>
 <%
     end
 %>

@@ -1,0 +1,13 @@
+<% content_for :heading do -%><%= t("myplaceonline.users.delete_category") %><% end -%>
+<h1><%= t("myplaceonline.users.delete_category") %></h1>
+
+<%= flashes! %>
+
+<p><%= t("myplaceonline.users.delete_category_details") %></p>
+
+<%= form_tag do %>
+  <%= label_tag 'category', t("myplaceonline.users.delete_category_selection") %>
+  <%= select_tag 'category', options_for_select(@categories, @category), include_blank: true %>
+  
+  <div><%= submit_tag t("myplaceonline.users.delete_category") %></div>
+<% end %>

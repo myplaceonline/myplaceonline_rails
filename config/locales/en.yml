@@ -112,6 +112,12 @@ en:
       resetpoints: "Reset Points"
       resetpointsdesc: "This will reset all of your points to 0."
       resetpointssuccess: "Points successfully reset to 0."
+      advanced_settings: "Advanced Settings"
+      delete_category: "Delete Category"
+      delete_category_details: "Delete all of your data for a particular category."
+      delete_category_selection: "Select a category:"
+      delete_category_missing: "Please select a category."
+      deleted_category_items: "Deleted %{count} items from %{category}."
     import:
       password: "Password (if any)"
       nofile: "No file selected"

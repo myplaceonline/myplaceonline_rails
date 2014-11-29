@@ -5,7 +5,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
   # before_filter :configure_sign_up_params, only: [:create]
   # before_filter :configure_account_update_params, only: [:update]
-  prepend_before_filter :authenticate_scope!, only: [:edit, :update, :destroy, :changepassword, :changeemail]
+  prepend_before_filter :authenticate_scope!, only: [
+    :edit, :update, :destroy, :changepassword, :changeemail, :resetpoints,
+    :advanced, :deletecategory
+  ]
   
   before_filter :configure_permitted_parameters
   
@@ -90,6 +93,47 @@ class Users::RegistrationsController < Devise::RegistrationsController
         :flash => { :notice => I18n.t("myplaceonline.users.resetpointssuccess") }
     else
       render :resetpoints
+    end
+  end
+
+  def advanced
+  end
+
+  def deletecategory
+    
+    passwords = I18n.t("myplaceonline.passwords.title")
+    @categories = [passwords]
+    
+    if request.post?
+      
+      count = 0
+      @category = params[:category]
+      
+      if @category.to_s.empty?
+        flash[:error] = I18n.t("myplaceonline.users.delete_category_missing")
+        render :deletecategory
+      else
+        
+        if @category.eql? passwords
+          ActiveRecord::Base.transaction do
+            destroyed = Password.destroy_all(identity: current_user.primary_identity)
+            count = destroyed.length
+            if count > 0
+              Myp.modifyPoints(current_user, :passwords, -1 * count)
+            end
+          end
+        else
+          raise "TODO"
+        end
+        
+        redirect_to users_advanced_path,
+          :flash => { :notice =>
+                      I18n.t("myplaceonline.users.deleted_category_items",
+                            :count => count, :category => @category)
+                    }
+      end
+    else
+      render :deletecategory
     end
   end
 
