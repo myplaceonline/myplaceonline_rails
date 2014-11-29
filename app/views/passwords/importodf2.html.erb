@@ -1,7 +1,8 @@
 <% content_for :heading do -%><%= t('myplaceonline.general.import') + " " + t("myplaceonline.general.odfspreadsheet") %><% end -%>
 <h1><%= t('myplaceonline.general.import') + " " + t("myplaceonline.general.odfspreadsheet") %></h1>
 <%= form_tag passwords_import_odf2_path, method: :get do %>
-  <%= label_tag 'sheet', nil %>
-  <%= select_tag 'sheet', options_for_select(@sheets) %>
+  <%= hidden_field_tag :sheet, @sheet %>
+  <%= label_tag 'password_column', nil %>
+  <%= select_tag 'password_column', options_for_select(@columns) %>
   <%= submit_tag t("myplaceonline.general.next") %>
 <% end %>

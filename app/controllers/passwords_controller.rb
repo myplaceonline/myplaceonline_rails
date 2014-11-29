@@ -135,12 +135,21 @@ class PasswordsController < ApplicationController
     ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
     if !ifile.nil?
       authorize! :manage, ifile
-      begin
-        s = Roo::OpenOffice.new(ifile.file.path)
-        puts s.sheets.inspect
-      rescue StandardError => error
-        logger.error(error.inspect)
-        @error = error.inspect
+      s = Roo::OpenOffice.new(ifile.file.path, :password => ifile.getPassword(session))
+      @sheets = s.sheets
+    end
+  end
+  
+  def importodf2
+    ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
+    if !ifile.nil?
+      authorize! :manage, ifile
+      s = Roo::OpenOffice.new(ifile.file.path, :password => ifile.getPassword(session))
+      @sheet = params[:sheet]
+      s.default_sheet = s.sheets[s.sheets.index(@sheet)]
+      @columns = Array.new
+      for i in 1..s.last_column
+        @columns.push(s.cell(s.first_row, i))
       end
     end
   end

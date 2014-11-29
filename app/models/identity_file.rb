@@ -4,4 +4,8 @@ class IdentityFile < ActiveRecord::Base
 
   has_attached_file :file, :path => ":rails_root/storage/:rails_env/attachments/:id/:style/:basename.:extension"
   do_not_validate_attachment_file_type :file
+
+  def getPassword(session)
+    Myp.decryptFromSession(session, encrypted_password)
+  end
 end
