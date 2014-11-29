@@ -107,12 +107,9 @@ class PasswordsController < ApplicationController
             identity_file.identity = current_user.primary_identity
             identity_file.file = file
             if !@password.to_s.empty?
-              encrypted_value = Myp.encryptFromSession(current_user, session, @password)
-              if encrypted_value.save
-                identity_file.encrypted_password = encrypted_value
-              end
+              identity_file.encrypted_password = Myp.encryptFromSession(current_user, session, @password)
             end
-            identity_file.save
+            identity_file.save!
             
             # Try to read the file
             s = Roo::OpenOffice.new(identity_file.file.path, :password => @password)
@@ -154,6 +151,104 @@ class PasswordsController < ApplicationController
     end
   end
   
+  def importodf3
+    ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
+    if !ifile.nil?
+      authorize! :manage, ifile
+      s = Roo::OpenOffice.new(ifile.file.path, :password => ifile.getPassword(session))
+      @sheet = params[:sheet]
+      s.default_sheet = s.sheets[s.sheets.index(@sheet)]
+      @columns = Array.new
+      for i in 1..s.last_column
+        @columns.push(s.cell(s.first_row, i))
+      end
+      
+      last_row = params[:maximum_row]
+      if last_row.to_s.empty?
+        last_row = s.last_row.to_s
+      end
+      last_row = last_row.to_i
+      imported_count = 0
+      encrypt = "1".eql? params[:is_encrypted_password]
+      
+      inputs = [
+                :password_column, :service_name_column, :user_name_column,
+                :notes_column, :notes_column_2, :account_number_column,
+                :url_column,
+                :secret_question_1_column, :secret_answer_1_column,
+                :secret_question_2_column, :secret_answer_2_column,
+                :secret_question_3_column, :secret_answer_3_column,
+                :secret_question_4_column, :secret_answer_4_column,
+                :secret_question_5_column, :secret_answer_5_column
+               ]
+      
+      colindices = Hash.new
+      inputs.each { |col| colindices[col] = getPlus1(@columns, params[col]) }
+      
+      if !colindices[:password_column].nil?
+        if !colindices[:service_name_column].nil?
+          ActiveRecord::Base.transaction do
+            for i in (s.first_row + 1)..last_row
+              password = Password.new
+              password.identity_id = current_user.primary_identity.id
+
+              password.password = s.cell(i, colindices[:password_column]).to_s
+              if encrypt
+                password.is_encrypted_password = true
+                password.encrypted_password = Myp.encryptFromSession(current_user, session, password.password)
+                password.password = nil
+              end
+
+              password.name = s.cell(i, colindices[:service_name_column]).to_s
+              if !colindices[:user_name_column].nil?
+                password.user = s.cell(i, colindices[:user_name_column]).to_s
+              end
+              if !colindices[:notes_column].nil?
+                if password.notes.to_s.empty?
+                  password.notes = ""
+                else
+                  password.notes += "\n"
+                end
+                password.notes += s.cell(i, colindices[:notes_column]).to_s
+              end
+              if !colindices[:notes_column_2].nil?
+                if password.notes.to_s.empty?
+                  password.notes = ""
+                else
+                  password.notes += "\n"
+                end
+                password.notes += s.cell(i, colindices[:notes_column_2]).to_s
+              end
+              if !colindices[:account_number_column].nil?
+                password.account_number = s.cell(i, colindices[:account_number_column]).to_s
+              end
+              if !colindices[:url_column].nil?
+                password.url = s.cell(i, colindices[:url_column]).to_s
+              end
+              
+              password.save!
+
+              addSecret(s, i, password, encrypt, colindices, :secret_question_1_column, :secret_answer_1_column)
+              addSecret(s, i, password, encrypt, colindices, :secret_question_2_column, :secret_answer_2_column)
+              addSecret(s, i, password, encrypt, colindices, :secret_question_3_column, :secret_answer_3_column)
+              addSecret(s, i, password, encrypt, colindices, :secret_question_4_column, :secret_answer_4_column)
+              addSecret(s, i, password, encrypt, colindices, :secret_question_5_column, :secret_answer_5_column)
+              
+              Myp.addPoint(current_user, :passwords)
+            end
+          end
+          redirect_to passwords_path, :flash => { :notice => I18n.t("myplaceonline.passwords.imported_count", :count => imported_count) }
+        else
+          flash[:error] = t("myplaceonline.passwords.service_name_col_required")
+          render :importodf2
+        end
+      else
+        flash[:error] = t("myplaceonline.passwords.password_col_required")
+        render :importodf2
+      end
+    end
+  end
+  
   private
     def password_params
       # Without the require call, render new in create doesn't persist values
@@ -162,6 +257,29 @@ class PasswordsController < ApplicationController
 
     def findPassword
       return Password.find_by(id: params[:id], identity_id: current_user.primary_identity.id)
+    end
+    
+    def getPlus1(array, name)
+      result = array.index(name)
+      if !result.nil?
+        result += 1
+      end
+      result
+    end
+    
+    def addSecret(s, i, password, encrypt, colindices, question_col, answer_col)
+      if !colindices[question_col].nil? && !colindices[answer_col].nil?
+        secret = PasswordSecret.new
+        secret.password = password
+        secret.question = s.cell(i, colindices[question_col]).to_s
+        secret.answer = s.cell(i, colindices[answer_col]).to_s
+        if encrypt
+          secret.is_encrypted_answer = true
+          secret.encrypted_answer = Myp.encryptFromSession(current_user, session, secret.answer)
+          secret.answer = nil
+        end
+        secret.save!
+      end
     end
     
     def encryptIfNeeded(password)

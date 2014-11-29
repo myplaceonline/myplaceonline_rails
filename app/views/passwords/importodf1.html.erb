@@ -1,7 +1,17 @@
 <% content_for :heading do -%><%= t('myplaceonline.general.import') + " " + t("myplaceonline.general.odfspreadsheet") %><% end -%>
 <h1><%= t('myplaceonline.general.import') + " " + t("myplaceonline.general.odfspreadsheet") %></h1>
+<%= flashes! %>
 <%= form_tag passwords_import_odf2_path, method: :get do %>
   <%= label_tag 'sheet', nil %>
   <%= select_tag 'sheet', options_for_select(@sheets) %>
   <%= submit_tag t("myplaceonline.general.next") %>
 <% end %>
+<% content_for :footer do -%>
+<div data-role="footer" data-position="fixed">
+    <div data-role="navbar">
+        <ul>
+            <li><%= link_to t('myplaceonline.passwords.back'), passwords_path, "data-icon" => "back" %></li>
+        </ul>
+    </div>
+</div>
+<% end -%>

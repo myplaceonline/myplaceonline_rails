@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141128222051) do
+ActiveRecord::Schema.define(version: 20141129045902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,19 @@ ActiveRecord::Schema.define(version: 20141128222051) do
   add_index "identity_files", ["encrypted_password_id"], name: "index_identity_files_on_encrypted_password_id", using: :btree
   add_index "identity_files", ["identity_id"], name: "index_identity_files_on_identity_id", using: :btree
 
+  create_table "password_secrets", force: true do |t|
+    t.string   "question"
+    t.string   "answer"
+    t.boolean  "is_encrypted_answer"
+    t.integer  "encrypted_answer_id"
+    t.integer  "password_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "password_secrets", ["encrypted_answer_id"], name: "index_password_secrets_on_encrypted_answer_id", using: :btree
+  add_index "password_secrets", ["password_id"], name: "index_password_secrets_on_password_id", using: :btree
+
   create_table "passwords", force: true do |t|
     t.string   "name"
     t.string   "user"
@@ -86,6 +99,7 @@ ActiveRecord::Schema.define(version: 20141128222051) do
     t.datetime "updated_at"
     t.boolean  "is_encrypted_password"
     t.integer  "encrypted_password_id"
+    t.string   "account_number"
   end
 
   add_index "passwords", ["encrypted_password_id"], name: "index_passwords_on_encrypted_password_id", using: :btree

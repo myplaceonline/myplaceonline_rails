@@ -1,6 +1,7 @@
 class Password < ActiveRecord::Base  
   belongs_to :identity
   belongs_to :encrypted_password, class_name: EncryptedValue, dependent: :destroy
+  has_many :password_secrets, :dependent => :destroy
   
   validates :name, presence: true
   

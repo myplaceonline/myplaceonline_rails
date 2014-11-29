@@ -1,8 +1,74 @@
 <% content_for :heading do -%><%= t('myplaceonline.general.import') + " " + t("myplaceonline.general.odfspreadsheet") %><% end -%>
 <h1><%= t('myplaceonline.general.import') + " " + t("myplaceonline.general.odfspreadsheet") %></h1>
-<%= form_tag passwords_import_odf2_path, method: :get do %>
+<%= flashes! %>
+<%= form_tag passwords_import_odf3_path, method: :get do %>
   <%= hidden_field_tag :sheet, @sheet %>
+  
   <%= label_tag 'password_column', nil %>
   <%= select_tag 'password_column', options_for_select(@columns) %>
-  <%= submit_tag t("myplaceonline.general.next") %>
+
+  <%= label_tag 'service_name_column', nil %>
+  <%= select_tag 'service_name_column', options_for_select(@columns) %>
+
+  <%= label_tag 'user_name_column', nil %>
+  <%= select_tag 'user_name_column', options_for_select(@columns, ""), include_blank: true %>
+
+  <%= label_tag 'notes_column', nil %>
+  <%= select_tag 'notes_column', options_for_select(@columns, ""), include_blank: true %>
+
+  <%= label_tag 'notes_column_2', nil %>
+  <%= select_tag 'notes_column_2', options_for_select(@columns, ""), include_blank: true %>
+
+  <%= label_tag 'account_number_column', nil %>
+  <%= select_tag 'account_number_column', options_for_select(@columns, ""), include_blank: true %>
+
+  <%= label_tag 'url_column', nil %>
+  <%= select_tag 'url_column', options_for_select(@columns, ""), include_blank: true %>
+
+  <%= label_tag 'secret_question_1_column', nil %>
+  <%= select_tag 'secret_question_1_column', options_for_select(@columns, ""), include_blank: true %>
+
+  <%= label_tag 'secret_answer_1_column', nil %>
+  <%= select_tag 'secret_answer_1_column', options_for_select(@columns, ""), include_blank: true %>
+
+  <%= label_tag 'secret_question_2_column', nil %>
+  <%= select_tag 'secret_question_2_column', options_for_select(@columns, ""), include_blank: true %>
+
+  <%= label_tag 'secret_answer_2_column', nil %>
+  <%= select_tag 'secret_answer_2_column', options_for_select(@columns, ""), include_blank: true %>
+
+  <%= label_tag 'secret_question_3_column', nil %>
+  <%= select_tag 'secret_question_3_column', options_for_select(@columns, ""), include_blank: true %>
+
+  <%= label_tag 'secret_answer_3_column', nil %>
+  <%= select_tag 'secret_answer_3_column', options_for_select(@columns, ""), include_blank: true %>
+
+  <%= label_tag 'secret_question_4_column', nil %>
+  <%= select_tag 'secret_question_4_column', options_for_select(@columns, ""), include_blank: true %>
+
+  <%= label_tag 'secret_answer_4_column', nil %>
+  <%= select_tag 'secret_answer_4_column', options_for_select(@columns, ""), include_blank: true %>
+
+  <%= label_tag 'secret_question_5_column', nil %>
+  <%= select_tag 'secret_question_5_column', options_for_select(@columns, ""), include_blank: true %>
+
+  <%= label_tag 'secret_answer_5_column', nil %>
+  <%= select_tag 'secret_answer_5_column', options_for_select(@columns, ""), include_blank: true %>
+
+  <%= check_box_tag :is_encrypted_password %>
+  <%= label_tag :is_encrypted_password, t("myplaceonline.passwords.encryptall") %>
+
+  <%= label_tag 'maximum_row', nil, class: "ui-hidden-accessible" %>
+  <%= text_field_tag :maximum_row, @max_row, placeholder: t("myplaceonline.passwords.maxrow") %>
+
+  <%= submit_tag t("myplaceonline.general.import") %>
 <% end %>
+<% content_for :footer do -%>
+<div data-role="footer" data-position="fixed">
+    <div data-role="navbar">
+        <ul>
+            <li><%= link_to t('myplaceonline.passwords.back'), passwords_path, "data-icon" => "back" %></li>
+        </ul>
+    </div>
+</div>
+<% end -%>
