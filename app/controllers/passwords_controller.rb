@@ -256,7 +256,7 @@ class PasswordsController < ApplicationController
   private
     def password_params
       # Without the require call, render new in create doesn't persist values
-      params.require(:password).permit(:name, :user, :password, :is_encrypted_password)
+      params.require(:password).permit(:name, :user, :password, :is_encrypted_password, :url, :account_number, :notes)
     end
 
     def findPassword
