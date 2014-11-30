@@ -97,6 +97,9 @@ en:
       imported_count: "Successfully imported %{count} passwords."
       password_col_required: "The password column is required."
       service_name_col_required: "The service name column is required."
+      url: "Website"
+      notes: "Notes"
+      account_number: "Account Number"
     users:
       invite: "Invite Code"
       invite_invalid: "invalid"

@@ -123,6 +123,7 @@ class PasswordsController < ApplicationController
           @url = Myp.getReentryURL(request)
         rescue StandardError => error
           logger.error(error.inspect)
+          logger.error("\t" + error.backtrace.join("\n\t"))
           @error = error.to_s
         end
       else
@@ -277,12 +278,14 @@ class PasswordsController < ApplicationController
         secret.password = password
         secret.question = s.cell(i, colindices[question_col]).to_s
         secret.answer = s.cell(i, colindices[answer_col]).to_s
-        if encrypt
-          secret.is_encrypted_answer = true
-          secret.encrypted_answer = Myp.encryptFromSession(current_user, session, secret.answer)
-          secret.answer = nil
+        if !secret.question.empty?
+          if encrypt
+            secret.is_encrypted_answer = true
+            secret.encrypted_answer = Myp.encryptFromSession(current_user, session, secret.answer)
+            secret.answer = nil
+          end
+          secret.save!
         end
-        secret.save!
       end
     end
     

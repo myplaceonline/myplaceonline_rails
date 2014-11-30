@@ -30,6 +30,21 @@
   </p>
   
   <p>
+    <%= f.label :url, class: "ui-hidden-accessible" %>
+    <%= f.text_field :url, placeholder: t("myplaceonline.passwords.url") %>
+  </p>
+
+  <p>
+    <%= f.label :account_number, class: "ui-hidden-accessible" %>
+    <%= f.text_field :account_number, placeholder: t("myplaceonline.passwords.account_number") %>
+  </p>
+
+  <p>
+    <%= f.label :notes, class: "ui-hidden-accessible" %>
+    <%= f.text_area :notes, placeholder: t("myplaceonline.passwords.notes") %>
+  </p>
+
+  <p>
     <%= f.submit %>
   </p>
 <% end %>

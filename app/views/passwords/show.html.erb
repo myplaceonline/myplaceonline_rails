@@ -1,10 +1,64 @@
 <% content_for :heading do -%><%= t('myplaceonline.passwords.title') %><% end -%>
 <h1><%= @password.name %></h1>
 <%= flashes! %>
-<p><b><%= t("myplaceonline.passwords.password") %>:</b> <%= @password.getPassword(session) %></p>
-<p><b><%= t("myplaceonline.passwords.name") %>:</b> <%= @password.name %></p>
-<p><b><%= t("myplaceonline.passwords.user") %>:</b> <%= @password.user %></p>
-<p><b><%= t("myplaceonline.passwords.isencrypted") %></b> <%= @password.is_encrypted_password %></p>
+
+<table data-role="table" data-mode="reflow" class="ui-responsive tablestripes normalwidth firstcolumnbold noheadertable">
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  <tbody>
+    <tr>
+      <td><%= t("myplaceonline.passwords.password") %></td>
+      <td><%= @password.getPassword(session) %></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= t("myplaceonline.passwords.name") %></td>
+      <td><%= @password.name %></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= t("myplaceonline.passwords.user") %></td>
+      <td><%= @password.user %></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= t("myplaceonline.passwords.isencrypted") %></td>
+      <td><%= @password.is_encrypted_password %></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= t("myplaceonline.passwords.url") %></td>
+      <td><%= @password.url %></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= t("myplaceonline.passwords.account_number") %></td>
+      <td><%= @password.account_number %></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><%= t("myplaceonline.passwords.notes") %></td>
+      <td><%= @password.notes %></td>
+      <td>&nbsp;</td>
+    </tr>
+
+    <% @password.password_secrets.each do |secret| %>
+    
+      <tr>
+        <td><%= secret.question %></td>
+        <td><%= secret.getAnswer(session) %></td>
+        <td>&nbsp;</td>
+      </tr>
+
+    <% end %>
+
+  </tbody>
+</table>
+
 <% content_for :footer do -%>
 <div data-role="footer" data-position="fixed">
     <div data-role="navbar">

@@ -34,3 +34,45 @@ a.headerlink:hover {
 div.ui-checkbox + label {
   display: none;
 }
+
+.tablestripes thead th,
+.tablestripes tbody tr:last-child {
+  border-bottom: 1px solid #d6d6d6; /* non-RGBA fallback */
+  border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.tablestripes tbody th,
+.tablestripes tbody td {
+  border-bottom: 1px solid #e6e6e6; /* non-RGBA fallback  */
+  border-bottom: 1px solid rgba(0,0,0,.05);
+}
+
+.tablestripes tbody tr:last-child th,
+.tablestripes tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.tablestripes tbody tr:nth-child(odd) td,
+.tablestripes tbody tr:nth-child(odd) th {
+  background-color: #eeeeee; /* non-RGBA fallback  */
+  background-color: rgba(0,0,0,.04);
+}
+
+.normalwidth {
+  width: inherit !important;
+}
+
+.firstcolumnbold tbody tr td:first-child {
+  font-weight: bold;
+}
+
+.noheadertable thead tr th {
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width: 35em) {
+    .noheadertable th {
+        margin-top: 12px; /* optional spacing during reflow */
+    }
+}

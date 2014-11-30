@@ -128,7 +128,7 @@ module Myp
   
   def self.encrypt(user, message, key)
     result = EncryptedValue.new
-    return self.encryptValue(result)
+    return self.encryptValue(user, message, key, result)
   end
   
   def self.encryptValue(user, message, key, value)
