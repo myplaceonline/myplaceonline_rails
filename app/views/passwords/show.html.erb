@@ -10,53 +10,17 @@
       <th></th>
     </tr>
   <tbody>
-    <tr>
-      <td><%= t("myplaceonline.passwords.password") %></td>
-      <td><%= @password.getPassword(session) %></td>
-      <td>
-        <%= content_tag :a, href: "#", id: "p", class: "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable", title: t("myplaceonline.general.clipboard"), data: { "clipboard-text" => @password.getPassword(session) } do %>
-          t("myplaceonline.general.clipboard")
-        <% end -%>
-      </td>
-    </tr>
-    <tr>
-      <td><%= t("myplaceonline.passwords.name") %></td>
-      <td><%= @password.name %></td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td><%= t("myplaceonline.passwords.user") %></td>
-      <td><%= @password.user %></td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td><%= t("myplaceonline.passwords.isencrypted") %></td>
-      <td><%= @password.is_encrypted_password %></td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td><%= t("myplaceonline.passwords.url") %></td>
-      <td><%= @password.url %></td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td><%= t("myplaceonline.passwords.account_number") %></td>
-      <td><%= @password.account_number %></td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td><%= t("myplaceonline.passwords.notes") %></td>
-      <td><%= @password.notes %></td>
-      <td>&nbsp;</td>
-    </tr>
+    <%= attribute_table_row(t("myplaceonline.passwords.password"), @password.getPassword(session)) %>
+    <%= attribute_table_row(t("myplaceonline.passwords.name"), @password.name) %>
+    <%= attribute_table_row(t("myplaceonline.passwords.user"), @password.user) %>
+    <%= attribute_table_row(t("myplaceonline.passwords.isencrypted"), @password.is_encrypted_password) %>
+    <%= attribute_table_row(t("myplaceonline.passwords.url"), @password.url) %>
+    <%= attribute_table_row(t("myplaceonline.passwords.account_number"), @password.account_number) %>
+    <%= attribute_table_row(t("myplaceonline.passwords.notes"), @password.notes) %>
 
     <% @password.password_secrets.each do |secret| %>
     
-      <tr>
-        <td><%= secret.question %></td>
-        <td><%= secret.getAnswer(session) %></td>
-        <td>&nbsp;</td>
-      </tr>
+      <%= attribute_table_row(secret.question, secret.getAnswer(session)) %>
 
     <% end %>
 

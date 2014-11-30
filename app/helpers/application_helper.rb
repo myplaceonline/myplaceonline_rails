@@ -12,4 +12,27 @@ module ApplicationHelper
 
     html.html_safe
   end
+  
+  def attribute_table_row(name, value)
+    html = <<-HTML
+    <tr>
+      <td>#{name}</td>
+      <td>#{value}</td>
+      <td>
+        #{
+          content_tag(
+            :a,
+            t("myplaceonline.general.clipboard"),
+            href: "#",
+            class: "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable",
+            title: t("myplaceonline.general.clipboard"),
+            data: { "clipboard-text" => value }
+          )
+        }
+      </td>
+    </tr>
+    HTML
+    
+    html.html_safe
+  end
 end
