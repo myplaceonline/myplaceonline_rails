@@ -18,4 +18,14 @@ class Password < ActiveRecord::Base
       return Myp.decryptFromSession(session, encrypted_password)
     end
   end
+  
+  def getURL(prefertls = true)
+    result = url
+    if !result.to_s.empty?
+      if prefertls && result.start_with?("http:")
+        result = "https" + result[4..-1]
+      end
+    end
+    result
+  end
 end

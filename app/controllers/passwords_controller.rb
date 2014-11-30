@@ -45,6 +45,7 @@ class PasswordsController < ApplicationController
   def show
     @password = findPassword
     authorize! :manage, @password
+    @displaypassword = @password.getPassword(session)
   end
   
   def edit
