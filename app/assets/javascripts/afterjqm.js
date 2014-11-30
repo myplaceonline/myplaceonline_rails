@@ -67,3 +67,17 @@ function hideLoading() {
 $(document).on('ajax:remotipartSubmit', 'form', function() {
   showLoading();
 });
+
+function createSuccessNotification(message, timeout) {
+  if (!timeout) {
+    timeout = $.noty.defaults.timeout;
+  }
+  noty({text: message, layout: $.noty.defaults.layout, type: 'success', timeout: timeout});
+}
+
+function createErrorNotification(message, duration, timeout) {
+  if (!timeout) {
+    timeout = $.noty.defaults.timeout;
+  }
+  noty({text: message, layout: $.noty.defaults.layout, type: 'error', timeout: timeout});
+}
