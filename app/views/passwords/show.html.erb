@@ -13,7 +13,11 @@
     <tr>
       <td><%= t("myplaceonline.passwords.password") %></td>
       <td><%= @password.getPassword(session) %></td>
-      <td>&nbsp;</td>
+      <td>
+        <%= content_tag :a, href: "#", id: "p", class: "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable", title: t("myplaceonline.general.clipboard"), data: { "clipboard-text" => @password.getPassword(session) } do %>
+          t("myplaceonline.general.clipboard")
+        <% end -%>
+      </td>
     </tr>
     <tr>
       <td><%= t("myplaceonline.passwords.name") %></td>
@@ -58,6 +62,10 @@
 
   </tbody>
 </table>
+
+<script type="text/javascript">
+new ZeroClipboard($(".clipboardable"));
+</script>
 
 <% content_for :footer do -%>
 <div data-role="footer" data-position="fixed">

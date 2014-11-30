@@ -44,6 +44,7 @@ en:
       odfspreadsheet: "OpenOffice, LibreOffice (.ods)"
       next: "Next"
       save: "Save"
+      clipboard: "Copy to Clipboard"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"

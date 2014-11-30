@@ -16,3 +16,4 @@
 //= require jquery.mobile
 //= require afterjqm
 //= require jquery.remotipart
+//= require zeroclipboard

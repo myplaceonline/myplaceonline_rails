@@ -67,12 +67,16 @@ div.ui-checkbox + label {
 }
 
 .noheadertable thead tr th {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 @media (max-width: 35em) {
-    .noheadertable th {
-        margin-top: 12px; /* optional spacing during reflow */
-    }
+  .noheadertable th {
+    margin-top: 12px; /* optional spacing during reflow */
+  }
+}
+
+.nomargin {
+  margin: 0 !important;
 }
