@@ -122,8 +122,7 @@ class PasswordsController < ApplicationController
         rescue Myp::DecryptionKeyUnavailableError
           @url = Myp.getReentryURL(request)
         rescue StandardError => error
-          logger.error(error.inspect)
-          logger.error("\t" + error.backtrace.join("\n\t"))
+          Myp.logError(logger, error)
           @error = error.to_s
         end
       else

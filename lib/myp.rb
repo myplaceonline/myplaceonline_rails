@@ -230,5 +230,13 @@ module Myp
     "/users/reenter?redirect=" + URI.encode(request.path)
   end
   
+  def self.getErrorDetails(error)
+    return error.inspect + "\n\t" + error.backtrace.join("\n\t")
+  end
+  
+  def self.logError(logger, error)
+    logger.error(self.getErrorDetails(error))
+  end
+  
   class DecryptionKeyUnavailableError < StandardError; end
 end
