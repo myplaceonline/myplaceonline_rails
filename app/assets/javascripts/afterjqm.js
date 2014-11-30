@@ -81,3 +81,12 @@ function createErrorNotification(message, duration, timeout) {
   }
   noty({text: message, layout: $.noty.defaults.layout, type: 'error', timeout: timeout});
 }
+
+function ensureClipboard(objects) {
+  var clipboard = new ZeroClipboard(objects);
+  clipboard.on( "ready", function(readyEvent) {
+    clipboard.on( "aftercopy", function(event) {
+      createSuccessNotification("Copied to clipboard.");
+    });
+  });
+}
