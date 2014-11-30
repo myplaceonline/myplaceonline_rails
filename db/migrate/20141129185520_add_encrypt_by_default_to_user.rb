@@ -1,5 +1,6 @@
 class AddEncryptByDefaultToUser < ActiveRecord::Migration
   def change
-    add_column :users, :encrypt_by_default, :boolean, default: true
+    # Default to false because the user needs to be ware of the pitfalls
+    add_column :users, :encrypt_by_default, :boolean, default: false
   end
 end

@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/myplaceonline/roo.git
-  revision: 3d5adc3b716cc6c33a9f8db8f58572a31a9ea6a7
+  revision: 966f3cea90a4ba8dd1e71b335c0a194e772596db
   specs:
     roo (2.0.0)
       nokogiri
@@ -129,7 +129,7 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sprockets-rails (2.2.1)
+    sprockets-rails (2.2.2)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)

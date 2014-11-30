@@ -128,13 +128,17 @@ module Myp
   
   def self.encrypt(user, message, key)
     result = EncryptedValue.new
-    result.encryption_type = 1
-    result.user = user
-    result.salt = SecureRandom.random_bytes(64)
-    generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(result.salt)
+    return self.encryptValue(result)
+  end
+  
+  def self.encryptValue(user, message, key, value)
+    value.encryption_type = 1
+    value.user = user
+    value.salt = SecureRandom.random_bytes(64)
+    generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(value.salt)
     crypt = ActiveSupport::MessageEncryptor.new(generated_key)
-    result.val = crypt.encrypt_and_sign(message)
-    return result
+    value.val = crypt.encrypt_and_sign(message)
+    return value
   end
   
   def self.decryptFromSession(session, encrypted_value)
@@ -147,6 +151,18 @@ module Myp
             .generate_key(encrypted_value.salt)
     crypt = ActiveSupport::MessageEncryptor.new(generated_key)
     return crypt.decrypt_and_verify(encrypted_value.val)
+  end
+  
+  def self.passwordChanged(user, old_password, new_password)
+    if !old_password.eql?(new_password)
+      ActiveRecord::Base.transaction do
+        EncryptedValue.where(user: user).each do |encrypted_value|
+          decrypted = self.decrypt(encrypted_value, old_password)
+          self.encryptValue(user, decrypted, new_password, encrypted_value)
+          encrypted_value.save!
+        end
+      end
+    end
   end
   
   def self.visit(user, categoryName)

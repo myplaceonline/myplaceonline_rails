@@ -9,6 +9,7 @@
       <%= label_tag :encrypt_by_default, t("myplaceonline.users.encrypt_by_default") %>
       <%= check_box_tag :encrypt_by_default, 1, @encrypt_by_default, data: { "role" => "flipswitch" } %>
     </div>
+    <p><%= t("myplaceonline.users.encrypt_warning") %></p>
   </fieldset>
   <div><%= submit_tag t("myplaceonline.general.save") %></div>
 <% end %>

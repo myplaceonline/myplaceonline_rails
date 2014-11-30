@@ -122,6 +122,7 @@ en:
       security_settings: "Security"
       security_settings_saved: "Security settings saved."
       encrypt_by_default: "Encrypt By Default"
+      encrypt_warning: "Warning: If using encryption and you lose your password, you cannot decrypt the value."
     import:
       password: "Password (if any)"
       nofile: "No file selected"
