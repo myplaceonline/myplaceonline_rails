@@ -12,7 +12,7 @@
 
 <div data-role="page" data-theme="a" data-url="<%= html_escape(request.original_url) %>" data-uniqueid="<%= request.uuid %>">
   <div data-role="header" data-add-back-btn="true">
-    <h1><a href="/"><%= image_tag "myplaceonlinelogo.gif" %></a>&nbsp;<a class="headerlink" href="<%= html_escape(request.fullpath) %>" style="color: black"><%= yield(:heading).presence || t('myplaceonline.siteTitle') %></a></h1>
+    <h1><a href="/" title="<%= t("myplaceonline.menu.home") %>"><%= image_tag "myplaceonlinelogo.gif" %></a>&nbsp;<a class="headerlink" href="<%= html_escape(request.fullpath) %>" style="color: black"><%= yield(:heading).presence || t('myplaceonline.siteTitle') %></a></h1>
     <%# We give a unique id to each popup because the menu may be different. %>
     <a href="#menuPopup<%= request.uuid %>" data-icon="bars" class="ui-btn-right" data-rel="popup" data-iconpos="notext" title="<%= t("myplaceonline.menu.name") %>"><%= t("myplaceonline.menu.name") %></a>
   </div>

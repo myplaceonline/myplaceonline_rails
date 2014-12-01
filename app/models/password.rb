@@ -25,6 +25,10 @@ class Password < ActiveRecord::Base
       if prefertls && result.start_with?("http:")
         result = "https" + result[4..-1]
       end
+      
+      if (/^[^:]+:.*/ =~ result).nil?
+        result = (prefertls ? "https://" : "http://") + result
+      end
     end
     result
   end
