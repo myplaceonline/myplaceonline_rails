@@ -80,5 +80,5 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
   
-  config.require_invite_code = ENV["REQUIRE_INVITE_CODE"].nil? ? true : ENV["REQUIRE_INVITE_CODE"].to_bool
+  config.require_invite_code = ENV["REQUIRE_INVITE_CODE"].nil? ? true : (ENV["REQUIRE_INVITE_CODE"].eql? "true")
 end
