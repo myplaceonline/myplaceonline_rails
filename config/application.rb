@@ -24,7 +24,7 @@ module Myplaceonline
 
     config.autoload_paths += %W(#{config.root}/lib)
     
-    config.require_invite_code = ENV["REQUIRE_INVITE_CODE"].nil? ? false : ENV["REQUIRE_INVITE_CODE"].to_bool
+    config.require_invite_code = ENV["REQUIRE_INVITE_CODE"].nil? ? false : (ENV["REQUIRE_INVITE_CODE"].eql? "true")
     
     config.invite_code = ENV["INVITE_CODE"].nil? ? "invitecode" : ENV["INVITE_CODE"]
   end
