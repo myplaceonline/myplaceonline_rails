@@ -1,9 +1,12 @@
 module Myp
   @categories = Hash.new
-  @categories[:order] = Category.find_by(:name => :order)
-  @categories[:joy] = Category.find_by(:name => :joy)
-  @categories[:meaning] = Category.find_by(:name => :meaning)
-  @categories[:passwords] = Category.find_by(:name => :passwords)
+  
+  if defined?(Rails::Server)
+    @categories[:order] = Category.find_by(:name => :order)
+    @categories[:joy] = Category.find_by(:name => :joy)
+    @categories[:meaning] = Category.find_by(:name => :meaning)
+    @categories[:passwords] = Category.find_by(:name => :passwords)
+  end
   
   # Return a list of CategoryForIdentity objects.
   # Assumes user is logged in.
