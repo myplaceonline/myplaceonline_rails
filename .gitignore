@@ -33,3 +33,4 @@ config/database.yml
 *swp
 
 /storage
+/public/assets/
