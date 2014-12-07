@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   check_authorization
   
   rescue_from Myp::DecryptionKeyUnavailableError do |exception|
-    redirect_to Myp.getReentryURL(request)
+    redirect_to Myp.reentry_url(request)
   end
   
   rescue_from CanCan::AccessDenied do |exception|

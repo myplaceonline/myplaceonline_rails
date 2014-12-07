@@ -15,7 +15,7 @@ class Password < ActiveRecord::Base
     if !is_encrypted_password
       password
     else
-      Myp.decryptFromSession(session, encrypted_password)
+      Myp.decrypt_from_session(session, encrypted_password)
     end
   end
   

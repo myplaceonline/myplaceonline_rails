@@ -77,8 +77,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
       resource_updated = update_resource(resource, account_update_params)
       yield resource if block_given?
       if resource_updated
-        Myp.passwordChanged(self.resource, current_password, new_password)
-        Myp.rememberPassword(session, new_password)
+        Myp.password_changed(self.resource, current_password, new_password)
+        Myp.remember_password(session, new_password)
         if is_flashing_format?
           flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
             :update_needs_confirmation : :updated
@@ -95,7 +95,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
   def resetpoints
     if request.post?
-      Myp.resetPoints(current_user)
+      Myp.reset_points(current_user)
       redirect_to edit_user_registration_path,
         :flash => { :notice => I18n.t("myplaceonline.users.resetpointssuccess") }
     else
@@ -126,7 +126,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
             destroyed = Password.destroy_all(identity: current_user.primary_identity)
             count = destroyed.length
             if count > 0
-              Myp.modifyPoints(current_user, :passwords, -1 * count)
+              Myp.modify_points(current_user, :passwords, -1 * count)
             end
           end
         else

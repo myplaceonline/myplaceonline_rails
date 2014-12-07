@@ -6,7 +6,7 @@ class ApiController < ApplicationController
   
   def categories
     respond_to do |format|
-      format.json { render json: Myp.categoriesForCurrentUser(current_user, nil, true)}
+      format.json { render json: Myp.categories_for_current_user(current_user, nil, true)}
     end
   end
 end

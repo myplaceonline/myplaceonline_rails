@@ -1,7 +1,7 @@
 module Myp
   @categories = Hash.new
   
-  def self.isWebServer?
+  def self.is_web_server?
     defined?(Rails::Server) || defined?(::PhusionPassenger)
   end
   
@@ -11,7 +11,7 @@ module Myp
   # If parent is nil, search for all categories.
   # If parent is -1, search for all root categories.
   # Parent is is >= 0, search for all categories with a particular parent.
-  def self.categoriesForCurrentUser(user, parent = nil, orderByName = false)
+  def self.categories_for_current_user(user, parent = nil, orderByName = false)
     # We want a set of categories, left outer joined with points for each of
     # those for the current user, if available.
     #
@@ -66,7 +66,7 @@ module Myp
     }
   end
   
-  def self.usefulCategories(user)
+  def self.useful_categories(user)
     CategoryPointsAmount.find_by_sql(%{
       (
         SELECT category_points_amounts.*, categories.name as category_name, categories.link as category_link
@@ -111,27 +111,27 @@ module Myp
     @categories
   end
 
-  def self.rememberPassword(session, password)
+  def self.remember_password(session, password)
     session[:password] = password
   end
   
-  def self.ensureEncryptionKey(session)
+  def self.ensure_encryption_key(session)
     if !session.has_key?(:password)
       raise Myp::DecryptionKeyUnavailableError
     end
   end
   
-  def self.encryptFromSession(user, session, message)
-    self.ensureEncryptionKey(session)
+  def self.encrypt_from_session(user, session, message)
+    self.ensure_encryption_key(session)
     self.encrypt(user, message, session[:password])
   end
   
   def self.encrypt(user, message, key)
     result = EncryptedValue.new
-    self.encryptValue(user, message, key, result)
+    self.encrypt_value(user, message, key, result)
   end
   
-  def self.encryptValue(user, message, key, value)
+  def self.encrypt_value(user, message, key, value)
     value.encryption_type = 1
     value.user = user
     value.salt = SecureRandom.random_bytes(64)
@@ -141,8 +141,8 @@ module Myp
     value
   end
   
-  def self.decryptFromSession(session, encrypted_value)
-    self.ensureEncryptionKey(session)
+  def self.decrypt_from_session(session, encrypted_value)
+    self.ensure_encryption_key(session)
     self.decrypt(encrypted_value, session[:password])
   end
   
@@ -153,12 +153,12 @@ module Myp
     crypt.decrypt_and_verify(encrypted_value.val)
   end
   
-  def self.passwordChanged(user, old_password, new_password)
+  def self.password_changed(user, old_password, new_password)
     if !old_password.eql?(new_password)
       ActiveRecord::Base.transaction do
         EncryptedValue.where(user: user).each do |encrypted_value|
           decrypted = self.decrypt(encrypted_value, old_password)
-          self.encryptValue(user, decrypted, new_password, encrypted_value)
+          self.encrypt_value(user, decrypted, new_password, encrypted_value)
           encrypted_value.save!
         end
       end
@@ -178,15 +178,15 @@ module Myp
     cpa.save
   end
   
-  def self.addPoint(user, categoryName)
-    self.modifyPoints(user, categoryName, 1)
+  def self.add_point(user, categoryName)
+    self.modify_points(user, categoryName, 1)
   end
   
-  def self.subtractPoint(user, categoryName)
-    self.modifyPoints(user, categoryName, -1)
+  def self.subtract_point(user, categoryName)
+    self.modify_points(user, categoryName, -1)
   end
   
-  def self.modifyPoints(user, categoryName, amount)
+  def self.modify_points(user, categoryName, amount)
     ActiveRecord::Base.transaction do
       if user.primary_identity.points.nil?
         user.primary_identity.points = 0
@@ -217,7 +217,7 @@ module Myp
     end
   end
   
-  def self.resetPoints(user)
+  def self.reset_points(user)
     ActiveRecord::Base.transaction do
       user.primary_identity.points = 0
       user.primary_identity.save
@@ -226,16 +226,16 @@ module Myp
     end
   end
   
-  def self.getReentryURL(request)
+  def self.reentry_url(request)
     "/users/reenter?redirect=" + URI.encode(request.path)
   end
   
-  def self.getErrorDetails(error)
+  def self.error_details(error)
     error.inspect + "\n\t" + error.backtrace.join("\n\t")
   end
   
-  def self.logError(logger, error)
-    logger.error(self.getErrorDetails(error))
+  def self.log_error(logger, error)
+    logger.error(self.error_details(error))
   end
   
   class DecryptionKeyUnavailableError < StandardError; end

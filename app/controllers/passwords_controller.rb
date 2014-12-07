@@ -34,7 +34,7 @@ class PasswordsController < ApplicationController
       end
       
       if @password.save
-        Myp.addPoint(current_user, :passwords)
+        Myp.add_point(current_user, :passwords)
         redirect_to @password
       else
         render :new
@@ -89,7 +89,7 @@ class PasswordsController < ApplicationController
     authorize! :manage, @password
     ActiveRecord::Base.transaction do
       @password.destroy
-      Myp.subtractPoint(current_user, :passwords)
+      Myp.subtract_point(current_user, :passwords)
     end
 
     redirect_to passwords_path
@@ -111,7 +111,7 @@ class PasswordsController < ApplicationController
             identity_file.identity = current_user.primary_identity
             identity_file.file = file
             if !@password.to_s.empty?
-              identity_file.encrypted_password = Myp.encryptFromSession(current_user, session, @password)
+              identity_file.encrypted_password = Myp.encrypt_from_session(current_user, session, @password)
             end
             identity_file.save!
             
@@ -121,9 +121,9 @@ class PasswordsController < ApplicationController
             @url = passwords_import_odf1_path(identity_file.id)
           end
         rescue Myp::DecryptionKeyUnavailableError
-          @url = Myp.getReentryURL(request)
+          @url = Myp.reentry_url(request)
         rescue StandardError => error
-          Myp.logError(logger, error)
+          Myp.log_error(logger, error)
           @error = error.to_s
         end
       else
@@ -200,7 +200,7 @@ class PasswordsController < ApplicationController
               password.password = s.cell(i, colindices[:password_column]).to_s
               if @encrypt
                 password.is_encrypted_password = true
-                password.encrypted_password = Myp.encryptFromSession(current_user, session, password.password)
+                password.encrypted_password = Myp.encrypt_from_session(current_user, session, password.password)
                 password.password = nil
               end
 
@@ -239,7 +239,7 @@ class PasswordsController < ApplicationController
               addSecret(s, i, password, @encrypt, colindices, :secret_question_4_column, :secret_answer_4_column)
               addSecret(s, i, password, @encrypt, colindices, :secret_question_5_column, :secret_answer_5_column)
               
-              Myp.addPoint(current_user, :passwords)
+              Myp.add_point(current_user, :passwords)
             end
           end
           redirect_to passwords_path, :flash => { :notice => I18n.t("myplaceonline.passwords.imported_count", :count => imported_count) }
@@ -281,7 +281,7 @@ class PasswordsController < ApplicationController
         if !secret.question.empty?
           if encrypt
             secret.is_encrypted_answer = true
-            secret.encrypted_answer = Myp.encryptFromSession(current_user, session, secret.answer)
+            secret.encrypted_answer = Myp.encrypt_from_session(current_user, session, secret.answer)
             secret.answer = nil
           end
           secret.save!
@@ -291,7 +291,7 @@ class PasswordsController < ApplicationController
     
     def encryptIfNeeded(password)
       if password.is_encrypted_password
-        encrypted_value = Myp.encryptFromSession(current_user, session, password.password)
+        encrypted_value = Myp.encrypt_from_session(current_user, session, password.password)
         if encrypted_value.save
           password.encrypted_password = encrypted_value
           password.password = nil
