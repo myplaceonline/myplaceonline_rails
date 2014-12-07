@@ -261,7 +261,7 @@ class PasswordsController < ApplicationController
     end
 
     def findPassword
-      return Password.find_by(id: params[:id], identity_id: current_user.primary_identity.id)
+      Password.find_by(id: params[:id], identity_id: current_user.primary_identity.id)
     end
     
     def getPlus1(array, name)
@@ -300,6 +300,6 @@ class PasswordsController < ApplicationController
           return false
         end
       end
-      return true
+      true
     end
 end

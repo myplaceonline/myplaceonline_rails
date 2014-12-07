@@ -13,9 +13,9 @@ class Password < ActiveRecord::Base
   
   def getPassword(session)
     if !is_encrypted_password
-      return password
+      password
     else
-      return Myp.decryptFromSession(session, encrypted_password)
+      Myp.decryptFromSession(session, encrypted_password)
     end
   end
   

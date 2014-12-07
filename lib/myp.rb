@@ -108,7 +108,7 @@ module Myp
   end
 
   def self.categories
-    return @categories
+    @categories
   end
 
   def self.rememberPassword(session, password)
@@ -123,12 +123,12 @@ module Myp
   
   def self.encryptFromSession(user, session, message)
     self.ensureEncryptionKey(session)
-    return self.encrypt(user, message, session[:password])
+    self.encrypt(user, message, session[:password])
   end
   
   def self.encrypt(user, message, key)
     result = EncryptedValue.new
-    return self.encryptValue(user, message, key, result)
+    self.encryptValue(user, message, key, result)
   end
   
   def self.encryptValue(user, message, key, value)
@@ -138,19 +138,19 @@ module Myp
     generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(value.salt)
     crypt = ActiveSupport::MessageEncryptor.new(generated_key)
     value.val = crypt.encrypt_and_sign(message)
-    return value
+    value
   end
   
   def self.decryptFromSession(session, encrypted_value)
     self.ensureEncryptionKey(session)
-    return self.decrypt(encrypted_value, session[:password])
+    self.decrypt(encrypted_value, session[:password])
   end
   
   def self.decrypt(encrypted_value, key)
     generated_key = ActiveSupport::KeyGenerator.new(key)
             .generate_key(encrypted_value.salt)
     crypt = ActiveSupport::MessageEncryptor.new(generated_key)
-    return crypt.decrypt_and_verify(encrypted_value.val)
+    crypt.decrypt_and_verify(encrypted_value.val)
   end
   
   def self.passwordChanged(user, old_password, new_password)
@@ -231,7 +231,7 @@ module Myp
   end
   
   def self.getErrorDetails(error)
-    return error.inspect + "\n\t" + error.backtrace.join("\n\t")
+    error.inspect + "\n\t" + error.backtrace.join("\n\t")
   end
   
   def self.logError(logger, error)
