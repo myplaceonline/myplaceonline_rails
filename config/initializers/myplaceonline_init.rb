@@ -5,3 +5,10 @@ class String
     raise ArgumentError.new("invalid value for Boolean: \"#{self}\"")
   end
 end
+
+if Myp.isWebServer?
+  Myp.categories[:order] = Category.find_by(:name => :order)
+  Myp.categories[:joy] = Category.find_by(:name => :joy)
+  Myp.categories[:meaning] = Category.find_by(:name => :meaning)
+  Myp.categories[:passwords] = Category.find_by(:name => :passwords)
+end

@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   post 'passwords/new'
   get 'passwords', :to => 'passwords#index'
 
-  if defined?(Rails::Server)
+  if Myp.isWebServer?
     devise_scope :user do
       match 'users/reenter', :to => 'users/sessions#reenter', via: [:get, :post]
       post 'users/sign_up', :to => 'users/registrations#new'
