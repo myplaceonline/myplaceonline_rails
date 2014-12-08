@@ -1,4 +1,6 @@
 language: ruby
+
+# http://docs.travis-ci.com/user/ci-environment/#Ruby-%28aka-common%29-VM-images
 rvm:
   - 1.9.3
 
@@ -6,7 +8,7 @@ before_script:
   - cp config/database.yml.travis config/database.yml
 
 script: 
-  - RAILS_ENV=test bundle exec rake db:setup test
+  - RAILS_ENV=test bundle exec rake --trace db:setup test
 
 after_failure:
   - psql -U postgres -d myplaceonline_test -c "\\dt"
