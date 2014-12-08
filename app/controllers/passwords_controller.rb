@@ -160,7 +160,7 @@ class PasswordsController < ApplicationController
     ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
     if !ifile.nil?
       authorize! :manage, ifile
-      s = Roo::OpenOffice.new(ifile, :file_warning => :ignore, :password => ifile.getPassword(session), :file_warning => :ignore)
+      s = Roo::OpenOffice.new(ifile.file.to_file.path, :password => ifile.getPassword(session), :file_warning => :ignore)
       @sheet = params[:sheet]
       s.default_sheet = s.sheets[s.sheets.index(@sheet)]
       @columns = Array.new
