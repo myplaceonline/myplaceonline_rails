@@ -8,3 +8,6 @@ before_script:
 
 script: 
   - RAILS_ENV=test bundle exec rake db:setup test
+
+after_failure:
+  - psql -U postgres -d myplaceonline_test -c "\\dt"
