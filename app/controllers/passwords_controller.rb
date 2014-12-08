@@ -193,6 +193,7 @@ class PasswordsController < ApplicationController
       if !colindices[:password_column].nil?
         if !colindices[:service_name_column].nil?
           ActiveRecord::Base.transaction do
+            points = 0
             for i in (s.first_row + 1)..last_row
               password = Password.new
               password.identity_id = current_user.primary_identity.id
@@ -239,9 +240,10 @@ class PasswordsController < ApplicationController
               addSecret(s, i, password, @encrypt, colindices, :secret_question_4_column, :secret_answer_4_column)
               addSecret(s, i, password, @encrypt, colindices, :secret_question_5_column, :secret_answer_5_column)
               
-              Myp.add_point(current_user, :passwords)
+              points = points + 1
             end
           end
+          Myp.modify_points(current_user, :passwords, points)
           redirect_to passwords_path, :flash => { :notice => I18n.t("myplaceonline.passwords.imported_count", :count => imported_count) }
         else
           flash[:error] = t("myplaceonline.passwords.service_name_col_required")
