@@ -116,7 +116,7 @@ class PasswordsController < ApplicationController
             identity_file.save!
             
             # Try to read the file
-            s = Roo::OpenOffice.new(identity_file.file.path, :password => @password)
+            s = Roo::OpenOffice.new(identity_file.file.to_file.path, :password => @password, :file_warning => :ignore)
             
             @url = passwords_import_odf1_path(identity_file.id)
           end
@@ -136,7 +136,7 @@ class PasswordsController < ApplicationController
     ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
     if !ifile.nil?
       authorize! :manage, ifile
-      s = Roo::OpenOffice.new(ifile.file.path, :password => ifile.getPassword(session))
+      s = Roo::OpenOffice.new(ifile.file.to_file.path, :password => ifile.getPassword(session), :file_warning => :ignore)
       @sheets = s.sheets
     end
   end
@@ -146,7 +146,7 @@ class PasswordsController < ApplicationController
     if !ifile.nil?
       authorize! :manage, ifile
       @encrypt = current_user.encrypt_by_default
-      s = Roo::OpenOffice.new(ifile.file.path, :password => ifile.getPassword(session))
+      s = Roo::OpenOffice.new(ifile.file.to_file.path, :password => ifile.getPassword(session), :file_warning => :ignore)
       @sheet = params[:sheet]
       s.default_sheet = s.sheets[s.sheets.index(@sheet)]
       @columns = Array.new
@@ -160,7 +160,7 @@ class PasswordsController < ApplicationController
     ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
     if !ifile.nil?
       authorize! :manage, ifile
-      s = Roo::OpenOffice.new(ifile.file.path, :password => ifile.getPassword(session))
+      s = Roo::OpenOffice.new(ifile, :file_warning => :ignore, :password => ifile.getPassword(session), :file_warning => :ignore)
       @sheet = params[:sheet]
       s.default_sheet = s.sheets[s.sheets.index(@sheet)]
       @columns = Array.new

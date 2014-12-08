@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141129185520) do
+ActiveRecord::Schema.define(version: 20141208054944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,12 @@ ActiveRecord::Schema.define(version: 20141129185520) do
   end
 
   add_index "encrypted_values", ["user_id"], name: "index_encrypted_values_on_user_id", using: :btree
+
+  create_table "files", force: true do |t|
+    t.integer "identity_file_id"
+    t.string  "style"
+    t.binary  "file_contents"
+  end
 
   create_table "identities", force: true do |t|
     t.integer  "owner_id"
