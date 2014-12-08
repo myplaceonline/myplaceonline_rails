@@ -166,6 +166,7 @@ DEPENDENCIES
   paperclip
   pg
   rails (~> 4.1.8)
+  rake (~> 10.4.2)
   remotipart
   roo!
   rubyzip
