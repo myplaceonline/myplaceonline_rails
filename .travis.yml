@@ -1,7 +1,6 @@
 language: ruby
 rvm:
-  - ruby-head
-  - jruby-head
+  - 1.9.3
 
 before_script:
   - psql -U postgres -c 'create database myplaceonline_test'
