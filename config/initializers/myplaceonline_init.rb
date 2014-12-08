@@ -6,7 +6,7 @@ class String
   end
 end
 
-if Myp.is_web_server?
+if Myp.is_web_server? || Rails.env.test?
   Myp.categories[:order] = Category.find_by(:name => :order)
   Myp.categories[:joy] = Category.find_by(:name => :joy)
   Myp.categories[:meaning] = Category.find_by(:name => :meaning)

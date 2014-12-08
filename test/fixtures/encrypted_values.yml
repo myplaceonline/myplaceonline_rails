@@ -1,11 +1,2 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  val: MyString
-  salt: 
-  user_id: 
-
-two:
-  val: MyString
-  salt: 
-  user_id: 
