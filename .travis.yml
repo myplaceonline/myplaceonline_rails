@@ -3,6 +3,7 @@ rvm:
   - 1.9.3
 
 before_script:
+  - cp config/database.yml.travis config/database.yml
   - psql -U postgres -c 'create database myplaceonline_test'
 
 script: 
