@@ -8,8 +8,8 @@ before_script:
   - cp config/database.yml.travis config/database.yml
 
 script: 
-  - RAILS_ENV=test bundle exec rake --trace db:setup
-  - RAILS_ENV=test bundle exec rake --trace test
+  - RAILS_ENV=test bundle exec rake db:setup
+  - RAILS_ENV=test bundle exec rake test
 
 after_failure:
   - psql -U postgres -d myplaceonline_test -c "\\dt"
