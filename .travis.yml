@@ -7,7 +7,9 @@ before_script:
   - psql -U postgres -c 'create database myplaceonline_test'
 
 script: 
-  - RAILS_ENV=test bundle exec rake db:setup test
+  - RAILS_ENV=test bundle exec rake db:setup
+  - psql -U postgres -d myplaceonline_test -c "\\dt"
+  - RAILS_ENV=test bundle exec rake test
 
 after_failure:
   - psql -U postgres -d myplaceonline_test -c "\\dt"

@@ -3,7 +3,6 @@ default: &default
   encoding: unicode
   pool: 5
   database: myplaceonline_<%= Rails.env %>
-  host: localhost
   username: postgres
 
 development:
