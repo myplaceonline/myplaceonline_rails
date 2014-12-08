@@ -2,3 +2,9 @@ language: ruby
 rvm:
   - ruby-head
   - jruby-head
+
+before_script:
+  - psql -U postgres -c 'create database myplaceonline_test'
+
+script: 
+  - RAILS_ENV=test bundle exec rake db:setup test
