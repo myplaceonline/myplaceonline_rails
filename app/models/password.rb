@@ -6,7 +6,7 @@ class Password < ActiveRecord::Base
   validates :name, presence: true
   
   validates_each :password do |record, attr, value|
-    if (value.nil? || value.length == 0) && record.encrypted_password.nil?
+    if (value.nil?) && record.encrypted_password.nil?
       record.errors.add attr, I18n.t("errors.messages.blank")
     end
   end
