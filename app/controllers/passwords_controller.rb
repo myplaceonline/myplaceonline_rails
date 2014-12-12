@@ -242,8 +242,8 @@ class PasswordsController < ApplicationController
               
               points = points + 1
             end
+            Myp.modify_points(current_user, :passwords, points)
           end
-          Myp.modify_points(current_user, :passwords, points)
           redirect_to passwords_path, :flash => { :notice => I18n.t("myplaceonline.passwords.imported_count", :count => imported_count) }
         else
           flash[:error] = t("myplaceonline.passwords.service_name_col_required")
