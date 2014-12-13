@@ -43,6 +43,17 @@
     <%= f.label :notes, class: "ui-hidden-accessible" %>
     <%= f.text_area :notes, placeholder: t("myplaceonline.passwords.notes") %>
   </p>
+  
+  <% @password.password_secrets.each do |secret| %>
+    <%= f.fields_for :password_secrets, secret do |secret_fields| %>
+      <p>
+        <%= secret_fields.text_field :question, placeholder: t("myplaceonline.passwords.question") %>
+      </p>
+      <p>
+        <%= secret_fields.text_field :answer, placeholder: t("myplaceonline.passwords.answer") %>
+      </p>
+    <% end %>
+  <% end %>
 
   <p>
     <%= f.submit %>

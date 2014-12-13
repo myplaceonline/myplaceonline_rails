@@ -101,6 +101,8 @@ en:
       url: "Website"
       notes: "Notes"
       account_number: "Account Number"
+      question: "Question"
+      answer: "Answer"
     users:
       invite: "Invite Code"
       invite_invalid: "invalid"
