@@ -5,9 +5,15 @@ class PasswordsController < ApplicationController
   
   def index
     Myp.visit(current_user, :passwords)
+    @count = Password.where(
+      identity_id: current_user.primary_identity.id
+    ).count
+    @offset = 0
+    @perpage = @count
     @passwords = Password.where(
       identity_id: current_user.primary_identity.id
-    ).order("lower(passwords.name) ASC", "lower(passwords.user) ASC")
+    ).offset(@offset).limit(@perpage)
+     .order("lower(passwords.name) ASC", "lower(passwords.user) ASC")
   end
   
   def new

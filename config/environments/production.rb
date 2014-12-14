@@ -78,7 +78,7 @@ Rails.application.configure do
   
   config.require_invite_code = ENV["REQUIRE_INVITE_CODE"].nil? ? true : (ENV["REQUIRE_INVITE_CODE"].eql? "true")
   
-  config.action_mailer.default_url_options = { :host => ENV["WEB_DOMAIN"] }
+  config.action_mailer.default_url_options = { :host => ENV["WEB_DOMAIN"], :protocol => ENV["WEB_PROTOCOL"] }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address              => 'smtp.mandrillapp.com',
