@@ -42,6 +42,7 @@ en:
       register: "Register"
       import: "Import"
       odfspreadsheet: "OpenOffice, LibreOffice (.ods)"
+      previous: "Previous"
       next: "Next"
       save: "Save"
       clipboard: "Copy to Clipboard"

@@ -9,6 +9,9 @@ class PasswordsController < ApplicationController
       identity_id: current_user.primary_identity.id
     ).count
     @offset = params[:offset].nil? ? 0 : params[:offset].to_i
+    if @offset < 0
+      @offset = 0
+    end
     @perpage = params[:perpage].nil? ? 10 : params[:perpage].to_i
     if @perpage <= 0
       @perpage = @count
