@@ -1,0 +1,14 @@
+<% content_for :heading do -%><%= t("myplaceonline.users.export") %><% end -%>
+<h1><%= t("myplaceonline.users.export") %></h1>
+
+<%= flashes! %>
+
+<p><%= t("myplaceonline.users.exportdescription") %></p>
+
+<%= form_tag do %>
+  <p>
+    <%= check_box_tag :encrypt, 1, @encrypt %>
+    <%= label_tag :encrypt, t("myplaceonline.general.encrypt") %>
+  </p>
+  <div><%= submit_tag t("myplaceonline.users.export") %></div>
+<% end %>

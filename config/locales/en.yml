@@ -46,6 +46,7 @@ en:
       next: "Next"
       save: "Save"
       clipboard: "Copy to Clipboard"
+      encrypt: "Encrypt"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
@@ -130,6 +131,8 @@ en:
       security_settings_saved: "Security settings saved."
       encrypt_by_default: "Encrypt By Default"
       encrypt_warning: "Warning: If using encryption and you lose your password, you cannot decrypt the value."
+      export: "Export"
+      exportdescription: "This utility exports all of your data into a JavaScript Object Notation (JSON) downloadable file."
     import:
       password: "Password (if any)"
       nofile: "No file selected"
