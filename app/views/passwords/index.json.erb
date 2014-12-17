@@ -1,0 +1,8 @@
+<%=
+@passwords.map { |password|
+  {
+    :title => password.display,
+    :link => url_for(password)
+  }
+}.to_json.html_safe
+%>

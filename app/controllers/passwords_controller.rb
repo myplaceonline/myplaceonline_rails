@@ -8,8 +8,11 @@ class PasswordsController < ApplicationController
     @count = Password.where(
       identity_id: current_user.primary_identity.id
     ).count
-    @offset = 0
-    @perpage = @count
+    @offset = params[:offset].nil? ? 0 : params[:offset].to_i
+    @perpage = params[:perpage].nil? ? 10 : params[:perpage].to_i
+    if @perpage <= 0
+      @perpage = @count
+    end
     @passwords = Password.where(
       identity_id: current_user.primary_identity.id
     ).offset(@offset).limit(@perpage)
@@ -34,7 +37,7 @@ class PasswordsController < ApplicationController
       # Only bother checking encryption if the password is valid
       # (i.e. the save will fail)
       if @password.valid?
-        if !encryptIfNeeded(@password)
+        if !encrypt_if_needed(@password)
           return render :new
         end
       end
@@ -49,20 +52,20 @@ class PasswordsController < ApplicationController
   end
   
   def show
-    @password = findPassword
+    @password = find_password
     authorize! :manage, @password
     @displaypassword = @password.getPassword(session)
   end
   
   def edit
-    @password = findPassword
+    @password = find_password
     authorize! :manage, @password
     @password.password = @password.getPassword(session)
     @url = @password
   end
   
   def update
-    @password = findPassword
+    @password = find_password
     authorize! :manage, @password
 
     ActiveRecord::Base.transaction do
@@ -77,7 +80,7 @@ class PasswordsController < ApplicationController
         if !@password.is_encrypted_password && !@password.encrypted_password.nil?
           @password.encrypted_password.destroy
         end
-        if !encryptIfNeeded(@password)
+        if !encrypt_if_needed(@password)
           return render :edit
         end
       end
@@ -91,7 +94,7 @@ class PasswordsController < ApplicationController
   end
   
   def destroy
-    @password = findPassword
+    @password = find_password
     authorize! :manage, @password
     ActiveRecord::Base.transaction do
       @password.destroy
@@ -194,7 +197,7 @@ class PasswordsController < ApplicationController
                ]
       
       colindices = Hash.new
-      inputs.each { |col| colindices[col] = getPlus1(@columns, params[col]) }
+      inputs.each { |col| colindices[col] = get_plus1(@columns, params[col]) }
       
       if !colindices[:password_column].nil?
         if !colindices[:service_name_column].nil?
@@ -240,11 +243,11 @@ class PasswordsController < ApplicationController
               
               password.save!
 
-              addSecret(s, i, password, @encrypt, colindices, :secret_question_1_column, :secret_answer_1_column)
-              addSecret(s, i, password, @encrypt, colindices, :secret_question_2_column, :secret_answer_2_column)
-              addSecret(s, i, password, @encrypt, colindices, :secret_question_3_column, :secret_answer_3_column)
-              addSecret(s, i, password, @encrypt, colindices, :secret_question_4_column, :secret_answer_4_column)
-              addSecret(s, i, password, @encrypt, colindices, :secret_question_5_column, :secret_answer_5_column)
+              add_secret(s, i, password, @encrypt, colindices, :secret_question_1_column, :secret_answer_1_column)
+              add_secret(s, i, password, @encrypt, colindices, :secret_question_2_column, :secret_answer_2_column)
+              add_secret(s, i, password, @encrypt, colindices, :secret_question_3_column, :secret_answer_3_column)
+              add_secret(s, i, password, @encrypt, colindices, :secret_question_4_column, :secret_answer_4_column)
+              add_secret(s, i, password, @encrypt, colindices, :secret_question_5_column, :secret_answer_5_column)
               
               points = points + 1
             end
@@ -277,11 +280,11 @@ class PasswordsController < ApplicationController
       )
     end
 
-    def findPassword
+    def find_password
       Password.find_by(id: params[:id], identity_id: current_user.primary_identity.id)
     end
     
-    def getPlus1(array, name)
+    def get_plus1(array, name)
       result = array.index(name)
       if !result.nil?
         result += 1
@@ -289,7 +292,7 @@ class PasswordsController < ApplicationController
       result
     end
     
-    def addSecret(s, i, password, encrypt, colindices, question_col, answer_col)
+    def add_secret(s, i, password, encrypt, colindices, question_col, answer_col)
       if !colindices[question_col].nil? && !colindices[answer_col].nil?
         secret = PasswordSecret.new
         secret.password = password
@@ -306,7 +309,7 @@ class PasswordsController < ApplicationController
       end
     end
     
-    def encryptIfNeeded(password)
+    def encrypt_if_needed(password)
       if password.is_encrypted_password
         encrypted_value = Myp.encrypt_from_session(current_user, session, password.password)
         if encrypted_value.save

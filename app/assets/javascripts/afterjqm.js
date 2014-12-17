@@ -25,26 +25,6 @@ function onPageLoad(func) {
   $(document).one("pagecontainershow", $.mobile.pageContainer, func);
 }
 
-function jqmSetListMessage(list, message) {
-  list.html("<li>" + message + "</li>");
-  list.listview("refresh");
-  list.trigger("updatelayout");
-}
-
-/* items: [{title: String, link: String, count: Integer}, ...] */
-function jqmSetList(list, items, header) {
-  var html = "";
-  if (header) {
-    html += "<li data-role='list-divider'>" + header + "</li>";
-  }
-  $.each(items, function (i, x) {
-    html += "<li><a href='" + x.link + "'>" + x.title + " <span class='ui-li-count'>" + x.count + "</span></a></li>";
-  });
-  list.html(html);
-  list.listview("refresh");
-  list.trigger("updatelayout");
-}
-
 function navigate(url, skipAjax) {
   if ($.mobile.ajaxEnabled && !skipAjax) {
     $.mobile.pageContainer.pagecontainer("change", url, {
@@ -88,5 +68,64 @@ function ensureClipboard(objects) {
     clipboard.on( "aftercopy", function(event) {
       createSuccessNotification("Copied to clipboard.");
     });
+  });
+}
+
+function jqmSetListMessage(list, message) {
+  list.html("<li>" + message + "</li>");
+  list.listview("refresh");
+  list.trigger("updatelayout");
+}
+
+/* items: [{title: String, link: String, count: Integer}, ...] */
+function jqmSetList(list, items, header) {
+  var html = "";
+  if (header) {
+    html += "<li data-role='list-divider'>" + header + "</li>";
+  }
+  $.each(items, function (i, x) {
+    if (x.count) {
+      html += "<li><a href='" + x.link + "'>" + x.title + " <span class='ui-li-count'>" + x.count + "</span></a></li>";
+    } else {
+      html += "<li><a href='" + x.link + "'>" + x.title + "</a></li>";
+    }
+  });
+  list.html(html);
+  list.listview("refresh");
+  list.trigger("updatelayout");
+}
+
+// http://view.jquerymobile.com/master/demos/listview-autocomplete-remote/
+function hookListviewSearch(list, url) {
+  list.on("listviewbeforefilter", function(e, data) {
+    var $ul = $(this);
+    var $input = $(data.input);
+    var value = $input.val();
+    if (value && value.length > 0 && !$ul[0].allLoaded) {
+      jqmSetListMessage($ul, "Loading...");
+      $.ajax({
+        url: url,
+        dataType: "json",
+        context: $ul
+      }).done(function(data, textStatus, jqXHR) {
+        jqmSetList(this, $(data));
+        this[0].allLoaded = true;
+      }).fail(function(jqXHR, textStatus, errorThrown) {
+        jqmSetListMessage(this, "Error, please try again.");
+      });
+    }
+  });
+}
+
+function hookListviewEnter(listInput, listIdentifier) {
+  listInput.keyup(function(e) {
+    if (e.which == 13) {
+      var searchList = $(listIdentifier + " li:not(.ui-screen-hidden)");
+      if (searchList.size() > 0) {
+        e.preventDefault();
+        navigate(searchList.filter(":first").children("a").attr("href"));
+      }
+    }
+    return true;
   });
 }

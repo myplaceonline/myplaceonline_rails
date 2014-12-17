@@ -8,40 +8,14 @@ onPageLoad(function() {
 
   var search = $("#myplaceonline_search_list");
 
-  // http://view.jquerymobile.com/master/demos/listview-autocomplete-remote/
-  search.on("listviewbeforefilter", function(e, data) {
-    var $ul = $(this);
-    var $input = $(data.input);
-    var value = $input.val();
-    if (value && value.length > 0) {
-      jqmSetListMessage($ul, "Loading...");
-      $.ajax({
-        url: "/api/categories.json",
-        dataType: "json",
-        context: $ul
-      }).done(function(data, textStatus, jqXHR) {
-        jqmSetList(this, $(data));
-      }).fail(function(jqXHR, textStatus, errorThrown) {
-        jqmSetListMessage($ul, "Error, please try again.");
-      });
-    }
-  });
+  hookListviewSearch(search, "/api/categories.json");
 
   var list = <%= raw(initialCategoryList) %>;
   jqmSetList(search, list);
   
   var input = $("#myplaceonline_search_container input");
   
-  input.keyup(function(e) {
-    if(e.which == 13) {
-      var searchList = $("#myplaceonline_search_list li:not(.ui-screen-hidden)");
-      if (searchList.size() > 0) {
-        e.preventDefault();
-        navigate(searchList.filter(":first").children("a").attr("href"));
-      }
-    }
-    return true;
-  });
+  hookListviewEnter(input, "#myplaceonline_search_list");
 
   input.focus();
   

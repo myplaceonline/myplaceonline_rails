@@ -13,13 +13,9 @@ else
   <ul class="searchable" data-role="listview" data-inset="true" data-filter="true">
 <%
     @passwords.each do |password|
-      name = password.name
-      if !password.user.to_s.empty?
-        name += " (" + password.user + ")"
-      end
 %>
       <li>
-        <%= link_to name, password %>
+        <%= link_to password.display, password %>
       </li>
 <%
     end
@@ -33,18 +29,11 @@ end
 <script type="text/javascript">
 onPageLoad(function() {
 
+  hookListviewSearch($(".searchable"), "/passwords.json?perpage=0");
+  
   var input = $(".searchable_container input");
   
-  input.keyup(function(e) {
-    if(e.which == 13) {
-      var searchList = $(".searchable li:not(.ui-screen-hidden)");
-      if (searchList.size() > 0) {
-        e.preventDefault();
-        navigate(searchList.filter(":first").children("a").attr("href"));
-      }
-    }
-    return true;
-  });
+  hookListviewEnter(input, ".searchable");
 
   input.focus();
   

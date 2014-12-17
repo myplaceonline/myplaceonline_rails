@@ -33,4 +33,12 @@ class Password < ActiveRecord::Base
     end
     result
   end
+  
+  def display
+    result = name
+    if !user.to_s.empty?
+      result += " (" + user + ")"
+    end
+    result
+  end
 end
