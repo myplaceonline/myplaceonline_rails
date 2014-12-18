@@ -158,15 +158,23 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def export
+    # http://superuser.com/questions/633715/how-do-i-fix-warning-message-was-not-integrity-protected-when-using-gpg-symme
     @encrypt = current_user.encrypt_by_default
+    @download = nil
     if !params[:encrypt].nil?
       @encrypt = params[:encrypt] == "1"
     end
     if request.post?
-      render :export
-    else
-      render :export
+      @download = users_export_path(:download => "1", :encrypt => @encrypt ? "1" : "0")
+    elsif !params[:download].nil?
+      return send_data(
+        JSON.pretty_generate(current_user.as_json),
+        :type => :json,
+        :filename => "myplaceonline_export_" + DateTime.now.strftime("%Y%m%d-%H%M%S%z") + ".json",
+        :disposition => 'attachment'
+      )
     end
+    render :export
   end
 
   # POST /resource

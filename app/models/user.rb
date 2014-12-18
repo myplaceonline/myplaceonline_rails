@@ -34,4 +34,10 @@ class User < ActiveRecord::Base
   def total_points
     primary_identity.points.nil? ? 0 : primary_identity.points
   end
+  
+  def as_json(options={})
+    super.as_json(options).merge({
+      :primary_identity => primary_identity.as_json
+    })
+  end
 end

@@ -12,3 +12,14 @@
   </p>
   <div><%= submit_tag t("myplaceonline.users.export") %></div>
 <% end %>
+
+<% if @download %>
+
+<script type="text/javascript">
+onPageLoad(function() {
+  createSuccessNotification("Starting Download...");
+  window.location = '<%= @download %>';
+});
+</script>
+
+<% end %>
