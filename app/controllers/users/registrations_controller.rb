@@ -166,6 +166,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
     if request.post?
       @download = users_export_path(:download => "1", :encrypt => @encrypt ? "1" : "0")
+    elsif !params[:js].nil? && params[:js] == "true"
+      return render json: JSON.pretty_generate(current_user.as_json)
     elsif !params[:download].nil?
       return send_data(
         JSON.pretty_generate(current_user.as_json),

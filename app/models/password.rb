@@ -41,4 +41,10 @@ class Password < ActiveRecord::Base
     end
     result
   end
+  
+  def as_json(options={})
+    super.as_json(options).merge({
+      :password_secrets => password_secrets.to_a.map{|x| x.as_json}
+    })
+  end
 end

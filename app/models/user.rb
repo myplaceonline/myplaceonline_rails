@@ -5,7 +5,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable
 
-  belongs_to :primary_identity, class_name: Identity
+  belongs_to :primary_identity, class_name: Identity, :dependent => :destroy
+  
+  has_many :encrypted_values, :dependent => :destroy
   
   attr_accessor :invite_code
   
@@ -37,7 +39,8 @@ class User < ActiveRecord::Base
   
   def as_json(options={})
     super.as_json(options).merge({
-      :primary_identity => primary_identity.as_json
+      :primary_identity => primary_identity.as_json,
+      :encrypted_values => encrypted_values.to_a.map{|x| x.as_json}
     })
   end
 end
