@@ -158,23 +158,25 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   
   def export
-    # http://superuser.com/questions/633715/how-do-i-fix-warning-message-was-not-integrity-protected-when-using-gpg-symme
-    @encrypt = current_user.encrypt_by_default
-    @download = nil
-    if !params[:encrypt].nil?
-      @encrypt = params[:encrypt] == "1"
-    end
-    if request.post?
-      @download = users_export_path(:download => "1", :encrypt => @encrypt ? "1" : "0")
-    elsif !params[:js].nil? && params[:js] == "true"
-      return render json: JSON.pretty_generate(exported_json)
-    elsif !params[:download].nil?
-      return send_data(
-        JSON.pretty_generate(exported_json),
-        :type => :json,
-        :filename => "myplaceonline_export_" + DateTime.now.strftime("%Y%m%d-%H%M%S%z") + ".json",
-        :disposition => 'attachment'
-      )
+    if request.format == "text/javascript"
+      @jscontent = JSON.pretty_generate(exported_json)
+    else
+      # http://superuser.com/questions/633715/how-do-i-fix-warning-message-was-not-integrity-protected-when-using-gpg-symme
+      @encrypt = current_user.encrypt_by_default
+      @download = nil
+      if !params[:encrypt].nil?
+        @encrypt = params[:encrypt] == "1"
+      end
+      if request.post?
+        @download = users_export_path(:download => "1", :encrypt => @encrypt ? "1" : "0")
+      elsif !params[:download].nil?
+        return send_data(
+          JSON.pretty_generate(exported_json),
+          :type => :json,
+          :filename => "myplaceonline_export_" + DateTime.now.strftime("%Y%m%d-%H%M%S%z") + ".json",
+          :disposition => 'attachment'
+        )
+      end
     end
     render :export
   end

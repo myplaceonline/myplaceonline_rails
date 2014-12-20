@@ -72,9 +72,19 @@ function ensureClipboard(objects) {
 }
 
 function jqmSetListMessage(list, message) {
-  list.html("<li>" + message + "</li>");
+  list.html("<li data-role=\"visible\">" + message + "</li>");
   list.listview("refresh");
   list.trigger("updatelayout");
+}
+
+// Override the default filterCallback to always show list items with
+// data-role="visible" in addition to the default behavior
+$.mobile.filterable.prototype.options.filterCallback = function (index, searchValue) {
+  if ($.mobile.getAttribute( this, "role" ) == "visible") {
+    return false;
+  }
+  searchValue = searchValue.toLowerCase();
+  return ( ( "" + ( $.mobile.getAttribute( this, "filtertext" ) || $( this ).text() ) ).toLowerCase().indexOf( searchValue ) === -1 );
 }
 
 /* items: [{title: String, link: String, count: Integer}, ...] */
