@@ -15,8 +15,8 @@ Rails.application.routes.draw do
   get 'search/index'
   get 'search', :to => 'search#index'
 
-  get 'contact/index'
-  get 'contact', :to => 'contact#index'
+  get 'info/index'
+  get 'info', :to => 'info#index'
   
   get 'passwords/import'
   match 'passwords/import/odf', :to => 'passwords#importodf', via: [:get, :post]

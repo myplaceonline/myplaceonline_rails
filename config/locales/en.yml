@@ -67,8 +67,9 @@ en:
         passwords: "Manage passwords."
       search: "Search"
       recentlyused: "Recently Used"
-    contact:
-      title: "Contact"
+    info:
+      title: "Information"
+      apk: "Android APK"
     search:
       title: "Search"
       placeholder: "Search"

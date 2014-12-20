@@ -1,4 +1,4 @@
-class ContactController < ApplicationController
+class InfoController < ApplicationController
   skip_before_filter :authenticate_user!
   skip_authorization_check
   
