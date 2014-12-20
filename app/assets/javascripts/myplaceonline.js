@@ -321,7 +321,7 @@ if (!myp) {
       
       /*
       if (activePage) {
-        consoleLog("pagecontainershow: " + activePage.id + "," + $(activePage).attr('uid'));
+        consoleLog("pagecontainershow: " + activePage.id + "," + $(activePage).attr('data-uniqueid'));
         if (ui.prevPage && ui.prevPage.length > 0) {
           // Don't keep the previous page cached
           $(ui.prevPage[0]).remove();
@@ -410,7 +410,7 @@ if (!myp) {
     var result = null;
     var activePage = getActivePage();
     if (activePage) {
-      result = $(activePage).attr('uid');
+      result = $(activePage).attr('data-uniqueid');
     }
     return result;
   }
@@ -436,7 +436,7 @@ if (!myp) {
           var ap = pc.pagecontainer("getActivePage");
           if (ap) {
             if (ap[0] && $(ap[0])) {
-              if ($(ap[0]).attr('uid') == ev.data.page) {
+              if ($(ap[0]).attr('data-uniqueid') == ev.data.page) {
                 ev.data.f(ev, ui);
                 $( document ).off(ev.data.selector);
               }
@@ -467,7 +467,7 @@ if (!myp) {
       $( document ).off(e).on(e, null, {page: uniqueid, f: func, selector: e}, function(ev, ui) {
         if (ui.prevPage && ui.prevPage.length > 0) {
           consoleLog("pageunloading with prevPage");
-          var prevuid = $(ui.prevPage[0]).attr('uid');
+          var prevuid = $(ui.prevPage[0]).attr('data-uniqueid');
           if (prevuid == ev.data.page) {
             consoleLog("pageunloading, prevPage uid " + prevuid + " matched " + ev.data.selector);
             ev.data.f(ev, ui);
