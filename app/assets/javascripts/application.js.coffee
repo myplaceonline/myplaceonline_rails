@@ -12,9 +12,8 @@
 #
 #= require jquery
 #= require jquery_ujs
-#= require beforejqm
+#= require myplaceonline
 #= require jquery.mobile
-#= require afterjqm
 #= require jquery.remotipart
 #= require zeroclipboard
 #= require noty/jquery.noty
