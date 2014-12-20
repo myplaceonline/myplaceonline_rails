@@ -47,6 +47,8 @@ en:
       save: "Save"
       clipboard: "Copy to Clipboard"
       encrypt: "Encrypt"
+      metadescription: "myplaceonline is a virtual life assistant."
+      metakeywords: "myplaceonline, virtual life assistant, life assistant, organizer, passwords"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
