@@ -6,8 +6,8 @@
 //    myplaceonline_phonegap/www/js/myplaceonline.js and do a new phonegap
 //    build.
 //  * This file should be loaded after jQuery but before jQueryMobile,
-//    so any jQueryMobile specific executions may be done in the mobileinit
-//    callback.
+//    so any jQueryMobile specific executions (outside function definitions
+//    and callbacks) may be done in the mobileinit callback.
 
 // Only load this file once
 if (!myp) {
