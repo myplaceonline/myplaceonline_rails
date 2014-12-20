@@ -61,7 +61,9 @@ module Myp
       CategoryForIdentity.new(
         I18n.t("myplaceonline.category." + category.name.downcase),
         category.link,
-        category.points_amount.nil? ? 0 : category.points_amount
+        category.points_amount.nil? ? 0 : category.points_amount,
+        category.id,
+        category.parent_id
       )
     }
   end
@@ -69,7 +71,7 @@ module Myp
   def self.useful_categories(user)
     CategoryPointsAmount.find_by_sql(%{
       (
-        SELECT category_points_amounts.*, categories.name as category_name, categories.link as category_link
+        SELECT category_points_amounts.*, categories.name as category_name, categories.link as category_link, categories.id as category_id, categories.parent_id as category_parent_id
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
         WHERE categories.parent_id IS NOT NULL AND category_points_amounts.identity_id = #{
@@ -80,7 +82,7 @@ module Myp
       )
       UNION
       (
-        SELECT category_points_amounts.*, categories.name as category_name, categories.link as category_link
+        SELECT category_points_amounts.*, categories.name as category_name, categories.link as category_link, categories.id as category_id, categories.parent_id as category_parent_id
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
         WHERE categories.parent_id IS NOT NULL AND category_points_amounts.identity_id = #{
@@ -94,16 +96,20 @@ module Myp
       CategoryForIdentity.new(
         I18n.t("myplaceonline.category." + cpa.category_name.downcase),
         cpa.category_link,
-        cpa.count
+        cpa.count,
+        cpa.category_id,
+        cpa.category_parent_id
       )
     }
   end
 
   class CategoryForIdentity
-    def initialize(title, link, count)
+    def initialize(title, link, count, id, parent_id)
       @title = title
       @link = link
       @count = count
+      @id = id
+      @parent_id = parent_id
     end
   end
 

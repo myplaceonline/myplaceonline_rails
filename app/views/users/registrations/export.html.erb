@@ -6,10 +6,10 @@
 <p><%= t("myplaceonline.users.exportdescription") %></p>
 
 <%= form_tag do %>
-  <p>
+  <!--<p>
     <%= check_box_tag :encrypt, 1, @encrypt %>
     <%= label_tag :encrypt, t("myplaceonline.general.encrypt") %>
-  </p>
+  </p>-->
   <div><%= submit_tag t("myplaceonline.users.export") %></div>
 <% end %>
 

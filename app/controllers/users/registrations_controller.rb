@@ -156,7 +156,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       render :security
     end
   end
-
+  
   def export
     # http://superuser.com/questions/633715/how-do-i-fix-warning-message-was-not-integrity-protected-when-using-gpg-symme
     @encrypt = current_user.encrypt_by_default
@@ -167,10 +167,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if request.post?
       @download = users_export_path(:download => "1", :encrypt => @encrypt ? "1" : "0")
     elsif !params[:js].nil? && params[:js] == "true"
-      return render json: JSON.pretty_generate(current_user.as_json)
+      return render json: JSON.pretty_generate(exported_json)
     elsif !params[:download].nil?
       return send_data(
-        JSON.pretty_generate(current_user.as_json),
+        JSON.pretty_generate(exported_json),
         :type => :json,
         :filename => "myplaceonline_export_" + DateTime.now.strftime("%Y%m%d-%H%M%S%z") + ".json",
         :disposition => 'attachment'
@@ -241,4 +241,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+  
+  def exported_json
+    initialCategoryList = Myp.categories_for_current_user(current_user, nil, true)
+    {
+      "user" => current_user.as_json,
+      "categories" => initialCategoryList.map{|x| x.as_json}
+    }
+  end
 end
