@@ -28,7 +28,8 @@
 onPageLoad(function() {
   jqmSetList($("#myplaceonline_recent_list"), <%= raw(@usefulCategoryList.to_json) %>, "<%= t("myplaceonline.welcome.recentlyused") %>");
   <% if @isInitialPhonegapRequest %>
-  alert('phonegap!');
+  loadExternalScript("<%= javascript_path('application_extra') %>", false);
+  loadExternalCss("<%= path_to_stylesheet('application') %>");
   <% end %>
 });
 </script>
