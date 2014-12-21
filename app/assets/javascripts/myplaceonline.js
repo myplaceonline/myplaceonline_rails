@@ -1,5 +1,5 @@
 // myplaceonline.js
-// Version 0.1
+// Version 0.2
 //
 // Notes:
 //  * When changing this file, you may need to apply the same changes to
@@ -603,17 +603,25 @@ function maybeFocus(selector) {
 }
 
 function createSuccessNotification(message, timeout) {
-  if (!timeout) {
-    timeout = 4000;
+  if (noty) {
+    if (!timeout) {
+      timeout = 4000;
+    }
+    noty({text: message, layout: 'topCenter', type: 'success', timeout: timeout});
+  } else {
+    alert(message);
   }
-  noty({text: message, layout: 'topCenter', type: 'success', timeout: timeout});
 }
 
 function createErrorNotification(message, duration, timeout) {
-  if (!timeout) {
-    timeout = 4000;
+  if (noty) {
+    if (!timeout) {
+      timeout = 4000;
+    }
+    noty({text: message, layout: 'topCenter', type: 'error', timeout: timeout});
+  } else {
+    alert(message);
   }
-  noty({text: message, layout: 'topCenter', type: 'error', timeout: timeout});
 }
 
 // http://stackoverflow.com/a/9614662
@@ -694,10 +702,19 @@ function jqmSetList(list, items, header) {
 }
 
 function ensureClipboard(objects) {
-  var clipboard = new ZeroClipboard(objects);
-  clipboard.on( "ready", function(readyEvent) {
-    clipboard.on( "aftercopy", function(event) {
+  if (window.plugins && window.plugins.clipboard) {
+    $("a:data(clipboard-text)").click( function(e) {
+      window.plugins.clipboard.copy($(this).data("clipboard-text"));
       createSuccessNotification("Copied to clipboard.");
+      e.preventDefault();
+      return false;
     });
-  });
+  } else {
+    var clipboard = new ZeroClipboard(objects);
+    clipboard.on("ready", function(readyEvent) {
+      clipboard.on("aftercopy", function(event) {
+        createSuccessNotification("Copied to clipboard.");
+      });
+    });
+  }
 }
