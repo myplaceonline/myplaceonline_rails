@@ -51,6 +51,9 @@
           <% end %>
         </ul>
       </div>
+      <script type="text/javascript">
+        myp.isInitialPhonegapPage = <%= params[:phonegap] == "true" ? "true" : "false" %>;
+      </script>
     </div>
   </body>
 </html>
