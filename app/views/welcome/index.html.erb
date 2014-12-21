@@ -4,7 +4,6 @@
   <script type="text/javascript">
     loadExternalScript("<%= javascript_path('application_extra') %>", false);
     loadExternalCss("<%= path_to_stylesheet('application') %>");
-  });
   </script>
 <% end %>
 
@@ -35,10 +34,6 @@
 <script type="text/javascript">
 onPageLoad(function() {
   jqmSetList($("#myplaceonline_recent_list"), <%= raw(@usefulCategoryList.to_json) %>, "<%= t("myplaceonline.welcome.recentlyused") %>");
-  <% if @isInitialPhonegapRequest %>
-  loadExternalScript("<%= javascript_path('application_extra') %>", false);
-  loadExternalCss("<%= path_to_stylesheet('application') %>");
-  <% end %>
 });
 </script>
 
