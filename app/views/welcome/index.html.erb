@@ -1,5 +1,13 @@
 <% content_for :heading do -%><%= t('myplaceonline.siteTitle') %><% end -%>
 
+<% if @isInitialPhonegapRequest %>
+  <script type="text/javascript">
+    loadExternalScript("<%= javascript_path('application_extra') %>", false);
+    loadExternalCss("<%= path_to_stylesheet('application') %>");
+  });
+  </script>
+<% end %>
+
 <%= flashes! %>
 
 <% if !user_signed_in? %>
