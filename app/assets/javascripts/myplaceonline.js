@@ -1,5 +1,5 @@
 // myplaceonline.js
-// Version 0.2
+// Version 0.3
 //
 // Notes:
 //  * When changing this file, you may need to apply the same changes to
@@ -703,7 +703,7 @@ function jqmSetList(list, items, header) {
 
 function ensureClipboard(objects) {
   if (window.plugins && window.plugins.clipboard) {
-    $("a:data(clipboard-text)").click( function(e) {
+    $("[data-clipboard-text]").click( function(e) {
       window.plugins.clipboard.copy($(this).data("clipboard-text"));
       createSuccessNotification("Copied to clipboard.");
       e.preventDefault();
