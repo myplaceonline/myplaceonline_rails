@@ -11,7 +11,7 @@
 
   <p>
     <%= f.label :name, class: "ui-hidden-accessible" %>
-    <%= f.text_field :name, autofocus: true, placeholder: t("myplaceonline.passwords.name") %>
+    <%= f.text_field :name, placeholder: t("myplaceonline.passwords.name"), class: "autofocus" %>
   </p>
 
   <p>
@@ -58,4 +58,10 @@
   <p>
     <%= f.submit %>
   </p>
+  
+<script type="text/javascript">
+onPageLoad(function() {
+  maybeFocus(".autofocus");
+});
+</script>
 <% end %>

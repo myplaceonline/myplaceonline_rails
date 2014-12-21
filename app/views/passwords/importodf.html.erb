@@ -3,7 +3,7 @@
 <%= flashes! %>
 <%= form_tag passwords_import_odf_path, :multipart => true, :remote => true, "data-ajax" => false do %>
   <%= label_tag 'file', nil, class: "ui-hidden-accessible" %>
-  <%= file_field_tag 'file', autofocus: true %>
+  <%= file_field_tag 'file', class: "autofocus" %>
 
   <%= label_tag 'password', nil, class: "ui-hidden-accessible" %>
   <%= password_field_tag 'password', @password, placeholder: t("myplaceonline.import.password") %>
@@ -18,4 +18,9 @@
         </ul>
     </div>
 </div>
+<script type="text/javascript">
+onPageLoad(function() {
+  maybeFocus(".autofocus");
+});
+</script>
 <% end -%>

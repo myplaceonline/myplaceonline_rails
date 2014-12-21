@@ -6,12 +6,17 @@
   <%= f.hidden_field :reset_password_token %>
 
   <div><%= f.label :password, "New password", class: "ui-hidden-accessible" %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "off", placeholder: "New Password" %></div>
+    <%= f.password_field :password, class: "autofocus", autocomplete: "off", placeholder: "New Password" %></div>
 
   <div><%= f.label :password_confirmation, "Confirm new password", class: "ui-hidden-accessible" %>
     <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Confirm new password" %></div>
 
   <div><%= f.submit "Change my password" %></div>
+<script type="text/javascript">
+onPageLoad(function() {
+  maybeFocus(".autofocus");
+});
+</script>
 <% end %>
 
 <%= render "users/shared/links" %>
