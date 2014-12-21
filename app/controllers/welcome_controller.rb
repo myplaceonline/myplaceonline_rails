@@ -8,5 +8,6 @@ class WelcomeController < ApplicationController
       @totalPoints = current_user.total_points
       @usefulCategoryList = Myp.useful_categories(current_user)
     end
+    @isInitialPhonegapRequest = params[:phonegap] == "true"
   end
 end

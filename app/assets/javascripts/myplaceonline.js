@@ -688,7 +688,7 @@ if (!myp) {
       html += "<li data-role='list-divider'>" + header + "</li>";
     }
     $.each(items, function (i, x) {
-      if (x.count) {
+      if (typeof x.count !== 'undefined') {
         html += "<li><a href='" + x.link + "'>" + x.title + " <span class='ui-li-count'>" + x.count + "</span></a></li>";
       } else {
         html += "<li><a href='" + x.link + "'>" + x.title + "</a></li>";
