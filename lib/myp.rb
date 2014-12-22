@@ -142,8 +142,8 @@ module Myp
     value.encryption_type = 1
     value.user = user
     value.salt = SecureRandom.random_bytes(64)
-    generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(value.salt)
-    crypt = ActiveSupport::MessageEncryptor.new(generated_key)
+    generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(value.salt, 32)
+    crypt = ActiveSupport::MessageEncryptor.new(generated_key, :serializer => SimpleSerializer.new)
     value.val = crypt.encrypt_and_sign(message)
     value
   end
@@ -154,9 +154,8 @@ module Myp
   end
   
   def self.decrypt(encrypted_value, key)
-    generated_key = ActiveSupport::KeyGenerator.new(key)
-            .generate_key(encrypted_value.salt)
-    crypt = ActiveSupport::MessageEncryptor.new(generated_key)
+    generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(encrypted_value.salt, 32)
+    crypt = ActiveSupport::MessageEncryptor.new(generated_key, :serializer => SimpleSerializer.new)
     crypt.decrypt_and_verify(encrypted_value.val)
   end
   
@@ -245,5 +244,16 @@ module Myp
     logger.error(self.error_details(error))
   end
   
-  class DecryptionKeyUnavailableError < StandardError; end
+  class DecryptionKeyUnavailableError < StandardError
+  end
+    
+  class SimpleSerializer
+    def dump(value)
+      value
+    end
+    
+    def load(value)
+      value
+    end
+  end
 end

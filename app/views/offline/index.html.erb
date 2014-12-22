@@ -102,17 +102,26 @@ onPageLoad(function() {
             });
             if (encrypted_value) {
               var salt = forge.util.decode64(encrypted_value.salt);
-              var key = forge.pkcs5.pbkdf2(sessionPassword, salt, 65536, 16);
-              var i = encrypted_value.val.indexOf("--");
-              var encrypted_data_string = encrypted_value.val.substring(0, i);
-              var iv_string = encrypted_value.val.substring(i + 2);
-              var encrypted_data = forge.util.decode64(encrypted_data_string);
-              var iv = forge.util.decode64(iv_string);
+              var key = forge.pkcs5.pbkdf2(sessionPassword, salt, 65536, 32);
+              var val = forge.util.decode64(encrypted_value.val);
+              
+              var i = val.indexOf("--");
+              var data = forge.util.decode64(val.substring(0, i));
+              var digest = val.substring(i + 2);
+              // TODO verify digest (message_verifier.rb secure_compare)
+              
+              i = data.indexOf("--");
+              var encrypted_data = forge.util.decode64(data.substring(0, i));
+              var iv = forge.util.decode64(data.substring(i + 2));
+
               var decipher = forge.cipher.createDecipher('AES-CBC', key);
               decipher.start({iv: iv});
-              decipher.update(encrypted_data);
-              decipher.finish();
-              //password = decipher.output.toHex();
+              decipher.update(forge.util.createBuffer(encrypted_data));
+              if (decipher.finish()) {
+                password = decipher.output.toString();
+              } else {
+                throw "Could not perform decryption");
+              }
             }
           } else {
             password = model.password;
