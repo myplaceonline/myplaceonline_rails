@@ -16,10 +16,10 @@ onPageLoad(function() {
     $("#offline_info").html("Your browser supports local storage.");
     <% if !@data.nil? %>
     var exported = <%= raw(@data) %>;
+    window.localStorage.setItem("myplaceonline_offline_snapshot", JSON.stringify(exported));
     if (myp.inPhoneGap) {
+      app.exported = exported;
       app.navigate(app.phonegapHomepage);
-    } else {
-      window.localStorage.setItem("myplaceonline_offline_snapshot", JSON.stringify(exported));
     }
     <% end %>
     var snapshot = window.localStorage.getItem("myplaceonline_offline_snapshot");
