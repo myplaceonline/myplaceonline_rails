@@ -16,9 +16,18 @@
 <script type="text/x-handlebars" data-template-name="passwords">
   <ul data-role="listview" data-inset="true" data-filter="true">
   {{#each password in model}}
-    <li>{{password.name}}</li>
+    <li>{{#link-to "password" password}}{{password.name}}{{/link-to}}</li>
   {{/each}}
   </ul>
+</script>
+
+<script type="text/x-handlebars" data-template-name="password">
+  <h1>{{model.name}}</h1>
+  <p>User: {{model.user}}</p>
+  <p>Password: {{password}}</p>
+  <p>Account: {{model.account_number}}</p>
+  <p>Notes: {{model.notes}}</p>
+  <p>URL: {{model.url}}</p>
 </script>
 
 <script type="text/javascript">
@@ -46,8 +55,7 @@ onPageLoad(function() {
       });
       
       App.IndexRoute = Ember.Route.extend({
-        setupController: function(controller) {
-          var model = this.get('model')();
+        setupController: function(controller, model) {
           var categories = [];
           $.each(model.categories, function(i, x) {
             if (x.parent_id > 0) {
@@ -80,9 +88,43 @@ onPageLoad(function() {
         }
       });
 
+      App.PasswordRoute = Ember.Route.extend({
+        setupController: function(controller, model) {
+          var password = null;
+          if (model.is_encrypted_password) {
+            var sessionPassword = getSessionPassword();
+            var encrypted_value = null;
+            $.each(window.appsnapshot.user.encrypted_values, function(i, x) {
+              if (x.id == model.encrypted_password_id) {
+                encrypted_value = x;
+                return false;
+              }
+            });
+            if (encrypted_value) {
+              // "val": "azJaTkVLYzlSRXBydlF1dEp3QzdSdz09LS1ST2NWQm9pakVoR0tXb0NzaERtdk53PT0=--b37199dc8ff40027ccf664faf164f19fe0fc47ea",
+              // "salt": "XKh/vl5Wrolo7slTa/1hxiN6PVOaGbDsPhy1EnndvC7xZ4gx1jipGvIGmdeZ\nOQFhh/v3iTa070jhkdOBzmwjDA==\n",
+            }
+          } else {
+            password = model.password;
+          }
+          controller.set("model", model);
+          controller.set("password", password);
+        },
+        model: function(params) {
+          var result = null;
+          $.each(window.appsnapshot.user.primary_identity.passwords, function(i, x) {
+            if (x.id == params.id) {
+              result = x;
+              return false;
+            }
+          });
+          return result;
+        }
+      });
+      
       App.Router.map(function() {
-        this.resource('passwords', { path: '/passwords' }, function() {
-        });
+        this.resource('passwords');
+        this.resource('password', { path: '/password/:id' });
       });
     }
   }

@@ -1,5 +1,5 @@
 // myplaceonline.js
-// Version 0.4
+// Version 0.5
 //
 // Notes:
 //  * When changing this file, you may need to apply the same changes to
@@ -737,4 +737,11 @@ function getMyplaceonlineSnapshot() {
     }
   }
   return result;
+}
+
+function getSessionPassword() {
+  if (!window.sessionPassword) {
+    window.sessionPassword = prompt("Please enter your password:", "");
+  }
+  return window.sessionPassword;
 }
