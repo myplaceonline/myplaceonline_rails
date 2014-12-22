@@ -139,6 +139,10 @@ module Myp
   end
   
   def self.encrypt_value(user, message, key, value)
+    # TODO OpenSSL::Cipher.update does not allow a nil or empty value
+    if message.nil? || message == "" then
+      message = " "
+    end
     value.encryption_type = 1
     value.user = user
     value.salt = SecureRandom.random_bytes(64)
