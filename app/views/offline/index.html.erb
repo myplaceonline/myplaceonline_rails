@@ -1,10 +1,8 @@
 <% content_for :heading do -%><%= t('myplaceonline.siteTitle') %><% end -%>
 <div id="emberContainer"></div>
 <script type="text/x-handlebars" data-template-name="application">
-  Hello World {{model.time}}
-  
-  <ul>
-  {{#each category in model.categories}}
+  <ul data-role="listview" data-inset="true">
+  {{#each category in categories}}
     <li>{{category.title}}</li>
   {{/each}}
   </ul>
@@ -25,7 +23,15 @@ onPageLoad(function() {
       
       App.ApplicationRoute = Ember.Route.extend({
         setupController: function(controller) {
-          controller.set("model", this.get('model')());
+          var model = this.get('model')();
+          var categories = [];
+          $.each(model.categories, function(i, x) {
+            if (x.parent_id && x.parent_id > 0) {
+              categories.push(x);
+            }
+          });
+          controller.set("model", model);
+          controller.set("categories", categories);
         },
         model: function() {
           return window.appsnapshot;
@@ -33,6 +39,12 @@ onPageLoad(function() {
       });
       
       App.ApplicationController = Ember.Controller.extend({
+      });
+      
+      App.ApplicationView = Ember.View.extend({
+        didInsertElement : function() {
+          ensureStyledPage();
+        }
       });
 
       App.Router.map(function() {
