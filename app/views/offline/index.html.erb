@@ -1,17 +1,22 @@
 <% content_for :heading do -%><%= t('myplaceonline.siteTitle') %><% end -%>
 <div id="emberContainer"></div>
 <script type="text/x-handlebars" data-template-name="application">
-  Hello World {{test}}
+  Hello World {{model.time}}
+  
+  <ul>
+  {{#each category in model.categories}}
+    <li>{{category.title}}</li>
+  {{/each}}
+  </ul>
 </script>
 
 <script type="text/javascript">
 onPageLoad(function() {
   if (window.localStorage) {
-    var snapshot = getMyplaceonlineSnapshot();
-    if (snapshot) {
+    window.appsnapshot = getMyplaceonlineSnapshot();
+    if (window.appsnapshot) {
       window.App = Ember.Application.create({
-        rootElement: '#emberContainer',
-        LOG_TRANSITIONS: true
+        rootElement: '#emberContainer'
       });
       
       App.Router.reopen({
@@ -20,11 +25,10 @@ onPageLoad(function() {
       
       App.ApplicationRoute = Ember.Route.extend({
         setupController: function(controller) {
-          var m = this.get('model')();
-          controller.set("test", m.time);
+          controller.set("model", this.get('model')());
         },
         model: function() {
-          return getMyplaceonlineSnapshot();
+          return window.appsnapshot;
         }
       });
       
