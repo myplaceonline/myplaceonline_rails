@@ -279,19 +279,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       result = result.to_json
     end
     if encrypt
-      algorithm = "AES-256-CBC"
-      password = Myp.ensure_encryption_key(session)
-      digest = Digest::SHA256.new
-      digest.update(password)
-      key = digest.digest
-      iv = OpenSSL::Cipher::Cipher.new(algorithm).random_iv
-      cipher = OpenSSL::Cipher.new(algorithm)
-      cipher.encrypt
-      cipher.key = key
-      cipher.iv = iv
-      #result = cipher.update(result) + cipher.final
-      # openssl aes-256-cbc -salt -in passwords.txt -out passwords.aes
-      # openssl aes-256-cbc -d -in test.out
+      # TODO: http://stackoverflow.com/questions/27593591/how-do-i-encrypt-a-file-with-ruby-using-symmetric-aes256-that-can-be-decrypted-w/27595873#27595873
     end
     result
   end

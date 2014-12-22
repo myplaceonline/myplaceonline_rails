@@ -1,7 +1,7 @@
 <% content_for :heading do -%><%= t('myplaceonline.siteTitle') %><% end -%>
 <div id="emberContainer"></div>
-<script type="text/x-handlebars" data-template-name="index">
-  Hello World
+<script type="text/x-handlebars" data-template-name="application">
+  Hello World {{test}}
 </script>
 
 <script type="text/javascript">
@@ -16,6 +16,19 @@ onPageLoad(function() {
       
       App.Router.reopen({
         rootURL: '/offline/'
+      });
+      
+      App.ApplicationRoute = Ember.Route.extend({
+        setupController: function(controller) {
+          var m = this.get('model')();
+          controller.set("test", m.time);
+        },
+        model: function() {
+          return getMyplaceonlineSnapshot();
+        }
+      });
+      
+      App.ApplicationController = Ember.Controller.extend({
       });
 
       App.Router.map(function() {
