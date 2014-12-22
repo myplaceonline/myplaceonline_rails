@@ -1,5 +1,5 @@
 // myplaceonline.js
-// Version 0.3
+// Version 0.4
 //
 // Notes:
 //  * When changing this file, you may need to apply the same changes to
@@ -21,7 +21,8 @@ var myp = {
   debug: false,
   debugMessages: [],
   inPhoneGap: false,
-  audioMarkers: []
+  audioMarkers: [],
+  snapshotKey: "myplaceonline_offline_snapshot"
 };
 
 function consoleLog(msg) {
@@ -717,4 +718,23 @@ function ensureClipboard(objects) {
       });
     });
   }
+}
+
+function setMyplaceonlineSnapshot(jsonObj) {
+  if (window.localStorage) {
+    window.localStorage.setItem(myp.snapshotKey, JSON.stringify(jsonObj));
+  }
+}
+
+function getMyplaceonlineSnapshot() {
+  var result = window.localStorage ? window.localStorage.getItem(myp.snapshotKey) : null;
+  if (result) {
+    try {
+      result = JSON.parse(result);
+    } catch (e) {
+      window.localStorage.removeItem(myp.snapshotKey);
+      throw e;
+    }
+  }
+  return result;
 }
