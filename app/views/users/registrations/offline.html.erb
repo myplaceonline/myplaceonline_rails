@@ -26,7 +26,7 @@ onPageLoad(function() {
     if (snapshot) {
       $("#offline_info").append(" The current offline snapshot was stored for " + location.hostname + " on " + snapshot.time);
       $("#offline_info").after("<p><a href='#' class='ui-btn' onclick='window.localStorage.removeItem(myp.snapshotKey); createSuccessNotification(\"Offline storage cleared.\"); refreshPage(); return false;'>Clear Snapshot</a></p>");
-      $("#offline_info").after("<p><a href='#' class='ui-btn' onclick='return false;'>Load Snapshot</a></p>");
+      $("#offline_info").after("<p><a href='/offline/' class='ui-btn'>Load Snapshot</a></p>");
       ensureStyledPage();
     } else {
       $("#offline_info").append(" There is no current offline snapshot.");

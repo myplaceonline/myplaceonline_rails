@@ -1,0 +1,26 @@
+<% content_for :heading do -%><%= t('myplaceonline.siteTitle') %><% end -%>
+<div id="emberContainer"></div>
+<script type="text/x-handlebars" data-template-name="index">
+  Hello World
+</script>
+
+<script type="text/javascript">
+onPageLoad(function() {
+  if (window.localStorage) {
+    var snapshot = getMyplaceonlineSnapshot();
+    if (snapshot) {
+      window.App = Ember.Application.create({
+        rootElement: '#emberContainer',
+        LOG_TRANSITIONS: true
+      });
+      
+      App.Router.reopen({
+        rootURL: '/offline/'
+      });
+
+      App.Router.map(function() {
+      });
+    }
+  }
+});
+</script>
