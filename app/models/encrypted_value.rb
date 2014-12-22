@@ -7,7 +7,7 @@ class EncryptedValue < ActiveRecord::Base
     {
       :id => id,
       :val => val,
-      :salt => Base64.encode64(salt),
+      :salt => Base64.encode64(salt).strip!,
       :user_id => user_id,
       :created_at => created_at,
       :updated_at => updated_at,

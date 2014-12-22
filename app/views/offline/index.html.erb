@@ -101,8 +101,18 @@ onPageLoad(function() {
               }
             });
             if (encrypted_value) {
-              // "val": "azJaTkVLYzlSRXBydlF1dEp3QzdSdz09LS1ST2NWQm9pakVoR0tXb0NzaERtdk53PT0=--b37199dc8ff40027ccf664faf164f19fe0fc47ea",
-              // "salt": "XKh/vl5Wrolo7slTa/1hxiN6PVOaGbDsPhy1EnndvC7xZ4gx1jipGvIGmdeZ\nOQFhh/v3iTa070jhkdOBzmwjDA==\n",
+              var salt = forge.util.decode64(encrypted_value.salt);
+              var key = forge.pkcs5.pbkdf2(sessionPassword, salt, 65536, 16);
+              var i = encrypted_value.val.indexOf("--");
+              var encrypted_data_string = encrypted_value.val.substring(0, i);
+              var iv_string = encrypted_value.val.substring(i + 2);
+              var encrypted_data = forge.util.decode64(encrypted_data_string);
+              var iv = forge.util.decode64(iv_string);
+              var decipher = forge.cipher.createDecipher('AES-CBC', key);
+              decipher.start({iv: iv});
+              decipher.update(encrypted_data);
+              decipher.finish();
+              //password = decipher.output.toHex();
             }
           } else {
             password = model.password;
