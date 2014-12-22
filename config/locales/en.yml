@@ -49,6 +49,7 @@ en:
       encrypt: "Encrypt"
       metadescription: "myplaceonline is a virtual life assistant."
       metakeywords: "myplaceonline, virtual life assistant, life assistant, organizer, passwords"
+      submit: "Submit"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
@@ -136,6 +137,9 @@ en:
       encrypt_warning: "Warning: If using encryption and you lose your password, you cannot decrypt the value."
       export: "Export"
       exportdescription: "This utility exports all of your data into a JavaScript Object Notation (JSON) downloadable file."
+      offline: "Offline"
+      offlinedescription: "You may export a snapshot of your data to browser local storage which you may then access offline."
+      offlinecreate: "Create Snapshot"
     import:
       password: "Password (if any)"
       nofile: "No file selected"

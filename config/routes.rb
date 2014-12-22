@@ -39,6 +39,7 @@ Rails.application.routes.draw do
       match 'users/deletecategory', :to => 'users/registrations#deletecategory', via: [:get, :post]
       match 'users/security', :to => 'users/registrations#security', via: [:get, :post]
       match 'users/export', :to => 'users/registrations#export', via: [:get, :post]
+      match 'users/offline', :to => 'users/registrations#offline', via: [:get, :post]
     end
 
     devise_for :users, controllers: {

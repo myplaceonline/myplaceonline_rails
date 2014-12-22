@@ -1,0 +1,38 @@
+<% content_for :heading do -%><%= t("myplaceonline.users.offline") %><% end -%>
+<h1><%= t("myplaceonline.users.offline") %></h1>
+
+<%= flashes! %>
+
+<p><%= t("myplaceonline.users.offlinedescription") %></p>
+
+<%= form_tag do %>
+  <p id="offline_info"></p>
+  <div><%= submit_tag t("myplaceonline.users.offlinecreate") %></div>
+<% end %>
+
+<script type="text/javascript">
+onPageLoad(function() {
+  if (window.localStorage) {
+    $("#offline_info").html("Your browser supports local storage.");
+    <% if !@data.nil? %>
+    var exported = <%= raw(@data) %>;
+    window.localStorage.setItem("myplaceonline_offline_snapshot", JSON.stringify(exported));
+    <% end %>
+    var snapshot = window.localStorage.getItem("myplaceonline_offline_snapshot");
+    if (snapshot) {
+      try {
+        snapshot = JSON.parse(snapshot);
+        $("#offline_info").append(" The current offline snapshot was stored for " + location.hostname + " on " + snapshot.time);
+        $("#offline_info").after("<p><a href='#' onclick='window.localStorage.removeItem(\"myplaceonline_offline_snapshot\"); createSuccessNotification(\"Offline storage cleared.\"); return false;'>Clear Snapshot</a></p>");
+      } catch (e) {
+        window.localStorage.removeItem("myplaceonline_offline_snapshot");
+        throw e;
+      }
+    } else {
+      $("#offline_info").append(" There is no current offline snapshot.");
+    }
+  } else {
+    $("#offline_info").html("Your browser does not support local storage.");
+  }
+});
+</script>

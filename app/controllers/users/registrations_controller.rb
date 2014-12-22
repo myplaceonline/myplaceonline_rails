@@ -170,7 +170,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       filename += ".gpg"
     end
     if request.format == "text/javascript"
-      @jscontent = exported_json(@encrypt)
+      @jscontent = exported_json(@encrypt, true)
       if !params[:download].nil?
         return send_data(
           @jscontent,
@@ -185,7 +185,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         @download = users_export_path(:download => "1", :encrypt => @encrypt ? "1" : "0")
       elsif !params[:download].nil?
         return send_data(
-          exported_json(@encrypt),
+          exported_json(@encrypt, true),
           :type => :json,
           :filename => filename,
           :disposition => 'attachment'
@@ -193,6 +193,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
     end
     render :export
+  end
+
+  def offline
+    @encrypt = false
+    if request.post?
+      @data = exported_json(@encrypt, false)
+    end
+    render :offline
   end
 
   # POST /resource
@@ -258,13 +266,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super(resource)
   # end
   
-  def exported_json(encrypt)
+  def exported_json(encrypt, pretty)
     initialCategoryList = Myp.categories_for_current_user(current_user, nil, true)
-    result = JSON.pretty_generate({
+    result = {
       "time" => DateTime.now,
       "categories" => initialCategoryList.map{|x| x.as_json},
       "user" => current_user.as_json
-    })
+    }
+    if pretty
+      result = JSON.pretty_generate(result)
+    else
+      result = result.to_json
+    end
     if encrypt
       algorithm = "AES-256-CBC"
       password = Myp.ensure_encryption_key(session)
