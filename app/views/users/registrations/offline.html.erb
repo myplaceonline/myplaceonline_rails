@@ -16,14 +16,18 @@ onPageLoad(function() {
     $("#offline_info").html("Your browser supports local storage.");
     <% if !@data.nil? %>
     var exported = <%= raw(@data) %>;
-    window.localStorage.setItem("myplaceonline_offline_snapshot", JSON.stringify(exported));
+    if (myp.inPhoneGap) {
+      alert(app.phonegapPath);
+    } else {
+      window.localStorage.setItem("myplaceonline_offline_snapshot", JSON.stringify(exported));
+    }
     <% end %>
     var snapshot = window.localStorage.getItem("myplaceonline_offline_snapshot");
     if (snapshot) {
       try {
         snapshot = JSON.parse(snapshot);
         $("#offline_info").append(" The current offline snapshot was stored for " + location.hostname + " on " + snapshot.time);
-        $("#offline_info").after("<p><a href='#' onclick='window.localStorage.removeItem(\"myplaceonline_offline_snapshot\"); createSuccessNotification(\"Offline storage cleared.\"); return false;'>Clear Snapshot</a></p>");
+        $("#offline_info").after("<p><a href='#' onclick='window.localStorage.removeItem(\"myplaceonline_offline_snapshot\"); createSuccessNotification(\"Offline storage cleared.\"); refreshPage(); return false;'>Clear Snapshot</a></p>");
       } catch (e) {
         window.localStorage.removeItem("myplaceonline_offline_snapshot");
         throw e;
