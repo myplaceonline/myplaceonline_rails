@@ -17,7 +17,7 @@ onPageLoad(function() {
     <% if !@data.nil? %>
     var exported = <%= raw(@data) %>;
     if (myp.inPhoneGap) {
-      alert(app.phonegapHomepage);
+      app.navigate(app.phonegapHomepage);
     } else {
       window.localStorage.setItem("myplaceonline_offline_snapshot", JSON.stringify(exported));
     }
