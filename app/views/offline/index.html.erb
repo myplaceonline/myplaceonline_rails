@@ -1,7 +1,11 @@
 <% content_for :heading do -%><%= t('myplaceonline.siteTitle') %><% end -%>
 <div id="emberContainer"></div>
 
-<script type="text/x-handlebars" data-template-name="application">
+<script type="text/x-handlebars">
+  {{outlet}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="index">
   <ul data-role="listview" data-inset="true">
   {{#each category in categories}}
     <li>{{#link-to category.link}}{{category.title}} <span class="ui-li-count">{{category.count}}</span>{{/link-to}}</li>
@@ -9,7 +13,7 @@
   </ul>
 </script>
 
-<script type="text/x-handlebars" data-template-name="passwords.index">
+<script type="text/x-handlebars" data-template-name="passwords">
   Hello World
 </script>
 
@@ -38,7 +42,7 @@ onPageLoad(function() {
         rootURL: '/offline/'
       });
       
-      App.ApplicationRoute = Ember.Route.extend({
+      App.IndexRoute = Ember.Route.extend({
         setupController: function(controller) {
           var model = this.get('model')();
           var categories = [];
@@ -55,10 +59,7 @@ onPageLoad(function() {
         }
       });
       
-      App.ApplicationController = Ember.Controller.extend({
-      });
-      
-      App.ApplicationView = Ember.View.extend({
+      App.IndexView = Ember.View.extend({
         didInsertElement : function() {
           ensureStyledPage();
         }
@@ -66,7 +67,7 @@ onPageLoad(function() {
 
       App.Router.map(function() {
         this.resource('passwords', { path: '/passwords' }, function() {
-        })
+        });
       });
     }
   }
