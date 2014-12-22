@@ -125,6 +125,7 @@ module Myp
     if !session.has_key?(:password)
       raise Myp::DecryptionKeyUnavailableError
     end
+    session[:password]
   end
   
   def self.encrypt_from_session(user, session, message)

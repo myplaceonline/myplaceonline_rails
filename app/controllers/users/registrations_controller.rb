@@ -1,3 +1,6 @@
+require "openssl"
+require "digest/sha2"
+
 class Users::RegistrationsController < Devise::RegistrationsController
   skip_authorization_check
   
@@ -158,22 +161,33 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   
   def export
+    @encrypt = current_user.encrypt_by_default
+    if !params[:encrypt].nil?
+      @encrypt = params[:encrypt] == "1" || params[:encrypt] == "true"
+    end
+    filename = "myplaceonline_export_" + DateTime.now.strftime("%Y%m%d-%H%M%S%z") + ".json"
+    if @encrypt
+      filename += ".gpg"
+    end
     if request.format == "text/javascript"
-      @jscontent = JSON.pretty_generate(exported_json)
-    else
-      # http://superuser.com/questions/633715/how-do-i-fix-warning-message-was-not-integrity-protected-when-using-gpg-symme
-      @encrypt = current_user.encrypt_by_default
-      @download = nil
-      if !params[:encrypt].nil?
-        @encrypt = params[:encrypt] == "1"
+      @jscontent = exported_json(@encrypt)
+      if !params[:download].nil?
+        return send_data(
+          @jscontent,
+          :type => :json,
+          :filename => filename,
+          :disposition => 'attachment'
+        )
       end
+    else
+      @download = nil
       if request.post?
         @download = users_export_path(:download => "1", :encrypt => @encrypt ? "1" : "0")
       elsif !params[:download].nil?
         return send_data(
-          JSON.pretty_generate(exported_json),
+          exported_json(@encrypt),
           :type => :json,
-          :filename => "myplaceonline_export_" + DateTime.now.strftime("%Y%m%d-%H%M%S%z") + ".json",
+          :filename => filename,
           :disposition => 'attachment'
         )
       end
@@ -244,11 +258,28 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super(resource)
   # end
   
-  def exported_json
+  def exported_json(encrypt)
     initialCategoryList = Myp.categories_for_current_user(current_user, nil, true)
-    {
-      "user" => current_user.as_json,
-      "categories" => initialCategoryList.map{|x| x.as_json}
-    }
+    result = JSON.pretty_generate({
+      "time" => DateTime.now,
+      "categories" => initialCategoryList.map{|x| x.as_json},
+      "user" => current_user.as_json
+    })
+    if encrypt
+      algorithm = "AES-256-CBC"
+      password = Myp.ensure_encryption_key(session)
+      digest = Digest::SHA256.new
+      digest.update(password)
+      key = digest.digest
+      iv = OpenSSL::Cipher::Cipher.new(algorithm).random_iv
+      cipher = OpenSSL::Cipher.new(algorithm)
+      cipher.encrypt
+      cipher.key = key
+      cipher.iv = iv
+      #result = cipher.update(result) + cipher.final
+      # openssl aes-256-cbc -salt -in passwords.txt -out passwords.aes
+      # openssl aes-256-cbc -d -in test.out
+    end
+    result
   end
 end
