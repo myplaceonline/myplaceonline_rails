@@ -1,11 +1,16 @@
 <% content_for :heading do -%><%= t('myplaceonline.siteTitle') %><% end -%>
 <div id="emberContainer"></div>
+
 <script type="text/x-handlebars" data-template-name="application">
   <ul data-role="listview" data-inset="true">
   {{#each category in categories}}
-    <li>{{category.title}}</li>
+    <li>{{#link-to category.link}}{{category.title}} <span class="ui-li-count">{{category.count}}</span>{{/link-to}}</li>
   {{/each}}
   </ul>
+</script>
+
+<script type="text/x-handlebars" data-template-name="passwords.index">
+  Hello World
 </script>
 
 <script type="text/javascript">
@@ -14,7 +19,19 @@ onPageLoad(function() {
     window.appsnapshot = getMyplaceonlineSnapshot();
     if (window.appsnapshot) {
       window.App = Ember.Application.create({
-        rootElement: '#emberContainer'
+        rootElement: '#emberContainer',
+        LOG_TRANSITIONS: true,
+        ready: function() {
+          $.mobile.window.unbind({ 
+            "popstate.history": $.proxy( this.popstate, this ),
+            "hashchange.history": $.proxy( this.hashchange, this )
+          });
+          $.mobile.changePage = function() {};
+          $.mobile.ajaxEnabled = false;
+          $.mobile.pushStateEnabled = false;
+          $.mobile.linkBindingEnabled = false;
+          $.mobile.hashListeningEnabled = false;
+        }
       });
       
       App.Router.reopen({
@@ -26,7 +43,7 @@ onPageLoad(function() {
           var model = this.get('model')();
           var categories = [];
           $.each(model.categories, function(i, x) {
-            if (x.parent_id && x.parent_id > 0) {
+            if (x.parent_id > 0) {
               categories.push(x);
             }
           });
@@ -48,6 +65,8 @@ onPageLoad(function() {
       });
 
       App.Router.map(function() {
+        this.resource('passwords', { path: '/passwords' }, function() {
+        })
       });
     }
   }
