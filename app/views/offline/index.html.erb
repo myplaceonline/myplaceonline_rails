@@ -120,7 +120,8 @@ onPageLoad(function() {
               if (decipher.finish()) {
                 password = decipher.output.toString();
               } else {
-                throw "Could not perform decryption";
+                password = "Invalid password or other decryption error.";
+                window.sessionPassword = null;
               }
             }
           } else {

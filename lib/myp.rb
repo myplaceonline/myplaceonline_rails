@@ -1,4 +1,6 @@
 module Myp
+  # See https://github.com/digitalbazaar/forge/issues/207
+  @@DEFAULT_AES_KEY_SIZE = 32
   @categories = Hash.new
   
   def self.is_web_server?
@@ -145,8 +147,8 @@ module Myp
     end
     value.encryption_type = 1
     value.user = user
-    value.salt = SecureRandom.random_bytes(64)
-    generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(value.salt, 32)
+    value.salt = SecureRandom.random_bytes(@@DEFAULT_AES_KEY_SIZE)
+    generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(value.salt, @@DEFAULT_AES_KEY_SIZE)
     crypt = ActiveSupport::MessageEncryptor.new(generated_key, :serializer => SimpleSerializer.new)
     value.val = crypt.encrypt_and_sign(message)
     value
@@ -158,7 +160,7 @@ module Myp
   end
   
   def self.decrypt(encrypted_value, key)
-    generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(encrypted_value.salt, 32)
+    generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(encrypted_value.salt, @@DEFAULT_AES_KEY_SIZE)
     crypt = ActiveSupport::MessageEncryptor.new(generated_key, :serializer => SimpleSerializer.new)
     crypt.decrypt_and_verify(encrypted_value.val)
   end
