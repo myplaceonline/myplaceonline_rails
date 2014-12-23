@@ -24,7 +24,7 @@ module ApplicationHelper
             :a,
             t("myplaceonline.general.clipboard"),
             href: "#",
-            class: "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable",
+            class: "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable externallink",
             title: t("myplaceonline.general.clipboard"),
             data: { "clipboard-text" => clipboard_text }
           )
