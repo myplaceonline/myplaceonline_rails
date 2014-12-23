@@ -16,7 +16,7 @@
 <script type="text/x-handlebars" data-template-name="passwords">
   <ul data-role="listview" data-inset="true" data-filter="true">
   {{#each password in model}}
-    <li>{{#link-to "password" password}}{{password.name}}{{/link-to}}</li>
+    <li>{{#link-to "password" password}}{{password.name}} ({{password.user}}){{/link-to}}</li>
   {{/each}}
   </ul>
 </script>
