@@ -24,13 +24,11 @@
     <%= f.text_field :password, placeholder: t("myplaceonline.passwords.password") %>
   </p>
   
-  <% if isnew %>
   <div data-role="collapsible">
     <h3>Generate Password</h3>
     <p><input type="text" id="generate_password_length" value="16" /></p>
     <p><a href="#" class="ui-btn" onclick="getRemoteString($('#password_password'), $('#generate_password_length').val()); return false;">Generate Random Password</a></p>
   </div>
-  <% end %>
 
   <p>
     <%= f.check_box :is_encrypted_password %>
