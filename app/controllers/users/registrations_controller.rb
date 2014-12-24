@@ -2,6 +2,11 @@ require "openssl"
 require "digest/sha2"
 
 class Users::RegistrationsController < Devise::RegistrationsController
+  
+  @@OPENSSL_MAGIC = "Salted__"
+  @@DEFAULT_CIPHER = "aes-256-cbc"
+  @@DEFAULT_MD = OpenSSL::Digest::SHA256
+  
   skip_authorization_check
   
   # By default, authentication is required for all actions except net/create/cancel
@@ -97,6 +102,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   
   def resetpoints
+    Myp.ensure_encryption_key(session)
     if request.post?
       Myp.reset_points(current_user)
       redirect_to edit_user_registration_path,
@@ -110,7 +116,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def deletecategory
-    
+    Myp.ensure_encryption_key(session)
     passwords = I18n.t("myplaceonline.passwords.title")
     @categories = [passwords]
     
@@ -148,6 +154,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def security
+    Myp.ensure_encryption_key(session)
     @encrypt_by_default = current_user.encrypt_by_default
     if request.post?
       @encrypt_by_default = params[:encrypt_by_default]
@@ -161,13 +168,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   
   def export
+    Myp.ensure_encryption_key(session)
     @encrypt = current_user.encrypt_by_default
     if !params[:encrypt].nil?
       @encrypt = params[:encrypt] == "1" || params[:encrypt] == "true"
     end
     filename = "myplaceonline_export_" + DateTime.now.strftime("%Y%m%d-%H%M%S%z") + ".json"
     if @encrypt
-      filename += ".gpg"
+      filename += ".encrypted"
+      # The page that shows this example command will be a different request
+      # from the actual download, so the filename might not be the same
+      @command = "openssl enc -d -#{@@DEFAULT_CIPHER} -md #{@@DEFAULT_MD.new.name.downcase} -in file.encrypted"
     end
     if request.format == "text/javascript"
       @jscontent = exported_json(@encrypt, true)
@@ -196,6 +207,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def offline
+    Myp.ensure_encryption_key(session)
     @encrypt = false
     if request.post?
       @data = exported_json(@encrypt, false)
@@ -279,8 +291,48 @@ class Users::RegistrationsController < Devise::RegistrationsController
       result = result.to_json
     end
     if encrypt
-      # TODO: http://stackoverflow.com/questions/27593591/how-do-i-encrypt-a-file-with-ruby-using-symmetric-aes256-that-can-be-decrypted-w/27595873#27595873
+      password = Myp.ensure_encryption_key(session)
+      result = encrypt_for_openssl(password, result)
     end
     result
+  end
+
+  # Resulting bytes when written to #{FILE} may be decrypted from the command
+  # line with `openssl enc -d -#{cipher} -md #{md} -in #{FILE}`
+  #
+  # Example:
+  #  openssl enc -d -aes-256-cbc -md sha256 -in file.encrypted
+  def encrypt_for_openssl(
+    password,
+    data,
+    cipher = @@DEFAULT_CIPHER,
+    md = @@DEFAULT_MD.new
+  )
+    salt = Random.new.bytes(8)
+    cipher = OpenSSL::Cipher::Cipher.new(cipher)
+    cipher.encrypt
+    cipher.pkcs5_keyivgen(password, salt, 1, md)
+    encrypted_data = cipher.update(data) + cipher.final
+    @@OPENSSL_MAGIC + salt + encrypted_data
+  end
+  
+  # Data may be written from the command line with
+  # `openssl enc -#{cipher} -md #{md} -in #{INFILE} -out #{OUTFILE}`
+  # and the resulting bytes may be read by this function.
+  #
+  # Example:
+  #  openssl enc -aes-256-cbc -md sha256 -in file.txt -out file.txt.encrypted`
+  def decrypt_from_openssl(
+    password,
+    data,
+    cipher = @@DEFAULT_CIPHER,
+    md = @@DEFAULT_MD.new
+  )
+    input_magic = data.slice!(0, 8)
+    input_salt = data.slice!(0, 8)
+    cipher = OpenSSL::Cipher::Cipher.new(cipher)
+    cipher.decrypt
+    cipher.pkcs5_keyivgen(password, input_salt, 1, md)
+    c.update(data) + c.final
   end
 end

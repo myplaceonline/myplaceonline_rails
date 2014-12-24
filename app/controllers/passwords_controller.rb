@@ -4,6 +4,7 @@ class PasswordsController < ApplicationController
   skip_authorization_check :only => [:index, :new, :create, :import, :importodf]
   
   def index
+    Myp.ensure_encryption_key(session)
     Myp.visit(current_user, :passwords)
     @count = Password.where(
       identity_id: current_user.primary_identity.id
@@ -55,12 +56,14 @@ class PasswordsController < ApplicationController
   end
   
   def show
+    Myp.ensure_encryption_key(session)
     @password = find_password
     authorize! :manage, @password
     @displaypassword = @password.getPassword(session)
   end
   
   def edit
+    Myp.ensure_encryption_key(session)
     @password = find_password
     authorize! :manage, @password
     @password.password = @password.getPassword(session)
@@ -68,6 +71,7 @@ class PasswordsController < ApplicationController
   end
   
   def update
+    Myp.ensure_encryption_key(session)
     @password = find_password
     authorize! :manage, @password
 
@@ -97,6 +101,7 @@ class PasswordsController < ApplicationController
   end
   
   def destroy
+    Myp.ensure_encryption_key(session)
     @password = find_password
     authorize! :manage, @password
     ActiveRecord::Base.transaction do
@@ -111,6 +116,7 @@ class PasswordsController < ApplicationController
   end
   
   def importodf
+    Myp.ensure_encryption_key(session)
     @password = ""
     if request.post?
       if params.has_key?(:file)
@@ -145,6 +151,7 @@ class PasswordsController < ApplicationController
   end
   
   def importodf1
+    Myp.ensure_encryption_key(session)
     ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
     if !ifile.nil?
       authorize! :manage, ifile
@@ -154,6 +161,7 @@ class PasswordsController < ApplicationController
   end
   
   def importodf2
+    Myp.ensure_encryption_key(session)
     ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
     if !ifile.nil?
       authorize! :manage, ifile
@@ -169,6 +177,7 @@ class PasswordsController < ApplicationController
   end
   
   def importodf3
+    Myp.ensure_encryption_key(session)
     ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
     if !ifile.nil?
       authorize! :manage, ifile

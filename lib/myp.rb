@@ -147,7 +147,8 @@ module Myp
     end
     value.encryption_type = 1
     value.user = user
-    value.salt = SecureRandom.random_bytes(@@DEFAULT_AES_KEY_SIZE)
+    # OpenSSL only uses an 8 byte salt: https://www.openssl.org/docs/crypto/EVP_BytesToKey.html
+    value.salt = SecureRandom.random_bytes(8)
     generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(value.salt, @@DEFAULT_AES_KEY_SIZE)
     crypt = ActiveSupport::MessageEncryptor.new(generated_key, :serializer => SimpleSerializer.new)
     value.val = crypt.encrypt_and_sign(message)
