@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'welcome/index'
   get 'api/index'
   get 'api/categories'
+  get 'api/randomString'
 
   get 'meaning/index'
   get 'meaning', :to => 'meaning#index'

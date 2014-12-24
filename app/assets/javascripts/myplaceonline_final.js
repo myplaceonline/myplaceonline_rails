@@ -39,3 +39,25 @@ function hookListviewEnter(listInput, listIdentifier) {
     return true;
   });
 }
+
+function getRemoteString(destination, length) {
+  showLoading();
+  var url = "/api/randomString";
+  if (length) {
+    length = parseInt(length);
+    if (length > 0) {
+      url += "?length=" + length;
+    }
+  }
+  $.ajax({
+    url: url,
+    dataType: "json",
+    context: destination
+  }).done(function(data, textStatus, jqXHR) {
+    this.val(data.randomString);
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+    createErrorNotification("Could not execute " + url + ": " + textStatus);
+  }).complete(function(jqXHR, textStatus) {
+    hideLoading();
+  });
+}
