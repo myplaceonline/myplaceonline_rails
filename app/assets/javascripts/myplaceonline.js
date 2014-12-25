@@ -1,5 +1,5 @@
 // myplaceonline.js
-// Version 0.5
+// Version 0.6
 //
 // Notes:
 //  * When changing this file, you may need to apply the same changes to
@@ -706,7 +706,7 @@ function ensureClipboard(objects) {
   if (window.plugins && window.plugins.clipboard) {
     $("[data-clipboard-text]").click( function(e) {
       window.plugins.clipboard.copy($(this).data("clipboard-text"));
-      createSuccessNotification("Copied to clipboard.");
+      createSuccessNotification("Copied '" + $(this).data("clipboard-text") + "' to clipboard.");
       e.preventDefault();
       return false;
     });
@@ -714,7 +714,7 @@ function ensureClipboard(objects) {
     var clipboard = new ZeroClipboard(objects);
     clipboard.on("ready", function(readyEvent) {
       clipboard.on("aftercopy", function(event) {
-        createSuccessNotification("Copied to clipboard.");
+        createSuccessNotification("Copied '" + event.data["text/plain"] + "' to clipboard.");
       });
     });
   }

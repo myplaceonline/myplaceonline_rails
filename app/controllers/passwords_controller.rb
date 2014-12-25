@@ -59,14 +59,14 @@ class PasswordsController < ApplicationController
     Myp.ensure_encryption_key(session)
     @password = find_password
     authorize! :manage, @password
-    @displaypassword = @password.getPassword(session)
+    @displaypassword = @password.get_password(session)
   end
   
   def edit
     Myp.ensure_encryption_key(session)
     @password = find_password
     authorize! :manage, @password
-    @password.password = @password.getPassword(session)
+    @password.password = @password.get_password(session)
     @url = @password
   end
   
@@ -155,7 +155,7 @@ class PasswordsController < ApplicationController
     ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
     if !ifile.nil?
       authorize! :manage, ifile
-      s = Roo::OpenOffice.new(ifile.file.to_file.path, :password => ifile.getPassword(session), :file_warning => :ignore)
+      s = Roo::OpenOffice.new(ifile.file.to_file.path, :password => ifile.get_password(session), :file_warning => :ignore)
       @sheets = s.sheets
     end
   end
@@ -166,7 +166,7 @@ class PasswordsController < ApplicationController
     if !ifile.nil?
       authorize! :manage, ifile
       @encrypt = current_user.encrypt_by_default
-      s = Roo::OpenOffice.new(ifile.file.to_file.path, :password => ifile.getPassword(session), :file_warning => :ignore)
+      s = Roo::OpenOffice.new(ifile.file.to_file.path, :password => ifile.get_password(session), :file_warning => :ignore)
       @sheet = params[:sheet]
       s.default_sheet = s.sheets[s.sheets.index(@sheet)]
       @columns = Array.new

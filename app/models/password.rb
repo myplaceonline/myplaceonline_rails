@@ -12,7 +12,7 @@ class Password < ActiveRecord::Base
     end
   end
   
-  def getPassword(session)
+  def get_password(session)
     if !is_encrypted_password
       password
     else
@@ -20,7 +20,7 @@ class Password < ActiveRecord::Base
     end
   end
   
-  def getURL(prefertls = true)
+  def get_url(prefertls = true)
     result = url
     if !result.to_s.empty?
       if prefertls && result.start_with?("http:")
