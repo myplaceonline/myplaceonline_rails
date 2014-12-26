@@ -14,4 +14,10 @@ if Myp.is_web_server? || Rails.env.test?
     Myp.categories[:passwords] = Category.find_by(:name => :passwords)
     puts "Initialized categories succesfully"
   end
+  
+  if Rails.env.production?
+    Myplaceonline::Application.config.session_store :cookie_store,
+        :key => 'mypsession',
+        :expire_after => 30.minutes
+  end
 end
