@@ -20,7 +20,7 @@
 
     <% @password.password_secrets.each do |secret| %>
     
-      <%= attribute_table_row(secret.question, secret.getAnswer(session)) %>
+      <%= attribute_table_row(secret.question, secret.answer) %>
 
     <% end %>
 

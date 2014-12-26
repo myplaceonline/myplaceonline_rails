@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141226041632) do
+ActiveRecord::Schema.define(version: 20141226063623) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,14 +84,13 @@ ActiveRecord::Schema.define(version: 20141226041632) do
   create_table "password_secrets", force: true do |t|
     t.string   "question"
     t.string   "answer"
-    t.boolean  "is_encrypted_answer"
-    t.integer  "encrypted_answer_id"
+    t.integer  "answer_encrypted_id"
     t.integer  "password_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "password_secrets", ["encrypted_answer_id"], name: "index_password_secrets_on_encrypted_answer_id", using: :btree
+  add_index "password_secrets", ["answer_encrypted_id"], name: "index_password_secrets_on_answer_encrypted_id", using: :btree
   add_index "password_secrets", ["password_id"], name: "index_password_secrets_on_password_id", using: :btree
 
   create_table "passwords", force: true do |t|

@@ -56,7 +56,7 @@
         <%= secret_fields.text_field :question, placeholder: t("myplaceonline.passwords.question") %>
       </p>
       <p>
-        <%= secret_fields.text_field :answer, placeholder: t("myplaceonline.passwords.answer") %>
+        <%= secret_fields.text_field :answer, placeholder: t("myplaceonline.passwords.answer"), value: secret.answer  %>
       </p>
     <% end %>
   <% end %>

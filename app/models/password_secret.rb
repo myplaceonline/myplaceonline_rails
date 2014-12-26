@@ -1,12 +1,7 @@
 class PasswordSecret < ActiveRecord::Base
+  include EncryptedConcern
   belongs_to :password
-  belongs_to :encrypted_answer, class_name: EncryptedValue, dependent: :destroy
-  
-  def getAnswer(session)
-    if !is_encrypted_answer
-      answer
-    else
-      Myp.decrypt_from_session(session, encrypted_answer)
-    end
-  end
+  belongs_to :answer_encrypted,
+      class_name: EncryptedValue, dependent: :destroy, :autosave => true
+  belongs_to_encrypted :answer
 end

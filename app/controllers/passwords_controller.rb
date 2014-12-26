@@ -73,6 +73,7 @@ class PasswordsController < ApplicationController
       
       @password.assign_attributes(password_params)
       @password.password_finalize(@encrypt)
+      @password.password_secrets.each{|secret| secret.answer_finalize(@encrypt)}
 
       if @password.save
         redirect_to @password
@@ -286,14 +287,7 @@ class PasswordsController < ApplicationController
         secret.password = password
         secret.question = s.cell(i, colindices[question_col]).to_s
         secret.answer = s.cell(i, colindices[answer_col]).to_s
-        if !secret.question.empty?
-          if encrypt
-            secret.is_encrypted_answer = true
-            secret.encrypted_answer = Myp.encrypt_from_session(current_user, session, secret.answer)
-            secret.answer = nil
-          end
-          secret.save!
-        end
+        secret.answer_finalize(encrypt)
       end
     end
 end
