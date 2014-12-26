@@ -178,7 +178,7 @@ class PasswordsController < ApplicationController
       end
       last_row = last_row.to_i
       imported_count = 0
-      @encrypt = "1".eql? params[:is_encrypted_password]
+      @encrypt = params[:encrypt] == "true"
       
       inputs = [
                 :password_column, :service_name_column, :user_name_column,

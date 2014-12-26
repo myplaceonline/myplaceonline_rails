@@ -91,11 +91,11 @@ onPageLoad(function() {
       App.PasswordRoute = Ember.Route.extend({
         setupController: function(controller, model) {
           var password = null;
-          if (model.is_encrypted_password) {
+          if (model.password_encrypted_id) {
             var sessionPassword = getSessionPassword();
             var encrypted_value = null;
             $.each(window.appsnapshot.user.encrypted_values, function(i, x) {
-              if (x.id == model.encrypted_password_id) {
+              if (x.id == model.password_encrypted_id) {
                 encrypted_value = x;
                 return false;
               }

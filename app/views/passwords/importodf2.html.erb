@@ -55,8 +55,8 @@
   <%= label_tag 'secret_answer_5_column', nil %>
   <%= select_tag 'secret_answer_5_column', options_for_select(@columns, ""), include_blank: true %>
 
-  <%= check_box_tag :is_encrypted_password, 1, @encrypt %>
-  <%= label_tag :is_encrypted_password, t("myplaceonline.passwords.encryptall") %>
+  <%= check_box_tag :encrypt, true, @encrypt %>
+  <%= label_tag :encrypt, t("myplaceonline.passwords.encryptall") %>
 
   <%= label_tag 'maximum_row', nil, class: "ui-hidden-accessible" %>
   <%= text_field_tag :maximum_row, @max_row, placeholder: t("myplaceonline.passwords.maxrow") %>

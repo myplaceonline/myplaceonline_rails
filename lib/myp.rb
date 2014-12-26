@@ -124,6 +124,9 @@ module Myp
   end
   
   def self.ensure_encryption_key(session)
+    if session.nil?
+      raise SessionUnavailableError
+    end
     if !session.has_key?(:password)
       raise Myp::DecryptionKeyUnavailableError
     end
@@ -264,14 +267,11 @@ module Myp
     logger.error(self.error_details(error))
   end
   
-  class DecryptionKeyUnavailableError < StandardError
-  end
-    
-  class UserUnavailableError < StandardError
-  end
-    
+  class DecryptionKeyUnavailableError < StandardError; end
+  class UserUnavailableError < StandardError; end
   class EncryptedValueUnavailableError < StandardError; end
-    
+  class SessionUnavailableError < StandardError; end
+
   class SimpleSerializer
     def dump(value)
       value
