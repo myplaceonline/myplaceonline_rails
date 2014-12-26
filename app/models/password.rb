@@ -31,12 +31,10 @@ class Password < ExtendedRecord
       )
       self.password = nil
       if password_encrypted?
-        puts "BEFORE: " + self.password_encrypted.inspect
         Myp.copy_encrypted_value_attributes(
           new_encrypted_value,
           self.password_encrypted
         )
-        puts "AFTER: " + self.password_encrypted.inspect
       else
         self.password_encrypted = new_encrypted_value
       end
