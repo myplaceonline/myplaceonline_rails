@@ -106,6 +106,7 @@ en:
       service_name_col_required: "The service name column is required."
       url: "Website"
       notes: "Notes"
+      notes_field: "Notes (supports Markdown syntax)"
       account_number: "Account Number"
       question: "Question"
       answer: "Answer"

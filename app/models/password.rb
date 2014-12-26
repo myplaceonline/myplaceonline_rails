@@ -1,3 +1,5 @@
+require 'kramdown'
+
 class Password < ActiveRecord::Base
   include EncryptedConcern
   belongs_to :identity
@@ -38,5 +40,9 @@ class Password < ActiveRecord::Base
     super.as_json(options).merge({
       :password_secrets => password_secrets.to_a.map{|x| x.as_json}
     })
+  end
+  
+  def notes_html
+    Kramdown::Document.new(notes).to_html
   end
 end

@@ -52,3 +52,4 @@ gem 'eventmachine'
 gem 'trim_blobs'
 gem 'paperclip_database'
 gem 'letter_opener', :group => :development
+gem 'kramdown'
