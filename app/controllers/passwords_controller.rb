@@ -29,22 +29,16 @@ class PasswordsController < ApplicationController
       create
     else
       @password = Password.new
-      @password.is_encrypted_password = current_user.encrypt_by_default
+      @encrypt = current_user.encrypt_by_default
     end
   end
   
   def create
-    @password = Password.new(password_params)
+    @encrypt = params[:encrypt] == "true"
     ActiveRecord::Base.transaction do
+      @password = Password.new(password_params)
       @password.identity_id = current_user.primary_identity.id
-      
-      # Only bother checking encryption if the password is valid
-      # (i.e. the save will fail)
-      if @password.valid?
-        if !encrypt_if_needed(@password)
-          return render :new
-        end
-      end
+      @password.password_finalize(@encrypt)
       
       if @password.save
         Myp.add_point(current_user, :passwords)
@@ -59,38 +53,26 @@ class PasswordsController < ApplicationController
     Myp.ensure_encryption_key(session)
     @password = find_password
     authorize! :manage, @password
-    @displaypassword = @password.get_password(session)
   end
   
   def edit
     Myp.ensure_encryption_key(session)
     @password = find_password
     authorize! :manage, @password
-    @password.password = @password.get_password(session)
     @url = @password
+    @encrypt = @password.password_encrypted?
   end
   
   def update
     Myp.ensure_encryption_key(session)
+    @encrypt = params[:encrypt] == "true"
     @password = find_password
     authorize! :manage, @password
-
+    
     ActiveRecord::Base.transaction do
       
-      @password.attributes=(password_params)
-      
-      # Only bother checking encryption if the password is valid
-      # (i.e. the save will fail)
-      if @password.valid?
-        # if there's an encrypted value and the user unchecked encrypt
-        # then we can delete the encrypted value
-        if !@password.is_encrypted_password && !@password.encrypted_password.nil?
-          @password.encrypted_password.destroy
-        end
-        if !encrypt_if_needed(@password)
-          return render :edit
-        end
-      end
+      @password.assign_attributes(password_params)
+      @password.password_finalize(@encrypt)
 
       if @password.save
         redirect_to @password
@@ -220,11 +202,7 @@ class PasswordsController < ApplicationController
               password.identity_id = current_user.primary_identity.id
 
               password.password = s.cell(i, colindices[:password_column]).to_s
-              if @encrypt
-                password.is_encrypted_password = true
-                password.encrypted_password = Myp.encrypt_from_session(current_user, session, password.password)
-                password.password = nil
-              end
+              password.password_finalize(@encrypt)
 
               password.name = s.cell(i, colindices[:service_name_column]).to_s
               if !colindices[:user_name_column].nil?
@@ -279,12 +257,10 @@ class PasswordsController < ApplicationController
   
   private
     def password_params
-      # Without the require call, render new in create doesn't persist values
       params.require(:password).permit(
         :name,
         :user,
         :password,
-        :is_encrypted_password,
         :url,
         :account_number,
         :notes,
@@ -319,19 +295,5 @@ class PasswordsController < ApplicationController
           secret.save!
         end
       end
-    end
-    
-    def encrypt_if_needed(password)
-      if password.is_encrypted_password
-        encrypted_value = Myp.encrypt_from_session(current_user, session, password.password)
-        if encrypted_value.save
-          password.encrypted_password = encrypted_value
-          password.password = nil
-        else
-          flash.now[:error] = t("myplaceonline.errors.couldnotencrypt")
-          return false
-        end
-      end
-      true
     end
 end

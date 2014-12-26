@@ -1,25 +1,53 @@
-class Password < ActiveRecord::Base  
+class Password < ExtendedRecord
   belongs_to :identity
-  belongs_to :encrypted_password, class_name: EncryptedValue, dependent: :destroy
+  belongs_to :password_encrypted,
+      class_name: EncryptedValue, dependent: :destroy, :autosave => true
   has_many :password_secrets, :dependent => :destroy
-  accepts_nested_attributes_for :password_secrets
+  accepts_nested_attributes_for :password_secrets, allow_destroy: true
   
   validates :name, presence: true
   
-  validates_each :password do |record, attr, value|
-    if (value.nil?) && record.encrypted_password.nil?
-      record.errors.add attr, I18n.t("errors.messages.blank")
-    end
-  end
-  
-  def get_password(session)
-    if !is_encrypted_password
-      password
+  def password
+    if !password_encrypted?
+      super
     else
-      Myp.decrypt_from_session(session, encrypted_password)
+      Myp.decrypt_from_session(
+        ApplicationController.current_session,
+        password_encrypted
+      )
     end
   end
   
+  def password_encrypted?
+    !password_encrypted.nil?
+  end
+  
+  def password_finalize(encrypt)
+    if encrypt
+      new_encrypted_value = Myp.encrypt_from_session(
+        User.current_user,
+        ApplicationController.current_session,
+        self[:password]
+      )
+      self.password = nil
+      if password_encrypted?
+        puts "BEFORE: " + self.password_encrypted.inspect
+        Myp.copy_encrypted_value_attributes(
+          new_encrypted_value,
+          self.password_encrypted
+        )
+        puts "AFTER: " + self.password_encrypted.inspect
+      else
+        self.password_encrypted = new_encrypted_value
+      end
+    else
+      if password_encrypted?
+        self.password_encrypted.destroy!
+        self.password_encrypted = nil
+      end
+    end
+  end
+
   def get_url(prefertls = true)
     result = url
     if !result.to_s.empty?

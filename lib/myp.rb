@@ -146,6 +146,9 @@ module Myp
       message = " "
     end
     value.encryption_type = 1
+    if user.nil?
+      raise Myp::UserUnavailableError
+    end
     value.user = user
     # OpenSSL only uses an 8 byte salt: https://www.openssl.org/docs/crypto/EVP_BytesToKey.html
     # "The standard recommends a salt length of at least [8 bytes]." (http://en.wikipedia.org/wiki/PBKDF2)
@@ -156,7 +159,16 @@ module Myp
     value
   end
   
+  def self.copy_encrypted_value_attributes(source, destination)
+    destination.encryption_type = source.encryption_type
+    destination.salt = source.salt
+    destination.val = source.val
+  end
+  
   def self.decrypt_from_session(session, encrypted_value)
+    if encrypted_value.nil?
+      raise Myp::EncryptedValueUnavailableError
+    end
     self.ensure_encryption_key(session)
     self.decrypt(encrypted_value, session[:password])
   end
@@ -254,6 +266,11 @@ module Myp
   
   class DecryptionKeyUnavailableError < StandardError
   end
+    
+  class UserUnavailableError < StandardError
+  end
+    
+  class EncryptedValueUnavailableError < StandardError; end
     
   class SimpleSerializer
     def dump(value)

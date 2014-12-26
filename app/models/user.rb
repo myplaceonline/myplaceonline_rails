@@ -43,4 +43,12 @@ class User < ActiveRecord::Base
       :encrypted_values => encrypted_values.to_a.map{|x| x.as_json}
     })
   end
+  
+  def self.current_user
+    Thread.current[:current_user]
+  end
+
+  def self.current_user=(usr)
+    Thread.current[:current_user] = usr
+  end
 end

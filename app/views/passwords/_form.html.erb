@@ -21,7 +21,7 @@
 
   <p>
     <%= f.label :password, class: "ui-hidden-accessible" %>
-    <%= f.text_field :password, placeholder: t("myplaceonline.passwords.password") %>
+    <%= f.text_field :password, placeholder: t("myplaceonline.passwords.password"), value: @password.password %>
   </p>
   
   <div data-role="collapsible">
@@ -31,8 +31,8 @@
   </div>
 
   <p>
-    <%= f.check_box :is_encrypted_password %>
-    <%= f.label :is_encrypted_password, t("myplaceonline.passwords.encrypt") %>
+    <%= check_box_tag :encrypt, true, @encrypt %>
+    <%= label_tag :encrypt, t("myplaceonline.passwords.encrypt") %>
   </p>
   
   <p>

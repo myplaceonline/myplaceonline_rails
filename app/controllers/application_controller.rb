@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
   #   skip_before_filter :authenticate_user!
   before_action :authenticate_user!
   
+  around_filter :set_current_user
+  
+  around_filter :set_current_session
+  
   check_authorization
   
   rescue_from Myp::DecryptionKeyUnavailableError do |exception|
@@ -16,5 +20,31 @@ class ApplicationController < ActionController::Base
   
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message
+  end
+  
+  def set_current_user
+    User.current_user = current_user
+    yield
+  ensure
+    User.current_user = nil
+  end
+  
+  def set_current_user
+    User.current_user = current_user
+    yield
+  ensure
+    User.current_user = nil
+  end
+  
+  def set_current_session
+    request_accessor = instance_variable_get(:@_request)
+    Thread.current[:current_session] = request_accessor.session
+    yield
+  ensure
+    Thread.current[:current_session] = nil
+  end
+  
+  def self.current_session
+    Thread.current[:current_session]
   end
 end
