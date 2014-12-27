@@ -10,10 +10,10 @@
       <th></th>
     </tr>
   <tbody>
-    <%= attribute_table_row(t("myplaceonline.passwords.password"), @password.password) %>
     <%= attribute_table_row(t("myplaceonline.passwords.name"), @password.name) %>
+    <%= attribute_table_row(t("myplaceonline.passwords.password"), @password.password) %>
     <%= attribute_table_row(t("myplaceonline.passwords.user"), @password.user) %>
-    <%= attribute_table_row(t("myplaceonline.passwords.isencrypted"), @password.password_encrypted?) %>
+    <!--<%= attribute_table_row(t("myplaceonline.passwords.isencrypted"), @password.password_encrypted?) %>-->
     <%= attribute_table_row(t("myplaceonline.passwords.url"), url_or_blank(@password.get_url, nil, @password.password), @password.password) %>
     <%= attribute_table_row(t("myplaceonline.passwords.account_number"), @password.account_number) %>
     <%= attribute_table_row(t("myplaceonline.passwords.notes"), @password.notes_html, @password.notes) %>

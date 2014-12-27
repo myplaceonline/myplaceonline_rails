@@ -14,6 +14,12 @@ module ApplicationHelper
   end
   
   def attribute_table_row(name, value, clipboard_text = value)
+    puts value.inspect
+    if value.nil? ||
+        (value.is_a?(String) &&
+         (value.strip.length == 0 || value == "&nbsp;"))
+      return nil
+    end
     html = <<-HTML
     <tr>
       <td>#{name}</td>
