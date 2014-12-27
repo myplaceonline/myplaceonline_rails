@@ -115,6 +115,7 @@ en:
       password_length: "Password Length"
       recovery_questions: "Recovery Questions"
       add_question: "Add Question"
+      remove_question: "Delete Question"
     users:
       invite: "Invite Code"
       invite_invalid: "invalid"

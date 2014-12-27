@@ -80,3 +80,9 @@ div.ui-checkbox + label {
 .nomargin {
   margin: 0 !important;
 }
+
+.subtleborder {
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid #D3D3D3;
+}

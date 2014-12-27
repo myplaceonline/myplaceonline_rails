@@ -51,7 +51,7 @@
   </p>
   
 <script type="text/javascript">
-function password_add_question(link, questionPlaceholder, answerPlaceholder) {
+function password_add_question(link, questionPlaceholder, answerPlaceholder, deletePlaceholder) {
   var index = -1;
   $(".question_input").each(function() {
     var id = $(this).attr("id");
@@ -64,10 +64,15 @@ function password_add_question(link, questionPlaceholder, answerPlaceholder) {
     }
   });
   index++;
-  var html = "<p><input id='password_password_secrets_attributes_" + index + "_question' name='password[password_secrets_attributes][" + index + "][question]' placeholder='" + questionPlaceholder + "' type='text' value='' class='question_input' /></p><p><input id='password_password_secrets_attributes_" + index + "_answer' name='password[password_secrets_attributes][" + index + "][answer]' placeholder='" + answerPlaceholder + "' type='text' value='' /></p>";
+  var html = "<div class='subtleborder'><p><input id='password_password_secrets_attributes_" + index + "_question' name='password[password_secrets_attributes][" + index + "][question]' placeholder='" + questionPlaceholder + "' type='text' value='' class='question_input' /></p><p><input id='password_password_secrets_attributes_" + index + "_answer' name='password[password_secrets_attributes][" + index + "][answer]' placeholder='" + answerPlaceholder + "' type='text' value='' /></p><p><a href='#' onclick='return password_remove_question(this);' class='ui-btn'>" + deletePlaceholder + "</a></p></div>";
   $(html).insertBefore($(link));
   ensureStyledPage();
   maybeFocus("#password_password_secrets_attributes_" + index + "_question");
+  return false;
+}
+
+function password_remove_question(link) {
+  $(link).parent().parent("div").hide();
   return false;
 }
 </script>
@@ -76,15 +81,18 @@ function password_add_question(link, questionPlaceholder, answerPlaceholder) {
     <h3><%= t("myplaceonline.passwords.recovery_questions") %></h3>
     <% @password.password_secrets.each do |secret| %>
       <%= f.fields_for :password_secrets, secret do |secret_fields| %>
-        <p>
-          <%= secret_fields.text_field :question, placeholder: t("myplaceonline.passwords.question"), class: "question_input" %>
-        </p>
-        <p>
-          <%= secret_fields.text_field :answer, placeholder: t("myplaceonline.passwords.answer"), value: secret.answer  %>
-        </p>
+        <div class="subtleborder">
+          <p>
+            <%= secret_fields.text_field :question, placeholder: t("myplaceonline.passwords.question"), class: "question_input" %>
+          </p>
+          <p>
+            <%= secret_fields.text_field :answer, placeholder: t("myplaceonline.passwords.answer"), value: secret.answer  %>
+          </p>
+          <p><a href="#" onclick="return password_remove_question(this);" class="ui-btn"><%= t("myplaceonline.passwords.remove_question") %></a></p>
+        </div>
       <% end %>
     <% end %>
-    <p><a href="#" onclick="return password_add_question(this, '<%= t("myplaceonline.passwords.question") %>', '<%= t("myplaceonline.passwords.answer") %>');" class="ui-btn"><%= t("myplaceonline.passwords.add_question") %></a></p>
+    <p><a href="#" onclick="return password_add_question(this, '<%= t("myplaceonline.passwords.question") %>', '<%= t("myplaceonline.passwords.answer") %>', '<%= t("myplaceonline.passwords.remove_question") %>');" class="ui-btn"><%= t("myplaceonline.passwords.add_question") %></a></p>
   </div>
 
   <p>
