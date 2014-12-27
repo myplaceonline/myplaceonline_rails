@@ -110,6 +110,11 @@ en:
       account_number: "Account Number"
       question: "Question"
       answer: "Answer"
+      generate_password: "Generate Password"
+      generate_password_button: "Generate Random Password"
+      password_length: "Password Length"
+      recovery_questions: "Recovery Questions"
+      add_question: "Add Question"
     users:
       invite: "Invite Code"
       invite_invalid: "invalid"
