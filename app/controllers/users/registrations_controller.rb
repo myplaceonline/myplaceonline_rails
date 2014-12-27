@@ -297,6 +297,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
     result
   end
 
+  # http://stackoverflow.com/a/27651940/4135310
+  #
+  # Note: OpenSSL "enc" uses a non-standard file format with a custom key
+  # derivation function and a fixed iteration count of 1, which some consider
+  # less secure than alternatives such as OpenPGP/GnuPG
+  #
   # Resulting bytes when written to #{FILE} may be decrypted from the command
   # line with `openssl enc -d -#{cipher} -md #{md} -in #{FILE}`
   #
@@ -308,7 +314,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     cipher = @@DEFAULT_CIPHER,
     md = @@DEFAULT_MD.new
   )
-    salt = Random.new.bytes(8)
+    salt = SecureRandom.random_bytes(8)
     cipher = OpenSSL::Cipher::Cipher.new(cipher)
     cipher.encrypt
     cipher.pkcs5_keyivgen(password, salt, 1, md)
@@ -321,7 +327,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # and the resulting bytes may be read by this function.
   #
   # Example:
-  #  openssl enc -aes-256-cbc -md sha256 -in file.txt -out file.txt.encrypted`
+  #  openssl enc -aes-256-cbc -md sha256 -in file.txt -out file.txt.encrypted
   def decrypt_from_openssl(
     password,
     data,
