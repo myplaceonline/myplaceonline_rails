@@ -2,9 +2,27 @@ module Myp
   # See https://github.com/digitalbazaar/forge/issues/207
   @@DEFAULT_AES_KEY_SIZE = 32
   @categories = Hash.new
+
+  # We want at least 128 bits of randomness, so
+  # min(POSSIBILITIES_*.length)^DEFAULT_PASSWORD_LENGTH should be >= 2^128
+  @@DEFAULT_PASSWORD_LENGTH = 22  
+  @@POSSIBILITIES_ALPHANUMERIC = [('0'..'9'), ('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
+  @@POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL = [('0'..'9'), ('a'..'z'), ('A'..'Z'), ['_', '-', '!']].map { |i| i.to_a }.flatten
   
   def self.is_web_server?
     defined?(Rails::Server) || defined?(::PhusionPassenger)
+  end
+  
+  def self.default_password_length
+    @@DEFAULT_PASSWORD_LENGTH
+  end
+  
+  def self.password_possibilities_alphanumeric
+    @@POSSIBILITIES_ALPHANUMERIC
+  end
+  
+  def self.password_possibilities_alphanumeric_plus_special
+    @@POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL
   end
   
   # Return a list of CategoryForIdentity objects.
@@ -156,6 +174,8 @@ module Myp
     # OpenSSL only uses an 8 byte salt: https://www.openssl.org/docs/crypto/EVP_BytesToKey.html
     # "The standard recommends a salt length of at least [8 bytes]." (http://en.wikipedia.org/wiki/PBKDF2)
     value.salt = SecureRandom.random_bytes(8)
+    # This uses PBKDF2+HMAC+SHA1 with an iteration count is 65536:
+    # https://github.com/rails/rails/blob/master/activesupport/lib/active_support/key_generator.rb
     generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(value.salt, @@DEFAULT_AES_KEY_SIZE)
     crypt = ActiveSupport::MessageEncryptor.new(generated_key, :serializer => SimpleSerializer.new)
     value.val = crypt.encrypt_and_sign(message)

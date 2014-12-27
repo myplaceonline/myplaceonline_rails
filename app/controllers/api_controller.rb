@@ -1,9 +1,5 @@
 class ApiController < ApplicationController
 
-  @@DEFAULT_PASSWORD_LENGTH = 16  
-  @@POSSIBILITIES_ALPHANUMERIC = [('0'..'9'), ('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
-  @@POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL = [('0'..'9'), ('a'..'z'), ('A'..'Z'), ['_', '-', '!']].map { |i| i.to_a }.flatten
-  
   skip_authorization_check
   
   def index
@@ -16,14 +12,14 @@ class ApiController < ApplicationController
   end
   
   def randomString
-    length = @@DEFAULT_PASSWORD_LENGTH
+    length = Myp.default_password_length
     if !params[:length].nil?
       length = params[:length].to_i
-      if length < 0 || length > 512
-        @@DEFAULT_PASSWORD_LENGTH
+      if length <= 0 || length > 512
+        Myp.default_password_length
       end
     end
-    possibilities = @@POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL
+    possibilities = Myp.password_possibilities_alphanumeric_plus_special
     result = (0...length).map { possibilities[SecureRandom.random_number(possibilities.length)] }.join
     render json: {
       :randomString => result
