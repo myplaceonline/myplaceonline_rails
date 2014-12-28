@@ -11,7 +11,7 @@
     </tr>
   <tbody>
     <%= attribute_table_row(t("myplaceonline.passwords.name"), @password.name) %>
-    <%= attribute_table_row(t("myplaceonline.passwords.password"), @password.password) %>
+    <%= attribute_table_row(t("myplaceonline.passwords.password"), @password.password, @password.password, "bghighlight") %>
     <%= attribute_table_row(t("myplaceonline.passwords.user"), @password.user) %>
     <!--<%= attribute_table_row(t("myplaceonline.passwords.isencrypted"), @password.password_encrypted?) %>-->
     <%= attribute_table_row(t("myplaceonline.passwords.url"), url_or_blank(@password.get_url, nil, @password.password), @password.password) %>

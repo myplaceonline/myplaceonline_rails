@@ -86,3 +86,7 @@ div.ui-checkbox + label {
   margin: 5px;
   border: 1px solid #D3D3D3;
 }
+
+.bghighlight {
+  background-color: #ADFF2F;
+}

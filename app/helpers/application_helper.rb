@@ -13,7 +13,7 @@ module ApplicationHelper
     html.html_safe
   end
   
-  def attribute_table_row(name, value, clipboard_text = value)
+  def attribute_table_row(name, value, clipboard_text = value, valueclass = "")
     if value.nil? ||
         (value.is_a?(String) &&
          (value.strip.length == 0 || value == "&nbsp;"))
@@ -22,7 +22,7 @@ module ApplicationHelper
     html = <<-HTML
     <tr>
       <td>#{name}</td>
-      <td>#{value}</td>
+      <td class="#{valueclass}">#{value}</td>
       <td>
         #{
           content_tag(
