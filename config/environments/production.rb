@@ -59,6 +59,13 @@ Rails.application.configure do
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
   # config.assets.precompile += %w( search.js )
+  
+  # http://stackoverflow.com/a/5015920/4135310
+  config.before_configuration do
+    I18n.locale = :en
+    I18n.load_path += Dir[Rails.root.join('config', 'locales', 'en.yml').to_s]
+    I18n.reload!
+  end
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
