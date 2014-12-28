@@ -296,6 +296,21 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
     result
   end
+  
+  # Encrypt:
+  # $ echo "Hello World" | gpg --symmetric --cipher-algo AES256 -o test.txt.pgp
+  # Decrypt:
+  # $ gpg --decrypt test.txt.pgp
+  #
+  # We can't seem to use ruby-gpgme because of
+  # https://github.com/ueno/ruby-gpgme/issues/11
+  #
+  # TODO Write RFC 4880 compliant file without requiring the gpg executable
+  #      Rubygem openpgp doesn't work:
+  #      https://github.com/bendiken/openpgp/issues/2
+  def encrypt_for_pgp(password, data)
+    raise NotImplementedError
+  end
 
   # http://stackoverflow.com/a/27651940/4135310
   #

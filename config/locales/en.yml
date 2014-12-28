@@ -114,7 +114,7 @@ en:
       answer: "Answer"
       generate_password: "Generate Password"
       generate_password_button: "Generate Random Password"
-      password_length: "Password Length"
+      password_length: "Password Length (Optional)"
       recovery_questions: "Recovery Questions"
       add_question: "Add Question"
       remove_question: "Delete Question"
