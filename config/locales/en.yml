@@ -76,6 +76,9 @@ en:
     info:
       title: "Information"
       apk: "Android APK"
+      contact: "Contact"
+      credits: "Credits"
+      credits_description: "Thank you to the following projects:"
     search:
       title: "Search"
       placeholder: "Search"

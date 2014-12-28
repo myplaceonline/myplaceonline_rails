@@ -1,8 +1,27 @@
 <% content_for :heading do -%><%= t('myplaceonline.info.title') %><% end -%>
 
-<p><b><%= t("myplaceonline.email") %></b>: <%= mail_to(t("myplaceonline.siteEmail")) %></p>
+<ul data-role="listview" data-inset="true">
+  <li>
+    <%= link_to(info_contact_path) do %>
+      <%= image_tag("famfamfam/email.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.info.contact") %>
+    <% end %>
+  </li>
+  <li>
+    <%= link_to("https://build.phonegap.com/apps/1133885/download/android/", :data => { :ajax => false }) do %>
+      <%= image_tag("android16x16.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.info.apk") %>
+    <% end %>
+  </li>
+  <li>
+    <%= link_to(info_credits_path) do %>
+      <%= image_tag("famfamfam/heart.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.info.credits") %>
+    <% end %>
+  </li>
+</ul>
 
-<p><b><%= t('myplaceonline.info.apk') %></b>: <a href="https://build.phonegap.com/apps/1133885/download/android/">https://build.phonegap.com/apps/1133885/download/android/</a></p>
+<% if user_signed_in? %>
 
 <hr />
 
@@ -11,3 +30,5 @@
 <p><a href="#" class="ui-btn" onclick="myp.debug=true; consoleDir($.mobile.path.documentUrl); showDebugConsole(); return false;">Debug</a></p>
 
 <p><a href="#" class="ui-btn" onclick="createSuccessNotification('Test'); return false;">Test Noty</a></p>
+
+<% end %>

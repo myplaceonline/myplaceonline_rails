@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   get 'search', :to => 'search#index'
 
   get 'info/index'
+  get 'info/contact'
+  get 'info/credits'
   get 'info', :to => 'info#index'
   
   get 'offline/index'
