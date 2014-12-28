@@ -23,7 +23,7 @@ module ApplicationHelper
     <tr>
       <td>#{name}</td>
       <td class="#{valueclass}">#{value}</td>
-      <td>
+      <td style="padding: 0 5px 0 5px; vertical-align: middle;">
         #{
           content_tag(
             :a,
