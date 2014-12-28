@@ -298,7 +298,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   
   # Encrypt:
-  # $ echo "Hello World" | gpg --symmetric --cipher-algo AES256 -o test.txt.pgp
+  # $ echo "Hello World" | gpg --symmetric --cipher-algo AES256 --s2k-digest-algo SHA512 -o test.txt.pgp
   # Decrypt:
   # $ gpg --decrypt test.txt.pgp
   #
