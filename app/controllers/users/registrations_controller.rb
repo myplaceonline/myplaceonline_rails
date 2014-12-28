@@ -328,7 +328,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       begin
         gpgbin = "/usr/bin/gpg"
         command = "#{gpgbin} --batch --passphrase-fd 0 --yes --homedir /tmp " +
-          "--cipher-algo #{cipher} --s2k-digest-algo #{md.name} " +
+          "--force-mdc --cipher-algo #{cipher} --s2k-digest-algo #{md.name} " +
           "-o #{output_file.path} --symmetric #{input_file.path}"
         Open3.popen3(command) do |stdin, stdout, stderr, wait_thr|
           stdin.write(password)

@@ -83,6 +83,7 @@ en:
         * General Features
           * Export all data to a [JSON](https://en.wikipedia.org/wiki/JSON) file with the option of encrypting it in a standardized, [OpenPGP](https://tools.ietf.org/html/rfc4880) format which can be decrypted with [GnuPG](https://www.gnupg.org/) or [PGP](http://www.symantec.com/encryption/).
           * Save exported data in offline browser storage and display some of it even without internet.
+            * Even if your phone is hacked, your passwords in offline storage are encrypted.
         ]]>
       search: "Search"
       recentlyused: "Recently Used"
@@ -104,9 +105,13 @@ en:
 
         Positive education: positive psychology and classroom interventions, Seligmana et al, Oxford Review of Education, 2009, [http://www.ppc.sas.upenn.edu/positiveeducationarticle2009.pdf](http://www.ppc.sas.upenn.edu/positiveeducationarticle2009.pdf)
 
-        ## What type of encryption is used?
+        ## How is data encrypted when stored in the database or in offline browser storage?
 
-        [AES-256-CBC](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard)
+        Symmetric [AES-256-CBC](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) and a [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2)+HMAC+SHA1 key derivation function with an 8 byte salt and 65536 iterations.
+        
+        ## How is data encrypted when exported to JSON?
+
+        Symmetric [AES-256](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) and an [S2K](https://tools.ietf.org/html/rfc4880)+SHA512 salted, iterated key derivation function with an 8 byte salt and 65536 iterations.
         
         ]]>
     search:
