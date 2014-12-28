@@ -19,16 +19,10 @@
       <%= t("myplaceonline.info.credits") %>
     <% end %>
   </li>
+  <li>
+    <%= link_to(info_diagnostics_path) do %>
+      <%= image_tag("famfamfam/bug.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.info.diagnostics") %>
+    <% end %>
+  </li>
 </ul>
-
-<% if user_signed_in? %>
-
-<hr />
-
-<p><a href="#" class="ui-btn" onclick="myp.debug=true; alertHTML(); return false;">Show HTML</a></p>
-
-<p><a href="#" class="ui-btn" onclick="myp.debug=true; consoleDir($.mobile.path.documentUrl); showDebugConsole(); return false;">Debug</a></p>
-
-<p><a href="#" class="ui-btn" onclick="createSuccessNotification('Test'); return false;">Test Noty</a></p>
-
-<% end %>

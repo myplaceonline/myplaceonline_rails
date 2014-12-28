@@ -1,0 +1,7 @@
+<% content_for :heading do -%><%= t('myplaceonline.info.diagnostics') %><% end -%>
+
+<ul data-role="listview" data-inset="true">
+  <li><a href="#" onclick="myp.debug=true; alertHTML(); return false;">Show HTML</a></li>
+  <li><a href="#" onclick="myp.debug=true; consoleDir($.mobile.path.documentUrl); showDebugConsole(); return false;">Debug</a></li>
+  <li><a href="#" onclick="createSuccessNotification('Test'); return false;">Test Noty</a></li>
+</ul>

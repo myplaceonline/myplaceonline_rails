@@ -79,6 +79,7 @@ en:
       contact: "Contact"
       credits: "Credits"
       credits_description: "Thank you to the following projects:"
+      diagnostics: "Diagnostics"
     search:
       title: "Search"
       placeholder: "Search"

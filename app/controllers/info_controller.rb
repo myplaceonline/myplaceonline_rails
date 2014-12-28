@@ -5,4 +5,5 @@ class InfoController < ApplicationController
   def index; end
   def contact; end
   def credits; end
+  def diagnostics; end
 end
