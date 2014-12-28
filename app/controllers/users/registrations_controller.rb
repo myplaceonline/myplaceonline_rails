@@ -326,11 +326,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
       input_file.close
       output_file = Tempfile.new('output')
       begin
-        Open3.popen3(
-          "/usr/bin/gpg --batch --passphrase-fd 0 --yes " +
+        gpgbin = "/usr/bin/gpg"
+        command = "#{gpgbin} --batch --passphrase-fd 0 --yes --homedir /tmp " +
           "--cipher-algo #{cipher} --s2k-digest-algo #{md.name} " +
           "-o #{output_file.path} --symmetric #{input_file.path}"
-        ) do |stdin, stdout, stderr, wait_thr|
+        Open3.popen3(command) do |stdin, stdout, stderr, wait_thr|
           stdin.write(password)
           stdin.close_write
           exit_status = wait_thr.value
