@@ -15,7 +15,7 @@ module Myp
   
   def self.website_init
     @@WELCOME_FEATURES = self.get_welcome_features
-    @@CONTENT_FAQ = self.content_faq
+    @@CONTENT_FAQ = self.get_content_faq
   end
   
   def self.parse_yaml_to_html(id)
