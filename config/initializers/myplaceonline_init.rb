@@ -6,9 +6,9 @@ class String
   end
 end
 
-Myp.init
-
 if Myp.is_web_server? || Rails.env.test?
+  Myp.website_init
+
   if ActiveRecord::Base.connection.table_exists?(Category.table_name)
     Myp.categories[:order] = Category.find_by(:name => :order)
     Myp.categories[:joy] = Category.find_by(:name => :joy)
