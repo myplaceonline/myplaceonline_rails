@@ -14,6 +14,12 @@
     <% end %>
   </li>
   <li>
+    <%= link_to(info_faq_path) do %>
+      <%= image_tag("famfamfam/help.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.info.faq") %>
+    <% end %>
+  </li>
+  <li>
     <%= link_to(info_credits_path) do %>
       <%= image_tag("famfamfam/heart.png", size: "16x16", class: "ui-li-icon") %>
       <%= t("myplaceonline.info.credits") %>

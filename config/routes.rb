@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get 'info/contact'
   get 'info/credits'
   get 'info/diagnostics'
+  get 'info/faq'
   get 'info', :to => 'info#index'
   
   get 'offline/index'

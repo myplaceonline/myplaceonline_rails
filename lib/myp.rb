@@ -1,3 +1,5 @@
+require 'i18n'
+
 module Myp
   # See https://github.com/digitalbazaar/forge/issues/207
   @@DEFAULT_AES_KEY_SIZE = 32
@@ -8,6 +10,27 @@ module Myp
   @@DEFAULT_PASSWORD_LENGTH = 22  
   @@POSSIBILITIES_ALPHANUMERIC = [('0'..'9'), ('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
   @@POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL = [('0'..'9'), ('a'..'z'), ('A'..'Z'), ['_', '-', '!']].map { |i| i.to_a }.flatten
+  @@WELCOME_FEATURES = nil
+  @@CONTENT_FAQ = nil
+  
+  def self.init
+    @@WELCOME_FEATURES = self.get_welcome_features
+  end
+  
+  def self.parse_yaml_to_html(id)
+    str = I18n.t(id)
+    xml = Nokogiri::XML("<xml>#{str}</xml>")
+    cdata = xml.root.xpath("//xml").children.find{|e| e.cdata?}
+    markdown_to_html(cdata.text.strip)
+  end
+  
+  def self.get_welcome_features
+    self.parse_yaml_to_html("myplaceonline.welcome.features")
+  end
+  
+  def self.get_content_faq
+    self.parse_yaml_to_html("myplaceonline.info.faq_content")
+  end
   
   def self.is_web_server?
     defined?(Rails::Server) || defined?(::PhusionPassenger)
@@ -23,6 +46,22 @@ module Myp
   
   def self.password_possibilities_alphanumeric_plus_special
     @@POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL
+  end
+  
+  def self.welcome_features
+    if Rails.env.production?
+      @@WELCOME_FEATURES
+    else
+      self.get_welcome_features
+    end
+  end
+  
+  def self.content_faq
+    if Rails.env.production?
+      @@CONTENT_FAQ
+    else
+      self.get_content_faq
+    end
   end
   
   # Return a list of CategoryForIdentity objects.
@@ -300,5 +339,9 @@ module Myp
     def load(value)
       value
     end
+  end
+  
+  def self.markdown_to_html(markdown)
+    Kramdown::Document.new(markdown).to_html
   end
 end

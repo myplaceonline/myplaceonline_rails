@@ -18,6 +18,8 @@
   <%= link_to t("myplaceonline.buttons.signup"), new_user_registration_path, :class => 'ui-btn ui-btn-icon-left ui-icon-user ui-btn-inline'  %>
 </div>
 
+<%= raw(Myp.welcome_features) %>
+
 <% else %>
 
 <div class="ui-grid-a myplaceonline_welcome_headergrid">

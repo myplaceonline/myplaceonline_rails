@@ -44,6 +44,6 @@ class Password < ActiveRecord::Base
   end
   
   def notes_html
-    Kramdown::Document.new(notes).to_html
+    Myp.markdown_to_html(notes)
   end
 end

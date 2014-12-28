@@ -6,4 +6,5 @@ class InfoController < ApplicationController
   def contact; end
   def credits; end
   def diagnostics; end
+  def faq; end
 end

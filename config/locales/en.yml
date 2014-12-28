@@ -68,9 +68,22 @@ en:
     welcome:
       intro_html: "myplaceonline is a virtual life assistant. We'll never sell your private data. The code is %{opensourcelink} if you want to review it or run it on your computer."
       opensourcelink: "open source"
-      features:
-        intro: "Features:"
-        passwords: "Manage passwords."
+      features: !xml |
+        <![CDATA[
+        ### Features
+
+        * Points system tracks life across three categories related to [happiness](/info/faq): order, joy, and meaning.
+        * General Features
+          * Export all data to a [JSON](https://en.wikipedia.org/wiki/JSON) file with the option of encrypting it in a standardized, [OpenPGP](https://tools.ietf.org/html/rfc4880) format which can be decrypted with [GnuPG](https://www.gnupg.org/) or [PGP](http://www.symantec.com/encryption/).
+          * Save exported data in offline browser storage and display some of it even without internet.
+        * Order
+          * Manage online passwords (user name, password, URL, notes, recovery questions & answers, etc.)
+            * Optionally encrypt passwords for storage in the database.
+            * Import passwords from an OpenDocument .ods spreadsheet (with support for encrypted spreadsheets).
+            * Generate random passwords.
+            * Quickly copy passwords to the clipboard.
+            * Password notes support [Markdown](http://daringfireball.net/projects/markdown/syntax) syntax.
+        ]]>
       search: "Search"
       recentlyused: "Recently Used"
     info:
@@ -80,6 +93,22 @@ en:
       credits: "Credits"
       credits_description: "Thank you to the following projects:"
       diagnostics: "Diagnostics"
+      faq: "Frequently Asked Questions"
+      faq_content: !xml |
+        <![CDATA[
+        # Frequently Asked Questions
+        
+        ## <a name="theory"></a>What is the theory of the categories?
+        
+        > ‘Happiness’ is too worn and too weary a term to be of much scientific use, and the discipline of Positive Psychology divides it into three very different realms, each of which is measurable and, most importantly, each of which is skill-based and can be taught (Seligman, 2002). The first is hedonic: positive emotion (joy, love, contentment, pleasure etc.). A life led around having as much of this good stuff as possible, is the ‘Pleasant Life’. The second, much closer to what Thomas Jefferson and Aristotle sought, is the state of flow, and a life led around it is the ‘Engaged Life’. Flow, a major part of the Engaged Life, consists in a loss of self-consciousness, time stopping for you, being ‘one with the music’ (Csikszentmihalyi, 1990). Importantly engagement seems to be the opposite of positive emotion: when one is totally absorbed, no thoughts or feelings are present—even though one says afterwards ‘that was fun’ (Delle Fave & Massimini, 2005). And while there are shortcuts to positive emotion—you can take drugs, masturbate, watch television, or go shopping—there are no shortcuts to flow. Flow only occurs when you deploy your highest strengths and talents to meet the challenges that come your way, and it is clear that flow facilitates learning. The third realm in the framework of Positive Psychology is the one with the best intellectual provenance, the Meaningful Life. Flow and positive emotion can be found in solipsistic pursuits, but not meaning or purpose. Meaning is increased through our connections to others, future generations, or causes that transcend the self (Durkheim, 1951/1897; Erikson, 1963). From a Positive Psychology perspective, meaning consists in knowing what your highest strengths are, and then using them to belong to and serve something you believe is larger than the self (Seligman, 2002).
+
+        Positive education: positive psychology and classroom interventions, Seligmana et al, Oxford Review of Education, 2009, [http://www.ppc.sas.upenn.edu/positiveeducationarticle2009.pdf](http://www.ppc.sas.upenn.edu/positiveeducationarticle2009.pdf)
+
+        ## What type of encryption is used?
+
+        [AES-256-CBC](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard)
+        
+        ]]>
     search:
       title: "Search"
       placeholder: "Search"

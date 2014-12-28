@@ -6,6 +6,8 @@ class String
   end
 end
 
+Myp.init
+
 if Myp.is_web_server? || Rails.env.test?
   if ActiveRecord::Base.connection.table_exists?(Category.table_name)
     Myp.categories[:order] = Category.find_by(:name => :order)
