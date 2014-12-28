@@ -1,11 +1,14 @@
 require "openssl"
 require "digest/sha2"
+require "open3"
+require "tempfile"
 
 class Users::RegistrationsController < Devise::RegistrationsController
   
   @@OPENSSL_MAGIC = "Salted__"
-  @@DEFAULT_CIPHER = "aes-256-cbc"
-  @@DEFAULT_MD = OpenSSL::Digest::SHA256
+  @@OPENSSL_DEFAULT_CIPHER = "aes-256-cbc"
+  @@OPENPGP_DEFAULT_CIPHER = "AES256"
+  @@DEFAULT_MD = OpenSSL::Digest::SHA512
   
   skip_authorization_check
   
@@ -175,10 +178,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
     filename = "myplaceonline_export_" + DateTime.now.strftime("%Y%m%d-%H%M%S%z") + ".json"
     if @encrypt
-      filename += ".encrypted"
       # The page that shows this example command will be a different request
       # from the actual download, so the filename might not be the same
-      @command = "openssl enc -d -#{@@DEFAULT_CIPHER} -md #{@@DEFAULT_MD.new.name.downcase} -in file.encrypted"
+
+      filename += ".pgp"
+      @command = "gpg --decrypt file.pgp"
+
+      #filename += ".encrypted"
+      #@command = "openssl enc -d -#{@@OPENSSL_DEFAULT_CIPHER} -md #{@@DEFAULT_MD.new.name.downcase} -in file.encrypted"
     end
     if request.format == "text/javascript"
       @jscontent = exported_json(@encrypt, true)
@@ -292,24 +299,53 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
     if encrypt
       password = Myp.ensure_encryption_key(session)
-      result = encrypt_for_openssl(password, result)
+
+      result = encrypt_for_pgp(password, result)
+
+      #result = encrypt_for_openssl(password, result)
     end
     result
   end
   
-  # Encrypt:
-  # $ echo "Hello World" | gpg --symmetric --cipher-algo AES256 --s2k-digest-algo SHA512 -o test.txt.pgp
-  # Decrypt:
-  # $ gpg --decrypt test.txt.pgp
+  # Return symmetrically encrypted bytes in RFC 4880 format which can be
+  # read by GnuPG or PGP. For example:
+  # $ gpg --decrypt file.pgp
   #
-  # We can't seem to use ruby-gpgme because of
-  # https://github.com/ueno/ruby-gpgme/issues/11
-  #
-  # TODO Write RFC 4880 compliant file without requiring the gpg executable
-  #      Rubygem openpgp doesn't work:
-  #      https://github.com/bendiken/openpgp/issues/2
-  def encrypt_for_pgp(password, data)
-    raise NotImplementedError
+  # ruby-gpgme doesn't seem to work: https://github.com/ueno/ruby-gpgme/issues/11
+  # openpgp doesn't seem to work: https://github.com/bendiken/openpgp/issues/2
+  # Therefore we assume gpg is installed and try to spawn out to it
+  def encrypt_for_pgp(
+    password,
+    data,
+    cipher = @@OPENPGP_DEFAULT_CIPHER,
+    md = @@DEFAULT_MD.new
+  )
+    input_file = Tempfile.new('input')
+    begin
+      input_file.write(data)
+      input_file.close
+      output_file = Tempfile.new('output')
+      begin
+        Open3.popen3(
+          "gpg --batch --passphrase-fd 0 --yes " +
+          "--cipher-algo #{cipher} --s2k-digest-algo #{md.name} " +
+          "-o #{output_file.path} --symmetric #{input_file.path}"
+        ) do |stdin, stdout, stderr, wait_thr|
+          stdin.write(password)
+          stdin.close_write
+          exit_status = wait_thr.value
+          if exit_status != 0
+            raise "Exit status " + exit_status.to_s
+          end
+        end
+        output_file.close
+        return IO.binread(output_file.path)
+      ensure
+        output_file.unlink
+      end
+    ensure
+      input_file.unlink
+    end
   end
 
   # http://stackoverflow.com/a/27651940/4135310
@@ -326,7 +362,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def encrypt_for_openssl(
     password,
     data,
-    cipher = @@DEFAULT_CIPHER,
+    cipher = @@OPENSSL_DEFAULT_CIPHER,
     md = @@DEFAULT_MD.new
   )
     salt = SecureRandom.random_bytes(8)
@@ -346,7 +382,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def decrypt_from_openssl(
     password,
     data,
-    cipher = @@DEFAULT_CIPHER,
+    cipher = @@OPENSSL_DEFAULT_CIPHER,
     md = @@DEFAULT_MD.new
   )
     input_magic = data.slice!(0, 8)
