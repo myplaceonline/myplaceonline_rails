@@ -265,7 +265,7 @@ class PasswordsController < ApplicationController
         :url,
         :account_number,
         :notes,
-        password_secrets_attributes: [:id, :question, :answer]
+        password_secrets_attributes: [:id, :question, :answer, :_destroy]
       )
     end
 

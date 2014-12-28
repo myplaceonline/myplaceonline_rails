@@ -51,16 +51,23 @@
   </p>
   
 <script type="text/javascript">
+
+function get_index_from_id(obj) {
+  var id = $(obj).attr("id");
+  if (id) {
+    id = id.substring(0, id.lastIndexOf('_'));
+    id = parseInt(id.substring(id.lastIndexOf('_') + 1));
+    return id;
+  }
+  return -1;
+}
+
 function password_add_question(link, questionPlaceholder, answerPlaceholder, deletePlaceholder) {
   var index = -1;
   $(".question_input").each(function() {
-    var id = $(this).attr("id");
-    if (id) {
-      id = id.substring(0, id.lastIndexOf('_'));
-      id = parseInt(id.substring(id.lastIndexOf('_') + 1));
-      if (id > index) {
-        index = id;
-      }
+    var id = get_index_from_id($(this));
+    if (id > index) {
+      index = id;
     }
   });
   index++;
@@ -72,7 +79,22 @@ function password_add_question(link, questionPlaceholder, answerPlaceholder, del
 }
 
 function password_remove_question(link) {
-  $(link).parent().parent("div").hide();
+  var div = $(link).parent().parent("div");
+  var question = div.find(".question_input").first();
+  if (question) {
+    var index = get_index_from_id(question);
+    var destroy_id = "password_password_secrets_attributes_" + index + "__destroy";
+    var destroy_name = "password[password_secrets_attributes][" + index + "][_destroy]";
+    var existing_destroy = $("#" + destroy_id);
+    if (existing_destroy.length) {
+      existing_destroy.val("1");
+    } else {
+      var html = "<input type='hidden' id='" + destroy_id + "' name='" + destroy_name + "' value='1' />";
+      $(html).insertBefore(question);
+    }
+  }
+  div.hide();
+  createSuccessNotification("<%= t("myplaceonline.general.child_attribute_removed") %>");
   return false;
 }
 </script>
