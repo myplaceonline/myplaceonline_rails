@@ -111,7 +111,7 @@ en:
         
         ## How is data encrypted when exported to JSON?
 
-        Symmetric [AES-256](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) and an [S2K](https://tools.ietf.org/html/rfc4880)+SHA512 salted, iterated key derivation function with an 8 byte salt and 65536 iterations.
+        Symmetric [AES-256](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) and an [S2K](https://tools.ietf.org/html/rfc4880)+SHA512 iterated key derivation function with an 8 byte salt and 65536 iterations.
         
         ]]>
     search:
