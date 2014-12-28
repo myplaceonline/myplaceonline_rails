@@ -22,7 +22,11 @@ module Myp
     str = I18n.t(id)
     xml = Nokogiri::XML("<xml>#{str}</xml>")
     cdata = xml.root.xpath("//xml").children.find{|e| e.cdata?}
-    markdown_to_html(cdata.text.strip)
+    if !cdata.nil?
+      markdown_to_html(cdata.text.strip)
+    else
+      raise "nil CDATA for #{xml}"
+    end
   end
   
   def self.get_welcome_features
