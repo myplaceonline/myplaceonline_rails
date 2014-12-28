@@ -327,7 +327,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       output_file = Tempfile.new('output')
       begin
         Open3.popen3(
-          "gpg --batch --passphrase-fd 0 --yes " +
+          "/usr/bin/gpg --batch --passphrase-fd 0 --yes " +
           "--cipher-algo #{cipher} --s2k-digest-algo #{md.name} " +
           "-o #{output_file.path} --symmetric #{input_file.path}"
         ) do |stdin, stdout, stderr, wait_thr|
