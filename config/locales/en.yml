@@ -50,6 +50,8 @@ en:
       metadescription: "myplaceonline is a virtual life assistant."
       metakeywords: "myplaceonline, virtual life assistant, life assistant, organizer, passwords"
       submit: "Submit"
+      created: "Created"
+      last_updated: "Last Updated"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"

@@ -65,4 +65,9 @@ module ApplicationHelper
       "&nbsp;"
     end
   end
+  
+  def display_time(time)
+    time.in_time_zone(Rails.application.config.time_zone)
+    #time.in_time_zone(ActiveSupport::TimeZone["Pacific Time (US & Canada)"])
+  end
 end

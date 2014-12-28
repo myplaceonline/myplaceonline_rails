@@ -17,6 +17,8 @@
     <%= attribute_table_row(t("myplaceonline.passwords.url"), url_or_blank(@password.get_url, nil, @password.password), @password.password) %>
     <%= attribute_table_row(t("myplaceonline.passwords.account_number"), @password.account_number) %>
     <%= attribute_table_row(t("myplaceonline.passwords.notes"), @password.notes_html, @password.notes) %>
+    <%= attribute_table_row(t("myplaceonline.general.created"), display_time(@password.created_at)) %>
+    <%= attribute_table_row(t("myplaceonline.general.last_updated"), display_time(@password.updated_at)) %>
 
     <% @password.password_secrets.each do |secret| %>
     
