@@ -75,13 +75,13 @@ en:
         * Points system tracks life across three categories related to [happiness](/info/faq): order, joy, and meaning.
         * Order
           * Manage online passwords (user name, password, URL, notes, recovery questions & answers, etc.)
-            * Optionally encrypt passwords in the database so that even if the website is hacked, your passwords are encrypted.
+            * Optionally encrypt passwords in the database so that even if the website is hacked, your passwords are encrypted with a key only you have.
             * Import passwords from an OpenDocument .ods spreadsheet (with support for encrypted spreadsheets).
             * Generate random passwords.
             * Quickly copy passwords to the clipboard.
-            * Password notes support [Markdown](http://daringfireball.net/projects/markdown/syntax) syntax.
+            * Password notes support Markdown syntax.
         * General Features
-          * Export all data to a [JSON](https://en.wikipedia.org/wiki/JSON) file with the option of encrypting it in a standardized, [OpenPGP](https://tools.ietf.org/html/rfc4880) format which can be decrypted with [GnuPG](https://www.gnupg.org/) or [PGP](http://www.symantec.com/encryption/).
+          * Export all data to a downlodable file with the option of encrypting it in a standardized format which can be decrypted with the open source gpg tool.
           * Save exported data in offline browser storage and display some of it even without internet.
             * Even if your phone is hacked, your passwords in offline storage are encrypted.
         ]]>

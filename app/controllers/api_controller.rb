@@ -16,7 +16,7 @@ class ApiController < ApplicationController
     if !params[:length].nil?
       length = params[:length].to_i
       if length <= 0 || length > 512
-        Myp.default_password_length
+        length = Myp.default_password_length
       end
     end
     possibilities = Myp.password_possibilities_alphanumeric_plus_special
