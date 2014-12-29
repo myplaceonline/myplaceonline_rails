@@ -23,7 +23,7 @@ onPageLoad(function() {
 </script>
 
 <% if @encrypt %>
-<p>The encrypted file may be decrypted with the command line openssl tool:</p>
+<p><%= t("myplaceonline.passwords.how_to_decrypt") %></p>
 <p><code><%= @command %></code></p>
 <% end %>
 
