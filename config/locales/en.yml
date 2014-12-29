@@ -86,7 +86,7 @@ en:
             * Even if your phone is hacked, your passwords in offline storage are encrypted.
         ]]>
       search: "Search"
-      recentlyused: "Recently Used"
+      recentlyused: "Recently or Frequently Used"
     info:
       title: "Information"
       apk: "Android APK"
