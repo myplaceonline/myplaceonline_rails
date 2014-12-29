@@ -14,6 +14,16 @@ module Myp
   @@CONTENT_FAQ = nil
   
   def self.website_init
+    if ActiveRecord::Base.connection.table_exists?(Category.table_name)
+      puts "Initializing categories..."
+      Myp.categories[:order] = Category.find_by(:name => :order)
+      puts "First category: " + Myp.categories[:order].inspect
+      Myp.categories[:joy] = Category.find_by(:name => :joy)
+      Myp.categories[:meaning] = Category.find_by(:name => :meaning)
+      Myp.categories[:passwords] = Category.find_by(:name => :passwords)
+      puts "Initialized categories succesfully"
+    end
+
     @@WELCOME_FEATURES = self.get_welcome_features
     @@CONTENT_FAQ = self.get_content_faq
   end

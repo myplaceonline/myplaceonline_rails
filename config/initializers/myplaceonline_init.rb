@@ -9,14 +9,6 @@ end
 if Myp.is_web_server? || Rails.env.test?
   Myp.website_init
 
-  if ActiveRecord::Base.connection.table_exists?(Category.table_name)
-    Myp.categories[:order] = Category.find_by(:name => :order)
-    Myp.categories[:joy] = Category.find_by(:name => :joy)
-    Myp.categories[:meaning] = Category.find_by(:name => :meaning)
-    Myp.categories[:passwords] = Category.find_by(:name => :passwords)
-    puts "Initialized categories succesfully"
-  end
-  
   if Rails.env.production?
     Myplaceonline::Application.config.session_store :cookie_store,
         :key => 'mypsession',
