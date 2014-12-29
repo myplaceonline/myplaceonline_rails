@@ -20,6 +20,13 @@ module Myplaceonline
     # config.i18n.default_locale = :de
     
     puts "Starting @ " + Time.now.to_s
+    
+    # http://stackoverflow.com/a/5015920/4135310
+    config.before_configuration do
+      I18n.locale = :en
+      I18n.load_path += Dir[Rails.root.join('config', 'locales', 'en.yml').to_s]
+      I18n.reload!
+    end
 
     config.autoload_paths += %W(#{config.root}/lib)
     

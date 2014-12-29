@@ -90,3 +90,11 @@ div.ui-checkbox + label {
 .bghighlight {
   background-color: #ADFF2F;
 }
+
+.markdowncell > p:first-child {
+  margin-top: 0;
+}
+
+.markdowncell > p:last-child {
+  margin-bottom: 0;
+}

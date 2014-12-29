@@ -30,6 +30,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
       resource_saved = resource.save
       yield resource if block_given?
       if resource_saved
+        
+        Myp.remember_password(session, params[:user][:password])
+        
         if resource.active_for_authentication?
           set_flash_message :notice, :signed_up if is_flashing_format?
           sign_up(resource_name, resource)
