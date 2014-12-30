@@ -13,6 +13,12 @@ class ContactsController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:contact).permit()
+      params.require(:contact).permit(
+        ref_attributes: [:id, :name]
+      )
+    end
+
+    def new_build
+      @obj.ref = Identity.new
     end
 end

@@ -40,6 +40,7 @@ class MyplaceonlineController < ApplicationController
 
   def new
     @obj = model.new
+    new_build
     @url = send("new_" + model_name + "_path")
     if request.post?
       return create
@@ -132,6 +133,9 @@ class MyplaceonlineController < ApplicationController
     end
     
     def before_edit
+    end
+    
+    def new_build
     end
   
     def set_obj
