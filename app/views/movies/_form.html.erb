@@ -7,3 +7,8 @@
   <%= f.label :url, class: "ui-hidden-accessible" %>
   <%= f.text_field :url, placeholder: t("myplaceonline.movies.url") %>
 </p>
+
+<p>
+  <%= check_box_tag :watched, true, !@obj.watched.nil? %>
+  <%= label_tag :watched, t("myplaceonline.movies.watched") %>
+</p>
