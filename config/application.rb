@@ -33,5 +33,7 @@ module Myplaceonline
     config.require_invite_code = ENV["REQUIRE_INVITE_CODE"].nil? ? false : (ENV["REQUIRE_INVITE_CODE"].eql? "true")
     
     config.invite_code = ENV["INVITE_CODE"].nil? ? "invitecode" : ENV["INVITE_CODE"]
+    
+    Date::DATE_FORMATS.merge!({ :default => '%Y-%m-%d' } )
   end
 end

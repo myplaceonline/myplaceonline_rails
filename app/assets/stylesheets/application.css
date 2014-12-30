@@ -102,3 +102,7 @@ div.ui-checkbox + label {
 .horizontal_center {
   text-align: center;
 }
+
+.form_field_label {
+  font-weight: bold !important;
+}

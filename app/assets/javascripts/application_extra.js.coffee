@@ -5,3 +5,4 @@
 #= require noty/layouts/topCenter
 #= require noty/themes/default
 #= require myplaceonline_final
+#= require jquery-mobile-datebox

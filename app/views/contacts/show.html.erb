@@ -4,6 +4,7 @@
 } do %>
 
   <%= attribute_table_row(t("myplaceonline.contacts.name"), @obj.name) %>
+  <%= attribute_table_row(t("myplaceonline.contacts.birthday"), @obj.birthday) %>
   
   <% content_for :footerlinks do %>
     <li><%= link_to t('myplaceonline.general.edit'), edit_contact_path, "data-icon" => "edit" %></li>

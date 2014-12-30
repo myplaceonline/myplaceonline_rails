@@ -3,4 +3,19 @@
     <%= identity_fields.label :name, class: "ui-hidden-accessible" %>
     <%= identity_fields.text_field :name, placeholder: t("myplaceonline.contacts.name"), class: "autofocus" %>
   </p>
+
+  <p>
+    <%= identity_fields.label :birthday, class: "form_field_label" %>
+    <%= identity_fields.date_field :birthday, placeholder: t("myplaceonline.contacts.birthday"), value: @obj.contact_identity.birthday %>
+  </p>
 <% end %>
+
+<script type="text/javascript">
+onPageLoad(function() {
+  $("#contact_ref_attributes_birthday").datebox({
+    mode: "datebox",
+    useFocus: true,
+    overrideDateFormat: "%Y-%m-%d"
+  });
+});
+</script>

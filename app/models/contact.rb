@@ -16,6 +16,10 @@ class Contact < ActiveRecord::Base
     contact_identity.name
   end
   
+  def birthday
+    contact_identity.birthday
+  end
+  
   def contact_identity
     ref
   end

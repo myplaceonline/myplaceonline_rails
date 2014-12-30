@@ -5,7 +5,7 @@ class ContactsController < MyplaceonlineController
     end
 
     def sorts
-      ["identities.name ASC"]
+      ["lower(identities.name) ASC"]
     end
 
     def display_obj(obj)
@@ -14,7 +14,7 @@ class ContactsController < MyplaceonlineController
 
     def obj_params
       params.require(:contact).permit(
-        ref_attributes: [:id, :name]
+        ref_attributes: [:id, :name, :birthday]
       )
     end
 
