@@ -73,7 +73,7 @@ class MyplaceonlineController < ApplicationController
 
   def update
     ActiveRecord::Base.transaction do
-      
+
       @obj.assign_attributes(obj_params)
       @encrypt = params[:encrypt] == "true"
       update_presave

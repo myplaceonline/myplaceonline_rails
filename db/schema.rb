@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141230190557) do
+ActiveRecord::Schema.define(version: 20141230205152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,16 @@ ActiveRecord::Schema.define(version: 20141230190557) do
 
   add_index "category_points_amounts", ["category_id"], name: "index_category_points_amounts_on_category_id", using: :btree
   add_index "category_points_amounts", ["identity_id"], name: "index_category_points_amounts_on_identity_id", using: :btree
+
+  create_table "contacts", force: true do |t|
+    t.integer  "ref_id"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "contacts", ["identity_id"], name: "index_contacts_on_identity_id", using: :btree
+  add_index "contacts", ["ref_id"], name: "index_contacts_on_ref_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
     t.binary   "val"

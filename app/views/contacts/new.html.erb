@@ -1,0 +1,9 @@
+<%= render layout: "shared/model_new", locals: {
+  title: "myplaceonline.contacts.title",
+  header: "myplaceonline.contacts.title_add",
+  form_name: "contacts/form"
+} do %>
+
+  <li><%= link_to t('myplaceonline.contacts.back'), contacts_path, "data-icon" => "back" %></li>
+
+<% end %>

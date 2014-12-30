@@ -32,6 +32,7 @@ en:
       movies: "Movies"
       wisdoms: "Wisdom"
       to_dos: "ToDos"
+      contacts: "Contacts"
     general:
       email: "E-mail"
       password: "Password"
@@ -237,3 +238,9 @@ en:
       notes: "Notes"
       notes_edit: "Notes (supports Markdown syntax)"
       back: "Back to ToDos"
+    contacts:
+      title: "Contact"
+      none: "No contacts"
+      title_add: "Add Contact"
+      back: "Back to Contacts"
+      name: "Name"

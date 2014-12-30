@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :contacts
+  post 'contacts/new'
+
   resources :to_dos
   post 'to_dos/new'
 

@@ -1,3 +1,5 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 identity:
   owner: user
+
+contact_identity:
+  points: 0

@@ -1,0 +1,10 @@
+<%= render layout: "shared/model_index", locals: {
+  title: "myplaceonline.contacts.title",
+  none: "myplaceonline.contacts.none",
+  display_item: lambda { |obj| obj.name },
+  model: Contact
+} do %>
+
+  <li><%= link_to t('myplaceonline.contacts.title_add'), new_contact_path, "data-icon" => "plus" %></li>
+
+<% end %>
