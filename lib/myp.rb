@@ -12,12 +12,14 @@ module Myp
   @@POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL = [('0'..'9'), ('a'..'z'), ('A'..'Z'), ['_', '-', '!']].map { |i| i.to_a }.flatten
 
   if ActiveRecord::Base.connection.table_exists?(Category.table_name)
+    puts "Initializing categories"
     @@all_categories[:order] = Category.find_by(:name => :order)
     @@all_categories[:joy] = Category.find_by(:name => :joy)
     @@all_categories[:meaning] = Category.find_by(:name => :meaning)
     @@all_categories[:passwords] = Category.find_by(:name => :passwords)
     @@all_categories[:movies] = Category.find_by(:name => :movies)
-    puts "Initialized categories " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
+    @@all_categories[:wisdoms] = Category.find_by(:name => :wisdoms)
+    puts "Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
   end
   
   def self.markdown_to_html(markdown)

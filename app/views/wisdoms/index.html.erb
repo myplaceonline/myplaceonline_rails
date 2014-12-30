@@ -1,0 +1,10 @@
+<%= render layout: "shared/model_index", locals: {
+  title: "myplaceonline.wisdoms.title",
+  none: "myplaceonline.wisdoms.none",
+  display_item: lambda { |obj| obj.name },
+  model: Wisdom
+} do %>
+
+  <li><%= link_to t('myplaceonline.wisdoms.title_add'), new_wisdom_path, "data-icon" => "plus" %></li>
+
+<% end %>

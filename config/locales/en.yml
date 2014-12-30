@@ -30,6 +30,7 @@ en:
       meaning: "Meaning"
       passwords: "Passwords"
       movies: "Movies"
+      wisdoms: "Wisdom"
     general:
       email: "E-mail"
       password: "Password"
@@ -201,3 +202,10 @@ en:
       watched: "Watched"
       url: "Website"
       back: "Back to Movies"
+    wisdoms:
+      title: "Wisdom"
+      none: "No entries"
+      title_add: "Add Wisdom"
+      name: "Wisdom Name"
+      wisdom: "Wisdom (supports Markdown syntax)"
+      back: "Back to Wisdom"

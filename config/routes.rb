@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :wisdoms
+  post 'wisdoms/new'
+
   resources :movies
   post 'movies/new'
 

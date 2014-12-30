@@ -1,0 +1,9 @@
+<%= render layout: "shared/model_edit", locals: {
+  title: "myplaceonline.wisdoms.title",
+  header: @obj.name,
+  form_name: "wisdoms/form"
+} do %>
+
+  <li><%= link_to t('myplaceonline.wisdoms.back'), passwords_path, "data-icon" => "back" %></li>
+
+<% end %>

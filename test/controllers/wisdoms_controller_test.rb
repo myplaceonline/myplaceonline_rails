@@ -1,10 +1,10 @@
 require 'test_helper'
 
-class MoviesControllerTest < ActionController::TestCase
+class WisdomsControllerTest < ActionController::TestCase
   include MyplaceonlineControllerTest
   
   def model
-    Movie
+    Wisdom
   end
   
   def test_attributes
