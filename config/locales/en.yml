@@ -133,7 +133,7 @@ en:
         
         ## How are website passwords managed?
         
-        We never store your website password. A bcrypt [hash and salt](https://www.owasp.org/index.php/Password_Storage_Cheat_Sheet) for the password is stored and used to authenticate you. However, we do store your password in memory for the life of your HTTP session. This is needed because your password is used to decrypt any values you chose to encrypt, and asking you for your password every time would be annoying.
+        We never store your website password. A bcrypt [hash and salt](https://www.owasp.org/index.php/Password_Storage_Cheat_Sheet) for the password is stored and used to authenticate you. However, we do store your password in server memory temporarily for the life of your HTTP session. This is needed because your password is used to decrypt any values you chose to encrypt, and asking you for your password every time something needs to be decrypted would be annoying.
         
         When you change your password, we symmetrically decrypt all encrypted values and then re-encrypt them with the new password. This can take a long time if you have a lot of encrypted values.
         
