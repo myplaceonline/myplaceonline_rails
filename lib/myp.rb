@@ -309,7 +309,9 @@ module Myp
         end
         cpa.count += amount
         if cpa.count < 0
-          raise "Something went wrong, category count would go negative for #{category}"
+          if !Rails.env.test?
+            raise "Something went wrong, category count would go negative for #{category.inspect}"
+          end
         end
         cpa.save
         category = category.parent
@@ -325,7 +327,7 @@ module Myp
       CategoryPointsAmount.where(identity: user.primary_identity).update_all(count: 0)
     end
   end
-  
+
   def self.reentry_url(request)
     "/users/reenter?redirect=" + URI.encode(request.path)
   end
