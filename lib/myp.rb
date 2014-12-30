@@ -19,6 +19,7 @@ module Myp
     @@all_categories[:passwords] = Category.find_by(:name => :passwords)
     @@all_categories[:movies] = Category.find_by(:name => :movies)
     @@all_categories[:wisdoms] = Category.find_by(:name => :wisdoms)
+    @@all_categories[:to_dos] = Category.find_by(:name => :to_dos)
     puts "Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
   end
   
@@ -118,7 +119,7 @@ module Myp
       ORDER BY #{
         orderByName ?
           "categories.name ASC" :
-          "categories.position ASC"
+          "categories.position ASC, categories.name ASC"
       }
     }).map{ |category|
       CategoryForIdentity.new(

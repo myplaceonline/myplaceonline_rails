@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :to_dos
+  post 'to_dos/new'
+
   resources :wisdoms
   post 'wisdoms/new'
 

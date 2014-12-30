@@ -45,30 +45,30 @@ module MyplaceonlineControllerTest
 
   test "should create" do
     assert_difference(model.name + '.count') do
-      post :create, model.name.downcase => test_attributes.merge({ identity_id: @user.primary_identity_id })
+      post :create, model.model_name.singular.downcase => test_attributes.merge({ identity_id: @user.primary_identity_id })
     end
 
-    assert_redirected_to send(model.name.downcase + "_path", assigns(:obj))
+    assert_redirected_to send(model.model_name.singular.downcase + "_path", assigns(:obj))
   end
 
   test "should show" do
-    get :show, id: send(model.table_name, model.name.downcase)
+    get :show, id: send(model.table_name, model.model_name.singular.downcase)
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: send(model.table_name, model.name.downcase)
+    get :edit, id: send(model.table_name, model.model_name.singular.downcase)
     assert_response :success
   end
 
   test "should update" do
-    patch :update, id: send(model.table_name, model.name.downcase), model.name.downcase => test_attributes
-    assert_redirected_to send(model.name.downcase + "_path", assigns(:obj))
+    patch :update, id: send(model.table_name, model.model_name.singular.downcase), model.model_name.singular.downcase => test_attributes
+    assert_redirected_to send(model.model_name.singular.downcase + "_path", assigns(:obj))
   end
 
   test "should destroy" do
     assert_difference(model.name + '.count', -1) do
-      delete :destroy, id: send(model.table_name, model.name.downcase)
+      delete :destroy, id: send(model.table_name, model.model_name.singular.downcase)
     end
 
     assert_redirected_to send(model.table_name + "_path")

@@ -122,7 +122,7 @@ class MyplaceonlineController < ApplicationController
     end
     
     def model_name
-      model.model_name.to_s.downcase
+      model.model_name.singular.to_s.downcase
     end
     
     def create_presave

@@ -31,6 +31,7 @@ en:
       passwords: "Passwords"
       movies: "Movies"
       wisdoms: "Wisdom"
+      to_dos: "ToDos"
     general:
       email: "E-mail"
       password: "Password"
@@ -227,3 +228,11 @@ en:
       wisdom: "Wisdom"
       wisdom_edit: "Wisdom (supports Markdown syntax)"
       back: "Back to Wisdom"
+    todos:
+      title: "ToDos"
+      none: "No ToDos"
+      title_add: "Add ToDo"
+      short_description: "Short Description"
+      notes: "Notes"
+      notes_edit: "Notes (supports Markdown syntax)"
+      back: "Back to ToDos"

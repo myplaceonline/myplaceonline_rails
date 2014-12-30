@@ -10,6 +10,7 @@ class Ability
     can :manage, Movie, :identity => identity
     can :manage, IdentityFile, :identity => identity
     can :manage, Wisdom, :identity => identity
+    can :manage, ToDo, :identity => identity
     
     # Define abilities for the passed in user here. For example:
     #

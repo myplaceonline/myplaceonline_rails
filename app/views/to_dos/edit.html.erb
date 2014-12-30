@@ -1,0 +1,9 @@
+<%= render layout: "shared/model_edit", locals: {
+  title: "myplaceonline.todos.title",
+  header: @obj.short_description,
+  form_name: "to_dos/form"
+} do %>
+
+  <li><%= link_to t('myplaceonline.todos.back'), to_dos_path, "data-icon" => "back" %></li>
+
+<% end %>

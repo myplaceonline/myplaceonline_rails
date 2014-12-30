@@ -1,0 +1,16 @@
+<%= render layout: "shared/model_show", locals: {
+  title: "myplaceonline.todos.title",
+  display_header: lambda { |obj| obj.short_description }
+} do %>
+
+  <%= attribute_table_row(t("myplaceonline.todos.short_description"), @obj.short_description) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.todos.notes"), @obj.notes) %>
+  
+  <% content_for :footerlinks do %>
+    <li><%= link_to t('myplaceonline.general.edit'), edit_to_do_path, "data-icon" => "edit" %></li>
+    <li><%= link_to t('myplaceonline.general.delete'), to_do_path(@obj),
+            method: :delete, data: { confirm: 'Are you sure?' }, "data-icon" => "delete" %></li>
+    <li><%= link_to t('myplaceonline.todos.back'), to_dos_path, "data-icon" => "back" %></li>
+  <% end %>
+
+<% end %>
