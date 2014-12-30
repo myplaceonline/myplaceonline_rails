@@ -17,7 +17,7 @@ module Myp
     @@all_categories[:meaning] = Category.find_by(:name => :meaning)
     @@all_categories[:passwords] = Category.find_by(:name => :passwords)
     @@all_categories[:movies] = Category.find_by(:name => :movies)
-    puts "Initialized categories " + @@all_categories.map{|k, v| "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
+    puts "Initialized categories " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
   end
   
   def self.markdown_to_html(markdown)
