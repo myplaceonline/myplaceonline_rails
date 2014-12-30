@@ -91,6 +91,7 @@ en:
             * Generate random passwords.
             * Quickly copy passwords to the clipboard.
             * Password notes support Markdown syntax.
+          * Manage contacts.
           * Manage To Dos.
         * Joy
           * Manage movies you want to watch or have watched.
@@ -239,7 +240,7 @@ en:
       notes_edit: "Notes (supports Markdown syntax)"
       back: "Back to ToDos"
     contacts:
-      title: "Contact"
+      title: "Contacts"
       none: "No contacts"
       title_add: "Add Contact"
       back: "Back to Contacts"
