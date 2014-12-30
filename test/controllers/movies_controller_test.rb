@@ -7,4 +7,8 @@ class MoviesControllerTest < ActionController::TestCase
   def model
     Movie
   end
+  
+  def test_attributes
+    { name: "test" }
+  end
 end

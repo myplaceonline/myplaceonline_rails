@@ -27,6 +27,10 @@ module MyplaceonlineControllerTest
     raise NotImplementedError
   end
   
+  def test_attributes
+    raise NotImplementedError
+  end
+  
   test "should get index" do
     get :index
     assert_response :success
@@ -40,7 +44,7 @@ module MyplaceonlineControllerTest
 
   test "should create" do
     assert_difference(model.name + '.count') do
-      post :create, model.name.downcase => { identity_id: @user.primary_identity_id, name: "test" }
+      post :create, model.name.downcase => test_attributes.merge({ identity_id: @user.primary_identity_id })
     end
 
     assert_redirected_to send(model.name.downcase + "_path", assigns(:obj))
@@ -57,7 +61,7 @@ module MyplaceonlineControllerTest
   end
 
   test "should update" do
-    patch :update, id: send(model.table_name, model.name.downcase), model.name.downcase => { name: "test" }
+    patch :update, id: send(model.table_name, model.name.downcase), model.name.downcase => test_attributes
     assert_redirected_to send(model.name.downcase + "_path", assigns(:obj))
   end
 
