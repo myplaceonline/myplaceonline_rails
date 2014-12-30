@@ -42,8 +42,4 @@ class Password < ActiveRecord::Base
       :password_secrets => password_secrets.to_a.map{|x| x.as_json}
     })
   end
-  
-  def notes_html
-    Myp.markdown_to_html(notes)
-  end
 end

@@ -45,6 +45,10 @@ module ApplicationHelper
     attribute_table_row(name, url_or_blank(url), url)
   end
   
+  def attribute_table_row_markdown(name, markdown)
+    attribute_table_row(name, Myp.markdown_to_html(markdown), markdown, "markdowncell")
+  end
+  
   def url_or_blank(url, text = nil, clipboard = nil)
     if !url.to_s.empty?
       if text.to_s.empty?
