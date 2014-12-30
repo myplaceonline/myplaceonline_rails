@@ -98,3 +98,7 @@ div.ui-checkbox + label {
 .markdowncell > p:last-child {
   margin-bottom: 0;
 }
+
+.horizontal_center {
+  text-align: center;
+}
