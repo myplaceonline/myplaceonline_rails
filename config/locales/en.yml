@@ -90,9 +90,9 @@ en:
             * Quickly copy passwords to the clipboard.
             * Password notes support Markdown syntax.
         * Joy
-          * Manage movies you want to watch or have watched
+          * Manage movies you want to watch or have watched.
         * Meaning
-          * Manage notes of wisdom gathered in life
+          * Manage notes of wisdom gathered in life.
         * General Features
           * Export all data to a downlodable file with the option of encrypting it in a standardized format which can be decrypted with the open source gpg tool.
           * Save exported data in offline browser storage and display some of it even without internet.
@@ -126,6 +126,16 @@ en:
         ## How is data encrypted when exported to JSON?
 
         Symmetric [AES-256](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) and an [S2K](https://tools.ietf.org/html/rfc4880)+SHA512 iterated key derivation function with an 8 byte salt and 65536 iterations.
+        
+        ## Why isn't encryption enabled by default?
+        
+        If you choose to encrypt certain values, we encrypt them with your password using a [symmetric cipher](https://en.wikipedia.org/wiki/Symmetric-key_algorithm). This means that if you forget your password, you will not be able to recover those encrypted values. The "forgot my password" function on websites simply resets your password to a new password after you click a link in an email. There is no such thing as a "forgot my password" function for symmetric encryption. For these reasons, we don't encrypt by default as many users might not understand these risks right away.
+        
+        ## How are website passwords managed?
+        
+        We never store your website password. A bcrypt [hash and salt](https://www.owasp.org/index.php/Password_Storage_Cheat_Sheet) for the password is stored and used to authenticate you. However, we do store your password in memory for the life of your HTTP session. This is needed because your password is used to decrypt any values you chose to encrypt, and asking you for your password every time would be annoying.
+        
+        When you change your password, we symmetrically decrypt all encrypted values and then re-encrypt them with the new password. This can take a long time if you have a lot of encrypted values.
         
         ]]>
     search:
