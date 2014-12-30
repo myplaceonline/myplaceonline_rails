@@ -253,8 +253,6 @@ module Myp
   end
   
   def self.visit(user, categoryName)
-    puts Myp.categories.inspect
-    puts @@all_categories.inspect
     category = Myp.categories[categoryName]
     if category.nil?
       raise "Could not find category " + categoryName + " (check Myp.website_init)"

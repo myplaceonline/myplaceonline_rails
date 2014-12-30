@@ -54,3 +54,4 @@ gem 'paperclip_database'
 gem 'letter_opener', :group => :development
 gem 'kramdown'
 gem 'nokogiri'
+gem 'factory_girl_rails'

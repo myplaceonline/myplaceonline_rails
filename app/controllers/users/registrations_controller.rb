@@ -185,7 +185,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       # from the actual download, so the filename might not be the same
 
       filename += ".pgp"
-      @command = "gpg --decrypt file.pgp"
+      @command = "gpg --output decrypted.json --decrypt myplaceonline_export_*.json.pgp"
 
       #filename += ".encrypted"
       #@command = "openssl enc -d -#{@@OPENSSL_DEFAULT_CIPHER} -md #{@@DEFAULT_MD.new.name.downcase} -in file.encrypted"
