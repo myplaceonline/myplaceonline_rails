@@ -8,6 +8,6 @@ class ContactsControllerTest < ActionController::TestCase
   end
   
   def test_attributes
-    { created_at: Time.now }
+    { ref_attributes: { name: "Test" } }
   end
 end
