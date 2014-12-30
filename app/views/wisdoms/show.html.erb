@@ -4,7 +4,7 @@
 } do %>
 
   <%= attribute_table_row(t("myplaceonline.wisdoms.name"), @obj.name) %>
-  <%= attribute_table_row(t("myplaceonline.wisdoms.wisdom"), @obj.wisdom) %>
+  <%= attribute_table_row(t("myplaceonline.wisdoms.wisdom"), @obj.wisdom_html, @obj.wisdom, "markdowncell") %>
   
   <% content_for :footerlinks do %>
     <li><%= link_to t('myplaceonline.general.edit'), edit_wisdom_path, "data-icon" => "edit" %></li>

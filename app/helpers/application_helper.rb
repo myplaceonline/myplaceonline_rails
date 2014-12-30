@@ -23,7 +23,7 @@ module ApplicationHelper
     <tr>
       <td>#{name}</td>
       <td class="#{valueclass}">#{value}</td>
-      <td style="padding: 0 5px 0 5px; vertical-align: middle;">
+      <td style="padding: 0.2em; vertical-align: top;">
         #{
           content_tag(
             :a,
@@ -69,5 +69,11 @@ module ApplicationHelper
   def display_time(time)
     time.in_time_zone(Rails.application.config.time_zone)
     #time.in_time_zone(ActiveSupport::TimeZone["Pacific Time (US & Canada)"])
+  end
+  
+  def myp_text_area(form, name, placeholderid)
+    # No need to set 'rows' or height because of autogrow:
+    # https://github.com/jquery/jquery-mobile/blob/master/js/widgets/forms/autogrow.js
+    form.text_area name, placeholder: t(placeholderid)
   end
 end
