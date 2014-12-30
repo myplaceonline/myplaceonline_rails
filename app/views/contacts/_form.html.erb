@@ -8,6 +8,11 @@
     <%= identity_fields.label :birthday, class: "form_field_label" %>
     <%= identity_fields.date_field :birthday, placeholder: t("myplaceonline.contacts.birthday"), value: @obj.contact_identity.birthday %>
   </p>
+  
+  <p>
+    <%= identity_fields.label :notes, class: "ui-hidden-accessible" %>
+    <%= myp_text_area(identity_fields, :notes, "myplaceonline.contacts.notes_edit") %>
+  </p>
 <% end %>
 
 <script type="text/javascript">

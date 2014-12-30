@@ -20,6 +20,10 @@ class Contact < ActiveRecord::Base
     contact_identity.birthday
   end
   
+  def notes
+    contact_identity.notes
+  end
+  
   def contact_identity
     ref
   end

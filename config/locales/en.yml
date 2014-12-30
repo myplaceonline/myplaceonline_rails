@@ -246,3 +246,5 @@ en:
       back: "Back to Contacts"
       name: "Name"
       birthday: "Birthday"
+      notes: "Notes"
+      notes_edit: "Notes (supports Markdown syntax)"

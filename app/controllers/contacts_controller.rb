@@ -14,7 +14,7 @@ class ContactsController < MyplaceonlineController
 
     def obj_params
       params.require(:contact).permit(
-        ref_attributes: [:id, :name, :birthday]
+        ref_attributes: [:id, :name, :birthday, :notes]
       )
     end
 
