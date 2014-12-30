@@ -7,8 +7,6 @@ class String
 end
 
 if Myp.is_web_server? || Rails.env.test?
-  Myp.website_init
-
   if Rails.env.production?
     Myplaceonline::Application.config.session_store :cookie_store,
         :key => 'mypsession',

@@ -3,29 +3,25 @@ require 'i18n'
 module Myp
   # See https://github.com/digitalbazaar/forge/issues/207
   @@DEFAULT_AES_KEY_SIZE = 32
-  @categories = Hash.new
+  @@all_categories = Hash.new.with_indifferent_access
 
   # We want at least 128 bits of randomness, so
   # min(POSSIBILITIES_*.length)^DEFAULT_PASSWORD_LENGTH should be >= 2^128
   @@DEFAULT_PASSWORD_LENGTH = 22  
   @@POSSIBILITIES_ALPHANUMERIC = [('0'..'9'), ('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
   @@POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL = [('0'..'9'), ('a'..'z'), ('A'..'Z'), ['_', '-', '!']].map { |i| i.to_a }.flatten
-  @@WELCOME_FEATURES = nil
-  @@CONTENT_FAQ = nil
-  
-  def self.website_init
-    if ActiveRecord::Base.connection.table_exists?(Category.table_name)
-      puts "Initializing categories..."
-      Myp.categories[:order] = Category.find_by(:name => :order)
-      puts "First category: " + Myp.categories[:order].inspect
-      Myp.categories[:joy] = Category.find_by(:name => :joy)
-      Myp.categories[:meaning] = Category.find_by(:name => :meaning)
-      Myp.categories[:passwords] = Category.find_by(:name => :passwords)
-      puts "Initialized categories"
-    end
 
-    @@WELCOME_FEATURES = self.get_welcome_features
-    @@CONTENT_FAQ = self.get_content_faq
+  if ActiveRecord::Base.connection.table_exists?(Category.table_name)
+    @@all_categories[:order] = Category.find_by(:name => :order)
+    @@all_categories[:joy] = Category.find_by(:name => :joy)
+    @@all_categories[:meaning] = Category.find_by(:name => :meaning)
+    @@all_categories[:passwords] = Category.find_by(:name => :passwords)
+    @@all_categories[:movies] = Category.find_by(:name => :movies)
+    puts "Initialized categories " + @@all_categories.map{|k, v| "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
+  end
+  
+  def self.markdown_to_html(markdown)
+    Kramdown::Document.new(markdown).to_html
   end
   
   def self.parse_yaml_to_html(id)
@@ -39,13 +35,8 @@ module Myp
     end
   end
   
-  def self.get_welcome_features
-    self.parse_yaml_to_html("myplaceonline.welcome.features")
-  end
-  
-  def self.get_content_faq
-    self.parse_yaml_to_html("myplaceonline.info.faq_content")
-  end
+  @@WELCOME_FEATURES = self.parse_yaml_to_html("myplaceonline.welcome.features")
+  @@CONTENT_FAQ = self.parse_yaml_to_html("myplaceonline.info.faq_content")
   
   def self.is_web_server?
     defined?(Rails::Server) || defined?(::PhusionPassenger)
@@ -64,19 +55,11 @@ module Myp
   end
   
   def self.welcome_features
-    if Rails.env.production?
-      @@WELCOME_FEATURES
-    else
-      self.get_welcome_features
-    end
+    @@WELCOME_FEATURES
   end
   
   def self.content_faq
-    if Rails.env.production?
-      @@CONTENT_FAQ
-    else
-      self.get_content_faq
-    end
+    @@CONTENT_FAQ
   end
   
   # Return a list of CategoryForIdentity objects.
@@ -170,7 +153,7 @@ module Myp
       CategoryForIdentity.new(
         I18n.t("myplaceonline.category." + cpa.category_name.downcase),
         cpa.category_link,
-        cpa.count,
+        cpa.count.nil? ? 0 : cpa.count,
         cpa.category_id,
         cpa.category_parent_id
       )
@@ -188,7 +171,7 @@ module Myp
   end
 
   def self.categories
-    @categories
+    @@all_categories
   end
 
   def self.remember_password(session, password)
@@ -269,9 +252,15 @@ module Myp
   end
   
   def self.visit(user, categoryName)
+    puts Myp.categories.inspect
+    puts @@all_categories.inspect
+    category = Myp.categories[categoryName]
+    if category.nil?
+      raise "Could not find category " + categoryName + " (check Myp.website_init)"
+    end
     cpa = CategoryPointsAmount.find_or_create_by(
       identity: user.primary_identity,
-      category: @categories[categoryName]
+      category: category
     )
     if cpa.visits.nil?
       cpa.visits = 0
@@ -300,7 +289,10 @@ module Myp
       end
       user.primary_identity.save
       
-      category = @categories[categoryName]
+      category = Myp.categories[categoryName]
+      if category.nil?
+        raise "Could not find category " + categoryName + " (check Myp.website_init)"
+      end
       
       while !category.nil? do
         cpa = CategoryPointsAmount.find_or_create_by(
@@ -354,9 +346,5 @@ module Myp
     def load(value)
       value
     end
-  end
-  
-  def self.markdown_to_html(markdown)
-    Kramdown::Document.new(markdown).to_html
   end
 end
