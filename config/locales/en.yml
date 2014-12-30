@@ -87,6 +87,10 @@ en:
             * Generate random passwords.
             * Quickly copy passwords to the clipboard.
             * Password notes support Markdown syntax.
+        * Joy
+          * Manage movies you want to watch or have watched
+        * Meaning
+          * Manage notes of wisdom gathered in life
         * General Features
           * Export all data to a downlodable file with the option of encrypting it in a standardized format which can be decrypted with the open source gpg tool.
           * Save exported data in offline browser storage and display some of it even without internet.
@@ -97,6 +101,7 @@ en:
     info:
       title: "Information"
       apk: "Android APK"
+      about: "About Myplaceonline"
       contact: "Contact"
       credits: "Credits"
       credits_description: "Thank you to the following projects:"

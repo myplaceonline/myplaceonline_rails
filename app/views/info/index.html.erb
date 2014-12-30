@@ -31,4 +31,10 @@
       <%= t("myplaceonline.info.diagnostics") %>
     <% end %>
   </li>
+  <li>
+    <%= link_to(info_about_path) do %>
+      <%= image_tag("myplaceonlinelogo.gif", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.info.about") %>
+    <% end %>
+  </li>
 </ul>
