@@ -129,7 +129,7 @@ en:
         
         ## Why isn't encryption enabled by default?
         
-        If you choose to encrypt certain values, we encrypt them with your password using a [symmetric cipher](https://en.wikipedia.org/wiki/Symmetric-key_algorithm). This means that if you forget your password, you will not be able to recover those encrypted values. The "forgot my password" function on websites simply resets your password to a new password after you click a link in an email. There is no such thing as a "forgot my password" function for symmetric encryption. For these reasons, we don't encrypt by default as many users might not understand these risks right away.
+        If you choose to encrypt certain values, we encrypt them with your password using a [symmetric cipher](https://en.wikipedia.org/wiki/Symmetric-key_algorithm). This means that if you forget your password, you will not be able to recover those encrypted values (because only you had the key). The "forgot my password" function on websites simply resets your password to a new password after you click a link in an email. There is no such thing as a "forgot my password" function for symmetric encryption. For these reasons, we don't encrypt by default as many users might not understand these risks right away.
         
         ## How are website passwords managed?
         
