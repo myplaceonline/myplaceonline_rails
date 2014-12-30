@@ -5,7 +5,7 @@
 
   <%= attribute_table_row(t("myplaceonline.movies.name"), @obj.name) %>
   <%= attribute_table_row(t("myplaceonline.movies.watched"), @obj.watched) %>
-  <%= attribute_table_row(t("myplaceonline.movies.url"), @obj.url) %>
+  <%= attribute_table_row_url(t("myplaceonline.movies.url"), @obj.url) %>
   
   <% content_for :footerlinks do %>
     <li><%= link_to t('myplaceonline.general.edit'), edit_movie_path, "data-icon" => "edit" %></li>

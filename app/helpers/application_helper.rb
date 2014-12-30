@@ -31,7 +31,7 @@ module ApplicationHelper
             href: "#",
             class: "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable externallink",
             title: t("myplaceonline.general.clipboard"),
-            data: { "clipboard-text" => clipboard_text }
+            data: { "clipboard-text" => html_escape("" + clipboard_text.to_s) }
           )
         }
       </td>
@@ -39,6 +39,10 @@ module ApplicationHelper
     HTML
     
     html.html_safe
+  end
+  
+  def attribute_table_row_url(name, url)
+    attribute_table_row(name, url_or_blank(url), url)
   end
   
   def url_or_blank(url, text = nil, clipboard = nil)
@@ -53,7 +57,7 @@ module ApplicationHelper
       options[:target] = "_blank"
       if !clipboard.nil?
         options[:class] += " clipboardable"
-        options["data-clipboard-text"] = clipboard
+        options["data-clipboard-text"] = html_escape("" + clipboard.to_s)
       end
       
       content_tag(
