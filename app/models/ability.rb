@@ -7,6 +7,7 @@ class Ability
     identity = user.primary_identity
     
     can :manage, Password, :identity => identity
+    can :manage, Movie, :identity => identity
     can :manage, IdentityFile, :identity => identity
     
     # Define abilities for the passed in user here. For example:

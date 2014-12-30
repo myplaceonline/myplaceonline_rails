@@ -1,99 +1,7 @@
 require 'roo'
 
-class PasswordsController < ApplicationController
+class PasswordsController < MyplaceonlineController
   skip_authorization_check :only => [:index, :new, :create, :import, :importodf]
-  
-  def index
-    Myp.ensure_encryption_key(session)
-    Myp.visit(current_user, :passwords)
-    @count = Password.where(
-      identity_id: current_user.primary_identity.id
-    ).count
-    @offset = params[:offset].nil? ? 0 : params[:offset].to_i
-    if @offset < 0
-      @offset = 0
-    end
-    @perpage = params[:perpage].nil? ? 10 : params[:perpage].to_i
-    if @perpage <= 0
-      @perpage = @count
-    end
-    @passwords = Password.where(
-      identity_id: current_user.primary_identity.id
-    ).offset(@offset).limit(@perpage)
-     .order("lower(passwords.name) ASC", "lower(passwords.user) ASC")
-  end
-  
-  def new
-    @url = new_password_path
-    if request.post?
-      create
-    else
-      @password = Password.new
-      @encrypt = current_user.encrypt_by_default
-    end
-  end
-  
-  def create
-    @encrypt = params[:encrypt] == "true"
-    ActiveRecord::Base.transaction do
-      @password = Password.new(password_params)
-      @password.identity_id = current_user.primary_identity.id
-      @password.password_finalize(@encrypt)
-      
-      if @password.save
-        Myp.add_point(current_user, :passwords)
-        redirect_to @password
-      else
-        render :new
-      end
-    end
-  end
-  
-  def show
-    Myp.ensure_encryption_key(session)
-    @password = find_password
-    authorize! :manage, @password
-  end
-  
-  def edit
-    Myp.ensure_encryption_key(session)
-    @password = find_password
-    authorize! :manage, @password
-    @url = @password
-    @encrypt = @password.password_encrypted?
-  end
-  
-  def update
-    Myp.ensure_encryption_key(session)
-    @encrypt = params[:encrypt] == "true"
-    @password = find_password
-    authorize! :manage, @password
-    
-    ActiveRecord::Base.transaction do
-      
-      @password.assign_attributes(password_params)
-      @password.password_finalize(@encrypt)
-      @password.password_secrets.each{|secret| secret.answer_finalize(@encrypt)}
-
-      if @password.save
-        redirect_to @password
-      else
-        render :edit
-      end
-    end
-  end
-  
-  def destroy
-    Myp.ensure_encryption_key(session)
-    @password = find_password
-    authorize! :manage, @password
-    ActiveRecord::Base.transaction do
-      @password.destroy
-      Myp.subtract_point(current_user, :passwords)
-    end
-
-    redirect_to passwords_path
-  end
   
   def import
   end
@@ -256,8 +164,37 @@ class PasswordsController < ApplicationController
     end
   end
   
-  private
-    def password_params
+  protected
+    def model
+      Password
+    end
+
+    def sensitive
+      true
+    end
+
+    def sorts
+      ["lower(passwords.name) ASC", "lower(passwords.user) ASC"]
+    end
+
+    def display_obj(obj)
+      obj.display
+    end
+
+    def create_presave
+      @obj.password_finalize(@encrypt)
+    end
+    
+    def update_presave
+      @obj.password_finalize(@encrypt)
+      @obj.password_secrets.each{|secret| secret.answer_finalize(@encrypt)}
+    end
+
+    def before_edit
+      @encrypt = @obj.password_encrypted?
+    end
+  
+    def obj_params
       params.require(:password).permit(
         :name,
         :user,
@@ -267,10 +204,6 @@ class PasswordsController < ApplicationController
         :notes,
         password_secrets_attributes: [:id, :question, :answer, :_destroy]
       )
-    end
-
-    def find_password
-      Password.find_by(id: params[:id], identity_id: current_user.primary_identity.id)
     end
     
     def get_plus1(array, name)

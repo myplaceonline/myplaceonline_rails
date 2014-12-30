@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  watched: 2014-12-29 10:10:12
+  url: MyString
+  identity_id: 
+
+two:
+  name: MyString
+  watched: 2014-12-29 10:10:12
+  url: MyString
+  identity_id: 

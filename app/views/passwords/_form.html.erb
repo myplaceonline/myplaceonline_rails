@@ -1,14 +1,3 @@
-<%= form_for @password, :url => @url do |f| %>
-  <% if @password.errors.any? %>
-    <div class="errors">
-      <ul>
-      <% @password.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <p>
     <%= f.label :name, class: "ui-hidden-accessible" %>
     <%= f.text_field :name, placeholder: t("myplaceonline.passwords.name"), class: "autofocus" %>
@@ -21,7 +10,7 @@
 
   <p>
     <%= f.label :password, class: "ui-hidden-accessible" %>
-    <%= f.text_field :password, placeholder: t("myplaceonline.passwords.password"), value: @password.password %>
+    <%= f.text_field :password, placeholder: t("myplaceonline.passwords.password"), value: @obj.password %>
   </p>
   
   <div data-role="collapsible">
@@ -100,7 +89,7 @@ function password_remove_question(link) {
 
   <div data-role="collapsible">
     <h3><%= t("myplaceonline.passwords.recovery_questions") %></h3>
-    <% @password.password_secrets.each do |secret| %>
+    <% @obj.password_secrets.each do |secret| %>
       <%= f.fields_for :password_secrets, secret do |secret_fields| %>
         <div class="itemwrapper">
           <p>
@@ -115,14 +104,3 @@ function password_remove_question(link) {
     <% end %>
     <p><a href="#" onclick="return password_add_question(this, '<%= t("myplaceonline.passwords.question") %>', '<%= t("myplaceonline.passwords.answer") %>', '<%= t("myplaceonline.passwords.remove_question") %>');" class="ui-btn"><%= t("myplaceonline.passwords.add_question") %></a></p>
   </div>
-
-  <p>
-    <%= f.submit %>
-  </p>
-  
-<script type="text/javascript">
-onPageLoad(function() {
-  maybeFocus(".autofocus");
-});
-</script>
-<% end %>

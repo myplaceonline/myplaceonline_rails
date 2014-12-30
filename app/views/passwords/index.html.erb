@@ -1,65 +1,11 @@
-<% content_for :heading do -%><%= t('myplaceonline.passwords.title') %><% end -%>
-<h1><%= t('myplaceonline.passwords.title') %></h1>
-<%= flashes! %>
+<%= render layout: "shared/model_index", locals: {
+  title: "myplaceonline.passwords.title",
+  none: "myplaceonline.passwords.none",
+  display_item: lambda { |obj| obj.display },
+  model: Password
+} do %>
 
-<%
-if @passwords.length == 0
-%>
-<p><%= t('myplaceonline.passwords.none') %></p>
-<%
-else
-%>
-<div class="searchable_container">
-  <ul class="searchable" data-role="listview" data-inset="true" data-filter="true">
-<%
-    @passwords.each do |password|
-%>
-      <li>
-        <%= link_to password.display, password %>
-      </li>
-<%
-    end
-%>
-  </ul>
-</div>
-<%
+  <li><%= link_to t('myplaceonline.passwords.title_add'), new_password_path, "data-icon" => "plus" %></li>
+  <li><%= link_to t('myplaceonline.general.import'), passwords_import_path, "data-icon" => "bars" %></li>
 
-  if @offset > 0
-%>
-    <%= link_to(t('myplaceonline.general.previous') + " " + @perpage.to_s, passwords_path(:offset => @offset - @perpage), :class => "ui-btn") %>
-<%
-  end
-
-  if @offset + @perpage < @count
-%>
-    <%= link_to(t('myplaceonline.general.next') + " " + @perpage.to_s, passwords_path(:offset => @offset + @perpage), :class => "ui-btn") %>
-<%
-  end
-
-end
-%>
-
-<script type="text/javascript">
-onPageLoad(function() {
-
-  hookListviewSearch($(".searchable"), "/passwords.json?perpage=0");
-  
-  var input = $(".searchable_container input");
-  
-  hookListviewEnter(input, ".searchable");
-
-  maybeFocus(input);
-  
-});
-</script>
-
-<% content_for :footer do -%>
-<div data-role="footer" data-position="fixed">
-    <div data-role="navbar">
-        <ul>
-            <li><%= link_to t('myplaceonline.passwords.title_add'), new_password_path, "data-icon" => "plus" %></li>
-            <li><%= link_to t('myplaceonline.general.import'), passwords_import_path, "data-icon" => "bars" %></li>
-        </ul>
-    </div>
-</div>
-<% end -%>
+<% end %>

@@ -1,0 +1,34 @@
+<% content_for :heading do -%><%= t(title) %><% end -%>
+<h1><%= display_header.call(@obj) %></h1>
+<%= flashes! %>
+
+<table data-role="table" data-mode="reflow" class="ui-responsive tablestripes normalwidth firstcolumnbold noheadertable">
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  <tbody>
+  
+    <%= yield %>
+
+    <%= attribute_table_row(t("myplaceonline.general.created"), display_time(@obj.created_at)) %>
+    <%= attribute_table_row(t("myplaceonline.general.last_updated"), display_time(@obj.updated_at)) %>
+
+  </tbody>
+</table>
+
+<script type="text/javascript">
+ensureClipboard($(".clipboardable"));
+</script>
+
+<% content_for :footer do -%>
+<div data-role="footer" data-position="fixed">
+    <div data-role="navbar">
+        <ul>
+            <%= content_for(:footerlinks) %>
+        </ul>
+    </div>
+</div>
+<% end -%>

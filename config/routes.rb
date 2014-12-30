@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :movies
+  post 'movies/new'
+
   get 'welcome/index'
   get 'api/index'
   get 'api/categories'

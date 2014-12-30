@@ -21,7 +21,7 @@ module Myp
       Myp.categories[:joy] = Category.find_by(:name => :joy)
       Myp.categories[:meaning] = Category.find_by(:name => :meaning)
       Myp.categories[:passwords] = Category.find_by(:name => :passwords)
-      puts "Initialized categories succesfully"
+      puts "Initialized categories"
     end
 
     @@WELCOME_FEATURES = self.get_welcome_features

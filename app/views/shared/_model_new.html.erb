@@ -1,0 +1,13 @@
+<% content_for :heading do -%><%= t(title) %><% end -%>
+<h1><%= t(header) %></h1>
+<%= flashes! %>
+<%= render partial: "shared/model_form", locals: { form_name: form_name } %>
+<% content_for :footer do -%>
+<div data-role="footer" data-position="fixed">
+    <div data-role="navbar">
+        <ul>
+          <%= yield %>
+        </ul>
+    </div>
+</div>
+<% end -%>

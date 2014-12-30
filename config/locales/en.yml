@@ -24,6 +24,12 @@ en:
     siteTitle: "myplaceonline"
     siteEmail: "support@myplaceonline.com"
     email: "E-mail"
+    category:
+      order: "Order"
+      joy: "Joy"
+      meaning: "Meaning"
+      passwords: "Passwords"
+      movies: "Movies"
     general:
       email: "E-mail"
       password: "Password"
@@ -119,11 +125,6 @@ en:
       placeholder: "Search"
     api:
       title: "API"
-    category:
-      order: "Order"
-      joy: "Joy"
-      meaning: "Meaning"
-      passwords: "Passwords"
     joy:
       title: "Joy"
     order:
@@ -192,3 +193,11 @@ en:
     import:
       password: "Password (if any)"
       nofile: "No file selected"
+    movies:
+      title: "Movies"
+      none: "No movies"
+      title_add: "Add Movie"
+      name: "Movie Name"
+      watched: "Watched"
+      url: "Website"
+      back: "Back to Movies"

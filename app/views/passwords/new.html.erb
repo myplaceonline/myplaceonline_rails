@@ -1,13 +1,9 @@
-<% content_for :heading do -%><%= t('myplaceonline.passwords.title') %><% end -%>
-<h1><%= t('myplaceonline.passwords.title_add') %></h1>
-<%= flashes! %>
-<%= render partial: "form", locals: { url: @url } %>
-<% content_for :footer do -%>
-<div data-role="footer" data-position="fixed">
-    <div data-role="navbar">
-        <ul>
-            <li><%= link_to t('myplaceonline.passwords.back'), passwords_path, "data-icon" => "back" %></li>
-        </ul>
-    </div>
-</div>
-<% end -%>
+<%= render layout: "shared/model_new", locals: {
+  title: "myplaceonline.passwords.title",
+  header: "myplaceonline.passwords.title_add",
+  form_name: "passwords/form"
+} do %>
+
+  <li><%= link_to t('myplaceonline.passwords.back'), passwords_path, "data-icon" => "back" %></li>
+
+<% end %>

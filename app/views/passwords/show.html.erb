@@ -1,48 +1,27 @@
-<% content_for :heading do -%><%= t('myplaceonline.passwords.title') %><% end -%>
-<h1><%= @password.name %></h1>
-<%= flashes! %>
+<%= render layout: "shared/model_show", locals: {
+  title: "myplaceonline.passwords.title",
+  display_header: lambda { |obj| obj.name }
+} do %>
 
-<table data-role="table" data-mode="reflow" class="ui-responsive tablestripes normalwidth firstcolumnbold noheadertable">
-  <thead>
-    <tr>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  <tbody>
-    <%= attribute_table_row(t("myplaceonline.passwords.name"), @password.name) %>
-    <%= attribute_table_row(t("myplaceonline.passwords.password"), @password.password, @password.password, "bghighlight") %>
-    <%= attribute_table_row(t("myplaceonline.passwords.user"), @password.user) %>
-    <!--<%= attribute_table_row(t("myplaceonline.passwords.isencrypted"), @password.password_encrypted?) %>-->
-    <%= attribute_table_row(t("myplaceonline.passwords.url"), url_or_blank(@password.get_url, nil, @password.password), @password.password) %>
-    <%= attribute_table_row(t("myplaceonline.passwords.account_number"), @password.account_number) %>
-    <%= attribute_table_row(t("myplaceonline.passwords.notes"), @password.notes_html, @password.notes, "markdowncell") %>
+  <%= attribute_table_row(t("myplaceonline.passwords.name"), @obj.name) %>
+  <%= attribute_table_row(t("myplaceonline.passwords.password"), @obj.password, @obj.password, "bghighlight") %>
+  <%= attribute_table_row(t("myplaceonline.passwords.user"), @obj.user) %>
+  <!--<%= attribute_table_row(t("myplaceonline.passwords.isencrypted"), @obj.password_encrypted?) %>-->
+  <%= attribute_table_row(t("myplaceonline.passwords.url"), url_or_blank(@obj.get_url, nil, @obj.password), @obj.password) %>
+  <%= attribute_table_row(t("myplaceonline.passwords.account_number"), @obj.account_number) %>
+  <%= attribute_table_row(t("myplaceonline.passwords.notes"), @obj.notes_html, @obj.notes, "markdowncell") %>
 
-    <% @password.password_secrets.each do |secret| %>
-    
-      <%= attribute_table_row(secret.question, secret.answer) %>
+  <% @obj.password_secrets.each do |secret| %>
+  
+    <%= attribute_table_row(secret.question, secret.answer) %>
 
-    <% end %>
+  <% end %>
+  
+  <% content_for :footerlinks do %>
+    <li><%= link_to t('myplaceonline.general.edit'), edit_password_path, "data-icon" => "edit" %></li>
+    <li><%= link_to t('myplaceonline.general.delete'), password_path(@obj),
+            method: :delete, data: { confirm: 'Are you sure?' }, "data-icon" => "delete" %></li>
+    <li><%= link_to t('myplaceonline.passwords.back'), passwords_path, "data-icon" => "back" %></li>
+  <% end %>
 
-    <%= attribute_table_row(t("myplaceonline.general.created"), display_time(@password.created_at)) %>
-    <%= attribute_table_row(t("myplaceonline.general.last_updated"), display_time(@password.updated_at)) %>
-
-  </tbody>
-</table>
-
-<script type="text/javascript">
-ensureClipboard($(".clipboardable"));
-</script>
-
-<% content_for :footer do -%>
-<div data-role="footer" data-position="fixed">
-    <div data-role="navbar">
-        <ul>
-            <li><%= link_to t('myplaceonline.general.edit'), edit_password_path, "data-icon" => "edit" %></li>
-            <li><%= link_to t('myplaceonline.general.delete'), password_path(@password),
-                    method: :delete, data: { confirm: 'Are you sure?' }, "data-icon" => "delete" %></li>
-            <li><%= link_to t('myplaceonline.passwords.back'), passwords_path, "data-icon" => "back" %></li>
-        </ul>
-    </div>
-</div>
-<% end -%>
+<% end %>

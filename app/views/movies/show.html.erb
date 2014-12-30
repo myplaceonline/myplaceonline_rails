@@ -1,0 +1,17 @@
+<%= render layout: "shared/model_show", locals: {
+  title: "myplaceonline.movies.title",
+  display_header: lambda { |obj| obj.name }
+} do %>
+
+  <%= attribute_table_row(t("myplaceonline.movies.name"), @obj.name) %>
+  <%= attribute_table_row(t("myplaceonline.movies.watched"), @obj.watched) %>
+  <%= attribute_table_row(t("myplaceonline.movies.url"), @obj.url) %>
+  
+  <% content_for :footerlinks do %>
+    <li><%= link_to t('myplaceonline.general.edit'), edit_movie_path, "data-icon" => "edit" %></li>
+    <li><%= link_to t('myplaceonline.general.delete'), movie_path(@obj),
+            method: :delete, data: { confirm: 'Are you sure?' }, "data-icon" => "delete" %></li>
+    <li><%= link_to t('myplaceonline.movies.back'), movies_path, "data-icon" => "back" %></li>
+  <% end %>
+
+<% end %>

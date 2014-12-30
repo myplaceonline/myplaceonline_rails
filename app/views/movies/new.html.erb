@@ -1,0 +1,9 @@
+<%= render layout: "shared/model_new", locals: {
+  title: "myplaceonline.movies.title",
+  header: "myplaceonline.movies.title_add",
+  form_name: "movies/form"
+} do %>
+
+  <li><%= link_to t('myplaceonline.movies.back'), passwords_path, "data-icon" => "back" %></li>
+
+<% end %>

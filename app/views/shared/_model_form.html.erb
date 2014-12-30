@@ -1,0 +1,23 @@
+<%= form_for @obj, :url => @url do |f| %>
+  <% if @obj.errors.any? %>
+    <div class="errors">
+      <ul>
+      <% @obj.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <%= render partial: form_name, locals: { f: f } %>
+
+  <p>
+    <%= f.submit %>
+  </p>
+  
+<script type="text/javascript">
+onPageLoad(function() {
+  maybeFocus(".autofocus");
+});
+</script>
+<% end %>
