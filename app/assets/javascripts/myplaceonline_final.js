@@ -61,3 +61,71 @@ function getRemoteString(destination, length) {
     hideLoading();
   });
 }
+
+function get_index_from_id(obj) {
+  var id = $(obj).attr("id");
+  if (id) {
+    id = id.substring(0, id.lastIndexOf('_'));
+    id = parseInt(id.substring(id.lastIndexOf('_') + 1));
+    return id;
+  }
+  return -1;
+}
+
+function form_add_item(link, referenceItemName, attributesName, attributesPrefix, deletePlaceholder, items) {
+  var index = -1;
+  var div = $(link).parent().parent(".itemswrapper");
+  div.find(".primary_input").each(function() {
+    var id = get_index_from_id($(this));
+    if (id > index) {
+      index = id;
+    }
+  });
+  index++;
+  var html = "<div class='itemwrapper'>";
+  var toFocus = null;
+  var i;
+  for (i = 0; i < items.length; i++) {
+    var item = items[i];
+    var id = attributesName + "_" + attributesPrefix + "_attributes_" + index + "_" + item.name;
+    var name = attributesName + "[" + attributesPrefix + "_attributes][" + index + "][" + item.name + "]";
+    var cssclass = '';
+    if (item.primary) {
+      cssclass = 'primary_input';
+      toFocus = id;
+    }
+    html += "<p><input id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' type='text' value='' class='" + cssclass + "' /></p>";
+  }
+  html += "<p><a href='#' onclick='return form_remove_item(this);' class='ui-btn'>" + deletePlaceholder + "</a></p>";
+  html += "</div>";
+  $(html).insertBefore($(link));
+  ensureStyledPage();
+  if (toFocus) {
+    maybeFocus("#" + toFocus);
+  }
+  return false;
+}
+
+function form_remove_item(link) {
+  var div = $(link).parent().parent("div");
+  var item = div.find(".primary_input").first();
+  if (item) {
+    var index = get_index_from_id(item);
+    var id = $(item).attr("id");
+    id = id.substring(0, id.lastIndexOf('_'));
+    var prefix = id.substring(0, id.lastIndexOf('_'));
+    var prefixFirst = prefix.substring(0, id.indexOf('_'));
+    var prefixRest = prefix.substring(id.indexOf('_') + 1);
+    var destroy_id = prefix + "_" + index + "__destroy";
+    var destroy_name = prefixFirst + "[" + prefixRest + "][" + index + "][_destroy]";
+    var existing_destroy = $("#" + destroy_id);
+    if (existing_destroy.length) {
+      existing_destroy.val("1");
+    } else {
+      var html = "<input type='hidden' id='" + destroy_id + "' name='" + destroy_name + "' value='1' />";
+      $(html).insertBefore(item);
+    }
+  }
+  div.hide();
+  return false;
+}
