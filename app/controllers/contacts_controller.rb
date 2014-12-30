@@ -5,7 +5,7 @@ class ContactsController < MyplaceonlineController
     end
 
     def sorts
-      ["contacts.created_at ASC"]
+      ["identities.name ASC"]
     end
 
     def display_obj(obj)
@@ -20,5 +20,11 @@ class ContactsController < MyplaceonlineController
 
     def new_build
       @obj.ref = Identity.new
+    end
+
+    def all
+      model.joins(:ref).where(
+        identity_id: current_user.primary_identity.id
+      )
     end
 end

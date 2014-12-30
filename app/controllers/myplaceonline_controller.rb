@@ -5,17 +5,13 @@ class MyplaceonlineController < ApplicationController
   respond_to :html, :json
 
   def index
-    @objs = model.all
-    
     if sensitive
       Myp.ensure_encryption_key(session)
     end
     
     Myp.visit(current_user, db_name)
     
-    @count = model.where(
-      identity_id: current_user.primary_identity.id
-    ).count
+    @count = all.count
     
     @offset = params[:offset].nil? ? 0 : params[:offset].to_i
     if @offset < 0
@@ -27,9 +23,7 @@ class MyplaceonlineController < ApplicationController
       @perpage = @count
     end
     
-    @objs = model.where(
-      identity_id: current_user.primary_identity.id
-    ).offset(@offset).limit(@perpage).order(sorts)
+    @objs = all.offset(@offset).limit(@perpage).order(sorts)
      
     respond_with(@objs)
   end
@@ -136,6 +130,12 @@ class MyplaceonlineController < ApplicationController
     end
     
     def new_build
+    end
+
+    def all
+      model.where(
+        identity_id: current_user.primary_identity.id
+      )
     end
   
     def set_obj
