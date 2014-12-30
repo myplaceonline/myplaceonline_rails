@@ -60,6 +60,8 @@ en:
       created: "Created"
       last_updated: "Last Updated"
       child_attribute_removed: "Click Update to complete the deletion"
+      yes: "Yes"
+      no: "No"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
