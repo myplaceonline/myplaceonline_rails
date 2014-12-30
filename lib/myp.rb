@@ -309,7 +309,7 @@ module Myp
         end
         cpa.count += amount
         if cpa.count < 0
-          cpa.count = 0
+          raise "Something went wrong, category count would go negative for #{category}"
         end
         cpa.save
         category = category.parent
