@@ -21,7 +21,11 @@ module Myp
   end
   
   def self.markdown_to_html(markdown)
-    Kramdown::Document.new(markdown).to_html
+    if !markdown.nil?
+      Kramdown::Document.new(markdown).to_html
+    else
+      nil
+    end
   end
   
   def self.parse_yaml_to_html(id)

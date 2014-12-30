@@ -1,9 +1,13 @@
 require 'test_helper'
 
 class PasswordsControllerTest < ActionController::TestCase
-  test "should get index" do
-    #get :index
-    #assert_response :success
+  include MyplaceonlineControllerTest
+  
+  def model
+    Password
   end
-
+  
+  def test_attributes
+    { name: "test" }
+  end
 end
