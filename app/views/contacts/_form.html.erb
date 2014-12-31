@@ -5,7 +5,7 @@
   </p>
 
   <p>
-    <%= identity_fields.label :birthday, class: "form_field_label" %>
+    <%= identity_fields.label :birthday, class: @obj.contact_identity.birthday.nil? ? "ui-hidden-accessible" : "form_field_label" %>
     <%= identity_fields.date_field :birthday, placeholder: t("myplaceonline.contacts.birthday"), value: @obj.contact_identity.birthday %>
   </p>
   
