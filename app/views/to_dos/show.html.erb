@@ -1,4 +1,4 @@
-<%= render layout: "shared/model_show", controller: controller do %>
+<%= render layout: "shared/model_show" do %>
 
   <%= attribute_table_row(t("myplaceonline.todos.short_description"), @obj.short_description) %>
   <%= attribute_table_row_markdown(t("myplaceonline.todos.notes"), @obj.notes) %>
