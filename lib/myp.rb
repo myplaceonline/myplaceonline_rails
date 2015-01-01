@@ -312,7 +312,10 @@ module Myp
         end
         cpa.count += amount
         if cpa.count < 0
-          if !Rails.env.test?
+          # TODO IdentityFile can be created out of the normal flow (like
+          # password import), so we need to bump the category count for it
+          # in presave
+          if !Rails.env.test? && categoryName != "files"
             raise "Something went wrong, category count would go negative for #{category.inspect}"
           end
         end
