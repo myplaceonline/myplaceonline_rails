@@ -232,7 +232,7 @@ en:
       wisdom: "Wisdom"
       wisdom_edit: "Wisdom (supports Markdown syntax)"
       back: "Back to Wisdom"
-    todos:
+    to_dos:
       title: "ToDos"
       none: "No ToDos"
       title_add: "Add ToDo"

@@ -29,10 +29,14 @@ class MyplaceonlineController < ApplicationController
   end
 
   def show
+    if sensitive
+      Myp.ensure_encryption_key(session)
+    end
     respond_with(@obj)
   end
 
   def new
+    Myp.ensure_encryption_key(session)
     @obj = model.new
     new_build
     @url = new_path
@@ -45,6 +49,7 @@ class MyplaceonlineController < ApplicationController
   end
 
   def edit
+    Myp.ensure_encryption_key(session)
     @url = obj_path(@obj)
     before_edit
     respond_with(@obj)
@@ -67,6 +72,7 @@ class MyplaceonlineController < ApplicationController
   end
 
   def update
+    Myp.ensure_encryption_key(session)
     ActiveRecord::Base.transaction do
 
       @obj.assign_attributes(obj_params)
@@ -82,6 +88,7 @@ class MyplaceonlineController < ApplicationController
   end
 
   def destroy
+    Myp.ensure_encryption_key(session)
     ActiveRecord::Base.transaction do
       @obj.destroy
       Myp.subtract_point(current_user, category_name)
@@ -159,9 +166,6 @@ class MyplaceonlineController < ApplicationController
     end
   
     def set_obj
-      if sensitive
-        Myp.ensure_encryption_key(session)
-      end
       @obj = model.find_by(id: params[:id], identity_id: current_user.primary_identity.id)
       authorize! :manage, @obj
     end
