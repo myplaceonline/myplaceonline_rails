@@ -15,10 +15,21 @@ class FilesController < MyplaceonlineController
     IdentityFile
   end
   
+  def download
+    set_obj
+    response.headers['Content-Length'] = @obj.file_file_size.to_s
+    send_data(
+      @obj.file.file_contents,
+      :type => @obj.file_content_type,
+      :filename => @obj.file_file_name,
+      :disposition => 'attachment'
+    )
+  end
+  
   protected
 
     def sorts
-      ["identity_files.created_at ASC"]
+      ["lower(identity_files.file_file_name) ASC"]
     end
 
     def obj_params

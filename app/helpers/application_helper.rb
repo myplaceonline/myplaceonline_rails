@@ -13,10 +13,14 @@ module ApplicationHelper
     html.html_safe
   end
   
+  def is_blank(value)
+    value.nil? ||
+      (value.is_a?(String) &&
+        (value.strip.length == 0 || value == "&nbsp;"))
+  end
+  
   def attribute_table_row(name, value, clipboard_text = value, valueclass = "")
-    if value.nil? ||
-        (value.is_a?(String) &&
-         (value.strip.length == 0 || value == "&nbsp;"))
+    if is_blank(value)
       return nil
     end
     html = <<-HTML
@@ -25,14 +29,16 @@ module ApplicationHelper
       <td class="#{valueclass}">#{value}</td>
       <td style="padding: 0.2em; vertical-align: top;">
         #{
-          content_tag(
-            :a,
-            t("myplaceonline.general.clipboard"),
-            href: "#",
-            class: "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable externallink",
-            title: t("myplaceonline.general.clipboard"),
-            data: { "clipboard-text" => html_escape("" + clipboard_text.to_s) }
-          )
+          !is_blank(clipboard_text.to_s) ?
+            content_tag(
+              :a,
+              t("myplaceonline.general.clipboard"),
+              href: "#",
+              class: "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable externallink",
+              title: t("myplaceonline.general.clipboard"),
+              data: { "clipboard-text" => html_escape("" + clipboard_text.to_s) }
+            )
+            : "&nbsp;"
         }
       </td>
     </tr>
