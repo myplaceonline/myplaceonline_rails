@@ -1,15 +1,15 @@
 class MoviesController < MyplaceonlineController
-  protected
-    def model
-      Movie
-    end
+  def model
+    Movie
+  end
 
+  def display_obj(obj)
+    obj.name
+  end
+
+  protected
     def sorts
       ["lower(movies.name) ASC"]
-    end
-
-    def display_obj(obj)
-      obj.name
     end
 
     def obj_params

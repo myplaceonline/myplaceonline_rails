@@ -1,5 +1,5 @@
-<% content_for :heading do -%><%= t(title) %><% end -%>
-<h1><%= display_header.call(@obj) %></h1>
+<% content_for :heading do -%><%= t("myplaceonline." + controller.category_name + ".title") %><% end -%>
+<h1><%= controller.display_obj(@obj) %></h1>
 <%= flashes! %>
 
 <table data-role="table" data-mode="reflow" class="ui-responsive tablestripes normalwidth firstcolumnbold noheadertable">
@@ -27,7 +27,14 @@ ensureClipboard($(".clipboardable"));
 <div data-role="footer" data-position="fixed">
     <div data-role="navbar">
         <ul>
+          <% if content_for?(:footerlinks) %>
             <%= content_for(:footerlinks) %>
+          <% else %>
+            <li><%= link_to t('myplaceonline.general.edit'), controller.edit_obj_path, "data-icon" => "edit" %></li>
+            <li><%= link_to t('myplaceonline.general.delete'), controller.obj_path,
+                    method: :delete, data: { confirm: 'Are you sure?' }, "data-icon" => "delete" %></li>
+            <li><%= link_to t("myplaceonline." + controller.category_name + ".back"), controller.index_path, "data-icon" => "back" %></li>
+          <% end %>
         </ul>
     </div>
 </div>

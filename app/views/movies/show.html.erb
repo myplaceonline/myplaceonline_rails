@@ -1,7 +1,4 @@
-<%= render layout: "shared/model_show", locals: {
-  title: "myplaceonline.movies.title",
-  display_header: lambda { |obj| obj.name }
-} do %>
+<%= render layout: "shared/model_show", controller: controller do %>
 
   <%= attribute_table_row(t("myplaceonline.movies.name"), @obj.name) %>
   <%= attribute_table_row_boolean(t("myplaceonline.movies.watched"), !@obj.watched.nil?) %>

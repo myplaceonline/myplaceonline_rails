@@ -9,3 +9,4 @@ movies = Category.create(name: "movies", link: "movies", position: 0, parent: jo
 wisdoms = Category.create(name: "wisdoms", link: "wisdoms", position: 0, parent: meaning)
 to_dos = Category.create(name: "to_dos", link: "to_dos", position: 0, parent: order)
 contacts = Category.create(name: "contacts", link: "contacts", position: 0, parent: order)
+files = Category.create(name: "files", link: "files", position: 0, parent: order)

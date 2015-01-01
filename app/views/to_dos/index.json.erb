@@ -1,8 +1,1 @@
-<%=
-@objs.map { |obj|
-  {
-    :title => obj.short_description,
-    :link => url_for(obj)
-  }
-}.to_json.html_safe
-%>
+<%= render partial: "shared/model_index", controller: controller %>

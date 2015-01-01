@@ -1,7 +1,4 @@
-<%= render layout: "shared/model_show", locals: {
-  title: "myplaceonline.contacts.title",
-  display_header: lambda { |obj| obj.name }
-} do %>
+<%= render layout: "shared/model_show", controller: controller do %>
 
   <%= attribute_table_row(t("myplaceonline.contacts.name"), @obj.name) %>
   <%= attribute_table_row(t("myplaceonline.contacts.birthday"), @obj.birthday) %>

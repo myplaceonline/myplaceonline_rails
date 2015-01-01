@@ -1,7 +1,4 @@
-<%= render layout: "shared/model_show", locals: {
-  title: "myplaceonline.passwords.title",
-  display_header: lambda { |obj| obj.name }
-} do %>
+<%= render layout: "shared/model_show", controller: controller do %>
 
   <%= attribute_table_row(t("myplaceonline.passwords.name"), @obj.name) %>
   <%= attribute_table_row(t("myplaceonline.passwords.password"), @obj.password, @obj.password, "bghighlight") %>

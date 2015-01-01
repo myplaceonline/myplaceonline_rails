@@ -1,9 +1,2 @@
-<%= render layout: "shared/model_new", locals: {
-  title: "myplaceonline.movies.title",
-  header: "myplaceonline.movies.title_add",
-  form_name: "movies/form"
-} do %>
-
-  <li><%= link_to t('myplaceonline.movies.back'), movies_path, "data-icon" => "back" %></li>
-
+<%= render layout: "shared/model_new", controller: controller do %>
 <% end %>

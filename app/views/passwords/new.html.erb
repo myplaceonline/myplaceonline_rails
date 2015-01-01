@@ -1,9 +1,2 @@
-<%= render layout: "shared/model_new", locals: {
-  title: "myplaceonline.passwords.title",
-  header: "myplaceonline.passwords.title_add",
-  form_name: "passwords/form"
-} do %>
-
-  <li><%= link_to t('myplaceonline.passwords.back'), passwords_path, "data-icon" => "back" %></li>
-
+<%= render layout: "shared/model_new", controller: controller do %>
 <% end %>

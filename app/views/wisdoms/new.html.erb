@@ -1,9 +1,2 @@
-<%= render layout: "shared/model_new", locals: {
-  title: "myplaceonline.wisdoms.title",
-  header: "myplaceonline.wisdoms.title_add",
-  form_name: "wisdoms/form"
-} do %>
-
-  <li><%= link_to t('myplaceonline.wisdoms.back'), wisdoms_path, "data-icon" => "back" %></li>
-
+<%= render layout: "shared/model_new", controller: controller do %>
 <% end %>

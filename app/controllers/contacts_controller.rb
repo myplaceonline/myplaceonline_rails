@@ -1,15 +1,16 @@
 class ContactsController < MyplaceonlineController
+  def model
+    Contact
+  end
+
+  def display_obj(obj)
+    obj.name
+  end
+
   protected
-    def model
-      Contact
-    end
 
     def sorts
       ["lower(identities.name) ASC"]
-    end
-
-    def display_obj(obj)
-      obj.name
     end
 
     def obj_params

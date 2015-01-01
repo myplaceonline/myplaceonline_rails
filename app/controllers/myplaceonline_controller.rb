@@ -9,7 +9,7 @@ class MyplaceonlineController < ApplicationController
       Myp.ensure_encryption_key(session)
     end
     
-    Myp.visit(current_user, db_name)
+    Myp.visit(current_user, category_name)
     
     @count = all.count
     
@@ -35,7 +35,7 @@ class MyplaceonlineController < ApplicationController
   def new
     @obj = model.new
     new_build
-    @url = send("new_" + model_name + "_path")
+    @url = new_path
     if request.post?
       return create
     else
@@ -45,7 +45,7 @@ class MyplaceonlineController < ApplicationController
   end
 
   def edit
-    @url = @obj
+    @url = obj_path(@obj)
     before_edit
     respond_with(@obj)
   end
@@ -58,7 +58,7 @@ class MyplaceonlineController < ApplicationController
       create_presave
       
       if @obj.save
-        Myp.add_point(current_user, db_name)
+        Myp.add_point(current_user, category_name)
         redirect_to @obj
       else
         render :new
@@ -84,18 +84,50 @@ class MyplaceonlineController < ApplicationController
   def destroy
     ActiveRecord::Base.transaction do
       @obj.destroy
-      Myp.subtract_point(current_user, db_name)
+      Myp.subtract_point(current_user, category_name)
     end
 
-    redirect_to send(db_name + "_path")
+    redirect_to index_path
+  end
+
+  def path_name
+    model.model_name.singular.to_s.downcase
+  end
+  
+  def paths_name
+    path_name.pluralize
+  end
+  
+  def category_name
+    model.table_name
+  end
+    
+  def display_obj(obj)
+    raise NotImplementedError
+  end
+    
+  def model
+    raise NotImplementedError
+  end
+  
+  def index_path
+    send(paths_name + "_path")
+  end
+  
+  def obj_path(obj = @obj)
+    send(path_name + "_path", obj)
+  end
+  
+  def edit_obj_path(obj = @obj)
+    send("edit_" + path_name + "_path", obj)
+  end
+  
+  def new_path
+    send("new_" + path_name + "_path")
   end
 
   protected
   
-    def model
-      raise NotImplementedError
-    end
-
     def obj_params
       raise NotImplementedError
     end
@@ -104,20 +136,8 @@ class MyplaceonlineController < ApplicationController
       raise NotImplementedError
     end
     
-    def display_obj(obj)
-      raise NotImplementedError
-    end
-    
     def sensitive
       false
-    end
-    
-    def db_name
-      model.table_name
-    end
-    
-    def model_name
-      model.model_name.singular.to_s.downcase
     end
     
     def create_presave

@@ -1,10 +1,2 @@
-<%= render layout: "shared/model_index", locals: {
-  title: "myplaceonline.movies.title",
-  none: "myplaceonline.movies.none",
-  display_item: lambda { |obj| obj.name },
-  model: Movie
-} do %>
-
-  <li><%= link_to t('myplaceonline.movies.title_add'), new_movie_path, "data-icon" => "plus" %></li>
-
+<%= render layout: "shared/model_index", controller: controller do %>
 <% end %>

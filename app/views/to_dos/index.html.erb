@@ -1,10 +1,2 @@
-<%= render layout: "shared/model_index", locals: {
-  title: "myplaceonline.todos.title",
-  none: "myplaceonline.todos.none",
-  display_item: lambda { |obj| obj.short_description },
-  model: ToDo
-} do %>
-
-  <li><%= link_to t('myplaceonline.todos.title_add'), new_to_do_path, "data-icon" => "plus" %></li>
-
+<%= render layout: "shared/model_index", controller: controller do %>
 <% end %>

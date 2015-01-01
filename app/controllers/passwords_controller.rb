@@ -164,21 +164,21 @@ class PasswordsController < MyplaceonlineController
     end
   end
   
-  protected
-    def model
-      Password
-    end
+  def model
+    Password
+  end
 
+  def display_obj(obj)
+    obj.display
+  end
+
+  protected
     def sensitive
       true
     end
 
     def sorts
       ["lower(passwords.name) ASC", "lower(passwords.user) ASC"]
-    end
-
-    def display_obj(obj)
-      obj.display
     end
 
     def create_presave

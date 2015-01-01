@@ -33,6 +33,7 @@ en:
       wisdoms: "Wisdom"
       to_dos: "ToDos"
       contacts: "Contacts"
+      files: "Files"
     general:
       email: "E-mail"
       password: "Password"
@@ -248,3 +249,8 @@ en:
       birthday: "Birthday"
       notes: "Notes"
       notes_edit: "Notes (supports Markdown syntax)"
+    files:
+      title: "Files"
+      none: "No files"
+      title_add: "Add File"
+      back: "Back to Files"

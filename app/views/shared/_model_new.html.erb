@@ -1,12 +1,20 @@
-<% content_for :heading do -%><%= t(title) %><% end -%>
-<h1><%= t(header) %></h1>
+<% content_for :heading do -%><%= t("myplaceonline." + controller.category_name + ".title_add") %><% end -%>
+<h1><%= t("myplaceonline." + controller.category_name + ".title_add") %></h1>
 <%= flashes! %>
-<%= render partial: "shared/model_form", locals: { form_name: form_name } %>
+
+<%= render partial: "shared/model_form", locals: { form_name: controller.paths_name + "/form" } %>
+
+<%= yield %>
+
 <% content_for :footer do -%>
 <div data-role="footer" data-position="fixed">
     <div data-role="navbar">
         <ul>
-          <%= yield %>
+          <% if content_for?(:footerlinks) %>
+            <%= content_for(:footerlinks) %>
+          <% else %>
+            <li><%= link_to t("myplaceonline." + controller.category_name + ".back"), controller.index_path, "data-icon" => "back" %></li>
+          <% end %>
         </ul>
     </div>
 </div>

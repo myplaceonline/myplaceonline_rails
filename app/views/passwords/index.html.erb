@@ -1,11 +1,5 @@
-<%= render layout: "shared/model_index", locals: {
-  title: "myplaceonline.passwords.title",
-  none: "myplaceonline.passwords.none",
-  display_item: lambda { |obj| obj.display },
-  model: Password
-} do %>
-
-  <li><%= link_to t('myplaceonline.passwords.title_add'), new_password_path, "data-icon" => "plus" %></li>
-  <li><%= link_to t('myplaceonline.general.import'), passwords_import_path, "data-icon" => "bars" %></li>
-
+<%= render layout: "shared/model_index", controller: controller do %>
+  <% content_for :footerlinks do %>
+    <li><%= link_to t('myplaceonline.general.import'), passwords_import_path, "data-icon" => "bars" %></li>
+  <% end %>
 <% end %>

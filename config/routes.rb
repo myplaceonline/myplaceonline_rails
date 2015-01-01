@@ -10,6 +10,9 @@ Rails.application.routes.draw do
 
   resources :movies
   post 'movies/new'
+  
+  resources :identity_files, :as => "files", :path => "files", :controller => "files"
+  post 'files/new'
 
   get 'welcome/index'
   get 'api/index'

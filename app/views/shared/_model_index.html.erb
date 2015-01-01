@@ -1,11 +1,11 @@
-<% content_for :heading do -%><%= t(title) %><% end -%>
-<h1><%= t(title) %></h1>
+<% content_for :heading do -%><%= t("myplaceonline." + controller.category_name + ".title") %><% end -%>
+<h1><%= t("myplaceonline." + controller.category_name + ".title") %></h1>
 <%= flashes! %>
 
 <%
 if @objs.length == 0
 %>
-<p><%= t(none) %></p>
+<p><%= t("myplaceonline." + controller.category_name + ".none") %></p>
 <%
 else
 %>
@@ -15,24 +15,24 @@ else
     @objs.each do |obj|
 %>
       <li>
-        <%= link_to display_item.call(obj), obj %>
+        <%= link_to controller.display_obj(obj), send("#{controller.path_name}_path", obj) %>
       </li>
 <%
     end
 %>
   </ul>
 </div>
-<%
 
+<%
   if @offset + @perpage < @count
 %>
-    <%= link_to(t('myplaceonline.general.next') + " " + @perpage.to_s, send("#{model.table_name}_path", :offset => @offset + @perpage), :class => "ui-btn") %>
+    <%= link_to(t('myplaceonline.general.next') + " " + @perpage.to_s, send("#{controller.paths_name}_path", :offset => @offset + @perpage), :class => "ui-btn") %>
 <%
   end
 
   if @offset > 0
 %>
-    <%= link_to(t('myplaceonline.general.previous') + " " + @perpage.to_s, send("#{model.table_name}_path", :offset => @offset - @perpage), :class => "ui-btn") %>
+    <%= link_to(t('myplaceonline.general.previous') + " " + @perpage.to_s, send("#{controller.paths_name}_path", :offset => @offset - @perpage), :class => "ui-btn") %>
 <%
   end
 
@@ -42,7 +42,7 @@ end
 <script type="text/javascript">
 onPageLoad(function() {
 
-  hookListviewSearch($(".searchable"), "/<%= model.table_name %>.json?perpage=0");
+  hookListviewSearch($(".searchable"), "/<%= controller.paths_name %>.json?perpage=0");
   
   var input = $(".searchable_container input");
   
@@ -53,11 +53,14 @@ onPageLoad(function() {
 });
 </script>
 
+<%= yield %>
+
 <% content_for :footer do -%>
 <div data-role="footer" data-position="fixed">
     <div data-role="navbar">
         <ul>
-          <%= yield %>
+          <li><%= link_to t("myplaceonline." + controller.category_name + ".title_add"), controller.new_path, "data-icon" => "plus" %></li>
+          <%= content_for(:footerlinks) %>
         </ul>
     </div>
 </div>

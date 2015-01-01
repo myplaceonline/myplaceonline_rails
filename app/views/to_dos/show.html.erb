@@ -1,7 +1,4 @@
-<%= render layout: "shared/model_show", locals: {
-  title: "myplaceonline.todos.title",
-  display_header: lambda { |obj| obj.short_description }
-} do %>
+<%= render layout: "shared/model_show", controller: controller do %>
 
   <%= attribute_table_row(t("myplaceonline.todos.short_description"), @obj.short_description) %>
   <%= attribute_table_row_markdown(t("myplaceonline.todos.notes"), @obj.notes) %>

@@ -1,15 +1,15 @@
 class WisdomsController < MyplaceonlineController
-  protected
-    def model
-      Wisdom
-    end
+  def model
+    Wisdom
+  end
 
+  def display_obj(obj)
+    obj.name
+  end
+
+  protected
     def sorts
       ["lower(wisdoms.name) ASC"]
-    end
-
-    def display_obj(obj)
-      obj.name
     end
 
     def obj_params
