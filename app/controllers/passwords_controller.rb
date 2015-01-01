@@ -24,6 +24,8 @@ class PasswordsController < MyplaceonlineController
             end
             identity_file.save!
             
+            Myp.add_point(current_user, "files")
+            
             # Try to read the file
             s = Roo::OpenOffice.new(identity_file.file.to_file.path, :password => @password, :file_warning => :ignore)
             
