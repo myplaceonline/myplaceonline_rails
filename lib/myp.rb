@@ -313,7 +313,7 @@ module Myp
         cpa.count += amount
         if cpa.count < 0
           if !Rails.env.test?
-            raise "Something went wrong, category count would go negative for #{category.inspect}"
+            Myp.warn("Something went wrong, category count would go negative for #{category.inspect}")
           end
           break
         end
@@ -321,6 +321,10 @@ module Myp
         category = category.parent
       end
     end
+  end
+  
+  def self.warn(message)
+    # TODO send admin notification
   end
   
   def self.reset_points(user)
