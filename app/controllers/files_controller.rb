@@ -3,16 +3,16 @@ class FilesController < MyplaceonlineController
     "file"
   end
 
+  def category_name
+    "files"
+  end
+  
   def display_obj(obj)
-    "File"
+    obj.file_file_name
   end
 
   def model
     IdentityFile
-  end
-  
-  def category_name
-    "files"
   end
   
   protected
