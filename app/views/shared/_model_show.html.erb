@@ -2,6 +2,8 @@
 <h1><%= controller.display_obj(@obj) %></h1>
 <%= flashes! %>
 
+<% yielded = yield %>
+
 <%= content_for(:beforetable) %>
 
 <table data-role="table" data-mode="reflow" class="ui-responsive tablestripes normalwidth firstcolumnbold noheadertable">
@@ -13,7 +15,7 @@
     </tr>
   <tbody>
   
-    <%= yield %>
+    <%= yielded %>
 
     <%= attribute_table_row(t("myplaceonline.general.created"), display_time(@obj.created_at)) %>
     <%= attribute_table_row(t("myplaceonline.general.last_updated"), display_time(@obj.updated_at)) %>
