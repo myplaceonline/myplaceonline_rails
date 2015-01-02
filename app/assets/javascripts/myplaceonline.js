@@ -1,5 +1,5 @@
 // myplaceonline.js
-// Version 0.6
+// Version 0.7
 //
 // Notes:
 //  * When changing this file, you may need to apply the same changes to
@@ -14,7 +14,7 @@ var myp = {
   loadedScripts: [],
   onetimeFunctions: [],
   jserrors: 0,
-  maxjserrors: 1,
+  maxjserrors: 10,
   holderrors: "",
   maxjsonobj: 200,
   heightPadding: 41,

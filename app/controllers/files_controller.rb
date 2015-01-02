@@ -26,6 +26,10 @@ class FilesController < MyplaceonlineController
     )
   end
   
+  def may_upload
+    true
+  end
+  
   protected
 
     def sorts
@@ -33,6 +37,6 @@ class FilesController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:file).permit()
+      params.require(:identity_file).permit(:file)
     end
 end

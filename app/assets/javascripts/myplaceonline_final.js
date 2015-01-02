@@ -1,8 +1,17 @@
 $.noty.defaults.timeout = 4000;
 $.noty.defaults.layout = 'topCenter';
 
+// https://github.com/rails/jquery-ujs/wiki/ajax
 $(document).on('ajax:remotipartSubmit', 'form', function() {
   showLoading();
+});
+
+$(document).on('ajax:complete', 'form', function(xhr, status) {
+  hideLoading();
+});
+
+$(document).on('ajax:error', 'form', function(xhr, status, error) {
+  criticalError("Error submitting form: " + getJSON(status) + ", " + getJSON(error));
 });
 
 // http://view.jquerymobile.com/master/demos/listview-autocomplete-remote/

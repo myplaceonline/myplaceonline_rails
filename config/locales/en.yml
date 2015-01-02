@@ -233,3 +233,5 @@ en:
       name: "Name"
       download: "Download"
       size_bytes: "Size (bytes)"
+      file: "File"
+      none: "No File Specified"

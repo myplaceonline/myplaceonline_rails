@@ -56,6 +56,7 @@ class MyplaceonlineController < ApplicationController
   end
 
   def create
+    Myp.ensure_encryption_key(session)
     ActiveRecord::Base.transaction do
       @obj = model.new(obj_params)
       @obj.identity_id = current_user.primary_identity.id
@@ -64,13 +65,13 @@ class MyplaceonlineController < ApplicationController
       
       if @obj.save
         Myp.add_point(current_user, category_name)
-        redirect_to @obj
+        return after_create_or_update
       else
-        render :new
+        return render :new
       end
     end
   end
-
+  
   def update
     Myp.ensure_encryption_key(session)
     ActiveRecord::Base.transaction do
@@ -80,10 +81,17 @@ class MyplaceonlineController < ApplicationController
       update_presave
 
       if @obj.save
-        redirect_to @obj
+        return after_create_or_update
       else
-        render :edit
+        return render :edit
       end
+    end
+  end
+  
+  def after_create_or_update
+    respond_to do |format|
+      format.html { redirect_to @obj }
+      format.js { render :saved }
     end
   end
 
@@ -131,6 +139,10 @@ class MyplaceonlineController < ApplicationController
   
   def new_path
     send("new_" + path_name + "_path")
+  end
+  
+  def may_upload
+    false
   end
 
   protected

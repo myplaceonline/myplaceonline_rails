@@ -1,7 +1,10 @@
 <%= render layout: "shared/model_show" do %>
 
   <%= attribute_table_row(t("myplaceonline.files.name"), @obj.file_file_name) %>
-  <%= attribute_table_row(t("myplaceonline.files.download"), link_to(t("myplaceonline.files.download"), file_download_url(@obj), :class => "externallink", :data => { :ajax => 'false' }), nil) %>
   <%= attribute_table_row(t("myplaceonline.files.size_bytes"), @obj.file_file_size) %>
+  
+  <% content_for :aftertable do -%>
+    <p><%= link_to(t("myplaceonline.files.download"), file_download_url(@obj), :class => "externallink ui-btn", :data => { :ajax => 'false' }) %></p>
+  <% end -%>
 
 <% end %>

@@ -1,0 +1,5 @@
+<% if @error.nil? %>
+navigate('<%= controller.obj_path(@obj) %>');
+<% else %>
+alert('Error: ' + <%= @error.to_json.html_safe %>);
+<% end %>

@@ -1,4 +1,4 @@
-<%= form_for @obj, :url => @url do |f| %>
+<%= form_for @obj, :url => @url, :remote => controller.may_upload, data: { ajax: !controller.may_upload } do |f| %>
   <% if @obj.errors.any? %>
     <div class="errors">
       <ul>
