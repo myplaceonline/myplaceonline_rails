@@ -12,7 +12,7 @@
   <%= render partial: form_name, locals: { f: f } %>
 
   <p>
-    <%= f.submit %>
+    <%= f.submit t("myplaceonline.general.save") + " " + t("myplaceonline.category." + controller.category_name).singularize %>
   </p>
   
 <script type="text/javascript">

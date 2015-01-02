@@ -1,4 +1,4 @@
-<% content_for :heading do -%><%= t("myplaceonline." + controller.category_name + ".title") %><% end -%>
+<% content_for :heading do -%><%= t("myplaceonline.category." + controller.category_name) %><% end -%>
 <h1><%= controller.display_obj(@obj) %></h1>
 <%= flashes! %>
 
@@ -13,7 +13,7 @@
           <% if content_for?(:footerlinks) %>
             <%= content_for(:footerlinks) %>
           <% else %>
-            <li><%= link_to t("myplaceonline." + controller.category_name + ".back"), controller.index_path, "data-icon" => "back" %></li>
+            <li><%= link_to t("myplaceonline.general.back_to_all") + " " + t("myplaceonline.category." + controller.category_name), controller.index_path, "data-icon" => "back" %></li>
           <% end %>
         </ul>
     </div>

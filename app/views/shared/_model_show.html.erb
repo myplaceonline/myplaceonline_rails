@@ -1,4 +1,4 @@
-<% content_for :heading do -%><%= t("myplaceonline." + controller.category_name + ".title") %><% end -%>
+<% content_for :heading do -%><%= controller.display_obj(@obj) %><% end -%>
 <h1><%= controller.display_obj(@obj) %></h1>
 <%= flashes! %>
 
@@ -33,7 +33,7 @@ ensureClipboard($(".clipboardable"));
             <li><%= link_to t('myplaceonline.general.edit'), controller.edit_obj_path, "data-icon" => "edit" %></li>
             <li><%= link_to t('myplaceonline.general.delete'), controller.obj_path,
                     method: :delete, data: { confirm: 'Are you sure?' }, "data-icon" => "delete" %></li>
-            <li><%= link_to t("myplaceonline." + controller.category_name + ".back"), controller.index_path, "data-icon" => "back" %></li>
+            <li><%= link_to t("myplaceonline.general.back_to_all") + " " + t("myplaceonline.category." + controller.category_name), controller.index_path, "data-icon" => "back" %></li>
           <% end %>
         </ul>
     </div>

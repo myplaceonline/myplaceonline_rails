@@ -123,7 +123,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def deletecategory
     Myp.ensure_encryption_key(session)
-    passwords = I18n.t("myplaceonline.passwords.title")
+    passwords = I18n.t("myplaceonline.category.passwords")
     @categories = [passwords]
     
     if request.post?

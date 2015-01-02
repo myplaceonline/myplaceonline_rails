@@ -14,11 +14,4 @@
 
   <% end %>
   
-  <% content_for :footerlinks do %>
-    <li><%= link_to t('myplaceonline.general.edit'), edit_password_path, "data-icon" => "edit" %></li>
-    <li><%= link_to t('myplaceonline.general.delete'), password_path(@obj),
-            method: :delete, data: { confirm: 'Are you sure?' }, "data-icon" => "delete" %></li>
-    <li><%= link_to t('myplaceonline.passwords.back'), passwords_path, "data-icon" => "back" %></li>
-  <% end %>
-
 <% end %>

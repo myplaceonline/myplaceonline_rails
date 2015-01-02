@@ -3,11 +3,4 @@
   <%= attribute_table_row(t("myplaceonline.to_dos.short_description"), @obj.short_description) %>
   <%= attribute_table_row_markdown(t("myplaceonline.to_dos.notes"), @obj.notes) %>
   
-  <% content_for :footerlinks do %>
-    <li><%= link_to t('myplaceonline.general.edit'), edit_to_do_path, "data-icon" => "edit" %></li>
-    <li><%= link_to t('myplaceonline.general.delete'), to_do_path(@obj),
-            method: :delete, data: { confirm: 'Are you sure?' }, "data-icon" => "delete" %></li>
-    <li><%= link_to t('myplaceonline.to_dos.back'), to_dos_path, "data-icon" => "back" %></li>
-  <% end %>
-
 <% end %>

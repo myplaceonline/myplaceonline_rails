@@ -3,11 +3,4 @@
   <%= attribute_table_row(t("myplaceonline.wisdoms.name"), @obj.name) %>
   <%= attribute_table_row_markdown(t("myplaceonline.wisdoms.wisdom"), @obj.wisdom) %>
   
-  <% content_for :footerlinks do %>
-    <li><%= link_to t('myplaceonline.general.edit'), edit_wisdom_path, "data-icon" => "edit" %></li>
-    <li><%= link_to t('myplaceonline.general.delete'), wisdom_path(@obj),
-            method: :delete, data: { confirm: 'Are you sure?' }, "data-icon" => "delete" %></li>
-    <li><%= link_to t('myplaceonline.wisdoms.back'), wisdoms_path, "data-icon" => "back" %></li>
-  <% end %>
-
 <% end %>

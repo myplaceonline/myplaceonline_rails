@@ -66,6 +66,10 @@ en:
       yes: "Yes"
       no: "No"
       perpage: "per page"
+      count_no: "No"
+      add: "Add"
+      back_to_all: "Back to all"
+      create_instructions: "Click the Add button below"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
@@ -149,16 +153,7 @@ en:
       placeholder: "Search"
     api:
       title: "API"
-    joy:
-      title: "Joy"
-    order:
-      title: "Order"
-    meaning:
-      title: "Meaning"
     passwords:
-      title: "Passwords"
-      none: "No passwords"
-      title_add: "Add Password"
       name: "Service Name"
       user: "User ID"
       password: "Password"
@@ -218,43 +213,23 @@ en:
       password: "Password (if any)"
       nofile: "No file selected"
     movies:
-      title: "Movies"
-      none: "No movies"
-      title_add: "Add Movie"
       name: "Movie Name"
       watched: "Watched"
       url: "Website"
-      back: "Back to Movies"
     wisdoms:
-      title: "Wisdom"
-      none: "No entries"
-      title_add: "Add Wisdom"
       name: "Wisdom Name"
       wisdom: "Wisdom"
       wisdom_edit: "Wisdom (supports Markdown syntax)"
-      back: "Back to Wisdom"
     to_dos:
-      title: "ToDos"
-      none: "No ToDos"
-      title_add: "Add ToDo"
       short_description: "Short Description"
       notes: "Notes"
       notes_edit: "Notes (supports Markdown syntax)"
-      back: "Back to ToDos"
     contacts:
-      title: "Contacts"
-      none: "No contacts"
-      title_add: "Add Contact"
-      back: "Back to Contacts"
       name: "Name"
       birthday: "Birthday"
       notes: "Notes"
       notes_edit: "Notes (supports Markdown syntax)"
     files:
-      title: "Files"
-      none: "No files"
-      title_add: "Add File"
-      back: "Back to Files"
       name: "Name"
       download: "Download"
       size_bytes: "Size (bytes)"

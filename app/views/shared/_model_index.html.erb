@@ -1,10 +1,10 @@
-<% content_for :heading do -%><%= t("myplaceonline." + controller.category_name + ".title") %><% end -%>
+<% content_for :heading do -%><%= t("myplaceonline.category." + controller.category_name) %><% end -%>
 <%= flashes! %>
 
 <%
 if @objs.length == 0
 %>
-<p><%= t("myplaceonline." + controller.category_name + ".none") %></p>
+<p><%= t("myplaceonline.general.count_no") + " " + t("myplaceonline.category." + controller.category_name) %>. <%= t("myplaceonline.general.create_instructions") %></p>
 <%
 else
 %>
@@ -42,7 +42,7 @@ end
   if @count > @perpage
 %>
     <div class="horizontal_center small">
-      <%= @count %> <%= t("myplaceonline." + controller.category_name + ".title") %>, <%= @perpage %> <%= t("myplaceonline.general.perpage") %>
+      <%= @count %> <%= t("myplaceonline.category." + controller.category_name) %>, <%= @perpage %> <%= t("myplaceonline.general.perpage") %>
     </div>
 <%
   end
@@ -68,7 +68,7 @@ onPageLoad(function() {
 <div data-role="footer" data-position="fixed">
     <div data-role="navbar">
         <ul>
-          <li><%= link_to t("myplaceonline." + controller.category_name + ".title_add"), controller.new_path, "data-icon" => "plus" %></li>
+          <li><%= link_to t("myplaceonline.general.add") + " " + t("myplaceonline.category." + controller.category_name).singularize, controller.new_path, "data-icon" => "plus" %></li>
           <%= content_for(:footerlinks) %>
         </ul>
     </div>

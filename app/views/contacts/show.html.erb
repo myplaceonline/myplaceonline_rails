@@ -4,11 +4,4 @@
   <%= attribute_table_row(t("myplaceonline.contacts.birthday"), @obj.birthday) %>
   <%= attribute_table_row_markdown(t("myplaceonline.contacts.notes"), @obj.notes) %>
   
-  <% content_for :footerlinks do %>
-    <li><%= link_to t('myplaceonline.general.edit'), edit_contact_path, "data-icon" => "edit" %></li>
-    <li><%= link_to t('myplaceonline.general.delete'), contact_path(@obj),
-            method: :delete, data: { confirm: 'Are you sure?' }, "data-icon" => "delete" %></li>
-    <li><%= link_to t('myplaceonline.contacts.back'), contacts_path, "data-icon" => "back" %></li>
-  <% end %>
-
 <% end %>
