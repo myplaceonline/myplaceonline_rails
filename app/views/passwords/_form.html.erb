@@ -39,6 +39,11 @@
   <%= f.text_area :notes, placeholder: t("myplaceonline.passwords.notes_field") %>
 </p>
 
+<p>
+  <%= check_box_tag :defunct, true, !@obj.defunct.nil? %>
+  <%= label_tag :defunct, t("myplaceonline.passwords.defunct") %>
+</p>
+
 <div data-role="collapsible">
   <h3><%= t("myplaceonline.passwords.recovery_questions") %></h3>
   <div class="itemswrapper">

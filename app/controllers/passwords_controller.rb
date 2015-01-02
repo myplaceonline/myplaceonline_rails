@@ -171,7 +171,14 @@ class PasswordsController < MyplaceonlineController
   end
 
   def display_obj(obj)
-    obj.display
+    result = obj.name
+    if !obj.user.to_s.empty?
+      result += " (" + obj.user + ")"
+    end
+    if !obj.defunct.nil?
+      result += " (" + t("myplaceonline.passwords.defunct") + ")"
+    end
+    result
   end
 
   protected
@@ -185,11 +192,21 @@ class PasswordsController < MyplaceonlineController
 
     def create_presave
       @obj.password_finalize(@encrypt)
+      update_defunct
     end
     
     def update_presave
       @obj.password_finalize(@encrypt)
       @obj.password_secrets.each{|secret| secret.answer_finalize(@encrypt)}
+      update_defunct
+    end
+    
+    def update_defunct
+      if params[:defunct] == "true"
+        @obj.defunct = Time.now
+      else
+        @obj.defunct = nil
+      end
     end
 
     def before_edit

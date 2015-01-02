@@ -178,6 +178,7 @@ en:
       add_question: "Add Question"
       remove_question: "Delete Question"
       how_to_decrypt: "The encrypted file may be decrypted with the command line gpg tool:"
+      defunct: "Defunct"
     users:
       invite: "Invite Code"
       invite_invalid: "invalid"
