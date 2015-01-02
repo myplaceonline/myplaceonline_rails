@@ -38,6 +38,16 @@ else
 end
 %>
 
+<%
+  if @count > @perpage
+%>
+    <div class="horizontal_center small">
+      <%= @count %> <%= t("myplaceonline." + controller.category_name + ".title") %>, <%= @perpage %> <%= t("myplaceonline.general.perpage") %>
+    </div>
+<%
+  end
+%>
+
 <script type="text/javascript">
 onPageLoad(function() {
 
