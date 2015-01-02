@@ -3,7 +3,7 @@
   <%= attribute_table_row(t("myplaceonline.files.name"), @obj.file_file_name) %>
   <%= attribute_table_row(t("myplaceonline.files.size_bytes"), @obj.file_file_size) %>
   
-  <% content_for :aftertable do -%>
+  <% content_for :beforetable do -%>
     <ul data-role="listview" data-inset="true">
       <li><%= link_to(t("myplaceonline.files.download"), file_download_url(@obj), :class => "externallink ui-btn", :data => { :ajax => 'false' }) %></li>
       <li><%= link_to(t("myplaceonline.files.view"), file_view_url(@obj), :class => "externallink ui-btn", :data => { :ajax => 'false' }) %></li>

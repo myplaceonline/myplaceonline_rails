@@ -2,6 +2,8 @@
 <h1><%= controller.display_obj(@obj) %></h1>
 <%= flashes! %>
 
+<%= content_for(:beforetable) %>
+
 <table data-role="table" data-mode="reflow" class="ui-responsive tablestripes normalwidth firstcolumnbold noheadertable">
   <thead>
     <tr>
