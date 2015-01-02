@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :identity_files, :as => "files", :path => "files", :controller => "files"
   post 'files/new'
   match 'files/:id/download', :to => 'files#download', via: [:get], as: "file_download"
+  match 'files/:id/view', :to => 'files#view', via: [:get], as: "file_view"
 
   get 'welcome/index'
   get 'api/index'

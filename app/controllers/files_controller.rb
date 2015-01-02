@@ -16,14 +16,11 @@ class FilesController < MyplaceonlineController
   end
   
   def download
-    set_obj
-    response.headers['Content-Length'] = @obj.file_file_size.to_s
-    send_data(
-      @obj.file.file_contents,
-      :type => @obj.file_content_type,
-      :filename => @obj.file_file_name,
-      :disposition => 'attachment'
-    )
+    respond_download('attachment')
+  end
+  
+  def view
+    respond_download('inline')
   end
   
   def may_upload
@@ -38,5 +35,16 @@ class FilesController < MyplaceonlineController
 
     def obj_params
       params.require(:identity_file).permit(:file)
+    end
+
+    def respond_download(type)
+      set_obj
+      response.headers['Content-Length'] = @obj.file_file_size.to_s
+      send_data(
+        @obj.file.file_contents,
+        :type => @obj.file_content_type,
+        :filename => @obj.file_file_name,
+        :disposition => type
+      )
     end
 end

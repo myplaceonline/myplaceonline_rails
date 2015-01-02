@@ -232,6 +232,7 @@ en:
     files:
       name: "Name"
       download: "Download"
+      view: "View"
       size_bytes: "Size (bytes)"
       file: "File"
       none: "No File Specified"
