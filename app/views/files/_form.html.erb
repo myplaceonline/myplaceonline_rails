@@ -1,4 +1,1 @@
-<p>
-  <%= f.label :file, class: "ui-hidden-accessible" %>
-  <%= f.file_field :file, placeholder: t("myplaceonline.files.file"), class: "autofocus" %>
-</p>
+<%= myp_file_field f, :file, "myplaceonline.files.file", @obj.file, true %>

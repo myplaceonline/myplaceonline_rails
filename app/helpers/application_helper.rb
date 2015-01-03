@@ -13,10 +13,13 @@ module ApplicationHelper
     html.html_safe
   end
   
-  def is_blank(value)
+  def is_blank(value, strip = true)
+    if strip && value.is_a?(String) && !value.nil?
+      value = value.strip
+    end
     value.nil? ||
       (value.is_a?(String) &&
-        (value.strip.length == 0 || value == "&nbsp;"))
+        (value.length == 0 || value == "&nbsp;"))
   end
   
   def attribute_table_row(name, value, clipboard_text = value, valueclass = "")
@@ -89,9 +92,60 @@ module ApplicationHelper
     #time.in_time_zone(ActiveSupport::TimeZone["Pacific Time (US & Canada)"])
   end
   
-  def myp_text_area(form, name, placeholderid)
+  def myp_label_classes(value)
+    is_blank(value, false) ? "ui-hidden-accessible" : "form_field_label"
+  end
+  
+  def myp_field_classes(autofocus, input_classes)
+    result = autofocus ? "autofocus" : ""
+    if !input_classes.nil? && input_classes.length > 0
+      if result.length > 0
+        result += " "
+      end
+      result += input_classes
+    end
+    result
+  end
+  
+  def myp_text_field(form, name, placeholderid, value, autofocus = false, input_classes = nil)
+    content_tag(
+      :p,
+      form.label(name, t(placeholderid), class: myp_label_classes(value)) +
+      form.text_field(name, placeholder: t(placeholderid), class: myp_field_classes(autofocus, input_classes), value: value)
+    ).html_safe
+  end
+  
+  def myp_date_field(form, name, placeholderid, value, autofocus = false, input_classes = nil)
+    content_tag(
+      :p,
+      form.label(name, t(placeholderid), class: myp_label_classes(value)) +
+      form.date_field(name, placeholder: t(placeholderid), class: myp_field_classes(autofocus, input_classes), value: value)
+    ).html_safe
+  end
+
+  def myp_file_field(form, name, placeholderid, value, autofocus = false, input_classes = nil)
+    content_tag(
+      :p,
+      form.label(name, t(placeholderid), class: myp_label_classes(value)) +
+      form.file_field(name, placeholder: t(placeholderid), class: myp_field_classes(autofocus, input_classes), value: value)
+    ).html_safe
+  end
+
+  def myp_text_area(form, name, placeholderid, value, autofocus = false, input_classes = nil)
     # No need to set 'rows' or height because of autogrow:
     # https://github.com/jquery/jquery-mobile/blob/master/js/widgets/forms/autogrow.js
-    form.text_area name, placeholder: t(placeholderid)
+    content_tag(
+      :p,
+      form.label(name, t(placeholderid), class: myp_label_classes(value)) +
+      form.text_area(name, placeholder: t(placeholderid), class: myp_field_classes(autofocus, input_classes), value: value)
+    ).html_safe
+  end
+
+  def myp_check_box_tag(name, placeholderid, checked, autofocus = false, input_classes = nil)
+    content_tag(
+      :p,
+      check_box_tag(name, true, checked, class: myp_field_classes(autofocus, input_classes)) +
+      label_tag(name, t(placeholderid))
+    ).html_safe
   end
 end

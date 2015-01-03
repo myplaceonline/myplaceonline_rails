@@ -1,14 +1,3 @@
-<p>
-  <%= f.label :name, class: "ui-hidden-accessible" %>
-  <%= f.text_field :name, placeholder: t("myplaceonline.movies.name"), class: "autofocus" %>
-</p>
-
-<p>
-  <%= f.label :url, class: "ui-hidden-accessible" %>
-  <%= f.text_field :url, placeholder: t("myplaceonline.movies.url") %>
-</p>
-
-<p>
-  <%= check_box_tag :watched, true, !@obj.watched.nil? %>
-  <%= label_tag :watched, t("myplaceonline.movies.watched") %>
-</p>
+<%= myp_text_field f, :name, "myplaceonline.movies.name", @obj.name, true %>
+<%= myp_text_field f, :url, "myplaceonline.movies.url", @obj.url %>
+<%= myp_check_box_tag :watched, "myplaceonline.movies.watched", !@obj.watched.nil? %>
