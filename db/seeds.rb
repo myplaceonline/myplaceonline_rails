@@ -10,3 +10,4 @@ wisdoms = Category.create(name: "wisdoms", link: "wisdoms", position: 0, parent:
 to_dos = Category.create(name: "to_dos", link: "to_dos", position: 0, parent: order)
 contacts = Category.create(name: "contacts", link: "contacts", position: 0, parent: order)
 files = Category.create(name: "files", link: "files", position: 0, parent: order)
+accomplishments = Category.create(name: "accomplishments", link: "accomplishments", position: 0, parent: meaning)

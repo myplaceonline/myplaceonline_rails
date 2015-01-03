@@ -34,6 +34,7 @@ en:
       to_dos: "ToDos"
       contacts: "Contacts"
       files: "Files"
+      accomplishments: "Accomplishments"
     general:
       email: "E-mail"
       password: "Password"
@@ -237,3 +238,7 @@ en:
       size_bytes: "Size (bytes)"
       file: "File"
       none: "No File Specified"
+    accomplishments:
+      name: "Name"
+      accomplishment: "Wisdom"
+      accomplishment_edit: "Accomplishment (supports Markdown syntax)"

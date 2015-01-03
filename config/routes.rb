@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :accomplishments
+  post 'accomplishments/new'
+
   resources :contacts
   post 'contacts/new'
 
