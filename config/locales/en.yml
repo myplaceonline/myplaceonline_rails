@@ -70,6 +70,7 @@ en:
       perpage: "per page"
       count_no: "No"
       add: "Add"
+      add_another: "Add Another"
       back_to_all: "Back to all"
       create_instructions: "Click the Add button below"
     errors:

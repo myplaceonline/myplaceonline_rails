@@ -40,6 +40,7 @@ ensureClipboard($(".clipboardable"));
             <li><%= link_to t('myplaceonline.general.delete'), controller.obj_path,
                     method: :delete, data: { confirm: 'Are you sure?' }, "data-icon" => "delete" %></li>
             <li><%= link_to t("myplaceonline.general.back_to_all") + " " + t("myplaceonline.category." + controller.category_name), controller.index_path, "data-icon" => "back" %></li>
+            <li><%= link_to t("myplaceonline.general.add_another"), controller.new_path, "data-icon" => "plus" %></li>
           <% end %>
         </ul>
     </div>
