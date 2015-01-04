@@ -11,3 +11,4 @@ to_dos = Category.create(name: "to_dos", link: "to_dos", position: 0, parent: or
 contacts = Category.create(name: "contacts", link: "contacts", position: 0, parent: order)
 files = Category.create(name: "files", link: "files", position: 0, parent: order)
 accomplishments = Category.create(name: "accomplishments", link: "accomplishments", position: 0, parent: meaning)
+feeds = Category.create(name: "feeds", link: "feeds", position: 0, parent: order)

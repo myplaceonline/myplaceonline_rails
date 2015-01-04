@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :feeds
+  post 'feeds/new'
+
   resources :accomplishments
   post 'accomplishments/new'
 

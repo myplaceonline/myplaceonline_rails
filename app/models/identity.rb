@@ -8,6 +8,7 @@ class Identity < ActiveRecord::Base
   has_many :to_dos, :dependent => :destroy
   has_many :contacts, :dependent => :destroy
   has_many :accomplishments, :dependent => :destroy
+  has_many :feeds, :dependent => :destroy
   
   def as_json(options={})
     super.as_json(options).merge({
@@ -18,6 +19,7 @@ class Identity < ActiveRecord::Base
       :to_dos => to_dos.to_a.sort{ |a,b| a.short_description.downcase <=> b.short_description.downcase }.map{|x| x.as_json},
       :contacts => contacts.to_a.map{|x| x.as_json},
       :accomplishments => accomplishments.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
+      :feeds => feeds.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

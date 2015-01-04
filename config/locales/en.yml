@@ -35,6 +35,7 @@ en:
       contacts: "Contacts"
       files: "Files"
       accomplishments: "Accomplishments"
+      feeds: "Feeds"
     general:
       email: "E-mail"
       password: "Password"
@@ -242,3 +243,6 @@ en:
       name: "Name"
       accomplishment: "Wisdom"
       accomplishment_edit: "Accomplishment (supports Markdown syntax)"
+    feeds:
+      name: "Name"
+      url: "Website"
