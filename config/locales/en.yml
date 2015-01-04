@@ -233,6 +233,7 @@ en:
       birthday: "Birthday"
       notes: "Notes"
       notes_edit: "Notes (supports Markdown syntax)"
+      me: "Me"
     files:
       name: "Name"
       download: "Download"

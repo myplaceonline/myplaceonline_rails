@@ -1,4 +1,5 @@
 class MyplaceonlineController < ApplicationController
+  before_action :before_all_actions
   before_action :set_obj, only: [:show, :edit, :update, :destroy]
   skip_authorization_check :only => [:index, :new, :create]
 
@@ -97,6 +98,7 @@ class MyplaceonlineController < ApplicationController
 
   def destroy
     Myp.ensure_encryption_key(session)
+    before_destroy
     ActiveRecord::Base.transaction do
       @obj.destroy
       Myp.subtract_point(current_user, category_name)
@@ -159,6 +161,9 @@ class MyplaceonlineController < ApplicationController
       false
     end
     
+    def before_all_actions
+    end
+    
     def create_presave
     end
     
@@ -166,6 +171,9 @@ class MyplaceonlineController < ApplicationController
     end
     
     def before_edit
+    end
+    
+    def before_destroy
     end
     
     def new_build
