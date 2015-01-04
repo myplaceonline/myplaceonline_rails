@@ -37,20 +37,6 @@ class ContactsController < MyplaceonlineController
     
     def before_all_actions
       # Create a Contact for the current user identity if it doesn't exist
-      if Contact.find_by(
-        identity_id: current_user.primary_identity.id,
-        ref_id: current_user.primary_identity.id
-      ).nil?
-        ActiveRecord::Base.transaction do
-          me = Contact.new
-          me.identity = current_user.primary_identity
-          me.ref = current_user.primary_identity
-          if current_user.primary_identity.name.blank?
-            current_user.primary_identity.name = I18n.t("myplaceonline.contacts.me")
-            current_user.primary_identity.save!
-          end
-          me.save!
-        end
-      end
+      current_user.primary_identity.ensure_contact!
     end
 end

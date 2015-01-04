@@ -9,6 +9,7 @@ class Identity < ActiveRecord::Base
   has_many :contacts, :dependent => :destroy
   has_many :accomplishments, :dependent => :destroy
   has_many :feeds, :dependent => :destroy
+  has_many :locations, :dependent => :destroy
   
   def as_json(options={})
     super.as_json(options).merge({
@@ -20,7 +21,26 @@ class Identity < ActiveRecord::Base
       :contacts => contacts.to_a.map{|x| x.as_json},
       :accomplishments => accomplishments.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :feeds => feeds.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
+      :locations => locations.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
+  end
+  
+  def ensure_contact!
+    if Contact.find_by(
+      identity_id: id,
+      ref_id: id
+    ).nil?
+      ActiveRecord::Base.transaction do
+        me = Contact.new
+        if self.name.blank?
+          self.name = I18n.t("myplaceonline.contacts.me")
+          self.save!
+        end
+        me.identity = self
+        me.ref = self
+        me.save!
+      end
+    end
   end
 end

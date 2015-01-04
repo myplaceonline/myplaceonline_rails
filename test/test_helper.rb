@@ -17,6 +17,7 @@ class ActionController::TestCase
     @user = users(:user)
     Myp.remember_password(session, "password")
     @user.confirm!
+    @user.primary_identity.ensure_contact!
     sign_in @user
   end
 end

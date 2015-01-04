@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :locations
+  post 'locations/new'
+
   resources :feeds
   post 'feeds/new'
 

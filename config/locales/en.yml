@@ -36,6 +36,7 @@ en:
       files: "Files"
       accomplishments: "Accomplishments"
       feeds: "Feeds"
+      locations: "Locations"
     general:
       email: "E-mail"
       password: "Password"
@@ -248,3 +249,8 @@ en:
     feeds:
       name: "Name"
       url: "Website"
+    locations:
+      name: "Name"
+      address1: "Address"
+      address2: "Address (Line 2)"
+      address3: "Address (Line 3)"
