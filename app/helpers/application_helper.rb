@@ -148,4 +148,12 @@ module ApplicationHelper
       label_tag(name, t(placeholderid))
     ).html_safe
   end
+
+  def myp_country_field(form, name, placeholderid, value, autofocus = false, input_classes = nil)
+    content_tag(
+      :p,
+      form.label(name, t(placeholderid), class: "form_field_label") +
+      form.country_select(name, priority: %w(US), class: myp_field_classes(autofocus, input_classes), value: value)
+    ).html_safe
+  end
 end

@@ -55,3 +55,5 @@ gem 'letter_opener', :group => :development
 gem 'kramdown'
 gem 'nokogiri'
 gem 'factory_girl_rails'
+gem 'carmen'
+gem 'carmen-rails'

@@ -254,3 +254,4 @@ en:
       address1: "Address"
       address2: "Address (Line 2)"
       address3: "Address (Line 3)"
+      region: "Country"
