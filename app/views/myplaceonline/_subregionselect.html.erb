@@ -1,0 +1,16 @@
+<div class="subregionwrapper">
+  <%
+  regionstr ||= params[:regionstr]
+  regionstr ||= default_region
+  subregion ||= nil
+  region = Carmen::Country.coded(regionstr)
+  %>
+
+  <% if region.nil? %>
+    <p><em><%= t("myplaceonline.locations.select_region") %></em></p>
+  <% elsif region.subregions? %>
+    <%= myp_subregion_select_field(:sub_region1, "myplaceonline.locations.sub_region1", region, subregion) %>
+  <% else %>
+    <%= myp_text_field_tag(:sub_region1, "myplaceonline.locations.sub_region1", subregion) %>
+  <% end %>
+</div>

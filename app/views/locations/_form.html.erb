@@ -1,2 +1,3 @@
 <%= myp_text_field f, :name, "myplaceonline.locations.name", @obj.name, true %>
-<%= myp_country_field f, :region, "myplaceonline.locations.region", @obj.region %>
+<%= myp_region_field f, :region, "myplaceonline.locations.region", @obj.region %>
+<%= myp_subregion_field f, :sub_region1, "myplaceonline.locations.sub_region1", @obj.region, @obj.sub_region1 %>

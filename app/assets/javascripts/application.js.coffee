@@ -7,3 +7,21 @@
 #= require handlebars-v2.0.0
 #= require ember-1.9.0
 #= require forge.min
+
+$ ->
+  $('body').on('change', 'select.region', ->
+    select_wrapper = $('.subregionwrapper')
+
+    $('select', select_wrapper).attr('disabled', true)
+
+    subregion_code = $(this).val()
+
+    url = 
+    
+    $.get(
+      "/api/subregions?regionstr=#{subregion_code}",
+      (data) ->
+        $(".subregionwrapper").replaceWith(data)
+        ensureStyledPage()
+    )
+  )

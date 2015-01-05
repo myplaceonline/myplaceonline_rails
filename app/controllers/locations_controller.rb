@@ -13,6 +13,7 @@ class LocationsController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:location).permit(:name, :address1, :address2, :address3, :region, :subregion1, :subregion2)
+      params[:location][:sub_region1] = params[:sub_region1]
+      params.require(:location).permit(:name, :address1, :address2, :address3, :region, :sub_region1, :sub_region2)
     end
 end

@@ -25,4 +25,8 @@ class ApiController < ApplicationController
       :randomString => result
     }
   end
+  
+  def subregions
+    render partial: 'myplaceonline/subregionselect'
+  end
 end

@@ -9,4 +9,22 @@ class Location < ActiveRecord::Base
       nil
     end
   end
+
+  def sub_region1_name
+    if !region.blank? && !sub_region1.blank?
+      reg = Carmen::Country.coded(region)
+      if reg.subregions.length > 0
+        subregion = reg.subregions.coded(sub_region1)
+        if !subregion.nil?
+          subregion.name
+        else
+          sub_region1
+        end
+      else
+        sub_region1
+      end
+    else
+      nil
+    end
+  end
 end

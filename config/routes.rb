@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   get 'api/index'
   get 'api/categories'
   get 'api/randomString'
+  get 'api/subregions' => 'api#subregions'
 
   get 'meaning/index'
   get 'meaning', :to => 'meaning#index'

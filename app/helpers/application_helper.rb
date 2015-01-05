@@ -115,6 +115,14 @@ module ApplicationHelper
     ).html_safe
   end
   
+  def myp_text_field_tag(name, placeholderid, value, autofocus = false, input_classes = nil)
+    content_tag(
+      :p,
+      label_tag(name, t(placeholderid), class: myp_label_classes(value)) +
+      text_field_tag(name, value, placeholder: t(placeholderid), class: myp_field_classes(autofocus, input_classes))
+    ).html_safe
+  end
+  
   def myp_date_field(form, name, placeholderid, value, autofocus = false, input_classes = nil)
     content_tag(
       :p,
@@ -148,12 +156,34 @@ module ApplicationHelper
       label_tag(name, t(placeholderid))
     ).html_safe
   end
+  
+  def default_region
+    "US"
+  end
 
-  def myp_country_field(form, name, placeholderid, value, autofocus = false, input_classes = nil)
+  def myp_region_field(form, name, placeholderid, value, autofocus = false, input_classes = nil)
+    if input_classes.nil?
+      input_classes = ""
+    else
+      input_classes += " "
+    end
+    input_classes += "region"
     content_tag(
       :p,
       form.label(name, t(placeholderid), class: "form_field_label") +
-      form.country_select(name, priority: %w(US), class: myp_field_classes(autofocus, input_classes), value: value)
+      form.select(name, region_options_for_select(Carmen::Country.all, value, priority: [default_region]), {}, { :class => myp_field_classes(autofocus, input_classes) })
+    ).html_safe
+  end
+  
+  def myp_subregion_field(form, name, placeholderid, regionvalue, subregionvalue)
+    render(partial: 'subregionselect', locals: { regionstr: regionvalue, subregion: subregionvalue })
+  end
+
+  def myp_subregion_select_field(name, placeholderid, region, subregionvalue, autofocus = false, input_classes = nil)
+    content_tag(
+      :p,
+      label_tag(name, t(placeholderid), class: "form_field_label") +
+      subregion_select_tag(name, subregionvalue, region, class: myp_field_classes(autofocus, input_classes))
     ).html_safe
   end
 end
