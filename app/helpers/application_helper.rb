@@ -174,7 +174,7 @@ module ApplicationHelper
     input_classes += "region"
     content_tag(
       :p,
-      form.label(name, t(placeholderid), class: "form_field_label") +
+      form.label(name, t(placeholderid), class: "ui-hidden-accessible") +
       form.select(name, region_options_for_select(Carmen::Country.all, value, priority: [default_region]), {}, { :class => myp_field_classes(autofocus, input_classes) })
     ).html_safe
   end
