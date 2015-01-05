@@ -256,4 +256,5 @@ en:
       address3: "Address (Line 3)"
       region: "Country"
       sub_region1: "State"
+      sub_region2: "City"
       select_region: "Please select a country first"

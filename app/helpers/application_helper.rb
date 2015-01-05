@@ -182,8 +182,8 @@ module ApplicationHelper
   def myp_subregion_select_field(name, placeholderid, region, subregionvalue, autofocus = false, input_classes = nil)
     content_tag(
       :p,
-      label_tag(name, t(placeholderid), class: "form_field_label") +
-      subregion_select_tag(name, subregionvalue, region, class: myp_field_classes(autofocus, input_classes))
+      label_tag(name, t(placeholderid), class: myp_label_classes(subregionvalue)) +
+      subregion_select_tag(name, subregionvalue, region, class: myp_field_classes(autofocus, input_classes), prompt: t(placeholderid))
     ).html_safe
   end
 end
