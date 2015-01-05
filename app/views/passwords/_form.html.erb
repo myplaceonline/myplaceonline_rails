@@ -1,13 +1,15 @@
 <%= myp_text_field f, :name, "myplaceonline.passwords.name", @obj.name, true %>
 <%= myp_text_field f, :user, "myplaceonline.passwords.user", @obj.user %>
+<%= myp_text_field f, :email, "myplaceonline.passwords.email", @obj.email %>
 <%= myp_text_field f, :password, "myplaceonline.passwords.password", @obj.password %>
-
-<div data-role="collapsible">
-  <h3><%= t("myplaceonline.passwords.generate_password") %></h3>
-  <p><input type="number" id="generate_password_length" value="" placeholder="<%= t("myplaceonline.passwords.password_length") %>" /></p>
-  <p><a href="#" class="ui-btn" onclick="getRemoteString($('#password_password'), $('#generate_password_length').val()); return false;"><%= t("myplaceonline.passwords.generate_password_button") %></a></p>
-</div>
-
+<%=
+  render partial: 'myplaceonline/generaterandom', locals: {
+    heading: t("myplaceonline.passwords.generate_password"),
+    lengthplaceholder: t("myplaceonline.passwords.generate_password_length"),
+    destination: "$('#password_password')",
+    button: t("myplaceonline.passwords.generate_password_button")
+  }
+%>
 <%= myp_check_box_tag :encrypt, "myplaceonline.passwords.encrypt", @encrypt %>
 <%= myp_text_field f, :url, "myplaceonline.passwords.url", @obj.url %>
 <%= myp_text_field f, :account_number, "myplaceonline.passwords.account_number", @obj.account_number %>
@@ -21,11 +23,19 @@
       <%= f.fields_for :password_secrets, secret do |secret_fields| %>
         <div class="itemwrapper">
           <%= myp_text_field secret_fields, :question, "myplaceonline.passwords.question", secret.question, false, "primary_input" %>
-          <%= myp_text_field secret_fields, :answer, "myplaceonline.passwords.answer", secret.answer %>
+          <%= myp_text_field secret_fields, :answer, "myplaceonline.passwords.answer", secret.answer, false, "random_destination" %>
+          <%=
+            render partial: 'myplaceonline/generaterandom', locals: {
+              heading: t("myplaceonline.passwords.generate_answer"),
+              lengthplaceholder: t("myplaceonline.passwords.generate_answer_length"),
+              destination: "$(this).parents('.itemwrapper').find('.random_destination')",
+              button: t("myplaceonline.passwords.generate_answer_button")
+            }
+          %>
           <p><a href="#" onclick="return form_remove_item(this);" class="ui-btn"><%= t("myplaceonline.passwords.remove_question") %></a></p>
         </div>
       <% end %>
     <% end %>
-    <p><a href="#" onclick="return form_add_item(this, 'question', 'password', 'password_secrets', '<%= t("myplaceonline.passwords.remove_question") %>', [ { name: 'question', placeholder: '<%= t("myplaceonline.passwords.question") %>', primary: true }, { name: 'answer', placeholder: '<%= t("myplaceonline.passwords.answer") %>' } ]);" class="ui-btn"><%= t("myplaceonline.passwords.add_question") %></a></p>
+    <p><a href="#" onclick="return form_add_item(this, 'question', 'password', 'password_secrets', '<%= t("myplaceonline.passwords.remove_question") %>', [ { type: 'text', name: 'question', placeholder: '<%= t("myplaceonline.passwords.question") %>', primary: true }, { type: 'text', name: 'answer', placeholder: '<%= t("myplaceonline.passwords.answer") %>', classes: 'random_destination' }, { type: 'random', heading: '<%= t("myplaceonline.passwords.generate_answer") %>', lengthplaceholder: '<%= t("myplaceonline.passwords.generate_answer_length") %>', button: '<%= t("myplaceonline.passwords.generate_answer_button") %>', destination: '$(this).parents(\'.itemwrapper\').find(\'.random_destination\')' } ]);" class="ui-btn"><%= t("myplaceonline.passwords.add_question") %></a></p>
   </div>
 </div>

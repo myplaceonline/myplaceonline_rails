@@ -3,6 +3,7 @@
   <%= attribute_table_row(t("myplaceonline.passwords.name"), @obj.name) %>
   <%= attribute_table_row(t("myplaceonline.passwords.password"), @obj.password, @obj.password, "bghighlight") %>
   <%= attribute_table_row(t("myplaceonline.passwords.user"), @obj.user) %>
+  <%= attribute_table_row(t("myplaceonline.passwords.email"), @obj.email) %>
   <!--<%= attribute_table_row(t("myplaceonline.passwords.isencrypted"), @obj.password_encrypted?) %>-->
   <%= attribute_table_row(t("myplaceonline.passwords.url"), url_or_blank(@obj.get_url, nil, @obj.password), @obj.password) %>
   <%= attribute_table_row(t("myplaceonline.passwords.account_number"), @obj.account_number) %>

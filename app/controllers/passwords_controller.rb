@@ -218,6 +218,7 @@ class PasswordsController < MyplaceonlineController
         :name,
         :user,
         :password,
+        :email,
         :url,
         :account_number,
         :notes,

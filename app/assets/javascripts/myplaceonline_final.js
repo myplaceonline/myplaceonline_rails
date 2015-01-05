@@ -98,12 +98,20 @@ function form_add_item(link, referenceItemName, attributesName, attributesPrefix
     var item = items[i];
     var id = attributesName + "_" + attributesPrefix + "_attributes_" + index + "_" + item.name;
     var name = attributesName + "[" + attributesPrefix + "_attributes][" + index + "][" + item.name + "]";
-    var cssclass = '';
+    var cssclasses = '';
     if (item.primary) {
-      cssclass = 'primary_input';
+      cssclasses = 'primary_input ';
       toFocus = id;
     }
-    html += "<p><input id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' type='text' value='' class='" + cssclass + "' /></p>";
+    if (item.classes) {
+      cssclasses += item.classes + ' ';
+    }
+    if (item.type == "text") {
+      html += "<p><input id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' type='text' value='' class='" + cssclasses + "' /></p>";
+    } else if (item.type == "random") {
+      // Duplicated in views/myplaceonline/_generaterandom.html.erb
+      html += '<div data-role="collapsible"><h3>' + item.heading + '</h3><p><input type="number" class="generate_password_length" value="" placeholder="' + item.lengthplaceholder + '" /></p><p><a href="#" class="ui-btn" onclick="getRemoteString(' + item.destination + ', $(this).parents(\'div\').first().find(\'.generate_password_length\').val()); return false;">' + item.button + '</a></p></div>';
+    }
   }
   html += "<p><a href='#' onclick='return form_remove_item(this);' class='ui-btn'>" + deletePlaceholder + "</a></p>";
   html += "</div>";

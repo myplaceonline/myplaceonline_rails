@@ -1,0 +1,6 @@
+<%# Logic duplicated in myplaceonline_final.js form_add_item %>
+<div data-role="collapsible">
+  <h3><%= heading %></h3>
+  <p><input type="number" class="generate_password_length" value="" placeholder="<%= lengthplaceholder %>" /></p>
+  <p><a href="#" class="ui-btn" onclick="getRemoteString(<%= destination %>, $(this).parents('div').first().find('.generate_password_length').val()); return false;"><%= button %></a></p>
+</div>
