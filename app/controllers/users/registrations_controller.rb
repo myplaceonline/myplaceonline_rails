@@ -173,6 +173,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
   
+  def changetimezone
+    Myp.ensure_encryption_key(session)
+    if request.post?
+      current_user.timezone = params[:user][:timezone]
+      current_user.save!
+      redirect_to edit_user_registration_path,
+        :flash => { :notice => I18n.t("myplaceonline.users.timezone_settings_saved") }
+    else
+      render :changetimezone
+    end
+  end
+  
   def export
     Myp.ensure_encryption_key(session)
     @encrypt = current_user.encrypt_by_default

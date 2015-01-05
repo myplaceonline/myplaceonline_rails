@@ -29,13 +29,6 @@ class ApplicationController < ActionController::Base
     User.current_user = nil
   end
   
-  def set_current_user
-    User.current_user = current_user
-    yield
-  ensure
-    User.current_user = nil
-  end
-  
   def set_current_session
     request_accessor = instance_variable_get(:@_request)
     Thread.current[:current_session] = request_accessor.session

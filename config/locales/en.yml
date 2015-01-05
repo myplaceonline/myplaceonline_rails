@@ -218,6 +218,9 @@ en:
       offline: "Offline"
       offlinedescription: "You may export a snapshot of your data to browser local storage which you may then access offline."
       offlinecreate: "Create Snapshot"
+      changetimezone: "Change Time Zone"
+      timezone_settings: "Time Zone"
+      timezone_settings_saved: "Time zone settings saved."
     import:
       password: "Password (if any)"
       nofile: "No file selected"

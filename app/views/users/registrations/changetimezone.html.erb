@@ -1,0 +1,12 @@
+<% content_for :heading do -%><%= t("myplaceonline.users.timezone_settings") %><% end -%>
+<h1><%= t("myplaceonline.users.timezone_settings") %></h1>
+
+<%= flashes! %>
+
+<%= form_for current_user, url: users_changetimezone_path, method: "post" do |f| %>
+  <p>
+    <%= label_tag :timezone, t("myplaceonline.users.timezone_settings"), class: "ui-hidden-accessible" %>
+    <%= f.time_zone_select(:timezone, ActiveSupport::TimeZone.us_zones, default: "UTC") %>
+  </p>
+  <div><%= submit_tag t("myplaceonline.general.save") %></div>
+<% end %>
