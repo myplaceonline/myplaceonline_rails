@@ -13,3 +13,4 @@ files = Category.create(name: "files", link: "files", position: 0, parent: order
 accomplishments = Category.create(name: "accomplishments", link: "accomplishments", position: 0, parent: meaning)
 feeds = Category.create(name: "feeds", link: "feeds", position: 0, parent: order)
 locations = Category.create(name: "locations", link: "locations", position: 0, parent: order)
+activities = Category.create(name: "activities", link: "activities", position: 0, parent: joy)

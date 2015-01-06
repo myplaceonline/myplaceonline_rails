@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :activities
+  post 'activities/new'
+
   resources :locations
   post 'locations/new'
 

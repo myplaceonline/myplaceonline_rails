@@ -37,6 +37,7 @@ en:
       accomplishments: "Accomplishments"
       feeds: "Feeds"
       locations: "Locations"
+      activities: "Activities"
     general:
       email: "E-mail"
       password: "Password"
@@ -266,3 +267,5 @@ en:
       sub_region2: "City"
       select_region: "Please select a country first"
       postal_code: "ZIP Code"
+    activities:
+      name: "Name"
