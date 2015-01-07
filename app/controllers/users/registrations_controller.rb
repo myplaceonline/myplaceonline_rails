@@ -202,7 +202,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       #filename += ".encrypted"
       #@command = "openssl enc -d -#{@@OPENSSL_DEFAULT_CIPHER} -md #{@@DEFAULT_MD.new.name.downcase} -in file.encrypted"
     end
-    if request.format == "text/javascript"
+    if request.format == "text/javascript" || request.format == "application/json"
       @jscontent = exported_json(@encrypt, true)
       if !params[:download].nil?
         return send_data(
