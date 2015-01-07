@@ -9,7 +9,7 @@
     </div>
   <% end %>
   
-  <%= render partial: form_name, locals: { f: f } %>
+  <%= render partial: form_name, locals: { f: f, obj: @obj } %>
   <hr />
   <p>
     <%= f.submit t("myplaceonline.general.save") + " " + t("myplaceonline.category." + controller.category_name).singularize %>

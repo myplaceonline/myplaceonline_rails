@@ -11,8 +11,12 @@ class ApartmentsController < MyplaceonlineController
     def sorts
       ["apartments.updated_at DESC"]
     end
+    
+    def new_build
+      @obj.location = Location.new
+    end
 
     def obj_params
-      params.require(:apartment).permit(:location)
+      params.require(:apartment).permit(location_attributes: LocationsController.location_params)
     end
 end

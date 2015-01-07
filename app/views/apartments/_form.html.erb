@@ -1,0 +1,3 @@
+<%= f.fields_for :location, obj.location do |location_fields| %>
+  <%= render partial: "locations/form", locals: { f: location_fields, obj: obj.location } %>
+<% end %>

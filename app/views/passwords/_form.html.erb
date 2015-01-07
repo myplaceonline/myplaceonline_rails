@@ -1,7 +1,7 @@
-<%= myp_text_field f, :name, "myplaceonline.passwords.name", @obj.name, true %>
-<%= myp_text_field f, :user, "myplaceonline.passwords.user", @obj.user %>
-<%= myp_text_field f, :email, "myplaceonline.passwords.email", @obj.email %>
-<%= myp_text_field f, :password, "myplaceonline.passwords.password", @obj.password %>
+<%= myp_text_field f, :name, "myplaceonline.passwords.name", obj.name, true %>
+<%= myp_text_field f, :user, "myplaceonline.passwords.user", obj.user %>
+<%= myp_text_field f, :email, "myplaceonline.passwords.email", obj.email %>
+<%= myp_text_field f, :password, "myplaceonline.passwords.password", obj.password %>
 <%=
   render partial: 'myplaceonline/generaterandom', locals: {
     heading: t("myplaceonline.passwords.generate_password"),
@@ -11,15 +11,15 @@
   }
 %>
 <%= myp_check_box_tag :encrypt, "myplaceonline.passwords.encrypt", @encrypt %>
-<%= myp_text_field f, :url, "myplaceonline.passwords.url", @obj.url %>
-<%= myp_text_field f, :account_number, "myplaceonline.passwords.account_number", @obj.account_number %>
-<%= myp_text_area f, :notes, "myplaceonline.passwords.notes_field", @obj.notes %>
-<%= myp_check_box_tag :defunct, "myplaceonline.passwords.defunct", !@obj.defunct.nil? %>
+<%= myp_text_field f, :url, "myplaceonline.passwords.url", obj.url %>
+<%= myp_text_field f, :account_number, "myplaceonline.passwords.account_number", obj.account_number %>
+<%= myp_text_area f, :notes, "myplaceonline.passwords.notes_field", obj.notes %>
+<%= myp_check_box_tag :defunct, "myplaceonline.passwords.defunct", !obj.defunct.nil? %>
 
 <div data-role="collapsible">
   <h3><%= t("myplaceonline.passwords.recovery_questions") %></h3>
   <div class="itemswrapper">
-    <% @obj.password_secrets.each do |secret| %>
+    <% obj.password_secrets.each do |secret| %>
       <%= f.fields_for :password_secrets, secret do |secret_fields| %>
         <div class="itemwrapper">
           <%= myp_text_field secret_fields, :question, "myplaceonline.passwords.question", secret.question, false, "primary_input" %>
