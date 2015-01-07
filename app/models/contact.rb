@@ -30,7 +30,7 @@ class Contact < ActiveRecord::Base
 
   def as_json(options={})
     super.as_json(options).merge({
-      :identity => ref.as_json
+      :contact_identity => ref.as_json
     })
   end
 end
