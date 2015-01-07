@@ -16,6 +16,7 @@ class Ability
     can :manage, Feed, :identity => identity
     can :manage, Location, :identity => identity
     can :manage, Activity, :identity => identity
+    can :manage, Apartment, :identity => identity
     
     # Define abilities for the passed in user here. For example:
     #

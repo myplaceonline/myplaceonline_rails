@@ -26,6 +26,7 @@ module Myp
     @@all_categories[:feeds] = Category.find_by(:name => :feeds)
     @@all_categories[:locations] = Category.find_by(:name => :locations)
     @@all_categories[:activities] = Category.find_by(:name => :activities)
+    @@all_categories[:apartments] = Category.find_by(:name => :apartments)
     puts "Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
   end
   

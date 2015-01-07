@@ -38,6 +38,7 @@ en:
       feeds: "Feeds"
       locations: "Locations"
       activities: "Activities"
+      apartments: "Apartments"
     general:
       email: "E-mail"
       password: "Password"

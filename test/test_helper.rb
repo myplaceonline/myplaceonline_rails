@@ -45,11 +45,14 @@ module MyplaceonlineControllerTest
   end
 
   test "should create" do
-    assert_difference(model.name + '.count') do
-      post :create, model.model_name.singular.downcase => test_attributes.merge({ identity_id: @user.primary_identity_id })
-    end
+    attrs = test_attributes
+    if attrs.length > 0
+      assert_difference(model.name + '.count') do
+        post :create, model.model_name.singular.downcase => attrs.merge({ identity_id: @user.primary_identity_id })
+      end
 
-    assert_redirected_to send(model.model_name.singular.downcase + "_path", assigns(:obj))
+      assert_redirected_to send(model.model_name.singular.downcase + "_path", assigns(:obj))
+    end
   end
 
   test "should show" do
@@ -63,8 +66,11 @@ module MyplaceonlineControllerTest
   end
 
   test "should update" do
-    patch :update, id: send(model.table_name, model.model_name.singular.downcase), model.model_name.singular.downcase => test_attributes
-    assert_redirected_to send(model.model_name.singular.downcase + "_path", assigns(:obj))
+    attrs = test_attributes
+    if attrs.length > 0
+      patch :update, id: send(model.table_name, model.model_name.singular.downcase), model.model_name.singular.downcase => test_attributes
+      assert_redirected_to send(model.model_name.singular.downcase + "_path", assigns(:obj))
+    end
   end
 
   test "should destroy" do

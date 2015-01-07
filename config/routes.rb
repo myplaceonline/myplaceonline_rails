@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :apartments
+  post 'apartments/new'
+
   resources :activities
   post 'activities/new'
 
