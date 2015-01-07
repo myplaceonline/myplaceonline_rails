@@ -180,14 +180,17 @@ module ApplicationHelper
   end
   
   def myp_subregion_field(form, name, placeholderid, regionvalue, subregionvalue)
-    render(partial: 'subregionselect', locals: { regionstr: regionvalue, subregion: subregionvalue })
+    render(partial: 'subregionselect', locals: { f: form, regionstr: regionvalue, subregion: subregionvalue })
   end
 
-  def myp_subregion_select_field(name, placeholderid, region, subregionvalue, autofocus = false, input_classes = nil)
+  def myp_subregion_select_field(form, name, placeholderid, region, subregionvalue, autofocus = false, input_classes = nil)
+    coded_region = Carmen::Country.coded(region.code)
+    options = coded_region.subregions.map { |r| [r.name, r.code] }
+    options.sort!{|a, b| a.first.to_s <=> b.first.to_s}
     content_tag(
       :p,
-      label_tag(name, t(placeholderid), class: myp_label_classes(subregionvalue)) +
-      subregion_select_tag(name, subregionvalue, region, class: myp_field_classes(autofocus, input_classes), prompt: t(placeholderid))
+      form.label(name, t(placeholderid), class: myp_label_classes(subregionvalue)) +
+      form.select(name, options_for_select(options, subregionvalue), class: myp_field_classes(autofocus, input_classes), prompt: t(placeholderid))
     ).html_safe
   end
 end

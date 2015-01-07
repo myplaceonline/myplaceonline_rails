@@ -4,7 +4,7 @@ class ApartmentsController < MyplaceonlineController
   end
 
   def display_obj(obj)
-    "Test"
+    obj.location.name
   end
 
   protected
@@ -18,5 +18,9 @@ class ApartmentsController < MyplaceonlineController
 
     def obj_params
       params.require(:apartment).permit(location_attributes: LocationsController.location_params)
+    end
+    
+    def create_presave
+      #@obj.location.identity = current_user.primary_identity
     end
 end
