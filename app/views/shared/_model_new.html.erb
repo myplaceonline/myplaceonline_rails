@@ -2,7 +2,7 @@
 <h1><%= t("myplaceonline.general.add") + " " + t("myplaceonline.category." + controller.category_name).singularize %></h1>
 <%= flashes! %>
 
-<%= render partial: "shared/model_form", locals: { form_name: controller.paths_name + "/form", edit: false, toplevel: true } %>
+<%= render partial: "shared/model_form", locals: { form_name: controller.paths_name + "/form", edit: false, autofocus: true } %>
 
 <%= yield %>
 

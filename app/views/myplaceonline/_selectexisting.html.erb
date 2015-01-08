@@ -24,13 +24,15 @@
                 $(this).attr("onclick", "<%= raw(Myp.select_listitem('#' + fieldid)) %>");
               });
             });
-            //maybeFocus($(".<%= fieldid %>_searchable_container input"));
+            <% if autofocus %>
+            maybeFocus($(".<%= fieldid %>_searchable_container input"));
+            <% end %>
           });
         </script>
       </div>
       <div data-role="collapsible">
         <h3><%= (edit ? t("myplaceonline.general.edit") : t("myplaceonline.general.new")) + " " + heading %></h3>
-        <%= render partial: objform, locals: { f: sub_fields, obj: existingobj, edit: edit, toplevel: false } %>
+        <%= render partial: objform, locals: { f: sub_fields, obj: existingobj, edit: edit, autofocus: autofocus } %>
       </div>
     </div>
   </div>

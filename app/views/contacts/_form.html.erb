@@ -1,6 +1,6 @@
 <%= f.fields_for :ref, obj.ref do |identity_fields| %>
 
-  <%= myp_text_field identity_fields, :name, "myplaceonline.contacts.name", obj.name, toplevel %>
+  <%= myp_text_field identity_fields, :name, "myplaceonline.contacts.name", obj.name, autofocus %>
   <%= myp_date_field identity_fields, :birthday, "myplaceonline.contacts.birthday", obj.birthday %>
   <%= myp_text_area identity_fields, :notes, "myplaceonline.contacts.notes_edit", obj.notes %>
   
