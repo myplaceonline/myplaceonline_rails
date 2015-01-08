@@ -28,6 +28,7 @@ class ApartmentsController < MyplaceonlineController
     
     def create_presave
       @obj.location.identity = current_user.primary_identity
+      @obj.landlord.identity = current_user.primary_identity
     end
     
     def presave
