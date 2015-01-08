@@ -276,3 +276,9 @@ en:
     apartments:
       location: "Address"
       landlord: "Landlord"
+      lease: "Lease"
+      leases: "Leases"
+      add_lease: "Add Lease"
+      delete_lease: "Delete Lease"
+      start_date: "Start Date"
+      end_date: "End Date"

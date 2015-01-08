@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150108045304) do
+ActiveRecord::Schema.define(version: 20150108064052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,16 @@ ActiveRecord::Schema.define(version: 20150108045304) do
   end
 
   add_index "activities", ["identity_id"], name: "index_activities_on_identity_id", using: :btree
+
+  create_table "apartment_leases", force: true do |t|
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "apartment_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "apartment_leases", ["apartment_id"], name: "index_apartment_leases_on_apartment_id", using: :btree
 
   create_table "apartments", force: true do |t|
     t.integer  "location_id"

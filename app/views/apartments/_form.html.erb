@@ -26,3 +26,31 @@
     autofocus: false
   }
 %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    objname: :apartment,
+    childpropertiesname: :apartment_leases,
+    heading: t("myplaceonline.apartments.leases"),
+    childproperties: obj.apartment_leases,
+    deletebutton: t("myplaceonline.apartments.delete_lease"),
+    addbutton: t("myplaceonline.apartments.add_lease"),
+    expanded: true,
+    formjson: [
+      {
+        type: 'text',
+        name: 'start_date',
+        placeholder: t("myplaceonline.apartments.start_date"),
+        primary: true
+      },
+      {
+        type: 'text',
+        name: 'end_date',
+        placeholder: t("myplaceonline.apartments.end_date")
+      }
+    ]
+  } do
+%>
+  <%= myp_text_field @child_fields, :start_date, "myplaceonline.apartments.start_date", @childproperty.start_date, false, "primary_input" %>
+  <%= myp_text_field @child_fields, :end_date, "myplaceonline.apartments.end_date", @childproperty.end_date %>
+<% end %>

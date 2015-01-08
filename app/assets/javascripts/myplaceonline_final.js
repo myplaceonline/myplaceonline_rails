@@ -77,8 +77,10 @@ function getRemoteString(destination, length) {
 function get_index_from_id(obj) {
   var id = $(obj).attr("id");
   if (id) {
-    id = id.substring(0, id.lastIndexOf('_'));
-    id = parseInt(id.substring(id.lastIndexOf('_') + 1));
+    id = id.replace(/^.+(\d+).+$/i, '$1');
+    if (isNaN(id)) {
+      id = -1;
+    }
     return id;
   }
   return -1;
@@ -131,21 +133,26 @@ function form_remove_item(link) {
   var item = div.find(".primary_input").first();
   if (item) {
     var index = get_index_from_id(item);
-    var id = $(item).attr("id");
-    id = id.substring(0, id.lastIndexOf('_'));
-    var prefix = id.substring(0, id.lastIndexOf('_'));
-    var prefixFirst = prefix.substring(0, id.indexOf('_'));
-    var prefixRest = prefix.substring(id.indexOf('_') + 1);
-    var destroy_id = prefix + "_" + index + "__destroy";
-    var destroy_name = prefixFirst + "[" + prefixRest + "][" + index + "][_destroy]";
-    var existing_destroy = $("#" + destroy_id);
-    if (existing_destroy.length) {
-      existing_destroy.val("1");
+    if (index != -1) {
+      var id = $(item).attr("id");
+      var prefix = id.replace(/^(.+)_\d+.+$/i, '$1');
+      var prefixFirst = prefix.replace(/^([^_]+)_.+$/i, '$1');
+      var prefixRest = prefix.replace(/^[^_]+_(.+)$/i, '$1');
+      var destroy_id = prefix + "_" + index + "__destroy";
+      var destroy_name = prefixFirst + "[" + prefixRest + "][" + index + "][_destroy]";
+      var existing_destroy = $("#" + destroy_id);
+      if (existing_destroy.length) {
+        existing_destroy.val("1");
+      } else {
+        var html = "<input type='hidden' id='" + destroy_id + "' name='" + destroy_name + "' value='1' />";
+        $(html).insertBefore(item);
+      }
+      div.hide();
     } else {
-      var html = "<input type='hidden' id='" + destroy_id + "' name='" + destroy_name + "' value='1' />";
-      $(html).insertBefore(item);
+      criticalError("Could not find item ID");
     }
+  } else {
+    criticalError("Error removing item");
   }
-  div.hide();
   return false;
 }
