@@ -4,13 +4,17 @@ class ContactsController < MyplaceonlineController
   end
 
   def display_obj(obj)
-    obj.name
+    obj.display
   end
   
   def before_destroy
     if @obj.ref_id == current_user.primary_identity.id
       raise "Cannot delete own identity"
     end
+  end
+
+  def self.param_names
+    [ ref_attributes: [:id, :name, :birthday, :notes] ]
   end
 
   protected
@@ -20,9 +24,7 @@ class ContactsController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:contact).permit(
-        ref_attributes: [:id, :name, :birthday, :notes]
-      )
+      params.require(:contact).permit(ContactsController.param_names)
     end
 
     def new_build

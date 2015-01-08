@@ -62,6 +62,7 @@ class MyplaceonlineController < ApplicationController
       @obj = model.new(obj_params)
       @obj.identity_id = current_user.primary_identity.id
       @encrypt = params[:encrypt] == "true"
+      # presave *MUST* occur before create_presave or update_presave
       presave
       create_presave
       
@@ -80,6 +81,7 @@ class MyplaceonlineController < ApplicationController
 
       @obj.assign_attributes(obj_params)
       @encrypt = params[:encrypt] == "true"
+      # presave *MUST* occur before create_presave or update_presave
       presave
       update_presave
 
@@ -166,6 +168,7 @@ class MyplaceonlineController < ApplicationController
     def before_all_actions
     end
     
+    # presave *MUST* occur before create_presave or update_presave
     def presave
     end
     
@@ -193,5 +196,18 @@ class MyplaceonlineController < ApplicationController
     def set_obj
       @obj = model.find_by(id: params[:id], identity_id: current_user.primary_identity.id)
       authorize! :manage, @obj
+    end
+
+    def set_from_existing(name, model_type, destination)
+      if !params[name].blank?
+        id = params[name]
+        i = id.rindex('/')
+        if !i.nil?
+          id = id[i+1..-1].to_i
+          found_obj = model_type.find(id)
+          authorize! :manage, found_obj
+          @obj.send(destination.to_s + "=", found_obj)
+        end
+      end
     end
 end

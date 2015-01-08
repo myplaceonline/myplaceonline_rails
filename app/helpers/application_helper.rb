@@ -61,6 +61,11 @@ module ApplicationHelper
   def attribute_table_row_boolean(name, val)
     attribute_table_row(name, val ? t("myplaceonline.general.yes") : t("myplaceonline.general.no"))
   end
+
+  def attribute_table_row_reference(name, pathfunc, ref)
+    val = ref.nil? ? nil : url_or_blank(send(pathfunc, ref), ref.display)
+    attribute_table_row(name, val)
+  end
   
   def url_or_blank(url, text = nil, clipboard = nil)
     if !url.to_s.empty?

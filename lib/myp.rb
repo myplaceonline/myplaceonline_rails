@@ -11,8 +11,8 @@ module Myp
   @@POSSIBILITIES_ALPHANUMERIC = [('0'..'9'), ('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
   @@POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL = [('0'..'9'), ('a'..'z'), ('A'..'Z'), ['_', '-', '!']].map { |i| i.to_a }.flatten
 
+  puts "Initializing categories"
   if ActiveRecord::Base.connection.table_exists?(Category.table_name)
-    puts "Initializing categories"
     @@all_categories[:order] = Category.find_by(:name => :order)
     @@all_categories[:joy] = Category.find_by(:name => :joy)
     @@all_categories[:meaning] = Category.find_by(:name => :meaning)

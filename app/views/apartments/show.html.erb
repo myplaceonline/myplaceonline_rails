@@ -1,5 +1,6 @@
 <%= render layout: "shared/model_show" do %>
 
-  <%= attribute_table_row(t("myplaceonline.apartments.location"), url_or_blank(location_path(@obj.location), @obj.location.display)) %>
+  <%= attribute_table_row_reference(t("myplaceonline.apartments.location"), "location_path", @obj.location) %>
+  <%= attribute_table_row_reference(t("myplaceonline.apartments.landlord"), "contact_path", @obj.landlord) %>
   
 <% end %>

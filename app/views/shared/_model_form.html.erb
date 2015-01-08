@@ -9,15 +9,15 @@
     </div>
   <% end %>
   
-  <%= render partial: form_name, locals: { f: f, obj: @obj } %>
+  <%= render partial: form_name, locals: { f: f, obj: @obj, edit: edit, toplevel: toplevel } %>
   <hr />
   <p>
     <%= f.submit t("myplaceonline.general.save") + " " + t("myplaceonline.category." + controller.category_name).singularize %>
   </p>
   
-<script type="text/javascript">
-onPageLoad(function() {
-  maybeFocus(".autofocus");
-});
-</script>
+  <script type="text/javascript">
+  onPageLoad(function() {
+    maybeFocus(".autofocus");
+  });
+  </script>
 <% end %>

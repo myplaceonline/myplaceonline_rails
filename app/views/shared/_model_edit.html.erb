@@ -2,7 +2,7 @@
 <h1><%= controller.display_obj(@obj) %></h1>
 <%= flashes! %>
 
-<%= render partial: "shared/model_form", locals: { form_name: controller.paths_name + "/form" } %>
+<%= render partial: "shared/model_form", locals: { form_name: controller.paths_name + "/form", edit: true, toplevel: true } %>
 
 <%= yield %>
 

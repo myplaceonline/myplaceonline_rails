@@ -33,4 +33,8 @@ class Contact < ActiveRecord::Base
       :contact_identity => ref.as_json
     })
   end
+
+  def display
+    name
+  end
 end

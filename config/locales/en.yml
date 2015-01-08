@@ -275,3 +275,4 @@ en:
       name: "Name"
     apartments:
       location: "Address"
+      landlord: "Landlord"
