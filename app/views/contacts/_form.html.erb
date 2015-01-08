@@ -4,4 +4,26 @@
   <%= myp_date_field identity_fields, :birthday, "myplaceonline.contacts.birthday", obj.birthday %>
   <%= myp_text_area identity_fields, :notes, "myplaceonline.contacts.notes_edit", obj.notes %>
   
+  <%=
+    render layout: 'myplaceonline/childproperties', locals: {
+      f: f,
+      objname: :contact,
+      childpropertiesname: :conversations,
+      heading: t("myplaceonline.contacts.conversations"),
+      childproperties: obj.conversations,
+      deletebutton: t("myplaceonline.contacts.delete_conversation"),
+      addbutton: t("myplaceonline.contacts.add_conversation"),
+      expanded: false,
+      formjson: [
+        {
+          type: 'text',
+          name: 'conversation',
+          placeholder: t("myplaceonline.contacts.conversation")
+        }
+      ]
+    } do
+  %>
+    <%= myp_text_area @child_fields, :conversation, "myplaceonline.contacts.conversation", @childproperty.conversation, false, "primary_input" %>
+  <% end %>
+
 <% end %>

@@ -24,7 +24,10 @@ class ContactsController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:contact).permit(ContactsController.param_names)
+      params.require(:contact).permit(
+        ContactsController.param_names,
+        conversations_attributes: [:id, :conversation, :_destroy]
+      )
     end
 
     def new_build
@@ -40,5 +43,14 @@ class ContactsController < MyplaceonlineController
     def before_all_actions
       # Create a Contact for the current user identity if it doesn't exist
       current_user.primary_identity.ensure_contact!
+    end
+    
+    def update_presave
+      @obj.conversations.each {
+        |conversation|
+        if !conversation.contact.nil?
+          authorize! :manage, conversation.contact
+        end
+      }
     end
 end

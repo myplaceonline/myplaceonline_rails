@@ -6,6 +6,10 @@ class Contact < ActiveRecord::Base
   validates_presence_of :ref
   validate :custom_validation
   
+  has_many :conversations, :dependent => :destroy
+  accepts_nested_attributes_for :conversations, allow_destroy: true,
+      reject_if: proc { |attributes| attributes['conversation'].blank? }
+  
   def custom_validation
     if contact_identity.name.blank?
       errors.add(:name, "not specified")

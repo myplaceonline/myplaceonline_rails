@@ -11,7 +11,7 @@ module Myp
   @@POSSIBILITIES_ALPHANUMERIC = [('0'..'9'), ('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
   @@POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL = [('0'..'9'), ('a'..'z'), ('A'..'Z'), ['_', '-', '!']].map { |i| i.to_a }.flatten
 
-  puts "Initializing categories"
+  puts "Myplaceonline: Initializing categories"
   if ActiveRecord::Base.connection.table_exists?(Category.table_name)
     @@all_categories[:order] = Category.find_by(:name => :order)
     @@all_categories[:joy] = Category.find_by(:name => :joy)
@@ -27,7 +27,7 @@ module Myp
     @@all_categories[:locations] = Category.find_by(:name => :locations)
     @@all_categories[:activities] = Category.find_by(:name => :activities)
     @@all_categories[:apartments] = Category.find_by(:name => :apartments)
-    puts "Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
+    puts "Myplaceonline: Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
   end
   
   def self.markdown_to_html(markdown)

@@ -247,6 +247,10 @@ en:
       notes: "Notes"
       notes_edit: "Notes (supports Markdown syntax)"
       me: "Me"
+      conversation: "Conversation"
+      conversations: "Conversations"
+      add_conversation: "Add Conversation"
+      delete_conversation: "Delete Conversation"
     files:
       name: "Name"
       download: "Download"
