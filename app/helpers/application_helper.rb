@@ -144,6 +144,7 @@ module ApplicationHelper
   
   def myp_date_field(form, name, placeholderid, value, autofocus = false, input_classes = nil)
     # http://dev.jtsage.com/jQM-DateBox/doc/3-0-first-datebox/
+    # Options should match app/assets/javascripts/myplaceonline_final.js form_add_item
     content_tag(
       :p,
       form.label(name, t(placeholderid), class: myp_label_classes(value)) +
@@ -155,7 +156,8 @@ module ApplicationHelper
         "data-role" => "datebox",
         "data-datebox-mode" => "datebox",
         "data-datebox-override-date-format" => "%Y-%m-%d",
-        "data-datebox-use-focus" => "true"
+        "data-datebox-use-focus" => "true",
+        "data-datebox-use-clear-button" => "true"
       )
     ).html_safe
   end

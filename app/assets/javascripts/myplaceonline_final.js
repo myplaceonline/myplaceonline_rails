@@ -111,13 +111,14 @@ function form_add_item(link, attributesName, attributesPrefix, deletePlaceholder
     if (item.classes) {
       cssclasses += item.classes + ' ';
     }
-    if (item.type == "text") {
-      html += "<p><input id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' type='text' value='' class='" + cssclasses + "' /></p>";
-    } else if (item.type == "date") {
-      html += "<p><input id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' type='text' value='' class='" + cssclasses + "' data-role='datebox' data-datebox-mode='datebox' data-datebox-override-date-format='%Y-%m-%d' data-datebox-use-focus='true' /></p>";
+    if (item.type == "date") {
+      // Options should match app/helps/application_helper.rb myp_date_field
+      html += "<p><input type='date' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='' class='" + cssclasses + "' data-role='datebox' data-datebox-mode='datebox' data-datebox-override-date-format='%Y-%m-%d' data-datebox-use-focus='true' data-datebox-use-clear-button='true' /></p>";
     } else if (item.type == "random") {
       // Duplicated in views/myplaceonline/_generaterandom.html.erb
       html += '<div data-role="collapsible"><h3>' + item.heading + '</h3><p><input type="number" class="generate_password_length" value="" placeholder="' + item.lengthplaceholder + '" /></p><p><a href="#" class="ui-btn" onclick="getRemoteString(' + item.destination + ', $(this).parents(\'div\').first().find(\'.generate_password_length\').val()); return false;">' + item.button + '</a></p></div>';
+    } else {
+      html += "<p><input type='" + item.type + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='' class='" + cssclasses + "' /></p>";
     }
   }
   html += "<p><a href='#' onclick='return form_remove_item(this);' class='ui-btn'>" + deletePlaceholder + "</a></p>";
