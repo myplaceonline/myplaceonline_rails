@@ -76,6 +76,8 @@ en:
       add_another: "Add Another"
       back_to_all: "Back to all"
       create_instructions: "Click the Add button below"
+      new: "New"
+      existing: "Existing"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"

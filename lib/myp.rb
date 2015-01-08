@@ -367,4 +367,8 @@ module Myp
       value
     end
   end
+  
+  def self.select_listitem(selector)
+    "$(this).addClass('ui-btn-active'); $('" + selector + "').val($(this).attr('href')); return false;"
+  end
 end

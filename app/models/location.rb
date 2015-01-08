@@ -9,6 +9,10 @@ class Location < ActiveRecord::Base
       nil
     end
   end
+  
+  def display
+    name
+  end
 
   def sub_region1_name
     if !region.blank? && !sub_region1.blank?

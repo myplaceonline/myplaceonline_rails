@@ -4,7 +4,7 @@ class LocationsController < MyplaceonlineController
   end
 
   def display_obj(obj)
-    obj.name
+    obj.display
   end
   
   def self.location_params

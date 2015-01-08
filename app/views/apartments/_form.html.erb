@@ -1,3 +1,34 @@
 <%= f.fields_for :location, obj.location do |location_fields| %>
-  <%= render partial: "locations/form", locals: { f: location_fields, obj: obj.location } %>
+  <div data-role="collapsible-set">
+    <div data-role="collapsible" data-collapsed="false">
+      <h3><%= t("myplaceonline.general.existing") + " " + t("myplaceonline.category.locations").singularize %></h3>
+      <div class="searchable_container">
+        <ul class="searchable" data-role="listview" data-inset="true" data-filter="true" data-icon="false" data-filter-placeholder="<%= t("myplaceonline.search.placeholder") %>">
+          <% if !obj.location.nil? %>
+            <li>
+              <%= link_to obj.location.display, location_path(obj.location), onclick: Myp.select_listitem('#location_selection') %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <%= hidden_field_tag :location_selection %>
+      <script type="text/javascript">
+        onPageLoad(function() {
+          $(".searchable li").each(function(index) {
+            $(this).addClass('ui-btn-active');
+          });
+          hookListviewSearch($(".searchable"), "/locations.json?perpage=0", function(ul) {
+            ul.find("li a").each(function(index) {
+              $(this).attr("onclick", "<%= raw(Myp.select_listitem('#location_selection')) %>");
+            });
+          });
+          maybeFocus($(".searchable_container input"));
+        });
+      </script>
+    </div>
+    <div data-role="collapsible">
+      <h3><%= t("myplaceonline.general.new") + " " + t("myplaceonline.category.locations").singularize %></h3>
+      <%= render partial: "locations/form", locals: { f: location_fields, obj: obj.location } %>
+    </div>
+  </div>
 <% end %>

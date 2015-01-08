@@ -15,7 +15,7 @@ $(document).on('ajax:error', 'form', function(xhr, status, error) {
 });
 
 // http://view.jquerymobile.com/master/demos/listview-autocomplete-remote/
-function hookListviewSearch(list, url) {
+function hookListviewSearch(list, url, afterload) {
   list.on("listviewbeforefilter", function(e, data) {
     var $ul = $(this);
     var $input = $(data.input);
@@ -29,6 +29,9 @@ function hookListviewSearch(list, url) {
       }).done(function(data, textStatus, jqXHR) {
         jqmSetList(this, $(data));
         this[0].allLoaded = true;
+        if (afterload) {
+          afterload(this);
+        }
       }).fail(function(jqXHR, textStatus, errorThrown) {
         jqmSetListMessage(this, "Error, please try again.");
       });

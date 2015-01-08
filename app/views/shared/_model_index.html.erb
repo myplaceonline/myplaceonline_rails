@@ -50,15 +50,10 @@ end
 
 <script type="text/javascript">
 onPageLoad(function() {
-
   hookListviewSearch($(".searchable"), "/<%= controller.paths_name %>.json?perpage=0");
-  
   var input = $(".searchable_container input");
-  
   hookListviewEnter(input, ".searchable");
-
   maybeFocus(input);
-  
 });
 </script>
 

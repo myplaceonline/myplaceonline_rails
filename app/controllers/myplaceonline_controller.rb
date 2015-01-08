@@ -62,6 +62,7 @@ class MyplaceonlineController < ApplicationController
       @obj = model.new(obj_params)
       @obj.identity_id = current_user.primary_identity.id
       @encrypt = params[:encrypt] == "true"
+      presave
       create_presave
       
       if @obj.save
@@ -79,6 +80,7 @@ class MyplaceonlineController < ApplicationController
 
       @obj.assign_attributes(obj_params)
       @encrypt = params[:encrypt] == "true"
+      presave
       update_presave
 
       if @obj.save
@@ -162,6 +164,9 @@ class MyplaceonlineController < ApplicationController
     end
     
     def before_all_actions
+    end
+    
+    def presave
     end
     
     def create_presave

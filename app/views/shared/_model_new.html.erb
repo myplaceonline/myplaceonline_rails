@@ -6,18 +6,16 @@
 
 <%= yield %>
 
-<% if content_for?(:footerlinks) %>
-  <% content_for :footer do -%>
-  <div data-role="footer" data-position="fixed">
-      <div data-role="navbar">
-          <ul>
-            <% if content_for?(:footerlinks) %>
-              <%= content_for(:footerlinks) %>
-            <% else %>
-              <!--<li><%= link_to t("myplaceonline.general.back_to_all") + " " + t("myplaceonline.category." + controller.category_name), controller.index_path, "data-icon" => "back" %></li>-->
-            <% end %>
-          </ul>
-      </div>
-  </div>
-  <% end -%>
-<% end %>
+<% content_for :footer do -%>
+<div data-role="footer" data-position="fixed">
+    <div data-role="navbar">
+        <ul>
+          <% if content_for?(:footerlinks) %>
+            <%= content_for(:footerlinks) %>
+          <% else %>
+            <li><%= link_to t("myplaceonline.general.back_to_all") + " " + t("myplaceonline.category." + controller.category_name), controller.index_path, "data-icon" => "back" %></li>
+          <% end %>
+        </ul>
+    </div>
+</div>
+<% end -%>

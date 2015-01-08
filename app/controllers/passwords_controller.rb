@@ -197,7 +197,13 @@ class PasswordsController < MyplaceonlineController
     
     def update_presave
       @obj.password_finalize(@encrypt)
-      @obj.password_secrets.each{|secret| secret.answer_finalize(@encrypt)}
+      @obj.password_secrets.each {
+        |secret|
+        if !secret.password.nil?
+          authorize! :manage, secret.password
+        end
+        secret.answer_finalize(@encrypt)
+      }
       update_defunct
     end
     

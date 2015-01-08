@@ -5,19 +5,12 @@
 
 <script type="text/javascript">
 onPageLoad(function() {
-
   var search = $("#myplaceonline_search_list");
-
   hookListviewSearch(search, "/api/categories.json");
-
   var list = <%= raw(initialCategoryList) %>;
   jqmSetList(search, list);
-  
   var input = $("#myplaceonline_search_container input");
-  
   hookListviewEnter(input, "#myplaceonline_search_list");
-
   maybeFocus(input);
-  
 });
 </script>
