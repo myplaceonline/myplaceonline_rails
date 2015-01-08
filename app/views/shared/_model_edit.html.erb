@@ -13,6 +13,7 @@
           <% if content_for?(:footerlinks) %>
             <%= content_for(:footerlinks) %>
           <% else %>
+            <li><%= link_to t("myplaceonline.general.back_to") + " " + t("myplaceonline.category." + controller.category_name).singularize, controller.obj_path, "data-rel" => "back", "data-icon" => "back" %></li>
             <li><%= link_to t("myplaceonline.general.back_to_all") + " " + t("myplaceonline.category." + controller.category_name), controller.index_path, "data-icon" => "back" %></li>
           <% end %>
         </ul>

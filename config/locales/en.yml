@@ -74,6 +74,7 @@ en:
       count_no: "No"
       add: "Add"
       add_another: "Add Another"
+      back_to: "Back to"
       back_to_all: "Back to all"
       create_instructions: "Click the Add button below"
       new: "New"
@@ -272,3 +273,5 @@ en:
       postal_code: "ZIP Code"
     activities:
       name: "Name"
+    apartments:
+      location: "Address"

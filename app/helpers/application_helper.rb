@@ -70,8 +70,10 @@ module ApplicationHelper
       
       options = Hash.new
       options[:href] = url
-      options[:class] = "externallink"
-      options[:target] = "_blank"
+      if !url.start_with?("/") || url.start_with?("//")
+        options[:class] = "externallink"
+        options[:target] = "_blank"
+      end
       if !clipboard.nil?
         options[:class] += " clipboardable"
         options["data-clipboard-text"] = html_escape("" + clipboard.to_s)
