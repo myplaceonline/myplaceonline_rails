@@ -84,7 +84,7 @@ function get_index_from_id(obj) {
   return -1;
 }
 
-function form_add_item(link, referenceItemName, attributesName, attributesPrefix, deletePlaceholder, items) {
+function form_add_item(link, attributesName, attributesPrefix, deletePlaceholder, items) {
   var index = -1;
   var div = $(link).parent().parent(".itemswrapper");
   div.find(".primary_input").each(function() {

@@ -1,0 +1,22 @@
+<div data-role="collapsible">
+  <h3><%= heading %></h3>
+  <div class="itemswrapper">
+    <% childproperties.each do |childproperty| %>
+      <%= f.fields_for childpropertiesname, childproperty do |child_fields| %>
+        <div class="itemwrapper">
+          <%
+          @child_fields = child_fields
+          @childproperty = childproperty
+          %>
+          <%= yield %>
+          <p><a href="#" onclick="return form_remove_item(this);" class="ui-btn"><%= deletebutton %></a></p>
+        </div>
+      <% end %>
+    <% end %>
+    <script type="text/javascript">
+    <% random_name = SecureRandom.hex(10) %>
+    var json<%= random_name %> = <%= raw(formjson.to_json) %>;
+    </script>
+    <p><a href="#" onclick="return form_add_item(this, '<%= objname %>', '<%= childpropertiesname %>', '<%= deletebutton %>', json<%= random_name %>);" class="ui-btn"><%= addbutton %></a></p>
+  </div>
+</div>
