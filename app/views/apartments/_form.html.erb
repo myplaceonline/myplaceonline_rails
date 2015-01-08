@@ -62,6 +62,11 @@
         type: 'number',
         name: 'moveout_fee',
         placeholder: t("myplaceonline.apartments.moveout_fee")
+      },
+      {
+        type: 'date',
+        name: 'terminate_by',
+        placeholder: t("myplaceonline.apartments.terminate_by")
       }
     ]
   } do
@@ -71,4 +76,5 @@
   <%= myp_number_field @child_fields, :monthly_rent, "myplaceonline.apartments.monthly_rent", @childproperty.monthly_rent %>
   <%= myp_number_field @child_fields, :deposit, "myplaceonline.apartments.deposit", @childproperty.deposit %>
   <%= myp_number_field @child_fields, :moveout_fee, "myplaceonline.apartments.moveout_fee", @childproperty.moveout_fee %>
+  <%= myp_date_field @child_fields, :terminate_by, "myplaceonline.apartments.terminate_by", @childproperty.terminate_by %>
 <% end %>
