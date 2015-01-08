@@ -47,10 +47,28 @@
         type: 'date',
         name: 'end_date',
         placeholder: t("myplaceonline.apartments.end_date")
+      },
+      {
+        type: 'number',
+        name: 'monthly_rent',
+        placeholder: t("myplaceonline.apartments.monthly_rent")
+      },
+      {
+        type: 'number',
+        name: 'deposit',
+        placeholder: t("myplaceonline.apartments.deposit")
+      },
+      {
+        type: 'number',
+        name: 'moveout_fee',
+        placeholder: t("myplaceonline.apartments.moveout_fee")
       }
     ]
   } do
 %>
   <%= myp_date_field @child_fields, :start_date, "myplaceonline.apartments.start_date", @childproperty.start_date, false, "primary_input" %>
   <%= myp_date_field @child_fields, :end_date, "myplaceonline.apartments.end_date", @childproperty.end_date %>
+  <%= myp_number_field @child_fields, :monthly_rent, "myplaceonline.apartments.monthly_rent", @childproperty.monthly_rent %>
+  <%= myp_number_field @child_fields, :deposit, "myplaceonline.apartments.deposit", @childproperty.deposit %>
+  <%= myp_number_field @child_fields, :moveout_fee, "myplaceonline.apartments.moveout_fee", @childproperty.moveout_fee %>
 <% end %>

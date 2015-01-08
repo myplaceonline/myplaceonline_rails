@@ -111,6 +111,14 @@ module ApplicationHelper
     end
   end
   
+  def display_currency(obj)
+    if !obj.blank?
+      "$" + obj.to_s
+    else
+      nil
+    end
+  end
+  
   def myp_label_classes(value)
     is_blank(value, false) ? "ui-hidden-accessible" : "form_field_label"
   end
@@ -131,6 +139,14 @@ module ApplicationHelper
       :p,
       form.label(name, t(placeholderid), class: myp_label_classes(value)) +
       form.text_field(name, placeholder: t(placeholderid), class: myp_field_classes(autofocus, input_classes), value: value)
+    ).html_safe
+  end
+  
+  def myp_number_field(form, name, placeholderid, value, autofocus = false, input_classes = nil)
+    content_tag(
+      :p,
+      form.label(name, t(placeholderid), class: myp_label_classes(value)) +
+      form.number_field(name, placeholder: t(placeholderid), class: myp_field_classes(autofocus, input_classes), value: value)
     ).html_safe
   end
   

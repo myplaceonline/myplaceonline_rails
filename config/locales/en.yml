@@ -282,3 +282,6 @@ en:
       delete_lease: "Delete Lease"
       start_date: "Start Date"
       end_date: "End Date"
+      monthly_rent: "Monthly Rent"
+      moveout_fee: "Move-out Fee"
+      deposit: "Deposit"

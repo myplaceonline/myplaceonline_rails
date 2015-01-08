@@ -23,7 +23,7 @@ class ApartmentsController < MyplaceonlineController
       params.require(:apartment).permit(
         location_attributes: LocationsController.param_names.push(:id),
         landlord_attributes: ContactsController.param_names.push(:id),
-        apartment_leases_attributes: [:id, :start_date, :end_date, :_destroy]
+        apartment_leases_attributes: [:id, :start_date, :end_date, :monthly_rent, :moveout_fee, :deposit, :_destroy]
       )
     end
     
