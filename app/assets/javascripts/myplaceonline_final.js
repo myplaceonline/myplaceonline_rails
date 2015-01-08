@@ -113,6 +113,8 @@ function form_add_item(link, attributesName, attributesPrefix, deletePlaceholder
     }
     if (item.type == "text") {
       html += "<p><input id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' type='text' value='' class='" + cssclasses + "' /></p>";
+    } else if (item.type == "date") {
+      html += "<p><input id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' type='text' value='' class='" + cssclasses + "' data-role='datebox' data-datebox-mode='datebox' data-datebox-override-date-format='%Y-%m-%d' data-datebox-use-focus='true' /></p>";
     } else if (item.type == "random") {
       // Duplicated in views/myplaceonline/_generaterandom.html.erb
       html += '<div data-role="collapsible"><h3>' + item.heading + '</h3><p><input type="number" class="generate_password_length" value="" placeholder="' + item.lengthplaceholder + '" /></p><p><a href="#" class="ui-btn" onclick="getRemoteString(' + item.destination + ', $(this).parents(\'div\').first().find(\'.generate_password_length\').val()); return false;">' + item.button + '</a></p></div>';

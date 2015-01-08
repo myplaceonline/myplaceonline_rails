@@ -5,13 +5,3 @@
   <%= myp_text_area identity_fields, :notes, "myplaceonline.contacts.notes_edit", obj.notes %>
   
 <% end %>
-
-<script type="text/javascript">
-onPageLoad(function() {
-  $("#contact_ref_attributes_birthday").datebox({
-    mode: "datebox",
-    useFocus: true,
-    overrideDateFormat: "%Y-%m-%d"
-  });
-});
-</script>

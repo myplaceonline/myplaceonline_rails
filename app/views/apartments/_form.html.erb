@@ -38,19 +38,19 @@
     expanded: true,
     formjson: [
       {
-        type: 'text',
+        type: 'date',
         name: 'start_date',
         placeholder: t("myplaceonline.apartments.start_date"),
         primary: true
       },
       {
-        type: 'text',
+        type: 'date',
         name: 'end_date',
         placeholder: t("myplaceonline.apartments.end_date")
       }
     ]
   } do
 %>
-  <%= myp_text_field @child_fields, :start_date, "myplaceonline.apartments.start_date", @childproperty.start_date, false, "primary_input" %>
-  <%= myp_text_field @child_fields, :end_date, "myplaceonline.apartments.end_date", @childproperty.end_date %>
+  <%= myp_date_field @child_fields, :start_date, "myplaceonline.apartments.start_date", @childproperty.start_date, false, "primary_input" %>
+  <%= myp_date_field @child_fields, :end_date, "myplaceonline.apartments.end_date", @childproperty.end_date %>
 <% end %>

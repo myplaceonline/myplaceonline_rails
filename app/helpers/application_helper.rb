@@ -143,10 +143,20 @@ module ApplicationHelper
   end
   
   def myp_date_field(form, name, placeholderid, value, autofocus = false, input_classes = nil)
+    # http://dev.jtsage.com/jQM-DateBox/doc/3-0-first-datebox/
     content_tag(
       :p,
       form.label(name, t(placeholderid), class: myp_label_classes(value)) +
-      form.date_field(name, placeholder: t(placeholderid), class: myp_field_classes(autofocus, input_classes), value: value)
+      form.date_field(
+        name,
+        placeholder: t(placeholderid),
+        class: myp_field_classes(autofocus, input_classes),
+        value: value,
+        "data-role" => "datebox",
+        "data-datebox-mode" => "datebox",
+        "data-datebox-override-date-format" => "%Y-%m-%d",
+        "data-datebox-use-focus" => "true"
+      )
     ).html_safe
   end
 
