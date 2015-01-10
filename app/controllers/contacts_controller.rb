@@ -14,7 +14,9 @@ class ContactsController < MyplaceonlineController
   end
 
   def self.param_names
-    [ ref_attributes: [:id, :name, :birthday, :notes] ]
+    [
+      ref_attributes: [:id, :name, :birthday, :notes, { identity_phones_attributes: [:id, :number, :_destroy] } ]
+    ]
   end
 
   protected
@@ -45,11 +47,31 @@ class ContactsController < MyplaceonlineController
       current_user.primary_identity.ensure_contact!
     end
     
+    def create_presave
+      @obj.contact_identity.identity_phones.each {
+        |phone|
+        if phone.identity.nil?
+          phone.identity = current_user.primary_identity
+        else
+          # TODO phone needs another "owner identity"
+          #authorize! :manage, phone.identity
+        end
+      }
+    end
+
     def update_presave
       @obj.conversations.each {
         |conversation|
         if !conversation.contact.nil?
           authorize! :manage, conversation.contact
+        end
+      }
+      @obj.contact_identity.identity_phones.each {
+        |phone|
+        if phone.identity.nil?
+          phone.identity = current_user.primary_identity
+        else
+          #authorize! :manage, phone.identity
         end
       }
     end

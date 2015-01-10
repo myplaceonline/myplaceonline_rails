@@ -86,7 +86,11 @@ function get_index_from_id(obj) {
   return -1;
 }
 
-function form_add_item(link, attributesName, attributesPrefix, deletePlaceholder, items) {
+function isArray(obj) {
+  return Object.prototype.toString.call(obj) === '[object Array]';
+}
+
+function form_add_item(link, prefixes, deletePlaceholder, items) {
   var index = -1;
   var div = $(link).parent().parent(".itemswrapper");
   div.find(".primary_input").each(function() {
@@ -96,13 +100,28 @@ function form_add_item(link, attributesName, attributesPrefix, deletePlaceholder
     }
   });
   index++;
+  var idPrefix = "";
+  var namePrefix = "";
+  for (var i = 0; i < prefixes.length; i++) {
+    var prefix = prefixes[i];
+    if (idPrefix.length > 0) {
+      idPrefix += "_";
+    }
+    idPrefix += prefix;
+    if (namePrefix.length == 0) {
+      namePrefix += prefix;
+    } else {
+      namePrefix += "[" + prefix + "]";
+    }
+  }
+  
   var html = "<div class='itemwrapper'>";
   var toFocus = null;
   var i;
   for (i = 0; i < items.length; i++) {
     var item = items[i];
-    var id = attributesName + "_" + attributesPrefix + "_attributes_" + index + "_" + item.name;
-    var name = attributesName + "[" + attributesPrefix + "_attributes][" + index + "][" + item.name + "]";
+    var id = idPrefix + "_" + index + "_" + item.name;
+    var name = namePrefix + "[" + index + "][" + item.name + "]";
     var cssclasses = '';
     if (item.primary) {
       cssclasses = 'primary_input ';

@@ -29,8 +29,7 @@
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,
-    objname: :apartment,
-    childpropertiesname: :apartment_leases,
+    prefixes: [:apartment, :apartment_leases_attributes],
     heading: t("myplaceonline.apartments.leases"),
     childproperties: obj.apartment_leases,
     deletebutton: t("myplaceonline.apartments.delete_lease"),

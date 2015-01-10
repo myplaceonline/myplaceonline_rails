@@ -18,8 +18,7 @@
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,
-    objname: :password,
-    childpropertiesname: :password_secrets,
+    prefixes: [:password, :password_secrets_attributes],
     heading: t("myplaceonline.passwords.recovery_questions"),
     childproperties: obj.password_secrets,
     deletebutton: t("myplaceonline.passwords.remove_question"),

@@ -6,9 +6,30 @@
   
   <%=
     render layout: 'myplaceonline/childproperties', locals: {
+      f: identity_fields,
+      prefixes: [:contact, :ref_attributes, :identity_phones_attributes],
+      heading: t("myplaceonline.identities.phones"),
+      childproperties: obj.contact_identity.identity_phones,
+      deletebutton: t("myplaceonline.identities.delete_phone"),
+      addbutton: t("myplaceonline.identities.add_phone"),
+      expanded: false,
+      formjson: [
+        {
+          type: 'text',
+          name: 'number',
+          placeholder: t("myplaceonline.identities.phone"),
+          primary: true
+        }
+      ]
+    } do
+  %>
+    <%= myp_text_field @child_fields, :number, "myplaceonline.identities.phone", @childproperty.number, false, "primary_input" %>
+  <% end %>
+
+  <%=
+    render layout: 'myplaceonline/childproperties', locals: {
       f: f,
-      objname: :contact,
-      childpropertiesname: :conversations,
+      prefixes: [:contact, :conversations_attributes],
       heading: t("myplaceonline.contacts.conversations"),
       childproperties: obj.conversations,
       deletebutton: t("myplaceonline.contacts.delete_conversation"),

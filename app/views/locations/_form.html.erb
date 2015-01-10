@@ -9,8 +9,7 @@
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,
-    objname: :location,
-    childpropertiesname: :location_phones,
+    prefixes: [:location, :location_phones_attributes],
     heading: t("myplaceonline.locations.phones"),
     childproperties: obj.location_phones,
     deletebutton: t("myplaceonline.locations.delete_phone"),
@@ -26,5 +25,5 @@
     ]
   } do
 %>
-  <%= myp_date_field @child_fields, :number, "myplaceonline.locations.phone", @childproperty.number, false, "primary_input" %>
+  <%= myp_text_field @child_fields, :number, "myplaceonline.locations.phone", @childproperty.number, false, "primary_input" %>
 <% end %>

@@ -229,6 +229,11 @@ en:
       changetimezone: "Change Time Zone"
       timezone_settings: "Time Zone"
       timezone_settings_saved: "Time zone settings saved."
+    identities:
+      phones: "Phone Numbers"
+      add_phone: "Add Phone"
+      delete_phone: "Delete Phone"
+      phone: "Phone Number"
     import:
       password: "Password (if any)"
       nofile: "No file selected"

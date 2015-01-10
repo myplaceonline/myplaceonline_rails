@@ -3,9 +3,10 @@
   <%= attribute_table_row(t("myplaceonline.contacts.name"), @obj.name) %>
   <%= attribute_table_row(t("myplaceonline.contacts.birthday"), @obj.birthday) %>
   <%= attribute_table_row_markdown(t("myplaceonline.contacts.notes"), @obj.notes) %>
+  <% @obj.contact_identity.identity_phones.each do |phone| %>
+    <%= attribute_table_row(t("myplaceonline.identities.phone"), phone.number) %>
+  <% end %>
   <% @obj.conversations.each do |conversation| %>
-  
     <%= attribute_table_row_markdown(t("myplaceonline.contacts.conversation") + " (" + Myp.display_date(conversation.created_at, current_user) + ")", conversation.conversation) %>
-
   <% end %>  
 <% end %>
