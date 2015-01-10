@@ -5,7 +5,7 @@
   <%= attribute_table_row_markdown(t("myplaceonline.contacts.notes"), @obj.notes) %>
   <% @obj.conversations.each do |conversation| %>
   
-    <%= attribute_table_row_markdown(t("myplaceonline.contacts.conversation"), conversation.conversation) %>
+    <%= attribute_table_row_markdown(t("myplaceonline.contacts.conversation") + " (" + display_date(conversation.created_at) + ")", conversation.conversation) %>
 
   <% end %>  
 <% end %>

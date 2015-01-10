@@ -39,6 +39,7 @@ en:
       locations: "Locations"
       activities: "Activities"
       apartments: "Apartments"
+      jokes: "Jokes"
     general:
       email: "E-mail"
       password: "Password"
@@ -290,3 +291,7 @@ en:
       moveout_fee: "Move-out Fee"
       deposit: "Deposit"
       terminate_by: "Terminate By"
+    jokes:
+      name: "Joke Name"
+      joke: "Joke"
+      joke_edit: "Joke (supports Markdown syntax)"

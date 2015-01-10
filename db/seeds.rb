@@ -15,3 +15,4 @@ feeds = Category.create(name: "feeds", link: "feeds", position: 0, parent: order
 locations = Category.create(name: "locations", link: "locations", position: 0, parent: order)
 activities = Category.create(name: "activities", link: "activities", position: 0, parent: joy)
 apartments = Category.create(name: "apartments", link: "apartments", position: 0, parent: order)
+jokes = Category.create(name: "jokes", link: "jokes", position: 0, parent: joy)

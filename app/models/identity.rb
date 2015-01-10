@@ -12,6 +12,7 @@ class Identity < ActiveRecord::Base
   has_many :locations, :dependent => :destroy
   has_many :activities, :dependent => :destroy
   has_many :apartments, :dependent => :destroy
+  has_many :jokes, :dependent => :destroy
   
   def as_json(options={})
     super.as_json(options).merge({
@@ -26,6 +27,7 @@ class Identity < ActiveRecord::Base
       :locations => locations.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :activities => activities.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :apartments => apartments.to_a.map{|x| x.as_json},
+      :jokes => jokes.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end
