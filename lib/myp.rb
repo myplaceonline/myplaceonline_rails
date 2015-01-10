@@ -374,4 +374,33 @@ module Myp
   def self.select_listitem(selector)
     "$(this).addClass('ui-btn-active'); $('" + selector + "').val($(this).attr('href')); return false;"
   end
+  
+  def self.display_date(time, current_user)
+    self.display_time(time, current_user, :simple_date)
+  end
+  
+  def self.display_date_short(time, current_user)
+    self.display_time(time, current_user, :short_date)
+  end
+  
+  def self.display_time(time, current_user, format = :rfc822)
+    if !time.nil?
+      if !current_user.nil? && !current_user.timezone.blank?
+        time = time.in_time_zone(current_user.timezone)
+      else
+        time = time.in_time_zone(Rails.application.config.time_zone)
+      end
+      time.to_s(format)
+    else
+      nil
+    end
+  end
+  
+  def self.display_currency(obj, current_user)
+    if !obj.blank?
+      "$" + obj.to_s
+    else
+      nil
+    end
+  end
 end

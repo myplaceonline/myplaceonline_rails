@@ -98,31 +98,6 @@ module ApplicationHelper
     end
   end
   
-  def display_date(time)
-    display_time(time, :simple_date)
-  end
-  
-  def display_time(time, format = :rfc822)
-    if !time.nil?
-      if !current_user.nil? && !current_user.timezone.blank?
-        time = time.in_time_zone(current_user.timezone)
-      else
-        time = time.in_time_zone(Rails.application.config.time_zone)
-      end
-      time.to_s(format)
-    else
-      nil
-    end
-  end
-  
-  def display_currency(obj)
-    if !obj.blank?
-      "$" + obj.to_s
-    else
-      nil
-    end
-  end
-  
   def myp_label_classes(value)
     is_blank(value, false) ? "ui-hidden-accessible" : "form_field_label"
   end

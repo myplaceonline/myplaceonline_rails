@@ -4,12 +4,16 @@ class PromisesController < MyplaceonlineController
   end
 
   def display_obj(obj)
-    obj.name
+    result = obj.name
+    if !obj.due.nil?
+      result += " (" + I18n.t("myplaceonline.promises.due") + " " + Myp.display_date_short(obj.due, current_user) + ")"
+    end
+    result
   end
 
   protected
     def sorts
-      ["lower(promises.name) ASC"]
+      ["promises.due ASC", "lower(promises.name) ASC"]
     end
 
     def obj_params

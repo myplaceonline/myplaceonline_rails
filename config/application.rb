@@ -39,5 +39,6 @@ module Myplaceonline
     # http://api.rubyonrails.org/classes/DateTime.html
     Date::DATE_FORMATS[:default] = "%Y-%m-%d"
     Time::DATE_FORMATS[:simple_date] = "%A, %b %d, %Y"
+    Time::DATE_FORMATS[:short_date] = "%b %d"
   end
 end
