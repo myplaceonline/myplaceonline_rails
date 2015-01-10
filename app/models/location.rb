@@ -35,4 +35,37 @@ class Location < ActiveRecord::Base
       nil
     end
   end
+  
+  def address_one_line
+    result = nil
+    result = maybe_append(result, address1)
+    result = maybe_append(result, address2)
+    result = maybe_append(result, address3)
+    result = maybe_append(result, sub_region2)
+    result = maybe_append(result, sub_region1)
+    result = maybe_append(result, postal_code, " ")
+    #result = maybe_append(result, region_name)
+    result
+  end
+  
+  def map_url
+    result = address_one_line
+    if !result.blank?
+      result = "https://www.google.com/maps/place/" + ERB::Util.url_encode(result)
+    end
+    result
+  end
+  
+  def maybe_append(str, val, delimiter = ", ")
+    if !val.blank?
+      if str.nil?
+        str = ""
+      end
+      if !str.blank?
+        str += delimiter
+      end
+      str += val
+    end
+    str
+  end
 end

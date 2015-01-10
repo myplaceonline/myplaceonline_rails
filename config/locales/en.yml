@@ -282,6 +282,7 @@ en:
       add_phone: "Add Phone"
       delete_phone: "Delete Phone"
       phone: "Phone Number"
+      map: "Map"
     activities:
       name: "Name"
     apartments:
