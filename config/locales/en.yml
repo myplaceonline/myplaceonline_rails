@@ -295,3 +295,4 @@ en:
       name: "Joke Name"
       joke: "Joke"
       joke_edit: "Joke (supports Markdown syntax)"
+      source: "Source"

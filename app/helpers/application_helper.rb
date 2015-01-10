@@ -50,8 +50,12 @@ module ApplicationHelper
     html.html_safe
   end
   
-  def attribute_table_row_url(name, url)
-    attribute_table_row(name, url_or_blank(url), url)
+  def attribute_table_row_url(name, url, may_be_nonurl = false)
+    if may_be_nonurl && !url.blank? && !url.start_with?("/") && !url.start_with?("http:")
+      attribute_table_row(name, url)
+    else
+      attribute_table_row(name, url_or_blank(url), url)
+    end
   end
   
   def attribute_table_row_markdown(name, markdown)

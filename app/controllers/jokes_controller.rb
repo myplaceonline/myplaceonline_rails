@@ -13,6 +13,6 @@ class JokesController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:joke).permit(:name, :joke)
+      params.require(:joke).permit(:name, :joke, :source)
     end
 end
