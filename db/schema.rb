@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150110034348) do
+ActiveRecord::Schema.define(version: 20150110105446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -246,6 +246,17 @@ ActiveRecord::Schema.define(version: 20150110034348) do
 
   add_index "passwords", ["identity_id"], name: "index_passwords_on_identity_id", using: :btree
   add_index "passwords", ["password_encrypted_id"], name: "index_passwords_on_password_encrypted_id", using: :btree
+
+  create_table "promises", force: true do |t|
+    t.string   "name"
+    t.date     "due"
+    t.text     "promise"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "promises", ["identity_id"], name: "index_promises_on_identity_id", using: :btree
 
   create_table "to_dos", force: true do |t|
     t.string   "short_description"

@@ -17,3 +17,4 @@ activities = Category.create(name: "activities", link: "activities", position: 0
 apartments = Category.create(name: "apartments", link: "apartments", position: 0, parent: order)
 jokes = Category.create(name: "jokes", link: "jokes", position: 0, parent: joy)
 banks = Category.create(name: "banks", link: "banks", position: 0, parent: order)
+promises = Category.create(name: "promises", link: "promises", position: 0, parent: order)

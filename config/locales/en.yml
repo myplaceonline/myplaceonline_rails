@@ -41,6 +41,7 @@ en:
       apartments: "Apartments"
       jokes: "Jokes"
       banks: "Banks"
+      promises: "Promises"
     general:
       email: "E-mail"
       password: "Password"
@@ -304,3 +305,8 @@ en:
     banks:
       location: "Address"
       password: "Password"
+    promises:
+      name: "Promise Name"
+      promise: "Promise"
+      promise_edit: "Promise (supports Markdown syntax)"
+      due: "Due"

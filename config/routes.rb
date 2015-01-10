@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :promises
+  post 'promises/new'
+
   resources :banks
   post 'banks/new'
 
