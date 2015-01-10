@@ -1,0 +1,6 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row_reference(t("myplaceonline.banks.location"), "location_path", @obj.location) %>
+  <%= attribute_table_row_reference(t("myplaceonline.banks.password"), "password_path", @obj.password) %>
+
+<% end %>

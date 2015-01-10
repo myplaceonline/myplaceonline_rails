@@ -171,14 +171,11 @@ class PasswordsController < MyplaceonlineController
   end
 
   def display_obj(obj)
-    result = obj.name
-    if !obj.user.to_s.empty?
-      result += " (" + obj.user + ")"
-    end
-    if !obj.defunct.nil?
-      result += " (" + t("myplaceonline.passwords.defunct") + ")"
-    end
-    result
+    obj.display
+  end
+
+  def self.param_names
+    [:name, :user, :password, :email, :url, :account_number, :notes]
   end
 
   protected
@@ -221,13 +218,7 @@ class PasswordsController < MyplaceonlineController
   
     def obj_params
       params.require(:password).permit(
-        :name,
-        :user,
-        :password,
-        :email,
-        :url,
-        :account_number,
-        :notes,
+        PasswordsController.param_names,
         password_secrets_attributes: [:id, :question, :answer, :_destroy]
       )
     end

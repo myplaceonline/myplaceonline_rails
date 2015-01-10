@@ -1,0 +1,4 @@
+bank:
+  identity: identity
+  location: location
+  password: password

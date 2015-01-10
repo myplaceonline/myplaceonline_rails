@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :banks
+  post 'banks/new'
+
   resources :jokes
   post 'jokes/new'
 

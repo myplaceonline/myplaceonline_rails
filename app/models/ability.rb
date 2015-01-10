@@ -18,6 +18,7 @@ class Ability
     can :manage, Activity, :identity => identity
     can :manage, Apartment, :identity => identity
     can :manage, Joke, :identity => identity
+    can :manage, Bank, :identity => identity
     
     # Define abilities for the passed in user here. For example:
     #

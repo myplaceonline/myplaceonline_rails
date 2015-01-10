@@ -27,6 +27,17 @@ class Password < ActiveRecord::Base
     result
   end
   
+  def display
+    result = name
+    if !user.to_s.empty?
+      result += " (" + user + ")"
+    end
+    if !defunct.nil?
+      result += " (" + I18n.t("myplaceonline.passwords.defunct") + ")"
+    end
+    result
+  end
+  
   def as_json(options={})
     if password_encrypted?
       options[:except] ||= "password"

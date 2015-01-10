@@ -40,6 +40,7 @@ en:
       activities: "Activities"
       apartments: "Apartments"
       jokes: "Jokes"
+      banks: "Banks"
     general:
       email: "E-mail"
       password: "Password"
@@ -296,3 +297,6 @@ en:
       joke: "Joke"
       joke_edit: "Joke (supports Markdown syntax)"
       source: "Source"
+    banks:
+      location: "Address"
+      password: "Password"
