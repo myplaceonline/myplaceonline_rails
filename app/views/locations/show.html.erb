@@ -8,5 +8,10 @@
   <%= attribute_table_row(t("myplaceonline.locations.sub_region1"), @obj.sub_region1_name) %>
   <%= attribute_table_row(t("myplaceonline.locations.postal_code"), @obj.postal_code) %>
   <%= attribute_table_row(t("myplaceonline.locations.region"), @obj.region_name) %>
+  <% @obj.location_phones.each do |phone| %>
   
+    <%= attribute_table_row(t("myplaceonline.locations.phone"), phone.number) %>
+
+  <% end %>
+
 <% end %>

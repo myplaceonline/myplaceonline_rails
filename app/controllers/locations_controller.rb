@@ -18,6 +18,18 @@ class LocationsController < MyplaceonlineController
 
     def obj_params
       params[:location][:sub_region1] = params[:sub_region1]
-      params.require(:location).permit(LocationsController.param_names)
+      params.require(:location).permit(
+        LocationsController.param_names,
+        location_phones_attributes: [:id, :number, :_destroy]
+      )
+    end
+    
+    def update_presave
+      @obj.location_phones.each {
+        |phone|
+        if !phone.location.nil?
+          authorize! :manage, phone.location
+        end
+      }
     end
 end

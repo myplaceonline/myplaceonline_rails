@@ -277,6 +277,10 @@ en:
       sub_region2: "City"
       select_region: "Please select a country first"
       postal_code: "ZIP Code"
+      phones: "Phone Numbers"
+      add_phone: "Add Phone"
+      delete_phone: "Delete Phone"
+      phone: "Phone Number"
     activities:
       name: "Name"
     apartments:
