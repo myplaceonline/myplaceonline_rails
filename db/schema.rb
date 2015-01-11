@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150110203253) do
+ActiveRecord::Schema.define(version: 20150111010722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -172,12 +172,12 @@ ActiveRecord::Schema.define(version: 20150110203253) do
 
   create_table "identity_phones", force: true do |t|
     t.string   "number"
-    t.integer  "identity_id"
+    t.integer  "ref_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "identity_phones", ["identity_id"], name: "index_identity_phones_on_identity_id", using: :btree
+  add_index "identity_phones", ["ref_id"], name: "index_identity_phones_on_ref_id", using: :btree
 
   create_table "jokes", force: true do |t|
     t.string   "name"

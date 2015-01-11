@@ -19,7 +19,7 @@ class MyplaceonlineController < ApplicationController
       @offset = 0
     end
     
-    @perpage = params[:perpage].nil? ? 10 : params[:perpage].to_i
+    @perpage = params[:perpage].nil? ? 20 : params[:perpage].to_i
     if @perpage <= 0
       @perpage = @count
     end

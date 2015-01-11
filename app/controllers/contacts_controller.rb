@@ -46,18 +46,6 @@ class ContactsController < MyplaceonlineController
       # Create a Contact for the current user identity if it doesn't exist
       current_user.primary_identity.ensure_contact!
     end
-    
-    def create_presave
-      @obj.contact_identity.identity_phones.each {
-        |phone|
-        if phone.identity.nil?
-          phone.identity = current_user.primary_identity
-        else
-          # TODO phone needs another "owner identity"
-          #authorize! :manage, phone.identity
-        end
-      }
-    end
 
     def update_presave
       @obj.conversations.each {
@@ -68,11 +56,7 @@ class ContactsController < MyplaceonlineController
       }
       @obj.contact_identity.identity_phones.each {
         |phone|
-        if phone.identity.nil?
-          phone.identity = current_user.primary_identity
-        else
-          #authorize! :manage, phone.identity
-        end
+        #authorize! :manage, phone.ref
       }
     end
 end

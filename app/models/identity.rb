@@ -16,7 +16,7 @@ class Identity < ActiveRecord::Base
   has_many :banks, :dependent => :destroy
   has_many :promises, :dependent => :destroy
   
-  has_many :identity_phones, :dependent => :destroy
+  has_many :identity_phones, :foreign_key => 'ref_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_phones, allow_destroy: true,
       reject_if: proc { |attributes| attributes['number'].blank? }
   
