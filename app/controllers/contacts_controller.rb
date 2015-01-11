@@ -48,15 +48,7 @@ class ContactsController < MyplaceonlineController
     end
 
     def update_presave
-      @obj.conversations.each {
-        |conversation|
-        if !conversation.contact.nil?
-          authorize! :manage, conversation.contact
-        end
-      }
-      @obj.contact_identity.identity_phones.each {
-        |phone|
-        #authorize! :manage, phone.ref
-      }
+      check_nested_attributes(@obj, :conversations, :contact)
+      check_nested_attributes(@obj.contact_identity, :identity_phones, :ref)
     end
 end

@@ -25,11 +25,6 @@ class LocationsController < MyplaceonlineController
     end
     
     def update_presave
-      @obj.location_phones.each {
-        |phone|
-        if !phone.location.nil?
-          authorize! :manage, phone.location
-        end
-      }
+      check_nested_attributes(@obj, :location_phones, :location)
     end
 end

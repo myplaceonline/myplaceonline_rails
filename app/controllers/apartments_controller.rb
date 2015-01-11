@@ -38,11 +38,6 @@ class ApartmentsController < MyplaceonlineController
     end
     
     def update_presave
-      @obj.apartment_leases.each {
-        |lease|
-        if !lease.apartment.nil?
-          authorize! :manage, lease.apartment
-        end
-      }
+      check_nested_attributes(@obj, :apartment_leases, :apartment)
     end
 end

@@ -210,4 +210,13 @@ class MyplaceonlineController < ApplicationController
         end
       end
     end
+    
+    def check_nested_attributes(target, method, belongs_to_name)
+      target.send(method).each {
+        |attr|
+        if attr.send((belongs_to_name.to_s + "_id").to_sym) != target.id
+          raise "Unauthorized"
+        end
+      }
+    end
 end
