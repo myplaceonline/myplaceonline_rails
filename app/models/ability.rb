@@ -20,6 +20,7 @@ class Ability
     can :manage, Joke, :identity => identity
     can :manage, Bank, :identity => identity
     can :manage, Promise, :identity => identity
+    can :manage, Subscription, :identity => identity
     
     # Define abilities for the passed in user here. For example:
     #

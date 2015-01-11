@@ -42,6 +42,7 @@ en:
       jokes: "Jokes"
       banks: "Banks"
       promises: "Promises"
+      subscriptions: "Subscriptions"
     general:
       email: "E-mail"
       password: "Password"
@@ -321,3 +322,7 @@ en:
       promise: "Promise"
       promise_edit: "Promise (supports Markdown syntax)"
       due: "Due"
+    subscriptions:
+      name: "Subscription Name"
+      start_date: "Start Date"
+      end_date: "End Date"

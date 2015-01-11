@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :subscriptions
+  post 'subscriptions/new'
+
   resources :promises
   post 'promises/new'
 

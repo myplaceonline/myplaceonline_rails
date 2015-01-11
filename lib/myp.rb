@@ -30,6 +30,7 @@ module Myp
     @@all_categories[:jokes] = Category.find_by(:name => :jokes)
     @@all_categories[:banks] = Category.find_by(:name => :banks)
     @@all_categories[:promises] = Category.find_by(:name => :promises)
+    @@all_categories[:subscriptions] = Category.find_by(:name => :subscriptions)
     puts "Myplaceonline: Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
   end
   
