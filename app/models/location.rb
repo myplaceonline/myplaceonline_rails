@@ -1,10 +1,16 @@
 class Location < ActiveRecord::Base
   belongs_to :identity
-  validates :name, presence: true
+  validate :at_least_one
   
   has_many :location_phones, :dependent => :destroy
   accepts_nested_attributes_for :location_phones, allow_destroy: true,
       reject_if: proc { |attributes| attributes['number'].blank? }
+  
+  def at_least_one
+    if [name, address1].reject(&:blank?).size == 0
+      errors[:base] << ("Name or address required")
+    end
+  end
   
   def region_name
     if !region.nil?
@@ -15,7 +21,11 @@ class Location < ActiveRecord::Base
   end
   
   def display
-    name
+    result = name
+    if result.blank?
+      result = address1
+    end
+    result
   end
 
   def sub_region1_name
