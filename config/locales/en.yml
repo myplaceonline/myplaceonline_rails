@@ -163,6 +163,7 @@ en:
     search:
       title: "Search"
       placeholder: "Search"
+      search_categories: "Search Categories"
     api:
       title: "API"
     passwords:
