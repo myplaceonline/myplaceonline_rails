@@ -121,39 +121,51 @@ module ApplicationHelper
     result
   end
   
-  def myp_text_field(form, name, placeholderid, value, autofocus = false, input_classes = nil)
+  def myp_text_field(form, name, placeholder, value, autofocus = false, input_classes = nil)
+    if is_probably_i18n(placeholder)
+      placeholder = I18n.t(placeholder)
+    end
     content_tag(
       :p,
-      form.label(name, t(placeholderid), class: myp_label_classes(value)) +
-      form.text_field(name, placeholder: t(placeholderid), class: myp_field_classes(autofocus, input_classes), value: value)
+      form.label(name, placeholder, class: myp_label_classes(value)) +
+      form.text_field(name, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes), value: value)
     ).html_safe
   end
   
-  def myp_number_field(form, name, placeholderid, value, autofocus = false, input_classes = nil)
+  def myp_number_field(form, name, placeholder, value, autofocus = false, input_classes = nil)
+    if is_probably_i18n(placeholder)
+      placeholder = I18n.t(placeholder)
+    end
     content_tag(
       :p,
-      form.label(name, t(placeholderid), class: myp_label_classes(value)) +
-      form.number_field(name, placeholder: t(placeholderid), class: myp_field_classes(autofocus, input_classes), value: value)
+      form.label(name, placeholder, class: myp_label_classes(value)) +
+      form.number_field(name, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes), value: value)
     ).html_safe
   end
   
-  def myp_text_field_tag(name, placeholderid, value, autofocus = false, input_classes = nil)
+  def myp_text_field_tag(name, placeholder, value, autofocus = false, input_classes = nil)
+    if is_probably_i18n(placeholder)
+      placeholder = I18n.t(placeholder)
+    end
     content_tag(
       :p,
-      label_tag(name, t(placeholderid), class: myp_label_classes(value)) +
-      text_field_tag(name, value, placeholder: t(placeholderid), class: myp_field_classes(autofocus, input_classes))
+      label_tag(name, placeholder, class: myp_label_classes(value)) +
+      text_field_tag(name, value, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes))
     ).html_safe
   end
   
-  def myp_date_field(form, name, placeholderid, value, autofocus = false, input_classes = nil)
+  def myp_date_field(form, name, placeholder, value, autofocus = false, input_classes = nil)
     # http://dev.jtsage.com/jQM-DateBox/doc/3-0-first-datebox/
     # Options should match app/assets/javascripts/myplaceonline_final.js form_add_item
+    if is_probably_i18n(placeholder)
+      placeholder = I18n.t(placeholder)
+    end
     content_tag(
       :p,
-      form.label(name, t(placeholderid), class: myp_label_classes(value)) +
+      form.label(name, placeholder, class: myp_label_classes(value)) +
       form.date_field(
         name,
-        placeholder: t(placeholderid),
+        placeholder: placeholder,
         class: myp_field_classes(autofocus, input_classes),
         value: value,
         "data-role" => "datebox",
@@ -165,33 +177,46 @@ module ApplicationHelper
     ).html_safe
   end
 
-  def myp_file_field(form, name, placeholderid, value, autofocus = false, input_classes = nil)
+  def myp_file_field(form, name, placeholder, value, autofocus = false, input_classes = nil)
+    if is_probably_i18n(placeholder)
+      placeholder = I18n.t(placeholder)
+    end
     content_tag(
       :p,
-      form.label(name, t(placeholderid), class: myp_label_classes(value)) +
-      form.file_field(name, placeholder: t(placeholderid), class: myp_field_classes(autofocus, input_classes), value: value)
+      form.label(name, placeholder, class: myp_label_classes(value)) +
+      form.file_field(name, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes), value: value)
     ).html_safe
   end
+  
+  def is_probably_i18n(str)
+    !str.nil? && str.include?("myplaceonline.")
+  end
 
-  def myp_text_area(form, name, placeholderid, value, autofocus = false, input_classes = nil)
+  def myp_text_area(form, name, placeholder, value, autofocus = false, input_classes = nil)
     # No need to set 'rows' or height because of autogrow:
     # https://github.com/jquery/jquery-mobile/blob/master/js/widgets/forms/autogrow.js
+    if is_probably_i18n(placeholder)
+      placeholder = I18n.t(placeholder)
+    end
     content_tag(
       :p,
-      form.label(name, t(placeholderid), class: myp_label_classes(value)) +
-      form.text_area(name, placeholder: t(placeholderid), class: myp_field_classes(autofocus, input_classes), value: value)
+      form.label(name, placeholder, class: myp_label_classes(value)) +
+      form.text_area(name, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes), value: value)
     ).html_safe
   end
 
-  def myp_text_area_markdown(form, name, placeholderid, value, autofocus = false, input_classes = nil)
-    myp_text_area(form, name, placeholderid + " (" + I18n.t("myplaceonline.general.supports_markdown") + ")", value, autofocus, input_classes)
+  def myp_text_area_markdown(form, name, placeholder, value, autofocus = false, input_classes = nil)
+    myp_text_area(form, name, I18n.t(placeholder) + " (" + I18n.t("myplaceonline.general.supports_markdown") + ")", value, autofocus, input_classes)
   end
 
-  def myp_check_box_tag(name, placeholderid, checked, autofocus = false, input_classes = nil)
+  def myp_check_box_tag(name, placeholder, checked, autofocus = false, input_classes = nil)
+    if is_probably_i18n(placeholder)
+      placeholder = I18n.t(placeholder)
+    end
     content_tag(
       :p,
       check_box_tag(name, true, checked, class: myp_field_classes(autofocus, input_classes)) +
-      label_tag(name, t(placeholderid))
+      label_tag(name, placeholder)
     ).html_safe
   end
   
@@ -199,7 +224,10 @@ module ApplicationHelper
     "US"
   end
 
-  def myp_region_field(form, name, placeholderid, value, autofocus = false, input_classes = nil)
+  def myp_region_field(form, name, placeholder, value, autofocus = false, input_classes = nil)
+    if is_probably_i18n(placeholder)
+      placeholder = I18n.t(placeholder)
+    end
     if input_classes.nil?
       input_classes = ""
     else
@@ -208,23 +236,29 @@ module ApplicationHelper
     input_classes += "region"
     content_tag(
       :p,
-      form.label(name, t(placeholderid), class: "ui-hidden-accessible") +
+      form.label(name, placeholder, class: "ui-hidden-accessible") +
       form.select(name, region_options_for_select(Carmen::Country.all, value, priority: [default_region]), {}, { :class => myp_field_classes(autofocus, input_classes) })
     ).html_safe
   end
   
-  def myp_subregion_field(form, name, placeholderid, regionvalue, subregionvalue)
+  def myp_subregion_field(form, name, placeholder, regionvalue, subregionvalue)
+    if is_probably_i18n(placeholder)
+      placeholder = I18n.t(placeholder)
+    end
     render(partial: 'subregionselect', locals: { f: form, regionstr: regionvalue, subregion: subregionvalue })
   end
 
-  def myp_subregion_select_field(form, name, placeholderid, region, subregionvalue, autofocus = false, input_classes = nil)
+  def myp_subregion_select_field(form, name, placeholder, region, subregionvalue, autofocus = false, input_classes = nil)
+    if is_probably_i18n(placeholder)
+      placeholder = I18n.t(placeholder)
+    end
     coded_region = Carmen::Country.coded(region.code)
     options = coded_region.subregions.map { |r| [r.name, r.code] }
     options.sort!{|a, b| a.first.to_s <=> b.first.to_s}
     content_tag(
       :p,
-      form.label(name, t(placeholderid), class: myp_label_classes(subregionvalue)) +
-      form.select(name, options_for_select(options, subregionvalue), class: myp_field_classes(autofocus, input_classes), prompt: t(placeholderid))
+      form.label(name, placeholder, class: myp_label_classes(subregionvalue)) +
+      form.select(name, options_for_select(options, subregionvalue), class: myp_field_classes(autofocus, input_classes), prompt: placeholder)
     ).html_safe
   end
 end
