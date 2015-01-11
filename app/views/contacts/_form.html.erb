@@ -7,6 +7,28 @@
   <%=
     render layout: 'myplaceonline/childproperties', locals: {
       f: identity_fields,
+      heading: t("myplaceonline.identities.emails"),
+      childpropertiesname: :identity_emails,
+      childproperties: obj.contact_identity.identity_emails,
+      deletebutton: t("myplaceonline.identities.delete_email"),
+      addbutton: t("myplaceonline.identities.add_email"),
+      expanded: obj.contact_identity.identity_emails.length > 0,
+      formjson: [
+        {
+          type: 'text',
+          name: 'email',
+          placeholder: t("myplaceonline.identities.email"),
+          primary: true
+        }
+      ]
+    } do
+  %>
+    <%= myp_text_field @child_fields, :email, "myplaceonline.identities.email", @childproperty.email, false, "primary_input" %>
+  <% end %>
+
+  <%=
+    render layout: 'myplaceonline/childproperties', locals: {
+      f: identity_fields,
       heading: t("myplaceonline.identities.phones"),
       childpropertiesname: :identity_phones,
       childproperties: obj.contact_identity.identity_phones,

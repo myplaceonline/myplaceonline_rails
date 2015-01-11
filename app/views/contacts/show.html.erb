@@ -3,6 +3,9 @@
   <%= attribute_table_row(t("myplaceonline.contacts.name"), @obj.name) %>
   <%= attribute_table_row(t("myplaceonline.contacts.birthday"), @obj.birthday) %>
   <%= attribute_table_row_markdown(t("myplaceonline.contacts.notes"), @obj.notes) %>
+  <% @obj.contact_identity.identity_emails.each do |email| %>
+    <%= attribute_table_row_email(t("myplaceonline.identities.email"), email.email) %>
+  <% end %>
   <% @obj.contact_identity.identity_phones.each do |phone| %>
     <%= attribute_table_row(t("myplaceonline.identities.phone"), phone.number) %>
   <% end %>

@@ -15,7 +15,16 @@ class ContactsController < MyplaceonlineController
 
   def self.param_names
     [
-      ref_attributes: [:id, :name, :birthday, :notes, { identity_phones_attributes: [:id, :number, :_destroy] } ]
+      ref_attributes: [
+        :id,
+        :name,
+        :birthday,
+        :notes,
+        {
+          identity_phones_attributes: [:id, :number, :_destroy],
+          identity_emails_attributes: [:id, :email, :_destroy],
+        }
+      ]
     ]
   end
 
@@ -50,5 +59,6 @@ class ContactsController < MyplaceonlineController
     def update_presave
       check_nested_attributes(@obj, :conversations, :contact)
       check_nested_attributes(@obj.contact_identity, :identity_phones, :ref)
+      check_nested_attributes(@obj.contact_identity, :identity_emails, :ref)
     end
 end

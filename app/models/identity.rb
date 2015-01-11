@@ -20,6 +20,10 @@ class Identity < ActiveRecord::Base
   accepts_nested_attributes_for :identity_phones, allow_destroy: true,
       reject_if: proc { |attributes| attributes['number'].blank? }
   
+  has_many :identity_emails, :foreign_key => 'ref_id', :dependent => :destroy
+  accepts_nested_attributes_for :identity_emails, allow_destroy: true,
+      reject_if: proc { |attributes| attributes['email'].blank? }
+  
   def as_json(options={})
     super.as_json(options).merge({
       :category_points_amounts => category_points_amounts.to_a.map{|x| x.as_json},

@@ -235,6 +235,10 @@ en:
       add_phone: "Add Phone"
       delete_phone: "Delete Phone"
       phone: "Phone Number"
+      emails: "E-mails"
+      add_email: "Add E-mail"
+      delete_email: "Delete E-mail"
+      email: "E-mail"
     import:
       password: "Password (if any)"
       nofile: "No file selected"

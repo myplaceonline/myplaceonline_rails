@@ -58,6 +58,14 @@ module ApplicationHelper
     end
   end
   
+  def attribute_table_row_email(name, email)
+    if !email.blank? && email.include?("@")
+      attribute_table_row(name, url_or_blank("mailto:" + email, email), email)
+    else
+      attribute_table_row(name, email)
+    end
+  end
+  
   def attribute_table_row_markdown(name, markdown)
     attribute_table_row(name, Myp.markdown_to_html(markdown), markdown, "markdowncell")
   end
