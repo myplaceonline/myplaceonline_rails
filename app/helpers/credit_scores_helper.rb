@@ -1,0 +1,2 @@
+module CreditScoresHelper
+end

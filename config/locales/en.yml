@@ -43,6 +43,7 @@ en:
       banks: "Banks"
       promises: "Promises"
       subscriptions: "Subscriptions"
+      credit_scores: "Credit Scores"
     general:
       email: "E-mail"
       password: "Password"
@@ -326,3 +327,7 @@ en:
       name: "Subscription Name"
       start_date: "Start Date"
       end_date: "End Date"
+    credit_scores:
+      score_date: "Score Date"
+      score: "Score"
+      source: "Source"

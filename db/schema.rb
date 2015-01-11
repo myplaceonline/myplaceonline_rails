@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150111084826) do
+ActiveRecord::Schema.define(version: 20150111174312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,17 @@ ActiveRecord::Schema.define(version: 20150111084826) do
   end
 
   add_index "conversations", ["contact_id"], name: "index_conversations_on_contact_id", using: :btree
+
+  create_table "credit_scores", force: true do |t|
+    t.date     "score_date"
+    t.integer  "score"
+    t.string   "source"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "credit_scores", ["identity_id"], name: "index_credit_scores_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
     t.binary   "val"
