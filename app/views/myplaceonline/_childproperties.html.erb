@@ -2,7 +2,7 @@
   <h3><%= heading %></h3>
   <div class="itemswrapper">
     <% childproperties.each do |childproperty| %>
-      <%= f.fields_for prefixes.last.to_s.gsub("_attributes", "").to_sym, childproperty do |child_fields| %>
+      <%= f.fields_for childpropertiesname, childproperty do |child_fields| %>
         <div class="itemwrapper">
           <%
           @child_fields = child_fields
@@ -17,6 +17,6 @@
     <% random_name = SecureRandom.hex(10) %>
     var json<%= random_name %> = <%= raw(formjson.to_json) %>;
     </script>
-    <p><a href="#" onclick="return form_add_item(this, <%= raw(prefixes.to_json.gsub("\"", "'")) %>, '<%= deletebutton %>', json<%= random_name %>);" class="ui-btn"><%= addbutton %></a></p>
+    <p><a href="#" onclick="return form_add_item(this, '<%= f.object_name + "[" + childpropertiesname.to_s + "_attributes]" %>', '<%= f.object_name.gsub("\[", "_").gsub("\]", "") + "_" + childpropertiesname.to_s + "_attributes" %>', '<%= deletebutton %>', json<%= random_name %>);" class="ui-btn"><%= addbutton %></a></p>
   </div>
 </div>

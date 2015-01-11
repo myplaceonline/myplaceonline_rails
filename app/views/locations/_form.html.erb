@@ -9,12 +9,12 @@
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,
-    prefixes: [:location, :location_phones_attributes],
     heading: t("myplaceonline.locations.phones"),
+    childpropertiesname: :location_phones,
     childproperties: obj.location_phones,
     deletebutton: t("myplaceonline.locations.delete_phone"),
     addbutton: t("myplaceonline.locations.add_phone"),
-    expanded: false,
+    expanded: obj.location_phones.length > 0,
     formjson: [
       {
         type: 'text',

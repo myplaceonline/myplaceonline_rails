@@ -90,7 +90,7 @@ function isArray(obj) {
   return Object.prototype.toString.call(obj) === '[object Array]';
 }
 
-function form_add_item(link, prefixes, deletePlaceholder, items) {
+function form_add_item(link, namePrefix, idPrefix, deletePlaceholder, items) {
   var index = -1;
   var div = $(link).parent().parent(".itemswrapper");
   div.find(".primary_input").each(function() {
@@ -100,20 +100,6 @@ function form_add_item(link, prefixes, deletePlaceholder, items) {
     }
   });
   index++;
-  var idPrefix = "";
-  var namePrefix = "";
-  for (var i = 0; i < prefixes.length; i++) {
-    var prefix = prefixes[i];
-    if (idPrefix.length > 0) {
-      idPrefix += "_";
-    }
-    idPrefix += prefix;
-    if (namePrefix.length == 0) {
-      namePrefix += prefix;
-    } else {
-      namePrefix += "[" + prefix + "]";
-    }
-  }
   
   var html = "<div class='itemwrapper'>";
   var toFocus = null;
@@ -158,12 +144,11 @@ function form_remove_item(link) {
   if (item) {
     var index = get_index_from_id(item);
     if (index != -1) {
-      var id = $(item).attr("id");
-      var prefix = id.replace(/^(.+)_\d+.+$/i, '$1');
-      var prefixFirst = prefix.replace(/^([^_]+)_.+$/i, '$1');
-      var prefixRest = prefix.replace(/^[^_]+_(.+)$/i, '$1');
-      var destroy_id = prefix + "_" + index + "__destroy";
-      var destroy_name = prefixFirst + "[" + prefixRest + "][" + index + "][_destroy]";
+      var name = $(item).attr("name");
+      var namePrefix = name.replace(/^(.+)\[\d+.+$/i, '$1');
+      var idPrefix = namePrefix.replace(/\[/g, '_').replace(/\]/g, '');
+      var destroy_id = idPrefix + "_" + index + "__destroy";
+      var destroy_name = namePrefix + "[" + index + "][_destroy]";
       var existing_destroy = $("#" + destroy_id);
       if (existing_destroy.length) {
         existing_destroy.val("1");

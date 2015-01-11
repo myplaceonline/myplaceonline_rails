@@ -18,11 +18,12 @@
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,
-    prefixes: [:password, :password_secrets_attributes],
     heading: t("myplaceonline.passwords.recovery_questions"),
+    childpropertiesname: :password_secrets,
     childproperties: obj.password_secrets,
     deletebutton: t("myplaceonline.passwords.remove_question"),
     addbutton: t("myplaceonline.passwords.add_question"),
+    expanded: obj.password_secrets.length > 0,
     formjson: [
       {
         type: 'text',

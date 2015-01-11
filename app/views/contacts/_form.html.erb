@@ -7,12 +7,12 @@
   <%=
     render layout: 'myplaceonline/childproperties', locals: {
       f: identity_fields,
-      prefixes: [:contact, :ref_attributes, :identity_phones_attributes],
       heading: t("myplaceonline.identities.phones"),
+      childpropertiesname: :identity_phones,
       childproperties: obj.contact_identity.identity_phones,
       deletebutton: t("myplaceonline.identities.delete_phone"),
       addbutton: t("myplaceonline.identities.add_phone"),
-      expanded: false,
+      expanded: obj.contact_identity.identity_phones.length > 0,
       formjson: [
         {
           type: 'text',
@@ -29,12 +29,12 @@
   <%=
     render layout: 'myplaceonline/childproperties', locals: {
       f: f,
-      prefixes: [:contact, :conversations_attributes],
       heading: t("myplaceonline.contacts.conversations"),
+      childpropertiesname: :conversations,
       childproperties: obj.conversations,
       deletebutton: t("myplaceonline.contacts.delete_conversation"),
       addbutton: t("myplaceonline.contacts.add_conversation"),
-      expanded: false,
+      expanded: obj.conversations.length > 0,
       formjson: [
         {
           type: 'textarea',
