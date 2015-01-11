@@ -43,7 +43,7 @@ class Identity < ActiveRecord::Base
       :banks => banks.to_a.map{|x| x.as_json},
       :promises => promises.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :subscriptions => subscriptions.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
-      :credit_scores => to_dos.to_a.map{|x| x.as_json},
+      :credit_scores => credit_scores.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end
