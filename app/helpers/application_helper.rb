@@ -183,6 +183,10 @@ module ApplicationHelper
     ).html_safe
   end
 
+  def myp_text_area_markdown(form, name, placeholderid, value, autofocus = false, input_classes = nil)
+    myp_text_area(form, name, placeholderid + " (" + I18n.t("myplaceonline.general.supports_markdown") + ")", value, autofocus, input_classes)
+  end
+
   def myp_check_box_tag(name, placeholderid, checked, autofocus = false, input_classes = nil)
     content_tag(
       :p,

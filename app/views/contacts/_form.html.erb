@@ -2,7 +2,7 @@
 
   <%= myp_text_field identity_fields, :name, "myplaceonline.contacts.name", obj.name, autofocus %>
   <%= myp_date_field identity_fields, :birthday, "myplaceonline.contacts.birthday", obj.birthday %>
-  <%= myp_text_area identity_fields, :notes, "myplaceonline.contacts.notes_edit", obj.notes %>
+  <%= myp_text_area_markdown identity_fields, :notes, "myplaceonline.contacts.notes", obj.notes %>
   
   <%=
     render layout: 'myplaceonline/childproperties', locals: {

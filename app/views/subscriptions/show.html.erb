@@ -3,5 +3,6 @@
   <%= attribute_table_row(t("myplaceonline.subscriptions.name"), @obj.name) %>
   <%= attribute_table_row(t("myplaceonline.subscriptions.start_date"), Myp.display_date(@obj.start_date, current_user)) %>
   <%= attribute_table_row(t("myplaceonline.subscriptions.end_date"), Myp.display_date(@obj.end_date, current_user)) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.subscriptions.notes"), @obj.notes) %>
   
 <% end %>

@@ -84,6 +84,7 @@ en:
       create_instructions: "Click the Add button below"
       new: "New"
       existing: "Existing"
+      supports_markdown: "supports Markdown syntax"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
@@ -182,7 +183,6 @@ en:
       service_name_col_required: "The service name column is required."
       url: "Website"
       notes: "Notes"
-      notes_field: "Notes (supports Markdown syntax)"
       account_number: "Account Number"
       question: "Question"
       answer: "Answer"
@@ -251,16 +251,13 @@ en:
     wisdoms:
       name: "Wisdom Name"
       wisdom: "Wisdom"
-      wisdom_edit: "Wisdom (supports Markdown syntax)"
     to_dos:
       short_description: "Short Description"
       notes: "Notes"
-      notes_edit: "Notes (supports Markdown syntax)"
     contacts:
       name: "Name"
       birthday: "Birthday"
       notes: "Notes"
-      notes_edit: "Notes (supports Markdown syntax)"
       me: "Me"
       conversation: "Conversation"
       conversations: "Conversations"
@@ -276,7 +273,6 @@ en:
     accomplishments:
       name: "Name"
       accomplishment: "Wisdom"
-      accomplishment_edit: "Accomplishment (supports Markdown syntax)"
     feeds:
       name: "Name"
       url: "Website"
@@ -313,7 +309,6 @@ en:
     jokes:
       name: "Joke Name"
       joke: "Joke"
-      joke_edit: "Joke (supports Markdown syntax)"
       source: "Source"
     banks:
       location: "Address"
@@ -321,12 +316,12 @@ en:
     promises:
       name: "Promise Name"
       promise: "Promise"
-      promise_edit: "Promise (supports Markdown syntax)"
       due: "Due"
     subscriptions:
       name: "Subscription Name"
       start_date: "Start Date"
       end_date: "End Date"
+      notes: "Notes"
     credit_scores:
       score_date: "Score Date"
       score: "Score"

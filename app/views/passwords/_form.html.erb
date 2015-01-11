@@ -13,7 +13,7 @@
 <%= myp_check_box_tag :encrypt, "myplaceonline.passwords.encrypt", @encrypt %>
 <%= myp_text_field f, :url, "myplaceonline.passwords.url", obj.url %>
 <%= myp_text_field f, :account_number, "myplaceonline.passwords.account_number", obj.account_number %>
-<%= myp_text_area f, :notes, "myplaceonline.passwords.notes_field", obj.notes %>
+<%= myp_text_area_markdown f, :notes, "myplaceonline.passwords.notes", obj.notes %>
 <%= myp_check_box_tag :defunct, "myplaceonline.passwords.defunct", !obj.defunct.nil? %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {

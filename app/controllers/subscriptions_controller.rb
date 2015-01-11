@@ -13,6 +13,6 @@ class SubscriptionsController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:subscription).permit(:name, :start_date, :end_date)
+      params.require(:subscription).permit(:name, :start_date, :end_date, :notes)
     end
 end
