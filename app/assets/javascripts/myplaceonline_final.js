@@ -75,7 +75,7 @@ function getRemoteString(destination, length) {
 }
 
 function get_index_from_id(obj) {
-  var id = $(obj).attr("id");
+  var id = $(obj).data("nameprefix");
   if (id) {
     id = id.replace(/^.+(\d+).+$/i, '$1');
     if (isNaN(id)) {
@@ -90,10 +90,13 @@ function isArray(obj) {
   return Object.prototype.toString.call(obj) === '[object Array]';
 }
 
-function form_add_item(link, namePrefix, idPrefix, deletePlaceholder, items) {
+function getIdPrefixFromNamePrefix(namePrefix) {
+  return namePrefix.replace(/\[/g, '_').replace(/\]/g, '');
+}
+
+function form_add_item(link, namePrefix, deletePlaceholder, items) {
   var index = -1;
-  var div = $(link).parent().parent(".itemswrapper");
-  div.find(".primary_input").each(function() {
+  $(link).parents(".itemswrapper").first().find(".itemwrapper").each(function() {
     var id = get_index_from_id($(this));
     if (id > index) {
       index = id;
@@ -101,16 +104,16 @@ function form_add_item(link, namePrefix, idPrefix, deletePlaceholder, items) {
   });
   index++;
   
-  var html = "<div class='itemwrapper'>";
+  var html = "<div class='itemwrapper' data-nameprefix='" + namePrefix + "[" + index + "]" + "'>";
   var toFocus = null;
   var i;
+  var idPrefix = getIdPrefixFromNamePrefix(namePrefix);
   for (i = 0; i < items.length; i++) {
     var item = items[i];
     var id = idPrefix + "_" + index + "_" + item.name;
     var name = namePrefix + "[" + index + "][" + item.name + "]";
     var cssclasses = '';
-    if (item.primary) {
-      cssclasses = 'primary_input ';
+    if (item.autofocus && !toFocus) {
       toFocus = id;
     }
     if (item.classes) {
@@ -143,30 +146,19 @@ function form_add_item_set_html(insertBefore, html, toFocus) {
 }
 
 function form_remove_item(link) {
-  var div = $(link).parent().parent("div");
-  var item = div.find(".primary_input").first();
-  if (item) {
-    var index = get_index_from_id(item);
-    if (index != -1) {
-      var name = $(item).attr("name");
-      var namePrefix = name.replace(/^(.+)\[\d+.+$/i, '$1');
-      var idPrefix = namePrefix.replace(/\[/g, '_').replace(/\]/g, '');
-      var destroy_id = idPrefix + "_" + index + "__destroy";
-      var destroy_name = namePrefix + "[" + index + "][_destroy]";
-      var existing_destroy = $("#" + destroy_id);
-      if (existing_destroy.length) {
-        existing_destroy.val("1");
-      } else {
-        var html = "<input type='hidden' id='" + destroy_id + "' name='" + destroy_name + "' value='1' />";
-        $(html).insertBefore(item);
-      }
-      div.hide();
-    } else {
-      criticalError("Could not find item ID");
-    }
+  var div = $(link).parents(".itemwrapper").first();
+  var namePrefix = div.data("nameprefix");
+  var idPrefix = getIdPrefixFromNamePrefix(namePrefix);
+  var destroy_id = idPrefix + "__destroy";
+  var destroy_name = namePrefix + "[_destroy]";
+  var existing_destroy = $("#" + destroy_id);
+  if (existing_destroy.length) {
+    existing_destroy.val("1");
   } else {
-    criticalError("Error removing item");
+    var html = "<input type='hidden' id='" + destroy_id + "' name='" + destroy_name + "' value='1' />";
+    $(html).insertBefore(div);
   }
+  div.hide();
   return false;
 }
 

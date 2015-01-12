@@ -29,7 +29,7 @@
         type: 'text',
         name: 'question',
         placeholder: t("myplaceonline.passwords.question"),
-        primary: true
+        autofocus: true
       },
       {
         type: 'text',
@@ -47,7 +47,7 @@
     ]
   } do
 %>
-  <%= myp_text_field @child_fields, :question, "myplaceonline.passwords.question", @childproperty.question, false, "primary_input" %>
+  <%= myp_text_field @child_fields, :question, "myplaceonline.passwords.question", @childproperty.question %>
   <%= myp_text_field @child_fields, :answer, "myplaceonline.passwords.answer", @childproperty.answer, false, "random_destination" %>
   <%=
     render partial: 'myplaceonline/generaterandom', locals: {

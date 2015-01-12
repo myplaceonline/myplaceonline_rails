@@ -18,12 +18,12 @@
           type: 'text',
           name: 'email',
           placeholder: t("myplaceonline.identities.email"),
-          primary: true
+          autofocus: true
         }
       ]
     } do
   %>
-    <%= myp_text_field @child_fields, :email, "myplaceonline.identities.email", @childproperty.email, false, "primary_input" %>
+    <%= myp_text_field @child_fields, :email, "myplaceonline.identities.email", @childproperty.email %>
   <% end %>
 
   <%=
@@ -40,12 +40,12 @@
           type: 'text',
           name: 'number',
           placeholder: t("myplaceonline.identities.phone"),
-          primary: true
+          autofocus: true
         }
       ]
     } do
   %>
-    <%= myp_text_field @child_fields, :number, "myplaceonline.identities.phone", @childproperty.number, false, "primary_input" %>
+    <%= myp_text_field @child_fields, :number, "myplaceonline.identities.phone", @childproperty.number %>
   <% end %>
 
   <%=
@@ -62,12 +62,12 @@
           type: 'textarea',
           name: 'conversation',
           placeholder: t("myplaceonline.contacts.conversation"),
-          primary: true
+          autofocus: true
         }
       ]
     } do
   %>
-    <%= myp_text_area @child_fields, :conversation, "myplaceonline.contacts.conversation", @childproperty.conversation, false, "primary_input" %>
+    <%= myp_text_area @child_fields, :conversation, "myplaceonline.contacts.conversation", @childproperty.conversation %>
   <% end %>
 
 <% end %>

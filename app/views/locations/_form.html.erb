@@ -20,10 +20,10 @@
         type: 'text',
         name: 'number',
         placeholder: t("myplaceonline.locations.phone"),
-        primary: true
+        autofocus: true
       }
     ]
   } do
 %>
-  <%= myp_text_field @child_fields, :number, "myplaceonline.locations.phone", @childproperty.number, false, "primary_input" %>
+  <%= myp_text_field @child_fields, :number, "myplaceonline.locations.phone", @childproperty.number %>
 <% end %>

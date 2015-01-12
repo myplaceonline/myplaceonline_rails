@@ -38,7 +38,7 @@
         type: 'date',
         name: 'start_date',
         placeholder: t("myplaceonline.apartments.start_date"),
-        primary: true
+        autofocus: true
       },
       {
         type: 'date',
@@ -68,7 +68,7 @@
     ]
   } do
 %>
-  <%= myp_date_field @child_fields, :start_date, "myplaceonline.apartments.start_date", @childproperty.start_date, false, "primary_input" %>
+  <%= myp_date_field @child_fields, :start_date, "myplaceonline.apartments.start_date", @childproperty.start_date %>
   <%= myp_date_field @child_fields, :end_date, "myplaceonline.apartments.end_date", @childproperty.end_date %>
   <%= myp_number_field @child_fields, :monthly_rent, "myplaceonline.apartments.monthly_rent", @childproperty.monthly_rent %>
   <%= myp_number_field @child_fields, :deposit, "myplaceonline.apartments.deposit", @childproperty.deposit %>
