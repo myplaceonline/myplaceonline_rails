@@ -17,7 +17,6 @@ class LocationsController < MyplaceonlineController
     end
 
     def obj_params
-      params[:location][:sub_region1] = params[:sub_region1]
       params.require(:location).permit(
         LocationsController.param_names,
         location_phones_attributes: [:id, :number, :_destroy]
