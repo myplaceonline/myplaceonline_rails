@@ -12,6 +12,8 @@ class ApplicationController < ActionController::Base
   
   around_filter :set_current_session
   
+  #after_filter do puts "Response: " + response.body end
+  
   check_authorization
   
   rescue_from Myp::DecryptionKeyUnavailableError do |exception|

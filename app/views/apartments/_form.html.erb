@@ -2,7 +2,7 @@
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,
     name: :location,
-    existingobj: obj.location || Location.new,
+    existingobj: obj.location,
     heading: t("myplaceonline.apartments.location"),
     objform: "locations/form",
     existingobjurl: "location_path",
@@ -15,7 +15,7 @@
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,
     name: :landlord,
-    existingobj: obj.landlord || Contact.new,
+    existingobj: obj.landlord,
     heading: t("myplaceonline.apartments.landlord"),
     objform: "contacts/form",
     existingobjurl: "contact_path",

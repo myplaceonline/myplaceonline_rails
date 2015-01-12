@@ -12,4 +12,7 @@
   <% @obj.conversations.each do |conversation| %>
     <%= attribute_table_row_markdown(t("myplaceonline.contacts.conversation") + " (" + Myp.display_date(conversation.created_at, current_user) + ")", conversation.conversation) %>
   <% end %>  
+  <% @obj.contact_identity.identity_locations.each do |identity_location| %>
+    <%= attribute_table_row_reference(t("myplaceonline.identities.location"), "location_path", identity_location.location) %>
+  <% end %>
 <% end %>

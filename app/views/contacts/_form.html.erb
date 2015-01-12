@@ -70,4 +70,43 @@
     <%= myp_text_area @child_fields, :conversation, "myplaceonline.contacts.conversation", @childproperty.conversation %>
   <% end %>
 
+  <%=
+    render layout: 'myplaceonline/childproperties', locals: {
+      f: identity_fields,
+      heading: t("myplaceonline.identities.locations"),
+      childpropertiesname: :identity_locations,
+      childproperties: obj.contact_identity.identity_locations,
+      deletebutton: t("myplaceonline.identities.delete_location"),
+      addbutton: t("myplaceonline.identities.add_location"),
+      expanded: obj.contact_identity.identity_locations.length > 0,
+      formjson: [
+        {
+          type: :renderpartial,
+          name: :location_attributes,
+          partial: 'myplaceonline/select_or_create',
+          heading: t("myplaceonline.identities.location"),
+          objform: "locations/form",
+          existingobjurl: "location_path",
+          searchurl: "/locations.json?perpage=0",
+          edit: false,
+          autofocus: true
+        }
+      ]
+    } do
+  %>
+    <%=
+      render partial: 'myplaceonline/select_or_create', locals: {
+        f: @child_fields,
+        name: :location_attributes,
+        existingobj: @childproperty.location,
+        heading: t("myplaceonline.identities.location"),
+        objform: "locations/form",
+        existingobjurl: "location_path",
+        searchurl: "/locations.json?perpage=0",
+        edit: edit,
+        autofocus: false
+      }
+    %>
+  <% end %>
+
 <% end %>

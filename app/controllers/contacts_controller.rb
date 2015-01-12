@@ -23,6 +23,13 @@ class ContactsController < MyplaceonlineController
         {
           identity_phones_attributes: [:id, :number, :_destroy],
           identity_emails_attributes: [:id, :email, :_destroy],
+          identity_locations_attributes: [
+            :id,
+            :_destroy,
+            {
+              location_attributes: LocationsController.param_names + [:id]
+            }
+          ]
         }
       ]
     ]

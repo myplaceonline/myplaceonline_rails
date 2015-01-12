@@ -29,4 +29,29 @@ class ApiController < ApplicationController
   def subregions
     render partial: 'myplaceonline/subregionselect'
   end
+  
+  def renderpartial
+    if !params[:partial].blank?
+      if !params[:namePrefix].blank?
+        updatedNamePrefix = params[:namePrefix][0..params[:namePrefix].rindex('[')-1]
+        name = params[:namePrefix][params[:namePrefix].rindex('[')..-1].gsub("\[", "").gsub("\]", "")
+        params[:namePrefix] = updatedNamePrefix
+        params[:name] = name
+        @params = params
+        render(partial: 'myplaceonline/render_partial')
+      else
+        json_error("Name prefix not specified")
+      end
+    else
+      json_error("Partial not specified")
+    end
+  end
+  
+  protected
+    def json_error(error)
+      render json: {
+        success: false,
+        error: error
+      }
+    end
 end

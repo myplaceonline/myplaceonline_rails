@@ -108,6 +108,7 @@ function form_add_item(link, namePrefix, deletePlaceholder, items) {
   var toFocus = null;
   var i;
   var idPrefix = getIdPrefixFromNamePrefix(namePrefix);
+  var futures = [];
   for (i = 0; i < items.length; i++) {
     var item = items[i];
     var id = idPrefix + "_" + index + "_" + item.name;
@@ -127,6 +128,11 @@ function form_add_item(link, namePrefix, deletePlaceholder, items) {
       html += '<div data-role="collapsible"><h3>' + item.heading + '</h3><p><input type="number" class="generate_password_length" value="" placeholder="' + item.lengthplaceholder + '" /></p><p><a href="#" class="ui-btn" onclick="getRemoteString(' + item.destination + ', $(this).parents(\'div\').first().find(\'.generate_password_length\').val()); return false;">' + item.button + '</a></p></div>';
     } else if (item.type == "textarea") {
       html += "<p><textarea id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='' class='" + cssclasses + "'></textarea></p>";
+    } else if (item.type == "renderpartial") {
+      item.namePrefix = name;
+      item.id = "remote_placeholder_" + id;
+      html += "<p id='" + item.id + "'>Loading...</p>";
+      futures.push(item);
     } else {
       html += "<p><input type='" + item.type + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='' class='" + cssclasses + "' /></p>";
     }
@@ -134,6 +140,34 @@ function form_add_item(link, namePrefix, deletePlaceholder, items) {
   html += "<p><a href='#' onclick='return form_remove_item(this);' class='ui-btn'>" + deletePlaceholder + "</a></p>";
   html += "</div>";
   form_add_item_set_html($(link), html, toFocus);
+  if (futures.length > 0) {
+    showLoading();
+  }
+  for (i = 0; i < futures.length; i++) {
+    var item = futures[i];
+    var url = "/api/renderpartial.json";
+    $.ajax({
+      url: url,
+      dataType: "json",
+      contentType: "application/json",
+      type: "POST",
+      data: JSON.stringify(item),
+      context: item
+    }).done(function(data, textStatus, jqXHR) {
+      if (data.success) {
+        $("#" + this.id).html(data.html);
+      } else {
+        $("#" + this.id).html("<b>Error:</b> " + data.error);
+      }
+      ensureStyledPage();
+      // Fire off any onPageLoad events
+      $.mobile.pageContainer.trigger("pagecontainershow");
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+      createErrorNotification("Could not execute " + url + ": " + textStatus);
+    }).complete(function(jqXHR, textStatus) {
+      hideLoading();
+    });
+  }
   return false;
 }
 

@@ -1,3 +1,6 @@
+<%
+existingobj ||= objform[0..(objform.index('/')-1)].singularize.camelize.constantize.new
+%>
 <div data-role="collapsible" data-collapsed="false">
   <h4><%= heading %></h4>
   <div data-role="collapsible-set">
@@ -29,7 +32,7 @@
               });
             });
             <% if autofocus %>
-            maybeFocus($(".<%= random_name %>_searchable_container input"));
+            maybeFocus($("#<%= random_name %>_searchable_container input"));
             <% end %>
           });
         </script>
@@ -39,7 +42,7 @@
       <div data-role="collapsible">
         <%= f.fields_for name, existingobj do |sub_fields| %>
           <h3><%= (edit ? t("myplaceonline.general.edit") : t("myplaceonline.general.new")) + " " + heading %></h3>
-          <%= render partial: objform, locals: { f: sub_fields, obj: existingobj, edit: edit, autofocus: autofocus } %>
+          <%= render partial: objform + ".html", locals: { f: sub_fields, obj: existingobj, edit: edit, autofocus: autofocus } %>
         <% end %>
       </div>
     <% end %>

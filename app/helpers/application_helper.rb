@@ -245,7 +245,7 @@ module ApplicationHelper
     if is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
-    render(partial: 'subregionselect', locals: { f: form, regionstr: regionvalue, subregion: subregionvalue })
+    render(partial: 'myplaceonline/subregionselect', locals: { f: form, regionstr: regionvalue, subregion: subregionvalue })
   end
 
   def myp_subregion_select_field(form, name, placeholder, region, subregionvalue, autofocus = false, input_classes = nil)

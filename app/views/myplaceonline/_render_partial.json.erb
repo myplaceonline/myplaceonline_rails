@@ -1,0 +1,17 @@
+<%
+  html = fields_for @params[:namePrefix] do |f|
+    render(
+      partial: @params[:partial],
+      formats: :html,
+      locals: params.merge({
+        f: f
+      })
+    )
+  end
+%>
+<%=
+{
+  success: true,
+  html: html
+}.to_json.html_safe
+%>
