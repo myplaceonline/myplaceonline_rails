@@ -19,15 +19,13 @@ class Identity < ActiveRecord::Base
   has_many :credit_scores, :dependent => :destroy
   
   has_many :identity_phones, :foreign_key => 'ref_id', :dependent => :destroy
-  accepts_nested_attributes_for :identity_phones, allow_destroy: true,
-      reject_if: proc { |attributes| attributes['number'].blank? }
+  accepts_nested_attributes_for :identity_phones, allow_destroy: true, reject_if: :all_blank
   
   has_many :identity_emails, :foreign_key => 'ref_id', :dependent => :destroy
-  accepts_nested_attributes_for :identity_emails, allow_destroy: true,
-      reject_if: proc { |attributes| attributes['email'].blank? }
+  accepts_nested_attributes_for :identity_emails, allow_destroy: true, reject_if: :all_blank
   
   has_many :identity_locations, :foreign_key => 'ref_id', :dependent => :destroy
-  accepts_nested_attributes_for :identity_locations, allow_destroy: true
+  accepts_nested_attributes_for :identity_locations, allow_destroy: true, reject_if: :all_blank
   
   def as_json(options={})
     super.as_json(options).merge({

@@ -2,7 +2,7 @@ class IdentityLocation < ActiveRecord::Base
   belongs_to :ref, class: Identity
 
   belongs_to :location
-  accepts_nested_attributes_for :location
+  accepts_nested_attributes_for :location, reject_if: :all_blank
   
   # http://stackoverflow.com/a/12064875/4135310
   def location_attributes=(attributes)

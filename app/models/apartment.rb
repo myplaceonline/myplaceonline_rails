@@ -3,7 +3,7 @@ class Apartment < ActiveRecord::Base
 
   belongs_to :location
   validates_presence_of :location
-  accepts_nested_attributes_for :location
+  accepts_nested_attributes_for :location, reject_if: :all_blank
 
   # http://stackoverflow.com/a/12064875/4135310
   def location_attributes=(attributes)
@@ -25,8 +25,7 @@ class Apartment < ActiveRecord::Base
   end
 
   has_many :apartment_leases, :dependent => :destroy
-  accepts_nested_attributes_for :apartment_leases, allow_destroy: true,
-      reject_if: proc { |attributes| attributes['start_date'].blank? }
+  accepts_nested_attributes_for :apartment_leases, allow_destroy: true, reject_if: :all_blank
   
   validates_each :location, :landlord do |record, attr, value|
     Myp.authorize_value(record, attr, value)

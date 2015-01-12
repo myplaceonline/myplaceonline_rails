@@ -3,8 +3,7 @@ class Location < ActiveRecord::Base
   validate :at_least_one
   
   has_many :location_phones, :dependent => :destroy
-  accepts_nested_attributes_for :location_phones, allow_destroy: true,
-      reject_if: proc { |attributes| attributes['number'].blank? }
+  accepts_nested_attributes_for :location_phones, allow_destroy: true, reject_if: :all_blank
   
   def at_least_one
     if [name, address1].reject(&:blank?).size == 0

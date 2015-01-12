@@ -1,13 +1,12 @@
 class Contact < ActiveRecord::Base
   belongs_to :ref, class_name: Identity, :dependent => :destroy
   belongs_to :identity
-  accepts_nested_attributes_for :ref
+  accepts_nested_attributes_for :ref, reject_if: :all_blank
   
   validate :custom_validation
   
   has_many :conversations, :dependent => :destroy
-  accepts_nested_attributes_for :conversations, allow_destroy: true,
-      reject_if: proc { |attributes| attributes['conversation'].blank? }
+  accepts_nested_attributes_for :conversations, allow_destroy: true, reject_if: :all_blank
   
   def custom_validation
     if !contact_identity.nil? && contact_identity.name.blank?

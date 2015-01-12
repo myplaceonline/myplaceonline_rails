@@ -8,8 +8,7 @@ class Password < ActiveRecord::Base
   belongs_to_encrypted :password
   
   has_many :password_secrets, :dependent => :destroy
-  accepts_nested_attributes_for :password_secrets, allow_destroy: true,
-      reject_if: proc { |attributes| attributes['question'].blank? }
+  accepts_nested_attributes_for :password_secrets, allow_destroy: true, reject_if: :all_blank
   
   validates :name, presence: true
   
