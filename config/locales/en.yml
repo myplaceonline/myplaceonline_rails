@@ -310,6 +310,7 @@ en:
       moveout_fee: "Move-out Fee"
       deposit: "Deposit"
       terminate_by: "Terminate By"
+      notes: "Notes"
     jokes:
       name: "Joke Name"
       joke: "Joke"

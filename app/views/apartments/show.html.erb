@@ -2,6 +2,7 @@
 
   <%= attribute_table_row_reference(t("myplaceonline.apartments.location"), "location_path", @obj.location) %>
   <%= attribute_table_row_reference(t("myplaceonline.apartments.landlord"), "contact_path", @obj.landlord) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.apartments.notes"), @obj.notes) %>
   <% @obj.apartment_leases.each do |lease| %>
   
     <%= attribute_table_row_markdown(

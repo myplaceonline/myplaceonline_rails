@@ -24,6 +24,7 @@
     autofocus: false
   }
 %>
+<%= myp_text_area_markdown f, :notes, "myplaceonline.apartments.notes", obj.notes %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,

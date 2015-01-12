@@ -17,7 +17,7 @@ class ApartmentsController < MyplaceonlineController
       params.require(:apartment).permit(
         select_or_create_permit(:apartment, :location_attributes, LocationsController.param_names),
         select_or_create_permit(:apartment, :landlord_attributes, ContactsController.param_names),
-        apartment_leases_attributes: [:id, :start_date, :end_date, :monthly_rent, :moveout_fee, :deposit, :terminate_by, :_destroy]
+        apartment_leases_attributes: [:id, :start_date, :end_date, :monthly_rent, :moveout_fee, :deposit, :terminate_by, :notes, :_destroy]
       )
     end
     
