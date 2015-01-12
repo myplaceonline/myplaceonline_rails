@@ -37,4 +37,8 @@ class Apartment < ActiveRecord::Base
       :landlord => landlord.as_json
     })
   end
+  
+  def display
+    location.display
+  end
 end

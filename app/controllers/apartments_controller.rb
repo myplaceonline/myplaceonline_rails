@@ -5,7 +5,7 @@ class ApartmentsController < MyplaceonlineController
   end
 
   def display_obj(obj)
-    obj.location.name
+    obj.display
   end
 
   protected
