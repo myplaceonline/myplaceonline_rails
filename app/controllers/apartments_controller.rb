@@ -13,28 +13,19 @@ class ApartmentsController < MyplaceonlineController
       ["apartments.updated_at DESC"]
     end
     
-    def new_build
-      @obj.location = Location.new
-      @obj.landlord = Contact.new
-      @obj.landlord.ref = Identity.new
-    end
-
     def obj_params
       params.require(:apartment).permit(
-        location_attributes: LocationsController.param_names.push(:id),
-        landlord_attributes: ContactsController.param_names.push(:id),
+        select_or_create_permit(:apartment, :location_attributes, LocationsController.param_names),
+        select_or_create_permit(:apartment, :landlord_attributes, ContactsController.param_names),
         apartment_leases_attributes: [:id, :start_date, :end_date, :monthly_rent, :moveout_fee, :deposit, :terminate_by, :_destroy]
       )
     end
     
     def create_presave
       @obj.location.identity = current_user.primary_identity
-      @obj.landlord.identity = current_user.primary_identity
-    end
-    
-    def presave
-      set_from_existing(:location_selection, Location, :location)
-      set_from_existing(:landlord_selection, Contact, :landlord)
+      if !@obj.landlord.nil?
+        @obj.landlord.identity = current_user.primary_identity
+      end
     end
     
     def update_presave

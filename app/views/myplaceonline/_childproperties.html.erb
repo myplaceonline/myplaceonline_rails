@@ -15,8 +15,8 @@
     <% end %>
     <script type="text/javascript">
     <% random_name = SecureRandom.hex(10) %>
-    var json<%= random_name %> = <%= raw(formjson.to_json) %>;
+    var x<%= random_name %> = <%= raw(formjson.to_json) %>;
     </script>
-    <p><a href="#" onclick="return form_add_item(this, '<%= f.object_name + "[" + childpropertiesname.to_s + "_attributes]" %>', '<%= f.object_name.gsub("\[", "_").gsub("\]", "") + "_" + childpropertiesname.to_s + "_attributes" %>', '<%= deletebutton %>', json<%= random_name %>);" class="ui-btn"><%= addbutton %></a></p>
+    <p><a href="#" onclick="return form_add_item(this, '<%= f.object_name + "[" + childpropertiesname.to_s + "_attributes]" %>', '<%= f.object_name.gsub("\[", "_").gsub("\]", "") + "_" + childpropertiesname.to_s + "_attributes" %>', '<%= deletebutton %>', x<%= random_name %>);" class="ui-btn"><%= addbutton %></a></p>
   </div>
 </div>

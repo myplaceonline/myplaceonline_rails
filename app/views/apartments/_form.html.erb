@@ -1,11 +1,10 @@
 <%=
-  render partial: 'myplaceonline/selectexisting', locals: {
+  render partial: 'myplaceonline/select_or_create', locals: {
     f: f,
     name: :location,
-    existingobj: obj.location,
+    existingobj: obj.location || Location.new,
     heading: t("myplaceonline.apartments.location"),
     objform: "locations/form",
-    fieldid: "location_selection",
     existingobjurl: "location_path",
     searchurl: "/locations.json?perpage=0",
     edit: edit,
@@ -13,13 +12,12 @@
   }
 %>
 <%=
-  render partial: 'myplaceonline/selectexisting', locals: {
+  render partial: 'myplaceonline/select_or_create', locals: {
     f: f,
     name: :landlord,
-    existingobj: obj.landlord,
+    existingobj: obj.landlord || Contact.new,
     heading: t("myplaceonline.apartments.landlord"),
     objform: "contacts/form",
-    fieldid: "landlord_selection",
     existingobjurl: "contact_path",
     searchurl: "/contacts.json?perpage=0",
     edit: edit,

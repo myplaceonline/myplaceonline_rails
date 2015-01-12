@@ -13,25 +13,17 @@ class BanksController < MyplaceonlineController
       ["banks.updated_at DESC"]
     end
     
-    def new_build
-      @obj.location = Location.new
-      @obj.password = Password.new
-    end
-
     def obj_params
       params.require(:bank).permit(
-        location_attributes: LocationsController.param_names.push(:id),
-        password_attributes: PasswordsController.param_names.push(:id)
+        select_or_create_permit(:bank, :location_attributes, LocationsController.param_names),
+        select_or_create_permit(:bank, :password_attributes, PasswordsController.param_names)
       )
     end
     
     def create_presave
       @obj.location.identity = current_user.primary_identity
-      @obj.password.identity = current_user.primary_identity
-    end
-    
-    def presave
-      set_from_existing(:location_selection, Location, :location)
-      set_from_existing(:password_selection, Password, :password)
+      if !@obj.password.nil?
+        @obj.password.identity = current_user.primary_identity
+      end
     end
 end

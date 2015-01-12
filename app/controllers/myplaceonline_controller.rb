@@ -198,19 +198,6 @@ class MyplaceonlineController < ApplicationController
       authorize! :manage, @obj
     end
 
-    def set_from_existing(name, model_type, destination)
-      if !params[name].blank?
-        id = params[name]
-        i = id.rindex('/')
-        if !i.nil?
-          id = id[i+1..-1].to_i
-          found_obj = model_type.find(id)
-          authorize! :manage, found_obj
-          @obj.send(destination.to_s + "=", found_obj)
-        end
-      end
-    end
-    
     def check_nested_attributes(target, method, belongs_to_name)
       target.send(method).each {
         |attr|
@@ -218,5 +205,13 @@ class MyplaceonlineController < ApplicationController
           raise "Unauthorized"
         end
       }
+    end
+
+    def select_or_create_permit(parent_name, name, all_array)
+      if params[parent_name][name][:id].blank?
+        { name => all_array }
+      else
+        { name => [:id] }
+      end
     end
 end

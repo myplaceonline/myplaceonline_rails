@@ -130,12 +130,16 @@ function form_add_item(link, namePrefix, idPrefix, deletePlaceholder, items) {
   }
   html += "<p><a href='#' onclick='return form_remove_item(this);' class='ui-btn'>" + deletePlaceholder + "</a></p>";
   html += "</div>";
-  $(html).insertBefore($(link));
+  form_add_item_set_html($(link), html, toFocus);
+  return false;
+}
+
+function form_add_item_set_html(insertBefore, html, toFocus) {
+  $(html).insertBefore(insertBefore);
   ensureStyledPage();
   if (toFocus) {
     maybeFocus("#" + toFocus);
   }
-  return false;
 }
 
 function form_remove_item(link) {
@@ -164,4 +168,16 @@ function form_remove_item(link) {
     criticalError("Error removing item");
   }
   return false;
+}
+
+function object_extract_id(obj) {
+  return href_extract_id($(obj).attr("href"));
+}
+
+function href_extract_id(href) {
+  var x = href.lastIndexOf("/"); 
+  if (x != -1) {
+    href = href.substring(x + 1);
+  }
+  return href;
 }

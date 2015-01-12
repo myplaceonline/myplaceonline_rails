@@ -8,7 +8,7 @@ class Location < ActiveRecord::Base
   
   def at_least_one
     if [name, address1].reject(&:blank?).size == 0
-      errors[:base] << ("Name or address required")
+      errors.add("", "Name or address required")
     end
   end
   

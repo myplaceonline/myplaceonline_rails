@@ -374,7 +374,7 @@ module Myp
   end
   
   def self.select_listitem(selector)
-    "$(this).addClass('ui-btn-active'); $('" + selector + "').val($(this).attr('href')); return false;"
+    "$(this).addClass('ui-btn-active'); $('" + selector + "').val(object_extract_id(this)); return false;"
   end
   
   def self.display_date(time, current_user)
@@ -403,6 +403,12 @@ module Myp
       "$" + obj.to_s
     else
       nil
+    end
+  end
+  
+  def self.authorize_value(record, attr, value)
+    if !value.nil?
+      Ability.new(User.current_user).authorize!(:manage, value)
     end
   end
 end

@@ -241,6 +241,10 @@ en:
       add_email: "Add E-mail"
       delete_email: "Delete E-mail"
       email: "E-mail"
+      locations: "Addresses"
+      add_location: "Add Address"
+      delete_location: "Delete Address"
+      location: "Address"
     import:
       password: "Password (if any)"
       nofile: "No file selected"

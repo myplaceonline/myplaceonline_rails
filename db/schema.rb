@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150111180406) do
+ActiveRecord::Schema.define(version: 20150111183633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -189,6 +189,16 @@ ActiveRecord::Schema.define(version: 20150111180406) do
 
   add_index "identity_files", ["encrypted_password_id"], name: "index_identity_files_on_encrypted_password_id", using: :btree
   add_index "identity_files", ["identity_id"], name: "index_identity_files_on_identity_id", using: :btree
+
+  create_table "identity_locations", force: true do |t|
+    t.integer  "location_id"
+    t.integer  "ref_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "identity_locations", ["location_id"], name: "index_identity_locations_on_location_id", using: :btree
+  add_index "identity_locations", ["ref_id"], name: "index_identity_locations_on_ref_id", using: :btree
 
   create_table "identity_phones", force: true do |t|
     t.string   "number"
