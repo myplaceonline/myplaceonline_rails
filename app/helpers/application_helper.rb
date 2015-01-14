@@ -22,10 +22,11 @@ module ApplicationHelper
         (value.length == 0 || value == "&nbsp;"))
   end
   
-  def attribute_table_row(name, value, clipboard_text = value, valueclass = "")
+  def attribute_table_row(name, value, clipboard_text = value, valueclass = nil)
     if is_blank(value)
       return nil
     end
+    valueclass ||= ""
     html = <<-HTML
     <tr>
       <td>#{name}</td>
@@ -50,11 +51,12 @@ module ApplicationHelper
     html.html_safe
   end
   
-  def attribute_table_row_url(name, url, may_be_nonurl = false)
+  def attribute_table_row_url(name, url, may_be_nonurl = false, url_text = nil, clipboard = nil, linkclasses = nil, external = false)
     if may_be_nonurl && !url.blank? && !url.start_with?("/") && !url.start_with?("http:")
+      # Probably not a URL, just display raw text
       attribute_table_row(name, url)
     else
-      attribute_table_row(name, url_or_blank(url), url)
+      attribute_table_row(name, url_or_blank(url, url_text, clipboard, linkclasses, external), url, nil)
     end
   end
   
@@ -79,7 +81,7 @@ module ApplicationHelper
     attribute_table_row(name, val)
   end
   
-  def url_or_blank(url, text = nil, clipboard = nil)
+  def url_or_blank(url, text = nil, clipboard = nil, linkclasses = nil, external = false)
     if !url.to_s.empty?
       if text.to_s.empty?
         text = url
@@ -87,13 +89,20 @@ module ApplicationHelper
       
       options = Hash.new
       options[:href] = url
-      if !url.start_with?("/") || url.start_with?("//")
-        options[:class] = "externallink"
+      options[:class] = ""
+      
+      # If it's probably external
+      if external || (!url.start_with?("/") || url.start_with?("//"))
+        options[:class] += " externallink"
         options[:target] = "_blank"
+        options["data-ajax"] = "false"
       end
       if !clipboard.nil?
         options[:class] += " clipboardable"
         options["data-clipboard-text"] = html_escape("" + clipboard.to_s)
+      end
+      if !linkclasses.blank?
+        options[:class] += " " + linkclasses
       end
       
       content_tag(
