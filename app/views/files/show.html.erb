@@ -4,5 +4,6 @@
   <%= attribute_table_row(t("myplaceonline.files.size_bytes"), @obj.file_file_size) %>
   <%= attribute_table_row_url(t("myplaceonline.files.download"), file_download_path(@obj), false, t("myplaceonline.files.download"), nil, nil, true) %>
   <%= attribute_table_row_url(t("myplaceonline.files.view"), file_view_path(@obj), false, t("myplaceonline.files.view"), nil, nil, true) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.files.notes"), @obj.notes) %>
 
 <% end %>

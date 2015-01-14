@@ -34,7 +34,7 @@ class FilesController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:identity_file).permit(:file)
+      params.require(:identity_file).permit(:file, :notes)
     end
 
     def respond_download(type)
