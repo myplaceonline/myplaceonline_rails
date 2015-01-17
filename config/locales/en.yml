@@ -44,6 +44,7 @@ en:
       promises: "Promises"
       subscriptions: "Subscriptions"
       credit_scores: "Credit Scores"
+      websites: "Websites"
     general:
       email: "E-mail"
       password: "Password"
@@ -332,3 +333,6 @@ en:
       score_date: "Score Date"
       score: "Score"
       source: "Source"
+    websites:
+      title: "Title"
+      url: "Link"

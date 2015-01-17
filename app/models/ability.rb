@@ -22,6 +22,7 @@ class Ability
     can :manage, Promise, :identity => identity
     can :manage, Subscription, :identity => identity
     can :manage, CreditScore, :identity => identity
+    can :manage, Website, :identity => identity
     
     # Define abilities for the passed in user here. For example:
     #

@@ -1,0 +1,6 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.websites.title"), @obj.title) %>
+  <%= attribute_table_row_url(t("myplaceonline.websites.url"), @obj.url) %>
+  
+<% end %>

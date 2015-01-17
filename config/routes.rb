@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :websites
+  post 'websites/new'
+
   resources :credit_scores
   post 'credit_scores/new'
 

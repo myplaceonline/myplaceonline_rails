@@ -17,6 +17,7 @@ class Identity < ActiveRecord::Base
   has_many :promises, :dependent => :destroy
   has_many :subscriptions, :dependent => :destroy
   has_many :credit_scores, :dependent => :destroy
+  has_many :websites, :dependent => :destroy
   
   has_many :identity_phones, :foreign_key => 'ref_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_phones, allow_destroy: true, reject_if: :all_blank
@@ -45,6 +46,7 @@ class Identity < ActiveRecord::Base
       :promises => promises.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :subscriptions => subscriptions.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :credit_scores => credit_scores.to_a.map{|x| x.as_json},
+      :websites => websites.to_a.sort{ |a,b| a.title.downcase <=> b.title.downcase }.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end
