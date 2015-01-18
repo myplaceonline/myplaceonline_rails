@@ -297,6 +297,7 @@ en:
       delete_phone: "Delete Phone"
       phone: "Phone Number"
       map: "Map"
+      full_address: "Full Address"
     activities:
       name: "Name"
     apartments:
