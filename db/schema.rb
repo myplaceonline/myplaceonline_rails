@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150129084108) do
+ActiveRecord::Schema.define(version: 20150129093849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,6 +127,8 @@ ActiveRecord::Schema.define(version: 20150129084108) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "pin"
+    t.text     "notes"
   end
 
   add_index "credit_cards", ["identity_id"], name: "index_credit_cards_on_identity_id", using: :btree

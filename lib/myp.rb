@@ -387,6 +387,10 @@ module Myp
     self.display_time(time, current_user, :short_date)
   end
   
+  def self.display_date_month_year(time, current_user)
+    self.display_time(time, current_user, :month_year)
+  end
+  
   def self.display_time(time, current_user, format = :rfc822)
     if !time.nil?
       if !current_user.nil? && !current_user.timezone.blank?

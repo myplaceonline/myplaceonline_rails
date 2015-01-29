@@ -18,6 +18,8 @@ class CreditCardsController < MyplaceonlineController
         :number,
         :expires,
         :security_code,
+        :pin,
+        :notes,
         select_or_create_permit(:credit_card, :password_attributes, PasswordsController.param_names)
       )
     end

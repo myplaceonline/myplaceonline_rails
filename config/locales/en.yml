@@ -344,3 +344,5 @@ en:
       expires: "Expires"
       security_code: "Security Code"
       password: "Password"
+      pin: "ATM PIN"
+      notes: "Notes"
