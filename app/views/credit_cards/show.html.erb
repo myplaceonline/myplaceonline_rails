@@ -4,5 +4,6 @@
   <%= attribute_table_row(t("myplaceonline.credit_cards.number"), @obj.number) %>
   <%= attribute_table_row(t("myplaceonline.credit_cards.expires"), Myp.display_date_short(@obj.expires, current_user)) %>
   <%= attribute_table_row(t("myplaceonline.credit_cards.security_code"), @obj.security_code) %>
+  <%= attribute_table_row_reference(t("myplaceonline.credit_cards.password"), "password_path", @obj.password) %>
   
 <% end %>

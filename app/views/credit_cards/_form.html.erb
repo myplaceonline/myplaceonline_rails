@@ -2,3 +2,16 @@
 <%= myp_text_field f, :number, "myplaceonline.credit_cards.number", obj.number %>
 <%= myp_date_field f, :expires, "myplaceonline.credit_cards.expires", obj.expires %>
 <%= myp_text_field f, :security_code, "myplaceonline.credit_cards.security_code", obj.security_code %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :password,
+    existingobj: obj.password,
+    heading: t("myplaceonline.credit_cards.password"),
+    objform: "passwords/form",
+    existingobjurl: "password_path",
+    searchurl: "/passwords.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
