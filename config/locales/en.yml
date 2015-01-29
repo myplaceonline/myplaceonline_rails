@@ -45,6 +45,7 @@ en:
       subscriptions: "Subscriptions"
       credit_scores: "Credit Scores"
       websites: "Websites"
+      credit_cards: "Credit Cards"
     general:
       email: "E-mail"
       password: "Password"
@@ -337,3 +338,8 @@ en:
     websites:
       title: "Title"
       url: "Link"
+    credit_cards:
+      name: "Name"
+      number: "Number"
+      expires: "Expires"
+      security_code: "Security Code"

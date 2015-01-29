@@ -1,0 +1,8 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.credit_cards.name"), @obj.name) %>
+  <%= attribute_table_row(t("myplaceonline.credit_cards.number"), @obj.number) %>
+  <%= attribute_table_row(t("myplaceonline.credit_cards.expires"), Myp.display_date_short(@obj.expires, current_user)) %>
+  <%= attribute_table_row(t("myplaceonline.credit_cards.security_code"), @obj.security_code) %>
+  
+<% end %>

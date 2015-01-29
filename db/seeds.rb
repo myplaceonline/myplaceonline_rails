@@ -21,3 +21,4 @@ promises = Category.create(name: "promises", link: "promises", position: 0, pare
 subscriptions = Category.create(name: "subscriptions", link: "subscriptions", position: 0, parent: order)
 credit_scores = Category.create(name: "credit_scores", link: "credit_scores", position: 0, parent: order)
 websites = Category.create(name: "websites", link: "websites", position: 0, parent: order)
+credit_cards = Category.create(name: "credit_cards", link: "credit_cards", position: 0, parent: order)
