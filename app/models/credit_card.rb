@@ -16,4 +16,16 @@ class CreditCard < ActiveRecord::Base
     end
     super
   end
+  
+  belongs_to :address, class_name: Location
+  accepts_nested_attributes_for :address, reject_if: :all_blank
+  
+  # http://stackoverflow.com/a/12064875/4135310
+  def address_attributes=(attributes)
+    if !attributes['id'].blank?
+      attributes.keep_if {|innerkey, innervalue| innerkey == "id" }
+      self.address = Location.find(attributes['id'])
+    end
+    super
+  end
 end

@@ -17,3 +17,16 @@
     autofocus: false
   }
 %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :address,
+    existingobj: obj.address,
+    heading: t("myplaceonline.credit_cards.address"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
