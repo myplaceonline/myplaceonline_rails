@@ -2,7 +2,9 @@ require 'kramdown'
 
 class Password < ActiveRecord::Base
   include EncryptedConcern
+
   belongs_to :identity
+
   belongs_to :password_encrypted,
       class_name: EncryptedValue, dependent: :destroy, :autosave => true
   belongs_to_encrypted :password
@@ -12,6 +14,9 @@ class Password < ActiveRecord::Base
   
   validates :name, presence: true
   
+  attr_accessor :encrypt
+  attr_accessor :is_defunct
+
   def get_url(prefertls = true)
     result = url
     if !result.to_s.empty?

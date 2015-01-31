@@ -8,5 +8,6 @@
   <%= attribute_table_row_reference(t("myplaceonline.credit_cards.address"), "location_path", @obj.address) %>
   <%= attribute_table_row(t("myplaceonline.credit_cards.pin"), @obj.pin) %>
   <%= attribute_table_row_markdown(t("myplaceonline.credit_cards.notes"), @obj.notes) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.general.is_encrypted"), @obj.number_encrypted?) %>
   
 <% end %>

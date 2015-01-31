@@ -6,6 +6,10 @@ class IdentityFile < ActiveRecord::Base
   do_not_validate_attachment_file_type :file
 
   def get_password(session)
-    Myp.decrypt_from_session(session, encrypted_password)
+    if !encrypted_password.nil?
+      Myp.decrypt_from_session(session, encrypted_password)
+    else
+      nil
+    end
   end
 end

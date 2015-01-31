@@ -74,7 +74,7 @@ class PasswordsController < MyplaceonlineController
     ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
     if !ifile.nil?
       authorize! :manage, ifile
-      s = Roo::OpenOffice.new(ifile.file.to_file.path, :password => ifile.getPassword(session), :file_warning => :ignore)
+      s = Roo::OpenOffice.new(ifile.file.to_file.path, :password => ifile.get_password(session), :file_warning => :ignore)
       @sheet = params[:sheet]
       s.default_sheet = s.sheets[s.sheets.index(@sheet)]
       @columns = Array.new
@@ -175,7 +175,7 @@ class PasswordsController < MyplaceonlineController
   end
 
   def self.param_names
-    [:name, :user, :password, :email, :url, :account_number, :notes]
+    [:name, :user, :password, :email, :url, :account_number, :notes, :encrypt, :is_defunct]
   end
 
   protected
@@ -188,24 +188,24 @@ class PasswordsController < MyplaceonlineController
     end
 
     def create_presave
-      @obj.password_finalize(@encrypt)
+      @obj.password_finalize
       update_defunct
     end
     
     def update_presave
-      @obj.password_finalize(@encrypt)
+      @obj.password_finalize
       @obj.password_secrets.each {
         |secret|
         if !secret.password.nil?
           authorize! :manage, secret.password
         end
-        secret.answer_finalize(@encrypt)
+        secret.answer_finalize
       }
       update_defunct
     end
     
     def update_defunct
-      if params[:defunct] == "true"
+      if @obj.is_defunct == "1"
         @obj.defunct = Time.now
       else
         @obj.defunct = nil
@@ -213,7 +213,8 @@ class PasswordsController < MyplaceonlineController
     end
 
     def before_edit
-      @encrypt = @obj.password_encrypted?
+      @obj.encrypt = @obj.password_encrypted?
+      @obj.is_defunct = !@obj.defunct.nil?
     end
   
     def obj_params

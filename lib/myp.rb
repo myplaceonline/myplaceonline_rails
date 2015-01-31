@@ -221,6 +221,9 @@ module Myp
   end
   
   def self.encrypt_value(user, message, key, value)
+    if !message.nil? && !message.kind_of?(String)
+      message = Myp.eye_catcher_marshalled + Marshal::dump(message)
+    end
     # TODO OpenSSL::Cipher.update does not allow a nil or empty value
     if message.nil? || message == "" then
       message = " "
@@ -237,6 +240,7 @@ module Myp
     # https://github.com/rails/rails/blob/master/activesupport/lib/active_support/key_generator.rb
     generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(value.salt, @@DEFAULT_AES_KEY_SIZE)
     crypt = ActiveSupport::MessageEncryptor.new(generated_key, :serializer => SimpleSerializer.new)
+    Rails.logger.debug("Performing encryption")
     value.val = crypt.encrypt_and_sign(message)
     value
   end
@@ -258,7 +262,13 @@ module Myp
   def self.decrypt(encrypted_value, key)
     generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(encrypted_value.salt, @@DEFAULT_AES_KEY_SIZE)
     crypt = ActiveSupport::MessageEncryptor.new(generated_key, :serializer => SimpleSerializer.new)
-    crypt.decrypt_and_verify(encrypted_value.val)
+    Rails.logger.debug("Performing decryption")
+    result = crypt.decrypt_and_verify(encrypted_value.val)
+    if result.start_with?(Myp.eye_catcher_marshalled)
+      #Rails.logger.debug{"un-marshalling: #{result}"}
+      result = Marshal::load(result[Myp.eye_catcher_marshalled.length..-1])
+    end
+    result
   end
   
   def self.password_changed(user, old_password, new_password)
@@ -416,5 +426,9 @@ module Myp
     if !value.nil?
       Ability.new(User.current_user).authorize!(:manage, value)
     end
+  end
+
+  def self.eye_catcher_marshalled
+    "M4RSH4LLED_"
   end
 end

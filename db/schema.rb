@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150130041737) do
+ActiveRecord::Schema.define(version: 20150130054526) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,11 +130,19 @@ ActiveRecord::Schema.define(version: 20150130041737) do
     t.string   "pin"
     t.text     "notes"
     t.integer  "address_id"
+    t.integer  "number_encrypted_id"
+    t.integer  "security_code_encrypted_id"
+    t.integer  "pin_encrypted_id"
+    t.integer  "expires_encrypted_id"
   end
 
   add_index "credit_cards", ["address_id"], name: "index_credit_cards_on_address_id", using: :btree
+  add_index "credit_cards", ["expires_encrypted_id"], name: "index_credit_cards_on_expires_encrypted_id", using: :btree
   add_index "credit_cards", ["identity_id"], name: "index_credit_cards_on_identity_id", using: :btree
+  add_index "credit_cards", ["number_encrypted_id"], name: "index_credit_cards_on_number_encrypted_id", using: :btree
   add_index "credit_cards", ["password_id"], name: "index_credit_cards_on_password_id", using: :btree
+  add_index "credit_cards", ["pin_encrypted_id"], name: "index_credit_cards_on_pin_encrypted_id", using: :btree
+  add_index "credit_cards", ["security_code_encrypted_id"], name: "index_credit_cards_on_security_code_encrypted_id", using: :btree
 
   create_table "credit_scores", force: true do |t|
     t.date     "score_date"

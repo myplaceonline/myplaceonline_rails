@@ -13,7 +13,7 @@ class MoviesController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:movie).permit(:name, :url)
+      params.require(:movie).permit(:name, :url, :is_watched)
     end
 
     def create_presave
@@ -25,10 +25,14 @@ class MoviesController < MyplaceonlineController
     end
     
     def update_watched
-      if params[:watched] == "true"
+      if @obj.is_watched == "1"
         @obj.watched = Time.now
       else
         @obj.watched = nil
       end
+    end
+
+    def before_edit
+      @obj.is_watched = !@obj.watched.nil?
     end
 end

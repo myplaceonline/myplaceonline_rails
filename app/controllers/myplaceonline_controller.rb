@@ -44,7 +44,7 @@ class MyplaceonlineController < ApplicationController
     if request.post?
       return create
     else
-      @encrypt = current_user.encrypt_by_default
+      @obj.encrypt = current_user.encrypt_by_default
     end
     respond_with(@obj)
   end
@@ -61,7 +61,6 @@ class MyplaceonlineController < ApplicationController
     ActiveRecord::Base.transaction do
       @obj = model.new(obj_params)
       @obj.identity_id = current_user.primary_identity.id
-      @encrypt = params[:encrypt] == "true"
       # presave *MUST* occur before create_presave or update_presave
       presave
       create_presave
@@ -80,7 +79,6 @@ class MyplaceonlineController < ApplicationController
     ActiveRecord::Base.transaction do
 
       @obj.assign_attributes(obj_params)
-      @encrypt = params[:encrypt] == "true"
       # presave *MUST* occur before create_presave or update_presave
       presave
       update_presave

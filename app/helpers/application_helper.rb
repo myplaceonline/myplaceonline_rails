@@ -219,6 +219,17 @@ module ApplicationHelper
     myp_text_area(form, name, I18n.t(placeholder) + " (" + I18n.t("myplaceonline.general.supports_markdown") + ")", value, autofocus, input_classes)
   end
 
+  def myp_check_box(form, name, placeholder, autofocus = false, input_classes = nil)
+    if is_probably_i18n(placeholder)
+      placeholder = I18n.t(placeholder)
+    end
+    content_tag(
+      :p,
+      form.check_box(name, class: myp_field_classes(autofocus, input_classes)) +
+      form.label(name, placeholder)
+    ).html_safe
+  end
+  
   def myp_check_box_tag(name, placeholder, checked, autofocus = false, input_classes = nil)
     if is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)

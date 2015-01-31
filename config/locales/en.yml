@@ -69,6 +69,7 @@ en:
       save: "Save"
       clipboard: "Copy to Clipboard"
       encrypt: "Encrypt"
+      is_encrypted: "Is Encrypted?"
       metadescription: "myplaceonline is a virtual life assistant."
       metakeywords: "myplaceonline, virtual life assistant, life assistant, organizer, passwords"
       submit: "Submit"
@@ -87,6 +88,7 @@ en:
       new: "New"
       existing: "Existing"
       supports_markdown: "supports Markdown syntax"
+      non_blank: "can't be blank"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
@@ -346,4 +348,4 @@ en:
       password: "Password"
       pin: "ATM PIN"
       notes: "Notes"
-      address: "Address"
+      address: "Billing Address"

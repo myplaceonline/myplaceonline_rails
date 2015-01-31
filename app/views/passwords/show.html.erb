@@ -4,7 +4,6 @@
   <%= attribute_table_row(t("myplaceonline.passwords.password"), @obj.password, @obj.password, "bghighlight") %>
   <%= attribute_table_row(t("myplaceonline.passwords.user"), @obj.user) %>
   <%= attribute_table_row(t("myplaceonline.passwords.email"), @obj.email) %>
-  <!--<%= attribute_table_row(t("myplaceonline.passwords.isencrypted"), @obj.password_encrypted?) %>-->
   <%= attribute_table_row(t("myplaceonline.passwords.url"), url_or_blank(@obj.get_url, nil, @obj.password), @obj.get_url) %>
   <%= attribute_table_row(t("myplaceonline.passwords.account_number"), @obj.account_number) %>
   <%= attribute_table_row_markdown(t("myplaceonline.passwords.notes"), @obj.notes) %>
@@ -16,4 +15,6 @@
 
   <% end %>
   
+  <%= attribute_table_row_boolean(t("myplaceonline.passwords.isencrypted"), @obj.password_encrypted?) %>
+
 <% end %>
