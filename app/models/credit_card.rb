@@ -60,4 +60,11 @@ class CreditCard < ActiveRecord::Base
     end
     super
   end
+
+  def as_json(options={})
+    if number_encrypted?
+      options[:except] ||= %w(number expires security_code pin)
+    end
+    super.as_json(options)
+  end
 end
