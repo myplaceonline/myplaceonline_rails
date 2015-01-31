@@ -46,6 +46,7 @@ en:
       credit_scores: "Credit Scores"
       websites: "Websites"
       credit_cards: "Credit Cards"
+      bank_accounts: "Bank Accounts"
     general:
       email: "E-mail"
       password: "Password"
@@ -349,3 +350,11 @@ en:
       pin: "ATM PIN"
       notes: "Notes"
       address: "Billing Address"
+    bank_accounts:
+      name: "Name"
+      account_number: "Account Number"
+      routing_number: "Routing Number"
+      pin: "ATM PIN"
+      home_address: "Address"
+      password: "Password"
+      bank: "Bank"

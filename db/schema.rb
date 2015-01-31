@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150130054526) do
+ActiveRecord::Schema.define(version: 20150131201614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,30 @@ ActiveRecord::Schema.define(version: 20150130054526) do
   add_index "apartments", ["identity_id"], name: "index_apartments_on_identity_id", using: :btree
   add_index "apartments", ["landlord_id"], name: "index_apartments_on_landlord_id", using: :btree
   add_index "apartments", ["location_id"], name: "index_apartments_on_location_id", using: :btree
+
+  create_table "bank_accounts", force: true do |t|
+    t.string   "name"
+    t.string   "account_number"
+    t.integer  "account_number_encrypted_id"
+    t.string   "routing_number"
+    t.integer  "routing_number_encrypted_id"
+    t.string   "pin"
+    t.integer  "pin_encrypted_id"
+    t.integer  "password_id"
+    t.integer  "bank_id"
+    t.integer  "home_address_id"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "bank_accounts", ["account_number_encrypted_id"], name: "index_bank_accounts_on_account_number_encrypted_id", using: :btree
+  add_index "bank_accounts", ["bank_id"], name: "index_bank_accounts_on_bank_id", using: :btree
+  add_index "bank_accounts", ["home_address_id"], name: "index_bank_accounts_on_home_address_id", using: :btree
+  add_index "bank_accounts", ["identity_id"], name: "index_bank_accounts_on_identity_id", using: :btree
+  add_index "bank_accounts", ["password_id"], name: "index_bank_accounts_on_password_id", using: :btree
+  add_index "bank_accounts", ["pin_encrypted_id"], name: "index_bank_accounts_on_pin_encrypted_id", using: :btree
+  add_index "bank_accounts", ["routing_number_encrypted_id"], name: "index_bank_accounts_on_routing_number_encrypted_id", using: :btree
 
   create_table "banks", force: true do |t|
     t.integer  "identity_id"

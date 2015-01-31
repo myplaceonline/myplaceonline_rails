@@ -1,0 +1,12 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.bank_accounts.name"), @obj.name) %>
+  <%= attribute_table_row(t("myplaceonline.bank_accounts.account_number"), @obj.account_number) %>
+  <%= attribute_table_row(t("myplaceonline.bank_accounts.routing_number"), @obj.routing_number) %>
+  <%= attribute_table_row(t("myplaceonline.bank_accounts.pin"), @obj.pin) %>
+  <%= attribute_table_row_reference(t("myplaceonline.bank_accounts.password"), "password_path", @obj.password) %>
+  <%= attribute_table_row_reference(t("myplaceonline.bank_accounts.home_address"), "location_path", @obj.home_address) %>
+  <%= attribute_table_row_reference(t("myplaceonline.bank_accounts.bank"), "bank_path", @obj.bank) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.general.is_encrypted"), @obj.account_number_encrypted?) %>
+  
+<% end %>

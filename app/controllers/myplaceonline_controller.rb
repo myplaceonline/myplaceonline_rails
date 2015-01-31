@@ -44,7 +44,9 @@ class MyplaceonlineController < ApplicationController
     if request.post?
       return create
     else
-      @obj.encrypt = current_user.encrypt_by_default
+      if @obj.respond_to?("encrypt")
+        @obj.encrypt = current_user.encrypt_by_default
+      end
     end
     respond_with(@obj)
   end
@@ -206,7 +208,7 @@ class MyplaceonlineController < ApplicationController
     end
 
     def select_or_create_permit(parent_name, name, all_array)
-      if params[parent_name][name][:id].blank?
+      if params[parent_name] && params[parent_name][name] && params[parent_name][name][:id].blank?
         { name => all_array }
       else
         { name => [:id] }

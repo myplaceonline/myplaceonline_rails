@@ -1,0 +1,44 @@
+<%= myp_text_field f, :name, "myplaceonline.bank_accounts.name", obj.name, autofocus %>
+<%= myp_text_field f, :account_number, "myplaceonline.bank_accounts.account_number", obj.account_number %>
+<%= myp_text_field f, :routing_number, "myplaceonline.bank_accounts.routing_number", obj.routing_number %>
+<%= myp_text_field f, :pin, "myplaceonline.bank_accounts.pin", obj.pin %>
+<%= myp_check_box f, :encrypt, "myplaceonline.general.encrypt" %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :password,
+    existingobj: obj.password,
+    heading: t("myplaceonline.bank_accounts.password"),
+    objform: "passwords/form",
+    existingobjurl: "password_path",
+    searchurl: "/passwords.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :home_address,
+    existingobj: obj.home_address,
+    heading: t("myplaceonline.bank_accounts.home_address"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :bank,
+    existingobj: obj.bank,
+    heading: t("myplaceonline.bank_accounts.bank"),
+    objform: "banks/form",
+    existingobjurl: "bank_path",
+    searchurl: "/banks.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
