@@ -38,7 +38,7 @@ class CreditCard < ActiveRecord::Base
   belongs_to_encrypted :pin
 
   belongs_to :password
-  accepts_nested_attributes_for :password, reject_if: :all_blank
+  accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
   
   # http://stackoverflow.com/a/12064875/4135310
   def password_attributes=(attributes)
@@ -50,7 +50,7 @@ class CreditCard < ActiveRecord::Base
   end
   
   belongs_to :address, class_name: Location
-  accepts_nested_attributes_for :address, reject_if: :all_blank
+  accepts_nested_attributes_for :address, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
   
   # http://stackoverflow.com/a/12064875/4135310
   def address_attributes=(attributes)
