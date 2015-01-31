@@ -22,7 +22,7 @@ module EncryptedConcern extend ActiveSupport::Concern
         end
         
         define_method("#{name}_finalize") do |encrypt = false|
-          do_encrypt = encrypt || self[:encrypt] || self.encrypt == "1"
+          do_encrypt = encrypt || self[:encrypt] || (self.respond_to?("encrypt") && self.encrypt == "1")
           if do_encrypt
             new_encrypted_value = Myp.encrypt_from_session(
               User.current_user,
