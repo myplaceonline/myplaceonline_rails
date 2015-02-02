@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150131201614) do
+ActiveRecord::Schema.define(version: 20150202082005) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 20150131201614) do
     t.string   "pin"
     t.integer  "pin_encrypted_id"
     t.integer  "password_id"
-    t.integer  "bank_id"
+    t.integer  "company_id"
     t.integer  "home_address_id"
     t.integer  "identity_id"
     t.datetime "created_at"
@@ -79,24 +79,12 @@ ActiveRecord::Schema.define(version: 20150131201614) do
   end
 
   add_index "bank_accounts", ["account_number_encrypted_id"], name: "index_bank_accounts_on_account_number_encrypted_id", using: :btree
-  add_index "bank_accounts", ["bank_id"], name: "index_bank_accounts_on_bank_id", using: :btree
+  add_index "bank_accounts", ["company_id"], name: "index_bank_accounts_on_company_id", using: :btree
   add_index "bank_accounts", ["home_address_id"], name: "index_bank_accounts_on_home_address_id", using: :btree
   add_index "bank_accounts", ["identity_id"], name: "index_bank_accounts_on_identity_id", using: :btree
   add_index "bank_accounts", ["password_id"], name: "index_bank_accounts_on_password_id", using: :btree
   add_index "bank_accounts", ["pin_encrypted_id"], name: "index_bank_accounts_on_pin_encrypted_id", using: :btree
   add_index "bank_accounts", ["routing_number_encrypted_id"], name: "index_bank_accounts_on_routing_number_encrypted_id", using: :btree
-
-  create_table "banks", force: true do |t|
-    t.integer  "identity_id"
-    t.integer  "location_id"
-    t.integer  "password_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "banks", ["identity_id"], name: "index_banks_on_identity_id", using: :btree
-  add_index "banks", ["location_id"], name: "index_banks_on_location_id", using: :btree
-  add_index "banks", ["password_id"], name: "index_banks_on_password_id", using: :btree
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -122,6 +110,17 @@ ActiveRecord::Schema.define(version: 20150131201614) do
 
   add_index "category_points_amounts", ["category_id"], name: "index_category_points_amounts_on_category_id", using: :btree
   add_index "category_points_amounts", ["identity_id"], name: "index_category_points_amounts_on_identity_id", using: :btree
+
+  create_table "companies", force: true do |t|
+    t.integer  "identity_id"
+    t.integer  "location_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
+  add_index "companies", ["identity_id"], name: "index_companies_on_identity_id", using: :btree
+  add_index "companies", ["location_id"], name: "index_companies_on_location_id", using: :btree
 
   create_table "contacts", force: true do |t|
     t.integer  "ref_id"

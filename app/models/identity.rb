@@ -13,7 +13,7 @@ class Identity < ActiveRecord::Base
   has_many :activities, :dependent => :destroy
   has_many :apartments, :dependent => :destroy
   has_many :jokes, :dependent => :destroy
-  has_many :banks, :dependent => :destroy
+  has_many :companies, :dependent => :destroy
   has_many :promises, :dependent => :destroy
   has_many :subscriptions, :dependent => :destroy
   has_many :credit_scores, :dependent => :destroy
@@ -44,7 +44,7 @@ class Identity < ActiveRecord::Base
       :activities => activities.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :apartments => apartments.to_a.map{|x| x.as_json},
       :jokes => jokes.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
-      :banks => banks.to_a.map{|x| x.as_json},
+      :companies => companies.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :promises => promises.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :subscriptions => subscriptions.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :credit_scores => credit_scores.to_a.map{|x| x.as_json},

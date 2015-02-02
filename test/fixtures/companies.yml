@@ -1,4 +1,4 @@
-bank:
+company:
   identity: identity
   location: location
-  password: password
+  name: "Test"

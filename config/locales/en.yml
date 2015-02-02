@@ -40,7 +40,7 @@ en:
       activities: "Activities"
       apartments: "Apartments"
       jokes: "Jokes"
-      banks: "Banks"
+      companies: "Companies"
       promises: "Promises"
       subscriptions: "Subscriptions"
       credit_scores: "Credit Scores"
@@ -322,9 +322,9 @@ en:
       name: "Joke Name"
       joke: "Joke"
       source: "Source"
-    banks:
+    companies:
+      name: "Name"
       location: "Address"
-      password: "Password"
     promises:
       name: "Promise Name"
       promise: "Promise"
@@ -355,6 +355,6 @@ en:
       account_number: "Account Number"
       routing_number: "Routing Number"
       pin: "ATM PIN"
-      home_address: "Address"
+      home_address: "Billing Address"
       password: "Password"
-      bank: "Bank"
+      company: "Bank"

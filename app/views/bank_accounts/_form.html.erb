@@ -32,12 +32,12 @@
 <%=
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,
-    name: :bank,
-    existingobj: obj.bank,
-    heading: t("myplaceonline.bank_accounts.bank"),
-    objform: "banks/form",
-    existingobjurl: "bank_path",
-    searchurl: "/banks.json?perpage=0",
+    name: :company,
+    existingobj: obj.company,
+    heading: t("myplaceonline.bank_accounts.company"),
+    objform: "companies/form",
+    existingobjurl: "company_path",
+    searchurl: "/companies.json?perpage=0",
     edit: edit,
     autofocus: false
   }

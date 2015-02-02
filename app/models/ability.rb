@@ -18,7 +18,7 @@ class Ability
     can :manage, Activity, :identity => identity
     can :manage, Apartment, :identity => identity
     can :manage, Joke, :identity => identity
-    can :manage, Bank, :identity => identity
+    can :manage, Company, :identity => identity
     can :manage, Promise, :identity => identity
     can :manage, Subscription, :identity => identity
     can :manage, CreditScore, :identity => identity

@@ -52,14 +52,14 @@ class BankAccount < ActiveRecord::Base
     super
   end
 
-  belongs_to :bank, class_name: Bank
-  accepts_nested_attributes_for :bank, reject_if: proc { |attributes| BanksController.reject_if_blank(attributes) }
+  belongs_to :company, class_name: Company
+  accepts_nested_attributes_for :company, reject_if: proc { |attributes| CompaniesController.reject_if_blank(attributes) }
   
   # http://stackoverflow.com/a/12064875/4135310
-  def bank_attributes=(attributes)
+  def company_attributes=(attributes)
     if !attributes['id'].blank?
       attributes.keep_if {|innerkey, innervalue| innerkey == "id" }
-      self.bank = Bank.find(attributes['id'])
+      self.company = Company.find(attributes['id'])
     end
     super
   end

@@ -1,8 +1,7 @@
 FactoryGirl.define do
-  factory :bank do
+  factory :company do
     identity nil
 location nil
-password nil
   end
 
 end

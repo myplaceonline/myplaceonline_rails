@@ -28,7 +28,7 @@ module Myp
     @@all_categories[:activities] = Category.find_by(:name => :activities)
     @@all_categories[:apartments] = Category.find_by(:name => :apartments)
     @@all_categories[:jokes] = Category.find_by(:name => :jokes)
-    @@all_categories[:banks] = Category.find_by(:name => :banks)
+    @@all_categories[:companies] = Category.find_by(:name => :companies)
     @@all_categories[:promises] = Category.find_by(:name => :promises)
     @@all_categories[:subscriptions] = Category.find_by(:name => :subscriptions)
     @@all_categories[:credit_scores] = Category.find_by(:name => :credit_scores)

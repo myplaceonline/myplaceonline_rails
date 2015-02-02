@@ -1,0 +1,14 @@
+<%= myp_text_field f, :name, "myplaceonline.companies.name", obj.name, autofocus %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :location,
+    existingobj: obj.location,
+    heading: t("myplaceonline.companies.location"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>

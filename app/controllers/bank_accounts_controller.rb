@@ -20,7 +20,7 @@ class BankAccountsController < MyplaceonlineController
         :pin,
         :encrypt,
         select_or_create_permit(:bank_account, :password_attributes, PasswordsController.param_names),
-        select_or_create_permit(:bank_account, :bank_attributes, BanksController.param_names),
+        select_or_create_permit(:bank_account, :company_attributes, CompaniesController.param_names),
         select_or_create_permit(:bank_account, :home_address_attributes, LocationsController.param_names)
       )
     end
@@ -32,8 +32,8 @@ class BankAccountsController < MyplaceonlineController
       if !@obj.home_address.nil?
         @obj.home_address.identity = current_user.primary_identity
       end
-      if !@obj.bank.nil?
-        @obj.bank.identity = current_user.primary_identity
+      if !@obj.company.nil?
+        @obj.company.identity = current_user.primary_identity
       end
     end
 

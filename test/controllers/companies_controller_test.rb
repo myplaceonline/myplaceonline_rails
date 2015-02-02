@@ -1,13 +1,13 @@
 require 'test_helper'
 
-class BanksControllerTest < ActionController::TestCase
+class CompaniesControllerTest < ActionController::TestCase
   include MyplaceonlineControllerTest
   
   def model
-    Bank
+    Company
   end
   
   def test_attributes
-    {  }
+    { name: "Test" }
   end
 end
