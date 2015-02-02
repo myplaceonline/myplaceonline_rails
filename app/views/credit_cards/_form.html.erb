@@ -5,6 +5,7 @@
 <%= myp_text_field f, :pin, "myplaceonline.credit_cards.pin", obj.pin %>
 <%= myp_check_box f, :encrypt, "myplaceonline.general.encrypt" %>
 <%= myp_text_area_markdown f, :notes, "myplaceonline.credit_cards.notes", obj.notes %>
+<%= myp_check_box f, :is_defunct, "myplaceonline.general.defunct" %>
 <%=
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,

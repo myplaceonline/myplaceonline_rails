@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150202082005) do
+ActiveRecord::Schema.define(version: 20150202085032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(version: 20150202082005) do
     t.integer  "security_code_encrypted_id"
     t.integer  "pin_encrypted_id"
     t.integer  "expires_encrypted_id"
+    t.datetime "defunct"
   end
 
   add_index "credit_cards", ["address_id"], name: "index_credit_cards_on_address_id", using: :btree

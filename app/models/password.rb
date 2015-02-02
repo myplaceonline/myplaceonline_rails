@@ -37,7 +37,7 @@ class Password < ActiveRecord::Base
       result += " (" + user + ")"
     end
     if !defunct.nil?
-      result += " (" + I18n.t("myplaceonline.passwords.defunct") + ")"
+      result += " (" + I18n.t("myplaceonline.general.defunct") + ")"
     end
     result
   end

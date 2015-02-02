@@ -4,7 +4,7 @@ class CreditCardsController < MyplaceonlineController
   end
 
   def display_obj(obj)
-    obj.name
+    obj.display
   end
 
   protected
@@ -21,6 +21,7 @@ class CreditCardsController < MyplaceonlineController
         :pin,
         :notes,
         :encrypt,
+        :is_defunct,
         select_or_create_permit(:credit_card, :password_attributes, PasswordsController.param_names),
         select_or_create_permit(:credit_card, :address_attributes, LocationsController.param_names)
       )
@@ -44,6 +45,7 @@ class CreditCardsController < MyplaceonlineController
       @obj.security_code_finalize
       @obj.pin_finalize
       @obj.expires_finalize
+      update_defunct
     end
 
     def update_presave
@@ -51,9 +53,19 @@ class CreditCardsController < MyplaceonlineController
       @obj.security_code_finalize
       @obj.pin_finalize
       @obj.expires_finalize
+      update_defunct
+    end
+    
+    def update_defunct
+      if @obj.is_defunct == "1"
+        @obj.defunct = Time.now
+      else
+        @obj.defunct = nil
+      end
     end
 
     def before_edit
       @obj.encrypt = @obj.number_encrypted?
+      @obj.is_defunct = !@obj.defunct.nil?
     end
 end

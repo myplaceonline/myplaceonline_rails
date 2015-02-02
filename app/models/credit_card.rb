@@ -4,6 +4,15 @@ class CreditCard < ActiveRecord::Base
   belongs_to :identity
 
   attr_accessor :encrypt
+  attr_accessor :is_defunct
+
+  def display
+    result = name
+    if !defunct.nil?
+      result += " (" + I18n.t("myplaceonline.general.defunct") + ")"
+    end
+    result
+  end
   
   validates :name, presence: true
 

@@ -90,6 +90,7 @@ en:
       existing: "Existing"
       supports_markdown: "supports Markdown syntax"
       non_blank: "can't be blank"
+      defunct: "Defunct"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
@@ -201,7 +202,6 @@ en:
       add_question: "Add Question"
       remove_question: "Delete Question"
       how_to_decrypt: "The encrypted file may be decrypted with the command line gpg tool:"
-      defunct: "Defunct"
       email: "E-mail"
     users:
       invite: "Invite Code"

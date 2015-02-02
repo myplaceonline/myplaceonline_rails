@@ -14,7 +14,7 @@
 <%= myp_text_field f, :url, "myplaceonline.passwords.url", obj.url %>
 <%= myp_text_field f, :account_number, "myplaceonline.passwords.account_number", obj.account_number %>
 <%= myp_text_area_markdown f, :notes, "myplaceonline.passwords.notes", obj.notes %>
-<%= myp_check_box f, :is_defunct, "myplaceonline.passwords.defunct" %>
+<%= myp_check_box f, :is_defunct, "myplaceonline.general.defunct" %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,
