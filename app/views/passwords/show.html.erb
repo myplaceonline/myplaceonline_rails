@@ -7,7 +7,7 @@
   <%= attribute_table_row(t("myplaceonline.passwords.url"), url_or_blank(@obj.get_url, nil, @obj.password), @obj.get_url) %>
   <%= attribute_table_row(t("myplaceonline.passwords.account_number"), @obj.account_number) %>
   <%= attribute_table_row_markdown(t("myplaceonline.passwords.notes"), @obj.notes) %>
-  <%= attribute_table_row_boolean(t("myplaceonline.passwords.defunct"), !@obj.defunct.nil?) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.general.defunct"), !@obj.defunct.nil?) %>
 
   <% @obj.password_secrets.each do |secret| %>
   
