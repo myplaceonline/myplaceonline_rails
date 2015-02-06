@@ -23,3 +23,4 @@ credit_scores = Category.create(name: "credit_scores", link: "credit_scores", po
 websites = Category.create(name: "websites", link: "websites", position: 0, parent: order)
 credit_cards = Category.create(name: "credit_cards", link: "credit_cards", position: 0, parent: order)
 bank_accounts = Category.create(name: "bank_accounts", link: "bank_accounts", position: 0, parent: order)
+ideas = Category.create(name: "ideas", link: "ideas", position: 0, parent: order)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150202085032) do
+ActiveRecord::Schema.define(version: 20150206055726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -205,6 +205,16 @@ ActiveRecord::Schema.define(version: 20150202085032) do
     t.string  "style"
     t.binary  "file_contents"
   end
+
+  create_table "ideas", force: true do |t|
+    t.string   "name"
+    t.text     "idea"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ideas", ["identity_id"], name: "index_ideas_on_identity_id", using: :btree
 
   create_table "identities", force: true do |t|
     t.integer  "owner_id"

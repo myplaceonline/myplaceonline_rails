@@ -47,6 +47,7 @@ en:
       websites: "Websites"
       credit_cards: "Credit Cards"
       bank_accounts: "Bank Accounts"
+      ideas: "Ideas"
     general:
       email: "E-mail"
       password: "Password"
@@ -358,3 +359,6 @@ en:
       home_address: "Billing Address"
       password: "Password"
       company: "Bank"
+    ideas:
+      name: "Idea Name"
+      idea: "Notes"
