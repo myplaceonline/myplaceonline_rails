@@ -26,6 +26,7 @@ class Ability
     can :manage, CreditCard, :identity => identity
     can :manage, BankAccount, :identity => identity
     can :manage, Idea, :identity => identity
+    can :manage, List, :identity => identity
     
     # Define abilities for the passed in user here. For example:
     #

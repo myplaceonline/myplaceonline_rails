@@ -48,6 +48,7 @@ en:
       credit_cards: "Credit Cards"
       bank_accounts: "Bank Accounts"
       ideas: "Ideas"
+      lists: "Lists"
     general:
       email: "E-mail"
       password: "Password"
@@ -362,3 +363,5 @@ en:
     ideas:
       name: "Idea Name"
       idea: "Notes"
+    lists:
+      name: "List Name"

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :lists
+  post 'lists/new'
+
   resources :ideas
   post 'ideas/new'
 
