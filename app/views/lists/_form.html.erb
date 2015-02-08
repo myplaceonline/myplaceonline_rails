@@ -1,1 +1,22 @@
 <%= myp_text_field f, :name, "myplaceonline.lists.name", obj.name, autofocus %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.lists.items"),
+    childpropertiesname: :list_items,
+    childproperties: obj.list_items,
+    deletebutton: t("myplaceonline.lists.delete"),
+    addbutton: t("myplaceonline.lists.add"),
+    expanded: true,
+    formjson: [
+      {
+        type: 'text',
+        name: 'name',
+        placeholder: t("myplaceonline.lists.item"),
+        autofocus: true
+      }
+    ]
+  } do
+%>
+  <%= myp_text_field @child_fields, :name, "myplaceonline.lists.item", @childproperty.name %>
+<% end %>

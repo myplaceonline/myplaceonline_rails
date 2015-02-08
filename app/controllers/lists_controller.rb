@@ -6,6 +6,15 @@ class ListsController < MyplaceonlineController
   def display_obj(obj)
     obj.name
   end
+  
+  def self.param_names
+    [
+      :name,
+      {
+        list_items_attributes: [:id, :name, :_destroy]
+      }
+    ]
+  end
 
   protected
     def sorts
@@ -13,6 +22,10 @@ class ListsController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:list).permit(:name)
+      params.require(:list).permit(ListsController.param_names)
+    end
+    
+    def update_presave
+      check_nested_attributes(@obj, :list_items, :list)
     end
 end

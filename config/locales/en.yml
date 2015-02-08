@@ -365,3 +365,7 @@ en:
       idea: "Notes"
     lists:
       name: "List Name"
+      items: "Items"
+      delete: "Delete Item"
+      add: "Add Item"
+      item: "Item Name"
