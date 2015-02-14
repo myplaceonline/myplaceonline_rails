@@ -1,5 +1,6 @@
 <%= render layout: "shared/model_show" do %>
 
+  <%= attribute_table_row(t("myplaceonline.locations.full_address"), @obj.address_one_line) %>
   <%= attribute_table_row(t("myplaceonline.locations.name"), @obj.name) %>
   <%= attribute_table_row(t("myplaceonline.locations.address1"), @obj.address1) %>
   <%= attribute_table_row(t("myplaceonline.locations.address2"), @obj.address2) %>
@@ -8,7 +9,6 @@
   <%= attribute_table_row(t("myplaceonline.locations.sub_region1"), @obj.sub_region1_name) %>
   <%= attribute_table_row(t("myplaceonline.locations.postal_code"), @obj.postal_code) %>
   <%= attribute_table_row(t("myplaceonline.locations.region"), @obj.region_name) %>
-  <%= attribute_table_row(t("myplaceonline.locations.full_address"), @obj.address_one_line) %>
   <%= attribute_table_row_url(t("myplaceonline.locations.map"), @obj.map_url) %>
   <% @obj.location_phones.each do |phone| %>
   
