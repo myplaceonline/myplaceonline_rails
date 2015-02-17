@@ -37,6 +37,7 @@ module Myp
     @@all_categories[:bank_accounts] = Category.find_by(:name => :bank_accounts)
     @@all_categories[:ideas] = Category.find_by(:name => :ideas)
     @@all_categories[:lists] = Category.find_by(:name => :lists)
+    @@all_categories[:calculation_forms] = Category.find_by(:name => :calculation_forms)
     puts "Myplaceonline: Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
   end
   

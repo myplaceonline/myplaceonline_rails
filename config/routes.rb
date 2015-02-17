@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :calculation_forms
+  post 'calculation_forms/new'
+
   resources :lists
   post 'lists/new'
 

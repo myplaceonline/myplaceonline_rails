@@ -25,3 +25,4 @@ credit_cards = Category.create(name: "credit_cards", link: "credit_cards", posit
 bank_accounts = Category.create(name: "bank_accounts", link: "bank_accounts", position: 0, parent: order)
 ideas = Category.create(name: "ideas", link: "ideas", position: 0, parent: order)
 lists = Category.create(name: "lists", link: "lists", position: 0, parent: order)
+calculation_forms = Category.create(name: "calculation_forms", link: "calculation_forms", position: 0, parent: order)

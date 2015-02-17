@@ -49,6 +49,7 @@ en:
       bank_accounts: "Bank Accounts"
       ideas: "Ideas"
       lists: "Lists"
+      calculation_forms: "Calculation Forms"
     general:
       email: "E-mail"
       password: "Password"
@@ -369,3 +370,5 @@ en:
       delete: "Delete Item"
       add: "Add Item"
       item: "Item Name"
+    calculation_forms:
+      name: "Name"
