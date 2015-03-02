@@ -29,12 +29,12 @@ class CalculationFormsController < MyplaceonlineController
             left_operand_attributes: [
               :id,
               :constant_value,
-              tree_item("calculation_element_attributes", !check["calculation_element_attributes"].nil? ? check["calculation_element_attributes"]["left_operand_attributes"] : nil)
+              tree_item("calculation_element_attributes", !check["left_operand_attributes"].nil? ? check["left_operand_attributes"]["calculation_element_attributes"] : nil)
             ],
             right_operand_attributes: [
               :id,
               :constant_value,
-              tree_item("calculation_element_attributes", !check["calculation_element_attributes"].nil? ? check["calculation_element_attributes"]["right_operand_attributes"] : nil)
+              tree_item("calculation_element_attributes", !check["right_operand_attributes"].nil? ? check["right_operand_attributes"]["calculation_element_attributes"] : nil)
             ]
           ]
         }

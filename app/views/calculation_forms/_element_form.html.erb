@@ -3,7 +3,7 @@
     <%=
       render partial: 'calculation_forms/operand_form', locals: {
         f: operand_form,
-        val: element.left_operand.constant_value,
+        operand: element.left_operand,
         heading: t("myplaceonline.calculation_forms.left_operand")
       }
     %>
@@ -13,7 +13,7 @@
     <%=
       render partial: 'calculation_forms/operand_form', locals: {
         f: operand_form,
-        val: element.right_operand.constant_value,
+        operand: element.right_operand,
         heading: t("myplaceonline.calculation_forms.right_operand")
       }
     %>
