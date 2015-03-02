@@ -94,6 +94,7 @@ en:
       supports_markdown: "supports Markdown syntax"
       non_blank: "can't be blank"
       defunct: "Defunct"
+      singleton_form_item: "There may only be one of these form elements."
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
@@ -379,3 +380,6 @@ en:
       constant_value: "Constant Name"
       sub_element: "Sub-Element"
       create_sub_element: "Create Sub-Element"
+      left_operand: "Left Operand"
+      right_operand: "Right Operand"
+

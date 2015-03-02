@@ -94,15 +94,24 @@ function getIdPrefixFromNamePrefix(namePrefix) {
   return namePrefix.replace(/\[/g, '_').replace(/\]/g, '');
 }
 
-function form_add_item(link, namePrefix, deletePlaceholder, items) {
+function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMessage) {
   var index = -1;
-  $(link).parents(".itemswrapper").first().find(".itemwrapper").each(function() {
+  var itemswrapper = $(link).parents(".itemswrapper").first();
+  if (itemswrapper.length == 0) {
+    alert('API error: form_add_item call should be within DIV with class itemswrapper');
+  }
+  itemswrapper.find(".itemwrapper").each(function() {
     var id = get_index_from_id($(this));
     if (id > index) {
       index = id;
     }
   });
   index++;
+  
+  if (singletonMessage && index > 0) {
+    alert(singletonMessage);
+    return false;
+  }
   
   var html = "<div class='itemwrapper' data-nameprefix='" + namePrefix + "[" + index + "]" + "'>";
   var toFocus = null;
@@ -133,6 +142,8 @@ function form_add_item(link, namePrefix, deletePlaceholder, items) {
       item.id = "remote_placeholder_" + id;
       html += "<p id='" + item.id + "'>Loading...</p>";
       futures.push(item);
+    } else if (item.type == "calculation_element") {
+      html += "<p></p>";
     } else {
       html += "<p><input type='" + item.type + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='' class='" + cssclasses + "' /></p>";
     }
@@ -173,7 +184,7 @@ function form_add_item(link, namePrefix, deletePlaceholder, items) {
 
 function form_add_item_set_html(insertBefore, html, toFocus) {
   $(html).insertBefore(insertBefore);
-  ensureStyledPage();
+  $(insertBefore).parent().trigger('create');
   if (toFocus) {
     maybeFocus("#" + toFocus);
   }
