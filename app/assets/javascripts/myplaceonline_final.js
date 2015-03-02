@@ -160,9 +160,9 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
       futures.push(item);
     } else if (item.type == "calculation_element") {
       // Duplicated in views/calculation_forms/_element_form.html.erb
-      html += html_calculation_operand(item.left_heading, item.constant, id, name, "left_operand_attributes", item.constant_value, item.sub_element);
+      html += html_calculation_operand(item, item.left_heading, id, name, "left_operand_attributes");
       html += "<select id='" + id + "_operator' name='" + name + "[operator]' placeholder='Test'><option value=''>Operator</option><option value='1'>+ (Add)</option><option value='2'>- (Subtract)</option><option value='3'>* (Multiply)</option><option value='4'>/ (Divide)</option></select>";
-      html += html_calculation_operand(item.right_heading, item.constant, id, name, "right_operand_attributes", item.constant_value, item.sub_element);
+      html += html_calculation_operand(item, item.right_heading, id, name, "right_operand_attributes");
     } else {
       html += "<p><input type='" + item.type + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='' class='" + cssclasses + "' /></p>";
     }
@@ -201,8 +201,8 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
   return false;
 }
 
-function html_calculation_operand(heading, constant, idPrefix, namePrefix, input_name, constant_value, sub_element) {
-  return "<div data-role='collapsible' data-collapsed='false'><h3>" + heading + "</h3><div data-role='collapsible-set'><div data-role='collapsible' data-collapsed='false'><h3>" + constant + "</h3><input type='text' id='" + idPrefix + "_" + input_name + "_constant_value' name='" + namePrefix + "[" + input_name + "][constant_value]' placeholder='" + constant_value + "' value='' class='' /></div><div data-role='collapsible' data-collapsed='true'><h3>" + sub_element + "</h3><div class='itemswrapper'><p></p></div></div></div></div>";
+function html_calculation_operand(item, heading, idPrefix, namePrefix, input_name) {
+  return '<div data-role="collapsible" data-collapsed="false"><h3>' + heading + '</h3><div data-role="collapsible-set"><div data-role="collapsible" data-collapsed="false"><h3>' + item.constant + '</h3><input type="text" id="' + idPrefix + '_' + input_name + '_constant_value" name="' + namePrefix + '[' + input_name + '][constant_value]" placeholder="' + item.constant_value + '" value="" class="" /></div><div data-role="collapsible" data-collapsed="true"><h3>' + item.sub_element + '</h3><div class="itemswrapper"><p><p><a href="#" onclick="return form_add_item(this, \'' + namePrefix + '[' + input_name + '][calculation_element_attributes]\', \'' + item.delete + '\', [{ type: \'calculation_element\', left_heading: \'' + item.left_heading + '\', right_heading: \'' + item.right_heading + '\', constant_value: \'' + item.constant + '\', sub_element: \'' + item.sub_element + '\', constant: \'' + item.constant_value + '\', create: \'' + item.create + '\', delete: \'' + item.delete + '\', singleton: \'' + item.singleton + '\' }], \'' + item.singleton + '\', true);" class="ui-btn">' + item.create + '</a></p></p></div></div></div></div>';
 }
 
 function form_add_item_set_html(insertBefore, html, toFocus) {
