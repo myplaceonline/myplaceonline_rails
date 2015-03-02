@@ -8,7 +8,7 @@
       }
     %>
   <% end %>
-  <%= myp_select f, :operator, "myplaceonline.calculation_forms.operator", { "+ (Add)" => 1, "- (Subtract)" => 2, "* (Multiply)" => 3, "/ (Divide)" => 4 }, element.operator %>
+  <%= myp_select f, :operator, "myplaceonline.calculation_forms.operator", CalculationElement.operator_map, element.operator %>
   <%= f.fields_for :right_operand, element.right_operand do |operand_form| %>
     <%=
       render partial: 'calculation_forms/operand_form', locals: {

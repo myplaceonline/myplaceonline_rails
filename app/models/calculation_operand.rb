@@ -14,4 +14,8 @@ class CalculationOperand < ActiveRecord::Base
   def blank?
     constant_value.blank? && calculation_element.nil?
   end
+  
+  def to_human_readable
+    calculation_element.nil? ? constant_value : calculation_element.to_human_readable
+  end
 end
