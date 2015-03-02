@@ -13,14 +13,34 @@ class CalculationFormsController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:calculation_form).permit(
+      permit_tree = [
         :name,
-        root_element_attributes: [
-          :operator,
-          left_operand_attributes: [:constant_value],
-          right_operand_attributes: [:constant_value]
-        ]
-      )
+        tree_item("root_element_attributes", params["calculation_form"]["root_element_attributes"])
+      ]
+      params.require(:calculation_form).permit(permit_tree)
+    end
+    
+    def tree_item(name, check)
+      if !check.nil?
+        {
+          name.to_sym => [
+            :id,
+            :operator,
+            left_operand_attributes: [
+              :id,
+              :constant_value,
+              tree_item("calculation_element_attributes", !check["calculation_element_attributes"].nil? ? check["calculation_element_attributes"]["left_operand_attributes"] : nil)
+            ],
+            right_operand_attributes: [
+              :id,
+              :constant_value,
+              tree_item("calculation_element_attributes", !check["calculation_element_attributes"].nil? ? check["calculation_element_attributes"]["right_operand_attributes"] : nil)
+            ]
+          ]
+        }
+      else
+        {}
+      end
     end
 
     def new_build
