@@ -13,6 +13,17 @@ class CalculationFormsController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:calculation_form).permit(:name)
+      params.require(:calculation_form).permit(
+        :name,
+        root_element_attributes: [
+          :operator,
+          left_operand_attributes: [:constant_value],
+          right_operand_attributes: [:constant_value]
+        ]
+      )
+    end
+
+    def new_build
+      @obj.root_element = CalculationElement.build
     end
 end

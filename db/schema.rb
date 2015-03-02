@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150217004258) do
+ActiveRecord::Schema.define(version: 20150220012741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,14 +86,36 @@ ActiveRecord::Schema.define(version: 20150217004258) do
   add_index "bank_accounts", ["pin_encrypted_id"], name: "index_bank_accounts_on_pin_encrypted_id", using: :btree
   add_index "bank_accounts", ["routing_number_encrypted_id"], name: "index_bank_accounts_on_routing_number_encrypted_id", using: :btree
 
+  create_table "calculation_elements", force: true do |t|
+    t.integer  "left_operand_id"
+    t.integer  "right_operand_id"
+    t.integer  "operator"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "calculation_elements", ["left_operand_id"], name: "index_calculation_elements_on_left_operand_id", using: :btree
+  add_index "calculation_elements", ["right_operand_id"], name: "index_calculation_elements_on_right_operand_id", using: :btree
+
   create_table "calculation_forms", force: true do |t|
     t.string   "name"
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "root_element_id"
   end
 
   add_index "calculation_forms", ["identity_id"], name: "index_calculation_forms_on_identity_id", using: :btree
+  add_index "calculation_forms", ["root_element_id"], name: "index_calculation_forms_on_root_element_id", using: :btree
+
+  create_table "calculation_operands", force: true do |t|
+    t.string   "constant_value"
+    t.integer  "calculation_element_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "calculation_operands", ["calculation_element_id"], name: "index_calculation_operands_on_calculation_element_id", using: :btree
 
   create_table "categories", force: true do |t|
     t.string   "name"

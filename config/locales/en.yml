@@ -372,3 +372,10 @@ en:
       item: "Item Name"
     calculation_forms:
       name: "Name"
+      elements: "Equation"
+      operand_blank: "Operand must have a value or continue the equation."
+      operator: "Operator"
+      constant: "Constant"
+      constant_value: "Constant Name"
+      sub_element: "Sub-Element"
+      create_sub_element: "Create Sub-Element"

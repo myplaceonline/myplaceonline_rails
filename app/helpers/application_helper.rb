@@ -115,6 +115,7 @@ module ApplicationHelper
     end
   end
   
+  # We only want to show the label if `value` is blank.
   def myp_label_classes(value)
     is_blank(value, false) ? "ui-hidden-accessible" : "form_field_label"
   end
@@ -280,6 +281,17 @@ module ApplicationHelper
       :p,
       form.label(name, placeholder, class: myp_label_classes(subregionvalue)) +
       form.select(name, options_for_select(options, subregionvalue), class: myp_field_classes(autofocus, input_classes), prompt: placeholder)
+    ).html_safe
+  end
+  
+  def myp_select(form, name, placeholder, selectoptions, selectvalue, autofocus = false, input_classes = nil)
+    if is_probably_i18n(placeholder)
+      placeholder = I18n.t(placeholder)
+    end
+    content_tag(
+      :p,
+      form.label(name, placeholder, class: myp_label_classes(selectvalue)) +
+      form.select(name, options_for_select(selectoptions, selectvalue), class: myp_field_classes(autofocus, input_classes), prompt: placeholder)
     ).html_safe
   end
 end
