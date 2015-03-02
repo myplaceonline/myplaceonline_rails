@@ -1,19 +1,21 @@
-<%= f.fields_for :left_operand, element.left_operand do |operand_form| %>
-  <%=
-    render partial: 'calculation_forms/operand_form', locals: {
-      f: operand_form,
-      val: element.left_operand.constant_value,
-      heading: t("myplaceonline.calculation_forms.left_operand")
-    }
-  %>
-<% end %>
-<%= myp_select f, :operator, "myplaceonline.calculation_forms.operator", { "+ (Add)" => 1, "- (Subtract)" => 2, "* (Multiply)" => 3, "/ (Divide)" => 4 }, element.operator %>
-<%= f.fields_for :right_operand, element.right_operand do |operand_form| %>
-  <%=
-    render partial: 'calculation_forms/operand_form', locals: {
-      f: operand_form,
-      val: element.right_operand.constant_value,
-      heading: t("myplaceonline.calculation_forms.right_operand")
-    }
-  %>
-<% end %>
+<div class="itemwrapper" data-nameprefix="<%= f.object_name %>">
+  <%= f.fields_for :left_operand, element.left_operand do |operand_form| %>
+    <%=
+      render partial: 'calculation_forms/operand_form', locals: {
+        f: operand_form,
+        val: element.left_operand.constant_value,
+        heading: t("myplaceonline.calculation_forms.left_operand")
+      }
+    %>
+  <% end %>
+  <%= myp_select f, :operator, "myplaceonline.calculation_forms.operator", { "+ (Add)" => 1, "- (Subtract)" => 2, "* (Multiply)" => 3, "/ (Divide)" => 4 }, element.operator %>
+  <%= f.fields_for :right_operand, element.right_operand do |operand_form| %>
+    <%=
+      render partial: 'calculation_forms/operand_form', locals: {
+        f: operand_form,
+        val: element.right_operand.constant_value,
+        heading: t("myplaceonline.calculation_forms.right_operand")
+      }
+    %>
+  <% end %>
+</div>

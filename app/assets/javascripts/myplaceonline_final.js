@@ -94,34 +94,50 @@ function getIdPrefixFromNamePrefix(namePrefix) {
   return namePrefix.replace(/\[/g, '_').replace(/\]/g, '');
 }
 
-function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMessage) {
+function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMessage, nonIndexBased) {
   var index = -1;
   var itemswrapper = $(link).parents(".itemswrapper").first();
   if (itemswrapper.length == 0) {
     alert('API error: form_add_item call should be within DIV with class itemswrapper');
   }
-  itemswrapper.find(".itemwrapper").each(function() {
-    var id = get_index_from_id($(this));
-    if (id > index) {
-      index = id;
-    }
-  });
+  var itemwrappers = itemswrapper.find(".itemwrapper");
+  if (!nonIndexBased) {
+    itemwrappers.each(function() {
+      var id = get_index_from_id($(this));
+      if (id > index) {
+        index = id;
+      }
+    });
+  }
   index++;
   
-  if (singletonMessage && index > 0) {
-    alert(singletonMessage);
-    return false;
-  }
+  //if (singletonMessage && itemwrappers.length > 0) {
+  //  alert(singletonMessage);
+  //  return false;
+  //}
   
-  var html = "<div class='itemwrapper' data-nameprefix='" + namePrefix + "[" + index + "]" + "'>";
+  var html = "<div class='itemwrapper' data-nameprefix='" + namePrefix;
+  if (!nonIndexBased) {
+    html += "[" + index + "]";
+  }
+  html += "'>";
   var toFocus = null;
   var i;
   var idPrefix = getIdPrefixFromNamePrefix(namePrefix);
   var futures = [];
   for (i = 0; i < items.length; i++) {
     var item = items[i];
-    var id = idPrefix + "_" + index + "_" + item.name;
-    var name = namePrefix + "[" + index + "][" + item.name + "]";
+    
+    var id = idPrefix;
+    if (!nonIndexBased) {
+      id += "_" + index + "_" + item.name;
+    }
+    
+    var name = namePrefix;
+    if (!nonIndexBased) {
+      name += "[" + index + "][" + item.name + "]";
+    }
+    
     var cssclasses = '';
     if (item.autofocus && !toFocus) {
       toFocus = id;
@@ -143,7 +159,10 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
       html += "<p id='" + item.id + "'>Loading...</p>";
       futures.push(item);
     } else if (item.type == "calculation_element") {
-      html += "<p></p>";
+      // Duplicated in views/calculation_forms/_element_form.html.erb
+      html += html_calculation_operand(item.left_heading, item.constant, id, name, "left_operand_attributes", item.constant_value, item.sub_element);
+      html += "<select id='" + id + "_operator' name='" + name + "[operator]' placeholder='Test'><option value=''>Operator</option><option value='1'>+ (Add)</option><option value='2'>- (Subtract)</option><option value='3'>* (Multiply)</option><option value='4'>/ (Divide)</option></select>";
+      html += html_calculation_operand(item.right_heading, item.constant, id, name, "right_operand_attributes", item.constant_value, item.sub_element);
     } else {
       html += "<p><input type='" + item.type + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='' class='" + cssclasses + "' /></p>";
     }
@@ -180,6 +199,10 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
     });
   }
   return false;
+}
+
+function html_calculation_operand(heading, constant, idPrefix, namePrefix, input_name, constant_value, sub_element) {
+  return "<div data-role='collapsible' data-collapsed='false'><h3>" + heading + "</h3><div data-role='collapsible-set'><div data-role='collapsible' data-collapsed='false'><h3>" + constant + "</h3><input type='text' id='" + idPrefix + "_" + input_name + "_constant_value' name='" + namePrefix + "[" + input_name + "][constant_value]' placeholder='" + constant_value + "' value='' class='' /></div><div data-role='collapsible' data-collapsed='true'><h3>" + sub_element + "</h3><div class='itemswrapper'><p></p></div></div></div></div>";
 }
 
 function form_add_item_set_html(insertBefore, html, toFocus) {
