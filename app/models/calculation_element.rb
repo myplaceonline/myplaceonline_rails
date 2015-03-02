@@ -19,7 +19,7 @@ class CalculationElement < ActiveRecord::Base
   end
   
   def to_human_readable
-    left_operand.to_human_readable + " " + CalculationElement.operator_display_map[operator] + " " + right_operand.to_human_readable
+    "(" + left_operand.to_human_readable + " " + CalculationElement.operator_display_map[operator] + " " + right_operand.to_human_readable + ")"
   end
   
   def self.operator_map
