@@ -1,0 +1,4 @@
+calculation_form:
+  left_operand: calculation_operand
+  right_operand: calculation_operand
+  operator: 1

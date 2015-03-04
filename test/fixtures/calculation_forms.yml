@@ -1,3 +1,4 @@
 calculation_form:
   identity: identity
   name: Test
+  root_element: calculation_element
