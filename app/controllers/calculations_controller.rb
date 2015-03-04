@@ -13,6 +13,6 @@ class CalculationsController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:calculation).permit(:name)
+      params.require(:calculation).permit(:name, :calculation_form_id)
     end
 end

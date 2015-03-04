@@ -39,4 +39,19 @@ class CalculationElement < ActiveRecord::Base
       4 => "/"
     }
   end
+  
+  def all_operands
+    resultSet = Set.new
+    process_operand(resultSet, left_operand)
+    process_operand(resultSet, right_operand)
+    resultSet.to_a
+  end
+  
+  def process_operand(resultSet, operand)
+    resultSet.add(operand)
+    if !operand.calculation_element.nil?
+      process_operand(resultSet, operand.calculation_element.left_operand)
+      process_operand(resultSet, operand.calculation_element.right_operand)
+    end
+  end
 end

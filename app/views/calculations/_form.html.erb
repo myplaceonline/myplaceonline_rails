@@ -1,1 +1,7 @@
 <%= myp_text_field f, :name, "myplaceonline.calculations.name", obj.name, autofocus %>
+<%= myp_select(f, :calculation_form_id, "myplaceonline.calculations.form", CalculationForm.where(identity_id: current_user.primary_identity.id).map{|x| [x.name, x.id.to_s]}, obj.calculation_form) %>
+<% if !obj.calculation_form.nil? && obj.calculation_form.valid? %>
+  <% obj.calculation_form.root_element.all_operands.map{|x| x.constant_value}.reject(&:blank?).each do |x| %>
+    <%= myp_text_field_tag(x, x, "") %>
+  <% end %>
+<% end %>

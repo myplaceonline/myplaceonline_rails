@@ -385,3 +385,4 @@ en:
       right_operand: "Right Operand"
     calculations:
       name: "Name"
+      form: "Calculation Form"
