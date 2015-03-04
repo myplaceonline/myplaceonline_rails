@@ -50,6 +50,7 @@ en:
       ideas: "Ideas"
       lists: "Lists"
       calculation_forms: "Calculation Forms"
+      calculations: "Calculations"
     general:
       email: "E-mail"
       password: "Password"
@@ -382,4 +383,5 @@ en:
       create_sub_element: "Create Sub-Element"
       left_operand: "Left Operand"
       right_operand: "Right Operand"
-
+    calculations:
+      name: "Name"

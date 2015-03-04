@@ -28,6 +28,7 @@ class Ability
     can :manage, Idea, :identity => identity
     can :manage, List, :identity => identity
     can :manage, CalculationForm, :identity => identity
+    can :manage, Calculation, :identity => identity
     
     # Define abilities for the passed in user here. For example:
     #

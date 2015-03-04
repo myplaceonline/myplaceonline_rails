@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150220012741) do
+ActiveRecord::Schema.define(version: 20150304023157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,18 @@ ActiveRecord::Schema.define(version: 20150220012741) do
   end
 
   add_index "calculation_operands", ["calculation_element_id"], name: "index_calculation_operands_on_calculation_element_id", using: :btree
+
+  create_table "calculations", force: true do |t|
+    t.string   "name"
+    t.integer  "calculation_form_id"
+    t.decimal  "result",              precision: 10, scale: 2
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "calculations", ["calculation_form_id"], name: "index_calculations_on_calculation_form_id", using: :btree
+  add_index "calculations", ["identity_id"], name: "index_calculations_on_identity_id", using: :btree
 
   create_table "categories", force: true do |t|
     t.string   "name"

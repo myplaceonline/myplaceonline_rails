@@ -23,6 +23,7 @@ class Identity < ActiveRecord::Base
   has_many :ideas, :dependent => :destroy
   has_many :lists, :dependent => :destroy
   has_many :calculation_forms, :dependent => :destroy
+  has_many :calculations, :dependent => :destroy
   
   has_many :identity_phones, :foreign_key => 'ref_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_phones, allow_destroy: true, reject_if: :all_blank
@@ -57,6 +58,7 @@ class Identity < ActiveRecord::Base
       :ideas => ideas.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :lists => lists.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :calculation_forms => calculation_forms.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
+      :calculations => calculations.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end
