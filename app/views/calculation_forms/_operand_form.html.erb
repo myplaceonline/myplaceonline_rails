@@ -5,6 +5,10 @@
       <h3><%= t("myplaceonline.calculation_forms.constant") %></h3>
       <%= myp_text_field f, :constant_value, "myplaceonline.calculation_forms.constant_value", operand.constant_value %>
     </div>
+    <div data-role="collapsible" data-collapsed="<%= operand.calculation_input.nil? ? "true" : "false" %>">
+      <h3><%= t("myplaceonline.calculation_forms.input") %></h3>
+      <%= myp_select(f, :calculation_input_id, "myplaceonline.calculation_forms.input", CalculationInput.where(calculation_form_id: 0).map{|x| [x.input_name, x.id.to_s]}, operand.calculation_input) %>
+    </div>
     <div data-role="collapsible" data-collapsed="<%= operand.calculation_element.nil? ? "true" : "false" %>">
       <h3><%= t("myplaceonline.calculation_forms.sub_element") %></h3>
       <div class="itemswrapper">

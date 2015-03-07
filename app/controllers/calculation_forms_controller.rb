@@ -37,6 +37,7 @@ class CalculationFormsController < MyplaceonlineController
             right_operand_attributes: [
               :id,
               :constant_value,
+              { calculation_input_attributes: [:id, :_destroy] },
               tree_item("calculation_element_attributes", !check["right_operand_attributes"].nil? ? check["right_operand_attributes"]["calculation_element_attributes"] : nil)
             ]
           ]

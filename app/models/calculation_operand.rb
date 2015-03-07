@@ -3,6 +3,9 @@ class CalculationOperand < ActiveRecord::Base
   belongs_to :calculation_element
   accepts_nested_attributes_for :calculation_element, reject_if: :all_blank
   
+  belongs_to :calculation_input
+  accepts_nested_attributes_for :calculation_input, reject_if: :all_blank
+  
   # constant_value:string
   
   validate do
