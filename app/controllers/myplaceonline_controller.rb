@@ -198,6 +198,8 @@ class MyplaceonlineController < ApplicationController
       authorize! :manage, @obj
     end
 
+    # Make sure that each element in ${target}.${method} has a
+    # ${belongs_to_name}_id field with a value equal to ${target}.id
     def check_nested_attributes(target, method, belongs_to_name)
       target.send(method).each {
         |attr|

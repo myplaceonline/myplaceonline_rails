@@ -3,7 +3,7 @@ class CreateCalculationInputs < ActiveRecord::Migration
     create_table :calculation_inputs do |t|
       t.string :input_name
       t.string :input_value
-      t.references :calculation_operand, index: true
+      t.references :calculation_form, index: true
 
       t.timestamps
     end

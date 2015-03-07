@@ -383,6 +383,11 @@ en:
       create_sub_element: "Create Sub-Element"
       left_operand: "Left Operand"
       right_operand: "Right Operand"
+      formula: "Formula"
+      inputs: "Inputs"
+      delete_input: "Delete Input"
+      add_input: "Add Input"
+      input: "Input"
     calculations:
       name: "Name"
       form: "Calculation Form"

@@ -1,6 +1,28 @@
 <%= myp_text_field f, :name, "myplaceonline.calculation_forms.name", obj.name, autofocus %>
+<p>A calculation form is a set of zero or more inputs (i.e. variable inputs from the user) and then a formula which is a set of one or more operands and operators, where each operand is either a constant value (e.g. an integer), a reference to an input, or a recursive calculation. For example, inputs of "Size" and "Questions" and a formula of ((5 * Size) + Questions)</p>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.calculation_forms.inputs"),
+    childpropertiesname: :calculation_inputs,
+    childproperties: obj.calculation_inputs,
+    deletebutton: t("myplaceonline.calculation_forms.delete_input"),
+    addbutton: t("myplaceonline.calculation_forms.add_input"),
+    expanded: obj.calculation_inputs.length > 0,
+    formjson: [
+      {
+        type: 'text',
+        name: 'input_name',
+        placeholder: t("myplaceonline.calculation_forms.input"),
+        autofocus: true
+      }
+    ]
+  } do
+%>
+  <%= myp_text_field @child_fields, :input_name, "myplaceonline.calculation_forms.input", @childproperty.input_name %>
+<% end %>
 <div data-role="collapsible" data-collapsed="false">
-  <h3>Formula</h3>
+  <h3><%= t("myplaceonline.calculation_forms.formula") %></h3>
   <%= f.fields_for :root_element, obj.root_element do |element_form| %>
     <%=
       render partial: 'calculation_forms/element_form', locals: {

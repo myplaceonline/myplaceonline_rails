@@ -15,6 +15,9 @@ class CalculationFormsController < MyplaceonlineController
     def obj_params
       permit_tree = [
         :name,
+        {
+          calculation_inputs_attributes: [:id, :input_name, :_destroy]
+        },
         tree_item("root_element_attributes", params["calculation_form"]["root_element_attributes"])
       ]
       params.require(:calculation_form).permit(permit_tree)
@@ -45,5 +48,9 @@ class CalculationFormsController < MyplaceonlineController
 
     def new_build
       @obj.root_element = CalculationElement.build
+    end
+
+    def update_presave
+      check_nested_attributes(@obj, :calculation_inputs, :calculation_form)
     end
 end

@@ -111,12 +111,12 @@ ActiveRecord::Schema.define(version: 20150307003216) do
   create_table "calculation_inputs", force: true do |t|
     t.string   "input_name"
     t.string   "input_value"
-    t.integer  "calculation_operand_id"
+    t.integer  "calculation_form_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "calculation_inputs", ["calculation_operand_id"], name: "index_calculation_inputs_on_calculation_operand_id", using: :btree
+  add_index "calculation_inputs", ["calculation_form_id"], name: "index_calculation_inputs_on_calculation_form_id", using: :btree
 
   create_table "calculation_operands", force: true do |t|
     t.string   "constant_value"
