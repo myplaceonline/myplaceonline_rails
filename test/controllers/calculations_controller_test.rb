@@ -8,6 +8,6 @@ class CalculationsControllerTest < ActionController::TestCase
   end
   
   def test_attributes
-    { name: "test" }
+    { }
   end
 end

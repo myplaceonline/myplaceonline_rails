@@ -378,7 +378,7 @@ en:
       operand_blank: "Operand must have a value or continue the equation."
       operator: "Operator"
       constant: "Constant"
-      constant_value: "Constant Name"
+      constant_value: "Constant Value"
       sub_element: "Sub-Element"
       create_sub_element: "Create Sub-Element"
       left_operand: "Left Operand"
