@@ -10,3 +10,48 @@
 <%= myp_region_field f, :region, "myplaceonline.general.region", obj.region %>
 <%= myp_subregion_field f, :sub_region1, "myplaceonline.general.sub_region1", obj.region, obj.sub_region1 %>
 <%= myp_text_area_markdown f, :notes, "myplaceonline.vehicles.notes", obj.notes %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.vehicles.loans"),
+    childpropertiesname: :vehicle_loans,
+    childproperties: obj.vehicle_loans,
+    deletebutton: t("myplaceonline.vehicles.delete_loan"),
+    addbutton: t("myplaceonline.vehicles.add_loan"),
+    expanded: obj.vehicle_loans.length > 0,
+    formjson: [
+      {
+        type: 'text',
+        name: 'lender',
+        placeholder: t("myplaceonline.vehicle_loans.lender"),
+        autofocus: true
+      },
+      {
+        type: 'text',
+        name: 'amount',
+        placeholder: t("myplaceonline.vehicle_loans.amount")
+      },
+      {
+        type: 'text',
+        name: 'monthly_payment',
+        placeholder: t("myplaceonline.vehicle_loans.monthly_payment")
+      },
+      {
+        type: 'date',
+        name: 'start',
+        placeholder: t("myplaceonline.vehicle_loans.start")
+      },
+      {
+        type: 'date',
+        name: 'paid_off',
+        placeholder: t("myplaceonline.vehicle_loans.paid_off")
+      }
+    ]
+  } do
+%>
+  <%= myp_text_field @child_fields, :lender, "myplaceonline.vehicle_loans.lender", @childproperty.lender %>
+  <%= myp_text_field @child_fields, :amount, "myplaceonline.vehicle_loans.amount", @childproperty.amount %>
+  <%= myp_text_field @child_fields, :monthly_payment, "myplaceonline.vehicle_loans.monthly_payment", @childproperty.monthly_payment %>
+  <%= myp_date_field @child_fields, :start, "myplaceonline.vehicle_loans.start", @childproperty.start %>
+  <%= myp_date_field @child_fields, :paid_off, "myplaceonline.vehicle_loans.paid_off", @childproperty.paid_off %>
+<% end %>

@@ -403,3 +403,12 @@ en:
       year: "Year"
       color: "Color"
       license_plate: "License Plate"
+      loans: "Loans"
+      add_loan: "Add Loan"
+      delete_loan: "Delete Loan"
+    vehicle_loans:
+      lender: "Lender"
+      amount: "Amount"
+      start: "Start Date"
+      paid_off: "Paid Off Date"
+      monthly_payment: "Monthly Payment"

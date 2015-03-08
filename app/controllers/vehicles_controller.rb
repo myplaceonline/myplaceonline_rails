@@ -25,7 +25,8 @@ class VehiclesController < MyplaceonlineController
         :color,
         :license_plate,
         :region,
-        :sub_region1
+        :sub_region1,
+        vehicle_loans_attributes: [:id, :lender, :amount, :start, :paid_off, :monthly_payment, :_destroy]
       )
     end
 end

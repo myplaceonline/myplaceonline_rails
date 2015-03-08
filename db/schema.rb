@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150308125634) do
+ActiveRecord::Schema.define(version: 20150308175422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -482,6 +482,19 @@ ActiveRecord::Schema.define(version: 20150308125634) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
+
+  create_table "vehicle_loans", force: true do |t|
+    t.string   "lender"
+    t.integer  "vehicle_id"
+    t.decimal  "amount",          precision: 10, scale: 2
+    t.date     "start"
+    t.date     "paid_off"
+    t.decimal  "monthly_payment", precision: 10, scale: 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "vehicle_loans", ["vehicle_id"], name: "index_vehicle_loans_on_vehicle_id", using: :btree
 
   create_table "vehicles", force: true do |t|
     t.string   "name"
