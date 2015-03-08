@@ -7,10 +7,17 @@
   <%= attribute_table_row(t("myplaceonline.vehicles.year"), @obj.year) %>
   <%= attribute_table_row(t("myplaceonline.vehicles.color"), @obj.color) %>
   <%= attribute_table_row(t("myplaceonline.vehicles.license_plate"), @obj.license_plate) %>
-  <%= attribute_table_row(t("myplaceonline.vehicles.owned_start"), @obj.owned_start) %>
-  <%= attribute_table_row(t("myplaceonline.vehicles.owned_end"), @obj.owned_end) %>
+  <%= attribute_table_row(t("myplaceonline.vehicles.owned_start"), Myp.display_date(@obj.owned_start, current_user)) %>
+  <%= attribute_table_row(t("myplaceonline.vehicles.owned_end"), Myp.display_date(@obj.owned_end, current_user)) %>
   <%= attribute_table_row(t("myplaceonline.general.region"), @obj.region) %>
   <%= attribute_table_row(t("myplaceonline.general.sub_region1"), @obj.sub_region1) %>
   <%= attribute_table_row_markdown(t("myplaceonline.vehicles.notes"), @obj.notes) %>
-  
+  <% @obj.vehicle_loans.each do |loan| %>
+    <%= attribute_table_row(t("myplaceonline.vehicle_loans.lender"), loan.lender) %>
+    <%= attribute_table_row(t("myplaceonline.vehicle_loans.amount"), loan.amount) %>
+    <%= attribute_table_row(t("myplaceonline.vehicle_loans.monthly_payment"), loan.monthly_payment) %>
+    <%= attribute_table_row(t("myplaceonline.vehicle_loans.start"), Myp.display_date(loan.start, current_user)) %>
+    <%= attribute_table_row(t("myplaceonline.vehicle_loans.paid_off"), Myp.display_date(loan.paid_off, current_user)) %>
+  <% end %>
+
 <% end %>
