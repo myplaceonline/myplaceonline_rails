@@ -7,10 +7,10 @@
   %>
 
   <% if region.nil? %>
-    <p><em><%= t("myplaceonline.locations.select_region") %></em></p>
+    <p><em><%= t("myplaceonline.general.select_region") %></em></p>
   <% elsif region.subregions? %>
-    <%= myp_subregion_select_field(f, :sub_region1, "myplaceonline.locations.sub_region1", region, subregion) %>
+    <%= myp_subregion_select_field(f, :sub_region1, "myplaceonline.general.sub_region1", region, subregion) %>
   <% else %>
-    <%= myp_text_field(f, :sub_region1, "myplaceonline.locations.sub_region1", subregion) %>
+    <%= myp_text_field(f, :sub_region1, "myplaceonline.general.sub_region1", subregion) %>
   <% end %>
 </div>

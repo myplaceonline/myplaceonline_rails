@@ -1,3 +1,5 @@
+# `region` is the country, `sub_region1` is the state, and `sug_region2`
+# is the city.
 class Location < ActiveRecord::Base
   belongs_to :identity
   validate :at_least_one

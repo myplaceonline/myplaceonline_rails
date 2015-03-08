@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :vehicles
+  post 'vehicles/new'
+
   resources :calculations
   post 'calculations/new'
 

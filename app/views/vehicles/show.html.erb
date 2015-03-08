@@ -1,0 +1,16 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.vehicles.name"), @obj.name) %>
+  <%= attribute_table_row(t("myplaceonline.vehicles.vin"), @obj.vin) %>
+  <%= attribute_table_row(t("myplaceonline.vehicles.manufacturer"), @obj.manufacturer) %>
+  <%= attribute_table_row(t("myplaceonline.vehicles.model"), @obj.model) %>
+  <%= attribute_table_row(t("myplaceonline.vehicles.year"), @obj.year) %>
+  <%= attribute_table_row(t("myplaceonline.vehicles.color"), @obj.color) %>
+  <%= attribute_table_row(t("myplaceonline.vehicles.license_plate"), @obj.license_plate) %>
+  <%= attribute_table_row(t("myplaceonline.vehicles.owned_start"), @obj.owned_start) %>
+  <%= attribute_table_row(t("myplaceonline.vehicles.owned_end"), @obj.owned_end) %>
+  <%= attribute_table_row(t("myplaceonline.general.region"), @obj.region) %>
+  <%= attribute_table_row(t("myplaceonline.general.sub_region1"), @obj.sub_region1) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.vehicles.notes"), @obj.notes) %>
+  
+<% end %>

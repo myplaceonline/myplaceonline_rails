@@ -1,0 +1,12 @@
+<%= myp_text_field f, :name, "myplaceonline.vehicles.name", obj.name, autofocus %>
+<%= myp_text_field f, :vin, "myplaceonline.vehicles.vin", obj.vin %>
+<%= myp_text_field f, :manufacturer, "myplaceonline.vehicles.manufacturer", obj.manufacturer %>
+<%= myp_text_field f, :model, "myplaceonline.vehicles.model", obj.model %>
+<%= myp_text_field f, :year, "myplaceonline.vehicles.year", obj.year %>
+<%= myp_text_field f, :color, "myplaceonline.vehicles.color", obj.color %>
+<%= myp_text_field f, :license_plate, "myplaceonline.vehicles.license_plate", obj.license_plate %>
+<%= myp_date_field f, :owned_start, "myplaceonline.vehicles.owned_start", obj.owned_start %>
+<%= myp_date_field f, :owned_end, "myplaceonline.vehicles.owned_end", obj.owned_end %>
+<%= myp_region_field f, :region, "myplaceonline.general.region", obj.region %>
+<%= myp_subregion_field f, :sub_region1, "myplaceonline.general.sub_region1", obj.region, obj.sub_region1 %>
+<%= myp_text_area_markdown f, :notes, "myplaceonline.vehicles.notes", obj.notes %>

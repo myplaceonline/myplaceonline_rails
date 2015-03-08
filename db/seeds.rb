@@ -27,3 +27,4 @@ ideas = Category.create(name: "ideas", link: "ideas", position: 0, parent: order
 lists = Category.create(name: "lists", link: "lists", position: 0, parent: order)
 calculation_forms = Category.create(name: "calculation_forms", link: "calculation_forms", position: 0, parent: order)
 calculations = Category.create(name: "calculations", link: "calculations", position: 0, parent: order)
+vehicles = Category.create(name: "vehicles", link: "vehicles", position: 0, parent: order)
