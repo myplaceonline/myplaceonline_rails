@@ -11,4 +11,17 @@ class CalculationForm < ActiveRecord::Base
   #validates_associated :root_element
   #validates_presence_of :root_element
   accepts_nested_attributes_for :root_element
+  
+  validate do
+    if !equation.blank?
+      calc = Dentaku::Calculator.new
+      dependencies = calc.dependencies(equation)
+      dependencies.each do |dependency|
+        found_input = calculation_inputs.find{|calculation_input| calculation_input.variable_name == dependency.to_s}
+        if found_input.nil?
+          errors.add(:equation, I18n.t("myplaceonline.calculation_forms.inputs_missing", variable_name: dependency.to_s))
+        end
+      end
+    end
+  end
 end

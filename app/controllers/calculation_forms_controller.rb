@@ -15,10 +15,10 @@ class CalculationFormsController < MyplaceonlineController
     def obj_params
       permit_tree = [
         :name,
+        :equation,
         {
-          calculation_inputs_attributes: [:id, :input_name, :_destroy]
-        },
-        tree_item("root_element_attributes", params["calculation_form"]["root_element_attributes"])
+          calculation_inputs_attributes: [:id, :input_name, :variable_name, :_destroy]
+        }
       ]
       params.require(:calculation_form).permit(permit_tree)
     end

@@ -392,6 +392,7 @@ en:
       input: "Question"
       variable_name: "Variable Name"
       equation: "Equation"
+      inputs_missing: "includes variable '%{variable_name}' for which an input doesn't exist."
     calculations:
       name: "Name"
       form: "Calculation Form"

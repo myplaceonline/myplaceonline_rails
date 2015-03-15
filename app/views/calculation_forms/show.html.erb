@@ -1,6 +1,6 @@
 <%= render layout: "shared/model_show" do %>
 
   <%= attribute_table_row(t("myplaceonline.calculation_forms.name"), @obj.name) %>
-  <%= attribute_table_row(t("myplaceonline.calculation_forms.formula"), @obj.root_element.nil? ? nil : @obj.root_element.to_human_readable) %>
+  <%= attribute_table_row(t("myplaceonline.calculation_forms.equation"), @obj.equation) %>
   
 <% end %>
