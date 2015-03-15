@@ -414,7 +414,11 @@ module Myp
       else
         time = time.in_time_zone(Rails.application.config.time_zone)
       end
-      time.to_s(format)
+      if !time.nil?
+        time.to_s(format)
+      else
+        nil
+      end
     else
       nil
     end
