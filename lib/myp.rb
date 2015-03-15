@@ -13,33 +13,9 @@ module Myp
 
   puts "Myplaceonline: Initializing categories"
   if ActiveRecord::Base.connection.table_exists?(Category.table_name)
-    @@all_categories[:order] = Category.find_by(:name => :order)
-    @@all_categories[:joy] = Category.find_by(:name => :joy)
-    @@all_categories[:meaning] = Category.find_by(:name => :meaning)
-    @@all_categories[:passwords] = Category.find_by(:name => :passwords)
-    @@all_categories[:movies] = Category.find_by(:name => :movies)
-    @@all_categories[:wisdoms] = Category.find_by(:name => :wisdoms)
-    @@all_categories[:to_dos] = Category.find_by(:name => :to_dos)
-    @@all_categories[:contacts] = Category.find_by(:name => :contacts)
-    @@all_categories[:files] = Category.find_by(:name => :files)
-    @@all_categories[:accomplishments] = Category.find_by(:name => :accomplishments)
-    @@all_categories[:feeds] = Category.find_by(:name => :feeds)
-    @@all_categories[:locations] = Category.find_by(:name => :locations)
-    @@all_categories[:activities] = Category.find_by(:name => :activities)
-    @@all_categories[:apartments] = Category.find_by(:name => :apartments)
-    @@all_categories[:jokes] = Category.find_by(:name => :jokes)
-    @@all_categories[:companies] = Category.find_by(:name => :companies)
-    @@all_categories[:promises] = Category.find_by(:name => :promises)
-    @@all_categories[:subscriptions] = Category.find_by(:name => :subscriptions)
-    @@all_categories[:credit_scores] = Category.find_by(:name => :credit_scores)
-    @@all_categories[:websites] = Category.find_by(:name => :websites)
-    @@all_categories[:credit_cards] = Category.find_by(:name => :credit_cards)
-    @@all_categories[:bank_accounts] = Category.find_by(:name => :bank_accounts)
-    @@all_categories[:ideas] = Category.find_by(:name => :ideas)
-    @@all_categories[:lists] = Category.find_by(:name => :lists)
-    @@all_categories[:calculation_forms] = Category.find_by(:name => :calculation_forms)
-    @@all_categories[:calculations] = Category.find_by(:name => :calculations)
-    @@all_categories[:vehicles] = Category.find_by(:name => :vehicles)
+    Category.all.each do |existing_category|
+      @@all_categories[existing_category.name.to_sym] = existing_category
+    end
     puts "Myplaceonline: Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
   end
   
