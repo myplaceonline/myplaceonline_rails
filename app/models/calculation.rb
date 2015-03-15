@@ -24,7 +24,9 @@ class Calculation < ActiveRecord::Base
   def create_cal
     calc = Dentaku::Calculator.new
     calculation_form.calculation_inputs.each do |calculation_input|
-      calc.store(calculation_input.variable_name => calculation_input.input_value.to_f)
+      if !calculation_input.input_value.blank?
+        calc.store(calculation_input.variable_name => calculation_input.input_value.to_f)
+      end
     end
     calc
   end
