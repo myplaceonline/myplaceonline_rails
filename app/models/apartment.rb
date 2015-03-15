@@ -1,24 +1,24 @@
 class Apartment < ActiveRecord::Base
   belongs_to :identity
 
-  belongs_to :location
+  belongs_to :location, :autosave => true
   validates_presence_of :location
   accepts_nested_attributes_for :location, reject_if: :all_blank
 
   # http://stackoverflow.com/a/12064875/4135310
   def location_attributes=(attributes)
-    if attributes['id'].present?
+    if !attributes['id'].blank?
       self.location = Location.find(attributes['id'])
     end
     super
   end
 
-  belongs_to :landlord, class_name: Contact
+  belongs_to :landlord, class_name: Contact, :autosave => true
   accepts_nested_attributes_for :landlord, reject_if: :all_blank
   
   # http://stackoverflow.com/a/12064875/4135310
   def landlord_attributes=(attributes)
-    if attributes['id'].present?
+    if !attributes['id'].blank?
       self.landlord = Contact.find(attributes['id'])
     end
     super
@@ -26,10 +26,6 @@ class Apartment < ActiveRecord::Base
 
   has_many :apartment_leases, :dependent => :destroy
   accepts_nested_attributes_for :apartment_leases, allow_destroy: true, reject_if: :all_blank
-  
-  validates_each :location, :landlord do |record, attr, value|
-    Myp.authorize_value(record, attr, value)
-  end
 
   def as_json(options={})
     super.as_json(options).merge({
@@ -40,5 +36,12 @@ class Apartment < ActiveRecord::Base
   
   def display
     location.display
+  end
+  
+  before_create :do_before_save
+  before_update :do_before_save
+
+  def do_before_save
+    Myp.set_common_model_properties(self)
   end
 end

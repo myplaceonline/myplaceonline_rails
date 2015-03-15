@@ -22,13 +22,6 @@ class ApartmentsController < MyplaceonlineController
       )
     end
     
-    def create_presave
-      @obj.location.identity = current_user.primary_identity
-      if !@obj.landlord.nil?
-        @obj.landlord.identity = current_user.primary_identity
-      end
-    end
-    
     def update_presave
       check_nested_attributes(@obj, :apartment_leases, :apartment)
     end

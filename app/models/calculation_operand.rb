@@ -21,4 +21,11 @@ class CalculationOperand < ActiveRecord::Base
   def to_human_readable
     calculation_element.nil? ? constant_value : calculation_element.to_human_readable
   end
+  
+  before_create :do_before_save
+  before_update :do_before_save
+
+  def do_before_save
+    Myp.set_common_model_properties(self)
+  end
 end

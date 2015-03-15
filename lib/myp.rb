@@ -427,12 +427,6 @@ module Myp
       nil
     end
   end
-  
-  def self.authorize_value(record, attr, value)
-    if !value.nil?
-      Ability.new(User.current_user).authorize!(:manage, value)
-    end
-  end
 
   def self.eye_catcher_marshalled
     "M4RSH4LLED_"
@@ -470,11 +464,31 @@ module Myp
     result
   end
   
-  def self.new_model(model)
+  def self.new_model(model, params = nil)
     if model.respond_to?("build")
-      model.build
+      result = model.build(params)
     else
-      model.new
+      result = model.new(params)
+    end
+    current_user = User.current_user
+    if !current_user.nil? && result.respond_to?("identity_id=")
+      result.identity_id = current_user.primary_identity.id
+    end
+    result
+  end
+  
+  def self.set_common_model_properties(model)
+    if model.respond_to?("identity=")
+      current_user = User.current_user
+      if !current_user.nil?
+        if !model.identity.nil?
+          if model.identity_id != current_user.primary_identity.id
+            raise "Unauthorized TODO"
+          end
+        else
+          model.identity = current_user.primary_identity
+        end
+      end
     end
   end
 end

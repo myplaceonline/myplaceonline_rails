@@ -61,7 +61,6 @@ class MyplaceonlineController < ApplicationController
     Myp.ensure_encryption_key(session)
     ActiveRecord::Base.transaction do
       @obj = model.new(obj_params)
-      @obj.identity_id = current_user.primary_identity.id
       # presave *MUST* occur before create_presave and update_presave
       presave
       create_presave
@@ -207,7 +206,8 @@ class MyplaceonlineController < ApplicationController
 
     def select_or_create_permit(parent_name, name, all_array)
       if params[parent_name] && params[parent_name][name] && params[parent_name][name][:id].blank?
-        { name => all_array }
+        # Push :id on even though we know it's blank to avoid the unpermitted parameter warning
+        { name => all_array.push(:id) }
       else
         { name => [:id] }
       end

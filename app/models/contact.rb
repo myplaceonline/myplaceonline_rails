@@ -40,9 +40,16 @@ class Contact < ActiveRecord::Base
     name
   end
   
-  def self.build
-    result = Contact.new
+  def self.build(params = nil)
+    result = Contact.new(params)
     result.ref = Myp.new_model(Identity)
     result
+  end
+  
+  before_create :do_before_save
+  before_update :do_before_save
+
+  def do_before_save
+    Myp.set_common_model_properties(self)
   end
 end

@@ -82,4 +82,20 @@ class Identity < ActiveRecord::Base
       end
     end
   end
+
+  before_create :before_create_set_common
+
+  def before_create_set_common
+    current_user = User.current_user
+    if !current_user.nil? && respond_to?("identity_id=")
+      identity_id = current_user.primary_identity.id
+    end
+  end
+  
+  before_create :do_before_save
+  before_update :do_before_save
+
+  def do_before_save
+    Myp.set_common_model_properties(self)
+  end
 end
