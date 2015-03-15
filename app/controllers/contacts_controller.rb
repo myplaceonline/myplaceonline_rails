@@ -48,10 +48,6 @@ class ContactsController < MyplaceonlineController
       )
     end
 
-    def new_build
-      @obj.ref = Identity.new
-    end
-
     def all
       model.joins(:ref).where(
         identity_id: current_user.primary_identity.id

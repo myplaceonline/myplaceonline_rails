@@ -469,4 +469,12 @@ module Myp
     end
     result
   end
+  
+  def self.new_model(model)
+    if model.respond_to?("build")
+      model.build
+    else
+      model.new
+    end
+  end
 end

@@ -38,8 +38,7 @@ class MyplaceonlineController < ApplicationController
 
   def new
     Myp.ensure_encryption_key(session)
-    @obj = model.new
-    new_build
+    @obj = Myp.new_model(model)
     @url = new_path
     if request.post?
       return create
@@ -184,9 +183,6 @@ class MyplaceonlineController < ApplicationController
     def before_destroy
     end
     
-    def new_build
-    end
-
     def all
       model.where(
         identity_id: current_user.primary_identity.id

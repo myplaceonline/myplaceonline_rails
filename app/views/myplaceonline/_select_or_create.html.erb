@@ -1,5 +1,5 @@
 <%
-existingobj ||= objform[0..(objform.index('/')-1)].singularize.camelize.constantize.new
+existingobj ||= Myp.new_model(objform[0..(objform.index('/')-1)].singularize.camelize.constantize)
 %>
 <div data-role="collapsible" data-collapsed="false">
   <h4><%= heading %></h4>

@@ -39,4 +39,10 @@ class Contact < ActiveRecord::Base
   def display
     name
   end
+  
+  def self.build
+    result = Contact.new
+    result.ref = Myp.new_model(Identity)
+    result
+  end
 end
