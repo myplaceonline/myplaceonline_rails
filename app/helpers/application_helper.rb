@@ -51,6 +51,16 @@ module ApplicationHelper
     html.html_safe
   end
   
+  def table_row_heading(name)
+    html = <<-HTML
+    <tr>
+      <td colspan="3" style="font-weight: bold; text-decoration: underline;">#{name}</td>
+    </tr>
+    HTML
+    
+    html.html_safe
+  end
+  
   def attribute_table_row_url(name, url, may_be_nonurl = false, url_text = nil, clipboard = nil, linkclasses = nil, external = false)
     if may_be_nonurl && !url.blank? && !url.start_with?("/") && !url.start_with?("http:")
       # Probably not a URL, just display raw text

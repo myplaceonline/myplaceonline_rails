@@ -407,6 +407,7 @@ en:
       add_loan: "Add Loan"
       delete_loan: "Delete Loan"
     vehicle_loans:
+      loan: "Vehicle Loan"
       lender: "Lender"
       amount: "Amount"
       start: "Start Date"
