@@ -6,6 +6,16 @@ class CalculationFormsController < MyplaceonlineController
   def display_obj(obj)
     obj.name
   end
+  
+  def self.param_names
+    [
+      :name,
+      :equation,
+      {
+        calculation_inputs_attributes: [:id, :input_name, :input_value, :variable_name, :_destroy]
+      }
+    ]
+  end
 
   protected
     def sorts
@@ -13,13 +23,7 @@ class CalculationFormsController < MyplaceonlineController
     end
 
     def obj_params
-      permit_tree = [
-        :name,
-        :equation,
-        {
-          calculation_inputs_attributes: [:id, :input_name, :variable_name, :_destroy]
-        }
-      ]
+      permit_tree = CalculationFormsController.param_names
       params.require(:calculation_form).permit(permit_tree)
     end
     
