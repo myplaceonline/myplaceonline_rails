@@ -1,5 +1,4 @@
 <%= myp_text_field f, :name, "myplaceonline.calculation_forms.name", obj.name, autofocus %>
-<p>A calculation form is a set of zero or more inputs (i.e. variable inputs from the user) and then a formula which is a set of one or more operands and operators, where each operand is either a constant value (e.g. an integer), a reference to an input, or a recursive calculation. For example, inputs of "Size" and "Questions" and a formula of ((5 * Size) + Questions)</p>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,

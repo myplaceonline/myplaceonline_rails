@@ -375,7 +375,7 @@ en:
       add: "Add Item"
       item: "Item Name"
     calculation_forms:
-      name: "Name"
+      name: "Form Name"
       elements: "Equation"
       operand_blank: "Operand must have a value or continue the equation."
       operator: "Operator"
@@ -389,7 +389,8 @@ en:
       inputs: "Inputs"
       delete_input: "Delete Input"
       add_input: "Add Input"
-      input: "Input"
+      input: "Question"
+      variable_name: "Variable Name"
     calculations:
       name: "Name"
       form: "Calculation Form"
