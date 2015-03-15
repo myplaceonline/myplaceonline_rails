@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150315145037) do
+ActiveRecord::Schema.define(version: 20150315145622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20150315145037) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "root_element_id"
+    t.text     "equation"
   end
 
   add_index "calculation_forms", ["identity_id"], name: "index_calculation_forms_on_identity_id", using: :btree
