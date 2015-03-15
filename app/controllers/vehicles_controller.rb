@@ -26,7 +26,8 @@ class VehiclesController < MyplaceonlineController
         :license_plate,
         :region,
         :sub_region1,
-        vehicle_loans_attributes: [:id, :lender, :amount, :start, :paid_off, :monthly_payment, :_destroy]
+        vehicle_loans_attributes: [:id, :lender, :amount, :start, :paid_off, :monthly_payment, :_destroy],
+        vehicle_services_attributes: [:id, :short_description, :date_due, :date_serviced, :miles, :service_location, :cost, :notes]
       )
     end
 end

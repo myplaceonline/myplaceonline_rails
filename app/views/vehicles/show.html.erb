@@ -19,5 +19,14 @@
     <%= attribute_table_row(t("myplaceonline.vehicle_loans.start"), Myp.display_date(loan.start, current_user)) %>
     <%= attribute_table_row(t("myplaceonline.vehicle_loans.paid_off"), Myp.display_date(loan.paid_off, current_user)) %>
   <% end %>
+  <% @obj.vehicle_services.each do |service| %>
+    <%= attribute_table_row(t("myplaceonline.vehicle_service.short_description"), service.short_description) %>
+    <%= attribute_table_row(t("myplaceonline.vehicle_service.date_due"), Myp.display_date(service.date_due, current_user)) %>
+    <%= attribute_table_row(t("myplaceonline.vehicle_service.date_serviced"), Myp.display_date(service.date_serviced, current_user)) %>
+    <%= attribute_table_row(t("myplaceonline.vehicle_service.service_location"), service.service_location) %>
+    <%= attribute_table_row(t("myplaceonline.vehicle_service.cost"), service.cost) %>
+    <%= attribute_table_row(t("myplaceonline.vehicle_service.miles"), service.miles) %>
+    <%= attribute_table_row_markdown(t("myplaceonline.vehicle_service.notes"), service.notes) %>
+  <% end %>
 
 <% end %>
