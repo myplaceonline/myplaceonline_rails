@@ -58,4 +58,4 @@ gem 'factory_girl_rails'
 gem 'carmen'
 gem 'carmen-rails'
 gem 'dentaku'
-
+gem 'calculus'
