@@ -11,33 +11,44 @@
 
 <% if !user_signed_in? %>
 
-<p><%= t("myplaceonline.welcome.intro_html", :opensourcelink => link_to(t("myplaceonline.welcome.opensourcelink"), "https://github.com/myplaceonline/myplaceonline", class: "externallink")) %></p>
+  <p><%= t("myplaceonline.welcome.intro_html", :opensourcelink => link_to(t("myplaceonline.welcome.opensourcelink"), "https://github.com/myplaceonline/myplaceonline", class: "externallink")) %></p>
 
-<div style="text-align: center">
-  <%= link_to t("myplaceonline.buttons.signin"), new_user_session_path, :class => 'ui-btn ui-btn-icon-left ui-icon-power ui-btn-inline'  %>
-  <%= link_to t("myplaceonline.buttons.signup"), new_user_registration_path, :class => 'ui-btn ui-btn-icon-left ui-icon-user ui-btn-inline'  %>
-</div>
+  <div style="text-align: center">
+    <%= link_to t("myplaceonline.buttons.signin"), new_user_session_path, :class => 'ui-btn ui-btn-icon-left ui-icon-power ui-btn-inline'  %>
+    <%= link_to t("myplaceonline.buttons.signup"), new_user_registration_path, :class => 'ui-btn ui-btn-icon-left ui-icon-user ui-btn-inline'  %>
+  </div>
 
-<%= raw(Myp.welcome_features) %>
+  <%= raw(Myp.welcome_features) %>
 
 <% else %>
 
-<div class="horizontal_center">
-    <span id="myplaceonline_welcome_score"><%= @totalPoints %></span>
-</div>
+  <div class="horizontal_center">
+      <span id="myplaceonline_welcome_score"><%= @totalPoints %></span>
+  </div>
 
-<%= render "shared/search", :initialCategoryList => @initialCategoryList %>
+  <%= render "shared/search", :initialCategoryList => @initialCategoryList %>
 
-<% if @usefulCategoryList.length > 0 %>
+  <% if @usefulCategoryList.length > 0 %>
 
-<ul id="myplaceonline_recent_list" data-role="listview" data-inset="true">
-</ul>
-<script type="text/javascript">
-onPageLoad(function() {
-  jqmSetList($("#myplaceonline_recent_list"), <%= raw(@usefulCategoryList.to_json) %>, "<%= t("myplaceonline.welcome.recentlyused") %>");
-});
-</script>
+    <ul id="myplaceonline_recent_list" data-role="listview" data-inset="true">
+    </ul>
+    <script type="text/javascript">
+    onPageLoad(function() {
+      jqmSetList($("#myplaceonline_recent_list"), <%= raw(@usefulCategoryList.to_json) %>, "<%= t("myplaceonline.welcome.recentlyused") %>");
+    });
+    </script>
 
-<% end %>
+  <% end %>
+
+  <% if @due.length > 0 %>
+
+    <ul data-role="listview" data-inset="true">
+      <li data-role="list-divider"><%= t("myplaceonline.welcome.due") %></li>
+      <% @due.each do |due_item| %>
+        <li><a href="<%= due_item.link %>"><%= due_item.display %> <span class="ui-li-count"><%= Myp.display_date(due_item.date, current_user) %></span></a></li>
+      <% end %>
+    </ul>
+
+  <% end %>
 
 <% end %>

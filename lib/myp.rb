@@ -437,4 +437,36 @@ module Myp
   def self.eye_catcher_marshalled
     "M4RSH4LLED_"
   end
+  
+  class DueItem
+    def initialize(display, link, date)
+      @display = display
+      @link = link
+      @date = date
+    end
+    
+    def display
+      @display
+    end
+    
+    def link
+      @link
+    end
+    
+    def date
+      @date
+    end
+  end
+  
+  def self.due(user)
+    result = Array.new
+    Vehicle.where(identity: user.primary_identity).each do |vehicle|
+      vehicle.vehicle_services.each do |service|
+        if service.date_serviced.nil? && !service.date_due.nil?
+          result.push(DueItem.new(service.short_description, "/vehicles/" + vehicle.id.to_s, service.date_due))
+        end
+      end
+    end
+    result
+  end
 end
