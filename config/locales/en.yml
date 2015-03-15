@@ -391,6 +391,7 @@ en:
       add_input: "Add Input"
       input: "Question"
       variable_name: "Variable Name"
+      equation: "Equation"
     calculations:
       name: "Name"
       form: "Calculation Form"

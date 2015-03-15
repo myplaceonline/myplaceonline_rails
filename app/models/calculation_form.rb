@@ -2,6 +2,7 @@ class CalculationForm < ActiveRecord::Base
   belongs_to :identity
   
   validates :name, presence: true
+  validates :equation, presence: true
   
   has_many :calculation_inputs, :dependent => :destroy
   accepts_nested_attributes_for :calculation_inputs, allow_destroy: true, reject_if: :all_blank
