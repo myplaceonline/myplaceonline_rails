@@ -6,8 +6,22 @@ class CalculationsController < MyplaceonlineController
   def display_obj(obj)
     obj.name
   end
+  
+  def available_forms
+    CalculationForm.where(identity_id: current_user.primary_identity.id, is_duplicate: false)
+  end
 
   protected
+    def new_obj_initialize
+      if !params[:form].nil?
+        existing_form = available_forms.find(params[:form].to_i)
+        if !existing_form.nil?
+          @obj.original_calculation_form_id = existing_form.id
+          create_presave
+        end
+      end
+    end
+    
     def sorts
       ["lower(calculations.name) ASC"]
     end
@@ -24,7 +38,7 @@ class CalculationsController < MyplaceonlineController
 
     def create_presave
       if !@obj.original_calculation_form_id.nil? && @obj.calculation_form.nil?
-        existing_form = CalculationForm.find(@obj.original_calculation_form_id)
+        existing_form = available_forms.find(@obj.original_calculation_form_id)
         new_inputs = existing_form.calculation_inputs.map{|calculation_input| calculation_input.dup}
         @obj.calculation_form = existing_form.dup
         @obj.calculation_form.calculation_inputs = new_inputs

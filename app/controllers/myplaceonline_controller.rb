@@ -39,6 +39,7 @@ class MyplaceonlineController < ApplicationController
   def new
     Myp.ensure_encryption_key(session)
     @obj = Myp.new_model(model)
+    new_obj_initialize
     @url = new_path
     if request.post?
       return create
@@ -164,6 +165,9 @@ class MyplaceonlineController < ApplicationController
     end
     
     def before_all_actions
+    end
+    
+    def new_obj_initialize
     end
     
     # presave *MUST* occur before create_presave or update_presave
