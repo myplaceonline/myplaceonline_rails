@@ -398,6 +398,8 @@ en:
       form: "Calculation Form"
       input_missing: "required for '%{input_name}'"
       result: "Result"
+      calculation_form: "Equation"
+      original_calculation_form: "Original Form"
     vehicles:
       name: "Vehicle Name"
       notes: "Notes"

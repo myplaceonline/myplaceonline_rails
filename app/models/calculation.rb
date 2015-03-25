@@ -6,7 +6,7 @@ class Calculation < ActiveRecord::Base
   accepts_nested_attributes_for :calculation_form
   validates_presence_of :calculation_form
 
-  attr_accessor :original_calculation_form_id
+  belongs_to :original_calculation_form, class_name: CalculationForm
 
   validate do
     if !calculation_form.nil?
@@ -32,7 +32,11 @@ class Calculation < ActiveRecord::Base
   end
   
   def evaluate
-    create_cal.evaluate(calculation_form.equation).to_s
+    if !calculation_form.nil?
+      create_cal.evaluate(calculation_form.equation).to_s
+    else
+      nil
+    end
   end
   
   before_create :do_before_save

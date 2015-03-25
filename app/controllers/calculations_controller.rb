@@ -28,6 +28,7 @@ class CalculationsController < MyplaceonlineController
         new_inputs = existing_form.calculation_inputs.map{|calculation_input| calculation_input.dup}
         @obj.calculation_form = existing_form.dup
         @obj.calculation_form.calculation_inputs = new_inputs
+        @obj.calculation_form.is_duplicate = true
       end
     end
 end

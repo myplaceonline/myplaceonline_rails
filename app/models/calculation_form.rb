@@ -12,6 +12,12 @@ class CalculationForm < ActiveRecord::Base
   #validates_presence_of :root_element
   accepts_nested_attributes_for :root_element
   
+  after_initialize :init
+
+  def init
+    self.is_duplicate = false if self.is_duplicate.nil?
+  end
+  
   validate do
     if !equation.blank?
       calc = Dentaku::Calculator.new
@@ -30,5 +36,9 @@ class CalculationForm < ActiveRecord::Base
 
   def do_before_save
     Myp.set_common_model_properties(self)
+  end
+  
+  def display
+    name
   end
 end

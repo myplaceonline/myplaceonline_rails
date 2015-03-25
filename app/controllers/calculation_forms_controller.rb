@@ -9,6 +9,7 @@ class CalculationFormsController < MyplaceonlineController
   
   def self.param_names
     [
+      :id,
       :name,
       :equation,
       {
@@ -18,6 +19,13 @@ class CalculationFormsController < MyplaceonlineController
   end
 
   protected
+    def all
+      model.where(
+        identity_id: current_user.primary_identity.id,
+        is_duplicate: false
+      )
+    end
+    
     def sorts
       ["lower(calculation_forms.name) ASC"]
     end
