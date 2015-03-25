@@ -6,6 +6,7 @@
   <%= f.fields_for :calculation_form, obj.calculation_form do |calculation_form_form| %>
     <%= calculation_form_form.hidden_field :name %>
     <%= calculation_form_form.hidden_field :equation %>
+    <%= calculation_form_form.hidden_field :is_duplicate %>
     <% obj.calculation_form.calculation_inputs.each do |calculation_input| %>
       <%= calculation_form_form.fields_for :calculation_inputs, calculation_input do |child_fields| %>
         <%= child_fields.hidden_field :input_name %>

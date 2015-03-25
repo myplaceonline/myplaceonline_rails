@@ -12,6 +12,7 @@ class CalculationFormsController < MyplaceonlineController
       :id,
       :name,
       :equation,
+      :is_duplicate,
       {
         calculation_inputs_attributes: [:id, :input_name, :input_value, :variable_name, :_destroy]
       }
