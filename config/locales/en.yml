@@ -437,3 +437,9 @@ en:
     questions:
       name: "Question"
       notes: "Notes"
+      hypotheses: "Hypotheses"
+      add_hypothesis: "Add Hypothesis"
+      delete_hypothesis: "Delete Hypothesis"
+    hypothesis:
+      name: "Hypothesis"
+      notes: "Notes"

@@ -1,2 +1,29 @@
 <%= myp_text_field f, :name, "myplaceonline.questions.name", obj.name, autofocus %>
 <%= myp_text_area_markdown f, :notes, "myplaceonline.questions.notes", obj.notes %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.questions.hypotheses"),
+    childpropertiesname: :hypotheses,
+    childproperties: obj.hypotheses,
+    deletebutton: t("myplaceonline.questions.delete_hypothesis"),
+    addbutton: t("myplaceonline.questions.add_hypothesis"),
+    expanded: obj.hypotheses.length > 0,
+    formjson: [
+      {
+        type: 'text',
+        name: 'name',
+        placeholder: t("myplaceonline.hypothesis.name"),
+        autofocus: true
+      },
+      {
+        type: 'textarea',
+        name: 'notes',
+        placeholder: t("myplaceonline.hypothesis.notes")
+      }
+    ]
+  } do
+%>
+  <%= myp_text_field @child_fields, :name, "myplaceonline.hypothesis.name", @childproperty.name %>
+  <%= myp_text_area_markdown @child_fields, :notes, "myplaceonline.hypothesis.notes", @childproperty.notes %>
+<% end %>

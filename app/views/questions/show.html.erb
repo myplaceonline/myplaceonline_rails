@@ -3,4 +3,10 @@
   <%= attribute_table_row(t("myplaceonline.questions.name"), @obj.name) %>
   <%= attribute_table_row_markdown(t("myplaceonline.questions.notes"), @obj.notes) %>
   
+  <% @obj.hypotheses.each do |hypothesis| %>
+    <%= table_row_heading(t("myplaceonline.questions.hypotheses")) %>
+    <%= attribute_table_row(t("myplaceonline.hypothesis.name"), hypothesis.name) %>
+    <%= attribute_table_row_markdown(t("myplaceonline.hypothesis.notes"), hypothesis.notes) %>
+  <% end %>
+  
 <% end %>

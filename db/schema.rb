@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150327181316) do
+ActiveRecord::Schema.define(version: 20150327182307) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -263,6 +263,18 @@ ActiveRecord::Schema.define(version: 20150327181316) do
     t.string  "style"
     t.binary  "file_contents"
   end
+
+  create_table "hypotheses", force: true do |t|
+    t.string   "name"
+    t.text     "notes"
+    t.integer  "question_id"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "hypotheses", ["identity_id"], name: "index_hypotheses_on_identity_id", using: :btree
+  add_index "hypotheses", ["question_id"], name: "index_hypotheses_on_question_id", using: :btree
 
   create_table "ideas", force: true do |t|
     t.string   "name"

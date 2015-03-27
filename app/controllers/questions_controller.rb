@@ -13,6 +13,10 @@ class QuestionsController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:question).permit(:name, :notes)
+      params.require(:question).permit(
+        :name,
+        :notes,
+        hypotheses_attributes: [:id, :name, :notes, :_destroy]
+      )
     end
 end
