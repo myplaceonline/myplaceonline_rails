@@ -53,21 +53,27 @@
       f: f,
       heading: t("myplaceonline.contacts.conversations"),
       childpropertiesname: :conversations,
-      childproperties: obj.conversations,
+      childproperties: obj.all_conversations,
       deletebutton: t("myplaceonline.contacts.delete_conversation"),
       addbutton: t("myplaceonline.contacts.add_conversation"),
-      expanded: obj.conversations.length > 0,
+      expanded: obj.all_conversations.length > 0,
       formjson: [
         {
           type: 'textarea',
           name: 'conversation',
           placeholder: t("myplaceonline.contacts.conversation"),
           autofocus: true
+        },
+        {
+          type: 'date',
+          name: 'when',
+          placeholder: t("myplaceonline.contacts.conversation_date")
         }
       ]
     } do |child_fields, childproperty|
   %>
     <%= myp_text_area child_fields, :conversation, "myplaceonline.contacts.conversation", childproperty.conversation %>
+    <%= myp_date_field child_fields, :when, "myplaceonline.contacts.conversation_date", childproperty.when %>
   <% end %>
 
   <%=

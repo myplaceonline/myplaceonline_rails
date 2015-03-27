@@ -286,6 +286,7 @@ en:
       conversations: "Conversations"
       add_conversation: "Add Conversation"
       delete_conversation: "Delete Conversation"
+      conversation_date: "Date"
     files:
       name: "Name"
       download: "Download"

@@ -8,6 +8,10 @@ class Contact < ActiveRecord::Base
   has_many :conversations, :dependent => :destroy
   accepts_nested_attributes_for :conversations, allow_destroy: true, reject_if: :all_blank
   
+  def all_conversations
+    Conversation.where(contact_id: id).order(["conversations.when DESC", "conversations.created_at DESC"])
+  end
+  
   def custom_validation
     if !contact_identity.nil? && contact_identity.name.blank?
       errors.add(:name, "not specified")
