@@ -46,11 +46,23 @@
           type: 'textarea',
           name: 'notes',
           placeholder: t("myplaceonline.hypothesis_experiments.notes")
+        },
+        {
+          type: 'date',
+          name: 'started',
+          placeholder: t("myplaceonline.hypothesis_experiments.started")
+        },
+        {
+          type: 'date',
+          name: 'ended',
+          placeholder: t("myplaceonline.hypothesis_experiments.ended")
         }
       ]
     } do
   %>
     <%= myp_text_field @child_fields, :name, "myplaceonline.hypothesis_experiments.name", @childproperty.name %>
     <%= myp_text_area_markdown @child_fields, :notes, "myplaceonline.hypothesis_experiments.notes", @childproperty.notes %>
+    <%= myp_date_field @child_fields, :started, "myplaceonline.hypothesis_experiments.started", @childproperty.started %>
+    <%= myp_date_field @child_fields, :ended, "myplaceonline.hypothesis_experiments.ended", @childproperty.ended %>
   <% end %>
 <% end %>
