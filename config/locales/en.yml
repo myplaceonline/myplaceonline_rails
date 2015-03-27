@@ -441,10 +441,12 @@ en:
       add_hypothesis: "Add Hypothesis"
       delete_hypothesis: "Delete Hypothesis"
     hypothesis:
+      hypothesis: "Hypothesis"
       name: "Hypothesis"
       notes: "Notes"
       experiments: "Experiments"
     hypothesis_experiments:
+      experiment: "Experiment"
       name: "Experiment"
       notes: "Notes"
       started: "Started"

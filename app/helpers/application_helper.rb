@@ -95,6 +95,10 @@ module ApplicationHelper
     attribute_table_row(name, val)
   end
   
+  def attribute_table_row_date(name, d)
+    attribute_table_row(name, d.nil? ? nil : Myp.display_date(d, current_user))
+  end
+  
   def url_or_blank(url, text = nil, clipboard = nil, linkclasses = nil, external = false)
     if !url.to_s.empty?
       if text.to_s.empty?
