@@ -21,9 +21,9 @@
           autofocus: true
         }
       ]
-    } do
+    } do |child_fields, childproperty|
   %>
-    <%= myp_text_field @child_fields, :email, "myplaceonline.identities.email", @childproperty.email %>
+    <%= myp_text_field child_fields, :email, "myplaceonline.identities.email", childproperty.email %>
   <% end %>
 
   <%=
@@ -43,9 +43,9 @@
           autofocus: true
         }
       ]
-    } do
+    } do |child_fields, childproperty|
   %>
-    <%= myp_text_field @child_fields, :number, "myplaceonline.identities.phone", @childproperty.number %>
+    <%= myp_text_field child_fields, :number, "myplaceonline.identities.phone", childproperty.number %>
   <% end %>
 
   <%=
@@ -65,9 +65,9 @@
           autofocus: true
         }
       ]
-    } do
+    } do |child_fields, childproperty|
   %>
-    <%= myp_text_area @child_fields, :conversation, "myplaceonline.contacts.conversation", @childproperty.conversation %>
+    <%= myp_text_area child_fields, :conversation, "myplaceonline.contacts.conversation", childproperty.conversation %>
   <% end %>
 
   <%=
@@ -92,13 +92,13 @@
           autofocus: true
         }
       ]
-    } do
+    } do |child_fields, childproperty|
   %>
     <%=
       render partial: 'myplaceonline/select_or_create', locals: {
         f: @child_fields,
         name: :location_attributes,
-        existingobj: @childproperty.location,
+        existingobj: childproperty.location,
         heading: t("myplaceonline.identities.location"),
         objform: "locations/form",
         existingobjurl: "location_path",

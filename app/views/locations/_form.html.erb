@@ -23,7 +23,7 @@
         autofocus: true
       }
     ]
-  } do
+  } do |child_fields, childproperty|
 %>
-  <%= myp_text_field @child_fields, :number, "myplaceonline.locations.phone", @childproperty.number %>
+  <%= myp_text_field child_fields, :number, "myplaceonline.locations.phone", childproperty.number %>
 <% end %>

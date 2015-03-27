@@ -45,10 +45,10 @@
         destination: "$(this).parents('.itemwrapper').find('.random_destination')"
       }
     ]
-  } do
+  } do |child_fields, childproperty|
 %>
-  <%= myp_text_field @child_fields, :question, "myplaceonline.passwords.question", @childproperty.question %>
-  <%= myp_text_field @child_fields, :answer, "myplaceonline.passwords.answer", @childproperty.answer, false, "random_destination" %>
+  <%= myp_text_field child_fields, :question, "myplaceonline.passwords.question", childproperty.question %>
+  <%= myp_text_field child_fields, :answer, "myplaceonline.passwords.answer", childproperty.answer, false, "random_destination" %>
   <%=
     render partial: 'myplaceonline/generaterandom', locals: {
       heading: t("myplaceonline.passwords.generate_answer"),

@@ -4,11 +4,7 @@
     <% childproperties.each do |childproperty| %>
       <%= f.fields_for childpropertiesname, childproperty do |child_fields| %>
         <div class="itemwrapper" data-nameprefix="<%= child_fields.object_name %>">
-          <%
-          @child_fields = child_fields
-          @childproperty = childproperty
-          %>
-          <%= yield %>
+          <%= yield child_fields, childproperty %>
           <p><a href="#" onclick="return form_remove_item(this);" class="ui-btn"><%= deletebutton %></a></p>
         </div>
       <% end %>

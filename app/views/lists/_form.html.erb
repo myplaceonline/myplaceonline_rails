@@ -16,7 +16,7 @@
         autofocus: true
       }
     ]
-  } do
+  } do |child_fields, childproperty|
 %>
-  <%= myp_text_field @child_fields, :name, "myplaceonline.lists.item", @childproperty.name %>
+  <%= myp_text_field child_fields, :name, "myplaceonline.lists.item", childproperty.name %>
 <% end %>
