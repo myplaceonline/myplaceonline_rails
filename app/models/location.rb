@@ -84,8 +84,6 @@ class Location < ActiveRecord::Base
   before_update :do_before_save
 
   def do_before_save
-    puts "LOC HERE " + self.inspect
     Myp.set_common_model_properties(self)
-    puts "LOC 2 " + self.inspect
   end
 end
