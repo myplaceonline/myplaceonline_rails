@@ -1,18 +1,27 @@
 <div data-role="collapsible"<%= defined?(expanded) && expanded ? raw(" data-collapsed=\"false\"") : "" %>>
   <h3><%= heading %></h3>
-  <div class="itemswrapper">
+  <% random_name = SecureRandom.hex(10) %>
+  <div id="itemswrapper<%= random_name %>" class="itemswrapper"<%= defined?(position_field) ? raw(" data-position-field=\"" + position_field.to_s + "\"") : "" %>>
     <% childproperties.each do |childproperty| %>
       <%= f.fields_for childpropertiesname, childproperty do |child_fields| %>
-        <div class="itemwrapper" data-nameprefix="<%= child_fields.object_name %>">
+        <div class="itemwrapper itemswrapper<%= random_name %>" data-nameprefix="<%= child_fields.object_name %>">
           <%= yield child_fields, childproperty %>
-          <p><a href="#" onclick="return form_remove_item(this);" class="ui-btn"><%= deletebutton %></a></p>
+          <% if defined?(position_field) %>
+            <%= child_fields.hidden_field(position_field) %>
+          <% end %>
+          <div data-role="controlgroup" data-type="horizontal">
+            <a href="#" onclick="return form_remove_item(this);" class="ui-btn ui-btn-icon-left ui-icon-delete ui-btn-inline"><%= deletebutton %></a>
+            <% if defined?(position_field) %>
+              <a href="#" onclick="return form_move_item(this, 1);" class="ui-btn ui-btn-icon-left ui-icon-arrow-d ui-btn-inline"><%= t("myplaceonline.general.movedown", name: itemname) %></a>
+              <a href="#" onclick="return form_move_item(this, -1);" class="ui-btn ui-btn-icon-left ui-icon-arrow-d ui-btn-inline"><%= t("myplaceonline.general.moveup", name: itemname) %></a>
+            <% end %>
+          </div>
         </div>
       <% end %>
     <% end %>
     <script type="text/javascript">
-    <% random_name = SecureRandom.hex(10) %>
     var x<%= random_name %> = <%= raw(formjson.to_json) %>;
     </script>
-    <p><a href="#" onclick="return form_add_item(this, '<%= f.object_name + "[" + childpropertiesname.to_s + "_attributes]" %>', '<%= deletebutton %>', x<%= random_name %>);" class="ui-btn"><%= addbutton %></a></p>
+    <p><a href="#" onclick="return form_add_item(this, '<%= f.object_name + "[" + childpropertiesname.to_s + "_attributes]" %>', '<%= deletebutton %>', x<%= random_name %>);" class="ui-btn ui-btn-icon-left ui-icon-plus ui-btn-inline"><%= addbutton %></a></p>
   </div>
 </div>

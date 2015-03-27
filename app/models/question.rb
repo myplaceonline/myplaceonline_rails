@@ -7,6 +7,10 @@ class Question < ActiveRecord::Base
 
   before_create :do_before_save
   before_update :do_before_save
+  
+  def all_hypotheses
+    Hypothesis.where(question_id: id).order(["hypotheses.position ASC"])
+  end
 
   def do_before_save
     Myp.set_common_model_properties(self)

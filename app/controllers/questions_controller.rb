@@ -20,6 +20,7 @@ class QuestionsController < MyplaceonlineController
           :id,
           :name,
           :notes,
+          :position,
           :_destroy,
           hypothesis_experiments_attributes: [
             :id,

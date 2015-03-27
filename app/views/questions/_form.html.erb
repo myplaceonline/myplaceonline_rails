@@ -5,10 +5,12 @@
     f: f,
     heading: t("myplaceonline.questions.hypotheses"),
     childpropertiesname: :hypotheses,
-    childproperties: obj.hypotheses,
+    childproperties: obj.all_hypotheses,
     deletebutton: t("myplaceonline.questions.delete_hypothesis"),
     addbutton: t("myplaceonline.questions.add_hypothesis"),
-    expanded: obj.hypotheses.length > 0,
+    expanded: obj.all_hypotheses.length > 0,
+    position_field: :position,
+    itemname: t("myplaceonline.hypothesis.hypothesis"),
     formjson: [
       {
         type: 'text',
@@ -20,6 +22,10 @@
         type: 'textarea',
         name: 'notes',
         placeholder: t("myplaceonline.hypothesis.notes")
+      },
+      {
+        type: 'position',
+        name: 'position'
       }
     ]
   } do |child_fields, childproperty|

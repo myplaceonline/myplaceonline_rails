@@ -90,7 +90,7 @@ function isArray(obj) {
   return Object.prototype.toString.call(obj) === '[object Array]';
 }
 
-function getIdPrefixFromNamePrefix(namePrefix) {
+function get_name_as_id(namePrefix) {
   return namePrefix.replace(/\[/g, '_').replace(/\]/g, '');
 }
 
@@ -100,6 +100,7 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
   if (itemswrapper.length == 0) {
     alert('API error: form_add_item call should be within DIV with class itemswrapper');
   }
+  var itemswrapper_id = itemswrapper.attr("id");
   var itemwrappers = itemswrapper.find(".itemwrapper");
   if (!nonIndexBased) {
     itemwrappers.each(function() {
@@ -111,19 +112,21 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
   }
   index++;
   
+  var has_position = false;
+  
   //if (singletonMessage && itemwrappers.length > 0) {
   //  alert(singletonMessage);
   //  return false;
   //}
   
-  var html = "<div class='itemwrapper' data-nameprefix='" + namePrefix;
+  var html = "<div class='itemwrapper " + itemswrapper_id + "' data-nameprefix='" + namePrefix;
   if (!nonIndexBased) {
     html += "[" + index + "]";
   }
   html += "'>";
   var toFocus = null;
   var i;
-  var idPrefix = getIdPrefixFromNamePrefix(namePrefix);
+  var idPrefix = get_name_as_id(namePrefix);
   var futures = [];
   for (i = 0; i < items.length; i++) {
     var item = items[i];
@@ -164,7 +167,12 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
       html += "<select id='" + id + "_operator' name='" + name + "[operator]' placeholder='Test'><option value=''>Operator</option><option value='1'>+ (Add)</option><option value='2'>- (Subtract)</option><option value='3'>* (Multiply)</option><option value='4'>/ (Divide)</option></select>";
       html += html_calculation_operand(item, item.right_heading, id, name, "right_operand_attributes");
     } else {
-      html += "<p><input type='" + item.type + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='' class='" + cssclasses + "' /></p>";
+      var inputType = item.type;
+      if (item.type == "position") {
+        inputType = "hidden";
+        has_position = true;
+      }
+      html += "<p><input type='" + inputType + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='' class='" + cssclasses + "' /></p>";
     }
   }
   html += "<p><a href='#' onclick='return form_remove_item(this);' class='ui-btn'>" + deletePlaceholder + "</a></p>";
@@ -172,6 +180,9 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
   form_add_item_set_html($(link), html, toFocus);
   if (futures.length > 0) {
     showLoading();
+  }
+  if (has_position) {
+    form_set_positions(link);
   }
   for (i = 0; i < futures.length; i++) {
     var item = futures[i];
@@ -216,7 +227,7 @@ function form_add_item_set_html(insertBefore, html, toFocus) {
 function form_remove_item(link) {
   var div = $(link).parents(".itemwrapper").first();
   var namePrefix = div.data("nameprefix");
-  var idPrefix = getIdPrefixFromNamePrefix(namePrefix);
+  var idPrefix = get_name_as_id(namePrefix);
   var destroy_id = idPrefix + "__destroy";
   var destroy_name = namePrefix + "[_destroy]";
   var existing_destroy = $("#" + destroy_id);
@@ -228,6 +239,58 @@ function form_remove_item(link) {
   }
   div.hide();
   return false;
+}
+
+function form_move_item(obj, direction) {
+  // Find the itemwrapper for our obj
+  var itemwrapper = $(obj).parents(".itemwrapper").first();
+
+  if (direction == 1) {
+    var search = itemwrapper[0].nextElementSibling;
+    while (search) {
+      if ($(search).hasClass("itemwrapper")) {
+        itemwrapper.remove();
+        $(search).after(itemwrapper);
+        itemwrapper.trigger('create');
+        break;
+      }
+      search = search.nextElementSibling;
+    }
+  } else if (direction == -1) {
+    var search = itemwrapper[0].previousElementSibling;
+    while (search) {
+      if ($(search).hasClass("itemwrapper")) {
+        itemwrapper.remove();
+        $(search).before(itemwrapper);
+        itemwrapper.trigger('create');
+        break;
+      }
+      search = search.previousElementSibling;
+    }
+  }
+  
+  form_set_positions(obj);
+}
+
+function form_get_item_wrappers(obj) {
+  var itemswrapper = $(obj).parents(".itemswrapper").first();
+  var itemswrapper_id = itemswrapper.attr("id");
+  return itemswrapper.find("." + itemswrapper_id);
+}
+
+function form_set_positions(obj) {
+  var itemswrapper = $(obj).parents(".itemswrapper").first();
+  var data_position_field = itemswrapper.data("position-field");
+  var itemswrapper_id = itemswrapper.attr("id");
+  var itemwrappers = itemswrapper.find("." + itemswrapper_id);
+  var position = 1;
+  itemwrappers.each(function() {
+    var itemwrapper = $(this);
+    var itemwrapper_nameprefix = itemwrapper.data("nameprefix");
+    var position_id = get_name_as_id(itemwrapper_nameprefix) + "_" + data_position_field;
+    $("#" + position_id).val(position);
+    position++;
+  });
 }
 
 function object_extract_id(obj) {

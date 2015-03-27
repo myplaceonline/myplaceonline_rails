@@ -102,6 +102,8 @@ en:
       sub_region1: "State"
       sub_region2: "City"
       select_region: "Please select a country first"
+      moveup: "Move %{name} Up"
+      movedown: "Move %{name} Down"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
