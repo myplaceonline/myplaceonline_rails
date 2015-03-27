@@ -30,6 +30,7 @@ class Ability
     can :manage, CalculationForm, :identity => identity
     can :manage, Calculation, :identity => identity
     can :manage, Vehicle, :identity => identity
+    can :manage, Question, :identity => identity
     
     # Define abilities for the passed in user here. For example:
     #

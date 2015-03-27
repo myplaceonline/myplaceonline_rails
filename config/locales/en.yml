@@ -52,6 +52,7 @@ en:
       calculation_forms: "Calculation Forms"
       calculations: "Calculations"
       vehicles: "Vehicles"
+      questions: "Questions"
     general:
       email: "E-mail"
       password: "Password"
@@ -432,4 +433,7 @@ en:
       service_location: "Service Location"
       cost: "Cost"
       miles: "Miles"
+      notes: "Notes"
+    questions:
+      name: "Question"
       notes: "Notes"

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :questions
+  post 'questions/new'
+
   resources :vehicles
   post 'vehicles/new'
 
