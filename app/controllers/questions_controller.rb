@@ -16,7 +16,20 @@ class QuestionsController < MyplaceonlineController
       params.require(:question).permit(
         :name,
         :notes,
-        hypotheses_attributes: [:id, :name, :notes, :_destroy]
+        hypotheses_attributes: [
+          :id,
+          :name,
+          :notes,
+          :_destroy,
+          hypothesis_experiments_attributes: [
+            :id,
+            :name,
+            :notes,
+            :started,
+            :ended,
+            :_destroy
+          ]
+        ]
       )
     end
 end

@@ -26,4 +26,31 @@
 %>
   <%= myp_text_field @child_fields, :name, "myplaceonline.hypothesis.name", @childproperty.name %>
   <%= myp_text_area_markdown @child_fields, :notes, "myplaceonline.hypothesis.notes", @childproperty.notes %>
+  <%=
+    render layout: 'myplaceonline/childproperties', locals: {
+      f: @child_fields,
+      heading: t("myplaceonline.hypothesis.experiments"),
+      childpropertiesname: :hypothesis_experiments,
+      childproperties: @childproperty.hypothesis_experiments,
+      deletebutton: t("myplaceonline.hypothesis_experiments.delete"),
+      addbutton: t("myplaceonline.hypothesis_experiments.add"),
+      expanded: @childproperty.hypothesis_experiments.length > 0,
+      formjson: [
+        {
+          type: 'text',
+          name: 'name',
+          placeholder: t("myplaceonline.hypothesis_experiments.name"),
+          autofocus: true
+        },
+        {
+          type: 'textarea',
+          name: 'notes',
+          placeholder: t("myplaceonline.hypothesis_experiments.notes")
+        }
+      ]
+    } do
+  %>
+    <%= myp_text_field @child_fields, :name, "myplaceonline.hypothesis_experiments.name", @childproperty.name %>
+    <%= myp_text_area_markdown @child_fields, :notes, "myplaceonline.hypothesis_experiments.notes", @childproperty.notes %>
+  <% end %>
 <% end %>

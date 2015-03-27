@@ -443,3 +443,11 @@ en:
     hypothesis:
       name: "Hypothesis"
       notes: "Notes"
+      experiments: "Experiments"
+    hypothesis_experiments:
+      name: "Experiment"
+      notes: "Notes"
+      started: "Started"
+      ended: "Ended"
+      add: "Add Experiment"
+      delete: "Delete Experiment"
