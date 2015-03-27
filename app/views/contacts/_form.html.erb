@@ -96,7 +96,7 @@
   %>
     <%=
       render partial: 'myplaceonline/select_or_create', locals: {
-        f: @child_fields,
+        f: child_fields,
         name: :location_attributes,
         existingobj: childproperty.location,
         heading: t("myplaceonline.identities.location"),
