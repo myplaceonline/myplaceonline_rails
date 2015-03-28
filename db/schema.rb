@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150328021821) do
+ActiveRecord::Schema.define(version: 20150328031536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -322,6 +322,7 @@ ActiveRecord::Schema.define(version: 20150328021821) do
     t.integer  "ref_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "identity_file_id"
   end
 
   add_index "identity_drivers_licenses", ["ref_id"], name: "index_identity_drivers_licenses_on_ref_id", using: :btree

@@ -143,6 +143,9 @@
     <%= myp_date_field child_fields, :expires, "myplaceonline.identities.license_expires", childproperty.expires %>
     <%= myp_region_field child_fields, :region, "myplaceonline.general.region", childproperty.region %>
     <%= myp_subregion_field child_fields, :sub_region1, "myplaceonline.general.sub_region1", childproperty.region, childproperty.sub_region1 %>
+    <%= child_fields.fields_for :identity_file, childproperty.identity_file || IdentityFile.new do |file_fields| %>
+      <%= myp_file_field file_fields, :file, "myplaceonline.identities.license_picture", childproperty.identity_file || IdentityFile.new %>
+    <% end %>
   <% end %>
 
 <% end %>

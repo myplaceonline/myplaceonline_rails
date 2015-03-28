@@ -270,6 +270,7 @@ en:
       delete_license: "Delete Driver's License"
       license_number: "License Number"
       license_expires: "Expires"
+      license_picture: "Picture"
     import:
       password: "Password (if any)"
       nofile: "No file selected"

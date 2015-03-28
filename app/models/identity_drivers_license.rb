@@ -3,6 +3,9 @@ class IdentityDriversLicense < ActiveRecord::Base
   
   validates :identifier, presence: true
 
+  belongs_to :identity_file, :dependent => :destroy
+  accepts_nested_attributes_for :identity_file, allow_destroy: true, reject_if: :all_blank
+
   before_create :do_before_save
   before_update :do_before_save
 

@@ -12,6 +12,10 @@ class ContactsController < MyplaceonlineController
       raise "Cannot delete own identity"
     end
   end
+  
+  def may_upload
+    true
+  end
 
   def self.param_names
     [
@@ -36,7 +40,14 @@ class ContactsController < MyplaceonlineController
             :expires,
             :region,
             :sub_region1,
-            :_destroy
+            :_destroy,
+            {
+              identity_file_attributes: [
+                :id,
+                :file,
+                :_destroy
+              ]
+            }
           ]
         }
       ]
