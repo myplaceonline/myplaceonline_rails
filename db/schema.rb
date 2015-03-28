@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150327232424) do
+ActiveRecord::Schema.define(version: 20150328021821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -313,6 +313,18 @@ ActiveRecord::Schema.define(version: 20150327232424) do
   end
 
   add_index "identities", ["owner_id"], name: "index_identities_on_owner_id", using: :btree
+
+  create_table "identity_drivers_licenses", force: true do |t|
+    t.string   "identifier"
+    t.string   "region"
+    t.string   "sub_region1"
+    t.date     "expires"
+    t.integer  "ref_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "identity_drivers_licenses", ["ref_id"], name: "index_identity_drivers_licenses_on_ref_id", using: :btree
 
   create_table "identity_emails", force: true do |t|
     t.string   "email"

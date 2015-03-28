@@ -312,4 +312,8 @@ module ApplicationHelper
       form.select(name, options_for_select(selectoptions, selectvalue), class: myp_field_classes(autofocus, input_classes), prompt: placeholder)
     ).html_safe
   end
+  
+  def single_quote_escape(str)
+    str.sub("'", "")
+  end
 end

@@ -114,5 +114,33 @@
       }
     %>
   <% end %>
+  
+  <%=
+    render layout: 'myplaceonline/childproperties', locals: {
+      f: identity_fields,
+      heading: t("myplaceonline.identities.drivers_licenses"),
+      childpropertiesname: :identity_drivers_licenses,
+      childproperties: obj.contact_identity.identity_drivers_licenses,
+      deletebutton: t("myplaceonline.identities.delete_license"),
+      addbutton: t("myplaceonline.identities.add_license"),
+      expanded: obj.contact_identity.identity_drivers_licenses.length > 0,
+      formjson: [
+        {
+          type: 'text',
+          name: 'identifier',
+          placeholder: t("myplaceonline.identities.license_number"),
+          autofocus: true
+        },
+        {
+          type: 'date',
+          name: 'expires',
+          placeholder: t("myplaceonline.identities.license_expires")
+        }
+      ]
+    } do |child_fields, childproperty|
+  %>
+    <%= myp_text_field child_fields, :identifier, "myplaceonline.identities.license_number", childproperty.identifier %>
+    <%= myp_date_field child_fields, :expires, "myplaceonline.identities.license_expires", childproperty.expires %>
+  <% end %>
 
 <% end %>

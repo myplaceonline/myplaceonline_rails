@@ -264,6 +264,11 @@ en:
       add_location: "Add Address"
       delete_location: "Delete Address"
       location: "Address"
+      drivers_licenses: "Driver's Licenses"
+      add_license: "Add Driver's License"
+      delete_license: "Delete Driver's License"
+      license_number: "License Number"
+      license_expires: "Expires"
     import:
       password: "Password (if any)"
       nofile: "No file selected"

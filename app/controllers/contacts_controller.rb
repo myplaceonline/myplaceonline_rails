@@ -29,6 +29,12 @@ class ContactsController < MyplaceonlineController
             {
               location_attributes: LocationsController.param_names + [:id]
             }
+          ],
+          identity_drivers_licenses_attributes: [
+            :id,
+            :identifier,
+            :expires,
+            :_destroy
           ]
         }
       ]

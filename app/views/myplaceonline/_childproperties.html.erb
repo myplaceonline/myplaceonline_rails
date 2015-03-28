@@ -22,6 +22,6 @@
     <script type="text/javascript">
     var x<%= random_name %> = <%= raw(formjson.to_json) %>;
     </script>
-    <p><a href="#" onclick="return form_add_item(this, '<%= f.object_name + "[" + childpropertiesname.to_s + "_attributes]" %>', '<%= deletebutton %>', x<%= random_name %>);" class="ui-btn ui-btn-icon-left ui-icon-plus ui-btn-inline"><%= addbutton %></a></p>
+    <p><a href="#" onclick="return form_add_item(this, '<%= f.object_name + "[" + childpropertiesname.to_s + "_attributes]" %>', '<%= single_quote_escape(deletebutton) %>', x<%= random_name %>);" class="ui-btn ui-btn-icon-left ui-icon-plus ui-btn-inline"><%= addbutton %></a></p>
   </div>
 </div>

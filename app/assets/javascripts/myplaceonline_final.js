@@ -175,7 +175,7 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
       html += "<p><input type='" + inputType + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='' class='" + cssclasses + "' /></p>";
     }
   }
-  html += "<p><a href='#' onclick='return form_remove_item(this);' class='ui-btn'>" + deletePlaceholder + "</a></p>";
+  html += "<p><a href='#' onclick='return form_remove_item(this);' class='ui-btn ui-btn-icon-left ui-icon-delete ui-btn-inline'>" + deletePlaceholder + "</a></p>";
   html += "</div>";
   form_add_item_set_html($(link), html, toFocus);
   if (futures.length > 0) {
