@@ -34,6 +34,8 @@ class ContactsController < MyplaceonlineController
             :id,
             :identifier,
             :expires,
+            :region,
+            :sub_region1,
             :_destroy
           ]
         }

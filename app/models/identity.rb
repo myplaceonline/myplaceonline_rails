@@ -37,7 +37,7 @@ class Identity < ActiveRecord::Base
   accepts_nested_attributes_for :identity_locations, allow_destroy: true, reject_if: :all_blank
   
   has_many :identity_drivers_licenses, :foreign_key => 'ref_id', :dependent => :destroy
-  accepts_nested_attributes_for :identity_drivers_licenses, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :identity_drivers_licenses, allow_destroy: true, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
   
   def as_json(options={})
     super.as_json(options).merge({

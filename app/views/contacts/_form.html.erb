@@ -141,6 +141,8 @@
   %>
     <%= myp_text_field child_fields, :identifier, "myplaceonline.identities.license_number", childproperty.identifier %>
     <%= myp_date_field child_fields, :expires, "myplaceonline.identities.license_expires", childproperty.expires %>
+    <%= myp_region_field child_fields, :region, "myplaceonline.general.region", childproperty.region %>
+    <%= myp_subregion_field child_fields, :sub_region1, "myplaceonline.general.sub_region1", childproperty.region, childproperty.sub_region1 %>
   <% end %>
 
 <% end %>

@@ -15,4 +15,11 @@
   <% @obj.contact_identity.identity_locations.each do |identity_location| %>
     <%= attribute_table_row_reference(t("myplaceonline.identities.location"), "location_path", identity_location.location) %>
   <% end %>
+  <% @obj.contact_identity.identity_drivers_licenses.each do |identity_drivers_license| %>
+    <%= table_row_heading(t("myplaceonline.identities.drivers_license")) %>
+    <%= attribute_table_row(t("myplaceonline.identities.license_number"), identity_drivers_license.identifier) %>
+    <%= attribute_table_row_date(t("myplaceonline.identities.license_expires"), identity_drivers_license.expires) %>
+    <%= attribute_table_row(t("myplaceonline.general.region"), identity_drivers_license.region) %>
+    <%= attribute_table_row(t("myplaceonline.general.sub_region1"), identity_drivers_license.sub_region1) %>
+  <% end %>
 <% end %>

@@ -264,6 +264,7 @@ en:
       add_location: "Add Address"
       delete_location: "Delete Address"
       location: "Address"
+      drivers_license: "Driver's License"
       drivers_licenses: "Driver's Licenses"
       add_license: "Add Driver's License"
       delete_license: "Delete Driver's License"
