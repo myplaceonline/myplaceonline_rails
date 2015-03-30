@@ -271,6 +271,7 @@ en:
       license_number: "License Number"
       license_expires: "Expires"
       license_picture: "Picture"
+      license_expiring: "Driver's License (%{license}) Expiring in %{time}"
     import:
       password: "Password (if any)"
       nofile: "No file selected"

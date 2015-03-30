@@ -441,6 +441,34 @@ module Myp
         end
       end
     end
+    threshold = 90.days.from_now
+    IdentityDriversLicense.where("identity_id = ? and expires is not null and expires < ?", user.primary_identity, threshold).each do |drivers_license|
+      contact = Contact.where(identity_id: user.primary_identity.id, ref_id: drivers_license.ref.id).first
+      diff = TimeDifference.between(drivers_license.expires, threshold).in_general
+      
+      #{:years=>0, :months=>2, :weeks=>3, :days=>2, :hours=>9, :minutes=>28, :seconds=>54}
+      result.push(DueItem.new(I18n.t("myplaceonline.identities.license_expiring", license: drivers_license.display, time: Myp.time_difference_in_general_human(diff)), "/contacts/" + contact.id.to_s, drivers_license.expires))
+    end
+    result
+  end
+  
+  def self.time_difference_in_general_human(diff)
+    result = ""
+    if diff[:years] > 0
+      result += diff[:years].to_s + " years"
+    end
+    if diff[:months] > 0
+      if result.length > 0
+        result += ", "
+      end
+      result += diff[:months].to_s + " months"
+    end
+    if diff[:days] > 0
+      if result.length > 0
+        result += ", "
+      end
+      result += diff[:days].to_s + " days"
+    end
     result
   end
   
