@@ -10,9 +10,18 @@ module Myp
   @@DEFAULT_PASSWORD_LENGTH = 22  
   @@POSSIBILITIES_ALPHANUMERIC = [('0'..'9'), ('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
   @@POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL = [('0'..'9'), ('a'..'z'), ('A'..'Z'), ['_', '-', '!']].map { |i| i.to_a }.flatten
+  
+  puts "myplaceonline: Initializing categories"
+  
+  def self.database_exists?
+    begin
+      ActiveRecord::Base.connection.table_exists?(Category.table_name)
+    rescue ActiveRecord::NoDatabaseError
+      false
+    end
+  end
 
-  puts "Myplaceonline: Initializing categories"
-  if ActiveRecord::Base.connection.table_exists?(Category.table_name)
+  if Myp.database_exists?
     Category.all.each do |existing_category|
       @@all_categories[existing_category.name.to_sym] = existing_category
     end
