@@ -33,8 +33,10 @@ class Password < ActiveRecord::Base
   
   def display
     result = name
-    if !user.to_s.empty?
+    if !user.blank?
       result += " (" + user + ")"
+    elsif !email.blank?
+      result += " (" + email + ")"
     end
     if !defunct.nil?
       result += " (" + I18n.t("myplaceonline.general.defunct") + ")"
