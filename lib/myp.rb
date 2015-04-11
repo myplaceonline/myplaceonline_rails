@@ -457,9 +457,16 @@ module Myp
 
     IdentityDriversLicense.where("identity_id = ? and expires is not null and expires < ?", user.primary_identity, threshold).each do |drivers_license|
       contact = Contact.where(identity_id: user.primary_identity.id, ref_id: drivers_license.ref.id).first
-      diff = TimeDifference.between(timenow, drivers_license.expires).in_general
-      puts diff.inspect
-      result.push(DueItem.new(I18n.t("myplaceonline.identities.license_expiring", license: drivers_license.display, time: Myp.time_difference_in_general_human(diff)), "/contacts/" + contact.id.to_s, drivers_license.expires))
+      diff = TimeDifference.between(timenow, drivers_license.expires)
+      if timenow >= drivers_license.expires
+	# TODO expired
+      end
+      diff_in_general = diff.in_general
+      result.push(DueItem.new(I18n.t(
+        "myplaceonline.identities.license_expiring",
+        license: drivers_license.display,
+        time: Myp.time_difference_in_general_human(diff_in_general)
+      ),"/contacts/" + contact.id.to_s, drivers_license.expires))
     end
 
     result
