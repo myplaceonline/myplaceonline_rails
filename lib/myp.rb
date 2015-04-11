@@ -458,6 +458,7 @@ module Myp
     IdentityDriversLicense.where("identity_id = ? and expires is not null and expires < ?", user.primary_identity, threshold).each do |drivers_license|
       contact = Contact.where(identity_id: user.primary_identity.id, ref_id: drivers_license.ref.id).first
       diff = TimeDifference.between(timenow, drivers_license.expires).in_general
+      puts diff.inspect
       result.push(DueItem.new(I18n.t("myplaceonline.identities.license_expiring", license: drivers_license.display, time: Myp.time_difference_in_general_human(diff)), "/contacts/" + contact.id.to_s, drivers_license.expires))
     end
 
@@ -467,19 +468,25 @@ module Myp
   def self.time_difference_in_general_human(diff)
     result = ""
     if diff[:years] > 0
-      result += diff[:years].to_s + " years"
+      result += ActionController::Base.helpers.pluralize(diff[:years], "year")
     end
     if diff[:months] > 0
       if result.length > 0
         result += ", "
       end
-      result += diff[:months].to_s + " months"
+      result += ActionController::Base.helpers.pluralize(diff[:months], "month")
+    end
+    if diff[:weeks] > 0
+      if result.length > 0
+        result += ", "
+      end
+      result += ActionController::Base.helpers.pluralize(diff[:weeks], "week")
     end
     if diff[:days] > 0
       if result.length > 0
         result += ", "
       end
-      result += diff[:days].to_s + " days"
+      result += ActionController::Base.helpers.pluralize(diff[:days], "day")
     end
     result
   end
