@@ -22,8 +22,13 @@ module ApplicationHelper
         (value.length == 0 || value == "&nbsp;"))
   end
   
-  def attribute_table_row_highlight(name, value, clipboard_text = value)
-    attribute_table_row(name, value, clipboard_text, "bghighlight")
+  def attribute_table_row_highlight(name, value, clipboard_text = value, valueclass = nil)
+    if valueclass.nil?
+      valueclass = "bghighlight"
+    else
+      valueclass += " bghighlight"
+    end
+    attribute_table_row(name, value, clipboard_text, valueclass)
   end
   
   def attribute_table_row(name, value, clipboard_text = value, valueclass = nil)
