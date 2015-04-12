@@ -18,5 +18,6 @@ class WeightsController < MyplaceonlineController
     
     def new_obj_initialize
       @obj.amount_type = 0
+      @obj.measure_date = Date.today
     end
 end

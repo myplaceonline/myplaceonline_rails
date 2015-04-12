@@ -188,11 +188,15 @@ module ApplicationHelper
   end
   
   def myp_date_field(form, name, placeholder, value, autofocus = false, input_classes = nil)
+    # http://dev.jtsage.com/jQM-DateBox/api/
     # http://dev.jtsage.com/jQM-DateBox/doc/3-0-first-datebox/
     # Options should match app/assets/javascripts/myplaceonline_final.js form_add_item
+    # https://github.com/jtsage/jquery-mobile-datebox/issues/363
+    # https://github.com/jtsage/jquery-mobile-datebox/issues/295
     if is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
+    datebox_type = "datebox"
     content_tag(
       :p,
       form.label(name, placeholder, class: myp_label_classes(value)) +
@@ -202,7 +206,7 @@ module ApplicationHelper
         class: myp_field_classes(autofocus, input_classes),
         value: value,
         "data-role" => "datebox",
-        "data-datebox-mode" => "datebox",
+        "data-datebox-mode" => datebox_type,
         "data-datebox-override-date-format" => "%Y-%m-%d",
         "data-datebox-use-focus" => "true",
         "data-datebox-use-clear-button" => "true",
