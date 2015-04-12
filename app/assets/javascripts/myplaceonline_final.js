@@ -148,9 +148,15 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
     if (item.classes) {
       cssclasses += item.classes + ' ';
     }
+    
+    var defaultValue = "";
+    if (item.value) {
+      defaultValue = item.value;
+    }
+    
     if (item.type == "date") {
       // Options should match app/helps/application_helper.rb myp_date_field
-      html += "<p><input type='date' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='' class='" + cssclasses + "' data-role='datebox' data-datebox-mode='datebox' data-datebox-override-date-format='%Y-%m-%d' data-datebox-use-focus='true' data-datebox-use-clear-button='true' data-datebox-use-modal='false' /></p>";
+      html += "<p><input type='date' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='" + defaultValue + "' class='" + cssclasses + "' data-role='datebox' data-datebox-mode='calbox' data-datebox-override-date-format='%Y-%m-%d' data-datebox-use-focus='true' data-datebox-use-clear-button='true' data-datebox-use-modal='false' /></p>";
     } else if (item.type == "random") {
       // Duplicated in views/myplaceonline/_generaterandom.html.erb
       html += '<div data-role="collapsible"><h3>' + item.heading + '</h3><p><input type="number" class="generate_password_length" value="" placeholder="' + item.lengthplaceholder + '" /></p><p><a href="#" class="ui-btn" onclick="getRemoteString(' + item.destination + ', $(this).parents(\'div\').first().find(\'.generate_password_length\').val()); return false;">' + item.button + '</a></p></div>';
