@@ -53,6 +53,7 @@ en:
       calculations: "Calculations"
       vehicles: "Vehicles"
       questions: "Questions"
+      health: "Health"
     general:
       email: "E-mail"
       password: "Password"

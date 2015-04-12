@@ -29,3 +29,4 @@ calculation_forms = Category.create(name: "calculation_forms", link: "calculatio
 calculations = Category.create(name: "calculations", link: "calculations", position: 0, parent: order)
 vehicles = Category.create(name: "vehicles", link: "vehicles", position: 0, parent: order)
 questions = Category.create(name: "questions", link: "questions", position: 0, parent: meaning)
+health = Category.create(name: "health", link: "health", position: 0, parent: order)
