@@ -54,6 +54,7 @@ en:
       vehicles: "Vehicles"
       questions: "Questions"
       health: "Health"
+      weights: "Weight"
     general:
       email: "E-mail"
       password: "Password"
@@ -465,3 +466,8 @@ en:
       ended: "Ended"
       add: "Add Experiment"
       delete: "Delete Experiment"
+    weights:
+      amount: "Weight"
+      amount_type: "Units"
+      measure_date: "Date"
+      source: "Source"

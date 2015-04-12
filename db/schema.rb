@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150412062012) do
+ActiveRecord::Schema.define(version: 20150412062913) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -596,6 +596,18 @@ ActiveRecord::Schema.define(version: 20150412062012) do
   end
 
   add_index "websites", ["identity_id"], name: "index_websites_on_identity_id", using: :btree
+
+  create_table "weights", force: true do |t|
+    t.decimal  "amount",       precision: 10, scale: 2
+    t.integer  "amount_type"
+    t.date     "measure_date"
+    t.string   "source"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "weights", ["identity_id"], name: "index_weights_on_identity_id", using: :btree
 
   create_table "wisdoms", force: true do |t|
     t.string   "name"

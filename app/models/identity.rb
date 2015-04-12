@@ -26,6 +26,7 @@ class Identity < ActiveRecord::Base
   has_many :calculations, :dependent => :destroy
   has_many :vehicles, :dependent => :destroy
   has_many :questions, :dependent => :destroy
+  has_many :weights, :dependent => :destroy
   
   has_many :identity_phones, :foreign_key => 'ref_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_phones, allow_destroy: true, reject_if: :all_blank
@@ -66,6 +67,7 @@ class Identity < ActiveRecord::Base
       :calculations => calculations.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :vehicles => vehicles.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :questions => questions.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
+      :weights => weights.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

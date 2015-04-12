@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :weights
+  post 'weights/new'
+
   resources :questions
   post 'questions/new'
 

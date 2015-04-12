@@ -1,0 +1,8 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.weights.amount"), @obj.amount) %>
+  <%= attribute_table_row(t("myplaceonline.wisdoms.amount_type"), @obj.amount_type) %>
+  <%= attribute_table_row_date(t("myplaceonline.wisdoms.measure_date"), @obj.measure_date) %>
+  <%= attribute_table_row(t("myplaceonline.wisdoms.source"), @obj.source) %>
+  
+<% end %>

@@ -30,3 +30,4 @@ calculations = Category.create(name: "calculations", link: "calculations", posit
 vehicles = Category.create(name: "vehicles", link: "vehicles", position: 0, parent: order)
 questions = Category.create(name: "questions", link: "questions", position: 0, parent: meaning)
 health = Category.create(name: "health", link: "health", position: 0, parent: order)
+weights = Category.create(name: "weights", link: "weights", position: 0, parent: health)
