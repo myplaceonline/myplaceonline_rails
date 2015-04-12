@@ -1,7 +1,7 @@
 <%= myp_text_field f, :name, "myplaceonline.passwords.name", obj.name, autofocus %>
 <%= myp_text_field f, :user, "myplaceonline.passwords.user", obj.user %>
 <%= myp_text_field f, :email, "myplaceonline.passwords.email", obj.email %>
-<%= myp_text_field f, :password, "myplaceonline.passwords.password", obj.password %>
+<%= myp_text_field f, :password, "myplaceonline.passwords.password", obj.password, false, nil, false %>
 <%=
   render partial: 'myplaceonline/generaterandom', locals: {
     heading: t("myplaceonline.passwords.generate_password"),

@@ -154,14 +154,19 @@ module ApplicationHelper
     result
   end
   
-  def myp_text_field(form, name, placeholder, value, autofocus = false, input_classes = nil)
+  def myp_text_field(form, name, placeholder, value, autofocus = false, input_classes = nil, autocomplete = true)
     if is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
+    end
+    if autocomplete
+      field = form.text_field(name, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes), value: value)
+    else
+      field = form.text_field(name, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes), value: value, autocomplete: "off")
     end
     content_tag(
       :p,
       form.label(name, placeholder, class: myp_label_classes(value)) +
-      form.text_field(name, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes), value: value)
+      field
     ).html_safe
   end
   
