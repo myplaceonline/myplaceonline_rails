@@ -1,0 +1,7 @@
+<% content_for :heading do -%><%= t('myplaceonline.test.test1.title') %><% end -%>
+<h1><%= t('myplaceonline.test.test1.title') %></h1>
+<p>Test jQM Calbox</p>
+<%= form_for Weight.new do |f| %>
+  <%= myp_date_field(f, :date, "myplaceonline.test.test1.input1", Date.today) %>
+  <%= myp_date_field(f, :date, "myplaceonline.test.test1.input2", Date.today, false, nil, "calbox") %>
+<% end %>

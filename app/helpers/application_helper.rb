@@ -187,7 +187,7 @@ module ApplicationHelper
     ).html_safe
   end
   
-  def myp_date_field(form, name, placeholder, value, autofocus = false, input_classes = nil)
+  def myp_date_field(form, name, placeholder, value, autofocus = false, input_classes = nil, override_datebox_type = nil)
     # http://dev.jtsage.com/jQM-DateBox/api/
     # http://dev.jtsage.com/jQM-DateBox/doc/3-0-first-datebox/
     # Options should match app/assets/javascripts/myplaceonline_final.js form_add_item
@@ -197,6 +197,9 @@ module ApplicationHelper
       placeholder = I18n.t(placeholder)
     end
     datebox_type = "datebox"
+    if !override_datebox_type.nil?
+      datebox_type = override_datebox_type
+    end
     content_tag(
       :p,
       form.label(name, placeholder, class: myp_label_classes(value)) +

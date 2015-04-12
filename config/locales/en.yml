@@ -471,3 +471,10 @@ en:
       amount_type: "Units"
       measure_date: "Date"
       source: "Source"
+    test:
+      title: "Test"
+      name: "Test"
+      test1:
+        title: "Test1"
+        input1: "datebox"
+        input2: "calbox"
