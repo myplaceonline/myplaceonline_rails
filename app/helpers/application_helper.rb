@@ -196,7 +196,8 @@ module ApplicationHelper
     if is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
-    datebox_type = "datebox"
+    # datebox or calbox
+    datebox_type = "calbox"
     if !override_datebox_type.nil?
       datebox_type = override_datebox_type
     end
