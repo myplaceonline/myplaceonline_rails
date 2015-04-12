@@ -15,4 +15,8 @@ class CreditScoresController < MyplaceonlineController
     def obj_params
       params.require(:credit_score).permit(:score_date, :score, :source)
     end
+    
+    def new_obj_initialize
+      @obj.score_date = Date.today
+    end
 end
