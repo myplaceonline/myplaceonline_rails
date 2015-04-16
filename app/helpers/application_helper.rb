@@ -222,7 +222,8 @@ module ApplicationHelper
         "data-datebox-use-modal" => "false",
         "data-datebox-cal-use-pickers" => "true",
         "data-datebox-cal-year-pick-min" => "-100",
-        "data-datebox-cal-year-pick-max" => "10"
+        "data-datebox-cal-year-pick-max" => "10",
+        "data-cal-no-header" => "true"
       )
     ).html_safe
   end
