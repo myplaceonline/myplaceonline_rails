@@ -219,7 +219,8 @@ module ApplicationHelper
         "data-datebox-override-date-format" => "%Y-%m-%d",
         "data-datebox-use-focus" => "true",
         "data-datebox-use-clear-button" => "true",
-        "data-datebox-use-modal" => "false"
+        "data-datebox-use-modal" => "false",
+        "data-datebox-cal-use-pickers" => "true"
       )
     ).html_safe
   end
