@@ -137,7 +137,7 @@ module Myp
     }
   end
   
-  def self.useful_categories(user)
+  def self.useful_categories(user, recentlyVisited = 2, mostVisited = 3)
     # Prefer last visit over number of visits
     CategoryPointsAmount.find_by_sql(%{
       (
@@ -148,7 +148,7 @@ module Myp
                 CategoryPointsAmount.sanitize(user.primary_identity.id)
               }
         ORDER BY category_points_amounts.last_visit DESC
-        LIMIT 2
+        LIMIT #{ recentlyVisited }
       )
       UNION ALL
       (
@@ -159,7 +159,7 @@ module Myp
                 CategoryPointsAmount.sanitize(user.primary_identity.id)
               }
         ORDER BY category_points_amounts.visits DESC
-        LIMIT 2
+        LIMIT #{ mostVisited }
       )
     })
     .uniq{ |cpa| cpa.category_id }.map{ |cpa|
