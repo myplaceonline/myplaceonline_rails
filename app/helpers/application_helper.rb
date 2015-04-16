@@ -220,7 +220,9 @@ module ApplicationHelper
         "data-datebox-use-focus" => "true",
         "data-datebox-use-clear-button" => "true",
         "data-datebox-use-modal" => "false",
-        "data-datebox-cal-use-pickers" => "true"
+        "data-datebox-cal-use-pickers" => "true",
+        "data-datebox-cal-year-pick-min" => "-100",
+        "data-datebox-cal-year-pick-max" => "10"
       )
     ).html_safe
   end
