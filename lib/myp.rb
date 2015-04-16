@@ -25,7 +25,7 @@ module Myp
     Category.all.each do |existing_category|
       @@all_categories[existing_category.name.to_sym] = existing_category
     end
-    puts "Myplaceonline: Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
+    puts "myplaceonline: Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
   end
   
   def self.markdown_to_html(markdown)

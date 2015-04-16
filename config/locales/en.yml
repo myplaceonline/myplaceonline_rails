@@ -54,7 +54,8 @@ en:
       vehicles: "Vehicles"
       questions: "Questions"
       health: "Health"
-      weights: "Weight"
+      weights: "Weight Measurements"
+      blood_pressures: "Blood Pressure Measurements"
     general:
       email: "E-mail"
       password: "Password"
@@ -478,3 +479,8 @@ en:
         title: "Test1"
         input1: "datebox"
         input2: "calbox"
+    blood_pressures:
+      systolic_pressure: "Systolic Pressure"
+      diastolic_pressure: "Diastolic Pressure"
+      measurement_date: "Measurement Date"
+      measurement_source: "Measurement Source"

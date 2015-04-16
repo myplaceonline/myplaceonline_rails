@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :blood_pressures
+  post 'blood_pressures/new'
+
   resources :weights
   post 'weights/new'
 

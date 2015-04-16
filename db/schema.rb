@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150412062913) do
+ActiveRecord::Schema.define(version: 20150416073042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,18 @@ ActiveRecord::Schema.define(version: 20150412062913) do
   add_index "bank_accounts", ["password_id"], name: "index_bank_accounts_on_password_id", using: :btree
   add_index "bank_accounts", ["pin_encrypted_id"], name: "index_bank_accounts_on_pin_encrypted_id", using: :btree
   add_index "bank_accounts", ["routing_number_encrypted_id"], name: "index_bank_accounts_on_routing_number_encrypted_id", using: :btree
+
+  create_table "blood_pressures", force: true do |t|
+    t.integer  "systolic_pressure"
+    t.integer  "diastolic_pressure"
+    t.date     "measurement_date"
+    t.string   "measurement_source"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "blood_pressures", ["identity_id"], name: "index_blood_pressures_on_identity_id", using: :btree
 
   create_table "calculation_elements", force: true do |t|
     t.integer  "left_operand_id"
