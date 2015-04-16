@@ -310,3 +310,22 @@ function href_extract_id(href) {
   }
   return href;
 }
+
+function notepad_changed(t) {
+  if (!myp.notepadTimeout) {
+    myp.notepadTimeout = window.setTimeout(function() {
+      var url = "/api/updatenotepad.json";
+      $.ajax({
+        url: url,
+        method: "POST",
+        dataType: "json",
+        data: $("#notepad").val()
+      }).done(function(data, textStatus, jqXHR) {
+      }).fail(function(jqXHR, textStatus, errorThrown) {
+        createErrorNotification("Could not execute " + url + ": " + textStatus);
+      }).complete(function(jqXHR, textStatus) {
+        myp.notepadTimeout = null;
+      });
+    }, 4000);
+  }
+}

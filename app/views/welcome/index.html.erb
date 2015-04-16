@@ -51,4 +51,9 @@
 
   <% end %>
 
+  <ul data-role="listview" data-inset="true">
+    <li data-role="list-divider"><%= t("myplaceonline.welcome.notepad") %></li>
+    <li><textarea id="notepad" autocomplete="off" placeholder="<%= t("myplaceonline.welcome.notepad") %>" onkeypress="notepad_changed(this)"><%= @notepad %></textarea></li>
+  </ul>
+
 <% end %>

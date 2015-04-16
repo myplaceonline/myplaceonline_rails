@@ -85,6 +85,7 @@ Rails.application.routes.draw do
   get 'api/randomString'
   get 'api/subregions'
   post 'api/renderpartial'
+  post 'api/updatenotepad'
 
   get 'meaning/index'
   get 'meaning', :to => 'meaning#index'

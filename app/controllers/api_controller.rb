@@ -47,6 +47,15 @@ class ApiController < ApplicationController
     end
   end
   
+  def updatenotepad
+    new_notepad = request.raw_post
+    current_user.primary_identity.notepad = new_notepad
+    current_user.primary_identity.save!
+    render json: {
+      :result => true
+    }
+  end
+  
   protected
     def json_error(error)
       render json: {

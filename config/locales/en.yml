@@ -123,6 +123,7 @@ en:
       intro_html: "myplaceonline is a virtual life assistant. We'll never sell your private data. The code is %{opensourcelink} if you want to review it or run it on your computer."
       opensourcelink: "open source"
       due: "Due"
+      notepad: "Notepad"
       features: !xml |
         <![CDATA[
         ### Features
