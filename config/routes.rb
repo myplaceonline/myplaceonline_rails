@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :heart_rates
+  post 'heart_rates/new'
+
   resources :blood_pressures
   post 'blood_pressures/new'
 

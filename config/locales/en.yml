@@ -56,6 +56,7 @@ en:
       health: "Health"
       weights: "Weight Measurements"
       blood_pressures: "Blood Pressure Measurements"
+      heart_rates: "Heart Rate Measurements"
     general:
       email: "E-mail"
       password: "Password"
@@ -483,5 +484,9 @@ en:
     blood_pressures:
       systolic_pressure: "Systolic Pressure"
       diastolic_pressure: "Diastolic Pressure"
+      measurement_date: "Measurement Date"
+      measurement_source: "Measurement Source"
+    heart_rates:
+      beats: "Beats Per Minute"
       measurement_date: "Measurement Date"
       measurement_source: "Measurement Source"

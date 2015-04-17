@@ -1,0 +1,7 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.heart_rates.beats"), @obj.beats) %>
+  <%= attribute_table_row_date(t("myplaceonline.heart_rates.measurement_date"), @obj.measurement_date) %>
+  <%= attribute_table_row(t("myplaceonline.heart_rates.measurement_source"), @obj.measurement_source) %>
+  
+<% end %>
