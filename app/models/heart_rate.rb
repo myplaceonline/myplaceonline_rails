@@ -7,7 +7,7 @@ class HeartRate < ActiveRecord::Base
   validates :measurement_date, presence: true
   
   def display
-    beats.to_s + " " + I18n.t("myplaceonline.heart_rates.beats")
+    beats.to_s + " " + I18n.t("myplaceonline.heart_rates.beats") + " (" + Myp.display_date(measurement_date, User.current_user) + ")"
   end
 
   before_create :do_before_save
