@@ -33,3 +33,4 @@ health = Category.create(name: "health", link: "health", position: 0, parent: or
 weights = Category.create(name: "weights", link: "weights", position: 0, parent: health)
 blood_pressures = Category.create(name: "blood_pressures", link: "blood_pressures", position: 0, parent: health)
 heart_rates = Category.create(name: "heart_rates", link: "heart_rates", position: 0, parent: health)
+recipes = Category.create(name: "recipes", link: "recipes", position: 0, parent: joy)

@@ -57,6 +57,7 @@ en:
       weights: "Weight Measurements"
       blood_pressures: "Blood Pressure Measurements"
       heart_rates: "Heart Rate Measurements"
+      recipes: "Recipes"
     general:
       email: "E-mail"
       password: "Password"
@@ -490,3 +491,6 @@ en:
       beats: "Beats Per Minute"
       measurement_date: "Measurement Date"
       measurement_source: "Measurement Source"
+    recipes:
+      name: "Recipe Name"
+      recipe: "Recipe"

@@ -29,6 +29,7 @@ class Identity < ActiveRecord::Base
   has_many :weights, :dependent => :destroy
   has_many :blood_pressures, :dependent => :destroy
   has_many :heart_rates, :dependent => :destroy
+  has_many :recipes, :dependent => :destroy
   
   has_many :identity_phones, :foreign_key => 'ref_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_phones, allow_destroy: true, reject_if: :all_blank
@@ -72,6 +73,7 @@ class Identity < ActiveRecord::Base
       :weights => weights.to_a.map{|x| x.as_json},
       :blood_pressures => blood_pressures.to_a.map{|x| x.as_json},
       :heart_rates => heart_rates.to_a.map{|x| x.as_json},
+      :recipes => recipes.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

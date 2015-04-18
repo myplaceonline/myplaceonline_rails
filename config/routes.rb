@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :recipes
+  post 'recipes/new'
+
   resources :heart_rates
   post 'heart_rates/new'
 
