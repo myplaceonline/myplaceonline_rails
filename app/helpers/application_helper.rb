@@ -216,7 +216,7 @@ module ApplicationHelper
         value: value,
         "data-role" => "datebox",
         "data-datebox-mode" => datebox_type,
-        "data-datebox-override-date-format" => "%Y-%m-%d",
+        "data-datebox-override-date-format" => Myplaceonline::DEFAULT_DATE_FORMAT,
         "data-datebox-use-focus" => "true",
         "data-datebox-use-clear-button" => "true",
         "data-datebox-use-modal" => "false",

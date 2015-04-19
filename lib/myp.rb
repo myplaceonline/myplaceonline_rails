@@ -396,7 +396,7 @@ module Myp
     self.display_time(time, current_user, :short_datetime)
   end
   
-  def self.display_time(time, current_user, format = :rfc822)
+  def self.display_time(time, current_user, format = :default)
     if !time.nil?
       if !current_user.nil? && !current_user.timezone.blank?
         time = time.in_time_zone(current_user.timezone)

@@ -7,6 +7,12 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 
 module Myplaceonline
+  
+  # The following section are mirrored in myplaceonline_final.js
+  DEFAULT_DATE_FORMAT = "%A, %b %d, %Y"
+  DEFAULT_TIME_FORMAT = "%A, %b %d, %Y %l:%M:%S %p"
+  # End mirrored constants
+  
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -37,7 +43,9 @@ module Myplaceonline
     # http://ruby-doc.org/core-2.2.0/Time.html#method-i-strftime
     # http://api.rubyonrails.org/classes/Time.html
     # http://api.rubyonrails.org/classes/DateTime.html
-    Date::DATE_FORMATS[:default] = "%Y-%m-%d"
+    Date::DATE_FORMATS[:default] = Myplaceonline::DEFAULT_DATE_FORMAT
+    Time::DATE_FORMATS[:default] = Myplaceonline::DEFAULT_TIME_FORMAT
+    
     Time::DATE_FORMATS[:month_year] = "%B %Y (%m/%y)"
     Time::DATE_FORMATS[:simple_date] = "%A, %b %d, %Y"
     Time::DATE_FORMATS[:short_date] = "%b %d"
