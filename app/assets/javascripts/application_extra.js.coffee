@@ -6,3 +6,4 @@
 #= require noty/themes/default
 #= require myplaceonline_final
 #= require jquery-mobile-datebox
+#= require quill.min

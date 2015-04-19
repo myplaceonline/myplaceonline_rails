@@ -53,7 +53,42 @@
 
   <ul data-role="listview" data-inset="true">
     <li data-role="list-divider"><%= t("myplaceonline.welcome.notepad") %></li>
-    <li><textarea id="notepad" autocomplete="off" placeholder="<%= t("myplaceonline.welcome.notepad") %>" onkeypress="notepad_changed(this)"><%= @notepad %></textarea></li>
+    <li>
+      <div class="quill-wrapper">
+        <div id="notepad-toolbar" class="quill-toolbar">
+          <span class="ql-format-group">
+            <span title="Bold" class="ql-format-button ql-bold"></span>
+            <span class="ql-format-separator"></span>
+            <span title="Italic" class="ql-format-button ql-italic"></span>
+            <span class="ql-format-separator"></span>
+            <span title="Underline" class="ql-format-button ql-underline"></span>
+            <span class="ql-format-separator"></span>
+            <span title="Strikethrough" class="ql-format-button ql-strike"></span>
+            <span class="ql-format-separator"></span>
+            <span title="List" class="ql-format-button ql-list"></span>
+            <span class="ql-format-separator"></span>
+            <span title="Bullet" class="ql-format-button ql-bullet"></span>
+            <span class="ql-format-separator"></span>
+            <span title="Link" class="ql-format-button ql-link"></span>
+          </span>
+        </div>
+        <div id="notepad" class="quill-editor"><%= raw(@notepad) %></div>
+      </div>
+      <script>
+      onPageLoad(function() {
+        myp.notepad = new Quill('#notepad', {
+          modules: {
+            'toolbar': { container: '#notepad-toolbar' },
+            'link-tooltip': true
+          },
+          theme: 'snow'
+        })
+        myp.notepad.on('text-change', function(delta, source) {
+          notepad_changed();
+        });
+      });
+      </script>
+    </li>
   </ul>
 
 <% end %>

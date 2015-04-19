@@ -311,15 +311,15 @@ function href_extract_id(href) {
   return href;
 }
 
-function notepad_changed(t) {
-  if (!myp.notepadTimeout) {
+function notepad_changed() {
+  if (myp.notepad && !myp.notepadTimeout) {
     myp.notepadTimeout = window.setTimeout(function() {
       var url = "/api/updatenotepad.json";
       $.ajax({
         url: url,
         method: "POST",
         dataType: "json",
-        data: $("#notepad").val()
+        data: myp.notepad.getHTML()
       }).done(function(data, textStatus, jqXHR) {
       }).fail(function(jqXHR, textStatus, errorThrown) {
         createErrorNotification("Could not execute " + url + ": " + textStatus);
