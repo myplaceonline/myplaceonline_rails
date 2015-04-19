@@ -326,6 +326,6 @@ function notepad_changed(t) {
       }).complete(function(jqXHR, textStatus) {
         myp.notepadTimeout = null;
       });
-    }, 4000);
+    }, 1000);
   }
 }
