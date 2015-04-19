@@ -384,6 +384,10 @@ module Myp
     self.display_time(time, current_user, :simple_date)
   end
   
+  def self.display_datetime(time, current_user)
+    self.display_time(time, current_user, :default)
+  end
+  
   def self.display_date_short(time, current_user)
     self.display_time(time, current_user, :short_date)
   end

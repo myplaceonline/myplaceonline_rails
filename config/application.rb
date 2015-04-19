@@ -10,7 +10,7 @@ module Myplaceonline
   
   # The following section are mirrored in myplaceonline_final.js
   DEFAULT_DATE_FORMAT = "%A, %b %d, %Y"
-  DEFAULT_TIME_FORMAT = "%A, %b %d, %Y %l:%M:%S %p"
+  DEFAULT_TIME_FORMAT = "%A, %b %d, %Y %-l:%M:%S %p"
   # End mirrored constants
   
   class Application < Rails::Application
@@ -47,7 +47,7 @@ module Myplaceonline
     Time::DATE_FORMATS[:default] = Myplaceonline::DEFAULT_TIME_FORMAT
     
     Time::DATE_FORMATS[:month_year] = "%B %Y (%m/%y)"
-    Time::DATE_FORMATS[:simple_date] = "%A, %b %d, %Y"
+    Time::DATE_FORMATS[:simple_date] = Myplaceonline::DEFAULT_DATE_FORMAT
     Time::DATE_FORMATS[:short_date] = "%b %d"
     Time::DATE_FORMATS[:short_datetime] = "%b %d %l:%M%p"
     

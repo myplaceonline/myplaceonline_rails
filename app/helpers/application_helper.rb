@@ -104,6 +104,10 @@ module ApplicationHelper
     attribute_table_row(name, d.nil? ? nil : Myp.display_date(d, current_user))
   end
   
+  def attribute_table_row_datetime(name, d)
+    attribute_table_row(name, d.nil? ? nil : Myp.display_datetime(d, current_user))
+  end
+  
   def url_or_blank(url, text = nil, clipboard = nil, linkclasses = nil, external = false)
     if !url.to_s.empty?
       if text.to_s.empty?
@@ -192,7 +196,11 @@ module ApplicationHelper
     ).html_safe
   end
   
-  def myp_date_field(form, name, placeholder, value, autofocus = false, input_classes = nil, override_datebox_type = nil)
+  def myp_datetime_field(form, name, placeholder, value, autofocus = false, input_classes = nil, override_datebox_type = nil)
+    myp_date_field(form, name, placeholder, value, autofocus, input_classes, override_datebox_type, Myplaceonline::DEFAULT_TIME_FORMAT)
+  end
+  
+  def myp_date_field(form, name, placeholder, value, autofocus = false, input_classes = nil, override_datebox_type = nil, date_format = Myplaceonline::DEFAULT_DATE_FORMAT)
     # http://dev.jtsage.com/jQM-DateBox/api/
     # http://dev.jtsage.com/jQM-DateBox/doc/3-0-first-datebox/
     # Options should match app/assets/javascripts/myplaceonline_final.js form_add_item
@@ -216,7 +224,7 @@ module ApplicationHelper
         value: value,
         "data-role" => "datebox",
         "data-datebox-mode" => datebox_type,
-        "data-datebox-override-date-format" => Myplaceonline::DEFAULT_DATE_FORMAT,
+        "data-datebox-override-date-format" => date_format,
         "data-datebox-use-focus" => "true",
         "data-datebox-use-clear-button" => "true",
         "data-datebox-use-modal" => "false",

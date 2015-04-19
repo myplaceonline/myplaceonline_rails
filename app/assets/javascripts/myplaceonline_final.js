@@ -1,7 +1,7 @@
-$.noty.defaults.timeout = 4000;
+$.noty.defaults.timeout = 3000;
 $.noty.defaults.layout = 'topCenter';
 myp.DEFAULT_DATE_FORMAT = "%A, %b %d, %Y";
-myp.DEFAULT_TIME_FORMAT = "%A, %b %d, %Y %l:%M:%S %p";
+myp.DEFAULT_TIME_FORMAT = "%A, %b %d, %Y %-l:%M:%S %p";
 
 // https://github.com/rails/jquery-ujs/wiki/ajax
 $(document).on('ajax:remotipartSubmit', 'form', function() {

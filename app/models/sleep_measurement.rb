@@ -4,7 +4,11 @@ class SleepMeasurement < ActiveRecord::Base
   validates :sleep_start_time, presence: true
   
   def display
-    Myp.display_datetime_short(sleep_start_time, User.current_user) + " - " + Myp.display_datetime_short(sleep_end_time, User.current_user)
+    if !sleep_end_time.nil?
+      Myp.display_datetime_short(sleep_start_time, User.current_user) + " - " + Myp.display_datetime_short(sleep_end_time, User.current_user)
+    else
+      Myp.display_datetime_short(sleep_start_time, User.current_user) + " - " + I18n.t("myplaceonline.general.unknown")
+    end
   end
 
   before_create :do_before_save
