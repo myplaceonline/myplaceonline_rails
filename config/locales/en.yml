@@ -109,6 +109,7 @@ en:
       select_region: "Please select a country first"
       moveup: "Move %{name} Up"
       movedown: "Move %{name} Down"
+      cancel: "Cancel"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
