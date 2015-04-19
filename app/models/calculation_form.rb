@@ -28,6 +28,12 @@ class CalculationForm < ActiveRecord::Base
           errors.add(:equation, I18n.t("myplaceonline.calculation_forms.inputs_missing", variable_name: dependency.to_s))
         end
       end
+      
+      calculation_inputs.each do |calculation_input|
+        calc.store(calculation_input.variable_name => 1)
+      end
+      
+      calc.evaluate(equation).to_s
     end
   end
   
