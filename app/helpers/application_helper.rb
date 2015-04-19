@@ -211,8 +211,8 @@ module ApplicationHelper
     end
     
     hidden_time = nil
-    random_name = nil
-    close_callback = ""
+    random_name = ""
+    close_callback = "false"
     
     # datebox or calbox
     datebox_type = "calbox"
