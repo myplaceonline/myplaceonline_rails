@@ -524,7 +524,7 @@ module Myp
       if result.length > 0
         result += ", "
       end
-      result += ActionController::Base.helpers.pluralize(diff[:second], "second")
+      result += ActionController::Base.helpers.pluralize(diff[:seconds], "second")
     end
     result
   end
