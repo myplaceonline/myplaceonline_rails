@@ -197,7 +197,7 @@ module ApplicationHelper
   end
   
   def myp_datetime_field(form, name, placeholder, value, autofocus = false, input_classes = nil, override_datebox_type = nil)
-    myp_date_field(form, name, placeholder, value, autofocus, input_classes, override_datebox_type, Myplaceonline::DEFAULT_TIME_FORMAT)
+    myp_date_field(form, name, placeholder, value, autofocus, input_classes, "datetime", Myplaceonline::DEFAULT_TIME_FORMAT)
   end
   
   def myp_date_field(form, name, placeholder, value, autofocus = false, input_classes = nil, override_datebox_type = nil, date_format = Myplaceonline::DEFAULT_DATE_FORMAT)
@@ -209,10 +209,32 @@ module ApplicationHelper
     if is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
+    
+    hidden_time = nil
+    random_name = nil
+    close_callback = ""
+    
     # datebox or calbox
     datebox_type = "calbox"
     if !override_datebox_type.nil?
       datebox_type = override_datebox_type
+      if override_datebox_type == "datetime"
+        random_name = SecureRandom.hex(10)
+        hidden_time = hidden_field_tag(
+          random_name,
+          value.nil? ? value : value.to_s(:timebox),
+          "data-role" => "datebox",
+          "data-datebox-mode" => "timebox",
+          "data-datebox-override-date-format" => Myplaceonline::JQM_DATEBOX_TIMEBOX_FORMAT,
+          "data-datebox-use-focus" => "true",
+          "data-datebox-use-modal" => "false",
+          "data-datebox-use-button" => "false",
+          "data-datebox-popup-position" => "window",
+          "data-datebox-close-callback" => "datebox_timebox_closed"
+        )
+        datebox_type = "calbox"
+        close_callback = "datebox_calendar_closed"
+      end
     end
     content_tag(
       :p,
@@ -231,8 +253,10 @@ module ApplicationHelper
         "data-datebox-cal-use-pickers" => "true",
         "data-datebox-cal-year-pick-min" => "-100",
         "data-datebox-cal-year-pick-max" => "10",
-        "data-cal-no-header" => "true"
-      )
+        "data-datebox-cal-no-header" => "true",
+        "data-datebox-close-callback" => close_callback,
+        "data-datetime-id" => random_name
+      ) + hidden_time
     ).html_safe
   end
 
