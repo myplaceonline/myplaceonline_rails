@@ -14,6 +14,8 @@ class ApplicationController < ActionController::Base
   
   #after_filter do puts "Response: " + response.body end
   
+  before_filter :set_time_zone
+  
   check_authorization
   
   rescue_from Myp::DecryptionKeyUnavailableError do |exception|
@@ -41,5 +43,11 @@ class ApplicationController < ActionController::Base
   
   def self.current_session
     Thread.current[:current_session]
+  end
+  
+  def set_time_zone
+    if !current_user.nil? && !current_user.timezone.blank?
+      Time.zone = current_user.timezone
+    end
   end
 end

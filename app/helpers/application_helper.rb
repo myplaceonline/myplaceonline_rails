@@ -213,6 +213,7 @@ module ApplicationHelper
     hidden_time = nil
     random_name = ""
     close_callback = "false"
+    element_type = "date_field"
     
     # datebox or calbox
     datebox_type = "calbox"
@@ -234,12 +235,13 @@ module ApplicationHelper
         )
         datebox_type = "calbox"
         close_callback = "datebox_calendar_closed"
+        element_type = "datetime_local_field"
       end
     end
     content_tag(
       :p,
       form.label(name, placeholder, class: myp_label_classes(value)) +
-      form.date_field(
+      form.send(element_type,
         name,
         placeholder: placeholder,
         class: myp_field_classes(autofocus, input_classes),
