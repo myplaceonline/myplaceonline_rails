@@ -112,6 +112,7 @@ en:
       movedown: "Move %{name} Down"
       cancel: "Cancel"
       unknown: "Unknown"
+      points: "Points"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
