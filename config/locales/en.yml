@@ -58,6 +58,7 @@ en:
       blood_pressures: "Blood Pressure Measurements"
       heart_rates: "Heart Rate Measurements"
       recipes: "Recipes"
+      sleep_measurements: "Sleep Measurements"
     general:
       email: "E-mail"
       password: "Password"
@@ -495,3 +496,6 @@ en:
     recipes:
       name: "Recipe Name"
       recipe: "Recipe"
+    sleep_measurements:
+      sleep_start_time: "Sleep Started"
+      sleep_end_time: "Sleep Ended"

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :sleep_measurements
+  post 'sleep_measurements/new'
+
   resources :recipes
   post 'recipes/new'
 

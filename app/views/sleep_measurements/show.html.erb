@@ -1,0 +1,6 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row_date(t("myplaceonline.sleep_measurements.sleep_start_time"), @obj.sleep_start_time) %>
+  <%= attribute_table_row_date(t("myplaceonline.sleep_measurements.sleep_end_time"), @obj.sleep_end_time) %>
+  
+<% end %>

@@ -1,0 +1,4 @@
+sleep_measurement:
+  identity: identity
+  sleep_start_time: 2015-01-01 01:01:01
+  sleep_end_time: 2015-01-01 01:01:01
