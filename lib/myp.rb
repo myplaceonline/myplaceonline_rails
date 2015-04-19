@@ -506,6 +506,29 @@ module Myp
     result
   end
   
+  def self.time_difference_in_general_human_detailed(diff)
+    result = Myp.time_difference_in_general_human(diff)
+    if diff[:hours] > 0
+      if result.length > 0
+        result += ", "
+      end
+      result += ActionController::Base.helpers.pluralize(diff[:hours], "hour")
+    end
+    if diff[:minutes] > 0
+      if result.length > 0
+        result += ", "
+      end
+      result += ActionController::Base.helpers.pluralize(diff[:minutes], "minute")
+    end
+    if diff[:seconds] > 0
+      if result.length > 0
+        result += ", "
+      end
+      result += ActionController::Base.helpers.pluralize(diff[:second], "second")
+    end
+    result
+  end
+  
   def self.new_model(model, params = nil)
     if model.respond_to?("build")
       result = model.build(params)

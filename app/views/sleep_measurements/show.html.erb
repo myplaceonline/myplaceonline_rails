@@ -2,5 +2,6 @@
 
   <%= attribute_table_row_datetime(t("myplaceonline.sleep_measurements.sleep_start_time"), @obj.sleep_start_time) %>
   <%= attribute_table_row_datetime(t("myplaceonline.sleep_measurements.sleep_end_time"), @obj.sleep_end_time) %>
+  <%= attribute_table_row(t("myplaceonline.sleep_measurements.duration"), @obj.to_s_difference) %>
   
 <% end %>

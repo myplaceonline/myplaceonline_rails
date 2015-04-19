@@ -500,3 +500,4 @@ en:
     sleep_measurements:
       sleep_start_time: "Sleep Started"
       sleep_end_time: "Sleep Ended"
+      duration: "Duration"
