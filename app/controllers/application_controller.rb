@@ -18,22 +18,20 @@ class ApplicationController < ActionController::Base
   
   check_authorization
   
-  rescue_from Myp::DecryptionKeyUnavailableError do |exception|
-    redirect_to Myp.reentry_url(request)
-  end
+  rescue_from StandardError, :with => :catchall
   
-  rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, :alert => exception.message
-  end
-  
-  rescue_from StandardError, :with => :error_render_method
-  
-  def error_render_method(exception)
-    respond_to do |type|
-      #type.xml { render :template => "errors/error_404", :status => 500 }
-      type.all { render :text => exception.to_s, :status => 500 }
+  def catchall(exception)
+    if exception.is_a?(Myp::DecryptionKeyUnavailableError)
+      redirect_to Myp.reentry_url(request)
+    elsif exception.is_a?(CanCan::AccessDenied)
+      redirect_to root_url, :alert => exception.message
+    else
+      respond_to do |type|
+        #type.xml { render :template => "errors/error_404", :status => 500 }
+        type.all { render :text => exception.to_s, :status => 500 }
+      end
+      true
     end
-    true
   end
   
   def set_current_user
