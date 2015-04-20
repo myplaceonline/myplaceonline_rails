@@ -10,6 +10,16 @@ class CalculationsController < MyplaceonlineController
   def available_forms
     CalculationForm.where(identity_id: current_user.primary_identity.id, is_duplicate: false)
   end
+  
+  def after_create_or_update
+    respond_to do |format|
+      format.html {
+        flash[:notice] = I18n.t("myplaceonline.calculations.result") + " = " + @obj.evaluate
+        render :edit
+      }
+      format.js { super.after_create_or_update }
+    end
+  end
 
   protected
     def new_obj_initialize

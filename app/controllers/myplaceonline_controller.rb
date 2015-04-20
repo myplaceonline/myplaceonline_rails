@@ -42,13 +42,13 @@ class MyplaceonlineController < ApplicationController
     new_obj_initialize
     @url = new_path
     if request.post?
-      return create
+      create
     else
       if @obj.respond_to?("encrypt")
         @obj.encrypt = current_user.encrypt_by_default
       end
+      respond_with(@obj)
     end
-    respond_with(@obj)
   end
 
   def edit
