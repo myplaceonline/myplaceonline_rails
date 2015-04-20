@@ -26,6 +26,16 @@ class ApplicationController < ActionController::Base
     redirect_to root_url, :alert => exception.message
   end
   
+  rescue_from StandardError, :with => :error_render_method
+  
+  def error_render_method(exception)
+    respond_to do |type|
+      #type.xml { render :template => "errors/error_404", :status => 500 }
+      type.all { render :text => exception.to_s, :status => 500 }
+    end
+    true
+  end
+  
   def set_current_user
     User.current_user = current_user
     yield

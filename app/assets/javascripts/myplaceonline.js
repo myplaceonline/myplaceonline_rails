@@ -1,5 +1,5 @@
 // myplaceonline.js
-// Version 0.7
+// Version 0.8
 //
 // Notes:
 //  * When changing this file, you may need to apply the same changes to
@@ -22,7 +22,8 @@ var myp = {
   debugMessages: [],
   inPhoneGap: false,
   audioMarkers: [],
-  snapshotKey: "myplaceonline_offline_snapshot"
+  snapshotKey: "myplaceonline_offline_snapshot",
+  contact_email: "contact@myplaceonline.com"
 };
 
 function consoleLog(msg) {
@@ -203,7 +204,7 @@ function submitForm(frm) {
 }
 
 function criticalError(msg) {
-  msg = "Browser Error. Please copy and report the following details to contact@myplaceonline.com: " + msg;
+  msg = "Browser Error. Please copy and report the following details to " + myp.contact_email + ": " + msg;
   consoleLog(msg);
   if (myp) {
     myp.jserrors++;
@@ -398,6 +399,15 @@ $(document).on("mobileinit.myp", function() {
   $(document).on("pagebeforecreate.updatedataurl", "[data-role=page]", null, function(e) {
     var dataUrl = $(this).attr("data-url");
     $(this).attr("data-url",dataUrl.replace(/&amp;/g,"&"));
+  });
+
+  // http://api.jquerymobile.com/pagecontainer/#event-loadfailed
+  $(document).on("pagecontainerloadfailed", $.mobile.pageContainer, function(event, ui) {
+    // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
+    alert("Error " + ui.xhr.status + "\n" + ui.xhr.responseText + "\n\nPlease try again or report the error to " + myp.contact_email);
+    // https://github.com/jquery/jquery-mobile/issues/3143
+    // event.preventDefault();
+    // ui.deferred.reject( ui.absUrl, ui.options );
   });
 });
 
