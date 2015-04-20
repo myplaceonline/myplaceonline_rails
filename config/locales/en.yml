@@ -113,6 +113,7 @@ en:
       cancel: "Cancel"
       unknown: "Unknown"
       points: "Points"
+      quick_feedback: "Enter some quick feedback and it will be emailed to us and reviewed:"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
@@ -125,6 +126,7 @@ en:
     menu:
       name: "Menu"
       home: "Home"
+      feedback: "Quick Feedback"
     welcome:
       intro_html: "myplaceonline is a virtual life assistant. We'll never sell your private data. The code is %{opensourcelink} if you want to review it or run it on your computer."
       opensourcelink: "open source"

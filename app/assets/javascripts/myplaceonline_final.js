@@ -344,3 +344,21 @@ function datebox_timebox_closed(update) {
   calDate.setHours(update.date.getHours(), update.date.getMinutes(), update.date.getSeconds(), update.date.getMilliseconds());
   cal.datebox('setTheDate', calDate);
 }
+
+function quick_feedback(prompt_text) {
+  var result = prompt(prompt_text);
+  if (result) {
+    var url = "/api/quickfeedback.json";
+    $.ajax({
+      url: url,
+      method: "POST",
+      dataType: "json",
+      data: result
+    }).done(function(data, textStatus, jqXHR) {
+      createSuccessNotification("Feedback submitted successfully");
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+      createErrorNotification("Could not execute " + url + ": " + textStatus);
+    }).complete(function(jqXHR, textStatus) {
+    });
+  }
+}

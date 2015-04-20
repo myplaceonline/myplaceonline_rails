@@ -95,6 +95,7 @@ Rails.application.routes.draw do
   get 'api/subregions'
   post 'api/renderpartial'
   post 'api/updatenotepad'
+  post 'api/quickfeedback'
 
   get 'meaning/index'
   get 'meaning', :to => 'meaning#index'

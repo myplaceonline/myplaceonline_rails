@@ -48,12 +48,38 @@ class ApiController < ApplicationController
   end
   
   def updatenotepad
-    new_notepad = request.raw_post
-    current_user.primary_identity.notepad = new_notepad
-    current_user.primary_identity.save!
-    render json: {
-      :result => true
-    }
+    if !current_user.nil? && !current_user.primary_identity.nil?
+      new_notepad = request.raw_post
+      current_user.primary_identity.notepad = new_notepad
+      current_user.primary_identity.save!
+      render json: {
+        :result => true
+      }
+    else
+      render json: {
+        :result => false
+      }
+    end
+  end
+  
+  def quickfeedback
+    if !current_user.nil? && !current_user.primary_identity.nil?
+      begin
+        UserMailer.send_support_email(current_user.email, "Quick Feedback", request.raw_post).deliver
+        render json: {
+          :result => true
+        }
+      rescue Exception => e
+        render json: {
+          :result => true,
+          :error => e.to_s
+        }
+      end
+    else
+      render json: {
+        :result => false
+      }
+    end
   end
   
   protected
