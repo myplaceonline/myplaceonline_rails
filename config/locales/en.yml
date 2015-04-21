@@ -510,3 +510,7 @@ en:
       amount_type: "Units"
       measurement_date: "Date"
       measurement_source: "Source"
+      input_by_feet_inches: "By Feet and Inches"
+      feet: "Feet"
+      inches: "Inches"
+      calculate: "Calculate Inches"
