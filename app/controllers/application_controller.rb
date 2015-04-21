@@ -26,6 +26,7 @@ class ApplicationController < ActionController::Base
     elsif exception.is_a?(CanCan::AccessDenied)
       redirect_to root_url, :alert => exception.message
     else
+      puts Myp.error_details(exception)
       respond_to do |type|
         #type.xml { render :template => "errors/error_404", :status => 500 }
         type.all { render :text => exception.to_s, :status => 500 }

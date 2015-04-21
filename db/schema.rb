@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150419173653) do
+ActiveRecord::Schema.define(version: 20150421025220) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -287,6 +287,18 @@ ActiveRecord::Schema.define(version: 20150419173653) do
   end
 
   add_index "heart_rates", ["identity_id"], name: "index_heart_rates_on_identity_id", using: :btree
+
+  create_table "heights", force: true do |t|
+    t.decimal  "height_amount",      precision: 10, scale: 2
+    t.integer  "amount_type"
+    t.date     "measurement_date"
+    t.string   "measurement_source"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "heights", ["identity_id"], name: "index_heights_on_identity_id", using: :btree
 
   create_table "hypotheses", force: true do |t|
     t.string   "name"

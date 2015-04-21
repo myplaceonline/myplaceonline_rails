@@ -59,6 +59,7 @@ en:
       heart_rates: "Heart Rate Measurements"
       recipes: "Recipes"
       sleep_measurements: "Sleep Measurements"
+      heights: "Height Measurements"
     general:
       email: "E-mail"
       password: "Password"
@@ -504,3 +505,8 @@ en:
       sleep_start_time: "Sleep Started"
       sleep_end_time: "Sleep Ended"
       duration: "Duration"
+    heights:
+      height_amount: "Height"
+      amount_type: "Units"
+      measurement_date: "Date"
+      measurement_source: "Source"

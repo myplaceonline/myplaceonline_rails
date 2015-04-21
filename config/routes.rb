@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :heights
+  post 'heights/new'
+
   resources :sleep_measurements
   post 'sleep_measurements/new'
 

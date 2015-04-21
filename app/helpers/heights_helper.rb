@@ -1,0 +1,2 @@
+module HeightsHelper
+end
