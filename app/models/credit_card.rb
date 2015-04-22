@@ -21,7 +21,7 @@ class CreditCard < ActiveRecord::Base
 
   validate do
     if number.blank? && number_encrypted.nil?
-      errors.add(:number, t("myplaceonline.general.non_blank"))
+      errors.add(:number, I18n.t("myplaceonline.general.non_blank"))
     end
   end
 
@@ -30,7 +30,7 @@ class CreditCard < ActiveRecord::Base
 
   validate do
     if expires.blank? && expires_encrypted.nil?
-      errors.add(:expires, t("myplaceonline.general.non_blank"))
+      errors.add(:expires, I18n.t("myplaceonline.general.non_blank"))
     end
   end
 
@@ -39,7 +39,7 @@ class CreditCard < ActiveRecord::Base
   
   validate do
     if security_code.blank? && security_code_encrypted.nil?
-      errors.add(:security_code, t("myplaceonline.general.non_blank"))
+      errors.add(:security_code, I18n.t("myplaceonline.general.non_blank"))
     end
   end
 

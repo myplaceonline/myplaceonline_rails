@@ -380,7 +380,7 @@ en:
       name: "Name"
       number: "Number"
       expires: "Expires"
-      security_code: "Security Code"
+      security_code: "Security Code/CVV"
       password: "Password"
       pin: "ATM PIN"
       notes: "Notes"
