@@ -313,9 +313,11 @@ function href_extract_id(href) {
   return href;
 }
 
-function notepad_changed() {
+function notepad_changed(notepadTitle, pendingSave, saving, saved) {
+  $(".notepad_heading").html(notepadTitle + " (" + pendingSave + ")");
   if (myp.notepad && !myp.notepadTimeout) {
     myp.notepadTimeout = window.setTimeout(function() {
+      $(".notepad_heading").html(notepadTitle + " (" + saving + ")");
       var url = "/api/updatenotepad.json";
       $.ajax({
         url: url,
@@ -323,7 +325,14 @@ function notepad_changed() {
         dataType: "json",
         data: myp.notepad.getHTML()
       }).done(function(data, textStatus, jqXHR) {
+        $(".notepad_heading").html(notepadTitle + " (" + saved + ")");
+        window.setTimeout(function() {
+          if (!myp.notepadTimeout) {
+            $(".notepad_heading").html(notepadTitle);
+          }
+        }, 3000);
       }).fail(function(jqXHR, textStatus, errorThrown) {
+        $(".notepad_heading").html(notepadTitle);
         createErrorNotification("Could not execute " + url + ": " + textStatus);
       }).complete(function(jqXHR, textStatus) {
         myp.notepadTimeout = null;

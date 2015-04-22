@@ -52,7 +52,7 @@
   <% end %>
 
   <ul data-role="listview" data-inset="true">
-    <li data-role="list-divider"><%= t("myplaceonline.welcome.notepad") %></li>
+    <li data-role="list-divider" class="notepad_heading"><%= t("myplaceonline.welcome.notepad") %></li>
     <li>
       <div class="quill-wrapper">
         <div id="notepad-toolbar" class="quill-toolbar">
@@ -84,7 +84,7 @@
           theme: 'snow'
         })
         myp.notepad.on('text-change', function(delta, source) {
-          notepad_changed();
+          notepad_changed('<%= t("myplaceonline.welcome.notepad") %>', '<%= t("myplaceonline.general.pending_save") %>', '<%= t("myplaceonline.general.saving") %>', '<%= t("myplaceonline.general.saved") %>');
         });
       });
       </script>
