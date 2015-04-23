@@ -314,6 +314,10 @@ function href_extract_id(href) {
 }
 
 function notepad_changed(notepadTitle, pendingSave, saving, saved) {
+  if (myp.notepadResetTimeout) {
+    clearTimeout(myp.notepadResetTimeout);
+    myp.notepadResetTimeout = null;
+  }
   $(".notepad_heading").html(notepadTitle + " (" + pendingSave + ")");
   if (myp.notepad && !myp.notepadTimeout) {
     myp.notepadTimeout = window.setTimeout(function() {
@@ -326,7 +330,8 @@ function notepad_changed(notepadTitle, pendingSave, saving, saved) {
         data: myp.notepad.getHTML()
       }).done(function(data, textStatus, jqXHR) {
         $(".notepad_heading").html(notepadTitle + " (" + saved + ")");
-        window.setTimeout(function() {
+        myp.notepadResetTimeout = window.setTimeout(function() {
+          myp.notepadResetTimeout = null;
           if (!myp.notepadTimeout) {
             $(".notepad_heading").html(notepadTitle);
           }
