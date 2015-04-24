@@ -128,11 +128,12 @@ module Myp
       }
     }).map{ |category|
       CategoryForIdentity.new(
-        I18n.t("myplaceonline.category." + category.name.downcase),
+        category.human_title,
         category.link,
         category.points_amount.nil? ? 0 : category.points_amount,
         category.id,
-        category.parent_id
+        category.parent_id,
+        category.filtertext
       )
     }
   end
@@ -141,7 +142,7 @@ module Myp
     # Prefer last visit over number of visits
     CategoryPointsAmount.find_by_sql(%{
       (
-        SELECT category_points_amounts.*, categories.name as category_name, categories.link as category_link, categories.parent_id as category_parent_id, 0 as select_type
+        SELECT category_points_amounts.*, categories.name as category_name, categories.additional_filtertext as category_additional_filtertext, categories.link as category_link, categories.parent_id as category_parent_id, 0 as select_type
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
         WHERE categories.parent_id IS NOT NULL AND category_points_amounts.identity_id = #{
@@ -152,7 +153,7 @@ module Myp
       )
       UNION ALL
       (
-        SELECT category_points_amounts.*, categories.name as category_name, categories.link as category_link, categories.parent_id as category_parent_id, 1 as select_type
+        SELECT category_points_amounts.*, categories.name as category_name, categories.additional_filtertext as category_additional_filtertext, categories.link as category_link, categories.parent_id as category_parent_id, 1 as select_type
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
         WHERE categories.parent_id IS NOT NULL AND category_points_amounts.identity_id = #{
@@ -164,22 +165,24 @@ module Myp
     })
     .uniq{ |cpa| cpa.category_id }.map{ |cpa|
       CategoryForIdentity.new(
-        I18n.t("myplaceonline.category." + cpa.category_name.downcase),
+        Category.human_title(cpa.category_name),
         cpa.category_link,
         cpa.count.nil? ? 0 : cpa.count,
         cpa.category_id,
-        cpa.category_parent_id
+        cpa.category_parent_id,
+        Category.filtertext(cpa.category_name, cpa.category_additional_filtertext)
       )
     }
   end
 
   class CategoryForIdentity
-    def initialize(title, link, count, id, parent_id)
+    def initialize(title, link, count, id, parent_id, filtertext)
       @title = title
       @link = link
       @count = count
       @id = id
       @parent_id = parent_id
+      @filtertext = filtertext
     end
   end
 
