@@ -21,4 +21,8 @@ class MealsController < MyplaceonlineController
         select_or_create_permit(:meal, :location_attributes, LocationsController.param_names)
       )
     end
+    
+    def new_obj_initialize
+      @obj.meal_time = DateTime.now
+    end
 end
