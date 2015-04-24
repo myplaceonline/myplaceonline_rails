@@ -1,7 +1,8 @@
 <%
 existingobj ||= Myp.new_model(objform[0..(objform.index('/')-1)].singularize.camelize.constantize)
+collapsed = collapsed.nil? ? false : collapsed
 %>
-<div data-role="collapsible" data-collapsed="false">
+<div data-role="collapsible" data-collapsed="<%= collapsed %>">
   <h4><%= heading %></h4>
   <div data-role="collapsible-set">
     <div data-role="collapsible" data-collapsed="false">

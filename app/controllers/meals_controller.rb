@@ -13,6 +13,12 @@ class MealsController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:meal).permit(:meal_time, :notes, :price, :calories)
+      params.require(:meal).permit(
+        :meal_time,
+        :notes,
+        :price,
+        :calories,
+        select_or_create_permit(:meal, :location_attributes, LocationsController.param_names)
+      )
     end
 end

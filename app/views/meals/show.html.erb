@@ -4,5 +4,6 @@
   <%= attribute_table_row(t("myplaceonline.meals.price"), @obj.price) %>
   <%= attribute_table_row(t("myplaceonline.meals.calories"), @obj.calories) %>
   <%= attribute_table_row_markdown(t("myplaceonline.meals.notes"), @obj.notes) %>
+  <%= attribute_table_row_reference(t("myplaceonline.meals.location"), "location_path", @obj.location) %>
   
 <% end %>
