@@ -149,12 +149,14 @@ en:
             * Generate random passwords.
             * Quickly copy passwords to the clipboard.
             * Password notes support Markdown syntax.
-          * Manage contacts.
-          * Manage To Dos.
+          * Manage apartments, bank accounts, contacts, credit cards, credit scores, RSS feeds, files, ideas, lists, vehicles, To Dos, etc.
+          * Create calculation forms with inputs and an equation and then create calculations from these forms.
         * Joy
+          * Manage jokes.
           * Manage movies you want to watch or have watched.
         * Meaning
           * Manage notes of wisdom gathered in life.
+          * Manage questions including hypotheses.
         * General Features
           * Export all data to a downlodable file with the option of encrypting it in a standardized format which can be decrypted with the open source gpg tool.
           * Save exported data in offline browser storage and display some of it even without internet.
