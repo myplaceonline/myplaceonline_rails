@@ -1,5 +1,7 @@
 class Weight < ActiveRecord::Base
   belongs_to :identity
+  
+  WEIGHTS = [["Pounds", "0"]]
 
   validates :amount, presence: true
   validates :amount_type, presence: true
