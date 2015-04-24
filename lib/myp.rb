@@ -551,7 +551,7 @@ module Myp
       if !current_user.nil?
         if !model.identity.nil?
           if model.identity_id != current_user.primary_identity.id
-            raise "Unauthorized TODO"
+            raise "Unauthorized"
           end
         else
           model.identity = current_user.primary_identity

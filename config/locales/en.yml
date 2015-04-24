@@ -181,6 +181,14 @@ en:
         > 
         > Positive education: positive psychology and classroom interventions, Seligman et al, Oxford Review of Education, 2009, [http://www.ppc.sas.upenn.edu/positiveeducationarticle2009.pdf](http://www.ppc.sas.upenn.edu/positiveeducationarticle2009.pdf)
 
+        ## What is the point of encryption?
+        
+        You may optionally encrypt some sensitive information. This protects that data from the following attacks:
+        
+        * If a malicious person hacks the myplaceonline servers.
+        * If a rogue myplaceonline administrator reads the database.
+        * If another myplaceonline user accesses your data by exploiting a bug in the server code (the reason this works is that even if the user accesses your data, unless you both happened to use the same password, the decryption will return garbage).
+        
         ## How is data encrypted when stored in the database or in offline browser storage?
 
         Symmetric [AES-256-CBC](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) and a [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2)+HMAC+SHA1 key derivation function with an 8 byte salt and 65536 iterations.
