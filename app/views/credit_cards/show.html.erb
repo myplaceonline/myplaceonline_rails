@@ -4,6 +4,7 @@
   <%= attribute_table_row(t("myplaceonline.credit_cards.number"), @obj.number) %>
   <%= attribute_table_row(t("myplaceonline.credit_cards.expires"), Myp.display_date_month_year(@obj.expires, current_user)) %>
   <%= attribute_table_row(t("myplaceonline.credit_cards.security_code"), @obj.security_code) %>
+  <%= attribute_table_row_select(t("myplaceonline.credit_cards.card_type"), @obj.card_type, CreditCard::CARD_TYPES) %>
   <%= attribute_table_row_reference(t("myplaceonline.credit_cards.password"), "password_path", @obj.password) %>
   <%= attribute_table_row_reference(t("myplaceonline.credit_cards.address"), "location_path", @obj.address) %>
   <%= attribute_table_row(t("myplaceonline.credit_cards.pin"), @obj.pin) %>

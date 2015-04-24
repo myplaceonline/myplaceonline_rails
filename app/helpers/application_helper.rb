@@ -108,6 +108,19 @@ module ApplicationHelper
     attribute_table_row(name, d.nil? ? nil : Myp.display_datetime(d, current_user))
   end
   
+  def attribute_table_row_select(name, val, select_values)
+    valstr = val.to_s
+    if !val.nil?
+      found = select_values.find{|x| x[1] == valstr}
+      if !found.nil?
+        found = found[0]
+      end
+      attribute_table_row(name, found)
+    else
+      nil
+    end
+  end
+  
   def url_or_blank(url, text = nil, clipboard = nil, linkclasses = nil, external = false)
     if !url.to_s.empty?
       if text.to_s.empty?

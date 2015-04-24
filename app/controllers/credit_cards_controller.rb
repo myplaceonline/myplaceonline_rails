@@ -22,6 +22,7 @@ class CreditCardsController < MyplaceonlineController
         :notes,
         :encrypt,
         :is_defunct,
+        :card_type,
         select_or_create_permit(:credit_card, :password_attributes, PasswordsController.param_names),
         select_or_create_permit(:credit_card, :address_attributes, LocationsController.param_names)
       )

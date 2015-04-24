@@ -386,6 +386,7 @@ en:
       pin: "ATM PIN"
       notes: "Notes"
       address: "Billing Address"
+      card_type: "Card Type"
     bank_accounts:
       name: "Name"
       account_number: "Account Number"
