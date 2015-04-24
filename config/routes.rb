@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :meals
+  post 'meals/new'
+
   resources :heights
   post 'heights/new'
 

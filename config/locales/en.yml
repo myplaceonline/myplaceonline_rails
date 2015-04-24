@@ -60,6 +60,7 @@ en:
       recipes: "Recipes"
       sleep_measurements: "Sleep Measurements"
       heights: "Height Measurements"
+      meals: "Meals"
     general:
       email: "E-mail"
       password: "Password"
@@ -517,3 +518,8 @@ en:
       feet: "Feet"
       inches: "Inches"
       calculate: "Calculate Inches"
+    meals:
+      meal_time: "Time"
+      notes: "Notes"
+      price: "Price"
+      calories: "Calories"
