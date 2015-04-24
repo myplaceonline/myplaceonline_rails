@@ -109,16 +109,7 @@ module ApplicationHelper
   end
   
   def attribute_table_row_select(name, val, select_values)
-    valstr = val.to_s
-    if !val.nil?
-      found = select_values.find{|x| x[1] == valstr}
-      if !found.nil?
-        found = found[0]
-      end
-      attribute_table_row(name, found)
-    else
-      nil
-    end
+    attribute_table_row(name, Myp.get_select_name(val, select_values))
   end
   
   def url_or_blank(url, text = nil, clipboard = nil, linkclasses = nil, external = false)

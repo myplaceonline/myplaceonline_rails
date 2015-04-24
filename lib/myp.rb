@@ -559,4 +559,18 @@ module Myp
       end
     end
   end
+
+  def self.get_select_name(val, select_values)
+    if !val.nil?
+      valstr = val.to_s
+      found = select_values.find{|x| x[1] == valstr}
+      if !found.nil?
+        found[0]
+      else
+        nil
+      end
+    else
+      nil
+    end
+  end
 end

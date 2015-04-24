@@ -10,6 +10,9 @@ class CreditCard < ActiveRecord::Base
 
   def display
     result = name
+    if !card_type.nil?
+      result += " (" + Myp.get_select_name(card_type, CreditCard::CARD_TYPES) + ")"
+    end
     if !defunct.nil?
       result += " (" + I18n.t("myplaceonline.general.defunct") + ")"
     end
