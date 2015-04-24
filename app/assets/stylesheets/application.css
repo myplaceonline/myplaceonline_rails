@@ -130,3 +130,11 @@ div.ui-checkbox + label {
   border-bottom: 1px solid #ccc;
   border-top: 1px solid #ccc;
 }
+
+/**
+ * JQM defaults to 30% left/right margins. On small screens like phones
+ * this can cause the title to go to ellipses sooner than it needs to.
+ */
+.ui-header .ui-title {
+  margin: 0px 10% !important;
+}
