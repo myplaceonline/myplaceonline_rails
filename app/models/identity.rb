@@ -104,6 +104,10 @@ class Identity < ActiveRecord::Base
     end
   end
   
+  def last_weight
+    weights.to_a.sort{ |a,b| b.measure_date <=> a.measure_date }.first
+  end
+  
   before_create :do_before_save
   before_update :do_before_save
 
