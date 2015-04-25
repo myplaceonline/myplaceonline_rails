@@ -52,6 +52,9 @@
   <%= attribute_table_row t("myplaceonline.vehicles.fuel_tank_capacity"), @obj.fuel_tank_capacity %>
   <%= attribute_table_row t("myplaceonline.vehicles.wet_weight_front"), @obj.wet_weight_front %>
   <%= attribute_table_row t("myplaceonline.vehicles.wet_weight_rear"), @obj.wet_weight_rear %>
+  <% if !@obj.wet_weight_front.blank? && !@obj.wet_weight_rear.blank? %>
+    <%= attribute_table_row t("myplaceonline.vehicles.wet_weight"), @obj.wet_weight_front + @obj.wet_weight_rear %>
+  <% end %>
   <%= attribute_table_row t("myplaceonline.vehicles.tailgate_weight"), @obj.tailgate_weight %>
   <% if !@obj.gvwr.blank? && !@obj.wet_weight_front.blank? && !@obj.wet_weight_rear.blank? %>
     <%= attribute_table_row t("myplaceonline.vehicles.max_payload"), @obj.gvwr - @obj.wet_weight_front - @obj.wet_weight_rear %>
