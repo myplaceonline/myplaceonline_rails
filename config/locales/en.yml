@@ -354,6 +354,7 @@ en:
       phone: "Phone Number"
       map: "Map"
       full_address: "Full Address"
+      notes: "Notes"
     activities:
       name: "Name"
     apartments:

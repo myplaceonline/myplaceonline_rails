@@ -10,6 +10,7 @@
   <%= attribute_table_row(t("myplaceonline.locations.postal_code"), @obj.postal_code) %>
   <%= attribute_table_row(t("myplaceonline.general.region"), @obj.region_name) %>
   <%= attribute_table_row_url(t("myplaceonline.locations.map"), @obj.map_url) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.locations.notes"), @obj.notes) %>
   <% @obj.location_phones.each do |phone| %>
   
     <%= attribute_table_row(t("myplaceonline.locations.phone"), phone.number) %>
