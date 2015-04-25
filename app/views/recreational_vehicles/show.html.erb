@@ -12,6 +12,7 @@
   <%= attribute_table_row(t("myplaceonline.recreational_vehicles.msrp"), @obj.msrp) %>
   <%= attribute_table_row(t("myplaceonline.recreational_vehicles.purchased"), Myp.display_date(@obj.purchased, current_user)) %>
   <%= attribute_table_row(t("myplaceonline.recreational_vehicles.warranty_ends"), Myp.display_date(@obj.warranty_ends, current_user)) %>
+  <%= attribute_table_row_reference(t("myplaceonline.recreational_vehicles.location_purchased"), "location_path", @obj.location_purchased) %>
   <%= attribute_table_row(t("myplaceonline.recreational_vehicles.sleeps"), @obj.sleeps) %>
   <%= attribute_table_row_select t("myplaceonline.recreational_vehicles.dimensions_type"), @obj.dimensions_type, Myp::DIMENSIONS %>
   <%= attribute_table_row(t("myplaceonline.recreational_vehicles.exterior_length"), @obj.exterior_length) %>

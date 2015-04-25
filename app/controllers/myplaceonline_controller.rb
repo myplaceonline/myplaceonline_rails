@@ -61,7 +61,11 @@ class MyplaceonlineController < ApplicationController
   def create
     Myp.ensure_encryption_key(session)
     ActiveRecord::Base.transaction do
-      @obj = model.new(obj_params)
+      begin
+        @obj = model.new(obj_params)
+      rescue ActiveRecord::RecordNotFound => rnf
+        raise Myp::CannotFindNestedAttribute, rnf.message + " (code needs attribute setter override?)"
+      end
       # presave *MUST* occur before create_presave and update_presave
       presave
       create_presave
@@ -79,7 +83,11 @@ class MyplaceonlineController < ApplicationController
     Myp.ensure_encryption_key(session)
     ActiveRecord::Base.transaction do
 
-      @obj.assign_attributes(obj_params)
+      begin
+        @obj.assign_attributes(obj_params)
+      rescue ActiveRecord::RecordNotFound => rnf
+        raise Myp::CannotFindNestedAttribute, rnf.message + " (code needs attribute setter override?)"
+      end
       # presave *MUST* occur before create_presave and update_presave
       presave
       update_presave

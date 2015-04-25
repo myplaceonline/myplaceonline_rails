@@ -348,6 +348,7 @@ module Myp
   class UserUnavailableError < StandardError; end
   class EncryptedValueUnavailableError < StandardError; end
   class SessionUnavailableError < StandardError; end
+  class CannotFindNestedAttribute < StandardError; end
 
   class SimpleSerializer
     def dump(value)
