@@ -1,4 +1,4 @@
-# `region` is the country, `sub_region1` is the state, and `sug_region2`
+# `region` is the country, `sub_region1` is the state, and `sub_region2`
 # is the city.
 class Location < ActiveRecord::Base
   belongs_to :identity
@@ -25,6 +25,9 @@ class Location < ActiveRecord::Base
     result = name
     if result.blank?
       result = address1
+    end
+    if !sub_region2.blank?
+      result += ", " + sub_region2
     end
     result
   end
