@@ -541,7 +541,6 @@ module Myp
   end
 
   def self.get_select_name(val, select_values)
-    puts val
     if !val.nil?
       found = select_values.find{|x| x[1] == val}
       if !found.nil?
@@ -557,6 +556,7 @@ module Myp
   WEIGHTS = [["myplaceonline.general.pounds", 0]]
   DIMENSIONS = [["myplaceonline.general.inches", 0]]
   LIQUID_CAPACITY = [["myplaceonline.general.gallons", 0]]
+  VOLUMES = [["myplaceonline.general.cubicft", 0]]
   
   def self.translate_options(options)
     options.map{|o| [I18n.t(o[0]), o[1]]}

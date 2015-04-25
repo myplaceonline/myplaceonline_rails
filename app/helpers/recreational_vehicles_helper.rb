@@ -1,0 +1,2 @@
+module RecreationalVehiclesHelper
+end

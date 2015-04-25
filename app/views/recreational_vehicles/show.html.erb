@@ -1,0 +1,33 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.rv_name"), @obj.rv_name) %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.vin"), @obj.vin) %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.manufacturer"), @obj.manufacturer) %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.model"), @obj.model) %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.year"), @obj.year) %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.owned_start"), Myp.display_date(@obj.owned_start, current_user)) %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.owned_end"), Myp.display_date(@obj.owned_end, current_user)) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.recreational_vehicles.notes"), @obj.notes) %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.price"), @obj.price) %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.msrp"), @obj.msrp) %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.purchased"), Myp.display_date(@obj.purchased, current_user)) %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.warranty_ends"), Myp.display_date(@obj.warranty_ends, current_user)) %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.sleeps"), @obj.sleeps) %>
+  <%= attribute_table_row_select t("myplaceonline.recreational_vehicles.dimensions_type"), @obj.dimensions_type, Myp::DIMENSIONS %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.exterior_length"), @obj.exterior_length) %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.exterior_width"), @obj.exterior_width) %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.exterior_height"), @obj.exterior_height) %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.exterior_height_over"), @obj.exterior_height_over) %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.interior_height"), @obj.interior_height) %>
+  <%= attribute_table_row_select t("myplaceonline.recreational_vehicles.weight_type"), @obj.weight_type, Myp::WEIGHTS %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.wet_weight"), @obj.wet_weight) %>
+  <%= attribute_table_row_select t("myplaceonline.recreational_vehicles.liquid_capacity_type"), @obj.liquid_capacity_type, Myp::LIQUID_CAPACITY %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.fresh_tank"), @obj.fresh_tank) %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.grey_tank"), @obj.grey_tank) %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.black_tank"), @obj.black_tank) %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.water_heater"), @obj.water_heater) %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.propane"), @obj.propane) %>
+  <%= attribute_table_row_select t("myplaceonline.recreational_vehicles.volume_type"), @obj.volume_type, Myp::VOLUMES %>
+  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.refrigerator"), @obj.refrigerator) %>
+
+<% end %>

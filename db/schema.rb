@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150425003530) do
+ActiveRecord::Schema.define(version: 20150425044932) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -253,7 +253,7 @@ ActiveRecord::Schema.define(version: 20150425003530) do
   add_index "credit_scores", ["identity_id"], name: "index_credit_scores_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.binary   "val"
+    t.string   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -549,6 +549,47 @@ ActiveRecord::Schema.define(version: 20150425003530) do
 
   add_index "recipes", ["identity_id"], name: "index_recipes_on_identity_id", using: :btree
 
+  create_table "recreational_vehicles", force: true do |t|
+    t.string   "rv_name"
+    t.string   "vin"
+    t.string   "manufacturer"
+    t.string   "model"
+    t.integer  "year"
+    t.decimal  "price",                 precision: 10, scale: 2
+    t.decimal  "msrp",                  precision: 10, scale: 2
+    t.date     "purchased"
+    t.date     "owned_start"
+    t.date     "owned_end"
+    t.text     "notes"
+    t.integer  "location_purchased_id"
+    t.integer  "vehicle_id"
+    t.decimal  "wet_weight",            precision: 10, scale: 2
+    t.integer  "sleeps"
+    t.integer  "dimensions_type"
+    t.decimal  "exterior_length",       precision: 10, scale: 2
+    t.decimal  "exterior_width",        precision: 10, scale: 2
+    t.decimal  "exterior_height",       precision: 10, scale: 2
+    t.decimal  "exterior_height_over",  precision: 10, scale: 2
+    t.decimal  "interior_height",       precision: 10, scale: 2
+    t.integer  "liquid_capacity_type"
+    t.integer  "fresh_tank"
+    t.integer  "grey_tank"
+    t.integer  "black_tank"
+    t.date     "warranty_ends"
+    t.integer  "water_heater"
+    t.integer  "propane"
+    t.integer  "volume_type"
+    t.integer  "weight_type"
+    t.integer  "refrigerator"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "recreational_vehicles", ["identity_id"], name: "index_recreational_vehicles_on_identity_id", using: :btree
+  add_index "recreational_vehicles", ["location_purchased_id"], name: "index_recreational_vehicles_on_location_purchased_id", using: :btree
+  add_index "recreational_vehicles", ["vehicle_id"], name: "index_recreational_vehicles_on_vehicle_id", using: :btree
+
   create_table "sleep_measurements", force: true do |t|
     t.datetime "sleep_start_time"
     t.datetime "sleep_end_time"
@@ -655,7 +696,6 @@ ActiveRecord::Schema.define(version: 20150425003530) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "bed_type"
     t.string   "trim_name"
     t.integer  "dimensions_type"
     t.decimal  "height",                   precision: 10, scale: 2

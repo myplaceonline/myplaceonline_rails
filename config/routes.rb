@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :recreational_vehicles
+  post 'recreational_vehicles/new'
+
   resources :meals
   post 'meals/new'
 
