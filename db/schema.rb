@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150425044932) do
+ActiveRecord::Schema.define(version: 20150425151806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -253,7 +253,7 @@ ActiveRecord::Schema.define(version: 20150425044932) do
   add_index "credit_scores", ["identity_id"], name: "index_credit_scores_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -696,6 +696,7 @@ ActiveRecord::Schema.define(version: 20150425044932) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "bed_type"
     t.string   "trim_name"
     t.integer  "dimensions_type"
     t.decimal  "height",                   precision: 10, scale: 2
@@ -737,6 +738,7 @@ ActiveRecord::Schema.define(version: 20150425044932) do
     t.integer  "doors"
     t.decimal  "displacement",             precision: 10, scale: 2
     t.decimal  "bed_length",               precision: 10, scale: 2
+    t.integer  "recreational_vehicle_id"
   end
 
   add_index "vehicles", ["identity_id"], name: "index_vehicles_on_identity_id", using: :btree

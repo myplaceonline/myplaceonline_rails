@@ -519,6 +519,7 @@ en:
       dual_rear_wheels: "Dual Rear Wheels"
       max_payload: "Maximum Payload"
       max_payload_wo_tailgate: "Maximum Payload Without Tailgate"
+      recreational_vehicle: "Attached Recreational Vehicle"
     vehicle_loans:
       loan: "Vehicle Loan"
       lender: "Lender"

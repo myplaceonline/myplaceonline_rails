@@ -156,3 +156,17 @@
   <%= myp_decimal_field f, :wet_weight_rear, "myplaceonline.vehicles.wet_weight_rear", obj.wet_weight_rear %>
   <%= myp_decimal_field f, :tailgate_weight, "myplaceonline.vehicles.tailgate_weight", obj.tailgate_weight %>
 </div>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :recreational_vehicle,
+    existingobj: obj.recreational_vehicle,
+    heading: t("myplaceonline.vehicles.recreational_vehicle"),
+    objform: "recreational_vehicles/form",
+    existingobjurl: "recreational_vehicle_path",
+    searchurl: "/recreational_vehicles.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    collapsed: obj.recreational_vehicle.nil?
+  }
+%>

@@ -562,4 +562,13 @@ module Myp
   def self.translate_options(options)
     options.map{|o| [I18n.t(o[0]), o[1]]}
   end
+  
+  def self.select_or_create_permit(params, name, all_array)
+    if !params.nil? && !params[name].nil? && params[name][:id].blank?
+      # Push :id on even though we know it's blank to avoid the unpermitted parameter warning
+      { name => all_array.push(:id) }
+    else
+      { name => [:id] }
+    end
+  end
 end

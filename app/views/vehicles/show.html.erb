@@ -62,6 +62,7 @@
       <%= attribute_table_row t("myplaceonline.vehicles.max_payload_wo_tailgate"), @obj.gvwr - @obj.wet_weight_front - @obj.wet_weight_rear + @obj.tailgate_weight %>
     <% end %>
   <% end %>
+  <%= attribute_table_row_reference(t("myplaceonline.vehicles.recreational_vehicle"), "recreational_vehicle_path", @obj.recreational_vehicle) %>
   <% @obj.vehicle_loans.each do |loan| %>
     <%= table_row_heading(t("myplaceonline.vehicle_loans.loan")) %>
     <%= attribute_table_row(t("myplaceonline.vehicle_loans.lender"), loan.lender) %>

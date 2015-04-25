@@ -15,6 +15,17 @@ class Vehicle < ActiveRecord::Base
   has_many :vehicle_services, :dependent => :destroy
   accepts_nested_attributes_for :vehicle_services, allow_destroy: true, reject_if: :all_blank
   
+  belongs_to :recreational_vehicle, :autosave => true
+  accepts_nested_attributes_for :recreational_vehicle, reject_if: :all_blank
+
+  # http://stackoverflow.com/a/12064875/4135310
+  def recreational_vehicle_attributes=(attributes)
+    if !attributes['id'].blank?
+      self.recreational_vehicle = RecreationalVehicle.find(attributes['id'])
+    end
+    super
+  end
+
   before_create :do_before_save
   before_update :do_before_save
 
