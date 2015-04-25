@@ -2,14 +2,14 @@ require 'i18n'
 
 module Myp
   # See https://github.com/digitalbazaar/forge/issues/207
-  @@DEFAULT_AES_KEY_SIZE = 32
+  DEFAULT_AES_KEY_SIZE = 32
   @@all_categories = Hash.new.with_indifferent_access
 
   # We want at least 128 bits of randomness, so
   # min(POSSIBILITIES_*.length)^DEFAULT_PASSWORD_LENGTH should be >= 2^128
-  @@DEFAULT_PASSWORD_LENGTH = 22  
-  @@POSSIBILITIES_ALPHANUMERIC = [('0'..'9'), ('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
-  @@POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL = [('0'..'9'), ('a'..'z'), ('A'..'Z'), ['_', '-', '!']].map { |i| i.to_a }.flatten
+  DEFAULT_PASSWORD_LENGTH = 22  
+  POSSIBILITIES_ALPHANUMERIC = [('0'..'9'), ('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
+  POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL = [('0'..'9'), ('a'..'z'), ('A'..'Z'), ['_', '-', '!']].map { |i| i.to_a }.flatten
   
   puts "myplaceonline: Initializing categories"
   
@@ -28,52 +28,10 @@ module Myp
     puts "myplaceonline: Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
   end
   
-  def self.markdown_to_html(markdown)
-    if !markdown.nil?
-      Kramdown::Document.new(markdown).to_html
-    else
-      nil
-    end
+  def self.categories
+    @@all_categories
   end
-  
-  def self.parse_yaml_to_html(id)
-    str = I18n.t(id)
-    xml = Nokogiri::XML("<xml>#{str}</xml>")
-    cdata = xml.root.xpath("//xml").children.find{|e| e.cdata?}
-    if !cdata.nil?
-      markdown_to_html(cdata.text.strip)
-    else
-      raise "nil CDATA for #{xml}"
-    end
-  end
-  
-  @@WELCOME_FEATURES = self.parse_yaml_to_html("myplaceonline.welcome.features")
-  @@CONTENT_FAQ = self.parse_yaml_to_html("myplaceonline.info.faq_content")
-  
-  def self.is_web_server?
-    defined?(Rails::Server) || defined?(::PhusionPassenger)
-  end
-  
-  def self.default_password_length
-    @@DEFAULT_PASSWORD_LENGTH
-  end
-  
-  def self.password_possibilities_alphanumeric
-    @@POSSIBILITIES_ALPHANUMERIC
-  end
-  
-  def self.password_possibilities_alphanumeric_plus_special
-    @@POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL
-  end
-  
-  def self.welcome_features
-    @@WELCOME_FEATURES
-  end
-  
-  def self.content_faq
-    @@CONTENT_FAQ
-  end
-  
+
   # Return a list of CategoryForIdentity objects.
   # Assumes user is logged in.
   #
@@ -186,10 +144,32 @@ module Myp
     end
   end
 
-  def self.categories
-    @@all_categories
+  def self.markdown_to_html(markdown)
+    if !markdown.nil?
+      Kramdown::Document.new(markdown).to_html
+    else
+      nil
+    end
   end
-
+  
+  def self.parse_yaml_to_html(id)
+    str = I18n.t(id)
+    xml = Nokogiri::XML("<xml>#{str}</xml>")
+    cdata = xml.root.xpath("//xml").children.find{|e| e.cdata?}
+    if !cdata.nil?
+      markdown_to_html(cdata.text.strip)
+    else
+      raise "nil CDATA for #{xml}"
+    end
+  end
+  
+  WELCOME_FEATURES = self.parse_yaml_to_html("myplaceonline.welcome.features")
+  CONTENT_FAQ = self.parse_yaml_to_html("myplaceonline.info.faq_content")
+  
+  def self.is_web_server?
+    defined?(Rails::Server) || defined?(::PhusionPassenger)
+  end
+  
   def self.remember_password(session, password)
     session[:password] = password
   end
@@ -232,7 +212,7 @@ module Myp
     value.salt = SecureRandom.random_bytes(8)
     # This uses PBKDF2+HMAC+SHA1 with an iteration count is 65536:
     # https://github.com/rails/rails/blob/master/activesupport/lib/active_support/key_generator.rb
-    generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(value.salt, @@DEFAULT_AES_KEY_SIZE)
+    generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(value.salt, Myp::DEFAULT_AES_KEY_SIZE)
     crypt = ActiveSupport::MessageEncryptor.new(generated_key, :serializer => SimpleSerializer.new)
     Rails.logger.debug("Performing encryption")
     value.val = crypt.encrypt_and_sign(message)
@@ -254,7 +234,7 @@ module Myp
   end
   
   def self.decrypt(encrypted_value, key)
-    generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(encrypted_value.salt, @@DEFAULT_AES_KEY_SIZE)
+    generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(encrypted_value.salt, Myp::DEFAULT_AES_KEY_SIZE)
     crypt = ActiveSupport::MessageEncryptor.new(generated_key, :serializer => SimpleSerializer.new)
     Rails.logger.debug("Performing decryption")
     result = crypt.decrypt_and_verify(encrypted_value.val)

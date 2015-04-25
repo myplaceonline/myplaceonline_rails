@@ -12,14 +12,14 @@ class ApiController < ApplicationController
   end
   
   def randomString
-    length = Myp.default_password_length
+    length = Myp::DEFAULT_PASSWORD_LENGTH
     if !params[:length].nil?
       length = params[:length].to_i
       if length <= 0 || length > 512
-        length = Myp.default_password_length
+        length = Myp::DEFAULT_PASSWORD_LENGTH
       end
     end
-    possibilities = Myp.password_possibilities_alphanumeric_plus_special
+    possibilities = Myp::POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL
     result = (0...length).map { possibilities[SecureRandom.random_number(possibilities.length)] }.join
     render json: {
       :randomString => result
