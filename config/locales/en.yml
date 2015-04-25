@@ -520,6 +520,7 @@ en:
       max_payload: "Maximum Payload"
       max_payload_wo_tailgate: "Maximum Payload Without Tailgate"
       recreational_vehicle: "Attached Recreational Vehicle"
+      max_payload_wo_tailgate_with_rv: "Maximum Payload Without Tailgate With RV"
     vehicle_loans:
       loan: "Vehicle Loan"
       lender: "Lender"

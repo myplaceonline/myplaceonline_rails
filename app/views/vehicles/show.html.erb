@@ -60,6 +60,9 @@
     <%= attribute_table_row t("myplaceonline.vehicles.max_payload"), @obj.gvwr - @obj.wet_weight_front - @obj.wet_weight_rear %>
     <% if !@obj.tailgate_weight.blank? %>
       <%= attribute_table_row t("myplaceonline.vehicles.max_payload_wo_tailgate"), @obj.gvwr - @obj.wet_weight_front - @obj.wet_weight_rear + @obj.tailgate_weight %>
+      <% if !@obj.recreational_vehicle.nil? && !@obj.recreational_vehicle.wet_weight.nil? %>
+        <%= attribute_table_row t("myplaceonline.vehicles.max_payload_wo_tailgate_with_rv"), @obj.gvwr - @obj.wet_weight_front - @obj.wet_weight_rear + @obj.tailgate_weight - @obj.recreational_vehicle.wet_weight %>
+      <% end %>
     <% end %>
   <% end %>
   <%= attribute_table_row_reference(t("myplaceonline.vehicles.recreational_vehicle"), "recreational_vehicle_path", @obj.recreational_vehicle) %>

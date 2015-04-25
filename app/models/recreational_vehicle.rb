@@ -2,6 +2,10 @@ class RecreationalVehicle < ActiveRecord::Base
   
   belongs_to :identity
   validates :rv_name, presence: true
+  
+  def display
+    rv_name
+  end
 
   belongs_to :location_purchased, class_name: Location, :autosave => true
   accepts_nested_attributes_for :location_purchased, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
