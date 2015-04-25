@@ -56,7 +56,7 @@
   <% if !@obj.gvwr.blank? && !@obj.wet_weight_front.blank? && !@obj.wet_weight_rear.blank? %>
     <%= attribute_table_row t("myplaceonline.vehicles.max_payload"), @obj.gvwr - @obj.wet_weight_front - @obj.wet_weight_rear %>
     <% if !@obj.tailgate_weight.blank? %>
-      <%= attribute_table_row t("myplaceonline.vehicles.max_payload_wo_tailgate"), @obj.gvwr - @obj.wet_weight_front - @obj.wet_weight_rear - @obj.tailgate_weight %>
+      <%= attribute_table_row t("myplaceonline.vehicles.max_payload_wo_tailgate"), @obj.gvwr - @obj.wet_weight_front - @obj.wet_weight_rear + @obj.tailgate_weight %>
     <% end %>
   <% end %>
   <% @obj.vehicle_loans.each do |loan| %>
