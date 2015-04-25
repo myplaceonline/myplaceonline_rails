@@ -42,7 +42,8 @@ class RecreationalVehiclesController < MyplaceonlineController
         :water_heater,
         :propane,
         :volume_type,
-        :refrigerator
+        :refrigerator,
+        select_or_create_permit(:recreational_vehicle, :location_purchased_attributes, LocationsController.param_names)
       )
     end
 end

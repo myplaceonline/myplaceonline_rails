@@ -10,6 +10,20 @@
 <%= myp_decimal_field f, :msrp, "myplaceonline.recreational_vehicles.msrp", obj.msrp %>
 <%= myp_date_field f, :purchased, "myplaceonline.recreational_vehicles.purchased", obj.purchased %>
 <%= myp_date_field f, :warranty_ends, "myplaceonline.recreational_vehicles.warranty_ends", obj.warranty_ends %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :location_purchased,
+    existingobj: obj.location_purchased,
+    heading: t("myplaceonline.recreational_vehicles.location_purchased"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    collapsed: obj.location_purchased.nil?
+  }
+%>
 <div data-role="collapsible" data-collapsed="true">
   <h3><%= t("myplaceonline.recreational_vehicles.extra") %></h3>
   <%= myp_integer_field f, :sleeps, "myplaceonline.recreational_vehicles.sleeps", obj.sleeps %>

@@ -621,6 +621,7 @@ en:
       exterior_height_over: "Cab-Over Height"
       interior_height: "Interior Height"
       liquid_capacity_type: "Liquid Capacity Type"
+      location_purchased: "Location Purchased"
       fresh_tank: "Fresh Tank"
       grey_tank: "Grey Tank"
       black_tank: "Black Tank"
