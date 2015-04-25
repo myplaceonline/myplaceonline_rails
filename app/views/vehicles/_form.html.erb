@@ -112,3 +112,47 @@
   <%= myp_text_field child_fields, :miles, "myplaceonline.vehicle_service.miles", childproperty.miles %>
   <%= myp_text_area_markdown child_fields, :notes, "myplaceonline.vehicle_service.notes", childproperty.notes %>
 <% end %>
+<div data-role="collapsible" data-collapsed="true">
+  <h3><%= t("myplaceonline.vehicles.extra") %></h3>
+  <%= myp_integer_field f, :horsepower, "myplaceonline.vehicles.horsepower", obj.horsepower %>
+  <%= myp_text_field f, :trim_name, "myplaceonline.vehicles.trim_name", obj.trim_name %>
+  <%= myp_select(f, :engine_type, "myplaceonline.vehicles.engine_type", Myp.translate_options(Vehicle::ENGINE_TYPES), obj.engine_type) %>
+  <%= myp_select(f, :displacement_type, "myplaceonline.vehicles.displacement_type", Myp.translate_options(Vehicle::DISPLACEMENT_TYPES), obj.displacement_type) %>
+  <%= myp_decimal_field f, :displacement, "myplaceonline.vehicles.displacement", obj.displacement %>
+  <%= myp_integer_field f, :cylinders, "myplaceonline.vehicles.cylinders", obj.cylinders %>
+  <%= myp_integer_field f, :passenger_seats, "myplaceonline.vehicles.passenger_seats", obj.passenger_seats %>
+  <%= myp_integer_field f, :doors, "myplaceonline.vehicles.doors", obj.doors %>
+  <%= myp_select(f, :doors_type, "myplaceonline.vehicles.doors_type", Myp.translate_options(Vehicle::DOOR_TYPES), obj.doors_type) %>
+  <%= myp_select(f, :wheel_drive_type, "myplaceonline.vehicles.wheel_drive_type", Myp.translate_options(Vehicle::DRIVE_TYPES), obj.wheel_drive_type) %>
+  <%= myp_select(f, :dimensions_type, "myplaceonline.vehicles.dimensions_type", Myp.translate_options(Myp::DIMENSIONS), obj.dimensions_type) %>
+  <%= myp_decimal_field f, :bed_length, "myplaceonline.vehicles.bed_length", obj.bed_length %>
+  <%= myp_decimal_field f, :height, "myplaceonline.vehicles.height", obj.height %>
+  <%= myp_decimal_field f, :width, "myplaceonline.vehicles.width", obj.width %>
+  <%= myp_decimal_field f, :length, "myplaceonline.vehicles.length", obj.length %>
+  <%= myp_decimal_field f, :wheel_base, "myplaceonline.vehicles.wheel_base", obj.wheel_base %>
+  <%= myp_decimal_field f, :ground_clearance, "myplaceonline.vehicles.ground_clearance", obj.ground_clearance %>
+  <%= myp_select(f, :weight_type, "myplaceonline.vehicles.weight_type", Myp.translate_options(Myp::WEIGHTS), obj.weight_type) %>
+  <%= myp_decimal_field f, :gvwr, "myplaceonline.vehicles.gvwr", obj.gvwr %>
+  <%= myp_decimal_field f, :gcwr, "myplaceonline.vehicles.gcwr", obj.gcwr %>
+  <%= myp_decimal_field f, :gawr_front, "myplaceonline.vehicles.gawr_front", obj.gawr_front %>
+  <%= myp_decimal_field f, :gawr_rear, "myplaceonline.vehicles.gawr_rear", obj.gawr_rear %>
+  <%= myp_text_field f, :front_axle_details, "myplaceonline.vehicles.front_axle_details", obj.front_axle_details %>
+  <%= myp_decimal_field f, :front_axle_rating, "myplaceonline.vehicles.front_axle_rating", obj.front_axle_rating %>
+  <%= myp_text_field f, :front_suspension_details, "myplaceonline.vehicles.front_suspension_details", obj.front_suspension_details %>
+  <%= myp_decimal_field f, :front_suspension_rating, "myplaceonline.vehicles.front_suspension_rating", obj.front_suspension_rating %>
+  <%= myp_text_field f, :rear_axle_details, "myplaceonline.vehicles.rear_axle_details", obj.rear_axle_details %>
+  <%= myp_decimal_field f, :rear_axle_rating, "myplaceonline.vehicles.rear_axle_rating", obj.rear_axle_rating %>
+  <%= myp_text_field f, :rear_suspension_details, "myplaceonline.vehicles.rear_suspension_details", obj.rear_suspension_details %>
+  <%= myp_decimal_field f, :rear_suspension_rating, "myplaceonline.vehicles.rear_suspension_rating", obj.rear_suspension_rating %>
+  <%= myp_text_field f, :tire_details, "myplaceonline.vehicles.tire_details", obj.tire_details %>
+  <%= myp_decimal_field f, :tire_rating, "myplaceonline.vehicles.tire_rating", obj.tire_rating %>
+  <%= myp_decimal_field f, :tire_diameter, "myplaceonline.vehicles.tire_diameter", obj.tire_diameter %>
+  <%= myp_text_field f, :wheel_details, "myplaceonline.vehicles.wheel_details", obj.wheel_details %>
+  <%= myp_decimal_field f, :wheel_rating, "myplaceonline.vehicles.wheel_rating", obj.wheel_rating %>
+  <%= myp_select(f, :wheels_type, "myplaceonline.vehicles.wheels_type", Myp.translate_options(Vehicle::WHEEL_TYPES), obj.wheels_type) %>
+  <%= myp_select(f, :fuel_tank_capacity_type, "myplaceonline.vehicles.fuel_tank_capacity_type", Myp.translate_options(Myp::LIQUID_CAPACITY), obj.fuel_tank_capacity_type) %>
+  <%= myp_decimal_field f, :fuel_tank_capacity, "myplaceonline.vehicles.fuel_tank_capacity", obj.fuel_tank_capacity %>
+  <%= myp_decimal_field f, :wet_weight_front, "myplaceonline.vehicles.wet_weight_front", obj.wet_weight_front %>
+  <%= myp_decimal_field f, :wet_weight_rear, "myplaceonline.vehicles.wet_weight_rear", obj.wet_weight_rear %>
+  <%= myp_decimal_field f, :tailgate_weight, "myplaceonline.vehicles.tailgate_weight", obj.tailgate_weight %>
+</div>

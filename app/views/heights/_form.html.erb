@@ -1,5 +1,5 @@
 <%= myp_text_field f, :height_amount, "myplaceonline.heights.height_amount", obj.height_amount, autofocus %>
-<%= myp_select(f, :amount_type, "myplaceonline.heights.amount_type", [["Inches", "0"]], obj.amount_type) %>
+<%= myp_select(f, :amount_type, "myplaceonline.heights.amount_type", Myp.translate_options(Myp::DIMENSIONS), obj.amount_type) %>
 <div data-role="collapsible">
   <h3><%= t("myplaceonline.heights.input_by_feet_inches") %></h3>
   <p><input type="number" class="input_feet" placeholder="<%= t("myplaceonline.heights.feet") %>" /></p>

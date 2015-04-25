@@ -1,7 +1,7 @@
 class CreditCard < ActiveRecord::Base
   include EncryptedConcern
   
-  CARD_TYPES = [["Visa", "1"], ["Mastercard", "2"], ["American Express", "3"]]
+  CARD_TYPES = [["myplaceonline.credit_cards.visa", 0], ["myplaceonline.credit_cards.mastercard", 1], ["myplaceonline.credit_cards.amex", 2]]
 
   belongs_to :identity
 

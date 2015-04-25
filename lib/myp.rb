@@ -7,7 +7,7 @@ module Myp
 
   # We want at least 128 bits of randomness, so
   # min(POSSIBILITIES_*.length)^DEFAULT_PASSWORD_LENGTH should be >= 2^128
-  DEFAULT_PASSWORD_LENGTH = 22  
+  DEFAULT_PASSWORD_LENGTH = 22
   POSSIBILITIES_ALPHANUMERIC = [('0'..'9'), ('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
   POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL = [('0'..'9'), ('a'..'z'), ('A'..'Z'), ['_', '-', '!']].map { |i| i.to_a }.flatten
   
@@ -541,16 +541,24 @@ module Myp
   end
 
   def self.get_select_name(val, select_values)
+    puts val
     if !val.nil?
-      valstr = val.to_s
-      found = select_values.find{|x| x[1] == valstr}
+      found = select_values.find{|x| x[1] == val}
       if !found.nil?
-        found[0]
+        I18n.t(found[0])
       else
         nil
       end
     else
       nil
     end
+  end
+
+  WEIGHTS = [["myplaceonline.general.pounds", 0]]
+  DIMENSIONS = [["myplaceonline.general.inches", 0]]
+  LIQUID_CAPACITY = [["myplaceonline.general.gallons", 0]]
+  
+  def self.translate_options(options)
+    options.map{|o| [I18n.t(o[0]), o[1]]}
   end
 end

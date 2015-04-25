@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150424232205) do
+ActiveRecord::Schema.define(version: 20150425003530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -655,6 +655,48 @@ ActiveRecord::Schema.define(version: 20150424232205) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "bed_type"
+    t.string   "trim_name"
+    t.integer  "dimensions_type"
+    t.decimal  "height",                   precision: 10, scale: 2
+    t.decimal  "width",                    precision: 10, scale: 2
+    t.decimal  "length",                   precision: 10, scale: 2
+    t.decimal  "wheel_base",               precision: 10, scale: 2
+    t.decimal  "ground_clearance",         precision: 10, scale: 2
+    t.integer  "weight_type"
+    t.integer  "doors_type"
+    t.integer  "passenger_seats"
+    t.decimal  "gvwr",                     precision: 10, scale: 2
+    t.decimal  "gcwr",                     precision: 10, scale: 2
+    t.decimal  "gawr_front",               precision: 10, scale: 2
+    t.decimal  "gawr_rear",                precision: 10, scale: 2
+    t.string   "front_axle_details"
+    t.decimal  "front_axle_rating",        precision: 10, scale: 2
+    t.string   "front_suspension_details"
+    t.decimal  "front_suspension_rating",  precision: 10, scale: 2
+    t.string   "rear_axle_details"
+    t.decimal  "rear_axle_rating",         precision: 10, scale: 2
+    t.string   "rear_suspension_details"
+    t.decimal  "rear_suspension_rating",   precision: 10, scale: 2
+    t.string   "tire_details"
+    t.decimal  "tire_rating",              precision: 10, scale: 2
+    t.decimal  "tire_diameter",            precision: 10, scale: 2
+    t.string   "wheel_details"
+    t.decimal  "wheel_rating",             precision: 10, scale: 2
+    t.integer  "engine_type"
+    t.integer  "wheel_drive_type"
+    t.integer  "wheels_type"
+    t.integer  "fuel_tank_capacity_type"
+    t.decimal  "fuel_tank_capacity",       precision: 10, scale: 2
+    t.decimal  "wet_weight_front",         precision: 10, scale: 2
+    t.decimal  "wet_weight_rear",          precision: 10, scale: 2
+    t.decimal  "tailgate_weight",          precision: 10, scale: 2
+    t.integer  "horsepower"
+    t.integer  "cylinders"
+    t.integer  "displacement_type"
+    t.integer  "doors"
+    t.decimal  "displacement",             precision: 10, scale: 2
+    t.decimal  "bed_length",               precision: 10, scale: 2
   end
 
   add_index "vehicles", ["identity_id"], name: "index_vehicles_on_identity_id", using: :btree

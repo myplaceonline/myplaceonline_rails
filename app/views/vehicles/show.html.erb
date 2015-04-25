@@ -12,6 +12,51 @@
   <%= attribute_table_row(t("myplaceonline.general.region"), @obj.region) %>
   <%= attribute_table_row(t("myplaceonline.general.sub_region1"), @obj.sub_region1) %>
   <%= attribute_table_row_markdown(t("myplaceonline.vehicles.notes"), @obj.notes) %>
+
+  <%= attribute_table_row t("myplaceonline.vehicles.horsepower"), @obj.horsepower %>
+  <%= attribute_table_row t("myplaceonline.vehicles.trim_name"), @obj.trim_name %>
+  <%= attribute_table_row_select t("myplaceonline.vehicles.engine_type"), @obj.engine_type, Vehicle::ENGINE_TYPES %>
+  <%= attribute_table_row_select t("myplaceonline.vehicles.displacement_type"), @obj.displacement_type, Vehicle::DISPLACEMENT_TYPES %>
+  <%= attribute_table_row t("myplaceonline.vehicles.displacement"), @obj.displacement %>
+  <%= attribute_table_row t("myplaceonline.vehicles.cylinders"), @obj.cylinders %>
+  <%= attribute_table_row t("myplaceonline.vehicles.passenger_seats"), @obj.passenger_seats %>
+  <%= attribute_table_row t( "myplaceonline.vehicles.doors"), @obj.doors %>
+  <%= attribute_table_row_select t("myplaceonline.vehicles.doors_type"), @obj.doors_type, Vehicle::DOOR_TYPES %>
+  <%= attribute_table_row_select t("myplaceonline.vehicles.wheel_drive_type"), @obj.wheel_drive_type, Vehicle::DRIVE_TYPES %>
+  <%= attribute_table_row_select t("myplaceonline.vehicles.dimensions_type"), @obj.dimensions_type, Myp::DIMENSIONS %>
+  <%= attribute_table_row t("myplaceonline.vehicles.bed_length"), @obj.bed_length %>
+  <%= attribute_table_row t("myplaceonline.vehicles.height"), @obj.height %>
+  <%= attribute_table_row t("myplaceonline.vehicles.width"), @obj.width %>
+  <%= attribute_table_row t("myplaceonline.vehicles.length"), @obj.length %>
+  <%= attribute_table_row t("myplaceonline.vehicles.wheel_base"), @obj.wheel_base %>
+  <%= attribute_table_row t("myplaceonline.vehicles.ground_clearance"), @obj.ground_clearance %>
+  <%= attribute_table_row_select t("myplaceonline.vehicles.weight_type"), @obj.weight_type, Myp::WEIGHTS %>
+  <%= attribute_table_row t("myplaceonline.vehicles.gvwr"), @obj.gvwr %>
+  <%= attribute_table_row t("myplaceonline.vehicles.gcwr"), @obj.gcwr %>
+  <%= attribute_table_row t("myplaceonline.vehicles.gawr_front"), @obj.gawr_front %>
+  <%= attribute_table_row t("myplaceonline.vehicles.gawr_rear"), @obj.gawr_rear %>
+  <%= attribute_table_row t("myplaceonline.vehicles.front_axle_details"), @obj.front_axle_details %>
+  <%= attribute_table_row t("myplaceonline.vehicles.front_axle_rating"), @obj.front_axle_rating %>
+  <%= attribute_table_row t("myplaceonline.vehicles.front_suspension_details"), @obj.front_suspension_details %>
+  <%= attribute_table_row t("myplaceonline.vehicles.front_suspension_rating"), @obj.front_suspension_rating %>
+  <%= attribute_table_row t("myplaceonline.vehicles.rear_axle_details"), @obj.rear_axle_details %>
+  <%= attribute_table_row t("myplaceonline.vehicles.rear_axle_rating"), @obj.rear_axle_rating %>
+  <%= attribute_table_row t("myplaceonline.vehicles.rear_suspension_details"), @obj.rear_suspension_details %>
+  <%= attribute_table_row t("myplaceonline.vehicles.rear_suspension_rating"), @obj.rear_suspension_rating %>
+  <%= attribute_table_row t("myplaceonline.vehicles.tire_details"), @obj.tire_details %>
+  <%= attribute_table_row t("myplaceonline.vehicles.tire_rating"), @obj.tire_rating %>
+  <%= attribute_table_row t("myplaceonline.vehicles.tire_diameter"), @obj.tire_diameter %>
+  <%= attribute_table_row t("myplaceonline.vehicles.wheel_details"), @obj.wheel_details %>
+  <%= attribute_table_row t("myplaceonline.vehicles.wheel_rating"), @obj.wheel_rating %>
+  <%= attribute_table_row_select t("myplaceonline.vehicles.wheels_type"), @obj.wheels_type, Vehicle::WHEEL_TYPES %>
+  <%= attribute_table_row_select t("myplaceonline.vehicles.fuel_tank_capacity_type"), @obj.fuel_tank_capacity_type, Myp::LIQUID_CAPACITY %>
+  <%= attribute_table_row t("myplaceonline.vehicles.fuel_tank_capacity"), @obj.fuel_tank_capacity %>
+  <%= attribute_table_row t("myplaceonline.vehicles.wet_weight_front"), @obj.wet_weight_front %>
+  <%= attribute_table_row t("myplaceonline.vehicles.wet_weight_rear"), @obj.wet_weight_rear %>
+  <%= attribute_table_row t("myplaceonline.vehicles.tailgate_weight"), @obj.tailgate_weight %>
+
+  
+  
   <% @obj.vehicle_loans.each do |loan| %>
     <%= table_row_heading(t("myplaceonline.vehicle_loans.loan")) %>
     <%= attribute_table_row(t("myplaceonline.vehicle_loans.lender"), loan.lender) %>

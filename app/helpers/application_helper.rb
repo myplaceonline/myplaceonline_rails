@@ -178,15 +178,23 @@ module ApplicationHelper
     ).html_safe
   end
   
-  def myp_number_field(form, name, placeholder, value, autofocus = false, input_classes = nil)
+  def myp_number_field(form, name, placeholder, value, autofocus = false, input_classes = nil, step = nil)
     if is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
     content_tag(
       :p,
       form.label(name, placeholder, class: myp_label_classes(value)) +
-      form.number_field(name, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes), value: value)
+      form.number_field(name, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes), value: value, step: step)
     ).html_safe
+  end
+  
+  def myp_decimal_field(form, name, placeholder, value, autofocus = false, input_classes = nil, step = "0.01")
+    myp_number_field(form, name, placeholder, value, autofocus, input_classes, step)
+  end
+  
+  def myp_integer_field(form, name, placeholder, value, autofocus = false, input_classes = nil)
+    myp_number_field(form, name, placeholder, value, autofocus, input_classes)
   end
   
   def myp_text_field_tag(name, placeholder, value, autofocus = false, input_classes = nil)
@@ -362,6 +370,7 @@ module ApplicationHelper
     ).html_safe
   end
   
+  # http://api.rubyonrails.org/classes/ActionView/Helpers/FormOptionsHelper.html
   def myp_select(form, name, placeholder, selectoptions, selectvalue, autofocus = false, input_classes = nil)
     if is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
@@ -369,7 +378,7 @@ module ApplicationHelper
     content_tag(
       :p,
       form.label(name, placeholder, class: myp_label_classes(selectvalue)) +
-      form.select(name, options_for_select(selectoptions, selectvalue), class: myp_field_classes(autofocus, input_classes), prompt: placeholder)
+      form.select(name, options_for_select(selectoptions, selectvalue), class: myp_field_classes(autofocus, input_classes), prompt: placeholder, include_blank: !selectvalue.nil?)
     ).html_safe
   end
   
