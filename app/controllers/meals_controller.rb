@@ -23,6 +23,11 @@ class MealsController < MyplaceonlineController
           :id,
           :_destroy,
           food_attributes: Food.params
+        ],
+        meal_drinks_attributes: [
+          :id,
+          :_destroy,
+          drink_attributes: Drink.params
         ]
       )
     end

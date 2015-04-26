@@ -14,4 +14,7 @@ class Meal < ActiveRecord::Base
 
   has_many :meal_foods, :dependent => :destroy
   accepts_nested_attributes_for :meal_foods, allow_destroy: true, reject_if: :all_blank
+
+  has_many :meal_drinks, :dependent => :destroy
+  accepts_nested_attributes_for :meal_drinks, allow_destroy: true, reject_if: :all_blank
 end
