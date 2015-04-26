@@ -132,15 +132,28 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
   var futures = [];
   for (i = 0; i < items.length; i++) {
     var item = items[i];
+    var itemNamePieces = null;
+    if (item.name) {
+      itemNamePieces = item.name.split('.');
+    } else {
+      itemNamePieces = new Array(1);
+      itemNamePieces[0] = item.name;
+    }
     
     var id = idPrefix;
     if (!nonIndexBased) {
-      id += "_" + index + "_" + item.name;
+      id += "_" + index;
+      for (var j = 0; j < itemNamePieces.length; j++) {
+        id += "_" + itemNamePieces[j];
+      }
     }
     
     var name = namePrefix;
     if (!nonIndexBased) {
-      name += "[" + index + "][" + item.name + "]";
+      name += "[" + index + "]";
+      for (var j = 0; j < itemNamePieces.length; j++) {
+        name += "[" + itemNamePieces[j] + "]";
+      }
     }
     
     var cssclasses = '';
