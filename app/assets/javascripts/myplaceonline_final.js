@@ -169,6 +169,8 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
       defaultValue = item.value;
     }
     
+    defaultValue = defaultValue.replace(/'/g, '').replace(/"/g, '');
+    
     if (item.type == "date") {
       // Options should match app/helps/application_helper.rb myp_date_field
       html += "<p><input type='date' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='" + defaultValue + "' class='" + cssclasses + "' data-role='datebox' data-datebox-mode='calbox' data-datebox-override-date-format='" + myp.DEFAULT_DATE_FORMAT + "' data-datebox-use-focus='true' data-datebox-use-clear-button='true' data-datebox-use-modal='false' data-datebox-cal-use-pickers='true' data-datebox-cal-year-pick-min='-100' data-datebox-cal-year-pick-max='10' data-datebox-cal-no-header='true' /></p>";
@@ -176,7 +178,7 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
       // Duplicated in views/myplaceonline/_generaterandom.html.erb
       html += '<div data-role="collapsible"><h3>' + item.heading + '</h3><p><input type="number" class="generate_password_length" value="" placeholder="' + item.lengthplaceholder + '" /></p><p><a href="#" class="ui-btn" onclick="getRemoteString(' + item.destination + ', $(this).parents(\'div\').first().find(\'.generate_password_length\').val()); return false;">' + item.button + '</a></p></div>';
     } else if (item.type == "textarea") {
-      html += "<p><textarea id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='' class='" + cssclasses + "'></textarea></p>";
+      html += "<p><textarea id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' class='" + cssclasses + "'></textarea></p>";
     } else if (item.type == "renderpartial") {
       item.namePrefix = name;
       item.id = "remote_placeholder_" + id;
@@ -193,7 +195,11 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
         inputType = "hidden";
         has_position = true;
       }
-      html += "<p><input type='" + inputType + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='' class='" + cssclasses + "' /></p>";
+      html += "<p><input type='" + inputType + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='" + defaultValue + "' class='" + cssclasses + "'";
+      if (item.step) {
+        html += " step='" + item.step + "'";
+      }
+      html += " /></p>";
     }
   }
   html += "<p><a href='#' onclick='return form_remove_item(this);' class='ui-btn ui-btn-icon-left ui-icon-delete ui-btn-inline'>" + deletePlaceholder + "</a></p>";

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150426211818) do
+ActiveRecord::Schema.define(version: 20150426214238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -156,6 +156,20 @@ ActiveRecord::Schema.define(version: 20150426211818) do
   add_index "calculations", ["calculation_form_id"], name: "index_calculations_on_calculation_form_id", using: :btree
   add_index "calculations", ["identity_id"], name: "index_calculations_on_identity_id", using: :btree
 
+  create_table "cashbacks", force: true do |t|
+    t.integer  "identity_id"
+    t.decimal  "cashback_percentage", precision: 10, scale: 2
+    t.string   "applies_to"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.decimal  "yearly_maximum",      precision: 10, scale: 2
+    t.text     "notes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "cashbacks", ["identity_id"], name: "index_cashbacks_on_identity_id", using: :btree
+
   create_table "categories", force: true do |t|
     t.string   "name"
     t.string   "link"
@@ -213,6 +227,18 @@ ActiveRecord::Schema.define(version: 20150426211818) do
   end
 
   add_index "conversations", ["contact_id"], name: "index_conversations_on_contact_id", using: :btree
+
+  create_table "credit_card_cashbacks", force: true do |t|
+    t.integer  "identity_id"
+    t.integer  "credit_card_id"
+    t.integer  "cashback_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "credit_card_cashbacks", ["cashback_id"], name: "index_credit_card_cashbacks_on_cashback_id", using: :btree
+  add_index "credit_card_cashbacks", ["credit_card_id"], name: "index_credit_card_cashbacks_on_credit_card_id", using: :btree
+  add_index "credit_card_cashbacks", ["identity_id"], name: "index_credit_card_cashbacks_on_identity_id", using: :btree
 
   create_table "credit_cards", force: true do |t|
     t.string   "name"

@@ -574,4 +574,6 @@ module Myp
       { name => [:id] }
     end
   end
+  
+  DEFAULT_DECIMAL_STEP = "0.01"
 end

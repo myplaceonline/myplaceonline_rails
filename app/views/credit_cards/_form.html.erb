@@ -33,3 +33,58 @@
     autofocus: false
   }
 %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.cashback.heading"),
+    childpropertiesname: :credit_card_cashbacks,
+    childproperties: obj.credit_card_cashbacks,
+    deletebutton: t("myplaceonline.cashback.delete"),
+    addbutton: t("myplaceonline.cashback.add"),
+    expanded: obj.credit_card_cashbacks.length > 0,
+    formjson: [
+      {
+        type: 'number',
+        name: 'cashback_attributes.cashback_percentage',
+        placeholder: t("myplaceonline.cashback.cashback_percentage"),
+        step: Myp::DEFAULT_DECIMAL_STEP,
+        autofocus: true
+      },
+      {
+        type: 'text',
+        name: 'cashback_attributes.applies_to',
+        placeholder: t("myplaceonline.cashback.applies_to")
+      },
+      {
+        type: 'date',
+        name: 'cashback_attributes.start_date',
+        placeholder: t("myplaceonline.cashback.start_date")
+      },
+      {
+        type: 'date',
+        name: 'cashback_attributes.end_date',
+        placeholder: t("myplaceonline.cashback.end_date")
+      },
+      {
+        type: 'number',
+        name: 'cashback_attributes.yearly_maximum',
+        placeholder: t("myplaceonline.cashback.yearly_maximum"),
+        step: Myp::DEFAULT_DECIMAL_STEP
+      },
+      {
+        type: 'textarea',
+        name: 'cashback_attributes.notes',
+        placeholder: t("myplaceonline.cashback.notes")
+      },
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%= child_fields.fields_for :cashback, childproperty.cashback do |inner_child_fields| %>
+    <%= myp_decimal_field inner_child_fields, :cashback_percentage, "myplaceonline.cashback.cashback_percentage", childproperty.cashback.cashback_percentage %>
+    <%= myp_text_field inner_child_fields, :applies_to, "myplaceonline.cashback.applies_to", childproperty.cashback.applies_to %>
+    <%= myp_date_field inner_child_fields, :start_date, "myplaceonline.cashback.start_date", childproperty.cashback.start_date %>
+    <%= myp_date_field inner_child_fields, :end_date, "myplaceonline.cashback.end_date", childproperty.cashback.end_date %>
+    <%= myp_decimal_field inner_child_fields, :yearly_maximum, "myplaceonline.cashback.yearly_maximum", childproperty.cashback.yearly_maximum %>
+    <%= myp_text_area_markdown inner_child_fields, :notes, "myplaceonline.cashback.notes", childproperty.cashback.notes %>
+  <% end %>
+<% end %>

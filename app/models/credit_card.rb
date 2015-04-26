@@ -82,6 +82,9 @@ class CreditCard < ActiveRecord::Base
     super.as_json(options)
   end
   
+  has_many :credit_card_cashbacks, :dependent => :destroy
+  accepts_nested_attributes_for :credit_card_cashbacks, allow_destroy: true, reject_if: :all_blank
+
   before_create :do_before_save
   before_update :do_before_save
 

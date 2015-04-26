@@ -11,5 +11,14 @@
   <%= attribute_table_row_markdown(t("myplaceonline.credit_cards.notes"), @obj.notes) %>
   <%= attribute_table_row_boolean(t("myplaceonline.general.is_encrypted"), @obj.number_encrypted?) %>
   <%= attribute_table_row_boolean(t("myplaceonline.general.defunct"), !@obj.defunct.nil?) %>
+  <% @obj.credit_card_cashbacks.each do |wrapper| %>
+    <%= table_row_heading(t("myplaceonline.cashback.heading")) %>
+    <%= attribute_table_row(t("myplaceonline.cashback.cashback_percentage"), wrapper.cashback.cashback_percentage) %>
+    <%= attribute_table_row(t("myplaceonline.cashback.applies_to"), wrapper.cashback.applies_to) %>
+    <%= attribute_table_row(t("myplaceonline.cashback.start_date"), Myp.display_date(wrapper.cashback.start_date, current_user)) %>
+    <%= attribute_table_row(t("myplaceonline.cashback.end_date"), Myp.display_date(wrapper.cashback.end_date, current_user)) %>
+    <%= attribute_table_row(t("myplaceonline.cashback.yearly_maximum"), wrapper.cashback.yearly_maximum) %>
+    <%= attribute_table_row_markdown(t("myplaceonline.cashback.notes"), wrapper.cashback.notes) %>
+  <% end %>
   
 <% end %>

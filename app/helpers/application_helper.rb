@@ -189,7 +189,7 @@ module ApplicationHelper
     ).html_safe
   end
   
-  def myp_decimal_field(form, name, placeholder, value, autofocus = false, input_classes = nil, step = "0.01")
+  def myp_decimal_field(form, name, placeholder, value, autofocus = false, input_classes = nil, step = Myp::DEFAULT_DECIMAL_STEP)
     myp_number_field(form, name, placeholder, value, autofocus, input_classes, step)
   end
   
