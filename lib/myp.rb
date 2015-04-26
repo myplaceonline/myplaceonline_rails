@@ -576,4 +576,33 @@ module Myp
   end
   
   DEFAULT_DECIMAL_STEP = "0.01"
+  
+  def self.includes_today?(start_date, end_date)
+    Myp.includes_date?(DateTime.now, start_date, end_date)
+  end
+  
+  def self.includes_date?(the_date, start_date, end_date)
+    if start_date.nil? && end_date.nil?
+      true
+    elsif start_date.nil?
+      if the_date <= end_date
+        true
+      else
+        false
+      end
+    elsif end_date.nil?
+      if the_date >= start_date
+        true
+      else
+        false
+      end
+    else
+      if the_date >= start_date && the_date <= end_date
+        true
+      else
+        false
+      end
+    end
+  end
+  
 end
