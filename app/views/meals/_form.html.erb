@@ -1,4 +1,47 @@
 <%= myp_datetime_field f, :meal_time, "myplaceonline.meals.meal_time", obj.meal_time %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.foods.heading"),
+    childpropertiesname: :meal_foods,
+    childproperties: obj.meal_foods,
+    deletebutton: t("myplaceonline.foods.delete"),
+    addbutton: t("myplaceonline.foods.add"),
+    expanded: true,
+    formjson: [
+      {
+        type: 'text',
+        name: 'food_attributes.food_name',
+        placeholder: t("myplaceonline.foods.food_name"),
+        autofocus: true
+      },
+      {
+        type: 'number',
+        name: 'food_attributes.price',
+        placeholder: t("myplaceonline.foods.price"),
+        step: Myp::DEFAULT_DECIMAL_STEP
+      },
+      {
+        type: 'number',
+        name: 'food_attributes.calories',
+        placeholder: t("myplaceonline.foods.calories"),
+        step: Myp::DEFAULT_DECIMAL_STEP
+      },
+      {
+        type: 'textarea',
+        name: 'food_attributes.notes',
+        placeholder: t("myplaceonline.foods.notes")
+      },
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%= child_fields.fields_for :food, childproperty.food do |inner_child_fields| %>
+    <%= myp_text_field inner_child_fields, :food_name, "myplaceonline.foods.food_name", childproperty.food.food_name %>
+    <%= myp_decimal_field inner_child_fields, :price, "myplaceonline.foods.price", childproperty.food.price %>
+    <%= myp_decimal_field inner_child_fields, :calories, "myplaceonline.foods.calories", childproperty.food.calories %>
+    <%= myp_text_area_markdown inner_child_fields, :notes, "myplaceonline.foods.notes", childproperty.food.notes %>
+  <% end %>
+<% end %>
 <%= myp_text_field f, :price, "myplaceonline.meals.price", obj.price %>
 <%= myp_text_field f, :calories, "myplaceonline.meals.calories", obj.calories %>
 <%= myp_text_area_markdown f, :notes, "myplaceonline.meals.notes", obj.notes %>

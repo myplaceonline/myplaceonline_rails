@@ -11,4 +11,7 @@ class Meal < ActiveRecord::Base
   def do_before_save
     Myp.set_common_model_properties(self)
   end
+
+  has_many :meal_foods, :dependent => :destroy
+  accepts_nested_attributes_for :meal_foods, allow_destroy: true, reject_if: :all_blank
 end

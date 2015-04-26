@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150426224959) do
+ActiveRecord::Schema.define(version: 20150426230421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -307,6 +307,18 @@ ActiveRecord::Schema.define(version: 20150426224959) do
     t.binary  "file_contents"
   end
 
+  create_table "foods", force: true do |t|
+    t.integer  "identity_id"
+    t.string   "food_name"
+    t.text     "notes"
+    t.decimal  "calories",    precision: 10, scale: 2
+    t.decimal  "price",       precision: 10, scale: 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "foods", ["identity_id"], name: "index_foods_on_identity_id", using: :btree
+
   create_table "heart_rates", force: true do |t|
     t.integer  "beats"
     t.date     "measurement_date"
@@ -504,6 +516,18 @@ ActiveRecord::Schema.define(version: 20150426224959) do
   end
 
   add_index "locations", ["identity_id"], name: "index_locations_on_identity_id", using: :btree
+
+  create_table "meal_foods", force: true do |t|
+    t.integer  "identity_id"
+    t.integer  "meal_id"
+    t.integer  "food_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "meal_foods", ["food_id"], name: "index_meal_foods_on_food_id", using: :btree
+  add_index "meal_foods", ["identity_id"], name: "index_meal_foods_on_identity_id", using: :btree
+  add_index "meal_foods", ["meal_id"], name: "index_meal_foods_on_meal_id", using: :btree
 
   create_table "meals", force: true do |t|
     t.datetime "meal_time"

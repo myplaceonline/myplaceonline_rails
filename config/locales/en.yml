@@ -652,3 +652,11 @@ en:
       add: "Add Cashback"
       delete: "Delete Cashback"
       default_cashback: "Default"
+    foods:
+      heading: "Foods"
+      food_name: "Name"
+      price: "Price"
+      calories: "Calories"
+      notes: "Notes"
+      add: "Add Food"
+      delete: "Delete Food"
