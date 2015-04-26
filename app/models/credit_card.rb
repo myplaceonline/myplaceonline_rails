@@ -16,6 +16,10 @@ class CreditCard < ActiveRecord::Base
     if !defunct.nil?
       result += " (" + I18n.t("myplaceonline.general.defunct") + ")"
     end
+    default_cashbacks = credit_card_cashbacks.to_a.keep_if{|wrapper| wrapper.cashback.default_cashback}
+    if default_cashbacks.length > 0
+      result += " (" + default_cashbacks[0].cashback.cashback_percentage.to_s + "%)"
+    end
     result
   end
   
