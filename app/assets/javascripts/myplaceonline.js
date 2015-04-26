@@ -1,5 +1,5 @@
 // myplaceonline.js
-// Version 0.9
+// Version 0.10
 //
 // Notes:
 //  * When changing this file, you may need to apply the same changes to
@@ -694,7 +694,7 @@ function jqmSetListMessage(list, message) {
   list.trigger("updatelayout");
 }
 
-/* items: [{title: String, link: String, count: Integer, filtertext: String}, ...] */
+/* items: [{title: String, link: String, count: Integer, filtertext: String, icon: String}, ...] */
 function jqmSetList(list, items, header) {
   var html = "";
   if (header) {
@@ -705,10 +705,14 @@ function jqmSetList(list, items, header) {
     if (x.filtertext) {
       filtertext = x.filtertext;
     }
+    var icon = "";
+    if (x.icon) {
+      icon = "<img alt='" + x.title + "' title='" + x.title + "' class='ui-li-icon' height='16' width='16' src='/assets/" + x.icon + "' />";
+    }
     if (typeof x.count !== 'undefined') {
-      html += "<li data-filtertext='" + filtertext + "'><a href='" + x.link + "'>" + x.title + " <span class='ui-li-count'>" + x.count + "</span></a></li>";
+      html += "<li data-filtertext='" + filtertext + "'><a href='" + x.link + "'>" + icon + x.title + " <span class='ui-li-count'>" + x.count + "</span></a></li>";
     } else {
-      html += "<li data-filtertext='" + filtertext + "'><a href='" + x.link + "'>" + x.title + "</a></li>";
+      html += "<li data-filtertext='" + filtertext + "'><a href='" + x.link + "'>" + icon + x.title + "</a></li>";
     }
   });
   list.html(html);

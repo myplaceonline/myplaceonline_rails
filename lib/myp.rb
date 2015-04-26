@@ -91,7 +91,8 @@ module Myp
         category.points_amount.nil? ? 0 : category.points_amount,
         category.id,
         category.parent_id,
-        category.filtertext
+        category.filtertext,
+        category.icon
       )
     }
   end
@@ -100,7 +101,7 @@ module Myp
     # Prefer last visit over number of visits
     CategoryPointsAmount.find_by_sql(%{
       (
-        SELECT category_points_amounts.*, categories.name as category_name, categories.additional_filtertext as category_additional_filtertext, categories.link as category_link, categories.parent_id as category_parent_id, 0 as select_type
+        SELECT category_points_amounts.*, categories.name as category_name, categories.icon as category_icon, categories.additional_filtertext as category_additional_filtertext, categories.link as category_link, categories.parent_id as category_parent_id, 0 as select_type
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
         WHERE categories.parent_id IS NOT NULL AND category_points_amounts.identity_id = #{
@@ -111,7 +112,7 @@ module Myp
       )
       UNION ALL
       (
-        SELECT category_points_amounts.*, categories.name as category_name, categories.additional_filtertext as category_additional_filtertext, categories.link as category_link, categories.parent_id as category_parent_id, 1 as select_type
+        SELECT category_points_amounts.*, categories.name as category_name, categories.icon as category_icon, categories.additional_filtertext as category_additional_filtertext, categories.link as category_link, categories.parent_id as category_parent_id, 1 as select_type
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
         WHERE categories.parent_id IS NOT NULL AND category_points_amounts.identity_id = #{
@@ -128,19 +129,21 @@ module Myp
         cpa.count.nil? ? 0 : cpa.count,
         cpa.category_id,
         cpa.category_parent_id,
-        Category.filtertext(cpa.category_name, cpa.category_additional_filtertext)
+        Category.filtertext(cpa.category_name, cpa.category_additional_filtertext),
+        cpa.category_icon
       )
     }
   end
 
   class CategoryForIdentity
-    def initialize(title, link, count, id, parent_id, filtertext)
+    def initialize(title, link, count, id, parent_id, filtertext, icon)
       @title = title
       @link = link
       @count = count
       @id = id
       @parent_id = parent_id
       @filtertext = filtertext
+      @icon = icon
     end
   end
 
