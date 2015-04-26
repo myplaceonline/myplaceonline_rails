@@ -649,3 +649,4 @@ en:
       default_applies_to: "Everything"
       add: "Add Cashback"
       delete: "Delete Cashback"
+      default_cashback: "Default"

@@ -179,6 +179,8 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
       html += '<div data-role="collapsible"><h3>' + item.heading + '</h3><p><input type="number" class="generate_password_length" value="" placeholder="' + item.lengthplaceholder + '" /></p><p><a href="#" class="ui-btn" onclick="getRemoteString(' + item.destination + ', $(this).parents(\'div\').first().find(\'.generate_password_length\').val()); return false;">' + item.button + '</a></p></div>';
     } else if (item.type == "textarea") {
       html += "<p><textarea id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' class='" + cssclasses + "'></textarea></p>";
+    } else if (item.type == "checkbox") {
+      html += "<p><label for='" + id + "'>" + item.placeholder + "</label><input type='checkbox' id='" + id + "' name='" + name + "' class='" + cssclasses + "' value='1' /></p>";
     } else if (item.type == "renderpartial") {
       item.namePrefix = name;
       item.id = "remote_placeholder_" + id;

@@ -19,7 +19,8 @@ class Cashback < ActiveRecord::Base
       :start_date,
       :end_date,
       :yearly_maximum,
-      :notes
+      :notes,
+      :default_cashback
     ]
   end
 end

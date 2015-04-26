@@ -14,6 +14,7 @@
   <% @obj.credit_card_cashbacks.to_a.keep_if{|cashback_wrapper| Myp.includes_today?(cashback_wrapper.cashback.start_date, cashback_wrapper.cashback.end_date) }.each do |wrapper| %>
     <%= table_row_heading(t("myplaceonline.cashback.heading")) %>
     <%= attribute_table_row(t("myplaceonline.cashback.cashback_percentage"), wrapper.cashback.cashback_percentage) %>
+    <%= attribute_table_row_boolean(t("myplaceonline.cashback.default_cashback"), wrapper.cashback.default_cashback) %>
     <%= attribute_table_row(t("myplaceonline.cashback.applies_to"), wrapper.cashback.applies_to) %>
     <%= attribute_table_row(t("myplaceonline.cashback.start_date"), Myp.display_date(wrapper.cashback.start_date, current_user)) %>
     <%= attribute_table_row(t("myplaceonline.cashback.end_date"), Myp.display_date(wrapper.cashback.end_date, current_user)) %>
