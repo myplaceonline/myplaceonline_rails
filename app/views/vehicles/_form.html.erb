@@ -49,11 +49,13 @@
     ]
   } do |child_fields, childproperty|
 %>
-  <%= myp_text_field child_fields, :lender, "myplaceonline.vehicle_loans.lender", childproperty.lender %>
-  <%= myp_text_field child_fields, :amount, "myplaceonline.vehicle_loans.amount", childproperty.amount %>
-  <%= myp_text_field child_fields, :monthly_payment, "myplaceonline.vehicle_loans.monthly_payment", childproperty.monthly_payment %>
-  <%= myp_date_field child_fields, :start, "myplaceonline.vehicle_loans.start", childproperty.start %>
-  <%= myp_date_field child_fields, :paid_off, "myplaceonline.vehicle_loans.paid_off", childproperty.paid_off %>
+  <%= child_fields.fields_for :loan, childproperty.loan do |inner_child_fields| %>
+    <%= myp_text_field inner_child_fields, :lender, "myplaceonline.vehicle_loans.lender", childproperty.loan.lender %>
+    <%= myp_text_field inner_child_fields, :amount, "myplaceonline.vehicle_loans.amount", childproperty.loan.amount %>
+    <%= myp_text_field inner_child_fields, :monthly_payment, "myplaceonline.vehicle_loans.monthly_payment", childproperty.loan.monthly_payment %>
+    <%= myp_date_field inner_child_fields, :start, "myplaceonline.vehicle_loans.start", childproperty.loan.start %>
+    <%= myp_date_field inner_child_fields, :paid_off, "myplaceonline.vehicle_loans.paid_off", childproperty.loan.paid_off %>
+  <% end %>
 <% end %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {

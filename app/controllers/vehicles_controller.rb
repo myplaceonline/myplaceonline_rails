@@ -68,7 +68,18 @@ class VehiclesController < MyplaceonlineController
         :displacement_type,
         :displacement,
         select_or_create_permit(:vehicle, :recreational_vehicle_attributes, RecreationalVehiclesController.param_names(params)),
-        vehicle_loans_attributes: [:id, :lender, :amount, :start, :paid_off, :monthly_payment, :_destroy],
+        vehicle_loans_attributes: [
+          :id,
+          :_destroy,
+          loan_attributes: [
+            :id,
+            :lender,
+            :amount,
+            :start,
+            :paid_off,
+            :monthly_payment,
+          ]
+        ],
         vehicle_services_attributes: [:id, :short_description, :date_due, :date_serviced, :miles, :service_location, :cost, :notes]
       )
     end

@@ -72,13 +72,13 @@
     <% end %>
   <% end %>
   <%= attribute_table_row_reference(t("myplaceonline.vehicles.recreational_vehicle"), "recreational_vehicle_path", @obj.recreational_vehicle) %>
-  <% @obj.vehicle_loans.each do |loan| %>
+  <% @obj.vehicle_loans.each do |vehicle_loan| %>
     <%= table_row_heading(t("myplaceonline.vehicle_loans.loan")) %>
-    <%= attribute_table_row(t("myplaceonline.vehicle_loans.lender"), loan.lender) %>
-    <%= attribute_table_row(t("myplaceonline.vehicle_loans.amount"), loan.amount) %>
-    <%= attribute_table_row(t("myplaceonline.vehicle_loans.monthly_payment"), loan.monthly_payment) %>
-    <%= attribute_table_row(t("myplaceonline.vehicle_loans.start"), Myp.display_date(loan.start, current_user)) %>
-    <%= attribute_table_row(t("myplaceonline.vehicle_loans.paid_off"), Myp.display_date(loan.paid_off, current_user)) %>
+    <%= attribute_table_row(t("myplaceonline.vehicle_loans.lender"), vehicle_loan.loan.lender) %>
+    <%= attribute_table_row(t("myplaceonline.vehicle_loans.amount"), vehicle_loan.loan.amount) %>
+    <%= attribute_table_row(t("myplaceonline.vehicle_loans.monthly_payment"), vehicle_loan.loan.monthly_payment) %>
+    <%= attribute_table_row(t("myplaceonline.vehicle_loans.start"), Myp.display_date(vehicle_loan.loan.start, current_user)) %>
+    <%= attribute_table_row(t("myplaceonline.vehicle_loans.paid_off"), Myp.display_date(vehicle_loan.loan.paid_off, current_user)) %>
   <% end %>
   <% @obj.vehicle_services.each do |service| %>
     <%= table_row_heading(t("myplaceonline.vehicle_service.services")) %>
