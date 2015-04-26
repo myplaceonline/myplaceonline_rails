@@ -30,5 +30,13 @@
   <%= attribute_table_row(t("myplaceonline.recreational_vehicles.propane"), @obj.propane) %>
   <%= attribute_table_row_select t("myplaceonline.recreational_vehicles.volume_type"), @obj.volume_type, Myp::VOLUMES %>
   <%= attribute_table_row(t("myplaceonline.recreational_vehicles.refrigerator"), @obj.refrigerator) %>
-
+  <% @obj.recreational_vehicle_loans.each do |loanwrapper| %>
+    <%= table_row_heading(t("myplaceonline.loans.loan")) %>
+    <%= attribute_table_row(t("myplaceonline.loans.lender"), loanwrapper.loan.lender) %>
+    <%= attribute_table_row(t("myplaceonline.loans.amount"), loanwrapper.loan.amount) %>
+    <%= attribute_table_row(t("myplaceonline.loans.monthly_payment"), loanwrapper.loan.monthly_payment) %>
+    <%= attribute_table_row(t("myplaceonline.loans.start"), Myp.display_date(loanwrapper.loan.start, current_user)) %>
+    <%= attribute_table_row(t("myplaceonline.loans.paid_off"), Myp.display_date(loanwrapper.loan.paid_off, current_user)) %>
+  <% end %>
+  
 <% end %>

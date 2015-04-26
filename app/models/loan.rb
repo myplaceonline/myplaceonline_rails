@@ -9,4 +9,15 @@ class Loan < ActiveRecord::Base
   def do_before_save
     Myp.set_common_model_properties(self)
   end
+  
+  def self.params
+    [
+      :id,
+      :lender,
+      :amount,
+      :start,
+      :paid_off,
+      :monthly_payment,
+    ]
+  end
 end

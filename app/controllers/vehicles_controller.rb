@@ -71,14 +71,7 @@ class VehiclesController < MyplaceonlineController
         vehicle_loans_attributes: [
           :id,
           :_destroy,
-          loan_attributes: [
-            :id,
-            :lender,
-            :amount,
-            :start,
-            :paid_off,
-            :monthly_payment,
-          ]
+          loan_attributes: Loan.params
         ],
         vehicle_services_attributes: [:id, :short_description, :date_due, :date_serviced, :miles, :service_location, :cost, :notes]
       )

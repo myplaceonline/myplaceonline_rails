@@ -523,13 +523,16 @@ en:
       max_payload_wo_tailgate: "Above Without Tailgate"
       max_payload_wo_tailgate_with_rv: "Above With RV"
       max_payload_wo_tailgate_with_rv_with_driver: "Above With Driver"
-    vehicle_loans:
-      loan: "Vehicle Loan"
+    loans:
+      heading: "Loans"
+      loan: "Loan"
       lender: "Lender"
       amount: "Amount"
       start: "Start Date"
       paid_off: "Paid Off Date"
       monthly_payment: "Monthly Payment"
+      delete: "Delete Loan"
+      add: "Add Loan"
     vehicle_service:
       services: "Vehicle Service"
       add: "Add Vehicle Service"

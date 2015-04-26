@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150425202204) do
+ActiveRecord::Schema.define(version: 20150426172656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -253,7 +253,7 @@ ActiveRecord::Schema.define(version: 20150425202204) do
   add_index "credit_scores", ["identity_id"], name: "index_credit_scores_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -563,6 +563,18 @@ ActiveRecord::Schema.define(version: 20150425202204) do
 
   add_index "recipes", ["identity_id"], name: "index_recipes_on_identity_id", using: :btree
 
+  create_table "recreational_vehicle_loans", force: true do |t|
+    t.integer  "recreational_vehicle_id"
+    t.integer  "loan_id"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "recreational_vehicle_loans", ["identity_id"], name: "index_recreational_vehicle_loans_on_identity_id", using: :btree
+  add_index "recreational_vehicle_loans", ["loan_id"], name: "index_recreational_vehicle_loans_on_loan_id", using: :btree
+  add_index "recreational_vehicle_loans", ["recreational_vehicle_id"], name: "index_recreational_vehicle_loans_on_recreational_vehicle_id", using: :btree
+
   create_table "recreational_vehicles", force: true do |t|
     t.string   "rv_name"
     t.string   "vin"
@@ -708,6 +720,7 @@ ActiveRecord::Schema.define(version: 20150425202204) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "bed_type"
     t.string   "trim_name"
     t.integer  "dimensions_type"
     t.decimal  "height",                   precision: 10, scale: 2

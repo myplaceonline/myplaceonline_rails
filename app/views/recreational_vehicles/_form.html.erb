@@ -44,3 +44,50 @@
   <%= myp_select(f, :volume_type, "myplaceonline.recreational_vehicles.volume_type", Myp.translate_options(Myp::VOLUMES), obj.volume_type) %>
   <%= myp_integer_field f, :refrigerator, "myplaceonline.recreational_vehicles.refrigerator", obj.refrigerator %>
 </div>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.loans.heading"),
+    childpropertiesname: :recreational_vehicle_loans,
+    childproperties: obj.recreational_vehicle_loans,
+    deletebutton: t("myplaceonline.loans.delete"),
+    addbutton: t("myplaceonline.loans.add"),
+    expanded: obj.recreational_vehicle_loans.length > 0,
+    formjson: [
+      {
+        type: 'text',
+        name: 'loan_attributes.lender',
+        placeholder: t("myplaceonline.loans.lender"),
+        autofocus: true
+      },
+      {
+        type: 'text',
+        name: 'loan_attributes.amount',
+        placeholder: t("myplaceonline.loans.amount")
+      },
+      {
+        type: 'text',
+        name: 'loan_attributes.monthly_payment',
+        placeholder: t("myplaceonline.loans.monthly_payment")
+      },
+      {
+        type: 'date',
+        name: 'loan_attributes.start',
+        placeholder: t("myplaceonline.loans.start")
+      },
+      {
+        type: 'date',
+        name: 'loan_attributes.paid_off',
+        placeholder: t("myplaceonline.loans.paid_off")
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%= child_fields.fields_for :loan, childproperty.loan do |inner_child_fields| %>
+    <%= myp_text_field inner_child_fields, :lender, "myplaceonline.loans.lender", childproperty.loan.lender %>
+    <%= myp_text_field inner_child_fields, :amount, "myplaceonline.loans.amount", childproperty.loan.amount %>
+    <%= myp_text_field inner_child_fields, :monthly_payment, "myplaceonline.loans.monthly_payment", childproperty.loan.monthly_payment %>
+    <%= myp_date_field inner_child_fields, :start, "myplaceonline.loans.start", childproperty.loan.start %>
+    <%= myp_date_field inner_child_fields, :paid_off, "myplaceonline.loans.paid_off", childproperty.loan.paid_off %>
+  <% end %>
+<% end %>
