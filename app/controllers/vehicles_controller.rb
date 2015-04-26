@@ -67,6 +67,8 @@ class VehiclesController < MyplaceonlineController
         :cylinders,
         :displacement_type,
         :displacement,
+        :price,
+        :msrp,
         select_or_create_permit(:vehicle, :recreational_vehicle_attributes, RecreationalVehiclesController.param_names(params)),
         vehicle_loans_attributes: [
           :id,

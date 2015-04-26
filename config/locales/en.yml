@@ -523,6 +523,8 @@ en:
       max_payload_wo_tailgate: "Above Without Tailgate"
       max_payload_wo_tailgate_with_rv: "Above With RV"
       max_payload_wo_tailgate_with_rv_with_driver: "Above With Driver"
+      price: "Price"
+      msrp: "MSRP"
     loans:
       heading: "Loans"
       loan: "Loan"

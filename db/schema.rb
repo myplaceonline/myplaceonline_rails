@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150426221855) do
+ActiveRecord::Schema.define(version: 20150426224156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -791,6 +791,8 @@ ActiveRecord::Schema.define(version: 20150426221855) do
     t.decimal  "displacement",             precision: 10, scale: 2
     t.decimal  "bed_length",               precision: 10, scale: 2
     t.integer  "recreational_vehicle_id"
+    t.decimal  "price",                    precision: 10, scale: 2
+    t.decimal  "msrp",                     precision: 10, scale: 2
   end
 
   add_index "vehicles", ["identity_id"], name: "index_vehicles_on_identity_id", using: :btree

@@ -6,6 +6,8 @@
   <%= attribute_table_row(t("myplaceonline.vehicles.model"), @obj.model) %>
   <%= attribute_table_row(t("myplaceonline.vehicles.year"), @obj.year) %>
   <%= attribute_table_row(t("myplaceonline.vehicles.color"), @obj.color) %>
+  <%= attribute_table_row(t("myplaceonline.vehicles.price"), @obj.price) %>
+  <%= attribute_table_row(t("myplaceonline.vehicles.msrp"), @obj.msrp) %>
   <%= attribute_table_row(t("myplaceonline.vehicles.owned_start"), Myp.display_date(@obj.owned_start, current_user)) %>
   <%= attribute_table_row(t("myplaceonline.vehicles.owned_end"), Myp.display_date(@obj.owned_end, current_user)) %>
   <%= attribute_table_row(t("myplaceonline.vehicles.license_plate"), @obj.license_plate) %>
