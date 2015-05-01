@@ -20,9 +20,9 @@ class Meal < ActiveRecord::Base
     super(attributes)
     attributes.each {|key, value|
       if !value['food_attributes'].blank? && !value['food_attributes']['id'].blank? && value['_destroy'] != "1"
-        self.meal_foods.each{|mf|
-          if mf.food.id == value['food_attributes']['id'].to_i
-            mf.food = Food.find(value['food_attributes']['id'])
+        self.meal_foods.each{|x|
+          if x.food.id == value['food_attributes']['id'].to_i
+            x.food = Food.find(value['food_attributes']['id'])
           end
         }
       end
@@ -31,4 +31,18 @@ class Meal < ActiveRecord::Base
 
   has_many :meal_drinks, :dependent => :destroy
   accepts_nested_attributes_for :meal_drinks, allow_destroy: true, reject_if: :all_blank
+  
+  # http://stackoverflow.com/a/12064875/4135310
+  def meal_drinks_attributes=(attributes)
+    super(attributes)
+    attributes.each {|key, value|
+      if !value['drink_attributes'].blank? && !value['drink_attributes']['id'].blank? && value['_destroy'] != "1"
+        self.meal_drinks.each{|x|
+          if x.drink.id == value['drink_attributes']['id'].to_i
+            x.drink = Drink.find(value['drink_attributes']['id'])
+          end
+        }
+      end
+    }
+  end
 end

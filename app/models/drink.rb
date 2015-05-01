@@ -10,6 +10,10 @@ class Drink < ActiveRecord::Base
     Myp.set_common_model_properties(self)
   end
   
+  def display
+    drink_name
+  end
+  
   def self.params
     [
       :id,

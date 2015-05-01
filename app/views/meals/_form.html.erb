@@ -48,37 +48,32 @@
     expanded: true,
     formjson: [
       {
-        type: 'text',
-        name: 'drink_attributes.drink_name',
-        placeholder: t("myplaceonline.drinks.drink_name"),
+        type: :renderpartial,
+        name: :drink_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.drinks.drink"),
+        objform: "drinks/form",
+        existingobjurl: "drink_path",
+        searchurl: "/drinks.json?perpage=0",
+        edit: false,
         autofocus: true
-      },
-      {
-        type: 'number',
-        name: 'drink_attributes.price',
-        placeholder: t("myplaceonline.drinks.price"),
-        step: Myp::DEFAULT_DECIMAL_STEP
-      },
-      {
-        type: 'number',
-        name: 'drink_attributes.calories',
-        placeholder: t("myplaceonline.drinks.calories"),
-        step: Myp::DEFAULT_DECIMAL_STEP
-      },
-      {
-        type: 'textarea',
-        name: 'drink_attributes.notes',
-        placeholder: t("myplaceonline.drinks.notes")
-      },
+      }
     ]
   } do |child_fields, childproperty|
 %>
-  <%= child_fields.fields_for :drink, childproperty.drink do |inner_child_fields| %>
-    <%= myp_text_field inner_child_fields, :drink_name, "myplaceonline.drinks.drink_name", childproperty.drink.drink_name %>
-    <%= myp_decimal_field inner_child_fields, :price, "myplaceonline.drinks.price", childproperty.drink.price %>
-    <%= myp_decimal_field inner_child_fields, :calories, "myplaceonline.drinks.calories", childproperty.drink.calories %>
-    <%= myp_text_area_markdown inner_child_fields, :notes, "myplaceonline.drinks.notes", childproperty.drink.notes %>
-  <% end %>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :drink_attributes,
+      existingobj: childproperty.drink,
+      heading: t("myplaceonline.drinks.drink"),
+      objform: "drinks/form",
+      existingobjurl: "drink_path",
+      searchurl: "/drinks.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
 <% end %>
 <%= myp_text_field f, :price, "myplaceonline.meals.price", obj.price %>
 <%= myp_text_field f, :calories, "myplaceonline.meals.calories", obj.calories %>

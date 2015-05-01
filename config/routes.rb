@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   resources :foods
   post 'foods/new'
 
+  resources :drinks
+  post 'drinks/new'
+
   resources :heights
   post 'heights/new'
 
