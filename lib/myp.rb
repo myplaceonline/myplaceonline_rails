@@ -143,7 +143,7 @@ module Myp
       @id = id
       @parent_id = parent_id
       @filtertext = filtertext
-      @icon = icon
+      @icon = ActionController::Base.helpers.asset_path(icon, type: :image)
     end
   end
 

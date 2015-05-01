@@ -1,5 +1,5 @@
 // myplaceonline.js
-// Version 0.10
+// Version 0.11
 //
 // Notes:
 //  * When changing this file, you may need to apply the same changes to
@@ -707,7 +707,7 @@ function jqmSetList(list, items, header) {
     }
     var icon = "";
     if (x.icon) {
-      icon = "<img alt='" + x.title + "' title='" + x.title + "' class='ui-li-icon' height='16' width='16' src='/assets/" + x.icon + "' />";
+      icon = "<img alt='" + x.title + "' title='" + x.title + "' class='ui-li-icon' height='16' width='16' src='" + x.icon + "' />";
     }
     if (typeof x.count !== 'undefined') {
       html += "<li data-filtertext='" + filtertext + "'><a href='" + x.link + "'>" + icon + x.title + " <span class='ui-li-count'>" + x.count + "</span></a></li>";
