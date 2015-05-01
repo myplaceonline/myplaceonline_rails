@@ -112,6 +112,48 @@ module ApplicationHelper
     attribute_table_row(name, Myp.get_select_name(val, select_values))
   end
   
+  def attribute_table_row_dimensions(name, val, dimensions_type)
+    if !val.blank? && !dimensions_type.nil?
+      if dimensions_type == 0
+        original_val = val
+        human_readable = ""
+        extra = ""
+        is_split = false
+        if val >= 12
+          feet = (val/12).floor
+          human_readable = feet.to_s + "'"
+          val = val % 12
+          extra = ActionController::Base.helpers.pluralize(feet, "foot")
+          is_split = true
+        end
+        if val > 0
+          if human_readable.length > 0
+            human_readable += " "
+          end
+          human_readable += Myp.truncate_zeros(val.to_s) + "\""
+          if extra.length > 0
+            extra += ", "
+          end
+          extra += Myp.truncate_zeros(ActionController::Base.helpers.pluralize(val, "inch"))
+        end
+        if is_split
+          if extra.length > 0
+            extra += "; "
+          end
+          extra += "total: " + Myp.truncate_zeros(ActionController::Base.helpers.pluralize(original_val, "inch"))
+        end
+        if extra.length > 0
+          human_readable += " (" + extra + ")"
+        end
+        attribute_table_row(name, human_readable)
+      else
+        raise "TODO"
+      end
+    else
+      nil
+    end
+  end
+  
   def url_or_blank(url, text = nil, clipboard = nil, linkclasses = nil, external = false)
     if !url.to_s.empty?
       if text.to_s.empty?

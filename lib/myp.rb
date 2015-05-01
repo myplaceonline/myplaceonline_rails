@@ -604,5 +604,8 @@ module Myp
       end
     end
   end
-  
+
+  def self.truncate_zeros(str)
+    str.gsub("\.0", "")
+  end
 end

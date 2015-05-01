@@ -525,6 +525,7 @@ en:
       max_payload_wo_tailgate_with_rv_with_driver: "Above With Driver"
       price: "Price"
       msrp: "MSRP"
+      height_with_rv: "Height With RV"
     loans:
       heading: "Loans"
       loan: "Loan"
