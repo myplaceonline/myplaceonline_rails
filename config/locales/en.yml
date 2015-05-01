@@ -62,6 +62,7 @@ en:
       heights: "Height Measurements"
       meals: "Meals"
       recreational_vehicles: "Recreational Vehicles"
+      foods: "Foods"
     general:
       email: "E-mail"
       password: "Password"
@@ -164,7 +165,7 @@ en:
           * Manage notes of wisdom gathered in life.
           * Manage questions including hypotheses.
         * General Features
-          * Export all data to a downlodable file with the option of encrypting it in a standardized format which can be decrypted with the open source gpg tool.
+          * Export all data to a downloadable file with the option of encrypting it in a standardized format which can be decrypted with the open source gpg tool.
           * Save exported data in offline browser storage and display some of it even without internet.
             * Even if your phone is hacked, your passwords in offline storage are encrypted.
         ]]>

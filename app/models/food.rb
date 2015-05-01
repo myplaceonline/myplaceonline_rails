@@ -10,6 +10,10 @@ class Food < ActiveRecord::Base
     Myp.set_common_model_properties(self)
   end
   
+  def display
+    food_name
+  end
+  
   def self.params
     [
       :id,

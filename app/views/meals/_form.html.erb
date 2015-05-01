@@ -10,37 +10,32 @@
     expanded: true,
     formjson: [
       {
-        type: 'text',
-        name: 'food_attributes.food_name',
-        placeholder: t("myplaceonline.foods.food_name"),
+        type: :renderpartial,
+        name: :food_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.foods.food"),
+        objform: "foods/form",
+        existingobjurl: "food_path",
+        searchurl: "/foods.json?perpage=0",
+        edit: false,
         autofocus: true
-      },
-      {
-        type: 'number',
-        name: 'food_attributes.price',
-        placeholder: t("myplaceonline.foods.price"),
-        step: Myp::DEFAULT_DECIMAL_STEP
-      },
-      {
-        type: 'number',
-        name: 'food_attributes.calories',
-        placeholder: t("myplaceonline.foods.calories"),
-        step: Myp::DEFAULT_DECIMAL_STEP
-      },
-      {
-        type: 'textarea',
-        name: 'food_attributes.notes',
-        placeholder: t("myplaceonline.foods.notes")
-      },
+      }
     ]
   } do |child_fields, childproperty|
 %>
-  <%= child_fields.fields_for :food, childproperty.food do |inner_child_fields| %>
-    <%= myp_text_field inner_child_fields, :food_name, "myplaceonline.foods.food_name", childproperty.food.food_name %>
-    <%= myp_decimal_field inner_child_fields, :price, "myplaceonline.foods.price", childproperty.food.price %>
-    <%= myp_decimal_field inner_child_fields, :calories, "myplaceonline.foods.calories", childproperty.food.calories %>
-    <%= myp_text_area_markdown inner_child_fields, :notes, "myplaceonline.foods.notes", childproperty.food.notes %>
-  <% end %>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :food_attributes,
+      existingobj: childproperty.food,
+      heading: t("myplaceonline.foods.food"),
+      objform: "foods/form",
+      existingobjurl: "food_path",
+      searchurl: "/foods.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
 <% end %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {

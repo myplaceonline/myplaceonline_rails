@@ -10,7 +10,9 @@ class MyplaceonlineController < ApplicationController
       Myp.ensure_encryption_key(session)
     end
     
-    Myp.visit(current_user, category_name)
+    if has_category
+      Myp.visit(current_user, category_name)
+    end
     
     @count = all.count
     
@@ -71,7 +73,9 @@ class MyplaceonlineController < ApplicationController
       create_presave
       
       if @obj.save
-        Myp.add_point(current_user, category_name)
+        if has_category
+          Myp.add_point(current_user, category_name)
+        end
         return after_create_or_update
       else
         return render :new
@@ -112,7 +116,9 @@ class MyplaceonlineController < ApplicationController
     before_destroy
     ActiveRecord::Base.transaction do
       @obj.destroy
-      Myp.subtract_point(current_user, category_name)
+      if has_category
+        Myp.subtract_point(current_user, category_name)
+      end
     end
 
     redirect_to index_path
@@ -223,5 +229,9 @@ class MyplaceonlineController < ApplicationController
       else
         { name => [:id] }
       end
+    end
+    
+    def has_category
+      true
     end
 end
