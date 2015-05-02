@@ -24,7 +24,9 @@ class AddIcons < ActiveRecord::Migration
 
   def set_icon(name, icon)
     c = Category.where(name: name).first
-    c.icon = icon
-    c.save!
+    if !c.nil?
+      c.icon = icon
+      c.save!
+    end
   end
 end
