@@ -124,7 +124,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def deletecategory
     Myp.ensure_encryption_key(session)
     passwords = I18n.t("myplaceonline.category.passwords")
-    @categories = Myp.categories.map{|k,v| I18n.t("myplaceonline.category." + v.name) }.sort
+    
+    search = Myp.categories.merge({
+      "foods" => Category.new(name: "foods"),
+      "drinks" => Category.new(name: "drinks"),
+    })
+    
+    @categories = search.map{|k,v| I18n.t("myplaceonline.category." + v.name) }.sort
     
     if request.post?
       
@@ -136,7 +142,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         render :deletecategory
       else
         
-        foundcat = Myp.categories.find{|k,v| I18n.t("myplaceonline.category." + v.name) == @category}
+        foundcat = search.find{|k,v| I18n.t("myplaceonline.category." + v.name) == @category}
         if !foundcat.nil?
           # TODO something safe
           eval_result = eval("#{@category.singularize}.new")
@@ -144,7 +150,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
           ActiveRecord::Base.transaction do
             destroyed = cl.destroy_all(identity: current_user.primary_identity)
             count = destroyed.length
-            if count > 0
+            if count > 0 && foundcat[0] != "foods" && foundcat[0] != "drinks"
               Myp.modify_points(current_user, foundcat[1].name.to_sym, -1 * count)
             end
           end
