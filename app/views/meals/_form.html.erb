@@ -75,6 +75,44 @@
     }
   %>
 <% end %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.vitamins.heading"),
+    childpropertiesname: :meal_vitamins,
+    childproperties: obj.meal_vitamins,
+    deletebutton: t("myplaceonline.vitamins.delete"),
+    addbutton: t("myplaceonline.vitamins.add"),
+    expanded: true,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :vitamin_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.vitamins.vitamin"),
+        objform: "vitamins/form",
+        existingobjurl: "vitamin_path",
+        searchurl: "/vitamins.json?perpage=0",
+        edit: false,
+        autofocus: true
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :vitamin_attributes,
+      existingobj: childproperty.vitamin,
+      heading: t("myplaceonline.vitamins.vitamin"),
+      objform: "vitamins/form",
+      existingobjurl: "vitamin_path",
+      searchurl: "/vitamins.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
+<% end %>
 <%= myp_text_field f, :price, "myplaceonline.meals.price", obj.price %>
 <%= myp_text_field f, :calories, "myplaceonline.meals.calories", obj.calories %>
 <%= myp_text_area_markdown f, :notes, "myplaceonline.meals.notes", obj.notes %>

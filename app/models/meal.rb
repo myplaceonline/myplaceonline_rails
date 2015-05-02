@@ -45,4 +45,21 @@ class Meal < ActiveRecord::Base
       end
     }
   end
+
+  has_many :meal_vitamins, :dependent => :destroy
+  accepts_nested_attributes_for :meal_vitamins, allow_destroy: true, reject_if: :all_blank
+  
+  # http://stackoverflow.com/a/12064875/4135310
+  def meal_vitamins_attributes=(attributes)
+    super(attributes)
+    attributes.each {|key, value|
+      if !value['vitamin_attributes'].blank? && !value['vitamin_attributes']['id'].blank? && value['_destroy'] != "1"
+        self.meal_vitamins.each{|x|
+          if x.vitamin.id == value['vitamin_attributes']['id'].to_i
+            x.vitamin = Vitamin.find(value['vitamin_attributes']['id'])
+          end
+        }
+      end
+    }
+  end
 end

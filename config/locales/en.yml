@@ -64,6 +64,7 @@ en:
       recreational_vehicles: "Recreational Vehicles"
       foods: "Foods"
       drinks: "Drinks"
+      vitamins: "Vitamins"
     general:
       email: "E-mail"
       password: "Password"
@@ -673,3 +674,13 @@ en:
       notes: "Notes"
       add: "Add Drink"
       delete: "Delete Drink"
+    vitamins:
+      heading: "Vitamins"
+      vitamin: "Vitamin"
+      vitamin_name: "Name"
+      amount_type: "Amount Type"
+      vitamin_amount: "Amount"
+      notes: "Notes"
+      add: "Add Vitamin"
+      delete: "Delete Vitamin"
+      test: "Test"

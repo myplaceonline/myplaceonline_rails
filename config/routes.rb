@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   resources :meals
   post 'meals/new'
 
+  resources :vitamins
+  post 'vitamins/new'
+
   resources :foods
   post 'foods/new'
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150501211509) do
+ActiveRecord::Schema.define(version: 20150502035656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -293,7 +293,7 @@ ActiveRecord::Schema.define(version: 20150501211509) do
   add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -553,6 +553,18 @@ ActiveRecord::Schema.define(version: 20150501211509) do
   add_index "meal_foods", ["identity_id"], name: "index_meal_foods_on_identity_id", using: :btree
   add_index "meal_foods", ["meal_id"], name: "index_meal_foods_on_meal_id", using: :btree
 
+  create_table "meal_vitamins", force: true do |t|
+    t.integer  "identity_id"
+    t.integer  "meal_id"
+    t.integer  "vitamin_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "meal_vitamins", ["identity_id"], name: "index_meal_vitamins_on_identity_id", using: :btree
+  add_index "meal_vitamins", ["meal_id"], name: "index_meal_vitamins_on_meal_id", using: :btree
+  add_index "meal_vitamins", ["vitamin_id"], name: "index_meal_vitamins_on_vitamin_id", using: :btree
+
   create_table "meals", force: true do |t|
     t.datetime "meal_time"
     t.text     "notes"
@@ -796,6 +808,7 @@ ActiveRecord::Schema.define(version: 20150501211509) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "bed_type"
     t.string   "trim_name"
     t.integer  "dimensions_type"
     t.decimal  "height",                   precision: 10, scale: 2
@@ -843,6 +856,18 @@ ActiveRecord::Schema.define(version: 20150501211509) do
   end
 
   add_index "vehicles", ["identity_id"], name: "index_vehicles_on_identity_id", using: :btree
+
+  create_table "vitamins", force: true do |t|
+    t.integer  "identity_id"
+    t.string   "vitamin_name"
+    t.text     "notes"
+    t.decimal  "vitamin_amount", precision: 10, scale: 2
+    t.integer  "amount_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "vitamins", ["identity_id"], name: "index_vitamins_on_identity_id", using: :btree
 
   create_table "websites", force: true do |t|
     t.string   "title"

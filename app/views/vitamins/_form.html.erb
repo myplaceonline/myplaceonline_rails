@@ -1,0 +1,4 @@
+<%= myp_text_field f, :vitamin_name, "myplaceonline.vitamins.vitamin_name", obj.vitamin_name, autofocus %>
+<%= myp_select(f, :amount_type, "myplaceonline.vitamins.amount_type", Myp.translate_options(Myp::VITAMIN_AMOUNTS), obj.amount_type) %>
+<%= myp_decimal_field f, :vitamin_amount, "myplaceonline.vitamins.vitamin_amount", obj.vitamin_amount %>
+<%= myp_text_area_markdown f, :notes, "myplaceonline.vitamins.notes", obj.notes %>
