@@ -561,7 +561,7 @@ module Myp
   DIMENSIONS = [["myplaceonline.general.inches", 0]]
   LIQUID_CAPACITY = [["myplaceonline.general.gallons", 0]]
   VOLUMES = [["myplaceonline.general.cubicft", 0]]
-  VITAMIN_AMOUNTS = [["myplaceonline.measurements.micrograms", 0]]
+  MEASUREMENTS = [["myplaceonline.measurements.micrograms", 0]]
   
   def self.translate_options(options)
     options.map{|o| [I18n.t(o[0]), o[1]]}

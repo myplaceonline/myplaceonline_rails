@@ -1,7 +1,7 @@
 <%= render layout: "shared/model_show" do %>
 
   <%= attribute_table_row(t("myplaceonline.vitamins.vitamin_name"), @obj.vitamin_name) %>
-  <%= attribute_table_row_select t("myplaceonline.vitamins.amount_type"), @obj.amount_type, Myp::VITAMIN_AMOUNTS %>
+  <%= attribute_table_row_select t("myplaceonline.vitamins.amount_type"), @obj.amount_type, Myp::MEASUREMENTS %>
   <%= attribute_table_row(t("myplaceonline.vitamins.vitamin_amount"), @obj.vitamin_amount) %>
   <%= attribute_table_row_markdown(t("myplaceonline.vitamins.notes"), @obj.notes) %>
 

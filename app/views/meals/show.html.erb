@@ -18,7 +18,7 @@
   <% @obj.meal_vitamins.each do |wrapper| %>
     <%= table_row_heading(t("myplaceonline.vitamins.vitamin")) %>
     <%= attribute_table_row(t("myplaceonline.vitamins.vitamin_name"), wrapper.vitamin.vitamin_name) %>
-    <%= attribute_table_row_select t("myplaceonline.vitamins.amount_type"), wrapper.vitamin.amount_type, Myp::VITAMIN_AMOUNTS %>
+    <%= attribute_table_row_select t("myplaceonline.vitamins.amount_type"), wrapper.vitamin.amount_type, Myp::MEASUREMENTS %>
     <%= attribute_table_row(t("myplaceonline.vitamins.vitamin_amount"), wrapper.vitamin.vitamin_amount) %>
     <%= attribute_table_row_markdown(t("myplaceonline.vitamins.notes"), wrapper.vitamin.notes) %>
   <% end %>

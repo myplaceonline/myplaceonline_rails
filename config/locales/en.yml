@@ -684,3 +684,5 @@ en:
       add: "Add Vitamin"
       delete: "Delete Vitamin"
       test: "Test"
+    measurements:
+      micrograms: "Micrograms"
