@@ -2,6 +2,8 @@
 existingobj ||= Myp.new_model(objform[0..(objform.index('/')-1)].singularize.camelize.constantize)
 collapsed = collapsed.nil? ? false : collapsed
 existingcollapsed = false
+random_name = SecureRandom.hex(10)
+new_item_collapsible_id = random_name + "_new_item"
 
 # If there are no existing items, then expand the new item instead
 if !objform.blank?
@@ -22,7 +24,6 @@ end
     <div data-role="collapsible" data-collapsed="<%= existingcollapsed %>">
       <%= f.fields_for name, existingobj do |sub_fields| %>
         <%
-          random_name = SecureRandom.hex(10)
           fieldid = sub_fields.object_name.gsub("\[", "_").gsub("\]", "") + "_id"
         %>
         <h3><%= t("myplaceonline.general.existing") + " " + heading %></h3>
@@ -54,10 +55,21 @@ end
       <% end %>
     </div>
     <% if !edit %>
-      <div data-role="collapsible" data-collapsed="<%= !existingcollapsed %>">
+      <div id="<%= new_item_collapsible_id %>" data-role="collapsible" data-collapsed="<%= !existingcollapsed %>">
+        <% first = true %>
         <%= f.fields_for name, existingobj do |sub_fields| %>
           <h3><%= (edit ? t("myplaceonline.general.edit") : t("myplaceonline.general.new")) + " " + heading %></h3>
           <%= render partial: objform + ".html", locals: { f: sub_fields, obj: existingobj, edit: edit, autofocus: autofocus } %>
+          <%
+             if existingcollapsed && autofocus && first
+               first = false
+          %>
+            <script type="text/javascript">
+              onPageLoad(function() {
+                maybeFocus($("#<%= new_item_collapsible_id %> .autofocus"));
+              });
+            </script>
+          <% end %>
         <% end %>
       </div>
     <% end %>
