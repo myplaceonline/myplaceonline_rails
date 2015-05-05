@@ -1,11 +1,25 @@
 <%
 existingobj ||= Myp.new_model(objform[0..(objform.index('/')-1)].singularize.camelize.constantize)
 collapsed = collapsed.nil? ? false : collapsed
+existingcollapsed = false
+
+# If there are no existing items, then expand the new item instead
+if !objform.blank?
+  i = objform.index('/')
+  if i != -1
+    m = Object.const_get(objform[0..i-1].singularize.camelize)
+    x = m.send("where", identity_id: current_user.primary_identity.id)
+    if x.length == 0
+      existingcollapsed = true
+    end
+  end
+end
+
 %>
 <div data-role="collapsible" data-collapsed="<%= collapsed %>">
   <h4><%= heading %></h4>
   <div data-role="collapsible-set">
-    <div data-role="collapsible" data-collapsed="false">
+    <div data-role="collapsible" data-collapsed="<%= existingcollapsed %>">
       <%= f.fields_for name, existingobj do |sub_fields| %>
         <%
           random_name = SecureRandom.hex(10)
@@ -32,7 +46,7 @@ collapsed = collapsed.nil? ? false : collapsed
                 $(this).attr("onclick", "<%= raw(Myp.select_listitem('#' + fieldid)) %>");
               });
             });
-            <% if autofocus %>
+            <% if autofocus && !existingcollapsed %>
             maybeFocus($("#<%= random_name %>_searchable_container input"));
             <% end %>
           });
@@ -40,7 +54,7 @@ collapsed = collapsed.nil? ? false : collapsed
       <% end %>
     </div>
     <% if !edit %>
-      <div data-role="collapsible">
+      <div data-role="collapsible" data-collapsed="<%= !existingcollapsed %>">
         <%= f.fields_for name, existingobj do |sub_fields| %>
           <h3><%= (edit ? t("myplaceonline.general.edit") : t("myplaceonline.general.new")) + " " + heading %></h3>
           <%= render partial: objform + ".html", locals: { f: sub_fields, obj: existingobj, edit: edit, autofocus: autofocus } %>
