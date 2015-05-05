@@ -1,7 +1,10 @@
 class MyplaceonlineController < ApplicationController
   before_action :before_all_actions
   before_action :set_obj, only: [:show, :edit, :update, :destroy]
-  skip_authorization_check :only => [:index, :new, :create]
+  
+  DEFAULT_SKIP_AUTHORIZATION_CHECK = [:index, :new, :create]
+  
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK
 
   respond_to :html, :json
 
@@ -27,7 +30,7 @@ class MyplaceonlineController < ApplicationController
     end
     
     @objs = all.offset(@offset).limit(@perpage).order(sorts)
-     
+    
     respond_with(@objs)
   end
 

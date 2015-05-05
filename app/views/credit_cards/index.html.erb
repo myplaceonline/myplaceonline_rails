@@ -1,2 +1,5 @@
 <%= render layout: "shared/model_index" do %>
+  <% content_for :footerlinks do %>
+    <li><%= link_to t('myplaceonline.credit_cards.list_cashbacks'), credit_cards_listcashback_path, "data-icon" => "bullets" %></li>
+  <% end %>
 <% end %>

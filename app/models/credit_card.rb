@@ -8,7 +8,7 @@ class CreditCard < ActiveRecord::Base
   attr_accessor :encrypt
   attr_accessor :is_defunct
 
-  def display
+  def display(show_default_cashback = true)
     result = name
     if !card_type.nil?
       result += " (" + Myp.get_select_name(card_type, CreditCard::CARD_TYPES) + ")"
@@ -16,9 +16,11 @@ class CreditCard < ActiveRecord::Base
     if !defunct.nil?
       result += " (" + I18n.t("myplaceonline.general.defunct") + ")"
     end
-    default_cashbacks = credit_card_cashbacks.to_a.keep_if{|wrapper| wrapper.cashback.default_cashback}
-    if default_cashbacks.length > 0
-      result += " (" + default_cashbacks[0].cashback.cashback_percentage.to_s + "%)"
+    if show_default_cashback
+      default_cashbacks = credit_card_cashbacks.to_a.keep_if{|wrapper| wrapper.cashback.default_cashback}
+      if default_cashbacks.length > 0
+        result += " (" + default_cashbacks[0].cashback.cashback_percentage.to_s + "%)"
+      end
     end
     result
   end

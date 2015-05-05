@@ -1,0 +1,7 @@
+<% content_for :heading do -%><%= t('myplaceonline.credit_cards.all_cashbacks') %><% end -%>
+<h1><%= t('myplaceonline.credit_cards.all_cashbacks') %></h1>
+<ul data-role="listview" data-inset="true">
+  <% @cashbacks.each do |c| %>
+    <li><%= link_to c.cashback.cashback_percentage.to_s + "% " + controller.cashback_for(c) + "- " + c.credit_card.display(false), credit_card_path(c.credit_card) %></li>
+  <% end %>
+</ul>

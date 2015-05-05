@@ -128,6 +128,7 @@ en:
       meters: "Meters"
       gallons: "Gallons"
       cubicft: "Cubic Feet"
+      for: "for"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
@@ -410,6 +411,8 @@ en:
       visa: "Visa"
       mastercard: "Mastercard"
       amex: "American Express"
+      list_cashbacks: "List All Cashbacks"
+      all_cashbacks: "All Cashbacks"
     bank_accounts:
       name: "Name"
       account_number: "Account Number"

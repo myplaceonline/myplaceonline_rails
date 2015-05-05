@@ -10,4 +10,8 @@ class CreditCardCashback < ActiveRecord::Base
   def do_before_save
     Myp.set_common_model_properties(self)
   end
+  
+  def expiration_includes_today?
+    Myp.includes_today?(cashback.start_date, cashback.end_date)
+  end
 end

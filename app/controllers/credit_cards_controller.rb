@@ -1,10 +1,24 @@
 class CreditCardsController < MyplaceonlineController
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:listcashback]
+
+  def listcashback
+    @cashbacks = CreditCardCashback.where(identity_id: current_user.primary_identity.id).sort{ |x, y| y.cashback.cashback_percentage <=> x.cashback.cashback_percentage }.keep_if{|c| c.expiration_includes_today?}
+  end
+
   def model
     CreditCard
   end
 
   def display_obj(obj)
     obj.display
+  end
+  
+  def cashback_for(cb)
+    if cb.cashback.applies_to.blank?
+      ""
+    else
+      I18n.t("myplaceonline.general.for") + " " + cb.cashback.applies_to + " "
+    end
   end
 
   protected
