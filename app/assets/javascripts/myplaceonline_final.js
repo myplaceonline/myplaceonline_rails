@@ -213,6 +213,9 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
   if (has_position) {
     form_set_positions(link);
   }
+  if (futures.length > 0) {
+    save_collapsible_states();
+  }
   for (i = 0; i < futures.length; i++) {
     var item = futures[i];
     var url = "/api/renderpartial.json";

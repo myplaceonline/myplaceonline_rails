@@ -4,5 +4,12 @@
   <%= attribute_table_row(t("myplaceonline.foods.price"), @obj.price) %>
   <%= attribute_table_row(t("myplaceonline.foods.calories"), @obj.calories) %>
   <%= attribute_table_row_markdown(t("myplaceonline.foods.notes"), @obj.notes) %>
+  <% @obj.food_ingredients.each do |wrapper| %>
+    <%= table_row_heading(t("myplaceonline.foods.food")) %>
+    <%= attribute_table_row(t("myplaceonline.foods.food_name"), wrapper.food.food_name) %>
+    <%= attribute_table_row(t("myplaceonline.foods.price"), wrapper.food.price) %>
+    <%= attribute_table_row(t("myplaceonline.foods.calories"), wrapper.food.calories) %>
+    <%= attribute_table_row_markdown(t("myplaceonline.foods.notes"), wrapper.food.notes) %>
+  <% end %>
   
 <% end %>

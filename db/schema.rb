@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150502035656) do
+ActiveRecord::Schema.define(version: 20150503205017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -318,6 +318,18 @@ ActiveRecord::Schema.define(version: 20150502035656) do
     t.string  "style"
     t.binary  "file_contents"
   end
+
+  create_table "food_ingredients", force: true do |t|
+    t.integer  "identity_id"
+    t.integer  "parent_food_id"
+    t.integer  "food_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "food_ingredients", ["food_id"], name: "index_food_ingredients_on_food_id", using: :btree
+  add_index "food_ingredients", ["identity_id"], name: "index_food_ingredients_on_identity_id", using: :btree
+  add_index "food_ingredients", ["parent_food_id"], name: "index_food_ingredients_on_parent_food_id", using: :btree
 
   create_table "foods", force: true do |t|
     t.integer  "identity_id"

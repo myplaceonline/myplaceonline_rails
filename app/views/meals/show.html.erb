@@ -3,10 +3,17 @@
   <%= attribute_table_row_datetime(t("myplaceonline.meals.meal_time"), @obj.meal_time) %>
   <% @obj.meal_foods.each do |wrapper| %>
     <%= table_row_heading(t("myplaceonline.foods.food")) %>
-    <%= attribute_table_row(t("myplaceonline.foods.food_name"), wrapper.food.food_name) %>
+    <%= attribute_table_row_reference(t("myplaceonline.foods.food_name"), "food_path", wrapper.food) %>
     <%= attribute_table_row(t("myplaceonline.foods.price"), wrapper.food.price) %>
     <%= attribute_table_row(t("myplaceonline.foods.calories"), wrapper.food.calories) %>
     <%= attribute_table_row_markdown(t("myplaceonline.foods.notes"), wrapper.food.notes) %>
+    <% wrapper.food.food_ingredients.each do |wrapper2| %>
+      <%= table_row_heading(t("myplaceonline.foods.food")) %>
+      <%= attribute_table_row_reference(t("myplaceonline.foods.food_name"), "food_path", wrapper2.food) %>
+      <%= attribute_table_row(t("myplaceonline.foods.price"), wrapper2.food.price) %>
+      <%= attribute_table_row(t("myplaceonline.foods.calories"), wrapper2.food.calories) %>
+      <%= attribute_table_row_markdown(t("myplaceonline.foods.notes"), wrapper2.food.notes) %>
+    <% end %>
   <% end %>
   <% @obj.meal_drinks.each do |wrapper| %>
     <%= table_row_heading(t("myplaceonline.drinks.drink")) %>

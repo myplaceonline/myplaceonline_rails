@@ -2,3 +2,43 @@
 <%= myp_decimal_field f, :price, "myplaceonline.foods.price", obj.price %>
 <%= myp_decimal_field f, :calories, "myplaceonline.foods.calories", obj.calories %>
 <%= myp_text_area_markdown f, :notes, "myplaceonline.foods.notes", obj.notes %>
+<% if params["allowinnerfoods"] %>
+  <%=
+    render layout: 'myplaceonline/childproperties', locals: {
+      f: f,
+      heading: t("myplaceonline.foods.heading"),
+      childpropertiesname: :food_ingredients,
+      childproperties: obj.food_ingredients,
+      deletebutton: t("myplaceonline.foods.delete"),
+      addbutton: t("myplaceonline.foods.add"),
+      expanded: true,
+      formjson: [
+        {
+          type: :renderpartial,
+          name: :food_attributes,
+          partial: 'myplaceonline/select_or_create',
+          heading: t("myplaceonline.foods.food"),
+          objform: "foods/form",
+          existingobjurl: "food_path",
+          searchurl: "/foods.json?perpage=0",
+          edit: false,
+          autofocus: true
+        }
+      ]
+    } do |child_fields, childproperty|
+  %>
+    <%=
+      render partial: 'myplaceonline/select_or_create', locals: {
+        f: child_fields,
+        name: :food_attributes,
+        existingobj: childproperty.food,
+        heading: t("myplaceonline.foods.food"),
+        objform: "foods/form",
+        existingobjurl: "food_path",
+        searchurl: "/foods.json?perpage=0",
+        edit: edit,
+        autofocus: false
+      }
+    %>
+  <% end %>
+<% end %>

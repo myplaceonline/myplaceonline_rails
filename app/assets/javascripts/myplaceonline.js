@@ -1,5 +1,5 @@
 // myplaceonline.js
-// Version 0.11
+// Version 0.12
 //
 // Notes:
 //  * When changing this file, you may need to apply the same changes to
@@ -556,9 +556,38 @@ function loadExternalCss(url, multiple) {
   return true;
 }
 
+function save_collapsible_states() {
+  var all_collapsibles = $(".ui-collapsible");
+  myp.collapseStates = {};
+  all_collapsibles.each(function() {
+    var collapsible = $(this);
+    var id = $(collapsible).attr("id");
+    if (!id) {
+      id = "cbl" + Math.floor(Math.random()*100000000);
+      $(collapsible).attr("id", id);
+    }
+    myp.collapseStates[id] = $(collapsible).hasClass("ui-collapsible-collapsed");
+  });
+}
+
+function restore_saved_collapsible_states() {
+  if (myp.collapseStates) {
+    $.each(myp.collapseStates, function (id, val) {
+      var x = $("#" + id);
+      if (val) {
+        x.collapsible("collapse");
+      } else {
+        x.collapsible("expand");
+      }
+    });
+    myp.collapseStates = null;
+  }
+}
+
 function ensureStyledPage() {
   if ($.mobile.activePage) {
     $.mobile.activePage.trigger('create');
+    restore_saved_collapsible_states();
   }
 }
 
