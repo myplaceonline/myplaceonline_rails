@@ -144,9 +144,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         
         foundcat = search.find{|k,v| I18n.t("myplaceonline.category." + v.name) == @category}
         if !foundcat.nil?
-          # TODO something safe
-          eval_result = eval("#{@category.singularize}.new")
-          cl = eval_result.class
+          cl = Object.const_get(@category.singularize)
           ActiveRecord::Base.transaction do
             destroyed = cl.destroy_all(identity: current_user.primary_identity)
             count = destroyed.length
