@@ -65,6 +65,7 @@ en:
       foods: "Foods"
       drinks: "Drinks"
       vitamins: "Vitamins"
+      acne_measurements: "Acne Measurements"
     general:
       email: "E-mail"
       password: "Password"
@@ -689,3 +690,9 @@ en:
       test: "Test"
     measurements:
       micrograms: "Micrograms"
+    acne_measurements:
+      measurement_datetime: "Date/Time"
+      new_pimples: "New Pimples"
+      worrying_pimples: "Worrying Pimples"
+      total_pimples: "Total Pimples"
+      acne_location: "Acne Location"
