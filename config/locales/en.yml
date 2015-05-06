@@ -67,6 +67,7 @@ en:
       vitamins: "Vitamins"
       acne_measurements: "Acne Measurements"
       exercises: "Exercises"
+      sun_exposures: "Sun Exposures"
     general:
       email: "E-mail"
       password: "Password"
@@ -702,3 +703,9 @@ en:
       exercise_end: "End Date/Time"
       exercise_activity: "Activity"
       notes: "Notes"
+    sun_exposures:
+      exposure_start: "Start Date/Time"
+      exposure_end: "End Date/Time"
+      sunscreened_body_parts: "Sunscreened Body Parts"
+      uncovered_body_parts: "Uncovered Body Parts"
+      sunscreen_type: "Sunscreen Type"

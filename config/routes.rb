@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :sun_exposures
+  post 'sun_exposures/new'
+
   resources :exercises
   post 'exercises/new'
 
