@@ -43,6 +43,7 @@ class Ability
     can :manage, Drink, :identity => identity
     can :manage, Vitamin, :identity => identity
     can :manage, AcneMeasurement, :identity => identity
+    can :manage, Exercise, :identity => identity
     
     # Define abilities for the passed in user here. For example:
     #

@@ -66,6 +66,7 @@ en:
       drinks: "Drinks"
       vitamins: "Vitamins"
       acne_measurements: "Acne Measurements"
+      exercises: "Exercises"
     general:
       email: "E-mail"
       password: "Password"
@@ -696,3 +697,8 @@ en:
       worrying_pimples: "Worrying Pimples"
       total_pimples: "Total Pimples"
       acne_location: "Acne Location"
+    exercises:
+      exercise_start: "Start Date/Time"
+      exercise_end: "End Date/Time"
+      exercise_activity: "Activity"
+      notes: "Notes"

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :exercises
+  post 'exercises/new'
+
   resources :acne_measurements
   post 'acne_measurements/new'
 

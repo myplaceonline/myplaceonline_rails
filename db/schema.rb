@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150506000629) do
+ActiveRecord::Schema.define(version: 20150506002817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -315,6 +315,18 @@ ActiveRecord::Schema.define(version: 20150506000629) do
   end
 
   add_index "encrypted_values", ["user_id"], name: "index_encrypted_values_on_user_id", using: :btree
+
+  create_table "exercises", force: true do |t|
+    t.datetime "exercise_start"
+    t.datetime "exercise_end"
+    t.string   "exercise_activity"
+    t.text     "notes"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "exercises", ["identity_id"], name: "index_exercises_on_identity_id", using: :btree
 
   create_table "feeds", force: true do |t|
     t.string   "name"
