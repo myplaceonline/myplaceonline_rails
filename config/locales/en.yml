@@ -328,6 +328,7 @@ en:
     contacts:
       name: "Name"
       birthday: "Birthday"
+      age: "Age"
       notes: "Notes"
       me: "Me"
       conversation: "Conversation"

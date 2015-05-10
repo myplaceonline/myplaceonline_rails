@@ -2,6 +2,9 @@
 
   <%= attribute_table_row(t("myplaceonline.contacts.name"), @obj.name) %>
   <%= attribute_table_row(t("myplaceonline.contacts.birthday"), @obj.birthday) %>
+  <% if !@obj.birthday.nil? %>
+    <%= attribute_table_row(t("myplaceonline.contacts.age"), Myp.time_difference_in_general_from_now(@obj.birthday)) %>
+  <% end %>
   <%= attribute_table_row_markdown(t("myplaceonline.contacts.notes"), @obj.notes) %>
   <% @obj.contact_identity.identity_emails.each do |email| %>
     <%= attribute_table_row_email(t("myplaceonline.identities.email"), email.email) %>

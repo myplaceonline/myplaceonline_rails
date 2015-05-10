@@ -467,6 +467,11 @@ module Myp
     result
   end
   
+  def self.time_difference_in_general_from_now(time)
+    diff = TimeDifference.between(Time.now, time)
+    Myp.time_difference_in_general_human(diff.in_general)
+  end
+  
   def self.time_difference_in_general_human(diff)
     result = ""
     if diff[:years] > 0
