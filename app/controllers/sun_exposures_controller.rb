@@ -8,6 +8,10 @@ class SunExposuresController < MyplaceonlineController
   end
 
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["sun_exposures.exposure_start DESC"]
     end

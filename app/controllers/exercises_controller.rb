@@ -8,6 +8,10 @@ class ExercisesController < MyplaceonlineController
   end
 
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["exercises.exercise_start DESC"]
     end

@@ -8,6 +8,10 @@ class HeartRatesController < MyplaceonlineController
   end
 
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["heart_rates.measurement_date DESC"]
     end

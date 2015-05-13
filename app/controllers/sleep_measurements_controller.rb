@@ -8,6 +8,10 @@ class SleepMeasurementsController < MyplaceonlineController
   end
 
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["sleep_measurements.sleep_start_time DESC"]
     end

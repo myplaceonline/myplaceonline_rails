@@ -8,6 +8,10 @@ class MedicineUsagesController < MyplaceonlineController
   end
 
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["medicine_usages.usage_time DESC"]
     end

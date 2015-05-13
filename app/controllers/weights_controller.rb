@@ -8,6 +8,10 @@ class WeightsController < MyplaceonlineController
   end
 
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["weights.measure_date DESC"]
     end

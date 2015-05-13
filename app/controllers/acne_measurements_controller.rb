@@ -8,6 +8,10 @@ class AcneMeasurementsController < MyplaceonlineController
   end
 
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["acne_measurements.measurement_datetime DESC"]
     end

@@ -8,6 +8,10 @@ class HeightsController < MyplaceonlineController
   end
 
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["heights.measurement_date DESC"]
     end
