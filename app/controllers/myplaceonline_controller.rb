@@ -42,7 +42,9 @@ class MyplaceonlineController < ApplicationController
   end
 
   def new
-    Myp.ensure_encryption_key(session)
+    if !insecure
+      Myp.ensure_encryption_key(session)
+    end
     @obj = Myp.new_model(model)
     new_obj_initialize
     @url = new_path
@@ -64,7 +66,9 @@ class MyplaceonlineController < ApplicationController
   end
 
   def create
-    Myp.ensure_encryption_key(session)
+    if !insecure
+      Myp.ensure_encryption_key(session)
+    end
     ActiveRecord::Base.transaction do
       begin
         @obj = model.new(obj_params)
@@ -178,6 +182,10 @@ class MyplaceonlineController < ApplicationController
     end
     
     def sensitive
+      false
+    end
+    
+    def insecure
       false
     end
     

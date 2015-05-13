@@ -8,6 +8,10 @@ class MealsController < MyplaceonlineController
   end
 
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["meals.meal_time DESC"]
     end
