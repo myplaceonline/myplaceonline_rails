@@ -46,6 +46,10 @@ class RecreationalVehiclesController < MyplaceonlineController
       ]
     ]
   end
+  
+  def self.reject_if_blank(attributes)
+    attributes.delete_if {|key, value| key.to_s == "dimensions_type" || key.to_s == "weight_type" || key.to_s == "liquid_capacity_type" || key.to_s == "volume_type" || key.to_s == "location_purchased_attributes" }.all? {|key, value| value.blank?}
+  end
 
   protected
     def sorts
