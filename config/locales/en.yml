@@ -674,6 +674,9 @@ en:
       notes: "Notes"
       add: "Add Food"
       delete: "Delete Food"
+      ingredients: "Ingredients"
+      add_ingredient: "Add Ingredient"
+      delete_ingredient: "Delete Ingredient"
     drinks:
       heading: "Drinks"
       drink: "Drink"

@@ -6,11 +6,11 @@
   <%=
     render layout: 'myplaceonline/childproperties', locals: {
       f: f,
-      heading: t("myplaceonline.foods.heading"),
+      heading: t("myplaceonline.foods.ingredients"),
       childpropertiesname: :food_ingredients,
       childproperties: obj.food_ingredients,
-      deletebutton: t("myplaceonline.foods.delete"),
-      addbutton: t("myplaceonline.foods.add"),
+      deletebutton: t("myplaceonline.foods.delete_ingredient"),
+      addbutton: t("myplaceonline.foods.add_ingredient"),
       expanded: true,
       formjson: [
         {
