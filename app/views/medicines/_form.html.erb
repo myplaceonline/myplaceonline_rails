@@ -1,0 +1,4 @@
+<%= myp_text_field f, :medicine_name, "myplaceonline.medicines.medicine_name", obj.medicine_name, autofocus %>
+<%= myp_select(f, :dosage_type, "myplaceonline.medicines.dosage_type", Myp.translate_options(Myp::DOSAGES), obj.dosage_type) %>
+<%= myp_decimal_field f, :dosage, "myplaceonline.medicines.dosage", obj.dosage %>
+<%= myp_text_area_markdown f, :notes, "myplaceonline.medicines.notes", obj.notes %>

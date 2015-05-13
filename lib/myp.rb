@@ -11,6 +11,15 @@ module Myp
   POSSIBILITIES_ALPHANUMERIC = [('0'..'9'), ('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
   POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL = [('0'..'9'), ('a'..'z'), ('A'..'Z'), ['_', '-', '!']].map { |i| i.to_a }.flatten
   
+  DEFAULT_DECIMAL_STEP = "0.01"
+  
+  WEIGHTS = [["myplaceonline.general.pounds", 0]]
+  DIMENSIONS = [["myplaceonline.general.inches", 0]]
+  LIQUID_CAPACITY = [["myplaceonline.general.gallons", 0]]
+  VOLUMES = [["myplaceonline.general.cubicft", 0]]
+  MEASUREMENTS = [["myplaceonline.measurements.micrograms", 0]]
+  DOSAGES = [["myplaceonline.measurements.micrograms", 0]]
+  
   puts "myplaceonline: Initializing categories"
   
   def self.database_exists?
@@ -562,12 +571,6 @@ module Myp
     end
   end
 
-  WEIGHTS = [["myplaceonline.general.pounds", 0]]
-  DIMENSIONS = [["myplaceonline.general.inches", 0]]
-  LIQUID_CAPACITY = [["myplaceonline.general.gallons", 0]]
-  VOLUMES = [["myplaceonline.general.cubicft", 0]]
-  MEASUREMENTS = [["myplaceonline.measurements.micrograms", 0]]
-  
   def self.translate_options(options)
     options.map{|o| [I18n.t(o[0]), o[1]]}
   end
@@ -580,8 +583,6 @@ module Myp
       { name => [:id] }
     end
   end
-  
-  DEFAULT_DECIMAL_STEP = "0.01"
   
   def self.includes_today?(start_date, end_date)
     Myp.includes_date?(DateTime.now, start_date, end_date)

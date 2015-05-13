@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :medicines
+  post 'medicines/new'
+
+  resources :medicine_usages
+  post 'medicine_usages/new'
+
   resources :sun_exposures
   post 'sun_exposures/new'
 

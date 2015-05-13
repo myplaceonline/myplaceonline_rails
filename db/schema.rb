@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150506004254) do
+ActiveRecord::Schema.define(version: 20150513175006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -615,6 +615,42 @@ ActiveRecord::Schema.define(version: 20150506004254) do
 
   add_index "meals", ["identity_id"], name: "index_meals_on_identity_id", using: :btree
   add_index "meals", ["location_id"], name: "index_meals_on_location_id", using: :btree
+
+  create_table "medicine_usage_medicines", force: true do |t|
+    t.integer  "identity_id"
+    t.integer  "medicine_usage_id"
+    t.integer  "medicine_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "medicine_usage_medicines", ["identity_id"], name: "index_medicine_usage_medicines_on_identity_id", using: :btree
+  add_index "medicine_usage_medicines", ["medicine_id"], name: "index_medicine_usage_medicines_on_medicine_id", using: :btree
+  add_index "medicine_usage_medicines", ["medicine_usage_id"], name: "index_medicine_usage_medicines_on_medicine_usage_id", using: :btree
+
+  create_table "medicine_usages", force: true do |t|
+    t.datetime "usage_time"
+    t.integer  "medicine_id"
+    t.text     "usage_notes"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "medicine_usages", ["identity_id"], name: "index_medicine_usages_on_identity_id", using: :btree
+  add_index "medicine_usages", ["medicine_id"], name: "index_medicine_usages_on_medicine_id", using: :btree
+
+  create_table "medicines", force: true do |t|
+    t.string   "medicine_name"
+    t.decimal  "dosage",        precision: 10, scale: 2
+    t.integer  "dosage_type"
+    t.text     "notes"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "medicines", ["identity_id"], name: "index_medicines_on_identity_id", using: :btree
 
   create_table "movies", force: true do |t|
     t.string   "name"

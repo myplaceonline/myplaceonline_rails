@@ -68,6 +68,8 @@ en:
       acne_measurements: "Acne Measurements"
       exercises: "Exercises"
       sun_exposures: "Sun Exposures"
+      medicine_usages: "Medicine Usages"
+      medicines: "Medicines"
     general:
       email: "E-mail"
       password: "Password"
@@ -710,3 +712,15 @@ en:
       sunscreened_body_parts: "Sunscreened Body Parts"
       uncovered_body_parts: "Uncovered Body Parts"
       sunscreen_type: "Sunscreen Type"
+    medicine_usages:
+      usage_time: "Time"
+      usage_notes: "Notes"
+    medicines:
+      heading: "Medicines"
+      medicine: "Medicine"
+      medicine_name: "Name"
+      dosage: "Dosage"
+      dosage_type: "Dosage Type"
+      notes: "Notes"
+      add: "Add Medicine"
+      delete: "Delete Medicine"
