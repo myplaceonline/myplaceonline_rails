@@ -696,6 +696,9 @@ en:
       add: "Add Vitamin"
       delete: "Delete Vitamin"
       test: "Test"
+      ingredients: "Ingredients"
+      add_ingredient: "Add Ingredient"
+      delete_ingredient: "Delete Ingredient"
     measurements:
       micrograms: "Micrograms"
     acne_measurements:

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150513175006) do
+ActiveRecord::Schema.define(version: 20150513221213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -941,6 +941,18 @@ ActiveRecord::Schema.define(version: 20150513175006) do
   end
 
   add_index "vehicles", ["identity_id"], name: "index_vehicles_on_identity_id", using: :btree
+
+  create_table "vitamin_ingredients", force: true do |t|
+    t.integer  "identity_id"
+    t.integer  "parent_vitamin_id"
+    t.integer  "vitamin_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "vitamin_ingredients", ["identity_id"], name: "index_vitamin_ingredients_on_identity_id", using: :btree
+  add_index "vitamin_ingredients", ["parent_vitamin_id"], name: "index_vitamin_ingredients_on_parent_vitamin_id", using: :btree
+  add_index "vitamin_ingredients", ["vitamin_id"], name: "index_vitamin_ingredients_on_vitamin_id", using: :btree
 
   create_table "vitamins", force: true do |t|
     t.integer  "identity_id"

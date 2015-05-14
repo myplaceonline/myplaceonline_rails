@@ -2,3 +2,43 @@
 <%= myp_select(f, :amount_type, "myplaceonline.vitamins.amount_type", Myp.translate_options(Myp::MEASUREMENTS), obj.amount_type) %>
 <%= myp_decimal_field f, :vitamin_amount, "myplaceonline.vitamins.vitamin_amount", obj.vitamin_amount %>
 <%= myp_text_area_markdown f, :notes, "myplaceonline.vitamins.notes", obj.notes %>
+<% if params["allowinnervitamins"] %>
+  <%=
+    render layout: 'myplaceonline/childproperties', locals: {
+      f: f,
+      heading: t("myplaceonline.vitamins.ingredients"),
+      childpropertiesname: :vitamin_ingredients,
+      childproperties: obj.vitamin_ingredients,
+      deletebutton: t("myplaceonline.vitamins.delete_ingredient"),
+      addbutton: t("myplaceonline.vitamins.add_ingredient"),
+      expanded: true,
+      formjson: [
+        {
+          type: :renderpartial,
+          name: :vitamin_attributes,
+          partial: 'myplaceonline/select_or_create',
+          heading: t("myplaceonline.vitamins.vitamin"),
+          objform: "vitamins/form",
+          existingobjurl: "vitamin_path",
+          searchurl: "/vitamins.json?perpage=0",
+          edit: false,
+          autofocus: true
+        }
+      ]
+    } do |child_fields, childproperty|
+  %>
+    <%=
+      render partial: 'myplaceonline/select_or_create', locals: {
+        f: child_fields,
+        name: :vitamin_attributes,
+        existingobj: childproperty.vitamin,
+        heading: t("myplaceonline.vitamins.vitamin"),
+        objform: "vitamins/form",
+        existingobjurl: "vitamin_path",
+        searchurl: "/vitamins.json?perpage=0",
+        edit: edit,
+        autofocus: false
+      }
+    %>
+  <% end %>
+<% end %>
