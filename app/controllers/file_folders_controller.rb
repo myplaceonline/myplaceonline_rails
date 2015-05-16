@@ -30,8 +30,23 @@ class FileFoldersController < MyplaceonlineController
   def add_another_name
     I18n.t("myplaceonline.file_folders.add_subfolder")
   end
+  
+  def new_path(context = nil)
+    if context.nil?
+      send("new_" + path_name + "_path")
+    else
+      send("new_" + path_name + "_path", parent: context.id)
+    end
+  end
 
   protected
+
+    def all
+      model.where(
+        identity_id: current_user.primary_identity.id,
+        parent_folder: nil
+      )
+    end
 
     def sorts
       FileFoldersController.sorts
@@ -42,10 +57,25 @@ class FileFoldersController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:identity_file_folder).permit(:folder_name)
+      params.require(:identity_file_folder).permit(
+        :folder_name,
+        parent_folder_attributes: [ :id ]
+      )
     end
     
     def has_category
       false
+    end
+    
+    def new_obj_initialize
+      if !params[:parent].nil?
+        folders = IdentityFileFolder.where(
+          identity_id: current_user.primary_identity.id,
+          id: params[:parent].to_i
+        )
+        if folders.size > 0
+          @obj.parent_folder = folders.first
+        end
+      end
     end
 end

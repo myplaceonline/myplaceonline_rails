@@ -173,7 +173,7 @@ class MyplaceonlineController < ApplicationController
     send("edit_" + path_name + "_path", obj)
   end
   
-  def new_path
+  def new_path(context = nil)
     send("new_" + path_name + "_path")
   end
   

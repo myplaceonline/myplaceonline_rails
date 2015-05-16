@@ -1,1 +1,3 @@
 <%= myp_text_field f, :folder_name, "myplaceonline.file_folders.folder_name", obj.folder_name, autofocus %>
+<%= f.fields_for :parent_folder, obj.parent_folder do |parent_folder_form| %>
+<% end %>
