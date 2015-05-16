@@ -1,2 +1,5 @@
 <%= render layout: "shared/model_index" do %>
+  <% content_for :footerlinks do %>
+    <li><%= link_to t('myplaceonline.file_folders.add'), new_file_folder_path, "data-icon" => "plus" %></li>
+  <% end %>
 <% end %>

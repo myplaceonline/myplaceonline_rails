@@ -113,9 +113,13 @@ class MyplaceonlineController < ApplicationController
   
   def after_create_or_update
     respond_to do |format|
-      format.html { redirect_to @obj }
+      format.html { redirect_to_obj }
       format.js { render :saved }
     end
+  end
+  
+  def redirect_to_obj
+    redirect_to @obj
   end
 
   def destroy

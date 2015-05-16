@@ -70,6 +70,7 @@ en:
       sun_exposures: "Sun Exposures"
       medicine_usages: "Medicine Usages"
       medicines: "Medicines"
+      file_folders: "File Folders"
     general:
       email: "E-mail"
       password: "Password"
@@ -732,3 +733,6 @@ en:
       notes: "Notes"
       add: "Add Medicine"
       delete: "Delete Medicine"
+    file_folders:
+      folder_name: "Folder Name"
+      add: "Add Folder"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150513221213) do
+ActiveRecord::Schema.define(version: 20150516202034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -463,6 +463,17 @@ ActiveRecord::Schema.define(version: 20150513221213) do
   end
 
   add_index "identity_emails", ["ref_id"], name: "index_identity_emails_on_ref_id", using: :btree
+
+  create_table "identity_file_folders", force: true do |t|
+    t.string   "folder_name"
+    t.integer  "parent_folder_id"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "identity_file_folders", ["identity_id"], name: "index_identity_file_folders_on_identity_id", using: :btree
+  add_index "identity_file_folders", ["parent_folder_id"], name: "index_identity_file_folders_on_parent_folder_id", using: :btree
 
   create_table "identity_files", force: true do |t|
     t.integer  "identity_id"

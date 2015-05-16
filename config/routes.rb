@@ -122,6 +122,9 @@ Rails.application.routes.draw do
   match 'files/:id/download', :to => 'files#download', via: [:get], as: "file_download"
   match 'files/:id/view', :to => 'files#view', via: [:get], as: "file_view"
 
+  resources :identity_file_folders, :as => "file_folders", :path => "file_folders", :controller => "file_folders"
+  post 'file_folders/new'
+
   get 'welcome/index'
   get 'api/index'
   get 'api/categories'
