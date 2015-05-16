@@ -201,6 +201,10 @@ class MyplaceonlineController < ApplicationController
     I18n.t("myplaceonline.general.add_another")
   end
   
+  def second_list_icon(obj = nil)
+    nil
+  end
+  
   protected
   
     def obj_params

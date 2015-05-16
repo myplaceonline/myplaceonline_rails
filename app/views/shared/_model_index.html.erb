@@ -15,7 +15,10 @@ else
       @objs2.each do |obj|
 %>
         <li>
-          <%= link_to controller.display_obj(obj), send("#{controller.second_path_name}_path", obj) %>
+          <%= link_to send("#{controller.second_path_name}_path", obj) do %>
+            <%= controller.second_list_icon(obj) %>
+            <%= controller.display_obj(obj) %>
+          <% end %>
         </li>
 <%
       end
@@ -35,7 +38,10 @@ else
       @objs2.each do |obj|
 %>
         <li>
-          <%= link_to controller.display_obj(obj), send("#{controller.second_path_name}_path", obj) %>
+          <%= link_to send("#{controller.second_path_name}_path", obj) do %>
+            <%= controller.second_list_icon(obj) %>
+            <%= controller.display_obj(obj) %>
+          <% end %>
         </li>
 <%
       end

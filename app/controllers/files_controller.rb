@@ -1,4 +1,5 @@
 class FilesController < MyplaceonlineController
+
   def path_name
     "file"
   end
@@ -33,6 +34,10 @@ class FilesController < MyplaceonlineController
   
   def second_path_name
     "file_folder"
+  end
+  
+  def second_list_icon(obj)
+    ActionController::Base.helpers.image_tag("famfamfam/folder.png", alt: obj.display, title: obj.display, class: "ui-li-icon", height: 16, width: 16)
   end
 
   protected
