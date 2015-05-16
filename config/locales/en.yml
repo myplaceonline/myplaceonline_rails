@@ -346,6 +346,8 @@ en:
       file: "File"
       none: "No File Specified"
       notes: "Notes"
+      content_type: "Content Type"
+      inline_image: "Inline Image"
     accomplishments:
       name: "Name"
       accomplishment: "Wisdom"

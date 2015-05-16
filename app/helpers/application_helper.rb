@@ -36,24 +36,29 @@ module ApplicationHelper
       return nil
     end
     valueclass ||= ""
+    attribute_table_row_content(
+      name,
+      valueclass,
+      value,
+      !is_blank(clipboard_text.to_s) ?
+        content_tag(
+          :a,
+          t("myplaceonline.general.clipboard"),
+          href: "#",
+          class: "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable externallink",
+          title: t("myplaceonline.general.clipboard"),
+          data: { "clipboard-text" => html_escape("" + clipboard_text.to_s) }
+        )
+        : "&nbsp;"
+    )
+  end
+  
+  def attribute_table_row_content(name, contentclass, content, lastcolumn = nil)
     html = <<-HTML
     <tr>
       <td>#{name}</td>
-      <td class="#{valueclass}">#{value}</td>
-      <td style="padding: 0.2em; vertical-align: top;">
-        #{
-          !is_blank(clipboard_text.to_s) ?
-            content_tag(
-              :a,
-              t("myplaceonline.general.clipboard"),
-              href: "#",
-              class: "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable externallink",
-              title: t("myplaceonline.general.clipboard"),
-              data: { "clipboard-text" => html_escape("" + clipboard_text.to_s) }
-            )
-            : "&nbsp;"
-        }
-      </td>
+      <td class="#{contentclass}">#{content}</td>
+      <td style="padding: 0.2em; vertical-align: top;">#{lastcolumn}</td>
     </tr>
     HTML
     
@@ -68,6 +73,10 @@ module ApplicationHelper
     HTML
     
     html.html_safe
+  end
+  
+  def attribute_table_row_image(name, link)
+    attribute_table_row_content(name, nil, image_tag(link))
   end
   
   def attribute_table_row_url(name, url, may_be_nonurl = false, url_text = nil, clipboard = nil, linkclasses = nil, external = false)
