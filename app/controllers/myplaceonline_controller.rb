@@ -31,6 +31,8 @@ class MyplaceonlineController < ApplicationController
     
     @objs = all.offset(@offset).limit(@perpage).order(sorts)
     
+    index_pre_respond()
+    
     respond_with(@objs)
   end
 
@@ -143,6 +145,10 @@ class MyplaceonlineController < ApplicationController
     path_name.pluralize
   end
   
+  def second_path_name
+    raise NotImplementedError
+  end
+  
   def category_name
     model.table_name
   end
@@ -174,7 +180,15 @@ class MyplaceonlineController < ApplicationController
   def may_upload
     false
   end
+  
+  def has_items
+    @objs.length > 0 || (!@objs2.nil? && @objs2.length > 0)
+  end
 
+  def second_list_before
+    false
+  end
+  
   protected
   
     def obj_params
@@ -248,5 +262,8 @@ class MyplaceonlineController < ApplicationController
     
     def has_category
       true
+    end
+    
+    def index_pre_respond()
     end
 end

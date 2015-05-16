@@ -8,7 +8,7 @@ class FilesController < MyplaceonlineController
   end
   
   def display_obj(obj)
-    obj.file_file_name
+    obj.display
   end
 
   def model
@@ -27,6 +27,14 @@ class FilesController < MyplaceonlineController
     true
   end
   
+  def second_list_before
+    true
+  end
+  
+  def second_path_name
+    "file_folder"
+  end
+
   protected
 
     def sorts
@@ -46,5 +54,14 @@ class FilesController < MyplaceonlineController
         :filename => @obj.file_file_name,
         :disposition => type
       )
+    end
+    
+    def index_pre_respond()
+      if @offset == 0
+        @objs2 = IdentityFileFolder.where(
+          identity_id: current_user.primary_identity.id,
+          parent_folder: nil
+        ).order(FileFoldersController.sorts)
+      end
     end
 end

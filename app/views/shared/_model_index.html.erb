@@ -2,7 +2,7 @@
 <%= flashes! %>
 
 <%
-if @objs.length == 0
+if !controller.has_items
 %>
 <p><%= t("myplaceonline.general.count_no") + " " + t("myplaceonline.category." + controller.category_name) %>. <%= t("myplaceonline.general.create_instructions") %></p>
 <%
@@ -11,12 +11,34 @@ else
 <div class="searchable_container">
   <ul class="searchable" data-role="listview" data-inset="true" data-filter="true">
 <%
+    if !@objs2.nil? && controller.second_list_before
+      @objs2.each do |obj|
+%>
+        <li>
+          <%= link_to controller.display_obj(obj), send("#{controller.second_path_name}_path", obj) %>
+        </li>
+<%
+      end
+    end
+%>
+<%
     @objs.each do |obj|
 %>
       <li>
         <%= link_to controller.display_obj(obj), send("#{controller.path_name}_path", obj) %>
       </li>
 <%
+    end
+%>
+<%
+    if !@objs2.nil? && !controller.second_list_before
+      @objs2.each do |obj|
+%>
+        <li>
+          <%= link_to controller.display_obj(obj), send("#{controller.second_path_name}_path", obj) %>
+        </li>
+<%
+      end
     end
 %>
   </ul>

@@ -22,6 +22,10 @@ class FileFoldersController < MyplaceonlineController
   protected
 
     def sorts
+      FileFoldersController.sorts
+    end
+    
+    def self.sorts
       ["lower(identity_file_folders.folder_name) ASC"]
     end
 

@@ -4,6 +4,10 @@ class IdentityFile < ActiveRecord::Base
 
   has_attached_file :file, :storage => :database
   do_not_validate_attachment_file_type :file
+  
+  def display
+    file_file_name
+  end
 
   def get_password(session)
     if !encrypted_password.nil?
