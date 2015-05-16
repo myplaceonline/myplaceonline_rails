@@ -3,19 +3,31 @@
   <%= attribute_table_row(t("myplaceonline.file_folders.folder_name"), @obj.folder_name) %>
   
   <% content_for :aftertable do %>
-    <div class="searchable_container">
-      <ul class="searchable" data-role="listview" data-inset="true">
-        <% @obj.subfolders.each do |subfolder| %>
-          <li>
-            <%= link_to controller.display_obj(subfolder), send("file_folder_path", subfolder) %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
+    <%
+      subfolders = @obj.subfolders
+      if subfolders.size > 0
+    %>
+        <div class="searchable_container">
+          <ul class="searchable" data-role="listview" data-inset="true">
+            <li data-role="list-divider"><%= t("myplaceonline.file_folders.subfolders") %></li>
+            <% @obj.subfolders.each do |subfolder| %>
+              <li>
+                <%= link_to controller.display_obj(subfolder), send("file_folder_path", subfolder) %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
   <% end %>
 
   <% content_for :prefooterlinks do %>
     <li><%= link_to t('myplaceonline.files.add_file'), new_file_path, "data-icon" => "plus" %></li>
+  <% end %>
+
+  <% if !@obj.parent_folder.nil? %>
+    <% content_for :postfooterlinks do %>
+      <li><%= link_to t('myplaceonline.file_folders.parent_folder'), file_folder_path(@obj.parent_folder), "data-icon" => "back" %></li>
+    <% end %>
   <% end %>
 
 <% end %>

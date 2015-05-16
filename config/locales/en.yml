@@ -738,3 +738,5 @@ en:
       folder_name: "Folder Name"
       add: "Add Folder"
       add_subfolder: "Add Sub Folder"
+      subfolders: "Sub-folders"
+      parent_folder: "Parent Folder"

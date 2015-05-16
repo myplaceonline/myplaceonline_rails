@@ -44,6 +44,9 @@ ensureClipboard($(".clipboardable"));
                     method: :delete, data: { confirm: 'Are you sure?' }, "data-icon" => "delete" %></li>
             <li><%= link_to t("myplaceonline.general.back_to_all") + " " + controller.back_to_all_name, controller.back_to_all_path, "data-icon" => "back" %></li>
             <li><%= link_to controller.add_another_name, controller.new_path(@obj), "data-icon" => "plus" %></li>
+            <% if content_for?(:postfooterlinks) %>
+              <%= content_for(:postfooterlinks) %>
+            <% end %>
           <% end %>
         </ul>
     </div>
