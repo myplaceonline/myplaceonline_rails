@@ -10,4 +10,10 @@
     <%= attribute_table_row_image(t("myplaceonline.files.inline_image"), file_view_path(@obj)) %>
   <% end %>
   
+  <% if !@obj.folder.nil? %>
+    <% content_for :postfooterlinks do %>
+      <li><%= link_to t('myplaceonline.files.folder'), file_folder_path(@obj.folder), "data-icon" => "back" %></li>
+    <% end %>
+  <% end %>
+  
 <% end %>

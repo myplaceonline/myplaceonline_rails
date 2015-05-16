@@ -350,6 +350,7 @@ en:
       content_type: "Content Type"
       inline_image: "Inline Image"
       add_file: "Add File"
+      folder: "Folder"
     accomplishments:
       name: "Name"
       accomplishment: "Wisdom"
