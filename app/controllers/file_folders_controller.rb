@@ -19,6 +19,18 @@ class FileFoldersController < MyplaceonlineController
     redirect_to file_folder_path(@obj)
   end
   
+  def back_to_all_name
+    I18n.t("myplaceonline.category.files")
+  end
+  
+  def back_to_all_path
+    files_path
+  end
+  
+  def add_another_name
+    I18n.t("myplaceonline.file_folders.add_subfolder")
+  end
+
   protected
 
     def sorts

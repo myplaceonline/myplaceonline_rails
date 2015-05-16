@@ -36,11 +36,14 @@ ensureClipboard($(".clipboardable"));
           <% if content_for?(:footerlinks) %>
             <%= content_for(:footerlinks) %>
           <% else %>
+            <% if content_for?(:prefooterlinks) %>
+              <%= content_for(:prefooterlinks) %>
+            <% end %>
             <li><%= link_to t('myplaceonline.general.edit'), controller.edit_obj_path, "data-icon" => "edit" %></li>
             <li><%= link_to t('myplaceonline.general.delete'), controller.obj_path,
                     method: :delete, data: { confirm: 'Are you sure?' }, "data-icon" => "delete" %></li>
-            <li><%= link_to t("myplaceonline.general.back_to_all") + " " + t("myplaceonline.category." + controller.category_name), controller.index_path, "data-icon" => "back" %></li>
-            <li><%= link_to t("myplaceonline.general.add_another"), controller.new_path, "data-icon" => "plus" %></li>
+            <li><%= link_to t("myplaceonline.general.back_to_all") + " " + controller.back_to_all_name, controller.back_to_all_path, "data-icon" => "back" %></li>
+            <li><%= link_to controller.add_another_name, controller.new_path, "data-icon" => "plus" %></li>
           <% end %>
         </ul>
     </div>

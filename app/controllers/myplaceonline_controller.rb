@@ -189,6 +189,18 @@ class MyplaceonlineController < ApplicationController
     false
   end
   
+  def back_to_all_name
+    I18n.t("myplaceonline.category." + category_name)
+  end
+  
+  def back_to_all_path
+    index_path
+  end
+  
+  def add_another_name
+    I18n.t("myplaceonline.general.add_another")
+  end
+  
   protected
   
     def obj_params

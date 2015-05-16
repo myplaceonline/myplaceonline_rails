@@ -2,4 +2,8 @@
 
   <%= attribute_table_row(t("myplaceonline.file_folders.folder_name"), @obj.folder_name) %>
   
+  <% content_for :prefooterlinks do %>
+    <li><%= link_to t('myplaceonline.files.add_file'), new_file_path, "data-icon" => "plus" %></li>
+  <% end %>
+
 <% end %>

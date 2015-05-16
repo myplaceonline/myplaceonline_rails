@@ -349,6 +349,7 @@ en:
       notes: "Notes"
       content_type: "Content Type"
       inline_image: "Inline Image"
+      add_file: "Add File"
     accomplishments:
       name: "Name"
       accomplishment: "Wisdom"
@@ -736,3 +737,4 @@ en:
     file_folders:
       folder_name: "Folder Name"
       add: "Add Folder"
+      add_subfolder: "Add Sub Folder"
