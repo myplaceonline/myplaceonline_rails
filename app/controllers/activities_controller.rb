@@ -8,6 +8,10 @@ class ActivitiesController < MyplaceonlineController
   end
 
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["lower(activities.name) ASC"]
     end
