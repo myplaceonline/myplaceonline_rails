@@ -18,6 +18,8 @@ class IdentityFileFolder < ActiveRecord::Base
     folder_name
   end
   
+  has_many :identity_files, :dependent => :destroy, :foreign_key => "folder_id"
+  
   def subfolders
     IdentityFileFolder.where(
       identity_id: User.current_user.primary_identity.id,

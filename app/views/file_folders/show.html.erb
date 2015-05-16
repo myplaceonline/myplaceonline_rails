@@ -4,13 +4,28 @@
   
   <% content_for :aftertable do %>
     <%
+      files = @obj.identity_files
+      if files.size > 0
+    %>
+        <div class="searchable_container">
+          <ul class="searchable" data-role="listview" data-inset="true">
+            <li data-role="list-divider"><%= t("myplaceonline.file_folders.files") %></li>
+            <% files.each do |file| %>
+              <li>
+                <%= link_to file.display, send("file_path", file) %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <%
       subfolders = @obj.subfolders
       if subfolders.size > 0
     %>
         <div class="searchable_container">
           <ul class="searchable" data-role="listview" data-inset="true">
             <li data-role="list-divider"><%= t("myplaceonline.file_folders.subfolders") %></li>
-            <% @obj.subfolders.each do |subfolder| %>
+            <% subfolders.each do |subfolder| %>
               <li>
                 <%= link_to controller.display_obj(subfolder), send("file_folder_path", subfolder) %>
               </li>
@@ -21,7 +36,7 @@
   <% end %>
 
   <% content_for :prefooterlinks do %>
-    <li><%= link_to t('myplaceonline.files.add_file'), new_file_path, "data-icon" => "plus" %></li>
+    <li><%= link_to t('myplaceonline.files.add_file'), new_file_path(folder: @obj.id), "data-icon" => "plus" %></li>
   <% end %>
 
   <% if !@obj.parent_folder.nil? %>

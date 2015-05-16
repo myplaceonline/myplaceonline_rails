@@ -42,12 +42,23 @@ class FilesController < MyplaceonlineController
 
   protected
 
+    def all
+      model.where(
+        identity_id: current_user.primary_identity.id,
+        folder: nil
+      )
+    end
+
     def sorts
       ["lower(identity_files.file_file_name) ASC"]
     end
 
     def obj_params
-      params.require(:identity_file).permit(:file, :notes)
+      params.require(:identity_file).permit(
+        :file,
+        :notes,
+        folder_attributes: [ :id ]
+      )
     end
 
     def respond_download(type)
@@ -67,6 +78,18 @@ class FilesController < MyplaceonlineController
           identity_id: current_user.primary_identity.id,
           parent_folder: nil
         ).order(FileFoldersController.sorts)
+      end
+    end
+    
+    def new_obj_initialize
+      if !params[:folder].nil?
+        folders = IdentityFileFolder.where(
+          identity_id: current_user.primary_identity.id,
+          id: params[:folder].to_i
+        )
+        if folders.size > 0
+          @obj.folder = folders.first
+        end
       end
     end
 end
