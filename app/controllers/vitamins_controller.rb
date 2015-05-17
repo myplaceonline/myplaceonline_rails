@@ -20,7 +20,7 @@ class VitaminsController < MyplaceonlineController
       false
     end
 
-    def before_edit
+    def before_all_actions
       @topedit = true
     end
 end

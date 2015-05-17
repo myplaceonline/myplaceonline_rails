@@ -19,4 +19,8 @@ class FoodsController < MyplaceonlineController
     def has_category
       false
     end
+
+    def before_all_actions
+      @topedit = true
+    end
 end

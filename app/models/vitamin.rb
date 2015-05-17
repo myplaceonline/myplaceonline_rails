@@ -47,7 +47,7 @@ class Vitamin < ActiveRecord::Base
           :vitamin_name,
           :notes,
           :amount_type,
-          :amount
+          :vitamin_amount
         ]
       ]
     ]
