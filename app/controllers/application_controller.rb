@@ -8,9 +8,7 @@ class ApplicationController < ActionController::Base
   #   skip_before_filter :authenticate_user!
   before_action :authenticate_user!
   
-  around_filter :set_current_user
-  
-  around_filter :set_current_session
+  around_filter :around_request
   
   #after_filter do puts "Response: " + response.body end
   
@@ -35,23 +33,24 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def set_current_user
+  def around_request
+    request_accessor = instance_variable_get(:@_request)
     User.current_user = current_user
+    Thread.current[:current_session] = request_accessor.session
+    Thread.current[:request] = request_accessor
     yield
   ensure
     User.current_user = nil
-  end
-  
-  def set_current_session
-    request_accessor = instance_variable_get(:@_request)
-    Thread.current[:current_session] = request_accessor.session
-    yield
-  ensure
     Thread.current[:current_session] = nil
+    Thread.current[:request] = nil
   end
   
   def self.current_session
     Thread.current[:current_session]
+  end
+  
+  def self.current_request
+    Thread.current[:request]
   end
   
   def set_time_zone

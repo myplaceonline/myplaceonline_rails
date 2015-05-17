@@ -236,7 +236,7 @@ module ApplicationHelper
     content_tag(
       :p,
       form.label(name, placeholder, class: myp_label_classes(value)) +
-      form.number_field(name, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes), value: value, step: step)
+      form.send(Myp.use_html5_inputs ? "number_field" : "text_field", name, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes), value: value, step: step)
     ).html_safe
   end
   
@@ -300,6 +300,9 @@ module ApplicationHelper
         close_callback = "datebox_calendar_closed"
         element_type = "datetime_local_field"
       end
+    end
+    if !Myp.use_html5_inputs
+      element_type = "text"
     end
     content_tag(
       :p,

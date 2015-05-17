@@ -615,4 +615,17 @@ module Myp
   def self.truncate_zeros(str)
     str.gsub("\.0", "")
   end
+  
+  def self.use_html5_inputs()
+    result = true
+    request = ApplicationController.current_request
+    if !request.nil?
+      if !request.user_agent.blank?
+        if request.user_agent.include?("LG-D520")
+          result = false
+        end
+      end
+    end
+    result
+  end
 end
