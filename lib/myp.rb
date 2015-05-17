@@ -17,7 +17,15 @@ module Myp
   DIMENSIONS = [["myplaceonline.general.inches", 0]]
   LIQUID_CAPACITY = [["myplaceonline.general.gallons", 0]]
   VOLUMES = [["myplaceonline.general.cubicft", 0]]
-  MEASUREMENTS = [["myplaceonline.measurements.micrograms", 0]]
+  
+  # For things like vitamins
+  MEASUREMENTS = [
+    ["myplaceonline.measurements.micrograms", 0],
+    ["myplaceonline.measurements.ius", 1],
+    ["myplaceonline.measurements.milligrams", 2]
+  ]
+  
+  # For things like medicines
   DOSAGES = [
     ["myplaceonline.measurements.micrograms", 0],
     ["myplaceonline.measurements.ius", 1],
