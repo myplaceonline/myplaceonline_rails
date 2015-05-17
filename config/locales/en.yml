@@ -351,6 +351,9 @@ en:
       inline_image: "Inline Image"
       add_file: "Add File"
       folder: "Folder"
+      move: "Move"
+      destination: "Destination"
+      file_moved: "File Moved"
     accomplishments:
       name: "Name"
       accomplishment: "Wisdom"

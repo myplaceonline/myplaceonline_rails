@@ -24,6 +24,52 @@ class FilesController < MyplaceonlineController
     respond_download('inline')
   end
   
+  def move
+    set_obj
+    Myp.ensure_encryption_key(session)
+    
+    @folders = Hash[IdentityFileFolder.where(
+      identity_id: current_user.primary_identity.id
+    ).order(FileFoldersController.sorts).map{|f| [f.folder_name, f.id]}]
+    
+    if request.post?
+      
+      @folder = params[:destination]
+      
+      if @folder.blank?
+        ActiveRecord::Base.transaction do
+          @obj.folder = nil
+          @obj.save!
+        end
+        redirect_to file_path(@obj),
+          :flash => { :notice =>
+                      I18n.t("myplaceonline.files.file_moved",
+                            :folder => @folder)
+                    }
+      else
+        
+        @folder = @folder.to_i
+        foundfolder = @folders.find{|k,v| v == @folder}
+        if !foundfolder.nil?
+          ActiveRecord::Base.transaction do
+            @obj.folder = IdentityFileFolder.find(@folder)
+            @obj.save!
+          end
+        else
+          raise "TODO"
+        end
+        
+        redirect_to file_path(@obj),
+          :flash => { :notice =>
+                      I18n.t("myplaceonline.files.file_moved",
+                            :folder => @folder)
+                    }
+      end
+    else
+      render :move
+    end
+  end
+  
   def may_upload
     true
   end

@@ -1,0 +1,11 @@
+<% content_for :heading do -%><%= t("myplaceonline.files.move") %><% end -%>
+<h1><%= t("myplaceonline.files.move") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag do %>
+  <%= label_tag 'destination', t("myplaceonline.files.destination") %>
+  <%= select_tag 'destination', options_for_select(@folders, @folder), include_blank: true %>
+  
+  <div><%= submit_tag t("myplaceonline.files.move") %></div>
+<% end %>
