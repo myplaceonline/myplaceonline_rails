@@ -302,7 +302,7 @@ module ApplicationHelper
       end
     end
     if !Myp.use_html5_inputs
-      element_type = "text"
+      element_type = "text_field"
     end
     content_tag(
       :p,
