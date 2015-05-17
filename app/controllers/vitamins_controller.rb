@@ -19,4 +19,8 @@ class VitaminsController < MyplaceonlineController
     def has_category
       false
     end
+
+    def before_edit
+      @topedit = true
+    end
 end
