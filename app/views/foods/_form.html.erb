@@ -2,7 +2,7 @@
 <%= myp_decimal_field f, :price, "myplaceonline.foods.price", obj.price %>
 <%= myp_decimal_field f, :calories, "myplaceonline.foods.calories", obj.calories %>
 <%= myp_text_area_markdown f, :notes, "myplaceonline.foods.notes", obj.notes %>
-<% if params["allowinnerfoods"] %>
+<% if params["allowinnerfoods"] || @topedit %>
   <%=
     render layout: 'myplaceonline/childproperties', locals: {
       f: f,
