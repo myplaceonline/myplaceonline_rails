@@ -18,7 +18,11 @@ module Myp
   LIQUID_CAPACITY = [["myplaceonline.general.gallons", 0]]
   VOLUMES = [["myplaceonline.general.cubicft", 0]]
   MEASUREMENTS = [["myplaceonline.measurements.micrograms", 0]]
-  DOSAGES = [["myplaceonline.measurements.micrograms", 0]]
+  DOSAGES = [
+    ["myplaceonline.measurements.micrograms", 0],
+    ["myplaceonline.measurements.ius", 1],
+    ["myplaceonline.measurements.milligrams", 2]
+  ]
   
   puts "myplaceonline: Initializing categories"
   

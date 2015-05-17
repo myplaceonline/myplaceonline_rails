@@ -708,7 +708,9 @@ en:
       add_ingredient: "Add Ingredient"
       delete_ingredient: "Delete Ingredient"
     measurements:
-      micrograms: "Micrograms"
+      micrograms: "Micrograms (mcg)"
+      ius: "International Units (IU)"
+      milligrams: "Milligrams (mg)"
     acne_measurements:
       measurement_datetime: "Date/Time"
       new_pimples: "New Pimples"
