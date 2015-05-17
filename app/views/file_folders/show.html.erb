@@ -27,7 +27,10 @@
             <li data-role="list-divider"><%= t("myplaceonline.file_folders.subfolders") %></li>
             <% subfolders.each do |subfolder| %>
               <li>
-                <%= link_to controller.display_obj(subfolder), send("file_folder_path", subfolder) %>
+                <%= link_to send("file_folder_path", subfolder) do %>
+                  <%= FilesController.second_list_icon(subfolder) %>
+                  <%= controller.display_obj(subfolder) %>
+                <% end %>
               </li>
             <% end %>
           </ul>

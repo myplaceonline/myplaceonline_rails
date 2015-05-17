@@ -83,6 +83,10 @@ class FilesController < MyplaceonlineController
   end
   
   def second_list_icon(obj)
+    FilesController.second_list_icon(obj)
+  end
+
+  def self.second_list_icon(obj)
     ActionController::Base.helpers.image_tag("famfamfam/folder.png", alt: obj.display, title: obj.display, class: "ui-li-icon", height: 16, width: 16)
   end
 
