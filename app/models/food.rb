@@ -39,7 +39,6 @@ class Food < ActiveRecord::Base
       :notes,
       :calories,
       :price,
-      :food_servings,
       food_ingredients_attributes: [
         :id,
         :_destroy,
@@ -49,8 +48,7 @@ class Food < ActiveRecord::Base
           :food_name,
           :notes,
           :calories,
-          :price,
-          :food_servings
+          :price
         ]
       ]
     ]

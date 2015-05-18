@@ -20,6 +20,11 @@
         edit: false,
         allowinnerfoods: true,
         autofocus: true
+      },
+      {
+        type: 'text',
+        name: 'food_servings',
+        placeholder: t("myplaceonline.foods.servings")
       }
     ]
   } do |child_fields, childproperty|
@@ -37,6 +42,7 @@
       autofocus: false
     }
   %>
+  <%= myp_text_field child_fields, :food_servings, "myplaceonline.foods.servings", childproperty.food_servings %>
 <% end %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {

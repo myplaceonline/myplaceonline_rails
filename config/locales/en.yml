@@ -685,8 +685,8 @@ en:
       ingredients: "Ingredients"
       add_ingredient: "Add Ingredient"
       delete_ingredient: "Delete Ingredient"
-      food_servings: "Servings"
       ingredient: "Ingredient"
+      servings: "Servings"
     drinks:
       heading: "Drinks"
       drink: "Drink"
