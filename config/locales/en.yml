@@ -724,6 +724,8 @@ en:
       exercise_end: "End Date/Time"
       exercise_activity: "Activity"
       notes: "Notes"
+      situps: "Situps"
+      pushups: "Pushups"
     sun_exposures:
       exposure_start: "Start Date/Time"
       exposure_end: "End Date/Time"

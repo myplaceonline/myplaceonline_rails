@@ -17,7 +17,7 @@ class ExercisesController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:exercise).permit(:exercise_start, :exercise_end, :exercise_activity, :notes)
+      params.require(:exercise).permit(:exercise_start, :exercise_end, :exercise_activity, :notes, :situps, :pushups)
     end
     
     def new_obj_initialize
