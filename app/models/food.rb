@@ -39,6 +39,8 @@ class Food < ActiveRecord::Base
       :notes,
       :calories,
       :price,
+      :weight,
+      :weight_type,
       food_ingredients_attributes: [
         :id,
         :_destroy,
@@ -48,7 +50,9 @@ class Food < ActiveRecord::Base
           :food_name,
           :notes,
           :calories,
-          :price
+          :price,
+          :weight,
+          :weight_type
         ]
       ]
     ]

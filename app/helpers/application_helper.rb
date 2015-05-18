@@ -121,6 +121,14 @@ module ApplicationHelper
     attribute_table_row(name, Myp.get_select_name(val, select_values))
   end
   
+  def attribute_table_row_weight(name, val, weight_type)
+    if !val.nil?
+      attribute_table_row(name, ActionController::Base.helpers.pluralize(val, Myp.get_select_name(weight_type, Myp::WEIGHTS).singularize))
+    else
+      nil
+    end
+  end
+  
   def attribute_table_row_dimensions(name, val, dimensions_type)
     if !val.blank? && !dimensions_type.nil?
       if dimensions_type == 0

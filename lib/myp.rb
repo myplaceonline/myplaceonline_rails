@@ -13,7 +13,9 @@ module Myp
   
   DEFAULT_DECIMAL_STEP = "0.01"
   
-  WEIGHTS = [["myplaceonline.general.pounds", 0]]
+  WEIGHTS = [
+    ["myplaceonline.general.pounds", 0]
+  ]
   DIMENSIONS = [["myplaceonline.general.inches", 0]]
   LIQUID_CAPACITY = [["myplaceonline.general.gallons", 0]]
   VOLUMES = [["myplaceonline.general.cubicft", 0]]

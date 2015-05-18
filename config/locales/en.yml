@@ -687,6 +687,8 @@ en:
       delete_ingredient: "Delete Ingredient"
       ingredient: "Ingredient"
       servings: "Servings"
+      weight_type: "Weight Type"
+      weight: "Weight"
     drinks:
       heading: "Drinks"
       drink: "Drink"

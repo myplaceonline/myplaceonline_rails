@@ -1,6 +1,8 @@
 <%= myp_text_field f, :food_name, "myplaceonline.foods.food_name", obj.food_name, autofocus %>
 <%= myp_decimal_field f, :price, "myplaceonline.foods.price", obj.price %>
 <%= myp_decimal_field f, :calories, "myplaceonline.foods.calories", obj.calories %>
+<%= myp_select(f, :weight_type, "myplaceonline.foods.weight_type", Myp.translate_options(Myp::WEIGHTS), obj.weight_type) %>
+<%= myp_decimal_field f, :weight, "myplaceonline.foods.weight", obj.weight %>
 <%= myp_text_area_markdown f, :notes, "myplaceonline.foods.notes", obj.notes %>
 <% if params["allowinnerfoods"] || @topedit %>
   <%=
