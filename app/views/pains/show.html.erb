@@ -1,0 +1,9 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row_datetime(t("myplaceonline.pains.pain_start_time"), @obj.pain_start_time) %>
+  <%= attribute_table_row_datetime(t("myplaceonline.pains.pain_end_time"), @obj.pain_end_time) %>
+  <%= attribute_table_row(t("myplaceonline.pains.pain_location"), @obj.pain_location) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.pains.notes"), @obj.notes) %>
+  <%= attribute_table_row_select(t("myplaceonline.pains.intensity"), @obj.intensity, Myp::INTENSITIES) %>
+  
+<% end %>

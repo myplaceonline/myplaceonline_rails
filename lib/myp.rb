@@ -40,6 +40,14 @@ module Myp
     ["myplaceonline.measurements.milligrams", 2]
   ]
   
+  INTENSITIES = [
+    ["myplaceonline.intensities.one", 1],
+    ["myplaceonline.intensities.two", 2],
+    ["myplaceonline.intensities.three", 3],
+    ["myplaceonline.intensities.four", 4],
+    ["myplaceonline.intensities.five", 5]
+  ]
+  
   puts "myplaceonline: Initializing categories"
   
   def self.database_exists?

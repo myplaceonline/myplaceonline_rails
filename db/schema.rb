@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150518030155) do
+ActiveRecord::Schema.define(version: 20150519012016) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -306,7 +306,7 @@ ActiveRecord::Schema.define(version: 20150518030155) do
   add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.binary   "val"
+    t.string   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -681,6 +681,19 @@ ActiveRecord::Schema.define(version: 20150518030155) do
 
   add_index "movies", ["identity_id"], name: "index_movies_on_identity_id", using: :btree
 
+  create_table "pains", force: true do |t|
+    t.string   "pain_location"
+    t.integer  "intensity"
+    t.datetime "pain_start_time"
+    t.datetime "pain_end_time"
+    t.text     "notes"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pains", ["identity_id"], name: "index_pains_on_identity_id", using: :btree
+
   create_table "password_secrets", force: true do |t|
     t.string   "question"
     t.string   "answer"
@@ -912,7 +925,6 @@ ActiveRecord::Schema.define(version: 20150518030155) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "bed_type"
     t.string   "trim_name"
     t.integer  "dimensions_type"
     t.decimal  "height",                   precision: 10, scale: 2

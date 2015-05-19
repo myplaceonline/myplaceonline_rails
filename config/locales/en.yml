@@ -71,6 +71,7 @@ en:
       medicine_usages: "Medicine Usages"
       medicines: "Medicines"
       file_folders: "File Folders"
+      pains: "Pains"
     general:
       email: "E-mail"
       password: "Password"
@@ -754,3 +755,15 @@ en:
       subfolders: "Sub-folders"
       parent_folder: "Parent Folder"
       files: "Files"
+    pains:
+      pain_start_time: "Started"
+      pain_end_time: "Ended"
+      pain_location: "Location"
+      intensity: "Intensity"
+      notes: "Notes"
+    intensities:
+      one: "1 (Low)"
+      two: "2"
+      three: "3 (Medium)"
+      four: "4"
+      five: "5 (High)"
