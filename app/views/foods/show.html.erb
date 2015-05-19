@@ -10,7 +10,7 @@
     <%= attribute_table_row_reference(t("myplaceonline.foods.ingredient"), "food_path", wrapper.food) %>
     <%= attribute_table_row(t("myplaceonline.foods.price"), wrapper.food.price) %>
     <%= attribute_table_row(t("myplaceonline.foods.calories"), wrapper.food.calories) %>
-    <%= attribute_table_row_weight(t("myplaceonline.foods.weight"), wrapper.food.weight, wrapper.food.weight_type) %>
+    <%= attribute_table_row_food_weight(t("myplaceonline.foods.weight"), wrapper.food.weight, wrapper.food.weight_type) %>
     <%= attribute_table_row_markdown(t("myplaceonline.foods.notes"), wrapper.food.notes) %>
   <% end %>
   

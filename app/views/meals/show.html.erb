@@ -6,7 +6,7 @@
     <%= attribute_table_row_reference(t("myplaceonline.foods.food_name"), "food_path", wrapper.food) %>
     <%= attribute_table_row(t("myplaceonline.foods.price"), wrapper.food.price) %>
     <%= attribute_table_row(t("myplaceonline.foods.calories"), wrapper.food.calories) %>
-    <%= attribute_table_row_weight(t("myplaceonline.foods.weight"), wrapper.food.weight, wrapper.food.weight_type) %>
+    <%= attribute_table_row_food_weight(t("myplaceonline.foods.weight"), wrapper.food.weight, wrapper.food.weight_type) %>
     <%= attribute_table_row(t("myplaceonline.foods.servings"), wrapper.food_servings) %>
     <%= attribute_table_row_markdown(t("myplaceonline.foods.notes"), wrapper.food.notes) %>
     <% wrapper.food.food_ingredients.each do |wrapper2| %>
@@ -14,7 +14,7 @@
       <%= attribute_table_row_reference(t("myplaceonline.foods.food_name"), "food_path", wrapper2.food) %>
       <%= attribute_table_row(t("myplaceonline.foods.price"), wrapper2.food.price) %>
       <%= attribute_table_row(t("myplaceonline.foods.calories"), wrapper2.food.calories) %>
-      <%= attribute_table_row_weight(t("myplaceonline.foods.weight"), wrapper2.food.weight, wrapper2.food.weight_type) %>
+      <%= attribute_table_row_food_weight(t("myplaceonline.foods.weight"), wrapper2.food.weight, wrapper2.food.weight_type) %>
       <%= attribute_table_row_markdown(t("myplaceonline.foods.notes"), wrapper2.food.notes) %>
     <% end %>
   <% end %>

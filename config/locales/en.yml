@@ -135,6 +135,7 @@ en:
       gallons: "Gallons"
       cubicft: "Cubic Feet"
       for: "for"
+      cups: "Cups"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"

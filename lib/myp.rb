@@ -16,6 +16,12 @@ module Myp
   WEIGHTS = [
     ["myplaceonline.general.pounds", 0]
   ]
+  
+  FOOD_WEIGHTS = [
+    ["myplaceonline.general.pounds", 0],
+    ["myplaceonline.general.cups", 1]
+  ]
+  
   DIMENSIONS = [["myplaceonline.general.inches", 0]]
   LIQUID_CAPACITY = [["myplaceonline.general.gallons", 0]]
   VOLUMES = [["myplaceonline.general.cubicft", 0]]
