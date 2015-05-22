@@ -136,7 +136,7 @@ div.ui-checkbox + label {
  * this can cause the title to go to ellipses sooner than it needs to.
  */
 .ui-header .ui-title {
-  margin: 0px 10% !important;
+  margin: 0px 15% !important;
 }
 
 /* Based on http://stackoverflow.com/a/2610741/4135310 */
