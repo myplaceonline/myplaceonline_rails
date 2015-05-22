@@ -39,6 +39,7 @@ class Identity < ActiveRecord::Base
   has_many :sun_exposures, :dependent => :destroy
   has_many :medicine_usages, :dependent => :destroy
   has_many :pains, :dependent => :destroy
+  has_many :songs, :dependent => :destroy
   
   has_many :identity_phones, :foreign_key => 'ref_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_phones, allow_destroy: true, reject_if: :all_blank
@@ -92,6 +93,7 @@ class Identity < ActiveRecord::Base
       :sun_exposures => sun_exposures.to_a.map{|x| x.as_json},
       :medicine_usages => medicine_usages.to_a.map{|x| x.as_json},
       :pains => pains.to_a.map{|x| x.as_json},
+      :songs => songs.to_a.sort{ |a,b| a.song_name.downcase <=> b.song_name.downcase }.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

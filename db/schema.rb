@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150519012016) do
+ActiveRecord::Schema.define(version: 20150522211158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -817,6 +817,21 @@ ActiveRecord::Schema.define(version: 20150519012016) do
   end
 
   add_index "sleep_measurements", ["identity_id"], name: "index_sleep_measurements_on_identity_id", using: :btree
+
+  create_table "songs", force: true do |t|
+    t.string   "song_name"
+    t.decimal  "song_rating", precision: 10, scale: 2
+    t.text     "lyrics"
+    t.integer  "song_plays"
+    t.datetime "lastplay"
+    t.boolean  "secret"
+    t.boolean  "awesome"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "songs", ["identity_id"], name: "index_songs_on_identity_id", using: :btree
 
   create_table "subscriptions", force: true do |t|
     t.string   "name"

@@ -72,6 +72,7 @@ en:
       medicines: "Medicines"
       file_folders: "File Folders"
       pains: "Pains"
+      songs: "Songs"
     general:
       email: "E-mail"
       password: "Password"
@@ -767,3 +768,11 @@ en:
       three: "3 (Medium)"
       four: "4"
       five: "5 (High)"
+    songs:
+      song_name: "Song Name"
+      song_rating: "Rating"
+      lyrics: "Lyrics"
+      song_plays: "Plays"
+      lastplay: "Last Played"
+      secret: "Secret"
+      awesome: "Awesome"
