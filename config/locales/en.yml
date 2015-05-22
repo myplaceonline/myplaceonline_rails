@@ -73,6 +73,7 @@ en:
       file_folders: "File Folders"
       pains: "Pains"
       songs: "Songs"
+      blood_tests: "Blood Tests"
     general:
       email: "E-mail"
       password: "Password"
@@ -776,3 +777,7 @@ en:
       lastplay: "Last Played"
       secret: "Secret"
       awesome: "Awesome"
+    blood_tests:
+      fast_started: "Fast Started"
+      test_time: "Test Time"
+      notes: "Notes"
