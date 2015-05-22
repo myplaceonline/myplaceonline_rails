@@ -74,6 +74,7 @@ en:
       pains: "Pains"
       songs: "Songs"
       blood_tests: "Blood Tests"
+      blood_concentrations: "Blood Concentrations"
     general:
       email: "E-mail"
       password: "Password"
@@ -781,3 +782,15 @@ en:
       fast_started: "Fast Started"
       test_time: "Test Time"
       notes: "Notes"
+      result: "Result"
+      results: "Results"
+      add: "Add Result"
+      delete: "Delete Result"
+      concentration: "Concentration"
+    blood_concentrations:
+      concentration_name: "Name"
+      concentration_type: "Concentration Type"
+      concentration_minimum: "Concentration Minimum"
+      concentration_maximum: "Concentration Maximum"
+    liquid_concentrations:
+      mgperdl: "mg/dL"

@@ -1,0 +1,4 @@
+<%= myp_text_field f, :concentration_name, "myplaceonline.blood_concentrations.concentration_name", obj.concentration_name, autofocus %>
+<%= myp_select(f, :concentration_type, "myplaceonline.blood_concentrations.concentration_type", Myp.translate_options(Myp::LIQUID_CONCENTRATIONS), obj.concentration_type) %>
+<%= myp_decimal_field f, :concentration_minimum, "myplaceonline.blood_concentrations.concentration_minimum", obj.concentration_minimum %>
+<%= myp_decimal_field f, :concentration_maximum, "myplaceonline.blood_concentrations.concentration_maximum", obj.concentration_maximum %>

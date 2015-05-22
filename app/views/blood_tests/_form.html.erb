@@ -1,3 +1,47 @@
 <%= myp_datetime_field f, :fast_started, "myplaceonline.blood_tests.fast_started", obj.fast_started %>
 <%= myp_datetime_field f, :test_time, "myplaceonline.blood_tests.test_time", obj.test_time %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.blood_tests.results"),
+    childpropertiesname: :blood_test_results,
+    childproperties: obj.blood_test_results,
+    deletebutton: t("myplaceonline.blood_tests.delete"),
+    addbutton: t("myplaceonline.blood_tests.add"),
+    expanded: true,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :blood_concentration_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.blood_tests.result"),
+        objform: "blood_concentrations/form",
+        existingobjurl: "blood_concentration_path",
+        searchurl: "/blood_concentrations.json?perpage=0",
+        edit: false,
+        autofocus: true
+      },
+      {
+        type: 'text',
+        name: 'concentration',
+        placeholder: t("myplaceonline.blood_tests.concentration")
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :blood_concentration_attributes,
+      existingobj: childproperty.blood_concentration,
+      heading: t("myplaceonline.blood_tests.result"),
+      objform: "blood_concentrations/form",
+      existingobjurl: "blood_concentration_path",
+      searchurl: "/blood_concentrations.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
+  <%= myp_text_field child_fields, :concentration, "myplaceonline.blood_tests.concentration", childproperty.concentration %>
+<% end %>
 <%= myp_text_area_markdown f, :notes, "myplaceonline.blood_tests.notes", obj.notes %>

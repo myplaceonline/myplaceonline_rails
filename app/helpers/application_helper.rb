@@ -129,6 +129,31 @@ module ApplicationHelper
     end
   end
   
+  def attribute_table_row_liquid_concentration(name, val, concentration_type, pluralize = true)
+    if !val.nil?
+      if concentration_type.nil?
+        attribute_table_row(
+          name,
+          val.to_s
+        )
+      else
+        if pluralize
+          attribute_table_row(
+            name,
+            ActionController::Base.helpers.pluralize(val, Myp.get_select_name(concentration_type, Myp::LIQUID_CONCENTRATIONS).singularize)
+          )
+        else
+          attribute_table_row(
+            name,
+            val.to_s + " " + Myp.get_select_name(concentration_type, Myp::LIQUID_CONCENTRATIONS)
+          )
+        end
+      end
+    else
+      nil
+    end
+  end
+  
   def attribute_table_row_food_weight(name, val, weight_type)
     if !val.nil?
       attribute_table_row(name, ActionController::Base.helpers.pluralize(val, Myp.get_select_name(weight_type, Myp::FOOD_WEIGHTS).singularize))

@@ -1,0 +1,7 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.blood_concentrations.concentration_name"), @obj.concentration_name) %>
+  <%= attribute_table_row_liquid_concentration(t("myplaceonline.blood_concentrations.concentration_minimum"), @obj.concentration_minimum, @obj.concentration_type, false) %>
+  <%= attribute_table_row_liquid_concentration(t("myplaceonline.blood_concentrations.concentration_maximum"), @obj.concentration_maximum, @obj.concentration_type, false) %>
+  
+<% end %>

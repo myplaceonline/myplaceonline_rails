@@ -48,6 +48,10 @@ module Myp
     ["myplaceonline.intensities.five", 5]
   ]
   
+  LIQUID_CONCENTRATIONS = [
+    ["myplaceonline.liquid_concentrations.mgperdl", 1]
+  ]
+  
   puts "myplaceonline: Initializing categories"
   
   def self.database_exists?

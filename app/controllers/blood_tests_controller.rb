@@ -13,6 +13,16 @@ class BloodTestsController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:blood_test).permit(:fast_started, :test_time, :notes)
+      params.require(:blood_test).permit(
+        :fast_started,
+        :test_time,
+        :notes,
+        blood_test_results_attributes: [
+          :id,
+          :_destroy,
+          :concentration,
+          blood_concentration_attributes: BloodConcentration.params
+        ]
+      )
     end
 end

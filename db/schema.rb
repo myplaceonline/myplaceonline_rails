@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150522220040) do
+ActiveRecord::Schema.define(version: 20150522222003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +99,18 @@ ActiveRecord::Schema.define(version: 20150522220040) do
   add_index "bank_accounts", ["pin_encrypted_id"], name: "index_bank_accounts_on_pin_encrypted_id", using: :btree
   add_index "bank_accounts", ["routing_number_encrypted_id"], name: "index_bank_accounts_on_routing_number_encrypted_id", using: :btree
 
+  create_table "blood_concentrations", force: true do |t|
+    t.string   "concentration_name"
+    t.integer  "concentration_type"
+    t.decimal  "concentration_minimum", precision: 10, scale: 2
+    t.decimal  "concentration_maximum", precision: 10, scale: 2
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "blood_concentrations", ["identity_id"], name: "index_blood_concentrations_on_identity_id", using: :btree
+
   create_table "blood_pressures", force: true do |t|
     t.integer  "systolic_pressure"
     t.integer  "diastolic_pressure"
@@ -110,6 +122,19 @@ ActiveRecord::Schema.define(version: 20150522220040) do
   end
 
   add_index "blood_pressures", ["identity_id"], name: "index_blood_pressures_on_identity_id", using: :btree
+
+  create_table "blood_test_results", force: true do |t|
+    t.integer  "blood_test_id"
+    t.integer  "blood_concentration_id"
+    t.decimal  "concentration",          precision: 10, scale: 2
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "blood_test_results", ["blood_concentration_id"], name: "index_blood_test_results_on_blood_concentration_id", using: :btree
+  add_index "blood_test_results", ["blood_test_id"], name: "index_blood_test_results_on_blood_test_id", using: :btree
+  add_index "blood_test_results", ["identity_id"], name: "index_blood_test_results_on_identity_id", using: :btree
 
   create_table "blood_tests", force: true do |t|
     t.datetime "fast_started"
@@ -317,7 +342,7 @@ ActiveRecord::Schema.define(version: 20150522220040) do
   add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -951,6 +976,7 @@ ActiveRecord::Schema.define(version: 20150522220040) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "bed_type"
     t.string   "trim_name"
     t.integer  "dimensions_type"
     t.decimal  "height",                   precision: 10, scale: 2
