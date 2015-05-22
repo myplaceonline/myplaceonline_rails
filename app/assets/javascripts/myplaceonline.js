@@ -404,10 +404,13 @@ $(document).on("mobileinit.myp", function() {
   // http://api.jquerymobile.com/pagecontainer/#event-loadfailed
   $(document).on("pagecontainerloadfailed", $.mobile.pageContainer, function(event, ui) {
     // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
-    if (ui.xhr.status == 0 && !ui.xhr.responseText) {
-      alert("Could not communicate with server. This could be caused by:\n* Internet connection problem\n* Server is under maintenance\n\nPlease try again or report the error to " + myp.contact_email);
-    } else {
-      alert("Error " + ui.xhr.status + "\n" + ui.xhr.responseText + "\n\nPlease try again or report the error to " + myp.contact_email);
+    myp.jserrors++;
+    if (myp.jserrors <= myp.maxjserrors) {
+      if (ui.xhr.status == 0 && !ui.xhr.responseText) {
+        alert("Could not communicate with server. This could be caused by:\n* Internet connection problem\n* Server is under maintenance\n\nPlease try again or report the error to " + myp.contact_email);
+      } else {
+        alert("Error " + ui.xhr.status + "\n" + ui.xhr.responseText + "\n\nPlease try again or report the error to " + myp.contact_email);
+      }
     }
     // https://github.com/jquery/jquery-mobile/issues/3143
     // event.preventDefault();
