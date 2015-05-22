@@ -2,9 +2,9 @@
 // Version 0.12
 //
 // Notes:
-//  * When changing this file, you may need to apply the same changes to
-//    myplaceonline_phonegap/www/js/myplaceonline.js and do a new phonegap
-//    build.
+//  * When changing this file, apply the same changes in phonegap and push
+//    out a new app build:
+//    $ cp app/assets/ja*/myplaceonline.js ../myplaceonline_phonegap/www/js/
 //  * This file should be loaded after jQuery but before jQueryMobile,
 //    so any jQueryMobile specific executions (outside function definitions
 //    and callbacks) may be done in the mobileinit callback.
@@ -404,7 +404,11 @@ $(document).on("mobileinit.myp", function() {
   // http://api.jquerymobile.com/pagecontainer/#event-loadfailed
   $(document).on("pagecontainerloadfailed", $.mobile.pageContainer, function(event, ui) {
     // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
-    alert("Error " + ui.xhr.status + "\n" + ui.xhr.responseText + "\n\nPlease try again or report the error to " + myp.contact_email);
+    if (ui.xhr.status == 0 && !ui.xhr.responseText) {
+      alert("Could not communicate with server. This could be caused by:\n* Internet connection problem\n* Server is under maintenance\n\nPlease try again or report the error to " + myp.contact_email);
+    } else {
+      alert("Error " + ui.xhr.status + "\n" + ui.xhr.responseText + "\n\nPlease try again or report the error to " + myp.contact_email);
+    }
     // https://github.com/jquery/jquery-mobile/issues/3143
     // event.preventDefault();
     // ui.deferred.reject( ui.absUrl, ui.options );
