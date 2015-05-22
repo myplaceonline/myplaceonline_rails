@@ -281,5 +281,11 @@ class MyplaceonlineController < ApplicationController
     end
     
     def index_pre_respond()
+      if request.original_url().include?(".json")
+        filter_json_index_search()
+      end
+    end
+    
+    def filter_json_index_search()
     end
 end
