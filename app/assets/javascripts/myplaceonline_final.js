@@ -79,7 +79,9 @@ function getRemoteString(destination, length) {
 function get_index_from_id(obj) {
   var id = $(obj).data("nameprefix");
   if (id) {
-    id = id.replace(/^.+(\d+).+$/i, '$1');
+    id = id.substring(id.lastIndexOf('[') + 1);
+    id = id.substring(0, id.indexOf(']'));
+    id = parseInt(id);
     if (isNaN(id)) {
       id = -1;
     }
