@@ -801,5 +801,6 @@ en:
       delete: "Delete Item"
       items: "Items"
       item: "Item"
+      generate: "Generate"
     checklist_items:
       checklist_item_name: "Name"

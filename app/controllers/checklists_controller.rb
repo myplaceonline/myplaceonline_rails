@@ -7,6 +7,11 @@ class ChecklistsController < MyplaceonlineController
     obj.display
   end
 
+  def generate
+    set_obj
+    respond_with(@obj)
+  end
+
   protected
     def sorts
       ["lower(checklists.checklist_name) ASC"]

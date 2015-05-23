@@ -6,4 +6,8 @@
     <%= attribute_table_row(t("myplaceonline.checklist_items.checklist_item_name"), checklist_item.checklist_item_name) %>
   <% end %>
   
+  <% content_for :prefooterlinks do %>
+    <li><%= link_to t('myplaceonline.checklists.generate'), checklist_generate_path(@obj), "data-icon" => "plus" %></li>
+  <% end %>
+
 <% end %>

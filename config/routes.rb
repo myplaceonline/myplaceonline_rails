@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  match 'checlists/:id/generate', :to => 'checklists#generate', via: [:get], as: "checklist_generate"
   resources :checklists
   post 'checklists/new'
 
