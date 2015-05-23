@@ -1,0 +1,9 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.checklists.checklist_name"), @obj.checklist_name) %>
+  <% @obj.all_checklist_items.each do |checklist_item| %>
+    <%= table_row_heading(t("myplaceonline.checklists.item")) %>
+    <%= attribute_table_row(t("myplaceonline.checklist_items.checklist_item_name"), checklist_item.checklist_item_name) %>
+  <% end %>
+  
+<% end %>

@@ -53,6 +53,7 @@ class Ability
     can :manage, BloodTest, :identity => identity
     can :manage, BloodConcentration, :identity => identity
     can :manage, BloodTestResult, :identity => identity
+    can :manage, Checklist, :identity => identity
     
     # Define abilities for the passed in user here. For example:
     #

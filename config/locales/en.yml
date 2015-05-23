@@ -75,6 +75,7 @@ en:
       songs: "Songs"
       blood_tests: "Blood Tests"
       blood_concentrations: "Blood Concentrations"
+      checklists: "Checklists"
     general:
       email: "E-mail"
       password: "Password"
@@ -794,3 +795,11 @@ en:
       concentration_maximum: "Concentration Maximum"
     liquid_concentrations:
       mgperdl: "mg/dL"
+    checklists:
+      checklist_name: "Name"
+      add: "Add Item"
+      delete: "Delete Item"
+      items: "Items"
+      item: "Item"
+    checklist_items:
+      checklist_item_name: "Name"

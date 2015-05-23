@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150522222003) do
+ActiveRecord::Schema.define(version: 20150523134202) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -246,6 +246,27 @@ ActiveRecord::Schema.define(version: 20150522222003) do
 
   add_index "category_points_amounts", ["category_id"], name: "index_category_points_amounts_on_category_id", using: :btree
   add_index "category_points_amounts", ["identity_id"], name: "index_category_points_amounts_on_identity_id", using: :btree
+
+  create_table "checklist_items", force: true do |t|
+    t.string   "checklist_item_name"
+    t.integer  "checklist_id"
+    t.integer  "position"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "checklist_items", ["checklist_id"], name: "index_checklist_items_on_checklist_id", using: :btree
+  add_index "checklist_items", ["identity_id"], name: "index_checklist_items_on_identity_id", using: :btree
+
+  create_table "checklists", force: true do |t|
+    t.string   "checklist_name"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "checklists", ["identity_id"], name: "index_checklists_on_identity_id", using: :btree
 
   create_table "companies", force: true do |t|
     t.integer  "identity_id"

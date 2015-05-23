@@ -41,6 +41,7 @@ class Identity < ActiveRecord::Base
   has_many :pains, :dependent => :destroy
   has_many :songs, :dependent => :destroy
   has_many :blood_tests, :dependent => :destroy
+  has_many :checklists, :dependent => :destroy
   
   has_many :identity_phones, :foreign_key => 'ref_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_phones, allow_destroy: true, reject_if: :all_blank
@@ -96,6 +97,7 @@ class Identity < ActiveRecord::Base
       :pains => pains.to_a.map{|x| x.as_json},
       :songs => songs.to_a.sort{ |a,b| a.song_name.downcase <=> b.song_name.downcase }.map{|x| x.as_json},
       :blood_tests => blood_tests.to_a.map{|x| x.as_json},
+      :checklists => checklists.to_a.sort{ |a,b| a.checklist_name.downcase <=> b.checklist_name.downcase }.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :checklists
+  post 'checklists/new'
+
   resources :blood_concentrations
   post 'blood_concentrations/new'
 
