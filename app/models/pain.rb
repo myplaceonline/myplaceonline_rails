@@ -4,7 +4,11 @@ class Pain < ActiveRecord::Base
   validates :pain_start_time, presence: true
   
   def display
-    Myp.display_datetime(pain_start_time, User.current_user)
+    result = Myp.display_datetime_short(pain_start_time, User.current_user)
+    if !pain_location.blank?
+      result += " (" + pain_location + ")"
+    end
+    result
   end
 
   before_create :do_before_save
