@@ -76,6 +76,7 @@ en:
       blood_tests: "Blood Tests"
       blood_concentrations: "Blood Concentrations"
       checklists: "Checklists"
+      medical_conditions: "Medical Conditions"
     general:
       email: "E-mail"
       password: "Password"
@@ -804,3 +805,6 @@ en:
       generate: "Generate"
     checklist_items:
       checklist_item_name: "Name"
+    medical_conditions:
+      medical_condition_name: "Name"
+      notes: "Notes"

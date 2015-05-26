@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150523134202) do
+ActiveRecord::Schema.define(version: 20150526000032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -363,7 +363,7 @@ ActiveRecord::Schema.define(version: 20150523134202) do
   add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.binary   "val"
+    t.string   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -691,6 +691,16 @@ ActiveRecord::Schema.define(version: 20150523134202) do
   add_index "meals", ["identity_id"], name: "index_meals_on_identity_id", using: :btree
   add_index "meals", ["location_id"], name: "index_meals_on_location_id", using: :btree
 
+  create_table "medical_conditions", force: true do |t|
+    t.string   "medical_condition_name"
+    t.text     "notes"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "medical_conditions", ["identity_id"], name: "index_medical_conditions_on_identity_id", using: :btree
+
   create_table "medicine_usage_medicines", force: true do |t|
     t.integer  "identity_id"
     t.integer  "medicine_usage_id"
@@ -997,7 +1007,6 @@ ActiveRecord::Schema.define(version: 20150523134202) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "bed_type"
     t.string   "trim_name"
     t.integer  "dimensions_type"
     t.decimal  "height",                   precision: 10, scale: 2
