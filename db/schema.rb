@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150526000032) do
+ActiveRecord::Schema.define(version: 20150526001300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -363,7 +363,7 @@ ActiveRecord::Schema.define(version: 20150526000032) do
   add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -691,6 +691,19 @@ ActiveRecord::Schema.define(version: 20150526000032) do
   add_index "meals", ["identity_id"], name: "index_meals_on_identity_id", using: :btree
   add_index "meals", ["location_id"], name: "index_meals_on_location_id", using: :btree
 
+  create_table "medical_condition_instances", force: true do |t|
+    t.datetime "condition_start"
+    t.datetime "condition_end"
+    t.text     "notes"
+    t.integer  "medical_condition_id"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "medical_condition_instances", ["identity_id"], name: "index_medical_condition_instances_on_identity_id", using: :btree
+  add_index "medical_condition_instances", ["medical_condition_id"], name: "index_medical_condition_instances_on_medical_condition_id", using: :btree
+
   create_table "medical_conditions", force: true do |t|
     t.string   "medical_condition_name"
     t.text     "notes"
@@ -1007,6 +1020,7 @@ ActiveRecord::Schema.define(version: 20150526000032) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "bed_type"
     t.string   "trim_name"
     t.integer  "dimensions_type"
     t.decimal  "height",                   precision: 10, scale: 2

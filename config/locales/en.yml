@@ -808,3 +808,11 @@ en:
     medical_conditions:
       medical_condition_name: "Name"
       notes: "Notes"
+      instances: "Instances"
+      instance: "Instance"
+      add: "Add Instance"
+      delete: "Delete Instance"
+    medical_condition_instances:
+      condition_start: "Start"
+      condition_end: "End"
+      notes: "Notes"
