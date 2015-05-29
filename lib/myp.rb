@@ -520,6 +520,9 @@ module Myp
         end
       end
     end
+    
+    # sort due items
+    result = result.sort{ |x,y| x.date <=> y.date }
 
     result
   end
