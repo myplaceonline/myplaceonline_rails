@@ -1,4 +1,5 @@
 class VehicleService < ActiveRecord::Base
+  belongs_to :identity
   belongs_to :vehicle
   validates :short_description, presence: true
   

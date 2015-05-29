@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150526001300) do
+ActiveRecord::Schema.define(version: 20150526013554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,9 +58,11 @@ ActiveRecord::Schema.define(version: 20150526001300) do
     t.decimal  "moveout_fee",  precision: 10, scale: 2
     t.decimal  "deposit",      precision: 10, scale: 2
     t.date     "terminate_by"
+    t.integer  "identity_id"
   end
 
   add_index "apartment_leases", ["apartment_id"], name: "index_apartment_leases_on_apartment_id", using: :btree
+  add_index "apartment_leases", ["identity_id"], name: "index_apartment_leases_on_identity_id", using: :btree
 
   create_table "apartments", force: true do |t|
     t.integer  "location_id"
@@ -153,8 +155,10 @@ ActiveRecord::Schema.define(version: 20150526001300) do
     t.integer  "operator"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "identity_id"
   end
 
+  add_index "calculation_elements", ["identity_id"], name: "index_calculation_elements_on_identity_id", using: :btree
   add_index "calculation_elements", ["left_operand_id"], name: "index_calculation_elements_on_left_operand_id", using: :btree
   add_index "calculation_elements", ["right_operand_id"], name: "index_calculation_elements_on_right_operand_id", using: :btree
 
@@ -178,9 +182,11 @@ ActiveRecord::Schema.define(version: 20150526001300) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "variable_name"
+    t.integer  "identity_id"
   end
 
   add_index "calculation_inputs", ["calculation_form_id"], name: "index_calculation_inputs_on_calculation_form_id", using: :btree
+  add_index "calculation_inputs", ["identity_id"], name: "index_calculation_inputs_on_identity_id", using: :btree
 
   create_table "calculation_operands", force: true do |t|
     t.string   "constant_value"
@@ -188,9 +194,11 @@ ActiveRecord::Schema.define(version: 20150526001300) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "calculation_input_id"
+    t.integer  "identity_id"
   end
 
   add_index "calculation_operands", ["calculation_element_id"], name: "index_calculation_operands_on_calculation_element_id", using: :btree
+  add_index "calculation_operands", ["identity_id"], name: "index_calculation_operands_on_identity_id", using: :btree
 
   create_table "calculations", force: true do |t|
     t.string   "name"
@@ -295,9 +303,11 @@ ActiveRecord::Schema.define(version: 20150526001300) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "when"
+    t.integer  "identity_id"
   end
 
   add_index "conversations", ["contact_id"], name: "index_conversations_on_contact_id", using: :btree
+  add_index "conversations", ["identity_id"], name: "index_conversations_on_identity_id", using: :btree
 
   create_table "credit_card_cashbacks", force: true do |t|
     t.integer  "identity_id"
@@ -363,7 +373,7 @@ ActiveRecord::Schema.define(version: 20150526001300) do
   add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.binary   "val"
+    t.string   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -521,8 +531,10 @@ ActiveRecord::Schema.define(version: 20150526001300) do
     t.integer  "ref_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "identity_id"
   end
 
+  add_index "identity_emails", ["identity_id"], name: "index_identity_emails_on_identity_id", using: :btree
   add_index "identity_emails", ["ref_id"], name: "index_identity_emails_on_ref_id", using: :btree
 
   create_table "identity_file_folders", force: true do |t|
@@ -558,8 +570,10 @@ ActiveRecord::Schema.define(version: 20150526001300) do
     t.integer  "ref_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "identity_id"
   end
 
+  add_index "identity_locations", ["identity_id"], name: "index_identity_locations_on_identity_id", using: :btree
   add_index "identity_locations", ["location_id"], name: "index_identity_locations_on_location_id", using: :btree
   add_index "identity_locations", ["ref_id"], name: "index_identity_locations_on_ref_id", using: :btree
 
@@ -588,8 +602,10 @@ ActiveRecord::Schema.define(version: 20150526001300) do
     t.integer  "list_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "identity_id"
   end
 
+  add_index "list_items", ["identity_id"], name: "index_list_items_on_identity_id", using: :btree
   add_index "list_items", ["list_id"], name: "index_list_items_on_list_id", using: :btree
 
   create_table "lists", force: true do |t|
@@ -619,8 +635,10 @@ ActiveRecord::Schema.define(version: 20150526001300) do
     t.integer  "location_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "identity_id"
   end
 
+  add_index "location_phones", ["identity_id"], name: "index_location_phones_on_identity_id", using: :btree
   add_index "location_phones", ["location_id"], name: "index_location_phones_on_location_id", using: :btree
 
   create_table "locations", force: true do |t|
@@ -781,9 +799,11 @@ ActiveRecord::Schema.define(version: 20150526001300) do
     t.integer  "password_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "identity_id"
   end
 
   add_index "password_secrets", ["answer_encrypted_id"], name: "index_password_secrets_on_answer_encrypted_id", using: :btree
+  add_index "password_secrets", ["identity_id"], name: "index_password_secrets_on_identity_id", using: :btree
   add_index "password_secrets", ["password_id"], name: "index_password_secrets_on_password_id", using: :btree
 
   create_table "passwords", force: true do |t|
@@ -1000,8 +1020,10 @@ ActiveRecord::Schema.define(version: 20150526001300) do
     t.integer  "miles"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "identity_id"
   end
 
+  add_index "vehicle_services", ["identity_id"], name: "index_vehicle_services_on_identity_id", using: :btree
   add_index "vehicle_services", ["vehicle_id"], name: "index_vehicle_services_on_vehicle_id", using: :btree
 
   create_table "vehicles", force: true do |t|
@@ -1020,7 +1042,6 @@ ActiveRecord::Schema.define(version: 20150526001300) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "bed_type"
     t.string   "trim_name"
     t.integer  "dimensions_type"
     t.decimal  "height",                   precision: 10, scale: 2

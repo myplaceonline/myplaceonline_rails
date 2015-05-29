@@ -1,4 +1,6 @@
 class CalculationElement < ActiveRecord::Base
+  belongs_to :identity
+
   belongs_to :left_operand, class_name: CalculationOperand, autosave: true
   validates_associated :left_operand
   validates_presence_of :left_operand

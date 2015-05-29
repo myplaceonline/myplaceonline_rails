@@ -1,4 +1,5 @@
 class IdentityEmail < ActiveRecord::Base
+  belongs_to :identity
   belongs_to :ref, class: Identity
   
   before_create :do_before_save

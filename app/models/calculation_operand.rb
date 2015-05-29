@@ -1,4 +1,6 @@
 class CalculationOperand < ActiveRecord::Base
+  belongs_to :identity
+
   # Recursive operand
   belongs_to :calculation_element
   accepts_nested_attributes_for :calculation_element, reject_if: :all_blank

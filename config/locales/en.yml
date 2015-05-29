@@ -142,6 +142,7 @@ en:
       cubicft: "Cubic Feet"
       for: "for"
       cups: "Cups"
+      unknown: "Unknown"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"

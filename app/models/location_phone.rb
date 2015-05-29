@@ -1,4 +1,5 @@
 class LocationPhone < ActiveRecord::Base
+  belongs_to :identity
   belongs_to :location
   
   before_create :do_before_save

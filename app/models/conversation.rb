@@ -1,4 +1,5 @@
 class Conversation < ActiveRecord::Base
+  belongs_to :identity
   belongs_to :contact
   
   before_create :do_before_save

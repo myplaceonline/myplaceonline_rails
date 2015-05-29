@@ -1,4 +1,5 @@
 class ApartmentLease < ActiveRecord::Base
+  belongs_to :identity
   belongs_to :apartment
   
   before_create :do_before_save

@@ -1,4 +1,5 @@
 class ListItem < ActiveRecord::Base
+  belongs_to :identity
   belongs_to :list
   
   before_create :do_before_save

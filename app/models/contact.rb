@@ -41,7 +41,11 @@ class Contact < ActiveRecord::Base
   end
 
   def display
-    name
+    if !contact_identity.nil?
+      name
+    else
+      I18n.t("myplaceonline.general.unknown")
+    end
   end
   
   def self.build(params = nil)

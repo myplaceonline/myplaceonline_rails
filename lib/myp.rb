@@ -587,6 +587,8 @@ module Myp
           model.identity = current_user.primary_identity
         end
       end
+    else
+      raise "identity= not found, missing belongs_to identity?"
     end
   end
 
