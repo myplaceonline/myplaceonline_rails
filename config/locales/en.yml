@@ -77,6 +77,7 @@ en:
       blood_concentrations: "Blood Concentrations"
       checklists: "Checklists"
       medical_conditions: "Medical Conditions"
+      life_goals: "Life Goals"
     general:
       email: "E-mail"
       password: "Password"
@@ -819,3 +820,8 @@ en:
       condition_start: "Start"
       condition_end: "End"
       notes: "Notes"
+    life_goals:
+      life_goal_name: "Goal"
+      notes: "Notes"
+      goal_started: "Started"
+      goal_ended: "Ended"

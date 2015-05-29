@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :life_goals
+  post 'life_goals/new'
+
   resources :medical_conditions
   post 'medical_conditions/new'
 

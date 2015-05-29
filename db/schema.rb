@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150526013554) do
+ActiveRecord::Schema.define(version: 20150529211446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -596,6 +596,19 @@ ActiveRecord::Schema.define(version: 20150526013554) do
   end
 
   add_index "jokes", ["identity_id"], name: "index_jokes_on_identity_id", using: :btree
+
+  create_table "life_goals", force: true do |t|
+    t.string   "life_goal_name"
+    t.text     "notes"
+    t.integer  "position"
+    t.datetime "goal_started"
+    t.datetime "goal_ended"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "life_goals", ["identity_id"], name: "index_life_goals_on_identity_id", using: :btree
 
   create_table "list_items", force: true do |t|
     t.string   "name"
