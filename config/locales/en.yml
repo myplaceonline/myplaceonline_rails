@@ -80,6 +80,7 @@ en:
       life_goals: "Life Goals"
       temperatures: "Temperatures"
       headaches: "Headaches"
+      skin_treatments: "Skin Treatments"
     general:
       email: "E-mail"
       password: "Password"
@@ -840,3 +841,7 @@ en:
       ended: "Ended"
       intensity: "Intensity"
       headache_location: "Location"
+    skin_treatments:
+      treatment_time: "Treatment Time"
+      treatment_activity: "Treatment"
+      treatment_location: "Location"

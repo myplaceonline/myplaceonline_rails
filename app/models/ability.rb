@@ -58,6 +58,7 @@ class Ability
     can :manage, LifeGoal, :identity => identity
     can :manage, Temperature, :identity => identity
     can :manage, Headache, :identity => identity
+    can :manage, SkinTreatment, :identity => identity
     
     # Define abilities for the passed in user here. For example:
     #

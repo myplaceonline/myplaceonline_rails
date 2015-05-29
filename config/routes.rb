@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :skin_treatments
+  post 'skin_treatments/new'
+
   resources :headaches
   post 'headaches/new'
 

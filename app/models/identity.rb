@@ -46,6 +46,7 @@ class Identity < ActiveRecord::Base
   has_many :life_goals, :dependent => :destroy
   has_many :temperatures, :dependent => :destroy
   has_many :headaches, :dependent => :destroy
+  has_many :skin_treatments, :dependent => :destroy
   
   has_many :identity_phones, :foreign_key => 'ref_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_phones, allow_destroy: true, reject_if: :all_blank
@@ -106,6 +107,7 @@ class Identity < ActiveRecord::Base
       :life_goals => life_goals.to_a.sort{ |a,b| a.life_goal_name.downcase <=> b.life_goal_name.downcase }.map{|x| x.as_json},
       :temperatures => temperatures.to_a.map{|x| x.as_json},
       :headaches => headaches.to_a.map{|x| x.as_json},
+      :skin_treatments => skin_treatments.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end
