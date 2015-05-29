@@ -78,6 +78,7 @@ en:
       checklists: "Checklists"
       medical_conditions: "Medical Conditions"
       life_goals: "Life Goals"
+      temperatures: "Temperatures"
     general:
       email: "E-mail"
       password: "Password"
@@ -826,3 +827,10 @@ en:
       notes: "Notes"
       goal_started: "Started"
       goal_ended: "Ended"
+    temperatures:
+      measured: "Measurement Time"
+      measured_temperature: "Temperature (Degrees)"
+      measurement_source: "Measurement Source"
+      fahrenheit: "Fahrenheit"
+      celcius: "Celcius"
+      temperature_type: "Temperature Type"

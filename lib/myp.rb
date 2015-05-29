@@ -52,6 +52,11 @@ module Myp
     ["myplaceonline.liquid_concentrations.mgperdl", 1]
   ]
   
+  TEMPERATURES = [
+    ["myplaceonline.temperatures.fahrenheit", 0],
+    ["myplaceonline.temperatures.celcius", 1],
+  ]
+  
   puts "myplaceonline: Initializing categories"
   
   def self.database_exists?

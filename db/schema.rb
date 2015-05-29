@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150529211446) do
+ActiveRecord::Schema.define(version: 20150529220107) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -970,6 +970,18 @@ ActiveRecord::Schema.define(version: 20150529211446) do
   end
 
   add_index "sun_exposures", ["identity_id"], name: "index_sun_exposures_on_identity_id", using: :btree
+
+  create_table "temperatures", force: true do |t|
+    t.datetime "measured"
+    t.decimal  "measured_temperature", precision: 10, scale: 2
+    t.string   "measurement_source"
+    t.integer  "temperature_type"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "temperatures", ["identity_id"], name: "index_temperatures_on_identity_id", using: :btree
 
   create_table "to_dos", force: true do |t|
     t.string   "short_description"

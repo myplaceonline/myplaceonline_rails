@@ -19,7 +19,8 @@
         <% end %>
         <% if true %>
           <li><%= link_to t("myplaceonline.general.cancel"), controller.obj_path, "data-icon" => "back" %></li>
-          <li><%= link_to t("myplaceonline.general.back_to_all") + " " + t("myplaceonline.category." + controller.category_name), controller.index_path, "data-icon" => "back" %></li>
+          <!--<li><%= link_to t("myplaceonline.general.back_to_all") + " " + t("myplaceonline.category." + controller.category_name), controller.index_path, "data-icon" => "back" %></li>-->
+          <li><%= link_to t("myplaceonline.general.back_to_list"), controller.index_path, "data-icon" => "back" %></li>
         <% end %>
       </ul>
     </div>
