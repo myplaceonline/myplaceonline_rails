@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :headaches
+  post 'headaches/new'
+
   resources :temperatures
   post 'temperatures/new'
 

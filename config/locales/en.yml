@@ -79,6 +79,7 @@ en:
       medical_conditions: "Medical Conditions"
       life_goals: "Life Goals"
       temperatures: "Temperatures"
+      headaches: "Headaches"
     general:
       email: "E-mail"
       password: "Password"
@@ -834,3 +835,8 @@ en:
       fahrenheit: "Fahrenheit"
       celcius: "Celcius"
       temperature_type: "Temperature Type"
+    headaches:
+      started: "Started"
+      ended: "Ended"
+      intensity: "Intensity"
+      headache_location: "Location"

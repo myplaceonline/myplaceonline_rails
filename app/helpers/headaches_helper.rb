@@ -1,0 +1,2 @@
+module HeadachesHelper
+end
