@@ -541,6 +541,7 @@ en:
       wet_weight_rear: "Rear Wet Weight (with Tailgate)"
       wet_weight: "Wet Weight (with Tailgate)"
       tailgate_weight: "Tailgate Weight"
+      wet_weight_with_rv: "Wet Weight With RV"
       horsepower: "Horsepower"
       cylinders: "Cylinders"
       displacement_type: "Engine Displacement Type"

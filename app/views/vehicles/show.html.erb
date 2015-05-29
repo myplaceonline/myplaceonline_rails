@@ -59,6 +59,9 @@
   <%= attribute_table_row t("myplaceonline.vehicles.wet_weight_rear"), @obj.wet_weight_rear %>
   <% if !@obj.wet_weight_front.blank? && !@obj.wet_weight_rear.blank? %>
     <%= attribute_table_row t("myplaceonline.vehicles.wet_weight"), @obj.wet_weight_front + @obj.wet_weight_rear %>
+    <% if !@obj.recreational_vehicle.nil? && !@obj.recreational_vehicle.wet_weight.nil? %>
+      <%= attribute_table_row t("myplaceonline.vehicles.wet_weight_with_rv"), @obj.wet_weight_front + @obj.wet_weight_rear + @obj.recreational_vehicle.wet_weight %>
+    <% end %>
   <% end %>
   <%= attribute_table_row t("myplaceonline.vehicles.tailgate_weight"), @obj.tailgate_weight %>
   <% if !@obj.gvwr.blank? && !@obj.wet_weight_front.blank? && !@obj.wet_weight_rear.blank? %>
