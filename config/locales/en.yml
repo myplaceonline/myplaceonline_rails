@@ -143,6 +143,7 @@ en:
       for: "for"
       cups: "Cups"
       unknown: "Unknown"
+      back_to_list: "Back to List"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
