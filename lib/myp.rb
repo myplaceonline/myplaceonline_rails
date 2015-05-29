@@ -480,8 +480,9 @@ module Myp
   def self.due(user)
     result = Array.new
 
-    threshold = 90.days.from_now
+    threshold = 60.days.from_now
     timenow = Time.now
+    datenow = Date.today
 
     Vehicle.where(identity: user.primary_identity).each do |vehicle|
       vehicle.vehicle_services.each do |service|
@@ -502,7 +503,22 @@ module Myp
         "myplaceonline.identities.license_expiring",
         license: drivers_license.display,
         time: Myp.time_difference_in_general_human(diff_in_general)
-      ),"/contacts/" + contact.id.to_s, drivers_license.expires))
+      ), "/contacts/" + contact.id.to_s, drivers_license.expires))
+    end
+    
+    Contact.where(identity: user.primary_identity).to_a.each do |x|
+      if !x.ref.nil? && !x.ref.birthday.nil?
+        bday_this_year = Date.new(Date.today.year, x.ref.birthday.month, x.ref.birthday.day)
+        if bday_this_year >= datenow && bday_this_year <= threshold
+          diff = TimeDifference.between(datenow, bday_this_year)
+          diff_in_general = diff.in_general
+          result.push(DueItem.new(I18n.t(
+            "myplaceonline.contacts.upcoming_birthday",
+            name: x.display,
+            delta: Myp.time_difference_in_general_human(diff_in_general)
+          ), "/contacts/" + x.id.to_s, bday_this_year))
+        end
+      end
     end
 
     result

@@ -349,6 +349,7 @@ en:
       add_conversation: "Add Conversation"
       delete_conversation: "Delete Conversation"
       conversation_date: "Date"
+      upcoming_birthday: "Upcoming Birthday for %{name} in %{delta}"
     files:
       name: "Name"
       download: "Download"
