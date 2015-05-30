@@ -55,6 +55,7 @@ class AddIdentityReferencs < ActiveRecord::Migration
     add_reference :conversations, :identity, index: true
     add_reference :identity_emails, :identity, index: true
     add_reference :identity_locations, :identity, index: true
+    add_reference :identity_phones, :identity, index: true
     Contact.all.each{|x|
       if !x.identity.nil?
         x.conversations.each{|y|
