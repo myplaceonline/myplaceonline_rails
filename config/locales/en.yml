@@ -811,6 +811,13 @@ en:
       items: "Items"
       item: "Item"
       generate: "Generate"
+      checklist: "Checklist"
+      checklist_references: "Checklist References"
+      checklist_reference: "Checklist Reference"
+      add_checklist_reference: "Add Checklist Reference"
+      delete_checklist_reference: "Delete Checklist Reference"
+      pre_checklist: "Pre-Checklist"
+      post_checklist: "Post-Checklist"
     checklist_items:
       checklist_item_name: "Name"
     medical_conditions:

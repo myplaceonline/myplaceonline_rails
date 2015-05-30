@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150529232201) do
+ActiveRecord::Schema.define(version: 20150529233023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -267,6 +267,19 @@ ActiveRecord::Schema.define(version: 20150529232201) do
   add_index "checklist_items", ["checklist_id"], name: "index_checklist_items_on_checklist_id", using: :btree
   add_index "checklist_items", ["identity_id"], name: "index_checklist_items_on_identity_id", using: :btree
 
+  create_table "checklist_references", force: true do |t|
+    t.integer  "checklist_parent_id"
+    t.integer  "checklist_id"
+    t.integer  "identity_id"
+    t.boolean  "pre_checklist"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "checklist_references", ["checklist_id"], name: "index_checklist_references_on_checklist_id", using: :btree
+  add_index "checklist_references", ["checklist_parent_id"], name: "index_checklist_references_on_checklist_parent_id", using: :btree
+  add_index "checklist_references", ["identity_id"], name: "index_checklist_references_on_identity_id", using: :btree
+
   create_table "checklists", force: true do |t|
     t.string   "checklist_name"
     t.integer  "identity_id"
@@ -373,7 +386,7 @@ ActiveRecord::Schema.define(version: 20150529232201) do
   add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -1090,6 +1103,7 @@ ActiveRecord::Schema.define(version: 20150529232201) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "bed_type"
     t.string   "trim_name"
     t.integer  "dimensions_type"
     t.decimal  "height",                   precision: 10, scale: 2

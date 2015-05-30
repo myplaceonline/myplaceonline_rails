@@ -26,3 +26,47 @@
 %>
   <%= myp_text_field child_fields, :checklist_item_name, "myplaceonline.checklist_items.checklist_item_name", childproperty.checklist_item_name %>
 <% end %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.checklists.checklist_references"),
+    childpropertiesname: :checklist_references,
+    childproperties: obj.checklist_references,
+    deletebutton: t("myplaceonline.checklists.delete_checklist_reference"),
+    addbutton: t("myplaceonline.checklists.add_checklist_reference"),
+    expanded: obj.checklist_references.size > 0,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :checklist_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.checklists.checklist"),
+        objform: "checklists/form",
+        existingobjurl: "checklist_path",
+        searchurl: "/checklists.json?perpage=0",
+        edit: true,
+        autofocus: true
+      },
+      {
+        type: 'checkbox',
+        name: 'pre_checklist',
+        placeholder: t("myplaceonline.checklists.pre_checklist")
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :checklist_attributes,
+      existingobj: childproperty.checklist,
+      heading: t("myplaceonline.checklists.checklist"),
+      objform: "checklists/form",
+      existingobjurl: "checklist_path",
+      searchurl: "/checklists.json?perpage=0",
+      edit: true,
+      autofocus: false
+    }
+  %>
+  <%= myp_check_box child_fields, :pre_checklist, "myplaceonline.checklists.pre_checklist", childproperty.pre_checklist %>
+<% end %>

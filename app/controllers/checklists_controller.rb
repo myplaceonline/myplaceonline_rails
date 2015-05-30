@@ -9,6 +9,16 @@ class ChecklistsController < MyplaceonlineController
 
   def generate
     set_obj
+    
+    @all_items = Array.new
+    @obj.pre_checklist_references.each do |x|
+      @all_items.concat(x.checklist.all_checklist_items)
+    end
+    @all_items.concat(@obj.all_checklist_items)
+    @obj.post_checklist_references.each do |x|
+      @all_items.concat(x.checklist.all_checklist_items)
+    end
+    
     respond_with(@obj)
   end
 
@@ -25,6 +35,15 @@ class ChecklistsController < MyplaceonlineController
           :checklist_item_name,
           :position,
           :_destroy
+        ],
+        checklist_references_attributes: [
+          :id,
+          :_destroy,
+          :pre_checklist,
+          checklist_attributes: [
+            :id,
+            :_destroy
+          ]
         ]
       )
     end

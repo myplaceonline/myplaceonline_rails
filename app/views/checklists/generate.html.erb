@@ -3,7 +3,7 @@
 <%= flashes! %>
 
 <% i = 0 %>
-<% @obj.all_checklist_items.each do |checklist_item| %>
+<% @all_items.each do |checklist_item| %>
   <%= myp_check_box_tag "item" + i.to_s, checklist_item.checklist_item_name, false %>
   <% i = i + 1 %>
 <% end %>
