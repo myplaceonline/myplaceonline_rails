@@ -16,7 +16,7 @@ class ActionController::TestCase
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @user = users(:user)
     Myp.remember_password(session, "password")
-    @user.confirm!
+    @user.confirm
     @user.primary_identity.ensure_contact!
     sign_in @user
   end

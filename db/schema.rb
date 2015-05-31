@@ -386,7 +386,7 @@ ActiveRecord::Schema.define(version: 20150529233023) do
   add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.binary   "val"
+    t.string   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -607,8 +607,10 @@ ActiveRecord::Schema.define(version: 20150529233023) do
     t.integer  "ref_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "identity_id"
   end
 
+  add_index "identity_phones", ["identity_id"], name: "index_identity_phones_on_identity_id", using: :btree
   add_index "identity_phones", ["ref_id"], name: "index_identity_phones_on_ref_id", using: :btree
 
   create_table "jokes", force: true do |t|
@@ -1103,7 +1105,6 @@ ActiveRecord::Schema.define(version: 20150529233023) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "bed_type"
     t.string   "trim_name"
     t.integer  "dimensions_type"
     t.decimal  "height",                   precision: 10, scale: 2
