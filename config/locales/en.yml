@@ -561,6 +561,7 @@ en:
       price: "Price"
       msrp: "MSRP"
       height_with_rv: "Height With RV"
+      length_with_rv: "Length With RV"
     loans:
       heading: "Loans"
       loan: "Loan"
@@ -661,6 +662,7 @@ en:
       weight_type: "Weight Type"
       sleeps: "Sleeps How Many"
       exterior_length: "Exterior Length"
+      exterior_length_over: "Cab-Over Length"
       exterior_width: "Exterior Width"
       exterior_height: "Exterior Height"
       exterior_height_over: "Cab-Over Height"

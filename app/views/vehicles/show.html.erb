@@ -32,6 +32,9 @@
   <% end %>
   <%= attribute_table_row_dimensions t("myplaceonline.vehicles.width"), @obj.width, @obj.dimensions_type %>
   <%= attribute_table_row_dimensions t("myplaceonline.vehicles.length"), @obj.length, @obj.dimensions_type %>
+  <% if !@obj.length.blank? && !@obj.recreational_vehicle.nil? && !@obj.recreational_vehicle.exterior_length_over.nil? %>
+    <%= attribute_table_row_dimensions t("myplaceonline.vehicles.length_with_rv"), @obj.length + @obj.recreational_vehicle.exterior_length_over, @obj.dimensions_type %>
+  <% end %>
   <%= attribute_table_row_dimensions t("myplaceonline.vehicles.wheel_base"), @obj.wheel_base, @obj.dimensions_type %>
   <%= attribute_table_row_dimensions t("myplaceonline.vehicles.ground_clearance"), @obj.ground_clearance, @obj.dimensions_type %>
   <%= attribute_table_row_select t("myplaceonline.vehicles.weight_type"), @obj.weight_type, Myp::WEIGHTS %>

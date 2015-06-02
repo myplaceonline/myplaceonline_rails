@@ -15,11 +15,12 @@
   <%= attribute_table_row_reference(t("myplaceonline.recreational_vehicles.location_purchased"), "location_path", @obj.location_purchased) %>
   <%= attribute_table_row(t("myplaceonline.recreational_vehicles.sleeps"), @obj.sleeps) %>
   <%= attribute_table_row_select t("myplaceonline.recreational_vehicles.dimensions_type"), @obj.dimensions_type, Myp::DIMENSIONS %>
-  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.exterior_length"), @obj.exterior_length) %>
-  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.exterior_width"), @obj.exterior_width) %>
-  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.exterior_height"), @obj.exterior_height) %>
-  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.exterior_height_over"), @obj.exterior_height_over) %>
-  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.interior_height"), @obj.interior_height) %>
+  <%= attribute_table_row_dimensions(t("myplaceonline.recreational_vehicles.exterior_length"), @obj.exterior_length, @obj.dimensions_type) %>
+  <%= attribute_table_row_dimensions(t("myplaceonline.recreational_vehicles.exterior_length_over"), @obj.exterior_length_over, @obj.dimensions_type) %>
+  <%= attribute_table_row_dimensions(t("myplaceonline.recreational_vehicles.exterior_width"), @obj.exterior_width, @obj.dimensions_type) %>
+  <%= attribute_table_row_dimensions(t("myplaceonline.recreational_vehicles.exterior_height"), @obj.exterior_height, @obj.dimensions_type) %>
+  <%= attribute_table_row_dimensions(t("myplaceonline.recreational_vehicles.exterior_height_over"), @obj.exterior_height_over, @obj.dimensions_type) %>
+  <%= attribute_table_row_dimensions(t("myplaceonline.recreational_vehicles.interior_height"), @obj.interior_height, @obj.dimensions_type) %>
   <%= attribute_table_row_select t("myplaceonline.recreational_vehicles.weight_type"), @obj.weight_type, Myp::WEIGHTS %>
   <%= attribute_table_row(t("myplaceonline.recreational_vehicles.wet_weight"), @obj.wet_weight) %>
   <%= attribute_table_row_select t("myplaceonline.recreational_vehicles.liquid_capacity_type"), @obj.liquid_capacity_type, Myp::LIQUID_CAPACITY %>

@@ -25,6 +25,7 @@ class RecreationalVehiclesController < MyplaceonlineController
       :weight_type,
       :sleeps,
       :exterior_length,
+      :exterior_length_over,
       :exterior_width,
       :exterior_height,
       :exterior_height_over,
