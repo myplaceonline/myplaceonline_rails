@@ -713,6 +713,7 @@ en:
       notes: "Notes"
       add: "Add Drink"
       delete: "Delete Drink"
+      servings: "Servings"
     vitamins:
       heading: "Vitamins"
       vitamin: "Vitamin"

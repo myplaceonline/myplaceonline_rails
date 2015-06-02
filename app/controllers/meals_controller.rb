@@ -32,6 +32,7 @@ class MealsController < MyplaceonlineController
         meal_drinks_attributes: [
           :id,
           :_destroy,
+          :drink_servings,
           drink_attributes: Drink.params
         ],
         meal_vitamins_attributes: [

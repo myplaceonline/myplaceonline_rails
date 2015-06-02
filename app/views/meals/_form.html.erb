@@ -64,6 +64,11 @@
         searchurl: "/drinks.json?perpage=0",
         edit: false,
         autofocus: true
+      },
+      {
+        type: 'text',
+        name: 'drink_servings',
+        placeholder: t("myplaceonline.drinks.servings")
       }
     ]
   } do |child_fields, childproperty|
@@ -81,6 +86,7 @@
       autofocus: false
     }
   %>
+  <%= myp_text_field child_fields, :drink_servings, "myplaceonline.drinks.servings", childproperty.drink_servings %>
 <% end %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {

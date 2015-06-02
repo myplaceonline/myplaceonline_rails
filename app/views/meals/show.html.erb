@@ -24,6 +24,7 @@
     <%= attribute_table_row(t("myplaceonline.drinks.price"), wrapper.drink.price) %>
     <%= attribute_table_row(t("myplaceonline.drinks.calories"), wrapper.drink.calories) %>
     <%= attribute_table_row_markdown(t("myplaceonline.drinks.notes"), wrapper.drink.notes) %>
+    <%= attribute_table_row(t("myplaceonline.drinks.servings"), wrapper.drink_servings) %>
   <% end %>
   <% @obj.meal_vitamins.each do |wrapper| %>
     <%= table_row_heading(t("myplaceonline.vitamins.vitamin")) %>
