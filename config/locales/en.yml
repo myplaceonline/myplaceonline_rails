@@ -81,6 +81,7 @@ en:
       temperatures: "Temperatures"
       headaches: "Headaches"
       skin_treatments: "Skin Treatments"
+      finance: "Finance"
     general:
       email: "E-mail"
       password: "Password"

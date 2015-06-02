@@ -198,6 +198,9 @@ Rails.application.routes.draw do
   post 'passwords/new'
   get 'passwords', :to => 'passwords#index'
 
+  get 'finance/index'
+  get 'finance', :to => 'finance#index'
+
   get 'health/index'
   get 'health', :to => 'health#index'
 
