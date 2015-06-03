@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'periodic_payments/monthly_total'
   resources :periodic_payments
   post 'periodic_payments/new'
 
@@ -17,7 +18,7 @@ Rails.application.routes.draw do
   resources :medical_conditions
   post 'medical_conditions/new'
 
-  match 'checlists/:id/generate', :to => 'checklists#generate', via: [:get], as: "checklist_generate"
+  match 'checklists/:id/generate', :to => 'checklists#generate', via: [:get], as: "checklist_generate"
   resources :checklists
   post 'checklists/new'
 

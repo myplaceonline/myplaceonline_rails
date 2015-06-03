@@ -1,5 +1,19 @@
-# periodic_payment_name:string notes:text started:date ended:date date_period:integer 'payment_amount:decimal{10,2}' identity:references:index
 class PeriodicPaymentsController < MyplaceonlineController
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:monthly_total]
+
+  def monthly_total
+    @total = 0
+    all.each do |x|
+      if Myp.includes_today?(x.started, x.ended)
+        if x.date_period == 0
+          @total += x.payment_amount
+        elsif x.date_period == 1
+          @total += x.payment_amount / 12
+        end
+      end
+    end
+  end
+
   def model
     PeriodicPayment
   end

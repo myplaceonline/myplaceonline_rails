@@ -1,2 +1,5 @@
 <%= render layout: "shared/model_index" do %>
+  <% content_for :footerlinks do %>
+    <li><%= link_to t('myplaceonline.periodic_payments.monthly_total'), periodic_payments_monthly_total_path, "data-icon" => "clock" %></li>
+  <% end %>
 <% end %>
