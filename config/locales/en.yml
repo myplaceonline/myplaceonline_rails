@@ -82,6 +82,7 @@ en:
       headaches: "Headaches"
       skin_treatments: "Skin Treatments"
       finance: "Finance"
+      periodic_payments: "Periodic Payments"
     general:
       email: "E-mail"
       password: "Password"
@@ -149,6 +150,9 @@ en:
       cups: "Cups"
       unknown: "Unknown"
       back_to_list: "Back to List"
+    periods:
+      monthly: "Monthly"
+      yearly: "Yearly"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
@@ -856,3 +860,10 @@ en:
       treatment_time: "Treatment Time"
       treatment_activity: "Treatment"
       treatment_location: "Location"
+    periodic_payments:
+      periodic_payment_name: "Name"
+      notes: "Notes"
+      started: "Started"
+      ended: "Ended"
+      date_period: "Period Type"
+      payment_amount: "Periodic Payment"

@@ -54,7 +54,12 @@ module Myp
   
   TEMPERATURES = [
     ["myplaceonline.temperatures.fahrenheit", 0],
-    ["myplaceonline.temperatures.celcius", 1],
+    ["myplaceonline.temperatures.celcius", 1]
+  ]
+  
+  PERIODS = [
+    ["myplaceonline.periods.monthly", 0],
+    ["myplaceonline.periods.yearly", 1]
   ]
   
   puts "myplaceonline: Initializing categories"

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :periodic_payments
+  post 'periodic_payments/new'
+
   resources :skin_treatments
   post 'skin_treatments/new'
 

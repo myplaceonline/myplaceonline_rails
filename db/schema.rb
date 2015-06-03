@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150602024816) do
+ActiveRecord::Schema.define(version: 20150602034228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -386,7 +386,7 @@ ActiveRecord::Schema.define(version: 20150602024816) do
   add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.binary   "val"
+    t.string   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -864,6 +864,20 @@ ActiveRecord::Schema.define(version: 20150602024816) do
 
   add_index "passwords", ["identity_id"], name: "index_passwords_on_identity_id", using: :btree
   add_index "passwords", ["password_encrypted_id"], name: "index_passwords_on_password_encrypted_id", using: :btree
+
+  create_table "periodic_payments", force: true do |t|
+    t.string   "periodic_payment_name"
+    t.text     "notes"
+    t.date     "started"
+    t.date     "ended"
+    t.integer  "date_period"
+    t.decimal  "payment_amount",        precision: 10, scale: 2
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "periodic_payments", ["identity_id"], name: "index_periodic_payments_on_identity_id", using: :btree
 
   create_table "promises", force: true do |t|
     t.string   "name"
