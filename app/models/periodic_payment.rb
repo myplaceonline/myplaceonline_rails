@@ -5,9 +5,14 @@ class PeriodicPayment < ActiveRecord::Base
   def display
     result = periodic_payment_name
     if !payment_amount.nil?
-      result += " (" + payment_amount.to_s
+      result += " (" + Myp.number_to_currency(payment_amount)
       if !date_period.nil?
         result += " " + Myp.get_select_name(date_period, Myp::PERIODS)
+      end
+      if date_period == 1
+        result += ", " + Myp.number_to_currency(payment_amount / 12) + " " + Myp.get_select_name(0, Myp::PERIODS)
+      elsif date_period == 2
+        result += ", " + Myp.number_to_currency(payment_amount / 6) + " " + Myp.get_select_name(0, Myp::PERIODS)
       end
       result += ")"
       if !ended.nil? && Date.today > ended

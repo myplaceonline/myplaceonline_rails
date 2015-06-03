@@ -692,4 +692,8 @@ module Myp
     end
     result
   end
+  
+  def self.number_to_currency(x)
+    ActionController::Base.helpers.number_to_currency(x)
+  end
 end
