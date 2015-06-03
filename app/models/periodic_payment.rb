@@ -11,7 +11,7 @@ class PeriodicPayment < ActiveRecord::Base
       end
       result += ")"
       if !ended.nil? && Date.today > ended
-        result += " (Ended " + Myp.display_date_short(ended, current_user) + ")"
+        result += " (Ended " + Myp.display_date_short(ended, User.current_user) + ")"
       end
     end
     result
