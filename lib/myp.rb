@@ -59,7 +59,8 @@ module Myp
   
   PERIODS = [
     ["myplaceonline.periods.monthly", 0],
-    ["myplaceonline.periods.yearly", 1]
+    ["myplaceonline.periods.yearly", 1],
+    ["myplaceonline.periods.six_months", 2]
   ]
   
   puts "myplaceonline: Initializing categories"

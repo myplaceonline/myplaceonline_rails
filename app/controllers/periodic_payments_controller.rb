@@ -9,6 +9,8 @@ class PeriodicPaymentsController < MyplaceonlineController
           @total += x.payment_amount
         elsif x.date_period == 1
           @total += x.payment_amount / 12
+        elsif x.date_period == 2
+          @total += x.payment_amount / 6
         end
       end
     end

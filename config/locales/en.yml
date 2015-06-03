@@ -153,6 +153,7 @@ en:
     periods:
       monthly: "Monthly"
       yearly: "Yearly"
+      six_months: "Every 6 Months"
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
