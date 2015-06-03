@@ -5,8 +5,10 @@ class AcneMeasurement < ActiveRecord::Base
   
   def display
     result = ""
-    if !total_pimples.nil?
-      result += total_pimples.to_s
+    if !new_pimples.nil?
+      result += new_pimples.to_s + " " + I18n.t("myplaceonline.acne_measurements.new_pimples")
+    elsif !total_pimples.nil?
+      result += total_pimples.to_s + " " + I18n.t("myplaceonline.acne_measurements.total_pimples")
     end
     result += " (" + Myp.display_datetime(measurement_datetime, User.current_user) + ")"
     result
