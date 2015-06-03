@@ -10,6 +10,9 @@ class PeriodicPayment < ActiveRecord::Base
         result += " " + Myp.get_select_name(date_period, Myp::PERIODS)
       end
       result += ")"
+      if !ended.nil? && Date.today > ended
+        result += " (Ended " + Myp.display_date_short(ended, current_user) + ")"
+      end
     end
     result
   end
