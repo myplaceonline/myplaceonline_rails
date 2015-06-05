@@ -8,8 +8,11 @@ class CompaniesController < MyplaceonlineController
     obj.name
   end
   
-  def self.param_names
-    [:name]
+  def self.param_names(params)
+    [
+      :name,
+      Myp.select_or_create_permit(params[:company], :location_attributes, LocationsController.param_names)
+    ]
   end
 
   def self.reject_if_blank(attributes)
@@ -23,8 +26,7 @@ class CompaniesController < MyplaceonlineController
     
     def obj_params
       params.require(:company).permit(
-        CompaniesController.param_names,
-        select_or_create_permit(:company, :location_attributes, LocationsController.param_names)
+        CompaniesController.param_names(params)
       )
     end
     
