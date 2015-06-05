@@ -103,6 +103,7 @@ Rails.application.routes.draw do
   resources :bank_accounts
   post 'bank_accounts/new'
 
+  get 'credit_cards/total_credit'
   get 'credit_cards/listcashback'
   resources :credit_cards
   post 'credit_cards/new'
