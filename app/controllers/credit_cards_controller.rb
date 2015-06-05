@@ -8,7 +8,7 @@ class CreditCardsController < MyplaceonlineController
   def total_credit
     @total_credit = 0
     all.each do |cc|
-      if !cc.total_credit.nil?
+      if !cc.total_credit.nil? && !cc.is_expired
         @total_credit += cc.total_credit
       end
     end

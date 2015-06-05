@@ -25,6 +25,18 @@ class CreditCard < ActiveRecord::Base
     result
   end
   
+  def is_expired
+    if !expires.nil?
+      if Date.today <= expires
+        false
+      else
+        true
+      end
+    else
+      true
+    end
+  end
+  
   validates :name, presence: true
 
   belongs_to :number_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
