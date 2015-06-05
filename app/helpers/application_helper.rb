@@ -162,6 +162,14 @@ module ApplicationHelper
     end
   end
   
+  def attribute_table_row_currency(name, val)
+    if !val.nil?
+      attribute_table_row(name, Myp.number_to_currency(val))
+    else
+      nil
+    end
+  end
+  
   def attribute_table_row_dimensions(name, val, dimensions_type)
     if !val.blank? && !dimensions_type.nil?
       if dimensions_type == 0

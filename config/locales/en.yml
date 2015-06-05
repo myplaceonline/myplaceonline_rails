@@ -447,6 +447,7 @@ en:
       amex: "American Express"
       list_cashbacks: "List All Cashbacks"
       all_cashbacks: "All Cashbacks"
+      total_credit: "Total Credit"
     bank_accounts:
       name: "Name"
       account_number: "Account Number"

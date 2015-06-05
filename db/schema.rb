@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150602034228) do
+ActiveRecord::Schema.define(version: 20150605195530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -352,6 +352,7 @@ ActiveRecord::Schema.define(version: 20150602034228) do
     t.integer  "expires_encrypted_id"
     t.datetime "defunct"
     t.integer  "card_type"
+    t.decimal  "total_credit",               precision: 10, scale: 2
   end
 
   add_index "credit_cards", ["address_id"], name: "index_credit_cards_on_address_id", using: :btree
@@ -386,7 +387,7 @@ ActiveRecord::Schema.define(version: 20150602034228) do
   add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
