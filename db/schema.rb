@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150606041615) do
+ActiveRecord::Schema.define(version: 20150606045003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -387,7 +387,7 @@ ActiveRecord::Schema.define(version: 20150606041615) do
   add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -1078,6 +1078,18 @@ ActiveRecord::Schema.define(version: 20150606041615) do
   end
 
   add_index "to_dos", ["identity_id"], name: "index_to_dos_on_identity_id", using: :btree
+
+  create_table "trip_pictures", force: true do |t|
+    t.integer  "identity_id"
+    t.integer  "trip_id"
+    t.integer  "identity_file_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "trip_pictures", ["identity_file_id"], name: "index_trip_pictures_on_identity_file_id", using: :btree
+  add_index "trip_pictures", ["identity_id"], name: "index_trip_pictures_on_identity_id", using: :btree
+  add_index "trip_pictures", ["trip_id"], name: "index_trip_pictures_on_trip_id", using: :btree
 
   create_table "trips", force: true do |t|
     t.integer  "location_id"

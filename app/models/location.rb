@@ -50,7 +50,24 @@ class Location < ActiveRecord::Base
     end
     result
   end
-
+  
+  def display_general_region
+    result = ""
+    if !sub_region2.blank?
+      if !result.blank?
+        result += ", "
+      end
+      result += sub_region2
+    end
+    if !sub_region1.blank?
+      if !result.blank?
+        result += ", "
+      end
+      result += sub_region1
+    end
+    result
+  end
+  
   def sub_region1_name
     if !region.blank? && !sub_region1.blank?
       reg = Carmen::Country.coded(region)

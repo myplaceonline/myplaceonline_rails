@@ -16,6 +16,9 @@ class Trip < ActiveRecord::Base
     super
   end
   
+  has_many :trip_pictures, :dependent => :destroy
+  accepts_nested_attributes_for :trip_pictures, allow_destroy: true, reject_if: :all_blank
+  
   def display
     result = Myp.display_date_short_year(started, User.current_user)
     if !ended.nil?

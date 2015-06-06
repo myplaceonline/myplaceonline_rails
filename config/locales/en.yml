@@ -895,3 +895,7 @@ en:
       notes: "Notes"
       location: "Location"
       work: "Work"
+      pictures: "Pictures"
+      picture: "Picture"
+      add_picture: "Add Picture"
+      delete_picture: "Delete Picture"

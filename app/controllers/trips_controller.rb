@@ -7,6 +7,10 @@ class TripsController < MyplaceonlineController
     obj.display
   end
 
+  def may_upload
+    true
+  end
+  
   protected
     def sorts
       ["trips.started DESC"]
@@ -18,7 +22,16 @@ class TripsController < MyplaceonlineController
         :ended,
         :notes,
         :work,
-        select_or_create_permit(:trip, :location_attributes, LocationsController.param_names)
+        select_or_create_permit(:trip, :location_attributes, LocationsController.param_names),
+        trip_pictures_attributes: [
+          :id,
+          :_destroy,
+          identity_file_attributes: [
+            :id,
+            :file,
+            :notes
+          ]
+        ]
       )
     end
 end
