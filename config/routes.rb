@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :jobs
+  post 'jobs/new'
+
   get 'periodic_payments/monthly_total'
   resources :periodic_payments
   post 'periodic_payments/new'
@@ -102,6 +105,7 @@ Rails.application.routes.draw do
 
   resources :bank_accounts
   post 'bank_accounts/new'
+
 
   get 'credit_cards/total_credit'
   get 'credit_cards/listcashback'

@@ -83,6 +83,7 @@ en:
       skin_treatments: "Skin Treatments"
       finance: "Finance"
       periodic_payments: "Periodic Payments"
+      jobs: "Jobs"
     general:
       email: "E-mail"
       password: "Password"
@@ -870,3 +871,9 @@ en:
       date_period: "Period Type"
       payment_amount: "Periodic Payment"
       monthly_total: "Monthly Total"
+    jobs:
+      job_title: "Job Title"
+      started: "Started"
+      ended: "Ended"
+      notes: "Notes"
+      company: "Company"

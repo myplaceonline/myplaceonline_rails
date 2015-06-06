@@ -20,7 +20,7 @@ class BankAccountsController < MyplaceonlineController
         :pin,
         :encrypt,
         select_or_create_permit(:bank_account, :password_attributes, PasswordsController.param_names),
-        select_or_create_permit(:bank_account, :company_attributes, CompaniesController.param_names),
+        select_or_create_permit(:bank_account, :company_attributes, CompaniesController.param_names(params[:bank_account][:company_attributes])),
         select_or_create_permit(:bank_account, :home_address_attributes, LocationsController.param_names)
       )
     end

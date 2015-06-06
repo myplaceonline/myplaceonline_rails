@@ -1,0 +1,17 @@
+<%= myp_text_field f, :job_title, "myplaceonline.jobs.job_title", obj.job_title, autofocus %>
+<%= myp_date_field f, :started, "myplaceonline.jobs.started", obj.started %>
+<%= myp_date_field f, :ended, "myplaceonline.jobs.ended", obj.ended %>
+<%= myp_text_area_markdown f, :notes, "myplaceonline.jobs.notes", obj.notes %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :company,
+    existingobj: obj.company,
+    heading: t("myplaceonline.jobs.company"),
+    objform: "companies/form",
+    existingobjurl: "company_path",
+    searchurl: "/companies.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
