@@ -15,3 +15,16 @@
     autofocus: false
   }
 %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :manager_contact,
+    existingobj: obj.manager_contact,
+    heading: t("myplaceonline.jobs.manager_contact"),
+    objform: "contacts/form",
+    existingobjurl: "contact_path",
+    searchurl: "/contacts.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
