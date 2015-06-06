@@ -1,5 +1,4 @@
-# `region` is the country, `sub_region1` is the state, and `sub_region2`
-# is the city.
+# `region` is country, `sub_region1` is state, and `sub_region2` is city.
 class Location < ActiveRecord::Base
   belongs_to :identity
   validate :at_least_one
@@ -28,6 +27,26 @@ class Location < ActiveRecord::Base
     end
     if !sub_region2.blank?
       result += ", " + sub_region2
+    end
+    result
+  end
+  
+  def display_simple
+    result = name
+    if result.blank?
+      result = ""
+    end
+    if !sub_region2.blank?
+      if !result.blank?
+        result += ", "
+      end
+      result += sub_region2
+    end
+    if !sub_region1.blank?
+      if !result.blank?
+        result += ", "
+      end
+      result += sub_region1
     end
     result
   end

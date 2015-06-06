@@ -431,6 +431,10 @@ module Myp
     self.display_time(time, current_user, :short_date)
   end
   
+  def self.display_date_short_year(time, current_user)
+    self.display_time(time, current_user, :short_date_year)
+  end
+  
   def self.display_date_month_year(time, current_user)
     self.display_time(time, current_user, :month_year)
   end

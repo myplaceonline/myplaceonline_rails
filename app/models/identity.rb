@@ -49,6 +49,7 @@ class Identity < ActiveRecord::Base
   has_many :skin_treatments, :dependent => :destroy
   has_many :periodic_payments, :dependent => :destroy
   has_many :jobs, :dependent => :destroy
+  has_many :trips, :dependent => :destroy
   
   has_many :identity_phones, :foreign_key => 'ref_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_phones, allow_destroy: true, reject_if: :all_blank
@@ -112,6 +113,7 @@ class Identity < ActiveRecord::Base
       :skin_treatments => skin_treatments.to_a.map{|x| x.as_json},
       :periodic_payments => periodic_payments.to_a.sort{ |a,b| a.periodic_payment_name.downcase <=> b.periodic_payment_name.downcase }.map{|x| x.as_json},
       :jobs => jobs.to_a.sort{ |a,b| a.job_title.downcase <=> b.job_title.downcase }.map{|x| x.as_json},
+      :trips => trips.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

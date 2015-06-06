@@ -84,6 +84,7 @@ en:
       finance: "Finance"
       periodic_payments: "Periodic Payments"
       jobs: "Jobs"
+      trips: "Trips"
     general:
       email: "E-mail"
       password: "Password"
@@ -888,3 +889,9 @@ en:
       notes: "Notes"
       salary: "Salary"
       salary_period: "Salary Period"
+    trips:
+      started: "Started"
+      ended: "Ended"
+      notes: "Notes"
+      location: "Location"
+      work: "Work"

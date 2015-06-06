@@ -51,6 +51,7 @@ module Myplaceonline
     Time::DATE_FORMATS[:month_year] = "%B %Y (%m/%y)"
     Time::DATE_FORMATS[:simple_date] = Myplaceonline::DEFAULT_DATE_FORMAT
     Time::DATE_FORMATS[:short_date] = "%b %d"
+    Time::DATE_FORMATS[:short_date_year] = "%b %d, %Y"
     Time::DATE_FORMATS[:short_datetime] = "%b %d %l:%M%p"
     # http://dev.jtsage.com/jQM-DateBox/api/timeOutput/
     Time::DATE_FORMATS[:timebox] = Myplaceonline::JQM_DATEBOX_TIMEBOX_FORMAT
