@@ -23,7 +23,7 @@ class Job < ActiveRecord::Base
   end
 
   belongs_to :manager_contact, class_name: Contact
-  accepts_nested_attributes_for :manager_contact, reject_if: proc { |attributes| CompaniesController.reject_if_blank(attributes) }
+  accepts_nested_attributes_for :manager_contact, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
   
   # http://stackoverflow.com/a/12064875/4135310
   def company_attributes=(attributes)

@@ -54,6 +54,16 @@ class ContactsController < MyplaceonlineController
     ]
   end
 
+  def self.reject_if_blank(attributes)
+    attributes.all?{|key, value|
+      if key == "ref_attributes"
+        value.all?{|key2, value2| value2.blank?}
+      else
+        value.blank?
+      end
+    }
+  end
+
   protected
 
     def sorts
