@@ -183,6 +183,12 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
       html += "<p><textarea id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' class='" + cssclasses + "'></textarea></p>";
     } else if (item.type == "checkbox") {
       html += "<p><label for='" + id + "'>" + item.placeholder + "</label><input type='checkbox' id='" + id + "' name='" + name + "' class='" + cssclasses + "' value='1' /></p>";
+    } else if (item.type == "select") {
+      html += "<p><select id='" + id + "' name='" + name + "' class='" + cssclasses + "'><option value=''>" + item.placeholder + "</option>";
+      for (var j = 0; j < item.options.length; j++) {
+        html += "<option value='" + item.options[j][1] + "'>" + item.options[j][0] + "</option>";
+      }
+      html += "</select></p>";
     } else if (item.type == "renderpartial") {
       item.namePrefix = name;
       item.id = "remote_placeholder_" + id;

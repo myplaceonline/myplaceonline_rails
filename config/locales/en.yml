@@ -878,3 +878,13 @@ en:
       notes: "Notes"
       company: "Company"
       manager_contact: "Manager"
+      job_salaries: "Salaries"
+      job_salary: "Salary"
+      add_salary: "Add Salary"
+      delete_salary: "Delete Salary"
+    job_salaries:
+      started: "Started"
+      ended: "Ended"
+      notes: "Notes"
+      salary: "Salary"
+      salary_period: "Salary Period"

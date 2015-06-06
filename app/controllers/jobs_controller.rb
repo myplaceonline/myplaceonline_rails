@@ -19,7 +19,16 @@ class JobsController < MyplaceonlineController
         :ended,
         :notes,
         select_or_create_permit(:job, :company_attributes, CompaniesController.param_names(params[:job][:company_attributes])),
-        select_or_create_permit(:job, :manager_contact_attributes, ContactsController.param_names)
+        select_or_create_permit(:job, :manager_contact_attributes, ContactsController.param_names),
+        job_salaries_attributes: [
+          :id,
+          :_destroy,
+          :started,
+          :ended,
+          :notes,
+          :salary,
+          :salary_period
+        ]
       )
     end
 end

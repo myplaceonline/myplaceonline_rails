@@ -6,5 +6,13 @@
   <%= attribute_table_row_markdown(t("myplaceonline.jobs.notes"), @obj.notes) %>
   <%= attribute_table_row_reference(t("myplaceonline.jobs.company"), "company_path", @obj.company) %>
   <%= attribute_table_row_reference(t("myplaceonline.jobs.manager_contact"), "contact_path", @obj.manager_contact) %>
+  <% @obj.job_salaries.each do |js| %>
+    <%= table_row_heading(t("myplaceonline.jobs.job_salaries")) %>
+    <%= attribute_table_row_date(t("myplaceonline.job_salaries.started"), js.started) %>
+    <%= attribute_table_row_date(t("myplaceonline.job_salaries.ended"), js.ended) %>
+    <%= attribute_table_row_currency(t("myplaceonline.job_salaries.salary"), js.salary) %>
+    <%= attribute_table_row_select(t("myplaceonline.job_salaries.salary_period"), js.salary_period, Myp::PERIODS) %>
+    <%= attribute_table_row_markdown(t("myplaceonline.job_salaries.notes"), js.notes) %>
+  <% end %>
 
 <% end %>

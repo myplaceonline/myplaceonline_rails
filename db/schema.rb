@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150605222951) do
+ActiveRecord::Schema.define(version: 20150606030832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -387,7 +387,7 @@ ActiveRecord::Schema.define(version: 20150605222951) do
   add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -613,6 +613,21 @@ ActiveRecord::Schema.define(version: 20150605222951) do
 
   add_index "identity_phones", ["identity_id"], name: "index_identity_phones_on_identity_id", using: :btree
   add_index "identity_phones", ["ref_id"], name: "index_identity_phones_on_ref_id", using: :btree
+
+  create_table "job_salaries", force: true do |t|
+    t.integer  "identity_id"
+    t.integer  "job_id"
+    t.date     "started"
+    t.date     "ended"
+    t.text     "notes"
+    t.decimal  "salary",        precision: 10, scale: 2
+    t.integer  "salary_period"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "job_salaries", ["identity_id"], name: "index_job_salaries_on_identity_id", using: :btree
+  add_index "job_salaries", ["job_id"], name: "index_job_salaries_on_job_id", using: :btree
 
   create_table "jobs", force: true do |t|
     t.string   "job_title"

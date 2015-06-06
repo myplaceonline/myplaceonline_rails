@@ -34,6 +34,9 @@ class Job < ActiveRecord::Base
     super
   end
 
+  has_many :job_salaries, -> { order('started DESC') }, :dependent => :destroy
+  accepts_nested_attributes_for :job_salaries, allow_destroy: true, reject_if: :all_blank
+
   before_create :do_before_save
   before_update :do_before_save
 
