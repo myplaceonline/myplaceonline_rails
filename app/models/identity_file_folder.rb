@@ -33,4 +33,40 @@ class IdentityFileFolder < ActiveRecord::Base
   def do_before_save
     Myp.set_common_model_properties(self)
   end
+  
+  def self.find_or_create(names, parent = nil)
+    names = names.reverse
+    while names.length > 0
+      name = names.pop
+      if parent.nil?
+        folders = IdentityFileFolder.where(
+          identity_id: User.current_user.primary_identity.id,
+          folder_name: name
+        )
+        if folders.length == 0
+          parent = IdentityFileFolder.new(folder_name: name, identity_id: User.current_user.primary_identity.id)
+          parent.save!
+        elsif folders.length == 1
+          parent = folders[0]
+        else
+          raise "TODO"
+        end
+      else
+        folders = IdentityFileFolder.where(
+          identity_id: User.current_user.primary_identity.id,
+          folder_name: name,
+          parent_folder_id: parent.id
+        )
+        if folders.length == 0
+          parent = IdentityFileFolder.new(folder_name: name, identity_id: User.current_user.primary_identity.id, parent_folder_id: parent.id)
+          parent.save!
+        elsif folders.length == 1
+          parent = folders[0]
+        else
+          raise "TODO"
+        end
+      end
+    end
+    parent
+  end
 end

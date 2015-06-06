@@ -34,4 +34,12 @@ class TripsController < MyplaceonlineController
         ]
       )
     end
+    
+    def presave
+      @obj.trip_pictures.each do |pic|
+        if pic.identity_file.folder.nil?
+          pic.identity_file.folder = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.trips"), @obj.location.display_general_region])
+        end
+      end
+    end
 end
