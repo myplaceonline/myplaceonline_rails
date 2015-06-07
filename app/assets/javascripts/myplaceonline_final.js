@@ -310,6 +310,7 @@ function form_move_item(obj, direction) {
   }
   
   form_set_positions(obj);
+  return false;
 }
 
 function form_get_item_wrappers(obj) {
