@@ -488,4 +488,33 @@ module ApplicationHelper
   def single_quote_escape(str)
     str.sub("'", "")
   end
+  
+  def find_category_by_url
+    result = nil
+    url = request.path
+    if url.length > 1 and url[0] == "/"
+      url = url[1..-1]
+      i = url.index('/')
+      if !i.nil?
+        url = url[0..i-1]
+      end
+      i = url.index('?')
+      if !i.nil?
+        url = url[0..i-1]
+      end
+      if url.length > 0
+        result = Myp.categories[url.to_sym]
+      end
+    end
+    result
+  end
+  
+  def header_icon
+    category = find_category_by_url
+    if category.nil? || category.icon.blank?
+      "myplaceonlinelogo.gif"
+    else
+      category.icon
+    end
+  end
 end
