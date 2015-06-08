@@ -62,6 +62,7 @@ class Ability
     can :manage, PeriodicPayment, :identity => identity
     can :manage, Job, :identity => identity
     can :manage, Trip, :identity => identity
+    can :manage, Passport, :identity => identity
     
     # Define abilities for the passed in user here. For example:
     #

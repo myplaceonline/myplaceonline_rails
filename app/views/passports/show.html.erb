@@ -1,0 +1,8 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.passports.region"), @obj.region) %>
+  <%= attribute_table_row(t("myplaceonline.passports.passport_number"), @obj.passport_number) %>
+  <%= attribute_table_row_date(t("myplaceonline.passports.expires"), @obj.expires) %>
+  <%= attribute_table_row_date(t("myplaceonline.passports.issued"), @obj.issued) %>
+  
+<% end %>

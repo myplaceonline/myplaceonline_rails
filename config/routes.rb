@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :passports
+  post 'passports/new'
+
   resources :trips
   post 'trips/new'
 

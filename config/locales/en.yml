@@ -85,6 +85,7 @@ en:
       periodic_payments: "Periodic Payments"
       jobs: "Jobs"
       trips: "Trips"
+      passports: "Passports"
     general:
       email: "E-mail"
       password: "Password"
@@ -900,3 +901,8 @@ en:
       picture: "Picture"
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
+    passports:
+      region: "Country"
+      passport_number: "Passport Number"
+      expires: "Expires"
+      issued: "Issued"
