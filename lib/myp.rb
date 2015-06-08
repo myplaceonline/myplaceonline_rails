@@ -709,4 +709,19 @@ module Myp
   def self.number_to_currency(x)
     ActionController::Base.helpers.number_to_currency(x)
   end
+  
+  def self.migration_add_filtertext(category_name, filtertext)
+    category = Category.where(name: category_name).first
+    if category.nil?
+      raise "Category not found"
+    end
+    if category.additional_filtertext.blank?
+      category.additional_filtertext = filtertext
+      puts "Set filtertext to #{filtertext}"
+    else
+      category.additional_filtertext += " " + filtertext
+      puts "Updated filtertext to #{category.additional_filtertext}"
+    end
+    category.save!
+  end
 end
