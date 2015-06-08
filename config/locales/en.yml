@@ -755,6 +755,7 @@ en:
       notes: "Notes"
       situps: "Situps"
       pushups: "Pushups"
+      havent_exercised_for: "Last Exercise %{delta} Ago"
     sun_exposures:
       exposure_start: "Start Date/Time"
       exposure_end: "End Date/Time"

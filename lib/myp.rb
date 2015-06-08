@@ -496,6 +496,7 @@ module Myp
     result = Array.new
 
     threshold = 60.days.from_now
+    exercise_threshold = 7.days.ago
     timenow = Time.now
     datenow = Date.today
 
@@ -534,6 +535,14 @@ module Myp
           ), "/contacts/" + x.id.to_s, bday_this_year))
         end
       end
+    end
+    
+    last_exercise = Exercise.where("identity_id = ? and exercise_start is not null", 1).order('exercise_start DESC').limit(1).first
+    if !last_exercise.nil? and last_exercise.exercise_start < exercise_threshold
+      result.push(DueItem.new(I18n.t(
+        "myplaceonline.exercises.havent_exercised_for",
+        delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, last_exercise.exercise_start).in_general)
+      ), "/exercises/" + last_exercise.id.to_s, last_exercise.exercise_start))
     end
     
     # sort due items
