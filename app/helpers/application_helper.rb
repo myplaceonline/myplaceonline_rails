@@ -420,13 +420,13 @@ module ApplicationHelper
     ).html_safe
   end
   
-  def myp_check_box_tag(name, placeholder, checked, autofocus = false, input_classes = nil)
+  def myp_check_box_tag(name, placeholder, checked, autofocus = false, input_classes = nil, onclick = "")
     if is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
     content_tag(
       :p,
-      check_box_tag(name, true, checked, class: myp_field_classes(autofocus, input_classes)) +
+      check_box_tag(name, true, checked, class: myp_field_classes(autofocus, input_classes), :onclick=> onclick) +
       label_tag(name, placeholder)
     ).html_safe
   end

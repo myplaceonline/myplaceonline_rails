@@ -147,3 +147,7 @@ div.ui-checkbox + label {
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
    opacity:  1;
 }
+
+.hiding {
+  font-style: italic;
+}

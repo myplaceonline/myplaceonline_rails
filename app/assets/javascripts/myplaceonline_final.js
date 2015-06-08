@@ -409,3 +409,33 @@ function quick_feedback(prompt_text) {
     });
   }
 }
+
+function addClass(obj, className) {
+  if (!obj.hasClass(className)) {
+    obj.addClass(className);
+  }
+}
+
+function removeClass(obj, className) {
+  if (obj.hasClass(className)) {
+    obj.removeClass(className);
+  }
+}
+
+function hide_if_checked(obj) {
+  if (obj.checked) {
+    addClass($(obj).parent().children("label").first(), "hiding");
+    // TODO how to pass object to function?
+    myp.objectToHide = $(obj).parent();
+    var hideTimeout = window.setTimeout(function() {
+      myp.objectToHide.fadeOut();
+    }, 1000);
+    $(obj).data("myplaceonline-is-hiding", hideTimeout);
+  } else {
+    if ($(obj).data("myplaceonline-is-hiding")) {
+      window.clearTimeout($(obj).data("myplaceonline-is-hiding"));
+      removeClass($(obj).parent().children("label").first(), "hiding");
+    }
+  }
+  return false;
+}
