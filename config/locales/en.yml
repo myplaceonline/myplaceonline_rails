@@ -933,3 +933,4 @@ en:
     graphs:
       graph: "Graph"
       generate: "Generate"
+      series_source: "Series #%{series_number} Source"

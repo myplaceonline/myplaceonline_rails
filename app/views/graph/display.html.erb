@@ -1,6 +1,10 @@
 <% content_for :heading do -%><%= t('myplaceonline.graphs.graph') %><% end -%>
 <h1><%= t('myplaceonline.graphs.graph') %></h1>
 <%= flashes! %>
-<%= form_tag graph_display_path, method: :get do %>
+<%= form_tag graph_display_path, method: :get do |f| %>
+
+  <%= label_tag 'series_1_source', t("myplaceonline.graphs.series_source", series_number: 1) %>
+  <%= select_tag 'series_1_source', options_for_select(@sources), include_blank: true %>
+
   <%= submit_tag t("myplaceonline.graphs.generate") %>
 <% end %>
