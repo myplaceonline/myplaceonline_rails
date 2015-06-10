@@ -7,3 +7,4 @@
 #= require myplaceonline_final
 #= require jquery-mobile-datebox
 #= require quill.min
+#= require dygraph-combined

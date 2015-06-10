@@ -8,3 +8,18 @@
 
   <%= submit_tag t("myplaceonline.graphs.generate") %>
 <% end %>
+<% if !@graphdata.blank? %>
+  <div id="graphdiv"></div>
+  <script type="text/javascript">
+    onPageLoad(function() {
+      maybeFocus(".autofocus");
+      var g = new Dygraph(
+        document.getElementById("graphdiv"),
+
+        // CSV or path to a CSV file.
+        <%= @graphdata.to_json.html_safe %>
+
+      );
+    });
+  </script>
+<% end %>
