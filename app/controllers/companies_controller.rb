@@ -11,6 +11,7 @@ class CompaniesController < MyplaceonlineController
   def self.param_names(params)
     [
       :name,
+      :notes,
       Myp.select_or_create_permit(params, :location_attributes, LocationsController.param_names)
     ]
   end
@@ -34,11 +35,5 @@ class CompaniesController < MyplaceonlineController
       params.require(:company).permit(
         CompaniesController.param_names(params[:company])
       )
-    end
-    
-    def create_presave
-      if !@obj.location.nil?
-        @obj.location.identity = current_user.primary_identity
-      end
     end
 end

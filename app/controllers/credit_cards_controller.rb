@@ -65,12 +65,6 @@ class CreditCardsController < MyplaceonlineController
       if !@obj.name.blank? && !@obj.number.blank? && @obj.number.length >= 4
         @obj.name += " (" + @obj.number.last(4) + ")"
       end
-      if !@obj.password.nil?
-        @obj.password.identity = current_user.primary_identity
-      end
-      if !@obj.address.nil?
-        @obj.address.identity = current_user.primary_identity
-      end
       @obj.number_finalize
       @obj.security_code_finalize
       @obj.pin_finalize
