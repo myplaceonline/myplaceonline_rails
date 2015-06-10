@@ -65,6 +65,12 @@ class Location < ActiveRecord::Base
       end
       result += sub_region1
     end
+    if result.blank?
+      result = name
+    end
+    if result.blank?
+      result = address1
+    end
     result
   end
   
