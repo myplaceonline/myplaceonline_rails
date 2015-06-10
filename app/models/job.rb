@@ -26,10 +26,10 @@ class Job < ActiveRecord::Base
   accepts_nested_attributes_for :manager_contact, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
   
   # http://stackoverflow.com/a/12064875/4135310
-  def company_attributes=(attributes)
+  def manager_contact_attributes=(attributes)
     if !attributes['id'].blank?
       attributes.keep_if {|innerkey, innervalue| innerkey == "id" }
-      self.company = Company.find(attributes['id'])
+      self.manager_contact = Contact.find(attributes['id'])
     end
     super
   end
