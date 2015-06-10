@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  get 'graph/display'
+
   resources :passports
   post 'passports/new'
 
@@ -111,7 +114,6 @@ Rails.application.routes.draw do
 
   resources :bank_accounts
   post 'bank_accounts/new'
-
 
   get 'credit_cards/total_credit'
   get 'credit_cards/listcashback'

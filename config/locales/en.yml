@@ -930,3 +930,6 @@ en:
       grandfather: "Grandfather"
     identity_relationships:
       relationship_type: "Relationship"
+    graphs:
+      graph: "Graph"
+      generate: "Generate"

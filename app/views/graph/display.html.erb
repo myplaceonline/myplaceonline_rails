@@ -1,0 +1,6 @@
+<% content_for :heading do -%><%= t('myplaceonline.graphs.graph') %><% end -%>
+<h1><%= t('myplaceonline.graphs.graph') %></h1>
+<%= flashes! %>
+<%= form_tag graph_display_path, method: :get do %>
+  <%= submit_tag t("myplaceonline.graphs.generate") %>
+<% end %>
