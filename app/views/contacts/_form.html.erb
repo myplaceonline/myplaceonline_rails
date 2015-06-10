@@ -119,6 +119,52 @@
   <%=
     render layout: 'myplaceonline/childproperties', locals: {
       f: identity_fields,
+      heading: t("myplaceonline.identities.relationships"),
+      childpropertiesname: :identity_relationships,
+      childproperties: obj.contact_identity.identity_relationships,
+      deletebutton: t("myplaceonline.identities.delete_relationship"),
+      addbutton: t("myplaceonline.identities.add_relationship"),
+      expanded: obj.contact_identity.identity_relationships.length > 0,
+      formjson: [
+        {
+          type: :renderpartial,
+          name: :contact_attributes,
+          partial: 'myplaceonline/select_or_create',
+          heading: t("myplaceonline.contacts.contact"),
+          objform: "contacts/form",
+          existingobjurl: "contact_path",
+          searchurl: "/contacts.json?perpage=0",
+          edit: true,
+          autofocus: true
+        },
+        {
+          type: 'select',
+          name: 'relationship_type',
+          options: IdentityRelationship::RELATIONSHIPS.map{|x,y| [I18n.t(x),y]}.as_json,
+          placeholder: t("myplaceonline.identity_relationships.relationship_type")
+        }
+      ]
+    } do |child_fields, childproperty|
+  %>
+    <%=
+      render partial: 'myplaceonline/select_or_create', locals: {
+        f: child_fields,
+        name: :contact_attributes,
+        existingobj: childproperty.contact,
+        heading: t("myplaceonline.contacts.contact"),
+        objform: "contacts/form",
+        existingobjurl: "contact_path",
+        searchurl: "/contacts.json?perpage=0",
+        edit: true,
+        autofocus: false
+      }
+    %>
+    <%= myp_select(child_fields, :relationship_type, "myplaceonline.identity_relationships.relationship_type", Myp.translate_options(IdentityRelationship::RELATIONSHIPS), childproperty.relationship_type) %>
+  <% end %>
+  
+  <%=
+    render layout: 'myplaceonline/childproperties', locals: {
+      f: identity_fields,
       heading: t("myplaceonline.identities.drivers_licenses"),
       childpropertiesname: :identity_drivers_licenses,
       childproperties: obj.contact_identity.identity_drivers_licenses,

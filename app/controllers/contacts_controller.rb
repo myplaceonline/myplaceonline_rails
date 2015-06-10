@@ -48,6 +48,17 @@ class ContactsController < MyplaceonlineController
                 :_destroy
               ]
             }
+          ],
+          identity_relationships_attributes: [
+            :id,
+            :relationship_type,
+            :_destroy,
+            {
+              contact_attributes: [
+                :id,
+                :_destroy
+              ]
+            }
           ]
         }
       ]

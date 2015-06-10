@@ -18,6 +18,13 @@
   <% @obj.contact_identity.identity_locations.each do |identity_location| %>
     <%= attribute_table_row_reference(t("myplaceonline.identities.location"), "location_path", identity_location.location) %>
   <% end %>
+  <% @obj.contact_identity.identity_relationships.each do |identity_relationship| %>
+    <% if !identity_relationship.relationship_type.nil? %>
+      <%= attribute_table_row_reference(Myp.get_select_name(identity_relationship.relationship_type, IdentityRelationship::RELATIONSHIPS), "contact_path", identity_relationship.contact) %>
+    <% else %>
+      <%= attribute_table_row_reference(t("myplaceonline.identities.relationship"), "contact_path", identity_relationship.contact) %>
+    <% end %>
+  <% end %>
   <% @obj.contact_identity.identity_drivers_licenses.each do |identity_drivers_license| %>
     <%= table_row_heading(t("myplaceonline.identities.drivers_license")) %>
     <%= attribute_table_row(t("myplaceonline.identities.license_number"), identity_drivers_license.identifier) %>

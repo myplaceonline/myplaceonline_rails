@@ -64,6 +64,9 @@ class Identity < ActiveRecord::Base
   has_many :identity_drivers_licenses, :foreign_key => 'ref_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_drivers_licenses, allow_destroy: true, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
   
+  has_many :identity_relationships, :foreign_key => 'ref_id', :dependent => :destroy
+  accepts_nested_attributes_for :identity_relationships, allow_destroy: true, reject_if: :all_blank
+  
   def as_json(options={})
     super.as_json(options).merge({
       :category_points_amounts => category_points_amounts.to_a.map{|x| x.as_json},
