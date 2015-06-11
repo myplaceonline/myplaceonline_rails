@@ -59,5 +59,8 @@ module Myplaceonline
     # http://www.iso.org/iso/iso8601
     Date::DATE_FORMATS[:iso8601] = "%Y-%m-%d"
     Time::DATE_FORMATS[:iso8601] = "%Y-%m-%d"
+    
+    Date::DATE_FORMATS[:dygraph] = "%Y-%m-%d"
+    Time::DATE_FORMATS[:dygraph] = "%Y-%m-%d %H:%M:%S"
   end
 end
