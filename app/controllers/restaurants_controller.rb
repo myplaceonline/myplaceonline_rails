@@ -18,7 +18,6 @@ class RestaurantsController < MyplaceonlineController
         max = @result.businesses.length
       end
       @business = @result.businesses[rand(max)]
-      puts "Business result: " + @business.url.gsub(/^http:/, "https:")
     end
   end
 end
