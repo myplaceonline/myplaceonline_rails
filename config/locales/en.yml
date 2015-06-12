@@ -934,3 +934,8 @@ en:
       graph: "Graph"
       generate: "Generate"
       series_source: "Series #%{series_number} Source"
+    restaurants:
+      random: "Random Restaurant"
+      search: "Search"
+      location: "Location"
+      submit: "Roll"
