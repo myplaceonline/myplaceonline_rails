@@ -6,5 +6,5 @@ if !ENV['YELP_CONSUMER_KEY'].nil?
     config.token_secret = ENV['YELP_TOKEN_SECRET']
   end
 else
-  puts "Warning: Yelp API keys not configured: YELP_CONSUMER_KEY=\"\" YELP_CONSUMER_SECRET=\"\" YELP_TOKEN=\"\" YELP_TOKEN_SECRET=\"\""
+  #puts "Warning: Yelp API keys not configured: YELP_CONSUMER_KEY=\"\" YELP_CONSUMER_SECRET=\"\" YELP_TOKEN=\"\" YELP_TOKEN_SECRET=\"\""
 end
