@@ -4,7 +4,12 @@
 <%= form_tag graph_display_path, method: :get do |f| %>
 
   <%= label_tag 'series_1_source', t("myplaceonline.graphs.series_source", series_number: 1) %>
-  <%= select_tag 'series_1_source', options_for_select(@sources), include_blank: true %>
+  <%= select_tag 'series_1_source', options_for_select(@sources), include_blank: true, class: "graph_source" %>
+
+  <%= label_tag 'series_1_values', t("myplaceonline.graphs.series_values", series_number: 1) %>
+  <div class="values_container">
+  <%= select_tag 'series_1_values', options_for_select(@values), include_blank: true, class: "graph_values" %>
+  </div>
 
   <%= submit_tag t("myplaceonline.graphs.generate") %>
 <% end %>

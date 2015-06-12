@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'restaurants/random'
   post 'restaurants/random'
 
+  get 'graph/source_values'
   get 'graph/display'
 
   resources :passports

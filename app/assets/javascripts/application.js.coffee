@@ -15,13 +15,23 @@ $ ->
     $('select', select_wrapper).attr('disabled', true)
 
     subregion_code = $(this).val()
-
-    url = 
     
     $.get(
       "/api/subregions?regionstr=#{subregion_code}",
       (data) ->
         $(".subregionwrapper").replaceWith(data)
+        ensureStyledPage()
+    )
+  )
+
+$ ->
+  $('body').on('change', 'select.graph_source', ->
+    source = $(this).val()
+    id = $(this).attr("id")
+    $.get(
+      "/graph/source_values?id=#{id}&source=#{source}",
+      (data) ->
+        $(".values_container").replaceWith(data)
         ensureStyledPage()
     )
   )

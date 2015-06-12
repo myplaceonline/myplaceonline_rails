@@ -4,13 +4,23 @@
   regionstr ||= default_region
   subregion ||= nil
   region = Carmen::Country.coded(regionstr)
+  
+  if defined?(f)
+    subregion_select_field = myp_subregion_select_field(f, :sub_region1, "myplaceonline.general.sub_region1", region, subregion)
+    subregion_text_field = myp_text_field(f, :sub_region1, "myplaceonline.general.sub_region1", subregion)
+  else
+    form_for Location.new do |f|
+      subregion_select_field = myp_subregion_select_field(f, :sub_region1, "myplaceonline.general.sub_region1", region, subregion)
+      subregion_text_field = myp_text_field(f, :sub_region1, "myplaceonline.general.sub_region1", subregion)
+    end
+  end
   %>
 
   <% if region.nil? %>
     <p><em><%= t("myplaceonline.general.select_region") %></em></p>
   <% elsif region.subregions? %>
-    <%= myp_subregion_select_field(f, :sub_region1, "myplaceonline.general.sub_region1", region, subregion) %>
+    <%= subregion_select_field %>
   <% else %>
-    <%= myp_text_field(f, :sub_region1, "myplaceonline.general.sub_region1", subregion) %>
+    <%= subregion_text_field %>
   <% end %>
 </div>

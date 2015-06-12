@@ -1,23 +1,31 @@
 class GraphController < MyplaceonlineController
-  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:display]
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:display, :source_values]
 
   def display
     categories = Myp.categories
+    @values = get_values()
     @sources = categories.map{|k,v| I18n.t("myplaceonline.category." + v.name) }.sort
-    series_numbers = params.delete_if{|k,v| !k.start_with?("series_") || !k.end_with?("_source") }.to_a.map{|x| x[0][x[0].index('_')+1..x[0].rindex('_')-1].to_i}.sort
+    series_numbers = params.dup.delete_if{|k,v| !k.start_with?("series_") || !k.end_with?("_source") }.to_a.map{|x| x[0][x[0].index('_')+1..x[0].rindex('_')-1].to_i}.sort
     data = Hash.new
     series_numbers.each do |series_number|
       series_index = series_number - 1
       source = params["series_" + series_number.to_s + "_source"]
+      value_name = params["series_" + series_number.to_s + "_values"]
       found_source = categories.find{|k,v| I18n.t("myplaceonline.category." + v.name) == source}
       if !found_source.nil?
         source_category = found_source[1]
-        category_class = Object.const_get(source.singularize)
+        category_class = Object.const_get(source.singularize.gsub(" ", ""))
+        if category_class.attribute_names.find{|x| x == value_name}.nil?
+          value_name = nil
+        end
         category_class.where(
           identity_id: current_user.primary_identity.id
         ).each do |record|
           x_axis = record.updated_at
           y_value = 1
+          if !value_name.blank?
+            y_value = record.send(value_name)
+          end
           series_array = data[x_axis]
           if series_array.nil?
             series_array = Array.new
@@ -44,4 +52,20 @@ class GraphController < MyplaceonlineController
       end
     end
   end
+  
+  def source_values
+    @values = get_values(params[:source])
+    render :layout => false
+  end
+  
+  protected
+  
+    def get_values(source = nil)
+      result = [I18n.t("myplaceonline.general.created"), I18n.t("myplaceonline.general.last_updated")]
+      if !source.blank?
+        category_class = Object.const_get(source.singularize.gsub(" ", ""))
+        result += category_class.attribute_names
+      end
+      result
+    end
 end
