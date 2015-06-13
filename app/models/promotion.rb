@@ -3,7 +3,14 @@ class Promotion < ActiveRecord::Base
   validates :promotion_name, presence: true
   
   def display
-    promotion_name
+    result = promotion_name
+    if !promotion_amount.nil?
+      result += " (" + Myp.number_to_currency(promotion_amount) + ")"
+    end
+    if !expires.nil?
+      result += " (" + I18n.t("myplaceonline.promotions.expires") + " " + Myp.display_date_short_year(expires, User.current_user) + ")"
+    end
+    result
   end
   
   before_create :do_before_save

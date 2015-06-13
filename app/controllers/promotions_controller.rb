@@ -9,7 +9,7 @@ class PromotionsController < MyplaceonlineController
 
   protected
     def sorts
-      ["lower(promotions.promotion_name) ASC"]
+      ["promotions.expires ASC", "lower(promotions.promotion_name) ASC"]
     end
 
     def obj_params
