@@ -947,3 +947,4 @@ en:
       expires: "Expires"
       promotion_amount: "Amount"
       notes: "Notes"
+      expires_soon: "Promotion %{promotion_name} for %{promotion_amount} in %{expires_when}"

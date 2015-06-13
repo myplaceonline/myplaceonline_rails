@@ -545,6 +545,15 @@ module Myp
       ), "/exercises/" + last_exercise.id.to_s, last_exercise.exercise_start))
     end
     
+    Promotion.where("identity_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, threshold).each do |promotion|
+      result.push(DueItem.new(I18n.t(
+        "myplaceonline.promotions.expires_soon",
+        promotion_name: promotion.promotion_name,
+        promotion_amount: Myp.number_to_currency(promotion.promotion_amount.nil? ? 0 : promotion.promotion_amount),
+        expires_when: Myp.time_difference_in_general_human(TimeDifference.between(timenow, promotion.expires).in_general)
+      ), "/promotions/" + promotion.id.to_s, promotion.expires))
+    end
+    
     # sort due items
     result = result.sort{ |x,y| x.date <=> y.date }
 
