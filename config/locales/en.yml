@@ -86,6 +86,7 @@ en:
       jobs: "Jobs"
       trips: "Trips"
       passports: "Passports"
+      promotions: "Promotions"
     general:
       email: "E-mail"
       password: "Password"
@@ -940,3 +941,9 @@ en:
       search: "Search"
       location: "Location"
       submit: "Roll"
+    promotions:
+      promotion_name: "Description"
+      started: "Started"
+      expires: "Expires"
+      promotion_amount: "Amount"
+      notes: "Notes"

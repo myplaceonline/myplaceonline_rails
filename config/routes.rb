@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :promotions
+  post 'promotions/new'
+
   get 'restaurants/random'
   post 'restaurants/random'
 
