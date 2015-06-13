@@ -87,6 +87,7 @@ en:
       trips: "Trips"
       passports: "Passports"
       promotions: "Promotions"
+      reward_programs: "Reward Programs"
     general:
       email: "E-mail"
       password: "Password"
@@ -947,4 +948,12 @@ en:
       expires: "Expires"
       promotion_amount: "Amount"
       notes: "Notes"
-      expires_soon: "Promotion %{promotion_name} for %{promotion_amount} in %{expires_when}"
+      expires_soon: "Promotion: %{promotion_name} for %{promotion_amount} in %{expires_when}"
+    reward_programs:
+      reward_program_name: "Reward Program Name"
+      reward_program_number: "Reward Program Number"
+      reward_program_status: "Current Status"
+      started: "Started"
+      ended: "Ended"
+      notes: "Notes"
+      password: "Password"

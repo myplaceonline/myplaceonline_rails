@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :reward_programs
+  post 'reward_programs/new'
+
   resources :promotions
   post 'promotions/new'
 

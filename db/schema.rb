@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150613161307) do
+ActiveRecord::Schema.define(version: 20150613174213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1034,6 +1034,22 @@ ActiveRecord::Schema.define(version: 20150613161307) do
   add_index "recreational_vehicles", ["identity_id"], name: "index_recreational_vehicles_on_identity_id", using: :btree
   add_index "recreational_vehicles", ["location_purchased_id"], name: "index_recreational_vehicles_on_location_purchased_id", using: :btree
   add_index "recreational_vehicles", ["vehicle_id"], name: "index_recreational_vehicles_on_vehicle_id", using: :btree
+
+  create_table "reward_programs", force: true do |t|
+    t.string   "reward_program_name"
+    t.date     "started"
+    t.date     "ended"
+    t.string   "reward_program_number"
+    t.string   "reward_program_status"
+    t.text     "notes"
+    t.integer  "password_id"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reward_programs", ["identity_id"], name: "index_reward_programs_on_identity_id", using: :btree
+  add_index "reward_programs", ["password_id"], name: "index_reward_programs_on_password_id", using: :btree
 
   create_table "skin_treatments", force: true do |t|
     t.datetime "treatment_time"
