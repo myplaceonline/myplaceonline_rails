@@ -954,6 +954,6 @@ en:
       reward_program_number: "Reward Program Number"
       reward_program_status: "Current Status"
       started: "Started"
-      ended: "Ended"
+      ended: "Ends"
       notes: "Notes"
       password: "Password"
