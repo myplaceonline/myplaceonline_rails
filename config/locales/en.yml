@@ -972,3 +972,5 @@ en:
       max_cpu_speed: "Maximum CPU Speed (GHz)"
       notes: "Notes"
       manufacturer: "Manufacturer"
+      administrator: "Administrator/Root User"
+      main_user: "Main User"

@@ -23,3 +23,29 @@
 <%= myp_check_box f, :hyperthreaded, "myplaceonline.computers.hyperthreaded" %>
 <%= myp_decimal_field f, :max_cpu_speed, "myplaceonline.computers.max_cpu_speed", obj.max_cpu_speed %>
 <%= myp_text_area_markdown f, :notes, "myplaceonline.computers.notes", obj.notes %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :administrator,
+    existingobj: obj.administrator,
+    heading: t("myplaceonline.computers.administrator"),
+    objform: "passwords/form",
+    existingobjurl: "password_path",
+    searchurl: "/passwords.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :main_user,
+    existingobj: obj.main_user,
+    heading: t("myplaceonline.computers.main_user"),
+    objform: "passwords/form",
+    existingobjurl: "password_path",
+    searchurl: "/passwords.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>

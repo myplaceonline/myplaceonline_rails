@@ -13,5 +13,7 @@
   <%= attribute_table_row_boolean(t("myplaceonline.computers.hyperthreaded"), @obj.hyperthreaded) %>
   <%= attribute_table_row(t("myplaceonline.computers.max_cpu_speed"), @obj.max_cpu_speed) %>
   <%= attribute_table_row_markdown(t("myplaceonline.computers.notes"), @obj.notes) %>
+  <%= attribute_table_row_reference(t("myplaceonline.computers.administrator"), "password_path", @obj.administrator) %>
+  <%= attribute_table_row_reference(t("myplaceonline.computers.main_user"), "password_path", @obj.main_user) %>
   
 <% end %>

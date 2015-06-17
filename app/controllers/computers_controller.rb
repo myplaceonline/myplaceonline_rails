@@ -26,7 +26,9 @@ class ComputersController < MyplaceonlineController
         :hyperthreaded,
         :max_cpu_speed,
         :notes,
-        select_or_create_permit(:computer, :manufacturer_attributes, CompaniesController.param_names(params[:computer][:manufacturer_attributes]))
+        select_or_create_permit(:computer, :manufacturer_attributes, CompaniesController.param_names(params[:computer][:manufacturer_attributes])),
+        select_or_create_permit(:computer, :administrator_attributes, PasswordsController.param_names),
+        select_or_create_permit(:computer, :main_user_attributes, PasswordsController.param_names)
       )
     end
 end
