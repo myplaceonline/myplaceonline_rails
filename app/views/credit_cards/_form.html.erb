@@ -87,7 +87,7 @@
 %>
   <%= child_fields.fields_for :cashback, childproperty.cashback do |inner_child_fields| %>
     <%= myp_decimal_field inner_child_fields, :cashback_percentage, "myplaceonline.cashback.cashback_percentage", childproperty.cashback.cashback_percentage %>
-    <%= myp_check_box inner_child_fields, :default_cashback, "myplaceonline.cashback.default_cashback", childproperty.cashback.default_cashback %>
+    <%= myp_check_box inner_child_fields, :default_cashback, "myplaceonline.cashback.default_cashback" %>
     <%= myp_text_field inner_child_fields, :applies_to, "myplaceonline.cashback.applies_to", childproperty.cashback.applies_to %>
     <%= myp_date_field inner_child_fields, :start_date, "myplaceonline.cashback.start_date", childproperty.cashback.start_date %>
     <%= myp_date_field inner_child_fields, :end_date, "myplaceonline.cashback.end_date", childproperty.cashback.end_date %>
