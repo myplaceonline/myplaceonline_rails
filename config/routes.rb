@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :computers
+  post 'computers/new'
+
   resources :reward_programs
   post 'reward_programs/new'
 

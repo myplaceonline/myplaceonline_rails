@@ -1,0 +1,25 @@
+<%= myp_text_field f, :computer_model, "myplaceonline.computers.computer_model", obj.computer_model, true %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :manufacturer,
+    existingobj: obj.manufacturer,
+    heading: t("myplaceonline.computers.manufacturer"),
+    objform: "companies/form",
+    existingobjurl: "company_path",
+    searchurl: "/companies.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%= myp_date_field f, :purchased, "myplaceonline.computers.purchased", obj.purchased %>
+<%= myp_decimal_field f, :price, "myplaceonline.computers.price", obj.price %>
+<%= myp_text_field f, :serial_number, "myplaceonline.computers.serial_number", obj.serial_number %>
+<%= myp_integer_field f, :max_resolution_width, "myplaceonline.computers.max_resolution_width", obj.max_resolution_width %>
+<%= myp_integer_field f, :max_resolution_height, "myplaceonline.computers.max_resolution_height", obj.max_resolution_height %>
+<%= myp_integer_field f, :ram, "myplaceonline.computers.ram", obj.ram %>
+<%= myp_integer_field f, :num_cpus, "myplaceonline.computers.num_cpus", obj.num_cpus %>
+<%= myp_integer_field f, :num_cores_per_cpu, "myplaceonline.computers.num_cores_per_cpu", obj.num_cores_per_cpu %>
+<%= myp_check_box f, :hyperthreaded, "myplaceonline.computers.hyperthreaded", obj.hyperthreaded %>
+<%= myp_decimal_field f, :max_cpu_speed, "myplaceonline.computers.max_cpu_speed", obj.max_cpu_speed %>
+<%= myp_text_area_markdown f, :notes, "myplaceonline.computers.notes", obj.notes %>

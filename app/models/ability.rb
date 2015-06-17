@@ -65,6 +65,7 @@ class Ability
     can :manage, Passport, :identity => identity
     can :manage, Promotion, :identity => identity
     can :manage, RewardProgram, :identity => identity
+    can :manage, Computer, :identity => identity
     
     # Define abilities for the passed in user here. For example:
     #

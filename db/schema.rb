@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150613180355) do
+ActiveRecord::Schema.define(version: 20150617032525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -301,6 +301,28 @@ ActiveRecord::Schema.define(version: 20150613180355) do
   add_index "companies", ["identity_id"], name: "index_companies_on_identity_id", using: :btree
   add_index "companies", ["location_id"], name: "index_companies_on_location_id", using: :btree
 
+  create_table "computers", force: true do |t|
+    t.date     "purchased"
+    t.decimal  "price",                 precision: 10, scale: 2
+    t.string   "computer_model"
+    t.string   "serial_number"
+    t.integer  "manufacturer_id"
+    t.integer  "max_resolution_width"
+    t.integer  "max_resolution_height"
+    t.integer  "ram"
+    t.integer  "num_cpus"
+    t.integer  "num_cores_per_cpu"
+    t.boolean  "hyperthreaded"
+    t.decimal  "max_cpu_speed",         precision: 10, scale: 2
+    t.text     "notes"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "computers", ["identity_id"], name: "index_computers_on_identity_id", using: :btree
+  add_index "computers", ["manufacturer_id"], name: "index_computers_on_manufacturer_id", using: :btree
+
   create_table "contacts", force: true do |t|
     t.integer  "ref_id"
     t.integer  "identity_id"
@@ -388,7 +410,7 @@ ActiveRecord::Schema.define(version: 20150613180355) do
   add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.binary   "val"
+    t.string   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
