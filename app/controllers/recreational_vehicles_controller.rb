@@ -39,6 +39,7 @@ class RecreationalVehiclesController < MyplaceonlineController
       :propane,
       :volume_type,
       :refrigerator,
+      :slideouts_extra_width,
       Myp.select_or_create_permit(params[:recreational_vehicle], :location_purchased_attributes, LocationsController.param_names),
       recreational_vehicle_loans_attributes: [
         :id,

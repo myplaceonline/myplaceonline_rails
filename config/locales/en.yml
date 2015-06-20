@@ -697,6 +697,7 @@ en:
       volume_type: "Volume Type"
       refrigerator: "Refrigerator"
       extra: "Details"
+      slideouts_extra_width: "Slideouts Extra Width"
     cashback:
       heading: "Cashback"
       cashback_percentage: "Percentage"
