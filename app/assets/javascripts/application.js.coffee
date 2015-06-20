@@ -16,6 +16,8 @@ $ ->
 
     subregion_code = $(this).val()
     
+    save_collapsible_states()
+    
     $.get(
       "/api/subregions?regionstr=#{subregion_code}",
       (data) ->
