@@ -910,6 +910,7 @@ en:
       picture: "Picture"
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
+      duration: "Length"
     passports:
       region: "Country"
       passport_number: "Passport Number"

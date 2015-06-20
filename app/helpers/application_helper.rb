@@ -113,6 +113,14 @@ module ApplicationHelper
     attribute_table_row(name, d.nil? ? nil : Myp.display_date(d, current_user))
   end
   
+  def attribute_table_row_date_diff(name, date1, date2)
+    if !date1.nil? && !date2.nil?
+      attribute_table_row(name, Myp.time_difference_in_general_human(TimeDifference.between(date1, date2).in_general))
+    else
+      nil
+    end
+  end
+  
   def attribute_table_row_datetime(name, d)
     attribute_table_row(name, d.nil? ? nil : Myp.display_datetime(d, current_user))
   end
