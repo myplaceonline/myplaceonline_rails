@@ -469,7 +469,7 @@ module ApplicationHelper
     content_tag(
       :p,
       form.label(name, placeholder, class: myp_label_classes(subregionvalue)) +
-      form.select(name, options_for_select(options, subregionvalue), class: myp_field_classes(autofocus, input_classes), prompt: placeholder)
+      form.select(name, options_for_select(options, subregionvalue), class: myp_field_classes(autofocus, input_classes), include_blank: placeholder)
     ).html_safe
   end
   
