@@ -21,36 +21,36 @@ class Location < ActiveRecord::Base
   end
   
   def display
-    result = Myp.appendstr(nil, name, delimeter = ", ")
+    result = Myp.appendstr(nil, name, ", ")
     if name.blank?
-      result = Myp.appendstr(result, address1, delimeter = ", ")
+      result = Myp.appendstr(result, address1, ", ")
     end
-    result = Myp.appendstr(result, sub_region2, delimeter = ", ")
-    result = Myp.appendstr(result, sub_region1, delimeter = ", ")
-    result = Myp.appendstr(result, region, delimeter = ", ")
+    result = Myp.appendstr(result, sub_region2, ", ")
+    result = Myp.appendstr(result, sub_region1, ", ")
+    result = Myp.appendstr(result, region, ", ")
     if result.blank?
-      result = Myp.appendstr(result, address2, delimeter = ", ")
+      result = Myp.appendstr(result, address2, ", ")
     end
     if result.blank?
-      result = Myp.appendstr(result, address3, delimeter = ", ")
+      result = Myp.appendstr(result, address3, ", ")
     end
     result
   end
   
   # Prefer just name, sub_region2, sub_region1, region
   def display_simple
-    result = Myp.appendstr(nil, name, delimeter = ", ")
-    result = Myp.appendstr(result, sub_region2, delimeter = ", ")
-    result = Myp.appendstr(result, sub_region1, delimeter = ", ")
-    result = Myp.appendstr(result, region, delimeter = ", ")
+    result = Myp.appendstr(nil, name, ", ")
+    result = Myp.appendstr(result, sub_region2, ", ")
+    result = Myp.appendstr(result, sub_region1, ", ")
+    result = Myp.appendstr(result, region, ", ")
     if result.blank?
-      result = Myp.appendstr(result, address2, delimeter = ", ")
+      result = Myp.appendstr(result, address2, ", ")
     end
     if result.blank?
-      result = Myp.appendstr(result, address3, delimeter = ", ")
+      result = Myp.appendstr(result, address3, ", ")
     end
     if result.blank?
-      result = Myp.appendstr(result, address1, delimeter = ", ")
+      result = Myp.appendstr(result, address1, ", ")
     end
     result
   end
@@ -97,14 +97,26 @@ class Location < ActiveRecord::Base
   end
   
   def address_one_line
-    result = nil
-    result = maybe_append(result, address1)
-    result = maybe_append(result, address2)
-    result = maybe_append(result, address3)
-    result = maybe_append(result, sub_region2)
-    result = maybe_append(result, sub_region1)
-    result = maybe_append(result, postal_code, " ")
-    #result = maybe_append(result, region_name)
+    result = Myp.appendstr(nil, name, ", ")
+    result = Myp.appendstr(result, address1, ", ")
+    result = Myp.appendstr(result, address2, ", ")
+    result = Myp.appendstr(result, address3, ", ")
+    result = Myp.appendstr(result, sub_region2, ", ")
+    result = Myp.appendstr(result, sub_region1_name, ", ")
+    result = Myp.appendstr(result, postal_code, " ")
+    result = Myp.appendstr(result, region_name, ", ")
+    result
+  end
+  
+  def address_one_line_simple
+    result = Myp.appendstr(nil, name, ", ")
+    result = Myp.appendstr(result, address1, ", ")
+    result = Myp.appendstr(result, address2, ", ")
+    result = Myp.appendstr(result, address3, ", ")
+    result = Myp.appendstr(result, sub_region2, ", ")
+    result = Myp.appendstr(result, sub_region1, ", ")
+    result = Myp.appendstr(result, postal_code, " ")
+    result = Myp.appendstr(result, region, ", ")
     result
   end
   
@@ -114,19 +126,6 @@ class Location < ActiveRecord::Base
       result = "https://www.google.com/maps/place/" + ERB::Util.url_encode(result)
     end
     result
-  end
-  
-  def maybe_append(str, val, delimiter = ", ")
-    if !val.blank?
-      if str.nil?
-        str = ""
-      end
-      if !str.blank?
-        str += delimiter
-      end
-      str += val
-    end
-    str
   end
   
   before_create :do_before_save
