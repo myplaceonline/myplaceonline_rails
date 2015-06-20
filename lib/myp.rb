@@ -735,17 +735,19 @@ module Myp
   end
   
   def self.appendstr(str, what, delimeter = " ", leftwrap = nil, rightwrap = nil)
-    if str.nil?
-      str = ""
-    else
-      str += delimeter
-    end
-    if !leftwrap.nil?
-      str += leftwrap
-    end
-    str += what
-    if !rightwrap.nil?
-      str += rightwrap
+    if !what.blank?
+      if str.nil?
+        str = ""
+      else
+        str += delimeter
+      end
+      if !leftwrap.nil?
+        str += leftwrap
+      end
+      str += what
+      if !rightwrap.nil?
+        str += rightwrap
+      end
     end
     str
   end

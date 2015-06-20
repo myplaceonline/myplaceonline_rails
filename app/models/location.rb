@@ -7,7 +7,7 @@ class Location < ActiveRecord::Base
   accepts_nested_attributes_for :location_phones, allow_destroy: true, reject_if: :all_blank
   
   def at_least_one
-    if [name, address1].reject(&:blank?).size == 0
+    if [name, address1, address2, address3, region, sub_region1, sub_region2].reject(&:blank?).size == 0
       errors.add("", "Name or address required")
     end
   end
@@ -21,32 +21,36 @@ class Location < ActiveRecord::Base
   end
   
   def display
-    result = name
-    if result.blank?
-      result = address1
+    result = Myp.appendstr(nil, name, delimeter = ", ")
+    if name.blank?
+      result = Myp.appendstr(result, address1, delimeter = ", ")
     end
-    if !sub_region2.blank?
-      result += ", " + sub_region2
+    result = Myp.appendstr(result, sub_region2, delimeter = ", ")
+    result = Myp.appendstr(result, sub_region1, delimeter = ", ")
+    result = Myp.appendstr(result, region, delimeter = ", ")
+    if result.blank?
+      result = Myp.appendstr(result, address2, delimeter = ", ")
+    end
+    if result.blank?
+      result = Myp.appendstr(result, address3, delimeter = ", ")
     end
     result
   end
   
+  # Prefer just name, sub_region2, sub_region1, region
   def display_simple
-    result = name
+    result = Myp.appendstr(nil, name, delimeter = ", ")
+    result = Myp.appendstr(result, sub_region2, delimeter = ", ")
+    result = Myp.appendstr(result, sub_region1, delimeter = ", ")
+    result = Myp.appendstr(result, region, delimeter = ", ")
     if result.blank?
-      result = ""
+      result = Myp.appendstr(result, address2, delimeter = ", ")
     end
-    if !sub_region2.blank?
-      if !result.blank?
-        result += ", "
-      end
-      result += sub_region2
+    if result.blank?
+      result = Myp.appendstr(result, address3, delimeter = ", ")
     end
-    if !sub_region1.blank?
-      if !result.blank?
-        result += ", "
-      end
-      result += sub_region1
+    if result.blank?
+      result = Myp.appendstr(result, address1, delimeter = ", ")
     end
     result
   end
