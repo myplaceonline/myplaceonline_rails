@@ -177,6 +177,10 @@ class MyplaceonlineController < ApplicationController
     send("new_" + path_name + "_path")
   end
   
+  # See myplaceonline_final.js, ajax:remotipartSubmit
+  # 
+  # If new/update succeeds, navigate JS returned in:
+  # views/myplaceonline/saved.js.erb
   def may_upload
     false
   end

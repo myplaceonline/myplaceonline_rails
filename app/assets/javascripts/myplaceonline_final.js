@@ -3,13 +3,32 @@ $.noty.defaults.layout = 'topCenter';
 myp.DEFAULT_DATE_FORMAT = "%A, %b %d, %Y";
 myp.DEFAULT_TIME_FORMAT = "%A, %b %d, %Y %-l:%M:%S %p";
 
+function startsWith(str, search) {
+  if (str && search && str.length >= search.length && str.substring(0, search.length) == search) {
+    return true;
+  }
+  return false;
+}
+
 // https://github.com/rails/jquery-ujs/wiki/ajax
 $(document).on('ajax:remotipartSubmit', 'form', function() {
+  consoleLog("ajax:remotipartSubmit: Submitting...");
   showLoading();
 });
 
 $(document).on('ajax:complete', 'form', function(xhr, status) {
   hideLoading();
+  consoleLog("ajax:complete");
+  //consoleDir(status);
+  //consoleDir(xhr);
+  var contentType = status.getResponseHeader("Content-Type");
+  // We expect a "successful" submission will return text/javascript
+  // which will do something like navigate to the success page
+  // (see MyplaceonlineController.may_upload). If it's text/html,
+  // then there was probably some error, so we need to display it.
+  if (startsWith(contentType, "text/html")) {
+    // TODO tell JQM to load this HTML
+  }
 });
 
 $(document).on('ajax:error', 'form', function(xhr, status, error) {
