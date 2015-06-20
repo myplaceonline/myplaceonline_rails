@@ -9,9 +9,21 @@
     subregion_select_field = myp_subregion_select_field(f, :sub_region1, "myplaceonline.general.sub_region1", region, subregion)
     subregion_text_field = myp_text_field(f, :sub_region1, "myplaceonline.general.sub_region1", subregion)
   else
-    form_for Location.new do |f|
-      subregion_select_field = myp_subregion_select_field(f, :sub_region1, "myplaceonline.general.sub_region1", region, subregion)
-      subregion_text_field = myp_text_field(f, :sub_region1, "myplaceonline.general.sub_region1", subregion)
+    name = params[:name]
+    if !name.blank?
+      i = name.rindex('[')
+      if !i.nil?
+        name = name[0..i-1]
+      end
+      fields_for name do |f|
+        subregion_select_field = myp_subregion_select_field(f, :sub_region1, "myplaceonline.general.sub_region1", region, subregion)
+        subregion_text_field = myp_text_field(f, :sub_region1, "myplaceonline.general.sub_region1", subregion)
+      end
+    else
+      form_for Location.new do |f|
+        subregion_select_field = myp_subregion_select_field(f, :sub_region1, "myplaceonline.general.sub_region1", region, subregion)
+        subregion_text_field = myp_text_field(f, :sub_region1, "myplaceonline.general.sub_region1", subregion)
+      end
     end
   end
   %>

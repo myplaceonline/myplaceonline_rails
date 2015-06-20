@@ -18,8 +18,10 @@ $ ->
     
     save_collapsible_states()
     
+    name = $(this).attr("name")
+    
     $.get(
-      "/api/subregions?regionstr=#{subregion_code}",
+      "/api/subregions?regionstr=#{subregion_code}&name=#{name}",
       (data) ->
         $(".subregionwrapper").replaceWith(data)
         ensureStyledPage()
