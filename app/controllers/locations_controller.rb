@@ -12,7 +12,7 @@ class LocationsController < MyplaceonlineController
   end
   
   def self.reject_if_blank(attributes)
-    attributes.delete_if {|key, value| key.to_s == "region" }.all? {|key, value| value.blank?}
+    attributes.dup.delete_if {|key, value| key.to_s == "region" }.all? {|key, value| value.blank?}
   end
 
   protected
