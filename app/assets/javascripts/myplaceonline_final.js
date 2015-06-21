@@ -27,7 +27,12 @@ $(document).on('ajax:complete', 'form', function(xhr, status) {
   // (see MyplaceonlineController.may_upload). If it's text/html,
   // then there was probably some error, so we need to display it.
   if (startsWith(contentType, "text/html")) {
-    // TODO tell JQM to load this HTML
+    showLoading();
+    var html = $(status.responseText);
+    var content = html.find(".ui-content");
+    $(".ui-content").replaceWith(content);
+    ensureStyledPage();
+    hideLoading();
   }
 });
 
