@@ -495,10 +495,14 @@ module Myp
   def self.due(user)
     result = Array.new
 
-    threshold = 60.days.from_now
+    general_threshold = 60.days.from_now
     exercise_threshold = 7.days.ago
     timenow = Time.now
     datenow = Date.today
+    contact_type_threshold = Hash.new
+    contact_type_threshold[0] = 20.days.ago
+    contact_type_threshold[1] = 45.days.ago
+    contact_type_threshold[2] = 90.days.ago
 
     Vehicle.where(identity: user.primary_identity).each do |vehicle|
       vehicle.vehicle_services.each do |service|
@@ -508,7 +512,7 @@ module Myp
       end
     end
 
-    IdentityDriversLicense.where("identity_id = ? and expires is not null and expires < ?", user.primary_identity, threshold).each do |drivers_license|
+    IdentityDriversLicense.where("identity_id = ? and expires is not null and expires < ?", user.primary_identity, general_threshold).each do |drivers_license|
       contact = Contact.where(identity_id: user.primary_identity.id, ref_id: drivers_license.ref.id).first
       diff = TimeDifference.between(timenow, drivers_license.expires)
       if timenow >= drivers_license.expires
@@ -525,7 +529,7 @@ module Myp
     Contact.where(identity: user.primary_identity).to_a.each do |x|
       if !x.ref.nil? && !x.ref.birthday.nil?
         bday_this_year = Date.new(Date.today.year, x.ref.birthday.month, x.ref.birthday.day)
-        if bday_this_year >= datenow && bday_this_year <= threshold
+        if bday_this_year >= datenow && bday_this_year <= general_threshold
           diff = TimeDifference.between(datenow, bday_this_year)
           diff_in_general = diff.in_general
           result.push(DueItem.new(I18n.t(
@@ -545,13 +549,43 @@ module Myp
       ), "/exercises/" + last_exercise.id.to_s, last_exercise.exercise_start))
     end
     
-    Promotion.where("identity_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, threshold).each do |promotion|
+    Promotion.where("identity_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, general_threshold).each do |promotion|
       result.push(DueItem.new(I18n.t(
         "myplaceonline.promotions.expires_soon",
         promotion_name: promotion.promotion_name,
         promotion_amount: Myp.number_to_currency(promotion.promotion_amount.nil? ? 0 : promotion.promotion_amount),
         expires_when: Myp.time_difference_in_general_human(TimeDifference.between(timenow, promotion.expires).in_general)
       ), "/promotions/" + promotion.id.to_s, promotion.expires))
+    end
+    
+    Contact.find_by_sql(%{
+      SELECT contacts.*, max(conversations.when) as last_conversation_date
+      FROM contacts
+      LEFT OUTER JOIN conversations
+        ON contacts.id = conversations.contact_id
+      WHERE contacts.identity_id = #{user.primary_identity.id}
+        AND contacts.contact_type IS NOT NULL
+      GROUP BY contacts.id
+      ORDER BY last_conversation_date ASC
+    }).each do |contact|
+      contact_threshold = contact_type_threshold[contact.contact_type]
+      if contact.last_conversation_date.nil?
+        # No conversations at all
+        result.push(DueItem.new(I18n.t(
+          "myplaceonline.contacts.no_conversations",
+          name: contact.display,
+          contact_type: Myp.get_select_name(contact.contact_type, Contact::CONTACT_TYPES)
+        ), "/contacts/" + contact.id.to_s, datenow))
+      else
+        if contact.last_conversation_date < contact_threshold
+          result.push(DueItem.new(I18n.t(
+            "myplaceonline.contacts.no_conversations_since",
+            name: contact.display,
+            contact_type: Myp.get_select_name(contact.contact_type, Contact::CONTACT_TYPES),
+            delta: Myp.time_difference_in_general_human(TimeDifference.between(datenow, contact.last_conversation_date).in_general)
+          ), "/contacts/" + contact.id.to_s, contact.last_conversation_date))
+        end
+      end
     end
     
     # sort due items
