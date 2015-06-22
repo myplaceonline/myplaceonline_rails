@@ -23,7 +23,7 @@
 <% else %>
 
   <div class="horizontal_center">
-      <span id="myplaceonline_welcome_score"><%= t("myplaceonline.general.points") %>: <%= @totalPoints %></span>
+      <span id="myplaceonline_welcome_score"><%= t("myplaceonline.general.points") %>: <%= Myp.number_with_delimiter(@totalPoints) %></span>
   </div>
 
   <%= render "shared/search", :initialCategoryList => @initialCategoryList %>

@@ -724,6 +724,10 @@ module Myp
     ActionController::Base.helpers.number_to_currency(x)
   end
   
+  def self.number_with_delimiter(x)
+    ActionController::Base.helpers.number_with_delimiter(x)
+  end
+  
   def self.migration_add_filtertext(category_name, filtertext)
     category = Category.where(name: category_name).first
     if category.nil?
