@@ -20,7 +20,7 @@ class RewardProgramsController < MyplaceonlineController
         :reward_program_number,
         :reward_program_status,
         :notes,
-        select_or_create_permit(:reward_program, :password_attributes, PasswordsController.param_names),
+        Myp.select_or_create_permit(params[:reward_program], :password_attributes, PasswordsController.param_names),
       )
     end
 end

@@ -22,7 +22,7 @@ class TripsController < MyplaceonlineController
         :ended,
         :notes,
         :work,
-        select_or_create_permit(:trip, :location_attributes, LocationsController.param_names),
+        Myp.select_or_create_permit(params[:trip], :location_attributes, LocationsController.param_names),
         trip_pictures_attributes: [
           :id,
           :_destroy,

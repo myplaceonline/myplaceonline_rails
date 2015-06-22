@@ -270,15 +270,6 @@ class MyplaceonlineController < ApplicationController
         end
       }
     end
-
-    def select_or_create_permit(parent_name, name, all_array)
-      if params[parent_name] && params[parent_name][name] && params[parent_name][name][:id].blank?
-        # Push :id on even though we know it's blank to avoid the unpermitted parameter warning
-        { name => all_array.push(:id) }
-      else
-        { name => [:id] }
-      end
-    end
     
     def has_category
       true
