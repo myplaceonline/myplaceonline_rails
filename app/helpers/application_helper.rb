@@ -493,6 +493,27 @@ module ApplicationHelper
     ).html_safe
   end
   
+  def myp_select_tag(name, placeholder, selectoptions, selectvalue, autofocus = false, input_classes = nil, inline = false, onchange = nil)
+    if is_probably_i18n(placeholder)
+      placeholder = I18n.t(placeholder)
+    end
+    options = Hash.new
+    options[:class] = myp_field_classes(autofocus, input_classes)
+    options[:prompt] = placeholder
+    options[:include_blank] = !selectvalue.nil?
+    if inline
+      options["data-inline"] = "true"
+    end
+    if !onchange.nil?
+      options["onchange"] = onchange
+    end
+    content_tag(
+      :p,
+      label_tag(name, placeholder, class: myp_label_classes(selectvalue)) +
+      select_tag(name, options_for_select(selectoptions, selectvalue), options)
+    ).html_safe
+  end
+  
   def single_quote_escape(str)
     str.sub("'", "")
   end

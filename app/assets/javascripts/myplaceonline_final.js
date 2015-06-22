@@ -463,3 +463,36 @@ function hide_if_checked(obj) {
   }
   return false;
 }
+
+function refreshWithParam(paramName, paramValue) {
+  var url = removeParam(window.location.search, paramName);
+  if (url.indexOf('?') == -1) {
+    url += "?" + paramName + "=" + paramValue;
+  } else {
+    url += "&" + paramName + "=" + paramValue;
+  }
+  navigate(window.location.pathname+url);
+}
+
+function removeParam(url, paramName) {
+  var x = url.indexOf("?" + paramName);
+  if (x == -1) {
+    x = url.indexOf("&" + paramName);
+    if (x != -1) {
+      var y = url.indexOf('&', x + 1);
+      if (y == -1) {
+        url = url.substring(0, x);
+      } else {
+        url = url.substring(0, y);
+      }
+    }
+  } else {
+    var y = url.indexOf('&', x + 1);
+    if (y == -1) {
+      url = url.substring(0, x);
+    } else {
+      url = url.substring(0, y);
+    }
+  }
+  return url;
+}

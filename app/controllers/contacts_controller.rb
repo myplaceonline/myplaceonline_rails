@@ -16,6 +16,14 @@ class ContactsController < MyplaceonlineController
   def may_upload
     true
   end
+  
+  def index
+    @contact_type = params[:contact_type]
+    if !@contact_type.blank?
+      @contact_type = @contact_type.to_i
+    end
+    super
+  end
 
   def self.param_names
     [
@@ -90,9 +98,16 @@ class ContactsController < MyplaceonlineController
     end
 
     def all
-      model.joins(:ref).where(
-        identity_id: current_user.primary_identity.id
-      )
+      if @contact_type.blank?
+        model.joins(:ref).where(
+          identity_id: current_user.primary_identity.id
+        )
+      else
+        model.joins(:ref).where(
+          identity_id: current_user.primary_identity.id,
+          contact_type: @contact_type
+        )
+      end
     end
     
     def before_all_actions
