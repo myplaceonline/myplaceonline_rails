@@ -8,7 +8,18 @@ class LocationsController < MyplaceonlineController
   end
   
   def self.param_names
-    [:name, :address1, :address2, :address3, :region, :sub_region1, :sub_region2, :postal_code, :notes]
+    [
+      :name,
+      :address1,
+      :address2,
+      :address3,
+      :region,
+      :sub_region1,
+      :sub_region2,
+      :postal_code,
+      :notes,
+      location_phones_attributes: [:id, :number, :_destroy]
+    ]
   end
   
   def self.reject_if_blank(attributes)
@@ -22,8 +33,7 @@ class LocationsController < MyplaceonlineController
 
     def obj_params
       params.require(:location).permit(
-        LocationsController.param_names,
-        location_phones_attributes: [:id, :number, :_destroy]
+        LocationsController.param_names
       )
     end
     

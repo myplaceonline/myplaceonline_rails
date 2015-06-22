@@ -73,7 +73,9 @@ class MyplaceonlineController < ApplicationController
     end
     ActiveRecord::Base.transaction do
       begin
-        @obj = model.new(obj_params)
+        p = obj_params
+        Rails.logger.debug("Permitted parameters: #{p.inspect}")
+        @obj = model.new(p)
       rescue ActiveRecord::RecordNotFound => rnf
         raise Myp::CannotFindNestedAttribute, rnf.message + " (code needs attribute setter override?)"
       end
