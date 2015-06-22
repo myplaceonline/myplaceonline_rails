@@ -19,6 +19,7 @@ class ContactsController < MyplaceonlineController
 
   def self.param_names
     [
+      :contact_type,
       ref_attributes: [
         :id,
         :name,

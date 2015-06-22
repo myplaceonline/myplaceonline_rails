@@ -371,6 +371,11 @@ en:
       delete_conversation: "Delete Conversation"
       conversation_date: "Date"
       upcoming_birthday: "Upcoming Birthday for %{name} in %{delta}"
+      best_friend: "Best Friend"
+      good_friend: "Good Friend"
+      acquiantance: "Acquaintance"
+      business_contact: "Business Contact"
+      contact_type: "Contact Type"
     files:
       name: "Name"
       download: "Download"

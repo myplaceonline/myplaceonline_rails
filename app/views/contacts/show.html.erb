@@ -5,6 +5,7 @@
   <% if !@obj.birthday.nil? %>
     <%= attribute_table_row(t("myplaceonline.contacts.age"), Myp.time_difference_in_general_from_now(@obj.birthday)) %>
   <% end %>
+  <%= attribute_table_row_select t("myplaceonline.contacts.contact_type"), @obj.contact_type, Contact::CONTACT_TYPES %>
   <%= attribute_table_row_markdown(t("myplaceonline.contacts.notes"), @obj.notes) %>
   <% @obj.contact_identity.identity_emails.each do |email| %>
     <%= attribute_table_row_email(t("myplaceonline.identities.email"), email.email) %>

@@ -1,4 +1,12 @@
 class Contact < ActiveRecord::Base
+
+  CONTACT_TYPES = [
+    ["myplaceonline.contacts.best_friend", 0],
+    ["myplaceonline.contacts.good_friend", 1],
+    ["myplaceonline.contacts.acquiantance", 2],
+    ["myplaceonline.contacts.business_contact", 3]
+  ]
+  
   belongs_to :ref, class_name: Identity, :dependent => :destroy
   belongs_to :identity
   accepts_nested_attributes_for :ref, reject_if: :all_blank
