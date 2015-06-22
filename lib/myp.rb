@@ -588,6 +588,11 @@ module Myp
       end
       result += ActionController::Base.helpers.pluralize(diff[:days], "day")
     end
+    if result.length == 0
+      if diff.values.reduce(:+) == 0
+        result += I18n.t("myplaceonline.general.today")
+      end
+    end
     result
   end
   

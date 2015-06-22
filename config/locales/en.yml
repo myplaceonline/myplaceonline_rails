@@ -156,6 +156,7 @@ en:
       cups: "Cups"
       unknown: "Unknown"
       back_to_list: "Back to List"
+      today: "Today"
     periods:
       monthly: "Monthly"
       yearly: "Yearly"
