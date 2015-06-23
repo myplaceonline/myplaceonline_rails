@@ -5,6 +5,7 @@
   <%= attribute_table_row(t("myplaceonline.reward_programs.reward_program_status"), @obj.reward_program_status) %>
   <%= attribute_table_row_date(t("myplaceonline.reward_programs.started"), @obj.started) %>
   <%= attribute_table_row_date(t("myplaceonline.reward_programs.ended"), @obj.ended) %>
+  <%= attribute_table_row_select t("myplaceonline.reward_programs.program_type"), @obj.program_type, RewardProgram::REWARD_PROGRAM_TYPES %>
   <%= attribute_table_row_markdown(t("myplaceonline.reward_programs.notes"), @obj.notes) %>
   <%= attribute_table_row_reference(t("myplaceonline.reward_programs.password"), "password_path", @obj.password) %>
   

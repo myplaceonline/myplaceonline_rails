@@ -1,2 +1,5 @@
 <%= render layout: "shared/model_index" do %>
+  <div class="horizontal_center">
+    <%= myp_select_tag(:program_type, "myplaceonline.reward_programs.program_type", Myp.translate_options(RewardProgram::REWARD_PROGRAM_TYPES), @program_type, false, nil, true, "refreshWithParam('program_type', $('#program_type').val())") %>
+  </div>
 <% end %>

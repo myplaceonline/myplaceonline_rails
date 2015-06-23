@@ -968,6 +968,10 @@ en:
       ended: "Ends"
       notes: "Notes"
       password: "Password"
+      type_hotel: "Hotel"
+      type_plane: "Airplane"
+      type_car: "Rental Car"
+      program_type: "Program Type"
     computers:
       purchased: "Purchased"
       price: "Price"

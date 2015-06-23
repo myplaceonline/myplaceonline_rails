@@ -1,5 +1,11 @@
 class RewardProgram < ActiveRecord::Base
   
+  REWARD_PROGRAM_TYPES = [
+    ["myplaceonline.reward_programs.type_plane", 0],
+    ["myplaceonline.reward_programs.type_hotel", 1],
+    ["myplaceonline.reward_programs.type_car", 2]
+  ]
+  
   belongs_to :identity
 
   belongs_to :password
