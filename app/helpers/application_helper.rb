@@ -453,16 +453,22 @@ module ApplicationHelper
       input_classes += " "
     end
     input_classes += "region"
+    if value.blank?
+      value = default_region
+    end
     content_tag(
       :p,
       form.label(name, placeholder, class: "ui-hidden-accessible") +
-      form.select(name, region_options_for_select(Carmen::Country.all, value, priority: [default_region]), {}, { :class => myp_field_classes(autofocus, input_classes) })
+      form.select(name, region_options_for_select(Carmen::Country.all, value, priority: [default_region]), { include_blank: placeholder }, { :class => myp_field_classes(autofocus, input_classes) })
     ).html_safe
   end
   
   def myp_subregion_field(form, name, placeholder, regionvalue, subregionvalue)
     if is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
+    end
+    if regionvalue.blank?
+      regionvalue = default_region
     end
     render(partial: 'myplaceonline/subregionselect', locals: { f: form, regionstr: regionvalue, subregion: subregionvalue })
   end
@@ -471,8 +477,10 @@ module ApplicationHelper
     if is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
-    coded_region = Carmen::Country.coded(region.code)
-    options = coded_region.subregions.map { |r| [r.name, r.code] }
+    if region.blank?
+      region = Carmen::Country.coded(default_region)
+    end
+    options = Carmen::Country.coded(region.code).subregions.map { |r| [r.name, r.code] }
     options.sort!{|a, b| a.first.to_s <=> b.first.to_s}
     content_tag(
       :p,

@@ -13,7 +13,7 @@ class Location < ActiveRecord::Base
   end
   
   def region_name
-    if !region.nil?
+    if !region.blank?
       Carmen::Country.coded(region).official_name
     else
       nil
