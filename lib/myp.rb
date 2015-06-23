@@ -503,6 +503,8 @@ module Myp
     contact_type_threshold[0] = 20.days.ago
     contact_type_threshold[1] = 45.days.ago
     contact_type_threshold[2] = 90.days.ago
+    
+    Rails.logger.debug("Searching vehicles")
 
     Vehicle.where(identity: user.primary_identity).each do |vehicle|
       vehicle.vehicle_services.each do |service|
@@ -511,6 +513,8 @@ module Myp
         end
       end
     end
+
+    Rails.logger.debug("Searching driver's licenses")
 
     IdentityDriversLicense.where("identity_id = ? and expires is not null and expires < ?", user.primary_identity, general_threshold).each do |drivers_license|
       contact = Contact.where(identity_id: user.primary_identity.id, ref_id: drivers_license.ref.id).first
@@ -526,7 +530,9 @@ module Myp
       ), "/contacts/" + contact.id.to_s, drivers_license.expires))
     end
     
-    Contact.where(identity: user.primary_identity).to_a.each do |x|
+    Rails.logger.debug("Searching contacts")
+
+    Contact.where(identity: user.primary_identity).includes(:ref).to_a.each do |x|
       if !x.ref.nil? && !x.ref.birthday.nil?
         bday_this_year = Date.new(Date.today.year, x.ref.birthday.month, x.ref.birthday.day)
         if bday_this_year >= datenow && bday_this_year <= general_threshold
@@ -541,6 +547,8 @@ module Myp
       end
     end
     
+    Rails.logger.debug("Searching exercises")
+
     last_exercise = Exercise.where("identity_id = ? and exercise_start is not null", 1).order('exercise_start DESC').limit(1).first
     if !last_exercise.nil? and last_exercise.exercise_start < exercise_threshold
       result.push(DueItem.new(I18n.t(
@@ -549,6 +557,8 @@ module Myp
       ), "/exercises/" + last_exercise.id.to_s, last_exercise.exercise_start))
     end
     
+    Rails.logger.debug("Searching promotions")
+
     Promotion.where("identity_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, general_threshold).each do |promotion|
       result.push(DueItem.new(I18n.t(
         "myplaceonline.promotions.expires_soon",
@@ -558,6 +568,8 @@ module Myp
       ), "/promotions/" + promotion.id.to_s, promotion.expires))
     end
     
+    Rails.logger.debug("Searching conversations")
+
     Contact.find_by_sql(%{
       SELECT contacts.*, max(conversations.when) as last_conversation_date
       FROM contacts
