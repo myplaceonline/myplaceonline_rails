@@ -78,7 +78,7 @@ end
 
 <script type="text/javascript">
 onPageLoad(function() {
-  hookListviewSearch($(".searchable"), "/<%= controller.paths_name %>.json<%= @query_params_part_all %>");
+  hookListviewSearch($(".searchable"), "/<%= controller.paths_name %>.json<%= raw(@query_params_part_all) %>");
   var input = $(".searchable_container input");
   hookListviewEnter(input, ".searchable");
   maybeFocus(input);
