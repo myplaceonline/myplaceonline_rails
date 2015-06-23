@@ -38,6 +38,12 @@ class MyplaceonlineController < ApplicationController
     # Save off any query parameters which might be used by AJAX callbacks to
     # index.json.erb (for example, for a full item search)
     @query_params_part = Myp.query_parameters_uri_part(request)
+    @query_params_part_all = ""
+    if @query_params_part.blank?
+      @query_params_part_all = "?perpage=0"
+    else
+      @query_params_part_all = "?" + @query_params_part + "&perpage=0"
+    end
     
     respond_with(@objs)
   end

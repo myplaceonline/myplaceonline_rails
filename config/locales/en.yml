@@ -127,6 +127,7 @@ en:
       perpage: "per page"
       count_no: "No"
       add: "Add"
+      all: "All"
       add_another: "Add Another"
       back_to: "Back to"
       back_to_all: "Back to all"
