@@ -3,6 +3,14 @@ require 'roo'
 class PasswordsController < MyplaceonlineController
   skip_authorization_check :only => [:index, :new, :create, :import, :importodf]
   
+  def index
+    @defunct = params[:defunct]
+    if !@defunct.blank?
+      @defunct = @defunct.to_bool
+    end
+    super
+  end
+
   def import
   end
   
@@ -243,6 +251,16 @@ class PasswordsController < MyplaceonlineController
         secret.question = s.cell(i, colindices[question_col]).to_s
         secret.answer = s.cell(i, colindices[answer_col]).to_s
         secret.answer_finalize(encrypt)
+      end
+    end
+
+    def all
+      if @defunct.blank? || !@defunct
+        model.where("identity_id = ? and defunct is null", current_user.primary_identity)
+      else
+        model.where(
+          identity_id: current_user.primary_identity.id
+        )
       end
     end
 end

@@ -17,7 +17,9 @@ class MyplaceonlineController < ApplicationController
       Myp.visit(current_user, category_name)
     end
     
-    @count = all.count
+    cached_all = all
+    
+    @count = cached_all.count
     
     @offset = params[:offset].nil? ? 0 : params[:offset].to_i
     if @offset < 0
@@ -29,9 +31,13 @@ class MyplaceonlineController < ApplicationController
       @perpage = @count
     end
     
-    @objs = all.offset(@offset).limit(@perpage).order(sorts)
+    @objs = cached_all.offset(@offset).limit(@perpage).order(sorts)
     
     index_pre_respond()
+    
+    # Save off any query parameters which might be used by AJAX callbacks to
+    # index.json.erb (for example, for a full item search)
+    @query_params_part = Myp.query_parameters_uri_part(request)
     
     respond_with(@objs)
   end

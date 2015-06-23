@@ -814,4 +814,8 @@ module Myp
     end
     str
   end
+  
+  def self.query_parameters_uri_part(request)
+    request.query_parameters().map{|k,v| URI.encode(k) + "=" + URI.encode(v)}.join("&")
+  end
 end
