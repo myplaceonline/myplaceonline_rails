@@ -1,4 +1,8 @@
 <%= render layout: "shared/model_index" do %>
+  <div class="horizontal_center" data-role="collapsible">
+    <h4><%= t("myplaceonline.general.filter") %></h4>
+    <%= myp_check_box_tag(:defunct, "myplaceonline.general.defunct", @defunct, false, nil, "refreshWithParam('defunct', this.checked)") %>
+  </div>
   <% content_for :footerlinks do %>
     <li><%= link_to t('myplaceonline.credit_cards.list_cashbacks'), credit_cards_listcashback_path, "data-icon" => "bullets" %></li>
     <li><%= link_to t('myplaceonline.credit_cards.total_credit'), credit_cards_total_credit_path, "data-icon" => "info" %></li>

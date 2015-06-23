@@ -1,6 +1,14 @@
 class CreditCardsController < MyplaceonlineController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:listcashback, :total_credit]
 
+  def index
+    @defunct = params[:defunct]
+    if !@defunct.blank?
+      @defunct = @defunct.to_bool
+    end
+    super
+  end
+
   def listcashback
     @cashbacks = CreditCardCashback.where(identity_id: current_user.primary_identity.id).sort{ |x, y| y.cashback.cashback_percentage <=> x.cashback.cashback_percentage }.keep_if{|c| c.expiration_includes_today?}
   end
@@ -91,5 +99,15 @@ class CreditCardsController < MyplaceonlineController
     def before_edit
       @obj.encrypt = @obj.number_encrypted?
       @obj.is_defunct = !@obj.defunct.nil?
+    end
+
+    def all
+      if @defunct.blank? || !@defunct
+        model.where("identity_id = ? and defunct is null", current_user.primary_identity)
+      else
+        model.where(
+          identity_id: current_user.primary_identity.id
+        )
+      end
     end
 end
