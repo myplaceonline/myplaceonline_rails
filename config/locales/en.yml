@@ -157,6 +157,7 @@ en:
       unknown: "Unknown"
       back_to_list: "Back to List"
       today: "Today"
+      filter: "Filter"
     periods:
       monthly: "Monthly"
       yearly: "Yearly"

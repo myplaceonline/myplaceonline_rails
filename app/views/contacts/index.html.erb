@@ -1,5 +1,6 @@
 <%= render layout: "shared/model_index" do %>
-  <div class="horizontal_center">
-    <%= myp_select_tag(:contact_type, "myplaceonline.contacts.contact_type", Myp.translate_options(Contact::CONTACT_TYPES), @contact_type, false, nil, true, "refreshWithParam('contact_type', $('#contact_type').val())") %>
+  <div class="horizontal_center" data-role="collapsible">
+    <h4><%= t("myplaceonline.general.filter") %></h4>
+    <%= myp_select_tag(:contact_type, "myplaceonline.contacts.contact_type", Myp.translate_options(Contact::CONTACT_TYPES), @contact_type, false, nil, false, "refreshWithParam('contact_type', $('#contact_type').val())") %>
   </div>
 <% end %>
