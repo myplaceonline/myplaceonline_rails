@@ -4,7 +4,9 @@ class Contact < ActiveRecord::Base
     ["myplaceonline.contacts.best_friend", 0],
     ["myplaceonline.contacts.good_friend", 1],
     ["myplaceonline.contacts.acquiantance", 2],
-    ["myplaceonline.contacts.business_contact", 3]
+    ["myplaceonline.contacts.business_contact", 3],
+    ["myplaceonline.contacts.best_family", 4],
+    ["myplaceonline.contacts.good_family", 5]
   ]
   
   belongs_to :ref, class_name: Identity, :dependent => :destroy

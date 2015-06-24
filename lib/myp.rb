@@ -503,6 +503,8 @@ module Myp
     contact_type_threshold[0] = 20.days.ago
     contact_type_threshold[1] = 45.days.ago
     contact_type_threshold[2] = 90.days.ago
+    contact_type_threshold[4] = 20.days.ago
+    contact_type_threshold[5] = 45.days.ago
     
     Rails.logger.debug("Searching vehicles")
 
