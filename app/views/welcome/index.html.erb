@@ -45,7 +45,7 @@
     <ul data-role="listview" data-inset="true">
       <li data-role="list-divider"><%= t("myplaceonline.welcome.due") %></li>
       <% @due.each do |due_item| %>
-        <li><a href="<%= due_item.link %>"><%= due_item.display %> <span class="ui-li-count"><%= Myp.display_date(due_item.date, current_user) %></span></a></li>
+        <li><a href="<%= due_item.link %>"><%= due_item.display %> <span class="ui-li-count"><%= Myp.display_date_short(due_item.date, current_user) %></span></a></li>
       <% end %>
     </ul>
 
