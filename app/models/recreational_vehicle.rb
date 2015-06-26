@@ -21,6 +21,9 @@ class RecreationalVehicle < ActiveRecord::Base
   has_many :recreational_vehicle_loans, :dependent => :destroy
   accepts_nested_attributes_for :recreational_vehicle_loans, allow_destroy: true, reject_if: :all_blank
 
+  has_many :recreational_vehicle_pictures, :dependent => :destroy
+  accepts_nested_attributes_for :recreational_vehicle_pictures, allow_destroy: true, reject_if: :all_blank
+
   before_create :do_before_save
   before_update :do_before_save
 

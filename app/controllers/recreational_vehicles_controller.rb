@@ -7,6 +7,10 @@ class RecreationalVehiclesController < MyplaceonlineController
     obj.rv_name
   end
 
+  def may_upload
+    true
+  end
+
   def self.param_names(params)
     [
       :rv_name,
@@ -45,6 +49,15 @@ class RecreationalVehiclesController < MyplaceonlineController
         :id,
         :_destroy,
         loan_attributes: Loan.params
+      ],
+      recreational_vehicle_pictures_attributes: [
+        :id,
+        :_destroy,
+        identity_file_attributes: [
+          :id,
+          :file,
+          :notes
+        ]
       ]
     ]
   end
@@ -60,5 +73,13 @@ class RecreationalVehiclesController < MyplaceonlineController
 
     def obj_params
       params.require(:recreational_vehicle).permit(RecreationalVehiclesController.param_names(params))
+    end
+
+    def presave
+      @obj.recreational_vehicle_pictures.each do |pic|
+        if pic.identity_file.folder.nil?
+          pic.identity_file.folder = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.recreational_vehicles"), @obj.display])
+        end
+      end
     end
 end

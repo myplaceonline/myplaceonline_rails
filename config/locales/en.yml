@@ -715,6 +715,10 @@ en:
       refrigerator: "Refrigerator"
       extra: "Details"
       slideouts_extra_width: "Slideouts Extra Width"
+      pictures: "Pictures"
+      picture: "Picture"
+      add_picture: "Add Picture"
+      delete_picture: "Delete Picture"
     cashback:
       heading: "Cashback"
       cashback_percentage: "Percentage"
