@@ -14,6 +14,9 @@ class AcneMeasurement < ActiveRecord::Base
     result
   end
 
+  has_many :acne_measurement_pictures, :dependent => :destroy
+  accepts_nested_attributes_for :acne_measurement_pictures, allow_destroy: true, reject_if: :all_blank
+
   before_create :do_before_save
   before_update :do_before_save
   

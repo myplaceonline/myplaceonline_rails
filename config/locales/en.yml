@@ -776,6 +776,10 @@ en:
       worrying_pimples: "Worrying Pimples"
       total_pimples: "Total Pimples"
       acne_location: "Acne Location"
+      pictures: "Pictures"
+      picture: "Picture"
+      add_picture: "Add Picture"
+      delete_picture: "Delete Picture"
     exercises:
       exercise_start: "Start Date/Time"
       exercise_end: "End Date/Time"

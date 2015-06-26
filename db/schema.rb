@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150626205234) do
+ActiveRecord::Schema.define(version: 20150626224033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,18 @@ ActiveRecord::Schema.define(version: 20150626205234) do
   end
 
   add_index "accomplishments", ["identity_id"], name: "index_accomplishments_on_identity_id", using: :btree
+
+  create_table "acne_measurement_pictures", force: true do |t|
+    t.integer  "acne_measurement_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "acne_measurement_pictures", ["acne_measurement_id"], name: "index_acne_measurement_pictures_on_acne_measurement_id", using: :btree
+  add_index "acne_measurement_pictures", ["identity_file_id"], name: "index_acne_measurement_pictures_on_identity_file_id", using: :btree
+  add_index "acne_measurement_pictures", ["identity_id"], name: "index_acne_measurement_pictures_on_identity_id", using: :btree
 
   create_table "acne_measurements", force: true do |t|
     t.datetime "measurement_datetime"
