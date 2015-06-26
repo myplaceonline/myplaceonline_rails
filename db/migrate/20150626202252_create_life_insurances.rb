@@ -8,6 +8,7 @@ class CreateLifeInsurances < ActiveRecord::Migration
       t.references :periodic_payment, index: true
       t.text :notes
       t.references :identity, index: true
+      t.integer :life_insurance_type
 
       t.timestamps
     end

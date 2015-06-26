@@ -415,7 +415,7 @@ ActiveRecord::Schema.define(version: 20150626202252) do
   add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -718,6 +718,7 @@ ActiveRecord::Schema.define(version: 20150626202252) do
     t.integer  "periodic_payment_id"
     t.text     "notes"
     t.integer  "identity_id"
+    t.integer  "life_insurance_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

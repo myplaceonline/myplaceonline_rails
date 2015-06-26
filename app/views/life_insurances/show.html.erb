@@ -3,6 +3,7 @@
   <%= attribute_table_row(t("myplaceonline.life_insurances.insurance_name"), @obj.insurance_name) %>
   <%= attribute_table_row_currency(t("myplaceonline.life_insurances.insurance_amount"), @obj.insurance_amount) %>
   <%= attribute_table_row_date(t("myplaceonline.life_insurances.started"), @obj.started) %>
+  <%= attribute_table_row_select t("myplaceonline.life_insurances.life_insurance_type"), @obj.life_insurance_type, LifeInsurance::LIFE_INSURANCE_TYPES %>
   <%= attribute_table_row_markdown(t("myplaceonline.life_insurances.notes"), @obj.notes) %>
   <%= attribute_table_row_reference(t("myplaceonline.life_insurances.company"), "company_path", @obj.company) %>
   <%= attribute_table_row_reference(t("myplaceonline.life_insurances.periodic_payment"), "periodic_payment_path", @obj.periodic_payment) %>

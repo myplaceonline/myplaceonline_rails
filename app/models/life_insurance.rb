@@ -1,4 +1,10 @@
 class LifeInsurance < ActiveRecord::Base
+  
+  LIFE_INSURANCE_TYPES = [
+    ["myplaceonline.life_insurances.type_whole", 0],
+    ["myplaceonline.life_insurances.type_term", 1]
+  ]
+
   belongs_to :identity
   validates :insurance_name, presence: true
   validates :insurance_amount, presence: true

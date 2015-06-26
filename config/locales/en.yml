@@ -998,5 +998,8 @@ en:
       insurance_amount: "Amount"
       started: "Started"
       notes: "Notes"
+      life_insurance_type: "Type"
       company: "Company"
       periodic_payment: "Periodic Payment"
+      type_whole: "Whole"
+      type_term: "Term"
