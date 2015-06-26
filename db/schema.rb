@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150626202252) do
+ActiveRecord::Schema.define(version: 20150626205234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1246,6 +1246,18 @@ ActiveRecord::Schema.define(version: 20150626202252) do
 
   add_index "vehicle_loans", ["identity_id"], name: "index_vehicle_loans_on_identity_id", using: :btree
   add_index "vehicle_loans", ["vehicle_id"], name: "index_vehicle_loans_on_vehicle_id", using: :btree
+
+  create_table "vehicle_pictures", force: true do |t|
+    t.integer  "vehicle_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "vehicle_pictures", ["identity_file_id"], name: "index_vehicle_pictures_on_identity_file_id", using: :btree
+  add_index "vehicle_pictures", ["identity_id"], name: "index_vehicle_pictures_on_identity_id", using: :btree
+  add_index "vehicle_pictures", ["vehicle_id"], name: "index_vehicle_pictures_on_vehicle_id", using: :btree
 
   create_table "vehicle_services", force: true do |t|
     t.integer  "vehicle_id"

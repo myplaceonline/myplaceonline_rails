@@ -594,6 +594,10 @@ en:
       msrp: "MSRP"
       height_with_rv: "Height With RV"
       length_with_rv: "Length With RV"
+      pictures: "Pictures"
+      picture: "Picture"
+      add_picture: "Add Picture"
+      delete_picture: "Delete Picture"
     loans:
       heading: "Loans"
       loan: "Loan"

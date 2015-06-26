@@ -7,6 +7,10 @@ class VehiclesController < MyplaceonlineController
     obj.name
   end
 
+  def may_upload
+    true
+  end
+
   protected
     def sorts
       ["lower(vehicles.name) ASC"]
@@ -75,7 +79,28 @@ class VehiclesController < MyplaceonlineController
           :_destroy,
           loan_attributes: Loan.params
         ],
-        vehicle_services_attributes: [:id, :short_description, :date_due, :date_serviced, :miles, :service_location, :cost, :notes]
+        vehicle_services_attributes: [:id, :short_description, :date_due, :date_serviced, :miles, :service_location, :cost, :notes],
+        vehicle_pictures_attributes: [
+          :id,
+          :_destroy,
+          identity_file_attributes: [
+            :id,
+            :file,
+            :notes
+          ]
+        ]
       )
+    end
+
+    def presave
+      @obj.vehicle_pictures.each do |pic|
+        if pic.identity_file.folder.nil?
+          if !@obj.name.blank?
+            pic.identity_file.folder = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.vehicles"), @obj.name])
+          else
+            raise "Name blank"
+          end
+        end
+      end
     end
 end
