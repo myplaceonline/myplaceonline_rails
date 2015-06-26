@@ -24,6 +24,17 @@ class PeriodicPaymentsController < MyplaceonlineController
     obj.display
   end
 
+  def self.param_names(params)
+    [
+      :periodic_payment_name,
+      :notes,
+      :started,
+      :ended,
+      :date_period,
+      :payment_amount
+    ]
+  end
+
   protected
     def sorts
       ["lower(periodic_payments.periodic_payment_name) ASC"]
@@ -31,12 +42,7 @@ class PeriodicPaymentsController < MyplaceonlineController
 
     def obj_params
       params.require(:periodic_payment).permit(
-        :periodic_payment_name,
-        :notes,
-        :started,
-        :ended,
-        :date_period,
-        :payment_amount
+        PeriodicPaymentsController.param_names(params)
       )
     end
 end

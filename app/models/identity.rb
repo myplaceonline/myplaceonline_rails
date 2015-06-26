@@ -54,6 +54,7 @@ class Identity < ActiveRecord::Base
   has_many :promotions, :dependent => :destroy
   has_many :reward_programs, :dependent => :destroy
   has_many :computers, :dependent => :destroy
+  has_many :life_insurances, :dependent => :destroy
   
   has_many :identity_phones, :foreign_key => 'ref_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_phones, allow_destroy: true, reject_if: :all_blank
@@ -129,6 +130,7 @@ class Identity < ActiveRecord::Base
       :promotions => promotions.to_a.sort{ |a,b| a.promotion_name.downcase <=> b.promotion_name.downcase }.map{|x| x.as_json},
       :reward_programs => reward_programs.to_a.sort{ |a,b| a.reward_program_name.downcase <=> b.reward_program_name.downcase }.map{|x| x.as_json},
       :computers => computers.to_a.sort{ |a,b| a.computer_model.downcase <=> b.computer_model.downcase }.map{|x| x.as_json},
+      :life_insurances => life_insurances.to_a.sort{ |a,b| a.insurance_name.downcase <=> b.insurance_name.downcase }.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

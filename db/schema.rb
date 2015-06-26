@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150626201258) do
+ActiveRecord::Schema.define(version: 20150626202252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -415,7 +415,7 @@ ActiveRecord::Schema.define(version: 20150626201258) do
   add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.binary   "val"
+    t.string   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -709,6 +709,22 @@ ActiveRecord::Schema.define(version: 20150626201258) do
   end
 
   add_index "life_goals", ["identity_id"], name: "index_life_goals_on_identity_id", using: :btree
+
+  create_table "life_insurances", force: true do |t|
+    t.string   "insurance_name"
+    t.integer  "company_id"
+    t.decimal  "insurance_amount",    precision: 10, scale: 2
+    t.date     "started"
+    t.integer  "periodic_payment_id"
+    t.text     "notes"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "life_insurances", ["company_id"], name: "index_life_insurances_on_company_id", using: :btree
+  add_index "life_insurances", ["identity_id"], name: "index_life_insurances_on_identity_id", using: :btree
+  add_index "life_insurances", ["periodic_payment_id"], name: "index_life_insurances_on_periodic_payment_id", using: :btree
 
   create_table "list_items", force: true do |t|
     t.string   "name"

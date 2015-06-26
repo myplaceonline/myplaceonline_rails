@@ -89,6 +89,7 @@ en:
       promotions: "Promotions"
       reward_programs: "Reward Programs"
       computers: "Computers"
+      life_insurances: "Life Insurances"
     general:
       email: "E-mail"
       password: "Password"
@@ -992,3 +993,10 @@ en:
       manufacturer: "Manufacturer"
       administrator: "Administrator/Root User"
       main_user: "Main User"
+    life_insurances:
+      insurance_name: "Name"
+      insurance_amount: "Amount"
+      started: "Started"
+      notes: "Notes"
+      company: "Company"
+      periodic_payment: "Periodic Payment"
