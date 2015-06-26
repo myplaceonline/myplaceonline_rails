@@ -799,6 +799,16 @@ module Myp
     category.save!
   end
   
+  def self.migration_set_icon(category_name, icon)
+    category = Category.where(name: category_name).first
+    if category.nil?
+      raise "Category not found"
+    end
+    category.icon = icon
+    puts "Set icon to #{icon}"
+    category.save!
+  end
+  
   def self.appendstr(str, what, delimeter = " ", leftwrap = nil, rightwrap = nil)
     if !what.blank?
       if str.nil?
