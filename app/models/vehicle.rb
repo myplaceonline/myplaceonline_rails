@@ -15,6 +15,9 @@ class Vehicle < ActiveRecord::Base
   has_many :vehicle_services, :dependent => :destroy
   accepts_nested_attributes_for :vehicle_services, allow_destroy: true, reject_if: :all_blank
   
+  has_many :vehicle_insurances, :dependent => :destroy
+  accepts_nested_attributes_for :vehicle_insurances, allow_destroy: true, reject_if: :all_blank
+  
   belongs_to :recreational_vehicle, :autosave => true
   accepts_nested_attributes_for :recreational_vehicle, reject_if: proc { |attributes| RecreationalVehiclesController.reject_if_blank(attributes) }
 

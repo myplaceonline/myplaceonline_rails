@@ -79,7 +79,24 @@ class VehiclesController < MyplaceonlineController
           :_destroy,
           loan_attributes: Loan.params
         ],
-        vehicle_services_attributes: [:id, :short_description, :date_due, :date_serviced, :miles, :service_location, :cost, :notes],
+        vehicle_services_attributes: [
+          :id,
+          :short_description,
+          :date_due,
+          :date_serviced,
+          :miles,
+          :service_location,
+          :cost,
+          :notes,
+          :_destroy
+        ],
+        vehicle_insurances_attributes: [
+          :id,
+          :insurance_name,
+          :started,
+          :notes,
+          :_destroy
+        ],
         vehicle_pictures_attributes: [
           :id,
           :_destroy,
