@@ -58,6 +58,15 @@ class RecreationalVehiclesController < MyplaceonlineController
           :file,
           :notes
         ]
+      ],
+      recreational_vehicle_insurances_attributes: [
+        :id,
+        :insurance_name,
+        :started,
+        :notes,
+        :_destroy,
+        company_attributes: CompaniesController.param_names(params[:recreational_vehicle][:recreational_vehicle_insurances_attributes]) + [:id],
+        periodic_payment_attributes: PeriodicPaymentsController.param_names(params[:recreational_vehicle][:recreational_vehicle_insurances_attributes]) + [:id]
       ]
     ]
   end

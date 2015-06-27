@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150626235409) do
+ActiveRecord::Schema.define(version: 20150627004520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1036,6 +1036,22 @@ ActiveRecord::Schema.define(version: 20150626235409) do
   end
 
   add_index "recipes", ["identity_id"], name: "index_recipes_on_identity_id", using: :btree
+
+  create_table "recreational_vehicle_insurances", force: true do |t|
+    t.string   "insurance_name"
+    t.integer  "company_id"
+    t.date     "started"
+    t.integer  "periodic_payment_id"
+    t.text     "notes"
+    t.integer  "recreational_vehicle_id"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "recreational_vehicle_insurances", ["company_id"], name: "index_recreational_vehicle_insurances_on_company_id", using: :btree
+  add_index "recreational_vehicle_insurances", ["identity_id"], name: "index_recreational_vehicle_insurances_on_identity_id", using: :btree
+  add_index "recreational_vehicle_insurances", ["periodic_payment_id"], name: "index_recreational_vehicle_insurances_on_periodic_payment_id", using: :btree
 
   create_table "recreational_vehicle_loans", force: true do |t|
     t.integer  "recreational_vehicle_id"

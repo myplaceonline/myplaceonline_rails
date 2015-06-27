@@ -608,6 +608,16 @@ en:
       started: "Started"
       periodic_payment: "Periodic Payment"
       notes: "Notes"
+    recreational_vehicle_insurances:
+      insurance_name: "Name"
+      insurances: "Insurances"
+      insurance: "Insurance"
+      add_insurance: "Add Insurance"
+      delete_insurance: "Delete Insurance"
+      company: "Company"
+      started: "Started"
+      periodic_payment: "Periodic Payment"
+      notes: "Notes"
     loans:
       heading: "Loans"
       loan: "Loan"

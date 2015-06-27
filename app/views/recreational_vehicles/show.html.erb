@@ -40,6 +40,14 @@
     <%= attribute_table_row(t("myplaceonline.loans.start"), Myp.display_date(loanwrapper.loan.start, current_user)) %>
     <%= attribute_table_row(t("myplaceonline.loans.paid_off"), Myp.display_date(loanwrapper.loan.paid_off, current_user)) %>
   <% end %>
+  <% @obj.recreational_vehicle_insurances.each do |insurance| %>
+    <%= table_row_heading(t("myplaceonline.recreational_vehicle_insurances.insurance")) %>
+    <%= attribute_table_row(t("myplaceonline.recreational_vehicle_insurances.insurance_name"), insurance.insurance_name) %>
+    <%= attribute_table_row_date(t("myplaceonline.recreational_vehicle_insurances.date_due"), insurance.started) %>
+    <%= attribute_table_row_markdown(t("myplaceonline.recreational_vehicle_insurances.notes"), insurance.notes) %>
+    <%= attribute_table_row_reference(t("myplaceonline.recreational_vehicle_insurances.company"), "company_path", insurance.company) %>
+    <%= attribute_table_row_reference(t("myplaceonline.recreational_vehicle_insurances.periodic_payment"), "periodic_payment_path", insurance.periodic_payment) %>
+  <% end %>
   <% @obj.recreational_vehicle_pictures.each do |pic| %>
     <%= table_row_heading(t("myplaceonline.recreational_vehicles.picture")) %>
     <% if !pic.identity_file.nil? && !pic.identity_file.file_content_type.nil? && (pic.identity_file.file_content_type.start_with?("image")) %>
