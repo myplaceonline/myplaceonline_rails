@@ -95,7 +95,9 @@ class VehiclesController < MyplaceonlineController
           :insurance_name,
           :started,
           :notes,
-          :_destroy
+          :_destroy,
+          company_attributes: CompaniesController.param_names(params[:vehicle][:vehicle_insurances_attributes]) + [:id],
+          periodic_payment_attributes: PeriodicPaymentsController.param_names(params[:vehicle][:vehicle_insurances_attributes]) + [:id]
         ],
         vehicle_pictures_attributes: [
           :id,

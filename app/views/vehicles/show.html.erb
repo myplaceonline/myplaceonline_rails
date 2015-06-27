@@ -106,6 +106,8 @@
     <%= attribute_table_row(t("myplaceonline.vehicle_insurances.insurance_name"), insurance.insurance_name) %>
     <%= attribute_table_row_date(t("myplaceonline.vehicle_insurances.date_due"), insurance.started) %>
     <%= attribute_table_row_markdown(t("myplaceonline.vehicle_insurances.notes"), insurance.notes) %>
+    <%= attribute_table_row_reference(t("myplaceonline.vehicle_insurances.company"), "company_path", insurance.company) %>
+    <%= attribute_table_row_reference(t("myplaceonline.vehicle_insurances.periodic_payment"), "periodic_payment_path", insurance.periodic_payment) %>
   <% end %>
   <% @obj.vehicle_pictures.each do |pic| %>
     <%= table_row_heading(t("myplaceonline.vehicles.picture")) %>

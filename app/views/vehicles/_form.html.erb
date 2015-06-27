@@ -141,6 +141,28 @@
         type: 'textarea',
         name: 'notes',
         placeholder: t("myplaceonline.vehicle_insurances.notes")
+      },
+      {
+        type: :renderpartial,
+        name: :company_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.vehicle_insurances.company"),
+        objform: "companies/form",
+        existingobjurl: "company_path",
+        searchurl: "/companies.json?perpage=0",
+        edit: false,
+        autofocus: false
+      },
+      {
+        type: :renderpartial,
+        name: :periodic_payment_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.vehicle_insurances.periodic_payment"),
+        objform: "periodic_payments/form",
+        existingobjurl: "periodic_payment_path",
+        searchurl: "/periodic_payments.json?perpage=0",
+        edit: false,
+        autofocus: false
       }
     ]
   } do |child_fields, childproperty|
@@ -148,6 +170,32 @@
   <%= myp_text_field child_fields, :insurance_name, "myplaceonline.vehicle_insurances.insurance_name", childproperty.insurance_name %>
   <%= myp_date_field child_fields, :started, "myplaceonline.vehicle_insurances.started", childproperty.started %>
   <%= myp_text_area_markdown child_fields, :notes, "myplaceonline.vehicle_insurances.notes", childproperty.notes %>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :company_attributes,
+      existingobj: childproperty.company,
+      heading: t("myplaceonline.vehicle_insurances.company"),
+      objform: "companies/form",
+      existingobjurl: "company_path",
+      searchurl: "/companies.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :periodic_payment_attributes,
+      existingobj: childproperty.periodic_payment,
+      heading: t("myplaceonline.vehicle_insurances.periodic_payment"),
+      objform: "periodic_payments/form",
+      existingobjurl: "periodic_payment_path",
+      searchurl: "/periodic_payments.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
 <% end %>
 <div data-role="collapsible" data-collapsed="true">
   <h3><%= t("myplaceonline.vehicles.extra") %></h3>
