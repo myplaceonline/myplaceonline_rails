@@ -583,21 +583,23 @@ module Myp
       ORDER BY last_conversation_date ASC
     }).each do |contact|
       contact_threshold = contact_type_threshold[contact.contact_type]
-      if contact.last_conversation_date.nil?
-        # No conversations at all
-        result.push(DueItem.new(I18n.t(
-          "myplaceonline.contacts.no_conversations",
-          name: contact.display,
-          contact_type: Myp.get_select_name(contact.contact_type, Contact::CONTACT_TYPES)
-        ), "/contacts/" + contact.id.to_s, datenow))
-      else
-        if contact.last_conversation_date < contact_threshold
+      if !contact_threshold.nil?
+        if contact.last_conversation_date.nil?
+          # No conversations at all
           result.push(DueItem.new(I18n.t(
-            "myplaceonline.contacts.no_conversations_since",
+            "myplaceonline.contacts.no_conversations",
             name: contact.display,
-            contact_type: Myp.get_select_name(contact.contact_type, Contact::CONTACT_TYPES),
-            delta: Myp.time_difference_in_general_human(TimeDifference.between(datenow, contact.last_conversation_date).in_general)
-          ), "/contacts/" + contact.id.to_s, contact.last_conversation_date))
+            contact_type: Myp.get_select_name(contact.contact_type, Contact::CONTACT_TYPES)
+          ), "/contacts/" + contact.id.to_s, datenow))
+        else
+          if contact.last_conversation_date < contact_threshold
+            result.push(DueItem.new(I18n.t(
+              "myplaceonline.contacts.no_conversations_since",
+              name: contact.display,
+              contact_type: Myp.get_select_name(contact.contact_type, Contact::CONTACT_TYPES),
+              delta: Myp.time_difference_in_general_human(TimeDifference.between(datenow, contact.last_conversation_date).in_general)
+            ), "/contacts/" + contact.id.to_s, contact.last_conversation_date))
+          end
         end
       end
     end
