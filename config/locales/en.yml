@@ -965,6 +965,10 @@ en:
       passport_number: "Passport Number"
       expires: "Expires"
       issued: "Issued"
+      pictures: "Pictures"
+      picture: "Picture"
+      add_picture: "Add Picture"
+      delete_picture: "Delete Picture"
     relationships:
       sister: "Sister"
       brother: "Brother"

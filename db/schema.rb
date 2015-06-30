@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150627004520) do
+ActiveRecord::Schema.define(version: 20150630030040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -427,7 +427,7 @@ ActiveRecord::Schema.define(version: 20150627004520) do
   add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -934,6 +934,18 @@ ActiveRecord::Schema.define(version: 20150627004520) do
   end
 
   add_index "pains", ["identity_id"], name: "index_pains_on_identity_id", using: :btree
+
+  create_table "passport_pictures", force: true do |t|
+    t.integer  "passport_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "passport_pictures", ["identity_file_id"], name: "index_passport_pictures_on_identity_file_id", using: :btree
+  add_index "passport_pictures", ["identity_id"], name: "index_passport_pictures_on_identity_id", using: :btree
+  add_index "passport_pictures", ["passport_id"], name: "index_passport_pictures_on_passport_id", using: :btree
 
   create_table "passports", force: true do |t|
     t.string   "region"

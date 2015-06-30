@@ -7,6 +7,9 @@ class Passport < ActiveRecord::Base
     region + " (" + passport_number + ")"
   end
   
+  has_many :passport_pictures, :dependent => :destroy
+  accepts_nested_attributes_for :passport_pictures, allow_destroy: true, reject_if: :all_blank
+
   before_create :do_before_save
   before_update :do_before_save
 

@@ -2,3 +2,25 @@
 <%= myp_text_field f, :passport_number, "myplaceonline.passports.passport_number", obj.passport_number %>
 <%= myp_date_field f, :expires, "myplaceonline.passports.expires", obj.expires %>
 <%= myp_date_field f, :issued, "myplaceonline.passports.issued", obj.issued %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.passports.pictures"),
+    childpropertiesname: :passport_pictures,
+    childproperties: obj.passport_pictures,
+    deletebutton: t("myplaceonline.passports.delete_picture"),
+    addbutton: t("myplaceonline.passports.add_picture"),
+    expanded: obj.passport_pictures.length > 0,
+    formjson: [
+      {
+        type: 'file',
+        name: 'identity_file_attributes.file',
+        placeholder: t("myplaceonline.passports.picture")
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%= child_fields.fields_for :identity_file, childproperty.identity_file do |file_fields| %>
+    <%= myp_file_field file_fields, :file, "myplaceonline.passports.picture", childproperty.identity_file.file %>
+  <% end %>
+<% end %>

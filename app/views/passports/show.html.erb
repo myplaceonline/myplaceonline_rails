@@ -4,5 +4,11 @@
   <%= attribute_table_row(t("myplaceonline.passports.passport_number"), @obj.passport_number) %>
   <%= attribute_table_row_date(t("myplaceonline.passports.expires"), @obj.expires) %>
   <%= attribute_table_row_date(t("myplaceonline.passports.issued"), @obj.issued) %>
-  
+  <% @obj.passport_pictures.each do |pic| %>
+    <%= table_row_heading(t("myplaceonline.passports.picture")) %>
+    <% if !pic.identity_file.nil? && !pic.identity_file.file_content_type.nil? && (pic.identity_file.file_content_type.start_with?("image")) %>
+      <%= attribute_table_row_image(t("myplaceonline.passports.picture"), file_view_path(pic.identity_file)) %>
+    <% end %>
+  <% end %>
+
 <% end %>
