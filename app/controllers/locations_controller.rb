@@ -14,6 +14,8 @@ class LocationsController < MyplaceonlineController
       :sub_region2,
       :postal_code,
       :notes,
+      :latitude,
+      :longitude,
       location_phones_attributes: [:id, :number, :_destroy]
     ]
   end

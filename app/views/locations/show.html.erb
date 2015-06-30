@@ -9,6 +9,8 @@
   <%= attribute_table_row(t("myplaceonline.general.sub_region1"), @obj.sub_region1_name) %>
   <%= attribute_table_row(t("myplaceonline.locations.postal_code"), @obj.postal_code) %>
   <%= attribute_table_row(t("myplaceonline.general.region"), @obj.region_name) %>
+  <%= attribute_table_row(t("myplaceonline.locations.latitude"), @obj.latitude) %>
+  <%= attribute_table_row(t("myplaceonline.locations.longitude"), @obj.longitude) %>
   <%= attribute_table_row_url(t("myplaceonline.locations.map"), @obj.map_url) %>
   <%= attribute_table_row_markdown(t("myplaceonline.locations.notes"), @obj.notes) %>
   <% @obj.location_phones.each do |phone| %>

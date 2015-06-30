@@ -420,6 +420,8 @@ en:
       map: "Map"
       full_address: "Full Address"
       notes: "Notes"
+      latitude: "Latitude"
+      longitude: "Longitude"
     activities:
       name: "Name"
     apartments:
