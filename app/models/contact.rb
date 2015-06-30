@@ -55,7 +55,17 @@ class Contact < ActiveRecord::Base
 
   def display
     if !contact_identity.nil?
-      name
+      result = name
+      whitespace = result =~ /\s+/
+      if whitespace.nil?
+        # Seemingly no last name, so add some other identifier if available
+        if contact_identity.identity_relationships.length > 0 && !contact_identity.identity_relationships[0].relationship_name.nil?
+          relationship = contact_identity.identity_relationships[0]
+          result = Myp.appendstrwrap(result, relationship.contact.name + "'s " + relationship.relationship_name)
+        else
+        end
+      end
+      result
     else
       I18n.t("myplaceonline.general.unknown")
     end

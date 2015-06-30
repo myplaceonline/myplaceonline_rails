@@ -32,6 +32,14 @@ class IdentityRelationship < ActiveRecord::Base
     super
   end
   
+  def relationship_name
+    if relationship_type.nil?
+      nil
+    else
+      Myp.get_select_name(relationship_type, IdentityRelationship::RELATIONSHIPS)
+    end
+  end
+  
   before_create :do_before_save
   before_update :do_before_save
 

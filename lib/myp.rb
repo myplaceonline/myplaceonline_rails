@@ -816,7 +816,9 @@ module Myp
       if str.nil?
         str = ""
       else
-        str += delimeter
+        if !delimeter.nil?
+          str += delimeter
+        end
       end
       if !leftwrap.nil?
         str += leftwrap
@@ -827,6 +829,10 @@ module Myp
       end
     end
     str
+  end
+  
+  def self.appendstrwrap(str, what)
+    Myp.appendstr(str, what, nil, " (", ")")
   end
   
   def self.query_parameters_uri_part(request)
