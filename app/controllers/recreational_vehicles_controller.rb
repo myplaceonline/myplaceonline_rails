@@ -8,7 +8,7 @@ class RecreationalVehiclesController < MyplaceonlineController
   end
 
   def self.param_names(params)
-    if params.length == 1 && !params["id"].nil?
+    if params.nil? || (params.length == 1 && !params["id"].nil?)
       return []
     end
     [
