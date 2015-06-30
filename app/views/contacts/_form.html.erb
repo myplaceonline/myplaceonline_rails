@@ -42,11 +42,18 @@
           name: 'number',
           placeholder: t("myplaceonline.identities.phone"),
           autofocus: true
+        },
+        {
+          type: 'select',
+          name: 'phone_type',
+          options: IdentityPhone::PHONE_TYPES.map{|x,y| [I18n.t(x),y]}.as_json,
+          placeholder: t("myplaceonline.identity_phones.phone_type")
         }
       ]
     } do |child_fields, childproperty|
   %>
     <%= myp_text_field child_fields, :number, "myplaceonline.identities.phone", childproperty.number %>
+    <%= myp_select(child_fields, :phone_type, "myplaceonline.identity_phones.phone_type", Myp.translate_options(IdentityPhone::PHONE_TYPES), childproperty.phone_type) %>
   <% end %>
 
   <%=

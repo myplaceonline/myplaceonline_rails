@@ -30,7 +30,12 @@ class ContactsController < MyplaceonlineController
         :birthday,
         :notes,
         {
-          identity_phones_attributes: [:id, :number, :_destroy],
+          identity_phones_attributes: [
+            :id,
+            :number,
+            :phone_type,
+            :_destroy
+          ],
           identity_emails_attributes: [:id, :email, :_destroy],
           identity_locations_attributes: [
             :id,

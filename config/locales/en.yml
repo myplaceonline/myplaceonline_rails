@@ -1042,3 +1042,8 @@ en:
       periodic_payment: "Periodic Payment"
       type_whole: "Whole"
       type_term: "Term"
+    identity_phones:
+      phone_type: "Phone Type"
+      cell: "Cell"
+      home: "Home"
+      temporary: "Temporary"
