@@ -3,10 +3,6 @@ class LifeInsurancesController < MyplaceonlineController
     LifeInsurance
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   protected
     def sorts
       ["lower(life_insurances.insurance_name) ASC"]

@@ -3,10 +3,6 @@ class TripsController < MyplaceonlineController
     Trip
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   def may_upload
     true
   end

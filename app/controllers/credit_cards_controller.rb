@@ -25,10 +25,6 @@ class CreditCardsController < MyplaceonlineController
   def model
     CreditCard
   end
-
-  def display_obj(obj)
-    obj.display
-  end
   
   def cashback_for(cb)
     if cb.cashback.applies_to.blank?

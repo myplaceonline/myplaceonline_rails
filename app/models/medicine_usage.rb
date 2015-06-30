@@ -25,4 +25,8 @@ class MedicineUsage < ActiveRecord::Base
       end
     }
   end
+  
+  def display
+    Myp.display_datetime_short(usage_time, User.current_user)
+  end
 end

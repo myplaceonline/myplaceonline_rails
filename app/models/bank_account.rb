@@ -1,6 +1,10 @@
 class BankAccount < ActiveRecord::Base
   include EncryptedConcern
 
+  def display
+    name
+  end
+  
   belongs_to :identity
 
   attr_accessor :encrypt

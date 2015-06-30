@@ -168,7 +168,7 @@ class MyplaceonlineController < ApplicationController
   end
     
   def display_obj(obj)
-    raise NotImplementedError
+    obj.display
   end
     
   def model

@@ -3,6 +3,10 @@ class Movie < ActiveRecord::Base
   validates :name, presence: true
   attr_accessor :is_watched
   
+  def display
+    name
+  end
+  
   before_create :do_before_save
   before_update :do_before_save
 

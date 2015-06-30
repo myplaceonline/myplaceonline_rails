@@ -3,10 +3,6 @@ class ComputersController < MyplaceonlineController
     Computer
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   protected
     def sorts
       ["lower(computers.computer_model) ASC"]

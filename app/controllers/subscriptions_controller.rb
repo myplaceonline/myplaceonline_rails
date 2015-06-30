@@ -3,10 +3,6 @@ class SubscriptionsController < MyplaceonlineController
     Subscription
   end
 
-  def display_obj(obj)
-    obj.name
-  end
-
   protected
     def sorts
       ["lower(subscriptions.name) ASC"]

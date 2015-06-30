@@ -3,10 +3,6 @@ class BloodPressuresController < MyplaceonlineController
     BloodPressure
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   protected
     def insecure
       true

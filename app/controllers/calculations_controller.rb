@@ -2,10 +2,6 @@ class CalculationsController < MyplaceonlineController
   def model
     Calculation
   end
-
-  def display_obj(obj)
-    obj.name
-  end
   
   def available_forms
     CalculationForm.where(identity_id: current_user.primary_identity.id, is_duplicate: false)

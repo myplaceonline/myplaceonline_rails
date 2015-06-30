@@ -3,10 +3,6 @@ class PainsController < MyplaceonlineController
     Pain
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   protected
     def insecure
       true

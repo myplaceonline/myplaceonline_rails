@@ -3,6 +3,10 @@ class Feed < ActiveRecord::Base
   validates :name, presence: true
   validates :url, presence: true
   
+  def display
+    name
+  end
+  
   before_create :do_before_save
   before_update :do_before_save
 

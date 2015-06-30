@@ -3,10 +3,6 @@ class MedicineUsagesController < MyplaceonlineController
     MedicineUsage
   end
 
-  def display_obj(obj)
-    Myp.display_datetime_short(obj.usage_time, User.current_user)
-  end
-
   protected
     def insecure
       true

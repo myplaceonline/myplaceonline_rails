@@ -3,10 +3,6 @@ class LifeGoalsController < MyplaceonlineController
     LifeGoal
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   protected
     def sorts
       ["lower(life_goals.life_goal_name) ASC"]

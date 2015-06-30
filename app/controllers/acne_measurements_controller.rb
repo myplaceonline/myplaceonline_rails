@@ -2,10 +2,6 @@ class AcneMeasurementsController < MyplaceonlineController
   def model
     AcneMeasurement
   end
-
-  def display_obj(obj)
-    obj.display
-  end
   
   def may_upload
     true

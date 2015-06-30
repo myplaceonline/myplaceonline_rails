@@ -3,10 +3,6 @@ class RewardProgramsController < MyplaceonlineController
     RewardProgram
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   def index
     @program_type = params[:program_type]
     if !@program_type.blank?

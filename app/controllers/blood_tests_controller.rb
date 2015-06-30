@@ -3,10 +3,6 @@ class BloodTestsController < MyplaceonlineController
     BloodTest
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   protected
     def sorts
       ["blood_tests.fast_started DESC"]

@@ -3,10 +3,6 @@ class RecreationalVehiclesController < MyplaceonlineController
     RecreationalVehicle
   end
 
-  def display_obj(obj)
-    obj.rv_name
-  end
-
   def may_upload
     true
   end

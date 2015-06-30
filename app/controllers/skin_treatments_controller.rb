@@ -3,10 +3,6 @@ class SkinTreatmentsController < MyplaceonlineController
     SkinTreatment
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   protected
     def sorts
       ["skin_treatments.treatment_time DESC"]

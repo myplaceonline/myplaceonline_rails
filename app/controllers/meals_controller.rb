@@ -3,10 +3,6 @@ class MealsController < MyplaceonlineController
     Meal
   end
 
-  def display_obj(obj)
-    Myp.display_datetime_short(obj.meal_time, User.current_user)
-  end
-
   protected
     def insecure
       true

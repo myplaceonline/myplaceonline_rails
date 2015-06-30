@@ -3,10 +3,6 @@ class HeadachesController < MyplaceonlineController
     Headache
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   protected
     def sorts
       ["headaches.started DESC"]

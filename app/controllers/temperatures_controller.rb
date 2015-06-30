@@ -3,10 +3,6 @@ class TemperaturesController < MyplaceonlineController
     Temperature
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   protected
     def sorts
       ["temperatures.measured DESC"]

@@ -3,10 +3,6 @@ class FeedsController < MyplaceonlineController
     Feed
   end
 
-  def display_obj(obj)
-    obj.name
-  end
-
   protected
     def sorts
       ["lower(feeds.name) ASC"]

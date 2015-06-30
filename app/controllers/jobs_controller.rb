@@ -3,10 +3,6 @@ class JobsController < MyplaceonlineController
     Job
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   protected
     def sorts
       ["lower(jobs.job_title) ASC"]

@@ -3,10 +3,6 @@ class ToDosController < MyplaceonlineController
     ToDo
   end
 
-  def display_obj(obj)
-    obj.short_description
-  end
-
   protected
     def sorts
       ["lower(to_dos.short_description) ASC"]

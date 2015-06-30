@@ -3,10 +3,6 @@ class WebsitesController < MyplaceonlineController
     Website
   end
 
-  def display_obj(obj)
-    obj.title
-  end
-
   protected
     def sorts
       ["lower(websites.title) ASC"]

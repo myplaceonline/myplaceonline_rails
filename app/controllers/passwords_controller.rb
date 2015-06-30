@@ -178,10 +178,6 @@ class PasswordsController < MyplaceonlineController
     Password
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   def self.param_names
     [:name, :user, :password, :email, :url, :account_number, :notes, :encrypt, :is_defunct]
   end

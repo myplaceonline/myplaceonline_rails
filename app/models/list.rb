@@ -5,6 +5,10 @@ class List < ActiveRecord::Base
   has_many :list_items, :foreign_key => 'list_id', :dependent => :destroy
   accepts_nested_attributes_for :list_items, allow_destroy: true, reject_if: :all_blank
   
+  def display
+    name
+  end
+  
   before_create :do_before_save
   before_update :do_before_save
 

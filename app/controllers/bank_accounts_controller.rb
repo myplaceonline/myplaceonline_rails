@@ -3,10 +3,6 @@ class BankAccountsController < MyplaceonlineController
     BankAccount
   end
 
-  def display_obj(obj)
-    obj.name
-  end
-
   protected
     def sorts
       ["lower(bank_accounts.name) ASC"]

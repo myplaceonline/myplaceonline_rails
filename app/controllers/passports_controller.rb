@@ -3,10 +3,6 @@ class PassportsController < MyplaceonlineController
     Passport
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   protected
     def sorts
       ["lower(passports.region) ASC"]

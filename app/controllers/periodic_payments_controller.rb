@@ -20,10 +20,6 @@ class PeriodicPaymentsController < MyplaceonlineController
     PeriodicPayment
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   def self.param_names(params)
     [
       :periodic_payment_name,

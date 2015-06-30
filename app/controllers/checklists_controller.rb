@@ -3,10 +3,6 @@ class ChecklistsController < MyplaceonlineController
     Checklist
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   def generate
     set_obj
     

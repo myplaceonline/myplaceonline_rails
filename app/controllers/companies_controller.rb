@@ -3,10 +3,6 @@ class CompaniesController < MyplaceonlineController
   def model
     Company
   end
-
-  def display_obj(obj)
-    obj.name
-  end
   
   def self.param_names(params)
     [

@@ -3,10 +3,6 @@ class VitaminsController < MyplaceonlineController
     Vitamin
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   protected
     def sorts
       ["lower(vitamins.vitamin_name) ASC"]

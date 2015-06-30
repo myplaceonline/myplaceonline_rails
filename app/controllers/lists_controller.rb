@@ -2,10 +2,6 @@ class ListsController < MyplaceonlineController
   def model
     List
   end
-
-  def display_obj(obj)
-    obj.name
-  end
   
   def self.param_names
     [

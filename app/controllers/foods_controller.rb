@@ -2,11 +2,7 @@ class FoodsController < MyplaceonlineController
   def model
     Food
   end
-
-  def display_obj(obj)
-    obj.food_name
-  end
-
+  
   protected
     def sorts
       ["lower(foods.food_name) ASC"]

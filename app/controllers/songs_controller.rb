@@ -3,10 +3,6 @@ class SongsController < MyplaceonlineController
     Song
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   protected
     def sorts
       ["lower(songs.song_name) ASC"]

@@ -3,10 +3,6 @@ class CreditScoresController < MyplaceonlineController
     CreditScore
   end
 
-  def display_obj(obj)
-    Myp.display_date(obj.score_date, current_user) + " (" + obj.score.to_s + ")"
-  end
-
   protected
     def sorts
       ["credit_scores.score_date DESC"]

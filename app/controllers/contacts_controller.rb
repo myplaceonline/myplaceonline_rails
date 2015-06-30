@@ -2,10 +2,6 @@ class ContactsController < MyplaceonlineController
   def model
     Contact
   end
-
-  def display_obj(obj)
-    obj.display
-  end
   
   def before_destroy
     if @obj.ref_id == current_user.primary_identity.id

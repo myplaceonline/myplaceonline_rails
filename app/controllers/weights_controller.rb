@@ -3,10 +3,6 @@ class WeightsController < MyplaceonlineController
     Weight
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   protected
     def insecure
       true

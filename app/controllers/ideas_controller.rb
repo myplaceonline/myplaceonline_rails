@@ -3,10 +3,6 @@ class IdeasController < MyplaceonlineController
     Idea
   end
 
-  def display_obj(obj)
-    obj.name
-  end
-
   protected
     def sorts
       ["lower(ideas.name) ASC"]

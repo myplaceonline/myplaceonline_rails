@@ -7,10 +7,6 @@ class FilesController < MyplaceonlineController
   def category_name
     "files"
   end
-  
-  def display_obj(obj)
-    obj.display
-  end
 
   def model
     IdentityFile

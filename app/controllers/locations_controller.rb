@@ -2,10 +2,6 @@ class LocationsController < MyplaceonlineController
   def model
     Location
   end
-
-  def display_obj(obj)
-    obj.display
-  end
   
   def self.param_names
     [

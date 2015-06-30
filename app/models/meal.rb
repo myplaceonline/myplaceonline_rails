@@ -62,4 +62,8 @@ class Meal < ActiveRecord::Base
       end
     }
   end
+  
+  def display
+    Myp.display_datetime_short(meal_time, User.current_user)
+  end
 end

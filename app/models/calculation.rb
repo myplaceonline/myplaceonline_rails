@@ -7,6 +7,10 @@ class Calculation < ActiveRecord::Base
   validates_presence_of :calculation_form
 
   belongs_to :original_calculation_form, class_name: CalculationForm
+  
+  def display
+    name
+  end
 
   validate do
     if !calculation_form.nil?

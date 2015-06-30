@@ -12,6 +12,10 @@ class CalculationForm < ActiveRecord::Base
   #validates_presence_of :root_element
   accepts_nested_attributes_for :root_element
   
+  def display
+    name
+  end
+  
   after_initialize :init
 
   def init
@@ -42,9 +46,5 @@ class CalculationForm < ActiveRecord::Base
 
   def do_before_save
     Myp.set_common_model_properties(self)
-  end
-  
-  def display
-    name
   end
 end

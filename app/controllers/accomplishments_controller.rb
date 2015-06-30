@@ -3,10 +3,6 @@ class AccomplishmentsController < MyplaceonlineController
     Accomplishment
   end
 
-  def display_obj(obj)
-    obj.name
-  end
-
   protected
     def sorts
       ["accomplishments.updated_at DESC"]

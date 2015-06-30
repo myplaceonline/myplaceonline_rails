@@ -3,6 +3,9 @@ class AcneMeasurement < ActiveRecord::Base
   
   validates :measurement_datetime, presence: true
   
+  has_many :acne_measurement_pictures, :dependent => :destroy
+  accepts_nested_attributes_for :acne_measurement_pictures, allow_destroy: true, reject_if: :all_blank
+
   def display
     result = ""
     if !new_pimples.nil?
@@ -13,9 +16,6 @@ class AcneMeasurement < ActiveRecord::Base
     result += " (" + Myp.display_datetime(measurement_datetime, User.current_user) + ")"
     result
   end
-
-  has_many :acne_measurement_pictures, :dependent => :destroy
-  accepts_nested_attributes_for :acne_measurement_pictures, allow_destroy: true, reject_if: :all_blank
 
   before_create :do_before_save
   before_update :do_before_save

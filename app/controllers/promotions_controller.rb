@@ -3,10 +3,6 @@ class PromotionsController < MyplaceonlineController
     Promotion
   end
 
-  def display_obj(obj)
-    obj.display
-  end
-
   protected
     def sorts
       ["promotions.expires ASC", "lower(promotions.promotion_name) ASC"]

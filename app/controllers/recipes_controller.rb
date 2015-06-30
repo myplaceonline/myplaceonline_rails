@@ -3,10 +3,6 @@ class RecipesController < MyplaceonlineController
     Recipe
   end
 
-  def display_obj(obj)
-    obj.name
-  end
-
   protected
     def sorts
       ["lower(recipes.name) ASC"]
