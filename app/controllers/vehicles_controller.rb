@@ -69,7 +69,7 @@ class VehiclesController < MyplaceonlineController
         :displacement,
         :price,
         :msrp,
-        Myp.select_or_create_permit(params[:vehicle], :recreational_vehicle_attributes, RecreationalVehiclesController.param_names(params)),
+        Myp.select_or_create_permit(params[:vehicle], :recreational_vehicle_attributes, RecreationalVehiclesController.param_names(params[:vehicle][:recreational_vehicle_attributes])),
         vehicle_loans_attributes: [
           :id,
           :_destroy,
