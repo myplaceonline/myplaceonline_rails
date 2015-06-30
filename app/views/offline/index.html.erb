@@ -58,7 +58,7 @@ onPageLoad(function() {
         setupController: function(controller, model) {
           var categories = [];
           $.each(model.categories, function(i, x) {
-            if (x.parent_id > 0) {
+            if (x.parent_id > 0 && x.link == "passwords") {
               categories.push(x);
             }
           });
