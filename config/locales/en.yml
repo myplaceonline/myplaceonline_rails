@@ -90,6 +90,7 @@ en:
       reward_programs: "Reward Programs"
       computers: "Computers"
       life_insurances: "Life Insurances"
+      diary_entries: "Diary Entries"
     general:
       email: "E-mail"
       password: "Password"
@@ -1049,3 +1050,6 @@ en:
       cell: "Cell"
       home: "Home"
       temporary: "Temporary"
+    diary_entries:
+      diary_time: "Time"
+      entry: "Entry"
