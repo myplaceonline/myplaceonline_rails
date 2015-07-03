@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150703215948) do
+ActiveRecord::Schema.define(version: 20150703222655) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -437,6 +437,16 @@ ActiveRecord::Schema.define(version: 20150703215948) do
 
   add_index "credit_scores", ["identity_id"], name: "index_credit_scores_on_identity_id", using: :btree
 
+  create_table "desired_products", force: true do |t|
+    t.string   "product_name"
+    t.text     "notes"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "desired_products", ["identity_id"], name: "index_desired_products_on_identity_id", using: :btree
+
   create_table "diary_entries", force: true do |t|
     t.datetime "diary_time"
     t.text     "entry"
@@ -460,7 +470,7 @@ ActiveRecord::Schema.define(version: 20150703215948) do
   add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"

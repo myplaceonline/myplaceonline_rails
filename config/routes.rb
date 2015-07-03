@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :desired_products
+  post 'desired_products/new'
+
   resources :guns
   post 'guns/new'
 

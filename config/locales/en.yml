@@ -94,6 +94,7 @@ en:
       restaurants: "Restaurants"
       camp_locations: "Camp Locations"
       guns: "Guns"
+      desired_products: "Desired Products"
     general:
       email: "E-mail"
       password: "Password"
@@ -1099,4 +1100,7 @@ en:
       max_bullets: "Maximum Bullets"
       price: "Price"
       purchased: "Purchased"
+      notes: "Notes"
+    desired_products:
+      product_name: "Name"
       notes: "Notes"

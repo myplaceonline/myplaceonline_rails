@@ -59,6 +59,7 @@ class Identity < ActiveRecord::Base
   has_many :restaurants, :dependent => :destroy
   has_many :camp_locations, :dependent => :destroy
   has_many :guns, :dependent => :destroy
+  has_many :desired_products, :dependent => :destroy
   
   has_many :identity_phones, :foreign_key => 'ref_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_phones, allow_destroy: true, reject_if: :all_blank
@@ -139,6 +140,7 @@ class Identity < ActiveRecord::Base
       :restaurants => restaurants.to_a.map{|x| x.as_json},
       :camp_locations => camp_locations.to_a.map{|x| x.as_json},
       :guns => guns.to_a.sort{ |a,b| a.gun_name.downcase <=> b.gun_name.downcase }.map{|x| x.as_json},
+      :desired_products => desired_products.to_a.sort{ |a,b| a.product_name.downcase <=> b.product_name.downcase }.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end
