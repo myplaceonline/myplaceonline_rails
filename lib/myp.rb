@@ -72,6 +72,14 @@ module Myp
     ["myplaceonline.ratings.five", 5]
   ]  
   
+  NOISE_LEVELS = [
+    ["myplaceonline.noise_levels.quiet", 0],
+    ["myplaceonline.noise_levels.nature", 1],
+    ["myplaceonline.noise_levels.mild", 2],
+    ["myplaceonline.noise_levels.loud", 3],
+    ["myplaceonline.noise_levels.very_loud", 4]
+  ]  
+  
   puts "myplaceonline: Initializing categories"
   
   def self.database_exists?

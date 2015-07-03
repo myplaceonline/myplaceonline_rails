@@ -1,0 +1,2 @@
+module CampLocationsHelper
+end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150703185707) do
+ActiveRecord::Schema.define(version: 20150703192740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -224,6 +224,29 @@ ActiveRecord::Schema.define(version: 20150703185707) do
 
   add_index "calculations", ["calculation_form_id"], name: "index_calculations_on_calculation_form_id", using: :btree
   add_index "calculations", ["identity_id"], name: "index_calculations_on_identity_id", using: :btree
+
+  create_table "camp_locations", force: true do |t|
+    t.integer  "location_id"
+    t.boolean  "vehicle_parking"
+    t.boolean  "free"
+    t.boolean  "sewage"
+    t.boolean  "fresh_water"
+    t.boolean  "electricity"
+    t.boolean  "internet"
+    t.boolean  "trash"
+    t.boolean  "shower"
+    t.boolean  "bathroom"
+    t.integer  "noise_level"
+    t.integer  "rating"
+    t.boolean  "overnight_allowed"
+    t.text     "notes"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "camp_locations", ["identity_id"], name: "index_camp_locations_on_identity_id", using: :btree
+  add_index "camp_locations", ["location_id"], name: "index_camp_locations_on_location_id", using: :btree
 
   create_table "cashbacks", force: true do |t|
     t.integer  "identity_id"

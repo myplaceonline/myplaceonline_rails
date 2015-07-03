@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :camp_locations
+  post 'camp_locations/new'
+
   resources :restaurants
   post 'restaurants/new'
 
