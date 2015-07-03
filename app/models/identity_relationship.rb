@@ -14,7 +14,8 @@ class IdentityRelationship < ActiveRecord::Base
     ["myplaceonline.relationships.aunt", 11],
     ["myplaceonline.relationships.uncle", 12],
     ["myplaceonline.relationships.grandmother", 13],
-    ["myplaceonline.relationships.grandfather", 14]
+    ["myplaceonline.relationships.grandfather", 14],
+    ["myplaceonline.relationships.friend", 15]
   ]
 
   belongs_to :identity

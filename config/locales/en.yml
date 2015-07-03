@@ -992,6 +992,7 @@ en:
       uncle: "Uncle"
       grandmother: "Grandmother"
       grandfather: "Grandfather"
+      friend: "Friend"
     identity_relationships:
       relationship_type: "Relationship"
     graphs:
