@@ -1,6 +1,10 @@
 class RestaurantsController < MyplaceonlineController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:random]
 
+  def model
+    Restaurant
+  end
+
   def random
     @search = params[:search]
     @location = params[:location]
@@ -20,4 +24,17 @@ class RestaurantsController < MyplaceonlineController
       @business = @result.businesses[rand(max)]
     end
   end
+
+  protected
+    def sorts
+      ["restaurants.updated_at DESC"]
+    end
+
+    def obj_params
+      params.require(:restaurant).permit(
+        :notes,
+        :rating,
+        Myp.select_or_create_permit(params[:restaurant], :location_attributes, LocationsController.param_names)
+      )
+    end
 end

@@ -91,6 +91,7 @@ en:
       computers: "Computers"
       life_insurances: "Life Insurances"
       diary_entries: "Diary Entries"
+      restaurants: "Restaurants"
     general:
       email: "E-mail"
       password: "Password"
@@ -1053,3 +1054,14 @@ en:
     diary_entries:
       diary_time: "Time"
       entry: "Entry"
+    restaurants:
+      location: "Location"
+      notes: "Notes"
+      rating: "Rating"
+    ratings:
+      zero: "0 (Lowest)"
+      one: "1"
+      two: "2"
+      three: "3"
+      four: "4"
+      five: "5 (Highest)"
