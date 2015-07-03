@@ -62,7 +62,6 @@ class Contact < ActiveRecord::Base
         if contact_identity.identity_relationships.length > 0 && !contact_identity.identity_relationships[0].relationship_name.nil?
           relationship = contact_identity.identity_relationships[0]
           result = Myp.appendstrwrap(result, relationship.contact.name + "'s " + relationship.relationship_name)
-        else
         end
       end
       result
