@@ -1,0 +1,2 @@
+module GunsHelper
+end

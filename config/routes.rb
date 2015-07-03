@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :guns
+  post 'guns/new'
+
   resources :camp_locations
   post 'camp_locations/new'
 

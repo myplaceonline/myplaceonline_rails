@@ -93,6 +93,7 @@ en:
       diary_entries: "Diary Entries"
       restaurants: "Restaurants"
       camp_locations: "Camp Locations"
+      guns: "Guns"
     general:
       email: "E-mail"
       password: "Password"
@@ -1090,3 +1091,12 @@ en:
       mild: "Mild"
       loud: "Loud"
       very_loud: "Very Loud"
+    guns:
+      gun_name: "Name"
+      gun_model: "Model"
+      manufacturer_name: "Manufacturer"
+      bullet_caliber: "Caliber"
+      max_bullets: "Maximum Bullets"
+      price: "Price"
+      purchased: "Purchased"
+      notes: "Notes"

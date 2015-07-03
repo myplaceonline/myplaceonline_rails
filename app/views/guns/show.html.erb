@@ -1,0 +1,12 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.guns.gun_name"), @obj.gun_name) %>
+  <%= attribute_table_row(t("myplaceonline.guns.gun_model"), @obj.gun_model) %>
+  <%= attribute_table_row(t("myplaceonline.guns.manufacturer_name"), @obj.manufacturer_name) %>
+  <%= attribute_table_row(t("myplaceonline.guns.bullet_caliber"), @obj.bullet_caliber) %>
+  <%= attribute_table_row(t("myplaceonline.guns.max_bullets"), @obj.max_bullets) %>
+  <%= attribute_table_row_currency(t("myplaceonline.guns.price"), @obj.price) %>
+  <%= attribute_table_row_date(t("myplaceonline.guns.purchased"), @obj.purchased) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.guns.notes"), @obj.notes) %>
+  
+<% end %>
