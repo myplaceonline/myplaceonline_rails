@@ -237,6 +237,7 @@ module Myp
   
   WELCOME_FEATURES = self.parse_yaml_to_html("myplaceonline.welcome.features")
   CONTENT_FAQ = self.parse_yaml_to_html("myplaceonline.info.faq_content")
+  CONTENT_TIPS = self.parse_yaml_to_html("myplaceonline.info.tips_content")
   
   def self.is_web_server?
     defined?(Rails::Server) || defined?(::PhusionPassenger)

@@ -231,6 +231,7 @@ Rails.application.routes.draw do
   get 'info/credits'
   get 'info/diagnostics'
   get 'info/faq'
+  get 'info/tips'
   get 'info/about'
   get 'info', :to => 'info#index'
   
