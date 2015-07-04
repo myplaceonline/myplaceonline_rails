@@ -757,20 +757,39 @@ function jqmSetList(list, items, header) {
 }
 
 function ensureClipboard(objects) {
+  // If we're in PhoneGap, use the clipboard plugin; otherwise,
+  // check if the user has overriden clipboard integration and use that
+  // option or fall back to ZeroClipboard
   if (window.plugins && window.plugins.clipboard) {
     $("[data-clipboard-text]").click( function(e) {
       window.plugins.clipboard.copy($(this).data("clipboard-text"));
       createSuccessNotification("Copied '" + $(this).data("clipboard-text") + "' to clipboard.");
-      e.preventDefault();
-      return false;
+      //e.preventDefault();
+      return true;
     });
   } else {
-    var clipboard = new ZeroClipboard(objects);
-    clipboard.on("ready", function(readyEvent) {
-      clipboard.on("aftercopy", function(event) {
-        createSuccessNotification("Copied '" + event.data["text/plain"] + "' to clipboard.");
+    var clipboard_integration = 1;
+    if (typeof myp.clipboard_integration !== 'undefined') {
+      clipboard_integration = myp.clipboard_integration;
+      if (myp.clipboard_integration == 2 && !window.ffclipboard) {
+        clipboard_integration = 1;
+      }
+    }
+    if (clipboard_integration == 1) {
+      var clipboard = new ZeroClipboard(objects);
+      clipboard.on("ready", function(readyEvent) {
+        clipboard.on("aftercopy", function(event) {
+          createSuccessNotification("Copied '" + event.data["text/plain"] + "' to clipboard.");
+        });
       });
-    });
+    } else if (clipboard_integration == 2) {
+      $("[data-clipboard-text]").click( function(e) {
+        window.ffclipboard.setText($(this).data("clipboard-text"));
+        createSuccessNotification("Copied '" + $(this).data("clipboard-text") + "' to clipboard.");
+        //e.preventDefault();
+        return true;
+      });
+    }
   }
 }
 
