@@ -370,7 +370,7 @@ function href_extract_id(href) {
   return href;
 }
 
-function notepad_changed(notepadTitle, pendingSave, saving, saved) {
+function notepad_changed(notepadTitle, pendingSave, saving, saved, safe_save) {
   if (myp.notepadResetTimeout) {
     clearTimeout(myp.notepadResetTimeout);
     myp.notepadResetTimeout = null;
@@ -398,6 +398,11 @@ function notepad_changed(notepadTitle, pendingSave, saving, saved) {
         createErrorNotification("Could not execute " + url + ": " + textStatus);
       }).complete(function(jqXHR, textStatus) {
         myp.notepadTimeout = null;
+        if (!safe_save) {
+          // Whether we succeeded or failed, do an extra save to deal with
+          // race conditions and retry, respectively
+          notepad_changed(notepadTitle, pendingSave, saving, saved, true);
+        }
       });
     }, 1000);
   }
