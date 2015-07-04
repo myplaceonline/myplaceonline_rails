@@ -952,6 +952,8 @@ en:
       job_salary: "Salary"
       add_salary: "Add Salary"
       delete_salary: "Delete Salary"
+      days_holiday: "Days of Holidays"
+      days_vacation: "Days of Vacation"
     job_salaries:
       started: "Started"
       ended: "Ended"

@@ -3,6 +3,8 @@
   <%= attribute_table_row(t("myplaceonline.jobs.job_title"), @obj.job_title) %>
   <%= attribute_table_row_date(t("myplaceonline.jobs.started"), @obj.started) %>
   <%= attribute_table_row_date(t("myplaceonline.jobs.ended"), @obj.ended) %>
+  <%= attribute_table_row(t("myplaceonline.jobs.days_vacation"), @obj.days_vacation) %>
+  <%= attribute_table_row(t("myplaceonline.jobs.days_holiday"), @obj.days_holiday) %>
   <%= attribute_table_row_markdown(t("myplaceonline.jobs.notes"), @obj.notes) %>
   <%= attribute_table_row_reference(t("myplaceonline.jobs.company"), "company_path", @obj.company) %>
   <%= attribute_table_row_reference(t("myplaceonline.jobs.manager_contact"), "contact_path", @obj.manager_contact) %>
