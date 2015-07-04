@@ -18,7 +18,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_filter :configure_account_update_params, only: [:update]
   prepend_before_filter :authenticate_scope!, only: [
     :edit, :update, :destroy, :changepassword, :changeemail, :resetpoints,
-    :advanced, :deletecategory, :security, :export
+    :advanced, :deletecategory, :security, :export, :appearance
   ]
   
   before_filter :configure_permitted_parameters
@@ -178,6 +178,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
         :flash => { :notice => I18n.t("myplaceonline.users.security_settings_saved") }
     else
       render :security
+    end
+  end
+  
+  def appearance
+    Myp.ensure_encryption_key(session)
+    @page_transition = current_user.page_transition
+    if request.post?
+      @page_transition = params[:page_transition]
+      current_user.page_transition = @page_transition
+      current_user.save!
+      redirect_to edit_user_registration_path,
+        :flash => { :notice => I18n.t("myplaceonline.users.appearance_saved") }
+    else
+      render :appearance
     end
   end
   

@@ -266,6 +266,7 @@ Rails.application.routes.draw do
       match 'users/resetpoints', :to => 'users/registrations#resetpoints', via: [:get, :post]
       match 'users/advanced', :to => 'users/registrations#advanced', via: [:get, :post]
       match 'users/deletecategory', :to => 'users/registrations#deletecategory', via: [:get, :post]
+      match 'users/appearance', :to => 'users/registrations#appearance', via: [:get, :post]
       match 'users/security', :to => 'users/registrations#security', via: [:get, :post]
       match 'users/export', :to => 'users/registrations#export', via: [:get, :post]
       match 'users/offline', :to => 'users/registrations#offline', via: [:get, :post]

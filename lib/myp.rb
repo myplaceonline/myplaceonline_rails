@@ -78,8 +78,8 @@ module Myp
     ["myplaceonline.noise_levels.mild", 2],
     ["myplaceonline.noise_levels.loud", 3],
     ["myplaceonline.noise_levels.very_loud", 4]
-  ]  
-  
+  ]
+
   puts "myplaceonline: Initializing categories"
   
   def self.database_exists?
@@ -855,4 +855,44 @@ module Myp
   def self.query_parameters_uri_part(request)
     request.query_parameters().map{|k,v| URI.encode(k) + "=" + URI.encode(v)}.join("&")
   end
+
+  PAGE_TRANSITIONS = [
+    ["myplaceonline.page_transitions.none", 0],
+    ["myplaceonline.page_transitions.fade", 1],
+    ["myplaceonline.page_transitions.pop", 2],
+    ["myplaceonline.page_transitions.flip", 3],
+    ["myplaceonline.page_transitions.turn", 4],
+    ["myplaceonline.page_transitions.flow", 5],
+    ["myplaceonline.page_transitions.slidefade", 6],
+    ["myplaceonline.page_transitions.slide", 7],
+    ["myplaceonline.page_transitions.slideup", 8],
+    ["myplaceonline.page_transitions.slidedown", 9]
+  ]
+  
+  def self.page_transition_value_to_jqm(x)
+    if x == 0
+      "none"
+    elsif x == 1
+      "fade"
+    elsif x == 2
+      "pop"
+    elsif x == 3
+      "flip"
+    elsif x == 4
+      "turn"
+    elsif x == 5
+      "flow"
+    elsif x == 6
+      "slidefade"
+    elsif x == 7
+      "slide"
+    elsif x == 8
+      "slideup"
+    elsif x == 9
+      "slidedown"
+    else
+      nil
+    end
+  end
+  
 end

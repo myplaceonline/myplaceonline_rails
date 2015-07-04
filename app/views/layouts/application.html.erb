@@ -62,6 +62,12 @@
       <script type="text/javascript">
         myp.isInitialPhonegapPage = <%= params[:phonegap] == "true" ? "true" : "false" %>;
         
+        <% if !current_user.nil? %>
+          <% if !current_user.page_transition.blank? %>
+            $.mobile.defaultPageTransition = "<%= Myp.page_transition_value_to_jqm(current_user.page_transition) %>";
+          <% end %>
+        <% end %>
+        
         onPageLoad(function() {
           hookListviewSearch($("#mainButtonPopup_search_list"), "/api/categories.json");
           hookListviewEnter($("#mainButtonPopup_search_container input"), "#mainButtonPopup_search_list");

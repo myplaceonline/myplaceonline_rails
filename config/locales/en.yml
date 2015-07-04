@@ -330,6 +330,9 @@ en:
       changetimezone: "Change Time Zone"
       timezone_settings: "Time Zone"
       timezone_settings_saved: "Time zone settings saved."
+      appearance: "Appearance"
+      page_transition: "Page Transition"
+      appearance_saved: "Appearance Settings Saved"
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"
@@ -1107,3 +1110,14 @@ en:
     desired_products:
       product_name: "Name"
       notes: "Notes"
+    page_transitions:
+      none: "None"
+      fade: "Fade"
+      pop: "Pop"
+      flip: "Flip"
+      turn: "Turn"
+      flow: "Flow"
+      slidefade: "Slide and Fade"
+      slide: "Slide"
+      slideup: "Slide Up"
+      slidedown: "Slide Down"
