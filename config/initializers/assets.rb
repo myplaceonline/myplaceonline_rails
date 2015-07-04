@@ -10,4 +10,5 @@ Rails.application.config.assets.precompile += %w(
   jquery-mobile/icons-png/*.png
   jquery-mobile/ajax-loader.gif
   application_extra.js
+  *.css
 )

@@ -12,7 +12,9 @@
  *
  *= require_self
  *= require jquery.mobile
- *= require_tree .
+ *= require jqm-datebox-1.4.5.min
+ *= require quill.snow
+ *= require welcome
  */
 
 a.headerlink:link, a.headerlink:visited, a.headerlink:hover, a.headerlink:active {
