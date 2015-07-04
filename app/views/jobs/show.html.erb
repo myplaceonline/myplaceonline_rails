@@ -12,6 +12,11 @@
     <%= attribute_table_row_date(t("myplaceonline.job_salaries.ended"), js.ended) %>
     <%= attribute_table_row_currency(t("myplaceonline.job_salaries.salary"), js.salary) %>
     <%= attribute_table_row_select(t("myplaceonline.job_salaries.salary_period"), js.salary_period, Myp::PERIODS) %>
+    <% if !js.salary_period.nil? %>
+      <% if js.salary_period == 0 %>
+        <%= attribute_table_row_currency(t("myplaceonline.job_salaries.salary_yearly"), js.salary * 12) %>
+      <% end %>
+    <% end %>
     <%= attribute_table_row_markdown(t("myplaceonline.job_salaries.notes"), js.notes) %>
   <% end %>
 
