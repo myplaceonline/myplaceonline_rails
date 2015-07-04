@@ -27,6 +27,7 @@ class ContactsController < MyplaceonlineController
       ref_attributes: [
         :id,
         :name,
+        :nickname,
         :birthday,
         :notes,
         {

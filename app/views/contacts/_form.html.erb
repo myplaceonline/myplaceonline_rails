@@ -1,6 +1,7 @@
 <%= f.fields_for :ref, obj.ref do |identity_fields| %>
 
   <%= myp_text_field identity_fields, :name, "myplaceonline.contacts.name", obj.name, autofocus %>
+  <%= myp_text_field identity_fields, :nickname, "myplaceonline.contacts.nickname", obj.nickname %>
   <%= myp_date_field identity_fields, :birthday, "myplaceonline.contacts.birthday", obj.birthday %>
   <%= myp_select(f, :contact_type, "myplaceonline.contacts.contact_type", Myp.translate_options(Contact::CONTACT_TYPES), obj.contact_type) %>
   <%= myp_text_area_markdown identity_fields, :notes, "myplaceonline.contacts.notes", obj.notes %>

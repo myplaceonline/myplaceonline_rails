@@ -386,7 +386,8 @@ en:
       notes: "Notes"
     contacts:
       contact: "Contact"
-      name: "Name"
+      name: "Full Name"
+      nickname: "Nick Name"
       birthday: "Birthday"
       age: "Age"
       notes: "Notes"

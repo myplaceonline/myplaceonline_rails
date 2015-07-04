@@ -1,6 +1,7 @@
 <%= render layout: "shared/model_show" do %>
 
   <%= attribute_table_row(t("myplaceonline.contacts.name"), @obj.name) %>
+  <%= attribute_table_row(t("myplaceonline.contacts.nickname"), @obj.nickname) %>
   <%= attribute_table_row(t("myplaceonline.contacts.birthday"), @obj.birthday) %>
   <% if !@obj.birthday.nil? %>
     <%= attribute_table_row(t("myplaceonline.contacts.age"), Myp.time_difference_in_general_from_now(@obj.birthday)) %>

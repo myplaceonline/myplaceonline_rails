@@ -35,6 +35,10 @@ class Contact < ActiveRecord::Base
     contact_identity.name
   end
   
+  def nickname
+    contact_identity.nickname
+  end
+  
   def birthday
     contact_identity.birthday
   end
@@ -58,6 +62,9 @@ class Contact < ActiveRecord::Base
       result = name
       whitespace = result =~ /\s+/
       if whitespace.nil?
+        if !nickname.blank?
+          result = Myp.appendstrwrap(result, nickname)
+        end
         # Seemingly no last name, so add some other identifier if available
         if contact_identity.identity_relationships.length > 0 && !contact_identity.identity_relationships[0].relationship_name.nil?
           relationship = contact_identity.identity_relationships[0]
