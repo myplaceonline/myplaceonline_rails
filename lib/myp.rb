@@ -896,4 +896,10 @@ module Myp
     end
   end
   
+  CLIPBOARD_INTEGRATIONS = [
+    ["myplaceonline.clipboard.none", 0],
+    ["myplaceonline.clipboard.zeroclipboard", 1],
+    ["myplaceonline.clipboard.ffclipboard", 2]
+  ]
+  
 end

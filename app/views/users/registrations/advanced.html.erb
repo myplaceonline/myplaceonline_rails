@@ -4,6 +4,7 @@
 <%= flashes! %>
 
 <ul data-role="listview" data-inset="true">
+  <li><%= link_to t("myplaceonline.users.clipboard_settings"), users_clipboard_path %></li>
   <li><%= link_to t("myplaceonline.users.delete_category"), users_deletecategory_path %></li>
   <li><%= link_to t("myplaceonline.users.resetpoints"), users_resetpoints_path %></li>
 </ul>

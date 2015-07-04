@@ -195,6 +195,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
   
+  def clipboard
+    Myp.ensure_encryption_key(session)
+    @clipboard_integration = current_user.clipboard_integration
+    if request.post?
+      @clipboard_integration = params[:clipboard_integration]
+      current_user.clipboard_integration = @clipboard_integration
+      current_user.save!
+      redirect_to edit_user_registration_path,
+        :flash => { :notice => I18n.t("myplaceonline.users.clipboard_settings_saved") }
+    else
+      render :clipboard
+    end
+  end
+  
   def changetimezone
     Myp.ensure_encryption_key(session)
     if request.post?

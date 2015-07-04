@@ -343,6 +343,9 @@ en:
       appearance: "Appearance"
       page_transition: "Page Transition"
       appearance_saved: "Appearance Settings Saved"
+      clipboard_settings: "Clipboard Settings"
+      clipboard_settings_saved: "Clipboard Settings Saved"
+      clipboard_integration: "Clipboard Integration"
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"
@@ -1131,3 +1134,7 @@ en:
       slide: "Slide"
       slideup: "Slide Up"
       slidedown: "Slide Down"
+    clipboard:
+      none: "None"
+      zeroclipboard: "ZeroClipboard"
+      ffclipboard: "ffclipboard"
