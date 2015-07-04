@@ -153,3 +153,10 @@ div.ui-checkbox + label {
 .hiding {
   font-style: italic;
 }
+
+#mainButtonPopup {
+  width: 400px;
+  max-height: 400px;
+  padding: 10px;
+  overflow: auto;
+}

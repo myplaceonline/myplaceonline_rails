@@ -19,8 +19,6 @@ $(document).on('ajax:remotipartSubmit', 'form', function() {
 $(document).on('ajax:complete', 'form', function(xhr, status) {
   hideLoading();
   consoleLog("ajax:complete");
-  //consoleDir(status);
-  //consoleDir(xhr);
   var contentType = status.getResponseHeader("Content-Type");
   // We expect a "successful" submission will return text/javascript
   // which will do something like navigate to the success page
@@ -38,6 +36,16 @@ $(document).on('ajax:complete', 'form', function(xhr, status) {
 
 $(document).on('ajax:error', 'form', function(xhr, status, error) {
   criticalError("Error submitting form: " + getJSON(status) + ", " + getJSON(error));
+});
+
+$(document).on("click", "#mainbutton", function(eventData) {
+  if (eventData && eventData.shiftKey) {
+    $("#mainButtonPopup").popup("open");
+    maybeFocus("#mainButtonPopup_search_container input");
+    return false;
+  } else {
+    return true;
+  }
 });
 
 // http://view.jquerymobile.com/master/demos/listview-autocomplete-remote/
