@@ -156,7 +156,7 @@ module Myp
     }).map{ |category|
       CategoryForIdentity.new(
         category.human_title,
-        category.link,
+        "/" + category.link,
         category.points_amount.nil? ? 0 : category.points_amount,
         category.id,
         category.parent_id,
