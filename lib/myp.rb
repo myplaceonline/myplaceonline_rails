@@ -905,7 +905,9 @@ module Myp
   def self.images_for_points(points)
     if !points.nil?
       if points == 42
-        ActionController::Base.helpers.image_tag("FatCow_Icons16x16/hhg.png", height: "16", width: "16", alt: I18n.t("myplaceonline.points_image.n" + points.to_s), title: I18n.t("myplaceonline.points_image.n" + points.to_s))
+        ActionController::Base.helpers.link_to "/badges/" + points.to_s do
+          ActionController::Base.helpers.image_tag("FatCow_Icons16x16/hhg.png", height: "16", width: "16", alt: I18n.t("myplaceonline.points_image.n" + points.to_s), title: I18n.t("myplaceonline.points_image.n" + points.to_s))
+        end
       else
         nil
       end

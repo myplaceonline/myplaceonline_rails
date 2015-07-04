@@ -257,6 +257,8 @@ Rails.application.routes.draw do
   get 'test', :to => 'test#index'
   get 'test/test1'
 
+  get 'badges/42', :to => 'badges#n42'
+
   if Myp.is_web_server? || Rails.env.test?
     devise_scope :user do
       match 'users/reenter', :to => 'users/sessions#reenter', via: [:get, :post]
