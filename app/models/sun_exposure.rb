@@ -1,5 +1,5 @@
 class SunExposure < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   
   validates :exposure_start, presence: true
   

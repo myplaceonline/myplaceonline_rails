@@ -1,5 +1,5 @@
 class Question < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   validates :name, presence: true
   
   has_many :hypotheses, :dependent => :destroy

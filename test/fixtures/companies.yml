@@ -1,4 +1,4 @@
 company:
-  identity: identity
+  owner: identity
   location: location
   name: "Test"

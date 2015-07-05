@@ -1,5 +1,5 @@
 class BloodTest < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   validates :fast_started, presence: true
   
   def display

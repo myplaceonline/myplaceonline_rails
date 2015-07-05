@@ -1,5 +1,5 @@
 class DiaryEntry < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   validates :diary_time, presence: true
   validates :entry, presence: true
   

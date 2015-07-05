@@ -1,6 +1,6 @@
 class ChecklistItem < ActiveRecord::Base
   belongs_to :checklist
-  belongs_to :identity
+  belongs_to :owner, class: Identity
 
   validates :checklist_item_name, presence: true
   

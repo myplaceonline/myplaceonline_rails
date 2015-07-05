@@ -1,5 +1,5 @@
 class Passport < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   validates :region, presence: true
   validates :passport_number, presence: true
   

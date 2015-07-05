@@ -1,5 +1,5 @@
 class IdentityLocation < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   belongs_to :ref, class: Identity
 
   belongs_to :location

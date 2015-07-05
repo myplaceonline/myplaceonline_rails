@@ -1,5 +1,5 @@
 class List < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   validates :name, presence: true
 
   has_many :list_items, :foreign_key => 'list_id', :dependent => :destroy

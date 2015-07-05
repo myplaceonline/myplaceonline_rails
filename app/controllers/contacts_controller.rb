@@ -109,11 +109,11 @@ class ContactsController < MyplaceonlineController
     def all
       if @contact_type.blank?
         model.joins(:ref).where(
-          identity_id: current_user.primary_identity.id
+          owner_id: current_user.primary_identity.id
         )
       else
         model.joins(:ref).where(
-          identity_id: current_user.primary_identity.id,
+          owner_id: current_user.primary_identity.id,
           contact_type: @contact_type
         )
       end

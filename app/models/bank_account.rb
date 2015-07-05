@@ -5,7 +5,7 @@ class BankAccount < ActiveRecord::Base
     name
   end
   
-  belongs_to :identity
+  belongs_to :owner, class: Identity
 
   attr_accessor :encrypt
   

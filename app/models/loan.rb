@@ -1,5 +1,5 @@
 class Loan < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   
   validates :lender, presence: true
 

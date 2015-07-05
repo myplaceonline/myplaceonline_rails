@@ -1,5 +1,5 @@
 class Computer < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   validates :computer_model, presence: true
   
   def display

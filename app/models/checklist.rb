@@ -1,5 +1,5 @@
 class Checklist < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   validates :checklist_name, presence: true
   
   before_create :do_before_save

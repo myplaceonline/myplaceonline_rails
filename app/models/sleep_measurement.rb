@@ -1,5 +1,5 @@
 class SleepMeasurement < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   
   validates :sleep_start_time, presence: true
   

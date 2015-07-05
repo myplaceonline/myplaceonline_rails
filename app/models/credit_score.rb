@@ -1,5 +1,5 @@
 class CreditScore < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   validates :score_date, presence: true
   validates :score, presence: true
   

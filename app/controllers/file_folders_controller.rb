@@ -39,7 +39,7 @@ class FileFoldersController < MyplaceonlineController
 
     def all
       model.where(
-        identity_id: current_user.primary_identity.id,
+        owner_id: current_user.primary_identity.id,
         parent_folder: nil
       )
     end
@@ -66,7 +66,7 @@ class FileFoldersController < MyplaceonlineController
     def new_obj_initialize
       if !params[:parent].nil?
         folders = IdentityFileFolder.where(
-          identity_id: current_user.primary_identity.id,
+          owner_id: current_user.primary_identity.id,
           id: params[:parent].to_i
         )
         if folders.size > 0

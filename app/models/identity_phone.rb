@@ -5,7 +5,7 @@ class IdentityPhone < ActiveRecord::Base
     ["myplaceonline.identity_phones.temporary", 2]
   ]
   
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   belongs_to :ref, class: Identity
   
   before_create :do_before_save

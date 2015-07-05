@@ -20,18 +20,6 @@ class BankAccountsController < MyplaceonlineController
         Myp.select_or_create_permit(params[:bank_account], :home_address_attributes, LocationsController.param_names)
       )
     end
-    
-    def create_presave
-      if !@obj.password.nil?
-        @obj.password.identity = current_user.primary_identity
-      end
-      if !@obj.home_address.nil?
-        @obj.home_address.identity = current_user.primary_identity
-      end
-      if !@obj.company.nil?
-        @obj.company.identity = current_user.primary_identity
-      end
-    end
 
     def sensitive
       true

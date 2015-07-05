@@ -1,5 +1,5 @@
 class Exercise < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   
   validates :exercise_start, presence: true
   

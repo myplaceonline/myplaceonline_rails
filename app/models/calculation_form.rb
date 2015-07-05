@@ -1,5 +1,5 @@
 class CalculationForm < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   
   validates :name, presence: true
   validates :equation, presence: true

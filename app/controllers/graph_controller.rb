@@ -19,7 +19,7 @@ class GraphController < MyplaceonlineController
           value_name = nil
         end
         category_class.where(
-          identity_id: current_user.primary_identity.id
+          owner_id: current_user.primary_identity.id
         ).each do |record|
           x_axis = record.updated_at
           y_value = 1

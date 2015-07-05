@@ -1,5 +1,5 @@
 class Calculation < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   validates :name, presence: true
   
   belongs_to :calculation_form, dependent: :destroy, :autosave => true

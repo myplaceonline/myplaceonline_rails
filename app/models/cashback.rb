@@ -1,6 +1,6 @@
 # 'cashback_percentage:decimal{10,2}' applies_to:string start_date:date end_date:date 'yearly_maximum:decimal{10,2}' notes:text
 class Cashback < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   
   validates :cashback_percentage, presence: true
 

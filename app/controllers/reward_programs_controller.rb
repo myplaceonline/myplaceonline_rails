@@ -19,11 +19,11 @@ class RewardProgramsController < MyplaceonlineController
     def all
       if @program_type.blank?
         model.where(
-          identity_id: current_user.primary_identity.id
+          owner_id: current_user.primary_identity.id
         )
       else
         model.where(
-          identity_id: current_user.primary_identity.id,
+          owner_id: current_user.primary_identity.id,
           program_type: @program_type
         )
       end

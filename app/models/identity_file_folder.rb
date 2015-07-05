@@ -1,5 +1,5 @@
 class IdentityFileFolder < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   
   belongs_to :parent_folder, class_name: IdentityFileFolder
   accepts_nested_attributes_for :parent_folder
@@ -22,7 +22,7 @@ class IdentityFileFolder < ActiveRecord::Base
   
   def subfolders
     IdentityFileFolder.where(
-      identity_id: User.current_user.primary_identity.id,
+      owner_id: User.current_user.primary_identity.id,
       parent_folder: self.id
     ).order(FileFoldersController.sorts)
   end
@@ -40,11 +40,11 @@ class IdentityFileFolder < ActiveRecord::Base
       name = names.pop
       if parent.nil?
         folders = IdentityFileFolder.where(
-          identity_id: User.current_user.primary_identity.id,
+          owner_id: User.current_user.primary_identity.id,
           folder_name: name
         )
         if folders.length == 0
-          parent = IdentityFileFolder.new(folder_name: name, identity_id: User.current_user.primary_identity.id)
+          parent = IdentityFileFolder.new(folder_name: name, owner_id: User.current_user.primary_identity.id)
           parent.save!
         elsif folders.length == 1
           parent = folders[0]
@@ -53,12 +53,12 @@ class IdentityFileFolder < ActiveRecord::Base
         end
       else
         folders = IdentityFileFolder.where(
-          identity_id: User.current_user.primary_identity.id,
+          owner_id: User.current_user.primary_identity.id,
           folder_name: name,
           parent_folder_id: parent.id
         )
         if folders.length == 0
-          parent = IdentityFileFolder.new(folder_name: name, identity_id: User.current_user.primary_identity.id, parent_folder_id: parent.id)
+          parent = IdentityFileFolder.new(folder_name: name, owner_id: User.current_user.primary_identity.id, parent_folder_id: parent.id)
           parent.save!
         elsif folders.length == 1
           parent = folders[0]

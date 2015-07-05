@@ -1,5 +1,5 @@
 class MedicineUsageMedicine < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   belongs_to :medicine_usage
   belongs_to :medicine
   accepts_nested_attributes_for :medicine, allow_destroy: true, reject_if: :all_blank

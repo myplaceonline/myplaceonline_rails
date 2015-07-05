@@ -1,5 +1,5 @@
 class TripPicture < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   belongs_to :trip
   
   belongs_to :identity_file

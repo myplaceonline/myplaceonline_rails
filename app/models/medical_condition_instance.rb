@@ -1,5 +1,5 @@
 class MedicalConditionInstance < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   belongs_to :medical_condition
   validates :condition_start, presence: true
   

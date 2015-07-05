@@ -1,4 +1,4 @@
 heart_rate:
-  identity: identity
+  owner: identity
   beats: 60
   measurement_date: 2015-01-01

@@ -1,5 +1,5 @@
 class Vitamin < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   
   validates :vitamin_name, presence: true
 

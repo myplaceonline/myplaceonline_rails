@@ -1,4 +1,4 @@
 life_insurance:
-  identity: identity
+  owner: identity
   insurance_name: Test
   insurance_amount: 1

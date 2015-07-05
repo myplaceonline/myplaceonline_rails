@@ -12,5 +12,5 @@ class BloodTestResult < ActiveRecord::Base
     super
   end
 
-  belongs_to :identity
+  belongs_to :owner, class: Identity
 end

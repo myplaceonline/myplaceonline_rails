@@ -1,5 +1,5 @@
 class CalculationInput < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   belongs_to :calculation_form
   
   # input_name:string

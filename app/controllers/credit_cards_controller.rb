@@ -10,7 +10,7 @@ class CreditCardsController < MyplaceonlineController
   end
 
   def listcashback
-    @cashbacks = CreditCardCashback.where(identity_id: current_user.primary_identity.id).sort{ |x, y| y.cashback.cashback_percentage <=> x.cashback.cashback_percentage }.keep_if{|c| c.expiration_includes_today?}
+    @cashbacks = CreditCardCashback.where(owner_id: current_user.primary_identity.id).sort{ |x, y| y.cashback.cashback_percentage <=> x.cashback.cashback_percentage }.keep_if{|c| c.expiration_includes_today?}
   end
 
   def total_credit
@@ -99,10 +99,10 @@ class CreditCardsController < MyplaceonlineController
 
     def all
       if @defunct.blank? || !@defunct
-        model.where("identity_id = ? and defunct is null", current_user.primary_identity)
+        model.where("owner_id = ? and defunct is null", current_user.primary_identity)
       else
         model.where(
-          identity_id: current_user.primary_identity.id
+          owner_id: current_user.primary_identity.id
         )
       end
     end

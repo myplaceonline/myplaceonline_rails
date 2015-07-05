@@ -1,5 +1,5 @@
 class Job < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   validates :job_title, presence: true
   
   def display

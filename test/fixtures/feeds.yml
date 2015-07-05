@@ -1,4 +1,4 @@
 feed:
-  identity: identity
+  owner: identity
   name: Test
   url: https://myplaceonline.com/

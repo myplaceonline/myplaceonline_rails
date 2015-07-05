@@ -1,5 +1,5 @@
 class IdentityFile < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   belongs_to :encrypted_password, class_name: EncryptedValue, dependent: :destroy
 
   has_attached_file :file, :storage => :database

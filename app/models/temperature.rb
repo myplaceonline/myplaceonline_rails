@@ -1,5 +1,5 @@
 class Temperature < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   validates :measured, presence: true
   validates :temperature_type, presence: true
   validates :measured_temperature, presence: true

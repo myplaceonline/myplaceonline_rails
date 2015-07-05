@@ -25,7 +25,7 @@ class FilesController < MyplaceonlineController
     Myp.ensure_encryption_key(session)
     
     @folders = Hash[IdentityFileFolder.where(
-      identity_id: current_user.primary_identity.id
+      owner_id: current_user.primary_identity.id
     ).order(FileFoldersController.sorts).map{|f| [f.folder_name, f.id]}]
     
     if request.post?
@@ -90,7 +90,7 @@ class FilesController < MyplaceonlineController
 
     def all
       model.where(
-        identity_id: current_user.primary_identity.id,
+        owner_id: current_user.primary_identity.id,
         folder: nil
       )
     end
@@ -121,7 +121,7 @@ class FilesController < MyplaceonlineController
     def index_pre_respond()
       if @offset == 0
         @objs2 = IdentityFileFolder.where(
-          identity_id: current_user.primary_identity.id,
+          owner_id: current_user.primary_identity.id,
           parent_folder: nil
         ).order(FileFoldersController.sorts)
       end
@@ -130,7 +130,7 @@ class FilesController < MyplaceonlineController
     def new_obj_initialize
       if !params[:folder].nil?
         folders = IdentityFileFolder.where(
-          identity_id: current_user.primary_identity.id,
+          owner_id: current_user.primary_identity.id,
           id: params[:folder].to_i
         )
         if folders.size > 0

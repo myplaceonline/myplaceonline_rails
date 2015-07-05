@@ -1,5 +1,5 @@
 class Feed < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   validates :name, presence: true
   validates :url, presence: true
   

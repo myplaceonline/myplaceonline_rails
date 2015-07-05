@@ -1,5 +1,5 @@
 class JobSalary < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   belongs_to :job
   
   validates :started, presence: true

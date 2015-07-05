@@ -116,7 +116,7 @@ module Myp
     # Category.where(parent: nil).order(:position)
     #   .includes(:category_points_amounts)
     #   .where(category_points_amounts:
-    #     {identity: user.primary_identity}
+    #     {owner: user.primary_identity}
     #   )
     #
     # However, this places the where clause at the end instead of as an addition
@@ -135,7 +135,7 @@ module Myp
       FROM categories
       LEFT OUTER JOIN category_points_amounts
         ON category_points_amounts.category_id = categories.id
-            AND category_points_amounts.identity_id = #{
+            AND category_points_amounts.owner_id = #{
                 CategoryPointsAmount.sanitize(user.primary_identity.id)
               }
       #{ parent.nil? ?
@@ -173,7 +173,7 @@ module Myp
         SELECT category_points_amounts.*, categories.name as category_name, categories.icon as category_icon, categories.additional_filtertext as category_additional_filtertext, categories.link as category_link, categories.parent_id as category_parent_id, 0 as select_type
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
-        WHERE categories.parent_id IS NOT NULL AND category_points_amounts.identity_id = #{
+        WHERE categories.parent_id IS NOT NULL AND category_points_amounts.owner_id = #{
                 CategoryPointsAmount.sanitize(user.primary_identity.id)
               }
         ORDER BY category_points_amounts.last_visit DESC
@@ -184,7 +184,7 @@ module Myp
         SELECT category_points_amounts.*, categories.name as category_name, categories.icon as category_icon, categories.additional_filtertext as category_additional_filtertext, categories.link as category_link, categories.parent_id as category_parent_id, 1 as select_type
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
-        WHERE categories.parent_id IS NOT NULL AND category_points_amounts.identity_id = #{
+        WHERE categories.parent_id IS NOT NULL AND category_points_amounts.owner_id = #{
                 CategoryPointsAmount.sanitize(user.primary_identity.id)
               }
         ORDER BY category_points_amounts.visits DESC
@@ -336,7 +336,7 @@ module Myp
       raise "Could not find category " + categoryName + " (check Myp.website_init)"
     end
     cpa = CategoryPointsAmount.find_or_create_by(
-      identity: user.primary_identity,
+      owner: user.primary_identity,
       category: category
     )
     if cpa.visits.nil?
@@ -373,7 +373,7 @@ module Myp
       
       while !category.nil? do
         cpa = CategoryPointsAmount.find_or_create_by(
-          identity: user.primary_identity,
+          owner: user.primary_identity,
           category: category
         )
         if cpa.count.nil?
@@ -401,7 +401,7 @@ module Myp
       user.primary_identity.points = 0
       user.primary_identity.save
       
-      CategoryPointsAmount.where(identity: user.primary_identity).update_all(count: 0)
+      CategoryPointsAmount.where(owner: user.primary_identity).update_all(count: 0)
     end
   end
 
@@ -526,7 +526,7 @@ module Myp
     
     Rails.logger.debug("Searching vehicles")
 
-    Vehicle.where(identity: user.primary_identity).each do |vehicle|
+    Vehicle.where(owner: user.primary_identity).each do |vehicle|
       vehicle.vehicle_services.each do |service|
         if service.date_serviced.nil? && !service.date_due.nil?
           result.push(DueItem.new(service.short_description, "/vehicles/" + vehicle.id.to_s, service.date_due))
@@ -536,8 +536,8 @@ module Myp
 
     Rails.logger.debug("Searching driver's licenses")
 
-    IdentityDriversLicense.where("identity_id = ? and expires is not null and expires < ?", user.primary_identity, general_threshold).each do |drivers_license|
-      contact = Contact.where(identity_id: user.primary_identity.id, ref_id: drivers_license.ref.id).first
+    IdentityDriversLicense.where("owner_id = ? and expires is not null and expires < ?", user.primary_identity, general_threshold).each do |drivers_license|
+      contact = Contact.where(owner_id: user.primary_identity.id, ref_id: drivers_license.ref.id).first
       diff = TimeDifference.between(timenow, drivers_license.expires)
       if timenow >= drivers_license.expires
 	# TODO expired
@@ -552,7 +552,7 @@ module Myp
     
     Rails.logger.debug("Searching contacts")
 
-    Contact.where(identity: user.primary_identity).includes(:ref).to_a.each do |x|
+    Contact.where(owner: user.primary_identity).includes(:ref).to_a.each do |x|
       if !x.ref.nil? && !x.ref.birthday.nil?
         bday_this_year = Date.new(Date.today.year, x.ref.birthday.month, x.ref.birthday.day)
         if bday_this_year >= datenow && bday_this_year <= general_threshold
@@ -569,7 +569,7 @@ module Myp
     
     Rails.logger.debug("Searching exercises")
 
-    last_exercise = Exercise.where("identity_id = ? and exercise_start is not null", 1).order('exercise_start DESC').limit(1).first
+    last_exercise = Exercise.where("owner_id = ? and exercise_start is not null", 1).order('exercise_start DESC').limit(1).first
     if !last_exercise.nil? and last_exercise.exercise_start < exercise_threshold
       result.push(DueItem.new(I18n.t(
         "myplaceonline.exercises.havent_exercised_for",
@@ -579,7 +579,7 @@ module Myp
     
     Rails.logger.debug("Searching promotions")
 
-    Promotion.where("identity_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, general_threshold).each do |promotion|
+    Promotion.where("owner_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, general_threshold).each do |promotion|
       result.push(DueItem.new(I18n.t(
         "myplaceonline.promotions.expires_soon",
         promotion_name: promotion.promotion_name,
@@ -595,7 +595,7 @@ module Myp
       FROM contacts
       LEFT OUTER JOIN conversations
         ON contacts.id = conversations.contact_id
-      WHERE contacts.identity_id = #{user.primary_identity.id}
+      WHERE contacts.owner_id = #{user.primary_identity.id}
         AND contacts.contact_type IS NOT NULL
       GROUP BY contacts.id
       ORDER BY last_conversation_date ASC
@@ -694,26 +694,26 @@ module Myp
       result = model.new(params)
     end
     current_user = User.current_user
-    if !current_user.nil? && result.respond_to?("identity_id=")
-      result.identity_id = current_user.primary_identity.id
+    if !current_user.nil? && result.respond_to?("owner_id=")
+      result.owner_id = current_user.primary_identity.id
     end
     result
   end
   
   def self.set_common_model_properties(model)
-    if model.respond_to?("identity=")
+    if model.respond_to?("owner=")
       current_user = User.current_user
       if !current_user.nil?
-        if !model.identity.nil?
-          if model.identity_id != current_user.primary_identity.id
+        if !model.owner.nil?
+          if model.owner_id != current_user.primary_identity.id
             raise "Unauthorized"
           end
         else
-          model.identity = current_user.primary_identity
+          model.owner = current_user.primary_identity
         end
       end
     else
-      raise "identity= not found, missing belongs_to identity?"
+      raise "owner= not found, missing belongs_to owner?"
     end
   end
 

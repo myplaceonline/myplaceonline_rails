@@ -6,7 +6,7 @@ class Vehicle < ActiveRecord::Base
   DRIVE_TYPES = [["myplaceonline.vehicles.front_wheel_drive", 0], ["myplaceonline.vehicles.rear_wheel_drive", 1]]
   WHEEL_TYPES = [["myplaceonline.vehicles.single_rear_wheel", 0], ["myplaceonline.vehicles.dual_rear_wheels", 1]]
   
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   validates :name, presence: true
 
   has_many :vehicle_loans, :dependent => :destroy

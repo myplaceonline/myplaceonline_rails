@@ -1,5 +1,5 @@
 class MedicineUsage < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   validates :usage_time, presence: true
   
   before_create :do_before_save

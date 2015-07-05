@@ -3,7 +3,7 @@ class CreditCard < ActiveRecord::Base
   
   CARD_TYPES = [["myplaceonline.credit_cards.visa", 0], ["myplaceonline.credit_cards.mastercard", 1], ["myplaceonline.credit_cards.amex", 2]]
 
-  belongs_to :identity
+  belongs_to :owner, class: Identity
 
   attr_accessor :encrypt
   attr_accessor :is_defunct

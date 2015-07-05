@@ -1,5 +1,5 @@
 class ToDo < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   validates :short_description, presence: true
   
   def display

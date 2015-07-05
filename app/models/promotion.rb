@@ -1,5 +1,5 @@
 class Promotion < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   validates :promotion_name, presence: true
   
   def display

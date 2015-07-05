@@ -1,5 +1,5 @@
 class SkinTreatment < ActiveRecord::Base
-  belongs_to :identity
+  belongs_to :owner, class: Identity
   validates :treatment_time, presence: true
   
   def display

@@ -265,12 +265,12 @@ class MyplaceonlineController < ApplicationController
     
     def all
       model.where(
-        identity_id: current_user.primary_identity.id
+        owner_id: current_user.primary_identity.id
       )
     end
   
     def set_obj
-      @obj = model.find_by(id: params[:id], identity_id: current_user.primary_identity.id)
+      @obj = model.find_by(id: params[:id], owner_id: current_user.primary_identity.id)
       authorize! :manage, @obj
     end
 

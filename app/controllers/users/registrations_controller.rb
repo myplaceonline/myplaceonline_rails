@@ -146,7 +146,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         if !foundcat.nil?
           cl = Object.const_get(@category.singularize)
           ActiveRecord::Base.transaction do
-            destroyed = cl.destroy_all(identity: current_user.primary_identity)
+            destroyed = cl.destroy_all(owner: current_user.primary_identity)
             count = destroyed.length
             if count > 0 && foundcat[0] != "foods" && foundcat[0] != "drinks"
               Myp.modify_points(current_user, foundcat[1].name.to_sym, -1 * count)
