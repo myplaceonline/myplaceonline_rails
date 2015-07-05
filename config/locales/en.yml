@@ -410,6 +410,10 @@ en:
       contact_type: "Contact Type"
       no_conversations: "No converations recorded with %{contact_type} %{name}"
       no_conversations_since: "No converations with %{contact_type} %{name} for %{delta}"
+      pictures: "Pictures"
+      picture: "Picture"
+      add_picture: "Add Picture"
+      delete_picture: "Delete Picture"
     files:
       name: "Name"
       download: "Download"

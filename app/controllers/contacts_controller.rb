@@ -30,48 +30,55 @@ class ContactsController < MyplaceonlineController
         :nickname,
         :birthday,
         :notes,
-        {
-          identity_phones_attributes: [
+        identity_phones_attributes: [
+          :id,
+          :number,
+          :phone_type,
+          :_destroy
+        ],
+        identity_emails_attributes: [:id, :email, :_destroy],
+        identity_locations_attributes: [
+          :id,
+          :_destroy,
+          {
+            location_attributes: LocationsController.param_names + [:id]
+          }
+        ],
+        identity_drivers_licenses_attributes: [
+          :id,
+          :identifier,
+          :expires,
+          :region,
+          :sub_region1,
+          :_destroy,
+          {
+            identity_file_attributes: [
+              :id,
+              :file,
+              :_destroy
+            ]
+          }
+        ],
+        identity_relationships_attributes: [
+          :id,
+          :relationship_type,
+          :_destroy,
+          {
+            contact_attributes: [
+              :id,
+              :_destroy
+            ]
+          }
+        ],
+        identity_pictures_attributes: [
+          :id,
+          :_destroy,
+          identity_file_attributes: [
             :id,
-            :number,
-            :phone_type,
-            :_destroy
-          ],
-          identity_emails_attributes: [:id, :email, :_destroy],
-          identity_locations_attributes: [
-            :id,
-            :_destroy,
-            {
-              location_attributes: LocationsController.param_names + [:id]
-            }
-          ],
-          identity_drivers_licenses_attributes: [
-            :id,
-            :identifier,
-            :expires,
-            :region,
-            :sub_region1,
-            :_destroy,
-            {
-              identity_file_attributes: [
-                :id,
-                :file,
-                :_destroy
-              ]
-            }
-          ],
-          identity_relationships_attributes: [
-            :id,
-            :relationship_type,
-            :_destroy,
-            {
-              contact_attributes: [
-                :id,
-                :_destroy
-              ]
-            }
+            :file,
+            :notes
           ]
-        }
+        ]
       ]
     ]
   end
@@ -121,5 +128,13 @@ class ContactsController < MyplaceonlineController
       check_nested_attributes(@obj, :conversations, :contact)
       check_nested_attributes(@obj.contact_identity, :identity_phones, :ref)
       check_nested_attributes(@obj.contact_identity, :identity_emails, :ref)
+    end
+    
+    def presave
+      @obj.contact_identity.identity_pictures.each do |pic|
+        if pic.identity_file.folder.nil?
+          pic.identity_file.folder = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.contacts"), @obj.display])
+        end
+      end
     end
 end

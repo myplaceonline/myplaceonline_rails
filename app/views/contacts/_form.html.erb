@@ -203,5 +203,28 @@
       <%= myp_file_field file_fields, :file, "myplaceonline.identities.license_picture", childproperty.identity_file || IdentityFile.new %>
     <% end %>
   <% end %>
+  
+  <%=
+    render layout: 'myplaceonline/childproperties', locals: {
+      f: identity_fields,
+      heading: t("myplaceonline.contacts.pictures"),
+      childpropertiesname: :identity_pictures,
+      childproperties: obj.contact_identity.identity_pictures,
+      deletebutton: t("myplaceonline.contacts.delete_picture"),
+      addbutton: t("myplaceonline.contacts.add_picture"),
+      expanded: obj.contact_identity.identity_pictures.length > 0,
+      formjson: [
+        {
+          type: 'file',
+          name: 'identity_file_attributes.file',
+          placeholder: t("myplaceonline.contacts.picture")
+        }
+      ]
+    } do |child_fields, childproperty|
+  %>
+    <%= child_fields.fields_for :identity_file, childproperty.identity_file do |file_fields| %>
+      <%= myp_file_field file_fields, :file, "myplaceonline.contacts.picture", childproperty.identity_file.file %>
+    <% end %>
+  <% end %>
 
 <% end %>
