@@ -845,6 +845,7 @@ en:
       situps: "Situps"
       pushups: "Pushups"
       havent_exercised_for: "Last Exercise %{delta} Ago"
+      cardio_time: "Cardio Time (Minutes)"
     sun_exposures:
       exposure_start: "Start Date/Time"
       exposure_end: "End Date/Time"
