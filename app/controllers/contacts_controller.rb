@@ -102,7 +102,12 @@ class ContactsController < MyplaceonlineController
     def obj_params
       params.require(:contact).permit(
         ContactsController.param_names,
-        conversations_attributes: [:id, :conversation, :when, :_destroy]
+        conversations_attributes: [
+          :id,
+          :conversation,
+          :conversation_date,
+          :_destroy
+        ]
       )
     end
 

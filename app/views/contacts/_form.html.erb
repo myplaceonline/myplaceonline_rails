@@ -75,7 +75,7 @@
         },
         {
           type: 'date',
-          name: 'when',
+          name: 'conversation_date',
           placeholder: t("myplaceonline.contacts.conversation_date"),
           value: Date.today.to_s
         }
@@ -83,7 +83,7 @@
     } do |child_fields, childproperty|
   %>
     <%= myp_text_area child_fields, :conversation, "myplaceonline.contacts.conversation", childproperty.conversation %>
-    <%= myp_date_field child_fields, :when, "myplaceonline.contacts.conversation_date", childproperty.when %>
+    <%= myp_date_field child_fields, :conversation_date, "myplaceonline.contacts.conversation_date", childproperty.conversation_date %>
   <% end %>
 
   <%=

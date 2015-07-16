@@ -591,7 +591,7 @@ module Myp
     Rails.logger.debug("Searching conversations")
 
     Contact.find_by_sql(%{
-      SELECT contacts.*, max(conversations.when) as last_conversation_date
+      SELECT contacts.*, max(conversations.conversation_date) as last_conversation_date
       FROM contacts
       LEFT OUTER JOIN conversations
         ON contacts.id = conversations.contact_id

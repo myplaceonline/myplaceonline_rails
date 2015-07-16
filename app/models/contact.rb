@@ -22,7 +22,7 @@ class Contact < ActiveRecord::Base
   accepts_nested_attributes_for :conversations, allow_destroy: true, reject_if: :all_blank
   
   def all_conversations
-    Conversation.where(contact_id: id).order(["conversations.when DESC", "conversations.created_at DESC"])
+    Conversation.where(contact_id: id).order(["conversations.conversation_date DESC"])
   end
   
   def custom_validation
