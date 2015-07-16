@@ -554,4 +554,22 @@ module ApplicationHelper
       category.icon
     end
   end
+  
+  def header_link
+    category = find_category_by_url
+    if category.nil? || category.icon.blank?
+      "/"
+    else
+      "/" + category.link
+    end
+  end
+  
+  def header_title
+    category = find_category_by_url
+    if category.nil? || category.icon.blank?
+      t("myplaceonline.menu.home")
+    else
+      category.human_title
+    end
+  end
 end

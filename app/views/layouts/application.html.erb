@@ -43,7 +43,8 @@
         });
       </script>
       <div data-role="header" data-add-back-btn="true">
-        <h1><a href="/" id="mainbutton" title="<%= t("myplaceonline.menu.home") %>"><%= image_tag(header_icon, alt: t("myplaceonline.menu.home")) %></a>&nbsp;<%= yield(:heading).presence || t('myplaceonline.siteTitle') %></h1>
+        <% header_title_cached = header_title %>
+        <h1><%= link_to(header_link, id: "mainbutton", title: header_title_cached) do image_tag(header_icon, alt: header_title_cached) end %>&nbsp;<%= yield(:heading).presence || t('myplaceonline.siteTitle') %></h1>
         <%# We give a unique id to each popup because the menu may be different. %>
         <a href="#menuPopup<%= request.uuid %>" data-icon="bars" class="ui-btn-right" data-rel="popup" data-iconpos="notext" title="<%= t("myplaceonline.menu.name") %>" id="headerMenuPopup"><%= t("myplaceonline.menu.name") %></a>
       </div>
