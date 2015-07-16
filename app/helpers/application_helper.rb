@@ -567,7 +567,7 @@ module ApplicationHelper
   def header_title
     category = find_category_by_url
     if category.nil? || category.icon.blank?
-      t("myplaceonline.menu.home")
+      t("myplaceonline.siteTitle")
     else
       category.human_title
     end
