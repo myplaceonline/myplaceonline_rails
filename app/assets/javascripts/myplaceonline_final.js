@@ -43,6 +43,9 @@ $(document).on("click", "#mainbutton", function(eventData) {
     $("#mainButtonPopup").popup("open");
     maybeFocus("#mainButtonPopup_search_container input");
     return false;
+  } else if (eventData && eventData.ctrlKey) {
+    navigate("/");
+    return false;
   } else {
     return true;
   }
