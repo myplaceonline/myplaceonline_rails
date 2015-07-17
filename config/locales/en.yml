@@ -467,6 +467,10 @@ en:
       deposit: "Deposit"
       terminate_by: "Terminate By"
       notes: "Notes"
+      pictures: "Pictures"
+      picture: "Picture"
+      add_picture: "Add Picture"
+      delete_picture: "Delete Picture"
     jokes:
       name: "Joke Name"
       joke: "Joke"

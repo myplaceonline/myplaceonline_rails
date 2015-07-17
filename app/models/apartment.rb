@@ -34,6 +34,9 @@ class Apartment < ActiveRecord::Base
     })
   end
   
+  has_many :apartment_pictures, :dependent => :destroy
+  accepts_nested_attributes_for :apartment_pictures, allow_destroy: true, reject_if: :all_blank
+
   def display
     location.display
   end

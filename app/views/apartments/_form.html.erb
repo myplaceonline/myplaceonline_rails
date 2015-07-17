@@ -76,3 +76,25 @@
   <%= myp_number_field child_fields, :moveout_fee, "myplaceonline.apartments.moveout_fee", childproperty.moveout_fee %>
   <%= myp_date_field child_fields, :terminate_by, "myplaceonline.apartments.terminate_by", childproperty.terminate_by %>
 <% end %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.apartments.pictures"),
+    childpropertiesname: :apartment_pictures,
+    childproperties: obj.apartment_pictures,
+    deletebutton: t("myplaceonline.apartments.delete_picture"),
+    addbutton: t("myplaceonline.apartments.add_picture"),
+    expanded: obj.apartment_pictures.length > 0,
+    formjson: [
+      {
+        type: 'file',
+        name: 'identity_file_attributes.file',
+        placeholder: t("myplaceonline.apartments.picture")
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%= child_fields.fields_for :identity_file, childproperty.identity_file do |file_fields| %>
+    <%= myp_file_field file_fields, :file, "myplaceonline.apartments.picture", childproperty.identity_file.file %>
+  <% end %>
+<% end %>
