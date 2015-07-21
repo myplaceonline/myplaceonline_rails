@@ -200,6 +200,7 @@ Rails.application.routes.draw do
   post 'files/new'
   match 'files/:id/download', :to => 'files#download', via: [:get], as: "file_download"
   match 'files/:id/view', :to => 'files#view', via: [:get], as: "file_view"
+  match 'files/:id/thumbnail', :to => 'files#thumbnail', via: [:get], as: "file_thumbnail"
   match 'files/:id/move', :to => 'files#move', via: [:get, :post], as: "file_move"
 
   resources :identity_file_folders, :as => "file_folders", :path => "file_folders", :controller => "file_folders"

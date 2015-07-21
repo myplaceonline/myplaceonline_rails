@@ -76,8 +76,19 @@ module ApplicationHelper
   end
   
   def attribute_table_row_image(name, identity_file)
-    #image = Magick::Image::from_blob(identity_file.file.file_contents)
-    attribute_table_row_content(name, nil, image_tag(file_view_path(identity_file)))
+    if identity_file.thumbnail_contents.nil?
+      image = Magick::Image::from_blob(identity_file.file.file_contents)
+      image = image.first
+      max_width = 400
+      if image.columns > max_width
+        image.resize_to_fit!(max_width)
+        blob = image.to_blob
+        identity_file.thumbnail_contents = blob
+        identity_file.thumbnail_bytes = blob.length
+        identity_file.save!
+      end
+    end
+    attribute_table_row_content(name, nil, image_tag(file_thumbnail_path(identity_file)))
   end
   
   def attribute_table_row_url(name, url, may_be_nonurl = false, url_text = nil, clipboard = nil, linkclasses = nil, external = false)
@@ -389,6 +400,9 @@ module ApplicationHelper
   def myp_file_field(form, name, placeholder, value, autofocus = false, input_classes = nil)
     if is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
+    end
+    if value.size.nil?
+      value = nil
     end
     content_tag(
       :p,

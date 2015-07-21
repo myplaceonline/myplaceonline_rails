@@ -13,11 +13,22 @@ class FilesController < MyplaceonlineController
   end
   
   def download
-    respond_download('attachment')
+    set_obj
+    respond_download('attachment', @obj.file.file_contents, @obj.file_file_size)
   end
   
   def view
-    respond_download('inline')
+    set_obj
+    respond_download('inline', @obj.file.file_contents, @obj.file_file_size)
+  end
+  
+  def thumbnail
+    set_obj
+    if !@obj.thumbnail_contents.nil?
+      respond_download('inline', @obj.thumbnail_contents, @obj.thumbnail_bytes)
+    else
+      respond_download('inline', @obj.file.file_contents, @obj.file_file_size)
+    end
   end
   
   def move
@@ -107,11 +118,10 @@ class FilesController < MyplaceonlineController
       )
     end
 
-    def respond_download(type)
-      set_obj
-      response.headers['Content-Length'] = @obj.file_file_size.to_s
+    def respond_download(type, data, data_bytes)
+      response.headers['Content-Length'] = data_bytes.to_s
       send_data(
-        @obj.file.file_contents,
+        data,
         :type => @obj.file_content_type,
         :filename => @obj.file_file_name,
         :disposition => type
