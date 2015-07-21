@@ -1,5 +1,5 @@
 class Meal < ActiveRecord::Base
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   validates :meal_time, presence: true
   
   belongs_to :location, :autosave => true

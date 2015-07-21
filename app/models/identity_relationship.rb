@@ -18,8 +18,8 @@ class IdentityRelationship < ActiveRecord::Base
     ["myplaceonline.relationships.friend", 15]
   ]
 
-  belongs_to :owner, class: Identity
-  belongs_to :ref, class: Identity
+  belongs_to :owner, class_name: Identity
+  belongs_to :ref, class_name: Identity
   
   belongs_to :contact
   accepts_nested_attributes_for :contact, reject_if: :all_blank

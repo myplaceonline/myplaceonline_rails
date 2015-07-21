@@ -3,7 +3,7 @@ require 'kramdown'
 class Password < ActiveRecord::Base
   include EncryptedConcern
 
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
 
   belongs_to :password_encrypted,
       class_name: EncryptedValue, dependent: :destroy, :autosave => true

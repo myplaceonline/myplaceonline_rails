@@ -1,6 +1,6 @@
 # `region` is country, `sub_region1` is state, and `sub_region2` is city.
 class Location < ActiveRecord::Base
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   validate :at_least_one
   
   has_many :location_phones, :dependent => :destroy

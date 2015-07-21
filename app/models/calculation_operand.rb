@@ -1,5 +1,5 @@
 class CalculationOperand < ActiveRecord::Base
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
 
   # Recursive operand
   belongs_to :calculation_element

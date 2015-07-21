@@ -1,6 +1,6 @@
 class HypothesisExperiment < ActiveRecord::Base
   belongs_to :hypothesis
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
 
   validates :name, presence: true
 

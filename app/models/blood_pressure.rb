@@ -1,5 +1,5 @@
 class BloodPressure < ActiveRecord::Base
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   
   # systolic_pressure:integer diastolic_pressure:integer measurement_date:date measurement_source:string
 

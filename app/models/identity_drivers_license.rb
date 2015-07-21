@@ -1,6 +1,6 @@
 class IdentityDriversLicense < ActiveRecord::Base
-  belongs_to :ref, class: Identity
-  belongs_to :owner, class: Identity
+  belongs_to :ref, class_name: Identity
+  belongs_to :owner, class_name: Identity
   
   validates :identifier, presence: true
 

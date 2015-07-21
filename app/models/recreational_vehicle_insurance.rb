@@ -1,6 +1,6 @@
 class RecreationalVehicleInsurance < ActiveRecord::Base
   belongs_to :recreational_vehicle
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
 
   validates :insurance_name, presence: true
 

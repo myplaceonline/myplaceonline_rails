@@ -1,5 +1,5 @@
 class Height < ActiveRecord::Base
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
 
   validates :height_amount, presence: true
   validates :amount_type, presence: true

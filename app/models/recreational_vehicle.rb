@@ -1,6 +1,6 @@
 class RecreationalVehicle < ActiveRecord::Base
   
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   validates :rv_name, presence: true
   
   def display

@@ -5,7 +5,7 @@ class LifeInsurance < ActiveRecord::Base
     ["myplaceonline.life_insurances.type_term", 1]
   ]
 
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   validates :insurance_name, presence: true
   validates :insurance_amount, presence: true
   

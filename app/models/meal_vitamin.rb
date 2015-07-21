@@ -1,7 +1,7 @@
 class MealVitamin < ActiveRecord::Base
   belongs_to :meal
 
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   
   belongs_to :vitamin
   accepts_nested_attributes_for :vitamin, allow_destroy: true, reject_if: :all_blank

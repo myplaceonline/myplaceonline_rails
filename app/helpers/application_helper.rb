@@ -76,6 +76,7 @@ module ApplicationHelper
   end
   
   def attribute_table_row_image(name, identity_file)
+    #image = Magick::Image::from_blob(identity_file.file.file_contents)
     attribute_table_row_content(name, nil, image_tag(file_view_path(identity_file)))
   end
   

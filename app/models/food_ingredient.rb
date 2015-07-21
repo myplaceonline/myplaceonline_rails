@@ -1,7 +1,7 @@
 class FoodIngredient < ActiveRecord::Base
   belongs_to :parent_food, class_name: Food
 
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   
   belongs_to :food
   accepts_nested_attributes_for :food, allow_destroy: true, reject_if: :all_blank

@@ -1,5 +1,5 @@
 class IdentityFileFolder < ActiveRecord::Base
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   
   belongs_to :parent_folder, class_name: IdentityFileFolder
   accepts_nested_attributes_for :parent_folder

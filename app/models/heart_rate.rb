@@ -1,5 +1,5 @@
 class HeartRate < ActiveRecord::Base
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   
   # beats:integer measurement_date:date measurement_source:string
 

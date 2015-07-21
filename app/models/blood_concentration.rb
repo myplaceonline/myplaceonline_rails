@@ -1,6 +1,6 @@
 class BloodConcentration < ActiveRecord::Base
   # concentration_name:string concentration_type:integer 'concentration_minimum:decimal{10,2}' 'concentration_maximum:decimal{10,2}'
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   validates :concentration_name, presence: true
   
   def display

@@ -1,5 +1,5 @@
 class Food < ActiveRecord::Base
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   
   validates :food_name, presence: true
   

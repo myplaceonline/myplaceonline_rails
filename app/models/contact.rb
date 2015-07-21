@@ -13,7 +13,7 @@ class Contact < ActiveRecord::Base
   ]
   
   belongs_to :ref, class_name: Identity, :dependent => :destroy
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   accepts_nested_attributes_for :ref, reject_if: :all_blank
   
   validate :custom_validation

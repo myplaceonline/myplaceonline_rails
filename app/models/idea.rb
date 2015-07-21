@@ -1,5 +1,5 @@
 class Idea < ActiveRecord::Base
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   validates :name, presence: true
   
   def display

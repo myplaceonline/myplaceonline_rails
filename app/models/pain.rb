@@ -1,5 +1,5 @@
 class Pain < ActiveRecord::Base
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   
   validates :pain_start_time, presence: true
   

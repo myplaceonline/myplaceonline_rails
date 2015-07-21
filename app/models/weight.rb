@@ -1,5 +1,5 @@
 class Weight < ActiveRecord::Base
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   
   validates :amount, presence: true
   validates :amount_type, presence: true

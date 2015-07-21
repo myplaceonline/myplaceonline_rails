@@ -1,5 +1,5 @@
 class PeriodicPayment < ActiveRecord::Base
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   validates :periodic_payment_name, presence: true
   
   def display

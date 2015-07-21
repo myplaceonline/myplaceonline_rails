@@ -1,5 +1,5 @@
 class Drink < ActiveRecord::Base
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   
   validates :drink_name, presence: true
 

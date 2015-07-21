@@ -6,7 +6,7 @@ class RewardProgram < ActiveRecord::Base
     ["myplaceonline.reward_programs.type_car", 2]
   ]
   
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
 
   belongs_to :password
   accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }

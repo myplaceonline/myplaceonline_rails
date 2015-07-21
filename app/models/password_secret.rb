@@ -1,6 +1,6 @@
 class PasswordSecret < ActiveRecord::Base
   include EncryptedConcern
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   belongs_to :password
   belongs_to :answer_encrypted,
       class_name: EncryptedValue, dependent: :destroy, :autosave => true

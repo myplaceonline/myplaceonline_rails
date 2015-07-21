@@ -1,5 +1,5 @@
 class Apartment < ActiveRecord::Base
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
 
   belongs_to :location, :autosave => true
   validates_presence_of :location

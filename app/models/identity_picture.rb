@@ -1,6 +1,6 @@
 class IdentityPicture < ActiveRecord::Base
-  belongs_to :ref, class: Identity
-  belongs_to :owner, class: Identity
+  belongs_to :ref, class_name: Identity
+  belongs_to :owner, class_name: Identity
 
   belongs_to :identity_file
   accepts_nested_attributes_for :identity_file, reject_if: :all_blank

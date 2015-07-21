@@ -1,5 +1,5 @@
 class AcneMeasurement < ActiveRecord::Base
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   
   validates :measurement_datetime, presence: true
   

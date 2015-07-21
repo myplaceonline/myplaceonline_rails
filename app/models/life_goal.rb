@@ -1,5 +1,5 @@
 class LifeGoal < ActiveRecord::Base
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   validates :life_goal_name, presence: true
   
   def display

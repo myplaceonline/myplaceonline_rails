@@ -1,5 +1,5 @@
 class Medicine < ActiveRecord::Base
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   
   validates :medicine_name, presence: true
   

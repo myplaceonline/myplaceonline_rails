@@ -1,5 +1,5 @@
 class Gun < ActiveRecord::Base
-  belongs_to :owner, class: Identity
+  belongs_to :owner, class_name: Identity
   validates :gun_name, presence: true
   
   def display
