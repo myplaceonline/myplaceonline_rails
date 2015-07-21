@@ -75,8 +75,8 @@ module ApplicationHelper
     html.html_safe
   end
   
-  def attribute_table_row_image(name, link)
-    attribute_table_row_content(name, nil, image_tag(link))
+  def attribute_table_row_image(name, identity_file)
+    attribute_table_row_content(name, nil, image_tag(file_view_path(identity_file)))
   end
   
   def attribute_table_row_url(name, url, may_be_nonurl = false, url_text = nil, clipboard = nil, linkclasses = nil, external = false)

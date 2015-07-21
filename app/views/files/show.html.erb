@@ -7,7 +7,7 @@
   <%= attribute_table_row_markdown(t("myplaceonline.files.notes"), @obj.notes) %>
   <%= attribute_table_row(t("myplaceonline.files.content_type"), @obj.file_content_type) %>
   <% if !@obj.file_content_type.nil? && (@obj.file_content_type.start_with?("image")) %>
-    <%= attribute_table_row_image(t("myplaceonline.files.inline_image"), file_view_path(@obj)) %>
+    <%= attribute_table_row_image(t("myplaceonline.files.inline_image"), @obj) %>
   <% end %>
   
   <% content_for :postfooterlinks do %>

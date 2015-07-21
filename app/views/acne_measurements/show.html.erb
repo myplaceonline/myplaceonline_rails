@@ -8,7 +8,7 @@
   <% @obj.acne_measurement_pictures.each do |pic| %>
     <%= table_row_heading(t("myplaceonline.acne_measurements.picture")) %>
     <% if !pic.identity_file.nil? && !pic.identity_file.file_content_type.nil? && (pic.identity_file.file_content_type.start_with?("image")) %>
-      <%= attribute_table_row_image(t("myplaceonline.acne_measurements.picture"), file_view_path(pic.identity_file)) %>
+      <%= attribute_table_row_image(t("myplaceonline.acne_measurements.picture"), pic.identity_file) %>
     <% end %>
   <% end %>
     
