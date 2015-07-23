@@ -1009,6 +1009,7 @@ en:
       picture: "Picture"
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
+      issuing_authority: "Issuing Authority"
     relationships:
       sister: "Sister"
       brother: "Brother"
