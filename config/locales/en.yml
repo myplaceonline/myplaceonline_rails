@@ -95,6 +95,7 @@ en:
       camp_locations: "Camp Locations"
       guns: "Guns"
       desired_products: "Desired Products"
+      books: "Books"
     general:
       email: "E-mail"
       password: "Password"
@@ -1153,3 +1154,10 @@ en:
       n42: "DON'T PANIC!"
     badges_text:
       n42: "Although you may have found the meaning of life, we recommend you continue as if you hadn't."
+    books:
+      book_name: "Name"
+      isbn: "ISBN"
+      author: "Author"
+      is_read: "Read"
+      notes: "Notes"
+      when_read: "Date Read"

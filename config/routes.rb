@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :books
+  post 'books/new'
+
   resources :desired_products
   post 'desired_products/new'
 
