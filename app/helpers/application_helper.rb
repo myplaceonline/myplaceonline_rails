@@ -47,10 +47,24 @@ module ApplicationHelper
           href: "#",
           class: "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable externallink",
           title: t("myplaceonline.general.clipboard"),
-          data: { "clipboard-text" => html_escape("" + clipboard_text.to_s) }
+          data: { "clipboard-text" => html_escape(clipboard_text_str(clipboard_text)) }
         )
         : "&nbsp;"
     )
+  end
+  
+  def clipboard_text_str(clipboard_text)
+    result = ""
+    if !clipboard_text.blank?
+      result = clipboard_text.to_s
+      # Haven't been able to find out where, but in some cases, trying to
+      # use the firefox clipboard SDK to copy to copy values that look
+      # like credit cards to the clipboard are actually suppressed.
+      if result.length == 15 || result.length == 16
+        result += " "
+      end
+    end
+    result
   end
   
   def attribute_table_row_content(name, contentclass, content, lastcolumn = nil)
@@ -117,8 +131,9 @@ module ApplicationHelper
   end
 
   def attribute_table_row_reference(name, pathfunc, ref)
-    val = ref.nil? ? nil : url_or_blank(send(pathfunc, ref), ref.display)
-    attribute_table_row(name, val)
+    url = send(pathfunc, ref)
+    val = ref.nil? ? nil : url_or_blank(url, ref.display)
+    attribute_table_row(name, val, url)
   end
   
   def attribute_table_row_date(name, d)
@@ -250,7 +265,7 @@ module ApplicationHelper
       end
       if !clipboard.nil?
         options[:class] += " clipboardable"
-        options["data-clipboard-text"] = html_escape("" + clipboard.to_s)
+        options["data-clipboard-text"] = html_escape(clipboard_text_str(clipboard))
       end
       if !linkclasses.blank?
         options[:class] += " " + linkclasses
