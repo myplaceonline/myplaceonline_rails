@@ -31,6 +31,7 @@ class ContactsController < MyplaceonlineController
         :birthday,
         :notes,
         :likes,
+        :gift_ideas,
         identity_phones_attributes: [
           :id,
           :number,

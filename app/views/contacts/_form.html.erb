@@ -6,6 +6,7 @@
   <%= myp_select(f, :contact_type, "myplaceonline.contacts.contact_type", Myp.translate_options(Contact::CONTACT_TYPES), obj.contact_type) %>
   <%= myp_text_area_markdown identity_fields, :notes, "myplaceonline.contacts.notes", obj.notes %>
   <%= myp_text_area_markdown identity_fields, :likes, "myplaceonline.contacts.likes", obj.likes %>
+  <%= myp_text_area_markdown identity_fields, :gift_ideas, "myplaceonline.contacts.gift_ideas", obj.gift_ideas %>
   
   <%=
     render layout: 'myplaceonline/childproperties', locals: {
