@@ -122,7 +122,7 @@ class Location < ActiveRecord::Base
   
   def map_url
     if !latitude.blank? && !longitude.blank?
-      result = latitude + "," + longitude
+      result = latitude.to_s + "," + longitude.to_s
     else
       result = address_one_line
     end
