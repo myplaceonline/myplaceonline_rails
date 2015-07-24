@@ -60,7 +60,7 @@ module ApplicationHelper
       # Haven't been able to find out where, but in some cases, trying to
       # use the firefox clipboard SDK to copy to copy values that look
       # like credit cards to the clipboard are actually suppressed.
-      if result.length == 15 || result.length == 16
+      if (result.length == 15 && result.gsub(/[^0-9]+/, "").length == 15) || (result.length == 16 && result.gsub(/[^0-9]+/, "").length == 16)
         result += " "
       end
     end
