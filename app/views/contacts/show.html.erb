@@ -1,15 +1,15 @@
 <%= render layout: "shared/model_show" do %>
 
-  <%= attribute_table_row(t("myplaceonline.contacts.name"), @obj.name) %>
-  <%= attribute_table_row(t("myplaceonline.contacts.nickname"), @obj.nickname) %>
-  <%= attribute_table_row(t("myplaceonline.contacts.birthday"), @obj.birthday) %>
-  <% if !@obj.birthday.nil? %>
-    <%= attribute_table_row(t("myplaceonline.contacts.age"), Myp.time_difference_in_general_from_now(@obj.birthday)) %>
+  <%= attribute_table_row(t("myplaceonline.contacts.name"), @obj.contact_identity.name) %>
+  <%= attribute_table_row(t("myplaceonline.contacts.nickname"), @obj.contact_identity.nickname) %>
+  <%= attribute_table_row(t("myplaceonline.contacts.birthday"), @obj.contact_identity.birthday) %>
+  <% if !@obj.contact_identity.birthday.nil? %>
+    <%= attribute_table_row(t("myplaceonline.contacts.age"), Myp.time_difference_in_general_from_now(@obj.contact_identity.birthday)) %>
   <% end %>
   <%= attribute_table_row_select t("myplaceonline.contacts.contact_type"), @obj.contact_type, Contact::CONTACT_TYPES %>
-  <%= attribute_table_row_markdown(t("myplaceonline.contacts.notes"), @obj.notes) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.contacts.likes"), @obj.likes) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.contacts.gift_ideas"), @obj.gift_ideas) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.contacts.notes"), @obj.contact_identity.notes) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.contacts.likes"), @obj.contact_identity.likes) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.contacts.gift_ideas"), @obj.contact_identity.gift_ideas) %>
   <% @obj.contact_identity.identity_emails.each do |email| %>
     <%= attribute_table_row_email(t("myplaceonline.identities.email"), email.email) %>
   <% end %>

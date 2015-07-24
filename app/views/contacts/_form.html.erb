@@ -1,12 +1,12 @@
 <%= f.fields_for :ref, obj.ref do |identity_fields| %>
 
-  <%= myp_text_field identity_fields, :name, "myplaceonline.contacts.name", obj.name, autofocus %>
-  <%= myp_text_field identity_fields, :nickname, "myplaceonline.contacts.nickname", obj.nickname %>
-  <%= myp_date_field identity_fields, :birthday, "myplaceonline.contacts.birthday", obj.birthday %>
+  <%= myp_text_field identity_fields, :name, "myplaceonline.contacts.name", obj.contact_identity.name, autofocus %>
+  <%= myp_text_field identity_fields, :nickname, "myplaceonline.contacts.nickname", obj.contact_identity.nickname %>
+  <%= myp_date_field identity_fields, :birthday, "myplaceonline.contacts.birthday", obj.contact_identity.birthday %>
   <%= myp_select(f, :contact_type, "myplaceonline.contacts.contact_type", Myp.translate_options(Contact::CONTACT_TYPES), obj.contact_type) %>
-  <%= myp_text_area_markdown identity_fields, :notes, "myplaceonline.contacts.notes", obj.notes %>
-  <%= myp_text_area_markdown identity_fields, :likes, "myplaceonline.contacts.likes", obj.likes %>
-  <%= myp_text_area_markdown identity_fields, :gift_ideas, "myplaceonline.contacts.gift_ideas", obj.gift_ideas %>
+  <%= myp_text_area_markdown identity_fields, :notes, "myplaceonline.contacts.notes", obj.contact_identity.notes %>
+  <%= myp_text_area_markdown identity_fields, :likes, "myplaceonline.contacts.likes", obj.contact_identity.likes %>
+  <%= myp_text_area_markdown identity_fields, :gift_ideas, "myplaceonline.contacts.gift_ideas", obj.contact_identity.gift_ideas %>
   
   <%=
     render layout: 'myplaceonline/childproperties', locals: {

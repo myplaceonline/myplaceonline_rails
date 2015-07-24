@@ -31,34 +31,10 @@ class Contact < ActiveRecord::Base
     end
   end
 
-  def name
-    contact_identity.name
-  end
-  
-  def nickname
-    contact_identity.nickname
-  end
-  
-  def birthday
-    contact_identity.birthday
-  end
-  
-  def notes
-    contact_identity.notes
-  end
-  
   def contact_identity
     ref
   end
   
-  def likes
-    contact_identity.likes
-  end
-  
-  def gift_ideas
-    contact_identity.gift_ideas
-  end
-
   def as_json(options={})
     super.as_json(options).merge({
       :contact_identity => ref.as_json
@@ -67,16 +43,16 @@ class Contact < ActiveRecord::Base
 
   def display
     if !contact_identity.nil?
-      result = name
+      result = contact_identity.name
       whitespace = result =~ /\s+/
       if whitespace.nil?
-        if !nickname.blank?
-          result = Myp.appendstrwrap(result, nickname)
+        if !contact_identity.nickname.blank?
+          result = Myp.appendstrwrap(result, contact_identity.nickname)
         end
         # Seemingly no last name, so add some other identifier if available
         if contact_identity.identity_relationships.length > 0 && !contact_identity.identity_relationships[0].relationship_name.nil?
           relationship = contact_identity.identity_relationships[0]
-          result = Myp.appendstrwrap(result, relationship.contact.name + "'s " + relationship.relationship_name)
+          result = Myp.appendstrwrap(result, relationship.contact.contact_identity.name + "'s " + relationship.relationship_name)
         end
       end
       result
