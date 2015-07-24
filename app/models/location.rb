@@ -121,7 +121,11 @@ class Location < ActiveRecord::Base
   end
   
   def map_url
-    result = address_one_line
+    if !latitude.blank? && !longitude.blank?
+      result = latitude + "," + longitude
+    else
+      result = address_one_line
+    end
     if !result.blank?
       result = "https://www.google.com/maps/place/" + ERB::Util.url_encode(result)
     end
