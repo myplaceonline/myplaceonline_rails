@@ -54,7 +54,7 @@ class Vehicle < ActiveRecord::Base
   accepts_nested_attributes_for :vehicle_pictures, allow_destroy: true, reject_if: :all_blank
   
   def display
-    name
+    Myp.appendstrwrap(name, license_plate)
   end
   
   before_create :do_before_save
