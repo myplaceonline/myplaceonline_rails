@@ -89,7 +89,7 @@ module ApplicationHelper
     html.html_safe
   end
   
-  def attribute_table_row_image(name, identity_file)
+  def attribute_table_row_image(name, identity_file, link_to_original = true)
     if identity_file.thumbnail_contents.nil?
       image = Magick::Image::from_blob(identity_file.file.file_contents)
       image = image.first
@@ -102,7 +102,23 @@ module ApplicationHelper
         identity_file.save!
       end
     end
-    attribute_table_row_content(name, nil, image_tag(file_thumbnail_path(identity_file)))
+    image_content = image_tag(file_thumbnail_path(identity_file))
+    if link_to_original
+      attribute_table_row_content(
+        name,
+        nil,
+        url_or_blank(
+          file_view_path(identity_file),
+          image_content, nil, nil, true
+        )
+      )
+    else
+      attribute_table_row_content(
+        name,
+        nil,
+        image_content
+      )
+    end
   end
   
   def attribute_table_row_url(name, url, may_be_nonurl = false, url_text = nil, clipboard = nil, linkclasses = nil, external = false)
@@ -247,10 +263,10 @@ module ApplicationHelper
     end
   end
   
-  def url_or_blank(url, text = nil, clipboard = nil, linkclasses = nil, external = false)
+  def url_or_blank(url, inner_content = nil, clipboard = nil, linkclasses = nil, external = false)
     if !url.to_s.empty?
-      if text.to_s.empty?
-        text = url
+      if inner_content.nil? || inner_content.to_s.empty?
+        inner_content = url
       end
       
       options = Hash.new
@@ -273,7 +289,7 @@ module ApplicationHelper
       
       content_tag(
         :a,
-        text,
+        inner_content,
         options
       )
     else
