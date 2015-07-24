@@ -416,6 +416,7 @@ en:
       picture: "Picture"
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
+      likes: "Likes"
     files:
       name: "Name"
       download: "Download"

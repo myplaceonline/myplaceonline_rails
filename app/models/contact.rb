@@ -50,6 +50,10 @@ class Contact < ActiveRecord::Base
   def contact_identity
     ref
   end
+  
+  def likes
+    contact_identity.likes
+  end
 
   def as_json(options={})
     super.as_json(options).merge({
