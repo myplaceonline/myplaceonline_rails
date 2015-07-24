@@ -1,3 +1,6 @@
+<% if edit %>
+  <%= myp_text_field f, :file_file_name, "myplaceonline.files.file_file_name", obj.file_file_name %>
+<% end %>
 <%= myp_file_field f, :file, "myplaceonline.files.file", obj.file, autofocus %>
 <%= myp_text_area_markdown f, :notes, "myplaceonline.files.notes", obj.notes %>
 <%= f.fields_for :folder, obj.folder do |folder_form| %>

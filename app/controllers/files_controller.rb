@@ -114,6 +114,7 @@ class FilesController < MyplaceonlineController
       params.require(:identity_file).permit(
         :file,
         :notes,
+        :file_file_name,
         folder_attributes: [ :id ]
       )
     end

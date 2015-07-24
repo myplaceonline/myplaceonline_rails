@@ -433,6 +433,7 @@ en:
       move: "Move"
       destination: "Destination"
       file_moved: "File Moved"
+      file_file_name: "Name"
     accomplishments:
       name: "Name"
       accomplishment: "Wisdom"
