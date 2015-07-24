@@ -151,9 +151,12 @@ module ApplicationHelper
   end
 
   def attribute_table_row_reference(name, pathfunc, ref)
-    url = send(pathfunc, ref)
-    val = ref.nil? ? nil : url_or_blank(url, ref.display)
-    attribute_table_row(name, val, url)
+    if !ref.nil?
+      url = send(pathfunc, ref)
+      attribute_table_row(name, url_or_blank(url, ref.display), url)
+    else
+      nil
+    end
   end
   
   def attribute_table_row_date(name, d)
