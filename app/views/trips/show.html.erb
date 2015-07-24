@@ -8,9 +8,7 @@
   <%= attribute_table_row_date_diff(t("myplaceonline.trips.duration"), @obj.started, @obj.ended) %>
   <% @obj.trip_pictures.each do |pic| %>
     <%= table_row_heading(t("myplaceonline.trips.picture")) %>
-    <% if !pic.identity_file.nil? && !pic.identity_file.file_content_type.nil? && (pic.identity_file.file_content_type.start_with?("image")) %>
-      <%= attribute_table_row_image(t("myplaceonline.trips.picture"), pic.identity_file) %>
-    <% end %>
+    <%= attribute_table_row_image(t("myplaceonline.trips.picture"), pic.identity_file) %>
   <% end %>
   
 <% end %>

@@ -90,34 +90,38 @@ module ApplicationHelper
   end
   
   def attribute_table_row_image(name, identity_file, link_to_original = true)
-    if identity_file.thumbnail_contents.nil?
-      image = Magick::Image::from_blob(identity_file.file.file_contents)
-      image = image.first
-      max_width = 400
-      if image.columns > max_width
-        image.resize_to_fit!(max_width)
-        blob = image.to_blob
-        identity_file.thumbnail_contents = blob
-        identity_file.thumbnail_bytes = blob.length
-        identity_file.save!
+    if !identity_file.nil? && !identity_file.file_content_type.nil? && (identity_file.file_content_type.start_with?("image"))
+      if identity_file.thumbnail_contents.nil?
+        image = Magick::Image::from_blob(identity_file.file.file_contents)
+        image = image.first
+        max_width = 400
+        if image.columns > max_width
+          image.resize_to_fit!(max_width)
+          blob = image.to_blob
+          identity_file.thumbnail_contents = blob
+          identity_file.thumbnail_bytes = blob.length
+          identity_file.save!
+        end
       end
-    end
-    image_content = image_tag(file_thumbnail_path(identity_file))
-    if link_to_original
-      attribute_table_row_content(
-        name,
-        nil,
-        url_or_blank(
-          file_view_path(identity_file),
-          image_content, nil, nil, true
+      image_content = image_tag(file_thumbnail_path(identity_file))
+      if link_to_original
+        attribute_table_row_content(
+          name,
+          nil,
+          url_or_blank(
+            file_view_path(identity_file),
+            image_content, nil, nil, true
+          )
         )
-      )
+      else
+        attribute_table_row_content(
+          name,
+          nil,
+          image_content
+        )
+      end
     else
-      attribute_table_row_content(
-        name,
-        nil,
-        image_content
-      )
+      nil
     end
   end
   

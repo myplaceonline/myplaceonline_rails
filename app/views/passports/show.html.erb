@@ -7,9 +7,7 @@
   <%= attribute_table_row(t("myplaceonline.passports.issuing_authority"), @obj.issuing_authority) %>
   <% @obj.passport_pictures.each do |pic| %>
     <%= table_row_heading(t("myplaceonline.passports.picture")) %>
-    <% if !pic.identity_file.nil? && !pic.identity_file.file_content_type.nil? && (pic.identity_file.file_content_type.start_with?("image")) %>
-      <%= attribute_table_row_image(t("myplaceonline.passports.picture"), pic.identity_file) %>
-    <% end %>
+    <%= attribute_table_row_image(t("myplaceonline.passports.picture"), pic.identity_file) %>
   <% end %>
 
 <% end %>

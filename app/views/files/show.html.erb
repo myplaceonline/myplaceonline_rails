@@ -6,9 +6,7 @@
   <%= attribute_table_row_url(t("myplaceonline.files.view"), file_view_path(@obj), false, t("myplaceonline.files.view"), nil, nil, true) %>
   <%= attribute_table_row_markdown(t("myplaceonline.files.notes"), @obj.notes) %>
   <%= attribute_table_row(t("myplaceonline.files.content_type"), @obj.file_content_type) %>
-  <% if !@obj.file_content_type.nil? && (@obj.file_content_type.start_with?("image")) %>
-    <%= attribute_table_row_image(t("myplaceonline.files.inline_image"), @obj) %>
-  <% end %>
+  <%= attribute_table_row_image(t("myplaceonline.files.inline_image"), @obj) %>
   
   <% content_for :postfooterlinks do %>
     <li><%= link_to t('myplaceonline.files.move'), file_move_path(@obj), "data-icon" => "arrow-r" %></li>

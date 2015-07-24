@@ -39,8 +39,6 @@
   <% end %>
   <% @obj.contact_identity.identity_pictures.each do |pic| %>
     <%= table_row_heading(t("myplaceonline.contacts.picture")) %>
-    <% if !pic.identity_file.nil? && !pic.identity_file.file_content_type.nil? && (pic.identity_file.file_content_type.start_with?("image")) %>
-      <%= attribute_table_row_image(t("myplaceonline.contacts.picture"), pic.identity_file) %>
-    <% end %>
+    <%= attribute_table_row_image(t("myplaceonline.contacts.picture"), pic.identity_file) %>
   <% end %>
 <% end %>

@@ -111,9 +111,7 @@
   <% end %>
   <% @obj.vehicle_pictures.each do |pic| %>
     <%= table_row_heading(t("myplaceonline.vehicles.picture")) %>
-    <% if !pic.identity_file.nil? && !pic.identity_file.file_content_type.nil? && (pic.identity_file.file_content_type.start_with?("image")) %>
-      <%= attribute_table_row_image(t("myplaceonline.vehicles.picture"), pic.identity_file) %>
-    <% end %>
+    <%= attribute_table_row_image(t("myplaceonline.vehicles.picture"), pic.identity_file) %>
   <% end %>
   <% @obj.vehicle_warranties.each do |wrapper| %>
     <%= table_row_heading(t("myplaceonline.warranties.warranty")) %>
