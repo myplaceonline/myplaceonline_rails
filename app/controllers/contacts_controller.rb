@@ -4,7 +4,7 @@ class ContactsController < MyplaceonlineController
   end
   
   def before_destroy
-    if @obj.ref_id == current_user.primary_identity.id
+    if @obj.identity_id == current_user.primary_identity.id
       raise "Cannot delete own identity"
     end
   end
@@ -24,7 +24,7 @@ class ContactsController < MyplaceonlineController
   def self.param_names
     [
       :contact_type,
-      ref_attributes: [
+      identity_attributes: [
         :id,
         :name,
         :nickname,
@@ -87,7 +87,7 @@ class ContactsController < MyplaceonlineController
 
   def self.reject_if_blank(attributes)
     attributes.all?{|key, value|
-      if key == "ref_attributes"
+      if key == "identity_attributes"
         value.all?{|key2, value2| value2.blank?}
       else
         value.blank?
@@ -115,11 +115,11 @@ class ContactsController < MyplaceonlineController
 
     def all
       if @contact_type.blank?
-        model.joins(:ref).where(
+        model.joins(:identity).where(
           owner_id: current_user.primary_identity.id
         )
       else
-        model.joins(:ref).where(
+        model.joins(:identity).where(
           owner_id: current_user.primary_identity.id,
           contact_type: @contact_type
         )
@@ -133,14 +133,16 @@ class ContactsController < MyplaceonlineController
 
     def update_presave
       check_nested_attributes(@obj, :conversations, :contact)
-      check_nested_attributes(@obj.contact_identity, :identity_phones, :ref)
-      check_nested_attributes(@obj.contact_identity, :identity_emails, :ref)
+      check_nested_attributes(@obj.identity, :identity_phones, :identity)
+      check_nested_attributes(@obj.identity, :identity_emails, :identity)
     end
     
     def presave
-      @obj.contact_identity.identity_pictures.each do |pic|
-        if pic.identity_file.folder.nil?
-          pic.identity_file.folder = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.contacts"), @obj.display])
+      if !@obj.identity.nil?
+        @obj.identity.identity_pictures.each do |pic|
+          if pic.identity_file.folder.nil?
+            pic.identity_file.folder = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.contacts"), @obj.display])
+          end
         end
       end
     end

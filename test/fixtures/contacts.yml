@@ -1,3 +1,3 @@
 contact:
   owner: identity
-  ref: contact_identity
+  identity: contact_identity

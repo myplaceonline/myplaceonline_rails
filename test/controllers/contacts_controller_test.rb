@@ -8,6 +8,6 @@ class ContactsControllerTest < ActionController::TestCase
   end
   
   def test_attributes
-    { ref_attributes: { name: "Test" } }
+    { identity_attributes: { name: "Test" } }
   end
 end

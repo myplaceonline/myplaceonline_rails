@@ -1,5 +1,5 @@
 class IdentityPicture < ActiveRecord::Base
-  belongs_to :ref, class_name: Identity
+  belongs_to :identity, class_name: Identity
   belongs_to :owner, class_name: Identity
 
   belongs_to :identity_file

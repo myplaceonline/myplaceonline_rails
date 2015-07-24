@@ -12,9 +12,10 @@ class Contact < ActiveRecord::Base
     ["myplaceonline.contacts.party_friend", 8]
   ]
   
-  belongs_to :ref, class_name: Identity, :dependent => :destroy
   belongs_to :owner, class_name: Identity
-  accepts_nested_attributes_for :ref, reject_if: :all_blank
+
+  belongs_to :identity, :dependent => :destroy
+  accepts_nested_attributes_for :identity, reject_if: :all_blank
   
   validate :custom_validation
   
@@ -26,33 +27,29 @@ class Contact < ActiveRecord::Base
   end
   
   def custom_validation
-    if !contact_identity.nil? && contact_identity.name.blank?
+    if !identity.nil? && identity.name.blank?
       errors.add(:name, "not specified")
     end
-  end
-
-  def contact_identity
-    ref
   end
   
   def as_json(options={})
     super.as_json(options).merge({
-      :contact_identity => ref.as_json
+      :identity => identity.as_json
     })
   end
 
   def display
-    if !contact_identity.nil?
-      result = contact_identity.name
+    if !identity.nil?
+      result = identity.name
       whitespace = result =~ /\s+/
       if whitespace.nil?
-        if !contact_identity.nickname.blank?
-          result = Myp.appendstrwrap(result, contact_identity.nickname)
+        if !identity.nickname.blank?
+          result = Myp.appendstrwrap(result, identity.nickname)
         end
         # Seemingly no last name, so add some other identifier if available
-        if contact_identity.identity_relationships.length > 0 && !contact_identity.identity_relationships[0].relationship_name.nil?
-          relationship = contact_identity.identity_relationships[0]
-          result = Myp.appendstrwrap(result, relationship.contact.contact_identity.name + "'s " + relationship.relationship_name)
+        if identity.identity_relationships.length > 0 && !identity.identity_relationships[0].relationship_name.nil?
+          relationship = identity.identity_relationships[0]
+          result = Myp.appendstrwrap(result, relationship.contact.identity.name + "'s " + relationship.relationship_name)
         end
       end
       result
@@ -63,7 +60,7 @@ class Contact < ActiveRecord::Base
   
   def self.build(params = nil)
     result = Contact.new(params)
-    result.ref = Myp.new_model(Identity)
+    result.identity = Myp.new_model(Identity)
     result
   end
   

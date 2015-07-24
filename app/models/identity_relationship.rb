@@ -19,7 +19,7 @@ class IdentityRelationship < ActiveRecord::Base
   ]
 
   belongs_to :owner, class_name: Identity
-  belongs_to :ref, class_name: Identity
+  belongs_to :identity, class_name: Identity
   
   belongs_to :contact
   accepts_nested_attributes_for :contact, reject_if: :all_blank

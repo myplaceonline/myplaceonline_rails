@@ -6,8 +6,8 @@
 <%= myp_subregion_field f, :sub_region1, "myplaceonline.general.sub_region1", obj.region, obj.sub_region1 %>
 <%= myp_text_field f, :postal_code, "myplaceonline.locations.postal_code", obj.postal_code %>
 <%= myp_region_field f, :region, "myplaceonline.general.region", obj.region %>
-<%= myp_decimal_field f, :latitude, "myplaceonline.locations.latitude", obj.latitude %>
-<%= myp_decimal_field f, :longitude, "myplaceonline.locations.longitude", obj.longitude %>
+<%= myp_decimal_field f, :latitude, "myplaceonline.locations.latitude", obj.latitude, false, nil, 0.000001 %>
+<%= myp_decimal_field f, :longitude, "myplaceonline.locations.longitude", obj.longitude, false, nil, 0.000001 %>
 <%= myp_text_area_markdown f, :notes, "myplaceonline.locations.notes", obj.notes %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {

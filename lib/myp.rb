@@ -537,7 +537,7 @@ module Myp
     Rails.logger.debug("Searching driver's licenses")
 
     IdentityDriversLicense.where("owner_id = ? and expires is not null and expires < ?", user.primary_identity, general_threshold).each do |drivers_license|
-      contact = Contact.where(owner_id: user.primary_identity.id, ref_id: drivers_license.ref.id).first
+      contact = Contact.where(owner_id: user.primary_identity.id, identity_id: drivers_license.identity.id).first
       diff = TimeDifference.between(timenow, drivers_license.expires)
       if timenow >= drivers_license.expires
 	# TODO expired
@@ -552,9 +552,9 @@ module Myp
     
     Rails.logger.debug("Searching contacts")
 
-    Contact.where(owner: user.primary_identity).includes(:ref).to_a.each do |x|
-      if !x.ref.nil? && !x.ref.birthday.nil?
-        bday_this_year = Date.new(Date.today.year, x.ref.birthday.month, x.ref.birthday.day)
+    Contact.where(owner: user.primary_identity).includes(:identity).to_a.each do |x|
+      if !x.identity.nil? && !x.identity.birthday.nil?
+        bday_this_year = Date.new(Date.today.year, x.identity.birthday.month, x.identity.birthday.day)
         if bday_this_year >= datenow && bday_this_year <= general_threshold
           diff = TimeDifference.between(datenow, bday_this_year)
           diff_in_general = diff.in_general

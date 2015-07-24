@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150724161800) do
+ActiveRecord::Schema.define(version: 20150724182429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -388,15 +388,15 @@ ActiveRecord::Schema.define(version: 20150724161800) do
   add_index "computers", ["owner_id"], name: "index_computers_on_owner_id", using: :btree
 
   create_table "contacts", force: true do |t|
-    t.integer  "ref_id"
+    t.integer  "identity_id"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "contact_type"
   end
 
+  add_index "contacts", ["identity_id"], name: "index_contacts_on_identity_id", using: :btree
   add_index "contacts", ["owner_id"], name: "index_contacts_on_owner_id", using: :btree
-  add_index "contacts", ["ref_id"], name: "index_contacts_on_ref_id", using: :btree
 
   create_table "conversations", force: true do |t|
     t.integer  "contact_id"
@@ -671,25 +671,25 @@ ActiveRecord::Schema.define(version: 20150724161800) do
     t.string   "region"
     t.string   "sub_region1"
     t.date     "expires"
-    t.integer  "ref_id"
+    t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "identity_file_id"
     t.integer  "owner_id"
   end
 
-  add_index "identity_drivers_licenses", ["ref_id"], name: "index_identity_drivers_licenses_on_ref_id", using: :btree
+  add_index "identity_drivers_licenses", ["identity_id"], name: "index_identity_drivers_licenses_on_identity_id", using: :btree
 
   create_table "identity_emails", force: true do |t|
     t.string   "email"
-    t.integer  "ref_id"
+    t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id"
   end
 
+  add_index "identity_emails", ["identity_id"], name: "index_identity_emails_on_identity_id", using: :btree
   add_index "identity_emails", ["owner_id"], name: "index_identity_emails_on_owner_id", using: :btree
-  add_index "identity_emails", ["ref_id"], name: "index_identity_emails_on_ref_id", using: :btree
 
   create_table "identity_file_folders", force: true do |t|
     t.string   "folder_name"
@@ -723,30 +723,30 @@ ActiveRecord::Schema.define(version: 20150724161800) do
 
   create_table "identity_locations", force: true do |t|
     t.integer  "location_id"
-    t.integer  "ref_id"
+    t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id"
   end
 
+  add_index "identity_locations", ["identity_id"], name: "index_identity_locations_on_identity_id", using: :btree
   add_index "identity_locations", ["location_id"], name: "index_identity_locations_on_location_id", using: :btree
   add_index "identity_locations", ["owner_id"], name: "index_identity_locations_on_owner_id", using: :btree
-  add_index "identity_locations", ["ref_id"], name: "index_identity_locations_on_ref_id", using: :btree
 
   create_table "identity_phones", force: true do |t|
     t.string   "number"
-    t.integer  "ref_id"
+    t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id"
     t.integer  "phone_type"
   end
 
+  add_index "identity_phones", ["identity_id"], name: "index_identity_phones_on_identity_id", using: :btree
   add_index "identity_phones", ["owner_id"], name: "index_identity_phones_on_owner_id", using: :btree
-  add_index "identity_phones", ["ref_id"], name: "index_identity_phones_on_ref_id", using: :btree
 
   create_table "identity_pictures", force: true do |t|
-    t.integer  "ref_id"
+    t.integer  "identity_id"
     t.integer  "identity_file_id"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -754,21 +754,21 @@ ActiveRecord::Schema.define(version: 20150724161800) do
   end
 
   add_index "identity_pictures", ["identity_file_id"], name: "index_identity_pictures_on_identity_file_id", using: :btree
+  add_index "identity_pictures", ["identity_id"], name: "index_identity_pictures_on_identity_id", using: :btree
   add_index "identity_pictures", ["owner_id"], name: "index_identity_pictures_on_owner_id", using: :btree
-  add_index "identity_pictures", ["ref_id"], name: "index_identity_pictures_on_ref_id", using: :btree
 
   create_table "identity_relationships", force: true do |t|
     t.integer  "contact_id"
     t.integer  "relationship_type"
     t.integer  "owner_id"
-    t.integer  "ref_id"
+    t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "identity_relationships", ["contact_id"], name: "index_identity_relationships_on_contact_id", using: :btree
+  add_index "identity_relationships", ["identity_id"], name: "index_identity_relationships_on_identity_id", using: :btree
   add_index "identity_relationships", ["owner_id"], name: "index_identity_relationships_on_owner_id", using: :btree
-  add_index "identity_relationships", ["ref_id"], name: "index_identity_relationships_on_ref_id", using: :btree
 
   create_table "job_salaries", force: true do |t|
     t.integer  "owner_id"
