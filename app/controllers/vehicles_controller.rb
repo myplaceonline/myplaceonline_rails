@@ -103,7 +103,12 @@ class VehiclesController < MyplaceonlineController
             :file,
             :notes
           ]
-        ]
+        ],
+        vehicle_warranties_attributes: [
+          :id,
+          :_destroy,
+          warranty_attributes: Warranty.params
+        ],
       )
     end
 

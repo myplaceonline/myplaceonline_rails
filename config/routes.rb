@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :warranties
+  post 'warranties/new'
+
   resources :books
   post 'books/new'
 

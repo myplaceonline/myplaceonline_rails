@@ -115,5 +115,14 @@
       <%= attribute_table_row_image(t("myplaceonline.vehicles.picture"), pic.identity_file) %>
     <% end %>
   <% end %>
+  <% @obj.vehicle_warranties.each do |wrapper| %>
+    <%= table_row_heading(t("myplaceonline.warranties.warranty")) %>
+    <%= attribute_table_row_reference(t("myplaceonline.warrnties.warranty_name"), "warranty_path", wrapper.warranty) %>
+    <%= attribute_table_row(t("myplaceonline.warranties.warranty_name"), wrapper.warranty.warranty_name) %>
+    <%= attribute_table_row_date(t("myplaceonline.warranties.warranty_start"), wrapper.warranty.warranty_start) %>
+    <%= attribute_table_row_date(t("myplaceonline.warranties.warranty_end"), wrapper.warranty.warranty_end) %>
+    <%= attribute_table_row(t("myplaceonline.warranties.warranty_condition"), wrapper.warranty.warranty_condition) %>
+    <%= attribute_table_row_markdown(t("myplaceonline.warranties.notes"), wrapper.warranty.notes) %>
+  <% end %>
   
 <% end %>

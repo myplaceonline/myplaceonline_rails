@@ -96,6 +96,7 @@ en:
       guns: "Guns"
       desired_products: "Desired Products"
       books: "Books"
+      warranties: "Warranties"
     general:
       email: "E-mail"
       password: "Password"
@@ -1163,3 +1164,13 @@ en:
       is_read: "Read"
       notes: "Notes"
       when_read: "Date Read"
+    warranties:
+      heading: "Warranties"
+      add: "Add Warranty"
+      delete: "Delete Warranty"
+      warranty: "Warranty"
+      warranty_name: "Description"
+      warranty_start: "Start"
+      warranty_end: "End"
+      warranty_condition: "Conditions"
+      notes: "Notes"

@@ -277,3 +277,41 @@
     <%= myp_file_field file_fields, :file, "myplaceonline.vehicles.picture", childproperty.identity_file.file %>
   <% end %>
 <% end %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.warranties.heading"),
+    childpropertiesname: :vehicle_warranties,
+    childproperties: obj.vehicle_warranties,
+    deletebutton: t("myplaceonline.warranties.delete"),
+    addbutton: t("myplaceonline.warranties.add"),
+    expanded: obj.vehicle_warranties.length > 0,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :warranty_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.warranties.warranty"),
+        objform: "warranties/form",
+        existingobjurl: "warranty_path",
+        searchurl: "/warranties.json?perpage=0",
+        edit: false,
+        autofocus: true
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :warranty_attributes,
+      existingobj: childproperty.warranty,
+      heading: t("myplaceonline.warranties.warranty"),
+      objform: "warranties/form",
+      existingobjurl: "warranty_path",
+      searchurl: "/warranties.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
+<% end %>

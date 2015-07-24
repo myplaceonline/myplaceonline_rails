@@ -53,6 +53,23 @@ class Vehicle < ActiveRecord::Base
   has_many :vehicle_pictures, :dependent => :destroy
   accepts_nested_attributes_for :vehicle_pictures, allow_destroy: true, reject_if: :all_blank
   
+  has_many :vehicle_warranties, :dependent => :destroy
+  accepts_nested_attributes_for :vehicle_warranties, allow_destroy: true, reject_if: :all_blank
+  
+  # http://stackoverflow.com/a/12064875/4135310
+  def vehicle_warranties_attributes=(attributes)
+    super(attributes)
+    attributes.each {|key, value|
+      if !value['warranty_attributes'].blank? && !value['warranty_attributes']['id'].blank? && value['_destroy'] != "1"
+        self.vehicle_warranties.each{|x|
+          if x.warranty.id == value['warranty_attributes']['id'].to_i
+            x.warranty = Warranty.find(value['warranty_attributes']['id'])
+          end
+        }
+      end
+    }
+  end
+
   def display
     Myp.appendstrwrap(name, license_plate)
   end
