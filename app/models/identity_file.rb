@@ -28,6 +28,10 @@ class IdentityFile < ActiveRecord::Base
     end
   end
   
+  def size
+    file_file_size
+  end
+  
   before_create :do_before_save
   before_update :do_before_save
 

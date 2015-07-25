@@ -10,6 +10,7 @@
   <%= attribute_table_row_markdown(t("myplaceonline.contacts.notes"), @obj.identity.notes) %>
   <%= attribute_table_row_markdown(t("myplaceonline.contacts.likes"), @obj.identity.likes) %>
   <%= attribute_table_row_markdown(t("myplaceonline.contacts.gift_ideas"), @obj.identity.gift_ideas) %>
+  <%= attribute_table_row(t("myplaceonline.contacts.ktn"), @obj.identity.ktn) %>
   <% @obj.identity.identity_emails.each do |email| %>
     <%= attribute_table_row_email(t("myplaceonline.identities.email"), email.email) %>
   <% end %>
