@@ -151,21 +151,23 @@ class Identity < ActiveRecord::Base
   end
   
   def ensure_contact!
-    if Contact.find_by(
+    result = Contact.find_by(
       owner_id: id,
       identity_id: id
-    ).nil?
+    )
+    if result.nil?
       ActiveRecord::Base.transaction do
-        me = Contact.new
+        result = Contact.new
         if self.name.blank?
           self.name = I18n.t("myplaceonline.contacts.me")
           self.save!
         end
-        me.owner = self
-        me.identity = self
-        me.save!
+        result.owner = self
+        result.identity = self
+        result.save!
       end
     end
+    result
   end
   
   def last_weight
