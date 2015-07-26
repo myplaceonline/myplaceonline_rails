@@ -783,6 +783,16 @@ en:
       picture: "Picture"
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
+    recreational_vehicle_measurements:
+      heading: "Measurements"
+      add: "Add Measurement"
+      delete: "Delete Measurement"
+      measurement_name: "Name"
+      measurement_type: "Type"
+      width: "Width"
+      height: "Height"
+      depth: "Depth"
+      notes: "Notes"
     cashback:
       heading: "Cashback"
       cashback_percentage: "Percentage"

@@ -66,6 +66,16 @@ class RecreationalVehiclesController < MyplaceonlineController
         :_destroy,
         company_attributes: CompaniesController.param_names(params[:recreational_vehicle][:recreational_vehicle_insurances_attributes]) + [:id],
         periodic_payment_attributes: PeriodicPaymentsController.param_names(params[:recreational_vehicle][:recreational_vehicle_insurances_attributes]) + [:id]
+      ],
+      recreational_vehicle_measurements_attributes: [
+        :id,
+        :_destroy,
+        :measurement_name,
+        :measurement_type,
+        :width,
+        :height,
+        :depth,
+        :notes
       ]
     ]
   end

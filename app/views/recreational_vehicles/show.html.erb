@@ -52,5 +52,13 @@
     <%= table_row_heading(t("myplaceonline.recreational_vehicles.picture")) %>
     <%= attribute_table_row_image(t("myplaceonline.recreational_vehicles.picture"), pic.identity_file) %>
   <% end %>
+  <% @obj.recreational_vehicle_measurements.each do |measurement| %>
+    <%= table_row_heading(t("myplaceonline.recreational_vehicle_measurements.heading")) %>
+    <%= attribute_table_row(t("myplaceonline.recreational_vehicle_measurements.measurement_name"), measurement.measurement_name) %>
+    <%= attribute_table_row_dimensions(t("myplaceonline.recreational_vehicle_measurements.width"), measurement.width, measurement.measurement_type) %>
+    <%= attribute_table_row_dimensions(t("myplaceonline.recreational_vehicle_measurements.height"), measurement.height, measurement.measurement_type) %>
+    <%= attribute_table_row_dimensions(t("myplaceonline.recreational_vehicle_measurements.depth"), measurement.depth, measurement.measurement_type) %>
+    <%= attribute_table_row_markdown(t("myplaceonline.recreational_vehicle_measurements.notes"), measurement.notes) %>
+  <% end %>
     
 <% end %>

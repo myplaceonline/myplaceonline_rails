@@ -48,6 +48,9 @@ class RecreationalVehicle < ActiveRecord::Base
     }
   end
   
+  has_many :recreational_vehicle_measurements, :dependent => :destroy
+  accepts_nested_attributes_for :recreational_vehicle_measurements, allow_destroy: true, reject_if: :all_blank
+
   before_create :do_before_save
   before_update :do_before_save
 
