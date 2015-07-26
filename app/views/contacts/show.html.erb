@@ -37,7 +37,7 @@
     <%= attribute_table_row_date(t("myplaceonline.identities.license_expires"), identity_drivers_license.expires) %>
     <%= attribute_table_row(t("myplaceonline.general.region"), identity_drivers_license.region) %>
     <%= attribute_table_row(t("myplaceonline.general.sub_region1"), identity_drivers_license.sub_region1) %>
-    <%= attribute_table_row_reference(t("myplaceonline.identities.license_picture"), "file_path", identity_drivers_license.identity_file) %>
+    <%= attribute_table_row_image(t("myplaceonline.identities.license_picture"), identity_drivers_license.identity_file) %>
   <% end %>
   <% @obj.identity.identity_pictures.each do |pic| %>
     <%= table_row_heading(t("myplaceonline.contacts.picture")) %>
