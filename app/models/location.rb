@@ -96,8 +96,11 @@ class Location < ActiveRecord::Base
     end
   end
   
-  def address_one_line
-    result = Myp.appendstr(nil, name, ", ")
+  def address_one_line(usename = true)
+    result = nil
+    if usename
+      result = Myp.appendstr(result, name, ", ")
+    end
     result = Myp.appendstr(result, address1, ", ")
     result = Myp.appendstr(result, address2, ", ")
     result = Myp.appendstr(result, address3, ", ")
@@ -109,7 +112,8 @@ class Location < ActiveRecord::Base
   end
   
   def address_one_line_simple
-    result = Myp.appendstr(nil, name, ", ")
+    result = nil
+    result = Myp.appendstr(result, name, ", ")
     result = Myp.appendstr(result, address1, ", ")
     result = Myp.appendstr(result, address2, ", ")
     result = Myp.appendstr(result, address3, ", ")
@@ -124,7 +128,7 @@ class Location < ActiveRecord::Base
     if !latitude.blank? && !longitude.blank?
       result = latitude.to_s + "," + longitude.to_s
     else
-      result = address_one_line
+      result = address_one_line(false)
     end
     if !result.blank?
       result = "https://www.google.com/maps/place/" + ERB::Util.url_encode(result)
