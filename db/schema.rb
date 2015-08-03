@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150726152437) do
+ActiveRecord::Schema.define(version: 20150803171942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -495,7 +495,7 @@ ActiveRecord::Schema.define(version: 20150726152437) do
   add_index "drinks", ["owner_id"], name: "index_drinks_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.binary   "val"
+    t.string   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -519,6 +519,16 @@ ActiveRecord::Schema.define(version: 20150726152437) do
   end
 
   add_index "exercises", ["owner_id"], name: "index_exercises_on_owner_id", using: :btree
+
+  create_table "favorite_products", force: true do |t|
+    t.string   "product_name"
+    t.text     "notes"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "favorite_products", ["owner_id"], name: "index_favorite_products_on_owner_id", using: :btree
 
   create_table "feeds", force: true do |t|
     t.string   "name"

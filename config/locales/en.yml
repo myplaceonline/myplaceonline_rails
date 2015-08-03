@@ -97,6 +97,7 @@ en:
       desired_products: "Desired Products"
       books: "Books"
       warranties: "Warranties"
+      favorite_products: "Favorite Products"
     general:
       email: "E-mail"
       password: "Password"
@@ -1186,4 +1187,7 @@ en:
       warranty_start: "Start"
       warranty_end: "End"
       warranty_condition: "Conditions"
+      notes: "Notes"
+    favorite_products:
+      product_name: "Name"
       notes: "Notes"

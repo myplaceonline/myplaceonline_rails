@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :favorite_products
+  post 'favorite_products/new'
+
   resources :warranties
   post 'warranties/new'
 
