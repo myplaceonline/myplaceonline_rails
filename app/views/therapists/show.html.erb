@@ -5,5 +5,8 @@
   <% @obj.all_conversations.each do |conversation| %>
     <%= attribute_table_row_markdown(t("myplaceonline.therapists.conversation") + " (" + Myp.display_date(conversation.conversation_date, current_user) + ")", conversation.conversation) %>
   <% end %>
+  <% @obj.therapist_emails.each do |email| %>
+    <%= attribute_table_row_email(t("myplaceonline.identities.email"), email.email) %>
+  <% end %>
 
 <% end %>

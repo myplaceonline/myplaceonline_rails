@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150806205635) do
+ActiveRecord::Schema.define(version: 20150806210140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1379,6 +1379,17 @@ ActiveRecord::Schema.define(version: 20150806205635) do
 
   add_index "therapist_conversations", ["owner_id"], name: "index_therapist_conversations_on_owner_id", using: :btree
   add_index "therapist_conversations", ["therapist_id"], name: "index_therapist_conversations_on_therapist_id", using: :btree
+
+  create_table "therapist_emails", force: true do |t|
+    t.integer  "therapist_id"
+    t.integer  "owner_id"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "therapist_emails", ["owner_id"], name: "index_therapist_emails_on_owner_id", using: :btree
+  add_index "therapist_emails", ["therapist_id"], name: "index_therapist_emails_on_therapist_id", using: :btree
 
   create_table "therapists", force: true do |t|
     t.string   "name"

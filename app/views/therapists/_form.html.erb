@@ -28,3 +28,24 @@
   <%= myp_text_area child_fields, :conversation, "myplaceonline.therapists.conversation", childproperty.conversation %>
   <%= myp_date_field child_fields, :conversation_date, "myplaceonline.therapists.conversation_date", childproperty.conversation_date %>
 <% end %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.identities.emails"),
+    childpropertiesname: :therapist_emails,
+    childproperties: obj.therapist_emails,
+    deletebutton: t("myplaceonline.identities.delete_email"),
+    addbutton: t("myplaceonline.identities.add_email"),
+    expanded: obj.therapist_emails.length > 0,
+    formjson: [
+      {
+        type: 'text',
+        name: 'email',
+        placeholder: t("myplaceonline.identities.email"),
+        autofocus: true
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%= myp_text_field child_fields, :email, "myplaceonline.identities.email", childproperty.email %>
+<% end %>

@@ -15,6 +15,9 @@ class Therapist < ActiveRecord::Base
     TherapistConversation.where(therapist_id: id).order(["therapist_conversations.conversation_date DESC"])
   end
   
+  has_many :therapist_emails, :dependent => :destroy
+  accepts_nested_attributes_for :therapist_emails, allow_destroy: true, reject_if: :all_blank
+  
   before_create :do_before_save
   before_update :do_before_save
 
