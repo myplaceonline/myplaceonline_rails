@@ -12,5 +12,8 @@
     <%= attribute_table_row(t("myplaceonline.identities.phone"), phone.number) %>
     <%= attribute_table_row_select t("myplaceonline.identity_phones.phone_type"), phone.phone_type, IdentityPhone::PHONE_TYPES %>
   <% end %>
+  <% @obj.therapist_locations.each do |x| %>
+    <%= attribute_table_row_reference(t("myplaceonline.identities.location"), "location_path", x.location) %>
+  <% end %>
 
 <% end %>

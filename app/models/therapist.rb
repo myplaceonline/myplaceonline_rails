@@ -21,6 +21,9 @@ class Therapist < ActiveRecord::Base
   has_many :therapist_phones, :dependent => :destroy
   accepts_nested_attributes_for :therapist_phones, allow_destroy: true, reject_if: :all_blank
   
+  has_many :therapist_locations, :dependent => :destroy
+  accepts_nested_attributes_for :therapist_locations, allow_destroy: true, reject_if: :all_blank
+  
   before_create :do_before_save
   before_update :do_before_save
 
