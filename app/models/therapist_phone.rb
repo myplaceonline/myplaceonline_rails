@@ -1,4 +1,4 @@
-class TherapistEmail < ActiveRecord::Base
+class TherapistPhone < ActiveRecord::Base
   belongs_to :owner, class_name: Identity
   belongs_to :therapist
   

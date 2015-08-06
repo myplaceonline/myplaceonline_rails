@@ -49,3 +49,32 @@
 %>
   <%= myp_text_field child_fields, :email, "myplaceonline.identities.email", childproperty.email %>
 <% end %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.identities.phones"),
+    childpropertiesname: :therapist_phones,
+    childproperties: obj.therapist_phones,
+    deletebutton: t("myplaceonline.identities.delete_phone"),
+    addbutton: t("myplaceonline.identities.add_phone"),
+    expanded: obj.therapist_phones.length > 0,
+    formjson: [
+      {
+        type: 'text',
+        name: 'number',
+        placeholder: t("myplaceonline.identities.phone"),
+        autofocus: true
+      },
+      {
+        type: 'select',
+        name: 'phone_type',
+        options: IdentityPhone::PHONE_TYPES.map{|x,y| [I18n.t(x),y]}.as_json,
+        placeholder: t("myplaceonline.identity_phones.phone_type")
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%= myp_text_field child_fields, :number, "myplaceonline.identities.phone", childproperty.number %>
+  <%= myp_select(child_fields, :phone_type, "myplaceonline.identity_phones.phone_type", Myp.translate_options(IdentityPhone::PHONE_TYPES), childproperty.phone_type) %>
+<% end %>
+

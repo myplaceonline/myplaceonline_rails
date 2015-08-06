@@ -8,5 +8,9 @@
   <% @obj.therapist_emails.each do |email| %>
     <%= attribute_table_row_email(t("myplaceonline.identities.email"), email.email) %>
   <% end %>
+  <% @obj.therapist_phones.each do |phone| %>
+    <%= attribute_table_row(t("myplaceonline.identities.phone"), phone.number) %>
+    <%= attribute_table_row_select t("myplaceonline.identity_phones.phone_type"), phone.phone_type, IdentityPhone::PHONE_TYPES %>
+  <% end %>
 
 <% end %>
