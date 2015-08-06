@@ -1,2 +1,30 @@
 <%= myp_text_field f, :name, "myplaceonline.therapists.name", obj.name, autofocus %>
 <%= myp_text_area_markdown f, :notes, "myplaceonline.therapists.notes", obj.notes %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.therapists.conversations"),
+    childpropertiesname: :therapist_conversations,
+    childproperties: obj.all_conversations,
+    deletebutton: t("myplaceonline.therapists.delete_conversation"),
+    addbutton: t("myplaceonline.therapists.add_conversation"),
+    expanded: false,
+    formjson: [
+      {
+        type: 'textarea',
+        name: 'conversation',
+        placeholder: t("myplaceonline.therapists.conversation"),
+        autofocus: true
+      },
+      {
+        type: 'date',
+        name: 'conversation_date',
+        placeholder: t("myplaceonline.therapists.conversation_date"),
+        value: Date.today.to_s
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%= myp_text_area child_fields, :conversation, "myplaceonline.therapists.conversation", childproperty.conversation %>
+  <%= myp_date_field child_fields, :conversation_date, "myplaceonline.therapists.conversation_date", childproperty.conversation_date %>
+<% end %>

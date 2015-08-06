@@ -2,5 +2,8 @@
 
   <%= attribute_table_row(t("myplaceonline.therapists.name"), @obj.name) %>
   <%= attribute_table_row_markdown(t("myplaceonline.therapists.notes"), @obj.notes) %>
+  <% @obj.all_conversations.each do |conversation| %>
+    <%= attribute_table_row_markdown(t("myplaceonline.therapists.conversation") + " (" + Myp.display_date(conversation.conversation_date, current_user) + ")", conversation.conversation) %>
+  <% end %>
 
 <% end %>
