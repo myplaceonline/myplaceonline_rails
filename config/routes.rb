@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :therapists
+  post 'therapists/new'
+
   resources :favorite_products
   post 'favorite_products/new'
 

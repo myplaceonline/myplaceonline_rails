@@ -98,6 +98,7 @@ en:
       books: "Books"
       warranties: "Warranties"
       favorite_products: "Favorite Products"
+      therapists: "Therapists"
     general:
       email: "E-mail"
       password: "Password"
@@ -1191,3 +1192,11 @@ en:
     favorite_products:
       product_name: "Name"
       notes: "Notes"
+    therapists:
+      name: "Full Name"
+      notes: "Notes"
+      conversation: "Conversation"
+      conversations: "Conversations"
+      add_conversation: "Add Conversation"
+      delete_conversation: "Delete Conversation"
+      conversation_date: "Date"

@@ -62,6 +62,7 @@ class Identity < ActiveRecord::Base
   has_many :desired_products, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :books, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :favorite_products, :foreign_key => 'owner_id', :dependent => :destroy
+  has_many :therapists, :foreign_key => 'owner_id', :dependent => :destroy
   
   has_many :identity_phones, :foreign_key => 'identity_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_phones, allow_destroy: true, reject_if: :all_blank
@@ -148,6 +149,7 @@ class Identity < ActiveRecord::Base
       :desired_products => desired_products.to_a.sort{ |a,b| a.product_name.downcase <=> b.product_name.downcase }.map{|x| x.as_json},
       :books => books.to_a.sort{ |a,b| a.book_name.downcase <=> b.book_name.downcase }.map{|x| x.as_json},
       :favorite_products => favorite_products.to_a.sort{ |a,b| a.product_name.downcase <=> b.product_name.downcase }.map{|x| x.as_json},
+      :therapists => therapists.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end
