@@ -273,17 +273,6 @@ class MyplaceonlineController < ApplicationController
       @obj = model.find_by(id: params[:id], owner_id: current_user.primary_identity.id)
       authorize! :manage, @obj
     end
-
-    # Make sure that each element in ${target}.${method} has a
-    # ${belongs_to_name}_id field with a value equal to ${target}.id
-    def check_nested_attributes(target, method, belongs_to_name)
-      target.send(method).each {
-        |attr|
-        if attr.send((belongs_to_name.to_s + "_id").to_sym) != target.id
-          raise "Unauthorized"
-        end
-      }
-    end
     
     def has_category
       true

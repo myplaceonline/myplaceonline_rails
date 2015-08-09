@@ -34,8 +34,4 @@ class LocationsController < MyplaceonlineController
         LocationsController.param_names
       )
     end
-    
-    def update_presave
-      check_nested_attributes(@obj, :location_phones, :location)
-    end
 end

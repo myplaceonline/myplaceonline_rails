@@ -131,12 +131,6 @@ class ContactsController < MyplaceonlineController
       # Create a Contact for the current user identity if it doesn't exist
       current_user.primary_identity.ensure_contact!
     end
-
-    def update_presave
-      check_nested_attributes(@obj, :conversations, :contact)
-      check_nested_attributes(@obj.identity, :identity_phones, :identity)
-      check_nested_attributes(@obj.identity, :identity_emails, :identity)
-    end
     
     def presave
       if !@obj.identity.nil?

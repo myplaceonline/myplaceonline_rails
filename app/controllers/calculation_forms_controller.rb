@@ -55,8 +55,4 @@ class CalculationFormsController < MyplaceonlineController
         {}
       end
     end
-
-    def update_presave
-      check_nested_attributes(@obj, :calculation_inputs, :calculation_form)
-    end
 end

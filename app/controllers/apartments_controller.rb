@@ -30,10 +30,6 @@ class ApartmentsController < MyplaceonlineController
         ]
       )
     end
-    
-    def update_presave
-      check_nested_attributes(@obj, :apartment_leases, :apartment)
-    end
 
     def presave
       @obj.apartment_pictures.each do |pic|

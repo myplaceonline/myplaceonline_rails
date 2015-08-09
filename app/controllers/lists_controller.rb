@@ -20,8 +20,4 @@ class ListsController < MyplaceonlineController
     def obj_params
       params.require(:list).permit(ListsController.param_names)
     end
-    
-    def update_presave
-      check_nested_attributes(@obj, :list_items, :list)
-    end
 end
