@@ -1,4 +1,6 @@
 class Meal < ActiveRecord::Base
+  include AllowExistingConcern
+
   belongs_to :owner, class_name: Identity
   validates :meal_time, presence: true
   

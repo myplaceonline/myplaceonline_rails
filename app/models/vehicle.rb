@@ -1,5 +1,6 @@
 class Vehicle < ActiveRecord::Base
-  
+  include AllowExistingConcern
+
   ENGINE_TYPES = [["myplaceonline.vehicles.gas", 0], ["myplaceonline.vehicles.diesel", 1]]
   DISPLACEMENT_TYPES = [["myplaceonline.vehicles.litres", 0]]
   DOOR_TYPES = [["myplaceonline.vehicles.doors_standard", 0], ["myplaceonline.vehicles.doors_extended", 1], ["myplaceonline.vehicles.doors_crew", 2]]
@@ -41,14 +42,7 @@ class Vehicle < ActiveRecord::Base
   
   belongs_to :recreational_vehicle, :autosave => true
   accepts_nested_attributes_for :recreational_vehicle, reject_if: proc { |attributes| RecreationalVehiclesController.reject_if_blank(attributes) }
-
-  # http://stackoverflow.com/a/12064875/4135310
-  def recreational_vehicle_attributes=(attributes)
-    if !attributes['id'].blank?
-      self.recreational_vehicle = RecreationalVehicle.find(attributes['id'])
-    end
-    super
-  end
+  allow_existing :recreational_vehicle
 
   has_many :vehicle_pictures, :dependent => :destroy
   accepts_nested_attributes_for :vehicle_pictures, allow_destroy: true, reject_if: :all_blank

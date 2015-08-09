@@ -1,4 +1,5 @@
 class CreditCard < ActiveRecord::Base
+  include AllowExistingConcern
   include EncryptedConcern
   
   CARD_TYPES = [["myplaceonline.credit_cards.visa", 0], ["myplaceonline.credit_cards.mastercard", 1], ["myplaceonline.credit_cards.amex", 2]]
@@ -71,27 +72,11 @@ class CreditCard < ActiveRecord::Base
 
   belongs_to :password
   accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
-  
-  # http://stackoverflow.com/a/12064875/4135310
-  def password_attributes=(attributes)
-    if !attributes['id'].blank?
-      attributes.keep_if {|innerkey, innervalue| innerkey == "id" }
-      self.password = Password.find(attributes['id'])
-    end
-    super
-  end
+  allow_existing :password
   
   belongs_to :address, class_name: Location
   accepts_nested_attributes_for :address, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
-  
-  # http://stackoverflow.com/a/12064875/4135310
-  def address_attributes=(attributes)
-    if !attributes['id'].blank?
-      attributes.keep_if {|innerkey, innervalue| innerkey == "id" }
-      self.address = Location.find(attributes['id'])
-    end
-    super
-  end
+  allow_existing :address, Location
 
   def as_json(options={})
     if number_encrypted?

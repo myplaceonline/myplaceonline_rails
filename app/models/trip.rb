@@ -1,4 +1,6 @@
 class Trip < ActiveRecord::Base
+  include AllowExistingConcern
+
   belongs_to :owner, class_name: Identity
 
   validates :location, presence: true
@@ -6,15 +8,7 @@ class Trip < ActiveRecord::Base
 
   belongs_to :location
   accepts_nested_attributes_for :location, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
-  
-  # http://stackoverflow.com/a/12064875/4135310
-  def location_attributes=(attributes)
-    if !attributes['id'].blank?
-      attributes.keep_if {|innerkey, innervalue| innerkey == "id" }
-      self.location = Location.find(attributes['id'])
-    end
-    super
-  end
+  allow_existing :location
   
   has_many :trip_pictures, :dependent => :destroy
   accepts_nested_attributes_for :trip_pictures, allow_destroy: true, reject_if: :all_blank

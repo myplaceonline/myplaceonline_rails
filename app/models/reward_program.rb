@@ -1,5 +1,6 @@
 class RewardProgram < ActiveRecord::Base
-  
+  include AllowExistingConcern
+
   REWARD_PROGRAM_TYPES = [
     ["myplaceonline.reward_programs.type_plane", 0],
     ["myplaceonline.reward_programs.type_hotel", 1],
@@ -10,15 +11,7 @@ class RewardProgram < ActiveRecord::Base
 
   belongs_to :password
   accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
-  
-  # http://stackoverflow.com/a/12064875/4135310
-  def password_attributes=(attributes)
-    if !attributes['id'].blank?
-      attributes.keep_if {|innerkey, innervalue| innerkey == "id" }
-      self.password = Password.find(attributes['id'])
-    end
-    super
-  end
+  allow_existing :password
   
   validates :reward_program_name, presence: true
 

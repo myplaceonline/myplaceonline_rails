@@ -1,4 +1,6 @@
 class IdentityFile < ActiveRecord::Base
+  include AllowExistingConcern
+
   belongs_to :owner, class_name: Identity
   belongs_to :encrypted_password, class_name: EncryptedValue, dependent: :destroy
 
@@ -7,14 +9,7 @@ class IdentityFile < ActiveRecord::Base
   
   belongs_to :folder, class_name: IdentityFileFolder
   accepts_nested_attributes_for :folder
-
-  # http://stackoverflow.com/a/12064875/4135310
-  def folder_attributes=(attributes)
-    if !attributes['id'].blank?
-      self.folder = IdentityFileFolder.find(attributes['id'])
-    end
-    super
-  end
+  allow_existing :folder, IdentityFileFolder
 
   def display
     file_file_name

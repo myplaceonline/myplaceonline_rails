@@ -1,4 +1,6 @@
 class BloodTest < ActiveRecord::Base
+  include AllowExistingConcern
+
   belongs_to :owner, class_name: Identity
   validates :fast_started, presence: true
   

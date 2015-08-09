@@ -1,4 +1,6 @@
 class Computer < ActiveRecord::Base
+  include AllowExistingConcern
+
   belongs_to :owner, class_name: Identity
   validates :computer_model, presence: true
   
@@ -13,39 +15,15 @@ class Computer < ActiveRecord::Base
   
   belongs_to :manufacturer, class_name: Company
   accepts_nested_attributes_for :manufacturer, reject_if: proc { |attributes| CompaniesController.reject_if_blank(attributes) }
-  
-  # http://stackoverflow.com/a/12064875/4135310
-  def manufacturer_attributes=(attributes)
-    if !attributes['id'].blank?
-      attributes.keep_if {|innerkey, innervalue| innerkey == "id" }
-      self.manufacturer = Company.find(attributes['id'])
-    end
-    super
-  end
+  allow_existing :manufacturer, Company
 
   belongs_to :administrator, class_name: Password
   accepts_nested_attributes_for :administrator, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
-  
-  # http://stackoverflow.com/a/12064875/4135310
-  def administrator_attributes=(attributes)
-    if !attributes['id'].blank?
-      attributes.keep_if {|innerkey, innervalue| innerkey == "id" }
-      self.administrator = Password.find(attributes['id'])
-    end
-    super
-  end
+  allow_existing :administrator, Password
   
   belongs_to :main_user, class_name: Password
   accepts_nested_attributes_for :main_user, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
-  
-  # http://stackoverflow.com/a/12064875/4135310
-  def main_user_attributes=(attributes)
-    if !attributes['id'].blank?
-      attributes.keep_if {|innerkey, innervalue| innerkey == "id" }
-      self.main_user = Password.find(attributes['id'])
-    end
-    super
-  end
+  allow_existing :main_user, Password
   
   before_create :do_before_save
   before_update :do_before_save

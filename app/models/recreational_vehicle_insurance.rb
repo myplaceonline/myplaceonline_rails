@@ -1,4 +1,6 @@
 class RecreationalVehicleInsurance < ActiveRecord::Base
+  include AllowExistingConcern
+
   belongs_to :recreational_vehicle
   belongs_to :owner, class_name: Identity
 
@@ -6,25 +8,11 @@ class RecreationalVehicleInsurance < ActiveRecord::Base
 
   belongs_to :company
   accepts_nested_attributes_for :company, allow_destroy: true, reject_if: :all_blank
-  
-  # http://stackoverflow.com/a/12064875/4135310
-  def company_attributes=(attributes)
-    if !attributes['id'].blank?
-      self.company = Company.find(attributes['id'])
-    end
-    super
-  end
+  allow_existing :company
 
   belongs_to :periodic_payment
   accepts_nested_attributes_for :periodic_payment, allow_destroy: true, reject_if: :all_blank
-  
-  # http://stackoverflow.com/a/12064875/4135310
-  def periodic_payment_attributes=(attributes)
-    if !attributes['id'].blank?
-      self.periodic_payment = PeriodicPayment.find(attributes['id'])
-    end
-    super
-  end
+  allow_existing :periodic_payment
 
   before_create :do_before_save
   before_update :do_before_save

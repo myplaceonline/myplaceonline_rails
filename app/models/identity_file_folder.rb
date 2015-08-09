@@ -1,16 +1,11 @@
 class IdentityFileFolder < ActiveRecord::Base
+  include AllowExistingConcern
+
   belongs_to :owner, class_name: Identity
   
   belongs_to :parent_folder, class_name: IdentityFileFolder
   accepts_nested_attributes_for :parent_folder
-
-  # http://stackoverflow.com/a/12064875/4135310
-  def parent_folder_attributes=(attributes)
-    if !attributes['id'].blank?
-      self.parent_folder = IdentityFileFolder.find(attributes['id'])
-    end
-    super
-  end
+  allow_existing :parent_folder, IdentityFileFolder
 
   validates :folder_name, presence: true
 

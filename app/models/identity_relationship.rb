@@ -1,4 +1,6 @@
 class IdentityRelationship < ActiveRecord::Base
+  include AllowExistingConcern
+
   RELATIONSHIPS = [
     ["myplaceonline.relationships.sister", 0],
     ["myplaceonline.relationships.brother", 1],
@@ -23,15 +25,7 @@ class IdentityRelationship < ActiveRecord::Base
   
   belongs_to :contact
   accepts_nested_attributes_for :contact, reject_if: :all_blank
-  
-  # http://stackoverflow.com/a/12064875/4135310
-  def contact_attributes=(attributes)
-    if !attributes['id'].blank?
-      attributes.keep_if {|innerkey, innervalue| innerkey == "id" }
-      self.contact = Contact.find(attributes['id'])
-    end
-    super
-  end
+  allow_existing :contact
   
   def relationship_name
     if relationship_type.nil?
