@@ -916,4 +916,21 @@ module Myp
     end
   end
   
+  def self.set_existing_object(targetobj, targetname, model, id)
+    if model.nil?
+      model = Object.const_get(targetname.to_s.camelize)
+    end
+    obj = model.find_by(
+      id: id,
+      owner: User.current_user.primary_identity
+    )
+    if obj.nil?
+      raise "Could not find " + model.to_s + " with ID " + id.to_s
+    end
+    targetobj.send(
+      "#{targetname.to_s}=",
+      obj
+    )
+  end
+
 end

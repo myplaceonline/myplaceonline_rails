@@ -18,27 +18,7 @@ class Vehicle < ActiveRecord::Base
   
   has_many :vehicle_insurances, :dependent => :destroy
   accepts_nested_attributes_for :vehicle_insurances, allow_destroy: true, reject_if: :all_blank
-  
-  # http://stackoverflow.com/a/12064875/4135310
-  def vehicle_insurances_attributes=(attributes)
-    super(attributes)
-    attributes.each {|key, value|
-      if !value['company_attributes'].blank? && !value['company_attributes']['id'].blank? && value['_destroy'] != "1"
-        self.vehicle_insurances.each{|x|
-          if !x.company.nil? && x.company.id == value['company_attributes']['id'].to_i
-            x.company = Company.find(value['company_attributes']['id'])
-          end
-        }
-      end
-      if !value['periodic_payment_attributes'].blank? && !value['periodic_payment_attributes']['id'].blank? && value['_destroy'] != "1"
-        self.vehicle_insurances.each{|x|
-          if !x.periodic_payment.nil? && x.periodic_payment.id == value['periodic_payment_attributes']['id'].to_i
-            x.periodic_payment = PeriodicPayment.find(value['periodic_payment_attributes']['id'])
-          end
-        }
-      end
-    }
-  end
+  allow_existing_children :vehicle_insurances, [{:name => :company}, {:name => :periodic_payment}]
   
   belongs_to :recreational_vehicle, :autosave => true
   accepts_nested_attributes_for :recreational_vehicle, reject_if: proc { |attributes| RecreationalVehiclesController.reject_if_blank(attributes) }
@@ -49,20 +29,7 @@ class Vehicle < ActiveRecord::Base
   
   has_many :vehicle_warranties, :dependent => :destroy
   accepts_nested_attributes_for :vehicle_warranties, allow_destroy: true, reject_if: :all_blank
-  
-  # http://stackoverflow.com/a/12064875/4135310
-  def vehicle_warranties_attributes=(attributes)
-    super(attributes)
-    attributes.each {|key, value|
-      if !value['warranty_attributes'].blank? && !value['warranty_attributes']['id'].blank? && value['_destroy'] != "1"
-        self.vehicle_warranties.each{|x|
-          if x.warranty.id == value['warranty_attributes']['id'].to_i
-            x.warranty = Warranty.find(value['warranty_attributes']['id'])
-          end
-        }
-      end
-    }
-  end
+  allow_existing_children :vehicle_warranties, [{:name => :warranty}]
 
   def display
     Myp.appendstrwrap(name, license_plate)

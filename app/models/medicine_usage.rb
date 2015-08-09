@@ -1,4 +1,6 @@
 class MedicineUsage < ActiveRecord::Base
+  include AllowExistingConcern
+
   belongs_to :owner, class_name: Identity
   validates :usage_time, presence: true
   
@@ -11,20 +13,7 @@ class MedicineUsage < ActiveRecord::Base
 
   has_many :medicine_usage_medicines, :dependent => :destroy
   accepts_nested_attributes_for :medicine_usage_medicines, allow_destroy: true, reject_if: :all_blank
-  
-  # http://stackoverflow.com/a/12064875/4135310
-  def medicine_usage_medicines_attributes=(attributes)
-    super(attributes)
-    attributes.each {|key, value|
-      if !value['medicine_attributes'].blank? && !value['medicine_attributes']['id'].blank? && value['_destroy'] != "1"
-        self.medicine_usage_medicines.each{|x|
-          if x.medicine.id == value['medicine_attributes']['id'].to_i
-            x.medicine = Medicine.find(value['medicine_attributes']['id'])
-          end
-        }
-      end
-    }
-  end
+  allow_existing_children :medicine_usage_medicines, [{:name => :medicine}]
   
   def display
     Myp.display_datetime_short(usage_time, User.current_user)

@@ -1,4 +1,6 @@
 class Checklist < ActiveRecord::Base
+  include AllowExistingConcern
+
   belongs_to :owner, class_name: Identity
   validates :checklist_name, presence: true
   
@@ -20,20 +22,7 @@ class Checklist < ActiveRecord::Base
 
   has_many :checklist_references, :foreign_key => 'checklist_parent_id'
   accepts_nested_attributes_for :checklist_references, allow_destroy: true, reject_if: :all_blank
-
-  # http://stackoverflow.com/a/12064875/4135310
-  def checklist_references_attributes=(attributes)
-    super(attributes)
-    attributes.each {|key, value|
-      if !value['checklist_attributes'].blank? && !value['checklist_attributes']['id'].blank? && value['_destroy'] != "1"
-        self.checklist_references.each{|x|
-          if x.checklist.id == value['checklist_attributes']['id'].to_i
-            x.checklist = Checklist.find(value['checklist_attributes']['id'])
-          end
-        }
-      end
-    }
-  end
+  allow_existing_children :checklist_references, [{:name => :checklist}]
 
   def do_before_save
     Myp.set_common_model_properties(self)

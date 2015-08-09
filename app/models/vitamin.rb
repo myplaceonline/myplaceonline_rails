@@ -1,4 +1,6 @@
 class Vitamin < ActiveRecord::Base
+  include AllowExistingConcern
+
   belongs_to :owner, class_name: Identity
   
   validates :vitamin_name, presence: true
@@ -8,20 +10,7 @@ class Vitamin < ActiveRecord::Base
 
   has_many :vitamin_ingredients, :foreign_key => 'parent_vitamin_id'
   accepts_nested_attributes_for :vitamin_ingredients, allow_destroy: true, reject_if: :all_blank
-
-  # http://stackoverflow.com/a/12064875/4135310
-  def vitamin_ingredients_attributes=(attributes)
-    super(attributes)
-    attributes.each {|key, value|
-      if !value['vitamin_attributes'].blank? && !value['vitamin_attributes']['id'].blank? && value['_destroy'] != "1"
-        self.vitamin_ingredients.each{|x|
-          if x.vitamin.id == value['vitamin_attributes']['id'].to_i
-            x.vitamin = Vitamin.find(value['vitamin_attributes']['id'])
-          end
-        }
-      end
-    }
-  end
+  allow_existing_children :vitamin_ingredients, [{:name => :vitamin}]
 
   def do_before_save
     Myp.set_common_model_properties(self)
