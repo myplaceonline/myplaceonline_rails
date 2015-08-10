@@ -8,13 +8,58 @@
 <% end %>
 
 <ul data-role="listview" data-inset="true">
-  <li><%= link_to t("myplaceonline.users.changeemail"), users_changeemail_path %></li>
-  <li><%= link_to t("myplaceonline.users.changepassword"), users_password_change_path %></li>
-  <li><%= link_to t("myplaceonline.users.changetimezone"), users_changetimezone_path %></li>
-  <li><%= link_to t("myplaceonline.users.appearance"), users_appearance_path %></li>
-  <li><%= link_to t("myplaceonline.users.security_settings"), users_security_path %></li>
-  <li><%= link_to t("myplaceonline.users.export"), users_export_path %></li>
-  <li><%= link_to t("myplaceonline.users.offline"), users_offline_path %></li>
-  <li><%= link_to t("myplaceonline.users.advanced_settings"), users_advanced_path %></li>
-  <li><%= link_to t("myplaceonline.general.deleteaccount"), users_delete_path %></li>
+  <li>
+    <%= link_to users_changeemail_path do %>
+      <%= image_tag("FatCow_Icons16x16/email_edit.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.users.changeemail") %>
+    <% end %>
+  </li>
+  <li>
+    <%= link_to users_password_change_path do %>
+      <%= image_tag("famfamfam/textfield_key.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.users.changepassword") %>
+    <% end %>
+  </li>
+  <li>
+    <%= link_to users_changetimezone_path do %>
+      <%= image_tag("FatCow_Icons16x16/world_edit.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.users.changetimezone") %>
+    <% end %>
+  </li>
+  <li>
+    <%= link_to users_appearance_path do %>
+      <%= image_tag("FatCow_Icons16x16/image_edit.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.users.appearance") %>
+    <% end %>
+  </li>
+  <li>
+    <%= link_to users_security_path do %>
+      <%= image_tag("FatCow_Icons16x16/lock_edit.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.users.security_settings") %>
+    <% end %>
+  </li>
+  <li>
+    <%= link_to users_export_path do %>
+      <%= image_tag("FatCow_Icons16x16/external.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.users.export") %>
+    <% end %>
+  </li>
+  <li>
+    <%= link_to users_offline_path do %>
+      <%= image_tag("FatCow_Icons16x16/disconnect.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.users.offline") %>
+    <% end %>
+  </li>
+  <li>
+    <%= link_to users_advanced_path do %>
+      <%= image_tag("FatCow_Icons16x16/user_edit.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.users.advanced_settings") %>
+    <% end %>
+  </li>
+  <li>
+    <%= link_to users_delete_path do %>
+      <%= image_tag("FatCow_Icons16x16/user_delete.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.general.deleteaccount") %>
+    <% end %>
+  </li>
 </ul>
