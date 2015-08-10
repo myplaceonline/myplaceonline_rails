@@ -188,7 +188,13 @@ class PasswordsController < MyplaceonlineController
       :account_number,
       :notes,
       :encrypt,
-      :is_defunct
+      :is_defunct,
+      password_secrets_attributes: [
+        :id,
+        :_destroy,
+        :question,
+        :answer
+      ]
     ]
   end
 
@@ -237,8 +243,7 @@ class PasswordsController < MyplaceonlineController
   
     def obj_params
       params.require(:password).permit(
-        PasswordsController.param_names,
-        password_secrets_attributes: [:id, :question, :answer, :_destroy]
+        PasswordsController.param_names
       )
     end
     
