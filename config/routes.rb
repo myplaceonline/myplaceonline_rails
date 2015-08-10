@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :health_insurances
+  post 'health_insurances/new'
+
   resources :therapists
   post 'therapists/new'
 

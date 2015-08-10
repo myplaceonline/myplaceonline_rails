@@ -99,6 +99,7 @@ en:
       warranties: "Warranties"
       favorite_products: "Favorite Products"
       therapists: "Therapists"
+      health_insurances: "Health Insurances"
     general:
       email: "E-mail"
       password: "Password"
@@ -1200,3 +1201,12 @@ en:
       add_conversation: "Add Conversation"
       delete_conversation: "Delete Conversation"
       conversation_date: "Date"
+    health_insurances:
+      insurance_name: "Name"
+      notes: "Notes"
+      insurance_company: "Insurance Company"
+      group_company: "Company Payer"
+      periodic_payment: "Periodic Payment"
+      account_number: "Account Number"
+      group_number: "Group Number"
+      password: "Password"

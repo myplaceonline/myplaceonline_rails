@@ -179,7 +179,17 @@ class PasswordsController < MyplaceonlineController
   end
 
   def self.param_names
-    [:name, :user, :password, :email, :url, :account_number, :notes, :encrypt, :is_defunct]
+    [
+      :name,
+      :user,
+      :password,
+      :email,
+      :url,
+      :account_number,
+      :notes,
+      :encrypt,
+      :is_defunct
+    ]
   end
 
   def self.reject_if_blank(attributes)

@@ -76,6 +76,7 @@ class Ability
     can :manage, Warranty, :owner => identity
     can :manage, FavoriteProduct, :owner => identity
     can :manage, Therapist, :owner => identity
+    can :manage, HealthInsurance, :owner => identity
     
     # Define abilities for the passed in user here. For example:
     #

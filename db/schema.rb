@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150806212358) do
+ActiveRecord::Schema.define(version: 20150810001320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -599,6 +599,27 @@ ActiveRecord::Schema.define(version: 20150806212358) do
   end
 
   add_index "headaches", ["owner_id"], name: "index_headaches_on_owner_id", using: :btree
+
+  create_table "health_insurances", force: true do |t|
+    t.string   "insurance_name"
+    t.integer  "insurance_company_id"
+    t.datetime "defunct"
+    t.integer  "periodic_payment_id"
+    t.text     "notes"
+    t.integer  "group_company_id"
+    t.integer  "password_id"
+    t.string   "account_number"
+    t.string   "group_number"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "health_insurances", ["group_company_id"], name: "index_health_insurances_on_group_company_id", using: :btree
+  add_index "health_insurances", ["insurance_company_id"], name: "index_health_insurances_on_insurance_company_id", using: :btree
+  add_index "health_insurances", ["owner_id"], name: "index_health_insurances_on_owner_id", using: :btree
+  add_index "health_insurances", ["password_id"], name: "index_health_insurances_on_password_id", using: :btree
+  add_index "health_insurances", ["periodic_payment_id"], name: "index_health_insurances_on_periodic_payment_id", using: :btree
 
   create_table "heart_rates", force: true do |t|
     t.integer  "beats"

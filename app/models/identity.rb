@@ -63,6 +63,7 @@ class Identity < ActiveRecord::Base
   has_many :books, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :favorite_products, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :therapists, :foreign_key => 'owner_id', :dependent => :destroy
+  has_many :health_insurances, :foreign_key => 'owner_id', :dependent => :destroy
   
   has_many :identity_phones, :foreign_key => 'identity_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_phones, allow_destroy: true, reject_if: :all_blank
