@@ -31,6 +31,7 @@ $(document).on('ajax:complete', 'form', function(xhr, status) {
     $(".ui-content").replaceWith(content);
     ensureStyledPage();
     hideLoading();
+    scrollTop();
   }
 });
 

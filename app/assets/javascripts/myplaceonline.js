@@ -598,11 +598,17 @@ function ensureStyledPage() {
   }
 }
 
+function scrollTop() {
+  scrollY(0);
+}
+
 function scrollY(y) {
-  y -= myp.heightPadding;
+  if (y > myp.heightPadding) {
+    y -= myp.heightPadding;
+  }
   $('html, body').stop().animate({
     scrollTop : y
-  }, 650, "easeInOutExpo");
+  }, 650, "easeInOut");
 }
 
 function playSound(audioFile) {
