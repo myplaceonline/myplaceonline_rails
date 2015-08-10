@@ -36,20 +36,31 @@ module ApplicationHelper
       return nil
     end
     valueclass ||= ""
+    
+    if !is_blank(clipboard_text.to_s)
+
+      options = Hash.new
+      options[:href] = "#"
+      options[:class] = "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable externallink"
+      options[:title] = t("myplaceonline.general.clipboard")
+      
+      # TODO 1 For a link (e.g. feeds) can produce... data-clipboard-text="<a class="externallink"...
+      options["data-clipboard-text"] = ERB::Util.html_escape(clipboard_text_str(clipboard_text))
+      
+      lastcolumn = content_tag(
+        :a,
+        t("myplaceonline.general.clipboard"),
+        options
+      )
+    else
+      lastcolumn = "&nbsp;"
+    end
+    
     attribute_table_row_content(
       name,
       valueclass,
       value,
-      !is_blank(clipboard_text.to_s) ?
-        content_tag(
-          :a,
-          t("myplaceonline.general.clipboard"),
-          href: "#",
-          class: "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable externallink",
-          title: t("myplaceonline.general.clipboard"),
-          data: { "clipboard-text" => html_escape(clipboard_text_str(clipboard_text)) }
-        )
-        : "&nbsp;"
+      lastcolumn
     )
   end
   
