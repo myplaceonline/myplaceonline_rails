@@ -4,6 +4,7 @@ module Myp
   # See https://github.com/digitalbazaar/forge/issues/207
   DEFAULT_AES_KEY_SIZE = 32
   @@all_categories = Hash.new.with_indifferent_access
+  @@all_categories_without_explicit = Hash.new.with_indifferent_access
 
   # We want at least 128 bits of randomness, so
   # min(POSSIBILITIES_*.length)^DEFAULT_PASSWORD_LENGTH should be >= 2^128
@@ -93,6 +94,9 @@ module Myp
   if Myp.database_exists?
     Category.all.each do |existing_category|
       @@all_categories[existing_category.name.to_sym] = existing_category
+      if !existing_category.explicit?
+        @@all_categories_without_explicit[existing_category.name.to_sym] = existing_category
+      end
     end
     puts "myplaceonline: Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
   end
