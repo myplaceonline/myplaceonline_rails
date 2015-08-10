@@ -1,0 +1,14 @@
+<% content_for :heading do -%><%= t("myplaceonline.users.categories") %><% end -%>
+<h1><%= t("myplaceonline.users.categories") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag do %>
+  <fieldset>
+    <div data-role="fieldcontain">
+      <%= label_tag :explicit_categories, t("myplaceonline.users.explicit_categories") %>
+      <%= check_box_tag :explicit_categories, 1, @explicit_categories, data: { "role" => "flipswitch" } %>
+    </div>
+  </fieldset>
+  <div><%= submit_tag t("myplaceonline.general.save") %></div>
+<% end %>

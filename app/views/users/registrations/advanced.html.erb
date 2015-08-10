@@ -5,6 +5,12 @@
 
 <ul data-role="listview" data-inset="true">
   <li>
+    <%= link_to users_categories_path do %>
+      <%= image_tag("FatCow_Icons16x16/category.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.users.categories") %>
+    <% end %>
+  </li>
+  <li>
     <%= link_to users_clipboard_path do %>
       <%= image_tag("FatCow_Icons16x16/clipboard_empty.png", size: "16x16", class: "ui-li-icon") %>
       <%= t("myplaceonline.users.clipboard_settings") %>

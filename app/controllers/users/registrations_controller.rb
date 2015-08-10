@@ -181,6 +181,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
   
+  def categories
+    Myp.ensure_encryption_key(session)
+    @explicit_categories = current_user.explicit_categories
+    if request.post?
+      @explicit_categories = params[:explicit_categories]
+      current_user.explicit_categories = @explicit_categories
+      current_user.save!
+      redirect_to users_advanced_path,
+        :flash => { :notice => I18n.t("myplaceonline.general.saved") }
+    else
+      render :categories
+    end
+  end
+  
   def appearance
     Myp.ensure_encryption_key(session)
     @page_transition = current_user.page_transition

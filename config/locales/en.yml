@@ -353,6 +353,8 @@ en:
       clipboard_settings_saved: "Clipboard Settings Saved"
       clipboard_integration: "Clipboard Integration"
       starting_download: "Starting Download. This can take some time..."
+      categories: "Categories"
+      explicit_categories: "Show Explicit Categories"
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"
