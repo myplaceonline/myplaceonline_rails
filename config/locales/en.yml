@@ -352,6 +352,7 @@ en:
       clipboard_settings: "Clipboard Settings"
       clipboard_settings_saved: "Clipboard Settings Saved"
       clipboard_integration: "Clipboard Integration"
+      starting_download: "Starting Download. This can take some time..."
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"

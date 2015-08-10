@@ -17,7 +17,7 @@
 
 <script type="text/javascript">
 onPageLoad(function() {
-  createSuccessNotification("Starting Download...");
+  createSuccessNotification("<%= t("myplaceonline.users.starting_download") %>");
   window.location = '<%= @download %>';
 });
 </script>

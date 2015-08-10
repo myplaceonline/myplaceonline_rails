@@ -932,5 +932,28 @@ module Myp
       obj
     )
   end
+  
+  def self.handle_exception(exception)
+    stack = Myp.error_details(exception)
+    body = ""
+    if !User.current_user.nil?
+      body += User.current_user.inspect
+    end
+    body += stack
+    puts "handle_exception: " + body
+    Myp.send_support_email_safe("User Exception", body)
+  end
+  
+  def self.send_support_email_safe(subject, body)
+    begin
+      from = I18n.t("myplaceonline.siteEmail")
+      if !User.current_user.nil?
+        from = User.current_user.email
+      end
+      UserMailer.send_support_email(from, subject, body).deliver
+    rescue Exception => e
+      puts "Could not send email. Subject: " + subject + ", Body: " + body + ", Email Problem: " + Myp.error_details(e)
+    end
+  end
 
 end
