@@ -100,6 +100,7 @@ en:
       favorite_products: "Favorite Products"
       therapists: "Therapists"
       health_insurances: "Health Insurances"
+      random: "Random"
     general:
       email: "E-mail"
       password: "Password"

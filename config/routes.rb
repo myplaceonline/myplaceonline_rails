@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
   match 'random/activity', via: [:get, :post]
+  get 'random/index'
+  get 'random', :to => 'random#index'
 
   resources :health_insurances
   post 'health_insurances/new'
