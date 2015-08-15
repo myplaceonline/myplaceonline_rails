@@ -5,3 +5,13 @@
 
   <%= submit_tag t("myplaceonline.random.new_activity") %>
 <% end %>
+<% if !@result.nil? %>
+  <ul data-role="listview" data-inset="true">
+    <li>
+      <%= link_to(@result_link) do %>
+        <%= image_tag(@category.icon, size: "16x16", class: "ui-li-icon") %>
+        <%= @result.display %>
+      <% end %>
+    </li>
+  </ul>
+<% end %>
