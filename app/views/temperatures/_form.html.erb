@@ -1,4 +1,4 @@
-<%= myp_datetime_field f, :measured, "myplaceonline.temperatures.measured", obj.measured %>
+<%= myp_datetime_field(f, :measured, "myplaceonline.temperatures.measured", obj.measured) %>
 <%= myp_select(f, :temperature_type, "myplaceonline.temperatures.temperature_type", Myp.translate_options(Myp::TEMPERATURES), obj.temperature_type) %>
-<%= myp_decimal_field f, :measured_temperature, "myplaceonline.temperatures.measured_temperature", obj.measured_temperature %>
-<%= myp_text_field f, :measurement_source, "myplaceonline.temperatures.measurement_source", obj.measurement_source %>
+<%= myp_decimal_field(f, :measured_temperature, "myplaceonline.temperatures.measured_temperature", obj.measured_temperature) %>
+<%= myp_text_field(f, :measurement_source, "myplaceonline.temperatures.measurement_source", obj.measurement_source) %>

@@ -1,8 +1,8 @@
-<%= myp_region_field f, :region, "myplaceonline.passports.region", obj.region, autofocus %>
-<%= myp_text_field f, :passport_number, "myplaceonline.passports.passport_number", obj.passport_number %>
-<%= myp_date_field f, :expires, "myplaceonline.passports.expires", obj.expires %>
-<%= myp_date_field f, :issued, "myplaceonline.passports.issued", obj.issued %>
-<%= myp_text_field f, :issuing_authority, "myplaceonline.passports.issuing_authority", obj.issuing_authority %>
+<%= myp_region_field(f, :region, "myplaceonline.passports.region", obj.region, autofocus) %>
+<%= myp_text_field(f, :passport_number, "myplaceonline.passports.passport_number", obj.passport_number) %>
+<%= myp_date_field(f, :expires, "myplaceonline.passports.expires", obj.expires) %>
+<%= myp_date_field(f, :issued, "myplaceonline.passports.issued", obj.issued) %>
+<%= myp_text_field(f, :issuing_authority, "myplaceonline.passports.issuing_authority", obj.issuing_authority) %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,
@@ -22,6 +22,6 @@
   } do |child_fields, childproperty|
 %>
   <%= child_fields.fields_for :identity_file, childproperty.identity_file do |file_fields| %>
-    <%= myp_file_field file_fields, :file, "myplaceonline.passports.picture", childproperty.identity_file.file %>
+    <%= myp_file_field(file_fields, :file, "myplaceonline.passports.picture", childproperty.identity_file.file) %>
   <% end %>
 <% end %>

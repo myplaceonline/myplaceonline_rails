@@ -12,4 +12,4 @@
   }
 %>
 <%= myp_select(f, :rating, "myplaceonline.restaurants.rating", Myp.translate_options(Myp::RATINGS), obj.rating) %>
-<%= myp_text_area_markdown f, :notes, "myplaceonline.restaurants.notes", obj.notes %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.restaurants.notes", obj.notes) %>

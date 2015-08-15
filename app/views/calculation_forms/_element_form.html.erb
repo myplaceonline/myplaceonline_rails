@@ -1,5 +1,5 @@
 <div class="itemwrapper" data-nameprefix="<%= f.object_name %>">
-  <%= f.fields_for :left_operand, element.left_operand do |operand_form| %>
+  <%= f.fields_for(:left_operand, element.left_operand) do |operand_form| %>
     <%=
       render partial: 'calculation_forms/operand_form', locals: {
         f: operand_form,
@@ -8,8 +8,8 @@
       }
     %>
   <% end %>
-  <%= myp_select f, :operator, "myplaceonline.calculation_forms.operator", CalculationElement.operator_map, element.operator %>
-  <%= f.fields_for :right_operand, element.right_operand do |operand_form| %>
+  <%= myp_select(f, :operator, "myplaceonline.calculation_forms.operator", CalculationElement.operator_map, element.operator) %>
+  <%= f.fields_for(:right_operand, element.right_operand) do |operand_form| %>
     <%=
       render partial: 'calculation_forms/operand_form', locals: {
         f: operand_form,

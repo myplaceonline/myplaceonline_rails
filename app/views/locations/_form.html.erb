@@ -1,14 +1,14 @@
-<%= myp_text_field f, :name, "myplaceonline.locations.name", obj.name, autofocus %>
-<%= myp_text_field f, :address1, "myplaceonline.locations.address1", obj.address1 %>
-<%= myp_text_field f, :address2, "myplaceonline.locations.address2", obj.address2 %>
-<%= myp_text_field f, :address3, "myplaceonline.locations.address3", obj.address3 %>
-<%= myp_text_field f, :sub_region2, "myplaceonline.general.sub_region2", obj.sub_region2 %>
-<%= myp_subregion_field f, :sub_region1, "myplaceonline.general.sub_region1", obj.region, obj.sub_region1 %>
-<%= myp_text_field f, :postal_code, "myplaceonline.locations.postal_code", obj.postal_code %>
-<%= myp_region_field f, :region, "myplaceonline.general.region", obj.region %>
-<%= myp_decimal_field f, :latitude, "myplaceonline.locations.latitude", obj.latitude, false, nil, 0.000001 %>
-<%= myp_decimal_field f, :longitude, "myplaceonline.locations.longitude", obj.longitude, false, nil, 0.000001 %>
-<%= myp_text_area_markdown f, :notes, "myplaceonline.locations.notes", obj.notes %>
+<%= myp_text_field(f, :name, "myplaceonline.locations.name", obj.name, autofocus) %>
+<%= myp_text_field(f, :address1, "myplaceonline.locations.address1", obj.address1) %>
+<%= myp_text_field(f, :address2, "myplaceonline.locations.address2", obj.address2) %>
+<%= myp_text_field(f, :address3, "myplaceonline.locations.address3", obj.address3) %>
+<%= myp_text_field(f, :sub_region2, "myplaceonline.general.sub_region2", obj.sub_region2) %>
+<%= myp_subregion_field(f, :sub_region1, "myplaceonline.general.sub_region1", obj.region, obj.sub_region1) %>
+<%= myp_text_field(f, :postal_code, "myplaceonline.locations.postal_code", obj.postal_code) %>
+<%= myp_region_field(f, :region, "myplaceonline.general.region", obj.region) %>
+<%= myp_decimal_field(f, :latitude, "myplaceonline.locations.latitude", obj.latitude, false, nil, 0.000001) %>
+<%= myp_decimal_field(f, :longitude, "myplaceonline.locations.longitude", obj.longitude, false, nil, 0.000001) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.locations.notes", obj.notes) %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,
@@ -28,5 +28,5 @@
     ]
   } do |child_fields, childproperty|
 %>
-  <%= myp_text_field child_fields, :number, "myplaceonline.locations.phone", childproperty.number %>
+  <%= myp_text_field(child_fields, :number, "myplaceonline.locations.phone", childproperty.number) %>
 <% end %>

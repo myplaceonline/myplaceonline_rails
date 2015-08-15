@@ -1,8 +1,8 @@
-<%= myp_text_field f, :insurance_name, "myplaceonline.health_insurances.insurance_name", obj.insurance_name, autofocus %>
-<%= myp_text_field f, :account_number, "myplaceonline.health_insurances.account_number", obj.account_number %>
-<%= myp_text_field f, :group_number, "myplaceonline.health_insurances.group_number", obj.group_number %>
-<%= myp_text_area_markdown f, :notes, "myplaceonline.life_insurances.notes", obj.notes %>
-<%= myp_check_box f, :is_defunct, "myplaceonline.general.defunct" %>
+<%= myp_text_field(f, :insurance_name, "myplaceonline.health_insurances.insurance_name", obj.insurance_name, autofocus) %>
+<%= myp_text_field(f, :account_number, "myplaceonline.health_insurances.account_number", obj.account_number) %>
+<%= myp_text_field(f, :group_number, "myplaceonline.health_insurances.group_number", obj.group_number) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.life_insurances.notes", obj.notes) %>
+<%= myp_check_box(f, :is_defunct, "myplaceonline.general.defunct") %>
 <%=
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,

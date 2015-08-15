@@ -1,4 +1,4 @@
-<%= myp_datetime_field f, :usage_time, "myplaceonline.medicine_usages.usage_time", obj.usage_time %>
+<%= myp_datetime_field(f, :usage_time, "myplaceonline.medicine_usages.usage_time", obj.usage_time) %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,
@@ -37,4 +37,4 @@
     }
   %>
 <% end %>
-<%= myp_text_area_markdown f, :usage_notes, "myplaceonline.medicine_usages.usage_notes", obj.usage_notes %>
+<%= myp_text_area_markdown(f, :usage_notes, "myplaceonline.medicine_usages.usage_notes", obj.usage_notes) %>

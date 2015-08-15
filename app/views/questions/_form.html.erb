@@ -1,5 +1,5 @@
-<%= myp_text_field f, :name, "myplaceonline.questions.name", obj.name, autofocus %>
-<%= myp_text_area_markdown f, :notes, "myplaceonline.questions.notes", obj.notes %>
+<%= myp_text_field(f, :name, "myplaceonline.questions.name", obj.name, autofocus) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.questions.notes", obj.notes) %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,
@@ -30,8 +30,8 @@
     ]
   } do |child_fields, childproperty|
 %>
-  <%= myp_text_field child_fields, :name, "myplaceonline.hypothesis.name", childproperty.name %>
-  <%= myp_text_area_markdown child_fields, :notes, "myplaceonline.hypothesis.notes", childproperty.notes %>
+  <%= myp_text_field(child_fields, :name, "myplaceonline.hypothesis.name", childproperty.name) %>
+  <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.hypothesis.notes", childproperty.notes) %>
   <%=
     render layout: 'myplaceonline/childproperties', locals: {
       f: child_fields,
@@ -66,9 +66,9 @@
       ]
     } do |child_fields, childproperty|
   %>
-    <%= myp_text_field child_fields, :name, "myplaceonline.hypothesis_experiments.name", childproperty.name %>
-    <%= myp_text_area_markdown child_fields, :notes, "myplaceonline.hypothesis_experiments.notes", childproperty.notes %>
-    <%= myp_date_field child_fields, :started, "myplaceonline.hypothesis_experiments.started", childproperty.started %>
-    <%= myp_date_field child_fields, :ended, "myplaceonline.hypothesis_experiments.ended", childproperty.ended %>
+    <%= myp_text_field(child_fields, :name, "myplaceonline.hypothesis_experiments.name", childproperty.name) %>
+    <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.hypothesis_experiments.notes", childproperty.notes) %>
+    <%= myp_date_field(child_fields, :started, "myplaceonline.hypothesis_experiments.started", childproperty.started) %>
+    <%= myp_date_field(child_fields, :ended, "myplaceonline.hypothesis_experiments.ended", childproperty.ended) %>
   <% end %>
 <% end %>

@@ -1,17 +1,17 @@
-<%= myp_text_field f, :name, "myplaceonline.calculations.name", obj.name, autofocus %>
+<%= myp_text_field(f, :name, "myplaceonline.calculations.name", obj.name, autofocus) %>
 <% if obj.original_calculation_form_id.nil? %>
   <%= myp_select(f, :original_calculation_form_id, "myplaceonline.calculations.form", controller.available_forms.map{|x| [x.name, x.id.to_s]}, obj.original_calculation_form_id) %>
 <% else %>
-  <%= f.hidden_field :original_calculation_form_id %>
-  <%= f.fields_for :calculation_form, obj.calculation_form do |calculation_form_form| %>
-    <%= calculation_form_form.hidden_field :name %>
-    <%= calculation_form_form.hidden_field :equation %>
-    <%= calculation_form_form.hidden_field :is_duplicate %>
+  <%= f.hidden_field(:original_calculation_form_id) %>
+  <%= f.fields_for(:calculation_form, obj.calculation_form) do |calculation_form_form| %>
+    <%= calculation_form_form.hidden_field(:name) %>
+    <%= calculation_form_form.hidden_field(:equation) %>
+    <%= calculation_form_form.hidden_field(:is_duplicate) %>
     <% obj.calculation_form.calculation_inputs.each do |calculation_input| %>
-      <%= calculation_form_form.fields_for :calculation_inputs, calculation_input do |child_fields| %>
-        <%= child_fields.hidden_field :input_name %>
-        <%= child_fields.hidden_field :variable_name %>
-        <%= myp_text_field child_fields, :input_value, calculation_input.input_name, calculation_input.input_value %>
+      <%= calculation_form_form.fields_for(:calculation_inputs, calculation_input) do |child_fields| %>
+        <%= child_fields.hidden_field(:input_name) %>
+        <%= child_fields.hidden_field(:variable_name) %>
+        <%= myp_text_field(child_fields, :input_value, calculation_input.input_name, calculation_input.input_value) %>
       <% end %>
     <% end %>
   <% end %>

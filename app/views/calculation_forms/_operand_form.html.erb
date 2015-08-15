@@ -13,7 +13,7 @@
       <h3><%= t("myplaceonline.calculation_forms.sub_element") %></h3>
       <div class="itemswrapper">
         <% if !operand.calculation_element.nil? %>
-          <%= f.fields_for :calculation_element, operand.calculation_element do |element_form| %>
+          <%= f.fields_for(:calculation_element, operand.calculation_element) do |element_form| %>
             <%=
               render partial: 'calculation_forms/element_form', locals: {
                 f: element_form,

@@ -1,16 +1,16 @@
-<%= f.fields_for :identity, obj.identity do |identity_fields| %>
+<%= f.fields_for(:identity, obj.identity) do |identity_fields| %>
 
-  <%= myp_text_field identity_fields, :name, "myplaceonline.contacts.name", obj.identity.name, autofocus %>
-  <%= myp_text_field identity_fields, :nickname, "myplaceonline.contacts.nickname", obj.identity.nickname %>
-  <%= myp_date_field identity_fields, :birthday, "myplaceonline.contacts.birthday", obj.identity.birthday %>
+  <%= myp_text_field(identity_fields, :name, "myplaceonline.contacts.name", obj.identity.name, autofocus) %>
+  <%= myp_text_field(identity_fields, :nickname, "myplaceonline.contacts.nickname", obj.identity.nickname) %>
+  <%= myp_date_field(identity_fields, :birthday, "myplaceonline.contacts.birthday", obj.identity.birthday) %>
   <%= myp_select(f, :contact_type, "myplaceonline.contacts.contact_type", Myp.translate_options(Contact::CONTACT_TYPES), obj.contact_type) %>
-  <%= myp_text_area_markdown identity_fields, :notes, "myplaceonline.contacts.notes", obj.identity.notes %>
-  <%= myp_text_area_markdown identity_fields, :likes, "myplaceonline.contacts.likes", obj.identity.likes %>
-  <%= myp_text_area_markdown identity_fields, :gift_ideas, "myplaceonline.contacts.gift_ideas", obj.identity.gift_ideas %>
-  <%= myp_text_field identity_fields, :ktn, "myplaceonline.contacts.ktn", obj.identity.ktn %>
+  <%= myp_text_area_markdown(identity_fields, :notes, "myplaceonline.contacts.notes", obj.identity.notes) %>
+  <%= myp_text_area_markdown(identity_fields, :likes, "myplaceonline.contacts.likes", obj.identity.likes) %>
+  <%= myp_text_area_markdown(identity_fields, :gift_ideas, "myplaceonline.contacts.gift_ideas", obj.identity.gift_ideas) %>
+  <%= myp_text_field(identity_fields, :ktn, "myplaceonline.contacts.ktn", obj.identity.ktn) %>
   
   <%=
-    render layout: 'myplaceonline/childproperties', locals: {
+    render(layout: 'myplaceonline/childproperties', locals: {
       f: identity_fields,
       heading: t("myplaceonline.identities.emails"),
       childpropertiesname: :identity_emails,
@@ -26,13 +26,13 @@
           autofocus: true
         }
       ]
-    } do |child_fields, childproperty|
+    }) do |child_fields, childproperty|
   %>
-    <%= myp_text_field child_fields, :email, "myplaceonline.identities.email", childproperty.email %>
+    <%= myp_text_field(child_fields, :email, "myplaceonline.identities.email", childproperty.email) %>
   <% end %>
 
   <%=
-    render layout: 'myplaceonline/childproperties', locals: {
+    render(layout: 'myplaceonline/childproperties', locals: {
       f: identity_fields,
       heading: t("myplaceonline.identities.phones"),
       childpropertiesname: :identity_phones,
@@ -54,14 +54,14 @@
           placeholder: t("myplaceonline.identity_phones.phone_type")
         }
       ]
-    } do |child_fields, childproperty|
+    }) do |child_fields, childproperty|
   %>
-    <%= myp_text_field child_fields, :number, "myplaceonline.identities.phone", childproperty.number %>
+    <%= myp_text_field(child_fields, :number, "myplaceonline.identities.phone", childproperty.number) %>
     <%= myp_select(child_fields, :phone_type, "myplaceonline.identity_phones.phone_type", Myp.translate_options(IdentityPhone::PHONE_TYPES), childproperty.phone_type) %>
   <% end %>
 
   <%=
-    render layout: 'myplaceonline/childproperties', locals: {
+    render(layout: 'myplaceonline/childproperties', locals: {
       f: f,
       heading: t("myplaceonline.contacts.conversations"),
       childpropertiesname: :conversations,
@@ -83,14 +83,14 @@
           value: Date.today.to_s
         }
       ]
-    } do |child_fields, childproperty|
+    }) do |child_fields, childproperty|
   %>
-    <%= myp_text_area child_fields, :conversation, "myplaceonline.contacts.conversation", childproperty.conversation %>
-    <%= myp_date_field child_fields, :conversation_date, "myplaceonline.contacts.conversation_date", childproperty.conversation_date %>
+    <%= myp_text_area(child_fields, :conversation, "myplaceonline.contacts.conversation", childproperty.conversation) %>
+    <%= myp_date_field(child_fields, :conversation_date, "myplaceonline.contacts.conversation_date", childproperty.conversation_date) %>
   <% end %>
 
   <%=
-    render layout: 'myplaceonline/childproperties', locals: {
+    render(layout: 'myplaceonline/childproperties', locals: {
       f: identity_fields,
       heading: t("myplaceonline.identities.locations"),
       childpropertiesname: :identity_locations,
@@ -111,7 +111,7 @@
           autofocus: true
         }
       ]
-    } do |child_fields, childproperty|
+    }) do |child_fields, childproperty|
   %>
     <%=
       render partial: 'myplaceonline/select_or_create', locals: {
@@ -129,7 +129,7 @@
   <% end %>
   
   <%=
-    render layout: 'myplaceonline/childproperties', locals: {
+    render(layout: 'myplaceonline/childproperties', locals: {
       f: identity_fields,
       heading: t("myplaceonline.identities.relationships"),
       childpropertiesname: :identity_relationships,
@@ -156,7 +156,7 @@
           placeholder: t("myplaceonline.identity_relationships.relationship_type")
         }
       ]
-    } do |child_fields, childproperty|
+    }) do |child_fields, childproperty|
   %>
     <%=
       render partial: 'myplaceonline/select_or_create', locals: {
@@ -175,7 +175,7 @@
   <% end %>
   
   <%=
-    render layout: 'myplaceonline/childproperties', locals: {
+    render(layout: 'myplaceonline/childproperties', locals: {
       f: identity_fields,
       heading: t("myplaceonline.identities.drivers_licenses"),
       childpropertiesname: :identity_drivers_licenses,
@@ -196,19 +196,19 @@
           placeholder: t("myplaceonline.identities.license_expires")
         }
       ]
-    } do |child_fields, childproperty|
+    }) do |child_fields, childproperty|
   %>
-    <%= myp_text_field child_fields, :identifier, "myplaceonline.identities.license_number", childproperty.identifier %>
-    <%= myp_date_field child_fields, :expires, "myplaceonline.identities.license_expires", childproperty.expires %>
-    <%= myp_region_field child_fields, :region, "myplaceonline.general.region", childproperty.region %>
-    <%= myp_subregion_field child_fields, :sub_region1, "myplaceonline.general.sub_region1", childproperty.region, childproperty.sub_region1 %>
-    <%= child_fields.fields_for :identity_file, childproperty.identity_file || IdentityFile.new do |file_fields| %>
-      <%= myp_file_field file_fields, :file, "myplaceonline.identities.license_picture", childproperty.identity_file || IdentityFile.new %>
+    <%= myp_text_field(child_fields, :identifier, "myplaceonline.identities.license_number", childproperty.identifier) %>
+    <%= myp_date_field(child_fields, :expires, "myplaceonline.identities.license_expires", childproperty.expires) %>
+    <%= myp_region_field(child_fields, :region, "myplaceonline.general.region", childproperty.region) %>
+    <%= myp_subregion_field(child_fields, :sub_region1, "myplaceonline.general.sub_region1", childproperty.region, childproperty.sub_region1) %>
+    <%= child_fields.fields_for(:identity_file, childproperty.identity_file || IdentityFile.new) do |file_fields| %>
+      <%= myp_file_field(file_fields, :file, "myplaceonline.identities.license_picture", childproperty.identity_file || IdentityFile.new) %>
     <% end %>
   <% end %>
   
   <%=
-    render layout: 'myplaceonline/childproperties', locals: {
+    render(layout: 'myplaceonline/childproperties', locals: {
       f: identity_fields,
       heading: t("myplaceonline.contacts.pictures"),
       childpropertiesname: :identity_pictures,
@@ -223,10 +223,10 @@
           placeholder: t("myplaceonline.contacts.picture")
         }
       ]
-    } do |child_fields, childproperty|
+    }) do |child_fields, childproperty|
   %>
-    <%= child_fields.fields_for :identity_file, childproperty.identity_file do |file_fields| %>
-      <%= myp_file_field file_fields, :file, "myplaceonline.contacts.picture", childproperty.identity_file.file %>
+    <%= child_fields.fields_for(:identity_file, childproperty.identity_file) do |file_fields| %>
+      <%= myp_file_field(file_fields, :file, "myplaceonline.contacts.picture", childproperty.identity_file.file) %>
     <% end %>
   <% end %>
 

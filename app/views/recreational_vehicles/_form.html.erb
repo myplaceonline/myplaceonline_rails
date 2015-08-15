@@ -1,15 +1,15 @@
-<%= myp_text_field f, :rv_name, "myplaceonline.recreational_vehicles.rv_name", obj.rv_name, autofocus %>
-<%= myp_text_field f, :vin, "myplaceonline.recreational_vehicles.vin", obj.vin %>
-<%= myp_text_field f, :manufacturer, "myplaceonline.recreational_vehicles.manufacturer", obj.manufacturer %>
-<%= myp_text_field f, :model, "myplaceonline.recreational_vehicles.model", obj.model %>
-<%= myp_text_field f, :year, "myplaceonline.recreational_vehicles.year", obj.year %>
-<%= myp_date_field f, :owned_start, "myplaceonline.recreational_vehicles.owned_start", obj.owned_start %>
-<%= myp_date_field f, :owned_end, "myplaceonline.recreational_vehicles.owned_end", obj.owned_end %>
-<%= myp_text_area_markdown f, :notes, "myplaceonline.recreational_vehicles.notes", obj.notes %>
-<%= myp_decimal_field f, :price, "myplaceonline.recreational_vehicles.price", obj.price %>
-<%= myp_decimal_field f, :msrp, "myplaceonline.recreational_vehicles.msrp", obj.msrp %>
-<%= myp_date_field f, :purchased, "myplaceonline.recreational_vehicles.purchased", obj.purchased %>
-<%= myp_date_field f, :warranty_ends, "myplaceonline.recreational_vehicles.warranty_ends", obj.warranty_ends %>
+<%= myp_text_field(f, :rv_name, "myplaceonline.recreational_vehicles.rv_name", obj.rv_name, autofocus) %>
+<%= myp_text_field(f, :vin, "myplaceonline.recreational_vehicles.vin", obj.vin) %>
+<%= myp_text_field(f, :manufacturer, "myplaceonline.recreational_vehicles.manufacturer", obj.manufacturer) %>
+<%= myp_text_field(f, :model, "myplaceonline.recreational_vehicles.model", obj.model) %>
+<%= myp_text_field(f, :year, "myplaceonline.recreational_vehicles.year", obj.year) %>
+<%= myp_date_field(f, :owned_start, "myplaceonline.recreational_vehicles.owned_start", obj.owned_start) %>
+<%= myp_date_field(f, :owned_end, "myplaceonline.recreational_vehicles.owned_end", obj.owned_end) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.recreational_vehicles.notes", obj.notes) %>
+<%= myp_decimal_field(f, :price, "myplaceonline.recreational_vehicles.price", obj.price) %>
+<%= myp_decimal_field(f, :msrp, "myplaceonline.recreational_vehicles.msrp", obj.msrp) %>
+<%= myp_date_field(f, :purchased, "myplaceonline.recreational_vehicles.purchased", obj.purchased) %>
+<%= myp_date_field(f, :warranty_ends, "myplaceonline.recreational_vehicles.warranty_ends", obj.warranty_ends) %>
 <%=
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,
@@ -75,9 +75,9 @@
     ]
   } do |child_fields, childproperty|
 %>
-  <%= myp_text_field child_fields, :insurance_name, "myplaceonline.recreational_vehicle_insurances.insurance_name", childproperty.insurance_name %>
-  <%= myp_date_field child_fields, :started, "myplaceonline.recreational_vehicle_insurances.started", childproperty.started %>
-  <%= myp_text_area_markdown child_fields, :notes, "myplaceonline.recreational_vehicle_insurances.notes", childproperty.notes %>
+  <%= myp_text_field(child_fields, :insurance_name, "myplaceonline.recreational_vehicle_insurances.insurance_name", childproperty.insurance_name) %>
+  <%= myp_date_field(child_fields, :started, "myplaceonline.recreational_vehicle_insurances.started", childproperty.started) %>
+  <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.recreational_vehicle_insurances.notes", childproperty.notes) %>
   <%=
     render partial: 'myplaceonline/select_or_create', locals: {
       f: child_fields,
@@ -107,25 +107,25 @@
 <% end %>
 <div data-role="collapsible" data-collapsed="true">
   <h3><%= t("myplaceonline.recreational_vehicles.extra") %></h3>
-  <%= myp_integer_field f, :sleeps, "myplaceonline.recreational_vehicles.sleeps", obj.sleeps %>
+  <%= myp_integer_field(f, :sleeps, "myplaceonline.recreational_vehicles.sleeps", obj.sleeps) %>
   <%= myp_select(f, :dimensions_type, "myplaceonline.recreational_vehicles.dimensions_type", Myp.translate_options(Myp::DIMENSIONS), obj.dimensions_type) %>
-  <%= myp_decimal_field f, :exterior_length, "myplaceonline.recreational_vehicles.exterior_length", obj.exterior_length %>
-  <%= myp_decimal_field f, :exterior_length_over, "myplaceonline.recreational_vehicles.exterior_length_over", obj.exterior_length_over %>
-  <%= myp_decimal_field f, :exterior_width, "myplaceonline.recreational_vehicles.exterior_width", obj.exterior_width %>
-  <%= myp_decimal_field f, :slideouts_extra_width, "myplaceonline.recreational_vehicles.slideouts_extra_width", obj.slideouts_extra_width %>
-  <%= myp_decimal_field f, :exterior_height, "myplaceonline.recreational_vehicles.exterior_height", obj.exterior_height %>
-  <%= myp_decimal_field f, :exterior_height_over, "myplaceonline.recreational_vehicles.exterior_height_over", obj.exterior_height_over %>
-  <%= myp_decimal_field f, :interior_height, "myplaceonline.recreational_vehicles.interior_height", obj.interior_height %>
+  <%= myp_decimal_field(f, :exterior_length, "myplaceonline.recreational_vehicles.exterior_length", obj.exterior_length) %>
+  <%= myp_decimal_field(f, :exterior_length_over, "myplaceonline.recreational_vehicles.exterior_length_over", obj.exterior_length_over) %>
+  <%= myp_decimal_field(f, :exterior_width, "myplaceonline.recreational_vehicles.exterior_width", obj.exterior_width) %>
+  <%= myp_decimal_field(f, :slideouts_extra_width, "myplaceonline.recreational_vehicles.slideouts_extra_width", obj.slideouts_extra_width) %>
+  <%= myp_decimal_field(f, :exterior_height, "myplaceonline.recreational_vehicles.exterior_height", obj.exterior_height) %>
+  <%= myp_decimal_field(f, :exterior_height_over, "myplaceonline.recreational_vehicles.exterior_height_over", obj.exterior_height_over) %>
+  <%= myp_decimal_field(f, :interior_height, "myplaceonline.recreational_vehicles.interior_height", obj.interior_height) %>
   <%= myp_select(f, :weight_type, "myplaceonline.recreational_vehicles.weight_type", Myp.translate_options(Myp::WEIGHTS), obj.weight_type) %>
-  <%= myp_decimal_field f, :wet_weight, "myplaceonline.recreational_vehicles.wet_weight", obj.wet_weight %>
+  <%= myp_decimal_field(f, :wet_weight, "myplaceonline.recreational_vehicles.wet_weight", obj.wet_weight) %>
   <%= myp_select(f, :liquid_capacity_type, "myplaceonline.recreational_vehicles.liquid_capacity_type", Myp.translate_options(Myp::LIQUID_CAPACITY), obj.liquid_capacity_type) %>
-  <%= myp_integer_field f, :fresh_tank, "myplaceonline.recreational_vehicles.fresh_tank", obj.fresh_tank %>
-  <%= myp_integer_field f, :grey_tank, "myplaceonline.recreational_vehicles.grey_tank", obj.grey_tank %>
-  <%= myp_integer_field f, :black_tank, "myplaceonline.recreational_vehicles.black_tank", obj.black_tank %>
-  <%= myp_integer_field f, :water_heater, "myplaceonline.recreational_vehicles.water_heater", obj.water_heater %>
-  <%= myp_integer_field f, :propane, "myplaceonline.recreational_vehicles.propane", obj.propane %>
+  <%= myp_integer_field(f, :fresh_tank, "myplaceonline.recreational_vehicles.fresh_tank", obj.fresh_tank) %>
+  <%= myp_integer_field(f, :grey_tank, "myplaceonline.recreational_vehicles.grey_tank", obj.grey_tank) %>
+  <%= myp_integer_field(f, :black_tank, "myplaceonline.recreational_vehicles.black_tank", obj.black_tank) %>
+  <%= myp_integer_field(f, :water_heater, "myplaceonline.recreational_vehicles.water_heater", obj.water_heater) %>
+  <%= myp_integer_field(f, :propane, "myplaceonline.recreational_vehicles.propane", obj.propane) %>
   <%= myp_select(f, :volume_type, "myplaceonline.recreational_vehicles.volume_type", Myp.translate_options(Myp::VOLUMES), obj.volume_type) %>
-  <%= myp_integer_field f, :refrigerator, "myplaceonline.recreational_vehicles.refrigerator", obj.refrigerator %>
+  <%= myp_integer_field(f, :refrigerator, "myplaceonline.recreational_vehicles.refrigerator", obj.refrigerator) %>
 </div>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
@@ -167,11 +167,11 @@
   } do |child_fields, childproperty|
 %>
   <%= child_fields.fields_for :loan, childproperty.loan do |inner_child_fields| %>
-    <%= myp_text_field inner_child_fields, :lender, "myplaceonline.loans.lender", childproperty.loan.lender %>
-    <%= myp_text_field inner_child_fields, :amount, "myplaceonline.loans.amount", childproperty.loan.amount %>
-    <%= myp_text_field inner_child_fields, :monthly_payment, "myplaceonline.loans.monthly_payment", childproperty.loan.monthly_payment %>
-    <%= myp_date_field inner_child_fields, :start, "myplaceonline.loans.start", childproperty.loan.start %>
-    <%= myp_date_field inner_child_fields, :paid_off, "myplaceonline.loans.paid_off", childproperty.loan.paid_off %>
+    <%= myp_text_field(inner_child_fields, :lender, "myplaceonline.loans.lender", childproperty.loan.lender) %>
+    <%= myp_text_field(inner_child_fields, :amount, "myplaceonline.loans.amount", childproperty.loan.amount) %>
+    <%= myp_text_field(inner_child_fields, :monthly_payment, "myplaceonline.loans.monthly_payment", childproperty.loan.monthly_payment) %>
+    <%= myp_date_field(inner_child_fields, :start, "myplaceonline.loans.start", childproperty.loan.start) %>
+    <%= myp_date_field(inner_child_fields, :paid_off, "myplaceonline.loans.paid_off", childproperty.loan.paid_off) %>
   <% end %>
 <% end %>
 <%=
@@ -193,7 +193,7 @@
   } do |child_fields, childproperty|
 %>
   <%= child_fields.fields_for :identity_file, childproperty.identity_file do |file_fields| %>
-    <%= myp_file_field file_fields, :file, "myplaceonline.recreational_vehicles.picture", childproperty.identity_file.file %>
+    <%= myp_file_field(file_fields, :file, "myplaceonline.recreational_vehicles.picture", childproperty.identity_file.file) %>
   <% end %>
 <% end %>
 <%=
@@ -241,10 +241,10 @@
     ]
   } do |child_fields, childproperty|
 %>
-  <%= myp_text_field child_fields, :measurement_name, "myplaceonline.recreational_vehicle_measurements.measurement_name", childproperty.measurement_name %>
+  <%= myp_text_field(child_fields, :measurement_name, "myplaceonline.recreational_vehicle_measurements.measurement_name", childproperty.measurement_name) %>
   <%= myp_select(child_fields, :measurement_type, "myplaceonline.recreational_vehicle_measurements.measurement_type", Myp.translate_options(Myp::DIMENSIONS), childproperty.measurement_type) %>
-  <%= myp_text_field child_fields, :width, "myplaceonline.recreational_vehicle_measurements.width", childproperty.width %>
-  <%= myp_text_field child_fields, :height, "myplaceonline.recreational_vehicle_measurements.height", childproperty.height %>
-  <%= myp_text_field child_fields, :depth, "myplaceonline.recreational_vehicle_measurements.depth", childproperty.depth %>
-  <%= myp_text_area_markdown child_fields, :notes, "myplaceonline.recreational_vehicle_measurements.notes", childproperty.notes %>
+  <%= myp_text_field(child_fields, :width, "myplaceonline.recreational_vehicle_measurements.width", childproperty.width) %>
+  <%= myp_text_field(child_fields, :height, "myplaceonline.recreational_vehicle_measurements.height", childproperty.height) %>
+  <%= myp_text_field(child_fields, :depth, "myplaceonline.recreational_vehicle_measurements.depth", childproperty.depth) %>
+  <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.recreational_vehicle_measurements.notes", childproperty.notes) %>
 <% end %>

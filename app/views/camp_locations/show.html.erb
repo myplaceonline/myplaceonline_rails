@@ -1,18 +1,18 @@
 <%= render layout: "shared/model_show" do %>
 
   <%= attribute_table_row_reference(t("myplaceonline.camp_locations.location"), "location_path", @obj.location) %>
-  <%= attribute_table_row_boolean t("myplaceonline.camp_locations.overnight_allowed"), @obj.overnight_allowed %>
-  <%= attribute_table_row_boolean t("myplaceonline.camp_locations.free"), @obj.free %>
-  <%= attribute_table_row_boolean t("myplaceonline.camp_locations.bathroom"), @obj.bathroom %>
-  <%= attribute_table_row_boolean t("myplaceonline.camp_locations.vehicle_parking"), @obj.vehicle_parking %>
-  <%= attribute_table_row_boolean t("myplaceonline.camp_locations.fresh_water"), @obj.fresh_water %>
-  <%= attribute_table_row_boolean t("myplaceonline.camp_locations.electricity"), @obj.electricity %>
-  <%= attribute_table_row_boolean t("myplaceonline.camp_locations.sewage"), @obj.sewage %>
-  <%= attribute_table_row_boolean t("myplaceonline.camp_locations.shower"), @obj.shower %>
-  <%= attribute_table_row_boolean t("myplaceonline.camp_locations.internet"), @obj.internet %>
-  <%= attribute_table_row_boolean t("myplaceonline.camp_locations.trash"), @obj.trash %>
-  <%= attribute_table_row_select t("myplaceonline.camp_locations.rating"), @obj.rating, Myp::RATINGS %>
-  <%= attribute_table_row_select t("myplaceonline.camp_locations.noise_level"), @obj.noise_level, Myp::NOISE_LEVELS %>
+  <%= attribute_table_row_boolean(t("myplaceonline.camp_locations.overnight_allowed"), @obj.overnight_allowed) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.camp_locations.free"), @obj.free) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.camp_locations.bathroom"), @obj.bathroom) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.camp_locations.vehicle_parking"), @obj.vehicle_parking) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.camp_locations.fresh_water"), @obj.fresh_water) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.camp_locations.electricity"), @obj.electricity) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.camp_locations.sewage"), @obj.sewage) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.camp_locations.shower"), @obj.shower) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.camp_locations.internet"), @obj.internet) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.camp_locations.trash"), @obj.trash) %>
+  <%= attribute_table_row_select(t("myplaceonline.camp_locations.rating"), @obj.rating, Myp::RATINGS) %>
+  <%= attribute_table_row_select(t("myplaceonline.camp_locations.noise_level"), @obj.noise_level, Myp::NOISE_LEVELS) %>
   <%= attribute_table_row_markdown(t("myplaceonline.camp_locations.notes"), @obj.notes) %>
   
 <% end %>

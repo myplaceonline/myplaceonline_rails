@@ -1,7 +1,7 @@
-<%= myp_text_field f, :song_name, "myplaceonline.songs.song_name", obj.song_name, autofocus %>
-<%= myp_decimal_field f, :song_rating, "myplaceonline.songs.song_rating", obj.song_rating %>
-<%= myp_integer_field f, :song_plays, "myplaceonline.songs.song_plays", obj.song_plays %>
-<%= myp_datetime_field f, :lastplay, "myplaceonline.songs.lastplay", obj.lastplay %>
-<%= myp_check_box f, :secret, "myplaceonline.songs.secret" %>
-<%= myp_check_box f, :awesome, "myplaceonline.songs.awesome" %>
-<%= myp_text_area_markdown f, :lyrics, "myplaceonline.songs.lyrics", obj.lyrics %>
+<%= myp_text_field(f, :song_name, "myplaceonline.songs.song_name", obj.song_name, autofocus) %>
+<%= myp_decimal_field(f, :song_rating, "myplaceonline.songs.song_rating", obj.song_rating) %>
+<%= myp_integer_field(f, :song_plays, "myplaceonline.songs.song_plays", obj.song_plays) %>
+<%= myp_datetime_field(f, :lastplay, "myplaceonline.songs.lastplay", obj.lastplay) %>
+<%= myp_check_box(f, :secret, "myplaceonline.songs.secret") %>
+<%= myp_check_box(f, :awesome, "myplaceonline.songs.awesome") %>
+<%= myp_text_area_markdown(f, :lyrics, "myplaceonline.songs.lyrics", obj.lyrics) %>

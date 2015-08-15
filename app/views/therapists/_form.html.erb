@@ -1,5 +1,5 @@
-<%= myp_text_field f, :name, "myplaceonline.therapists.name", obj.name, autofocus %>
-<%= myp_text_area_markdown f, :notes, "myplaceonline.therapists.notes", obj.notes %>
+<%= myp_text_field(f, :name, "myplaceonline.therapists.name", obj.name, autofocus) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.therapists.notes", obj.notes) %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,
@@ -25,8 +25,8 @@
     ]
   } do |child_fields, childproperty|
 %>
-  <%= myp_text_area child_fields, :conversation, "myplaceonline.therapists.conversation", childproperty.conversation %>
-  <%= myp_date_field child_fields, :conversation_date, "myplaceonline.therapists.conversation_date", childproperty.conversation_date %>
+  <%= myp_text_area(child_fields, :conversation, "myplaceonline.therapists.conversation", childproperty.conversation) %>
+  <%= myp_date_field(child_fields, :conversation_date, "myplaceonline.therapists.conversation_date", childproperty.conversation_date) %>
 <% end %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
@@ -47,7 +47,7 @@
     ]
   } do |child_fields, childproperty|
 %>
-  <%= myp_text_field child_fields, :email, "myplaceonline.identities.email", childproperty.email %>
+  <%= myp_text_field(child_fields, :email, "myplaceonline.identities.email", childproperty.email) %>
 <% end %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
@@ -74,7 +74,7 @@
     ]
   } do |child_fields, childproperty|
 %>
-  <%= myp_text_field child_fields, :number, "myplaceonline.identities.phone", childproperty.number %>
+  <%= myp_text_field(child_fields, :number, "myplaceonline.identities.phone", childproperty.number) %>
   <%= myp_select(child_fields, :phone_type, "myplaceonline.identity_phones.phone_type", Myp.translate_options(IdentityPhone::PHONE_TYPES), childproperty.phone_type) %>
 <% end %>
 <%=

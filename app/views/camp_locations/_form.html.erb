@@ -11,16 +11,16 @@
     autofocus: true
   }
 %>
-<%= myp_check_box f, :overnight_allowed, "myplaceonline.camp_locations.overnight_allowed" %>
-<%= myp_check_box f, :free, "myplaceonline.camp_locations.free" %>
-<%= myp_check_box f, :bathroom, "myplaceonline.camp_locations.bathroom" %>
-<%= myp_check_box f, :vehicle_parking, "myplaceonline.camp_locations.vehicle_parking" %>
-<%= myp_check_box f, :fresh_water, "myplaceonline.camp_locations.fresh_water" %>
-<%= myp_check_box f, :electricity, "myplaceonline.camp_locations.electricity" %>
-<%= myp_check_box f, :sewage, "myplaceonline.camp_locations.sewage" %>
-<%= myp_check_box f, :shower, "myplaceonline.camp_locations.shower" %>
-<%= myp_check_box f, :internet, "myplaceonline.camp_locations.internet" %>
-<%= myp_check_box f, :trash, "myplaceonline.camp_locations.trash" %>
+<%= myp_check_box(f, :overnight_allowed, "myplaceonline.camp_locations.overnight_allowed") %>
+<%= myp_check_box(f, :free, "myplaceonline.camp_locations.free") %>
+<%= myp_check_box(f, :bathroom, "myplaceonline.camp_locations.bathroom") %>
+<%= myp_check_box(f, :vehicle_parking, "myplaceonline.camp_locations.vehicle_parking") %>
+<%= myp_check_box(f, :fresh_water, "myplaceonline.camp_locations.fresh_water") %>
+<%= myp_check_box(f, :electricity, "myplaceonline.camp_locations.electricity") %>
+<%= myp_check_box(f, :sewage, "myplaceonline.camp_locations.sewage") %>
+<%= myp_check_box(f, :shower, "myplaceonline.camp_locations.shower") %>
+<%= myp_check_box(f, :internet, "myplaceonline.camp_locations.internet") %>
+<%= myp_check_box(f, :trash, "myplaceonline.camp_locations.trash") %>
 <%= myp_select(f, :rating, "myplaceonline.camp_locations.rating", Myp.translate_options(Myp::RATINGS), obj.rating) %>
 <%= myp_select(f, :noise_level, "myplaceonline.camp_locations.noise_level", Myp.translate_options(Myp::NOISE_LEVELS), obj.noise_level) %>
-<%= myp_text_area_markdown f, :notes, "myplaceonline.camp_locations.notes", obj.notes %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.camp_locations.notes", obj.notes) %>

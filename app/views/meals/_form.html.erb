@@ -1,4 +1,4 @@
-<%= myp_datetime_field f, :meal_time, "myplaceonline.meals.meal_time", obj.meal_time %>
+<%= myp_datetime_field(f, :meal_time, "myplaceonline.meals.meal_time", obj.meal_time) %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,
@@ -42,7 +42,7 @@
       autofocus: false
     }
   %>
-  <%= myp_text_field child_fields, :food_servings, "myplaceonline.foods.servings", childproperty.food_servings %>
+  <%= myp_text_field(child_fields, :food_servings, "myplaceonline.foods.servings", childproperty.food_servings) %>
 <% end %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
@@ -86,7 +86,7 @@
       autofocus: false
     }
   %>
-  <%= myp_text_field child_fields, :drink_servings, "myplaceonline.drinks.servings", childproperty.drink_servings %>
+  <%= myp_text_field(child_fields, :drink_servings, "myplaceonline.drinks.servings", childproperty.drink_servings) %>
 <% end %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
@@ -127,9 +127,9 @@
     }
   %>
 <% end %>
-<%= myp_text_field f, :price, "myplaceonline.meals.price", obj.price %>
-<%= myp_text_field f, :calories, "myplaceonline.meals.calories", obj.calories %>
-<%= myp_text_area_markdown f, :notes, "myplaceonline.meals.notes", obj.notes %>
+<%= myp_text_field(f, :price, "myplaceonline.meals.price", obj.price) %>
+<%= myp_text_field(f, :calories, "myplaceonline.meals.calories", obj.calories) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.meals.notes", obj.notes) %>
 <%=
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,

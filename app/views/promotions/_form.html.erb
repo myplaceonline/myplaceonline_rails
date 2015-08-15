@@ -1,5 +1,5 @@
-<%= myp_text_field f, :promotion_name, "myplaceonline.promotions.promotion_name", obj.promotion_name, autofocus %>
-<%= myp_date_field f, :started, "myplaceonline.promotions.started", obj.started %>
-<%= myp_date_field f, :expires, "myplaceonline.promotions.expires", obj.expires %>
-<%= myp_decimal_field f, :promotion_amount, "myplaceonline.promotions.promotion_amount", obj.promotion_amount %>
-<%= myp_text_area_markdown f, :notes, "myplaceonline.promotions.notes", obj.notes %>
+<%= myp_text_field(f, :promotion_name, "myplaceonline.promotions.promotion_name", obj.promotion_name, autofocus) %>
+<%= myp_date_field(f, :started, "myplaceonline.promotions.started", obj.started) %>
+<%= myp_date_field(f, :expires, "myplaceonline.promotions.expires", obj.expires) %>
+<%= myp_decimal_field(f, :promotion_amount, "myplaceonline.promotions.promotion_amount", obj.promotion_amount) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.promotions.notes", obj.notes) %>

@@ -1,4 +1,4 @@
-<%= myp_text_field f, :height_amount, "myplaceonline.heights.height_amount", obj.height_amount, autofocus %>
+<%= myp_text_field(f, :height_amount, "myplaceonline.heights.height_amount", obj.height_amount, autofocus) %>
 <%= myp_select(f, :amount_type, "myplaceonline.heights.amount_type", Myp.translate_options(Myp::DIMENSIONS), obj.amount_type) %>
 <div data-role="collapsible">
   <h3><%= t("myplaceonline.heights.input_by_feet_inches") %></h3>
@@ -6,5 +6,5 @@
   <p><input type="number" class="input_inches" placeholder="<%= t("myplaceonline.heights.inches") %>" /></p>
   <p><a href="#" class="ui-btn" onclick="$('#height_height_amount').val('' + (((parseInt($('.input_feet').val()) || 0) * 12) + (parseInt($('.input_inches').val()) || 0))); return false;"><%= t("myplaceonline.heights.calculate") %></a></p>
 </div>
-<%= myp_date_field f, :measurement_date, "myplaceonline.heights.measurement_date", obj.measurement_date %>
-<%= myp_text_field f, :measurement_source, "myplaceonline.heights.measurement_source", obj.measurement_source %>
+<%= myp_date_field(f, :measurement_date, "myplaceonline.heights.measurement_date", obj.measurement_date) %>
+<%= myp_text_field(f, :measurement_source, "myplaceonline.heights.measurement_source", obj.measurement_source) %>

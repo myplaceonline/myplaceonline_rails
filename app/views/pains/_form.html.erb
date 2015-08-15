@@ -1,5 +1,5 @@
-<%= myp_datetime_field f, :pain_start_time, "myplaceonline.pains.pain_start_time", obj.pain_start_time %>
-<%= myp_datetime_field f, :pain_end_time, "myplaceonline.pains.pain_end_time", obj.pain_end_time %>
-<%= myp_text_field f, :pain_location, "myplaceonline.pains.pain_location", obj.pain_location %>
+<%= myp_datetime_field(f, :pain_start_time, "myplaceonline.pains.pain_start_time", obj.pain_start_time) %>
+<%= myp_datetime_field(f, :pain_end_time, "myplaceonline.pains.pain_end_time", obj.pain_end_time) %>
+<%= myp_text_field(f, :pain_location, "myplaceonline.pains.pain_location", obj.pain_location) %>
 <%= myp_select(f, :intensity, "myplaceonline.pains.intensity", Myp.translate_options(Myp::INTENSITIES), obj.intensity) %>
-<%= myp_text_area_markdown f, :notes, "myplaceonline.pains.notes", obj.notes %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.pains.notes", obj.notes) %>

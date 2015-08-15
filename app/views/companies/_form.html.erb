@@ -1,5 +1,5 @@
-<%= myp_text_field f, :name, "myplaceonline.companies.name", obj.name, autofocus %>
-<%= myp_text_area_markdown f, :notes, "myplaceonline.companies.notes", obj.notes %>
+<%= myp_text_field(f, :name, "myplaceonline.companies.name", obj.name, autofocus) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.companies.notes", obj.notes) %>
 <%=
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,

@@ -1,13 +1,13 @@
-<%= myp_text_field f, :name, "myplaceonline.credit_cards.name", obj.name, autofocus %>
-<%= myp_text_field f, :number, "myplaceonline.credit_cards.number", obj.number %>
-<%= myp_date_field f, :expires, "myplaceonline.credit_cards.expires", obj.expires %>
-<%= myp_text_field f, :security_code, "myplaceonline.credit_cards.security_code", obj.security_code %>
+<%= myp_text_field(f, :name, "myplaceonline.credit_cards.name", obj.name, autofocus) %>
+<%= myp_text_field(f, :number, "myplaceonline.credit_cards.number", obj.number) %>
+<%= myp_date_field(f, :expires, "myplaceonline.credit_cards.expires", obj.expires) %>
+<%= myp_text_field(f, :security_code, "myplaceonline.credit_cards.security_code", obj.security_code) %>
 <%= myp_select(f, :card_type, "myplaceonline.credit_cards.card_type", Myp.translate_options(CreditCard::CARD_TYPES), obj.card_type) %>
-<%= myp_text_field f, :pin, "myplaceonline.credit_cards.pin", obj.pin %>
-<%= myp_check_box f, :encrypt, "myplaceonline.general.encrypt" %>
-<%= myp_decimal_field f, :total_credit, "myplaceonline.credit_cards.total_credit", obj.total_credit %>
-<%= myp_text_area_markdown f, :notes, "myplaceonline.credit_cards.notes", obj.notes %>
-<%= myp_check_box f, :is_defunct, "myplaceonline.general.defunct" %>
+<%= myp_text_field(f, :pin, "myplaceonline.credit_cards.pin", obj.pin) %>
+<%= myp_check_box(f, :encrypt, "myplaceonline.general.encrypt") %>
+<%= myp_decimal_field(f, :total_credit, "myplaceonline.credit_cards.total_credit", obj.total_credit) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.credit_cards.notes", obj.notes) %>
+<%= myp_check_box(f, :is_defunct, "myplaceonline.general.defunct") %>
 <%=
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,
@@ -86,12 +86,12 @@
   } do |child_fields, childproperty|
 %>
   <%= child_fields.fields_for :cashback, childproperty.cashback do |inner_child_fields| %>
-    <%= myp_decimal_field inner_child_fields, :cashback_percentage, "myplaceonline.cashback.cashback_percentage", childproperty.cashback.cashback_percentage %>
-    <%= myp_check_box inner_child_fields, :default_cashback, "myplaceonline.cashback.default_cashback" %>
-    <%= myp_text_field inner_child_fields, :applies_to, "myplaceonline.cashback.applies_to", childproperty.cashback.applies_to %>
-    <%= myp_date_field inner_child_fields, :start_date, "myplaceonline.cashback.start_date", childproperty.cashback.start_date %>
-    <%= myp_date_field inner_child_fields, :end_date, "myplaceonline.cashback.end_date", childproperty.cashback.end_date %>
-    <%= myp_decimal_field inner_child_fields, :yearly_maximum, "myplaceonline.cashback.yearly_maximum", childproperty.cashback.yearly_maximum %>
-    <%= myp_text_area_markdown inner_child_fields, :notes, "myplaceonline.cashback.notes", childproperty.cashback.notes %>
+    <%= myp_decimal_field(inner_child_fields, :cashback_percentage, "myplaceonline.cashback.cashback_percentage", childproperty.cashback.cashback_percentage) %>
+    <%= myp_check_box(inner_child_fields, :default_cashback, "myplaceonline.cashback.default_cashback") %>
+    <%= myp_text_field(inner_child_fields, :applies_to, "myplaceonline.cashback.applies_to", childproperty.cashback.applies_to) %>
+    <%= myp_date_field(inner_child_fields, :start_date, "myplaceonline.cashback.start_date", childproperty.cashback.start_date) %>
+    <%= myp_date_field(inner_child_fields, :end_date, "myplaceonline.cashback.end_date", childproperty.cashback.end_date) %>
+    <%= myp_decimal_field(inner_child_fields, :yearly_maximum, "myplaceonline.cashback.yearly_maximum", childproperty.cashback.yearly_maximum) %>
+    <%= myp_text_area_markdown(inner_child_fields, :notes, "myplaceonline.cashback.notes", childproperty.cashback.notes) %>
   <% end %>
 <% end %>

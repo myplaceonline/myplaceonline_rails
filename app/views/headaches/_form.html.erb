@@ -1,4 +1,4 @@
-<%= myp_datetime_field f, :started, "myplaceonline.headaches.started", obj.started %>
-<%= myp_datetime_field f, :ended, "myplaceonline.headaches.ended", obj.ended %>
+<%= myp_datetime_field(f, :started, "myplaceonline.headaches.started", obj.started) %>
+<%= myp_datetime_field(f, :ended, "myplaceonline.headaches.ended", obj.ended) %>
 <%= myp_select(f, :intensity, "myplaceonline.headaches.intensity", Myp.translate_options(Myp::INTENSITIES), obj.intensity) %>
-<%= myp_text_field f, :headache_location, "myplaceonline.headaches.headache_location", obj.headache_location %>
+<%= myp_text_field(f, :headache_location, "myplaceonline.headaches.headache_location", obj.headache_location) %>
