@@ -11,3 +11,4 @@
     autofocus: true
   }
 %>
+<%= myp_select(f, :doctor_type, "myplaceonline.doctors.doctor_type", Myp.translate_options(Doctor::DOCTOR_TYPES), obj.doctor_type) %>

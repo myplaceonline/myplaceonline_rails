@@ -1223,3 +1223,6 @@ en:
       new_activity: "Generate"
     doctors:
       doctor: "Doctor"
+      doctor_type: "Type"
+      type_primary_care: "Primary Care"
+      type_dentist: "Dentist"

@@ -1,11 +1,20 @@
 class Doctor < ActiveRecord::Base
   include AllowExistingConcern
 
+  DOCTOR_TYPES = [
+    ["myplaceonline.doctors.type_primary_care", 0],
+    ["myplaceonline.doctors.type_dentist", 1]
+  ]
+
   belongs_to :owner, class_name: Identity
   validates :contact, presence: true
   
   def display
-    contact.display
+    result = contact.display
+    if !doctor_type.nil?
+      result = Myp.appendstrwrap(result, Myp.get_select_name(doctor_type, Doctor::DOCTOR_TYPES))
+    end
+    result
   end
   
   belongs_to :contact

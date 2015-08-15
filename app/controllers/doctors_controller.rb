@@ -10,6 +10,7 @@ class DoctorsController < MyplaceonlineController
 
     def obj_params
       params.require(:doctor).permit(
+        :doctor_type,
         Myp.select_or_create_permit(params[:doctor], :contact_attributes, ContactsController.param_names)
       )
     end
