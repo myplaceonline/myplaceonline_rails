@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :doctors
+  post 'doctors/new'
+
   match 'random/activity', via: [:get, :post]
   get 'random/index'
   get 'random', :to => 'random#index'

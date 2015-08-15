@@ -101,6 +101,7 @@ en:
       therapists: "Therapists"
       health_insurances: "Health Insurances"
       random: "Random"
+      doctors: "Doctors"
     general:
       email: "E-mail"
       password: "Password"
@@ -1220,3 +1221,5 @@ en:
     random:
       activity: "Random Activity"
       new_activity: "Generate"
+    doctors:
+      doctor: "Doctor"
