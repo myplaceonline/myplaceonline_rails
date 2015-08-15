@@ -604,7 +604,7 @@ module ApplicationHelper
         url = url[0..i-1]
       end
       if url.length > 0
-        result = Myp.categories[url.to_sym]
+        result = Myp.categories(User.current_user)[url.to_sym]
       end
     end
     result

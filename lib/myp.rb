@@ -94,15 +94,19 @@ module Myp
   if Myp.database_exists?
     Category.all.each do |existing_category|
       @@all_categories[existing_category.name.to_sym] = existing_category
-      if !existing_category.explicit?
+      if existing_category.respond_to?("explicit?") && !existing_category.explicit?
         @@all_categories_without_explicit[existing_category.name.to_sym] = existing_category
       end
     end
     puts "myplaceonline: Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
   end
   
-  def self.categories
-    @@all_categories
+  def self.categories(user)
+    if user.nil? || user.explicit_categories
+      @@all_categories
+    else
+      @@all_categories_without_explicit
+    end
   end
 
   # Return a list of CategoryForIdentity objects.
@@ -134,6 +138,32 @@ module Myp
     #
     # Therefore we have to fallback to direct SQL.
 
+    where_clause = ""
+    
+    if !parent.nil?
+      if where_clause.length == 0
+        where_clause += "WHERE "
+      else
+        where_clause += " AND "
+      end
+      if parent == -1
+        where_clause += "categories.parent_id IS NULL"
+      else
+        where_clause += "categories.parent_id = " + parent.id.to_s
+      end
+    end
+    
+    explicit_check = Myp.get_categories_explicit_check_sql(user)
+    
+    if explicit_check.length > 0
+      if where_clause.length == 0
+        where_clause += "WHERE "
+      else
+        where_clause += " AND "
+      end
+      where_clause += explicit_check
+    end
+    
     Category.find_by_sql(%{
       SELECT categories.*, category_points_amounts.count as points_amount
       FROM categories
@@ -142,16 +172,7 @@ module Myp
             AND category_points_amounts.owner_id = #{
                 CategoryPointsAmount.sanitize(user.primary_identity.id)
               }
-      #{ parent.nil? ?
-           "" :
-           %{
-              WHERE categories.parent_id #{
-                parent == -1 ?
-                  "IS NULL" :
-                  "= " + parent.id.to_s
-              }
-            }
-       }
+      #{ where_clause }
       ORDER BY #{
         orderByName ?
           "categories.name ASC" :
@@ -170,14 +191,29 @@ module Myp
     }
   end
   
+  def self.get_categories_explicit_check_sql(user)
+    if user.nil? || !user.explicit_categories
+      "(categories.explicit IS NULL OR categories.explicit = false)"
+    else
+      ""
+    end
+  end
+  
   def self.useful_categories(user, recentlyVisited = 2, mostVisited = 3)
     # Prefer last visit over number of visits
+    
+    explicit_check = Myp.get_categories_explicit_check_sql(user)
+    
+    if explicit_check.length > 0
+      explicit_check += " AND "
+    end
+    
     CategoryPointsAmount.find_by_sql(%{
       (
         SELECT category_points_amounts.*, categories.name as category_name, categories.icon as category_icon, categories.additional_filtertext as category_additional_filtertext, categories.link as category_link, categories.parent_id as category_parent_id, 0 as select_type
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
-        WHERE categories.parent_id IS NOT NULL AND category_points_amounts.owner_id = #{
+        WHERE #{ explicit_check } categories.parent_id IS NOT NULL AND category_points_amounts.owner_id = #{
                 CategoryPointsAmount.sanitize(user.primary_identity.id)
               }
         ORDER BY category_points_amounts.last_visit DESC
@@ -188,7 +224,7 @@ module Myp
         SELECT category_points_amounts.*, categories.name as category_name, categories.icon as category_icon, categories.additional_filtertext as category_additional_filtertext, categories.link as category_link, categories.parent_id as category_parent_id, 1 as select_type
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
-        WHERE categories.parent_id IS NOT NULL AND category_points_amounts.owner_id = #{
+        WHERE #{ explicit_check } categories.parent_id IS NOT NULL AND category_points_amounts.owner_id = #{
                 CategoryPointsAmount.sanitize(user.primary_identity.id)
               }
         ORDER BY category_points_amounts.visits DESC
@@ -335,7 +371,7 @@ module Myp
   end
   
   def self.visit(user, categoryName)
-    category = Myp.categories[categoryName]
+    category = Myp.categories(user)[categoryName]
     if category.nil?
       raise "Could not find category " + categoryName + " (check Myp.website_init)"
     end
@@ -370,7 +406,7 @@ module Myp
       end
       user.primary_identity.save
       
-      category = Myp.categories[categoryName]
+      category = Myp.categories(user)[categoryName]
       if category.nil?
         raise "Could not find category " + categoryName + " (check Myp.website_init)"
       end

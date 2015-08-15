@@ -125,7 +125,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     Myp.ensure_encryption_key(session)
     passwords = I18n.t("myplaceonline.category.passwords")
     
-    search = Myp.categories.merge({
+    search = Myp.categories(User.current_user).merge({
       "foods" => Category.new(name: "foods"),
       "drinks" => Category.new(name: "drinks"),
     })
