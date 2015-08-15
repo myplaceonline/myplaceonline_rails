@@ -1003,6 +1003,9 @@ en:
       delete_salary: "Delete Salary"
       days_holiday: "Days of Holidays"
       days_vacation: "Days of Vacation"
+      employee_identifier: "Employee Identifier"
+      department_name: "Department Name"
+      division_name: "Division Name"
     job_salaries:
       started: "Started"
       ended: "Ended"
