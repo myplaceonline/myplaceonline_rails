@@ -1216,3 +1216,6 @@ en:
       account_number: "Account Number"
       group_number: "Group Number"
       password: "Password"
+    random:
+      activity: "Random Activity"
+      new_activity: "Generate"

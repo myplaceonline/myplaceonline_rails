@@ -1,0 +1,7 @@
+<% content_for :heading do -%><%= t('myplaceonline.random.activity') %><% end -%>
+<h1><%= t('myplaceonline.random.activity') %></h1>
+<%= flashes! %>
+<%= form_tag random_activity_path do |f| %>
+
+  <%= submit_tag t("myplaceonline.random.new_activity") %>
+<% end %>

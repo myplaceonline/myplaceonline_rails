@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  match 'random/activity', via: [:get, :post]
+
   resources :health_insurances
   post 'health_insurances/new'
 
