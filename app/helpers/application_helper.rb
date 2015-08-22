@@ -1,3 +1,5 @@
+require 'htmlentities'
+
 module ApplicationHelper
   def flashes!
     return "" if flash.empty?
@@ -43,9 +45,7 @@ module ApplicationHelper
       options[:href] = "#"
       options[:class] = "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable externallink"
       options[:title] = t("myplaceonline.general.clipboard")
-      
-      # TODO 1 For a link (e.g. feeds) can produce... data-clipboard-text="<a class="externallink"...
-      options["data-clipboard-text"] = ERB::Util.html_escape(clipboard_text_str(clipboard_text))
+      options["data-clipboard-text"] = HTMLEntities.new.encode(clipboard_text_str(clipboard_text))
       
       lastcolumn = content_tag(
         :a,
@@ -299,7 +299,7 @@ module ApplicationHelper
       end
       if !clipboard.nil?
         options[:class] += " clipboardable"
-        options["data-clipboard-text"] = html_escape(clipboard_text_str(clipboard))
+        options["data-clipboard-text"] = HTMLEntities.new.encode(clipboard_text_str(clipboard))
       end
       if !linkclasses.blank?
         options[:class] += " " + linkclasses

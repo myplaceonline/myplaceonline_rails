@@ -1,6 +1,6 @@
 <%= render layout: "shared/model_show" do %>
 
   <%= attribute_table_row(t("myplaceonline.feeds.name"), @obj.name) %>
-  <%= attribute_table_row(t("myplaceonline.feeds.url"), url_or_blank(@obj.url)) %>
+  <%= attribute_table_row_url(t("myplaceonline.feeds.url"), @obj.url) %>
   
 <% end %>
