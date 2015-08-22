@@ -1,5 +1,4 @@
-class JobSalary < ActiveRecord::Base
-  belongs_to :owner, class_name: Identity
+class JobSalary < MyplaceonlineActiveRecord
   belongs_to :job
   
   validates :started, presence: true
@@ -12,12 +11,5 @@ class JobSalary < ActiveRecord::Base
       result += " " + Myp.get_select_name(salary_period, Myp::PERIODS)
     end
     result
-  end
-
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

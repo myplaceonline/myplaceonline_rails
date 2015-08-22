@@ -740,23 +740,6 @@ module Myp
     result
   end
   
-  def self.set_common_model_properties(model)
-    if model.respond_to?("owner=")
-      current_user = User.current_user
-      if !current_user.nil?
-        if !model.owner.nil?
-          if model.owner_id != current_user.primary_identity.id
-            raise "Unauthorized"
-          end
-        else
-          model.owner = current_user.primary_identity
-        end
-      end
-    else
-      raise "owner= not found, missing belongs_to owner?"
-    end
-  end
-
   def self.get_select_name(val, select_values)
     if !val.nil?
       found = select_values.find{|x| x[1] == val}

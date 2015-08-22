@@ -1,6 +1,4 @@
-class Therapist < ActiveRecord::Base
-
-  belongs_to :owner, class_name: Identity
+class Therapist < MyplaceonlineActiveRecord
 
   validates :name, presence: true
 
@@ -23,11 +21,4 @@ class Therapist < ActiveRecord::Base
   
   has_many :therapist_locations, :dependent => :destroy
   accepts_nested_attributes_for :therapist_locations, allow_destroy: true, reject_if: :all_blank
-  
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
-  end
 end

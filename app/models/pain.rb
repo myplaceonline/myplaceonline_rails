@@ -1,6 +1,4 @@
-class Pain < ActiveRecord::Base
-  belongs_to :owner, class_name: Identity
-  
+class Pain < MyplaceonlineActiveRecord
   validates :pain_start_time, presence: true
   
   def display
@@ -9,12 +7,5 @@ class Pain < ActiveRecord::Base
       result += " (" + pain_location + ")"
     end
     result
-  end
-
-  before_create :do_before_save
-  before_update :do_before_save
-  
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

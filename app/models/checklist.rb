@@ -1,11 +1,7 @@
-class Checklist < ActiveRecord::Base
+class Checklist < MyplaceonlineActiveRecord
   include AllowExistingConcern
 
-  belongs_to :owner, class_name: Identity
   validates :checklist_name, presence: true
-  
-  before_create :do_before_save
-  before_update :do_before_save
   
   def display
     checklist_name
@@ -24,10 +20,6 @@ class Checklist < ActiveRecord::Base
   accepts_nested_attributes_for :checklist_references, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :checklist_references, [{:name => :checklist}]
 
-  def do_before_save
-    Myp.set_common_model_properties(self)
-  end
-    
   def pre_checklist_references
     checklist_references.to_a.delete_if{|cr| !cr.pre_checklist }
   end

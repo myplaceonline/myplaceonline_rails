@@ -1,4 +1,4 @@
-class Contact < ActiveRecord::Base
+class Contact < MyplaceonlineActiveRecord
 
   CONTACT_TYPES = [
     ["myplaceonline.contacts.best_friend", 0],
@@ -12,8 +12,6 @@ class Contact < ActiveRecord::Base
     ["myplaceonline.contacts.party_friend", 8]
   ]
   
-  belongs_to :owner, class_name: Identity
-
   belongs_to :identity, :dependent => :destroy
   accepts_nested_attributes_for :identity, reject_if: :all_blank
   
@@ -62,12 +60,5 @@ class Contact < ActiveRecord::Base
     result = Contact.new(params)
     result.identity = Myp.new_model(Identity)
     result
-  end
-  
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

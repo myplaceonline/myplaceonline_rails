@@ -1,6 +1,4 @@
-class CalculationOperand < ActiveRecord::Base
-  belongs_to :owner, class_name: Identity
-
+class CalculationOperand < MyplaceonlineActiveRecord
   # Recursive operand
   belongs_to :calculation_element
   accepts_nested_attributes_for :calculation_element, reject_if: :all_blank
@@ -22,12 +20,5 @@ class CalculationOperand < ActiveRecord::Base
   
   def to_human_readable
     calculation_element.nil? ? constant_value : calculation_element.to_human_readable
-  end
-  
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

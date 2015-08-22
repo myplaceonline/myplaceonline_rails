@@ -1,7 +1,5 @@
-class Apartment < ActiveRecord::Base
+class Apartment < MyplaceonlineActiveRecord
   include AllowExistingConcern
-
-  belongs_to :owner, class_name: Identity
 
   belongs_to :location, :autosave => true
   validates_presence_of :location
@@ -27,12 +25,5 @@ class Apartment < ActiveRecord::Base
 
   def display
     location.display
-  end
-  
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

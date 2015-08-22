@@ -1,4 +1,4 @@
-class Vehicle < ActiveRecord::Base
+class Vehicle < MyplaceonlineActiveRecord
   include AllowExistingConcern
 
   ENGINE_TYPES = [["myplaceonline.vehicles.gas", 0], ["myplaceonline.vehicles.diesel", 1]]
@@ -7,7 +7,6 @@ class Vehicle < ActiveRecord::Base
   DRIVE_TYPES = [["myplaceonline.vehicles.front_wheel_drive", 0], ["myplaceonline.vehicles.rear_wheel_drive", 1]]
   WHEEL_TYPES = [["myplaceonline.vehicles.single_rear_wheel", 0], ["myplaceonline.vehicles.dual_rear_wheels", 1]]
   
-  belongs_to :owner, class_name: Identity
   validates :name, presence: true
 
   has_many :vehicle_loans, :dependent => :destroy
@@ -33,12 +32,5 @@ class Vehicle < ActiveRecord::Base
 
   def display
     Myp.appendstrwrap(name, license_plate)
-  end
-  
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

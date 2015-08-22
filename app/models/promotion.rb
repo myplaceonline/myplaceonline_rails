@@ -1,5 +1,4 @@
-class Promotion < ActiveRecord::Base
-  belongs_to :owner, class_name: Identity
+class Promotion < MyplaceonlineActiveRecord
   validates :promotion_name, presence: true
   
   def display
@@ -11,12 +10,5 @@ class Promotion < ActiveRecord::Base
       result += " (" + I18n.t("myplaceonline.promotions.expires") + " " + Myp.display_date_short_year(expires, User.current_user) + ")"
     end
     result
-  end
-  
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

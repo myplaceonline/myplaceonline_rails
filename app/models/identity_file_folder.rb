@@ -1,8 +1,6 @@
-class IdentityFileFolder < ActiveRecord::Base
+class IdentityFileFolder < MyplaceonlineActiveRecord
   include AllowExistingConcern
 
-  belongs_to :owner, class_name: Identity
-  
   belongs_to :parent_folder, class_name: IdentityFileFolder
   accepts_nested_attributes_for :parent_folder
   allow_existing :parent_folder, IdentityFileFolder
@@ -22,13 +20,6 @@ class IdentityFileFolder < ActiveRecord::Base
     ).order(FileFoldersController.sorts)
   end
 
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
-  end
-  
   def self.find_or_create(names, parent = nil)
     names = names.reverse
     while names.length > 0

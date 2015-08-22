@@ -1,4 +1,4 @@
-class RewardProgram < ActiveRecord::Base
+class RewardProgram < MyplaceonlineActiveRecord
   include AllowExistingConcern
 
   REWARD_PROGRAM_TYPES = [
@@ -7,8 +7,6 @@ class RewardProgram < ActiveRecord::Base
     ["myplaceonline.reward_programs.type_car", 2]
   ]
   
-  belongs_to :owner, class_name: Identity
-
   belongs_to :password
   accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
   allow_existing :password
@@ -18,12 +16,5 @@ class RewardProgram < ActiveRecord::Base
   def display(show_default_cashback = true)
     result = reward_program_name
     result
-  end
-  
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

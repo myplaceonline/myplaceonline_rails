@@ -1,5 +1,4 @@
-class List < ActiveRecord::Base
-  belongs_to :owner, class_name: Identity
+class List < MyplaceonlineActiveRecord
   validates :name, presence: true
 
   has_many :list_items, :foreign_key => 'list_id', :dependent => :destroy
@@ -7,12 +6,5 @@ class List < ActiveRecord::Base
   
   def display
     name
-  end
-  
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

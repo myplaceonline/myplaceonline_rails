@@ -1,6 +1,4 @@
-class Weight < ActiveRecord::Base
-  belongs_to :owner, class_name: Identity
-  
+class Weight < MyplaceonlineActiveRecord
   validates :amount, presence: true
   validates :amount_type, presence: true
   validates :measure_date, presence: true
@@ -12,12 +10,5 @@ class Weight < ActiveRecord::Base
     end
     result += " (" + Myp.display_date(measure_date, User.current_user) + ")"
     result
-  end
-
-  before_create :do_before_save
-  before_update :do_before_save
-  
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

@@ -1,7 +1,5 @@
-class Trip < ActiveRecord::Base
+class Trip < MyplaceonlineActiveRecord
   include AllowExistingConcern
-
-  belongs_to :owner, class_name: Identity
 
   validates :location, presence: true
   validates :started, presence: true
@@ -23,12 +21,5 @@ class Trip < ActiveRecord::Base
       result += " (" + I18n.t("myplaceonline.trips.work") + ")"
     end
     result
-  end
-
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

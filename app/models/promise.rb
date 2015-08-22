@@ -1,5 +1,4 @@
-class Promise < ActiveRecord::Base
-  belongs_to :owner, class_name: Identity
+class Promise < MyplaceonlineActiveRecord
   validates :name, presence: true
   
   def display
@@ -8,12 +7,5 @@ class Promise < ActiveRecord::Base
       result += " (" + I18n.t("myplaceonline.promises.due") + " " + Myp.display_date_short(due, User.current_user) + ")"
     end
     result
-  end
-  
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

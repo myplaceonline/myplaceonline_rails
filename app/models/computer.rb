@@ -1,7 +1,6 @@
-class Computer < ActiveRecord::Base
+class Computer < MyplaceonlineActiveRecord
   include AllowExistingConcern
 
-  belongs_to :owner, class_name: Identity
   validates :computer_model, presence: true
   
   def display
@@ -24,11 +23,4 @@ class Computer < ActiveRecord::Base
   belongs_to :main_user, class_name: Password
   accepts_nested_attributes_for :main_user, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
   allow_existing :main_user, Password
-  
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
-  end
 end

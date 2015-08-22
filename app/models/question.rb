@@ -1,5 +1,4 @@
-class Question < ActiveRecord::Base
-  belongs_to :owner, class_name: Identity
+class Question < MyplaceonlineActiveRecord
   validates :name, presence: true
   
   has_many :hypotheses, :dependent => :destroy
@@ -9,14 +8,7 @@ class Question < ActiveRecord::Base
     name
   end
 
-  before_create :do_before_save
-  before_update :do_before_save
-  
   def all_hypotheses
     Hypothesis.where(question_id: id).order(["hypotheses.position ASC"])
-  end
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

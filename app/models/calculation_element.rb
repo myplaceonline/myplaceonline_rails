@@ -1,6 +1,4 @@
-class CalculationElement < ActiveRecord::Base
-  belongs_to :owner, class_name: Identity
-
+class CalculationElement < MyplaceonlineActiveRecord
   belongs_to :left_operand, class_name: CalculationOperand, autosave: true
   validates_associated :left_operand
   validates_presence_of :left_operand
@@ -55,12 +53,5 @@ class CalculationElement < ActiveRecord::Base
       process_operand(resultSet, operand.calculation_element.left_operand)
       process_operand(resultSet, operand.calculation_element.right_operand)
     end
-  end
-  
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

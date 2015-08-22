@@ -1,4 +1,4 @@
-class BankAccount < ActiveRecord::Base
+class BankAccount < MyplaceonlineActiveRecord
   include AllowExistingConcern
   include EncryptedConcern
 
@@ -6,8 +6,6 @@ class BankAccount < ActiveRecord::Base
     name
   end
   
-  belongs_to :owner, class_name: Identity
-
   attr_accessor :encrypt
   
   validates :name, presence: true
@@ -50,12 +48,5 @@ class BankAccount < ActiveRecord::Base
       options[:except] ||= %w(account_number routing_number pin)
     end
     super.as_json(options)
-  end
-  
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

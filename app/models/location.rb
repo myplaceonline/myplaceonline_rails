@@ -1,6 +1,5 @@
 # `region` is country, `sub_region1` is state, and `sub_region2` is city.
-class Location < ActiveRecord::Base
-  belongs_to :owner, class_name: Identity
+class Location < MyplaceonlineActiveRecord
   validate :at_least_one
   
   has_many :location_phones, :dependent => :destroy
@@ -134,12 +133,5 @@ class Location < ActiveRecord::Base
       result = "https://www.google.com/maps/place/" + ERB::Util.url_encode(result)
     end
     result
-  end
-  
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

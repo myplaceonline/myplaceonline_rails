@@ -1,10 +1,8 @@
-class CreditCard < ActiveRecord::Base
+class CreditCard < MyplaceonlineActiveRecord
   include AllowExistingConcern
   include EncryptedConcern
   
   CARD_TYPES = [["myplaceonline.credit_cards.visa", 0], ["myplaceonline.credit_cards.mastercard", 1], ["myplaceonline.credit_cards.amex", 2]]
-
-  belongs_to :owner, class_name: Identity
 
   attr_accessor :encrypt
   attr_accessor :is_defunct
@@ -87,11 +85,4 @@ class CreditCard < ActiveRecord::Base
   
   has_many :credit_card_cashbacks, :dependent => :destroy
   accepts_nested_attributes_for :credit_card_cashbacks, allow_destroy: true, reject_if: :all_blank
-
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
-  end
 end

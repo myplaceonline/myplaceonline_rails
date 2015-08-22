@@ -1,6 +1,4 @@
-class SleepMeasurement < ActiveRecord::Base
-  belongs_to :owner, class_name: Identity
-  
+class SleepMeasurement < MyplaceonlineActiveRecord
   validates :sleep_start_time, presence: true
   
   def display
@@ -17,12 +15,5 @@ class SleepMeasurement < ActiveRecord::Base
     else
       nil
     end
-  end
-
-  before_create :do_before_save
-  before_update :do_before_save
-  
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

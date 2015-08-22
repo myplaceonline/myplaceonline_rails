@@ -1,9 +1,7 @@
 require 'kramdown'
 
-class Password < ActiveRecord::Base
+class Password < MyplaceonlineActiveRecord
   include EncryptedConcern
-
-  belongs_to :owner, class_name: Identity
 
   belongs_to :password_encrypted,
       class_name: EncryptedValue, dependent: :destroy, :autosave => true
@@ -51,12 +49,5 @@ class Password < ActiveRecord::Base
     super.as_json(options).merge({
       :password_secrets => password_secrets.to_a.map{|x| x.as_json}
     })
-  end
-  
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

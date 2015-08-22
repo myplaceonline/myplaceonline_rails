@@ -1,6 +1,4 @@
-class CalculationForm < ActiveRecord::Base
-  belongs_to :owner, class_name: Identity
-  
+class CalculationForm < MyplaceonlineActiveRecord
   validates :name, presence: true
   validates :equation, presence: true
   
@@ -39,12 +37,5 @@ class CalculationForm < ActiveRecord::Base
       
       calc.evaluate(equation).to_s
     end
-  end
-  
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

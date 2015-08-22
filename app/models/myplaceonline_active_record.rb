@@ -7,6 +7,19 @@ class MyplaceonlineActiveRecord < ActiveRecord::Base
   before_update :do_before_save
 
   def do_before_save
-    Myp.set_common_model_properties(self)
+    if self.respond_to?("owner=")
+      current_user = User.current_user
+      if !current_user.nil?
+        if !self.owner.nil?
+          if self.owner_id != current_user.primary_identity.id
+            raise "Unauthorized"
+          end
+        else
+          self.owner = current_user.primary_identity
+        end
+      end
+    else
+      raise "owner= not found"
+    end
   end
 end

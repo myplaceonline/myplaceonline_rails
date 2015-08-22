@@ -1,20 +1,12 @@
-class IdentityDriversLicense < ActiveRecord::Base
+class IdentityDriversLicense < MyplaceonlineActiveRecord
   belongs_to :identity, class_name: Identity
-  belongs_to :owner, class_name: Identity
   
   validates :identifier, presence: true
 
   belongs_to :identity_file, :dependent => :destroy
   accepts_nested_attributes_for :identity_file, allow_destroy: true, reject_if: :all_blank
 
-  before_create :do_before_save
-  before_update :do_before_save
-  
   def display
     identifier
-  end
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

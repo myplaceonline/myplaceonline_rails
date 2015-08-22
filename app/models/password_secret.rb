@@ -1,6 +1,6 @@
-class PasswordSecret < ActiveRecord::Base
+class PasswordSecret < MyplaceonlineActiveRecord
   include EncryptedConcern
-  belongs_to :owner, class_name: Identity
+
   belongs_to :password
   belongs_to :answer_encrypted,
       class_name: EncryptedValue, dependent: :destroy, :autosave => true
@@ -11,12 +11,5 @@ class PasswordSecret < ActiveRecord::Base
       options[:except] ||= "answer"
     end
     super.as_json(options)
-  end
-  
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
   end
 end

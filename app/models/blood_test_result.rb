@@ -1,4 +1,4 @@
-class BloodTestResult < ActiveRecord::Base
+class BloodTestResult < MyplaceonlineActiveRecord
   include AllowExistingConcern
 
   belongs_to :blood_test
@@ -6,6 +6,4 @@ class BloodTestResult < ActiveRecord::Base
   belongs_to :blood_concentration
   accepts_nested_attributes_for :blood_concentration, allow_destroy: true, reject_if: :all_blank
   allow_existing :blood_concentration
-
-  belongs_to :owner, class_name: Identity
 end

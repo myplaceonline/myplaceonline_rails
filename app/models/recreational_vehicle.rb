@@ -1,7 +1,6 @@
-class RecreationalVehicle < ActiveRecord::Base
+class RecreationalVehicle < MyplaceonlineActiveRecord
   include AllowExistingConcern
 
-  belongs_to :owner, class_name: Identity
   validates :rv_name, presence: true
   
   def display
@@ -24,11 +23,4 @@ class RecreationalVehicle < ActiveRecord::Base
   
   has_many :recreational_vehicle_measurements, :dependent => :destroy
   accepts_nested_attributes_for :recreational_vehicle_measurements, allow_destroy: true, reject_if: :all_blank
-
-  before_create :do_before_save
-  before_update :do_before_save
-
-  def do_before_save
-    Myp.set_common_model_properties(self)
-  end
 end
