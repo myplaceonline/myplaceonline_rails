@@ -103,6 +103,7 @@ en:
       random: "Random"
       doctors: "Doctors"
       dental_insurances: "Dental Insurances"
+      hobbies: "Hobbies"
     general:
       email: "E-mail"
       password: "Password"
@@ -1236,3 +1237,6 @@ en:
       account_number: "Account Number"
       group_number: "Group Number"
       password: "Password"
+    hobbies:
+      hobby_name: "Name"
+      notes: "Notes"
