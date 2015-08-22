@@ -114,7 +114,9 @@ module ApplicationHelper
           identity_file.save!
         end
       end
-      image_content = image_tag(file_thumbnail_path(identity_file))
+      # Include a unique query parameter all the time because the thumbnail
+      # may have been updated
+      image_content = image_tag(file_thumbnail_path(identity_file, :t => Time.now.to_f))
       if link_to_original
         attribute_table_row_content(
           name,
