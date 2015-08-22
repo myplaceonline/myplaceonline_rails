@@ -102,6 +102,7 @@ en:
       health_insurances: "Health Insurances"
       random: "Random"
       doctors: "Doctors"
+      dental_insurances: "Dental Insurances"
     general:
       email: "E-mail"
       password: "Password"
@@ -1226,3 +1227,12 @@ en:
       doctor_type: "Type"
       type_primary_care: "Primary Care"
       type_dentist: "Dentist"
+    dental_insurances:
+      insurance_name: "Name"
+      notes: "Notes"
+      insurance_company: "Insurance Company"
+      group_company: "Company Payer"
+      periodic_payment: "Periodic Payment"
+      account_number: "Account Number"
+      group_number: "Group Number"
+      password: "Password"
