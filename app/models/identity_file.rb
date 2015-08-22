@@ -1,5 +1,7 @@
 class IdentityFile < MyplaceonlineActiveRecord
   include AllowExistingConcern
+  
+  before_update :do_before_update
 
   belongs_to :encrypted_password, class_name: EncryptedValue, dependent: :destroy
 
@@ -24,5 +26,13 @@ class IdentityFile < MyplaceonlineActiveRecord
   
   def size
     file_file_size
+  end
+  
+  def do_before_update
+    if self.file_file_size_changed?
+      # Make sure any thumbnail is cleared (if it's a picture)
+      self.thumbnail_contents = nil
+      self.thumbnail_bytes = nil
+    end
   end
 end
