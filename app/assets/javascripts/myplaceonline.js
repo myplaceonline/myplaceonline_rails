@@ -598,17 +598,21 @@ function ensureStyledPage() {
   }
 }
 
-function scrollTop() {
-  scrollY(0);
+function scrollTop(easingType) {
+  scrollY(0, easingType);
 }
 
-function scrollY(y) {
+// http://easings.net/
+function scrollY(y, easingType) {
+  if (!easingType) {
+    easingType = "easeInSine";
+  }
   if (y > myp.heightPadding) {
     y -= myp.heightPadding;
   }
   $('html, body').stop().animate({
     scrollTop : y
-  }, 650, "easeInOut");
+  }, 650, easingType);
 }
 
 function playSound(audioFile) {

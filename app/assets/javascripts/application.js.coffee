@@ -2,6 +2,7 @@
 # else is loaded in application_extra.js.coffee
 
 #= require jquery
+#= require jquery.easing
 #= require myplaceonline
 #= require jquery.mobile
 #= require handlebars-v2.0.0
