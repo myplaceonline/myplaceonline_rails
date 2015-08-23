@@ -89,7 +89,6 @@ class MyplaceonlineController < ApplicationController
       end
       # presave *MUST* occur before create_presave and update_presave
       presave
-      create_presave
       
       if @obj.save
         if has_category
@@ -113,7 +112,6 @@ class MyplaceonlineController < ApplicationController
       end
       # presave *MUST* occur before create_presave and update_presave
       presave
-      update_presave
 
       if @obj.save
         return after_create_or_update
@@ -242,12 +240,6 @@ class MyplaceonlineController < ApplicationController
     
     # presave *MUST* occur before create_presave or update_presave
     def presave
-    end
-    
-    def create_presave
-    end
-    
-    def update_presave
     end
     
     def before_edit
