@@ -87,8 +87,6 @@ class MyplaceonlineController < ApplicationController
       rescue ActiveRecord::RecordNotFound => rnf
         raise Myp::CannotFindNestedAttribute, rnf.message + " (code needs attribute setter override?)"
       end
-      # presave *MUST* occur before create_presave and update_presave
-      presave
       
       if @obj.save
         if has_category
@@ -110,8 +108,6 @@ class MyplaceonlineController < ApplicationController
       rescue ActiveRecord::RecordNotFound => rnf
         raise Myp::CannotFindNestedAttribute, rnf.message + " (code needs attribute setter override?)"
       end
-      # presave *MUST* occur before create_presave and update_presave
-      presave
 
       if @obj.save
         return after_create_or_update
@@ -236,10 +232,6 @@ class MyplaceonlineController < ApplicationController
     end
     
     def before_all_actions
-    end
-    
-    # presave *MUST* occur before create_presave or update_presave
-    def presave
     end
     
     def before_edit

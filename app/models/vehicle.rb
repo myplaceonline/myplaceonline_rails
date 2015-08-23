@@ -25,6 +25,12 @@ class Vehicle < MyplaceonlineIdentityRecord
 
   has_many :vehicle_pictures, :dependent => :destroy
   accepts_nested_attributes_for :vehicle_pictures, allow_destroy: true, reject_if: :all_blank
+
+  before_validation :update_pic_folders
+  
+  def update_pic_folders
+    put_pictures_in_folder(vehicle_pictures, [I18n.t("myplaceonline.category.vehicles"), name])
+  end
   
   has_many :vehicle_warranties, :dependent => :destroy
   accepts_nested_attributes_for :vehicle_warranties, allow_destroy: true, reject_if: :all_blank

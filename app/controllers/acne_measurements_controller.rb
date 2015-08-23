@@ -34,12 +34,4 @@ class AcneMeasurementsController < MyplaceonlineController
         ]
       )
     end
-    
-    def presave
-      @obj.acne_measurement_pictures.each do |pic|
-        if pic.identity_file.folder.nil?
-          pic.identity_file.folder = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.acne_measurements"), @obj.display])
-        end
-      end
-    end
 end

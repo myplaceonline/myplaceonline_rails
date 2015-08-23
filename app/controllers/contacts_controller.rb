@@ -131,14 +131,4 @@ class ContactsController < MyplaceonlineController
       # Create a Contact for the current user identity if it doesn't exist
       current_user.primary_identity.ensure_contact!
     end
-    
-    def presave
-      if !@obj.identity.nil?
-        @obj.identity.identity_pictures.each do |pic|
-          if pic.identity_file.folder.nil?
-            pic.identity_file.folder = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.contacts"), @obj.display])
-          end
-        end
-      end
-    end
 end

@@ -30,8 +30,7 @@ class Trip < MyplaceonlineIdentityRecord
         folders.push(self.location.display_general_region)
       end
     end
-    put_pictures_in_folder(:trip_pictures, folders)
-    puts "ADDED: " + trip_pictures.inspect
+    put_pictures_in_folder(trip_pictures, folders)
   end
   
   def display

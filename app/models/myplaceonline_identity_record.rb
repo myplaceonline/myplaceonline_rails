@@ -25,8 +25,8 @@ class MyplaceonlineIdentityRecord < MyplaceonlineModelBase
     end
   end
   
-  def put_pictures_in_folder(pictures_name, folders)
-    self.send("#{pictures_name}").each do |pic|
+  def put_pictures_in_folder(pictures, folders)
+    pictures.each do |pic|
       if pic.identity_file.folder.nil?
         pic.identity_file.folder = IdentityFileFolder.find_or_create(folders)
       end

@@ -111,16 +111,4 @@ class VehiclesController < MyplaceonlineController
         ],
       )
     end
-
-    def presave
-      @obj.vehicle_pictures.each do |pic|
-        if pic.identity_file.folder.nil?
-          if !@obj.name.blank?
-            pic.identity_file.folder = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.vehicles"), @obj.name])
-          else
-            raise "Name blank"
-          end
-        end
-      end
-    end
 end

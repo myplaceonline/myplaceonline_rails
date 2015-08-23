@@ -23,6 +23,12 @@ class Apartment < MyplaceonlineIdentityRecord
   has_many :apartment_pictures, :dependent => :destroy
   accepts_nested_attributes_for :apartment_pictures, allow_destroy: true, reject_if: :all_blank
 
+  before_validation :update_pic_folders
+  
+  def update_pic_folders
+    put_pictures_in_folder(apartment_pictures, [I18n.t("myplaceonline.category.apartments"), display])
+  end
+
   def display
     location.display
   end

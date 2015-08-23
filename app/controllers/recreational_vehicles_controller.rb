@@ -92,12 +92,4 @@ class RecreationalVehiclesController < MyplaceonlineController
     def obj_params
       params.require(:recreational_vehicle).permit(RecreationalVehiclesController.param_names(params))
     end
-
-    def presave
-      @obj.recreational_vehicle_pictures.each do |pic|
-        if pic.identity_file.folder.nil?
-          pic.identity_file.folder = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.recreational_vehicles"), @obj.display])
-        end
-      end
-    end
 end

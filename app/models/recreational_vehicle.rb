@@ -17,6 +17,12 @@ class RecreationalVehicle < MyplaceonlineIdentityRecord
   has_many :recreational_vehicle_pictures, :dependent => :destroy
   accepts_nested_attributes_for :recreational_vehicle_pictures, allow_destroy: true, reject_if: :all_blank
 
+  before_validation :update_pic_folders
+  
+  def update_pic_folders
+    put_pictures_in_folder(recreational_vehicle_pictures, [I18n.t("myplaceonline.category.recreational_vehicles"), display])
+  end
+
   has_many :recreational_vehicle_insurances, :dependent => :destroy
   accepts_nested_attributes_for :recreational_vehicle_insurances, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :recreational_vehicle_insurances, [{:name => :company}, {:name => :periodic_payment}]

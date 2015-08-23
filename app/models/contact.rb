@@ -61,4 +61,12 @@ class Contact < MyplaceonlineIdentityRecord
     result.identity = Myp.new_model(Identity)
     result
   end
+  
+  before_validation :update_pic_folders
+  
+  def update_pic_folders
+    if !identity.nil?
+      put_pictures_in_folder(identity.identity_pictures, [I18n.t("myplaceonline.category.contacts"), display])
+    end
+  end
 end
