@@ -65,9 +65,6 @@ class MyplaceonlineController < ApplicationController
     if request.post?
       create
     else
-      if @obj.respond_to?("encrypt")
-        @obj.encrypt = current_user.encrypt_by_default
-      end
       respond_with(@obj)
     end
   end
