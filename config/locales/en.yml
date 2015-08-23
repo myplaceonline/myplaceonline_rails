@@ -1258,3 +1258,4 @@ en:
       expires: "Expires"
       add: "Add Gun Registration"
       delete: "Delete Gun Registration"
+      expires_soon: "Gun Registration Expires for %{gun_name} in %{delta}"

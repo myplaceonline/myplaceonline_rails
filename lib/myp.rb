@@ -628,6 +628,16 @@ module Myp
       ), "/promotions/" + promotion.id.to_s, promotion.expires))
     end
     
+    Rails.logger.debug("Searching gun registrations")
+
+    GunRegistration.where("owner_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, general_threshold).each do |x|
+      result.push(DueItem.new(I18n.t(
+        "myplaceonline.gun_registrations.expires_soon",
+        gun_name: x.gun.display,
+        delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, x.expires).in_general)
+      ), "/guns/" + x.gun.id.to_s, x.expires))
+    end
+    
     Rails.logger.debug("Searching conversations")
 
     Contact.find_by_sql(%{
