@@ -17,10 +17,6 @@ class MyplaceonlineController < ApplicationController
       Myp.visit(current_user, category_name)
     end
     
-    cached_all = all
-    
-    @count = cached_all.count
-    
     @offset = params[:offset].nil? ? 0 : params[:offset].to_i
     if @offset < 0
       @offset = 0
@@ -31,7 +27,21 @@ class MyplaceonlineController < ApplicationController
       @perpage = @count
     end
     
-    @objs = cached_all.offset(@offset).limit(@perpage).order(sorts)
+    if !is_custom_all_sql || @offset > 0
+      search_all
+    else
+      cached_all = all_custom
+      @count = cached_all.count
+      if @count == 0
+        # The custom SQL returned 0 results, so fall back
+        search_all
+      else
+        @objs = cached_all
+        if @perpage > 0 && @count > @perpage
+          @objs = @objs.first(@perpage)
+        end
+      end
+    end
     
     index_pre_respond()
     
@@ -52,6 +62,7 @@ class MyplaceonlineController < ApplicationController
     if sensitive
       Myp.ensure_encryption_key(session)
     end
+    before_show
     respond_with(@obj)
   end
 
@@ -237,10 +248,27 @@ class MyplaceonlineController < ApplicationController
         owner_id: current_user.primary_identity.id
       )
     end
+    
+    def search_all
+      cached_all = all
+      @objs = cached_all.offset(@offset).limit(@perpage).order(sorts)
+      @count = cached_all.count
+    end
+    
+    def is_custom_all_sql
+      false
+    end
+  
+    def all_custom
+      raise NotImplementedError
+    end
   
     def set_obj
       @obj = model.find_by(id: params[:id], owner_id: current_user.primary_identity.id)
       authorize! :manage, @obj
+    end
+    
+    def before_show
     end
     
     def has_category

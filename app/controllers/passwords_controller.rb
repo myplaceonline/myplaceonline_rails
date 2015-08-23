@@ -231,6 +231,10 @@ class PasswordsController < MyplaceonlineController
       end
     end
 
+    def is_custom_all_sql
+      true
+    end
+
     def all
       if @defunct.blank? || !@defunct
         model.where("owner_id = ? and defunct is null", current_user.primary_identity)
@@ -238,6 +242,30 @@ class PasswordsController < MyplaceonlineController
         model.where(
           owner_id: current_user.primary_identity.id
         )
+      end
+    end
+
+    def all_custom
+      extra_where = ""
+      if @defunct.blank? || !@defunct
+        extra_where += " AND defunct is null"
+      end
+      sql = %{
+        (
+          SELECT *
+          FROM passwords
+          WHERE owner_id = #{current_user.primary_identity.id} AND visit_count IS NOT NULL AND visit_count > 0 #{extra_where}
+          ORDER BY visit_count DESC
+        )
+      }
+      Password.find_by_sql(sql)
+    end
+    
+    def before_show
+      if @obj.visit_count?
+        Password.update(@obj, visit_count: @obj.visit_count + 1)
+      else
+        Password.update(@obj, visit_count: 1)
       end
     end
 end
