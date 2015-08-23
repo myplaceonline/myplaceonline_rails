@@ -23,8 +23,4 @@ class ExercisesController < MyplaceonlineController
         :cardio_time
       )
     end
-    
-    def new_obj_initialize
-      @obj.exercise_start = DateTime.now
-    end
 end

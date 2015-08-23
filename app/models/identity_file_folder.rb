@@ -55,4 +55,18 @@ class IdentityFileFolder < MyplaceonlineIdentityRecord
     end
     parent
   end
+  
+  def self.build(params = nil)
+    result = super(params)
+    if !params[:parent].nil?
+      folders = IdentityFileFolder.where(
+        owner_id: User.current_user.primary_identity.id,
+        id: params[:parent].to_i
+      )
+      if folders.size > 0
+        result.parent_folder = folders.first
+      end
+    end
+    result
+  end
 end

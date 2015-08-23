@@ -11,4 +11,11 @@ class Weight < MyplaceonlineIdentityRecord
     result += " (" + Myp.display_date(measure_date, User.current_user) + ")"
     result
   end
+    
+  def self.build(params = nil)
+    result = super(params)
+    result.amount_type = 0
+    result.measure_date = Date.today
+    result
+  end
 end

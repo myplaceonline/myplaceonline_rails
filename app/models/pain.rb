@@ -8,4 +8,10 @@ class Pain < MyplaceonlineIdentityRecord
     end
     result
   end
+  
+  def self.build(params = nil)
+    result = super(params)
+    result.pain_start_time = DateTime.now
+    result
+  end
 end

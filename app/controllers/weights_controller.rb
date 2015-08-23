@@ -15,9 +15,4 @@ class WeightsController < MyplaceonlineController
     def obj_params
       params.require(:weight).permit(:amount, :amount_type, :measure_date, :source)
     end
-    
-    def new_obj_initialize
-      @obj.amount_type = 0
-      @obj.measure_date = Date.today
-    end
 end

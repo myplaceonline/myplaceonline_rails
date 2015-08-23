@@ -16,8 +16,4 @@ class SunExposuresController < MyplaceonlineController
     def obj_params
       params.require(:sun_exposure).permit(:exposure_start, :exposure_end, :sunscreened_body_parts, :uncovered_body_parts, :sunscreen_type)
     end
-    
-    def new_obj_initialize
-      @obj.exposure_start = DateTime.now
-    end
 end

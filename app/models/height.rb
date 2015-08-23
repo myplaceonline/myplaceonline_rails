@@ -16,4 +16,11 @@ class Height < MyplaceonlineIdentityRecord
     result += " (" + Myp.display_date(measurement_date, User.current_user) + ")"
     result
   end
+    
+  def build(params = nil)
+    result = super(params)
+    result.amount_type = 0
+    result.measurement_date = Date.today
+    result
+  end
 end

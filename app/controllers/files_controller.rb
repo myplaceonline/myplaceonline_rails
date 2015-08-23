@@ -137,16 +137,4 @@ class FilesController < MyplaceonlineController
         ).order(FileFoldersController.sorts)
       end
     end
-    
-    def new_obj_initialize
-      if !params[:folder].nil?
-        folders = IdentityFileFolder.where(
-          owner_id: current_user.primary_identity.id,
-          id: params[:folder].to_i
-        )
-        if folders.size > 0
-          @obj.folder = folders.first
-        end
-      end
-    end
 end

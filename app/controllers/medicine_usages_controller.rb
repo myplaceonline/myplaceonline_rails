@@ -23,8 +23,4 @@ class MedicineUsagesController < MyplaceonlineController
         ]
       )
     end
-    
-    def new_obj_initialize
-      @obj.usage_time = DateTime.now
-    end
 end

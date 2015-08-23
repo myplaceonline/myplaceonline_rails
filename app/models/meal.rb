@@ -21,4 +21,10 @@ class Meal < MyplaceonlineIdentityRecord
   def display
     Myp.display_datetime_short(meal_time, User.current_user)
   end
+
+  def self.build(params = nil)
+    result = super(params)
+    result.meal_time = DateTime.now
+    result
+  end
 end

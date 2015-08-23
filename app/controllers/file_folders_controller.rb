@@ -62,16 +62,4 @@ class FileFoldersController < MyplaceonlineController
     def has_category
       false
     end
-    
-    def new_obj_initialize
-      if !params[:parent].nil?
-        folders = IdentityFileFolder.where(
-          owner_id: current_user.primary_identity.id,
-          id: params[:parent].to_i
-        )
-        if folders.size > 0
-          @obj.parent_folder = folders.first
-        end
-      end
-    end
 end

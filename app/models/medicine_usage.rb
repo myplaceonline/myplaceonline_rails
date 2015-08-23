@@ -10,4 +10,10 @@ class MedicineUsage < MyplaceonlineIdentityRecord
   def display
     Myp.display_datetime_short(usage_time, User.current_user)
   end
+
+  def self.build(params = nil)
+    result = super(params)
+    result.usage_time = DateTime.now
+    result
+  end
 end

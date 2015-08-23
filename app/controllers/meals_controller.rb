@@ -38,8 +38,4 @@ class MealsController < MyplaceonlineController
         ]
       )
     end
-    
-    def new_obj_initialize
-      @obj.meal_time = DateTime.now
-    end
 end

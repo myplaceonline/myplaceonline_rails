@@ -35,4 +35,18 @@ class IdentityFile < MyplaceonlineIdentityRecord
       self.thumbnail_bytes = nil
     end
   end
+  
+  def self.build(params = nil)
+    result = super(params)
+    if !params[:folder].nil?
+      folders = IdentityFileFolder.where(
+        owner_id: User.current_user.primary_identity.id,
+        id: params[:folder].to_i
+      )
+      if folders.size > 0
+        result.folder = folders.first
+      end
+    end
+    result
+  end
 end
