@@ -1,8 +1,4 @@
 class BloodPressuresController < MyplaceonlineController
-  def model
-    BloodPressure
-  end
-
   protected
     def insecure
       true

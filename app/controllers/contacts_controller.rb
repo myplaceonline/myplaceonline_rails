@@ -1,8 +1,4 @@
 class ContactsController < MyplaceonlineController
-  def model
-    Contact
-  end
-  
   def may_upload
     true
   end

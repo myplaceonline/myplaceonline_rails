@@ -1,8 +1,4 @@
 class TripsController < MyplaceonlineController
-  def model
-    Trip
-  end
-
   def may_upload
     true
   end

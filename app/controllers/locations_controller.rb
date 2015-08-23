@@ -1,8 +1,4 @@
 class LocationsController < MyplaceonlineController
-  def model
-    Location
-  end
-  
   def self.param_names
     [
       :name,

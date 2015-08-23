@@ -1,8 +1,4 @@
 class HobbiesController < MyplaceonlineController
-  def model
-    Hobby
-  end
-
   protected
     def sorts
       ["lower(hobbies.hobby_name) ASC"]

@@ -1,8 +1,4 @@
 class WarrantiesController < MyplaceonlineController
-  def model
-    Warranty
-  end
-  
   protected
     def sorts
       ["lower(warranties.warranty_name) ASC"]

@@ -174,10 +174,6 @@ class PasswordsController < MyplaceonlineController
     end
   end
   
-  def model
-    Password
-  end
-
   def self.param_names
     [
       :name,

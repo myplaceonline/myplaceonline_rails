@@ -1,8 +1,4 @@
 class BankAccountsController < MyplaceonlineController
-  def model
-    BankAccount
-  end
-
   protected
     def sorts
       ["lower(bank_accounts.name) ASC"]

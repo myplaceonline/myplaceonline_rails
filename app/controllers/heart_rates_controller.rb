@@ -1,8 +1,4 @@
 class HeartRatesController < MyplaceonlineController
-  def model
-    HeartRate
-  end
-
   protected
     def insecure
       true

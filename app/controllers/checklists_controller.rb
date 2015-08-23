@@ -1,8 +1,4 @@
 class ChecklistsController < MyplaceonlineController
-  def model
-    Checklist
-  end
-
   def generate
     set_obj
     

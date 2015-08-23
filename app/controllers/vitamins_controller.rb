@@ -1,8 +1,4 @@
 class VitaminsController < MyplaceonlineController
-  def model
-    Vitamin
-  end
-
   protected
     def sorts
       ["lower(vitamins.vitamin_name) ASC"]

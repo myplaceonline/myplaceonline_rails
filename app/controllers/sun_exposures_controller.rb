@@ -1,9 +1,4 @@
 class SunExposuresController < MyplaceonlineController
-  def model
-    SunExposure
-  end
-
-
   protected
     def insecure
       true

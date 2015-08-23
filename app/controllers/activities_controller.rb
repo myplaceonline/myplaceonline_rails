@@ -1,8 +1,4 @@
 class ActivitiesController < MyplaceonlineController
-  def model
-    Activity
-  end
-
   protected
     def insecure
       true

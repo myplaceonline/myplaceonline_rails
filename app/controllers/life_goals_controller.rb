@@ -1,8 +1,4 @@
 class LifeGoalsController < MyplaceonlineController
-  def model
-    LifeGoal
-  end
-
   protected
     def sorts
       ["lower(life_goals.life_goal_name) ASC"]

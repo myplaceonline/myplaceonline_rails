@@ -30,6 +30,10 @@ module MyplaceonlineControllerTest
     raise NotImplementedError
   end
   
+  def model
+    Object.const_get(self.class.name.gsub(/ControllerTest$/, "").singularize)
+  end
+  
   def test_attributes
     raise NotImplementedError
   end

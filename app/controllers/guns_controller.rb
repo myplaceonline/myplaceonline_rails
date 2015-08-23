@@ -1,8 +1,4 @@
 class GunsController < MyplaceonlineController
-  def model
-    Gun
-  end
-
   protected
     def sorts
       ["lower(guns.gun_name) ASC"]

@@ -1,8 +1,4 @@
 class WisdomsController < MyplaceonlineController
-  def model
-    Wisdom
-  end
-
   protected
     def sorts
       ["lower(wisdoms.name) ASC"]

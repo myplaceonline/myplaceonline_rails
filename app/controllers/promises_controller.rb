@@ -1,8 +1,4 @@
 class PromisesController < MyplaceonlineController
-  def model
-    Promise
-  end
-
   protected
     def sorts
       ["promises.due ASC", "lower(promises.name) ASC"]

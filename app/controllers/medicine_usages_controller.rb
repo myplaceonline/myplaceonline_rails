@@ -1,8 +1,4 @@
 class MedicineUsagesController < MyplaceonlineController
-  def model
-    MedicineUsage
-  end
-
   protected
     def insecure
       true

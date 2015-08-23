@@ -1,9 +1,5 @@
 class CompaniesController < MyplaceonlineController
   
-  def model
-    Company
-  end
-  
   def self.param_names(params)
     [
       :name,

@@ -1,8 +1,4 @@
 class RewardProgramsController < MyplaceonlineController
-  def model
-    RewardProgram
-  end
-
   def index
     @program_type = params[:program_type]
     if !@program_type.blank?

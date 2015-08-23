@@ -1,8 +1,4 @@
 class TemperaturesController < MyplaceonlineController
-  def model
-    Temperature
-  end
-
   protected
     def sorts
       ["temperatures.measured DESC"]

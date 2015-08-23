@@ -1,8 +1,4 @@
 class PainsController < MyplaceonlineController
-  def model
-    Pain
-  end
-
   protected
     def insecure
       true

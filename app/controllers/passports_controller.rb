@@ -1,8 +1,4 @@
 class PassportsController < MyplaceonlineController
-  def model
-    Passport
-  end
-
   def may_upload
     true
   end

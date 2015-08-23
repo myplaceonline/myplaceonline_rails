@@ -1,8 +1,4 @@
 class WebsitesController < MyplaceonlineController
-  def model
-    Website
-  end
-
   protected
     def sorts
       ["lower(websites.title) ASC"]

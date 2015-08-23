@@ -1,8 +1,4 @@
 class JobsController < MyplaceonlineController
-  def model
-    Job
-  end
-
   protected
     def sorts
       ["lower(jobs.job_title) ASC"]

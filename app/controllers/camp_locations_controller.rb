@@ -1,9 +1,4 @@
 class CampLocationsController < MyplaceonlineController
-
-  def model
-    CampLocation
-  end
-
   protected
     def sorts
       ["camp_locations.updated_at DESC"]

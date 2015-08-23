@@ -1,8 +1,4 @@
 class HeadachesController < MyplaceonlineController
-  def model
-    Headache
-  end
-
   protected
     def sorts
       ["headaches.started DESC"]

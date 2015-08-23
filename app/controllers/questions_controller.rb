@@ -1,8 +1,4 @@
 class QuestionsController < MyplaceonlineController
-  def model
-    Question
-  end
-
   protected
     def sorts
       ["lower(questions.name) ASC"]

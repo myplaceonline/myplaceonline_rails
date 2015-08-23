@@ -1,8 +1,4 @@
 class FavoriteProductsController < MyplaceonlineController
-  def model
-    FavoriteProduct
-  end
-
   protected
     def sorts
       ["lower(favorite_products.product_name) ASC"]

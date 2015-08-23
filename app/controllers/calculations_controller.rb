@@ -1,8 +1,4 @@
 class CalculationsController < MyplaceonlineController
-  def model
-    Calculation
-  end
-  
   def after_create_or_update
     respond_to do |format|
       format.html {

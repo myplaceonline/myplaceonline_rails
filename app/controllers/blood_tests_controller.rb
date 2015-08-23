@@ -1,8 +1,4 @@
 class BloodTestsController < MyplaceonlineController
-  def model
-    BloodTest
-  end
-
   protected
     def sorts
       ["blood_tests.fast_started DESC"]

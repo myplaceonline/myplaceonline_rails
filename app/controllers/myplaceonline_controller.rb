@@ -160,7 +160,7 @@ class MyplaceonlineController < ApplicationController
   end
     
   def model
-    raise NotImplementedError
+    Object.const_get(self.class.name.gsub(/Controller$/, "").singularize)
   end
   
   def index_path

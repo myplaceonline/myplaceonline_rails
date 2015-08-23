@@ -1,8 +1,4 @@
 class SongsController < MyplaceonlineController
-  def model
-    Song
-  end
-
   protected
     def sorts
       ["lower(songs.song_name) ASC"]

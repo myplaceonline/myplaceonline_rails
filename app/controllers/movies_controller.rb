@@ -1,8 +1,4 @@
 class MoviesController < MyplaceonlineController
-  def model
-    Movie
-  end
-
   protected
     def sorts
       ["lower(movies.name) ASC"]

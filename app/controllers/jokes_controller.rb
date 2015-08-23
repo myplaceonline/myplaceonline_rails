@@ -1,8 +1,4 @@
 class JokesController < MyplaceonlineController
-  def model
-    Joke
-  end
-
   protected
     def sorts
       ["lower(jokes.name) ASC"]

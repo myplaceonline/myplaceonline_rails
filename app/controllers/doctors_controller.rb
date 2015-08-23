@@ -1,8 +1,4 @@
 class DoctorsController < MyplaceonlineController
-  def model
-    Doctor
-  end
-
   protected
     def sorts
       ["doctors.updated_at DESC"]

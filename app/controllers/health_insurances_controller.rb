@@ -1,8 +1,4 @@
 class HealthInsurancesController < MyplaceonlineController
-  def model
-    HealthInsurance
-  end
-
   def index
     @defunct = params[:defunct]
     if !@defunct.blank?

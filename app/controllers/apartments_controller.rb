@@ -1,9 +1,4 @@
 class ApartmentsController < MyplaceonlineController
-  
-  def model
-    Apartment
-  end
-
   def may_upload
     true
   end

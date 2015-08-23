@@ -1,8 +1,4 @@
 class TherapistsController < MyplaceonlineController
-  def model
-    Therapist
-  end
-  
   protected
 
     def sorts

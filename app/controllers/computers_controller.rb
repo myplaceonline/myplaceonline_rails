@@ -1,8 +1,4 @@
 class ComputersController < MyplaceonlineController
-  def model
-    Computer
-  end
-
   protected
     def sorts
       ["lower(computers.computer_model) ASC"]

@@ -1,8 +1,4 @@
 class HeightsController < MyplaceonlineController
-  def model
-    Height
-  end
-
   protected
     def insecure
       true

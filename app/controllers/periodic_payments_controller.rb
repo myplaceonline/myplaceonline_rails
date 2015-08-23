@@ -16,10 +16,6 @@ class PeriodicPaymentsController < MyplaceonlineController
     end
   end
 
-  def model
-    PeriodicPayment
-  end
-
   def self.param_names(params)
     [
       :periodic_payment_name,

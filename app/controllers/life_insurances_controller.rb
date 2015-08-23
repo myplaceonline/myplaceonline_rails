@@ -1,8 +1,4 @@
 class LifeInsurancesController < MyplaceonlineController
-  def model
-    LifeInsurance
-  end
-
   protected
     def sorts
       ["lower(life_insurances.insurance_name) ASC"]

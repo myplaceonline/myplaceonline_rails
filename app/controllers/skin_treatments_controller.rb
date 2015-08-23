@@ -1,8 +1,4 @@
 class SkinTreatmentsController < MyplaceonlineController
-  def model
-    SkinTreatment
-  end
-
   protected
     def sorts
       ["skin_treatments.treatment_time DESC"]

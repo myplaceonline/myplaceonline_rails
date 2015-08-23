@@ -1,8 +1,4 @@
 class AcneMeasurementsController < MyplaceonlineController
-  def model
-    AcneMeasurement
-  end
-  
   def may_upload
     true
   end

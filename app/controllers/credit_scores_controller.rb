@@ -1,8 +1,4 @@
 class CreditScoresController < MyplaceonlineController
-  def model
-    CreditScore
-  end
-
   protected
     def sorts
       ["credit_scores.score_date DESC"]

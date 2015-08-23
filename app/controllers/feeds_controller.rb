@@ -1,8 +1,4 @@
 class FeedsController < MyplaceonlineController
-  def model
-    Feed
-  end
-
   protected
     def sorts
       ["lower(feeds.name) ASC"]

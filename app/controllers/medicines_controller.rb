@@ -1,8 +1,4 @@
 class MedicinesController < MyplaceonlineController
-  def model
-    Medicine
-  end
-
   protected
     def sorts
       ["lower(medicines.medicine_name) ASC"]

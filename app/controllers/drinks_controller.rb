@@ -1,8 +1,4 @@
 class DrinksController < MyplaceonlineController
-  def model
-    Drink
-  end
-  
   protected
     def sorts
       ["lower(drinks.drink_name) ASC"]

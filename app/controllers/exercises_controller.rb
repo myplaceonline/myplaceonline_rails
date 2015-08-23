@@ -1,8 +1,4 @@
 class ExercisesController < MyplaceonlineController
-  def model
-    Exercise
-  end
-
   protected
     def insecure
       true

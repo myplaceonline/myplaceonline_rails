@@ -1,8 +1,4 @@
 class RecreationalVehiclesController < MyplaceonlineController
-  def model
-    RecreationalVehicle
-  end
-
   def may_upload
     true
   end

@@ -1,8 +1,4 @@
 class WeightsController < MyplaceonlineController
-  def model
-    Weight
-  end
-
   protected
     def insecure
       true

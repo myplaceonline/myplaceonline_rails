@@ -1,8 +1,4 @@
 class CalculationFormsController < MyplaceonlineController
-  def model
-    CalculationForm
-  end
-  
   def self.param_names
     [
       :id,

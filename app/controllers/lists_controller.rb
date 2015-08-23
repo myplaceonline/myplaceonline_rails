@@ -1,8 +1,4 @@
 class ListsController < MyplaceonlineController
-  def model
-    List
-  end
-  
   def self.param_names
     [
       :name,

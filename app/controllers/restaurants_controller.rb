@@ -1,10 +1,6 @@
 class RestaurantsController < MyplaceonlineController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:random]
 
-  def model
-    Restaurant
-  end
-
   def random
     @search = params[:search]
     @location = params[:location]

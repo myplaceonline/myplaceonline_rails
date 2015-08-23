@@ -1,8 +1,4 @@
 class SleepMeasurementsController < MyplaceonlineController
-  def model
-    SleepMeasurement
-  end
-
   protected
     def insecure
       true

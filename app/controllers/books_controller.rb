@@ -1,8 +1,4 @@
 class BooksController < MyplaceonlineController
-  def model
-    Book
-  end
-
   protected
     def sorts
       ["lower(books.book_name) ASC"]

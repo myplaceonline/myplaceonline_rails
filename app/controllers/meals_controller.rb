@@ -1,8 +1,4 @@
 class MealsController < MyplaceonlineController
-  def model
-    Meal
-  end
-
   protected
     def insecure
       true

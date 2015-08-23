@@ -1,8 +1,4 @@
 class DiaryEntriesController < MyplaceonlineController
-  def model
-    DiaryEntry
-  end
-
   protected
     def sorts
       ["diary_entries.diary_time DESC"]

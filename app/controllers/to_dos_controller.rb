@@ -1,8 +1,4 @@
 class ToDosController < MyplaceonlineController
-  def model
-    ToDo
-  end
-
   protected
     def sorts
       ["lower(to_dos.short_description) ASC"]
