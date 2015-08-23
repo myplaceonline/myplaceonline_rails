@@ -71,7 +71,6 @@ class MyplaceonlineController < ApplicationController
   def edit
     Myp.ensure_encryption_key(session)
     @url = obj_path(@obj)
-    before_edit
     respond_with(@obj)
   end
 
@@ -130,7 +129,6 @@ class MyplaceonlineController < ApplicationController
 
   def destroy
     Myp.ensure_encryption_key(session)
-    before_destroy
     ActiveRecord::Base.transaction do
       @obj.destroy
       if has_category
@@ -232,12 +230,6 @@ class MyplaceonlineController < ApplicationController
     end
     
     def before_all_actions
-    end
-    
-    def before_edit
-    end
-    
-    def before_destroy
     end
     
     def all

@@ -20,6 +20,14 @@ class Contact < MyplaceonlineIdentityRecord
   has_many :conversations, :dependent => :destroy
   accepts_nested_attributes_for :conversations, allow_destroy: true, reject_if: :all_blank
   
+  before_destroy :check_if_user_contact, prepend: true
+  
+  def check_if_user_contact
+    if identity_id == User.current_user.primary_identity.id
+      raise "Cannot delete own identity"
+    end
+  end
+  
   def all_conversations
     Conversation.where(contact_id: id).order(["conversations.conversation_date DESC"])
   end

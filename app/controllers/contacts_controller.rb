@@ -3,12 +3,6 @@ class ContactsController < MyplaceonlineController
     Contact
   end
   
-  def before_destroy
-    if @obj.identity_id == current_user.primary_identity.id
-      raise "Cannot delete own identity"
-    end
-  end
-  
   def may_upload
     true
   end
@@ -125,10 +119,5 @@ class ContactsController < MyplaceonlineController
           contact_type: @contact_type
         )
       end
-    end
-    
-    def before_all_actions
-      # Create a Contact for the current user identity if it doesn't exist
-      current_user.primary_identity.ensure_contact!
     end
 end
