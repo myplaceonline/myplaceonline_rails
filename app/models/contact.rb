@@ -57,7 +57,7 @@ class Contact < MyplaceonlineActiveRecord
   end
   
   def self.build(params = nil)
-    result = Contact.new(params)
+    result = super(params)
     result.identity = Myp.new_model(Identity)
     result
   end

@@ -11,8 +11,8 @@ class CalculationElement < MyplaceonlineActiveRecord
   
   # t.integer  "operator"
   
-  def self.build
-    new_element = CalculationElement.new
+  def self.build(params = nil)
+    new_element = super(params)
     new_element.left_operand = CalculationOperand.new
     new_element.right_operand = CalculationOperand.new
     new_element

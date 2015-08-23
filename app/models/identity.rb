@@ -1,4 +1,4 @@
-class Identity < ActiveRecord::Base
+class Identity < MyplaceonlineModelBase
   belongs_to :owner, class_name: User
   has_many :passwords, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :identity_files, :foreign_key => 'owner_id', :dependent => :destroy
