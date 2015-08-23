@@ -1,6 +1,7 @@
 <%= render layout: "shared/model_show" do %>
 
   <%= attribute_table_row(t("myplaceonline.musical_groups.musical_group_name"), @obj.musical_group_name) %>
+  <%= attribute_table_row(t("myplaceonline.musical_groups.musical_genre"), @obj.musical_genre) %>
   <%= attribute_table_row_boolean(t("myplaceonline.musical_groups.is_listened_to"), @obj.is_listened_to) %>
   <%= attribute_table_row_boolean(t("myplaceonline.musical_groups.secret"), @obj.secret) %>
   <%= attribute_table_row_boolean(t("myplaceonline.musical_groups.awesome"), @obj.awesome) %>

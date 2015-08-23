@@ -11,7 +11,8 @@ class MusicalGroupsController < MyplaceonlineController
         :is_listened_to,
         :rating,
         :awesome,
-        :secret
+        :secret,
+        :musical_genre
       )
     end
 end
