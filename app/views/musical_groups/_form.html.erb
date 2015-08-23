@@ -1,0 +1,6 @@
+<%= myp_text_field(f, :musical_group_name, "myplaceonline.musical_groups.musical_group_name", obj.musical_group_name, autofocus) %>
+<%= myp_check_box(f, :is_listened_to, "myplaceonline.musical_groups.is_listened_to") %>
+<%= myp_check_box(f, :awesome, "myplaceonline.musical_groups.awesome") %>
+<%= myp_check_box(f, :secret, "myplaceonline.musical_groups.secret") %>
+<%= myp_select(f, :rating, "myplaceonline.musical_groups.rating", Myp.translate_options(Myp::RATINGS), obj.rating) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.musical_groups.notes", obj.notes) %>

@@ -105,6 +105,7 @@ en:
       dental_insurances: "Dental Insurances"
       hobbies: "Hobbies"
       poems: "Poems"
+      musical_groups: "Musical Groups"
     general:
       email: "E-mail"
       password: "Password"
@@ -1241,3 +1242,10 @@ en:
     poems:
       poem_name: "Name"
       poem: "Poem"
+    musical_groups:
+      musical_group_name: "Name"
+      notes: "Notes"
+      is_listened_to: "Listened"
+      rating: "Rating"
+      awesome: "Awesome"
+      secret: "Secret"
