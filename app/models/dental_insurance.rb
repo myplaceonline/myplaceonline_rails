@@ -1,5 +1,6 @@
 class DentalInsurance < MyplaceonlineIdentityRecord
   include AllowExistingConcern
+  include ModelHelpersConcern
   
   validates :insurance_name, presence: true
   
@@ -24,4 +25,5 @@ class DentalInsurance < MyplaceonlineIdentityRecord
   allow_existing :password
   
   attr_accessor :is_defunct
+  boolean_time_transfer :is_defunct, :defunct
 end

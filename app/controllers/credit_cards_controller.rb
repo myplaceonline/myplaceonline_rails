@@ -65,30 +65,6 @@ class CreditCardsController < MyplaceonlineController
       true
     end
 
-    def create_presave
-      if !@obj.name.blank? && !@obj.number.blank? && @obj.number.length >= 4
-        @obj.name += " (" + @obj.number.last(4) + ")"
-      end
-      update_defunct
-    end
-
-    def update_presave
-      update_defunct
-    end
-    
-    def update_defunct
-      if @obj.is_defunct == "1"
-        @obj.defunct = Time.now
-      else
-        @obj.defunct = nil
-      end
-    end
-
-    def before_edit
-      @obj.encrypt = @obj.number_encrypted?
-      @obj.is_defunct = !@obj.defunct.nil?
-    end
-
     def all
       if @defunct.blank? || !@defunct
         model.where("owner_id = ? and defunct is null", current_user.primary_identity)

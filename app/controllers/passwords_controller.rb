@@ -211,26 +211,6 @@ class PasswordsController < MyplaceonlineController
       ["lower(passwords.name) ASC", "lower(passwords.user) ASC"]
     end
 
-    def create_presave
-      update_defunct
-    end
-    
-    def update_presave
-      update_defunct
-    end
-    
-    def update_defunct
-      if @obj.is_defunct == "1"
-        @obj.defunct = Time.now
-      else
-        @obj.defunct = nil
-      end
-    end
-
-    def before_edit
-      @obj.is_defunct = !@obj.defunct.nil?
-    end
-  
     def obj_params
       params.require(:password).permit(
         PasswordsController.param_names

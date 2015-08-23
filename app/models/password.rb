@@ -2,7 +2,8 @@ require 'kramdown'
 
 class Password < MyplaceonlineIdentityRecord
   include EncryptedConcern
-
+  include ModelHelpersConcern
+  
   belongs_to :password_encrypted,
       class_name: EncryptedValue, dependent: :destroy, :autosave => true
   belongs_to_encrypted :password
@@ -15,6 +16,7 @@ class Password < MyplaceonlineIdentityRecord
   validates :name, presence: true
   
   attr_accessor :is_defunct
+  boolean_time_transfer :is_defunct, :defunct
   
   def set_encrypt_for_secrets
     password_secrets.each do |secret|

@@ -30,26 +30,6 @@ class HealthInsurancesController < MyplaceonlineController
       )
     end
 
-    def create_presave
-      update_defunct
-    end
-    
-    def update_presave
-      update_defunct
-    end
-
-    def before_edit
-      @obj.is_defunct = !@obj.defunct.nil?
-    end
-    
-    def update_defunct
-      if @obj.is_defunct == "1"
-        @obj.defunct = Time.now
-      else
-        @obj.defunct = nil
-      end
-    end
-
     def all
       if @defunct.blank? || !@defunct
         model.where("owner_id = ? and defunct is null", current_user.primary_identity)

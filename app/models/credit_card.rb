@@ -1,10 +1,20 @@
 class CreditCard < MyplaceonlineIdentityRecord
   include AllowExistingConcern
   include EncryptedConcern
+  include ModelHelpersConcern
   
   CARD_TYPES = [["myplaceonline.credit_cards.visa", 0], ["myplaceonline.credit_cards.mastercard", 1], ["myplaceonline.credit_cards.amex", 2]]
 
   attr_accessor :is_defunct
+  boolean_time_transfer :is_defunct, :defunct
+  
+  before_validation :process_cc_name
+  
+  def process_cc_name
+    if !self.name.blank? && !self.number.blank? && self.number.length >= 4
+      self.name += " (" + self.number.last(4) + ")"
+    end
+  end
 
   def display(show_default_cashback = true)
     result = name
