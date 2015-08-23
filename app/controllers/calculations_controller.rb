@@ -3,10 +3,6 @@ class CalculationsController < MyplaceonlineController
     Calculation
   end
   
-  def available_forms
-    CalculationForm.where(owner_id: current_user.primary_identity.id, is_duplicate: false)
-  end
-  
   def after_create_or_update
     respond_to do |format|
       format.html {
@@ -20,7 +16,7 @@ class CalculationsController < MyplaceonlineController
   protected
     def new_obj_initialize
       if !params[:form].nil?
-        existing_form = available_forms.find(params[:form].to_i)
+        existing_form = User.current_user.primary_identity.calculation_forms_available.find(params[:form].to_i)
         if !existing_form.nil?
           @obj.original_calculation_form_id = existing_form.id
           create_presave
@@ -36,15 +32,13 @@ class CalculationsController < MyplaceonlineController
       params.require(:calculation).permit(
         :name,
         :original_calculation_form_id,
-        {
-          calculation_form_attributes: CalculationFormsController.param_names
-        }
+        calculation_form_attributes: CalculationFormsController.param_names
       )
     end
 
     def create_presave
       if !@obj.original_calculation_form_id.nil? && @obj.calculation_form.nil?
-        existing_form = available_forms.find(@obj.original_calculation_form_id)
+        existing_form = User.current_user.primary_identity.calculation_forms_available.find(@obj.original_calculation_form_id)
         new_inputs = existing_form.calculation_inputs.map{|calculation_input| calculation_input.dup}
         @obj.calculation_form = existing_form.dup
         @obj.calculation_form.calculation_inputs = new_inputs

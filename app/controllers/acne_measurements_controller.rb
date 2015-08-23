@@ -35,10 +35,6 @@ class AcneMeasurementsController < MyplaceonlineController
       )
     end
     
-    def new_obj_initialize
-      @obj.measurement_datetime = DateTime.now
-    end
-
     def presave
       @obj.acne_measurement_pictures.each do |pic|
         if pic.identity_file.folder.nil?

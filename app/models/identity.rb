@@ -23,6 +23,11 @@ class Identity < MyplaceonlineModelBase
   has_many :ideas, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :lists, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :calculation_forms, :foreign_key => 'owner_id', :dependent => :destroy
+  
+  def calculation_forms_available
+    CalculationForm.where(owner_id: id, is_duplicate: false)
+  end
+  
   has_many :calculations, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :vehicles, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :questions, :foreign_key => 'owner_id', :dependent => :destroy

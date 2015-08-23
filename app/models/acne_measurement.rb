@@ -14,4 +14,10 @@ class AcneMeasurement < MyplaceonlineIdentityRecord
     result += " (" + Myp.display_datetime(measurement_datetime, User.current_user) + ")"
     result
   end
+  
+  def self.build(params = nil)
+    result = super(params)
+    result.measurement_datetime = DateTime.now
+    result
+  end
 end
