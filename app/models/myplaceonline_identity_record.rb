@@ -24,4 +24,12 @@ class MyplaceonlineIdentityRecord < MyplaceonlineModelBase
       raise "owner= not found"
     end
   end
+  
+  def put_pictures_in_folder(pictures_name, folders)
+    self.send("#{pictures_name}").each do |pic|
+      if pic.identity_file.folder.nil?
+        pic.identity_file.folder = IdentityFileFolder.find_or_create(folders)
+      end
+    end
+  end
 end
