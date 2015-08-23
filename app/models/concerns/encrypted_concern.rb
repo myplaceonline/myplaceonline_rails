@@ -4,7 +4,16 @@ module EncryptedConcern extend ActiveSupport::Concern
       def belongs_to_encrypted(name)
         
         if !respond_to?(:encrypt)
-          attr_accessor :encrypt
+          define_method("encrypt") do
+            if @encrypt.nil?
+              @encrypt = send("#{name}_encrypted?")
+            end
+            @encrypt
+          end
+          
+          define_method("encrypt=") do |newvalue|
+            @encrypt = newvalue
+          end
         end
         
         define_method("#{name}_encrypted?") do

@@ -5,6 +5,7 @@ class PasswordSecret < MyplaceonlineIdentityRecord
   belongs_to :answer_encrypted,
       class_name: EncryptedValue, dependent: :destroy, :autosave => true
   belongs_to_encrypted :answer
+  before_validation :answer_finalize
 
   def as_json(options={})
     if answer_encrypted?

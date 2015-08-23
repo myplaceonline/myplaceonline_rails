@@ -121,7 +121,7 @@ class PasswordsController < MyplaceonlineController
               password.owner_id = current_user.primary_identity.id
 
               password.password = s.cell(i, colindices[:password_column]).to_s
-              password.password_finalize(@encrypt)
+              password.encrypt = @encrypt
 
               password.name = s.cell(i, colindices[:service_name_column]).to_s
               if !colindices[:user_name_column].nil?
@@ -212,19 +212,10 @@ class PasswordsController < MyplaceonlineController
     end
 
     def create_presave
-      @obj.password_finalize
       update_defunct
     end
     
     def update_presave
-      @obj.password_finalize
-      @obj.password_secrets.each {
-        |secret|
-        if !secret.password.nil?
-          authorize! :manage, secret.password
-        end
-        secret.answer_finalize
-      }
       update_defunct
     end
     
@@ -237,7 +228,6 @@ class PasswordsController < MyplaceonlineController
     end
 
     def before_edit
-      @obj.encrypt = @obj.password_encrypted?
       @obj.is_defunct = !@obj.defunct.nil?
     end
   
@@ -261,7 +251,7 @@ class PasswordsController < MyplaceonlineController
         secret.password = password
         secret.question = s.cell(i, colindices[question_col]).to_s
         secret.answer = s.cell(i, colindices[answer_col]).to_s
-        secret.answer_finalize(encrypt)
+        secret.encrypt = encrypt
       end
     end
 

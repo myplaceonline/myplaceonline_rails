@@ -6,6 +6,8 @@ class Password < MyplaceonlineIdentityRecord
   belongs_to :password_encrypted,
       class_name: EncryptedValue, dependent: :destroy, :autosave => true
   belongs_to_encrypted :password
+  before_validation :password_finalize
+  before_validation :set_encrypt_for_secrets
   
   has_many :password_secrets, :dependent => :destroy
   accepts_nested_attributes_for :password_secrets, allow_destroy: true, reject_if: :all_blank
@@ -13,6 +15,12 @@ class Password < MyplaceonlineIdentityRecord
   validates :name, presence: true
   
   attr_accessor :is_defunct
+  
+  def set_encrypt_for_secrets
+    password_secrets.each do |secret|
+      secret.encrypt = encrypt
+    end
+  end
 
   def get_url(prefertls = true)
     result = url
