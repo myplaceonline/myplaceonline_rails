@@ -1,4 +1,4 @@
-class Calculation < MyplaceonlineActiveRecord
+class Calculation < MyplaceonlineIdentityRecord
   validates :name, presence: true
   
   belongs_to :calculation_form, dependent: :destroy, :autosave => true

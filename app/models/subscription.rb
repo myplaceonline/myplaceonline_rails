@@ -1,4 +1,4 @@
-class Subscription < MyplaceonlineActiveRecord
+class Subscription < MyplaceonlineIdentityRecord
   validates :name, presence: true
   
   def display

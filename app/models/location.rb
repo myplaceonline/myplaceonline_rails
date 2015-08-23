@@ -1,5 +1,5 @@
 # `region` is country, `sub_region1` is state, and `sub_region2` is city.
-class Location < MyplaceonlineActiveRecord
+class Location < MyplaceonlineIdentityRecord
   validate :at_least_one
   
   has_many :location_phones, :dependent => :destroy

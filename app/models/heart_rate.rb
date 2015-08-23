@@ -1,4 +1,4 @@
-class HeartRate < MyplaceonlineActiveRecord
+class HeartRate < MyplaceonlineIdentityRecord
   validates :beats, presence: true
   validates :measurement_date, presence: true
   

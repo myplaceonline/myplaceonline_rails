@@ -1,4 +1,4 @@
-class Cashback < MyplaceonlineActiveRecord
+class Cashback < MyplaceonlineIdentityRecord
   validates :cashback_percentage, presence: true
 
   def self.params

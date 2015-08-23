@@ -1,4 +1,4 @@
-class Idea < MyplaceonlineActiveRecord
+class Idea < MyplaceonlineIdentityRecord
   validates :name, presence: true
   
   def display

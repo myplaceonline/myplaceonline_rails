@@ -1,4 +1,4 @@
-class Computer < MyplaceonlineActiveRecord
+class Computer < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   validates :computer_model, presence: true

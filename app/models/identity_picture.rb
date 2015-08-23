@@ -1,4 +1,4 @@
-class IdentityPicture < MyplaceonlineActiveRecord
+class IdentityPicture < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   belongs_to :identity, class_name: Identity

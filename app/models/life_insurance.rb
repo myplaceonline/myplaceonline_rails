@@ -1,4 +1,4 @@
-class LifeInsurance < MyplaceonlineActiveRecord
+class LifeInsurance < MyplaceonlineIdentityRecord
   include AllowExistingConcern
   
   LIFE_INSURANCE_TYPES = [

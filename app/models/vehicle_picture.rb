@@ -1,4 +1,4 @@
-class VehiclePicture < MyplaceonlineActiveRecord
+class VehiclePicture < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   belongs_to :vehicle

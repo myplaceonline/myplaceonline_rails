@@ -1,4 +1,4 @@
-class Activity < MyplaceonlineActiveRecord
+class Activity < MyplaceonlineIdentityRecord
   validates :name, presence: true
   
   def display

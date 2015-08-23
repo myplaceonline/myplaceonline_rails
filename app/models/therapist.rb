@@ -1,4 +1,4 @@
-class Therapist < MyplaceonlineActiveRecord
+class Therapist < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   validates :contact, presence: true

@@ -1,4 +1,4 @@
-class Drink < MyplaceonlineActiveRecord
+class Drink < MyplaceonlineIdentityRecord
   validates :drink_name, presence: true
 
   def display

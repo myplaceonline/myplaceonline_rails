@@ -1,4 +1,4 @@
-class Joke < MyplaceonlineActiveRecord
+class Joke < MyplaceonlineIdentityRecord
   validates :name, presence: true
   
   def display

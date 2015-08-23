@@ -1,4 +1,4 @@
-class Meal < MyplaceonlineActiveRecord
+class Meal < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   validates :meal_time, presence: true

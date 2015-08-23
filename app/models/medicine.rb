@@ -1,4 +1,4 @@
-class Medicine < MyplaceonlineActiveRecord
+class Medicine < MyplaceonlineIdentityRecord
   validates :medicine_name, presence: true
   
   def display

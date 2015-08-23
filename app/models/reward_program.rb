@@ -1,4 +1,4 @@
-class RewardProgram < MyplaceonlineActiveRecord
+class RewardProgram < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   REWARD_PROGRAM_TYPES = [

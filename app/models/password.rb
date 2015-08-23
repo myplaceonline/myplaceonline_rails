@@ -1,6 +1,6 @@
 require 'kramdown'
 
-class Password < MyplaceonlineActiveRecord
+class Password < MyplaceonlineIdentityRecord
   include EncryptedConcern
 
   belongs_to :password_encrypted,

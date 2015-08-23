@@ -1,4 +1,4 @@
-class VehicleLoan < MyplaceonlineActiveRecord
+class VehicleLoan < MyplaceonlineIdentityRecord
   belongs_to :vehicle
 
   belongs_to :loan, :dependent => :destroy

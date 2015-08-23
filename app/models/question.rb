@@ -1,4 +1,4 @@
-class Question < MyplaceonlineActiveRecord
+class Question < MyplaceonlineIdentityRecord
   validates :name, presence: true
   
   has_many :hypotheses, :dependent => :destroy

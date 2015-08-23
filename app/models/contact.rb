@@ -1,4 +1,4 @@
-class Contact < MyplaceonlineActiveRecord
+class Contact < MyplaceonlineIdentityRecord
 
   CONTACT_TYPES = [
     ["myplaceonline.contacts.best_friend", 0],

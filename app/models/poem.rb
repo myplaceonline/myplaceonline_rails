@@ -1,4 +1,4 @@
-class Poem < MyplaceonlineActiveRecord
+class Poem < MyplaceonlineIdentityRecord
   validates :poem_name, presence: true
   
   def display

@@ -1,4 +1,4 @@
-class Warranty < MyplaceonlineActiveRecord
+class Warranty < MyplaceonlineIdentityRecord
   validates :warranty_name, presence: true
   
   def display

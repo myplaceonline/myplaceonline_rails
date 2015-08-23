@@ -1,4 +1,4 @@
-class Height < MyplaceonlineActiveRecord
+class Height < MyplaceonlineIdentityRecord
   validates :height_amount, presence: true
   validates :amount_type, presence: true
   validates :measurement_date, presence: true

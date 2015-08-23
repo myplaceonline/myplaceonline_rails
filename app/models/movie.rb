@@ -1,4 +1,4 @@
-class Movie < MyplaceonlineActiveRecord
+class Movie < MyplaceonlineIdentityRecord
   validates :name, presence: true
   attr_accessor :is_watched
   

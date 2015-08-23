@@ -1,4 +1,4 @@
-class HypothesisExperiment < MyplaceonlineActiveRecord
+class HypothesisExperiment < MyplaceonlineIdentityRecord
   belongs_to :hypothesis
 
   validates :name, presence: true

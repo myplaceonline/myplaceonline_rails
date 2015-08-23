@@ -1,4 +1,4 @@
-class VehicleWarranty < MyplaceonlineActiveRecord
+class VehicleWarranty < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   belongs_to :vehicle

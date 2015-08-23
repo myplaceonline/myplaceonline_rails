@@ -1,4 +1,4 @@
-class Vitamin < MyplaceonlineActiveRecord
+class Vitamin < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   validates :vitamin_name, presence: true

@@ -1,4 +1,4 @@
-class PeriodicPayment < MyplaceonlineActiveRecord
+class PeriodicPayment < MyplaceonlineIdentityRecord
   validates :periodic_payment_name, presence: true
   
   def display

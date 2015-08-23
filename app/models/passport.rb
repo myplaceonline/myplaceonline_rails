@@ -1,4 +1,4 @@
-class Passport < MyplaceonlineActiveRecord
+class Passport < MyplaceonlineIdentityRecord
   validates :region, presence: true
   validates :passport_number, presence: true
   

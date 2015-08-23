@@ -1,4 +1,4 @@
-class Feed < MyplaceonlineActiveRecord
+class Feed < MyplaceonlineIdentityRecord
   validates :name, presence: true
   validates :url, presence: true
   

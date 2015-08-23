@@ -1,4 +1,4 @@
-class FavoriteProduct < MyplaceonlineActiveRecord
+class FavoriteProduct < MyplaceonlineIdentityRecord
   validates :product_name, presence: true
   
   def display

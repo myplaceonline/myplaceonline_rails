@@ -1,4 +1,4 @@
-class List < MyplaceonlineActiveRecord
+class List < MyplaceonlineIdentityRecord
   validates :name, presence: true
 
   has_many :list_items, :foreign_key => 'list_id', :dependent => :destroy

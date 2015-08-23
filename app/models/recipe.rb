@@ -1,4 +1,4 @@
-class Recipe < MyplaceonlineActiveRecord
+class Recipe < MyplaceonlineIdentityRecord
   validates :name, presence: true
   
   def display

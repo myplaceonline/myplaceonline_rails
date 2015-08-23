@@ -1,4 +1,4 @@
-class MedicineUsageMedicine < MyplaceonlineActiveRecord
+class MedicineUsageMedicine < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   belongs_to :medicine_usage

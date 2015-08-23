@@ -1,4 +1,4 @@
-class VitaminIngredient < MyplaceonlineActiveRecord
+class VitaminIngredient < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   belongs_to :parent_food, class_name: Food

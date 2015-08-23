@@ -1,4 +1,4 @@
-class BloodConcentration < MyplaceonlineActiveRecord
+class BloodConcentration < MyplaceonlineIdentityRecord
   validates :concentration_name, presence: true
   
   def display

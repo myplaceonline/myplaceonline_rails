@@ -1,4 +1,4 @@
-class MealDrink < MyplaceonlineActiveRecord
+class MealDrink < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   belongs_to :meal

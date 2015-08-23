@@ -1,4 +1,4 @@
-class Job < MyplaceonlineActiveRecord
+class Job < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   validates :job_title, presence: true

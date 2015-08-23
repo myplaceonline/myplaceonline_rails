@@ -1,4 +1,4 @@
-class Website < MyplaceonlineActiveRecord
+class Website < MyplaceonlineIdentityRecord
   validates :url, presence: true
   
   def display

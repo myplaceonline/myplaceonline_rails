@@ -1,4 +1,4 @@
-class Checklist < MyplaceonlineActiveRecord
+class Checklist < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   validates :checklist_name, presence: true

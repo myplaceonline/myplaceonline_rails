@@ -1,4 +1,4 @@
-class Promise < MyplaceonlineActiveRecord
+class Promise < MyplaceonlineIdentityRecord
   validates :name, presence: true
   
   def display

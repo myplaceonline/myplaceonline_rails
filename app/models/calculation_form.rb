@@ -1,4 +1,4 @@
-class CalculationForm < MyplaceonlineActiveRecord
+class CalculationForm < MyplaceonlineIdentityRecord
   validates :name, presence: true
   validates :equation, presence: true
   

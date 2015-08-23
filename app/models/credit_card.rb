@@ -1,4 +1,4 @@
-class CreditCard < MyplaceonlineActiveRecord
+class CreditCard < MyplaceonlineIdentityRecord
   include AllowExistingConcern
   include EncryptedConcern
   

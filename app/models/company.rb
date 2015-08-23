@@ -1,4 +1,4 @@
-class Company < MyplaceonlineActiveRecord
+class Company < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   validates :name, presence: true

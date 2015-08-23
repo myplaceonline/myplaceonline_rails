@@ -1,4 +1,4 @@
-class RecreationalVehiclePicture < MyplaceonlineActiveRecord
+class RecreationalVehiclePicture < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   belongs_to :recreational_vehicle

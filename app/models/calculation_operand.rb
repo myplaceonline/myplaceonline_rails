@@ -1,4 +1,4 @@
-class CalculationOperand < MyplaceonlineActiveRecord
+class CalculationOperand < MyplaceonlineIdentityRecord
   # Recursive operand
   belongs_to :calculation_element
   accepts_nested_attributes_for :calculation_element, reject_if: :all_blank

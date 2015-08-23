@@ -1,4 +1,4 @@
-class Hypothesis < MyplaceonlineActiveRecord
+class Hypothesis < MyplaceonlineIdentityRecord
   belongs_to :question
 
   validates :name, presence: true

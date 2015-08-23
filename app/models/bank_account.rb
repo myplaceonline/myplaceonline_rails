@@ -1,4 +1,4 @@
-class BankAccount < MyplaceonlineActiveRecord
+class BankAccount < MyplaceonlineIdentityRecord
   include AllowExistingConcern
   include EncryptedConcern
 

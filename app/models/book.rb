@@ -1,4 +1,4 @@
-class Book < MyplaceonlineActiveRecord
+class Book < MyplaceonlineIdentityRecord
   validates :book_name, presence: true
   attr_accessor :is_read
   

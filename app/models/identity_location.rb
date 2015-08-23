@@ -1,4 +1,4 @@
-class IdentityLocation < MyplaceonlineActiveRecord
+class IdentityLocation < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   belongs_to :identity, class_name: Identity

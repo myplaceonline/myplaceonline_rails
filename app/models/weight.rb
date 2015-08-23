@@ -1,4 +1,4 @@
-class Weight < MyplaceonlineActiveRecord
+class Weight < MyplaceonlineIdentityRecord
   validates :amount, presence: true
   validates :amount_type, presence: true
   validates :measure_date, presence: true

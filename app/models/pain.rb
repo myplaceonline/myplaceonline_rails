@@ -1,4 +1,4 @@
-class Pain < MyplaceonlineActiveRecord
+class Pain < MyplaceonlineIdentityRecord
   validates :pain_start_time, presence: true
   
   def display

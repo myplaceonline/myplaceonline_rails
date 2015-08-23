@@ -1,4 +1,4 @@
-class SunExposure < MyplaceonlineActiveRecord
+class SunExposure < MyplaceonlineIdentityRecord
   validates :exposure_start, presence: true
   
   def display

@@ -1,4 +1,4 @@
-class MedicineUsage < MyplaceonlineActiveRecord
+class MedicineUsage < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   validates :usage_time, presence: true

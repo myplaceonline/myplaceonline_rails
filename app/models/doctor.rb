@@ -1,4 +1,4 @@
-class Doctor < MyplaceonlineActiveRecord
+class Doctor < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   DOCTOR_TYPES = [

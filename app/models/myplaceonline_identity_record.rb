@@ -1,4 +1,4 @@
-class MyplaceonlineActiveRecord < MyplaceonlineModelBase
+class MyplaceonlineIdentityRecord < MyplaceonlineModelBase
   self.abstract_class = true
   
   belongs_to :owner, class_name: Identity

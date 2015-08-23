@@ -1,4 +1,4 @@
-class IdentityFileFolder < MyplaceonlineActiveRecord
+class IdentityFileFolder < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   belongs_to :parent_folder, class_name: IdentityFileFolder

@@ -1,4 +1,4 @@
-class ToDo < MyplaceonlineActiveRecord
+class ToDo < MyplaceonlineIdentityRecord
   validates :short_description, presence: true
   
   def display

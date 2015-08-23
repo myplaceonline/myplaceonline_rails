@@ -1,4 +1,4 @@
-class HealthInsurance < MyplaceonlineActiveRecord
+class HealthInsurance < MyplaceonlineIdentityRecord
   include AllowExistingConcern
   
   validates :insurance_name, presence: true

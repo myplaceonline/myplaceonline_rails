@@ -1,4 +1,4 @@
-class IdentityFile < MyplaceonlineActiveRecord
+class IdentityFile < MyplaceonlineIdentityRecord
   include AllowExistingConcern
   
   before_update :do_before_update

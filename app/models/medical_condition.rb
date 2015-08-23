@@ -1,4 +1,4 @@
-class MedicalCondition < MyplaceonlineActiveRecord
+class MedicalCondition < MyplaceonlineIdentityRecord
   validates :medical_condition_name, presence: true
   
   def display

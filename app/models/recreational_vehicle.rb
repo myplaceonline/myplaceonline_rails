@@ -1,4 +1,4 @@
-class RecreationalVehicle < MyplaceonlineActiveRecord
+class RecreationalVehicle < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   validates :rv_name, presence: true

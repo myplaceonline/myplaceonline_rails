@@ -1,4 +1,4 @@
-class Gun < MyplaceonlineActiveRecord
+class Gun < MyplaceonlineIdentityRecord
   validates :gun_name, presence: true
   
   def display

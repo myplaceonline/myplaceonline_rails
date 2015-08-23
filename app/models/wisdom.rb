@@ -1,4 +1,4 @@
-class Wisdom < MyplaceonlineActiveRecord
+class Wisdom < MyplaceonlineIdentityRecord
   validates :name, presence: true
   
   def display

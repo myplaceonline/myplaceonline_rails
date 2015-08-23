@@ -1,4 +1,4 @@
-class IdentityDriversLicense < MyplaceonlineActiveRecord
+class IdentityDriversLicense < MyplaceonlineIdentityRecord
   belongs_to :identity, class_name: Identity
   
   validates :identifier, presence: true

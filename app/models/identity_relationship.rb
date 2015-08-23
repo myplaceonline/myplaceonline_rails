@@ -1,4 +1,4 @@
-class IdentityRelationship < MyplaceonlineActiveRecord
+class IdentityRelationship < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   RELATIONSHIPS = [

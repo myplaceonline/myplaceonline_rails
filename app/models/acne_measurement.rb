@@ -1,4 +1,4 @@
-class AcneMeasurement < MyplaceonlineActiveRecord
+class AcneMeasurement < MyplaceonlineIdentityRecord
   validates :measurement_datetime, presence: true
   
   has_many :acne_measurement_pictures, :dependent => :destroy

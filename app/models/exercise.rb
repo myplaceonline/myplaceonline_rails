@@ -1,4 +1,4 @@
-class Exercise < MyplaceonlineActiveRecord
+class Exercise < MyplaceonlineIdentityRecord
   validates :exercise_start, presence: true
   
   def display

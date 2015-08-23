@@ -1,4 +1,4 @@
-class MedicalConditionInstance < MyplaceonlineActiveRecord
+class MedicalConditionInstance < MyplaceonlineIdentityRecord
   belongs_to :medical_condition
   validates :condition_start, presence: true
   

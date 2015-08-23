@@ -1,4 +1,4 @@
-class PasswordSecret < MyplaceonlineActiveRecord
+class PasswordSecret < MyplaceonlineIdentityRecord
   include EncryptedConcern
 
   belongs_to :password

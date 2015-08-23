@@ -1,4 +1,4 @@
-class RecreationalVehicleMeasurement < MyplaceonlineActiveRecord
+class RecreationalVehicleMeasurement < MyplaceonlineIdentityRecord
   belongs_to :recreational_vehicle
 
   validates :measurement_name, presence: true

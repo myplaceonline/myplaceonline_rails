@@ -1,4 +1,4 @@
-class CreditScore < MyplaceonlineActiveRecord
+class CreditScore < MyplaceonlineIdentityRecord
   validates :score_date, presence: true
   validates :score, presence: true
   

@@ -1,4 +1,4 @@
-class DiaryEntry < MyplaceonlineActiveRecord
+class DiaryEntry < MyplaceonlineIdentityRecord
   validates :diary_time, presence: true
   validates :entry, presence: true
   

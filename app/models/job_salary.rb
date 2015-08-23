@@ -1,4 +1,4 @@
-class JobSalary < MyplaceonlineActiveRecord
+class JobSalary < MyplaceonlineIdentityRecord
   belongs_to :job
   
   validates :started, presence: true

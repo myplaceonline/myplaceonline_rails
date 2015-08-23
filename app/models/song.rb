@@ -1,4 +1,4 @@
-class Song < MyplaceonlineActiveRecord
+class Song < MyplaceonlineIdentityRecord
   validates :song_name, presence: true
   
   def display

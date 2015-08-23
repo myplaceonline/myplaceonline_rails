@@ -1,4 +1,4 @@
-class SleepMeasurement < MyplaceonlineActiveRecord
+class SleepMeasurement < MyplaceonlineIdentityRecord
   validates :sleep_start_time, presence: true
   
   def display

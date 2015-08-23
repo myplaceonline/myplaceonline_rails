@@ -1,4 +1,4 @@
-class Loan < MyplaceonlineActiveRecord
+class Loan < MyplaceonlineIdentityRecord
   validates :lender, presence: true
 
   def self.params

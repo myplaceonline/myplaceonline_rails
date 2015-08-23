@@ -1,4 +1,4 @@
-class Promotion < MyplaceonlineActiveRecord
+class Promotion < MyplaceonlineIdentityRecord
   validates :promotion_name, presence: true
   
   def display

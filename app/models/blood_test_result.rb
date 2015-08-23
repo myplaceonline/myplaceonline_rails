@@ -1,4 +1,4 @@
-class BloodTestResult < MyplaceonlineActiveRecord
+class BloodTestResult < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   belongs_to :blood_test

@@ -1,4 +1,4 @@
-class Headache < MyplaceonlineActiveRecord
+class Headache < MyplaceonlineIdentityRecord
   validates :started, presence: true
   
   def display

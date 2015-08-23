@@ -1,4 +1,4 @@
-class ChecklistItem < MyplaceonlineActiveRecord
+class ChecklistItem < MyplaceonlineIdentityRecord
   belongs_to :checklist
 
   validates :checklist_item_name, presence: true
