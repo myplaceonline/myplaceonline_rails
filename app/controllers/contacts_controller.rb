@@ -24,6 +24,12 @@ class ContactsController < MyplaceonlineController
   def self.param_names
     [
       :contact_type,
+      conversations_attributes: [
+        :id,
+        :conversation,
+        :conversation_date,
+        :_destroy
+      ],
       identity_attributes: [
         :id,
         :name,
@@ -104,13 +110,7 @@ class ContactsController < MyplaceonlineController
 
     def obj_params
       params.require(:contact).permit(
-        ContactsController.param_names,
-        conversations_attributes: [
-          :id,
-          :conversation,
-          :conversation_date,
-          :_destroy
-        ]
+        ContactsController.param_names
       )
     end
 
