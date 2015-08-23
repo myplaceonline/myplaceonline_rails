@@ -1,17 +1,17 @@
 <% content_for :heading do -%><%= t('myplaceonline.random.activity') %><% end -%>
 <h1><%= t('myplaceonline.random.activity') %></h1>
 <%= flashes! %>
-<%= form_tag random_activity_path do |f| %>
-
-  <%= submit_tag t("myplaceonline.random.new_activity") %>
-<% end %>
 <% if !@result.nil? %>
   <ul data-role="listview" data-inset="true">
     <li>
       <%= link_to(@result_link) do %>
         <%= image_tag(@category.icon, size: "16x16", class: "ui-li-icon") %>
-        <%= @result.display %>
+        <%= Myp.instance_to_category_human_readable(@result).singularize + ": " + @result.display %>
       <% end %>
     </li>
   </ul>
+<% end %>
+
+<%= form_tag random_activity_path do |f| %>
+  <%= submit_tag t("myplaceonline.random.new_activity") %>
 <% end %>

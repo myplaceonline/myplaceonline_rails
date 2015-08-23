@@ -978,5 +978,18 @@ module Myp
       puts "Could not send email. Subject: " + subject + ", Body: " + body + ", Email Problem: " + Myp.error_details(e)
     end
   end
-
+  
+  def self.instance_to_category(obj)
+    search = obj.class.name.pluralize.underscore
+    Category.all.each do |category|
+      if category.name == search
+        return category
+      end
+    end
+    raise "Could not find category from " + search
+  end
+  
+  def self.instance_to_category_human_readable(obj)
+    Myp.instance_to_category(obj).human_title
+  end
 end
