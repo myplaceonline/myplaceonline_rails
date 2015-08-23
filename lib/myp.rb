@@ -213,7 +213,7 @@ module Myp
         SELECT category_points_amounts.*, categories.name as category_name, categories.icon as category_icon, categories.additional_filtertext as category_additional_filtertext, categories.link as category_link, categories.parent_id as category_parent_id, 0 as select_type
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
-        WHERE #{ explicit_check } categories.parent_id IS NOT NULL AND category_points_amounts.owner_id = #{
+        WHERE category_points_amounts.last_visit IS NOT NULL AND #{ explicit_check } categories.parent_id IS NOT NULL AND category_points_amounts.owner_id = #{
                 CategoryPointsAmount.sanitize(user.primary_identity.id)
               }
         ORDER BY category_points_amounts.last_visit DESC
@@ -224,7 +224,7 @@ module Myp
         SELECT category_points_amounts.*, categories.name as category_name, categories.icon as category_icon, categories.additional_filtertext as category_additional_filtertext, categories.link as category_link, categories.parent_id as category_parent_id, 1 as select_type
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
-        WHERE #{ explicit_check } categories.parent_id IS NOT NULL AND category_points_amounts.owner_id = #{
+        WHERE category_points_amounts.visits IS NOT NULL AND #{ explicit_check } categories.parent_id IS NOT NULL AND category_points_amounts.owner_id = #{
                 CategoryPointsAmount.sanitize(user.primary_identity.id)
               }
         ORDER BY category_points_amounts.visits DESC
