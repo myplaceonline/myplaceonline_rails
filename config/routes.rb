@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :poems
+  post 'poems/new'
+
   resources :hobbies
   post 'hobbies/new'
 

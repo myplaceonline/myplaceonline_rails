@@ -104,6 +104,7 @@ en:
       doctors: "Doctors"
       dental_insurances: "Dental Insurances"
       hobbies: "Hobbies"
+      poems: "Poems"
     general:
       email: "E-mail"
       password: "Password"
@@ -1234,3 +1235,6 @@ en:
     hobbies:
       hobby_name: "Name"
       notes: "Notes"
+    poems:
+      poem_name: "Name"
+      poem: "Poem"

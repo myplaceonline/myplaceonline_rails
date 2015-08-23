@@ -1,13 +1,13 @@
 require 'test_helper'
 
-class TherapistsControllerTest < ActionController::TestCase
+class PoemsControllerTest < ActionController::TestCase
   include MyplaceonlineControllerTest
   
   def model
-    Therapist
+    Poem
   end
   
   def test_attributes
-    {  }
+    { poem_name: "test" }
   end
 end

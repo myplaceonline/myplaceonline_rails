@@ -1,0 +1,6 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.poems.poem_name"), @obj.poem_name) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.poems.poem"), @obj.poem) %>
+  
+<% end %>
