@@ -1250,3 +1250,11 @@ en:
       awesome: "Awesome"
       secret: "Secret"
       musical_genre: "Genre"
+    gun_registrations:
+      gun_registrations: "Gun Registrations"
+      gun_registration: "Gun Registration"
+      location: "Location"
+      registered: "Registered"
+      expires: "Expires"
+      add: "Add Gun Registration"
+      delete: "Delete Gun Registration"

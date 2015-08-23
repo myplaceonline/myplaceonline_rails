@@ -13,7 +13,14 @@ class GunsController < MyplaceonlineController
         :max_bullets,
         :price,
         :purchased,
-        :notes
+        :notes,
+        gun_registrations_attributes: [
+          :id,
+          :_destroy,
+          :registered,
+          :expires,
+          location_attributes: LocationsController.param_names + [:id, :_destroy]
+        ],
       )
     end
 end
