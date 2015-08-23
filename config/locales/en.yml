@@ -505,6 +505,7 @@ en:
       start_date: "Start Date"
       end_date: "End Date"
       notes: "Notes"
+      periodic_payment: "Periodic Payment"
     credit_scores:
       score_date: "Score Date"
       score: "Score"
