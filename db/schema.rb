@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150822160224) do
+ActiveRecord::Schema.define(version: 20150823111206) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -528,7 +528,7 @@ ActiveRecord::Schema.define(version: 20150822160224) do
   add_index "drinks", ["owner_id"], name: "index_drinks_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -1435,61 +1435,16 @@ ActiveRecord::Schema.define(version: 20150822160224) do
 
   add_index "temperatures", ["owner_id"], name: "index_temperatures_on_owner_id", using: :btree
 
-  create_table "therapist_conversations", force: true do |t|
-    t.integer  "owner_id"
-    t.integer  "therapist_id"
-    t.text     "conversation"
-    t.date     "conversation_date"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "therapist_conversations", ["owner_id"], name: "index_therapist_conversations_on_owner_id", using: :btree
-  add_index "therapist_conversations", ["therapist_id"], name: "index_therapist_conversations_on_therapist_id", using: :btree
-
-  create_table "therapist_emails", force: true do |t|
-    t.integer  "therapist_id"
-    t.integer  "owner_id"
-    t.string   "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "therapist_emails", ["owner_id"], name: "index_therapist_emails_on_owner_id", using: :btree
-  add_index "therapist_emails", ["therapist_id"], name: "index_therapist_emails_on_therapist_id", using: :btree
-
-  create_table "therapist_locations", force: true do |t|
-    t.integer  "owner_id"
-    t.integer  "therapist_id"
-    t.integer  "location_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "therapist_locations", ["location_id"], name: "index_therapist_locations_on_location_id", using: :btree
-  add_index "therapist_locations", ["owner_id"], name: "index_therapist_locations_on_owner_id", using: :btree
-  add_index "therapist_locations", ["therapist_id"], name: "index_therapist_locations_on_therapist_id", using: :btree
-
-  create_table "therapist_phones", force: true do |t|
-    t.integer  "owner_id"
-    t.integer  "therapist_id"
-    t.string   "number"
-    t.integer  "phone_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "therapist_phones", ["owner_id"], name: "index_therapist_phones_on_owner_id", using: :btree
-  add_index "therapist_phones", ["therapist_id"], name: "index_therapist_phones_on_therapist_id", using: :btree
-
   create_table "therapists", force: true do |t|
     t.string   "name"
     t.text     "notes"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "contact_id"
   end
 
+  add_index "therapists", ["contact_id"], name: "index_therapists_on_contact_id", using: :btree
   add_index "therapists", ["owner_id"], name: "index_therapists_on_owner_id", using: :btree
 
   create_table "to_dos", force: true do |t|

@@ -1,19 +1,5 @@
 <%= render layout: "shared/model_show" do %>
 
-  <%= attribute_table_row(t("myplaceonline.therapists.name"), @obj.name) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.therapists.notes"), @obj.notes) %>
-  <% @obj.all_conversations.each do |conversation| %>
-    <%= attribute_table_row_markdown(t("myplaceonline.therapists.conversation") + " (" + Myp.display_date(conversation.conversation_date, current_user) + ")", conversation.conversation) %>
-  <% end %>
-  <% @obj.therapist_emails.each do |email| %>
-    <%= attribute_table_row_email(t("myplaceonline.identities.email"), email.email) %>
-  <% end %>
-  <% @obj.therapist_phones.each do |phone| %>
-    <%= attribute_table_row(t("myplaceonline.identities.phone"), phone.number) %>
-    <%= attribute_table_row_select t("myplaceonline.identity_phones.phone_type"), phone.phone_type, IdentityPhone::PHONE_TYPES %>
-  <% end %>
-  <% @obj.therapist_locations.each do |x| %>
-    <%= attribute_table_row_reference(t("myplaceonline.identities.location"), "location_path", x.location) %>
-  <% end %>
+  <%= attribute_table_row_reference(t("myplaceonline.therapists.therapist"), "contact_path", @obj.contact) %>
 
 <% end %>

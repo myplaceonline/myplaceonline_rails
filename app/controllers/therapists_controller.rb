@@ -3,44 +3,15 @@ class TherapistsController < MyplaceonlineController
     Therapist
   end
   
-  def self.param_names
-    [
-      :name,
-      :notes,
-      therapist_conversations_attributes: [
-        :id,
-        :_destroy,
-        :conversation,
-        :conversation_date
-      ],
-      therapist_phones_attributes: [
-        :id,
-        :_destroy,
-        :number,
-        :phone_type
-      ],
-      therapist_emails_attributes: [
-        :id,
-        :_destroy,
-        :email
-      ],
-      therapist_locations_attributes: [
-        :id,
-        :_destroy,
-        location_attributes: LocationsController.param_names + [:id]
-      ]
-    ]
-  end
-
   protected
 
     def sorts
-      ["lower(therapists.name) ASC"]
+      ["therapists.updated_at DESC"]
     end
 
     def obj_params
       params.require(:therapist).permit(
-        TherapistsController.param_names
+        Myp.select_or_create_permit(params[:therapist], :contact_attributes, ContactsController.param_names)
       )
     end
 end

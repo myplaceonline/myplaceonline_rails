@@ -1204,13 +1204,7 @@ en:
       product_name: "Name"
       notes: "Notes"
     therapists:
-      name: "Full Name"
-      notes: "Notes"
-      conversation: "Conversation"
-      conversations: "Conversations"
-      add_conversation: "Add Conversation"
-      delete_conversation: "Delete Conversation"
-      conversation_date: "Date"
+      therapist: "Therapist"
     health_insurances:
       insurance_name: "Name"
       notes: "Notes"

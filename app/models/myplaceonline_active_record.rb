@@ -17,6 +17,8 @@ class MyplaceonlineActiveRecord < ActiveRecord::Base
         else
           self.owner = current_user.primary_identity
         end
+      else
+        raise "User.current_user not set"
       end
     else
       raise "owner= not found"
