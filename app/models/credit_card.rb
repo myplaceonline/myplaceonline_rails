@@ -39,6 +39,7 @@ class CreditCard < MyplaceonlineIdentityRecord
 
   belongs_to :number_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
   belongs_to_encrypted :number
+  before_validation :number_finalize
 
   validate do
     if number.blank? && number_encrypted.nil?
@@ -48,6 +49,7 @@ class CreditCard < MyplaceonlineIdentityRecord
 
   belongs_to :expires_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
   belongs_to_encrypted :expires
+  before_validation :expires_finalize
 
   validate do
     if expires.blank? && expires_encrypted.nil?
@@ -57,6 +59,7 @@ class CreditCard < MyplaceonlineIdentityRecord
 
   belongs_to :security_code_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
   belongs_to_encrypted :security_code
+  before_validation :security_code_finalize
   
   validate do
     if security_code.blank? && security_code_encrypted.nil?
@@ -66,6 +69,7 @@ class CreditCard < MyplaceonlineIdentityRecord
 
   belongs_to :pin_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
   belongs_to_encrypted :pin
+  before_validation :pin_finalize
 
   belongs_to :password
   accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }

@@ -10,6 +10,7 @@ class BankAccount < MyplaceonlineIdentityRecord
 
   belongs_to :account_number_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
   belongs_to_encrypted :account_number
+  before_validation :account_number_finalize
 
   validate do
     if account_number.blank? && account_number_encrypted.nil?
@@ -19,6 +20,7 @@ class BankAccount < MyplaceonlineIdentityRecord
 
   belongs_to :routing_number_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
   belongs_to_encrypted :routing_number
+  before_validation :routing_number_finalize
 
   validate do
     if routing_number.blank? && routing_number_encrypted.nil?
@@ -28,6 +30,7 @@ class BankAccount < MyplaceonlineIdentityRecord
 
   belongs_to :pin_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
   belongs_to_encrypted :pin
+  before_validation :pin_finalize
 
   belongs_to :password
   accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }

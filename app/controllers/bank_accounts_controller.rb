@@ -24,20 +24,4 @@ class BankAccountsController < MyplaceonlineController
     def sensitive
       true
     end
-
-    def create_presave
-      @obj.account_number_finalize
-      @obj.routing_number_finalize
-      @obj.pin_finalize
-    end
-
-    def update_presave
-      @obj.account_number_finalize
-      @obj.routing_number_finalize
-      @obj.pin_finalize
-    end
-
-    def before_edit
-      @obj.encrypt = @obj.account_number_encrypted?
-    end
 end
