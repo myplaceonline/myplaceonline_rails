@@ -59,7 +59,7 @@ class MyplaceonlineController < ApplicationController
     if !insecure
       Myp.ensure_encryption_key(session)
     end
-    @obj = Myp.new_model(model)
+    @obj = Myp.new_model(model, params)
     new_obj_initialize
     @url = new_path
     if request.post?
