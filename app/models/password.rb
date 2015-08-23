@@ -12,7 +12,6 @@ class Password < MyplaceonlineActiveRecord
   
   validates :name, presence: true
   
-  attr_accessor :encrypt
   attr_accessor :is_defunct
 
   def get_url(prefertls = true)

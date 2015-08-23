@@ -2,6 +2,11 @@ module EncryptedConcern extend ActiveSupport::Concern
   module ClassMethods
     protected
       def belongs_to_encrypted(name)
+        
+        if !respond_to?(:encrypt)
+          attr_accessor :encrypt
+        end
+        
         define_method("#{name}_encrypted?") do
           !send("#{name}_encrypted").nil?
         end

@@ -4,7 +4,6 @@ class CreditCard < MyplaceonlineActiveRecord
   
   CARD_TYPES = [["myplaceonline.credit_cards.visa", 0], ["myplaceonline.credit_cards.mastercard", 1], ["myplaceonline.credit_cards.amex", 2]]
 
-  attr_accessor :encrypt
   attr_accessor :is_defunct
 
   def display(show_default_cashback = true)

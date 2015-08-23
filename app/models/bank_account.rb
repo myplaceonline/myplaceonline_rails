@@ -6,8 +6,6 @@ class BankAccount < MyplaceonlineActiveRecord
     name
   end
   
-  attr_accessor :encrypt
-  
   validates :name, presence: true
 
   belongs_to :account_number_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
