@@ -31,6 +31,8 @@ class IdentityFileFolder < MyplaceonlineIdentityRecord
         )
         if folders.length == 0
           parent = IdentityFileFolder.new(folder_name: name, owner_id: User.current_user.primary_identity.id)
+          # This save seems to be needed for deep structures even though we have implicit autosave
+          parent.save!
         elsif folders.length == 1
           parent = folders[0]
         else
@@ -44,6 +46,8 @@ class IdentityFileFolder < MyplaceonlineIdentityRecord
         )
         if folders.length == 0
           parent = IdentityFileFolder.new(folder_name: name, owner_id: User.current_user.primary_identity.id, parent_folder_id: parent.id)
+          # This save seems to be needed for deep structures even though we have implicit autosave
+          parent.save!
         elsif folders.length == 1
           parent = folders[0]
         else

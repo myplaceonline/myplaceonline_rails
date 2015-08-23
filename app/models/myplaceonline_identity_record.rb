@@ -3,10 +3,10 @@ class MyplaceonlineIdentityRecord < MyplaceonlineModelBase
   
   belongs_to :owner, class_name: Identity
 
-  before_create :do_before_save
-  before_update :do_before_save
+  before_create :identity_record_before_save
+  before_update :identity_record_before_save
 
-  def do_before_save
+  def identity_record_before_save
     if self.respond_to?("owner=")
       current_user = User.current_user
       if !current_user.nil?
