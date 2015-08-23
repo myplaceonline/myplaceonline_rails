@@ -17,24 +17,4 @@ class BooksController < MyplaceonlineController
         :notes
       )
     end
-
-    def create_presave
-      update_read
-    end
-    
-    def update_presave
-      update_read
-    end
-    
-    def update_read
-      if @obj.is_read == "1"
-        @obj.when_read = Time.now
-      else
-        @obj.when_read = nil
-      end
-    end
-
-    def before_edit
-      @obj.is_read = !@obj.when_read.nil?
-    end
 end

@@ -1,6 +1,9 @@
 class Book < MyplaceonlineIdentityRecord
+  include ModelHelpersConcern
+  
   validates :book_name, presence: true
-  attr_accessor :is_read
+  
+  boolean_time_transfer :is_read, :when_read
   
   def display
     book_name
