@@ -55,3 +55,16 @@
     autofocus: false
   }
 %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :doctor,
+    existingobj: obj.doctor,
+    heading: t("myplaceonline.health_insurances.doctor"),
+    objform: "doctors/form",
+    existingobjurl: "doctor_path",
+    searchurl: "/doctors.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>

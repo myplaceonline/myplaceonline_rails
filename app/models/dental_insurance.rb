@@ -24,6 +24,10 @@ class DentalInsurance < MyplaceonlineIdentityRecord
   accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
   allow_existing :password
   
+  belongs_to :doctor
+  accepts_nested_attributes_for :doctor, reject_if: proc { |attributes| DoctorsController.reject_if_blank(attributes) }
+  allow_existing :doctor
+  
   attr_accessor :is_defunct
   boolean_time_transfer :is_defunct, :defunct
 end

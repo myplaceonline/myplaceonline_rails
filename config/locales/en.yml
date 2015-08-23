@@ -1215,6 +1215,7 @@ en:
       account_number: "Account Number"
       group_number: "Group Number"
       password: "Password"
+      doctor: "Primary Care Physician"
     random:
       activity: "Random Activity"
       new_activity: "Generate"
@@ -1232,6 +1233,7 @@ en:
       account_number: "Account Number"
       group_number: "Group Number"
       password: "Password"
+      doctor: "Primary Dentist"
     hobbies:
       hobby_name: "Name"
       notes: "Notes"

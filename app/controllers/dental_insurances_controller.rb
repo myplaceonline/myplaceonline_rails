@@ -22,7 +22,8 @@ class DentalInsurancesController < MyplaceonlineController
         Myp.select_or_create_permit(params[:dental_insurance], :password_attributes, PasswordsController.param_names),
         Myp.select_or_create_permit(params[:dental_insurance], :insurance_company_attributes, CompaniesController.param_names(params[:dental_insurance][:insurance_company_attributes])),
         Myp.select_or_create_permit(params[:dental_insurance], :periodic_payment_attributes, PeriodicPaymentsController.param_names(params[:dental_insurance][:periodic_payment_attributes])),
-        Myp.select_or_create_permit(params[:dental_insurance], :group_company_attributes, CompaniesController.param_names(params[:dental_insurance][:group_company_attributes]))
+        Myp.select_or_create_permit(params[:dental_insurance], :group_company_attributes, CompaniesController.param_names(params[:dental_insurance][:group_company_attributes])),
+        Myp.select_or_create_permit(params[:dental_insurance], :doctor_attributes, DoctorsController.param_names(params[:dental_insurance][:doctor_attributes]))
       )
     end
 

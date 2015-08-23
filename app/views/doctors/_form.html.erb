@@ -8,7 +8,7 @@
     existingobjurl: "contact_path",
     searchurl: "/contacts.json?perpage=0",
     edit: edit,
-    autofocus: true
+    autofocus: autofocus
   }
 %>
 <%= myp_select(f, :doctor_type, "myplaceonline.doctors.doctor_type", Myp.translate_options(Doctor::DOCTOR_TYPES), obj.doctor_type) %>

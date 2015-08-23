@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150823112746) do
+ActiveRecord::Schema.define(version: 20150823164629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -476,8 +476,10 @@ ActiveRecord::Schema.define(version: 20150823112746) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "doctor_id"
   end
 
+  add_index "dental_insurances", ["doctor_id"], name: "index_dental_insurances_on_doctor_id", using: :btree
   add_index "dental_insurances", ["group_company_id"], name: "index_dental_insurances_on_group_company_id", using: :btree
   add_index "dental_insurances", ["insurance_company_id"], name: "index_dental_insurances_on_insurance_company_id", using: :btree
   add_index "dental_insurances", ["owner_id"], name: "index_dental_insurances_on_owner_id", using: :btree
@@ -528,7 +530,7 @@ ActiveRecord::Schema.define(version: 20150823112746) do
   add_index "drinks", ["owner_id"], name: "index_drinks_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -646,8 +648,10 @@ ActiveRecord::Schema.define(version: 20150823112746) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "doctor_id"
   end
 
+  add_index "health_insurances", ["doctor_id"], name: "index_health_insurances_on_doctor_id", using: :btree
   add_index "health_insurances", ["group_company_id"], name: "index_health_insurances_on_group_company_id", using: :btree
   add_index "health_insurances", ["insurance_company_id"], name: "index_health_insurances_on_insurance_company_id", using: :btree
   add_index "health_insurances", ["owner_id"], name: "index_health_insurances_on_owner_id", using: :btree
