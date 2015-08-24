@@ -50,6 +50,19 @@
       </div>
       <div role="main" class="ui-content">
         <%= yield %>
+        <script type="text/javascript">
+          onPageLoad(function() {
+            // We need to bind to the link element after JQM has created it
+            // and bound its own events, so that we can do stuff before
+            // JQM stops propagation of it
+            $("[data-role='collapsible'] > h3 > a").click(function(eventData) {
+              var div = $(eventData.target).parents("div").first();
+              if (div.hasClass("ui-collapsible-collapsed")) {
+                //$.mobile.silentScroll(div.offset().top);
+              }
+            });
+          });
+        </script>
       </div>
       <%= yield(:footer) %>
       <%# We give a unique id to each popup because the menu may be different. %>
