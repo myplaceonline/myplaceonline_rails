@@ -1,4 +1,4 @@
-class TherapistLocation < MyplaceonlineActiveRecord
+class TherapistLocation < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   belongs_to :therapist
