@@ -27,22 +27,14 @@ class MyplaceonlineController < ApplicationController
       @perpage = @count
     end
     
-    if !is_custom_all_sql || @offset > 0
-      search_all
-    else
-      cached_all = all_custom
-      @count = cached_all.count
-      if @count == 0
-        # The custom SQL returned 0 results, so fall back
-        search_all
-      else
-        @objs = cached_all
-        if @perpage > 0 && @count > @perpage
-          @objs = @objs.first(@perpage)
-        end
-      end
-    end
+    cached_all = all
+    @objs = cached_all.offset(@offset).limit(@perpage).order(sorts)
+    @count = cached_all.count
     
+    if additional_items? && @offset == 0
+      @additional_items = additional_items
+    end
+
     index_pre_respond()
     
     # Save off any query parameters which might be used by AJAX callbacks to
@@ -249,17 +241,11 @@ class MyplaceonlineController < ApplicationController
       )
     end
     
-    def search_all
-      cached_all = all
-      @objs = cached_all.offset(@offset).limit(@perpage).order(sorts)
-      @count = cached_all.count
-    end
-    
-    def is_custom_all_sql
+    def additional_items?
       false
     end
   
-    def all_custom
+    def additional_items
       raise NotImplementedError
     end
   

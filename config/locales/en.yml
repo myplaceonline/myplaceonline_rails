@@ -176,6 +176,7 @@ en:
       back_to_list: "Back to List"
       today: "Today"
       filter: "Filter"
+      top_items: "Top Used Items"
     periods:
       monthly: "Monthly"
       yearly: "Yearly"

@@ -231,10 +231,6 @@ class PasswordsController < MyplaceonlineController
       end
     end
 
-    def is_custom_all_sql
-      false
-    end
-
     def all
       if @defunct.blank? || !@defunct
         model.where("owner_id = ? and defunct is null", current_user.primary_identity)
@@ -245,20 +241,17 @@ class PasswordsController < MyplaceonlineController
       end
     end
 
-    def all_custom
-      extra_where = ""
+    def additional_items?
+      true
+    end
+
+    def additional_items
       if @defunct.blank? || !@defunct
-        extra_where += " AND defunct is null"
+        result = model.where("owner_id = ? and visit_count >= 10 and defunct is null", current_user.primary_identity)
+      else
+        result = model.where("owner_id = ? and visit_count >= 10", current_user.primary_identity)
       end
-      sql = %{
-        (
-          SELECT *
-          FROM passwords
-          WHERE owner_id = #{current_user.primary_identity.id} AND visit_count IS NOT NULL AND visit_count > 0 #{extra_where}
-          ORDER BY visit_count DESC
-        )
-      }
-      Password.find_by_sql(sql)
+      result.limit(5).order("visit_count DESC")
     end
     
     def before_show
