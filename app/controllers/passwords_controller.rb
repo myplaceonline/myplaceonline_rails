@@ -232,7 +232,7 @@ class PasswordsController < MyplaceonlineController
     end
 
     def is_custom_all_sql
-      true
+      false
     end
 
     def all
