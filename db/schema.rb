@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150823204513) do
+ActiveRecord::Schema.define(version: 20150826020628) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -997,8 +997,8 @@ ActiveRecord::Schema.define(version: 20150823204513) do
     t.datetime "updated_at"
     t.string   "postal_code"
     t.text     "notes"
-    t.decimal  "latitude",    precision: 10, scale: 2
-    t.decimal  "longitude",   precision: 10, scale: 2
+    t.decimal  "latitude",    precision: 12, scale: 8
+    t.decimal  "longitude",   precision: 12, scale: 8
   end
 
   add_index "locations", ["owner_id"], name: "index_locations_on_owner_id", using: :btree
