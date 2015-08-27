@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150826020628) do
+ActiveRecord::Schema.define(version: 20150827012909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -893,9 +893,18 @@ ActiveRecord::Schema.define(version: 20150826020628) do
     t.string   "employee_identifier"
     t.string   "department_name"
     t.string   "division_name"
+    t.string   "business_unit"
+    t.string   "email"
+    t.string   "internal_mail_id"
+    t.string   "internal_mail_server"
+    t.integer  "internal_address_id"
+    t.string   "department_identifier"
+    t.string   "division_identifier"
+    t.string   "personnel_code"
   end
 
   add_index "jobs", ["company_id"], name: "index_jobs_on_company_id", using: :btree
+  add_index "jobs", ["internal_address_id"], name: "index_jobs_on_internal_address_id", using: :btree
   add_index "jobs", ["manager_contact_id"], name: "index_jobs_on_manager_contact_id", using: :btree
   add_index "jobs", ["owner_id"], name: "index_jobs_on_owner_id", using: :btree
 

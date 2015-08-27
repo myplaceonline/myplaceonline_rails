@@ -1,9 +1,12 @@
 <%= render layout: "shared/model_show" do %>
 
   <%= attribute_table_row(t("myplaceonline.jobs.job_title"), @obj.job_title) %>
+  <%= attribute_table_row(t("myplaceonline.jobs.email"), @obj.email) %>
   <%= attribute_table_row(t("myplaceonline.jobs.employee_identifier"), @obj.employee_identifier) %>
   <%= attribute_table_row(t("myplaceonline.jobs.department_name"), @obj.department_name) %>
+  <%= attribute_table_row(t("myplaceonline.jobs.department_identifier"), @obj.department_identifier) %>
   <%= attribute_table_row(t("myplaceonline.jobs.division_name"), @obj.division_name) %>
+  <%= attribute_table_row(t("myplaceonline.jobs.division_identifier"), @obj.division_identifier) %>
   <%= attribute_table_row_date(t("myplaceonline.jobs.started"), @obj.started) %>
   <%= attribute_table_row_date(t("myplaceonline.jobs.ended"), @obj.ended) %>
   <% if !@obj.started.nil? %>
@@ -18,9 +21,14 @@
   <% if !@obj.days_vacation.nil? && !@obj.days_holiday.nil? %>
     <%= attribute_table_row(t("myplaceonline.jobs.total_time_off"), @obj.days_vacation + @obj.days_holiday) %>
   <% end %>
+  <%= attribute_table_row(t("myplaceonline.jobs.business_unit"), @obj.business_unit) %>
+  <%= attribute_table_row(t("myplaceonline.jobs.internal_mail_id"), @obj.internal_mail_id) %>
+  <%= attribute_table_row(t("myplaceonline.jobs.internal_mail_server"), @obj.internal_mail_server) %>
+  <%= attribute_table_row(t("myplaceonline.jobs.personnel_code"), @obj.personnel_code) %>
   <%= attribute_table_row_markdown(t("myplaceonline.jobs.notes"), @obj.notes) %>
   <%= attribute_table_row_reference(t("myplaceonline.jobs.company"), "company_path", @obj.company) %>
   <%= attribute_table_row_reference(t("myplaceonline.jobs.manager_contact"), "contact_path", @obj.manager_contact) %>
+  <%= attribute_table_row_reference(t("myplaceonline.jobs.internal_address"), "location_path", @obj.internal_address) %>
   <% @obj.job_salaries.each do |js| %>
     <%= table_row_heading(t("myplaceonline.jobs.job_salaries")) %>
     <%= attribute_table_row_date(t("myplaceonline.job_salaries.started"), js.started) %>

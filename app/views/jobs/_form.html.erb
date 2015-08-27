@@ -1,11 +1,18 @@
 <%= myp_text_field(f, :job_title, "myplaceonline.jobs.job_title", obj.job_title, autofocus) %>
+<%= myp_text_field(f, :email, "myplaceonline.jobs.email", obj.email) %>
 <%= myp_text_field(f, :employee_identifier, "myplaceonline.jobs.employee_identifier", obj.employee_identifier) %>
 <%= myp_text_field(f, :department_name, "myplaceonline.jobs.department_name", obj.department_name) %>
+<%= myp_text_field(f, :department_identifier, "myplaceonline.jobs.department_identifier", obj.department_identifier) %>
 <%= myp_text_field(f, :division_name, "myplaceonline.jobs.division_name", obj.division_name) %>
+<%= myp_text_field(f, :division_identifier, "myplaceonline.jobs.division_identifier", obj.division_identifier) %>
 <%= myp_date_field(f, :started, "myplaceonline.jobs.started", obj.started) %>
 <%= myp_date_field(f, :ended, "myplaceonline.jobs.ended", obj.ended) %>
 <%= myp_integer_field(f, :days_vacation, "myplaceonline.jobs.days_vacation", obj.days_vacation) %>
 <%= myp_integer_field(f, :days_holiday, "myplaceonline.jobs.days_holiday", obj.days_holiday) %>
+<%= myp_text_field(f, :business_unit, "myplaceonline.jobs.business_unit", obj.business_unit) %>
+<%= myp_text_field(f, :internal_mail_id, "myplaceonline.jobs.internal_mail_id", obj.internal_mail_id) %>
+<%= myp_text_field(f, :internal_mail_server, "myplaceonline.jobs.internal_mail_server", obj.internal_mail_server) %>
+<%= myp_text_field(f, :personnel_code, "myplaceonline.jobs.personnel_code", obj.personnel_code) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.jobs.notes", obj.notes) %>
 <%=
   render partial: 'myplaceonline/select_or_create', locals: {
@@ -29,6 +36,19 @@
     objform: "contacts/form",
     existingobjurl: "contact_path",
     searchurl: "/contacts.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :internal_address,
+    existingobj: obj.internal_address,
+    heading: t("myplaceonline.jobs.internal_address"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
     edit: edit,
     autofocus: false
   }

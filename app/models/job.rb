@@ -21,4 +21,8 @@ class Job < MyplaceonlineIdentityRecord
 
   has_many :job_salaries, -> { order('started DESC') }, :dependent => :destroy
   accepts_nested_attributes_for :job_salaries, allow_destroy: true, reject_if: :all_blank
+
+  belongs_to :internal_address, class_name: Location
+  accepts_nested_attributes_for :internal_address, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
+  allow_existing :internal_address, Location
 end
