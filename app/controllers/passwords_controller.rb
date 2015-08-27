@@ -255,10 +255,11 @@ class PasswordsController < MyplaceonlineController
     end
     
     def before_show
+      # Use update_column because we don't want updated_at to be updated
       if @obj.visit_count?
-        Password.update(@obj, visit_count: @obj.visit_count + 1)
+        @obj.update_column(:visit_count, @obj.visit_count + 1)
       else
-        Password.update(@obj, visit_count: 1)
+        @obj.update_column(:visit_count, 1)
       end
     end
 end
