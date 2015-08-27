@@ -6,8 +6,18 @@
   <%= attribute_table_row(t("myplaceonline.jobs.division_name"), @obj.division_name) %>
   <%= attribute_table_row_date(t("myplaceonline.jobs.started"), @obj.started) %>
   <%= attribute_table_row_date(t("myplaceonline.jobs.ended"), @obj.ended) %>
+  <% if !@obj.started.nil? %>
+    <% if !@obj.ended.nil? %>
+      <%= attribute_table_row(t("myplaceonline.jobs.duration"), Myp.time_difference_in_general_from_date(@obj.started, @obj.ended)) %>
+    <% else %>
+      <%= attribute_table_row(t("myplaceonline.jobs.duration"), Myp.time_difference_in_general_from_now(@obj.started)) %>
+    <% end %>
+  <% end %>
   <%= attribute_table_row(t("myplaceonline.jobs.days_vacation"), @obj.days_vacation) %>
   <%= attribute_table_row(t("myplaceonline.jobs.days_holiday"), @obj.days_holiday) %>
+  <% if !@obj.days_vacation.nil? && !@obj.days_holiday.nil? %>
+    <%= attribute_table_row(t("myplaceonline.jobs.total_time_off"), @obj.days_vacation + @obj.days_holiday) %>
+  <% end %>
   <%= attribute_table_row_markdown(t("myplaceonline.jobs.notes"), @obj.notes) %>
   <%= attribute_table_row_reference(t("myplaceonline.jobs.company"), "company_path", @obj.company) %>
   <%= attribute_table_row_reference(t("myplaceonline.jobs.manager_contact"), "contact_path", @obj.manager_contact) %>

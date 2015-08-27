@@ -1014,6 +1014,8 @@ en:
       employee_identifier: "Employee Identifier"
       department_name: "Department Name"
       division_name: "Division Name"
+      duration: "Time in Job"
+      total_time_off: "Total Days Off"
     job_salaries:
       started: "Started"
       ended: "Ended"
