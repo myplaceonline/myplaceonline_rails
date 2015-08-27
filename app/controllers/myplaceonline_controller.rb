@@ -23,13 +23,14 @@ class MyplaceonlineController < ApplicationController
     end
     
     @perpage = params[:perpage].nil? ? 20 : params[:perpage].to_i
+    
+    cached_all = all
+    @count = cached_all.count
     if @perpage <= 0
       @perpage = @count
     end
-    
-    cached_all = all
+
     @objs = cached_all.offset(@offset).limit(@perpage).order(sorts)
-    @count = cached_all.count
     
     if additional_items? && @offset == 0
       @additional_items = additional_items
