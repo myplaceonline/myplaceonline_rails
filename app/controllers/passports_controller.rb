@@ -15,6 +15,7 @@ class PassportsController < MyplaceonlineController
         :expires,
         :issued,
         :issuing_authority,
+        :name,
         passport_pictures_attributes: [
           :id,
           :_destroy,

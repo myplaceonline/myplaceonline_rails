@@ -1,7 +1,13 @@
 <%= render layout: "shared/model_index" do %>
   <%=
     render partial: 'myplaceonline/filter_select', locals: {
-      items: @count
+      items: @count,
+      filters: [
+        {
+          :name => :defunct,
+          :display => "myplaceonline.general.defunct"
+        }
+      ]
     }
   %>
 <% end %>

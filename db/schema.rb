@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150827012909) do
+ActiveRecord::Schema.define(version: 20150828023211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1183,6 +1183,7 @@ ActiveRecord::Schema.define(version: 20150827012909) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "issuing_authority"
+    t.string   "name"
   end
 
   add_index "passports", ["owner_id"], name: "index_passports_on_owner_id", using: :btree

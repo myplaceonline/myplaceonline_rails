@@ -1052,6 +1052,7 @@ en:
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
       issuing_authority: "Issuing Authority"
+      name: "Full Name"
     relationships:
       sister: "Sister"
       brother: "Brother"
