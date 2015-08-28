@@ -4,4 +4,8 @@ class TestController < ApplicationController
   
   def index; end
   def test1; end
+    
+  def throw
+    raise "Random Exception"
+  end
 end

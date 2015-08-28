@@ -291,6 +291,7 @@ Rails.application.routes.draw do
   get 'test/index'
   get 'test', :to => 'test#index'
   get 'test/test1'
+  get 'test/throw'
 
   get 'badges/42', :to => 'badges#n42'
 

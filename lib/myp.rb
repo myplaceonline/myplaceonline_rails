@@ -971,11 +971,14 @@ module Myp
     )
   end
   
-  def self.handle_exception(exception)
+  def self.handle_exception(exception, email = nil)
     stack = Myp.error_details(exception)
     body = ""
+    if !email.nil?
+      body += "User e-mail: " + email + "\n"
+    end
     if !User.current_user.nil?
-      body += User.current_user.inspect
+      body += User.current_user.inspect + "\n"
     end
     body += stack
     puts "handle_exception: " + body

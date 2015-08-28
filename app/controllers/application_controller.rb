@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     elsif exception.is_a?(CanCan::AccessDenied)
       redirect_to root_url, :alert => exception.message
     else
-      Myp.handle_exception(exception)
+      Myp.handle_exception(exception, session[:myp_email])
       respond_to do |type|
         #type.xml { render :template => "errors/error_404", :status => 500 }
         type.all { render :text => exception.to_s, :status => 500 }
@@ -37,6 +37,7 @@ class ApplicationController < ActionController::Base
     request_accessor = instance_variable_get(:@_request)
     User.current_user = current_user
     Thread.current[:current_session] = request_accessor.session
+    request_accessor.session[:myp_email] = current_user.email
     Thread.current[:request] = request_accessor
     yield
   ensure
