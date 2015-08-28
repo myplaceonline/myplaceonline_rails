@@ -1053,6 +1053,7 @@ en:
       delete_picture: "Delete Picture"
       issuing_authority: "Issuing Authority"
       name: "Full Name"
+      expired: "Expired"
     relationships:
       sister: "Sister"
       brother: "Brother"

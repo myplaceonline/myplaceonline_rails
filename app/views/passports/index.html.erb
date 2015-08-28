@@ -1,2 +1,13 @@
 <%= render layout: "shared/model_index" do %>
+  <%=
+    render partial: 'myplaceonline/filter_select', locals: {
+      items: @count,
+      filters: [
+        {
+          :name => :expired,
+          :display => "myplaceonline.passports.expired"
+        }
+      ]
+    }
+  %>
 <% end %>
