@@ -37,7 +37,9 @@ class ApplicationController < ActionController::Base
     request_accessor = instance_variable_get(:@_request)
     User.current_user = current_user
     Thread.current[:current_session] = request_accessor.session
-    request_accessor.session[:myp_email] = current_user.email
+    if !current_user.nil?
+      request_accessor.session[:myp_email] = current_user.email
+    end
     Thread.current[:request] = request_accessor
     yield
   ensure
