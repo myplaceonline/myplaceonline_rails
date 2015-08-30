@@ -214,7 +214,7 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
       html += "<p><input type='" + (myp.allowFocusPlaceholder ? "date" : "text") + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='" + defaultValue + "' class='" + cssclasses + "' data-role='datebox' data-datebox-mode='calbox' data-datebox-override-date-format='" + myp.DEFAULT_DATE_FORMAT + "' data-datebox-use-focus='true' data-datebox-use-clear-button='true' data-datebox-use-modal='false' data-datebox-cal-use-pickers='true' data-datebox-cal-year-pick-min='-100' data-datebox-cal-year-pick-max='10' data-datebox-cal-no-header='true' /></p>";
     } else if (item.type == "random") {
       // Duplicated in views/myplaceonline/_generaterandom.html.erb
-      html += '<div data-role="collapsible"><h3>' + item.heading + '</h3><p><input type="number" class="generate_password_length" value="" placeholder="' + item.lengthplaceholder + '" /></p><p><a href="#" class="ui-btn" onclick="getRemoteString(' + item.destination + ', $(this).parents(\'div\').first().find(\'.generate_password_length\').val()); return false;">' + item.button + '</a></p></div>';
+      html += '<div data-role="collapsible"><h3>' + item.heading + '</h3><p><input type="' + (myp.allowFocusPlaceholder ? "number" : "text") + '" class="generate_password_length" value="" placeholder="' + item.lengthplaceholder + '" /></p><p><a href="#" class="ui-btn" onclick="getRemoteString(' + item.destination + ', $(this).parents(\'div\').first().find(\'.generate_password_length\').val()); return false;">' + item.button + '</a></p></div>';
     } else if (item.type == "textarea") {
       html += "<p><textarea id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' class='" + cssclasses + "'></textarea></p>";
     } else if (item.type == "checkbox") {
@@ -241,7 +241,7 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
         inputType = "hidden";
         has_position = true;
       }
-      html += "<p><input type='" + inputType + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='" + defaultValue + "' class='" + cssclasses + "'";
+      html += "<p><input type='" + (myp.allowFocusPlaceholder ? inputType : "text") + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='" + defaultValue + "' class='" + cssclasses + "'";
       if (item.step) {
         html += " step='" + item.step + "'";
       }
