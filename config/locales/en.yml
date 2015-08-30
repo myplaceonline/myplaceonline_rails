@@ -109,6 +109,7 @@ en:
       users: "Users"
       dentist_visits: "Dentist Visits"
       doctor_visits: "Doctor Visits"
+      statuses: "Statuses"
     general:
       email: "E-mail"
       password: "Password"
@@ -1306,3 +1307,6 @@ en:
       health_insurance: "Health Insurance"
       no_physical_for: "Last Health Physical %{delta} Ago"
       no_physicals: "No Health Physicals"
+    statuses:
+      status_time: "Time"
+      three_good_things: "Three Good Things"
