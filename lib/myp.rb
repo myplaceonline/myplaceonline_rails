@@ -138,30 +138,28 @@ module Myp
     #
     # Therefore we have to fallback to direct SQL.
 
-    where_clause = ""
+    # The first set of where clauses is to check that either the category has
+    # no required user type mask, or if it has one, first whether the user has
+    # a type mask (otherwise, there's no point in checking), and if so, if
+    # the category mask is subsumed in the user mask
+    where_clause = "WHERE (categories.user_type_mask IS NULL"
+    if !user.user_type.nil?
+      where_clause += " OR (" + user.user_type.to_s + " & categories.user_type_mask != 0)"
+    end
+    where_clause += ")"
     
     if !parent.nil?
-      if where_clause.length == 0
-        where_clause += "WHERE "
-      else
-        where_clause += " AND "
-      end
       if parent == -1
-        where_clause += "categories.parent_id IS NULL"
+        where_clause += " AND categories.parent_id IS NULL"
       else
-        where_clause += "categories.parent_id = " + parent.id.to_s
+        where_clause += " AND categories.parent_id = " + parent.id.to_s
       end
     end
-    
+
+    # By default, we don't show explicit categories
     explicit_check = Myp.get_categories_explicit_check_sql(user)
-    
     if explicit_check.length > 0
-      if where_clause.length == 0
-        where_clause += "WHERE "
-      else
-        where_clause += " AND "
-      end
-      where_clause += explicit_check
+      where_clause += " AND " + explicit_check
     end
     
     Category.find_by_sql(%{
@@ -974,16 +972,16 @@ module Myp
   def self.handle_exception(exception, email = nil, request = nil)
     stack = Myp.error_details(exception)
     body = ""
-    if !request.nil?
-      body += "Request: " + request.inspect + "\n"
-    end
     if !email.nil?
       body += "User e-mail: " + email + "\n"
     end
     if !User.current_user.nil?
       body += User.current_user.inspect + "\n"
     end
-    body += stack
+    body += stack + "\n"
+    if !request.nil?
+      body += "Request: " + request.inspect + "\n"
+    end
     puts "handle_exception: " + body
     Myp.send_support_email_safe("User Exception", body)
   end
