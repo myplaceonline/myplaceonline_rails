@@ -1304,5 +1304,5 @@ en:
       doctor: "Doctor"
       notes: "Notes"
       health_insurance: "Health Insurance"
-      no_physicals_for: "Last Health Physicals %{delta} Ago"
+      no_physical_for: "Last Health Physical %{delta} Ago"
       no_physicals: "No Health Physicals"

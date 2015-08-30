@@ -562,6 +562,7 @@ module Myp
     contact_type_threshold[4] = 20.days.ago
     contact_type_threshold[5] = 45.days.ago
     dentist_visit_threshold = 5.months.ago
+    doctor_visit_threshold = 11.months.ago
     
     Rails.logger.debug("Searching vehicles")
 
@@ -685,6 +686,23 @@ module Myp
         result.push(DueItem.new(I18n.t(
           "myplaceonline.dentist_visits.no_cleanings"
         ), "/dentist_visits/", timenow))
+      end
+    end
+    
+    Rails.logger.debug("Searching physicals")
+
+    last_doctor_visit = DoctorVisit.where("owner_id = ? and physical = true", user.primary_identity).order('visit_date DESC').limit(1).first
+    if !last_doctor_visit.nil? and last_doctor_visit.visit_date < doctor_visit_threshold
+      result.push(DueItem.new(I18n.t(
+        "myplaceonline.doctor_visits.no_physical_for",
+        delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, last_doctor_visit.visit_date).in_general)
+      ), "/doctor_visits/" + last_doctor_visit.id.to_s, last_doctor_visit.visit_date))
+    elsif last_doctor_visit.nil?
+      # If there are no physicals at all but there is a health insurance company, then notify
+      if HealthInsurance.where("owner_id = ? and (defunct is null)", user.primary_identity).count > 0
+        result.push(DueItem.new(I18n.t(
+          "myplaceonline.doctor_visits.no_physicals"
+        ), "/doctor_visits/", timenow))
       end
     end
     
