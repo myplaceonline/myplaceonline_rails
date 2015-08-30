@@ -609,7 +609,7 @@ module Myp
     
     Rails.logger.debug("Searching exercises")
 
-    last_exercise = Exercise.where("owner_id = ? and exercise_start is not null", 1).order('exercise_start DESC').limit(1).first
+    last_exercise = Exercise.where("owner_id = ? and exercise_start is not null", user.primary_identity).order('exercise_start DESC').limit(1).first
     if !last_exercise.nil? and last_exercise.exercise_start < exercise_threshold
       result.push(DueItem.new(I18n.t(
         "myplaceonline.exercises.havent_exercised_for",

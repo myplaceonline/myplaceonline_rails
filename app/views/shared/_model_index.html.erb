@@ -106,12 +106,14 @@ onPageLoad(function() {
 <%= yield %>
 
 <% content_for :footer do -%>
-<div data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <div data-role="navbar">
-        <ul>
-          <li><%= link_to t("myplaceonline.general.add") + " " + t("myplaceonline.category." + controller.category_name).singularize, controller.new_path, "data-icon" => "plus" %></li>
-          <%= content_for(:footerlinks) %>
-        </ul>
+  <% if controller.show_index_footer %>
+    <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+        <div data-role="navbar">
+            <ul>
+              <li><%= link_to t("myplaceonline.general.add") + " " + t("myplaceonline.category." + controller.category_name).singularize, controller.new_path, "data-icon" => "plus" %></li>
+              <%= content_for(:footerlinks) %>
+            </ul>
+        </div>
     </div>
-</div>
+  <% end %>
 <% end -%>

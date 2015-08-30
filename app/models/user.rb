@@ -1,4 +1,10 @@
 class User < MyplaceonlineModelBase
+
+  USER_TYPES = [
+    ["myplaceonline.users.type_normal", 0],
+    ["myplaceonline.users.type_admin", 1]
+  ]
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -24,6 +30,10 @@ class User < MyplaceonlineModelBase
     else
       false
     end
+  end
+  
+  def display
+    email
   end
 
   # User loaded from database

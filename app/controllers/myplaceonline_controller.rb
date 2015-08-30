@@ -215,6 +215,14 @@ class MyplaceonlineController < ApplicationController
     nil
   end
   
+  def show_add
+    true
+  end
+  
+  def show_index_footer
+    true
+  end
+  
   protected
   
     def obj_params

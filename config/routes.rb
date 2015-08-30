@@ -324,5 +324,8 @@ Rails.application.routes.draw do
     }
   end
 
+  resources :users
+  post 'users/new'
+
   root 'welcome#index'
 end
