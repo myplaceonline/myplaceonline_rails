@@ -1,0 +1,16 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.users.email"), @obj.email) %>
+  <%= attribute_table_row(t("myplaceonline.users.sign_in_count"), @obj.sign_in_count) %>
+  <%= attribute_table_row_datetime(t("myplaceonline.users.last_sign_in_at"), @obj.last_sign_in_at) %>
+  <%= attribute_table_row(t("myplaceonline.users.last_sign_in_ip"), @obj.last_sign_in_ip) %>
+  <%= attribute_table_row(t("myplaceonline.users.primary_identity_id"), @obj.primary_identity_id) %>
+  <%= attribute_table_row_datetime(t("myplaceonline.users.confirmed_at"), @obj.confirmed_at) %>
+  <% if @obj.confirmed_at.nil? %>
+    <%= attribute_table_row(t("myplaceonline.users.confirmed_at"), t("myplaceonline.users.not_confirmed")) %>
+  <% end %>
+  <%= attribute_table_row(t("myplaceonline.users.failed_attempts"), @obj.failed_attempts) %>
+  <%= attribute_table_row_datetime(t("myplaceonline.users.locked_at"), @obj.locked_at) %>
+  <%= attribute_table_row_select(t("myplaceonline.users.user_type"), @obj.user_type, User::USER_TYPES) %>
+
+<% end %>
