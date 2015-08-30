@@ -571,6 +571,7 @@ module Myp
     contact_type_threshold[5] = 45.days.ago
     dentist_visit_threshold = 5.months.ago
     doctor_visit_threshold = 11.months.ago
+    status_threshold = 1.days.ago
     
     Rails.logger.debug("Searching vehicles")
 
@@ -693,7 +694,7 @@ module Myp
       if DentalInsurance.where("owner_id = ? and (defunct is null)", user.primary_identity).count > 0
         result.push(DueItem.new(I18n.t(
           "myplaceonline.dentist_visits.no_cleanings"
-        ), "/dentist_visits/", timenow))
+        ), "/dentist_visits/new", timenow))
       end
     end
     
@@ -710,8 +711,22 @@ module Myp
       if HealthInsurance.where("owner_id = ? and (defunct is null)", user.primary_identity).count > 0
         result.push(DueItem.new(I18n.t(
           "myplaceonline.doctor_visits.no_physicals"
-        ), "/doctor_visits/", timenow))
+        ), "/doctor_visits/new", timenow))
       end
+    end
+    
+    Rails.logger.debug("Searching statuses")
+
+    last_status = Status.where("owner_id = ?", user.primary_identity).order('status_time DESC').limit(1).first
+    if !last_status.nil? and last_status.status_time < status_threshold
+      result.push(DueItem.new(I18n.t(
+        "myplaceonline.statuses.no_recent_status",
+        delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, last_status.status_time).in_general)
+      ), "/statuses/new", last_status.status_time))
+    elsif last_status.nil?
+      result.push(DueItem.new(I18n.t(
+        "myplaceonline.statuses.no_statuses"
+      ), "/statuses/new", timenow))
     end
     
     # sort due items
