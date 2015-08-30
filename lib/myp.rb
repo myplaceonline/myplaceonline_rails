@@ -546,6 +546,14 @@ module Myp
     def date
       @date
     end
+    
+    def short_date
+      if Date.today.year > @date.year
+        Myp.display_date_short_year(@date, User.current_user)
+      else
+        Myp.display_date_short(@date, User.current_user)
+      end
+    end
   end
   
   def self.due(user)
