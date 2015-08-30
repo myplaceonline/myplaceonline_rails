@@ -1,8 +1,7 @@
-<% if items > 0 %>
-  <div class="horizontal_center" data-role="collapsible">
-    <h4><%= t("myplaceonline.general.filter") %></h4>
-    <% filters.each do |filter| %>
-      <%= myp_check_box_tag(filter[:name].to_sym, filter[:display], controller.instance_variable_get("@" + filter[:name].to_s), false, nil, "refreshWithParam('" + filter[:name].to_s + "', this.checked)") %>
-    <% end %>
-  </div>
-<% end %>
+<%# We always show this even there may ostensibly be no items because all items may be filtered out %>
+<div class="horizontal_center" data-role="collapsible">
+  <h4><%= t("myplaceonline.general.filter") %></h4>
+  <% filters.each do |filter| %>
+    <%= myp_check_box_tag(filter[:name].to_sym, filter[:display], controller.instance_variable_get("@" + filter[:name].to_s), false, nil, "refreshWithParam('" + filter[:name].to_s + "', this.checked)") %>
+  <% end %>
+</div>

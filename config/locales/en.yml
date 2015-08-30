@@ -1294,3 +1294,5 @@ en:
       dentist: "Dentist"
       notes: "Notes"
       dental_insurance: "Dental Insurance"
+      no_cleaning_for: "Last Dental Cleaning %{delta} Ago"
+      no_cleanings: "No Dental Cleanings"

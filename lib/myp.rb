@@ -561,6 +561,7 @@ module Myp
     contact_type_threshold[2] = 90.days.ago
     contact_type_threshold[4] = 20.days.ago
     contact_type_threshold[5] = 45.days.ago
+    dentist_visit_threshold = 5.months.ago
     
     Rails.logger.debug("Searching vehicles")
 
@@ -667,6 +668,23 @@ module Myp
             ), "/contacts/" + contact.id.to_s, contact.last_conversation_date))
           end
         end
+      end
+    end
+    
+    Rails.logger.debug("Searching dental cleanings")
+
+    last_dentist_visit = DentistVisit.where("owner_id = ? and cleaning = true", user.primary_identity).order('visit_date DESC').limit(1).first
+    if !last_dentist_visit.nil? and last_dentist_visit.visit_date < dentist_visit_threshold
+      result.push(DueItem.new(I18n.t(
+        "myplaceonline.dentist_visits.no_cleaning_for",
+        delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, last_dentist_visit.visit_date).in_general)
+      ), "/dentist_visits/" + last_dentist_visit.id.to_s, last_dentist_visit.visit_date))
+    elsif last_dentist_visit.nil?
+      # If there are no dentist visits at all but there is a dental insurance company, then notify
+      if DentalInsurance.where("owner_id = ? and (defunct is null)", user.primary_identity).count > 0
+        result.push(DueItem.new(I18n.t(
+          "myplaceonline.dentist_visits.no_cleanings"
+        ), "/dentist_visits/", timenow))
       end
     end
     
