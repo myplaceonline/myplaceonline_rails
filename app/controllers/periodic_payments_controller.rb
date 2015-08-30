@@ -27,6 +27,11 @@ class PeriodicPaymentsController < MyplaceonlineController
     ]
   end
 
+  def self.reject_if_blank(attributes)
+    attributes.all?{|key, value|
+      value.blank?
+    }
+  end
   protected
     def sorts
       ["lower(periodic_payments.periodic_payment_name) ASC"]

@@ -107,6 +107,7 @@ en:
       poems: "Poems"
       musical_groups: "Musical Groups"
       users: "Users"
+      dentist_visits: "Dentist Visits"
     general:
       email: "E-mail"
       password: "Password"
@@ -1285,3 +1286,11 @@ en:
       add: "Add Gun Registration"
       delete: "Delete Gun Registration"
       expires_soon: "Gun Registration Expires for %{gun_name} in %{delta}"
+    dentist_visits:
+      visit_date: "Date"
+      cavities: "Cavities"
+      paid: "Paid"
+      cleaning: "Cleaning"
+      dentist: "Dentist"
+      notes: "Notes"
+      dental_insurance: "Dental Insurance"

@@ -1,0 +1,31 @@
+<%= myp_date_field(f, :visit_date, "myplaceonline.dentist_visits.visit_date", obj.visit_date) %>
+<%= myp_integer_field(f, :cavities, "myplaceonline.dentist_visits.cavities", obj.cavities) %>
+<%= myp_decimal_field(f, :paid, "myplaceonline.dentist_visits.paid", obj.paid) %>
+<%= myp_check_box(f, :cleaning, "myplaceonline.dentist_visits.cleaning") %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.dentist_visits.notes", obj.notes) %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :dentist,
+    existingobj: obj.dentist,
+    heading: t("myplaceonline.dentist_visits.dentist"),
+    objform: "doctors/form",
+    existingobjurl: "doctor_path",
+    searchurl: "/doctors.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :dental_insurance,
+    existingobj: obj.dental_insurance,
+    heading: t("myplaceonline.dentist_visits.dental_insurance"),
+    objform: "dental_insurances/form",
+    existingobjurl: "dental_insurance_path",
+    searchurl: "/dental_insurances.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>

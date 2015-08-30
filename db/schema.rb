@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150830185419) do
+ActiveRecord::Schema.define(version: 20150830193621) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -485,6 +485,23 @@ ActiveRecord::Schema.define(version: 20150830185419) do
   add_index "dental_insurances", ["owner_id"], name: "index_dental_insurances_on_owner_id", using: :btree
   add_index "dental_insurances", ["password_id"], name: "index_dental_insurances_on_password_id", using: :btree
   add_index "dental_insurances", ["periodic_payment_id"], name: "index_dental_insurances_on_periodic_payment_id", using: :btree
+
+  create_table "dentist_visits", force: true do |t|
+    t.date     "visit_date"
+    t.integer  "cavities"
+    t.text     "notes"
+    t.integer  "dentist_id"
+    t.integer  "dental_insurance_id"
+    t.decimal  "paid",                precision: 10, scale: 2
+    t.boolean  "cleaning"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "dentist_visits", ["dental_insurance_id"], name: "index_dentist_visits_on_dental_insurance_id", using: :btree
+  add_index "dentist_visits", ["dentist_id"], name: "index_dentist_visits_on_dentist_id", using: :btree
+  add_index "dentist_visits", ["owner_id"], name: "index_dentist_visits_on_owner_id", using: :btree
 
   create_table "desired_products", force: true do |t|
     t.string   "product_name"
