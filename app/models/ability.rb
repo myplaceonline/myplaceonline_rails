@@ -110,6 +110,7 @@ class Ability
     can :manage, Poem, :owner => identity
     can :manage, MusicalGroup, :owner => identity
     can :manage, DentistVisit, :owner => identity
+    can :manage, DoctorVisit, :owner => identity
     
     if user.admin?
       can :manage, User

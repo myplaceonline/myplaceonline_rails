@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :doctor_visits
+  post 'doctor_visits/new'
+
   resources :dentist_visits
   post 'dentist_visits/new'
 

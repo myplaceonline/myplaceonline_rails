@@ -108,6 +108,7 @@ en:
       musical_groups: "Musical Groups"
       users: "Users"
       dentist_visits: "Dentist Visits"
+      doctor_visits: "Doctor Visits"
     general:
       email: "E-mail"
       password: "Password"
@@ -1296,3 +1297,12 @@ en:
       dental_insurance: "Dental Insurance"
       no_cleaning_for: "Last Dental Cleaning %{delta} Ago"
       no_cleanings: "No Dental Cleanings"
+    doctor_visits:
+      visit_date: "Date"
+      paid: "Paid"
+      physical: "Physical"
+      doctor: "Doctor"
+      notes: "Notes"
+      health_insurance: "Health Insurance"
+      no_physicals_for: "Last Health Physicals %{delta} Ago"
+      no_physicals: "No Health Physicals"

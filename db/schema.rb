@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150830201551) do
+ActiveRecord::Schema.define(version: 20150830210732) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -524,6 +524,22 @@ ActiveRecord::Schema.define(version: 20150830201551) do
 
   add_index "diary_entries", ["owner_id"], name: "index_diary_entries_on_owner_id", using: :btree
 
+  create_table "doctor_visits", force: true do |t|
+    t.date     "visit_date"
+    t.text     "notes"
+    t.integer  "doctor_id"
+    t.integer  "health_insurance_id"
+    t.decimal  "paid",                precision: 10, scale: 2
+    t.boolean  "physical"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "doctor_visits", ["doctor_id"], name: "index_doctor_visits_on_doctor_id", using: :btree
+  add_index "doctor_visits", ["health_insurance_id"], name: "index_doctor_visits_on_health_insurance_id", using: :btree
+  add_index "doctor_visits", ["owner_id"], name: "index_doctor_visits_on_owner_id", using: :btree
+
   create_table "doctors", force: true do |t|
     t.integer  "contact_id"
     t.integer  "owner_id"
@@ -548,7 +564,7 @@ ActiveRecord::Schema.define(version: 20150830201551) do
   add_index "drinks", ["owner_id"], name: "index_drinks_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.binary   "val"
+    t.string   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
