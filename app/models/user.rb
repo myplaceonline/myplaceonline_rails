@@ -17,6 +17,14 @@ class User < MyplaceonlineModelBase
         value && value == Rails.configuration.invite_code
     end
   end
+  
+  def admin?
+    if !user_type.nil? && (user_type & 1) != 0
+      true
+    else
+      false
+    end
+  end
 
   # User loaded from database
   after_initialize do |user|
