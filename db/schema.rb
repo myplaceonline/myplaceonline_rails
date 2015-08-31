@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150830214640) do
+ActiveRecord::Schema.define(version: 20150831235220) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -520,6 +520,7 @@ ActiveRecord::Schema.define(version: 20150830214640) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "diary_title"
   end
 
   add_index "diary_entries", ["owner_id"], name: "index_diary_entries_on_owner_id", using: :btree
@@ -564,7 +565,7 @@ ActiveRecord::Schema.define(version: 20150830214640) do
   add_index "drinks", ["owner_id"], name: "index_drinks_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"

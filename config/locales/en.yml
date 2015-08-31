@@ -1152,6 +1152,7 @@ en:
     diary_entries:
       diary_time: "Time"
       entry: "Entry"
+      diary_title: "Title"
     restaurants:
       location: "Location"
       notes: "Notes"
