@@ -571,7 +571,7 @@ module Myp
     contact_type_threshold[5] = 45.days.ago
     dentist_visit_threshold = 5.months.ago
     doctor_visit_threshold = 11.months.ago
-    status_threshold = 1.days.ago
+    status_threshold = 16.hours.ago
     
     Rails.logger.debug("Searching vehicles")
 
