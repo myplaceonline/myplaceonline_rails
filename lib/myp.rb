@@ -771,6 +771,8 @@ module Myp
     if result.length == 0
       if diff.values.reduce(:+) == 0
         result += I18n.t("myplaceonline.general.today")
+      elsif diff[:hours] > 0
+        result += ActionController::Base.helpers.pluralize(diff[:hours], "hour")
       end
     end
     result
