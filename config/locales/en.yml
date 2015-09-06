@@ -1313,3 +1313,5 @@ en:
       three_good_things: "Three Good Things"
       no_recent_status: "Three Good Things Last Entered %{delta} Ago"
       no_statuses: "Enter Three Good Things Today"
+    points:
+      title: "Points"

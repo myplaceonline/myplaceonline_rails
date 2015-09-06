@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  
+  get 'points/show'
 
   resources :statuses
   post 'statuses/new'
