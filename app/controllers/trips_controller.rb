@@ -8,6 +8,10 @@ class TripsController < MyplaceonlineController
       ["trips.started DESC"]
     end
 
+    def insecure
+      true
+    end
+    
     def obj_params
       params.require(:trip).permit(
         :started,
