@@ -110,6 +110,7 @@ en:
       dentist_visits: "Dentist Visits"
       doctor_visits: "Doctor Visits"
       statuses: "Statuses"
+      notepads: "Notepads"
     general:
       email: "E-mail"
       password: "Password"
@@ -1315,3 +1316,6 @@ en:
       no_statuses: "Enter Three Good Things Today"
     points:
       title: "Points"
+    notepads:
+      title: "Title"
+      notepad_data: "Notepad"

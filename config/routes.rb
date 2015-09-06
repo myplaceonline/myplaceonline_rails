@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :notepads
+  post 'notepads/new'
+
   get 'points/show'
 
   resources :statuses

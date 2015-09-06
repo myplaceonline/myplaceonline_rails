@@ -112,6 +112,7 @@ class Ability
     can :manage, DentistVisit, :owner => identity
     can :manage, DoctorVisit, :owner => identity
     can :manage, Status, :owner => identity
+    can :manage, Notepad, :owner => identity
     
     if user.admin?
       can :manage, User
