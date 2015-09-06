@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :myplaceonline_quick_category_displays
+  post 'myplaceonline_quick_category_displays/new'
+
   resources :point_displays
   post 'point_displays/new'
 

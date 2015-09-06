@@ -1,0 +1,2 @@
+class MyplaceonlineQuickCategoryDisplay < MyplaceonlineIdentityRecord
+end
