@@ -4,4 +4,8 @@ class SearchController < ApplicationController
   def index
     @initialCategoryList = Myp.categories_for_current_user(current_user, -1).to_json
   end
+  
+  def show
+    @initialCategoryList = Myp.categories_for_current_user(current_user, -1).to_json
+  end
 end

@@ -273,6 +273,7 @@ Rails.application.routes.draw do
   get 'joy', :to => 'joy#index'
 
   get 'search/index'
+  get 'search/show'
   get 'search', :to => 'search#index'
 
   get 'info/index'
