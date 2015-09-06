@@ -113,6 +113,7 @@ class Ability
     can :manage, DoctorVisit, :owner => identity
     can :manage, Status, :owner => identity
     can :manage, Notepad, :owner => identity
+    can :manage, MyplaceonlineSearch, :owner => identity
     
     if user.admin?
       can :manage, User

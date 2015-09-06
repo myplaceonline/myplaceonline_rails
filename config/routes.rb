@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :myplaceonline_searches
+  post 'myplaceonline_searches/new'
+
   resources :notepads
   post 'notepads/new'
 

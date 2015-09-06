@@ -1,0 +1,2 @@
+class MyplaceonlineSearch < MyplaceonlineIdentityRecord
+end
