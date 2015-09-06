@@ -1323,3 +1323,10 @@ en:
     notepads:
       title: "Title"
       notepad_data: "Notepad"
+    myplets:
+      titles:
+        point_display: "Points"
+        myplaceonline_search: "Search"
+        myplaceonline_quick_category_display: "Recently or Frequently Used"
+        myplaceonline_due_display: "Due"
+        notepad: "Notepad"
