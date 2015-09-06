@@ -114,6 +114,7 @@ en:
       myplaceonline_searches: "Myplaceonline Searches"
       point_displays: "Point Displays"
       myplaceonline_quick_category_displays: "Myplaceonline Quick Category Displays"
+      myplaceonline_due_displays: "Myplaceonline Due Displays"
     general:
       email: "E-mail"
       password: "Password"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150906220819) do
+ActiveRecord::Schema.define(version: 20150906221726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1183,6 +1183,15 @@ ActiveRecord::Schema.define(version: 20150906220819) do
   end
 
   add_index "musical_groups", ["owner_id"], name: "index_musical_groups_on_owner_id", using: :btree
+
+  create_table "myplaceonline_due_displays", force: true do |t|
+    t.boolean  "trash"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "myplaceonline_due_displays", ["owner_id"], name: "index_myplaceonline_due_displays_on_owner_id", using: :btree
 
   create_table "myplaceonline_quick_category_displays", force: true do |t|
     t.boolean  "trash"

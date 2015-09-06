@@ -1,0 +1,2 @@
+class MyplaceonlineDueDisplay < MyplaceonlineIdentityRecord
+end
