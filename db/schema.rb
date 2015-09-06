@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150831235220) do
+ActiveRecord::Schema.define(version: 20150906190438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1183,6 +1183,21 @@ ActiveRecord::Schema.define(version: 20150831235220) do
   end
 
   add_index "musical_groups", ["owner_id"], name: "index_musical_groups_on_owner_id", using: :btree
+
+  create_table "myplets", force: true do |t|
+    t.integer  "x_coordinate"
+    t.integer  "y_coordinate"
+    t.string   "title"
+    t.string   "category_name"
+    t.integer  "category_id"
+    t.integer  "border_type"
+    t.boolean  "collapsed"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "myplets", ["owner_id"], name: "index_myplets_on_owner_id", using: :btree
 
   create_table "pains", force: true do |t|
     t.string   "pain_location"
