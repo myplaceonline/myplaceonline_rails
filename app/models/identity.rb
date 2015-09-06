@@ -79,6 +79,8 @@ class Identity < MyplaceonlineModelBase
   has_many :statuses, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :notepads, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :myplaceonline_searches, :foreign_key => 'owner_id', :dependent => :destroy
+  has_many :myplaceonline_quick_category_displays, :foreign_key => 'owner_id', :dependent => :destroy
+  has_many :myplaceonline_due_displays, :foreign_key => 'owner_id', :dependent => :destroy
   
   has_many :identity_phones, :foreign_key => 'identity_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_phones, allow_destroy: true, reject_if: :all_blank
@@ -177,6 +179,8 @@ class Identity < MyplaceonlineModelBase
       :statuses => statuses.to_a.map{|x| x.as_json},
       :notepads => notepads.to_a.sort{ |a,b| a.title.downcase <=> b.title.downcase }.map{|x| x.as_json},
       :myplaceonline_searches => myplaceonline_searches.to_a.map{|x| x.as_json},
+      :myplaceonline_quick_category_displays => myplaceonline_quick_category_displays.to_a.map{|x| x.as_json},
+      :myplaceonline_due_displays => myplaceonline_due_displays.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end
