@@ -1,5 +1,6 @@
 <%= render layout: "shared/model_show" do %>
 
   <%= attribute_table_row(t("myplaceonline.notepads.title"), @obj.title) %>
+  <%= attribute_table_row(t("myplaceonline.notepads.notepad_data"), @obj.notepad_data) %>
   
 <% end %>
