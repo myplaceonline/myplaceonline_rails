@@ -677,6 +677,7 @@ en:
       picture: "Picture"
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
+      owned_for: "Owned For"
     vehicle_insurances:
       insurance_name: "Name"
       insurances: "Insurances"
@@ -818,6 +819,7 @@ en:
       picture: "Picture"
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
+      owned_for: "Owned For"
     recreational_vehicle_measurements:
       heading: "Measurements"
       add: "Add Measurement"
