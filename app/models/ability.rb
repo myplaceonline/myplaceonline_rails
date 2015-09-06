@@ -114,6 +114,7 @@ class Ability
     can :manage, Status, :owner => identity
     can :manage, Notepad, :owner => identity
     can :manage, MyplaceonlineSearch, :owner => identity
+    can :manage, PointDisplay, :owner => identity
     
     if user.admin?
       can :manage, User

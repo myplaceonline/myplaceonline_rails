@@ -1,12 +1,13 @@
 Rails.application.routes.draw do
   
+  resources :point_displays
+  post 'point_displays/new'
+
   resources :myplaceonline_searches
   post 'myplaceonline_searches/new'
 
   resources :notepads
   post 'notepads/new'
-
-  get 'points/show'
 
   resources :statuses
   post 'statuses/new'

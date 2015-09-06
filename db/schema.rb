@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150906213840) do
+ActiveRecord::Schema.define(version: 20150906215302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1313,6 +1313,15 @@ ActiveRecord::Schema.define(version: 20150906213840) do
   end
 
   add_index "poems", ["owner_id"], name: "index_poems_on_owner_id", using: :btree
+
+  create_table "point_displays", force: true do |t|
+    t.boolean  "trash"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "point_displays", ["owner_id"], name: "index_point_displays_on_owner_id", using: :btree
 
   create_table "promises", force: true do |t|
     t.string   "name"

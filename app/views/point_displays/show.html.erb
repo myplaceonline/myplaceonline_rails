@@ -1,0 +1,8 @@
+<% if params[:myplet] %>
+  <div class="horizontal_center">
+    <span id="myplaceonline_points_show"><%= t("myplaceonline.general.points") %>: <%= Myp.number_with_delimiter(@totalPoints) %><%= Myp.images_for_points(@totalPoints) %></span>
+  </div>
+<% else %>
+  <%= render layout: "shared/model_show" do %>
+  <% end %>
+<% end %>

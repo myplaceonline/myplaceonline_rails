@@ -1,0 +1,2 @@
+class PointDisplay < MyplaceonlineIdentityRecord
+end
