@@ -9,6 +9,7 @@ class WelcomeController < ApplicationController
       @usefulCategoryList = Myp.useful_categories(current_user)
       @due = Myp.due(current_user)
       @notepad = current_user.primary_identity.notepad || ""
+      @myplets = Myplet.where(owner: current_user.primary_identity).order(:x_coordinate, :y_coordinate).all
     end
     @isInitialPhonegapRequest = params[:phonegap] == "true"
   end

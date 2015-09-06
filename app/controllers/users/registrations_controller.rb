@@ -12,7 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
   skip_authorization_check
   
-  # By default, authentication is required for all actions except net/create/cancel
+  # By default, authentication is required for all actions except new/create/cancel
   
   # before_filter :configure_sign_up_params, only: [:create]
   # before_filter :configure_account_update_params, only: [:update]

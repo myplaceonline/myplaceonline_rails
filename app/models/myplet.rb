@@ -68,7 +68,11 @@ class Myplet < MyplaceonlineIdentityRecord
       border_type: 1,
       owner: identity
     }))
-
+    
+    result.each do |myplet|
+      myplet.save!
+    end
+    
     result
   end
 end

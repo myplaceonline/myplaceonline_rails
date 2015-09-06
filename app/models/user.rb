@@ -40,13 +40,24 @@ class User < MyplaceonlineModelBase
   after_initialize do |user|
     # If user.id is nil, then it's an anonymous user
     if !user.id.nil? && primary_identity.nil?
-      # No primary identity, so we create a default one
+
+      User.current_user = user
+      
+      # No primary identity, so we create a default one. We can also do
+      # any first-time initialization of the user here
       user.transaction do
+        
+        # Create the identity
         @identity = Identity.new
         @identity.owner = user
-        @identity.save
+        @identity.save!
+        
+        # Set the identity in the user
         user.primary_identity = @identity
-        user.save
+        user.save!
+        
+        # Create default myplets
+        Myplet.default_myplets(@identity)
       end
     end
   end
