@@ -11,7 +11,8 @@ class StatusesController < MyplaceonlineController
     def obj_params
       params.require(:status).permit(
         :status_time,
-        :three_good_things
+        :three_good_things,
+        :feeling
       )
     end
 end

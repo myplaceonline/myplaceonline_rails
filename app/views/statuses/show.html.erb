@@ -2,5 +2,6 @@
 
   <%= attribute_table_row_datetime(t("myplaceonline.statuses.status_time"), @obj.status_time) %>
   <%= attribute_table_row_markdown(t("myplaceonline.statuses.three_good_things"), @obj.three_good_things) %>
+  <%= attribute_table_row_select(t("myplaceonline.statuses.feeling"), @obj.feeling, Status::FEELINGS) %>
   
 <% end %>
