@@ -4,13 +4,15 @@ class PeriodicPaymentsController < MyplaceonlineController
   def monthly_total
     @total = 0
     all.each do |x|
-      if Myp.includes_today?(x.started, x.ended)
-        if x.date_period == 0
-          @total += x.payment_amount
-        elsif x.date_period == 1
-          @total += x.payment_amount / 12
-        elsif x.date_period == 2
-          @total += x.payment_amount / 6
+      if !x.payment_amount.nil?
+        if Myp.includes_today?(x.started, x.ended)
+          if x.date_period == 0
+            @total += x.payment_amount
+          elsif x.date_period == 1
+            @total += x.payment_amount / 12
+          elsif x.date_period == 2
+            @total += x.payment_amount / 6
+          end
         end
       end
     end
