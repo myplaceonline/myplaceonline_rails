@@ -116,6 +116,7 @@ en:
       myplaceonline_quick_category_displays: "Myplaceonline Quick Category Displays"
       myplaceonline_due_displays: "Myplaceonline Due Displays"
       concerts: "Concerts"
+      shopping_lists: "Shopping Lists"
     general:
       email: "E-mail"
       password: "Password"
@@ -1338,3 +1339,11 @@ en:
       concert_title: "Description"
       notes: "Notes"
       location: "Location"
+    shopping_lists:
+      shopping_list_name: "Name"
+      add: "Add Item"
+      delete: "Delete Item"
+      items: "Items"
+      item: "Item"
+      generate: "Generate"
+      shopping_list_item_name: "Name"

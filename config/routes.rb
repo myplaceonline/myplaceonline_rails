@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   
+  match 'shopping_lists/:id/generate', :to => 'shopping_lists#generate', via: [:get], as: "shopping_list_generate"
+  resources :shopping_lists
+  post 'shopping_lists/new'
+
   resources :concerts
   post 'concerts/new'
 

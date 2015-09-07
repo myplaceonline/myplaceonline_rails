@@ -1,0 +1,36 @@
+<% content_for :heading do -%><%= controller.display_obj(@obj) %><% end -%>
+<h1><%= controller.display_obj(@obj) %></h1>
+<%= flashes! %>
+
+<% i = 0 %>
+<% @all_items.each do |item| %>
+  <%= myp_check_box_tag "item" + i.to_s, item.display, false, false, nil, "return hide_if_checked(this);" %>
+  <% i = i + 1 %>
+<% end %>
+
+<% content_for :footer do -%>
+<div data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="navbar">
+        <ul>
+          <% if content_for?(:footerlinks) %>
+            <%= content_for(:footerlinks) %>
+          <% else %>
+            <% if content_for?(:prefooterlinks) %>
+              <%= content_for(:prefooterlinks) %>
+            <% end %>
+            <li><%= link_to t('myplaceonline.general.edit'), controller.edit_obj_path, "data-icon" => "edit" %></li>
+            <li><%= link_to t('myplaceonline.general.delete'), controller.obj_path,
+                    method: :delete, data: { confirm: 'Are you sure?' }, "data-icon" => "delete" %></li>
+            <!--<li><%= link_to t("myplaceonline.general.back_to_all") + " " + controller.back_to_all_name, controller.back_to_all_path, "data-icon" => "back" %></li>-->
+            <li><%= link_to t("myplaceonline.general.back_to_list"), controller.back_to_all_path, "data-icon" => "back" %></li>
+            <% if controller.show_add %>
+              <li><%= link_to controller.add_another_name, controller.new_path(@obj), "data-icon" => "plus" %></li>
+            <% end %>
+            <% if content_for?(:postfooterlinks) %>
+              <%= content_for(:postfooterlinks) %>
+            <% end %>
+          <% end %>
+        </ul>
+    </div>
+</div>
+<% end -%>

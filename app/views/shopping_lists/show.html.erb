@@ -1,0 +1,13 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.shopping_lists.shopping_list_name"), @obj.shopping_list_name) %>
+  <% @obj.all_shopping_list_items.each do |item| %>
+    <%= table_row_heading(t("myplaceonline.shopping_lists.item")) %>
+    <%= attribute_table_row(t("myplaceonline.shopping_lists.shopping_list_item_name"), item.shopping_list_item_name) %>
+  <% end %>
+  
+  <% content_for :prefooterlinks do %>
+    <li><%= link_to t('myplaceonline.shopping_lists.generate'), shopping_list_generate_path(@obj), "data-icon" => "plus" %></li>
+  <% end %>
+
+<% end %>

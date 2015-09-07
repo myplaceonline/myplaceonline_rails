@@ -3,7 +3,7 @@
 <%= myp_decimal_field(f, :calories, "myplaceonline.foods.calories", obj.calories) %>
 <%= myp_select(f, :weight_type, "myplaceonline.foods.weight_type", Myp.translate_options(Myp::FOOD_WEIGHTS), obj.weight_type) %>
 <%= myp_decimal_field(f, :weight, "myplaceonline.foods.weight", obj.weight) %>
-<%= myp_text_area_markdown f, :notes, "myplaceonline.foods.notes", obj.notes) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.foods.notes", obj.notes) %>
 <% if params["allowinnerfoods"] || @topedit %>
   <%=
     render layout: 'myplaceonline/childproperties', locals: {

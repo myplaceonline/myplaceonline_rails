@@ -1,0 +1,28 @@
+<%= myp_text_field(f, :shopping_list_name, "myplaceonline.shopping_lists.shopping_list_name", obj.shopping_list_name, autofocus) %>
+<%=
+  render(layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.shopping_lists.items"),
+    childpropertiesname: :shopping_list_items,
+    childproperties: obj.all_shopping_list_items,
+    deletebutton: t("myplaceonline.shopping_lists.delete"),
+    addbutton: t("myplaceonline.shopping_lists.add"),
+    expanded: true,
+    position_field: :position,
+    itemname: t("myplaceonline.shopping_lists.item"),
+    formjson: [
+      {
+        type: 'text',
+        name: 'shopping_list_item_name',
+        placeholder: t("myplaceonline.shopping_lists.shopping_list_item_name"),
+        autofocus: true
+      },
+      {
+        type: 'position',
+        name: 'position'
+      }
+    ]
+  }) do |child_fields, childproperty|
+%>
+  <%= myp_text_field(child_fields, :shopping_list_item_name, "myplaceonline.shopping_lists.shopping_list_item_name", childproperty.shopping_list_item_name) %>
+<% end %>

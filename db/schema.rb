@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150907001225) do
+ActiveRecord::Schema.define(version: 20150907003120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -578,7 +578,7 @@ ActiveRecord::Schema.define(version: 20150907001225) do
   add_index "drinks", ["owner_id"], name: "index_drinks_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -1524,6 +1524,27 @@ ActiveRecord::Schema.define(version: 20150907001225) do
 
   add_index "reward_programs", ["owner_id"], name: "index_reward_programs_on_owner_id", using: :btree
   add_index "reward_programs", ["password_id"], name: "index_reward_programs_on_password_id", using: :btree
+
+  create_table "shopping_list_items", force: true do |t|
+    t.integer  "owner_id"
+    t.integer  "shopping_list_id"
+    t.string   "shopping_list_item_name"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shopping_list_items", ["owner_id"], name: "index_shopping_list_items_on_owner_id", using: :btree
+  add_index "shopping_list_items", ["shopping_list_id"], name: "index_shopping_list_items_on_shopping_list_id", using: :btree
+
+  create_table "shopping_lists", force: true do |t|
+    t.string   "shopping_list_name"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shopping_lists", ["owner_id"], name: "index_shopping_lists_on_owner_id", using: :btree
 
   create_table "skin_treatments", force: true do |t|
     t.datetime "treatment_time"

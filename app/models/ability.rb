@@ -118,6 +118,8 @@ class Ability
     can :manage, MyplaceonlineQuickCategoryDisplay, :owner => identity
     can :manage, MyplaceonlineDueDisplay, :owner => identity
     can :manage, Concert, :owner => identity
+    can :manage, ShoppingList, :owner => identity
+    can :manage, ShoppingListItem, :owner => identity
     
     if user.admin?
       can :manage, User
