@@ -6,9 +6,7 @@ class ShoppingListsController < MyplaceonlineController
   
   def generate
     set_obj
-    
     @all_items = @obj.all_shopping_list_items
-    
     respond_with(@obj)
   end
 

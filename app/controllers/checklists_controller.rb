@@ -1,20 +1,29 @@
 class ChecklistsController < MyplaceonlineController
+  def show
+    @all_items = find_items
+    render :generate
+  end
+  
   def generate
     set_obj
-    
-    @all_items = Array.new
-    @obj.pre_checklist_references.each do |x|
-      @all_items.concat(x.checklist.all_checklist_items)
-    end
-    @all_items.concat(@obj.all_checklist_items)
-    @obj.post_checklist_references.each do |x|
-      @all_items.concat(x.checklist.all_checklist_items)
-    end
-    
+    @all_items = find_items
     respond_with(@obj)
   end
 
   protected
+  
+    def find_items
+      result = Array.new
+      @obj.pre_checklist_references.each do |x|
+        result.concat(x.checklist.all_checklist_items)
+      end
+      result.concat(@obj.all_checklist_items)
+      @obj.post_checklist_references.each do |x|
+        result.concat(x.checklist.all_checklist_items)
+      end
+      result
+    end
+    
     def sorts
       ["lower(checklists.checklist_name) ASC"]
     end
