@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150906234240) do
+ActiveRecord::Schema.define(version: 20150907001225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -389,6 +389,19 @@ ActiveRecord::Schema.define(version: 20150906234240) do
   add_index "computers", ["manufacturer_id"], name: "index_computers_on_manufacturer_id", using: :btree
   add_index "computers", ["owner_id"], name: "index_computers_on_owner_id", using: :btree
 
+  create_table "concerts", force: true do |t|
+    t.string   "concert_date"
+    t.string   "concert_title"
+    t.integer  "location_id"
+    t.text     "notes"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "concerts", ["location_id"], name: "index_concerts_on_location_id", using: :btree
+  add_index "concerts", ["owner_id"], name: "index_concerts_on_owner_id", using: :btree
+
   create_table "contacts", force: true do |t|
     t.integer  "identity_id"
     t.integer  "owner_id"
@@ -565,7 +578,7 @@ ActiveRecord::Schema.define(version: 20150906234240) do
   add_index "drinks", ["owner_id"], name: "index_drinks_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.binary   "val"
+    t.string   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"

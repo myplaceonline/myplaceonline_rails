@@ -1,0 +1,8 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.concerts.concert_title"), @obj.concert_title) %>
+  <%= attribute_table_row_date(t("myplaceonline.concerts.concert_date"), @obj.concert_date) %>
+  <%= attribute_table_row_reference(t("myplaceonline.concerts.location"), "location_path", @obj.location) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.trips.notes"), @obj.notes) %>
+  
+<% end %>

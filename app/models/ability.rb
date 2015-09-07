@@ -117,6 +117,7 @@ class Ability
     can :manage, PointDisplay, :owner => identity
     can :manage, MyplaceonlineQuickCategoryDisplay, :owner => identity
     can :manage, MyplaceonlineDueDisplay, :owner => identity
+    can :manage, Concert, :owner => identity
     
     if user.admin?
       can :manage, User

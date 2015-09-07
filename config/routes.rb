@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :concerts
+  post 'concerts/new'
+
   resources :myplaceonline_due_displays
   post 'myplaceonline_due_displays/new'
 
