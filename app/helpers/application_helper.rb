@@ -638,4 +638,12 @@ module ApplicationHelper
       category.human_title
     end
   end
+  
+  # http://stackoverflow.com/a/7085969
+  def renderActionInOtherController(controller, action, params)
+    c = controller.new
+    c.params = params
+    c.dispatch(action, request)
+    c.response.body
+  end
 end

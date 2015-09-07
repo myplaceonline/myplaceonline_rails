@@ -92,7 +92,7 @@
   </ul>
   
   <%# @myplets.each do |myplet| %>
-    <%# render inline: "/" + myplet.category_name + "/" + myplet.category_id.to_s %>
+    <%# render :text => renderActionInOtherController(Object.const_get(myplet.category_name.camelize + "Controller"), :show, { id: myplet.category_id }) %>
   <%# end %>
 
 <% end %>
