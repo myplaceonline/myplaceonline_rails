@@ -109,7 +109,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def update
-    Myp.ensure_encryption_key(session)
+    update_security
     ActiveRecord::Base.transaction do
 
       begin
@@ -283,5 +283,9 @@ class MyplaceonlineController < ApplicationController
     end
     
     def filter_json_index_search()
+    end
+    
+    def update_security
+      Myp.ensure_encryption_key(session)
     end
 end

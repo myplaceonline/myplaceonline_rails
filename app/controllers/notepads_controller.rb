@@ -10,4 +10,7 @@ class NotepadsController < MyplaceonlineController
         :notepad_data
       )
     end
+    
+    def update_security
+    end
 end
