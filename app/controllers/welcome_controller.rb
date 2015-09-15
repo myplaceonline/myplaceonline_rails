@@ -4,11 +4,6 @@ class WelcomeController < ApplicationController
   
   def index
     if user_signed_in?
-      @initialCategoryList = Myp.categories_for_current_user(current_user, -1).to_json
-      @totalPoints = current_user.total_points
-      @usefulCategoryList = Myp.useful_categories(current_user)
-      @due = Myp.due(current_user)
-      @notepad = current_user.primary_identity.notepad || ""
       @myplets = Myplet.where(owner: current_user.primary_identity).order(:x_coordinate, :y_coordinate).all
     end
     @isInitialPhonegapRequest = params[:phonegap] == "true"

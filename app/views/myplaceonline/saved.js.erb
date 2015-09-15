@@ -1,5 +1,7 @@
 <% if @error.nil? %>
-navigate('<%= controller.obj_path(@obj) %>');
+  <% if params[:suppress_navigate].nil? %>
+    navigate('<%= controller.obj_path(@obj) %>');
+  <% end %>
 <% else %>
-alert('Error: ' + <%= @error.to_json.html_safe %>);
+  alert('Error: ' + <%= @error.to_json.html_safe %>);
 <% end %>

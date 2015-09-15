@@ -382,21 +382,25 @@ function href_extract_id(href) {
   return href;
 }
 
-function notepad_changed(notepadTitle, pendingSave, saving, saved, safe_save) {
+function notepad_changed(url, notepadTitle, pendingSave, saving, saved, new_data, safe_save) {
   if (myp.notepadResetTimeout) {
     clearTimeout(myp.notepadResetTimeout);
     myp.notepadResetTimeout = null;
   }
   $(".notepad_heading").html(notepadTitle + " (" + pendingSave + ")");
-  if (myp.notepad && !myp.notepadTimeout) {
+  if (!myp.notepadTimeout) {
     myp.notepadTimeout = window.setTimeout(function() {
       $(".notepad_heading").html(notepadTitle + " (" + saving + ")");
-      var url = "/api/updatenotepad.json";
       $.ajax({
         url: url,
-        method: "POST",
-        dataType: "json",
-        data: myp.notepad.getHTML()
+        method: "PATCH",
+        dataType: "script",
+        data: {
+          suppress_navigate: true,
+          notepad: {
+            notepad_data: new_data
+          }
+        }
       }).done(function(data, textStatus, jqXHR) {
         $(".notepad_heading").html(notepadTitle + " (" + saved + ")");
         myp.notepadResetTimeout = window.setTimeout(function() {
@@ -413,7 +417,7 @@ function notepad_changed(notepadTitle, pendingSave, saving, saved, safe_save) {
         if (!safe_save) {
           // Whether we succeeded or failed, do an extra save to deal with
           // race conditions and retry, respectively
-          notepad_changed(notepadTitle, pendingSave, saving, saved, true);
+          notepad_changed(url, notepadTitle, pendingSave, saving, saved, new_data, true);
         }
       });
     }, 1000);

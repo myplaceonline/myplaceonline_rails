@@ -1,0 +1,3 @@
+<%= form_for @obj, :url => @url, :remote => controller.may_upload, data: { ajax: !controller.may_upload } do |f| %>
+  <%= render partial: "shared/model_form", locals: { form_name: controller.paths_name + "/form", edit: true, autofocus: true, f: f } %>
+<% end %>

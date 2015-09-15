@@ -58,6 +58,12 @@ class MyplaceonlineController < ApplicationController
     before_show
     respond_with(@obj)
   end
+  
+  def showmyplet
+    set_obj
+    @myplet = true
+    render action: "showmyplet", layout: "myplet"
+  end
 
   def new
     if !insecure
@@ -77,7 +83,7 @@ class MyplaceonlineController < ApplicationController
     @url = obj_path(@obj)
     respond_with(@obj)
   end
-
+  
   def create
     if !insecure
       Myp.ensure_encryption_key(session)

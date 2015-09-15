@@ -1,11 +1,11 @@
 class PointDisplaysController < MyplaceonlineController
+  
+  def showmyplet
+    @totalPoints = current_user.total_points
+    super
+  end
+  
   protected
-    def before_show
-      if params[:myplet]
-        @totalPoints = current_user.total_points
-      end
-    end
-    
     def sorts
       ["point_displays.updated_at DESC"]
     end

@@ -643,6 +643,8 @@ module ApplicationHelper
   def renderActionInOtherController(controller, action, params)
     c = controller.new
     c.params = params
+    # TODO before_actions are not called (process_action is protected and
+    # calling it through a public wrapper doesn't work)
     c.dispatch(action, request)
     c.response.body
   end

@@ -1,4 +1,9 @@
 class MyplaceonlineDueDisplaysController < MyplaceonlineController
+  def showmyplet
+    @due = Myp.due(current_user)
+    super
+  end
+  
   protected
     def sorts
       ["myplaceonline_due_displays.updated_at DESC"]
