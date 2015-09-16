@@ -1,5 +1,9 @@
 class MoviesController < MyplaceonlineController
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["lower(movies.name) ASC"]
     end

@@ -1,5 +1,9 @@
 class HobbiesController < MyplaceonlineController
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["lower(hobbies.hobby_name) ASC"]
     end

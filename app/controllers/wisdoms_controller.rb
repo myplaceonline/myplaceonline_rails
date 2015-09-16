@@ -1,5 +1,9 @@
 class WisdomsController < MyplaceonlineController
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["lower(wisdoms.name) ASC"]
     end

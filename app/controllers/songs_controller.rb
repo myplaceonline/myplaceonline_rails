@@ -1,5 +1,9 @@
 class SongsController < MyplaceonlineController
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["lower(songs.song_name) ASC"]
     end

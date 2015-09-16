@@ -1,5 +1,9 @@
 class JokesController < MyplaceonlineController
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["lower(jokes.name) ASC"]
     end

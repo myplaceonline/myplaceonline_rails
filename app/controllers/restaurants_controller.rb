@@ -22,6 +22,10 @@ class RestaurantsController < MyplaceonlineController
   end
 
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["restaurants.updated_at DESC"]
     end

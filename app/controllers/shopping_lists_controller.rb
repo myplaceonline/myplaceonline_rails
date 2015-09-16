@@ -11,6 +11,10 @@ class ShoppingListsController < MyplaceonlineController
   end
 
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["lower(shopping_lists.shopping_list_name) ASC"]
     end

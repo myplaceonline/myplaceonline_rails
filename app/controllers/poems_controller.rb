@@ -1,5 +1,9 @@
 class PoemsController < MyplaceonlineController
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["lower(poems.poem_name) ASC"]
     end

@@ -1,5 +1,9 @@
 class RecipesController < MyplaceonlineController
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["lower(recipes.name) ASC"]
     end

@@ -1,5 +1,9 @@
 class NotepadsController < MyplaceonlineController
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["lower(notepads.title) ASC"]
     end

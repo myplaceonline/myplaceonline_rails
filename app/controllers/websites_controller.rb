@@ -1,5 +1,9 @@
 class WebsitesController < MyplaceonlineController
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["lower(websites.title) ASC"]
     end
