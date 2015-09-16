@@ -2,6 +2,8 @@ $.noty.defaults.timeout = 3000;
 $.noty.defaults.layout = 'topCenter';
 myp.DEFAULT_DATE_FORMAT = "%A, %b %d, %Y";
 myp.DEFAULT_TIME_FORMAT = "%A, %b %d, %Y %-l:%M:%S %p";
+myp.queuedRequests = [];
+myp.queuedRequestThread = null;
 
 function startsWith(str, search) {
   if (str && search && str.length >= search.length && str.substring(0, search.length) == search) {
@@ -382,46 +384,73 @@ function href_extract_id(href) {
   return href;
 }
 
-function notepad_changed(url, notepadTitle, pendingSave, saving, saved, new_data, safe_save) {
-  if (myp.notepadResetTimeout) {
-    clearTimeout(myp.notepadResetTimeout);
-    myp.notepadResetTimeout = null;
+function queueRequest(request) {
+  myp.queuedRequests.push(request);
+  if (!myp.queuedRequestThread) {
+    myp.queuedRequestThread = setTimeout(processQueuedRequest, 500);
   }
-  $(".notepad_heading").html(notepadTitle + " (" + pendingSave + ")");
-  if (!myp.notepadTimeout) {
-    myp.notepadTimeout = window.setTimeout(function() {
+}
+
+function processQueuedRequest() {
+  var newestRequests = {};
+  for (var i = 0; i < myp.queuedRequests.length; i++) {
+    var request = myp.queuedRequests[i];
+    var existingRequest = newestRequests[request.url];
+    if (existingRequest) {
+      if (request.timestamp > existingRequest.timestamp) {
+        newestRequests[request.url] = request;
+      }
+    } else {
+      newestRequests[request.url] = request;
+    }
+  }
+  for (var url in newestRequests) {
+    var request = newestRequests[url];
+    request.presend();
+    $.ajax({
+      url: request.url,
+      method: request.method,
+      dataType: request.dataType,
+      data: request.data
+    }).done(function(data, textStatus, jqXHR) {
+      request.done(data, textStatus, jqXHR);
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+      request.fail(jqXHR, textStatus, errorThrown);
+    });
+  }
+  myp.queuedRequests = [];
+  myp.queuedRequestThread = null;
+}
+
+function notepad_changed(url, notepadTitle, pendingSave, saving, saved, new_data) {
+  queueRequest({
+    url: url,
+    method: "PATCH",
+    dataType: "script",
+    timestamp: new Date().getTime(),
+    presend: function() {
       $(".notepad_heading").html(notepadTitle + " (" + saving + ")");
-      $.ajax({
-        url: url,
-        method: "PATCH",
-        dataType: "script",
-        data: {
-          suppress_navigate: true,
-          notepad: {
-            notepad_data: new_data
-          }
+    },
+    data: {
+      suppress_navigate: true,
+      notepad: {
+        notepad_data: new_data
+      }
+    },
+    done: function(data, textStatus, jqXHR) {
+      $(".notepad_heading").html(notepadTitle + " (" + saved + ")");
+      myp.notepadResetTimeout = window.setTimeout(function() {
+        myp.notepadResetTimeout = null;
+        if (!myp.notepadTimeout) {
+          $(".notepad_heading").html(notepadTitle);
         }
-      }).done(function(data, textStatus, jqXHR) {
-        $(".notepad_heading").html(notepadTitle + " (" + saved + ")");
-        myp.notepadResetTimeout = window.setTimeout(function() {
-          myp.notepadResetTimeout = null;
-          if (!myp.notepadTimeout) {
-            $(".notepad_heading").html(notepadTitle);
-          }
-        }, 3000);
-      }).fail(function(jqXHR, textStatus, errorThrown) {
-        $(".notepad_heading").html(notepadTitle);
-        createErrorNotification("Could not execute " + url + ": " + textStatus);
-      }).complete(function(jqXHR, textStatus) {
-        myp.notepadTimeout = null;
-        if (!safe_save) {
-          // Whether we succeeded or failed, do an extra save to deal with
-          // race conditions and retry, respectively
-          notepad_changed(url, notepadTitle, pendingSave, saving, saved, new_data, true);
-        }
-      });
-    }, 1000);
-  }
+      }, 1500);
+    },
+    fail: function(jqXHR, textStatus, errorThrown) {
+      $(".notepad_heading").html(notepadTitle);
+      createErrorNotification("Could not execute " + url + ": " + textStatus);
+    }
+  });
 }
 
 function datebox_calendar_closed(update) {
