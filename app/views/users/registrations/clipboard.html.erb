@@ -6,6 +6,8 @@
 <%= form_tag do %>
   <fieldset>
     <%= myp_select_tag(:clipboard_integration, "myplaceonline.users.clipboard_integration", Myp.translate_options(Myp::CLIPBOARD_INTEGRATIONS), @clipboard_integration) %>
+    <%= label_tag :clipboard_transform_numbers, t("myplaceonline.users.clipboard_transform_numbers") %>
+    <%= check_box_tag :clipboard_transform_numbers, 1, @clipboard_transform_numbers, data: { "role" => "flipswitch" } %>
   </fieldset>
   <div><%= submit_tag t("myplaceonline.general.save") %></div>
 <% end %>

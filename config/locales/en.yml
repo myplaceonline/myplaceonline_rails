@@ -370,6 +370,7 @@ en:
       clipboard_settings: "Clipboard Settings"
       clipboard_settings_saved: "Clipboard Settings Saved"
       clipboard_integration: "Clipboard Integration"
+      clipboard_transform_numbers: "Append Space To Copied Numbers"
       starting_download: "Starting Download. This can take some time..."
       categories: "Categories"
       explicit_categories: "Show Explicit Categories"

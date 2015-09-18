@@ -18,7 +18,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_filter :configure_account_update_params, only: [:update]
   prepend_before_filter :authenticate_scope!, only: [
     :edit, :update, :destroy, :changepassword, :changeemail, :resetpoints,
-    :advanced, :deletecategory, :security, :export, :appearance
+    :advanced, :deletecategory, :security, :export, :appearance, :clipboard
   ]
   
   before_filter :configure_permitted_parameters
@@ -212,9 +212,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def clipboard
     Myp.ensure_encryption_key(session)
     @clipboard_integration = current_user.clipboard_integration
+    @clipboard_transform_numbers = current_user.clipboard_transform_numbers
     if request.post?
       @clipboard_integration = params[:clipboard_integration]
+      @clipboard_transform_numbers = params[:clipboard_transform_numbers]
       current_user.clipboard_integration = @clipboard_integration
+      current_user.clipboard_transform_numbers = @clipboard_transform_numbers
       current_user.save!
       redirect_to edit_user_registration_path,
         :flash => { :notice => I18n.t("myplaceonline.users.clipboard_settings_saved") }
