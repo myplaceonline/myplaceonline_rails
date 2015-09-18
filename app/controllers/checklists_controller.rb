@@ -15,11 +15,15 @@ class ChecklistsController < MyplaceonlineController
     def find_items
       result = Array.new
       @obj.pre_checklist_references.each do |x|
-        result.concat(x.checklist.all_checklist_items)
+        if !x.checklist.nil?
+          result.concat(x.checklist.all_checklist_items)
+        end
       end
       result.concat(@obj.all_checklist_items)
       @obj.post_checklist_references.each do |x|
-        result.concat(x.checklist.all_checklist_items)
+        if !x.checklist.nil?
+          result.concat(x.checklist.all_checklist_items)
+        end
       end
       result
     end
