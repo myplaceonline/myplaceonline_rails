@@ -188,6 +188,7 @@ en:
       today: "Today"
       filter: "Filter"
       top_items: "Top Used Items"
+      play_store: "Android App on Google Play Store"
     periods:
       monthly: "Monthly"
       yearly: "Yearly"

@@ -7,5 +7,8 @@ class WelcomeController < ApplicationController
       @myplets = Myplet.where(owner: current_user.primary_identity).order(:x_coordinate, :y_coordinate).all
     end
     @isInitialPhonegapRequest = params[:phonegap] == "true"
+    if @isInitialPhonegapRequest
+      session[:phonegap] = true
+    end
   end
 end
