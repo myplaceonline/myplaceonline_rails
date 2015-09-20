@@ -8,6 +8,8 @@ class WelcomeController < ApplicationController
     end
     @isInitialPhonegapRequest = params[:phonegap] == "true"
     if @isInitialPhonegapRequest
+      # TODO this is reset if user signs out (need to "transfer" such
+      # session attributes)
       session[:phonegap] = true
     end
   end
