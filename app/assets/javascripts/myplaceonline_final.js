@@ -232,18 +232,18 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
       item.id = "remote_placeholder_" + id;
       html += "<p id='" + item.id + "'>Loading...</p>";
       futures.push(item);
-    } else if (item.type == "calculation_element") {
-      // Duplicated in views/calculation_forms/_element_form.html.erb
-      html += html_calculation_operand(item, item.left_heading, id, name, "left_operand_attributes");
-      html += "<select id='" + id + "_operator' name='" + name + "[operator]' placeholder='Test'><option value=''>Operator</option><option value='1'>+ (Add)</option><option value='2'>- (Subtract)</option><option value='3'>* (Multiply)</option><option value='4'>/ (Divide)</option></select>";
-      html += html_calculation_operand(item, item.right_heading, id, name, "right_operand_attributes");
     } else {
       var inputType = item.type;
       if (item.type == "position") {
         inputType = "hidden";
         has_position = true;
       }
-      html += "<p><input type='" + (myp.allowFocusPlaceholder ? inputType : "text") + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='" + defaultValue + "' class='" + cssclasses + "'";
+      if (!myp.allowFocusPlaceholder) {
+        if (inputType != "file") {
+          inputType = "text";
+        }
+      }
+      html += "<p><input type='" + inputType + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='" + defaultValue + "' class='" + cssclasses + "'";
       if (item.step) {
         html += " step='" + item.step + "'";
       }
