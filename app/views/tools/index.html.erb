@@ -1,0 +1,10 @@
+<% content_for :heading do -%><%= t('myplaceonline.category.tools') %><% end -%>
+<h1><%= t('myplaceonline.category.tools') %></h1>
+<ul data-role="listview" data-inset="true">
+  <li>
+    <%= link_to(tools_gps_path) do %>
+      <%= image_tag("FatCow_Icons16x16/location_pin.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.tools.gps") %>
+    <% end %>
+  </li>
+</ul>

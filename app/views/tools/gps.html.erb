@@ -1,0 +1,7 @@
+<% content_for :heading do -%><%= t('myplaceonline.tools.gps') %><% end -%>
+<h1><%= t('myplaceonline.tools.gps') %></h1>
+<%= flashes! %>
+<%= form_tag tools_gps_path do |f| %>
+  <div id="gps_results"></div>
+  <%= submit_tag t("myplaceonline.tools.get_gps"), :onclick => "return requestGPS('#gps_results');" %>
+<% end %>

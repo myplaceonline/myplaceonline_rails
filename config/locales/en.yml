@@ -117,6 +117,7 @@ en:
       myplaceonline_due_displays: "Myplaceonline Due Displays"
       concerts: "Concerts"
       shopping_lists: "Shopping Lists"
+      tools: "Tools"
     general:
       email: "E-mail"
       password: "Password"
@@ -1374,3 +1375,6 @@ en:
       item: "Item"
       generate: "Generate"
       shopping_list_item_name: "Name"
+    tools:
+      gps: "GPS Location"
+      get_gps: "Request GPS Coordinates"
