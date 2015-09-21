@@ -1378,3 +1378,7 @@ en:
     tools:
       gps: "GPS Location"
       get_gps: "Request GPS Coordinates"
+      requesting_gps: "Requesting GPS..."
+      latitude: "Latitude"
+      longitude: "Longitude"
+      geolocation_unavailable: "Geolocation support unavailable"
