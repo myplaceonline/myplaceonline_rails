@@ -547,12 +547,13 @@ function removeParam(url, paramName) {
   return url;
 }
 
-function requestGPS(target, requesting_gps, latitude, longitude, geolocation_unavailable) {
+function requestGPS(target, requesting_gps, latitude, longitude, geolocation_unavailable, copy_to_clipboard) {
   $(target).html("<p>" + requesting_gps + "</p>");
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(location) {
       var maplink = "https://www.google.com/maps/place/" + location.coords.latitude + "," + location.coords.longitude;
-      $(target).html("<p>" + latitude + ": " + location.coords.latitude + ", " + longitude + ": " + location.coords.longitude + "</p><p></p>" + location.coords.latitude + "," + location.coords.longitude + "</p><p><a href='" + maplink + "' target='_blank' class='externallink'>" + maplink + "</a></p>");
+      $(target).html("<p>" + latitude + ": " + location.coords.latitude + ", " + longitude + ": " + location.coords.longitude + "</p><p>" + location.coords.latitude + "," + location.coords.longitude + "</p><p><button class='clipboardable' data-clipboard-text='" + location.coords.latitude + "," + location.coords.longitude + "' onclick='return false;'>" + copy_to_clipboard + "</button></p><p><a href='" + maplink + "' target='_blank' class='externallink'>" + maplink + "</a></p>");
+      ensureClipboard($(".clipboardable"));
     });
   } else {
     $(target).html("<p>" + geolocation_unavailable + "</p>");

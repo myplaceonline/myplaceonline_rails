@@ -1387,3 +1387,4 @@ en:
       latitude: "Latitude"
       longitude: "Longitude"
       geolocation_unavailable: "Geolocation support unavailable"
+      copy_to_clipboard: "Copy Coordinates to Clipboard"

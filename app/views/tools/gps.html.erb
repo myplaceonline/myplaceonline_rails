@@ -3,5 +3,5 @@
 <%= flashes! %>
 <%= form_tag tools_gps_path do |f| %>
   <div id="gps_results"></div>
-  <%= submit_tag t("myplaceonline.tools.get_gps"), :onclick => "return requestGPS('#gps_results', '" + t("myplaceonline.tools.requesting_gps") + "', '" + t("myplaceonline.tools.latitude") + "', '" + t("myplaceonline.tools.longitude") + "', '" + t("myplaceonline.tools.geolocation_unavailable") + "');" %>
+  <%= submit_tag t("myplaceonline.tools.get_gps"), :onclick => "return requestGPS('#gps_results', '" + t("myplaceonline.tools.requesting_gps") + "', '" + t("myplaceonline.tools.latitude") + "', '" + t("myplaceonline.tools.longitude") + "', '" + t("myplaceonline.tools.geolocation_unavailable") + "', '" + t("myplaceonline.tools.copy_to_clipboard") + "');" %>
 <% end %>
