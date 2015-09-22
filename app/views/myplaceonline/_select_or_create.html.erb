@@ -17,8 +17,11 @@ if !objform.blank?
   end
 end
 
-# Seom user confusion when existing is expanded, so we always collapse it
-existingcollapsed = true
+# Some user confusion when existing is expanded, so we always collapse it,
+# unless new isn't shown
+if !edit
+  existingcollapsed = true
+end
 
 %>
 <div data-role="collapsible" data-collapsed="<%= collapsed %>">
