@@ -55,7 +55,7 @@ class Contact < MyplaceonlineIdentityRecord
         # Seemingly no last name, so add some other identifier if available
         if identity.identity_relationships.length > 0 && !identity.identity_relationships[0].relationship_name.nil?
           relationship = identity.identity_relationships[0]
-          result = Myp.appendstrwrap(result, relationship.contact.identity.name + "'s " + relationship.relationship_name)
+          result = Myp.appendstrwrap(result, I18n.t("myplaceonline.contacts.related_to") + " " + relationship.contact.identity.name)
         end
       end
       result
