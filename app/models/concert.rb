@@ -11,4 +11,10 @@ class Concert < MyplaceonlineIdentityRecord
   def display
     concert_title + " (" + Myp.display_date_short_year(concert_date, User.current_user) + ")"
   end
+
+  def self.build(params = nil)
+    result = super(params)
+    result.concert_date = Date.today
+    result
+  end
 end
