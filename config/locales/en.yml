@@ -1368,6 +1368,10 @@ en:
       concert_title: "Description"
       notes: "Notes"
       location: "Location"
+      musical_group: "Musical Group"
+      musical_groups: "Musical Groups"
+      add_musical_group: "Add Musical Group"
+      delete_musical_group: "Delete Musical Group"
     shopping_lists:
       shopping_list_name: "Name"
       add: "Add Item"

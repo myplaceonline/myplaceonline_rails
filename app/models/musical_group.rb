@@ -9,4 +9,18 @@ class MusicalGroup < MyplaceonlineIdentityRecord
   def display
     musical_group_name
   end
+
+  def self.params
+    [
+      :id,
+      :_destroy,
+      :musical_group_name,
+      :notes,
+      :is_listened_to,
+      :rating,
+      :awesome,
+      :secret,
+      :musical_genre
+    ]
+  end
 end

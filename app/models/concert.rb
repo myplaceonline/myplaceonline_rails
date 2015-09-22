@@ -8,6 +8,9 @@ class Concert < MyplaceonlineIdentityRecord
   accepts_nested_attributes_for :location, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
   allow_existing :location
   
+  has_many :concert_musical_groups, :dependent => :destroy
+  accepts_nested_attributes_for :concert_musical_groups, allow_destroy: true, reject_if: :all_blank
+
   def display
     concert_title + " (" + Myp.display_date_short_year(concert_date, User.current_user) + ")"
   end

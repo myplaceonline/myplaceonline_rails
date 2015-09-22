@@ -1,5 +1,6 @@
 <%= myp_text_field(f, :concert_title, "myplaceonline.concerts.concert_title", obj.concert_title, autofocus) %>
 <%= myp_date_field(f, :concert_date, "myplaceonline.concerts.concert_date", obj.concert_date) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.concerts.notes", obj.notes) %>
 <%=
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,
@@ -13,4 +14,41 @@
     autofocus: false
   }
 %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.concerts.notes", obj.notes) %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.concerts.musical_groups"),
+    childpropertiesname: :concert_musical_groups,
+    childproperties: obj.concert_musical_groups,
+    deletebutton: t("myplaceonline.concerts.delete_musical_group"),
+    addbutton: t("myplaceonline.concerts.add_musical_group"),
+    expanded: obj.concert_musical_groups.length > 0,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :musical_group_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.concerts.musical_group"),
+        objform: "musical_groups/form",
+        existingobjurl: "musical_group_path",
+        searchurl: "/musical_groups.json?perpage=0",
+        edit: false,
+        autofocus: true
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :musical_group_attributes,
+      existingobj: childproperty.musical_group,
+      heading: t("myplaceonline.concerts.musical_group"),
+      objform: "musical_groups/form",
+      existingobjurl: "musical_group_path",
+      searchurl: "/musical_groups.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
+<% end %>

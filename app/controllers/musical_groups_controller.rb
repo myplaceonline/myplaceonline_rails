@@ -5,14 +5,6 @@ class MusicalGroupsController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:musical_group).permit(
-        :musical_group_name,
-        :notes,
-        :is_listened_to,
-        :rating,
-        :awesome,
-        :secret,
-        :musical_genre
-      )
+      params.require(:musical_group).permit(MusicalGroup.params)
     end
 end

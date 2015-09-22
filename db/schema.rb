@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150922030750) do
+ActiveRecord::Schema.define(version: 20150922031939) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -388,6 +388,18 @@ ActiveRecord::Schema.define(version: 20150922030750) do
   add_index "computers", ["main_user_id"], name: "index_computers_on_main_user_id", using: :btree
   add_index "computers", ["manufacturer_id"], name: "index_computers_on_manufacturer_id", using: :btree
   add_index "computers", ["owner_id"], name: "index_computers_on_owner_id", using: :btree
+
+  create_table "concert_musical_groups", force: true do |t|
+    t.integer  "owner_id"
+    t.integer  "concert_id"
+    t.integer  "musical_group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "concert_musical_groups", ["concert_id"], name: "index_concert_musical_groups_on_concert_id", using: :btree
+  add_index "concert_musical_groups", ["musical_group_id"], name: "index_concert_musical_groups_on_musical_group_id", using: :btree
+  add_index "concert_musical_groups", ["owner_id"], name: "index_concert_musical_groups_on_owner_id", using: :btree
 
   create_table "concerts", force: true do |t|
     t.string   "concert_date"
