@@ -1,3 +1,4 @@
+<p><%= t("myplaceonline.statuses.first_status", :evidence => link_to(t("myplaceonline.statuses.some_evidence"), root_path + "PosPsyProgress.pdf", class: "externallink", :data => {:ajax => "false"})).html_safe %></p>
 <%= myp_datetime_field(f, :status_time, "myplaceonline.statuses.status_time", obj.status_time) %>
 <%= myp_text_area_markdown(f, :three_good_things, "myplaceonline.statuses.three_good_things", obj.three_good_things, autofocus) %>
 <%= myp_select(f, :feeling, "myplaceonline.statuses.feeling", Myp.translate_options(Status::FEELINGS), obj.feeling) %>
