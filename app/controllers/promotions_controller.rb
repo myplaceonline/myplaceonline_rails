@@ -1,5 +1,9 @@
 class PromotionsController < MyplaceonlineController
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["promotions.expires ASC", "lower(promotions.promotion_name) ASC"]
     end
