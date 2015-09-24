@@ -1,5 +1,9 @@
 class DesiredProductsController < MyplaceonlineController
   protected
+    def insecure
+      true
+    end
+
     def sorts
       ["lower(desired_products.product_name) ASC"]
     end
