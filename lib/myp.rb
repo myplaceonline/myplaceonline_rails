@@ -623,7 +623,7 @@ module Myp
       result.push(DueItem.new(I18n.t(
         "myplaceonline.exercises.havent_exercised_for",
         delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, last_exercise.exercise_start).in_general)
-      ), "/exercises/" + last_exercise.id.to_s, last_exercise.exercise_start))
+      ), "/exercises/new", last_exercise.exercise_start))
     end
     
     Rails.logger.debug("Searching promotions")
