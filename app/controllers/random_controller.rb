@@ -14,32 +14,38 @@ class RandomController < MyplaceonlineController
         filter_name = key[7..-1]
         if filter_name == "activities"
           @filter_activities = true
-        elsif filter_name == "websites"
-          @filter_websites = true
-        elsif filter_name == "movies"
-          @filter_movies = true
         elsif filter_name == "books"
           @filter_books = true
+        elsif filter_name == "ideas"
+          @filter_ideas = true
+        elsif filter_name == "movies"
+          @filter_movies = true
+        elsif filter_name == "websites"
+          @filter_websites = true
         end
       end
     end
     if !any_filters
       @filter_activities = true
-      @filter_websites = true
-      @filter_movies = true
       @filter_books = true
+      @filter_ideas = true
+      @filter_movies = true
+      @filter_websites = true
     end
     if @filter_activities
       candidates = candidates + identity.activities.to_a
     end
-    if @filter_websites
-      candidates = candidates + identity.websites.to_a
+    if @filter_books
+      candidates = candidates + identity.books.to_a
+    end
+    if @filter_ideas
+      candidates = candidates + identity.ideas.to_a
     end
     if @filter_movies
       candidates = candidates + identity.movies.to_a
     end
-    if @filter_books
-      candidates = candidates + identity.books.to_a
+    if @filter_websites
+      candidates = candidates + identity.websites.to_a
     end
     if candidates.length > 0
       @result = candidates[rand(candidates.length)]
