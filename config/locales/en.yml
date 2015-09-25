@@ -216,28 +216,46 @@ en:
       notepad: "Notepad"
       features: !xml |
         <![CDATA[
-        ### Features
 
-        * Points system tracks life across three categories related to [happiness](/info/faq): order, joy, and meaning.
-        * Order
-          * Manage online passwords (user name, password, URL, notes, recovery questions & answers, etc.)
-            * Optionally encrypt passwords in the database so that even if the website is hacked, your passwords are encrypted with a key only you have.
-            * Import passwords from an OpenDocument .ods spreadsheet (with support for encrypted spreadsheets).
-            * Generate random passwords.
-            * Quickly copy passwords to the clipboard.
-            * Password notes support Markdown syntax.
-          * Manage apartments, bank accounts, contacts, credit cards, credit scores, RSS feeds, files, ideas, lists, vehicles, To Dos, etc.
-          * Create calculation forms with inputs and an equation and then create calculations from these forms.
-        * Joy
-          * Manage jokes.
-          * Manage movies you want to watch or have watched.
-        * Meaning
-          * Manage notes of wisdom gathered in life.
-          * Manage questions including hypotheses.
-        * General Features
-          * Export all data to a downloadable file with the option of encrypting it in a standardized format which can be decrypted with the open source gpg tool.
-          * Save exported data in offline browser storage and display some of it even without internet.
-            * Even if your phone is hacked, your passwords in offline storage are encrypted.
+        <div data-role="collapsible-set">
+          <div data-role="collapsible" data-collapsed="true">
+            <h3>Screenshots</h3>
+            <p>%{screenshot1}</p>
+            <p>%{screenshot2}</p>
+            <p>%{screenshot3}</p>
+            <p>%{screenshot4}</p>
+          </div>
+          <div data-role="collapsible" data-collapsed="true">
+            <h3>Features</h3>
+            <p>%{feature_details}</p>
+          </div>
+        </div>
+        
+        ]]>
+      feature_details: !xml |
+        <![CDATA[
+
+          * Points system tracks life across three categories related to [happiness](/info/faq): order, joy, and meaning.
+          * Order
+            * Manage online passwords (user name, password, URL, notes, recovery questions & answers, etc.)
+              * Optionally encrypt passwords in the database so that even if the website is hacked, your passwords are encrypted with a key only you have.
+              * Import passwords from an OpenDocument .ods spreadsheet (with support for encrypted spreadsheets).
+              * Generate random passwords.
+              * Quickly copy passwords to the clipboard.
+              * Password notes support Markdown syntax.
+            * Manage apartments, bank accounts, contacts, credit cards, credit scores, RSS feeds, files, ideas, lists, vehicles, To Dos, etc.
+            * Create calculation forms with inputs and an equation and then create calculations from these forms.
+          * Joy
+            * Manage jokes.
+            * Manage movies you want to watch or have watched.
+          * Meaning
+            * Manage notes of wisdom gathered in life.
+            * Manage questions including hypotheses.
+          * General Features
+            * Export all data to a downloadable file with the option of encrypting it in a standardized format which can be decrypted with the open source gpg tool.
+            * Save exported data in offline browser storage and display some of it even without internet.
+              * Even if your phone is hacked, your passwords in offline storage are encrypted.
+        
         ]]>
       search: "Search"
       recentlyused: "Recently or Frequently Used"
