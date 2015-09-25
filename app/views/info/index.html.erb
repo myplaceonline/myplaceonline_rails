@@ -44,6 +44,12 @@
     <% end %>
   </li>
   <li>
+    <%= link_to(info_terms_path) do %>
+      <%= image_tag("FatCow_Icons16x16/auction_hammer_gavel.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.info.terms") %>
+    <% end %>
+  </li>
+  <li>
     <%= link_to(info_about_path) do %>
       <%= image_tag("myplaceonlinelogo.gif", size: "16x16", class: "ui-li-icon") %>
       <%= t("myplaceonline.info.about") %>

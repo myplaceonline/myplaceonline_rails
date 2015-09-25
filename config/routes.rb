@@ -312,6 +312,7 @@ Rails.application.routes.draw do
   get 'info/tips'
   get 'info/about'
   get 'info/privacy'
+  get 'info/terms'
   get 'info', :to => 'info#index'
   
   get 'offline/index'
