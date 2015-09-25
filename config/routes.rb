@@ -307,6 +307,7 @@ Rails.application.routes.draw do
   get 'info/faq'
   get 'info/tips'
   get 'info/about'
+  get 'info/privacy'
   get 'info', :to => 'info#index'
   
   get 'offline/index'

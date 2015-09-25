@@ -247,6 +247,7 @@ en:
       credits: "Credits"
       credits_description: "Thank you to the following projects:"
       diagnostics: "Diagnostics"
+      privacy: "Privacy Policy"
       faq: "Frequently Asked Questions"
       faq_content: !xml |
         <![CDATA[
@@ -254,7 +255,7 @@ en:
         
         ## <a name="theory"></a>What is the theory of the categories?
         
-        > ‘Happiness’ is too worn and too weary a term to be of much scientific use, and the discipline of Positive Psychology divides it into three very different realms, each of which is measurable and, most importantly, each of which is skill-based and can be taught (Seligman, 2002). The first is hedonic: positive emotion (joy, love, contentment, pleasure etc.). A life led around having as much of this good stuff as possible, is the ‘Pleasant Life’. The second, much closer to what Thomas Jefferson and Aristotle sought, is the state of flow, and a life led around it is the ‘Engaged Life’. Flow, a major part of the Engaged Life, consists in a loss of self-consciousness, time stopping for you, being ‘one with the music’ (Csikszentmihalyi, 1990). Importantly engagement seems to be the opposite of positive emotion: when one is totally absorbed, no thoughts or feelings are present—even though one says afterwards ‘that was fun’ (Delle Fave & Massimini, 2005). And while there are shortcuts to positive emotion—you can take drugs, masturbate, watch television, or go shopping—there are no shortcuts to flow. Flow only occurs when you deploy your highest strengths and talents to meet the challenges that come your way, and it is clear that flow facilitates learning. The third realm in the framework of Positive Psychology is the one with the best intellectual provenance, the Meaningful Life. Flow and positive emotion can be found in solipsistic pursuits, but not meaning or purpose. Meaning is increased through our connections to others, future generations, or causes that transcend the self (Durkheim, 1951/1897; Erikson, 1963). From a Positive Psychology perspective, meaning consists in knowing what your highest strengths are, and then using them to belong to and serve something you believe is larger than the self (Seligman, 2002).
+        > ‘Happiness' is too worn and too weary a term to be of much scientific use, and the discipline of Positive Psychology divides it into three very different realms, each of which is measurable and, most importantly, each of which is skill-based and can be taught (Seligman, 2002). The first is hedonic: positive emotion (joy, love, contentment, pleasure etc.). A life led around having as much of this good stuff as possible, is the ‘Pleasant Life'. The second, much closer to what Thomas Jefferson and Aristotle sought, is the state of flow, and a life led around it is the ‘Engaged Life'. Flow, a major part of the Engaged Life, consists in a loss of self-consciousness, time stopping for you, being ‘one with the music' (Csikszentmihalyi, 1990). Importantly engagement seems to be the opposite of positive emotion: when one is totally absorbed, no thoughts or feelings are present—even though one says afterwards ‘that was fun' (Delle Fave & Massimini, 2005). And while there are shortcuts to positive emotion—you can take drugs, masturbate, watch television, or go shopping—there are no shortcuts to flow. Flow only occurs when you deploy your highest strengths and talents to meet the challenges that come your way, and it is clear that flow facilitates learning. The third realm in the framework of Positive Psychology is the one with the best intellectual provenance, the Meaningful Life. Flow and positive emotion can be found in solipsistic pursuits, but not meaning or purpose. Meaning is increased through our connections to others, future generations, or causes that transcend the self (Durkheim, 1951/1897; Erikson, 1963). From a Positive Psychology perspective, meaning consists in knowing what your highest strengths are, and then using them to belong to and serve something you believe is larger than the self (Seligman, 2002).
         > 
         > Positive education: positive psychology and classroom interventions, Seligman et al, Oxford Review of Education, 2009, [http://www.sas.upenn.edu/~duckwort/images/upperdarbypd/10082012_PDReading.pdf](http://www.sas.upenn.edu/~duckwort/images/upperdarbypd/10082012_PDReading.pdf)
 
@@ -1390,3 +1391,50 @@ en:
       longitude: "Longitude"
       geolocation_unavailable: "Geolocation support unavailable"
       copy_to_clipboard: "Copy Coordinates to Clipboard"
+    privacy_policy: !xml |
+      <![CDATA[
+      # Privacy Policy
+
+      Your privacy is critically important to us. At myplaceonline we have a few fundamental principles:
+
+      * We don't ask you for personal information unless we truly need it. (We can't stand services that ask you for things like your gender or income level for no apparent reason.)
+      * We don't share your personal information with anyone except to comply with the law or protect our rights.
+      * We don't store personal information on our servers unless required for the on-going operation of one of our services.
+      * We aim to make it as simple as possible for you to control your data visibility. By default, data you enter is private and only you can see what you input. Any data you delete is permanently deleted from our systems.
+
+      Below is our privacy policy which incorporates these goals: (Note, this page is based on [Automattic's](https://automattic.com/privacy/) Creative Commons Sharealike privacy policy)
+
+      If you have questions about deleting or correcting your personal data please [contact](/info/contact) our support team.
+
+      It is myplaceonline's policy to respect your privacy regarding any information we may collect while operating our websites.
+      
+      ## Website Visitors
+
+      Like most website operators, myplaceonline collects non-personally-identifying information of the sort that web browsers and servers typically make available, such as the browser type, language preference, referring site, and the date and time of each visitor request. myplaceonline's purpose in collecting non-personally identifying information is to better understand how myplaceonline's visitors use its website. From time to time, myplaceonline may release non-personally-identifying information in the aggregate, e.g., by publishing a report on trends in the usage of its website.
+
+      myplaceonline also collects potentially personally-identifying information like Internet Protocol (IP) addresses for logged in users. myplaceonline only discloses logged in user IP addresses under the same circumstances that it uses and discloses personally-identifying information as described below.
+      
+      ## Gathering of Personally-Identifying Information
+
+      Certain visitors to myplaceonline's websites choose to interact with myplaceonline in ways that require myplaceonline to gather personally-identifying information. The amount and type of information that myplaceonline gathers depends on the nature of the interaction. For example, we ask visitors who sign up for an account at myplaceonline.com to provide an email address. Those who engage in transactions with myplaceonline are asked to provide additional information, including as necessary the personal and financial information required to process those transactions. In each case, myplaceonline collects such information only insofar as is necessary or appropriate to fulfill the purpose of the visitor's interaction with myplaceonline. myplaceonline does not disclose personally-identifying information other than as described below. And visitors can always refuse to supply personally-identifying information, with the caveat that it may prevent them from engaging in certain website-related activities.
+      
+      ## Aggregated Statistics
+
+      myplaceonline may collect statistics about the behavior of visitors to its websites. myplaceonline may display this information publicly or provide it to others. However, myplaceonline does not disclose personally-identifying information other than as described below.
+      
+      ## Protection of Certain Personally-Identifying Information
+
+      myplaceonline discloses potentially personally-identifying and personally-identifying information only to those of its employees, contractors and affiliated organizations that (i) need to know that information in order to process it on myplaceonline's behalf or to provide services available at myplaceonline's websites, and (ii) that have agreed not to disclose it to others. Some of those employees, contractors and affiliated organizations may be located outside of your home country; by using myplaceonline's websites, you consent to the transfer of such information to them. myplaceonline will not rent or sell potentially personally-identifying and personally-identifying information to anyone. Other than to its employees, contractors and affiliated organizations, as described above, myplaceonline discloses potentially personally-identifying and personally-identifying information only in response to a subpoena, court order or other governmental request, or when myplaceonline believes in good faith that disclosure is reasonably necessary to protect the property or rights of myplaceonline, third parties or the public at large. If you are a registered user of myplaceonline, myplaceonline may occasionally send you an email to tell you about new features, solicit your feedback, or just keep you up to date with what's going on with myplaceonline and our products. We expect to keep this type of email to a minimum. myplaceonline takes all measures reasonably necessary to protect against the unauthorized access, use, alteration or destruction of potentially personally-identifying and personally-identifying information.
+      
+      ## Cookies
+
+      A cookie is a string of information that a website stores on a visitor's computer, and that the visitor's browser provides to the website each time the visitor returns. myplaceonline uses cookies to help myplaceonline identify and track visitors, their usage of myplaceonline website, and their website access preferences. myplaceonline visitors who do not wish to have cookies placed on their computers should set their browsers to refuse cookies before using myplaceonline's websites, with the drawback that certain features of myplaceonline's websites may not function properly without the aid of cookies.
+      
+      ## Business Transfers
+
+      If myplaceonline, or substantially all of its assets, were acquired, or in the unlikely event that myplaceonline goes out of business or enters bankruptcy, user information would be one of the assets that is transferred or acquired by a third party. You acknowledge that such transfers may occur, and that any acquirer of myplaceonline may continue to use your personal information as set forth in this policy.
+      
+      ## Privacy Policy Changes
+
+      Although most changes are likely to be minor, myplaceonline may change its Privacy Policy from time to time, and in myplaceonline's sole discretion. myplaceonline will send an email to all registered members when this happens and maintain a change log at the bottom of this page.
+      ]]>
