@@ -15,7 +15,7 @@ class GroupsController < MyplaceonlineController
         group_contacts_attributes: [
           :id,
           :_destroy,
-          contact_attributes: ContactsController.param_names
+          contact_attributes: ContactsController.param_names + [:id]
         ]
       )
     end
