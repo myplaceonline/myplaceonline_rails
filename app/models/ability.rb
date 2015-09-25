@@ -120,6 +120,7 @@ class Ability
     can :manage, Concert, :owner => identity
     can :manage, ShoppingList, :owner => identity
     can :manage, ShoppingListItem, :owner => identity
+    can :manage, Group, :owner => identity
     
     if user.admin?
       can :manage, User

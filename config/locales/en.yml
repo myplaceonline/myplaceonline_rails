@@ -118,6 +118,7 @@ en:
       concerts: "Concerts"
       shopping_lists: "Shopping Lists"
       tools: "Tools"
+      groups: "Groups"
     general:
       email: "E-mail"
       password: "Password"
@@ -1438,3 +1439,6 @@ en:
 
       Although most changes are likely to be minor, myplaceonline may change its Privacy Policy from time to time, and in myplaceonline's sole discretion. myplaceonline will send an email to all registered members when this happens and maintain a change log at the bottom of this page.
       ]]>
+    groups:
+      group_name: "Name"
+      notes: "Notes"

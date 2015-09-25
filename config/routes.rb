@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :groups
+  post 'groups/new'
+
   match 'tools/gps', via: [:get, :post]
   get 'tools/index'
   get 'tools', :to => 'tools#index'
