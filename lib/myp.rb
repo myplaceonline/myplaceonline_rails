@@ -273,13 +273,16 @@ module Myp
     end
   end
   
-  WELCOME_FEATURES = self.parse_yaml_to_html("myplaceonline.welcome.features") % {
-    :screenshot1 => ActionController::Base.helpers.asset_path("screenshot1.png"),
-    :screenshot2 => ActionController::Base.helpers.asset_path("screenshot6.png"),
-    :screenshot3 => ActionController::Base.helpers.asset_path("screenshot7.png"),
-    :screenshot4 => ActionController::Base.helpers.asset_path("screenshot8.png"),
-    :feature_details => self.parse_yaml_to_html("myplaceonline.welcome.feature_details")
-  }
+  def self.welcome_features
+    self.parse_yaml_to_html("myplaceonline.welcome.features") % {
+      :screenshot1 => ActionController::Base.helpers.image_tag("screenshot1.png"),
+      :screenshot2 => ActionController::Base.helpers.image_tag("screenshot6.png"),
+      :screenshot3 => ActionController::Base.helpers.image_tag("screenshot7.png"),
+      :screenshot4 => ActionController::Base.helpers.image_tag("screenshot8.png"),
+      :feature_details => self.parse_yaml_to_html("myplaceonline.welcome.feature_details")
+    }
+  end
+  
   CONTENT_FAQ = self.parse_yaml_to_html("myplaceonline.info.faq_content")
   CONTENT_TIPS = self.parse_yaml_to_html("myplaceonline.info.tips_content")
   
