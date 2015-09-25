@@ -11,7 +11,12 @@ class GroupsController < MyplaceonlineController
     def obj_params
       params.require(:group).permit(
         :group_name,
-        :notes
+        :notes,
+        group_contacts_attributes: [
+          :id,
+          :_destroy,
+          contact_attributes: ContactsController.param_names
+        ]
       )
     end
 end

@@ -2,5 +2,8 @@
 
   <%= attribute_table_row(t("myplaceonline.groups.group_name"), @obj.group_name) %>
   <%= attribute_table_row_markdown(t("myplaceonline.groups.notes"), @obj.notes) %>
+  <% @obj.group_contacts.each do |wrapper| %>
+    <%= attribute_table_row_reference(t("myplaceonline.groups.contact"), "contact_path", wrapper.contact) %>
+  <% end %>
   
 <% end %>
