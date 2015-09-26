@@ -8,6 +8,17 @@
 <%= form_for(resource, as: resource_name, url: new_registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
+  <%
+  if Rails.configuration.require_invite_code
+  %>
+    <div>
+      <%= f.label :invite_code, class: "ui-hidden-accessible" %>
+      <%= f.password_field :invite_code, autocomplete: "off", placeholder: t("myplaceonline.users.invite") %>
+    </div>
+  <%
+  end
+  %>
+
   <div><%= f.label :email, class: "ui-hidden-accessible" %>
   <%= f.email_field :email, class: "autofocus", placeholder: t("myplaceonline.general.email") %></div>
 
@@ -23,17 +34,6 @@
 
   <div><%= f.label :password_confirmation, class: "ui-hidden-accessible" %>
     <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: t("myplaceonline.general.password2") %></div>
-
-  <%
-  if Rails.configuration.require_invite_code
-  %>
-    <div>
-      <%= f.label :invite_code, class: "ui-hidden-accessible" %>
-      <%= f.password_field :invite_code, autocomplete: "off", placeholder: t("myplaceonline.users.invite") %>
-    </div>
-  <%
-  end
-  %>
 
   <div><%= f.submit t("myplaceonline.general.signup") %></div>
 <script type="text/javascript">
