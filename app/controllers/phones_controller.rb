@@ -24,6 +24,12 @@ class PhonesController < MyplaceonlineController
         :front_camera_megapixels,
         :back_camera_megapixels,
         :notes,
+        :dimensions_type,
+        :width,
+        :height,
+        :depth,
+        :weight_type,
+        :weight,
         Myp.select_or_create_permit(params[:phone], :manufacturer_attributes, CompaniesController.param_names(params[:phone][:manufacturer_attributes])),
         Myp.select_or_create_permit(params[:phone], :password_attributes, PasswordsController.param_names)
       )

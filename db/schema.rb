@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150927184829) do
+ActiveRecord::Schema.define(version: 20150927191441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -382,6 +382,12 @@ ActiveRecord::Schema.define(version: 20150927184829) do
     t.datetime "updated_at"
     t.integer  "administrator_id"
     t.integer  "main_user_id"
+    t.integer  "dimensions_type"
+    t.decimal  "width",                 precision: 10, scale: 2
+    t.decimal  "height",                precision: 10, scale: 2
+    t.decimal  "depth",                 precision: 10, scale: 2
+    t.integer  "weight_type"
+    t.decimal  "weight",                precision: 10, scale: 2
   end
 
   add_index "computers", ["administrator_id"], name: "index_computers_on_administrator_id", using: :btree
@@ -603,7 +609,7 @@ ActiveRecord::Schema.define(version: 20150927184829) do
   add_index "due_items", ["owner_id"], name: "index_due_items_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -1406,6 +1412,12 @@ ActiveRecord::Schema.define(version: 20150927184829) do
     t.integer  "password_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "dimensions_type"
+    t.decimal  "width",                    precision: 10, scale: 2
+    t.decimal  "height",                   precision: 10, scale: 2
+    t.decimal  "depth",                    precision: 10, scale: 2
+    t.integer  "weight_type"
+    t.decimal  "weight",                   precision: 10, scale: 2
   end
 
   add_index "phones", ["manufacturer_id"], name: "index_phones_on_manufacturer_id", using: :btree

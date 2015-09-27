@@ -49,3 +49,9 @@
     autofocus: false
   }
 %>
+<%= myp_select(f, :dimensions_type, "myplaceonline.computers.dimensions_type", Myp.translate_options(Myp::DIMENSIONS), obj.dimensions_type) %>
+<%= myp_decimal_field(f, :width, "myplaceonline.computers.width", obj.width) %>
+<%= myp_decimal_field(f, :height, "myplaceonline.computers.height", obj.height) %>
+<%= myp_decimal_field(f, :depth, "myplaceonline.computers.depth", obj.depth) %>
+<%= myp_select(f, :weight_type, "myplaceonline.computers.weight_type", Myp.translate_options(Myp::WEIGHTS), obj.weight_type) %>
+<%= myp_decimal_field(f, :weight, "myplaceonline.computers.weight", obj.weight) %>

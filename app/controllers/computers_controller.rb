@@ -18,6 +18,12 @@ class ComputersController < MyplaceonlineController
         :hyperthreaded,
         :max_cpu_speed,
         :notes,
+        :dimensions_type,
+        :width,
+        :height,
+        :depth,
+        :weight_type,
+        :weight,
         Myp.select_or_create_permit(params[:computer], :manufacturer_attributes, CompaniesController.param_names(params[:computer][:manufacturer_attributes])),
         Myp.select_or_create_permit(params[:computer], :administrator_attributes, PasswordsController.param_names),
         Myp.select_or_create_permit(params[:computer], :main_user_attributes, PasswordsController.param_names)
