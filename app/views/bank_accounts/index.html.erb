@@ -1,2 +1,15 @@
 <%= render layout: "shared/model_index" do %>
+  <%=
+    render partial: 'myplaceonline/filter_select', locals: {
+      filters: [
+        {
+          :name => :defunct,
+          :display => "myplaceonline.general.defunct"
+        }
+      ]
+    }
+  %>
+  <% content_for :footerlinks do %>
+    <li><%= link_to t('myplaceonline.general.import'), passwords_import_path, "data-icon" => "bars" %></li>
+  <% end %>
 <% end %>

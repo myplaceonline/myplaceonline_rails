@@ -1,12 +1,20 @@
 class BankAccount < MyplaceonlineIdentityRecord
   include AllowExistingConcern
   include EncryptedConcern
+  include ModelHelpersConcern
 
   def display
-    name
+    result = name
+    if !defunct.nil?
+      result += " (" + I18n.t("myplaceonline.general.defunct") + ")"
+    end
+    result
   end
   
   validates :name, presence: true
+
+  attr_accessor :is_defunct
+  boolean_time_transfer :is_defunct, :defunct
 
   belongs_to :account_number_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
   belongs_to_encrypted :account_number
