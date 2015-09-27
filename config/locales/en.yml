@@ -849,6 +849,7 @@ en:
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
       owned_for: "Owned For"
+      floor_length: "Floor Length"
     recreational_vehicle_measurements:
       heading: "Measurements"
       add: "Add Measurement"

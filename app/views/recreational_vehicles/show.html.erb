@@ -10,14 +10,15 @@
     <%= attribute_table_row(t("myplaceonline.recreational_vehicles.owned_for"), Myp.time_difference_in_general_from_now(@obj.owned_start)) %>
   <% end %>
   <%= attribute_table_row(t("myplaceonline.recreational_vehicles.owned_end"), Myp.display_date(@obj.owned_end, current_user)) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.recreational_vehicles.notes"), @obj.notes) %>
-  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.price"), @obj.price) %>
-  <%= attribute_table_row(t("myplaceonline.recreational_vehicles.msrp"), @obj.msrp) %>
+  <%= attribute_table_row_currency(t("myplaceonline.recreational_vehicles.price"), @obj.price) %>
+  <%= attribute_table_row_currency(t("myplaceonline.recreational_vehicles.msrp"), @obj.msrp) %>
   <%= attribute_table_row(t("myplaceonline.recreational_vehicles.purchased"), Myp.display_date(@obj.purchased, current_user)) %>
   <%= attribute_table_row(t("myplaceonline.recreational_vehicles.warranty_ends"), Myp.display_date(@obj.warranty_ends, current_user)) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.recreational_vehicles.notes"), @obj.notes) %>
   <%= attribute_table_row_reference(t("myplaceonline.recreational_vehicles.location_purchased"), "location_path", @obj.location_purchased) %>
   <%= attribute_table_row(t("myplaceonline.recreational_vehicles.sleeps"), @obj.sleeps) %>
   <%= attribute_table_row_select t("myplaceonline.recreational_vehicles.dimensions_type"), @obj.dimensions_type, Myp::DIMENSIONS %>
+  <%= attribute_table_row_dimensions(t("myplaceonline.recreational_vehicles.floor_length"), @obj.floor_length, @obj.dimensions_type) %>
   <%= attribute_table_row_dimensions(t("myplaceonline.recreational_vehicles.exterior_length"), @obj.exterior_length, @obj.dimensions_type) %>
   <%= attribute_table_row_dimensions(t("myplaceonline.recreational_vehicles.exterior_length_over"), @obj.exterior_length_over, @obj.dimensions_type) %>
   <%= attribute_table_row_dimensions(t("myplaceonline.recreational_vehicles.exterior_width"), @obj.exterior_width, @obj.dimensions_type) %>

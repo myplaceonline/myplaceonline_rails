@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150927193551) do
+ActiveRecord::Schema.define(version: 20150927193815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1580,6 +1580,7 @@ ActiveRecord::Schema.define(version: 20150927193551) do
     t.datetime "updated_at"
     t.decimal  "exterior_length_over",  precision: 10, scale: 2
     t.decimal  "slideouts_extra_width", precision: 10, scale: 2
+    t.decimal  "floor_length",          precision: 10, scale: 2
   end
 
   add_index "recreational_vehicles", ["location_purchased_id"], name: "index_recreational_vehicles_on_location_purchased_id", using: :btree
