@@ -11,4 +11,7 @@ class Promotion < MyplaceonlineIdentityRecord
     end
     result
   end
+
+  after_save { |record| DueItem.due_promotions(User.current_user) }
+  after_destroy { |record| DueItem.due_promotions(User.current_user) }
 end

@@ -37,4 +37,7 @@ class Status < MyplaceonlineIdentityRecord
     result.status_time = DateTime.now
     result
   end
+
+  after_save { |record| DueItem.due_status(User.current_user) }
+  after_destroy { |record| DueItem.due_status(User.current_user) }
 end

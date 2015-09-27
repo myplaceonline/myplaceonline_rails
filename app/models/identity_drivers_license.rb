@@ -9,4 +9,7 @@ class IdentityDriversLicense < MyplaceonlineIdentityRecord
   def display
     identifier
   end
+
+  after_save { |record| DueItem.due_contacts(User.current_user) }
+  after_destroy { |record| DueItem.due_contacts(User.current_user) }
 end

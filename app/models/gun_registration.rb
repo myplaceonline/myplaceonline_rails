@@ -11,4 +11,7 @@ class GunRegistration < MyplaceonlineIdentityRecord
   def display
     Myp.display_date(expires, User.current_user)
   end
+
+  after_save { |record| DueItem.due_gun_registrations(User.current_user) }
+  after_destroy { |record| DueItem.due_gun_registrations(User.current_user) }
 end

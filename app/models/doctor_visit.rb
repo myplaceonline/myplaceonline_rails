@@ -21,4 +21,7 @@ class DoctorVisit < MyplaceonlineIdentityRecord
     result.visit_date = DateTime.now
     result
   end
+
+  after_save { |record| DueItem.due_physicals(User.current_user) }
+  after_destroy { |record| DueItem.due_physicals(User.current_user) }
 end

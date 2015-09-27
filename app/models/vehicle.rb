@@ -39,4 +39,7 @@ class Vehicle < MyplaceonlineIdentityRecord
   def display
     Myp.appendstrwrap(name, license_plate)
   end
+
+  after_save { |record| DueItem.due_vehicles(User.current_user) }
+  after_destroy { |record| DueItem.due_vehicles(User.current_user) }
 end

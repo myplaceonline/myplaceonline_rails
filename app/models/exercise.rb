@@ -10,4 +10,7 @@ class Exercise < MyplaceonlineIdentityRecord
     result.exercise_start = DateTime.now
     result
   end
+
+  after_save { |record| DueItem.due_exercises(User.current_user) }
+  after_destroy { |record| DueItem.due_exercises(User.current_user) }
 end

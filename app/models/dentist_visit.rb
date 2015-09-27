@@ -21,4 +21,7 @@ class DentistVisit < MyplaceonlineIdentityRecord
     result.visit_date = DateTime.now
     result
   end
+
+  after_save { |record| DueItem.due_dental_cleanings(User.current_user) }
+  after_destroy { |record| DueItem.due_dental_cleanings(User.current_user) }
 end

@@ -77,4 +77,7 @@ class Contact < MyplaceonlineIdentityRecord
       put_pictures_in_folder(identity.identity_pictures, [I18n.t("myplaceonline.category.contacts"), display])
     end
   end
+
+  after_save { |record| DueItem.due_contacts(User.current_user) }
+  after_destroy { |record| DueItem.due_contacts(User.current_user) }
 end

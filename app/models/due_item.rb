@@ -51,16 +51,11 @@ class DueItem < MyplaceonlineIdentityRecord
   
   def self.recalculate_due(user)
     ActiveRecord::Base.transaction do
-      
-      DueItem.destroy_all(owner: user.primary_identity)
-      
       due_vehicles(user)
-      due_drivers_licenses(user)
       due_contacts(user)
       due_exercises(user)
       due_promotions(user)
       due_gun_registrations(user)
-      due_conversations(user)
       due_dental_cleanings(user)
       due_physicals(user)
       due_status(user)
@@ -68,6 +63,8 @@ class DueItem < MyplaceonlineIdentityRecord
   end
   
   def self.due_vehicles(user)
+    DueItem.destroy_all(owner: user.primary_identity, model_name: Vehicle.name)
+    
     Vehicle.where(owner: user.primary_identity).each do |vehicle|
       vehicle.vehicle_services.each do |service|
         if service.date_serviced.nil? && !service.date_due.nil?
@@ -84,7 +81,9 @@ class DueItem < MyplaceonlineIdentityRecord
     end
   end
   
-  def self.due_drivers_licenses(user)
+  def self.due_contacts(user)
+    DueItem.destroy_all(owner: user.primary_identity, model_name: Contact.name)
+    
     IdentityDriversLicense.where("owner_id = ? and expires is not null and expires < ?", user.primary_identity, general_threshold).each do |drivers_license|
       contact = Contact.where(owner_id: user.primary_identity.id, identity_id: drivers_license.identity.id).first
       diff = TimeDifference.between(timenow, drivers_license.expires)
@@ -105,9 +104,7 @@ class DueItem < MyplaceonlineIdentityRecord
         model_id: contact.id
       ).save!
     end
-  end
-  
-  def self.due_contacts(user)
+
     Contact.where(owner: user.primary_identity).includes(:identity).to_a.each do |x|
       if !x.identity.nil? && !x.identity.birthday.nil?
         bday_this_year = Date.new(Date.today.year, x.identity.birthday.month, x.identity.birthday.day)
@@ -129,60 +126,7 @@ class DueItem < MyplaceonlineIdentityRecord
         end
       end
     end
-  end
-  
-  def self.due_exercises(user)
-    last_exercise = Exercise.where("owner_id = ? and exercise_start is not null", user.primary_identity).order('exercise_start DESC').limit(1).first
-    if !last_exercise.nil? and last_exercise.exercise_start < exercise_threshold
-      DueItem.new(
-        display: I18n.t(
-          "myplaceonline.exercises.havent_exercised_for",
-          delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, last_exercise.exercise_start).in_general)
-        ),
-        link: "/exercises/new",
-        due_date: last_exercise.exercise_start,
-        owner: user.primary_identity,
-        model_name: Exercise.name
-      ).save!
-    end
-  end
-  
-  def self.due_promotions(user)
-    Promotion.where("owner_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, general_threshold).each do |promotion|
-      DueItem.new(
-        display: I18n.t(
-          "myplaceonline.promotions.expires_soon",
-          promotion_name: promotion.promotion_name,
-          promotion_amount: Myp.number_to_currency(promotion.promotion_amount.nil? ? 0 : promotion.promotion_amount),
-          expires_when: Myp.time_difference_in_general_human(TimeDifference.between(timenow, promotion.expires).in_general)
-        ),
-        link: "/promotions/" + promotion.id.to_s,
-        due_date: promotion.expires,
-        owner: user.primary_identity,
-        model_name: Promotion.name,
-        model_id: promotion.id
-      ).save!
-    end
-  end
-  
-  def self.due_gun_registrations(user)
-    GunRegistration.where("owner_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, general_threshold).each do |x|
-      DueItem.new(
-        display: I18n.t(
-          "myplaceonline.gun_registrations.expires_soon",
-          gun_name: x.gun.display,
-          delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, x.expires).in_general)
-        ),
-        link: "/guns/" + x.gun.id.to_s,
-        due_date: x.expires,
-        owner: user.primary_identity,
-        model_name: GunRegistration.name,
-        model_id: x.gun.id
-      ).save!
-    end
-  end
-  
-  def self.due_conversations(user)
+
     Contact.find_by_sql(%{
       SELECT contacts.*, max(conversations.conversation_date) as last_conversation_date
       FROM contacts
@@ -230,7 +174,66 @@ class DueItem < MyplaceonlineIdentityRecord
     end
   end
   
+  def self.due_exercises(user)
+    DueItem.destroy_all(owner: user.primary_identity, model_name: Exercise.name)
+    
+    last_exercise = Exercise.where("owner_id = ? and exercise_start is not null", user.primary_identity).order('exercise_start DESC').limit(1).first
+    if !last_exercise.nil? and last_exercise.exercise_start < exercise_threshold
+      DueItem.new(
+        display: I18n.t(
+          "myplaceonline.exercises.havent_exercised_for",
+          delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, last_exercise.exercise_start).in_general)
+        ),
+        link: "/exercises/new",
+        due_date: last_exercise.exercise_start,
+        owner: user.primary_identity,
+        model_name: Exercise.name
+      ).save!
+    end
+  end
+  
+  def self.due_promotions(user)
+    DueItem.destroy_all(owner: user.primary_identity, model_name: Promotion.name)
+    
+    Promotion.where("owner_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, general_threshold).each do |promotion|
+      DueItem.new(
+        display: I18n.t(
+          "myplaceonline.promotions.expires_soon",
+          promotion_name: promotion.promotion_name,
+          promotion_amount: Myp.number_to_currency(promotion.promotion_amount.nil? ? 0 : promotion.promotion_amount),
+          expires_when: Myp.time_difference_in_general_human(TimeDifference.between(timenow, promotion.expires).in_general)
+        ),
+        link: "/promotions/" + promotion.id.to_s,
+        due_date: promotion.expires,
+        owner: user.primary_identity,
+        model_name: Promotion.name,
+        model_id: promotion.id
+      ).save!
+    end
+  end
+  
+  def self.due_gun_registrations(user)
+    DueItem.destroy_all(owner: user.primary_identity, model_name: GunRegistration.name)
+    
+    GunRegistration.where("owner_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, general_threshold).each do |x|
+      DueItem.new(
+        display: I18n.t(
+          "myplaceonline.gun_registrations.expires_soon",
+          gun_name: x.gun.display,
+          delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, x.expires).in_general)
+        ),
+        link: "/guns/" + x.gun.id.to_s,
+        due_date: x.expires,
+        owner: user.primary_identity,
+        model_name: GunRegistration.name,
+        model_id: x.gun.id
+      ).save!
+    end
+  end
+  
   def self.due_dental_cleanings(user)
+    DueItem.destroy_all(owner: user.primary_identity, model_name: DentistVisit.name)
+    
     last_dentist_visit = DentistVisit.where("owner_id = ? and cleaning = true", user.primary_identity).order('visit_date DESC').limit(1).first
     if !last_dentist_visit.nil? and last_dentist_visit.visit_date < dentist_visit_threshold
       DueItem.new(
@@ -261,6 +264,8 @@ class DueItem < MyplaceonlineIdentityRecord
   end
   
   def self.due_physicals(user)
+    DueItem.destroy_all(owner: user.primary_identity, model_name: DoctorVisit.name)
+    
     last_doctor_visit = DoctorVisit.where("owner_id = ? and physical = true", user.primary_identity).order('visit_date DESC').limit(1).first
     if !last_doctor_visit.nil? and last_doctor_visit.visit_date < doctor_visit_threshold
       DueItem.new(
@@ -291,6 +296,8 @@ class DueItem < MyplaceonlineIdentityRecord
   end
   
   def self.due_status(user)
+    DueItem.destroy_all(owner: user.primary_identity, model_name: Status.name)
+    
     last_status = Status.where("owner_id = ?", user.primary_identity).order('status_time DESC').limit(1).first
     if !last_status.nil? and last_status.status_time < status_threshold
       DueItem.new(
