@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :phones
+  post 'phones/new'
+
   resources :groups
   post 'groups/new'
   match 'groups/:id/email_list', :to => 'groups#email_list', via: [:get], as: "groups_email_list"

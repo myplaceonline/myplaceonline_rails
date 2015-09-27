@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150927173213) do
+ActiveRecord::Schema.define(version: 20150927184829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -603,7 +603,7 @@ ActiveRecord::Schema.define(version: 20150927173213) do
   add_index "due_items", ["owner_id"], name: "index_due_items_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.binary   "val"
+    t.string   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -1381,6 +1381,36 @@ ActiveRecord::Schema.define(version: 20150927173213) do
   end
 
   add_index "periodic_payments", ["owner_id"], name: "index_periodic_payments_on_owner_id", using: :btree
+
+  create_table "phones", force: true do |t|
+    t.string   "model_name"
+    t.string   "phone_number"
+    t.integer  "manufacturer_id"
+    t.date     "purchased"
+    t.decimal  "price",                    precision: 10, scale: 2
+    t.integer  "operating_system"
+    t.decimal  "operating_system_version", precision: 10, scale: 2
+    t.integer  "max_resolution_width"
+    t.integer  "max_resolution_height"
+    t.integer  "ram"
+    t.integer  "num_cpus"
+    t.integer  "num_cores_per_cpu"
+    t.boolean  "hyperthreaded"
+    t.decimal  "max_cpu_speed",            precision: 10, scale: 2
+    t.boolean  "cdma"
+    t.boolean  "gsm"
+    t.decimal  "front_camera_megapixels",  precision: 10, scale: 2
+    t.decimal  "back_camera_megapixels",   precision: 10, scale: 2
+    t.text     "notes"
+    t.integer  "owner_id"
+    t.integer  "password_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "phones", ["manufacturer_id"], name: "index_phones_on_manufacturer_id", using: :btree
+  add_index "phones", ["owner_id"], name: "index_phones_on_owner_id", using: :btree
+  add_index "phones", ["password_id"], name: "index_phones_on_password_id", using: :btree
 
   create_table "poems", force: true do |t|
     t.string   "poem_name"

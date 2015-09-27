@@ -1,0 +1,44 @@
+<%= myp_text_field(f, :model_name, "myplaceonline.phones.model_name", obj.model_name, true) %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :manufacturer,
+    existingobj: obj.manufacturer,
+    heading: t("myplaceonline.phones.manufacturer"),
+    objform: "companies/form",
+    existingobjurl: "company_path",
+    searchurl: "/companies.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%= myp_text_field(f, :phone_number, "myplaceonline.phones.phone_number", obj.phone_number) %>
+<%= myp_date_field(f, :purchased, "myplaceonline.phones.purchased", obj.purchased) %>
+<%= myp_decimal_field(f, :price, "myplaceonline.phones.price", obj.price) %>
+<%= myp_select(f, :operating_system, "myplaceonline.phones.operating_system", Myp.translate_options(Phone::OPERATING_SYSTEMS), obj.operating_system) %>
+<%= myp_decimal_field(f, :operating_system_version, "myplaceonline.phones.operating_system_version", obj.operating_system_version) %>
+<%= myp_integer_field(f, :max_resolution_width, "myplaceonline.phones.max_resolution_width", obj.max_resolution_width) %>
+<%= myp_integer_field(f, :max_resolution_height, "myplaceonline.phones.max_resolution_height", obj.max_resolution_height) %>
+<%= myp_integer_field(f, :ram, "myplaceonline.phones.ram", obj.ram) %>
+<%= myp_integer_field(f, :num_cpus, "myplaceonline.phones.num_cpus", obj.num_cpus) %>
+<%= myp_integer_field(f, :num_cores_per_cpu, "myplaceonline.phones.num_cores_per_cpu", obj.num_cores_per_cpu) %>
+<%= myp_check_box(f, :hyperthreaded, "myplaceonline.phones.hyperthreaded") %>
+<%= myp_decimal_field(f, :max_cpu_speed, "myplaceonline.phones.max_cpu_speed", obj.max_cpu_speed) %>
+<%= myp_check_box(f, :cdma, "myplaceonline.phones.cdma") %>
+<%= myp_check_box(f, :gsm, "myplaceonline.phones.gsm") %>
+<%= myp_decimal_field(f, :front_camera_megapixels, "myplaceonline.phones.front_camera_megapixels", obj.front_camera_megapixels) %>
+<%= myp_decimal_field(f, :back_camera_megapixels, "myplaceonline.phones.back_camera_megapixels", obj.back_camera_megapixels) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.phones.notes", obj.notes) %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :password,
+    existingobj: obj.password,
+    heading: t("myplaceonline.phones.password"),
+    objform: "passwords/form",
+    existingobjurl: "password_path",
+    searchurl: "/passwords.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>

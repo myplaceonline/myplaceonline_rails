@@ -121,6 +121,7 @@ class Ability
     can :manage, ShoppingList, :owner => identity
     can :manage, ShoppingListItem, :owner => identity
     can :manage, Group, :owner => identity
+    can :manage, Phone, :owner => identity
     
     if user.admin?
       can :manage, User
