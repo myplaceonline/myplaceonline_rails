@@ -1,6 +1,6 @@
 class MyplaceonlineDueDisplaysController < MyplaceonlineController
   def showmyplet
-    @due = Myp.due(current_user)
+    @due = DueItem.all_due(current_user)
     super
   end
   
