@@ -62,6 +62,17 @@ class DueItem < MyplaceonlineIdentityRecord
     end
   end
   
+  def self.recalculate_all_users_due()
+    User.all.each do |user|
+      begin
+        User.current_user = user
+        self.recalculate_due(user)
+      ensure
+        User.current_user = nil
+      end
+    end
+  end
+  
   def self.due_vehicles(user)
     DueItem.destroy_all(owner: user.primary_identity, model_name: Vehicle.name)
     

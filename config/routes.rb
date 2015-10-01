@@ -293,6 +293,9 @@ Rails.application.routes.draw do
   get 'api/subregions'
   post 'api/renderpartial'
   post 'api/quickfeedback'
+  
+  get 'admin/test'
+  get 'admin/recalculate_all_users_due'
 
   get 'meaning/index'
   get 'meaning', :to => 'meaning#index'

@@ -12,4 +12,9 @@ if Myp.is_web_server? || Rails.env.test?
         :key => 'mypsession',
         :expire_after => 30.minutes
   end
+
+  if Myp.database_exists?
+    DueItem.recalculate_all_users_due
+    puts "Recalculated due items"
+  end
 end
