@@ -12,16 +12,11 @@ class RewardProgramsController < MyplaceonlineController
       ["lower(reward_programs.reward_program_name) ASC"]
     end
 
-    def all
-      if @program_type.blank?
-        model.where(
-          owner_id: current_user.primary_identity.id
-        )
+    def all_additional_sql
+      if !@program_type.blank?
+        "and program_type = " + @program_type
       else
-        model.where(
-          owner_id: current_user.primary_identity.id,
-          program_type: @program_type
-        )
+        nil
       end
     end
     

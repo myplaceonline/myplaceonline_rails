@@ -12,11 +12,8 @@ class CalculationFormsController < MyplaceonlineController
   end
 
   protected
-    def all
-      model.where(
-        owner_id: current_user.primary_identity.id,
-        is_duplicate: false
-      )
+    def all_additional_sql
+      "and is_duplicate = false"
     end
     
     def sorts

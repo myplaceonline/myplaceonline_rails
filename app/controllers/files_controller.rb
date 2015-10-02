@@ -99,11 +99,8 @@ class FilesController < MyplaceonlineController
 
   protected
 
-    def all
-      model.where(
-        owner_id: current_user.primary_identity.id,
-        folder: nil
-      )
+    def all_additional_sql
+      "and folder is null"
     end
 
     def sorts

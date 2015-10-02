@@ -61,7 +61,8 @@ class DueItem < MyplaceonlineIdentityRecord
       due_status(user)
     end
   end
-  
+
+  # This will be called once an hour by crontab
   def self.recalculate_all_users_due()
     User.all.each do |user|
       begin
@@ -72,7 +73,7 @@ class DueItem < MyplaceonlineIdentityRecord
       end
     end
   end
-  
+
   def self.due_vehicles(user)
     DueItem.destroy_all(owner: user.primary_identity, model_name: Vehicle.name)
     

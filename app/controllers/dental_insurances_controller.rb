@@ -53,13 +53,11 @@ class DentalInsurancesController < MyplaceonlineController
       )
     end
 
-    def all
+    def all_additional_sql
       if @defunct.blank? || !@defunct
-        model.where("owner_id = ? and defunct is null", current_user.primary_identity)
+        "and defunct is null"
       else
-        model.where(
-          owner_id: current_user.primary_identity.id
-        )
+        nil
       end
     end
 end

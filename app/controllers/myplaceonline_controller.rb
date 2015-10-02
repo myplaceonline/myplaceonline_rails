@@ -32,7 +32,11 @@ class MyplaceonlineController < ApplicationController
 
     @objs = cached_all.offset(@offset).limit(@perpage).order(sorts)
     
-    if additional_items? && @offset == 0
+    # If there are more items than the perpage count and we're on the first page
+    # (or perpage count is 0 in which case we're showing all items), and
+    # `additional_items?` returns true, then we'll add a Top X section
+    
+    if additional_items? && @offset == 0 && ((@perpage > 0 && @count > @perpage) || @perpage <= 0)
       @additional_items = additional_items
     end
 
@@ -229,6 +233,10 @@ class MyplaceonlineController < ApplicationController
     true
   end
   
+  def how_many_top_items
+    additional_items_max_items
+  end
+  
   protected
   
     def obj_params
@@ -250,26 +258,65 @@ class MyplaceonlineController < ApplicationController
     def before_all_actions
     end
     
-    def all
-      model.where(
-        owner_id: current_user.primary_identity.id
-      )
+    def all_additional_sql
+      nil
+    end
+    
+    def all_joins
+      nil
+    end
+    
+    def all_includes
+      nil
     end
     
     def additional_items?
-      false
+      true
     end
   
+    def additional_items_min_visit_count
+      2
+    end
+    
+    def additional_items_max_items
+      5
+    end
+  
+    def all
+      additional = all_additional_sql
+      if additional.nil?
+        additional = ""
+      end
+      model.includes(all_includes).joins(all_joins).where(
+        model.table_name + ".owner_id = ? " + additional,
+        current_user.primary_identity.id
+      )
+    end
+    
     def additional_items
-      raise NotImplementedError
+      additional = all_additional_sql
+      if additional.nil?
+        additional = ""
+      end
+      model.includes(all_includes).joins(all_joins).where(
+        model.table_name + ".owner_id = ? and " + model.table_name + ".visit_count >= ? " + additional,
+        current_user.primary_identity,
+        additional_items_min_visit_count
+      ).limit(additional_items_max_items).order(model.table_name + ".visit_count DESC")
     end
-  
+
     def set_obj
       @obj = model.find_by(id: params[:id], owner_id: current_user.primary_identity.id)
       authorize! :manage, @obj
     end
     
     def before_show
+      # Use update_column because we don't want updated_at to be updated
+      if @obj.visit_count?
+        @obj.update_column(:visit_count, @obj.visit_count + 1)
+      else
+        @obj.update_column(:visit_count, 1)
+      end
     end
     
     def has_category

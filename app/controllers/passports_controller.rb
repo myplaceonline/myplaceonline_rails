@@ -12,13 +12,11 @@ class PassportsController < MyplaceonlineController
   end
 
   protected
-    def all
+    def all_additional_sql
       if @expired.blank? || !@expired
-        model.where("owner_id = ? and (expires is null or expires > now())", current_user.primary_identity)
+        "and (expires is null or expires > now())"
       else
-        model.where(
-          owner_id: current_user.primary_identity.id
-        )
+        nil
       end
     end
 

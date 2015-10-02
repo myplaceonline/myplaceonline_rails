@@ -37,11 +37,8 @@ class FileFoldersController < MyplaceonlineController
 
   protected
 
-    def all
-      model.where(
-        owner_id: current_user.primary_identity.id,
-        parent_folder: nil
-      )
+    def all_additional_sql
+      "and parent_folder is null"
     end
 
     def sorts

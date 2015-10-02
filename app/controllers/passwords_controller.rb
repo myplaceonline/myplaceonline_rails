@@ -231,35 +231,11 @@ class PasswordsController < MyplaceonlineController
       end
     end
 
-    def all
+    def all_additional_sql
       if @defunct.blank? || !@defunct
-        model.where("owner_id = ? and defunct is null", current_user.primary_identity)
+        "and defunct is null"
       else
-        model.where(
-          owner_id: current_user.primary_identity.id
-        )
-      end
-    end
-
-    def additional_items?
-      true
-    end
-
-    def additional_items
-      if @defunct.blank? || !@defunct
-        result = model.where("owner_id = ? and visit_count >= 10 and defunct is null", current_user.primary_identity)
-      else
-        result = model.where("owner_id = ? and visit_count >= 10", current_user.primary_identity)
-      end
-      result.limit(5).order("visit_count DESC")
-    end
-    
-    def before_show
-      # Use update_column because we don't want updated_at to be updated
-      if @obj.visit_count?
-        @obj.update_column(:visit_count, @obj.visit_count + 1)
-      else
-        @obj.update_column(:visit_count, 1)
+        nil
       end
     end
 end

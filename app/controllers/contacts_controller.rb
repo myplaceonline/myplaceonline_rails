@@ -104,16 +104,20 @@ class ContactsController < MyplaceonlineController
       )
     end
 
-    def all
+    def all_additional_sql
       if @contact_type.blank?
-        model.joins(:identity).where(
-          owner_id: current_user.primary_identity.id
-        )
+        ""
       else
-        model.joins(:identity).where(
-          owner_id: current_user.primary_identity.id,
-          contact_type: @contact_type
-        )
+        "and contact_type = " + @contact_type
       end
+    end
+
+    # Join because we're sorting by identity name
+    def all_joins
+      :identity
+    end
+    
+    def all_includes
+      :identity
     end
 end
