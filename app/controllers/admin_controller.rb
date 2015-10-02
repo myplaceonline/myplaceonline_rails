@@ -19,6 +19,7 @@ class AdminController < ApplicationController
   
   def check_admin_key
     if Rails.env.production?
+      puts "DEBUG: " + ENV["SECRET_KEY_BASE"].inspect + ";" + params[:key].inspect
       if ENV["SECRET_KEY_BASE"] != params[:key]
         raise CanCan::AccessDenied.new("Not authorized")
       end
