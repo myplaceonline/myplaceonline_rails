@@ -12,7 +12,6 @@ class AdminController < ApplicationController
   end
   
   def recalculate_all_users_due
-    Rails.logger.debug("Entered recalculate_all_users_due")
     DueItem.recalculate_all_users_due
     render json: {
       :success => true
@@ -20,9 +19,7 @@ class AdminController < ApplicationController
   end
   
   def check_admin_key
-    Rails.logger.debug("check_admin_key")
     if Rails.env.production?
-      Rails.logger.debug("DEBUG: " + ENV["SECRET_KEY_BASE"].inspect + ";" + params[:key].inspect)
       if ENV["SECRET_KEY_BASE"] != params[:key]
         raise CanCan::AccessDenied.new("Not authorized")
       end
