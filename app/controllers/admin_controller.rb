@@ -1,8 +1,7 @@
 class AdminController < ApplicationController
 
-  skip_authorization_check
-  skip_load_and_authorize_resource
-  
+  skip_before_filter :authenticate_user!
+
   before_action :check_admin_key
   
   def test
