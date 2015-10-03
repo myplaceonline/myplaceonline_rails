@@ -1574,3 +1574,5 @@ en:
       depth: "Depth"
       weight_type: "Weight Type"
       weight: "Weight"
+    pictures:
+      slideshow: "Pictures Slideshow"

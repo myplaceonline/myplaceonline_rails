@@ -8,3 +8,4 @@
 #= require jquery-mobile-datebox
 #= require quill.min
 #= require dygraph-combined
+#= require magnific-popup

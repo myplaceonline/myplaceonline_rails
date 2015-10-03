@@ -15,6 +15,7 @@
  *= require jqm-datebox-1.4.5.min
  *= require quill.snow
  *= require welcome
+ *= require magnific-popup
  */
 
 a.headerlink:link, a.headerlink:visited, a.headerlink:hover, a.headerlink:active {

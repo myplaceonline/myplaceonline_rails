@@ -102,6 +102,16 @@ module ApplicationHelper
     html.html_safe
   end
   
+  def attribute_table_row_span(content)
+    html = <<-HTML
+    <tr>
+      <td colspan="3">#{content}</td>
+    </tr>
+    HTML
+    
+    html.html_safe
+  end
+  
   def attribute_table_row_image(name, identity_file, link_to_original = true)
     if !identity_file.nil? && !identity_file.file_content_type.nil? && (identity_file.file_content_type.start_with?("image"))
       if identity_file.thumbnail_contents.nil?

@@ -52,10 +52,12 @@
     <%= attribute_table_row_reference(t("myplaceonline.recreational_vehicle_insurances.company"), "company_path", insurance.company) %>
     <%= attribute_table_row_reference(t("myplaceonline.recreational_vehicle_insurances.periodic_payment"), "periodic_payment_path", insurance.periodic_payment) %>
   <% end %>
-  <% @obj.recreational_vehicle_pictures.each do |pic| %>
-    <%= table_row_heading(t("myplaceonline.recreational_vehicles.picture")) %>
-    <%= attribute_table_row_image(t("myplaceonline.recreational_vehicles.picture"), pic.identity_file) %>
-  <% end %>
+  <%=
+    render partial: 'myplaceonline/pictures', locals: {
+      pics: @obj.recreational_vehicle_pictures,
+      placeholder: "myplaceonline.recreational_vehicles.picture"
+    }
+  %>
   <% @obj.recreational_vehicle_measurements.each do |measurement| %>
     <%= table_row_heading(t("myplaceonline.recreational_vehicle_measurements.heading")) %>
     <%= attribute_table_row(t("myplaceonline.recreational_vehicle_measurements.measurement_name"), measurement.measurement_name) %>
