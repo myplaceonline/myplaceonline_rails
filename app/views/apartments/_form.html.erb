@@ -79,6 +79,53 @@
 <%=
   render(layout: 'myplaceonline/childproperties', locals: {
     f: f,
+    heading: t("myplaceonline.apartments.trash_pickups"),
+    childpropertiesname: :apartment_trash_pickups,
+    childproperties: obj.apartment_trash_pickups,
+    deletebutton: t("myplaceonline.apartments.delete_trash_pickup"),
+    addbutton: t("myplaceonline.apartments.add_trash_pickup"),
+    expanded: obj.apartment_trash_pickups.length > 0,
+    formjson: [
+      {
+        type: 'select',
+        name: 'trash_type',
+        options: ApartmentTrashPickup::TRASH_TYPES.map{|x,y| [I18n.t(x),y]}.as_json,
+        placeholder: t("myplaceonline.apartments.trash_type"),
+        autofocus: true
+      },
+      {
+        type: 'date',
+        name: 'start_date',
+        placeholder: t("myplaceonline.apartments.trash_start")
+      },
+      {
+        type: 'select',
+        name: 'period_type',
+        options: Myp::PERIOD_TYPES.map{|x,y| [I18n.t(x),y]}.as_json,
+        placeholder: t("myplaceonline.apartments.period_type")
+      },
+      {
+        type: 'number',
+        name: 'period',
+        placeholder: t("myplaceonline.apartments.period")
+      },
+      {
+        type: 'textarea',
+        name: 'notes',
+        placeholder: t("myplaceonline.general.notes")
+      }
+    ]
+  }) do |child_fields, childproperty|
+%>
+  <%= myp_select(child_fields, :trash_type, "myplaceonline.apartments.trash_type", Myp.translate_options(ApartmentTrashPickup::TRASH_TYPES), childproperty.trash_type) %>
+  <%= myp_date_field(child_fields, :start_date, "myplaceonline.apartments.trash_start", childproperty.start_date) %>
+  <%= myp_select(child_fields, :period_type, "myplaceonline.apartments.period_type", Myp.translate_options(Myp::PERIOD_TYPES), childproperty.period_type) %>
+  <%= myp_number_field(child_fields, :period, "myplaceonline.apartments.period", childproperty.period) %>
+  <%= myp_text_area(child_fields, :notes, "myplaceonline.general.notes", childproperty.notes) %>
+<% end %>
+<%=
+  render(layout: 'myplaceonline/childproperties', locals: {
+    f: f,
     heading: t("myplaceonline.apartments.pictures"),
     childpropertiesname: :apartment_pictures,
     childproperties: obj.apartment_pictures,

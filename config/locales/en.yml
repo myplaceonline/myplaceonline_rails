@@ -193,6 +193,7 @@ en:
       filter: "Filter"
       top_items: "Top Used Items"
       play_store: "Android App on Google Play Store"
+      notes: "Notes"
     periods:
       monthly: "Monthly"
       yearly: "Yearly"
@@ -542,6 +543,14 @@ en:
       picture: "Picture"
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
+      trash_pickup: "Trash Pickup"
+      trash_pickups: "Trash Pickups"
+      add_trash_pickup: "Add Trash Pickup"
+      delete_trash_pickup: "Delete Trash Pickup"
+      trash_start: "Start Date"
+      trash_type: "Trash Type"
+      period_type: "Period Type"
+      period: "Period"
     jokes:
       name: "Joke Name"
       joke: "Joke"
@@ -1576,3 +1585,10 @@ en:
       weight: "Weight"
     pictures:
       slideshow: "Pictures Slideshow"
+    trash:
+      type_general: "General Trash"
+      type_recycling: "Recycling"
+    period_types:
+      days: "Days"
+      weeks: "Weeks"
+      months: "Months"

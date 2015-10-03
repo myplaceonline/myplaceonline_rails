@@ -237,6 +237,31 @@ module ApplicationHelper
     end
   end
   
+  def attribute_table_row_period(name, val, period_type, pluralize = true)
+    if !val.nil?
+      if period_type.nil?
+        attribute_table_row(
+          name,
+          val.to_s
+        )
+      else
+        if pluralize
+          attribute_table_row(
+            name,
+            ActionController::Base.helpers.pluralize(val, Myp.get_select_name(period_type, Myp::PERIOD_TYPES).singularize)
+          )
+        else
+          attribute_table_row(
+            name,
+            val.to_s + " " + Myp.get_select_name(period_type, Myp::PERIOD_TYPES)
+          )
+        end
+      end
+    else
+      nil
+    end
+  end
+  
   def attribute_table_row_food_weight(name, val, weight_type)
     if !val.nil?
       attribute_table_row(name, ActionController::Base.helpers.pluralize(val, Myp.get_select_name(weight_type, Myp::FOOD_WEIGHTS).singularize))

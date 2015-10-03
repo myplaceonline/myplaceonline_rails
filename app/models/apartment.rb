@@ -13,6 +13,9 @@ class Apartment < MyplaceonlineIdentityRecord
   has_many :apartment_leases, :dependent => :destroy
   accepts_nested_attributes_for :apartment_leases, allow_destroy: true, reject_if: :all_blank
 
+  has_many :apartment_trash_pickups, :dependent => :destroy
+  accepts_nested_attributes_for :apartment_trash_pickups, allow_destroy: true, reject_if: :all_blank
+
   def as_json(options={})
     super.as_json(options).merge({
       :location => location.as_json,

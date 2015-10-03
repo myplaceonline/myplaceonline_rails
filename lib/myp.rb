@@ -80,6 +80,12 @@ module Myp
     ["myplaceonline.noise_levels.loud", 3],
     ["myplaceonline.noise_levels.very_loud", 4]
   ]
+  
+  PERIOD_TYPES = [
+    ["myplaceonline.period_types.days", 0],
+    ["myplaceonline.period_types.weeks", 1],
+    ["myplaceonline.period_types.months", 2]
+  ]
 
   puts "myplaceonline: Initializing categories"
   
