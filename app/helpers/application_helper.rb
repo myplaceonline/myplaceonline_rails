@@ -237,6 +237,18 @@ module ApplicationHelper
     end
   end
   
+  def numberth(num)
+    if num == 1
+      "st"
+    elsif num == 2
+      "nd"
+    elsif num == 3
+      "rd"
+    elsif num >= 4
+      "th"
+    end
+  end
+  
   def attribute_table_row_period(name, val, period_type, pluralize = true)
     if !val.nil?
       if period_type.nil?
@@ -245,16 +257,23 @@ module ApplicationHelper
           val.to_s
         )
       else
-        if pluralize
+        if period_type >= 3 && period_type <= 9
           attribute_table_row(
             name,
-            ActionController::Base.helpers.pluralize(val, Myp.get_select_name(period_type, Myp::PERIOD_TYPES).singularize)
+            val.to_s + numberth(val) + " " + Myp.get_select_name(period_type, Myp::PERIOD_TYPES).gsub("Nth", "")
           )
         else
-          attribute_table_row(
-            name,
-            val.to_s + " " + Myp.get_select_name(period_type, Myp::PERIOD_TYPES)
-          )
+          if pluralize
+            attribute_table_row(
+              name,
+              ActionController::Base.helpers.pluralize(val, Myp.get_select_name(period_type, Myp::PERIOD_TYPES).singularize)
+            )
+          else
+            attribute_table_row(
+              name,
+              val.to_s + " " + Myp.get_select_name(period_type, Myp::PERIOD_TYPES)
+            )
+          end
         end
       end
     else

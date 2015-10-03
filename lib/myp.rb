@@ -84,7 +84,14 @@ module Myp
   PERIOD_TYPES = [
     ["myplaceonline.period_types.days", 0],
     ["myplaceonline.period_types.weeks", 1],
-    ["myplaceonline.period_types.months", 2]
+    ["myplaceonline.period_types.months", 2],
+    ["myplaceonline.period_types.nth_monday", 3],
+    ["myplaceonline.period_types.nth_tuesday", 4],
+    ["myplaceonline.period_types.nth_wednesday", 5],
+    ["myplaceonline.period_types.nth_thursday", 6],
+    ["myplaceonline.period_types.nth_friday", 7],
+    ["myplaceonline.period_types.nth_saturday", 8],
+    ["myplaceonline.period_types.nth_sunday", 9]
   ]
 
   puts "myplaceonline: Initializing categories"
