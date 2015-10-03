@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151002190734) do
+ActiveRecord::Schema.define(version: 20151003144133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -636,7 +636,7 @@ ActiveRecord::Schema.define(version: 20151002190734) do
   add_index "due_items", ["owner_id"], name: "index_due_items_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -931,6 +931,7 @@ ActiveRecord::Schema.define(version: 20151002190734) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "visit_count"
   end
 
   add_index "identity_file_folders", ["owner_id"], name: "index_identity_file_folders_on_owner_id", using: :btree
@@ -949,6 +950,7 @@ ActiveRecord::Schema.define(version: 20151002190734) do
     t.integer  "folder_id"
     t.binary   "thumbnail_contents"
     t.integer  "thumbnail_bytes"
+    t.integer  "visit_count"
   end
 
   add_index "identity_files", ["encrypted_password_id"], name: "index_identity_files_on_encrypted_password_id", using: :btree

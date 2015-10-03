@@ -100,7 +100,7 @@ class FilesController < MyplaceonlineController
   protected
 
     def all_additional_sql
-      "and folder is null"
+      "and folder_id is null"
     end
 
     def sorts
