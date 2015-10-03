@@ -1,22 +1,29 @@
 <%# locals: pics, placeholder %>
 
 <% if !pics.nil? && pics.length > 0 %>
-  <% random_name = "slideshow-" + SecureRandom.hex(10) %>
-  <%= attribute_table_row_span(link_to(t("myplaceonline.pictures.slideshow"), "#", class: "ui-btn", id: random_name)) %>
+
+  <% if pics.length > 1 %>
+    <% random_name = "slideshow-" + SecureRandom.hex(10) %>
+    <%= attribute_table_row_span(link_to(t("myplaceonline.pictures.slideshow"), "#", class: "ui-btn", id: random_name)) %>
+  <% end %>
+  
   <% pics.each do |pic| %>
     <%= attribute_table_row_image(t(placeholder), pic.identity_file) %>
   <% end %>
-  <script type="text/javascript">
-  onPageLoad(function() {
-    $('#<%= random_name %>').magnificPopup({
-        items: [
-          <%= raw(pics.map{ |pic| "{ src: '" + file_thumbnail_path(pic.identity_file, :t => Time.now.to_f) + "'}" }.join(", ")) %>
-        ],
-        gallery: {
-          enabled: true
-        },
-        type: 'image' // this is default type
+  
+  <% if pics.length > 1 %>
+    <script type="text/javascript">
+    onPageLoad(function() {
+      $('#<%= random_name %>').magnificPopup({
+          items: [
+            <%= raw(pics.map{ |pic| "{ src: '" + file_thumbnail_path(pic.identity_file, :t => Time.now.to_f) + "'}" }.join(", ")) %>
+          ],
+          gallery: {
+            enabled: true
+          },
+          type: 'image' // this is default type
+      });
     });
-  });
-  </script>
+    </script>
+  <% end %>
 <% end %>

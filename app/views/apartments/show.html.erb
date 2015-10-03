@@ -21,9 +21,11 @@
 
   <% end %>
 
-  <% @obj.apartment_pictures.each do |pic| %>
-    <%= table_row_heading(t("myplaceonline.apartments.picture")) %>
-    <%= attribute_table_row_image(t("myplaceonline.apartments.picture"), pic.identity_file) %>
-  <% end %>
+  <%=
+    render partial: 'myplaceonline/pictures', locals: {
+      pics: @obj.apartment_pictures,
+      placeholder: "myplaceonline.apartments.picture"
+    }
+  %>
   
 <% end %>

@@ -39,8 +39,10 @@
     <%= attribute_table_row(t("myplaceonline.general.sub_region1"), identity_drivers_license.sub_region1) %>
     <%= attribute_table_row_image(t("myplaceonline.identities.license_picture"), identity_drivers_license.identity_file) %>
   <% end %>
-  <% @obj.identity.identity_pictures.each do |pic| %>
-    <%= table_row_heading(t("myplaceonline.contacts.picture")) %>
-    <%= attribute_table_row_image(t("myplaceonline.contacts.picture"), pic.identity_file) %>
-  <% end %>
+  <%=
+    render partial: 'myplaceonline/pictures', locals: {
+      pics: @obj.identity.identity_pictures,
+      placeholder: "myplaceonline.contacts.picture"
+    }
+  %>
 <% end %>

@@ -112,10 +112,12 @@
     <%= attribute_table_row_reference(t("myplaceonline.vehicle_insurances.company"), "company_path", insurance.company) %>
     <%= attribute_table_row_reference(t("myplaceonline.vehicle_insurances.periodic_payment"), "periodic_payment_path", insurance.periodic_payment) %>
   <% end %>
-  <% @obj.vehicle_pictures.each do |pic| %>
-    <%= table_row_heading(t("myplaceonline.vehicles.picture")) %>
-    <%= attribute_table_row_image(t("myplaceonline.vehicles.picture"), pic.identity_file) %>
-  <% end %>
+  <%=
+    render partial: 'myplaceonline/pictures', locals: {
+      pics: @obj.vehicle_pictures,
+      placeholder: "myplaceonline.vehicles.picture"
+    }
+  %>
   <% @obj.vehicle_warranties.each do |wrapper| %>
     <%= table_row_heading(t("myplaceonline.warranties.warranty")) %>
     <%= attribute_table_row_reference(t("myplaceonline.warrnties.warranty_name"), "warranty_path", wrapper.warranty) %>
