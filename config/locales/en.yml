@@ -551,6 +551,7 @@ en:
       trash_type: "Trash Type"
       period_type: "Period Type"
       period: "Period"
+      next_pickup: "Next Pickup"
     jokes:
       name: "Joke Name"
       joke: "Joke"
