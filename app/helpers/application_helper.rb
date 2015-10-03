@@ -263,17 +263,10 @@ module ApplicationHelper
             val.to_s + numberth(val) + " " + Myp.get_select_name(period_type, Myp::PERIOD_TYPES).gsub("Nth", "")
           )
         else
-          if pluralize
-            attribute_table_row(
-              name,
-              ActionController::Base.helpers.pluralize(val, Myp.get_select_name(period_type, Myp::PERIOD_TYPES).singularize)
-            )
-          else
-            attribute_table_row(
-              name,
-              val.to_s + " " + Myp.get_select_name(period_type, Myp::PERIOD_TYPES)
-            )
-          end
+          attribute_table_row(
+            name,
+            Myp.get_select_name(period_type, Myp::PERIOD_TYPES).gsub(" X ", " " + val.to_s + " ")
+          )
         end
       end
     else

@@ -1590,9 +1590,9 @@ en:
       type_general: "General Trash"
       type_recycling: "Recycling"
     period_types:
-      days: "Days"
-      weeks: "Weeks"
-      months: "Months"
+      days: "Every X Days From Start"
+      weeks: "Every X Weeks From Start"
+      months: "Every X Months From Start"
       nth_monday: "Nth Monday of the Month"
       nth_tuesday: "Nth Tuesday of the Month"
       nth_wednesday: "Nth Wednesday of the Month"
