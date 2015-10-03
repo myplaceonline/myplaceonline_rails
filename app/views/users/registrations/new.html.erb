@@ -7,6 +7,7 @@
 
 <%= form_for(resource, as: resource_name, url: new_registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
+  <%= flashes! %>
 
   <% if Rails.configuration.require_invite_code %>
     <div>
@@ -24,25 +25,32 @@
     <% end %>
   </div>
 
-  <div><%= f.label :password, class: "ui-hidden-accessible" %>
-  <%=
-    if @validatable
-      f.password_field :password, autocomplete: "off", placeholder: t("myplaceonline.general.passwordwithmin", minchars: @minimum_password_length)
-    else
-      f.password_field :password, autocomplete: "off", placeholder: t("myplaceonline.general.password")
-    end
-  %>
+  <div>
+    <%= f.label :password, class: "ui-hidden-accessible" %>
+    <%=
+      if @validatable
+        f.password_field :password, autocomplete: "off", placeholder: t("myplaceonline.general.passwordwithmin", minchars: @minimum_password_length)
+      else
+        f.password_field :password, autocomplete: "off", placeholder: t("myplaceonline.general.password")
+      end
+    %>
   </div>
 
-  <div><%= f.label :password_confirmation, class: "ui-hidden-accessible" %>
-    <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: t("myplaceonline.general.password2") %></div>
+  <div>
+    <%= f.label :password_confirmation, class: "ui-hidden-accessible" %>
+    <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: t("myplaceonline.general.password2") %>
+  </div>
+
+  <%= label_tag :agree_terms, raw(t("myplaceonline.users.agree_terms", :terms => link_to(t("myplaceonline.info.terms"), "/info/terms"))) %>
+  <%= check_box_tag :agree_terms, 1, @agree_terms, data: { "role" => "flipswitch" } %>
 
   <div><%= f.submit t("myplaceonline.general.signup") %></div>
-<script type="text/javascript">
-onPageLoad(function() {
-  maybeFocus(".autofocus");
-});
-</script>
+  
+  <script type="text/javascript">
+  onPageLoad(function() {
+    maybeFocus(".autofocus");
+  });
+  </script>
 <% end %>
 
 <%= render "users/shared/links" %>

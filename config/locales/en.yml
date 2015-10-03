@@ -411,6 +411,8 @@ en:
       not_confirmed: "Not Confirmed"
       type_normal: "Normal"
       type_admin: "Administrator"
+      agree_terms: "Do you agree to the %{terms}?"
+      must_agree_terms: "You must agree to the %{terms} to sign up."
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"
