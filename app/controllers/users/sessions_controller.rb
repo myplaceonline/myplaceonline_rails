@@ -5,6 +5,7 @@ class Users::SessionsController < Devise::SessionsController
   # GET /resource/sign_in
   def new
     self.resource = resource_class.new(sign_in_params)
+    self.resource.email = session[:login_email]
     self.resource.remember_me = true
     clean_up_passwords(resource)
     respond_with(resource, serialize_options(resource))
@@ -12,9 +13,17 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
+    if !params[:user].nil?
+      # If login fails, warden.authenticate! will throw a 401, so 
+      # there's no simple way to save off the email address, so we'll
+      # just throw it in the session for the `new` call above to pick it up
+      # on the redirect
+      session[:login_email] = params[:user][:email]
+    end
     self.resource = warden.authenticate!(auth_options)
     
     # If we make it here, the login is succesful
+    session[:login_email] = nil
     Myp.remember_password(session, params[:user][:password])
     
     #set_flash_message(:notice, :signed_in) if is_flashing_format?

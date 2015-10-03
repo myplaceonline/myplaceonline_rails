@@ -2,22 +2,26 @@
 <h1><%= t("myplaceonline.general.login") %></h1>
 <%= flashes! %>
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div><%= f.label :email, class: "ui-hidden-accessible" %>
-  <%= f.email_field :email, class: "autofocus", placeholder: t("myplaceonline.general.email") %></div>
+  <div>
+    <%= f.label :email, class: "ui-hidden-accessible" %>
+    <%= f.email_field :email, class: "autofocus", placeholder: t("myplaceonline.general.email") %>
+  </div>
 
-  <div><%= f.label :password, class: "ui-hidden-accessible" %>
-    <%= f.password_field :password, autocomplete: "off", placeholder: t("myplaceonline.general.password") %></div>
+  <div>
+    <%= f.label :password, class: "ui-hidden-accessible" %>
+    <%= f.password_field :password, autocomplete: "off", placeholder: t("myplaceonline.general.password") %>
+  </div>
 
   <% if devise_mapping.rememberable? -%>
     <div><%= f.check_box :remember_me %> <%= f.label :remember_me, t("myplaceonline.general.remember") %></div>
   <% end -%>
 
   <div><%= f.submit t("myplaceonline.general.login") %></div>
-<script type="text/javascript">
-onPageLoad(function() {
-  maybeFocus(".autofocus");
-});
-</script>
+  <script type="text/javascript">
+  onPageLoad(function() {
+    maybeFocus(".autofocus");
+  });
+  </script>
 <% end %>
 
 <%= render "users/shared/links" %>
