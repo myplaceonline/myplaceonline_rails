@@ -31,4 +31,8 @@ class UsersController < MyplaceonlineController
         :user_type
       )
     end
+
+    def additional_items?
+      false
+    end
 end
