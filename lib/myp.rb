@@ -407,15 +407,15 @@ module Myp
     cpa.save
   end
   
-  def self.add_point(user, categoryName)
-    self.modify_points(user, categoryName, 1)
+  def self.add_point(user, categoryName, session = nil)
+    self.modify_points(user, categoryName, 1, session)
   end
   
-  def self.subtract_point(user, categoryName)
-    self.modify_points(user, categoryName, -1)
+  def self.subtract_point(user, categoryName, session = nil)
+    self.modify_points(user, categoryName, -1, session)
   end
   
-  def self.modify_points(user, categoryName, amount)
+  def self.modify_points(user, categoryName, amount, session = nil)
     ActiveRecord::Base.transaction do
       if user.primary_identity.points.nil?
         user.primary_identity.points = 0
@@ -448,6 +448,14 @@ module Myp
         end
         cpa.save
         category = category.parent
+      end
+    end
+    
+    if !session.nil?
+      if session[:points_flash].nil?
+        session[:points_flash] = amount
+      else
+        session[:points_flash] = session[:points_flash] + amount
       end
     end
   end

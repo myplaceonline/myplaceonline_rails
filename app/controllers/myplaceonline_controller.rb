@@ -109,7 +109,7 @@ class MyplaceonlineController < ApplicationController
       
       if @obj.save
         if has_category
-          Myp.add_point(current_user, category_name)
+          Myp.add_point(current_user, category_name, session)
         end
         return after_create_or_update
       else
@@ -152,7 +152,7 @@ class MyplaceonlineController < ApplicationController
     ActiveRecord::Base.transaction do
       @obj.destroy
       if has_category
-        Myp.subtract_point(current_user, category_name)
+        Myp.subtract_point(current_user, category_name, session)
       end
     end
 

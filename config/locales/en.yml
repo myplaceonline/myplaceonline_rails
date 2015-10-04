@@ -1617,3 +1617,6 @@ en:
     border_types:
       none: "None"
       title: "Title Border"
+    points:
+      gotsome: "You earned %{amount}!"
+      point: "point"

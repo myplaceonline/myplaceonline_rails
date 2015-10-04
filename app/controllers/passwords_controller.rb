@@ -32,7 +32,7 @@ class PasswordsController < MyplaceonlineController
             end
             identity_file.save!
             
-            Myp.add_point(current_user, "files")
+            Myp.add_point(current_user, "files", session)
             
             # Try to read the file
             s = Roo::OpenOffice.new(identity_file.file.to_file.path, :password => @password, :file_warning => :ignore)
@@ -160,7 +160,7 @@ class PasswordsController < MyplaceonlineController
               
               points = points + 1
             end
-            Myp.modify_points(current_user, :passwords, points)
+            Myp.modify_points(current_user, :passwords, points, session)
           end
           redirect_to passwords_path, :flash => { :notice => I18n.t("myplaceonline.passwords.imported_count", :count => imported_count) }
         else

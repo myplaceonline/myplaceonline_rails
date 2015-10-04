@@ -49,20 +49,28 @@
         <a href="#menuPopup<%= request.uuid %>" data-icon="bars" class="ui-btn-right" data-rel="popup" data-iconpos="notext" title="<%= t("myplaceonline.menu.name") %>" id="headerMenuPopup"><%= t("myplaceonline.menu.name") %></a>
       </div>
       <div role="main" class="ui-content">
+      
         <%= yield %>
-        <script type="text/javascript">
-          onPageLoad(function() {
-            // We need to bind to the link element after JQM has created it
-            // and bound its own events, so that we can do stuff before
-            // JQM stops propagation of it
-            $("[data-role='collapsible'] > h3 > a").click(function(eventData) {
-              var div = $(eventData.target).parents("div").first();
-              if (div.hasClass("ui-collapsible-collapsed")) {
-                //$.mobile.silentScroll(div.offset().top);
-              }
+        
+        <% if !session[:points_flash].nil? && session[:points_flash] > 0 %>
+          <script type="text/javascript">
+            onPageLoad(function() {
+              // We need to bind to the link element after JQM has created it
+              // and bound its own events, so that we can do stuff before
+              // JQM stops propagation of it
+              //$("[data-role='collapsible'] > h3 > a").click(function(eventData) {
+              //  var div = $(eventData.target).parents("div").first();
+              //  if (div.hasClass("ui-collapsible-collapsed")) {
+              //    $.mobile.silentScroll(div.offset().top);
+              //  }
+              //});
+              <%= raw("createSuccessNotification('" + t("myplaceonline.points.gotsome", amount: ActionController::Base.helpers.pluralize(session[:points_flash], t("myplaceonline.points.point"))) + "');") %>
+              <%= raw("playSound('" + root_path + "bubble_gum_pop-Natalie_Wendt-772662403.wav');") %>
             });
-          });
-        </script>
+          </script>
+          <% session[:points_flash] = nil %>
+        <% end %>
+        
       </div>
       <%= yield(:footer) %>
       <%# We give a unique id to each popup because the menu may be different. %>
