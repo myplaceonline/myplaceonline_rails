@@ -194,6 +194,7 @@ en:
       top_items: "Top Used Items"
       play_store: "Android App on Google Play Store"
       notes: "Notes"
+      not_auhorized: "Not Authorized"
     periods:
       monthly: "Monthly"
       yearly: "Yearly"
@@ -1603,3 +1604,11 @@ en:
       nth_friday: "Nth Friday of the Month"
       nth_saturday: "Nth Saturday of the Month"
       nth_sunday: "Nth Sunday of the Month"
+    homepage:
+      myplets: "Myplets"
+      add_myplet: "Add Myplet"
+      delete_myplet: "Delete Myplet"
+      myplet: "Myplet"
+      title: "Title"
+      category_name: "Category Name"
+      category_id: "Category ID"

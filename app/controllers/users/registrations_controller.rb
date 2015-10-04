@@ -18,7 +18,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_filter :configure_account_update_params, only: [:update]
   prepend_before_filter :authenticate_scope!, only: [
     :edit, :update, :destroy, :changepassword, :changeemail, :resetpoints,
-    :advanced, :deletecategory, :security, :export, :appearance, :clipboard
+    :advanced, :deletecategory, :security, :export, :appearance, :clipboard,
+    :homepage
   ]
   
   before_filter :configure_permitted_parameters
@@ -218,9 +219,26 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
   def homepage
     Myp.ensure_encryption_key(session)
-    if request.post?
-      redirect_to edit_user_registration_path,
-        :flash => { :notice => I18n.t("myplaceonline.users.homepage_saved") }
+    @obj = User.current_user.primary_identity
+    if request.patch?
+      @obj.assign_attributes(
+        params.require(:identity).permit(
+          myplets_attributes: [
+            :id,
+            :_destroy,
+            :title,
+            :category_name,
+            :category_id,
+            :y_coordinate
+          ]
+        )
+      )
+      if @obj.save
+        redirect_to users_advanced_path,
+          :flash => { :notice => I18n.t("myplaceonline.users.homepage_saved") }
+      else
+        render :homepage
+      end
     else
       render :homepage
     end

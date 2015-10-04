@@ -1,8 +1,47 @@
 <% content_for :heading do -%><%= t("myplaceonline.users.homepage") %><% end -%>
 <h1><%= t("myplaceonline.users.homepage") %></h1>
 
-<%= flashes! %>
+<%= flashes!(@obj) %>
 
-<%= form_tag do %>
-  <div><%= submit_tag t("myplaceonline.general.save") %></div>
+<%= form_for @obj, url: users_homepage_path do |f| %>
+  <%=
+    render(layout: 'myplaceonline/childproperties', locals: {
+      f: f,
+      heading: t("myplaceonline.homepage.myplets"),
+      childpropertiesname: :myplets,
+      childproperties: @obj.myplets,
+      deletebutton: t("myplaceonline.homepage.delete_myplet"),
+      addbutton: t("myplaceonline.homepage.add_myplet"),
+      expanded: true,
+      position_field: :y_coordinate,
+      itemname: t("myplaceonline.homepage.myplet"),
+      formjson: [
+        {
+          type: 'text',
+          name: 'title',
+          placeholder: t("myplaceonline.homepage.title"),
+          autofocus: true
+        },
+        {
+          type: 'text',
+          name: 'category_name',
+          placeholder: t("myplaceonline.homepage.category_name")
+        },
+        {
+          type: 'number',
+          name: 'category_id',
+          placeholder: t("myplaceonline.homepage.category_id")
+        },
+        {
+          type: 'position',
+          name: 'y_coordinate'
+        }
+      ]
+    }) do |child_fields, childproperty|
+  %>
+    <%= myp_text_field(child_fields, :title, "myplaceonline.homepage.title", evaluate_if_probably_i18n(childproperty.title)) %>
+    <%= myp_text_field(child_fields, :category_name, "myplaceonline.homepage.category_name", childproperty.category_name) %>
+    <%= myp_number_field(child_fields, :category_id, "myplaceonline.homepage.category_id", childproperty.category_id) %>
+  <% end %>
+  <%= f.submit t("myplaceonline.general.save") %>
 <% end %>

@@ -9,9 +9,9 @@
       <% end %>
       <%
       rte_hidden_field = f.hidden_field(:notepad_data)
-      rte_hidden_field_id = f.object_name.gsub("\[", "_").gsub("\]", "") + "_notepad_data"
-      rte_wrapper_id = f.object_name.gsub("\[", "_").gsub("\]", "") + "_notepad_data_wrapper"
-      rte_wrapper_toolbar_id = f.object_name.gsub("\[", "_").gsub("\]", "") + "_notepad_data_toolbar_wrapper"
+      rte_hidden_field_id = f.object_name.gsub("\[", "_").gsub("\]", "") + "_notepad_data" + SecureRandom.hex(10)
+      rte_wrapper_id = f.object_name.gsub("\[", "_").gsub("\]", "") + "_notepad_data_wrapper" + SecureRandom.hex(10)
+      rte_wrapper_toolbar_id = f.object_name.gsub("\[", "_").gsub("\]", "") + "_notepad_data_toolbar_wrapper" + SecureRandom.hex(10)
       %>
       <div class="quill-wrapper">
         <div id="<%= rte_wrapper_toolbar_id %>" class="quill-toolbar">

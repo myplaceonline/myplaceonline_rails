@@ -357,7 +357,7 @@ Rails.application.routes.draw do
       match 'users/advanced', :to => 'users/registrations#advanced', via: [:get, :post]
       match 'users/deletecategory', :to => 'users/registrations#deletecategory', via: [:get, :post]
       match 'users/appearance', :to => 'users/registrations#appearance', via: [:get, :post]
-      match 'users/homepage', :to => 'users/registrations#homepage', via: [:get, :post]
+      match 'users/homepage', :to => 'users/registrations#homepage', via: [:get, :post, :patch]
       match 'users/clipboard', :to => 'users/registrations#clipboard', via: [:get, :post]
       match 'users/security', :to => 'users/registrations#security', via: [:get, :post]
       match 'users/categories', :to => 'users/registrations#categories', via: [:get, :post]

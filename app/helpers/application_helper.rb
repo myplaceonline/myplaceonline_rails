@@ -1,10 +1,15 @@
 require 'htmlentities'
 
 module ApplicationHelper
-  def flashes!
-    return "" if flash.empty?
+  def flashes!(obj = nil)
+    if flash.empty? && (obj.nil? || (!obj.nil? && obj.errors.empty?))
+      return ""
+    end
     
     messages = flash.map { |name, msg| content_tag(:li, msg) }.join
+    if !obj.nil? && obj.errors.any?
+      messages += obj.errors.full_messages.each.map{ |msg| content_tag(:li, msg) }.join
+    end
 
     html = <<-HTML
     <div class="errors">
@@ -517,6 +522,10 @@ module ApplicationHelper
   
   def is_probably_i18n(str)
     !str.nil? && str.include?("myplaceonline.")
+  end
+  
+  def evaluate_if_probably_i18n(str)
+    is_probably_i18n(str) ? t(str) : str
   end
 
   def myp_text_area(form, name, placeholder, value, autofocus = false, input_classes = nil)
