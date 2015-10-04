@@ -2,15 +2,22 @@ class GraphController < MyplaceonlineController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:display, :source_values]
 
   def display
+    if params[:hideform] == "true"
+      @hideform = true
+    end
     categories = Myp.categories(User.current_user)
     @values = get_values()
     @sources = categories.map{|k,v| I18n.t("myplaceonline.category." + v.name) }.sort
     series_numbers = params.dup.delete_if{|k,v| !k.start_with?("series_") || !k.end_with?("_source") }.to_a.map{|x| x[0][x[0].index('_')+1..x[0].rindex('_')-1].to_i}.sort
     data = Hash.new
+    @selected_sources = Hash.new
+    @selected_values = Hash.new
+    @selected_xvalues = Hash.new
     series_numbers.each do |series_number|
       series_index = series_number - 1
       source = params["series_" + series_number.to_s + "_source"]
       value_name = params["series_" + series_number.to_s + "_values"]
+      xvalue_name = params["series_" + series_number.to_s + "_xvalues"]
       found_source = categories.find{|k,v| I18n.t("myplaceonline.category." + v.name) == source}
       if !found_source.nil?
         source_category = found_source[1]
@@ -18,10 +25,22 @@ class GraphController < MyplaceonlineController
         if category_class.attribute_names.find{|x| x == value_name}.nil?
           value_name = nil
         end
+        if category_class.attribute_names.find{|x| x == xvalue_name}.nil?
+          xvalue_name = nil
+        end
+        if xvalue_name.blank?
+          xvalue_name = "updated_at"
+        end
+
+        @values = get_values(source)
+        @selected_sources[series_number] = source
+        @selected_values[series_number] = value_name
+        @selected_xvalues[series_number] = xvalue_name
+        
         category_class.where(
           owner_id: current_user.primary_identity.id
         ).each do |record|
-          x_axis = record.updated_at
+          x_axis = record.send(xvalue_name)
           y_value = 1
           if !value_name.blank?
             y_value = record.send(value_name)
@@ -61,7 +80,7 @@ class GraphController < MyplaceonlineController
   protected
   
     def get_values(source = nil)
-      result = [I18n.t("myplaceonline.general.created"), I18n.t("myplaceonline.general.last_updated")]
+      result = []
       if !source.blank?
         category_class = Object.const_get(source.singularize.gsub(" ", ""))
         result += category_class.attribute_names

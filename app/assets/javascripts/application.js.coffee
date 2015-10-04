@@ -37,6 +37,7 @@ $ ->
       "/graph/source_values?id=#{id}&source=#{source}",
       (data) ->
         $(".values_container").replaceWith(data)
+        $(".xvalues_container").replaceWith(data)
         ensureStyledPage()
     )
   )

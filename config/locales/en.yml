@@ -1146,7 +1146,8 @@ en:
       graph: "Graph"
       generate: "Generate"
       series_source: "Series #%{series_number} Source"
-      series_values: "Series #%{series_number} Values"
+      series_values: "Series #%{series_number} Y Values"
+      series_xvalues: "Series #%{series_number} X Values"
     restaurants:
       random: "Random Restaurant"
       search: "Search"
