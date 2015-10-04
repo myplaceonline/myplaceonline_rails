@@ -417,6 +417,8 @@ en:
       must_agree_terms: "You must agree to the %{terms} to sign up."
       homepage: "Homepage"
       homepage_saved: "Homepage settings saved"
+      sounds: "Sounds"
+      disable_sounds: "Disable Sounds"
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"

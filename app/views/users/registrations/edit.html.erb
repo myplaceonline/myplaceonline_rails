@@ -51,6 +51,12 @@
     <% end %>
   </li>
   <li>
+    <%= link_to users_sounds_path do %>
+      <%= image_tag("famfamfam/sound.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.users.sounds") %>
+    <% end %>
+  </li>
+  <li>
     <%= link_to users_advanced_path do %>
       <%= image_tag("FatCow_Icons16x16/user_edit.png", size: "16x16", class: "ui-li-icon") %>
       <%= t("myplaceonline.users.advanced_settings") %>

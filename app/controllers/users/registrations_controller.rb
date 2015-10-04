@@ -203,6 +203,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
   
+  def sounds
+    Myp.ensure_encryption_key(session)
+    @disable_sounds = current_user.disable_sounds
+    if request.post?
+      @disable_sounds = params[:disable_sounds]
+      current_user.disable_sounds = @disable_sounds
+      current_user.save!
+      redirect_to edit_user_registration_path,
+        :flash => { :notice => I18n.t("myplaceonline.general.saved") }
+    else
+      render :sounds
+    end
+  end
+  
   def appearance
     Myp.ensure_encryption_key(session)
     @page_transition = current_user.page_transition

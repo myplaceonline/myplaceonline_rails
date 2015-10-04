@@ -1,0 +1,14 @@
+<% content_for :heading do -%><%= t("myplaceonline.users.sounds") %><% end -%>
+<h1><%= t("myplaceonline.users.sounds") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag do %>
+  <fieldset>
+    <div data-role="fieldcontain">
+      <%= label_tag :disable_sounds, t("myplaceonline.users.disable_sounds") %>
+      <%= check_box_tag :disable_sounds, 1, @disable_sounds, data: { "role" => "flipswitch" } %>
+    </div>
+  </fieldset>
+  <div><%= submit_tag t("myplaceonline.general.save") %></div>
+<% end %>
