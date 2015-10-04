@@ -244,6 +244,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
             :category_name,
             :category_id,
             :y_coordinate,
+            :x_coordinate,
             :border_type
           ]
         )

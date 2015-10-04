@@ -39,6 +39,11 @@
           placeholder: t("myplaceonline.homepage.border_type")
         },
         {
+          type: 'hidden',
+          name: 'x_coordinate',
+          value: '0'
+        },
+        {
           type: 'position',
           name: 'y_coordinate'
         }
@@ -49,6 +54,7 @@
     <%= myp_text_field(child_fields, :category_name, "myplaceonline.homepage.category_name", childproperty.category_name) %>
     <%= myp_number_field(child_fields, :category_id, "myplaceonline.homepage.category_id", childproperty.category_id) %>
     <%= myp_select(child_fields, :border_type, "myplaceonline.homepage.border_type", Myp.translate_options(Myplet::BORDER_TYPES), childproperty.border_type) %>
+    <%= myp_hidden_field(child_fields, :x_coordinate, childproperty.x_coordinate) %>
   <% end %>
   <%= f.submit t("myplaceonline.general.save") %>
 <% end %>
