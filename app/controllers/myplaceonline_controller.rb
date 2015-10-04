@@ -60,15 +60,15 @@ class MyplaceonlineController < ApplicationController
       Myp.ensure_encryption_key(session)
     end
     before_show
-    respond_with(@obj)
+    @myplet = params[:myplet] == true
+    if !@myplet
+      respond_with(@obj)
+    else
+      showmyplet
+      render action: "show", layout: "myplet"
+    end
   end
   
-  def showmyplet
-    set_obj
-    @myplet = true
-    render action: "showmyplet", layout: "myplet"
-  end
-
   def new
     if !insecure
       Myp.ensure_encryption_key(session)
@@ -334,5 +334,8 @@ class MyplaceonlineController < ApplicationController
     
     def update_security
       Myp.ensure_encryption_key(session)
+    end
+    
+    def showmyplet
     end
 end

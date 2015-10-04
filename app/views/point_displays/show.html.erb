@@ -1,2 +1,8 @@
-<%= render layout: "shared/model_show" do %>
+<% if !@myplet %>
+  <%= render layout: "shared/model_show" do %>
+  <% end %>
+<% else %>
+  <div class="horizontal_center">
+    <span id="myplaceonline_points_show"><%= t("myplaceonline.general.points") %>: <%= Myp.number_with_delimiter(@totalPoints) %><%= Myp.images_for_points(@totalPoints) %></span>
+  </div>
 <% end %>

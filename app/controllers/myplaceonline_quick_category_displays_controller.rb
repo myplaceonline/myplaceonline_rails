@@ -1,7 +1,6 @@
 class MyplaceonlineQuickCategoryDisplaysController < MyplaceonlineController
   def showmyplet
     @usefulCategoryList = Myp.useful_categories(current_user)
-    super
   end
   
   protected

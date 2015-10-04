@@ -2,7 +2,6 @@ class PointDisplaysController < MyplaceonlineController
   
   def showmyplet
     @totalPoints = current_user.total_points
-    super
   end
   
   protected

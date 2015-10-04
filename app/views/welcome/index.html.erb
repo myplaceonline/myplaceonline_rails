@@ -31,7 +31,7 @@
 <% else %>
 
   <% @myplets.each do |myplet| %>
-    <%= render :html => renderActionInOtherController(Object.const_get(myplet.category_name.camelize + "Controller"), :showmyplet, { id: myplet.category_id }).html_safe %>
+    <%= render :html => renderActionInOtherController(Object.const_get(myplet.category_name.camelize + "Controller"), :show, { id: myplet.category_id, myplet: true }).html_safe %>
   <% end %>
 
 <% end %>

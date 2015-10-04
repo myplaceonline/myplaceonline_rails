@@ -1,4 +1,15 @@
-<%= render layout: "shared/model_show" do %>
+<% if !@myplet %>
+  <%= render layout: "shared/model_show" do %>
+  <% end %>
+<% else %>
+  <% if @due.length > 0 %>
 
-  
+    <ul data-role="listview" data-inset="true">
+      <li data-role="list-divider"><%= t("myplaceonline.welcome.due") %></li>
+      <% @due.each do |due_item| %>
+        <li><a href="<%= due_item.link %>"><%= due_item.display %> <span class="ui-li-count"><%= due_item.short_date %></span></a></li>
+      <% end %>
+    </ul>
+
+  <% end %>
 <% end %>

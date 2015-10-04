@@ -1,6 +1,10 @@
-<%= render layout: "shared/model_show" do %>
-
-  <%= attribute_table_row(t("myplaceonline.notepads.title"), @obj.title) %>
-  <%= attribute_table_row(t("myplaceonline.notepads.notepad_data"), @obj.notepad_data) %>
-  
+<% if !@myplet %>
+  <%= render layout: "shared/model_show" do %>
+    <%= attribute_table_row(t("myplaceonline.notepads.title"), @obj.title) %>
+    <%= attribute_table_row(t("myplaceonline.notepads.notepad_data"), @obj.notepad_data) %>
+  <% end %>
+<% else %>
+  <%= form_for @obj, :url => @url, :remote => controller.may_upload, data: { ajax: !controller.may_upload } do |f| %>
+    <%= render partial: "shared/model_form", locals: { form_name: controller.paths_name + "/form", edit: true, autofocus: true, f: f } %>
+  <% end %>
 <% end %>

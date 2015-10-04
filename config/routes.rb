@@ -20,22 +20,18 @@ Rails.application.routes.draw do
 
   resources :myplaceonline_due_displays
   post 'myplaceonline_due_displays/new'
-  get 'myplaceonline_due_displays/showmyplet'
 
   resources :myplaceonline_quick_category_displays
   post 'myplaceonline_quick_category_displays/new'
-  get 'myplaceonline_quick_category_displays/showmyplet'
 
   resources :point_displays
   post 'point_displays/new'
-  get 'point_displays/showmyplet'
 
   resources :myplaceonline_searches
   post 'myplaceonline_searches/new'
 
   resources :notepads
   post 'notepads/new'
-  get 'notepads/showmyplet'
 
   resources :statuses
   post 'statuses/new'

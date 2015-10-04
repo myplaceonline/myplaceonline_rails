@@ -1,7 +1,6 @@
 class MyplaceonlineDueDisplaysController < MyplaceonlineController
   def showmyplet
     @due = DueItem.all_due(current_user)
-    super
   end
   
   protected

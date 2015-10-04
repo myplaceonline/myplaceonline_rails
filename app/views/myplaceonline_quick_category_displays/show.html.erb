@@ -1,4 +1,16 @@
-<%= render layout: "shared/model_show" do %>
+<% if !@myplet %>
+  <%= render layout: "shared/model_show" do %>
+  <% end %>
+<% else %>
+  <% if @usefulCategoryList.length > 0 %>
 
-  
+    <ul id="myplaceonline_recent_list" data-role="listview" data-inset="true">
+    </ul>
+    <script type="text/javascript">
+    onPageLoad(function() {
+      jqmSetList($("#myplaceonline_recent_list"), <%= raw(@usefulCategoryList.to_json) %>, "<%= t("myplaceonline.welcome.recentlyused") %>");
+    });
+    </script>
+
+  <% end %>
 <% end %>
