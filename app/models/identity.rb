@@ -86,7 +86,7 @@ class Identity < MyplaceonlineModelBase
   has_many :groups, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :phones, :foreign_key => 'owner_id', :dependent => :destroy
   
-  has_many :myplets, :foreign_key => 'owner_id', :dependent => :destroy
+  has_many :myplets, -> { order('y_coordinate') }, :foreign_key => 'owner_id', :dependent => :destroy
   accepts_nested_attributes_for :myplets, allow_destroy: true, reject_if: :all_blank
 
   has_many :identity_phones, :foreign_key => 'identity_id', :dependent => :destroy
