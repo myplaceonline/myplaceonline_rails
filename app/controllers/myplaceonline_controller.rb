@@ -237,6 +237,10 @@ class MyplaceonlineController < ApplicationController
     additional_items_max_items
   end
   
+  def show_created_updated
+    true
+  end
+  
   protected
   
     def obj_params

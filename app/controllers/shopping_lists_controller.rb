@@ -1,15 +1,13 @@
 class ShoppingListsController < MyplaceonlineController
   def show
     @all_items = @obj.all_shopping_list_items
-    render :generate
+    super
   end
   
-  def generate
-    set_obj
-    @all_items = @obj.all_shopping_list_items
-    respond_with(@obj)
+  def show_created_updated
+    false
   end
-
+  
   protected
     def insecure
       true

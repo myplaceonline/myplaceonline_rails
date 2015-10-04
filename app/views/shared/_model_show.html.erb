@@ -1,10 +1,18 @@
-<% content_for :heading do -%><%= controller.display_obj(@obj) %><% end -%>
+<% if !@myplet %>
+  <% content_for :heading do -%><%= controller.display_obj(@obj) %><% end -%>
+<% end %>
+
 <h1><%= controller.display_obj(@obj) %></h1>
-<%= flashes! %>
+
+<% if !@myplet %>
+  <%= flashes! %>
+<% end %>
 
 <% yielded = yield %>
 
-<%= content_for(:beforetable) %>
+<% if !@myplet %>
+  <%= content_for(:beforetable) %>
+<% end %>
 
 <table data-role="table" data-mode="reflow" class="ui-responsive tablestripes normalwidth firstcolumnbold noheadertable">
   <thead>
@@ -17,16 +25,20 @@
   
     <%= yielded %>
 
-    <%= attribute_table_row(t("myplaceonline.general.created"), Myp.display_time(@obj.created_at, current_user)) %>
-    <%= attribute_table_row(t("myplaceonline.general.last_updated"), Myp.display_time(@obj.updated_at, current_user)) %>
+    <% if controller.show_created_updated %>
+      <%= attribute_table_row(t("myplaceonline.general.created"), Myp.display_time(@obj.created_at, current_user)) %>
+      <%= attribute_table_row(t("myplaceonline.general.last_updated"), Myp.display_time(@obj.updated_at, current_user)) %>
+    <% end %>
 
   </tbody>
 </table>
 
-<%= content_for(:aftertable) %>
+<% if !@myplet %>
+  <%= content_for(:aftertable) %>
 
-<script type="text/javascript">
-ensureClipboard($(".clipboardable"));
-</script>
+  <script type="text/javascript">
+  ensureClipboard($(".clipboardable"));
+  </script>
 
-<%= render partial: "shared/model_show_footer" %>
+  <%= render partial: "shared/model_show_footer" %>
+<% end %>

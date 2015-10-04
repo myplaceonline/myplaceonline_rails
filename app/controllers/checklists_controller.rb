@@ -1,13 +1,11 @@
 class ChecklistsController < MyplaceonlineController
   def show
     @all_items = find_items
-    render :generate
+    super
   end
-  
-  def generate
-    set_obj
-    @all_items = find_items
-    respond_with(@obj)
+
+  def show_created_updated
+    false
   end
 
   protected

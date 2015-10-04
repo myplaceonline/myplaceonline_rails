@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   get 'tools/index'
   get 'tools', :to => 'tools#index'
 
-  match 'shopping_lists/:id/generate', :to => 'shopping_lists#generate', via: [:get], as: "shopping_list_generate"
   resources :shopping_lists
   post 'shopping_lists/new'
 
@@ -137,7 +136,6 @@ Rails.application.routes.draw do
   resources :medical_conditions
   post 'medical_conditions/new'
 
-  match 'checklists/:id/generate', :to => 'checklists#generate', via: [:get], as: "checklist_generate"
   resources :checklists
   post 'checklists/new'
 
