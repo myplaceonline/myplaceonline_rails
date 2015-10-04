@@ -58,6 +58,8 @@ class User < MyplaceonlineModelBase
         
         # Create default myplets
         Myplet.default_myplets(@identity)
+        
+        DueItem.recalculate_due(user)
       end
     end
   end

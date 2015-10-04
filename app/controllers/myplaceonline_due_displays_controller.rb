@@ -1,6 +1,9 @@
 class MyplaceonlineDueDisplaysController < MyplaceonlineController
   def showmyplet
     @due = DueItem.all_due(current_user)
+    if @due.length == 0
+      @nocontent = true
+    end
   end
   
   protected

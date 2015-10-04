@@ -1,4 +1,4 @@
-<% if @myplet.border_type == 1 %>
+<% if @myplet.border_type == 1 && !@nocontent %>
   <ul data-role="listview" data-inset="true" class="myplet_border">
     <li data-role="list-divider" class="myplet_border_title"><%= evaluate_if_probably_i18n(@myplet.title) %></li>
     <li>
@@ -6,7 +6,7 @@
 
 <%= yield %>
 
-<% if @myplet.border_type == 1 %>
+<% if @myplet.border_type == 1 && !@nocontent %>
     </li>
   </ul>
 <% end %>  

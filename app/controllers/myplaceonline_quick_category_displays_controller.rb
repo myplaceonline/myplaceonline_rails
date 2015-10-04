@@ -1,6 +1,9 @@
 class MyplaceonlineQuickCategoryDisplaysController < MyplaceonlineController
   def showmyplet
     @usefulCategoryList = Myp.useful_categories(current_user)
+    if @usefulCategoryList.length == 0
+      @nocontent = true
+    end
   end
   
   protected
