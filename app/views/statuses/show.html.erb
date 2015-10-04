@@ -3,5 +3,8 @@
   <%= attribute_table_row_datetime(t("myplaceonline.statuses.status_time"), @obj.status_time) %>
   <%= attribute_table_row_markdown(t("myplaceonline.statuses.three_good_things"), @obj.three_good_things) %>
   <%= attribute_table_row_select(t("myplaceonline.statuses.feeling"), @obj.feeling, Status::FEELINGS) %>
+  <% content_for :aftertable do %>
+    <p><%= link_to t("myplaceonline.navigation.gohome"), root_path, :class => 'ui-btn ui-btn-icon-left ui-icon-home ui-btn-inline' %></p>
+  <% end %>
   
 <% end %>

@@ -1622,3 +1622,5 @@ en:
     points:
       gotsome: "You earned %{amount}!"
       point: "point"
+    navigation:
+      gohome: "Go Home"
