@@ -1,0 +1,8 @@
+<% content_for :heading do -%><%= t("myplaceonline.users.homepage") %><% end -%>
+<h1><%= t("myplaceonline.users.homepage") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag do %>
+  <div><%= submit_tag t("myplaceonline.general.save") %></div>
+<% end %>

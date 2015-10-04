@@ -414,6 +414,8 @@ en:
       type_admin: "Administrator"
       agree_terms: "Do you agree to the %{terms}?"
       must_agree_terms: "You must agree to the %{terms} to sign up."
+      homepage: "Homepage"
+      homepage_saved: "Homepage settings saved"
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"

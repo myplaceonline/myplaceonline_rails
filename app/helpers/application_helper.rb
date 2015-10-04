@@ -382,6 +382,10 @@ module ApplicationHelper
     result
   end
   
+  def myp_hidden_field(form, name, value = nil)
+    form.hidden_field(name, value: value)
+  end
+                       
   def myp_text_field(form, name, placeholder, value, autofocus = false, input_classes = nil, autocomplete = true)
     if is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)

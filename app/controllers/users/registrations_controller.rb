@@ -216,6 +216,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
   
+  def homepage
+    Myp.ensure_encryption_key(session)
+    if request.post?
+      redirect_to edit_user_registration_path,
+        :flash => { :notice => I18n.t("myplaceonline.users.homepage_saved") }
+    else
+      render :homepage
+    end
+  end
+  
   def clipboard
     Myp.ensure_encryption_key(session)
     @clipboard_integration = current_user.clipboard_integration

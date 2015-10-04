@@ -239,7 +239,7 @@ function form_add_item(link, namePrefix, deletePlaceholder, items, singletonMess
         has_position = true;
       }
       if (!myp.allowFocusPlaceholder) {
-        if (inputType != "file") {
+        if (inputType != "file" && inputType != "hidden") {
           inputType = "text";
         }
       }
