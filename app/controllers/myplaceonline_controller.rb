@@ -52,7 +52,13 @@ class MyplaceonlineController < ApplicationController
       @query_params_part_all = "?" + @query_params_part + "&perpage=0"
     end
     
-    respond_with(@objs)
+    @myplet = params[:myplet] == true
+    if !@myplet
+      respond_with(@objs)
+    else
+      indexmyplet
+      render action: "index", layout: "myplet"
+    end
   end
 
   def show
@@ -338,6 +344,9 @@ class MyplaceonlineController < ApplicationController
     
     def update_security
       Myp.ensure_encryption_key(session)
+    end
+    
+    def indexmyplet
     end
     
     def showmyplet

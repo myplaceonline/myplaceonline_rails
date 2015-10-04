@@ -1,5 +1,9 @@
-<% content_for :heading do -%><%= t("myplaceonline.category." + controller.category_name) %><% end -%>
-<%= flashes! %>
+<% if !@myplet %>
+  <% content_for :heading do -%><%= t("myplaceonline.category." + controller.category_name) %><% end -%>
+  <%= flashes! %>
+<% else %>
+  <h3><%= t("myplaceonline.category." + controller.category_name) %></h3>
+<% end %>
 
 <%
 if !controller.has_items
@@ -99,21 +103,25 @@ onPageLoad(function() {
   hookListviewSearch($(".searchable"), "/<%= controller.paths_name %>.json<%= raw(@query_params_part_all) %>");
   var input = $(".searchable_container input");
   hookListviewEnter(input, ".searchable");
+  <% if !@myplet %>
   maybeFocus(input);
+  <% end %>
 });
 </script>
 
 <%= yield %>
 
-<% content_for :footer do -%>
-  <% if controller.show_index_footer %>
-    <div data-role="footer" data-position="fixed" data-tap-toggle="false">
-        <div data-role="navbar">
-            <ul>
-              <li><%= link_to t("myplaceonline.general.add") + " " + t("myplaceonline.category." + controller.category_name).singularize, controller.new_path, "data-icon" => "plus" %></li>
-              <%= content_for(:footerlinks) %>
-            </ul>
-        </div>
-    </div>
-  <% end %>
-<% end -%>
+<% if !@myplet %>
+  <% content_for :footer do -%>
+    <% if controller.show_index_footer %>
+      <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+          <div data-role="navbar">
+              <ul>
+                <li><%= link_to t("myplaceonline.general.add") + " " + t("myplaceonline.category." + controller.category_name).singularize, controller.new_path, "data-icon" => "plus" %></li>
+                <%= content_for(:footerlinks) %>
+              </ul>
+          </div>
+      </div>
+    <% end %>
+  <% end -%>
+<% end %>
