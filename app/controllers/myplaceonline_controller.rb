@@ -32,11 +32,10 @@ class MyplaceonlineController < ApplicationController
 
     @objs = cached_all.offset(@offset).limit(@perpage).order(sorts)
     
-    # If there are more items than the perpage count and we're on the first page
-    # (or perpage count is 0 in which case we're showing all items), and
-    # `additional_items?` returns true, then we'll add a Top X section
-    
-    if additional_items? && @offset == 0 && ((@perpage > 0 && @count > @perpage) || @perpage <= 0)
+    # If the controller wants to show top items (`additional_items?` returns
+    # true), then the only other thing we'll check is if there's more than
+    # a few items
+    if additional_items? && @count > 1
       @additional_items = additional_items
     end
 
