@@ -45,6 +45,10 @@ class DueItem < MyplaceonlineIdentityRecord
     16.hours.ago
   end
   
+  def self.trash_pickup_threshold
+    2
+  end
+  
   def self.all_due(user)
     DueItem.where(owner: user.primary_identity).order(:due_date)
   end
@@ -59,6 +63,7 @@ class DueItem < MyplaceonlineIdentityRecord
       due_dental_cleanings(user)
       due_physicals(user)
       due_status(user)
+      due_apartments(user)
     end
   end
 
@@ -333,6 +338,30 @@ class DueItem < MyplaceonlineIdentityRecord
         owner: user.primary_identity,
         model_name: Status.name
       ).save!
+    end
+  end
+  
+  def self.due_apartments(user)
+    DueItem.destroy_all(owner: user.primary_identity, model_name: Apartment.name)
+    
+    Apartment.where("owner_id = ?", user.primary_identity).each do |apartment|
+      apartment.apartment_trash_pickups.each do |trash_pickup|
+        next_pickup = trash_pickup.next_pickup
+        if next_pickup.day - Date.today.day <= trash_pickup_threshold
+          DueItem.new(
+            display: I18n.t(
+              "myplaceonline.apartments.trash_pickup_reminder",
+              trash_type: Myp.get_select_name(trash_pickup.trash_type, ApartmentTrashPickup::TRASH_TYPES),
+              delta: Myp.time_difference_in_general_human(TimeDifference.between(Date.today, next_pickup).in_general)
+            ),
+            link: "/apartments/" + apartment.id.to_s,
+            due_date: next_pickup,
+            owner: user.primary_identity,
+            model_name: Apartment.name,
+            model_id: apartment.id
+          ).save!
+        end
+      end
     end
   end
 end

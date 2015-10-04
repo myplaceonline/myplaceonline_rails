@@ -552,6 +552,7 @@ en:
       period_type: "Period Type"
       period: "Period"
       next_pickup: "Next Pickup"
+      trash_pickup_reminder: "%{trash_type} Pickup in %{delta}"
     jokes:
       name: "Joke Name"
       joke: "Joke"

@@ -49,4 +49,7 @@ class ApartmentTrashPickup < MyplaceonlineIdentityRecord
     end
     result
   end
+
+  after_save { |record| DueItem.due_apartments(User.current_user) }
+  after_destroy { |record| DueItem.due_apartments(User.current_user) }
 end
