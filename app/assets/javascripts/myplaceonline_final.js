@@ -560,3 +560,12 @@ function requestGPS(target, requesting_gps, latitude, longitude, geolocation_una
   }
   return false;
 }
+
+function playSound(audioFile) {
+  try {
+    var snd = new Audio(audioFile);
+    snd.play();
+  } catch (soundError) {
+    consoleLog("Could not play sound: " + soundError);
+  }
+}
