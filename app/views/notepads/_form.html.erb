@@ -1,58 +1,47 @@
-<% if @myplet %>
-  <ul data-role="listview" data-inset="true">
-    <li data-role="list-divider" class="notepad_heading"><%= t("myplaceonline.welcome.notepad") %></li>
-    <li>
+<% if !@myplet %>
+  <%= myp_text_field(f, :title, "myplaceonline.notepads.title", obj.title, autofocus) %>
 <% end %>
-
-      <% if !@myplet %>
-        <%= myp_text_field(f, :title, "myplaceonline.notepads.title", obj.title, autofocus) %>
-      <% end %>
-      <%
-      rte_hidden_field = f.hidden_field(:notepad_data)
-      rte_hidden_field_id = f.object_name.gsub("\[", "_").gsub("\]", "") + "_notepad_data" + SecureRandom.hex(10)
-      rte_wrapper_id = f.object_name.gsub("\[", "_").gsub("\]", "") + "_notepad_data_wrapper" + SecureRandom.hex(10)
-      rte_wrapper_toolbar_id = f.object_name.gsub("\[", "_").gsub("\]", "") + "_notepad_data_toolbar_wrapper" + SecureRandom.hex(10)
-      %>
-      <div class="quill-wrapper">
-        <div id="<%= rte_wrapper_toolbar_id %>" class="quill-toolbar">
-          <span class="ql-format-group">
-            <span title="Bold" class="ql-format-button ql-bold"></span>
-            <span class="ql-format-separator"></span>
-            <span title="Italic" class="ql-format-button ql-italic"></span>
-            <span class="ql-format-separator"></span>
-            <span title="Underline" class="ql-format-button ql-underline"></span>
-            <span class="ql-format-separator"></span>
-            <span title="Strikethrough" class="ql-format-button ql-strike"></span>
-            <span class="ql-format-separator"></span>
-            <span title="List" class="ql-format-button ql-list"></span>
-            <span class="ql-format-separator"></span>
-            <span title="Bullet" class="ql-format-button ql-bullet"></span>
-            <span class="ql-format-separator"></span>
-            <span title="Link" class="ql-format-button ql-link"></span>
-          </span>
-        </div>
-        <div id="<%= rte_wrapper_id %>" class="quill-editor"><%= raw(obj.notepad_data) %></div>
-        <%= rte_hidden_field %>
-      </div>
-      <script>
-      onPageLoad(function() {
-        new Quill('#<%= rte_wrapper_id %>', {
-          modules: {
-            'toolbar': { container: '#<%= rte_wrapper_toolbar_id %>' },
-            'link-tooltip': true
-          },
-          theme: 'snow'
-        }).on('text-change', function(delta, source) {
-          <% if !@myplet %>
-            $("#<%= rte_hidden_field_id %>").attr("value", this.getHTML());
-          <% else %>
-            notepad_changed('/notepads/<%= obj.id %>', '<%= t("myplaceonline.welcome.notepad") %>', '<%= t("myplaceonline.general.pending_save") %>', '<%= t("myplaceonline.general.saving") %>', '<%= t("myplaceonline.general.saved") %>', this.getHTML());
-          <% end %>
-        });
-      });
-      </script>
-
-<% if @myplet %>
-    </li>
-  </ul>
-<% end %>
+<%
+rte_hidden_field = f.hidden_field(:notepad_data)
+rte_hidden_field_id = f.object_name.gsub("\[", "_").gsub("\]", "") + "_notepad_data" + SecureRandom.hex(10)
+rte_wrapper_id = f.object_name.gsub("\[", "_").gsub("\]", "") + "_notepad_data_wrapper" + SecureRandom.hex(10)
+rte_wrapper_toolbar_id = f.object_name.gsub("\[", "_").gsub("\]", "") + "_notepad_data_toolbar_wrapper" + SecureRandom.hex(10)
+%>
+<div class="quill-wrapper">
+  <div id="<%= rte_wrapper_toolbar_id %>" class="quill-toolbar">
+    <span class="ql-format-group">
+      <span title="Bold" class="ql-format-button ql-bold"></span>
+      <span class="ql-format-separator"></span>
+      <span title="Italic" class="ql-format-button ql-italic"></span>
+      <span class="ql-format-separator"></span>
+      <span title="Underline" class="ql-format-button ql-underline"></span>
+      <span class="ql-format-separator"></span>
+      <span title="Strikethrough" class="ql-format-button ql-strike"></span>
+      <span class="ql-format-separator"></span>
+      <span title="List" class="ql-format-button ql-list"></span>
+      <span class="ql-format-separator"></span>
+      <span title="Bullet" class="ql-format-button ql-bullet"></span>
+      <span class="ql-format-separator"></span>
+      <span title="Link" class="ql-format-button ql-link"></span>
+    </span>
+  </div>
+  <div id="<%= rte_wrapper_id %>" class="quill-editor"><%= raw(obj.notepad_data) %></div>
+  <%= rte_hidden_field %>
+</div>
+<script>
+onPageLoad(function() {
+  new Quill('#<%= rte_wrapper_id %>', {
+    modules: {
+      'toolbar': { container: '#<%= rte_wrapper_toolbar_id %>' },
+      'link-tooltip': true
+    },
+    theme: 'snow'
+  }).on('text-change', function(delta, source) {
+    <% if !@myplet %>
+      $("#<%= rte_hidden_field_id %>").attr("value", this.getHTML());
+    <% else %>
+      notepad_changed('#<%= rte_wrapper_toolbar_id %>', '/notepads/<%= obj.id %>', '<%= t("myplaceonline.welcome.notepad") %>', '<%= t("myplaceonline.general.pending_save") %>', '<%= t("myplaceonline.general.saving") %>', '<%= t("myplaceonline.general.saved") %>', this.getHTML());
+    <% end %>
+  });
+});
+</script>

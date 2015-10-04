@@ -33,6 +33,12 @@
           placeholder: t("myplaceonline.homepage.category_id")
         },
         {
+          type: 'select',
+          name: 'border_type',
+          options: Myplet::BORDER_TYPES.map{|x,y| [I18n.t(x),y]}.as_json,
+          placeholder: t("myplaceonline.homepage.border_type")
+        },
+        {
           type: 'position',
           name: 'y_coordinate'
         }
@@ -42,6 +48,7 @@
     <%= myp_text_field(child_fields, :title, "myplaceonline.homepage.title", evaluate_if_probably_i18n(childproperty.title)) %>
     <%= myp_text_field(child_fields, :category_name, "myplaceonline.homepage.category_name", childproperty.category_name) %>
     <%= myp_number_field(child_fields, :category_id, "myplaceonline.homepage.category_id", childproperty.category_id) %>
+    <%= myp_select(child_fields, :border_type, "myplaceonline.homepage.border_type", Myp.translate_options(Myplet::BORDER_TYPES), childproperty.border_type) %>
   <% end %>
   <%= f.submit t("myplaceonline.general.save") %>
 <% end %>

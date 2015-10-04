@@ -387,7 +387,7 @@ function href_extract_id(href) {
 function queueRequest(request) {
   myp.queuedRequests.push(request);
   if (!myp.queuedRequestThread) {
-    myp.queuedRequestThread = setTimeout(processQueuedRequest, 500);
+    myp.queuedRequestThread = setTimeout(processQueuedRequest, 1000);
   }
 }
 
@@ -422,14 +422,14 @@ function processQueuedRequest() {
   myp.queuedRequestThread = null;
 }
 
-function notepad_changed(url, notepadTitle, pendingSave, saving, saved, new_data) {
+function notepad_changed(rte_wrapper_id, url, notepadTitle, pendingSave, saving, saved, new_data) {
   queueRequest({
     url: url,
     method: "PATCH",
     dataType: "script",
     timestamp: new Date().getTime(),
     presend: function() {
-      $(".notepad_heading").html(notepadTitle + " (" + saving + ")");
+      $(rte_wrapper_id).parents(".myplet_border").first().find(".myplet_border_title").first().html(notepadTitle + " (" + saving + ")");
     },
     data: {
       suppress_navigate: true,
@@ -438,16 +438,16 @@ function notepad_changed(url, notepadTitle, pendingSave, saving, saved, new_data
       }
     },
     done: function(data, textStatus, jqXHR) {
-      $(".notepad_heading").html(notepadTitle + " (" + saved + ")");
+      $(rte_wrapper_id).parents(".myplet_border").first().find(".myplet_border_title").first().html(notepadTitle + " (" + saved + ")");
       myp.notepadResetTimeout = window.setTimeout(function() {
         myp.notepadResetTimeout = null;
         if (!myp.notepadTimeout) {
-          $(".notepad_heading").html(notepadTitle);
+          $(rte_wrapper_id).parents(".myplet_border").first().find(".myplet_border_title").first().html(notepadTitle);
         }
       }, 1500);
     },
     fail: function(jqXHR, textStatus, errorThrown) {
-      $(".notepad_heading").html(notepadTitle);
+      $(rte_wrapper_id).parents(".myplet_border").first().find(".myplet_border_title").first().html(notepadTitle);
       createErrorNotification("Could not execute " + url + ": " + textStatus);
     }
   });

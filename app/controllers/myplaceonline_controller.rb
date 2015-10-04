@@ -52,7 +52,7 @@ class MyplaceonlineController < ApplicationController
       @query_params_part_all = "?" + @query_params_part + "&perpage=0"
     end
     
-    @myplet = params[:myplet] == true
+    @myplet = params[:myplet]
     if !@myplet
       respond_with(@objs)
     else
@@ -66,7 +66,7 @@ class MyplaceonlineController < ApplicationController
       Myp.ensure_encryption_key(session)
     end
     before_show
-    @myplet = params[:myplet] == true
+    @myplet = params[:myplet]
     if !@myplet
       respond_with(@obj)
     else

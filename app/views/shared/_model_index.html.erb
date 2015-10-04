@@ -1,8 +1,6 @@
 <% if !@myplet %>
   <% content_for :heading do -%><%= t("myplaceonline.category." + controller.category_name) %><% end -%>
   <%= flashes! %>
-<% else %>
-  <h3><%= t("myplaceonline.category." + controller.category_name) %></h3>
 <% end %>
 
 <%

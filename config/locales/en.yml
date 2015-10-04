@@ -1613,3 +1613,7 @@ en:
       title: "Title"
       category_name: "Category Name"
       category_id: "Category ID"
+      border_type: "Border Type"
+    border_types:
+      none: "None"
+      title: "Title Border"

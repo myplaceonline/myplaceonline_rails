@@ -1,5 +1,10 @@
 # x_coordinate:integer y_coordinate:integer title:string category_name:string category_id:integer border_type:integer collapsed:boolean
 class Myplet < MyplaceonlineIdentityRecord
+  BORDER_TYPES = [
+    ["myplaceonline.border_types.none", 0],
+    ["myplaceonline.border_types.title", 1]
+  ]
+
   def display
     nil
   end

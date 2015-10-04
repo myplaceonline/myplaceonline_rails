@@ -229,7 +229,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
             :title,
             :category_name,
             :category_id,
-            :y_coordinate
+            :y_coordinate,
+            :border_type
           ]
         )
       )
