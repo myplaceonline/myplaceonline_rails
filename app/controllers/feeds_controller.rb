@@ -7,4 +7,8 @@ class FeedsController < MyplaceonlineController
     def obj_params
       params.require(:feed).permit(:name, :url)
     end
+
+    def insecure
+      true
+    end
 end
