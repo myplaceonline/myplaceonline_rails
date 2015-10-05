@@ -418,7 +418,7 @@ en:
       homepage: "Homepage"
       homepage_saved: "Homepage settings saved"
       sounds: "Sounds"
-      disable_sounds: "Disable Sounds"
+      enable_sounds: "Enable Sounds"
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"

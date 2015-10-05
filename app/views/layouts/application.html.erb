@@ -65,7 +65,7 @@
               //  }
               //});
               <%= raw("createSuccessNotification('" + t("myplaceonline.points.gotsome", amount: ActionController::Base.helpers.pluralize(session[:points_flash], t("myplaceonline.points.point"))) + "');") %>
-              <% if !current_user.disable_sounds %>
+              <% if current_user.enable_sounds %>
                 <%= raw("playSound('" + root_path + "bubble_gum_pop-Natalie_Wendt-772662403.wav');") %>
               <% end %>
             });
