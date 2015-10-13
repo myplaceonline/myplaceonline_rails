@@ -896,4 +896,12 @@ module Myp
   def self.instance_to_category_human_readable(obj)
     Myp.instance_to_category(obj).human_title
   end
+
+  def self.is_probably_i18n(str)
+    !str.nil? && str.include?("myplaceonline.")
+  end
+  
+  def self.evaluate_if_probably_i18n(str)
+    self.is_probably_i18n(str) ? I18n.t(str) : str
+  end
 end

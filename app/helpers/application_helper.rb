@@ -392,7 +392,7 @@ module ApplicationHelper
   end
                        
   def myp_text_field(form, name, placeholder, value, autofocus = false, input_classes = nil, autocomplete = true)
-    if is_probably_i18n(placeholder)
+    if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
     if autocomplete
@@ -408,7 +408,7 @@ module ApplicationHelper
   end
   
   def myp_number_field(form, name, placeholder, value, autofocus = false, input_classes = nil, step = nil)
-    if is_probably_i18n(placeholder)
+    if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
     content_tag(
@@ -427,7 +427,7 @@ module ApplicationHelper
   end
   
   def myp_text_field_tag(name, placeholder, value, autofocus = false, input_classes = nil)
-    if is_probably_i18n(placeholder)
+    if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
     content_tag(
@@ -447,7 +447,7 @@ module ApplicationHelper
     # Options should match app/assets/javascripts/myplaceonline_final.js form_add_item
     # https://github.com/jtsage/jquery-mobile-datebox/issues/363
     # https://github.com/jtsage/jquery-mobile-datebox/issues/295
-    if is_probably_i18n(placeholder)
+    if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
     
@@ -507,7 +507,7 @@ module ApplicationHelper
   end
 
   def myp_file_field(form, name, placeholder, value, autofocus = false, input_classes = nil)
-    if is_probably_i18n(placeholder)
+    if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
     if value.size.nil?
@@ -520,18 +520,10 @@ module ApplicationHelper
     ).html_safe
   end
   
-  def is_probably_i18n(str)
-    !str.nil? && str.include?("myplaceonline.")
-  end
-  
-  def evaluate_if_probably_i18n(str)
-    is_probably_i18n(str) ? t(str) : str
-  end
-
   def myp_text_area(form, name, placeholder, value, autofocus = false, input_classes = nil)
     # No need to set 'rows' or height because of autogrow:
     # https://github.com/jquery/jquery-mobile/blob/master/js/widgets/forms/autogrow.js
-    if is_probably_i18n(placeholder)
+    if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
     content_tag(
@@ -546,7 +538,7 @@ module ApplicationHelper
   end
 
   def myp_check_box(form, name, placeholder, autofocus = false, input_classes = nil)
-    if is_probably_i18n(placeholder)
+    if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
     content_tag(
@@ -557,7 +549,7 @@ module ApplicationHelper
   end
   
   def myp_check_box_tag(name, placeholder, checked, autofocus = false, input_classes = nil, onclick = "")
-    if is_probably_i18n(placeholder)
+    if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
     content_tag(
@@ -572,7 +564,7 @@ module ApplicationHelper
   end
 
   def myp_region_field(form, name, placeholder, value, autofocus = false, input_classes = nil)
-    if is_probably_i18n(placeholder)
+    if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
     if input_classes.nil?
@@ -592,7 +584,7 @@ module ApplicationHelper
   end
   
   def myp_subregion_field(form, name, placeholder, regionvalue, subregionvalue)
-    if is_probably_i18n(placeholder)
+    if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
     if regionvalue.blank?
@@ -602,7 +594,7 @@ module ApplicationHelper
   end
 
   def myp_subregion_select_field(form, name, placeholder, region, subregionvalue, autofocus = false, input_classes = nil)
-    if is_probably_i18n(placeholder)
+    if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
     if region.blank?
@@ -619,7 +611,7 @@ module ApplicationHelper
   
   # http://api.rubyonrails.org/classes/ActionView/Helpers/FormOptionsHelper.html
   def myp_select(form, name, placeholder, selectoptions, selectvalue, autofocus = false, input_classes = nil)
-    if is_probably_i18n(placeholder)
+    if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
     content_tag(
@@ -630,7 +622,7 @@ module ApplicationHelper
   end
   
   def myp_select_tag(name, placeholder, selectoptions, selectvalue, autofocus = false, input_classes = nil, inline = false, onchange = nil)
-    if is_probably_i18n(placeholder)
+    if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
     options = Hash.new

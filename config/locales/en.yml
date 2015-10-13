@@ -120,6 +120,7 @@ en:
       tools: "Tools"
       groups: "Groups"
       phones: "Phones"
+      myplets: "Myplets"
     general:
       email: "E-mail"
       password: "Password"
@@ -1411,6 +1412,11 @@ en:
       title: "Title"
       notepad_data: "Notepad"
     myplets:
+      settings: "Settings"
+      title: "Title"
+      category_name: "Category Name"
+      category_id: "Category ID"
+      border_type: "Border Type"
       titles:
         point_display: "Points"
         myplaceonline_search: "Search"
@@ -1615,10 +1621,6 @@ en:
       add_myplet: "Add Myplet"
       delete_myplet: "Delete Myplet"
       myplet: "Myplet"
-      title: "Title"
-      category_name: "Category Name"
-      category_id: "Category ID"
-      border_type: "Border Type"
     border_types:
       none: "None"
       title: "Title Border"

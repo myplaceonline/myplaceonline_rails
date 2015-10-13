@@ -19,24 +19,24 @@
         {
           type: 'text',
           name: 'title',
-          placeholder: t("myplaceonline.homepage.title"),
+          placeholder: t("myplaceonline.myplets.title"),
           autofocus: true
         },
         {
           type: 'text',
           name: 'category_name',
-          placeholder: t("myplaceonline.homepage.category_name")
+          placeholder: t("myplaceonline.myplets.category_name")
         },
         {
           type: 'number',
           name: 'category_id',
-          placeholder: t("myplaceonline.homepage.category_id")
+          placeholder: t("myplaceonline.myplets.category_id")
         },
         {
           type: 'select',
           name: 'border_type',
           options: Myplet::BORDER_TYPES.map{|x,y| [I18n.t(x),y]}.as_json,
-          placeholder: t("myplaceonline.homepage.border_type")
+          placeholder: t("myplaceonline.myplets.border_type")
         },
         {
           type: 'hidden',
@@ -50,10 +50,10 @@
       ]
     }) do |child_fields, childproperty|
   %>
-    <%= myp_text_field(child_fields, :title, "myplaceonline.homepage.title", evaluate_if_probably_i18n(childproperty.title)) %>
-    <%= myp_text_field(child_fields, :category_name, "myplaceonline.homepage.category_name", childproperty.category_name) %>
-    <%= myp_number_field(child_fields, :category_id, "myplaceonline.homepage.category_id", childproperty.category_id) %>
-    <%= myp_select(child_fields, :border_type, "myplaceonline.homepage.border_type", Myp.translate_options(Myplet::BORDER_TYPES), childproperty.border_type) %>
+    <%= myp_text_field(child_fields, :title, "myplaceonline.myplets.title", Myp.evaluate_if_probably_i18n(childproperty.title)) %>
+    <%= myp_text_field(child_fields, :category_name, "myplaceonline.myplets.category_name", childproperty.category_name) %>
+    <%= myp_number_field(child_fields, :category_id, "myplaceonline.myplets.category_id", childproperty.category_id) %>
+    <%= myp_select(child_fields, :border_type, "myplaceonline.myplets.border_type", Myp.translate_options(Myplet::BORDER_TYPES), childproperty.border_type) %>
     <%= myp_hidden_field(child_fields, :x_coordinate, childproperty.x_coordinate) %>
   <% end %>
   <%= f.submit t("myplaceonline.general.save") %>

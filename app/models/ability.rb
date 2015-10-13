@@ -122,6 +122,7 @@ class Ability
     can :manage, ShoppingListItem, :owner => identity
     can :manage, Group, :owner => identity
     can :manage, Phone, :owner => identity
+    can :manage, Myplet, :owner => identity
     
     if user.admin?
       can :manage, User

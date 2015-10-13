@@ -1,0 +1,8 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.myplets.title"), Myp.evaluate_if_probably_i18n(@obj.title)) %>
+  <%= attribute_table_row(t("myplaceonline.myplets.category_name"), @obj.category_name) %>
+  <%= attribute_table_row(t("myplaceonline.myplets.category_id"), @obj.category_id) %>
+  <%= attribute_table_row_select(t("myplaceonline.myplets.border_type"), @obj.border_type, Myplet::BORDER_TYPES) %>
+  
+<% end %>

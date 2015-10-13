@@ -321,10 +321,12 @@ class MyplaceonlineController < ApplicationController
     
     def before_show
       # Use update_column because we don't want updated_at to be updated
-      if @obj.visit_count?
-        @obj.update_column(:visit_count, @obj.visit_count + 1)
-      else
-        @obj.update_column(:visit_count, 1)
+      if @obj.respond_to?("visit_count")
+        if @obj.visit_count?
+          @obj.update_column(:visit_count, @obj.visit_count + 1)
+        else
+          @obj.update_column(:visit_count, 1)
+        end
       end
     end
     

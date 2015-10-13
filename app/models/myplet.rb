@@ -6,7 +6,7 @@ class Myplet < MyplaceonlineIdentityRecord
   ]
 
   def display
-    nil
+    Myp.evaluate_if_probably_i18n(title)
   end
   
   validate do
