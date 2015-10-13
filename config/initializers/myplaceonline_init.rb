@@ -13,7 +13,7 @@ if Myp.is_web_server? || Rails.env.test?
         :expire_after => 30.minutes
   end
 
-  if Myp.database_exists?
+  if Myp.database_exists? && !Rails.env.test?
     DueItem.recalculate_all_users_due
     puts "Recalculated due items"
   end

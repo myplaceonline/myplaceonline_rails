@@ -651,7 +651,7 @@ ActiveRecord::Schema.define(version: 20151005001910) do
   add_index "due_items", ["owner_id"], name: "index_due_items_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.binary   "val"
+    t.string   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -1360,6 +1360,7 @@ ActiveRecord::Schema.define(version: 20151005001910) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "visit_count"
   end
 
   add_index "myplets", ["owner_id"], name: "index_myplets_on_owner_id", using: :btree
