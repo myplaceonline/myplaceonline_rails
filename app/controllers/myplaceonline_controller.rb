@@ -13,7 +13,7 @@ class MyplaceonlineController < ApplicationController
       Myp.ensure_encryption_key(session)
     end
     
-    if has_category
+    if has_category && params[:myplet].nil?
       Myp.visit(current_user, category_name)
     end
     
