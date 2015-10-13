@@ -451,4 +451,8 @@ class DueItem < MyplaceonlineIdentityRecord
       end
     end
   end
+  
+  # Reminder: When adding a new type of due item processing, consider
+  # if the model should have after_save/after_destroy processing to 
+  # recalculate due items
 end
