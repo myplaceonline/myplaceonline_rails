@@ -1,4 +1,4 @@
-<% content_for :heading do -%><%= t("myplaceonline.category." + controller.category_name) %><% end -%>
+<% content_for :heading do -%><%= controller.display_obj(@obj) %><% end -%>
 <h1><%= controller.display_obj(@obj) %></h1>
 <%= flashes! %>
 
