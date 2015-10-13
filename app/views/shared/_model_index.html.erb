@@ -6,7 +6,11 @@
 <%
 if !controller.has_items
 %>
-<p><%= t("myplaceonline.general.count_no") + " " + t("myplaceonline.category." + controller.category_name) %>. <%= t("myplaceonline.general.create_instructions") %></p>
+  <p><%= t("myplaceonline.general.count_no") + " " + t("myplaceonline.category." + controller.category_name) %>.
+    <% if controller.show_index_footer && !@myplet %>
+      <%= t("myplaceonline.general.create_instructions") %>
+    <% end %>
+  </p>
 <%
 else
 %>
