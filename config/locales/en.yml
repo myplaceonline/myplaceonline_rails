@@ -1069,6 +1069,9 @@ en:
       date_period: "Period Type"
       payment_amount: "Periodic Payment"
       monthly_total: "Monthly Total"
+      reminder_today: "Periodic Payment %{name} Due Today"
+      reminder_before: "Periodic Payment %{name} Due in %{delta}"
+      reminder_after: "Periodic Payment %{name} Past Due by %{delta}"
     jobs:
       job_title: "Job Title"
       started: "Started"

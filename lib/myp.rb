@@ -57,7 +57,8 @@ module Myp
     ["myplaceonline.temperatures.fahrenheit", 0],
     ["myplaceonline.temperatures.celcius", 1]
   ]
-  
+
+  # DueItem.due_periodic_payments  
   PERIODS = [
     ["myplaceonline.periods.monthly", 0],
     ["myplaceonline.periods.yearly", 1],

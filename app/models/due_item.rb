@@ -49,6 +49,14 @@ class DueItem < MyplaceonlineIdentityRecord
     2
   end
   
+  def self.periodic_payment_threshold_after
+    2
+  end
+  
+  def self.periodic_payment_threshold_before
+    5
+  end
+  
   def self.all_due(user)
     DueItem.where(owner: user.primary_identity).order(:due_date)
   end
@@ -64,6 +72,7 @@ class DueItem < MyplaceonlineIdentityRecord
       due_physicals(user)
       due_status(user)
       due_apartments(user)
+      due_periodic_payments(user)
     end
   end
 
@@ -360,6 +369,84 @@ class DueItem < MyplaceonlineIdentityRecord
             model_name: Apartment.name,
             model_id: apartment.id
           ).save!
+        end
+      end
+    end
+  end
+  
+  def self.due_periodic_payments(user)
+    DueItem.destroy_all(owner: user.primary_identity, model_name: PeriodicPayment.name)
+    
+    today = Date.today
+    
+    PeriodicPayment.where("owner_id = ? and date_period is not null and ended is null", user.primary_identity).each do |x|
+      result = nil
+      if !x.started.nil?
+        result = x.started
+      elsif x.date_period == 0
+        result = Date.new(today.year, today.month)
+      elsif x.date_period == 1
+        result = Date.new(today.year)
+      end
+      if !result.nil?
+        while result < today
+          if x.date_period == 0
+            result = result.advance(months: 1)
+          elsif x.date_period == 1
+            result = result.advance(years: 1)
+          elsif x.date_period == 2
+            result = result.advance(months: 6)
+          end
+        end
+        y = result - today
+        if y.floor == 0
+          DueItem.new(
+            display: I18n.t(
+              "myplaceonline.periodic_payments.reminder_today",
+              name: x.display
+            ),
+            link: "/periodic_payments/" + x.id.to_s,
+            due_date: result,
+            owner: user.primary_identity,
+            model_name: PeriodicPayment.name,
+            model_id: x.id
+          ).save!
+        elsif y.floor <= self.periodic_payment_threshold_before
+          DueItem.new(
+            display: I18n.t(
+              "myplaceonline.periodic_payments.reminder_before",
+              name: x.display,
+              delta: Myp.time_difference_in_general_human(TimeDifference.between(result, today).in_general)
+            ),
+            link: "/periodic_payments/" + x.id.to_s,
+            due_date: result,
+            owner: user.primary_identity,
+            model_name: PeriodicPayment.name,
+            model_id: x.id
+          ).save!
+        else
+          if x.date_period == 0
+            result = result.advance(months: -1)
+          elsif x.date_period == 1
+            result = result.advance(years: -1)
+          elsif x.date_period == 2
+            result = result.advance(months: -6)
+          end
+          y = today - result
+          if y.ceil <= self.periodic_payment_threshold_after
+            DueItem.new(
+              display: I18n.t(
+                "myplaceonline.periodic_payments.reminder_after",
+                name: x.display,
+                delta: Myp.time_difference_in_general_human(TimeDifference.between(result, today).in_general)
+              ),
+              link: "/periodic_payments/" + x.id.to_s,
+              due_date: result,
+              owner: user.primary_identity,
+              model_name: PeriodicPayment.name,
+              model_id: x.id
+            ).save!
+          end
         end
       end
     end
