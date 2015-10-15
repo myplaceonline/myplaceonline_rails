@@ -3,113 +3,107 @@
   <%= flashes! %>
 <% end %>
 
-<%
-if !controller.has_items
-%>
+<% if !controller.has_items %>
+
   <p><%= t("myplaceonline.general.count_no") + " " + t("myplaceonline.category." + controller.category_name) %>.
-    <% if controller.show_index_footer && !@myplet %>
-      <%= t("myplaceonline.general.create_instructions") %>
+    <% if controller.show_index_footer %>
+      <% if !@myplet %>
+        <%= t("myplaceonline.general.create_instructions") %>
+      <% end %>
     <% end %>
   </p>
-<%
-else
-%>
 
-<% if !@additional_items.nil? && @additional_items.count > 0 %>
-<div data-role="collapsible" data-collapsed="true">
-  <h3><%= t("myplaceonline.general.top_items", max: controller.how_many_top_items) %></h3>
-  <ul data-role="listview" data-inset="true">
-<%
-    @additional_items.each do |obj|
-%>
-      <li>
-        <%= link_to controller.display_obj(obj), send("#{controller.path_name}_path", obj) %>
-      </li>
-<%
-    end
-%>
-  </ul>
-</div>
-<% end %>
+<% else %>
 
-<div class="searchable_container">
-  <ul class="searchable" data-role="listview" data-inset="true" data-filter="true">
-<%
-    if !@objs2.nil? && controller.second_list_before
-      @objs2.each do |obj|
-%>
-        <li>
-          <%= link_to send("#{controller.second_path_name}_path", obj) do %>
-            <%= controller.second_list_icon(obj) %>
-            <%= controller.display_obj(obj) %>
-          <% end %>
-        </li>
-<%
+  <% if !@additional_items.nil? && @additional_items.count > 0 %>
+
+    <div data-role="collapsible" data-collapsed="true">
+      <h3><%= t("myplaceonline.general.top_items", max: controller.how_many_top_items) %></h3>
+      <ul data-role="listview" data-inset="true">
+        <%
+        @additional_items.each do |obj|
+        %>
+          <li>
+            <%= link_to controller.display_obj(obj), send("#{controller.path_name}_path", obj) %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+  <% end %>
+
+  <div class="searchable_container">
+    <ul class="searchable" data-role="listview" data-inset="true" data-filter="true">
+      <%
+      if !@objs2.nil? && controller.second_list_before
+        @objs2.each do |obj|
+      %>
+          <li>
+            <%= link_to send("#{controller.second_path_name}_path", obj) do %>
+              <%= controller.second_list_icon(obj) %>
+              <%= controller.display_obj(obj) %>
+            <% end %>
+          </li>
+      <%
+        end
       end
-    end
-%>
-<%
-    @objs.each do |obj|
-%>
-      <li>
-        <%= link_to controller.display_obj(obj), send("#{controller.path_name}_path", obj) %>
-      </li>
-<%
-    end
-%>
-<%
-    if !@objs2.nil? && !controller.second_list_before
-      @objs2.each do |obj|
-%>
+      %>
+      <%
+      @objs.each do |obj|
+      %>
         <li>
-          <%= link_to send("#{controller.second_path_name}_path", obj) do %>
-            <%= controller.second_list_icon(obj) %>
-            <%= controller.display_obj(obj) %>
-          <% end %>
+          <%= link_to controller.display_obj(obj), send("#{controller.path_name}_path", obj) %>
         </li>
-<%
+      <%
       end
-    end
-%>
-  </ul>
-</div>
+      %>
+      <%
+      if !@objs2.nil? && !controller.second_list_before
+        @objs2.each do |obj|
+      %>
+          <li>
+            <%= link_to send("#{controller.second_path_name}_path", obj) do %>
+              <%= controller.second_list_icon(obj) %>
+              <%= controller.display_obj(obj) %>
+            <% end %>
+          </li>
+      <%
+        end
+      end
+      %>
+    </ul>
+  </div>
 
-<%
-  if @offset + @perpage < @count
-%>
+  <% if @offset + @perpage < @count %>
     <%= link_to(t('myplaceonline.general.next') + " " + @perpage.to_s, send("#{controller.paths_name}_path", :offset => @offset + @perpage), :class => "ui-btn") %>
-<%
-  end
+  <% end %>
 
-  if @offset > 0
-%>
+  <% if @offset > 0 %>
     <%= link_to(t('myplaceonline.general.previous') + " " + @perpage.to_s, send("#{controller.paths_name}_path", :offset => @offset - @perpage), :class => "ui-btn") %>
-<%
-  end
+  <% end %>
 
-end
-%>
-
-<%
-  if @count > @perpage
-%>
+  <% if @count > @perpage %>
     <div class="horizontal_center small">
       <%= @count %> <%= t("myplaceonline.category." + controller.category_name) %>, <%= @perpage %> <%= t("myplaceonline.general.perpage") %> (<%= link_to(t("myplaceonline.general.all"), "/" + controller.paths_name + @query_params_part_all) %>)
     </div>
-<%
-  end
-%>
-
-<script type="text/javascript">
-onPageLoad(function() {
-  hookListviewSearch($(".searchable"), "/<%= controller.paths_name %>.json<%= raw(@query_params_part_all) %>");
-  var input = $(".searchable_container input");
-  hookListviewEnter(input, ".searchable");
-  <% if !@myplet %>
-  maybeFocus(input);
   <% end %>
-});
-</script>
+
+  <script type="text/javascript">
+    onPageLoad(function() {
+      hookListviewSearch($(".searchable"), "/<%= controller.paths_name %>.json<%= raw(@query_params_part_all) %>");
+      var input = $(".searchable_container input");
+      hookListviewEnter(input, ".searchable");
+      <% if !@myplet %>
+      maybeFocus(input);
+      <% end %>
+    });
+  </script>
+
+<% end %>
+
+<% if @myplet %>
+  <p><%= link_to t("myplaceonline.general.add") + " " + t("myplaceonline.category." + controller.category_name).singularize, controller.new_path, "class" => "ui-btn" %></p>
+<% end %>
 
 <%= yield %>
 
