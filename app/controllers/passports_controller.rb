@@ -32,6 +32,7 @@ class PassportsController < MyplaceonlineController
         :issued,
         :issuing_authority,
         :name,
+        :notes,
         passport_pictures_attributes: [
           :id,
           :_destroy,

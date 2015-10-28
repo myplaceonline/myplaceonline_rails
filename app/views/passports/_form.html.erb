@@ -4,6 +4,7 @@
 <%= myp_date_field(f, :expires, "myplaceonline.passports.expires", obj.expires) %>
 <%= myp_date_field(f, :issued, "myplaceonline.passports.issued", obj.issued) %>
 <%= myp_text_field(f, :issuing_authority, "myplaceonline.passports.issuing_authority", obj.issuing_authority) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,
