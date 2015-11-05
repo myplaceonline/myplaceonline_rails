@@ -600,6 +600,7 @@ en:
       list_cashbacks: "List All Cashbacks"
       all_cashbacks: "All Cashbacks"
       total_credit: "Total Credit"
+      email_reminders: "E-mail Payment Reminders"
     bank_accounts:
       name: "Name"
       account_number: "Account Number"

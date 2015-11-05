@@ -10,6 +10,7 @@
   <%= attribute_table_row(t("myplaceonline.credit_cards.pin"), @obj.pin) %>
   <%= attribute_table_row_currency(t("myplaceonline.credit_cards.total_credit"), @obj.total_credit) %>
   <%= attribute_table_row_markdown(t("myplaceonline.credit_cards.notes"), @obj.notes) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.credit_cards.email_reminders"), @obj.email_reminders) %>
   <%= attribute_table_row_boolean(t("myplaceonline.general.is_encrypted"), @obj.number_encrypted?) %>
   <%= attribute_table_row_boolean(t("myplaceonline.general.defunct"), !@obj.defunct.nil?) %>
   <% @obj.credit_card_cashbacks.to_a.keep_if{|cashback_wrapper| Myp.includes_today?(cashback_wrapper.cashback.start_date, cashback_wrapper.cashback.end_date) }.each do |wrapper| %>

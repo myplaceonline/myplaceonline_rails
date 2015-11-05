@@ -47,6 +47,7 @@ class CreditCardsController < MyplaceonlineController
         :is_defunct,
         :card_type,
         :total_credit,
+        :email_reminders,
         Myp.select_or_create_permit(params[:credit_card], :password_attributes, PasswordsController.param_names),
         Myp.select_or_create_permit(params[:credit_card], :address_attributes, LocationsController.param_names),
         credit_card_cashbacks_attributes: [

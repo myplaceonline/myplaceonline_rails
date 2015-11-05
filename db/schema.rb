@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151028222620) do
+ActiveRecord::Schema.define(version: 20151105230416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -508,6 +508,7 @@ ActiveRecord::Schema.define(version: 20151028222620) do
     t.integer  "card_type"
     t.decimal  "total_credit",               precision: 10, scale: 2
     t.integer  "visit_count"
+    t.boolean  "email_reminders"
   end
 
   add_index "credit_cards", ["address_id"], name: "index_credit_cards_on_address_id", using: :btree
