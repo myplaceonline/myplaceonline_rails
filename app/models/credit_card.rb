@@ -12,7 +12,9 @@ class CreditCard < MyplaceonlineIdentityRecord
   
   def process_cc_name
     if !self.name.blank? && !self.number.blank? && self.number.length >= 4
-      self.name += " (" + self.number.last(4) + ")"
+      if !self.name.end_with?(")")
+        self.name += " (" + self.number.last(4) + ")"
+      end
     end
   end
 
