@@ -10,11 +10,17 @@ class CreditCard < MyplaceonlineIdentityRecord
   
   before_validation :process_cc_name
   
+  # We do this on save rather than in display because if we access self.name
+  # in display and the credit card is encrypted, then we'll have to decrypt
+  # just to show the name.
+  # TODO instead save off the last four digits into the model
   def process_cc_name
     if !self.name.blank? && !self.number.blank? && self.number.length >= 4
-      if !self.name.end_with?(")")
-        self.name += " (" + self.number.last(4) + ")"
+      r = Regexp.new(' \([0-9]{4}\)')
+      while !r.match(self.name).nil? do
+        self.name = self.name.gsub(r, "")
       end
+      self.name += " (" + self.number.last(4) + ")"
     end
   end
 
