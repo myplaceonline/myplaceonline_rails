@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  match 'due_items/:id/complete', :to => 'due_items#complete', via: [:post], as: "due_item_complete"
+  resources :due_items
+  
   resources :myplets
 
   resources :phones

@@ -3,12 +3,53 @@
   <% end %>
 <% else %>
   <% if @due.length > 0 %>
+  
+    <% popupid = "due" + request.uuid.to_s + "_" + @obj.id.to_s %>
 
-    <ul data-role="listview" data-inset="true">
+    <script type="text/javascript">
+      function due_item_popup(source, title, complete_link) {
+        var p = $("#<%= popupid %>");
+        p.popup("open");
+        $("#<%= popupid %>_title").html(title);
+        completeButton = $("#<%= popupid %>_complete");
+        completeButton.unbind('click').click(function(){
+          showLoading();
+          $.ajax({
+            url: complete_link,
+            method: "POST",
+            dataType: "json"
+          }).done(function(data, textStatus, jqXHR) {
+            p.popup("close");
+            $(source).parent().remove();
+          }).fail(function(jqXHR, textStatus, errorThrown) {
+            createErrorNotification("Could not execute " + complete_link + ": " + textStatus);
+          }).complete(function(jqXHR, textStatus) {
+            hideLoading();
+          });
+        });
+        completeButton.focus();
+        return false;
+      }
+    </script>
+
+    <ul data-role="listview" data-inset="true" data-split-icon="gear">
       <% @due.each do |due_item| %>
-        <li><a href="<%= due_item.link %>"><%= due_item.display %> <span class="ui-li-count"><%= due_item.short_date %></span></a></li>
+        <li>
+          <a href="<%= due_item.link %>"><%= due_item.display %> <span class="ui-li-count"><%= due_item.short_date %></span></a>
+          <a href="#" onclick="return due_item_popup(this, '<%= due_item.display.gsub("'", "") %>', '<%= due_item_complete_path(due_item) %>');"><%= due_item.display %></a>
+        </li>
       <% end %>
     </ul>
+    
+    <div data-role="popup" id="<%= popupid %>" class="ui-content" data-history="false">
+      <h3 id="<%= popupid %>_title">Title</h3>
+      <!--<div class="ui-grid-a">-->
+        <!--<div class="ui-block-a">-->
+          <a id="<%= popupid %>_complete" href="#" data-role="button" data-icon="check"><%= t("myplaceonline.due_items.complete") %></a>
+        <!--</div-->
+        <!--<div class="ui-block-b"><a href="#" data-role="button" data-icon="clock"><%= t("myplaceonline.due_items.snooze") %></a></div>-->
+      <!--</div>-->
+    </div>
 
   <% end %>
 <% end %>

@@ -7,6 +7,32 @@ class DueItem < MyplaceonlineIdentityRecord
     end
   end
   
+  def save
+    if CompleteDueItem.where(
+      owner_id: self.owner_id,
+      due_date: self.due_date,
+      model_name: self.model_name,
+      model_id: self.model_id
+    ).length == 0
+      super
+    else
+      true
+    end
+  end
+  
+  def save!
+    if CompleteDueItem.where(
+      owner_id: self.owner_id,
+      due_date: self.due_date,
+      model_name: self.model_name,
+      model_id: self.model_id
+    ).length == 0
+      super
+    else
+      true
+    end
+  end
+  
   def self.general_threshold
     60.days.from_now
   end

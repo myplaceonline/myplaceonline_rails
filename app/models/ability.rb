@@ -123,6 +123,7 @@ class Ability
     can :manage, Group, :owner => identity
     can :manage, Phone, :owner => identity
     can :manage, Myplet, :owner => identity
+    can :manage, DueItem, :owner => identity
     
     if user.admin?
       can :manage, User

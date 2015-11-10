@@ -1630,3 +1630,6 @@ en:
       point: "point"
     navigation:
       gohome: "Go Home"
+    due_items:
+      complete: "Complete"
+      snooze: "Snooze"

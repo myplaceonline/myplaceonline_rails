@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151105230416) do
+ActiveRecord::Schema.define(version: 20151110062655) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -392,6 +392,19 @@ ActiveRecord::Schema.define(version: 20151105230416) do
 
   add_index "companies", ["location_id"], name: "index_companies_on_location_id", using: :btree
   add_index "companies", ["owner_id"], name: "index_companies_on_owner_id", using: :btree
+
+  create_table "complete_due_items", force: true do |t|
+    t.integer  "owner_id"
+    t.string   "display"
+    t.string   "link"
+    t.datetime "due_date"
+    t.string   "model_name"
+    t.integer  "model_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "complete_due_items", ["owner_id"], name: "index_complete_due_items_on_owner_id", using: :btree
 
   create_table "computers", force: true do |t|
     t.date     "purchased"
