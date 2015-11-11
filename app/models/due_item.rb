@@ -21,16 +21,20 @@ class DueItem < MyplaceonlineIdentityRecord
   end
   
   def save!
-    if CompleteDueItem.where(
+    if allows_reminder
+      super
+    else
+      true
+    end
+  end
+  
+  def allows_reminder
+    CompleteDueItem.where(
       owner_id: self.owner_id,
       due_date: self.due_date,
       model_name: self.model_name,
       model_id: self.model_id
     ).length == 0
-      super
-    else
-      true
-    end
   end
   
   def self.general_threshold
