@@ -196,6 +196,7 @@ en:
       play_store: "Android App on Google Play Store"
       notes: "Notes"
       not_auhorized: "Not Authorized"
+      close: "Close"
     periods:
       monthly: "Monthly"
       yearly: "Yearly"
