@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151110062655) do
+ActiveRecord::Schema.define(version: 20151111031330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -660,13 +660,12 @@ ActiveRecord::Schema.define(version: 20151110062655) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
   end
 
   add_index "due_items", ["owner_id"], name: "index_due_items_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -1375,7 +1374,6 @@ ActiveRecord::Schema.define(version: 20151110062655) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
   end
 
   add_index "myplets", ["owner_id"], name: "index_myplets_on_owner_id", using: :btree
@@ -1762,6 +1760,20 @@ ActiveRecord::Schema.define(version: 20151110062655) do
   end
 
   add_index "sleep_measurements", ["owner_id"], name: "index_sleep_measurements_on_owner_id", using: :btree
+
+  create_table "snoozed_due_items", force: true do |t|
+    t.integer  "owner_id"
+    t.string   "display"
+    t.string   "link"
+    t.datetime "due_date"
+    t.datetime "original_due_date"
+    t.string   "model_name"
+    t.integer  "model_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "snoozed_due_items", ["owner_id"], name: "index_snoozed_due_items_on_owner_id", using: :btree
 
   create_table "songs", force: true do |t|
     t.string   "song_name"

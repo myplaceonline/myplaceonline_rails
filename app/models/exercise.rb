@@ -11,6 +11,6 @@ class Exercise < MyplaceonlineIdentityRecord
     result
   end
 
-  after_save { |record| DueItem.due_exercises(User.current_user) }
-  after_destroy { |record| DueItem.due_exercises(User.current_user) }
+  after_save { |record| DueItem.due_exercises(User.current_user, record, DueItem::UPDATE_TYPE_UPDATE) }
+  after_destroy { |record| DueItem.due_exercises(User.current_user, record, DueItem::UPDATE_TYPE_DELETE) }
 end

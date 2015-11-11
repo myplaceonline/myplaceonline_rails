@@ -1,0 +1,2 @@
+class SnoozedDueItem < MyplaceonlineIdentityRecord
+end

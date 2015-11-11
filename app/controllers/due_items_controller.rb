@@ -1,19 +1,53 @@
 class DueItemsController < MyplaceonlineController
   
-  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:complete]
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:complete, :snooze]
 
   def complete
     set_obj
     ActiveRecord::Base.transaction do
       ::CompleteDueItem.new(
-        owner_id: User.current_user.id,
+        owner_id: @obj.owner_id,
         display: @obj.display,
         link: @obj.link,
         due_date: @obj.due_date,
         model_name: @obj.model_name,
         model_id: @obj.model_id
       ).save!
+      
+      ::SnoozedDueItem.where(owner: @obj.owner_id, model_name: @obj.model_name, model_id: @obj.model_id).each do |snoozed_item|
+        snoozed_item.destroy!
+      end
+      
       @obj.destroy!
+    end
+    render json: {
+      result: true
+    }
+  end
+  
+  # When you snooze something, effectively it will never go away until
+  # you complete it (with just a hias until it shows up during the snooze
+  # period). So we simply delete the current due item, create a snoozed
+  # due item and let it pick up after snooze on the next due item recalculation
+  def snooze
+    set_obj
+    duration_str = params["duration"]
+    if !duration_str.blank?
+      matches = duration_str.match(/(\d+), (\d+):(\d+):(\d+)/)
+      duration = matches[1].to_i.days + matches[2].to_i.hours + matches[3].to_i.minutes + matches[4].to_i.seconds
+      new_due_date = Time.now + duration
+      ActiveRecord::Base.transaction do
+        ::SnoozedDueItem.new(
+          owner_id: @obj.owner_id,
+          display: @obj.display,
+          link: @obj.link,
+          due_date: new_due_date,
+          original_due_date: @obj.due_date,
+          model_name: @obj.model_name,
+          model_id: @obj.model_id
+        ).save!
+        @obj.destroy!
+      end
     end
     render json: {
       result: true

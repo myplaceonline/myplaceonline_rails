@@ -7,7 +7,7 @@
     <% popupid = "due" + request.uuid.to_s + "_" + @obj.id.to_s %>
 
     <script type="text/javascript">
-      function due_item_popup(source, title, complete_link) {
+      function due_item_popup(source, title, complete_link, snooze_link) {
         var p = $("#<%= popupid %>");
         p.popup("open");
         $("#<%= popupid %>_title").html(title);
@@ -27,6 +27,33 @@
             hideLoading();
           });
         });
+        $("#<%= popupid %>_snooze_datebox").datebox({
+          mode: "durationbox",
+          useInline: true,
+          useButton: false,
+          hideInput: true,
+          useImmediate: true,
+          useSetButton: false,
+          defaultValue: 0,
+          overrideDurationOrder: ["d", "h", "i"],
+          overrideDurationFormat: "%Dd, %Dl:%DM:%DS",
+          minDur: 60*5
+        });
+        $("#<%= popupid %>_snooze").unbind('click').click(function(){
+          showLoading();
+          $.ajax({
+            url: snooze_link + "?duration=" + encodeURIComponent($("#<%= popupid %>_snooze_datebox").val()),
+            method: "POST",
+            dataType: "json"
+          }).done(function(data, textStatus, jqXHR) {
+            p.popup("close");
+            $(source).parent().remove();
+          }).fail(function(jqXHR, textStatus, errorThrown) {
+            createErrorNotification("Could not execute " + snooze_link + ": " + textStatus);
+          }).complete(function(jqXHR, textStatus) {
+            hideLoading();
+          });
+        });
         completeButton.focus();
         return false;
       }
@@ -36,20 +63,23 @@
       <% @due.each do |due_item| %>
         <li>
           <a href="<%= due_item.link %>"><%= due_item.display %> <span class="ui-li-count"><%= due_item.short_date %></span></a>
-          <a href="#" onclick="return due_item_popup(this, '<%= due_item.display.gsub("'", "") %>', '<%= due_item_complete_path(due_item) %>');"><%= due_item.display %></a>
+          <a href="#" onclick="return due_item_popup(this, '<%= due_item.display.gsub("'", "") %>', '<%= due_item_complete_path(due_item) %>', '<%= due_item_snooze_path(due_item) %>');"><%= due_item.display %></a>
         </li>
       <% end %>
     </ul>
     
-    <div data-role="popup" id="<%= popupid %>" class="ui-content" data-history="false">
+    <%# min-width for the done and snooze buttons to not show ellipses %>
+    <div data-role="popup" id="<%= popupid %>" class="ui-content" data-history="false" style="min-width: 350px;">
       <a href="#" data-rel="back" data-role="button" data-icon="delete" data-iconpos="notext" class="ui-btn-right"><%= t("myplaceonline.general.close") %></a>
       <h3 id="<%= popupid %>_title">Title</h3>
-      <!--<div class="ui-grid-a">-->
-        <!--<div class="ui-block-a">-->
-          <a id="<%= popupid %>_complete" href="#" data-role="button" data-icon="check"><%= t("myplaceonline.due_items.complete") %></a>
-        <!--</div-->
-        <!--<div class="ui-block-b"><a href="#" data-role="button" data-icon="clock"><%= t("myplaceonline.due_items.snooze") %></a></div>-->
-      <!--</div>-->
+      <a id="<%= popupid %>_complete" href="#" data-role="button" data-icon="check"><%= t("myplaceonline.due_items.complete") %></a>
+      <div data-role="collapsible" data-collapsed="true" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+        <h3><%= t("myplaceonline.due_items.snooze") %></h3>
+        <div class="ui-field-contain">
+          <input id="<%= popupid %>_snooze_datebox" type="text" value="0, 00:05:00" />
+        </div>
+        <a id="<%= popupid %>_snooze" href="#" data-role="button" data-icon="clock"><%= t("myplaceonline.due_items.snooze") %></a>
+      </div>
     </div>
 
   <% end %>

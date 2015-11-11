@@ -1,4 +1,8 @@
 class DueItem < MyplaceonlineIdentityRecord
+  
+  UPDATE_TYPE_UPDATE = 1
+  UPDATE_TYPE_DELETE = 2
+  
   def short_date
     if Date.today.year > due_date.year
       Myp.display_date_short_year(due_date, User.current_user)
@@ -7,31 +11,23 @@ class DueItem < MyplaceonlineIdentityRecord
     end
   end
   
-  def save
-    if CompleteDueItem.where(
-      owner_id: self.owner_id,
-      due_date: self.due_date,
-      model_name: self.model_name,
-      model_id: self.model_id
-    ).length == 0
-      super
-    else
-      true
-    end
-  end
-  
-  def save!
+  def check_and_save!
     if allows_reminder
-      super
+      save!
     else
       true
     end
   end
   
   def allows_reminder
-    CompleteDueItem.where(
+    ::CompleteDueItem.where(
       owner_id: self.owner_id,
       due_date: self.due_date,
+      model_name: self.model_name,
+      model_id: self.model_id
+    ).length == 0 && ::SnoozedDueItem.where(
+      owner_id: self.owner_id,
+      original_due_date: self.due_date,
       model_name: self.model_name,
       model_id: self.model_id
     ).length == 0
@@ -117,8 +113,27 @@ class DueItem < MyplaceonlineIdentityRecord
       end
     end
   end
+  
+  def self.check_snoozed_items(user, model_name, updated_record, update_type)
+    if !updated_record.nil? && !update_type.nil? && update_type == DueItem::UPDATE_TYPE_DELETE
+      ::SnoozedDueItem.where(owner: user.primary_identity, model_name: model_name, model_id: updated_record.id).each do |snoozed_item|
+        snoozed_item.destroy!
+      end
+    end
+    
+    ::SnoozedDueItem.where(owner: user.primary_identity, model_name: model_name).where("due_date <= ?", timenow).each do |snoozed_item|
+      DueItem.new(
+        display: snoozed_item.display,
+        link: snoozed_item.link,
+        due_date: snoozed_item.due_date,
+        owner_id: snoozed_item.owner_id,
+        model_name: snoozed_item.model_name,
+        model_id: snoozed_item.model_id
+      ).save!
+    end
+  end
 
-  def self.due_vehicles(user)
+  def self.due_vehicles(user, updated_record = nil, update_type = nil)
     DueItem.destroy_all(owner: user.primary_identity, model_name: Vehicle.name)
     
     Vehicle.where(owner: user.primary_identity).each do |vehicle|
@@ -131,13 +146,15 @@ class DueItem < MyplaceonlineIdentityRecord
             owner: user.primary_identity,
             model_name: Vehicle.name,
             model_id: vehicle.id
-          ).save!
+          ).check_and_save!
         end
       end
     end
+    
+    check_snoozed_items(user, Vehicle.name, updated_record, update_type)
   end
   
-  def self.due_contacts(user)
+  def self.due_contacts(user, updated_record = nil, update_type = nil)
     DueItem.destroy_all(owner: user.primary_identity, model_name: Contact.name)
     
     IdentityDriversLicense.where("owner_id = ? and expires is not null and expires < ?", user.primary_identity, general_threshold).each do |drivers_license|
@@ -158,7 +175,7 @@ class DueItem < MyplaceonlineIdentityRecord
         owner: user.primary_identity,
         model_name: Contact.name,
         model_id: contact.id
-      ).save!
+      ).check_and_save!
     end
 
     Contact.where(owner: user.primary_identity).includes(:identity).to_a.each do |x|
@@ -178,7 +195,7 @@ class DueItem < MyplaceonlineIdentityRecord
             owner: user.primary_identity,
             model_name: Contact.name,
             model_id: x.id
-          ).save!
+          ).check_and_save!
         end
       end
     end
@@ -208,7 +225,7 @@ class DueItem < MyplaceonlineIdentityRecord
             owner: user.primary_identity,
             model_name: Contact.name,
             model_id: contact.id
-          ).save!
+          ).check_and_save!
         else
           if contact.last_conversation_date < contact_threshold
             DueItem.new(
@@ -223,14 +240,16 @@ class DueItem < MyplaceonlineIdentityRecord
               owner: user.primary_identity,
               model_name: Contact.name,
               model_id: contact.id
-            ).save!
+            ).check_and_save!
           end
         end
       end
     end
+
+    check_snoozed_items(user, Contact.name, updated_record, update_type)
   end
   
-  def self.due_exercises(user)
+  def self.due_exercises(user, updated_record = nil, update_type = nil)
     DueItem.destroy_all(owner: user.primary_identity, model_name: Exercise.name)
     
     last_exercise = Exercise.where("owner_id = ? and exercise_start is not null", user.primary_identity).order('exercise_start DESC').limit(1).first
@@ -244,11 +263,13 @@ class DueItem < MyplaceonlineIdentityRecord
         due_date: last_exercise.exercise_start,
         owner: user.primary_identity,
         model_name: Exercise.name
-      ).save!
+      ).check_and_save!
     end
+
+    check_snoozed_items(user, Exercise.name, updated_record, update_type)
   end
   
-  def self.due_promotions(user)
+  def self.due_promotions(user, updated_record = nil, update_type = nil)
     DueItem.destroy_all(owner: user.primary_identity, model_name: Promotion.name)
     
     Promotion.where("owner_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, general_threshold).each do |promotion|
@@ -264,11 +285,13 @@ class DueItem < MyplaceonlineIdentityRecord
         owner: user.primary_identity,
         model_name: Promotion.name,
         model_id: promotion.id
-      ).save!
+      ).check_and_save!
     end
+
+    check_snoozed_items(user, Promotion.name, updated_record, update_type)
   end
   
-  def self.due_gun_registrations(user)
+  def self.due_gun_registrations(user, updated_record = nil, update_type = nil)
     DueItem.destroy_all(owner: user.primary_identity, model_name: GunRegistration.name)
     
     GunRegistration.where("owner_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, general_threshold).each do |x|
@@ -283,11 +306,13 @@ class DueItem < MyplaceonlineIdentityRecord
         owner: user.primary_identity,
         model_name: GunRegistration.name,
         model_id: x.gun.id
-      ).save!
+      ).check_and_save!
     end
+
+    check_snoozed_items(user, GunRegistration.name, updated_record, update_type)
   end
   
-  def self.due_dental_cleanings(user)
+  def self.due_dental_cleanings(user, updated_record = nil, update_type = nil)
     DueItem.destroy_all(owner: user.primary_identity, model_name: DentistVisit.name)
     
     last_dentist_visit = DentistVisit.where("owner_id = ? and cleaning = true", user.primary_identity).order('visit_date DESC').limit(1).first
@@ -302,7 +327,7 @@ class DueItem < MyplaceonlineIdentityRecord
         owner: user.primary_identity,
         model_name: DentistVisit.name,
         model_id: last_dentist_visit.id
-      ).save!
+      ).check_and_save!
     elsif last_dentist_visit.nil?
       # If there are no dentist visits at all but there is a dental insurance company, then notify
       if DentalInsurance.where("owner_id = ? and (defunct is null)", user.primary_identity).count > 0
@@ -314,12 +339,14 @@ class DueItem < MyplaceonlineIdentityRecord
           due_date: timenow,
           owner: user.primary_identity,
           model_name: DentistVisit.name
-        ).save!
+        ).check_and_save!
       end
     end
+
+    check_snoozed_items(user, DentistVisit.name, updated_record, update_type)
   end
   
-  def self.due_physicals(user)
+  def self.due_physicals(user, updated_record = nil, update_type = nil)
     DueItem.destroy_all(owner: user.primary_identity, model_name: DoctorVisit.name)
     
     last_doctor_visit = DoctorVisit.where("owner_id = ? and physical = true", user.primary_identity).order('visit_date DESC').limit(1).first
@@ -334,7 +361,7 @@ class DueItem < MyplaceonlineIdentityRecord
         owner: user.primary_identity,
         model_name: DoctorVisit.name,
         model_id: last_doctor_visit.id
-      ).save!
+      ).check_and_save!
     elsif last_doctor_visit.nil?
       # If there are no physicals at all but there is a health insurance company, then notify
       if HealthInsurance.where("owner_id = ? and (defunct is null)", user.primary_identity).count > 0
@@ -346,12 +373,14 @@ class DueItem < MyplaceonlineIdentityRecord
           due_date: timenow,
           owner: user.primary_identity,
           model_name: DoctorVisit.name
-        ).save!
+        ).check_and_save!
       end
     end
+
+    check_snoozed_items(user, DoctorVisit.name, updated_record, update_type)
   end
   
-  def self.due_status(user)
+  def self.due_status(user, updated_record = nil, update_type = nil)
     DueItem.destroy_all(owner: user.primary_identity, model_name: Status.name)
     
     last_status = Status.where("owner_id = ?", user.primary_identity).order('status_time DESC').limit(1).first
@@ -366,7 +395,7 @@ class DueItem < MyplaceonlineIdentityRecord
         owner: user.primary_identity,
         model_name: Status.name,
         model_id: last_status.id
-      ).save!
+      ).check_and_save!
     elsif last_status.nil?
       DueItem.new(
         display: I18n.t(
@@ -376,11 +405,13 @@ class DueItem < MyplaceonlineIdentityRecord
         due_date: timenow,
         owner: user.primary_identity,
         model_name: Status.name
-      ).save!
+      ).check_and_save!
     end
+
+    check_snoozed_items(user, Status.name, updated_record, update_type)
   end
   
-  def self.due_apartments(user)
+  def self.due_apartments(user, updated_record = nil, update_type = nil)
     DueItem.destroy_all(owner: user.primary_identity, model_name: Apartment.name)
     
     Apartment.where("owner_id = ?", user.primary_identity).each do |apartment|
@@ -398,13 +429,15 @@ class DueItem < MyplaceonlineIdentityRecord
             owner: user.primary_identity,
             model_name: Apartment.name,
             model_id: apartment.id
-          ).save!
+          ).check_and_save!
         end
       end
     end
+
+    check_snoozed_items(user, Apartment.name, updated_record, update_type)
   end
   
-  def self.due_periodic_payments(user)
+  def self.due_periodic_payments(user, updated_record = nil, update_type = nil)
     DueItem.destroy_all(owner: user.primary_identity, model_name: PeriodicPayment.name)
     
     today = Date.today
@@ -440,7 +473,7 @@ class DueItem < MyplaceonlineIdentityRecord
             owner: user.primary_identity,
             model_name: PeriodicPayment.name,
             model_id: x.id
-          ).save!
+          ).check_and_save!
         elsif y.floor <= self.periodic_payment_threshold_before
           DueItem.new(
             display: I18n.t(
@@ -453,7 +486,7 @@ class DueItem < MyplaceonlineIdentityRecord
             owner: user.primary_identity,
             model_name: PeriodicPayment.name,
             model_id: x.id
-          ).save!
+          ).check_and_save!
         else
           if x.date_period == 0
             result = result.advance(months: -1)
@@ -475,11 +508,13 @@ class DueItem < MyplaceonlineIdentityRecord
               owner: user.primary_identity,
               model_name: PeriodicPayment.name,
               model_id: x.id
-            ).save!
+            ).check_and_save!
           end
         end
       end
     end
+
+    check_snoozed_items(user, PeriodicPayment.name, updated_record, update_type)
   end
   
   # Reminder: When adding a new type of due item processing, consider
