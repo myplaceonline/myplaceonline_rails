@@ -3,6 +3,9 @@ class DueItem < MyplaceonlineIdentityRecord
   UPDATE_TYPE_UPDATE = 1
   UPDATE_TYPE_DELETE = 2
   
+  DEFAULT_SNOOZE_SECONDS = 60*60*24
+  DEFAULT_SNOOZE_TEXT = "1, 00:00:00"
+  
   def short_date
     if Date.today.year > due_date.year
       Myp.display_date_short_year(due_date, User.current_user)
