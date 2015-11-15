@@ -37,7 +37,7 @@
           defaultValue: 0,
           overrideDurationOrder: ["d", "h", "i"],
           overrideDurationFormat: "%Dd, %Dl:%DM:%DS",
-          minDur: <%= DueItem::DEFAULT_SNOOZE_SECONDS %>
+          minDur: <%= DueItem::MINIMUM_DURATION_SECONDS %>
         });
         $("#<%= popupid %>_snooze").unbind('click').click(function(){
           showLoading();
