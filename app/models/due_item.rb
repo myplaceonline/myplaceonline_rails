@@ -23,14 +23,17 @@ class DueItem < MyplaceonlineIdentityRecord
   end
   
   def allows_reminder
+    # Return true if there are no completed due items with the original_due_date
+    # and there are no snoozed items with the original_due_date
+    
     ::CompleteDueItem.where(
       owner_id: self.owner_id,
-      due_date: self.due_date,
+      due_date: self.original_due_date,
       model_name: self.model_name,
       model_id: self.model_id
     ).length == 0 && ::SnoozedDueItem.where(
       owner_id: self.owner_id,
-      original_due_date: self.due_date,
+      original_due_date: self.original_due_date,
       model_name: self.model_name,
       model_id: self.model_id
     ).length == 0
