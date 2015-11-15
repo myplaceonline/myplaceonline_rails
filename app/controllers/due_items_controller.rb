@@ -10,6 +10,7 @@ class DueItemsController < MyplaceonlineController
         display: @obj.display,
         link: @obj.link,
         due_date: @obj.due_date,
+        original_due_date: @obj.original_due_date,
         model_name: @obj.model_name,
         model_id: @obj.model_id
       ).save!
@@ -36,13 +37,14 @@ class DueItemsController < MyplaceonlineController
       matches = duration_str.match(/(\d+), (\d+):(\d+):(\d+)/)
       duration = matches[1].to_i.days + matches[2].to_i.hours + matches[3].to_i.minutes + matches[4].to_i.seconds
       new_due_date = Time.now + duration
+      
       ActiveRecord::Base.transaction do
         ::SnoozedDueItem.new(
           owner_id: @obj.owner_id,
           display: @obj.display,
           link: @obj.link,
           due_date: new_due_date,
-          original_due_date: @obj.due_date,
+          original_due_date: @obj.original_due_date,
           model_name: @obj.model_name,
           model_id: @obj.model_id
         ).save!

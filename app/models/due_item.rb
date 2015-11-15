@@ -129,6 +129,7 @@ class DueItem < MyplaceonlineIdentityRecord
         display: snoozed_item.display,
         link: snoozed_item.link,
         due_date: snoozed_item.due_date,
+        original_due_date: snoozed_item.original_due_date,
         owner_id: snoozed_item.owner_id,
         model_name: snoozed_item.model_name,
         model_id: snoozed_item.model_id
@@ -146,6 +147,7 @@ class DueItem < MyplaceonlineIdentityRecord
             display: service.short_description,
             link: "/vehicles/" + vehicle.id.to_s,
             due_date: service.date_due,
+            original_due_date: service.date_due,
             owner: user.primary_identity,
             model_name: Vehicle.name,
             model_id: vehicle.id
@@ -175,6 +177,7 @@ class DueItem < MyplaceonlineIdentityRecord
         ),
         link: "/contacts/" + contact.id.to_s,
         due_date: drivers_license.expires,
+        original_due_date: drivers_license.expires,
         owner: user.primary_identity,
         model_name: Contact.name,
         model_id: contact.id
@@ -195,6 +198,7 @@ class DueItem < MyplaceonlineIdentityRecord
             ),
             link: "/contacts/" + x.id.to_s,
             due_date: bday_this_year,
+            original_due_date: bday_this_year,
             owner: user.primary_identity,
             model_name: Contact.name,
             model_id: x.id
@@ -225,6 +229,7 @@ class DueItem < MyplaceonlineIdentityRecord
             ),
             link: "/contacts/" + contact.id.to_s,
             due_date: datenow,
+            original_due_date: datenow,
             owner: user.primary_identity,
             model_name: Contact.name,
             model_id: contact.id
@@ -240,6 +245,7 @@ class DueItem < MyplaceonlineIdentityRecord
               ),
               link: "/contacts/" + contact.id.to_s,
               due_date: contact.last_conversation_date,
+              original_due_date: contact.last_conversation_date,
               owner: user.primary_identity,
               model_name: Contact.name,
               model_id: contact.id
@@ -264,6 +270,7 @@ class DueItem < MyplaceonlineIdentityRecord
         ),
         link: "/exercises/new",
         due_date: last_exercise.exercise_start,
+        original_due_date: last_exercise.exercise_start,
         owner: user.primary_identity,
         model_name: Exercise.name
       ).check_and_save!
@@ -285,6 +292,7 @@ class DueItem < MyplaceonlineIdentityRecord
         ),
         link: "/promotions/" + promotion.id.to_s,
         due_date: promotion.expires,
+        original_due_date: promotion.expires,
         owner: user.primary_identity,
         model_name: Promotion.name,
         model_id: promotion.id
@@ -306,6 +314,7 @@ class DueItem < MyplaceonlineIdentityRecord
         ),
         link: "/guns/" + x.gun.id.to_s,
         due_date: x.expires,
+        original_due_date: x.expires,
         owner: user.primary_identity,
         model_name: GunRegistration.name,
         model_id: x.gun.id
@@ -327,6 +336,7 @@ class DueItem < MyplaceonlineIdentityRecord
         ),
         link: "/dentist_visits/" + last_dentist_visit.id.to_s,
         due_date: last_dentist_visit.visit_date,
+        original_due_date: last_dentist_visit.visit_date,
         owner: user.primary_identity,
         model_name: DentistVisit.name,
         model_id: last_dentist_visit.id
@@ -340,6 +350,7 @@ class DueItem < MyplaceonlineIdentityRecord
           ),
           link: "/dentist_visits/new",
           due_date: timenow,
+          original_due_date: timenow,
           owner: user.primary_identity,
           model_name: DentistVisit.name
         ).check_and_save!
@@ -361,6 +372,7 @@ class DueItem < MyplaceonlineIdentityRecord
         ),
         link: "/doctor_visits/" + last_doctor_visit.id.to_s,
         due_date: last_doctor_visit.visit_date,
+        original_due_date: last_doctor_visit.visit_date,
         owner: user.primary_identity,
         model_name: DoctorVisit.name,
         model_id: last_doctor_visit.id
@@ -374,6 +386,7 @@ class DueItem < MyplaceonlineIdentityRecord
           ),
           link: "/doctor_visits/new",
           due_date: timenow,
+          original_due_date: timenow,
           owner: user.primary_identity,
           model_name: DoctorVisit.name
         ).check_and_save!
@@ -395,6 +408,7 @@ class DueItem < MyplaceonlineIdentityRecord
         ),
         link: "/statuses/new",
         due_date: last_status.status_time,
+        original_due_date: last_status.status_time,
         owner: user.primary_identity,
         model_name: Status.name,
         model_id: last_status.id
@@ -406,6 +420,7 @@ class DueItem < MyplaceonlineIdentityRecord
         ),
         link: "/statuses/new",
         due_date: timenow,
+        original_due_date: timenow,
         owner: user.primary_identity,
         model_name: Status.name
       ).check_and_save!
@@ -429,6 +444,7 @@ class DueItem < MyplaceonlineIdentityRecord
             ),
             link: "/apartments/" + apartment.id.to_s,
             due_date: next_pickup,
+            original_due_date: next_pickup,
             owner: user.primary_identity,
             model_name: Apartment.name,
             model_id: apartment.id
@@ -473,6 +489,7 @@ class DueItem < MyplaceonlineIdentityRecord
             ),
             link: "/periodic_payments/" + x.id.to_s,
             due_date: result,
+            original_due_date: result,
             owner: user.primary_identity,
             model_name: PeriodicPayment.name,
             model_id: x.id
@@ -486,6 +503,7 @@ class DueItem < MyplaceonlineIdentityRecord
             ),
             link: "/periodic_payments/" + x.id.to_s,
             due_date: result,
+            original_due_date: result,
             owner: user.primary_identity,
             model_name: PeriodicPayment.name,
             model_id: x.id
@@ -508,6 +526,7 @@ class DueItem < MyplaceonlineIdentityRecord
               ),
               link: "/periodic_payments/" + x.id.to_s,
               due_date: result,
+              original_due_date: result,
               owner: user.primary_identity,
               model_name: PeriodicPayment.name,
               model_id: x.id
