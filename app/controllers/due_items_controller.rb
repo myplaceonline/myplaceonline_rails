@@ -32,10 +32,8 @@ class DueItemsController < MyplaceonlineController
   # due item and let it pick up after snooze on the next due item recalculation
   def snooze
     set_obj
-    duration_str = params["duration"]
-    if !duration_str.blank?
-      matches = duration_str.match(/(\d+), (\d+):(\d+):(\d+)/)
-      duration = matches[1].to_i.days + matches[2].to_i.hours + matches[3].to_i.minutes + matches[4].to_i.seconds
+    duration = process_duration(params["duration"])
+    if !duration.nil?
       new_due_date = Time.now + duration
       
       ActiveRecord::Base.transaction do
