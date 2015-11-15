@@ -23,20 +23,29 @@ class DueItem < MyplaceonlineIdentityRecord
   end
   
   def allows_reminder
-    # Return true if there are no completed due items with the original_due_date
-    # and there are no snoozed items with the original_due_date
-    
-    ::CompleteDueItem.where(
-      owner_id: self.owner_id,
-      due_date: self.original_due_date,
-      model_name: self.model_name,
-      model_id: self.model_id
-    ).length == 0 && ::SnoozedDueItem.where(
-      owner_id: self.owner_id,
-      original_due_date: self.original_due_date,
-      model_name: self.model_name,
-      model_id: self.model_id
-    ).length == 0
+    if self.is_date_arbitrary
+      ::CompleteDueItem.where(
+        owner_id: self.owner_id,
+        model_name: self.model_name,
+        model_id: self.model_id
+      ).length == 0 && ::SnoozedDueItem.where(
+        owner_id: self.owner_id,
+        model_name: self.model_name,
+        model_id: self.model_id
+      ).length == 0
+    else
+      ::CompleteDueItem.where(
+        owner_id: self.owner_id,
+        due_date: self.original_due_date,
+        model_name: self.model_name,
+        model_id: self.model_id
+      ).length == 0 && ::SnoozedDueItem.where(
+        owner_id: self.owner_id,
+        original_due_date: self.original_due_date,
+        model_name: self.model_name,
+        model_id: self.model_id
+      ).length == 0
+    end
   end
   
   def self.general_threshold
@@ -235,7 +244,8 @@ class DueItem < MyplaceonlineIdentityRecord
             original_due_date: datenow,
             owner: user.primary_identity,
             model_name: Contact.name,
-            model_id: contact.id
+            model_id: contact.id,
+            is_date_arbitrary: true
           ).check_and_save!
         else
           if contact.last_conversation_date < contact_threshold
@@ -355,7 +365,8 @@ class DueItem < MyplaceonlineIdentityRecord
           due_date: timenow,
           original_due_date: timenow,
           owner: user.primary_identity,
-          model_name: DentistVisit.name
+          model_name: DentistVisit.name,
+          is_date_arbitrary: true
         ).check_and_save!
       end
     end
@@ -391,7 +402,8 @@ class DueItem < MyplaceonlineIdentityRecord
           due_date: timenow,
           original_due_date: timenow,
           owner: user.primary_identity,
-          model_name: DoctorVisit.name
+          model_name: DoctorVisit.name,
+          is_date_arbitrary: true
         ).check_and_save!
       end
     end
@@ -425,7 +437,8 @@ class DueItem < MyplaceonlineIdentityRecord
         due_date: timenow,
         original_due_date: timenow,
         owner: user.primary_identity,
-        model_name: Status.name
+        model_name: Status.name,
+        is_date_arbitrary: true
       ).check_and_save!
     end
 
