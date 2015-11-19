@@ -15,8 +15,9 @@ class MypletsController < MyplaceonlineController
       @category_obj.assign_attributes(params["myplet"].require(@obj.category_name.singularize).permit(
         controller.permit_params
       ))
+      @category_obj.save!
     end
-    @category_obj.save!
+    
     super
   end
   

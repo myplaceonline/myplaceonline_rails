@@ -61,8 +61,8 @@ class DueItem < MyplaceonlineIdentityRecord
     60.days.from_now
   end
   
-  def self.exercise_threshold
-    7.days.ago
+  def self.exercise_threshold(mdd)
+    (mdd.exercise_threshold || 7).days.ago
   end
   
   def self.timenow
@@ -294,8 +294,9 @@ class DueItem < MyplaceonlineIdentityRecord
     DueItem.destroy_all(owner: user.primary_identity, model_name: Exercise.name)
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
+      threshold = exercise_threshold(mdd)
       last_exercise = Exercise.where("owner_id = ? and exercise_start is not null", user.primary_identity).order('exercise_start DESC').limit(1).first
-      if !last_exercise.nil? and last_exercise.exercise_start < exercise_threshold
+      if !last_exercise.nil? and last_exercise.exercise_start < threshold
         DueItem.new(
           display: I18n.t(
             "myplaceonline.exercises.havent_exercised_for",
