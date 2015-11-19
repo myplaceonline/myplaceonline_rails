@@ -7,6 +7,7 @@ class DueItemsController < MyplaceonlineController
     ActiveRecord::Base.transaction do
       ::CompleteDueItem.new(
         owner_id: @obj.owner_id,
+        myplaceonline_due_display: @obj.myplaceonline_due_display,
         display: @obj.display,
         link: @obj.link,
         due_date: @obj.due_date,
@@ -39,6 +40,7 @@ class DueItemsController < MyplaceonlineController
       ActiveRecord::Base.transaction do
         ::SnoozedDueItem.new(
           owner_id: @obj.owner_id,
+          myplaceonline_due_display: @obj.myplaceonline_due_display,
           display: @obj.display,
           link: @obj.link,
           due_date: new_due_date,

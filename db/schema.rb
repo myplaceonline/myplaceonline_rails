@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151119020138) do
+ActiveRecord::Schema.define(version: 20151119035345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -403,8 +403,10 @@ ActiveRecord::Schema.define(version: 20151119020138) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "original_due_date"
+    t.integer  "myplaceonline_due_display_id"
   end
 
+  add_index "complete_due_items", ["myplaceonline_due_display_id"], name: "index_complete_due_items_on_myplaceonline_due_display_id", using: :btree
   add_index "complete_due_items", ["owner_id"], name: "index_complete_due_items_on_owner_id", using: :btree
 
   create_table "computers", force: true do |t|
@@ -663,8 +665,10 @@ ActiveRecord::Schema.define(version: 20151119020138) do
     t.datetime "updated_at"
     t.datetime "original_due_date"
     t.boolean  "is_date_arbitrary"
+    t.integer  "myplaceonline_due_display_id"
   end
 
+  add_index "due_items", ["myplaceonline_due_display_id"], name: "index_due_items_on_myplaceonline_due_display_id", using: :btree
   add_index "due_items", ["owner_id"], name: "index_due_items_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
@@ -1775,8 +1779,10 @@ ActiveRecord::Schema.define(version: 20151119020138) do
     t.integer  "model_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "myplaceonline_due_display_id"
   end
 
+  add_index "snoozed_due_items", ["myplaceonline_due_display_id"], name: "index_snoozed_due_items_on_myplaceonline_due_display_id", using: :btree
   add_index "snoozed_due_items", ["owner_id"], name: "index_snoozed_due_items_on_owner_id", using: :btree
 
   create_table "songs", force: true do |t|
