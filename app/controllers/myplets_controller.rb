@@ -11,9 +11,11 @@ class MypletsController < MyplaceonlineController
     set_category_obj
     controller_class = @obj.category_name + "_controller"
     controller = Object.const_get(controller_class.camelize)
-    @category_obj.assign_attributes(params["myplet"].require(@obj.category_name.singularize).permit(
-      controller.permit_params
-    ))
+    if controller.respond_to?("permit_params")
+      @category_obj.assign_attributes(params["myplet"].require(@obj.category_name.singularize).permit(
+        controller.permit_params
+      ))
+    end
     @category_obj.save!
     super
   end
