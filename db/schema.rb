@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151118052124) do
+ActiveRecord::Schema.define(version: 20151119020138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -402,6 +402,7 @@ ActiveRecord::Schema.define(version: 20151118052124) do
     t.integer  "model_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "original_due_date"
   end
 
   add_index "complete_due_items", ["owner_id"], name: "index_complete_due_items_on_owner_id", using: :btree
