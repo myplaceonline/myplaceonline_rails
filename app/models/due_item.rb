@@ -451,10 +451,13 @@ class DueItem < MyplaceonlineIdentityRecord
   def self.due_apartments(user, updated_record = nil, update_type = nil)
     DueItem.destroy_all(owner: user.primary_identity, model_name: Apartment.name)
     
+    epoch = Date.new(1970, 1, 1)
+    today_days_from_epoch = (Date.today - epoch).to_i
+
     Apartment.where("owner_id = ?", user.primary_identity).each do |apartment|
       apartment.apartment_trash_pickups.each do |trash_pickup|
         next_pickup = trash_pickup.next_pickup
-        if next_pickup.day - Date.today.day <= trash_pickup_threshold
+        if (next_pickup - epoch).to_i - today_days_from_epoch <= trash_pickup_threshold
           DueItem.new(
             display: I18n.t(
               "myplaceonline.apartments.trash_pickup_reminder",
