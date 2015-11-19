@@ -1634,3 +1634,5 @@ en:
     due_items:
       complete: "Complete"
       snooze: "Snooze"
+    myplaceonline_due_displays:
+      exercise_threshold: "Exercise Threshold (Days)"

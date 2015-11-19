@@ -90,6 +90,7 @@ class MyplaceonlineController < ApplicationController
   def edit
     Myp.ensure_encryption_key(session)
     @url = obj_path(@obj)
+    edit_prerespond
     respond_with(@obj)
   end
   
@@ -362,5 +363,8 @@ class MyplaceonlineController < ApplicationController
       else
         nil
       end
+    end
+    
+    def edit_prerespond
     end
 end

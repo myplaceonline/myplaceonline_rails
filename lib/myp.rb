@@ -854,6 +854,13 @@ module Myp
     )
   end
   
+  def self.find_existing_object(class_name, id)
+    Object.const_get(class_name.to_s.camelize).find_by(
+      id: id,
+      owner: User.current_user.primary_identity
+    )
+  end
+  
   def self.handle_exception(exception, email = nil, request = nil)
     stack = Myp.error_details(exception)
     body = ""

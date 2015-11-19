@@ -7,7 +7,28 @@ class MypletsController < MyplaceonlineController
     false
   end
   
+  def after_create_or_update
+    set_category_obj
+    controller_class = @obj.category_name + "_controller"
+    controller = Object.const_get(controller_class.camelize)
+    @category_obj.assign_attributes(params["myplet"].require(@obj.category_name.singularize).permit(
+      controller.permit_params
+    ))
+    @category_obj.save!
+    super
+  end
+  
   protected
+    def set_category_obj
+      if !@obj.category_name.blank? && !@obj.category_id.nil?
+        @category_obj = Myp.find_existing_object(@obj.category_name.singularize, @obj.category_id)
+      end
+    end
+  
+    def edit_prerespond
+      set_category_obj
+    end
+    
     def sorts
       ["lower(myplets.title) ASC"]
     end
