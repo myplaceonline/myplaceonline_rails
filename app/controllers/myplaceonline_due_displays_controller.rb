@@ -8,7 +8,8 @@ class MyplaceonlineDueDisplaysController < MyplaceonlineController
   
   def self.permit_params()
     [
-      :exercise_threshold
+      :exercise_threshold,
+      :contact_best_friend_threshold
     ]
   end
   

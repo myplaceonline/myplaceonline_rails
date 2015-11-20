@@ -12,6 +12,8 @@ class DueItem < MyplaceonlineIdentityRecord
   MINIMUM_DURATION_SECONDS = 60*5
   
   DEFAULT_EXERCISE_THRESHOLD_SECONDS = 7*60*60*24
+  
+  DEFAULT_CONTACT_BEST_FRIEND_THRESHOLD_SECONDS = 20*60*60*24
 
   def short_date
     if Date.today.year > due_date.year
@@ -75,9 +77,9 @@ class DueItem < MyplaceonlineIdentityRecord
     Date.today
   end
   
-  def self.contact_type_threshold
+  def self.contact_type_threshold(mdd)
     result = Hash.new
-    result[0] = 20.days.ago
+    result[0] = (mdd.contact_best_friend_threshold_seconds || DEFAULT_CONTACT_BEST_FRIEND_THRESHOLD_SECONDS).seconds.ago
     result[1] = 45.days.ago
     result[2] = 90.days.ago
     result[4] = 20.days.ago
@@ -247,7 +249,7 @@ class DueItem < MyplaceonlineIdentityRecord
         GROUP BY contacts.id
         ORDER BY last_conversation_date ASC
       }).each do |contact|
-        contact_threshold = contact_type_threshold[contact.contact_type]
+        contact_threshold = contact_type_threshold(mdd)[contact.contact_type]
         if !contact_threshold.nil?
           if contact.last_conversation_date.nil?
             # No conversations at all

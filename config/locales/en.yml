@@ -1635,4 +1635,5 @@ en:
       complete: "Complete"
       snooze: "Snooze"
     myplaceonline_due_displays:
-      exercise_threshold: "Exercise Threshold (Days)"
+      exercise_threshold: "Exercise Threshold"
+      contact_best_friend_threshold: "Best Friend Last Contact"
