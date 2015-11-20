@@ -911,4 +911,22 @@ module Myp
   def self.evaluate_if_probably_i18n(str)
     self.is_probably_i18n(str) ? I18n.t(str) : str
   end
+  
+  def self.process_duration_timespan(duration_str)
+    if !duration_str.blank?
+      matches = duration_str.match(/(\d+) [^,]+, (\d+):(\d+):(\d+)/)
+      matches[1].to_i.days + matches[2].to_i.hours + matches[3].to_i.minutes + matches[4].to_i.seconds
+    else
+      nil
+    end
+  end
+  
+  def self.process_duration_timespan_short(duration_str)
+    if !duration_str.blank?
+      matches = duration_str.match(/(\d+), (\d+):(\d+):(\d+)/)
+      matches[1].to_i.days + matches[2].to_i.hours + matches[3].to_i.minutes + matches[4].to_i.seconds
+    else
+      nil
+    end
+  end
 end

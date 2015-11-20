@@ -437,6 +437,27 @@ module ApplicationHelper
     ).html_safe
   end
   
+  def myp_timespan_field(form, name, placeholder, value, autofocus = false, defaultValueSeconds = nil, input_classes = nil)
+    if defaultValueSeconds.nil?
+      defaultValueSeconds = 0
+    end
+    result = myp_text_field(form, name, placeholder, value, autofocus, input_classes)
+    id = extract_id(result)
+    script = <<-eos
+      <script type="text/javascript">
+        $("##{ id }").datebox({
+          mode: "durationbox",
+          useFocus: true,
+          useClearButton: true,
+          useModal: true,
+          useButton: false,
+          defaultValue: #{ defaultValueSeconds }
+        });
+      </script>
+    eos
+    result + script.html_safe
+  end
+  
   def myp_datetime_field(form, name, placeholder, value, autofocus = false, input_classes = nil, override_datebox_type = nil)
     myp_date_field(form, name, placeholder, value, autofocus, input_classes, "datetime", Myplaceonline::DEFAULT_TIME_FORMAT)
   end
@@ -701,5 +722,9 @@ module ApplicationHelper
     # calling it through a public wrapper doesn't work)
     c.dispatch(action, request)
     c.response.body
+  end
+  
+  def extract_id(html)
+    html.match("id=\"([^\"]+)\"")[1]
   end
 end

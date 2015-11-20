@@ -10,6 +10,8 @@ class DueItem < MyplaceonlineIdentityRecord
   
   # Should match crontab minimum
   MINIMUM_DURATION_SECONDS = 60*5
+  
+  DEFAULT_EXERCISE_THRESHOLD_SECONDS = 7*60*60*24
 
   def short_date
     if Date.today.year > due_date.year
@@ -62,7 +64,7 @@ class DueItem < MyplaceonlineIdentityRecord
   end
   
   def self.exercise_threshold(mdd)
-    (mdd.exercise_threshold || 7).days.ago
+    (mdd.exercise_threshold_seconds || DEFAULT_EXERCISE_THRESHOLD_SECONDS).seconds.ago
   end
   
   def self.timenow

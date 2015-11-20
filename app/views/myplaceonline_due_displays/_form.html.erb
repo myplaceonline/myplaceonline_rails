@@ -1,1 +1,1 @@
-<%= myp_integer_field(f, :exercise_threshold, "myplaceonline.myplaceonline_due_displays.exercise_threshold", obj.exercise_threshold) %>
+<%= myp_timespan_field(f, :exercise_threshold, "myplaceonline.myplaceonline_due_displays.exercise_threshold", obj.exercise_threshold, false, DueItem::DEFAULT_EXERCISE_THRESHOLD_SECONDS) %>

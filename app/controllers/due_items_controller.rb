@@ -33,7 +33,7 @@ class DueItemsController < MyplaceonlineController
   # due item and let it pick up after snooze on the next due item recalculation
   def snooze
     set_obj
-    duration = process_duration(params["duration"])
+    duration = Myp.process_duration_timespan_short(params["duration"])
     if !duration.nil?
       new_due_date = Time.now + duration
       

@@ -355,15 +355,6 @@ class MyplaceonlineController < ApplicationController
     
     def showmyplet
     end
-  
-    def process_duration(duration_str)
-      if !duration_str.blank?
-        matches = duration_str.match(/(\d+), (\d+):(\d+):(\d+)/)
-        matches[1].to_i.days + matches[2].to_i.hours + matches[3].to_i.minutes + matches[4].to_i.seconds
-      else
-        nil
-      end
-    end
     
     def edit_prerespond
     end
