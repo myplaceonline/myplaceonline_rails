@@ -14,6 +14,10 @@ class DueItem < MyplaceonlineIdentityRecord
   DEFAULT_EXERCISE_THRESHOLD_SECONDS = 7*60*60*24
   
   DEFAULT_CONTACT_BEST_FRIEND_THRESHOLD_SECONDS = 20*60*60*24
+  DEFAULT_CONTACT_GOOD_FRIEND_THRESHOLD_SECONDS = 45*60*60*24
+  DEFAULT_CONTACT_ACQUAINTANCE_THRESHOLD_SECONDS = 90*60*60*24
+  DEFAULT_CONTACT_BEST_FAMILY_THRESHOLD_SECONDS = 20*60*60*24
+  DEFAULT_CONTACT_GOOD_FAMILY_THRESHOLD_SECONDS = 45*60*60*24
 
   def short_date
     if Date.today.year > due_date.year
@@ -80,10 +84,10 @@ class DueItem < MyplaceonlineIdentityRecord
   def self.contact_type_threshold(mdd)
     result = Hash.new
     result[0] = (mdd.contact_best_friend_threshold_seconds || DEFAULT_CONTACT_BEST_FRIEND_THRESHOLD_SECONDS).seconds.ago
-    result[1] = 45.days.ago
-    result[2] = 90.days.ago
-    result[4] = 20.days.ago
-    result[5] = 45.days.ago
+    result[1] = (mdd.contact_good_friend_threshold_seconds || DEFAULT_CONTACT_GOOD_FRIEND_THRESHOLD_SECONDS).seconds.ago
+    result[2] = (mdd.contact_acquaintance_threshold_seconds || DEFAULT_CONTACT_ACQUAINTANCE_THRESHOLD_SECONDS).seconds.ago
+    result[4] = (mdd.contact_best_family_threshold_seconds || DEFAULT_CONTACT_BEST_FAMILY_THRESHOLD_SECONDS).seconds.ago
+    result[5] = (mdd.contact_good_family_threshold_seconds || DEFAULT_CONTACT_GOOD_FAMILY_THRESHOLD_SECONDS).seconds.ago
     result
   end
   

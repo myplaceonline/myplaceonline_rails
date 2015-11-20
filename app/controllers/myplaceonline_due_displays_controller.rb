@@ -9,7 +9,11 @@ class MyplaceonlineDueDisplaysController < MyplaceonlineController
   def self.permit_params()
     [
       :exercise_threshold,
-      :contact_best_friend_threshold
+      :contact_best_friend_threshold,
+      :contact_good_friend_threshold,
+      :contact_acquaintance_threshold,
+      :contact_best_family_threshold,
+      :contact_good_family_threshold
     ]
   end
   

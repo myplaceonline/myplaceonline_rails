@@ -1637,3 +1637,7 @@ en:
     myplaceonline_due_displays:
       exercise_threshold: "Exercise Threshold"
       contact_best_friend_threshold: "Best Friend Last Contact"
+      contact_good_friend_threshold: "Good Friend Last Contact"
+      contact_acquaintance_threshold: "Acquaintance Last Contact"
+      contact_best_family_threshold: "Best Family Last Contact"
+      contact_good_family_threshold: "Good Family Last Contact"
