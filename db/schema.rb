@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151120015253) do
+ActiveRecord::Schema.define(version: 20151121174330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1358,6 +1358,10 @@ ActiveRecord::Schema.define(version: 20151120015253) do
     t.integer  "trash_pickup_threshold"
     t.integer  "periodic_payment_before_threshold"
     t.integer  "periodic_payment_after_threshold"
+    t.integer  "drivers_license_expiration_threshold"
+    t.integer  "birthday_threshold"
+    t.integer  "promotion_threshold"
+    t.string   "gun_registration_expiration_threshold"
   end
 
   add_index "myplaceonline_due_displays", ["owner_id"], name: "index_myplaceonline_due_displays_on_owner_id", using: :btree
