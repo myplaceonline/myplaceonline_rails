@@ -22,16 +22,13 @@ module EncryptedConcern extend ActiveSupport::Concern
         
         define_method(name) do
           if !send("#{name}_encrypted?")
-            #logger.debug{"Getting non-encrypted value for #{name}"}
             result = super()
           else
-            #logger.debug{"Getting encrypted value for #{name}"}
             result = Myp.decrypt_from_session(
               ApplicationController.current_session,
               send("#{name}_encrypted")
             )
           end
-          #logger.debug{"result: #{result}"}
           result
         end
         
@@ -44,8 +41,6 @@ module EncryptedConcern extend ActiveSupport::Concern
                 ApplicationController.current_session,
                 self[name]
               )
-              #logger.debug{"decrypted: #{Myp.decrypt_from_session(ApplicationController.current_session, new_encrypted_value)}"}
-              #logger.debug{"new_encrypted_value: #{new_encrypted_value.inspect}"}
               self.send("#{name}=", nil)
               if send("#{name}_encrypted?")
                 Myp.copy_encrypted_value_attributes(

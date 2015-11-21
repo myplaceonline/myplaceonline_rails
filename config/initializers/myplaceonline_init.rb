@@ -15,6 +15,5 @@ if Myp.is_web_server? || Rails.env.test?
 
   if Myp.database_exists? && !Rails.env.test?
     DueItem.recalculate_all_users_due
-    puts "Recalculated due items"
   end
 end

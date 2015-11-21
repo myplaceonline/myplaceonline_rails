@@ -13,7 +13,13 @@ class MyplaceonlineDueDisplaysController < MyplaceonlineController
       :contact_good_friend_threshold,
       :contact_acquaintance_threshold,
       :contact_best_family_threshold,
-      :contact_good_family_threshold
+      :contact_good_family_threshold,
+      :dentist_visit_threshold,
+      :doctor_visit_threshold,
+      :status_threshold,
+      :trash_pickup_threshold,
+      :periodic_payment_before_threshold,
+      :periodic_payment_after_threshold
     ]
   end
   

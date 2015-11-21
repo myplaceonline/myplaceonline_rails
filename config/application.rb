@@ -2,6 +2,11 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
+require 'log4r'
+require 'log4r/yamlconfigurator'
+require 'log4r/outputter/datefileoutputter'
+include Log4r
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -28,6 +33,10 @@ module Myplaceonline
     # config.i18n.default_locale = :de
     
     puts "Starting @ " + Time.now.to_s
+    
+    log4r_config= YAML.load_file(File.join(File.dirname(__FILE__), "log4r.yml"))
+    YamlConfigurator.decode_yaml( log4r_config['log4r_config'] )
+    config.logger = Log4r::Logger[Rails.env]
     
     # http://stackoverflow.com/a/5015920/4135310
     config.before_configuration do

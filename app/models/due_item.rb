@@ -19,6 +19,13 @@ class DueItem < MyplaceonlineIdentityRecord
   DEFAULT_CONTACT_BEST_FAMILY_THRESHOLD_SECONDS = 20*60*60*24
   DEFAULT_CONTACT_GOOD_FAMILY_THRESHOLD_SECONDS = 45*60*60*24
 
+  DEFAULT_DENTIST_VISIT_THRESHOLD_SECONDS = 7*4*5*60*60*24
+  DEFAULT_DOCTOR_VISIT_THRESHOLD_SECONDS = 11*4*5*60*60*24
+  DEFAULT_STATUS_THRESHOLD_SECONDS = 60*60*16
+  DEFAULT_TRASH_PICKUP_THRESHOLD_SECONDS = 2*60*60*24
+  DEFAULT_PERIODIC_PAYMENT_BEFORE_THRESHOLD_SECONDS = 3*60*60*24
+  DEFAULT_PERIODIC_PAYMENT_AFTER_THRESHOLD_SECONDS = 3*60*60*24
+
   def short_date
     if Date.today.year > due_date.year
       Myp.display_date_short_year(due_date, User.current_user)
@@ -36,33 +43,50 @@ class DueItem < MyplaceonlineIdentityRecord
   end
   
   def allows_reminder
+    Rails.logger.debug{
+      "allows_reminder start, #{self.inspect}"
+    }
     if self.is_date_arbitrary
-      ::CompleteDueItem.where(
+      completed_due_items = ::CompleteDueItem.where(
         owner_id: self.owner_id,
         myplaceonline_due_display_id: self.myplaceonline_due_display.id,
         model_name: self.model_name,
         model_id: self.model_id
-      ).length == 0 && ::SnoozedDueItem.where(
+      )
+      
+      snoozed_due_items = ::SnoozedDueItem.where(
         owner_id: self.owner_id,
         myplaceonline_due_display_id: self.myplaceonline_due_display.id,
         model_name: self.model_name,
         model_id: self.model_id
-      ).length == 0
+      )
     else
-      ::CompleteDueItem.where(
+      completed_due_items = ::CompleteDueItem.where(
         owner_id: self.owner_id,
         myplaceonline_due_display_id: self.myplaceonline_due_display.id,
         due_date: self.original_due_date,
         model_name: self.model_name,
         model_id: self.model_id
-      ).length == 0 && ::SnoozedDueItem.where(
+      )
+      
+      snoozed_due_items = ::SnoozedDueItem.where(
         owner_id: self.owner_id,
         myplaceonline_due_display_id: self.myplaceonline_due_display.id,
         original_due_date: self.original_due_date,
         model_name: self.model_name,
         model_id: self.model_id
-      ).length == 0
+      )
     end
+    
+    Rails.logger.debug{
+      "allows_reminder end, completed_due_items: #{
+        completed_due_items.length
+      }, snoozed_due_items: #{
+        snoozed_due_items.length
+      }"
+    }
+    
+    completed_due_items.length == 0 && snoozed_due_items.length == 0
   end
   
   def self.general_threshold
@@ -91,28 +115,28 @@ class DueItem < MyplaceonlineIdentityRecord
     result
   end
   
-  def self.dentist_visit_threshold
-    5.months.ago
+  def self.dentist_visit_threshold(mdd)
+    (mdd.dentist_visit_threshold_seconds || DEFAULT_DENTIST_VISIT_THRESHOLD_SECONDS).seconds.ago
   end
   
-  def self.doctor_visit_threshold
-    11.months.ago
+  def self.doctor_visit_threshold(mdd)
+    (mdd.doctor_visit_threshold_seconds || DEFAULT_DOCTOR_VISIT_THRESHOLD_SECONDS).seconds.ago
   end
   
-  def self.status_threshold
-    16.hours.ago
+  def self.status_threshold(mdd)
+    (mdd.status_threshold_seconds || DEFAULT_STATUS_THRESHOLD_SECONDS).seconds.ago
   end
   
-  def self.trash_pickup_threshold
-    2
+  def self.trash_pickup_threshold(mdd)
+    (mdd.trash_pickup_threshold_seconds || DEFAULT_TRASH_PICKUP_THRESHOLD_SECONDS).seconds
   end
   
-  def self.periodic_payment_threshold_after
-    2
+  def self.periodic_payment_threshold_after(mdd)
+    (mdd.periodic_payment_after_threshold_seconds || DEFAULT_PERIODIC_PAYMENT_AFTER_THRESHOLD_SECONDS).seconds
   end
   
-  def self.periodic_payment_threshold_before
-    5
+  def self.periodic_payment_threshold_before(mdd)
+    (mdd.periodic_payment_before_threshold_seconds || DEFAULT_PERIODIC_PAYMENT_BEFORE_THRESHOLD_SECONDS).seconds
   end
   
   def self.all_due(user)
@@ -136,6 +160,7 @@ class DueItem < MyplaceonlineIdentityRecord
 
   # This will be called periodically by crontab
   def self.recalculate_all_users_due()
+    Rails.logger.info("recalculate_all_users_due start")
     User.all.each do |user|
       begin
         User.current_user = user
@@ -144,6 +169,7 @@ class DueItem < MyplaceonlineIdentityRecord
         User.current_user = nil
       end
     end
+    Rails.logger.info("recalculate_all_users_due end")
   end
   
   def self.check_snoozed_items(user, model_name, updated_record, update_type)
@@ -379,7 +405,7 @@ class DueItem < MyplaceonlineIdentityRecord
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
       last_dentist_visit = DentistVisit.where("owner_id = ? and cleaning = true", user.primary_identity).order('visit_date DESC').limit(1).first
-      if !last_dentist_visit.nil? and last_dentist_visit.visit_date < dentist_visit_threshold
+      if !last_dentist_visit.nil? and last_dentist_visit.visit_date < dentist_visit_threshold(mdd)
         DueItem.new(
           display: I18n.t(
             "myplaceonline.dentist_visits.no_cleaning_for",
@@ -420,7 +446,7 @@ class DueItem < MyplaceonlineIdentityRecord
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
       last_doctor_visit = DoctorVisit.where("owner_id = ? and physical = true", user.primary_identity).order('visit_date DESC').limit(1).first
-      if !last_doctor_visit.nil? and last_doctor_visit.visit_date < doctor_visit_threshold
+      if !last_doctor_visit.nil? and last_doctor_visit.visit_date < doctor_visit_threshold(mdd)
         DueItem.new(
           display: I18n.t(
             "myplaceonline.doctor_visits.no_physical_for",
@@ -461,7 +487,7 @@ class DueItem < MyplaceonlineIdentityRecord
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
       last_status = Status.where("owner_id = ?", user.primary_identity).order('status_time DESC').limit(1).first
-      if !last_status.nil? and last_status.status_time < status_threshold
+      if !last_status.nil? and last_status.status_time < status_threshold(mdd)
         DueItem.new(
           display: I18n.t(
             "myplaceonline.statuses.no_recent_status",
@@ -497,14 +523,26 @@ class DueItem < MyplaceonlineIdentityRecord
   def self.due_apartments(user, updated_record = nil, update_type = nil)
     DueItem.destroy_all(owner: user.primary_identity, model_name: Apartment.name)
     
-    epoch = Date.new(1970, 1, 1)
-    today_days_from_epoch = (Date.today - epoch).to_i
-
+    today = Date.today
+    
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
       Apartment.where("owner_id = ?", user.primary_identity).each do |apartment|
         apartment.apartment_trash_pickups.each do |trash_pickup|
           next_pickup = trash_pickup.next_pickup
-          if (next_pickup - epoch).to_i - today_days_from_epoch <= trash_pickup_threshold
+          Rails.logger.debug{
+            "Trash pickup: #{
+              trash_pickup.inspect
+            }, next: #{
+              next_pickup
+            }, threshold: #{
+              trash_pickup_threshold(mdd)
+            }, today: #{
+              today
+            }, diff: #{
+              next_pickup - trash_pickup_threshold(mdd)
+            }"
+          }
+          if next_pickup - trash_pickup_threshold(mdd) <= today
             DueItem.new(
               display: I18n.t(
                 "myplaceonline.apartments.trash_pickup_reminder",
@@ -552,8 +590,7 @@ class DueItem < MyplaceonlineIdentityRecord
               result = result.advance(months: 6)
             end
           end
-          y = result - today
-          if y.floor == 0
+          if result == today
             DueItem.new(
               display: I18n.t(
                 "myplaceonline.periodic_payments.reminder_today",
@@ -567,7 +604,7 @@ class DueItem < MyplaceonlineIdentityRecord
               model_name: PeriodicPayment.name,
               model_id: x.id
             ).check_and_save!
-          elsif y.floor <= self.periodic_payment_threshold_before
+          elsif result - self.periodic_payment_threshold_before(mdd) <= today
             DueItem.new(
               display: I18n.t(
                 "myplaceonline.periodic_payments.reminder_before",
@@ -590,8 +627,7 @@ class DueItem < MyplaceonlineIdentityRecord
             elsif x.date_period == 2
               result = result.advance(months: -6)
             end
-            y = today - result
-            if y.ceil <= self.periodic_payment_threshold_after
+            if today - self.periodic_payment_threshold_after(mdd) <= result
               DueItem.new(
                 display: I18n.t(
                   "myplaceonline.periodic_payments.reminder_after",

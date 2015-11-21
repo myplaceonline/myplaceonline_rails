@@ -348,7 +348,6 @@ module Myp
     # https://github.com/rails/rails/blob/master/activesupport/lib/active_support/key_generator.rb
     generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(value.salt, Myp::DEFAULT_AES_KEY_SIZE)
     crypt = ActiveSupport::MessageEncryptor.new(generated_key, :serializer => SimpleSerializer.new)
-    Rails.logger.debug("Performing encryption")
     value.val = crypt.encrypt_and_sign(message)
     value
   end
@@ -370,10 +369,8 @@ module Myp
   def self.decrypt(encrypted_value, key)
     generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(encrypted_value.salt, Myp::DEFAULT_AES_KEY_SIZE)
     crypt = ActiveSupport::MessageEncryptor.new(generated_key, :serializer => SimpleSerializer.new)
-    Rails.logger.debug("Performing decryption")
     result = crypt.decrypt_and_verify(encrypted_value.val)
     if result.start_with?(Myp.eye_catcher_marshalled)
-      #Rails.logger.debug{"un-marshalling: #{result}"}
       result = Marshal::load(result[Myp.eye_catcher_marshalled.length..-1])
     end
     result

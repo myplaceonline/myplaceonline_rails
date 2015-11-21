@@ -21,6 +21,6 @@ class PeriodicPayment < MyplaceonlineIdentityRecord
     result
   end
 
-  after_save { |x| DueItem.due_periodic_payments(User.current_user, record, DueItem::UPDATE_TYPE_UPDATE) }
-  after_destroy { |x| DueItem.due_periodic_payments(User.current_user, record, DueItem::UPDATE_TYPE_DELETE) }
+  after_save { |record| DueItem.due_periodic_payments(User.current_user, record, DueItem::UPDATE_TYPE_UPDATE) }
+  after_destroy { |record| DueItem.due_periodic_payments(User.current_user, record, DueItem::UPDATE_TYPE_DELETE) }
 end

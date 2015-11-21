@@ -7,6 +7,12 @@ class MyplaceonlineDueDisplay < MyplaceonlineIdentityRecord
   timespan_field :contact_acquaintance_threshold
   timespan_field :contact_best_family_threshold
   timespan_field :contact_good_family_threshold
+  timespan_field :dentist_visit_threshold
+  timespan_field :doctor_visit_threshold
+  timespan_field :status_threshold
+  timespan_field :trash_pickup_threshold
+  timespan_field :periodic_payment_before_threshold
+  timespan_field :periodic_payment_after_threshold
   
   after_save { |record| DueItem.recalculate_due(User.current_user) }
   after_destroy { |record| DueItem.recalculate_due(User.current_user) }
