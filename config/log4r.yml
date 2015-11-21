@@ -1,21 +1,29 @@
 log4r_config:
   loggers:
-    - name      : production
-      level     : WARN
-      trace     : 'false'
+    - name       : production
+      level      : INFO # this should match the level in the outputter
+      trace      : 'false'
       outputters :
       - datefile
-    - name      : development
-      level     : DEBUG
-      trace     : 'true'
+    - name       : development
+      level      : DEBUG
+      trace      : 'true'
       outputters :
-      - datefile
+      - custom_stdout
 
   outputters:
   - type: DateFileOutputter
     name: datefile
     dirname: "log"
     filename: "app_log4r_%u.log"
+    level: INFO # this should match the level in the production logger
+    formatter:
+      date_pattern: '%H:%M:%S'
+      pattern     : '%d %l: %m '
+      type        : PatternFormatter
+  - type     : StdoutOutputter
+    name     : custom_stdout 
+    level    : DEBUG
     formatter:
       date_pattern: '%H:%M:%S'
       pattern     : '%d %l: %m '

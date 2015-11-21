@@ -36,8 +36,10 @@ module Myplaceonline
     
     log4r_config = YAML.load_file(File.join(File.dirname(__FILE__), "log4r.yml"))
     log4r_config['log4r_config']['outputters'].each do |outputter|
-      outputter['filename'] = outputter['filename'].gsub("%u", ENV['USER'])
-      puts "Writing log4r to " + File.absolute_path(Dir.new(outputter["dirname"]))
+      if outputter['filename']
+        outputter['filename'] = outputter['filename'].gsub("%u", ENV['USER'])
+        puts "Writing log4r to " + File.absolute_path(Dir.new(outputter["dirname"]))
+      end
     end
     YamlConfigurator.decode_yaml( log4r_config['log4r_config'] )
     config.logger = Log4r::Logger[Rails.env]
