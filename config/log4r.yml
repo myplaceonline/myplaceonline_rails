@@ -15,7 +15,7 @@ log4r_config:
   - type: DateFileOutputter
     name: datefile
     dirname: "log"
-    filename: "app_log4r.log"
+    filename: "app_log4r_%u.log"
     formatter:
       date_pattern: '%H:%M:%S'
       pattern     : '%d %l: %m '
