@@ -26,6 +26,11 @@ class DueItem < MyplaceonlineIdentityRecord
   DEFAULT_PERIODIC_PAYMENT_BEFORE_THRESHOLD_SECONDS = 3*60*60*24
   DEFAULT_PERIODIC_PAYMENT_AFTER_THRESHOLD_SECONDS = 3*60*60*24
 
+  DEFAULT_DRIVERS_LICENSE_EXPIRATION_THRESHOLD_SECONDS = 60*60*60*24
+  DEFAULT_BIRTHDAY_THRESHOLD_SECONDS = 60*60*60*24
+  DEFAULT_PROMOTION_THRESHOLD_SECONDS = 60*60*60*24
+  DEFAULT_GUN_REGISTRATION_EXPIRATION_THRESHOLD_SECONDS = 60*60*60*24
+
   def short_date
     if Date.today.year > due_date.year
       Myp.display_date_short_year(due_date, User.current_user)
@@ -89,10 +94,6 @@ class DueItem < MyplaceonlineIdentityRecord
     completed_due_items.length == 0 && snoozed_due_items.length == 0
   end
   
-  def self.general_threshold
-    60.days.from_now
-  end
-  
   def self.exercise_threshold(mdd)
     (mdd.exercise_threshold_seconds || DEFAULT_EXERCISE_THRESHOLD_SECONDS).seconds.ago
   end
@@ -125,6 +126,22 @@ class DueItem < MyplaceonlineIdentityRecord
   
   def self.status_threshold(mdd)
     (mdd.status_threshold_seconds || DEFAULT_STATUS_THRESHOLD_SECONDS).seconds.ago
+  end
+
+  def self.drivers_license_expiration_threshold(mdd)
+    (mdd.drivers_license_expiration_threshold_seconds || DEFAULT_DRIVERS_LICENSE_EXPIRATION_THRESHOLD_SECONDS).seconds.since
+  end
+  
+  def self.birthday_threshold(mdd)
+    (mdd.birthday_threshold_seconds || DEFAULT_BIRTHDAY_THRESHOLD_SECONDS).seconds.since
+  end
+  
+  def self.promotion_threshold(mdd)
+    (mdd.promotion_threshold_seconds || DEFAULT_PROMOTION_THRESHOLD_SECONDS).seconds.since
+  end
+  
+  def self.gun_registration_expiration_threshold(mdd)
+    (mdd.gun_registration_expiration_threshold_seconds || DEFAULT_GUN_REGISTRATION_EXPIRATION_THRESHOLD_SECONDS).seconds.since
   end
   
   def self.trash_pickup_threshold(mdd)
@@ -222,7 +239,7 @@ class DueItem < MyplaceonlineIdentityRecord
     DueItem.destroy_all(owner: user.primary_identity, model_name: Contact.name)
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
-      IdentityDriversLicense.where("owner_id = ? and expires is not null and expires < ?", user.primary_identity, general_threshold).each do |drivers_license|
+      IdentityDriversLicense.where("owner_id = ? and expires is not null and expires < ?", user.primary_identity, drivers_license_expiration_threshold(mdd)).each do |drivers_license|
         contact = Contact.where(owner_id: user.primary_identity.id, identity_id: drivers_license.identity.id).first
         diff = TimeDifference.between(timenow, drivers_license.expires)
         if timenow >= drivers_license.expires
@@ -248,7 +265,7 @@ class DueItem < MyplaceonlineIdentityRecord
       Contact.where(owner: user.primary_identity).includes(:identity).to_a.each do |x|
         if !x.identity.nil? && !x.identity.birthday.nil?
           bday_this_year = Date.new(Date.today.year, x.identity.birthday.month, x.identity.birthday.day)
-          if bday_this_year >= datenow && bday_this_year <= general_threshold
+          if bday_this_year >= datenow && bday_this_year <= birthday_threshold(mdd)
             diff = TimeDifference.between(datenow, bday_this_year)
             diff_in_general = diff.in_general
             DueItem.new(
@@ -353,7 +370,8 @@ class DueItem < MyplaceonlineIdentityRecord
     DueItem.destroy_all(owner: user.primary_identity, model_name: Promotion.name)
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
-      Promotion.where("owner_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, general_threshold).each do |promotion|
+      Promotion.where("owner_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, promotion_threshold(mdd)).each do |promotion|
+        Rails.logger.debug{"Promotion due #{promotion.inspect}"}
         DueItem.new(
           display: I18n.t(
             "myplaceonline.promotions.expires_soon",
@@ -379,7 +397,7 @@ class DueItem < MyplaceonlineIdentityRecord
     DueItem.destroy_all(owner: user.primary_identity, model_name: GunRegistration.name)
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
-      GunRegistration.where("owner_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, general_threshold).each do |x|
+      GunRegistration.where("owner_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, gun_registration_expiration_threshold(mdd)).each do |x|
         DueItem.new(
           display: I18n.t(
             "myplaceonline.gun_registrations.expires_soon",

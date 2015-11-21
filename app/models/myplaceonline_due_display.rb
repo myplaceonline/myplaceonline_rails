@@ -13,6 +13,10 @@ class MyplaceonlineDueDisplay < MyplaceonlineIdentityRecord
   timespan_field :trash_pickup_threshold
   timespan_field :periodic_payment_before_threshold
   timespan_field :periodic_payment_after_threshold
+  timespan_field :drivers_license_expiration_threshold
+  timespan_field :birthday_threshold
+  timespan_field :promotion_threshold
+  timespan_field :gun_registration_expiration_threshold
   
   after_save { |record| DueItem.recalculate_due(User.current_user) }
   after_destroy { |record| DueItem.recalculate_due(User.current_user) }

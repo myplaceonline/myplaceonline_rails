@@ -10,3 +10,9 @@
 <%= myp_timespan_field(f, :trash_pickup_threshold, "myplaceonline.myplaceonline_due_displays.trash_pickup_threshold", obj.trash_pickup_threshold, false, DueItem::DEFAULT_TRASH_PICKUP_THRESHOLD_SECONDS) %>
 <%= myp_timespan_field(f, :periodic_payment_before_threshold, "myplaceonline.myplaceonline_due_displays.periodic_payment_before_threshold", obj.periodic_payment_before_threshold, false, DueItem::DEFAULT_PERIODIC_PAYMENT_BEFORE_THRESHOLD_SECONDS) %>
 <%= myp_timespan_field(f, :periodic_payment_after_threshold, "myplaceonline.myplaceonline_due_displays.periodic_payment_after_threshold", obj.periodic_payment_after_threshold, false, DueItem::DEFAULT_PERIODIC_PAYMENT_AFTER_THRESHOLD_SECONDS) %>
+<%= myp_timespan_field(f, :drivers_license_expiration_threshold, "myplaceonline.myplaceonline_due_displays.drivers_license_expiration_threshold", obj.drivers_license_expiration_threshold, false, DueItem::DEFAULT_DRIVERS_LICENSE_EXPIRATION_THRESHOLD_SECONDS) %>
+<%= myp_timespan_field(f, :birthday_threshold, "myplaceonline.myplaceonline_due_displays.birthday_threshold", obj.birthday_threshold, false, DueItem::DEFAULT_BIRTHDAY_THRESHOLD_SECONDS) %>
+<%= myp_timespan_field(f, :promotion_threshold, "myplaceonline.myplaceonline_due_displays.promotion_threshold", obj.promotion_threshold, false, DueItem::DEFAULT_PROMOTION_THRESHOLD_SECONDS) %>
+<% if current_user.explicit_categories %>
+  <%= myp_timespan_field(f, :gun_registration_expiration_threshold, "myplaceonline.myplaceonline_due_displays.gun_registration_expiration_threshold", obj.gun_registration_expiration_threshold, false, DueItem::DEFAULT_GUN_REGISTRATION_EXPIRATION_THRESHOLD_SECONDS) %>
+<% end %>

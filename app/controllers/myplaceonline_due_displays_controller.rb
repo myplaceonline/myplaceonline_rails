@@ -19,7 +19,11 @@ class MyplaceonlineDueDisplaysController < MyplaceonlineController
       :status_threshold,
       :trash_pickup_threshold,
       :periodic_payment_before_threshold,
-      :periodic_payment_after_threshold
+      :periodic_payment_after_threshold,
+      :drivers_license_expiration_threshold,
+      :birthday_threshold,
+      :promotion_threshold,
+      :gun_registration_expiration_threshold
     ]
   end
   
