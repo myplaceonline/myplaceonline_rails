@@ -32,7 +32,7 @@ log4r_config:
   - type: DateFileOutputter
     name: debug_datefile
     dirname: "log"
-    filename: "app_log4r.log"
+    filename: "app_log4r_debug_%u.log"
     level: DEBUG # this should match the level in the production logger
     formatter:
       date_pattern: '%H:%M:%S'

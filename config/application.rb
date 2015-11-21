@@ -38,7 +38,7 @@ module Myplaceonline
     log4r_config['log4r_config']['outputters'].each do |outputter|
       if outputter['filename']
         outputter['filename'] = outputter['filename'].gsub("%u", ENV['USER'])
-        puts "Writing log4r to " + File.absolute_path(Dir.new(outputter["dirname"]))
+        puts "Changing configuration of log4r outputter to " + File.absolute_path(Dir.new(outputter["dirname"])) + "/" + outputter['filename']
       end
     end
     YamlConfigurator.decode_yaml( log4r_config['log4r_config'] )
