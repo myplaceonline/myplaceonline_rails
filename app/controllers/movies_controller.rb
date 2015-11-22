@@ -9,6 +9,11 @@ class MoviesController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:movie).permit(:name, :url, :is_watched)
+      params.require(:movie).permit(
+        :name,
+        :url,
+        :is_watched,
+        Myp.select_or_create_permit(params[:movie], :recommender_attributes, ContactsController.param_names)
+      )
     end
 end

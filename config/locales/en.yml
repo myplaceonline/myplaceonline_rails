@@ -453,6 +453,7 @@ en:
       name: "Movie Name"
       watched: "Watched"
       url: "Website"
+      recommender: "Recommender"
     wisdoms:
       name: "Wisdom Name"
       wisdom: "Wisdom"

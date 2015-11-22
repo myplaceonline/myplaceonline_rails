@@ -1,3 +1,16 @@
 <%= myp_text_field f, :name, "myplaceonline.movies.name", obj.name, autofocus %>
 <%= myp_text_field f, :url, "myplaceonline.movies.url", obj.url %>
 <%= myp_check_box f, :is_watched, "myplaceonline.movies.watched" %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :recommender,
+    existingobj: obj.recommender,
+    heading: t("myplaceonline.movies.recommender"),
+    objform: "contacts/form",
+    existingobjurl: "contact_path",
+    searchurl: "/contacts.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
