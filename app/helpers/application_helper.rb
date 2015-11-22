@@ -355,6 +355,7 @@ module ApplicationHelper
       if !clipboard.nil?
         options[:class] += " clipboardable"
         options["data-clipboard-text"] = HTMLEntities.new.encode(clipboard_text_str(clipboard))
+        options["data-clipboard-clickthrough"] = "yes"
       end
       if !linkclasses.blank?
         options[:class] += " " + linkclasses

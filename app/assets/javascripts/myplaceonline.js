@@ -774,8 +774,7 @@ function ensureClipboard(objects) {
     $("[data-clipboard-text]").click( function(e) {
       cordova.plugins.clipboard.copy($(this).data("clipboard-text"));
       createSuccessNotification("Copied '" + $(this).data("clipboard-text") + "' to clipboard.");
-      //e.preventDefault();
-      return true;
+      return $(this).data("clipboard-clickthrough") == "yes" ? true : false;
     });
   } else {
     var clipboard_integration = 1;
@@ -796,8 +795,7 @@ function ensureClipboard(objects) {
       $("[data-clipboard-text]").click( function(e) {
         window.ffclipboard.setText($(this).data("clipboard-text"));
         createSuccessNotification("Copied '" + $(this).data("clipboard-text") + "' to clipboard.");
-        //e.preventDefault();
-        return true;
+        return $(this).data("clipboard-clickthrough") == "yes" ? true : false;
       });
     }
   }
