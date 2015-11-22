@@ -16,7 +16,7 @@
 <%= myp_date_field(f, :purchased, "myplaceonline.phones.purchased", obj.purchased) %>
 <%= myp_decimal_field(f, :price, "myplaceonline.phones.price", obj.price) %>
 <%= myp_select(f, :operating_system, "myplaceonline.phones.operating_system", Myp.translate_options(Phone::OPERATING_SYSTEMS), obj.operating_system) %>
-<%= myp_decimal_field(f, :operating_system_version, "myplaceonline.phones.operating_system_version", obj.operating_system_version) %>
+<%= myp_text_field(f, :operating_system_version, "myplaceonline.phones.operating_system_version", obj.operating_system_version) %>
 <%= myp_integer_field(f, :max_resolution_width, "myplaceonline.phones.max_resolution_width", obj.max_resolution_width) %>
 <%= myp_integer_field(f, :max_resolution_height, "myplaceonline.phones.max_resolution_height", obj.max_resolution_height) %>
 <%= myp_integer_field(f, :ram, "myplaceonline.phones.ram", obj.ram) %>

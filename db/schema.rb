@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151121174330) do
+ActiveRecord::Schema.define(version: 20151122231539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1509,7 +1509,7 @@ ActiveRecord::Schema.define(version: 20151121174330) do
     t.date     "purchased"
     t.decimal  "price",                    precision: 10, scale: 2
     t.integer  "operating_system"
-    t.decimal  "operating_system_version", precision: 10, scale: 2
+    t.string   "operating_system_version"
     t.integer  "max_resolution_width"
     t.integer  "max_resolution_height"
     t.integer  "ram"
