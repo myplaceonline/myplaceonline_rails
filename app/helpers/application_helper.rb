@@ -48,7 +48,7 @@ module ApplicationHelper
 
       options = Hash.new
       options[:href] = "#"
-      options[:class] = "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable externallink"
+      options[:class] = "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable"
       options[:title] = t("myplaceonline.general.clipboard")
       options["data-clipboard-text"] = HTMLEntities.new.encode(clipboard_text_str(clipboard_text))
       
@@ -75,7 +75,7 @@ module ApplicationHelper
       result = clipboard_text.to_s
       if !User.current_user.nil? && User.current_user.clipboard_transform_numbers
         # Haven't been able to find out where, but in some cases, trying to
-        # use the firefox clipboard SDK to copy to copy values that look
+        # use the firefox clipboard SDK to copy values that look
         # like credit cards to the clipboard are actually suppressed.
         if (result.length == 15 && result.gsub(/[^0-9]+/, "").length == 15) || (result.length == 16 && result.gsub(/[^0-9]+/, "").length == 16)
           result += " "
