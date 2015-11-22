@@ -1292,6 +1292,7 @@ en:
       is_read: "Read"
       notes: "Notes"
       when_read: "Date Read"
+      recommender: "Recommender"
     warranties:
       heading: "Warranties"
       add: "Add Warranty"

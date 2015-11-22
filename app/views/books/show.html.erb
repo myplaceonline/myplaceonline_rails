@@ -6,5 +6,8 @@
   <%= attribute_table_row_date(t("myplaceonline.books.when_read"), @obj.when_read) %>
   <%= attribute_table_row(t("myplaceonline.books.isbn"), @obj.isbn) %>
   <%= attribute_table_row_markdown(t("myplaceonline.books.notes"), @obj.notes) %>
+  <% if !@obj.recommender.nil? %>
+    <%= attribute_table_row_reference(t("myplaceonline.books.recommender"), "contact_path", @obj.recommender) %>
+  <% end %>
   
 <% end %>

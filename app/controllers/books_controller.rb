@@ -14,7 +14,8 @@ class BooksController < MyplaceonlineController
         :isbn,
         :author,
         :is_read,
-        :notes
+        :notes,
+        Myp.select_or_create_permit(params[:book], :recommender_attributes, ContactsController.param_names)
       )
     end
 end
