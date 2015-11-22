@@ -349,7 +349,6 @@ module ApplicationHelper
       
       # If it's probably external
       if external || (!url.start_with?("/") || url.start_with?("//"))
-        options[:class] += " externallink"
         options[:target] = "_blank"
         options["data-ajax"] = "false"
       end

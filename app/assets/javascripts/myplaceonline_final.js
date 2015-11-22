@@ -552,7 +552,7 @@ function requestGPS(target, requesting_gps, latitude, longitude, geolocation_una
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(location) {
       var maplink = "https://www.google.com/maps/place/" + location.coords.latitude + "," + location.coords.longitude;
-      $(target).html("<p>" + latitude + ": " + location.coords.latitude + ", " + longitude + ": " + location.coords.longitude + "</p><p>" + location.coords.latitude + "," + location.coords.longitude + "</p><p><button class='clipboardable' data-clipboard-text='" + location.coords.latitude + "," + location.coords.longitude + "' onclick='return false;'>" + copy_to_clipboard + "</button></p><p><a href='" + maplink + "' target='_blank' class='externallink'>" + maplink + "</a></p>");
+      $(target).html("<p>" + latitude + ": " + location.coords.latitude + ", " + longitude + ": " + location.coords.longitude + "</p><p>" + location.coords.latitude + "," + location.coords.longitude + "</p><p><button class='clipboardable' data-clipboard-text='" + location.coords.latitude + "," + location.coords.longitude + "' onclick='return false;'>" + copy_to_clipboard + "</button></p><p><a href='" + maplink + "' target='_blank'>" + maplink + "</a></p>");
       ensureClipboard($(".clipboardable"));
     });
   } else {

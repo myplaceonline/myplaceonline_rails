@@ -11,7 +11,7 @@
 
 <% if !user_signed_in? %>
 
-  <p><%= t("myplaceonline.welcome.intro_html", :opensourcelink => link_to(t("myplaceonline.welcome.opensourcelink"), "https://github.com/myplaceonline/myplaceonline", class: "externallink")) %></p>
+  <p><%= t("myplaceonline.welcome.intro_html", :opensourcelink => link_to(t("myplaceonline.welcome.opensourcelink"), "https://github.com/myplaceonline/myplaceonline")) %></p>
 
   <p style="text-align: center">
     <%= link_to t("myplaceonline.buttons.signin"), new_user_session_path, :class => 'ui-btn ui-btn-icon-left ui-icon-power ui-btn-inline'  %>
@@ -20,7 +20,7 @@
 
   <% if session[:phonegap].nil? %>
     <p style="text-align: center">
-      <%= link_to("https://play.google.com/store/apps/details?id=com.myplaceonline", class: "externallink") do %>
+      <%= link_to("https://play.google.com/store/apps/details?id=com.myplaceonline") do %>
         <%= image_tag("play_store.png", alt: t("myplaceonline.general.play_store")) %>
       <% end %>
     </p>
