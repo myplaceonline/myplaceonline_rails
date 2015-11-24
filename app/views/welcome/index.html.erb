@@ -11,11 +11,12 @@
 
 <% if !user_signed_in? %>
 
-  <p><%= t("myplaceonline.welcome.intro_html", :opensourcelink => link_to(t("myplaceonline.welcome.opensourcelink"), "https://github.com/myplaceonline/myplaceonline")) %></p>
+  <p class="horizontal_center"><%= t("myplaceonline.welcome.intro_html", :opensourcelink => link_to(t("myplaceonline.welcome.opensourcelink"), "https://github.com/myplaceonline/myplaceonline")) %></p>
+  <p class="horizontal_center"><%= raw(t("myplaceonline.welcome.motto")) %></p>
 
   <p style="text-align: center">
-    <%= link_to t("myplaceonline.buttons.signin"), new_user_session_path, :class => 'ui-btn ui-btn-icon-left ui-icon-power ui-btn-inline'  %>
     <%= link_to t("myplaceonline.buttons.signup"), new_user_registration_path, :class => 'ui-btn ui-btn-icon-left ui-icon-user ui-btn-inline'  %>
+    <%= link_to t("myplaceonline.buttons.signin"), new_user_session_path, :class => 'ui-btn ui-btn-icon-left ui-icon-power ui-btn-inline'  %>
   </p>
 
   <% if session[:phonegap].nil? %>

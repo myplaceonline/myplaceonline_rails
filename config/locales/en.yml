@@ -156,7 +156,9 @@ en:
       last_updated: "Last Updated"
       child_attribute_removed: "Click Update to complete the deletion"
       yes: "Yes"
+      y: "Yes"
       no: "No"
+      n: "No"
       perpage: "per page"
       count_no: "No"
       add: "Add"
@@ -207,7 +209,7 @@ en:
       invalidpassword: "Invalid password"
     buttons:
       signin: "Login"
-      signup: "Sign up"
+      signup: "Join"
       edituser: "Settings"
       logout: "Logout"
     menu:
@@ -217,6 +219,7 @@ en:
     welcome:
       intro_html: "myplaceonline is a virtual life assistant. We'll never sell your private data. The code is %{opensourcelink} if you want to review it or run it on your computer."
       opensourcelink: "open source"
+      motto: "organize, <strong>harmonize</strong>, <em>maximize</em>."
       due: "Due"
       notepad: "Notepad"
       features: !xml |
