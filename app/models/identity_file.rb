@@ -1,3 +1,5 @@
+require "base64"
+
 class IdentityFile < MyplaceonlineIdentityRecord
   include AllowExistingConcern
   
@@ -48,5 +50,11 @@ class IdentityFile < MyplaceonlineIdentityRecord
       end
     end
     result
+  end
+
+  def as_json(options={})
+    super.as_json(options).merge({
+      "thumbnail_contents" => thumbnail_contents.nil? ? nil : ::Base64.strict_encode64(thumbnail_contents)
+    })
   end
 end
