@@ -1047,8 +1047,8 @@ en:
     life_goals:
       life_goal_name: "Goal"
       notes: "Notes"
-      goal_started: "Started"
-      goal_ended: "Ended"
+      goal_started: "Start"
+      goal_ended: "End"
     temperatures:
       measured: "Measurement Time"
       measured_temperature: "Temperature (Degrees)"

@@ -38,7 +38,10 @@ module Myplaceonline
     log4r_config['log4r_config']['outputters'].each do |outputter|
       if outputter['filename']
         outputter['filename'] = outputter['filename'].gsub("%u", ENV['USER'])
-        puts "Changing configuration of log4r outputter to " + File.absolute_path(Dir.new(outputter["dirname"])) + "/" + outputter['filename']
+        if Rails.env.production?
+          # may need to know for perms, etc
+          puts "Changing configuration of log4r outputter to " + File.absolute_path(Dir.new(outputter["dirname"])) + "/" + outputter['filename']
+        end
       end
     end
     YamlConfigurator.decode_yaml( log4r_config['log4r_config'] )
