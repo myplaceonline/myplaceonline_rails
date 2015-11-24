@@ -357,7 +357,7 @@ en:
       recovery_questions: "Recovery Questions"
       add_question: "Add Question"
       remove_question: "Delete Question"
-      how_to_decrypt: "The encrypted file may be decrypted with the command line gpg tool:"
+      how_to_decrypt: "The encrypted file may be decrypted with the command line %{gpg} tool:"
       email: "E-mail"
     users:
       invite: "Invite Code"

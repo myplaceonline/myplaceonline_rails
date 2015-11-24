@@ -23,7 +23,7 @@ onPageLoad(function() {
 </script>
 
 <% if @encrypt %>
-<p><%= t("myplaceonline.passwords.how_to_decrypt") %></p>
+<p><%= raw(t("myplaceonline.passwords.how_to_decrypt", gpg: link_to("gpg", "https://gnupg.org/"))) %></p>
 <p><code><%= @command %></code></p>
 <% end %>
 
