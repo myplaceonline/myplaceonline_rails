@@ -561,6 +561,15 @@ function requestGPS(target, requesting_gps, latitude, longitude, geolocation_una
   return false;
 }
 
+function requestGPS2(onSuccess) {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(location) {
+      onSuccess(location);
+    });
+  }
+  return false;
+}
+
 function playSound(audioFile) {
   try {
     var snd = new Audio(audioFile);

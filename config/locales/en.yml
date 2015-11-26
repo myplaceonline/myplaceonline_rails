@@ -534,6 +534,7 @@ en:
       notes: "Notes"
       latitude: "Latitude"
       longitude: "Longitude"
+      request_gps: "Request GPS"
     activities:
       name: "Name"
     apartments:
