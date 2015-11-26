@@ -19,7 +19,7 @@ function location_gps_success<%= random_name %>(location) {
   $("#<%= extract_id(longitude_field) %>").val(location.coords.longitude);
 }
 </script>
-<button onclick="return requestGPS2(location_gps_success<%= random_name %>);"><%= t("myplaceonline.locations.request_gps") %></button>
+<a href="#" onclick="return requestGPS2(location_gps_success<%= random_name %>);" class="ui-btn"><%= t("myplaceonline.locations.request_gps") %></a>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.locations.notes", obj.notes) %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {

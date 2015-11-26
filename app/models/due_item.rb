@@ -242,9 +242,6 @@ class DueItem < MyplaceonlineIdentityRecord
       IdentityDriversLicense.where("owner_id = ? and expires is not null and expires < ?", user.primary_identity, drivers_license_expiration_threshold(mdd)).each do |drivers_license|
         contact = Contact.where(owner_id: user.primary_identity.id, identity_id: drivers_license.identity.id).first
         diff = TimeDifference.between(timenow, drivers_license.expires)
-        if timenow >= drivers_license.expires
-          # TODO expired
-        end
         diff_in_general = diff.in_general
         DueItem.new(
           display: I18n.t(
