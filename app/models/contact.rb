@@ -13,7 +13,7 @@ class Contact < MyplaceonlineIdentityRecord
   ]
   
   belongs_to :identity, :dependent => :destroy
-  accepts_nested_attributes_for :identity, reject_if: :all_blank
+  accepts_nested_attributes_for :identity
   
   validate :custom_validation
   

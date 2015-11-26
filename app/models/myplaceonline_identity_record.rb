@@ -32,4 +32,8 @@ class MyplaceonlineIdentityRecord < MyplaceonlineModelBase
       end
     end
   end
+  
+  def self.build(params = nil)
+    new(params)
+  end
 end

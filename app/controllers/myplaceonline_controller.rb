@@ -78,7 +78,7 @@ class MyplaceonlineController < ApplicationController
     if !insecure
       Myp.ensure_encryption_key(session)
     end
-    @obj = Myp.new_model(model, params)
+    @obj = Myp.new_model(model)
     @url = new_path
     if request.post?
       create
@@ -95,6 +95,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def create
+    Rails.logger.debug{"create"}
     if !insecure
       Myp.ensure_encryption_key(session)
     end
@@ -107,7 +108,11 @@ class MyplaceonlineController < ApplicationController
         raise Myp::CannotFindNestedAttribute, rnf.message + " (code needs attribute setter override?)"
       end
       
-      if @obj.save
+      save_result = @obj.save
+      
+      Rails.logger.debug{"Saved #{save_result.to_s} for #{@obj.inspect}"}
+      
+      if save_result
         if has_category
           Myp.add_point(current_user, category_name, session)
         end
