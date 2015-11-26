@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151125173429) do
+ActiveRecord::Schema.define(version: 20151126231318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1502,6 +1502,7 @@ ActiveRecord::Schema.define(version: 20151125173429) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.boolean  "suppress_reminder"
   end
 
   add_index "periodic_payments", ["owner_id"], name: "index_periodic_payments_on_owner_id", using: :btree

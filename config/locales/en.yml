@@ -1080,6 +1080,7 @@ en:
       reminder_today: "Periodic Payment %{name} Due Today"
       reminder_before: "Periodic Payment %{name} Due in %{delta}"
       reminder_after: "Periodic Payment %{name} Past Due by %{delta}"
+      suppress_reminder: "Suppress Reminder"
     jobs:
       job_title: "Job Title"
       started: "Started"

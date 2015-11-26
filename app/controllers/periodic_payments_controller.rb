@@ -25,7 +25,8 @@ class PeriodicPaymentsController < MyplaceonlineController
       :started,
       :ended,
       :date_period,
-      :payment_amount
+      :payment_amount,
+      :suppress_reminder
     ]
   end
 
