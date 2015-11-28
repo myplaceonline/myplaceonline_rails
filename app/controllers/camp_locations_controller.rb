@@ -19,6 +19,9 @@ class CampLocationsController < MyplaceonlineController
         :bathroom,
         :noise_level,
         :overnight_allowed,
+        :boondocking,
+        :cell_phone_reception,
+        :cell_phone_data,
         Myp.select_or_create_permit(params[:camp_location], :location_attributes, LocationsController.param_names)
       )
     end

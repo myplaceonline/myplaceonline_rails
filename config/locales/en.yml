@@ -1256,6 +1256,9 @@ en:
       bathroom: "Bathroom"
       noise_level: "Noise Level"
       overnight_allowed: "Overnight Allowed"
+      boondocking: "Boondocking"
+      cell_phone_reception: "Cell Phone Reception"
+      cell_phone_data: "Cell Phone Data Reception"
     noise_levels:
       quiet: "Quiet"
       nature: "Nature"
