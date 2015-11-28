@@ -279,6 +279,17 @@ module ApplicationHelper
     end
   end
   
+  def attribute_table_row_duration(name, start_time, end_time)
+    if !start_time.nil? && !end_time.nil? && end_time > start_time
+      attribute_table_row(
+        name,
+        Myp.time_difference_in_general_human_detailed(TimeDifference.between(start_time, end_time).in_general)
+      )
+    else
+      nil
+    end
+  end
+  
   def attribute_table_row_food_weight(name, val, weight_type)
     if !val.nil?
       attribute_table_row(name, ActionController::Base.helpers.pluralize(val, Myp.get_select_name(weight_type, Myp::FOOD_WEIGHTS).singularize))

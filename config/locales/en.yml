@@ -955,6 +955,7 @@ en:
     exercises:
       exercise_start: "Start Date/Time"
       exercise_end: "End Date/Time"
+      exercise_duration: "Duration"
       exercise_activity: "Activity"
       notes: "Notes"
       situps: "Situps"
