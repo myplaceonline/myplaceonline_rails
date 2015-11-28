@@ -121,6 +121,7 @@ en:
       groups: "Groups"
       phones: "Phones"
       myplets: "Myplets"
+      movie_theaters: "Movie Theaters"
     general:
       email: "E-mail"
       password: "Password"
@@ -1658,3 +1659,5 @@ en:
       birthday_threshold: "Upcoming Birthday"
       promotion_threshold: "Promotion Expires"
       gun_registration_expiration_threshold: "Gun Registration Expires"
+    movie_theaters:
+      location: "Location"

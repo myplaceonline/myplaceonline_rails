@@ -1,0 +1,2 @@
+module MovieTheatersHelper
+end

@@ -1,0 +1,3 @@
+movie_theater:
+  owner: identity
+  location: location

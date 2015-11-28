@@ -57,7 +57,7 @@ class Calculation < MyplaceonlineIdentityRecord
   
   def self.build(params = nil)
     result = super(params)
-    if !params[:form].nil?
+    if !params.nil? && !params[:form].nil?
       existing_form = User.current_user.primary_identity.calculation_forms_available.find(params[:form].to_i)
       if !existing_form.nil?
         result.original_calculation_form_id = existing_form.id

@@ -124,6 +124,7 @@ class Ability
     can :manage, Phone, :owner => identity
     can :manage, Myplet, :owner => identity
     can :manage, DueItem, :owner => identity
+    can :manage, MovieTheater, :owner => identity
     
     if user.admin?
       can :manage, User

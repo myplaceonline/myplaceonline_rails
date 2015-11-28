@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151126231318) do
+ActiveRecord::Schema.define(version: 20151128032038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -665,6 +665,7 @@ ActiveRecord::Schema.define(version: 20151126231318) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "visit_count"
     t.datetime "original_due_date"
     t.boolean  "is_date_arbitrary"
     t.integer  "myplaceonline_due_display_id"
@@ -674,7 +675,7 @@ ActiveRecord::Schema.define(version: 20151126231318) do
   add_index "due_items", ["owner_id"], name: "index_due_items_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.binary   "val"
+    t.string   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -1314,6 +1315,18 @@ ActiveRecord::Schema.define(version: 20151126231318) do
 
   add_index "medicines", ["owner_id"], name: "index_medicines_on_owner_id", using: :btree
 
+  create_table "movie_theaters", force: true do |t|
+    t.string   "theater_name"
+    t.integer  "location_id"
+    t.integer  "visit_count"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "movie_theaters", ["location_id"], name: "index_movie_theaters_on_location_id", using: :btree
+  add_index "movie_theaters", ["owner_id"], name: "index_movie_theaters_on_owner_id", using: :btree
+
   create_table "movies", force: true do |t|
     t.string   "name"
     t.datetime "watched"
@@ -1401,6 +1414,7 @@ ActiveRecord::Schema.define(version: 20151126231318) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "visit_count"
   end
 
   add_index "myplets", ["owner_id"], name: "index_myplets_on_owner_id", using: :btree

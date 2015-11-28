@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :movie_theaters
+  post 'movie_theaters/new'
+
   match 'due_items/:id/complete', :to => 'due_items#complete', via: [:post], as: "due_item_complete"
   match 'due_items/:id/snooze', :to => 'due_items#snooze', via: [:post], as: "due_item_snooze"
   resources :due_items
