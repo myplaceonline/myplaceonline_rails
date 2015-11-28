@@ -1,0 +1,17 @@
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :location,
+    existingobj: obj.location,
+    heading: t("myplaceonline.gas_stations.location"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    autofocus: true
+  }
+%>
+<%= myp_check_box(f, :gas, "myplaceonline.gas_stations.gas") %>
+<%= myp_check_box(f, :diesel, "myplaceonline.gas_stations.diesel") %>
+<%= myp_check_box(f, :propane_fillup, "myplaceonline.gas_stations.propane_fillup") %>
+<%= myp_check_box(f, :propane_replacement, "myplaceonline.gas_stations.propane_replacement") %>

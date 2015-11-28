@@ -122,6 +122,7 @@ en:
       phones: "Phones"
       myplets: "Myplets"
       movie_theaters: "Movie Theaters"
+      gas_stations: "Gas Stations"
     general:
       email: "E-mail"
       password: "Password"
@@ -1662,3 +1663,9 @@ en:
       gun_registration_expiration_threshold: "Gun Registration Expires"
     movie_theaters:
       location: "Location"
+    gas_stations:
+      location: "Location"
+      gas: "Gas"
+      diesel: "Diesel"
+      propane_replacement: "Propane Tank Replacement"
+      propane_fillup: "Propane Fillup"

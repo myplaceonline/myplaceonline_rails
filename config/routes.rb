@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :gas_stations
+  post 'gas_stations/new'
+
   resources :movie_theaters
   post 'movie_theaters/new'
 

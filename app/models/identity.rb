@@ -23,11 +23,6 @@ class Identity < MyplaceonlineModelBase
   has_many :ideas, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :lists, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :calculation_forms, :foreign_key => 'owner_id', :dependent => :destroy
-  
-  def calculation_forms_available
-    CalculationForm.where(owner_id: id, is_duplicate: false)
-  end
-  
   has_many :calculations, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :vehicles, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :questions, :foreign_key => 'owner_id', :dependent => :destroy
@@ -86,6 +81,7 @@ class Identity < MyplaceonlineModelBase
   has_many :groups, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :phones, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :movie_theaters, :foreign_key => 'owner_id', :dependent => :destroy
+  has_many :gas_stations, :foreign_key => 'owner_id', :dependent => :destroy
   
   has_many :myplets, -> { order('y_coordinate') }, :foreign_key => 'owner_id', :dependent => :destroy
   accepts_nested_attributes_for :myplets, allow_destroy: true, reject_if: :all_blank
@@ -193,9 +189,14 @@ class Identity < MyplaceonlineModelBase
       :shopping_lists => shopping_lists.to_a.sort{ |a,b| a.shopping_list_name.downcase <=> b.shopping_list_name.downcase }.map{|x| x.as_json},
       :groups => groups.to_a.sort{ |a,b| a.group_name.downcase <=> b.group_name.downcase }.map{|x| x.as_json},
       :phones => phones.to_a.sort{ |a,b| a.model_name.downcase <=> b.model_name.downcase }.map{|x| x.as_json},
-      :movie_theaters => movie_theaters.to_a.sort{ |a,b| a.theater_name.downcase <=> b.theater_name.downcase }.map{|x| x.as_json},
+      :movie_theaters => movie_theaters.to_a.map{|x| x.as_json},
+      :gas_stations => gas_stations.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
+  end
+  
+  def calculation_forms_available
+    CalculationForm.where(owner_id: id, is_duplicate: false)
   end
   
   def ensure_contact!
