@@ -14,7 +14,13 @@ class ApartmentsController < MyplaceonlineController
         Myp.select_or_create_permit(params[:apartment], :location_attributes, LocationsController.param_names),
         Myp.select_or_create_permit(params[:apartment], :landlord_attributes, ContactsController.param_names),
         apartment_leases_attributes: [:id, :start_date, :end_date, :monthly_rent, :moveout_fee, :deposit, :terminate_by, :_destroy],
-        apartment_trash_pickups_attributes: [:id, :start_date, :trash_type, :period, :period_type, :notes, :_destroy],
+        apartment_trash_pickups_attributes: [
+          :id,
+          :_destroy,
+          :trash_type,
+          :notes,
+          reminder_attributes: Reminder.params
+        ],
         apartment_pictures_attributes: [
           :id,
           :_destroy,

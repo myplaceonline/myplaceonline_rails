@@ -561,10 +561,7 @@ en:
       trash_pickups: "Trash Pickups"
       add_trash_pickup: "Add Trash Pickup"
       delete_trash_pickup: "Delete Trash Pickup"
-      trash_start: "Start Date"
       trash_type: "Trash Type"
-      period_type: "Period Type"
-      period: "Period"
       next_pickup: "Next Pickup"
       trash_pickup_reminder: "%{trash_type} Pickup in %{delta}"
     jokes:
@@ -1672,3 +1669,8 @@ en:
       diesel: "Diesel"
       propane_replacement: "Propane Tank Replacement"
       propane_fillup: "Propane Fillup"
+    reminders:
+      start_date: "Start Date"
+      period_type: "Period Type"
+      period: "Period"
+      next_reminder: "Next Reminder"

@@ -42,4 +42,13 @@ class Reminder < MyplaceonlineIdentityRecord
     end
     result
   end
+
+  def self.params
+    [
+      :id,
+      :start_date,
+      :period_type,
+      :period
+    ]
+  end
 end

@@ -23,10 +23,12 @@
   <% @obj.apartment_trash_pickups.each do |wrapper| %>
     <%= table_row_heading(t("myplaceonline.apartments.trash_pickup")) %>
     <%= attribute_table_row_select(t("myplaceonline.apartments.trash_type"), wrapper.trash_type, ApartmentTrashPickup::TRASH_TYPES) %>
-    <%= attribute_table_row_date(t("myplaceonline.apartments.trash_start"), wrapper.start_date) %>
-    <%= attribute_table_row_period(t("myplaceonline.apartments.period"), wrapper.period, wrapper.period_type) %>
-    <%= attribute_table_row_date(t("myplaceonline.apartments.next_pickup"), wrapper.next_pickup) %>
     <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), wrapper.notes) %>
+    <%=
+      render partial: 'reminders/show', locals: {
+        obj: wrapper.reminder
+      }
+    %>
   <% end %>
 
   <%=

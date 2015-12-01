@@ -543,35 +543,37 @@ class DueItem < MyplaceonlineIdentityRecord
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
       Apartment.where("owner_id = ?", user.primary_identity).each do |apartment|
         apartment.apartment_trash_pickups.each do |trash_pickup|
-          next_pickup = trash_pickup.next_pickup
-          Rails.logger.debug{
-            "Trash pickup: #{
-              trash_pickup.inspect
-            }, next: #{
-              next_pickup
-            }, threshold: #{
-              trash_pickup_threshold(mdd)
-            }, today: #{
-              today
-            }, diff: #{
-              next_pickup - trash_pickup_threshold(mdd)
-            }"
-          }
-          if next_pickup - trash_pickup_threshold(mdd) <= today
-            DueItem.new(
-              display: I18n.t(
-                "myplaceonline.apartments.trash_pickup_reminder",
-                trash_type: Myp.get_select_name(trash_pickup.trash_type, ApartmentTrashPickup::TRASH_TYPES),
-                delta: Myp.time_difference_in_general_human(TimeDifference.between(Date.today, next_pickup).in_general)
-              ),
-              link: "/apartments/" + apartment.id.to_s,
-              due_date: next_pickup,
-              original_due_date: next_pickup,
-              owner: user.primary_identity,
-              myplaceonline_due_display: mdd,
-              model_name: Apartment.name,
-              model_id: apartment.id
-            ).check_and_save!
+          if trash_pickup.reminder
+            next_pickup = trash_pickup.reminder.next_reminder
+            Rails.logger.debug{
+              "Trash pickup: #{
+                trash_pickup.inspect
+              }, next: #{
+                next_pickup
+              }, threshold: #{
+                trash_pickup_threshold(mdd)
+              }, today: #{
+                today
+              }, diff: #{
+                next_pickup - trash_pickup_threshold(mdd)
+              }"
+            }
+            if next_pickup - trash_pickup_threshold(mdd) <= today
+              DueItem.new(
+                display: I18n.t(
+                  "myplaceonline.apartments.trash_pickup_reminder",
+                  trash_type: Myp.get_select_name(trash_pickup.trash_type, ApartmentTrashPickup::TRASH_TYPES),
+                  delta: Myp.time_difference_in_general_human(TimeDifference.between(Date.today, next_pickup).in_general)
+                ),
+                link: "/apartments/" + apartment.id.to_s,
+                due_date: next_pickup,
+                original_due_date: next_pickup,
+                owner: user.primary_identity,
+                myplaceonline_due_display: mdd,
+                model_name: Apartment.name,
+                model_id: apartment.id
+              ).check_and_save!
+            end
           end
         end
       end
