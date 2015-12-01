@@ -1,5 +1,4 @@
 class SkinTreatment < MyplaceonlineIdentityRecord
-  belongs_to :owner, class_name: Identity
   validates :treatment_time, presence: true
   
   def display

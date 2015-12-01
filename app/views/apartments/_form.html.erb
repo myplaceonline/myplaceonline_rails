@@ -94,20 +94,11 @@
         autofocus: true
       },
       {
-        type: 'date',
-        name: 'start_date',
-        placeholder: t("myplaceonline.apartments.trash_start")
-      },
-      {
-        type: 'select',
-        name: 'period_type',
-        options: Myp::PERIOD_TYPES.map{|x,y| [I18n.t(x),y]}.as_json,
-        placeholder: t("myplaceonline.apartments.period_type")
-      },
-      {
-        type: 'number',
-        name: 'period',
-        placeholder: t("myplaceonline.apartments.period")
+        type: :renderpartial,
+        name: :reminder_attributes,
+        partial: 'myplaceonline/create',
+        objform: "reminders/form",
+        autofocus: false
       },
       {
         type: 'textarea',
@@ -118,10 +109,17 @@
   }) do |child_fields, childproperty|
 %>
   <%= myp_select(child_fields, :trash_type, "myplaceonline.apartments.trash_type", Myp.translate_options(ApartmentTrashPickup::TRASH_TYPES), childproperty.trash_type) %>
-  <%= myp_date_field(child_fields, :start_date, "myplaceonline.apartments.trash_start", childproperty.start_date) %>
-  <%= myp_select(child_fields, :period_type, "myplaceonline.apartments.period_type", Myp.translate_options(Myp::PERIOD_TYPES), childproperty.period_type) %>
-  <%= myp_number_field(child_fields, :period, "myplaceonline.apartments.period", childproperty.period) %>
   <%= myp_text_area(child_fields, :notes, "myplaceonline.general.notes", childproperty.notes) %>
+  <%=
+    render partial: 'myplaceonline/create', locals: {
+      f: child_fields,
+      name: :reminder_attributes,
+      existingobj: childproperty.reminder,
+      objform: "reminders/form",
+      edit: edit,
+      autofocus: false
+    }
+  %>
 <% end %>
 <%=
   render(layout: 'myplaceonline/childproperties', locals: {

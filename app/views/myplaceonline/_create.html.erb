@@ -1,0 +1,20 @@
+<%
+existingobj ||= Myp.new_model(objform[0..(objform.index('/')-1)].singularize.camelize.constantize)
+random_name = "createitem_" + SecureRandom.hex(10)
+first = true
+%>
+<div id="<%= random_name %>">
+  <%= f.fields_for name, existingobj do |sub_fields| %>
+    <%= render partial: objform + ".html", locals: { f: sub_fields, obj: existingobj, edit: edit, autofocus: autofocus } %>
+    <%
+    if existingcollapsed && autofocus && first
+      first = false
+    %>
+      <script type="text/javascript">
+        onPageLoad(function() {
+          maybeFocus($("#<%= random_name %> .autofocus"));
+        });
+      </script>
+    <% end %>
+  <% end %>
+</div>

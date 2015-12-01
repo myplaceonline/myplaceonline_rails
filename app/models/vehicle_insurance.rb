@@ -2,7 +2,6 @@ class VehicleInsurance < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   belongs_to :vehicle
-  belongs_to :owner, class_name: Identity
 
   validates :insurance_name, presence: true
 
