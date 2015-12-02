@@ -1,10 +1,10 @@
-class Reminder < MyplaceonlineIdentityRecord
+class Repeat < MyplaceonlineIdentityRecord
 
   validates :start_date, presence: true
   validates :period_type, presence: true
   validates :period, presence: true
 
-  def next_reminder
+  def next_instance
     # Start at the start date, and keep adding the period until we're >= today
     result = start_date
     today = Date.today

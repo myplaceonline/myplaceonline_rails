@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151201054135) do
+ActiveRecord::Schema.define(version: 20151202063845) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,12 +98,12 @@ ActiveRecord::Schema.define(version: 20151201054135) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "reminder_id"
+    t.integer  "repeat_id"
   end
 
   add_index "apartment_trash_pickups", ["apartment_id"], name: "index_apartment_trash_pickups_on_apartment_id", using: :btree
   add_index "apartment_trash_pickups", ["owner_id"], name: "index_apartment_trash_pickups_on_owner_id", using: :btree
-  add_index "apartment_trash_pickups", ["reminder_id"], name: "index_apartment_trash_pickups_on_reminder_id", using: :btree
+  add_index "apartment_trash_pickups", ["repeat_id"], name: "index_apartment_trash_pickups_on_repeat_id", using: :btree
 
   create_table "apartments", force: true do |t|
     t.integer  "location_id"
@@ -693,13 +693,13 @@ ActiveRecord::Schema.define(version: 20151201054135) do
     t.datetime "event_time"
     t.integer  "visit_count"
     t.integer  "owner_id"
-    t.integer  "reminder_id"
+    t.integer  "repeat_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "events", ["owner_id"], name: "index_events_on_owner_id", using: :btree
-  add_index "events", ["reminder_id"], name: "index_events_on_reminder_id", using: :btree
+  add_index "events", ["repeat_id"], name: "index_events_on_repeat_id", using: :btree
 
   create_table "exercises", force: true do |t|
     t.datetime "exercise_start"
@@ -1758,7 +1758,7 @@ ActiveRecord::Schema.define(version: 20151201054135) do
   add_index "recreational_vehicles", ["owner_id"], name: "index_recreational_vehicles_on_owner_id", using: :btree
   add_index "recreational_vehicles", ["vehicle_id"], name: "index_recreational_vehicles_on_vehicle_id", using: :btree
 
-  create_table "reminders", force: true do |t|
+  create_table "repeats", force: true do |t|
     t.date     "start_date"
     t.integer  "period_type"
     t.integer  "period"
@@ -1767,7 +1767,7 @@ ActiveRecord::Schema.define(version: 20151201054135) do
     t.datetime "updated_at"
   end
 
-  add_index "reminders", ["owner_id"], name: "index_reminders_on_owner_id", using: :btree
+  add_index "repeats", ["owner_id"], name: "index_repeats_on_owner_id", using: :btree
 
   create_table "restaurants", force: true do |t|
     t.integer  "location_id"

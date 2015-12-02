@@ -95,9 +95,9 @@
       },
       {
         type: :renderpartial,
-        name: :reminder_attributes,
+        name: :repeat_attributes,
         partial: 'myplaceonline/create',
-        objform: "reminders/form",
+        objform: "repeats/form",
         autofocus: false
       },
       {
@@ -113,9 +113,9 @@
   <%=
     render partial: 'myplaceonline/create', locals: {
       f: child_fields,
-      name: :reminder_attributes,
-      existingobj: childproperty.reminder,
-      objform: "reminders/form",
+      name: :repeat_attributes,
+      existingobj: childproperty.repeat,
+      objform: "repeats/form",
       autofocus: false
     }
   %>

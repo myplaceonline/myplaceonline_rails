@@ -3,10 +3,10 @@
   <%= attribute_table_row(t("myplaceonline.events.event_name"), @obj.event_name) %>
   <%= attribute_table_row_datetime(t("myplaceonline.events.event_time"), @obj.event_time) %>
   <%= attribute_table_row_markdown(t("myplaceonline.events.notes"), @obj.notes) %>
-  <% if !@obj.reminder.nil? %>
+  <% if !@obj.repeat.nil? %>
     <%=
-      render partial: 'reminders/show', locals: {
-        obj: @obj.reminder
+      render partial: 'repeats/show', locals: {
+        obj: @obj.repeat
       }
     %>
   <% end %>

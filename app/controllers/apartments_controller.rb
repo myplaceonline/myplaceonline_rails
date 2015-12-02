@@ -19,7 +19,7 @@ class ApartmentsController < MyplaceonlineController
           :_destroy,
           :trash_type,
           :notes,
-          reminder_attributes: Reminder.params
+          repeat_attributes: Repeat.params
         ],
         apartment_pictures_attributes: [
           :id,

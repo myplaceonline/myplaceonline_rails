@@ -543,8 +543,8 @@ class DueItem < MyplaceonlineIdentityRecord
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
       Apartment.where("owner_id = ?", user.primary_identity).each do |apartment|
         apartment.apartment_trash_pickups.each do |trash_pickup|
-          if trash_pickup.reminder
-            next_pickup = trash_pickup.reminder.next_reminder
+          if trash_pickup.repeat
+            next_pickup = trash_pickup.repeat.next_instance
             Rails.logger.debug{
               "Trash pickup: #{
                 trash_pickup.inspect

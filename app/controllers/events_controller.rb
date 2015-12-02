@@ -9,7 +9,7 @@ class EventsController < MyplaceonlineController
         :event_name,
         :event_time,
         :notes,
-        reminder_attributes: Reminder.params
+        repeat_attributes: Repeat.params
       )
     end
 end

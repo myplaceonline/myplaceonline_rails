@@ -25,8 +25,8 @@
     <%= attribute_table_row_select(t("myplaceonline.apartments.trash_type"), wrapper.trash_type, ApartmentTrashPickup::TRASH_TYPES) %>
     <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), wrapper.notes) %>
     <%=
-      render partial: 'reminders/show', locals: {
-        obj: wrapper.reminder
+      render partial: 'repeats/show', locals: {
+        obj: wrapper.repeat
       }
     %>
   <% end %>

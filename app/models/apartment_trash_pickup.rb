@@ -7,9 +7,9 @@ class ApartmentTrashPickup < MyplaceonlineIdentityRecord
   
   belongs_to :apartment
   
-  belongs_to :reminder
-  accepts_nested_attributes_for :reminder, allow_destroy: true, reject_if: :all_blank
-  validates_presence_of :reminder
+  belongs_to :repeat
+  accepts_nested_attributes_for :repeat, allow_destroy: true, reject_if: :all_blank
+  validates_presence_of :repeat
 
   validates :trash_type, presence: true
   
