@@ -24,6 +24,8 @@ class RandomController < MyplaceonlineController
           @filter_websites = true
         elsif filter_name == "life_goals"
           @filter_life_goals = true
+        elsif filter_name == "restaurants"
+          @filter_restaurants = true
         end
       end
     end
@@ -34,6 +36,7 @@ class RandomController < MyplaceonlineController
       @filter_movies = true
       @filter_websites = true
       @filter_life_goals = true
+      @filter_restaurants = true
     end
     if @filter_activities
       candidates = candidates + identity.activities.to_a
@@ -52,6 +55,9 @@ class RandomController < MyplaceonlineController
     end
     if @filter_life_goals
       candidates = candidates + identity.life_goals.to_a
+    end
+    if @filter_restaurants
+      candidates = candidates + identity.restaurants.to_a
     end
     if candidates.length > 0
       @result = candidates[rand(candidates.length)]

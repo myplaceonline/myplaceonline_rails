@@ -1330,6 +1330,7 @@ en:
     random:
       activity: "Random Activity"
       new_activity: "Generate"
+      restaurant: "Random Restaurant"
     doctors:
       doctor: "Doctor"
       doctor_type: "Type"
