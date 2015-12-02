@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151201050013) do
+ActiveRecord::Schema.define(version: 20151201054135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -667,6 +667,7 @@ ActiveRecord::Schema.define(version: 20151201050013) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "visit_count"
     t.datetime "original_due_date"
     t.boolean  "is_date_arbitrary"
     t.integer  "myplaceonline_due_display_id"
@@ -676,7 +677,7 @@ ActiveRecord::Schema.define(version: 20151201050013) do
   add_index "due_items", ["owner_id"], name: "index_due_items_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.binary   "val"
+    t.string   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -685,6 +686,20 @@ ActiveRecord::Schema.define(version: 20151201050013) do
   end
 
   add_index "encrypted_values", ["user_id"], name: "index_encrypted_values_on_user_id", using: :btree
+
+  create_table "events", force: true do |t|
+    t.string   "event_name"
+    t.text     "notes"
+    t.datetime "event_time"
+    t.integer  "visit_count"
+    t.integer  "owner_id"
+    t.integer  "reminder_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "events", ["owner_id"], name: "index_events_on_owner_id", using: :btree
+  add_index "events", ["reminder_id"], name: "index_events_on_reminder_id", using: :btree
 
   create_table "exercises", force: true do |t|
     t.datetime "exercise_start"
@@ -1430,6 +1445,7 @@ ActiveRecord::Schema.define(version: 20151201050013) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "visit_count"
   end
 
   add_index "myplets", ["owner_id"], name: "index_myplets_on_owner_id", using: :btree

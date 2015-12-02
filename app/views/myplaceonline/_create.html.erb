@@ -3,18 +3,23 @@ existingobj ||= Myp.new_model(objform[0..(objform.index('/')-1)].singularize.cam
 random_name = "createitem_" + SecureRandom.hex(10)
 first = true
 %>
-<div id="<%= random_name %>">
-  <%= f.fields_for name, existingobj do |sub_fields| %>
-    <%= render partial: objform + ".html", locals: { f: sub_fields, obj: existingobj, autofocus: autofocus } %>
-    <%
-    if first && autofocus
-      first = false
-    %>
-      <script type="text/javascript">
-        onPageLoad(function() {
-          maybeFocus($("#<%= random_name %> .autofocus"));
-        });
-      </script>
+<% if !heading.blank? %>
+  <div id="<%= random_name %>" data-role="collapsible" data-collapsed="false">
+    <h4><%= heading %></h4>
+<% else %>
+  <div id="<%= random_name %>">
+<% end %>
+    <%= f.fields_for name, existingobj do |sub_fields| %>
+      <%= render partial: objform + ".html", locals: { f: sub_fields, obj: existingobj, autofocus: autofocus } %>
+      <%
+      if first && autofocus
+        first = false
+      %>
+        <script type="text/javascript">
+          onPageLoad(function() {
+            maybeFocus($("#<%= random_name %> .autofocus"));
+          });
+        </script>
+      <% end %>
     <% end %>
-  <% end %>
 </div>

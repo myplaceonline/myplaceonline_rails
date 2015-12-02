@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :events
+  post 'events/new'
+
   resources :gas_stations
   post 'gas_stations/new'
 

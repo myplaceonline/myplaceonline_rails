@@ -123,6 +123,7 @@ en:
       myplets: "Myplets"
       movie_theaters: "Movie Theaters"
       gas_stations: "Gas Stations"
+      events: "Events"
     general:
       email: "E-mail"
       password: "Password"
@@ -1669,8 +1670,14 @@ en:
       diesel: "Diesel"
       propane_replacement: "Propane Tank Replacement"
       propane_fillup: "Propane Fillup"
+    repeats:
+      heading_singular: "Repeat"
     reminders:
       start_date: "Start Date"
       period_type: "Period Type"
       period: "Period"
       next_reminder: "Next Reminder"
+    events:
+      event_name: "Name"
+      event_time: "Date/Time"
+      notes: "Notes"

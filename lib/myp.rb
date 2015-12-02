@@ -926,4 +926,8 @@ module Myp
       nil
     end
   end
+  
+  def self.heading(name)
+    I18n.t("myplaceonline." + name + ".heading_singular")
+  end
 end
