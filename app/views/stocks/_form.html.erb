@@ -1,0 +1,29 @@
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :company,
+    existingobj: obj.company,
+    heading: t("myplaceonline.stocks.company"),
+    objform: "companies/form",
+    existingobjurl: "company_path",
+    searchurl: "/companies.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%= myp_integer_field(f, :num_shares, "myplaceonline.stocks.num_shares", obj.num_shares) %>
+<%= myp_date_field(f, :vest_date, "myplaceonline.stocks.vest_date", obj.vest_date) %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :password,
+    existingobj: obj.password,
+    heading: t("myplaceonline.stocks.password"),
+    objform: "passwords/form",
+    existingobjurl: "password_path",
+    searchurl: "/passwords.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.stocks.notes", obj.notes) %>

@@ -124,6 +124,7 @@ en:
       movie_theaters: "Movie Theaters"
       gas_stations: "Gas Stations"
       events: "Events"
+      stocks: "Stocks"
     general:
       email: "E-mail"
       password: "Password"
@@ -1681,3 +1682,10 @@ en:
       event_name: "Name"
       event_time: "Date/Time"
       notes: "Notes"
+    stocks:
+      company: "Company"
+      password: "Password"
+      num_shares: "Number of Shares"
+      vest_date: "Vest Date"
+      notes: "Notes"
+      until_vest: "Until Vested"

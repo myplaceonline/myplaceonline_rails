@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :stocks
+  post 'stocks/new'
+
   resources :events
   post 'events/new'
 

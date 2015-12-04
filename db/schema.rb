@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151202063845) do
+ActiveRecord::Schema.define(version: 20151202222429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1888,6 +1888,22 @@ ActiveRecord::Schema.define(version: 20151202063845) do
   end
 
   add_index "statuses", ["owner_id"], name: "index_statuses_on_owner_id", using: :btree
+
+  create_table "stocks", force: true do |t|
+    t.integer  "company_id"
+    t.integer  "num_shares"
+    t.text     "notes"
+    t.date     "vest_date"
+    t.integer  "password_id"
+    t.integer  "visit_count"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "stocks", ["company_id"], name: "index_stocks_on_company_id", using: :btree
+  add_index "stocks", ["owner_id"], name: "index_stocks_on_owner_id", using: :btree
+  add_index "stocks", ["password_id"], name: "index_stocks_on_password_id", using: :btree
 
   create_table "subscriptions", force: true do |t|
     t.string   "name"

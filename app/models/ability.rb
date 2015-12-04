@@ -127,6 +127,7 @@ class Ability
     can :manage, MovieTheater, :owner => identity
     can :manage, GasStation, :owner => identity
     can :manage, Event, :owner => identity
+    can :manage, Stock, :owner => identity
     
     if user.admin?
       can :manage, User

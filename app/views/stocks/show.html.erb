@@ -1,0 +1,12 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row_reference(t("myplaceonline.stocks.company"), "company_path", @obj.company) %>
+  <%= attribute_table_row(t("myplaceonline.stocks.num_shares"), @obj.num_shares) %>
+  <%= attribute_table_row_date(t("myplaceonline.stocks.vest_date"), @obj.vest_date) %>
+  <% if !@obj.vest_date.nil? && @obj.vest_date > Date.today %>
+    <%= attribute_table_row(t("myplaceonline.stocks.until_vest"), Myp.time_difference_in_general_from_now(@obj.vest_date)) %>
+  <% end %>
+  <%= attribute_table_row_reference(t("myplaceonline.stocks.password"), "password_path", @obj.password) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.stocks.notes"), @obj.notes) %>
+
+<% end %>
