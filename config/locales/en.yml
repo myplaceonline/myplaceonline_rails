@@ -1681,7 +1681,9 @@ en:
     events:
       event_name: "Name"
       event_time: "Date/Time"
+      event_end_time: "End Date/Time"
       notes: "Notes"
+      location: "Location"
     stocks:
       company: "Company"
       password: "Password"

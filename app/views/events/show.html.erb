@@ -2,6 +2,7 @@
 
   <%= attribute_table_row(t("myplaceonline.events.event_name"), @obj.event_name) %>
   <%= attribute_table_row_datetime(t("myplaceonline.events.event_time"), @obj.event_time) %>
+  <%= attribute_table_row_datetime(t("myplaceonline.events.event_end_time"), @obj.event_end_time) %>
   <%= attribute_table_row_markdown(t("myplaceonline.events.notes"), @obj.notes) %>
   <% if !@obj.repeat.nil? %>
     <%=
@@ -10,5 +11,6 @@
       }
     %>
   <% end %>
+  <%= attribute_table_row_reference(t("myplaceonline.events.location"), "location_path", @obj.location) %>
   
 <% end %>

@@ -1,5 +1,6 @@
 <%= myp_text_field(f, :event_name, "myplaceonline.events.event_name", obj.event_name, autofocus) %>
 <%= myp_datetime_field(f, :event_time, "myplaceonline.events.event_time", obj.event_time) %>
+<%= myp_datetime_field(f, :event_end_time, "myplaceonline.events.event_end_time", obj.event_end_time) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.events.notes", obj.notes) %>
 <%=
   render partial: 'myplaceonline/create', locals: {
@@ -8,6 +9,19 @@
     heading: Myp.heading("repeats"),
     existingobj: obj.repeat,
     objform: "repeats/form",
+    autofocus: false
+  }
+%>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :location,
+    existingobj: obj.location,
+    heading: t("myplaceonline.events.location"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
     autofocus: false
   }
 %>
