@@ -17,6 +17,8 @@ class MyplaceonlineDueDisplay < MyplaceonlineIdentityRecord
   timespan_field :birthday_threshold
   timespan_field :promotion_threshold
   timespan_field :gun_registration_expiration_threshold
+  timespan_field :event_threshold
+  timespan_field :stocks_vest_threshold
   
   after_save { |record| DueItem.recalculate_due(User.current_user) }
   after_destroy { |record| DueItem.recalculate_due(User.current_user) }

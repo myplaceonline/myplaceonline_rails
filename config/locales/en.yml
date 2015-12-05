@@ -1664,6 +1664,8 @@ en:
       birthday_threshold: "Upcoming Birthday"
       promotion_threshold: "Promotion Expires"
       gun_registration_expiration_threshold: "Gun Registration Expires"
+      event_threshold: "Event"
+      stocks_vest_threshold: "Stocks Vest"
     movie_theaters:
       location: "Location"
     gas_stations:
@@ -1684,6 +1686,7 @@ en:
       event_end_time: "End Date/Time"
       notes: "Notes"
       location: "Location"
+      upcoming: "Event %{name} in %{delta}"
     stocks:
       company: "Company"
       password: "Password"
@@ -1691,3 +1694,4 @@ en:
       vest_date: "Vest Date"
       notes: "Notes"
       until_vest: "Until Vested"
+      upcoming: "Stocks %{name} vest in %{delta}"

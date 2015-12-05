@@ -14,4 +14,6 @@ class Event < MyplaceonlineIdentityRecord
     event_name
   end
   
+  after_save { |record| DueItem.due_events(User.current_user, record, DueItem::UPDATE_TYPE_UPDATE) }
+  after_destroy { |record| DueItem.due_events(User.current_user, record, DueItem::UPDATE_TYPE_DELETE) }
 end

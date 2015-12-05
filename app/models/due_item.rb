@@ -30,6 +30,8 @@ class DueItem < MyplaceonlineIdentityRecord
   DEFAULT_BIRTHDAY_THRESHOLD_SECONDS = 60*60*60*24
   DEFAULT_PROMOTION_THRESHOLD_SECONDS = 60*60*60*24
   DEFAULT_GUN_REGISTRATION_EXPIRATION_THRESHOLD_SECONDS = 60*60*60*24
+  DEFAULT_EVENT_THRESHOLD_SECONDS = 30*60*60*24
+  DEFAULT_STOCKS_VEST_THRESHOLD_SECONDS = 30*60*60*24
 
   def short_date
     if Date.today.year > due_date.year
@@ -156,6 +158,14 @@ class DueItem < MyplaceonlineIdentityRecord
     (mdd.periodic_payment_before_threshold_seconds || DEFAULT_PERIODIC_PAYMENT_BEFORE_THRESHOLD_SECONDS).seconds
   end
   
+  def self.event_threshold(mdd)
+    (mdd.event_threshold_seconds || DEFAULT_EVENT_THRESHOLD_SECONDS).seconds.since
+  end
+  
+  def self.stocks_vest_threshold(mdd)
+    (mdd.stocks_vest_threshold_seconds || DEFAULT_STOCKS_VEST_THRESHOLD_SECONDS).seconds.since
+  end
+  
   def self.all_due(user)
     DueItem.where(owner: user.primary_identity).order(:due_date)
   end
@@ -172,6 +182,8 @@ class DueItem < MyplaceonlineIdentityRecord
       due_status(user)
       due_apartments(user)
       due_periodic_payments(user)
+      due_events(user)
+      due_stocks_vest(user)
     end
   end
 
@@ -668,6 +680,56 @@ class DueItem < MyplaceonlineIdentityRecord
     end
 
     check_snoozed_items(user, PeriodicPayment.name, updated_record, update_type)
+  end
+  
+  def self.due_events(user, updated_record = nil, update_type = nil)
+    DueItem.destroy_all(owner: user.primary_identity, model_name: Event.name)
+    
+    user.primary_identity.myplaceonline_due_displays.each do |mdd|
+      Event.where("owner_id = ? and event_time is not null and event_time > ? and event_time < ?", user.primary_identity, datenow, event_threshold(mdd)).each do |x|
+        DueItem.new(
+          display: I18n.t(
+            "myplaceonline.events.upcoming",
+            name: x.event_name,
+            delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, x.event_time).in_general)
+          ),
+          link: "/events/" + x.id.to_s,
+          due_date: x.event_time,
+          original_due_date: x.event_time,
+          owner: user.primary_identity,
+          myplaceonline_due_display: mdd,
+          model_name: Event.name,
+          model_id: x.id
+        ).check_and_save!
+      end
+    end
+
+    check_snoozed_items(user, Event.name, updated_record, update_type)
+  end
+  
+  def self.due_stocks_vest(user, updated_record = nil, update_type = nil)
+    DueItem.destroy_all(owner: user.primary_identity, model_name: Stock.name)
+    
+    user.primary_identity.myplaceonline_due_displays.each do |mdd|
+      Stock.where("owner_id = ? and vest_date is not null and vest_date > ? and vest_date < ?", user.primary_identity, datenow, stocks_vest_threshold(mdd)).each do |x|
+        DueItem.new(
+          display: I18n.t(
+            "myplaceonline.stocks.upcoming",
+            name: x.display,
+            delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, x.vest_date).in_general)
+          ),
+          link: "/stocks/" + x.id.to_s,
+          due_date: x.vest_date,
+          original_due_date: x.vest_date,
+          owner: user.primary_identity,
+          myplaceonline_due_display: mdd,
+          model_name: Stock.name,
+          model_id: x.id
+        ).check_and_save!
+      end
+    end
+
+    check_snoozed_items(user, Stock.name, updated_record, update_type)
   end
   
   # Reminder: When adding a new type of due item processing, consider

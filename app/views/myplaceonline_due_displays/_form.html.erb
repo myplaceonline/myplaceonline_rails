@@ -16,3 +16,5 @@
 <% if current_user.explicit_categories %>
   <%= myp_timespan_field(f, :gun_registration_expiration_threshold, "myplaceonline.myplaceonline_due_displays.gun_registration_expiration_threshold", obj.gun_registration_expiration_threshold, false, DueItem::DEFAULT_GUN_REGISTRATION_EXPIRATION_THRESHOLD_SECONDS) %>
 <% end %>
+<%= myp_timespan_field(f, :event_threshold, "myplaceonline.myplaceonline_due_displays.event_threshold", obj.event_threshold, false, DueItem::DEFAULT_EVENT_THRESHOLD_SECONDS) %>
+<%= myp_timespan_field(f, :stocks_vest_threshold, "myplaceonline.myplaceonline_due_displays.stocks_vest_threshold", obj.stocks_vest_threshold, false, DueItem::DEFAULT_STOCKS_VEST_THRESHOLD_SECONDS) %>

@@ -596,11 +596,19 @@ module Myp
         result += ActionController::Base.helpers.pluralize(diff[:hours], "hour")
       end
     end
+    if result.blank?
+      result = time_difference_in_general_human_detailed_hms(diff, result)
+    end
     result
   end
   
   def self.time_difference_in_general_human_detailed(diff)
     result = Myp.time_difference_in_general_human(diff)
+    result = Myp.time_difference_in_general_human_detailed_hms(diff, result)
+    result
+  end
+  
+  def self.time_difference_in_general_human_detailed_hms(diff, result)
     if diff[:hours] > 0
       if result.length > 0
         result += ", "

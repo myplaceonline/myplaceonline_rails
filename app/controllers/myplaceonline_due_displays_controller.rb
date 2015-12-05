@@ -23,7 +23,9 @@ class MyplaceonlineDueDisplaysController < MyplaceonlineController
       :drivers_license_expiration_threshold,
       :birthday_threshold,
       :promotion_threshold,
-      :gun_registration_expiration_threshold
+      :gun_registration_expiration_threshold,
+      :event_threshold,
+      :stocks_vest_threshold
     ]
   end
   
