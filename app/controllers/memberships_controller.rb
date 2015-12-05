@@ -27,7 +27,7 @@ class MembershipsController < MyplaceonlineController
 
     def obj_params
       params.require(:membership).permit(
-        param_names(params[:membership])
+        MembershipsController.param_names(params[:membership])
       )
     end
 end
