@@ -16,6 +16,7 @@ class MembershipsController < MyplaceonlineController
       :start_date,
       :end_date,
       :notes,
+      :membership_identifier,
       Myp.select_or_create_permit(params, :periodic_payment_attributes, PeriodicPaymentsController.param_names(params[:periodic_payment_attributes]))
     ]
   end

@@ -585,6 +585,7 @@ en:
       end_date: "End Date"
       notes: "Notes"
       periodic_payment: "Periodic Payment"
+      membership_identifier: "Number/Identifier"
     credit_scores:
       score_date: "Score Date"
       score: "Score"
