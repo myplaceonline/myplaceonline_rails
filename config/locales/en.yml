@@ -538,6 +538,7 @@ en:
       notes: "Notes"
       latitude: "Latitude"
       longitude: "Longitude"
+      latitude_longitude: "Latitude/Longitude"
       request_gps: "Request GPS"
     activities:
       name: "Name"

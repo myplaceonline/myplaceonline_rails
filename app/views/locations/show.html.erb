@@ -11,6 +11,9 @@
   <%= attribute_table_row(t("myplaceonline.general.region"), @obj.region_name) %>
   <%= attribute_table_row(t("myplaceonline.locations.latitude"), @obj.latitude) %>
   <%= attribute_table_row(t("myplaceonline.locations.longitude"), @obj.longitude) %>
+  <% if !@obj.latitude.nil? && !@obj.longitude.nil? %>
+    <%= attribute_table_row(t("myplaceonline.locations.latitude_longitude"), @obj.latitude.to_s + "," + @obj.longitude.to_s) %>
+  <% end %>
   <%= attribute_table_row_url(t("myplaceonline.locations.map"), @obj.map_url) %>
   <%= attribute_table_row_markdown(t("myplaceonline.locations.notes"), @obj.notes) %>
   <% @obj.location_phones.each do |phone| %>
