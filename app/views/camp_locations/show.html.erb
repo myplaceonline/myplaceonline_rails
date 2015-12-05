@@ -17,5 +17,6 @@
   <%= attribute_table_row_select(t("myplaceonline.camp_locations.rating"), @obj.rating, Myp::RATINGS) %>
   <%= attribute_table_row_select(t("myplaceonline.camp_locations.noise_level"), @obj.noise_level, Myp::NOISE_LEVELS) %>
   <%= attribute_table_row_markdown(t("myplaceonline.camp_locations.notes"), @obj.notes) %>
+  <%= attribute_table_row_reference(t("myplaceonline.camp_locations.membership"), "membership_path", @obj.membership) %>
   
 <% end %>

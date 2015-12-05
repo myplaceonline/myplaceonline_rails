@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151205055646) do
+ActiveRecord::Schema.define(version: 20151205061346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -300,9 +300,11 @@ ActiveRecord::Schema.define(version: 20151205055646) do
     t.boolean  "boondocking"
     t.boolean  "cell_phone_reception"
     t.boolean  "cell_phone_data"
+    t.integer  "membership_id"
   end
 
   add_index "camp_locations", ["location_id"], name: "index_camp_locations_on_location_id", using: :btree
+  add_index "camp_locations", ["membership_id"], name: "index_camp_locations_on_membership_id", using: :btree
   add_index "camp_locations", ["owner_id"], name: "index_camp_locations_on_owner_id", using: :btree
 
   create_table "cashbacks", force: true do |t|
@@ -667,7 +669,6 @@ ActiveRecord::Schema.define(version: 20151205055646) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
     t.datetime "original_due_date"
     t.boolean  "is_date_arbitrary"
     t.integer  "myplaceonline_due_display_id"
@@ -677,7 +678,7 @@ ActiveRecord::Schema.define(version: 20151205055646) do
   add_index "due_items", ["owner_id"], name: "index_due_items_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -1358,6 +1359,7 @@ ActiveRecord::Schema.define(version: 20151205055646) do
     t.datetime "updated_at"
     t.text     "notes"
     t.integer  "periodic_payment_id"
+    t.integer  "visit_count"
   end
 
   add_index "memberships", ["owner_id"], name: "index_memberships_on_owner_id", using: :btree
@@ -1464,7 +1466,6 @@ ActiveRecord::Schema.define(version: 20151205055646) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
   end
 
   add_index "myplets", ["owner_id"], name: "index_myplets_on_owner_id", using: :btree

@@ -27,3 +27,17 @@
 <%= myp_select(f, :rating, "myplaceonline.camp_locations.rating", Myp.translate_options(Myp::RATINGS), obj.rating) %>
 <%= myp_select(f, :noise_level, "myplaceonline.camp_locations.noise_level", Myp.translate_options(Myp::NOISE_LEVELS), obj.noise_level) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.camp_locations.notes", obj.notes) %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :membership,
+    existingobj: obj.membership,
+    heading: t("myplaceonline.camp_locations.membership"),
+    objform: "memberships/form",
+    existingobjurl: "membership_path",
+    searchurl: "/memberships.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    collapsed: obj.membership.nil? ? true : false
+  }
+%>
