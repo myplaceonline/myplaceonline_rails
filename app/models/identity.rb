@@ -15,7 +15,7 @@ class Identity < MyplaceonlineModelBase
   has_many :jokes, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :companies, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :promises, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :subscriptions, :foreign_key => 'owner_id', :dependent => :destroy
+  has_many :memberships, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :credit_scores, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :websites, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :credit_cards, :foreign_key => 'owner_id', :dependent => :destroy
@@ -126,7 +126,7 @@ class Identity < MyplaceonlineModelBase
       :jokes => jokes.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :companies => companies.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :promises => promises.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
-      :subscriptions => subscriptions.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
+      :memberships => memberships.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :credit_scores => credit_scores.to_a.map{|x| x.as_json},
       :websites => websites.to_a.sort{ |a,b| a.title.downcase <=> b.title.downcase }.map{|x| x.as_json},
       :credit_cards => credit_cards.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},

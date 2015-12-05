@@ -1,4 +1,4 @@
-class Subscription < MyplaceonlineIdentityRecord
+class Membership < MyplaceonlineIdentityRecord
   include AllowExistingConcern
 
   validates :name, presence: true

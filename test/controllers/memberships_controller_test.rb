@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SubscriptionsControllerTest < ActionController::TestCase
+class MembershipsControllerTest < ActionController::TestCase
   include MyplaceonlineControllerTest
   
   def test_attributes

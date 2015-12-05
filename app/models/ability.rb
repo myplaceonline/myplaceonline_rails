@@ -47,7 +47,7 @@ class Ability
     can :manage, Joke, :owner => identity
     can :manage, Company, :owner => identity
     can :manage, Promise, :owner => identity
-    can :manage, Subscription, :owner => identity
+    can :manage, Membership, :owner => identity
     can :manage, CreditScore, :owner => identity
     can :manage, Website, :owner => identity
     can :manage, CreditCard, :owner => identity

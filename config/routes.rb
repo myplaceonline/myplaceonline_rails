@@ -249,8 +249,8 @@ Rails.application.routes.draw do
   resources :credit_scores
   post 'credit_scores/new'
 
-  resources :subscriptions
-  post 'subscriptions/new'
+  resources :memberships
+  post 'memberships/new'
 
   resources :promises
   post 'promises/new'

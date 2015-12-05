@@ -42,7 +42,7 @@ en:
       jokes: "Jokes"
       companies: "Companies"
       promises: "Promises"
-      subscriptions: "Subscriptions"
+      memberships: "Memberships"
       credit_scores: "Credit Scores"
       websites: "Websites"
       credit_cards: "Credit Cards"
@@ -578,8 +578,8 @@ en:
       name: "Promise Name"
       promise: "Promise"
       due: "Due"
-    subscriptions:
-      name: "Subscription Name"
+    memberships:
+      name: "Membership Name"
       start_date: "Start Date"
       end_date: "End Date"
       notes: "Notes"

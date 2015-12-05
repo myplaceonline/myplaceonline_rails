@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151205050919) do
+ActiveRecord::Schema.define(version: 20151205055646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -667,6 +667,7 @@ ActiveRecord::Schema.define(version: 20151205050919) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "visit_count"
     t.datetime "original_due_date"
     t.boolean  "is_date_arbitrary"
     t.integer  "myplaceonline_due_display_id"
@@ -676,7 +677,7 @@ ActiveRecord::Schema.define(version: 20151205050919) do
   add_index "due_items", ["owner_id"], name: "index_due_items_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.binary   "val"
+    t.string   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -1348,6 +1349,20 @@ ActiveRecord::Schema.define(version: 20151205050919) do
 
   add_index "medicines", ["owner_id"], name: "index_medicines_on_owner_id", using: :btree
 
+  create_table "memberships", force: true do |t|
+    t.string   "name"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "notes"
+    t.integer  "periodic_payment_id"
+  end
+
+  add_index "memberships", ["owner_id"], name: "index_memberships_on_owner_id", using: :btree
+  add_index "memberships", ["periodic_payment_id"], name: "index_memberships_on_periodic_payment_id", using: :btree
+
   create_table "movie_theaters", force: true do |t|
     t.string   "theater_name"
     t.integer  "location_id"
@@ -1449,6 +1464,7 @@ ActiveRecord::Schema.define(version: 20151205050919) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "visit_count"
   end
 
   add_index "myplets", ["owner_id"], name: "index_myplets_on_owner_id", using: :btree
@@ -1907,21 +1923,6 @@ ActiveRecord::Schema.define(version: 20151205050919) do
   add_index "stocks", ["company_id"], name: "index_stocks_on_company_id", using: :btree
   add_index "stocks", ["owner_id"], name: "index_stocks_on_owner_id", using: :btree
   add_index "stocks", ["password_id"], name: "index_stocks_on_password_id", using: :btree
-
-  create_table "subscriptions", force: true do |t|
-    t.string   "name"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.integer  "owner_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "notes"
-    t.integer  "periodic_payment_id"
-    t.integer  "visit_count"
-  end
-
-  add_index "subscriptions", ["owner_id"], name: "index_subscriptions_on_owner_id", using: :btree
-  add_index "subscriptions", ["periodic_payment_id"], name: "index_subscriptions_on_periodic_payment_id", using: :btree
 
   create_table "sun_exposures", force: true do |t|
     t.datetime "exposure_start"
