@@ -870,14 +870,24 @@ module Myp
     stack = Myp.error_details(exception)
     body = ""
     if !email.nil?
-      body += "User e-mail: " + email + "\n"
+      body += "\nUser: " + email + "\n"
     end
     if !User.current_user.nil?
-      body += User.current_user.inspect + "\n"
+      body += "\nUser: " + User.current_user.email + "\n"
     end
-    body += stack + "\n"
+    body += "Stack:\n" + stack + "\n"
     if !request.nil?
-      body += "Request: " + request.inspect + "\n"
+      body += "Request: { " +
+          "fullpath: #{request.fullpath.inspect}, " +
+          "ip: #{request.ip.inspect}, " +
+          "method: #{request.method.inspect}, " +
+          "original_fullpath: #{request.original_fullpath.inspect}, " +
+          "original_url: #{request.original_url.inspect}, " +
+          "query_parameters: #{request.query_parameters.inspect}, " +
+          "remote_ip: #{request.remote_ip.inspect}, " +
+          "request_method: #{request.request_method.inspect}, " +
+          "uuid: #{request.uuid.inspect}" +
+          " }\n"
     end
     puts "handle_exception: " + body
     Myp.send_support_email_safe("User Exception", body)
@@ -889,7 +899,9 @@ module Myp
       if !User.current_user.nil?
         from = User.current_user.email
       end
-      UserMailer.send_support_email(from, subject, body).deliver
+      if !Rails.env.development?
+        UserMailer.send_support_email(from, subject, body).deliver
+      end
     rescue Exception => e
       puts "Could not send email. Subject: " + subject + ", Body: " + body + ", Email Problem: " + Myp.error_details(e)
     end
