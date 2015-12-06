@@ -16,7 +16,7 @@
     onPageLoad(function() {
       $('#<%= random_name %>').magnificPopup({
           items: [
-            <%= raw(pics.map{ |pic| "{ src: '" + file_thumbnail_path(pic.identity_file, :t => Time.now.to_f) + "'}" }.join(", ")) %>
+            <%= raw(pics.map{ |pic| "{ src: '" + file_view_path(pic.identity_file, :t => Time.now.to_f) + "'}" }.join(", ")) %>
           ],
           gallery: {
             enabled: true
