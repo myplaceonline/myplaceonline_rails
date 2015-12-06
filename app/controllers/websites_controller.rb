@@ -1,4 +1,11 @@
 class WebsitesController < MyplaceonlineController
+  def self.param_names
+    [
+      :title,
+      :url
+    ]
+  end
+  
   protected
     def insecure
       true
@@ -9,6 +16,8 @@ class WebsitesController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:website).permit(:title, :url)
+      params.require(:website).permit(
+        WebsitesController.param_names
+      )
     end
 end

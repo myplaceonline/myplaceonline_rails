@@ -1704,6 +1704,7 @@ en:
       museum_type: "Type"
       notes: "Notes"
       location: "Location"
+      website: "Website"
     museum_types:
       art: "Art"
       bot: "Arboretums, Botanical Gardens, & Nature Centers"

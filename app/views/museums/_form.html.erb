@@ -14,3 +14,16 @@
 <%= myp_text_field f, :museum_id, "myplaceonline.museums.museum_id", obj.museum_id %>
 <%= myp_select(f, :museum_type, "myplaceonline.museums.museum_type", Myp.translate_options(Museum::MUSEUM_TYPES), obj.museum_type) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.museums.notes", obj.notes) %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :website,
+    existingobj: obj.website,
+    heading: t("myplaceonline.museums.website"),
+    objform: "websites/form",
+    existingobjurl: "website_path",
+    searchurl: "/websites.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
