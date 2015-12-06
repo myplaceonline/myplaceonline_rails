@@ -2,7 +2,7 @@ class CreateRootUser < ActiveRecord::Migration
   def up
     user = User.new
     user.id = 0
-    user.email = ENV["ROOT_EMAIL"].blank? ? Myplaceonline::DEFAULT_SUPPORT_EMAIL : ENV["ROOT_EMAIL"].blank?
+    user.email = ENV["ROOT_EMAIL"].blank? ? Myplaceonline::DEFAULT_SUPPORT_EMAIL : ENV["ROOT_EMAIL"]
     user.password = ENV["ROOT_PASSWORD"].blank? ? "password" : ENV["SECRET_KEY_BASE"]
     user.password_confirmation = user.password
     user.confirmed_at = Time.now
