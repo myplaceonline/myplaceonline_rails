@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151206035458) do
+ActiveRecord::Schema.define(version: 20151206041406) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -669,6 +669,7 @@ ActiveRecord::Schema.define(version: 20151206035458) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "visit_count"
     t.datetime "original_due_date"
     t.boolean  "is_date_arbitrary"
     t.integer  "myplaceonline_due_display_id"
@@ -678,7 +679,7 @@ ActiveRecord::Schema.define(version: 20151206035458) do
   add_index "due_items", ["owner_id"], name: "index_due_items_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.binary   "val"
+    t.string   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -1359,7 +1360,6 @@ ActiveRecord::Schema.define(version: 20151206035458) do
     t.datetime "updated_at"
     t.text     "notes"
     t.integer  "periodic_payment_id"
-    t.integer  "visit_count"
     t.string   "membership_identifier"
   end
 
@@ -1391,6 +1391,22 @@ ActiveRecord::Schema.define(version: 20151206035458) do
 
   add_index "movies", ["owner_id"], name: "index_movies_on_owner_id", using: :btree
   add_index "movies", ["recommender_id"], name: "index_movies_on_recommender_id", using: :btree
+
+  create_table "museums", force: true do |t|
+    t.integer  "location_id"
+    t.string   "museum_id"
+    t.integer  "website_id"
+    t.integer  "museum_type"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "museums", ["location_id"], name: "index_museums_on_location_id", using: :btree
+  add_index "museums", ["owner_id"], name: "index_museums_on_owner_id", using: :btree
+  add_index "museums", ["website_id"], name: "index_museums_on_website_id", using: :btree
 
   create_table "musical_groups", force: true do |t|
     t.string   "musical_group_name"
@@ -1467,6 +1483,7 @@ ActiveRecord::Schema.define(version: 20151206035458) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "visit_count"
   end
 
   add_index "myplets", ["owner_id"], name: "index_myplets_on_owner_id", using: :btree

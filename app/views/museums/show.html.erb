@@ -1,0 +1,8 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row_reference(t("myplaceonline.museums.location"), "location_path", @obj.location) %>
+  <%= attribute_table_row(t("myplaceonline.museum.museum_id"), @obj.museum_id) %>
+  <%= attribute_table_row_select(t("myplaceonline.museums.museum_type"), @obj.museum_type, Museum::MUSEUM_TYPES) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.museum.notes"), @obj.notes) %>
+  
+<% end %>

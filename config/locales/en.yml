@@ -125,6 +125,7 @@ en:
       gas_stations: "Gas Stations"
       events: "Events"
       stocks: "Stocks"
+      museums: "Museums"
     general:
       email: "E-mail"
       password: "Password"
@@ -1698,3 +1699,18 @@ en:
       notes: "Notes"
       until_vest: "Until Vested"
       upcoming: "Stocks %{name} vest in %{delta}"
+    museums:
+      museum_id: "Museum Identifier"
+      museum_type: "Type"
+      notes: "Notes"
+      location: "Location"
+    museum_types:
+      art: "Art"
+      bot: "Arboretums, Botanical Gardens, & Nature Centers"
+      cmu: "Children's"
+      gmu: "General"
+      hsc: "Historical Societies, Historic Preservation"
+      hst: "History"
+      nat: "Natural History & Natural Science Museums"
+      sci: "Science & Technology Museums & Planetariums"
+      zaw: "Zoos, Aquariums, & Wildlife Conservation"
