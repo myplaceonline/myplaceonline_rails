@@ -21,5 +21,8 @@ class MyplaceonlineDueDisplay < MyplaceonlineIdentityRecord
   timespan_field :stocks_vest_threshold
   
   after_save { |record| DueItem.recalculate_due(User.current_user) }
-  after_destroy { |record| DueItem.recalculate_due(User.current_user) }
+  
+  # We don't want to recalculate due items on a delete because there's no
+  # context.
+  # after_destroy { |record| DueItem.recalculate_due(User.current_user) }
 end

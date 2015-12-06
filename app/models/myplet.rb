@@ -42,7 +42,7 @@ class Myplet < MyplaceonlineIdentityRecord
       x_coordinate: 0,
       category_name: x.class.name.underscore.pluralize,
       category_id: x.id,
-      border_type: 1,
+      border_type: 0,
       owner: identity
     }))
 
