@@ -282,12 +282,19 @@ module ApplicationHelper
     end
   end
   
-  def attribute_table_row_duration(name, start_time, end_time)
-    if !start_time.nil? && !end_time.nil? && end_time > start_time
-      attribute_table_row(
-        name,
-        Myp.time_difference_in_general_human_detailed(TimeDifference.between(start_time, end_time).in_general)
-      )
+  def attribute_table_row_duration(name, start_time, end_time = DateTime.now)
+    if !start_time.nil? && !end_time.nil?
+      if end_time > start_time
+        attribute_table_row(
+          name,
+          Myp.time_difference_in_general_human_detailed(TimeDifference.between(start_time, end_time).in_general)
+        )
+      else
+        attribute_table_row(
+          name,
+          Myp.time_difference_in_general_human_detailed(TimeDifference.between(end_time, start_time).in_general)
+        )
+      end
     else
       nil
     end
