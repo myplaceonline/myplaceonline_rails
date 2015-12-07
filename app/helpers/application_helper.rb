@@ -140,7 +140,10 @@ module ApplicationHelper
           nil,
           url_or_blank(
             file_view_path(identity_file),
-            image_content, nil, nil, true
+            image_content,
+            nil,
+            "externallink",
+            true
           )
         )
       else
