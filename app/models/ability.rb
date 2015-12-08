@@ -129,6 +129,8 @@ class Ability
     can :manage, Event, :owner => identity
     can :manage, Stock, :owner => identity
     can :manage, Museum, :owner => identity
+    can :manage, SnoozedDueItem, :owner => identity
+    can :manage, CompleteDueItem, :owner => identity
     
     if user.admin?
       can :manage, User

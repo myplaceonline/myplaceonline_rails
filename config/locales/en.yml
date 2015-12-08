@@ -126,6 +126,8 @@ en:
       events: "Events"
       stocks: "Stocks"
       museums: "Museums"
+      snoozed_due_items: "Snoozed Due Items"
+      complete_due_items: "Complete Due Items"
     general:
       email: "E-mail"
       password: "Password"
@@ -1715,3 +1717,13 @@ en:
       nat: "Natural History & Natural Science Museums"
       sci: "Science & Technology Museums & Planetariums"
       zaw: "Zoos, Aquariums, & Wildlife Conservation"
+    snoozed_due_items:
+      display: "Display"
+      link: "Link"
+      due_date: "Due Date"
+      original_due_date: "Original Due Date"
+    complete_due_items:
+      display: "Display"
+      link: "Link"
+      due_date: "Due Date"
+      original_due_date: "Original Due Date"

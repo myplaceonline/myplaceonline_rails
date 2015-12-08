@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   
+  resources :complete_due_items
+  post 'complete_due_items/new'
+
+  resources :snoozed_due_items
+  post 'snoozed_due_items/new'
+
   resources :museums
   post 'museums/new'
 
