@@ -1397,9 +1397,12 @@ en:
       no_physicals: "No Health Physicals"
     statuses:
       status_time: "Time"
-      three_good_things: "Three Good Things"
+      three_good_things: "Overall Status"
       no_recent_status: "Three Good Things Last Entered %{delta} Ago"
       no_statuses: "Enter Three Good Things Today"
+      status1: "First Good Thing"
+      status2: "Second Good Thing"
+      status3: "Third Good Thing"
       feeling: "General Feeling"
       feeling_okay: "Fine"
       feeling_happy: "Happy"

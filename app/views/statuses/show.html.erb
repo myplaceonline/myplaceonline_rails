@@ -1,6 +1,9 @@
 <%= render layout: "shared/model_show" do %>
 
   <%= attribute_table_row_datetime(t("myplaceonline.statuses.status_time"), @obj.status_time) %>
+  <%= attribute_table_row(t("myplaceonline.statuses.status1"), @obj.status1) %>
+  <%= attribute_table_row(t("myplaceonline.statuses.status2"), @obj.status2) %>
+  <%= attribute_table_row(t("myplaceonline.statuses.status3"), @obj.status3) %>
   <%= attribute_table_row_markdown(t("myplaceonline.statuses.three_good_things"), @obj.three_good_things) %>
   <%= attribute_table_row_select(t("myplaceonline.statuses.feeling"), @obj.feeling, Status::FEELINGS) %>
   <% content_for :aftertable do %>

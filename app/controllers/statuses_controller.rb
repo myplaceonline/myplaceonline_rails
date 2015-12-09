@@ -12,7 +12,10 @@ class StatusesController < MyplaceonlineController
       params.require(:status).permit(
         :status_time,
         :three_good_things,
-        :feeling
+        :feeling,
+        :status1,
+        :status2,
+        :status3
       )
     end
 end
