@@ -21,6 +21,30 @@ class PeriodicPayment < MyplaceonlineIdentityRecord
     result
   end
 
+  def next_payment
+    result = nil
+    today = Date.today
+    if !started.nil?
+      result = started
+    elsif date_period == 0
+      result = Date.new(today.year, today.month)
+    elsif date_period == 1
+      result = Date.new(today.year)
+    end
+    if !result.nil?
+      while result < today
+        if date_period == 0
+          result = result.advance(months: 1)
+        elsif date_period == 1
+          result = result.advance(years: 1)
+        elsif date_period == 2
+          result = result.advance(months: 6)
+        end
+      end
+    end
+    result
+  end
+
   after_save { |record| DueItem.due_periodic_payments(User.current_user, record, DueItem::UPDATE_TYPE_UPDATE) }
   after_destroy { |record| DueItem.due_periodic_payments(User.current_user, record, DueItem::UPDATE_TYPE_DELETE) }
 end

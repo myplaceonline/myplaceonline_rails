@@ -1088,6 +1088,7 @@ en:
       reminder_before: "Periodic Payment %{name} Due in %{delta}"
       reminder_after: "Periodic Payment %{name} Past Due by %{delta}"
       suppress_reminder: "Suppress Reminder"
+      next_payment: "Next Payment"
     jobs:
       job_title: "Job Title"
       started: "Started"
@@ -1397,7 +1398,7 @@ en:
       no_physicals: "No Health Physicals"
     statuses:
       status_time: "Time"
-      three_good_things: "Overall Status"
+      three_good_things: "Notes"
       no_recent_status: "Three Good Things Last Entered %{delta} Ago"
       no_statuses: "Enter Three Good Things Today"
       status1: "First Good Thing"

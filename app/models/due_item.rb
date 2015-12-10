@@ -602,24 +602,8 @@ class DueItem < MyplaceonlineIdentityRecord
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
       PeriodicPayment.where("owner_id = ? and date_period is not null and ended is null", user.primary_identity).each do |x|
         if !x.suppress_reminder
-          result = nil
-          if !x.started.nil?
-            result = x.started
-          elsif x.date_period == 0
-            result = Date.new(today.year, today.month)
-          elsif x.date_period == 1
-            result = Date.new(today.year)
-          end
+          result = x.next_payment
           if !result.nil?
-            while result < today
-              if x.date_period == 0
-                result = result.advance(months: 1)
-              elsif x.date_period == 1
-                result = result.advance(years: 1)
-              elsif x.date_period == 2
-                result = result.advance(months: 6)
-              end
-            end
             if result == today
               DueItem.new(
                 display: I18n.t(
