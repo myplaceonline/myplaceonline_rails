@@ -273,9 +273,9 @@ class DueItem < MyplaceonlineIdentityRecord
 
       Contact.where(owner: user.primary_identity).includes(:identity).to_a.each do |x|
         if !x.identity.nil? && !x.identity.birthday.nil?
-          bday_this_year = Date.new(Date.today.year, x.identity.birthday.month, x.identity.birthday.day)
-          if bday_this_year >= datenow && bday_this_year <= birthday_threshold(mdd)
-            diff = TimeDifference.between(datenow, bday_this_year)
+          next_birthday = x.identity.next_birthday
+          if next_birthday <= birthday_threshold(mdd)
+            diff = TimeDifference.between(datenow, next_birthday)
             diff_in_general = diff.in_general
             DueItem.new(
               display: I18n.t(
@@ -284,8 +284,8 @@ class DueItem < MyplaceonlineIdentityRecord
                 delta: Myp.time_difference_in_general_human(diff_in_general)
               ),
               link: "/contacts/" + x.id.to_s,
-              due_date: bday_this_year,
-              original_due_date: bday_this_year,
+              due_date: next_birthday,
+              original_due_date: next_birthday,
               owner: user.primary_identity,
               myplaceonline_due_display: mdd,
               model_name: Contact.name,

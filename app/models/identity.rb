@@ -228,4 +228,15 @@ class Identity < MyplaceonlineModelBase
   def last_weight
     weights.to_a.sort{ |a,b| b.measure_date <=> a.measure_date }.first
   end
+  
+  def next_birthday
+    result = nil
+    if !birthday.nil?
+      result = Date.new(Date.today.year, birthday.month, birthday.day)
+      if result < Date.today
+        result = Date.new(Date.today.year + 1, birthday.month, birthday.day)
+      end
+    end
+    result
+  end
 end

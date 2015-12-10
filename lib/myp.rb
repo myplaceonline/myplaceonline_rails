@@ -602,6 +602,10 @@ module Myp
     result
   end
   
+  def self.time_difference_in_general_human_detailed_from_now(dt)
+    time_difference_in_general_human_detailed(TimeDifference.between(dt, Time.now).in_general)
+  end
+  
   def self.time_difference_in_general_human_detailed(diff)
     result = Myp.time_difference_in_general_human(diff)
     result = Myp.time_difference_in_general_human_detailed_hms(diff, result)
