@@ -131,6 +131,7 @@ class Ability
     can :manage, Museum, :owner => identity
     can :manage, SnoozedDueItem, :owner => identity
     can :manage, CompleteDueItem, :owner => identity
+    can :manage, DateLocation, :owner => identity
     
     if user.admin?
       can :manage, User

@@ -8,6 +8,7 @@ class ImportMuseums < ActiveRecord::Migration
 
     f = File.open(file.to_s, "rb")
     contents = f.read.encode!("UTF-8", :undef => :replace, :invalid => :replace, :replace => "")
+    count = 1
 
     CSV.parse(contents, { headers: true, skip_blanks: true }) do |row|
       m = Museum.new 
@@ -65,6 +66,12 @@ class ImportMuseums < ActiveRecord::Migration
         m.museum_type = 8 
       end
       m.save!
+
+      if (count % 1000) == 0
+        puts "Processed #{count} rows"
+      end
+
+      count = count + 1
     end
   end
 end

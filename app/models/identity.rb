@@ -85,6 +85,7 @@ class Identity < MyplaceonlineModelBase
   has_many :events, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :stocks, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :museums, :foreign_key => 'owner_id', :dependent => :destroy
+  has_many :date_locations, :foreign_key => 'owner_id', :dependent => :destroy
   
   has_many :myplets, -> { order('y_coordinate') }, :foreign_key => 'owner_id', :dependent => :destroy
   accepts_nested_attributes_for :myplets, allow_destroy: true, reject_if: :all_blank
@@ -197,6 +198,7 @@ class Identity < MyplaceonlineModelBase
       :events => events.to_a.sort{ |a,b| a.event_name.downcase <=> b.event_name.downcase }.map{|x| x.as_json},
       :stocks => stocks.to_a.map{|x| x.as_json},
       :museums => museums.to_a.map{|x| x.as_json},
+      :date_locations => date_locations.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

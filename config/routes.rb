@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :date_locations
+  post 'date_locations/new'
+
   resources :complete_due_items
   post 'complete_due_items/new'
 
