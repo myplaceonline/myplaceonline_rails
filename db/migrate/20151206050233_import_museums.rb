@@ -6,6 +6,9 @@ class ImportMuseums < ActiveRecord::Migration
 
     User.current_user = User.find(0)
 
+    line_count = `wc -l "#{file.to_s}"`.strip.split(' ')[0].to_i
+    puts "Entries: #{line_count}"
+
     f = File.open(file.to_s, "rb")
     contents = f.read.encode!("UTF-8", :undef => :replace, :invalid => :replace, :replace => "")
     count = 1

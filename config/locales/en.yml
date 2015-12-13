@@ -129,6 +129,7 @@ en:
       snoozed_due_items: "Snoozed Due Items"
       complete_due_items: "Complete Due Items"
       date_locations: "Date Locations"
+      playlists: "Playlists"
     general:
       email: "E-mail"
       password: "Password"
@@ -1739,3 +1740,9 @@ en:
       original_due_date: "Original Due Date"
     date_locations:
       location: "Location"
+    playlists:
+      playlist_name: "Name"
+      songs: "Songs"
+      song: "Song"
+      delete_song: "Delete Song"
+      add_song: "Add Song"

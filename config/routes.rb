@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :playlists
+  post 'playlists/new'
+
   resources :date_locations
   post 'date_locations/new'
 

@@ -132,6 +132,7 @@ class Ability
     can :manage, SnoozedDueItem, :owner => identity
     can :manage, CompleteDueItem, :owner => identity
     can :manage, DateLocation, :owner => identity
+    can :manage, Playlist, :owner => identity
     
     if user.admin?
       can :manage, User

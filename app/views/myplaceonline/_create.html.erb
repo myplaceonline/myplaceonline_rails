@@ -11,7 +11,7 @@ heading ||= ""
   <div id="<%= random_name %>">
 <% end %>
     <%= f.fields_for name, existingobj do |sub_fields| %>
-      <%= render partial: objform + ".html", locals: { f: sub_fields, obj: existingobj, autofocus: autofocus } %>
+      <%= render partial: objform + ".html", locals: { f: sub_fields, obj: existingobj, autofocus: autofocus, edit: true } %>
       <%
       if first && autofocus
         first = false

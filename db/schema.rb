@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151213183024) do
+ActiveRecord::Schema.define(version: 20151213194618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1637,6 +1637,29 @@ ActiveRecord::Schema.define(version: 20151213183024) do
   add_index "phones", ["manufacturer_id"], name: "index_phones_on_manufacturer_id", using: :btree
   add_index "phones", ["owner_id"], name: "index_phones_on_owner_id", using: :btree
   add_index "phones", ["password_id"], name: "index_phones_on_password_id", using: :btree
+
+  create_table "playlist_songs", force: true do |t|
+    t.integer  "playlist_id"
+    t.integer  "song_id"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "position"
+  end
+
+  add_index "playlist_songs", ["owner_id"], name: "index_playlist_songs_on_owner_id", using: :btree
+  add_index "playlist_songs", ["playlist_id"], name: "index_playlist_songs_on_playlist_id", using: :btree
+  add_index "playlist_songs", ["song_id"], name: "index_playlist_songs_on_song_id", using: :btree
+
+  create_table "playlists", force: true do |t|
+    t.string   "playlist_name"
+    t.integer  "visit_count"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "playlists", ["owner_id"], name: "index_playlists_on_owner_id", using: :btree
 
   create_table "poems", force: true do |t|
     t.string   "poem_name"
