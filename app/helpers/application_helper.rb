@@ -123,6 +123,7 @@ module ApplicationHelper
       <audio src="#{file_view_path(identity_file)}" controls>
         <p>#{I18n.t("myplaceonline.html5.noaudio")}</p>
       </audio>
+      #{ url_or_blank(file_download_path(identity_file), t("myplaceonline.files.download"), nil, "ui-btn", true) }
       HTML
       
       attribute_table_row_content(
