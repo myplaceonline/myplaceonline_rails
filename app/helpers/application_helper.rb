@@ -117,6 +117,24 @@ module ApplicationHelper
     html.html_safe
   end
   
+  def attribute_table_row_file_audio(name, identity_file)
+    if !identity_file.nil? && !identity_file.file_content_type.nil? && identity_file.file_content_type.start_with?("audio")
+      html = <<-HTML
+      <audio src="#{file_view_path(identity_file)}" controls>
+        <p>#{I18n.t("myplaceonline.html5.noaudio")}</p>
+      </audio>
+      HTML
+      
+      attribute_table_row_content(
+        name,
+        nil,
+        html.html_safe
+      )
+    else
+      nil
+    end
+  end
+  
   def attribute_table_row_image(name, identity_file, link_to_original = true)
     if !identity_file.nil? && !identity_file.file_content_type.nil? && (identity_file.file_content_type.start_with?("image"))
       if identity_file.thumbnail_contents.nil?
@@ -557,7 +575,7 @@ module ApplicationHelper
     end
     content_tag(
       :p,
-      form.label(name, placeholder, class: myp_label_classes(value)) +
+      form.label(name, placeholder, class: "form_field_label") +
       form.file_field(name, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes), value: value)
     ).html_safe
   end

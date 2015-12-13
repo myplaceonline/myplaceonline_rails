@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151210201648) do
+ActiveRecord::Schema.define(version: 20151213173507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -680,7 +680,6 @@ ActiveRecord::Schema.define(version: 20151210201648) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
     t.datetime "original_due_date"
     t.boolean  "is_date_arbitrary"
     t.integer  "myplaceonline_due_display_id"
@@ -690,7 +689,7 @@ ActiveRecord::Schema.define(version: 20151210201648) do
   add_index "due_items", ["owner_id"], name: "index_due_items_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: true do |t|
-    t.string   "val"
+    t.binary   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -1371,6 +1370,7 @@ ActiveRecord::Schema.define(version: 20151210201648) do
     t.datetime "updated_at"
     t.text     "notes"
     t.integer  "periodic_payment_id"
+    t.integer  "visit_count"
     t.string   "membership_identifier"
   end
 
@@ -1495,7 +1495,6 @@ ActiveRecord::Schema.define(version: 20151210201648) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
   end
 
   add_index "myplets", ["owner_id"], name: "index_myplets_on_owner_id", using: :btree
@@ -1913,7 +1912,7 @@ ActiveRecord::Schema.define(version: 20151210201648) do
 
   create_table "songs", force: true do |t|
     t.string   "song_name"
-    t.decimal  "song_rating", precision: 10, scale: 2
+    t.decimal  "song_rating",      precision: 10, scale: 2
     t.text     "lyrics"
     t.integer  "song_plays"
     t.datetime "lastplay"
@@ -1923,8 +1922,10 @@ ActiveRecord::Schema.define(version: 20151210201648) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.integer  "identity_file_id"
   end
 
+  add_index "songs", ["identity_file_id"], name: "index_songs_on_identity_file_id", using: :btree
   add_index "songs", ["owner_id"], name: "index_songs_on_owner_id", using: :btree
 
   create_table "statuses", force: true do |t|

@@ -207,6 +207,8 @@ en:
       notes: "Notes"
       not_auhorized: "Not Authorized"
       close: "Close"
+    html5:
+      noaudio: "Your browser doesn't support embedded audio."
     periods:
       monthly: "Monthly"
       yearly: "Yearly"
@@ -1014,6 +1016,7 @@ en:
       lastplay: "Last Played"
       secret: "Secret"
       awesome: "Awesome"
+      file: "File"
     blood_tests:
       fast_started: "Fast Started"
       test_time: "Test Time"

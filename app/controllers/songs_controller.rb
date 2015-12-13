@@ -1,4 +1,8 @@
 class SongsController < MyplaceonlineController
+  def may_upload
+    true
+  end
+
   protected
     def insecure
       true
@@ -16,7 +20,13 @@ class SongsController < MyplaceonlineController
         :song_plays,
         :lastplay,
         :secret,
-        :awesome
+        :awesome,
+        identity_file_attributes: [
+          :id,
+          :_destroy,
+          :file,
+          :notes
+        ]
       )
     end
 end
