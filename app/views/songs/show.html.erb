@@ -1,6 +1,7 @@
 <%= render layout: "shared/model_show" do %>
 
   <%= attribute_table_row(t("myplaceonline.songs.song_name"), @obj.song_name) %>
+  <%= attribute_table_row_reference(t("myplaceonline.songs.musical_group"), "musical_group_path", @obj.musical_group) %>
   <%= attribute_table_row(t("myplaceonline.songs.song_rating"), @obj.song_rating) %>
   <%= attribute_table_row(t("myplaceonline.songs.plays"), @obj.song_plays) %>
   <%= attribute_table_row_datetime(t("myplaceonline.songs.lastplay"), @obj.lastplay) %>

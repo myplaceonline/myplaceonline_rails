@@ -21,6 +21,7 @@ class SongsController < MyplaceonlineController
         :lastplay,
         :secret,
         :awesome,
+        musical_group_attributes: MusicalGroup.params,
         identity_file_attributes: [
           :id,
           :_destroy,
