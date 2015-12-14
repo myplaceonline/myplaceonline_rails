@@ -594,6 +594,17 @@ module ApplicationHelper
     ).html_safe
   end
 
+  def myp_text_area_tag(name, placeholder, value, autofocus = false, input_classes = nil)
+    if Myp.is_probably_i18n(placeholder)
+      placeholder = I18n.t(placeholder)
+    end
+    content_tag(
+      :p,
+      label_tag(name, placeholder, class: myp_label_classes(value)) +
+      text_area_tag(name, value, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes))
+    ).html_safe
+  end
+
   def myp_text_area_markdown(form, name, placeholder, value, autofocus = false, input_classes = nil)
     myp_text_area(form, name, I18n.t(placeholder) + " (" + I18n.t("myplaceonline.general.supports_markdown") + ")", value, autofocus, input_classes)
   end

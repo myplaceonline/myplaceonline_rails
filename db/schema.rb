@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151213194618) do
+ActiveRecord::Schema.define(version: 20151214054521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1638,6 +1638,31 @@ ActiveRecord::Schema.define(version: 20151213194618) do
   add_index "phones", ["owner_id"], name: "index_phones_on_owner_id", using: :btree
   add_index "phones", ["password_id"], name: "index_phones_on_password_id", using: :btree
 
+  create_table "playlist_share_contacts", force: true do |t|
+    t.integer  "playlist_share_id"
+    t.integer  "contact_id"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "playlist_share_contacts", ["contact_id"], name: "index_playlist_share_contacts_on_contact_id", using: :btree
+  add_index "playlist_share_contacts", ["owner_id"], name: "index_playlist_share_contacts_on_owner_id", using: :btree
+  add_index "playlist_share_contacts", ["playlist_share_id"], name: "index_playlist_share_contacts_on_playlist_share_id", using: :btree
+
+  create_table "playlist_shares", force: true do |t|
+    t.boolean  "email"
+    t.integer  "playlist_id"
+    t.integer  "owner_id"
+    t.string   "subject"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "playlist_shares", ["owner_id"], name: "index_playlist_shares_on_owner_id", using: :btree
+  add_index "playlist_shares", ["playlist_id"], name: "index_playlist_shares_on_playlist_id", using: :btree
+
   create_table "playlist_songs", force: true do |t|
     t.integer  "playlist_id"
     t.integer  "song_id"
@@ -1871,6 +1896,17 @@ ActiveRecord::Schema.define(version: 20151213194618) do
 
   add_index "reward_programs", ["owner_id"], name: "index_reward_programs_on_owner_id", using: :btree
   add_index "reward_programs", ["password_id"], name: "index_reward_programs_on_password_id", using: :btree
+
+  create_table "shares", force: true do |t|
+    t.string   "token"
+    t.string   "model_name"
+    t.integer  "model_id"
+    t.integer  "owner_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shares", ["owner_id"], name: "index_shares_on_owner_id", using: :btree
 
   create_table "shopping_list_items", force: true do |t|
     t.integer  "owner_id"

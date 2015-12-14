@@ -1,7 +1,7 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user)
+  def initialize(user, request = nil)
     
     # Define abilities for the passed in user here. For example:
     #
@@ -29,7 +29,7 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/ryanb/cancan/wiki/Defining-Abilities
-
+    
     user ||= User.new
     identity = user.primary_identity
     

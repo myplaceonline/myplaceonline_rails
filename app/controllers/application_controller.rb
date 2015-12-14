@@ -63,4 +63,10 @@ class ApplicationController < ActionController::Base
       Time.zone = current_user.timezone
     end
   end
+
+  private
+    # https://github.com/CanCanCommunity/cancancan/wiki/Accessing-request-data
+    def current_ability
+      @current_ability ||= Ability.new(current_user, request)
+    end
 end

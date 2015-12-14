@@ -1,0 +1,2 @@
+class Share < MyplaceonlineIdentityRecord
+end

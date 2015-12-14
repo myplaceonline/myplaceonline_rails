@@ -6,4 +6,7 @@
     <%= attribute_table_row_reference(t("myplaceonline.playlists.song"), "song_path", playlist_song.song) %>
   <% end %>
   
+  <% content_for :postfooterlinks do %>
+    <li><%= link_to t('myplaceonline.playlists.share'), playlists_share_path(@obj), "data-icon" => "action" %></li>
+  <% end %>
 <% end %>
