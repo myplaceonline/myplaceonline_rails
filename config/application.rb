@@ -60,6 +60,10 @@ module Myplaceonline
     
     config.invite_code = ENV["INVITE_CODE"].nil? ? "invitecode" : ENV["INVITE_CODE"]
     
+    config.active_record.raise_in_transactional_callbacks = true
+    
+    config.active_job.queue_adapter = :delayed_job
+    
     # http://ruby-doc.org/core-2.2.0/Time.html#method-i-strftime
     # http://api.rubyonrails.org/classes/Time.html
     # http://api.rubyonrails.org/classes/DateTime.html

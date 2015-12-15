@@ -24,6 +24,9 @@ class PlaylistsController < MyplaceonlineController
       
       save_result = @share.save
       if save_result
+        
+        ZipPlaylistJob.perform_later(@share)
+        
         redirect_to obj_path,
           :flash => { :notice =>
                       I18n.t("myplaceonline.playlists.shared_sucess")

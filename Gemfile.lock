@@ -67,6 +67,11 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     daemons (1.2.3)
+    delayed_job (4.1.1)
+      activesupport (>= 3.0, < 5.0)
+    delayed_job_active_record (4.1.0)
+      activerecord (>= 3.0, < 5)
+      delayed_job (>= 3.0, < 5)
     dentaku (2.0.5)
     devise (3.5.3)
       bcrypt (~> 3.0)
@@ -225,6 +230,8 @@ DEPENDENCIES
   carmen
   carmen-rails
   coffee-rails (~> 4.0.0)
+  daemons
+  delayed_job_active_record
   dentaku
   devise
   eventmachine
