@@ -41,7 +41,7 @@ class IdentityFile < ActiveRecord::Base
   
   def self.build(params = nil)
     result = self.dobuild(params)
-    if !params[:folder].nil?
+    if !params.nil? && !params[:folder].nil?
       folders = IdentityFileFolder.where(
         owner_id: User.current_user.primary_identity.id,
         id: params[:folder].to_i
