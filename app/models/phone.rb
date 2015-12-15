@@ -7,14 +7,14 @@ class Phone < MyplaceonlineIdentityRecord
     ["myplaceonline.phones.operating_system_windows", 2]
   ]
 
-  validates :model_name, presence: true
+  validates :phone_model_name, presence: true
   
   def display
     result = nil
     if !manufacturer.nil?
       result = Myp.appendstr(result, manufacturer.display)
     end
-    result = Myp.appendstr(result, model_name)
+    result = Myp.appendstr(result, phone_model_name)
     result
   end
   

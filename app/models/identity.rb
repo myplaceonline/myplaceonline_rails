@@ -193,7 +193,7 @@ class Identity < MyplaceonlineModelBase
       :concerts => concerts.to_a.sort{ |a,b| a.concert_title.downcase <=> b.concert_title.downcase }.map{|x| x.as_json},
       :shopping_lists => shopping_lists.to_a.sort{ |a,b| a.shopping_list_name.downcase <=> b.shopping_list_name.downcase }.map{|x| x.as_json},
       :groups => groups.to_a.sort{ |a,b| a.group_name.downcase <=> b.group_name.downcase }.map{|x| x.as_json},
-      :phones => phones.to_a.sort{ |a,b| a.model_name.downcase <=> b.model_name.downcase }.map{|x| x.as_json},
+      :phones => phones.to_a.sort{ |a,b| a.phone_model_name.downcase <=> b.phone_model_name.downcase }.map{|x| x.as_json},
       :movie_theaters => movie_theaters.to_a.map{|x| x.as_json},
       :gas_stations => gas_stations.to_a.map{|x| x.as_json},
       :events => events.to_a.sort{ |a,b| a.event_name.downcase <=> b.event_name.downcase }.map{|x| x.as_json},

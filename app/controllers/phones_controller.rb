@@ -1,12 +1,12 @@
 class PhonesController < MyplaceonlineController
   protected
     def sorts
-      ["lower(phones.model_name) ASC"]
+      ["lower(phones.phone_model_name) ASC"]
     end
 
     def obj_params
       params.require(:phone).permit(
-        :model_name,
+        :phone_model_name,
         :phone_number,
         :purchased,
         :price,

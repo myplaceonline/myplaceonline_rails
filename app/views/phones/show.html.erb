@@ -1,6 +1,6 @@
 <%= render layout: "shared/model_show" do %>
 
-  <%= attribute_table_row(t("myplaceonline.phones.model_name"), @obj.model_name) %>
+  <%= attribute_table_row(t("myplaceonline.phones.phone_model_name"), @obj.phone_model_name) %>
   <%= attribute_table_row_reference(t("myplaceonline.phones.manufacturer"), "company_path", @obj.manufacturer) %>
   <%= attribute_table_row(t("myplaceonline.phones.phone_number"), @obj.phone_number) %>
   <%= attribute_table_row_date(t("myplaceonline.phones.purchased"), @obj.purchased) %>

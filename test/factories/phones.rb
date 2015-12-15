@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :phone do
-    model_name "MyString"
+    phone_model_name "MyString"
 manufacturer nil
 purchased "2015-09-27"
 price "9.99"

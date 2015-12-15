@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151214054521) do
+ActiveRecord::Schema.define(version: 20151215014755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -404,7 +404,7 @@ ActiveRecord::Schema.define(version: 20151214054521) do
     t.string   "display"
     t.string   "link"
     t.datetime "due_date"
-    t.string   "model_name"
+    t.string   "myp_model_name"
     t.integer  "model_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -675,7 +675,7 @@ ActiveRecord::Schema.define(version: 20151214054521) do
     t.string   "display"
     t.string   "link"
     t.datetime "due_date"
-    t.string   "model_name"
+    t.string   "myp_model_name"
     t.integer  "model_id"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -1602,7 +1602,7 @@ ActiveRecord::Schema.define(version: 20151214054521) do
   add_index "periodic_payments", ["owner_id"], name: "index_periodic_payments_on_owner_id", using: :btree
 
   create_table "phones", force: true do |t|
-    t.string   "model_name"
+    t.string   "phone_model_name"
     t.string   "phone_number"
     t.integer  "manufacturer_id"
     t.date     "purchased"
@@ -1899,7 +1899,7 @@ ActiveRecord::Schema.define(version: 20151214054521) do
 
   create_table "shares", force: true do |t|
     t.string   "token"
-    t.string   "model_name"
+    t.string   "myp_model_name"
     t.integer  "model_id"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -1959,7 +1959,7 @@ ActiveRecord::Schema.define(version: 20151214054521) do
     t.string   "link"
     t.datetime "due_date"
     t.datetime "original_due_date"
-    t.string   "model_name"
+    t.string   "myp_model_name"
     t.integer  "model_id"
     t.datetime "created_at"
     t.datetime "updated_at"

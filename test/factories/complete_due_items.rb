@@ -4,7 +4,7 @@ FactoryGirl.define do
 display "MyString"
 link "MyString"
 due_date "2015-11-09 22:26:55"
-model_name "MyString"
+myp_model_name "MyString"
 model_id 1
   end
 

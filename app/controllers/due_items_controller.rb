@@ -12,11 +12,11 @@ class DueItemsController < MyplaceonlineController
         link: @obj.link,
         due_date: @obj.due_date,
         original_due_date: @obj.original_due_date,
-        model_name: @obj.model_name,
+        myp_model_name: @obj.myp_model_name,
         model_id: @obj.model_id
       ).save!
       
-      ::SnoozedDueItem.where(owner: @obj.owner_id, model_name: @obj.model_name, model_id: @obj.model_id).each do |snoozed_item|
+      ::SnoozedDueItem.where(owner: @obj.owner_id, myp_model_name: @obj.myp_model_name, model_id: @obj.model_id).each do |snoozed_item|
         snoozed_item.destroy!
       end
       
@@ -45,7 +45,7 @@ class DueItemsController < MyplaceonlineController
           link: @obj.link,
           due_date: new_due_date,
           original_due_date: @obj.original_due_date,
-          model_name: @obj.model_name,
+          myp_model_name: @obj.myp_model_name,
           model_id: @obj.model_id
         ).save!
         @obj.destroy!

@@ -1606,7 +1606,7 @@ en:
       phone_number: "Phone Number"
       purchased: "Purchased"
       price: "Price"
-      model_name: "Model"
+      phone_model_name: "Model"
       operating_system: "Operating System"
       operating_system_version: "Operating System Version"
       max_resolution_width: "Maximum Display Resolution Width (Pixels)"
