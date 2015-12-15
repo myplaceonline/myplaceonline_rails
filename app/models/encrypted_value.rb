@@ -1,6 +1,8 @@
 require "base64"
 
-class EncryptedValue < MyplaceonlineModelBase
+class EncryptedValue < ActiveRecord::Base
+  include MyplaceonlineActiveRecordBaseConcern
+
   belongs_to :user
   
   def as_json(options={})

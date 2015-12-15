@@ -1,4 +1,6 @@
-class CreditCardCashback < MyplaceonlineIdentityRecord
+class CreditCardCashback < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   belongs_to :credit_card
   belongs_to :cashback, :dependent => :destroy
   accepts_nested_attributes_for :cashback, allow_destroy: true, reject_if: :all_blank

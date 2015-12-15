@@ -1,4 +1,6 @@
-class Status < MyplaceonlineIdentityRecord
+class Status < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   FEELINGS = [
     ["myplaceonline.statuses.feeling_okay", 0],
     ["myplaceonline.statuses.feeling_happy", 1],
@@ -33,7 +35,7 @@ class Status < MyplaceonlineIdentityRecord
   end
   
   def self.build(params = nil)
-    result = super(params)
+    result = self.dobuild(params)
     result.status_time = DateTime.now
     result
   end

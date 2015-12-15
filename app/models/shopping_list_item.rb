@@ -1,4 +1,6 @@
-class ShoppingListItem < MyplaceonlineIdentityRecord
+class ShoppingListItem < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   belongs_to :shopping_list
 
   validates :shopping_list_item_name, presence: true

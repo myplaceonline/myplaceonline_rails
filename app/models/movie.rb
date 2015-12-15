@@ -1,4 +1,5 @@
-class Movie < MyplaceonlineIdentityRecord
+class Movie < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include ModelHelpersConcern
   include AllowExistingConcern
 

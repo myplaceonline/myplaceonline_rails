@@ -1,4 +1,6 @@
-class CalculationElement < MyplaceonlineIdentityRecord
+class CalculationElement < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   belongs_to :left_operand, class_name: CalculationOperand, autosave: true
   validates_associated :left_operand
   validates_presence_of :left_operand
@@ -12,7 +14,7 @@ class CalculationElement < MyplaceonlineIdentityRecord
   # t.integer  "operator"
   
   def self.build(params = nil)
-    new_element = super(params)
+    new_element = self.dobuild(params)
     new_element.left_operand = CalculationOperand.new
     new_element.right_operand = CalculationOperand.new
     new_element

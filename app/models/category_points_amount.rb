@@ -1,3 +1,5 @@
-class CategoryPointsAmount < MyplaceonlineIdentityRecord
+class CategoryPointsAmount < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   belongs_to :category
 end

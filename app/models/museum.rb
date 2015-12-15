@@ -1,4 +1,5 @@
-class Museum < MyplaceonlineIdentityRecord
+class Museum < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   MUSEUM_TYPES = [

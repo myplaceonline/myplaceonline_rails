@@ -1,4 +1,5 @@
-class MovieTheater < MyplaceonlineIdentityRecord
+class MovieTheater < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :location, :autosave => true

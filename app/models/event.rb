@@ -1,4 +1,5 @@
-class Event < MyplaceonlineIdentityRecord
+class Event < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :event_name, presence: true

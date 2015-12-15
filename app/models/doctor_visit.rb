@@ -1,4 +1,5 @@
-class DoctorVisit < MyplaceonlineIdentityRecord
+class DoctorVisit < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   include ModelHelpersConcern
   
@@ -17,7 +18,7 @@ class DoctorVisit < MyplaceonlineIdentityRecord
   allow_existing :doctor
   
   def self.build(params = nil)
-    result = super(params)
+    result = self.dobuild(params)
     result.visit_date = DateTime.now
     result
   end

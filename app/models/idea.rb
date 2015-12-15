@@ -1,4 +1,6 @@
-class Idea < MyplaceonlineIdentityRecord
+class Idea < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :name, presence: true
   
   def display

@@ -1,4 +1,6 @@
-class CalculationForm < MyplaceonlineIdentityRecord
+class CalculationForm < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :name, presence: true
   validates :equation, presence: true
   

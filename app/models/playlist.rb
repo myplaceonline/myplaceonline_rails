@@ -1,4 +1,6 @@
-class Playlist < MyplaceonlineIdentityRecord
+class Playlist < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :playlist_name, presence: true
   
   has_many :playlist_songs, :dependent => :destroy

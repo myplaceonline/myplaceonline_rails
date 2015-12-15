@@ -1,4 +1,5 @@
-class CreditCard < MyplaceonlineIdentityRecord
+class CreditCard < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   include EncryptedConcern
   include ModelHelpersConcern

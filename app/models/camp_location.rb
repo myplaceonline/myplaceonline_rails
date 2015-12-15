@@ -1,4 +1,5 @@
-class CampLocation < MyplaceonlineIdentityRecord
+class CampLocation < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :location, presence: true

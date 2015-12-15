@@ -1,4 +1,5 @@
-class Phone < MyplaceonlineIdentityRecord
+class Phone < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   OPERATING_SYSTEMS = [

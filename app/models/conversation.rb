@@ -1,4 +1,6 @@
-class Conversation < MyplaceonlineIdentityRecord
+class Conversation < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   belongs_to :contact
   
   validates :conversation_date, presence: true

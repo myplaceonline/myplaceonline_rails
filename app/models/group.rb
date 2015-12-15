@@ -1,4 +1,6 @@
-class Group < MyplaceonlineIdentityRecord
+class Group < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :group_name, presence: true
   
   has_many :group_contacts, :dependent => :destroy

@@ -1,4 +1,6 @@
-class Exercise < MyplaceonlineIdentityRecord
+class Exercise < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :exercise_start, presence: true
   
   def display
@@ -6,7 +8,7 @@ class Exercise < MyplaceonlineIdentityRecord
   end
   
   def self.build(params = nil)
-    result = super(params)
+    result = self.dobuild(params)
     result.exercise_start = DateTime.now
     result
   end

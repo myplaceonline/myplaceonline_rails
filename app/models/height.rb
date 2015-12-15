@@ -1,4 +1,6 @@
-class Height < MyplaceonlineIdentityRecord
+class Height < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :height_amount, presence: true
   validates :amount_type, presence: true
   validates :measurement_date, presence: true
@@ -18,7 +20,7 @@ class Height < MyplaceonlineIdentityRecord
   end
     
   def build(params = nil)
-    result = super(params)
+    result = self.dobuild(params)
     result.amount_type = 0
     result.measurement_date = Date.today
     result

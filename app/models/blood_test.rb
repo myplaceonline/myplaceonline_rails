@@ -1,4 +1,5 @@
-class BloodTest < MyplaceonlineIdentityRecord
+class BloodTest < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :fast_started, presence: true

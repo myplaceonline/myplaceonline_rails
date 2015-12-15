@@ -1,4 +1,5 @@
-class Calculation < MyplaceonlineIdentityRecord
+class Calculation < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   
   before_validation :check_calculation_before_create
   
@@ -56,7 +57,7 @@ class Calculation < MyplaceonlineIdentityRecord
   end
   
   def self.build(params = nil)
-    result = super(params)
+    result = self.dobuild(params)
     if !params.nil? && !params[:form].nil?
       existing_form = User.current_user.primary_identity.calculation_forms_available.find(params[:form].to_i)
       if !existing_form.nil?

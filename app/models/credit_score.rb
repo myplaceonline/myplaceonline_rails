@@ -1,4 +1,6 @@
-class CreditScore < MyplaceonlineIdentityRecord
+class CreditScore < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :score_date, presence: true
   validates :score, presence: true
   
@@ -7,7 +9,7 @@ class CreditScore < MyplaceonlineIdentityRecord
   end
   
   def self.build(params = nil)
-    result = super(params)
+    result = self.dobuild(params)
     result.score_date = Date.today
     result
   end

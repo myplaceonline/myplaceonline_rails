@@ -1,4 +1,6 @@
-class BloodPressure < MyplaceonlineIdentityRecord
+class BloodPressure < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :systolic_pressure, presence: true
   validates :diastolic_pressure, presence: true
   validates :measurement_date, presence: true

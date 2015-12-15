@@ -1,4 +1,6 @@
-class RecreationalVehicleLoan < MyplaceonlineIdentityRecord
+class RecreationalVehicleLoan < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   belongs_to :recreational_vehicle
 
   belongs_to :loan, :dependent => :destroy

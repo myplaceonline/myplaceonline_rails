@@ -1,4 +1,6 @@
-class Promise < MyplaceonlineIdentityRecord
+class Promise < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :name, presence: true
   
   def display

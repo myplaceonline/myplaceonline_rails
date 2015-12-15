@@ -1,4 +1,6 @@
-class JobSalary < MyplaceonlineIdentityRecord
+class JobSalary < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   belongs_to :job
   
   validates :started, presence: true

@@ -1,5 +1,7 @@
 # `region` is country, `sub_region1` is state, and `sub_region2` is city.
-class Location < MyplaceonlineIdentityRecord
+class Location < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+  
   validate :at_least_one
   
   has_many :location_phones, :dependent => :destroy

@@ -1,4 +1,6 @@
-class BloodConcentration < MyplaceonlineIdentityRecord
+class BloodConcentration < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :concentration_name, presence: true
   
   def display

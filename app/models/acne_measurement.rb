@@ -1,4 +1,6 @@
-class AcneMeasurement < MyplaceonlineIdentityRecord
+class AcneMeasurement < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :measurement_datetime, presence: true
   
   has_many :acne_measurement_pictures, :dependent => :destroy
@@ -22,7 +24,7 @@ class AcneMeasurement < MyplaceonlineIdentityRecord
   end
   
   def self.build(params = nil)
-    result = super(params)
+    result = self.dobuild(params)
     result.measurement_datetime = DateTime.now
     result
   end

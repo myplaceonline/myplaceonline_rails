@@ -1,4 +1,6 @@
-class Weight < MyplaceonlineIdentityRecord
+class Weight < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :amount, presence: true
   validates :amount_type, presence: true
   validates :measure_date, presence: true
@@ -13,7 +15,7 @@ class Weight < MyplaceonlineIdentityRecord
   end
     
   def self.build(params = nil)
-    result = super(params)
+    result = self.dobuild(params)
     result.amount_type = 0
     result.measure_date = Date.today
     result

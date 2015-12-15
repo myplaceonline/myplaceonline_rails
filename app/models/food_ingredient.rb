@@ -1,4 +1,5 @@
-class FoodIngredient < MyplaceonlineIdentityRecord
+class FoodIngredient < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :parent_food, class_name: Food

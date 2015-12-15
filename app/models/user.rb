@@ -1,4 +1,5 @@
-class User < MyplaceonlineModelBase
+class User < ActiveRecord::Base
+  include MyplaceonlineActiveRecordBaseConcern
 
   USER_TYPES = [
     ["myplaceonline.users.type_normal", 0],

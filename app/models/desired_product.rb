@@ -1,4 +1,6 @@
-class DesiredProduct < MyplaceonlineIdentityRecord
+class DesiredProduct < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :product_name, presence: true
   
   def display

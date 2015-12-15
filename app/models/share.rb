@@ -1,2 +1,4 @@
-class Share < MyplaceonlineIdentityRecord
+class Share < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
 end

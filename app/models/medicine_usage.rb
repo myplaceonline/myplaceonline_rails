@@ -1,4 +1,5 @@
-class MedicineUsage < MyplaceonlineIdentityRecord
+class MedicineUsage < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :usage_time, presence: true
@@ -12,7 +13,7 @@ class MedicineUsage < MyplaceonlineIdentityRecord
   end
 
   def self.build(params = nil)
-    result = super(params)
+    result = self.dobuild(params)
     result.usage_time = DateTime.now
     result
   end

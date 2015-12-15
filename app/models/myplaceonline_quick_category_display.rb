@@ -1,2 +1,4 @@
-class MyplaceonlineQuickCategoryDisplay < MyplaceonlineIdentityRecord
+class MyplaceonlineQuickCategoryDisplay < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
 end

@@ -1,4 +1,6 @@
-class SunExposure < MyplaceonlineIdentityRecord
+class SunExposure < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :exposure_start, presence: true
   
   def display
@@ -6,7 +8,7 @@ class SunExposure < MyplaceonlineIdentityRecord
   end
     
   def self.build(params = nil)
-    result = super(params)
+    result = self.dobuild(params)
     result.exposure_start = DateTime.now
     result
   end

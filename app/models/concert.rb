@@ -1,4 +1,5 @@
-class Concert < MyplaceonlineIdentityRecord
+class Concert < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :concert_date, presence: true
@@ -16,7 +17,7 @@ class Concert < MyplaceonlineIdentityRecord
   end
 
   def self.build(params = nil)
-    result = super(params)
+    result = self.dobuild(params)
     result.concert_date = Date.today
     result
   end

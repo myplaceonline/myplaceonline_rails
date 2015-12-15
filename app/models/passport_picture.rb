@@ -1,4 +1,5 @@
-class PassportPicture < MyplaceonlineIdentityRecord
+class PassportPicture < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :passport

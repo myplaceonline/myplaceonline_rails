@@ -1,6 +1,7 @@
 require "base64"
 
-class IdentityFile < MyplaceonlineIdentityRecord
+class IdentityFile < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   
   before_update :do_before_update
@@ -39,7 +40,7 @@ class IdentityFile < MyplaceonlineIdentityRecord
   end
   
   def self.build(params = nil)
-    result = super(params)
+    result = self.dobuild(params)
     if !params[:folder].nil?
       folders = IdentityFileFolder.where(
         owner_id: User.current_user.primary_identity.id,

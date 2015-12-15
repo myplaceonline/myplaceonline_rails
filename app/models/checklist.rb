@@ -1,4 +1,5 @@
-class Checklist < MyplaceonlineIdentityRecord
+class Checklist < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :checklist_name, presence: true

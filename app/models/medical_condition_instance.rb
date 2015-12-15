@@ -1,4 +1,6 @@
-class MedicalConditionInstance < MyplaceonlineIdentityRecord
+class MedicalConditionInstance < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   belongs_to :medical_condition
   validates :condition_start, presence: true
   

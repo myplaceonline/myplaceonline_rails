@@ -1,4 +1,6 @@
-class Medicine < MyplaceonlineIdentityRecord
+class Medicine < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :medicine_name, presence: true
   
   def display

@@ -1,4 +1,6 @@
-class Category < MyplaceonlineModelBase
+class Category < ActiveRecord::Base
+  include MyplaceonlineActiveRecordBaseConcern
+
   belongs_to :parent, class_name: Category
   has_many :category_points_amounts
   

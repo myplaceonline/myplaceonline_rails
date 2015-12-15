@@ -1,4 +1,5 @@
-class IdentityFileFolder < MyplaceonlineIdentityRecord
+class IdentityFileFolder < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :parent_folder, class_name: IdentityFileFolder
@@ -59,7 +60,7 @@ class IdentityFileFolder < MyplaceonlineIdentityRecord
   end
   
   def self.build(params = nil)
-    result = super(params)
+    result = self.dobuild(params)
     if !params[:parent].nil?
       folders = IdentityFileFolder.where(
         owner_id: User.current_user.primary_identity.id,

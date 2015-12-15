@@ -1,4 +1,5 @@
-class Contact < MyplaceonlineIdentityRecord
+class Contact < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
 
   CONTACT_TYPES = [
     ["myplaceonline.contacts.best_friend", 0],
@@ -65,7 +66,7 @@ class Contact < MyplaceonlineIdentityRecord
   end
   
   def self.build(params = nil)
-    result = super(params)
+    result = self.dobuild(params)
     result.identity = Myp.new_model(Identity)
     result
   end

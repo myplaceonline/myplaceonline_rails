@@ -1,4 +1,6 @@
-class Hypothesis < MyplaceonlineIdentityRecord
+class Hypothesis < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   belongs_to :question
 
   validates :name, presence: true

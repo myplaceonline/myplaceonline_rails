@@ -1,4 +1,6 @@
-class MedicalCondition < MyplaceonlineIdentityRecord
+class MedicalCondition < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :medical_condition_name, presence: true
   
   def display

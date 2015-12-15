@@ -1,4 +1,5 @@
-class PlaylistShareContact < MyplaceonlineIdentityRecord
+class PlaylistShareContact < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :playlist_share

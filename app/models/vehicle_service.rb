@@ -1,4 +1,6 @@
-class VehicleService < MyplaceonlineIdentityRecord
+class VehicleService < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   belongs_to :vehicle
   validates :short_description, presence: true
 

@@ -1,4 +1,6 @@
-class Passport < MyplaceonlineIdentityRecord
+class Passport < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :region, presence: true
   validates :passport_number, presence: true
   

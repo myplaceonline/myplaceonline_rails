@@ -1,4 +1,5 @@
-class MusicalGroup < MyplaceonlineIdentityRecord
+class MusicalGroup < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include ModelHelpersConcern
 
   validates :musical_group_name, presence: true

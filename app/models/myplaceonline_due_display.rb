@@ -1,4 +1,5 @@
-class MyplaceonlineDueDisplay < MyplaceonlineIdentityRecord
+class MyplaceonlineDueDisplay < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include TimespanConcern
   
   timespan_field :exercise_threshold

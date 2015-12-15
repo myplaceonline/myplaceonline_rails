@@ -1,4 +1,5 @@
-class Trip < MyplaceonlineIdentityRecord
+class Trip < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :location, presence: true

@@ -1,4 +1,5 @@
-class TripPicture < MyplaceonlineIdentityRecord
+class TripPicture < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :trip

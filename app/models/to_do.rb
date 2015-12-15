@@ -1,4 +1,6 @@
-class ToDo < MyplaceonlineIdentityRecord
+class ToDo < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :short_description, presence: true
   
   def display

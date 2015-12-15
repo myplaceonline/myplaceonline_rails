@@ -1,4 +1,5 @@
-class Song < MyplaceonlineIdentityRecord
+class Song < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :song_name, presence: true

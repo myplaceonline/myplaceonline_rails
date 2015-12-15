@@ -1,4 +1,5 @@
-class GunRegistration < MyplaceonlineIdentityRecord
+class GunRegistration < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :gun

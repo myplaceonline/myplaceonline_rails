@@ -1,4 +1,6 @@
-class Gun < MyplaceonlineIdentityRecord
+class Gun < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :gun_name, presence: true
   
   has_many :gun_registrations, :dependent => :destroy

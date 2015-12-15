@@ -1,4 +1,5 @@
-class ApartmentTrashPickup < MyplaceonlineIdentityRecord
+class ApartmentTrashPickup < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
 
   TRASH_TYPES = [
     ["myplaceonline.trash.type_general", 0],

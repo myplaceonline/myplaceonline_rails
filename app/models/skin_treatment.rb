@@ -1,4 +1,6 @@
-class SkinTreatment < MyplaceonlineIdentityRecord
+class SkinTreatment < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :treatment_time, presence: true
   
   def display

@@ -1,4 +1,5 @@
-class MedicineUsageMedicine < MyplaceonlineIdentityRecord
+class MedicineUsageMedicine < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :medicine_usage

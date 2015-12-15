@@ -1,4 +1,6 @@
-class Loan < MyplaceonlineIdentityRecord
+class Loan < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :lender, presence: true
 
   def self.params

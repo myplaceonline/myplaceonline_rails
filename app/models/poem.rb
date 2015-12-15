@@ -1,4 +1,6 @@
-class Poem < MyplaceonlineIdentityRecord
+class Poem < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :poem_name, presence: true
   
   def display

@@ -1,4 +1,5 @@
-class BankAccount < MyplaceonlineIdentityRecord
+class BankAccount < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   include EncryptedConcern
   include ModelHelpersConcern

@@ -1,4 +1,5 @@
-class RewardProgram < MyplaceonlineIdentityRecord
+class RewardProgram < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   REWARD_PROGRAM_TYPES = [

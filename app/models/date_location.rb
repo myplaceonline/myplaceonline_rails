@@ -1,4 +1,5 @@
-class DateLocation < MyplaceonlineIdentityRecord
+class DateLocation < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :location, presence: true

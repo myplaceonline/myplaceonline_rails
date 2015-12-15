@@ -1,4 +1,6 @@
-class Promotion < MyplaceonlineIdentityRecord
+class Promotion < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :promotion_name, presence: true
   
   def display

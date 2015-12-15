@@ -1,4 +1,5 @@
-class ApartmentPicture < MyplaceonlineIdentityRecord
+class ApartmentPicture < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :apartment

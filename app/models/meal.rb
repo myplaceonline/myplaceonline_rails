@@ -1,4 +1,5 @@
-class Meal < MyplaceonlineIdentityRecord
+class Meal < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :meal_time, presence: true
@@ -23,7 +24,7 @@ class Meal < MyplaceonlineIdentityRecord
   end
 
   def self.build(params = nil)
-    result = super(params)
+    result = self.dobuild(params)
     result.meal_time = DateTime.now
     result
   end

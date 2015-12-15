@@ -1,4 +1,5 @@
-class Membership < MyplaceonlineIdentityRecord
+class Membership < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :name, presence: true

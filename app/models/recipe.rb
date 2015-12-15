@@ -1,4 +1,6 @@
-class Recipe < MyplaceonlineIdentityRecord
+class Recipe < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :name, presence: true
   
   def display

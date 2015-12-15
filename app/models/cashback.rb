@@ -1,4 +1,6 @@
-class Cashback < MyplaceonlineIdentityRecord
+class Cashback < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :cashback_percentage, presence: true
 
   def self.params

@@ -1,4 +1,5 @@
-class AcneMeasurementPicture < MyplaceonlineIdentityRecord
+class AcneMeasurementPicture < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :acne_measurement

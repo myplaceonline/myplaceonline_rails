@@ -1,4 +1,5 @@
-class HealthInsurance < MyplaceonlineIdentityRecord
+class HealthInsurance < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   include ModelHelpersConcern
   

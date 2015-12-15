@@ -1,4 +1,5 @@
-class Stock < MyplaceonlineIdentityRecord
+class Stock < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :num_shares, presence: true

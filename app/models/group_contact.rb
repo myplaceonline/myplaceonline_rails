@@ -1,4 +1,5 @@
-class GroupContact < MyplaceonlineIdentityRecord
+class GroupContact < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :group

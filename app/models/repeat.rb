@@ -1,4 +1,5 @@
-class Repeat < MyplaceonlineIdentityRecord
+class Repeat < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
 
   validates :start_date, presence: true
   validates :period_type, presence: true

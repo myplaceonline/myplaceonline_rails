@@ -1,4 +1,5 @@
-class Apartment < MyplaceonlineIdentityRecord
+class Apartment < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :location, :autosave => true

@@ -1,4 +1,6 @@
-class List < MyplaceonlineIdentityRecord
+class List < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :name, presence: true
 
   has_many :list_items, :foreign_key => 'list_id', :dependent => :destroy

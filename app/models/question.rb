@@ -1,4 +1,6 @@
-class Question < MyplaceonlineIdentityRecord
+class Question < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :name, presence: true
   
   has_many :hypotheses, :dependent => :destroy

@@ -1,4 +1,6 @@
-class PlaylistShare < MyplaceonlineIdentityRecord
+class PlaylistShare < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   belongs_to :playlist
 
   validates :subject, presence: true

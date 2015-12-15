@@ -1,4 +1,5 @@
-class Book < MyplaceonlineIdentityRecord
+class Book < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include ModelHelpersConcern
   include AllowExistingConcern
   

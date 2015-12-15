@@ -1,4 +1,5 @@
-class MealVitamin < MyplaceonlineIdentityRecord
+class MealVitamin < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :meal

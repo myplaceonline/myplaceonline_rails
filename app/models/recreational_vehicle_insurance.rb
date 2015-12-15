@@ -1,4 +1,5 @@
-class RecreationalVehicleInsurance < MyplaceonlineIdentityRecord
+class RecreationalVehicleInsurance < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :recreational_vehicle

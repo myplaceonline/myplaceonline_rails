@@ -1,4 +1,5 @@
-class Food < MyplaceonlineIdentityRecord
+class Food < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :food_name, presence: true

@@ -1,4 +1,5 @@
-class IdentityRelationship < MyplaceonlineIdentityRecord
+class IdentityRelationship < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   RELATIONSHIPS = [

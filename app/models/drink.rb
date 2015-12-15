@@ -1,4 +1,6 @@
-class Drink < MyplaceonlineIdentityRecord
+class Drink < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :drink_name, presence: true
 
   def display

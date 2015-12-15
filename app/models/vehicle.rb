@@ -1,4 +1,5 @@
-class Vehicle < MyplaceonlineIdentityRecord
+class Vehicle < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   ENGINE_TYPES = [["myplaceonline.vehicles.gas", 0], ["myplaceonline.vehicles.diesel", 1]]

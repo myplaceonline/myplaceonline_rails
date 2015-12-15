@@ -1,4 +1,6 @@
-class Pain < MyplaceonlineIdentityRecord
+class Pain < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :pain_start_time, presence: true
   
   def display
@@ -10,7 +12,7 @@ class Pain < MyplaceonlineIdentityRecord
   end
   
   def self.build(params = nil)
-    result = super(params)
+    result = self.dobuild(params)
     result.pain_start_time = DateTime.now
     result
   end

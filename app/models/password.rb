@@ -1,6 +1,7 @@
 require 'kramdown'
 
-class Password < MyplaceonlineIdentityRecord
+class Password < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include EncryptedConcern
   include ModelHelpersConcern
   

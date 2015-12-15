@@ -1,4 +1,6 @@
-class Notepad < MyplaceonlineIdentityRecord
+class Notepad < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   def display
     title
   end

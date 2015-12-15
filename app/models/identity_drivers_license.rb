@@ -1,4 +1,6 @@
-class IdentityDriversLicense < MyplaceonlineIdentityRecord
+class IdentityDriversLicense < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   belongs_to :identity, class_name: Identity
   
   validates :identifier, presence: true

@@ -1,4 +1,5 @@
-class PlaylistSong < MyplaceonlineIdentityRecord
+class PlaylistSong < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :playlist

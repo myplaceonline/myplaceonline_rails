@@ -1,4 +1,5 @@
-class ConcertMusicalGroup < MyplaceonlineIdentityRecord
+class ConcertMusicalGroup < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :concert

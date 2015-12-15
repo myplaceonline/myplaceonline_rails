@@ -1,4 +1,6 @@
-class DiaryEntry < MyplaceonlineIdentityRecord
+class DiaryEntry < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :diary_time, presence: true
   validates :entry, presence: true
   
@@ -11,7 +13,7 @@ class DiaryEntry < MyplaceonlineIdentityRecord
   end
   
   def self.build(params = nil)
-    result = super(params)
+    result = self.dobuild(params)
     result.diary_time = DateTime.now
     result
   end

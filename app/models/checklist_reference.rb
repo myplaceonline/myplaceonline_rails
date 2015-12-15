@@ -1,4 +1,5 @@
-class ChecklistReference < MyplaceonlineIdentityRecord
+class ChecklistReference < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :checklist_parent, class_name: Checklist

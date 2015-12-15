@@ -1,4 +1,5 @@
-class Restaurant < MyplaceonlineIdentityRecord
+class Restaurant < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :location, presence: true

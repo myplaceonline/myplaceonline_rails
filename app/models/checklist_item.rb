@@ -1,4 +1,6 @@
-class ChecklistItem < MyplaceonlineIdentityRecord
+class ChecklistItem < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   belongs_to :checklist
 
   validates :checklist_item_name, presence: true

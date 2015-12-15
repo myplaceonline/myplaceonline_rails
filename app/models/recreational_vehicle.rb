@@ -1,4 +1,5 @@
-class RecreationalVehicle < MyplaceonlineIdentityRecord
+class RecreationalVehicle < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :rv_name, presence: true

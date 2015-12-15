@@ -1,4 +1,5 @@
-class Doctor < MyplaceonlineIdentityRecord
+class Doctor < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   DOCTOR_TYPES = [

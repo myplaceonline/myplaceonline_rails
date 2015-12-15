@@ -1,4 +1,6 @@
-class PeriodicPayment < MyplaceonlineIdentityRecord
+class PeriodicPayment < ActiveRecord::Base
+  include MyplaceonlineActiveRecordIdentityConcern
+
   validates :periodic_payment_name, presence: true
   
   def display
