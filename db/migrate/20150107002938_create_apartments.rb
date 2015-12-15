@@ -4,7 +4,7 @@ class CreateApartments < ActiveRecord::Migration
       t.references :location, index: true
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

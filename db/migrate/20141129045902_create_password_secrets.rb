@@ -7,7 +7,7 @@ class CreatePasswordSecrets < ActiveRecord::Migration
       t.references :encrypted_answer, index: true
       t.references :password, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

@@ -5,7 +5,7 @@ class CreateRecipes < ActiveRecord::Migration
       t.text :recipe
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

@@ -6,7 +6,7 @@ class CreateReminders < ActiveRecord::Migration
       t.integer :period
       t.references :owner, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

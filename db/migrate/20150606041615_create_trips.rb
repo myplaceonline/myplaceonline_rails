@@ -8,7 +8,7 @@ class CreateTrips < ActiveRecord::Migration
       t.boolean :work
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

@@ -5,7 +5,7 @@ class CreateConcertMusicalGroups < ActiveRecord::Migration
       t.references :concert, index: true
       t.references :musical_group, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

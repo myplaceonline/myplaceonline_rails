@@ -5,7 +5,7 @@ class CreateSleepMeasurements < ActiveRecord::Migration
       t.datetime :sleep_end_time
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

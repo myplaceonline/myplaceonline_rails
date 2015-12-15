@@ -10,7 +10,7 @@ class CreateSongs < ActiveRecord::Migration
       t.boolean :awesome
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

@@ -23,7 +23,7 @@ class CreatePhones < ActiveRecord::Migration
       t.references :owner, index: true
       t.references :password, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

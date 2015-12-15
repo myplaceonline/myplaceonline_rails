@@ -4,7 +4,7 @@ class CreateCalculationOperands < ActiveRecord::Migration
       t.string :constant_value
       t.references :calculation_element, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

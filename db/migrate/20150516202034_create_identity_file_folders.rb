@@ -5,7 +5,7 @@ class CreateIdentityFileFolders < ActiveRecord::Migration
       t.references :parent_folder, index: true
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

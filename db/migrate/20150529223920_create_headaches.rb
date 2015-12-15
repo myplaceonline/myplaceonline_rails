@@ -7,7 +7,7 @@ class CreateHeadaches < ActiveRecord::Migration
       t.string :headache_location
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

@@ -8,7 +8,7 @@ class CreateLifeGoals < ActiveRecord::Migration
       t.datetime :goal_ended
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

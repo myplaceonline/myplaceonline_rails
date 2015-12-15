@@ -5,7 +5,7 @@ class CreateMealVitamins < ActiveRecord::Migration
       t.references :meal, index: true
       t.references :vitamin, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

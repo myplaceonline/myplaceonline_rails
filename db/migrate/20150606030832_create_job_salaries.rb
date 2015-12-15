@@ -9,7 +9,7 @@ class CreateJobSalaries < ActiveRecord::Migration
       t.decimal :salary, precision: 10, scale: 2
       t.integer :salary_period
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

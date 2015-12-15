@@ -8,7 +8,7 @@ class CreateSunExposures < ActiveRecord::Migration
       t.string :sunscreen_type
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

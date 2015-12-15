@@ -5,7 +5,7 @@ class CreateCategoryPoints < ActiveRecord::Migration
       t.references :category, index: true
       t.integer :count
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

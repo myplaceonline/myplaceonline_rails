@@ -7,7 +7,7 @@ class CreateFoods < ActiveRecord::Migration
       t.decimal :calories, precision: 10, scale: 2
       t.decimal :price, precision: 10, scale: 2
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

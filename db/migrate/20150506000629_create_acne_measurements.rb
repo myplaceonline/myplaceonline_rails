@@ -8,7 +8,7 @@ class CreateAcneMeasurements < ActiveRecord::Migration
       t.integer :worrying_pimples
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

@@ -5,7 +5,7 @@ class CreateRecreationalVehicleLoans < ActiveRecord::Migration
       t.references :loan, index: true
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

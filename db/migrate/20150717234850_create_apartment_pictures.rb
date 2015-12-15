@@ -5,7 +5,7 @@ class CreateApartmentPictures < ActiveRecord::Migration
       t.references :identity_file, index: true
       t.references :owner, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

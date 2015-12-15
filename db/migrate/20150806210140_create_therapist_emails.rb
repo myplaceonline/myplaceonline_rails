@@ -5,7 +5,7 @@ class CreateTherapistEmails < ActiveRecord::Migration
       t.references :owner, index: true
       t.string :email
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

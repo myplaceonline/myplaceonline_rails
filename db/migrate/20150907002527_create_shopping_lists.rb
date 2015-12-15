@@ -4,7 +4,7 @@ class CreateShoppingLists < ActiveRecord::Migration
       t.string :shopping_list_name
       t.references :owner, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

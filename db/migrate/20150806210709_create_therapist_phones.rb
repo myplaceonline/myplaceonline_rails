@@ -6,7 +6,7 @@ class CreateTherapistPhones < ActiveRecord::Migration
       t.string :number
       t.integer :phone_type
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

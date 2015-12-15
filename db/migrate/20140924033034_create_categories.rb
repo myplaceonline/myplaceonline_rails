@@ -6,7 +6,7 @@ class CreateCategories < ActiveRecord::Migration
       t.integer :position
       t.references :parent, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
     add_index :categories, :name, unique: true
   end

@@ -10,7 +10,7 @@ class CreateMyplets < ActiveRecord::Migration
       t.boolean :collapsed
       t.references :owner, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

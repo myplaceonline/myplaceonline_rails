@@ -4,7 +4,7 @@ class CreateMyplaceonlineSearches < ActiveRecord::Migration
       t.references :owner, index: true
       t.boolean :trash
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

@@ -6,7 +6,7 @@ class CreateChecklistItems < ActiveRecord::Migration
       t.integer :position
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

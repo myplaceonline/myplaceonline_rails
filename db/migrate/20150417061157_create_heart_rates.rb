@@ -6,7 +6,7 @@ class CreateHeartRates < ActiveRecord::Migration
       t.string :measurement_source
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

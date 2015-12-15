@@ -5,7 +5,7 @@ class CreateGroupContacts < ActiveRecord::Migration
       t.references :group, index: true
       t.references :contact, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

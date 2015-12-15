@@ -7,7 +7,7 @@ class CreatePlaylistShares < ActiveRecord::Migration
       t.string :subject
       t.text :body
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

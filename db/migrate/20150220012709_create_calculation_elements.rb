@@ -5,7 +5,7 @@ class CreateCalculationElements < ActiveRecord::Migration
       t.references :right_operand, index: true
       t.integer :operator
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

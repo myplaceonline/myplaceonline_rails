@@ -6,7 +6,7 @@ class CreateMovies < ActiveRecord::Migration
       t.string :url
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

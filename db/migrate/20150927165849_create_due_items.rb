@@ -8,7 +8,7 @@ class CreateDueItems < ActiveRecord::Migration
       t.integer :model_id
       t.references :owner, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

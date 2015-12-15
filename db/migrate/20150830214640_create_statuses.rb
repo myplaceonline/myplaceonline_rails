@@ -5,7 +5,7 @@ class CreateStatuses < ActiveRecord::Migration
       t.text :three_good_things
       t.references :owner, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

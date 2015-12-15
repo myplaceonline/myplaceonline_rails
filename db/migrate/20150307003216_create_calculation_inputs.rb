@@ -5,7 +5,7 @@ class CreateCalculationInputs < ActiveRecord::Migration
       t.string :input_value
       t.references :calculation_form, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

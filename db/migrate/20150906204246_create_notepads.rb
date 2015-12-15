@@ -5,7 +5,7 @@ class CreateNotepads < ActiveRecord::Migration
       t.text :notepad_data
       t.references :owner, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

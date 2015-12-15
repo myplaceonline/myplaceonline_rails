@@ -5,7 +5,7 @@ class CreateEncryptedValues < ActiveRecord::Migration
       t.binary :salt
       t.references :user, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

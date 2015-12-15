@@ -5,7 +5,7 @@ class CreateBanks < ActiveRecord::Migration
       t.references :location, index: true
       t.references :password, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

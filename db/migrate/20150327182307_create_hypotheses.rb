@@ -6,7 +6,7 @@ class CreateHypotheses < ActiveRecord::Migration
       t.references :question, index: true
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

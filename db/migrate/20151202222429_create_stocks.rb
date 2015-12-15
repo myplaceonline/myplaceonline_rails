@@ -9,7 +9,7 @@ class CreateStocks < ActiveRecord::Migration
       t.integer :visit_count
       t.references :owner, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

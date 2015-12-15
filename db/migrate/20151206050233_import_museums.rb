@@ -2,6 +2,8 @@ class ImportMuseums < ActiveRecord::Migration
   disable_ddl_transaction!
 
   def change
+    Location.reset_column_information
+
     file = Rails.root.join('lib', 'data', 'mudf', 'mudf15q3pub_csv.csv')
 
     User.current_user = User.find(0)

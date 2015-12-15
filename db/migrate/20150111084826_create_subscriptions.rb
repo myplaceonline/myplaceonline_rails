@@ -6,7 +6,7 @@ class CreateSubscriptions < ActiveRecord::Migration
       t.date :end_date
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

@@ -6,7 +6,7 @@ class CreateShoppingListItems < ActiveRecord::Migration
       t.string :shopping_list_item_name
       t.integer :position
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

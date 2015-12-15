@@ -10,7 +10,7 @@ class CreateLifeInsurances < ActiveRecord::Migration
       t.references :identity, index: true
       t.integer :life_insurance_type
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

@@ -5,7 +5,7 @@ class CreatePlaylistSongs < ActiveRecord::Migration
       t.references :song, index: true
       t.references :owner, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

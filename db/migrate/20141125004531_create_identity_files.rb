@@ -3,7 +3,7 @@ class CreateIdentityFiles < ActiveRecord::Migration
     create_table :identity_files do |t|
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "accomplishments", force: true do |t|
+  create_table "accomplishments", force: :cascade do |t|
     t.string   "name"
     t.text     "accomplishment"
     t.integer  "owner_id"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "accomplishments", ["owner_id"], name: "index_accomplishments_on_owner_id", using: :btree
 
-  create_table "acne_measurement_pictures", force: true do |t|
+  create_table "acne_measurement_pictures", force: :cascade do |t|
     t.integer  "acne_measurement_id"
     t.integer  "identity_file_id"
     t.integer  "owner_id"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "acne_measurement_pictures", ["identity_file_id"], name: "index_acne_measurement_pictures_on_identity_file_id", using: :btree
   add_index "acne_measurement_pictures", ["owner_id"], name: "index_acne_measurement_pictures_on_owner_id", using: :btree
 
-  create_table "acne_measurements", force: true do |t|
+  create_table "acne_measurements", force: :cascade do |t|
     t.datetime "measurement_datetime"
     t.string   "acne_location"
     t.integer  "total_pimples"
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "acne_measurements", ["owner_id"], name: "index_acne_measurements_on_owner_id", using: :btree
 
-  create_table "activities", force: true do |t|
+  create_table "activities", force: :cascade do |t|
     t.string   "name"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "activities", ["owner_id"], name: "index_activities_on_owner_id", using: :btree
 
-  create_table "apartment_leases", force: true do |t|
+  create_table "apartment_leases", force: :cascade do |t|
     t.date     "start_date"
     t.date     "end_date"
     t.integer  "apartment_id"
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "apartment_leases", ["apartment_id"], name: "index_apartment_leases_on_apartment_id", using: :btree
   add_index "apartment_leases", ["owner_id"], name: "index_apartment_leases_on_owner_id", using: :btree
 
-  create_table "apartment_pictures", force: true do |t|
+  create_table "apartment_pictures", force: :cascade do |t|
     t.integer  "apartment_id"
     t.integer  "identity_file_id"
     t.integer  "owner_id"
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "apartment_pictures", ["identity_file_id"], name: "index_apartment_pictures_on_identity_file_id", using: :btree
   add_index "apartment_pictures", ["owner_id"], name: "index_apartment_pictures_on_owner_id", using: :btree
 
-  create_table "apartment_trash_pickups", force: true do |t|
+  create_table "apartment_trash_pickups", force: :cascade do |t|
     t.integer  "trash_type"
     t.text     "notes"
     t.integer  "apartment_id"
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "apartment_trash_pickups", ["owner_id"], name: "index_apartment_trash_pickups_on_owner_id", using: :btree
   add_index "apartment_trash_pickups", ["repeat_id"], name: "index_apartment_trash_pickups_on_repeat_id", using: :btree
 
-  create_table "apartments", force: true do |t|
+  create_table "apartments", force: :cascade do |t|
     t.integer  "location_id"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -119,7 +119,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "apartments", ["location_id"], name: "index_apartments_on_location_id", using: :btree
   add_index "apartments", ["owner_id"], name: "index_apartments_on_owner_id", using: :btree
 
-  create_table "bank_accounts", force: true do |t|
+  create_table "bank_accounts", force: :cascade do |t|
     t.string   "name"
     t.string   "account_number"
     t.integer  "account_number_encrypted_id"
@@ -145,7 +145,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "bank_accounts", ["pin_encrypted_id"], name: "index_bank_accounts_on_pin_encrypted_id", using: :btree
   add_index "bank_accounts", ["routing_number_encrypted_id"], name: "index_bank_accounts_on_routing_number_encrypted_id", using: :btree
 
-  create_table "blood_concentrations", force: true do |t|
+  create_table "blood_concentrations", force: :cascade do |t|
     t.string   "concentration_name"
     t.integer  "concentration_type"
     t.decimal  "concentration_minimum", precision: 10, scale: 2
@@ -158,7 +158,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "blood_concentrations", ["owner_id"], name: "index_blood_concentrations_on_owner_id", using: :btree
 
-  create_table "blood_pressures", force: true do |t|
+  create_table "blood_pressures", force: :cascade do |t|
     t.integer  "systolic_pressure"
     t.integer  "diastolic_pressure"
     t.date     "measurement_date"
@@ -171,7 +171,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "blood_pressures", ["owner_id"], name: "index_blood_pressures_on_owner_id", using: :btree
 
-  create_table "blood_test_results", force: true do |t|
+  create_table "blood_test_results", force: :cascade do |t|
     t.integer  "blood_test_id"
     t.integer  "blood_concentration_id"
     t.decimal  "concentration",          precision: 10, scale: 2
@@ -184,7 +184,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "blood_test_results", ["blood_test_id"], name: "index_blood_test_results_on_blood_test_id", using: :btree
   add_index "blood_test_results", ["owner_id"], name: "index_blood_test_results_on_owner_id", using: :btree
 
-  create_table "blood_tests", force: true do |t|
+  create_table "blood_tests", force: :cascade do |t|
     t.datetime "fast_started"
     t.datetime "test_time"
     t.text     "notes"
@@ -196,7 +196,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "blood_tests", ["owner_id"], name: "index_blood_tests_on_owner_id", using: :btree
 
-  create_table "books", force: true do |t|
+  create_table "books", force: :cascade do |t|
     t.string   "book_name"
     t.string   "isbn"
     t.string   "author"
@@ -212,7 +212,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "books", ["owner_id"], name: "index_books_on_owner_id", using: :btree
   add_index "books", ["recommender_id"], name: "index_books_on_recommender_id", using: :btree
 
-  create_table "calculation_elements", force: true do |t|
+  create_table "calculation_elements", force: :cascade do |t|
     t.integer  "left_operand_id"
     t.integer  "right_operand_id"
     t.integer  "operator"
@@ -225,7 +225,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "calculation_elements", ["owner_id"], name: "index_calculation_elements_on_owner_id", using: :btree
   add_index "calculation_elements", ["right_operand_id"], name: "index_calculation_elements_on_right_operand_id", using: :btree
 
-  create_table "calculation_forms", force: true do |t|
+  create_table "calculation_forms", force: :cascade do |t|
     t.string   "name"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -239,7 +239,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "calculation_forms", ["owner_id"], name: "index_calculation_forms_on_owner_id", using: :btree
   add_index "calculation_forms", ["root_element_id"], name: "index_calculation_forms_on_root_element_id", using: :btree
 
-  create_table "calculation_inputs", force: true do |t|
+  create_table "calculation_inputs", force: :cascade do |t|
     t.string   "input_name"
     t.string   "input_value"
     t.integer  "calculation_form_id"
@@ -252,7 +252,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "calculation_inputs", ["calculation_form_id"], name: "index_calculation_inputs_on_calculation_form_id", using: :btree
   add_index "calculation_inputs", ["owner_id"], name: "index_calculation_inputs_on_owner_id", using: :btree
 
-  create_table "calculation_operands", force: true do |t|
+  create_table "calculation_operands", force: :cascade do |t|
     t.string   "constant_value"
     t.integer  "calculation_element_id"
     t.datetime "created_at"
@@ -264,7 +264,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "calculation_operands", ["calculation_element_id"], name: "index_calculation_operands_on_calculation_element_id", using: :btree
   add_index "calculation_operands", ["owner_id"], name: "index_calculation_operands_on_owner_id", using: :btree
 
-  create_table "calculations", force: true do |t|
+  create_table "calculations", force: :cascade do |t|
     t.string   "name"
     t.integer  "calculation_form_id"
     t.decimal  "result",                       precision: 10, scale: 2
@@ -278,7 +278,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "calculations", ["calculation_form_id"], name: "index_calculations_on_calculation_form_id", using: :btree
   add_index "calculations", ["owner_id"], name: "index_calculations_on_owner_id", using: :btree
 
-  create_table "camp_locations", force: true do |t|
+  create_table "camp_locations", force: :cascade do |t|
     t.integer  "location_id"
     t.boolean  "vehicle_parking"
     t.boolean  "free"
@@ -307,7 +307,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "camp_locations", ["membership_id"], name: "index_camp_locations_on_membership_id", using: :btree
   add_index "camp_locations", ["owner_id"], name: "index_camp_locations_on_owner_id", using: :btree
 
-  create_table "cashbacks", force: true do |t|
+  create_table "cashbacks", force: :cascade do |t|
     t.integer  "owner_id"
     t.decimal  "cashback_percentage", precision: 10, scale: 2
     t.string   "applies_to"
@@ -322,7 +322,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "cashbacks", ["owner_id"], name: "index_cashbacks_on_owner_id", using: :btree
 
-  create_table "categories", force: true do |t|
+  create_table "categories", force: :cascade do |t|
     t.string   "name"
     t.string   "link"
     t.integer  "position"
@@ -338,7 +338,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "categories", ["name"], name: "index_categories_on_name", unique: true, using: :btree
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
 
-  create_table "category_points_amounts", force: true do |t|
+  create_table "category_points_amounts", force: :cascade do |t|
     t.integer  "owner_id"
     t.integer  "category_id"
     t.integer  "count"
@@ -351,7 +351,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "category_points_amounts", ["category_id"], name: "index_category_points_amounts_on_category_id", using: :btree
   add_index "category_points_amounts", ["owner_id"], name: "index_category_points_amounts_on_owner_id", using: :btree
 
-  create_table "checklist_items", force: true do |t|
+  create_table "checklist_items", force: :cascade do |t|
     t.string   "checklist_item_name"
     t.integer  "checklist_id"
     t.integer  "position"
@@ -363,7 +363,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "checklist_items", ["checklist_id"], name: "index_checklist_items_on_checklist_id", using: :btree
   add_index "checklist_items", ["owner_id"], name: "index_checklist_items_on_owner_id", using: :btree
 
-  create_table "checklist_references", force: true do |t|
+  create_table "checklist_references", force: :cascade do |t|
     t.integer  "checklist_parent_id"
     t.integer  "checklist_id"
     t.integer  "owner_id"
@@ -376,7 +376,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "checklist_references", ["checklist_parent_id"], name: "index_checklist_references_on_checklist_parent_id", using: :btree
   add_index "checklist_references", ["owner_id"], name: "index_checklist_references_on_owner_id", using: :btree
 
-  create_table "checklists", force: true do |t|
+  create_table "checklists", force: :cascade do |t|
     t.string   "checklist_name"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -386,7 +386,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "checklists", ["owner_id"], name: "index_checklists_on_owner_id", using: :btree
 
-  create_table "companies", force: true do |t|
+  create_table "companies", force: :cascade do |t|
     t.integer  "owner_id"
     t.integer  "location_id"
     t.datetime "created_at"
@@ -399,7 +399,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "companies", ["location_id"], name: "index_companies_on_location_id", using: :btree
   add_index "companies", ["owner_id"], name: "index_companies_on_owner_id", using: :btree
 
-  create_table "complete_due_items", force: true do |t|
+  create_table "complete_due_items", force: :cascade do |t|
     t.integer  "owner_id"
     t.string   "display"
     t.string   "link"
@@ -415,7 +415,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "complete_due_items", ["myplaceonline_due_display_id"], name: "index_complete_due_items_on_myplaceonline_due_display_id", using: :btree
   add_index "complete_due_items", ["owner_id"], name: "index_complete_due_items_on_owner_id", using: :btree
 
-  create_table "computers", force: true do |t|
+  create_table "computers", force: :cascade do |t|
     t.date     "purchased"
     t.decimal  "price",                 precision: 10, scale: 2
     t.string   "computer_model"
@@ -448,7 +448,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "computers", ["manufacturer_id"], name: "index_computers_on_manufacturer_id", using: :btree
   add_index "computers", ["owner_id"], name: "index_computers_on_owner_id", using: :btree
 
-  create_table "concert_musical_groups", force: true do |t|
+  create_table "concert_musical_groups", force: :cascade do |t|
     t.integer  "owner_id"
     t.integer  "concert_id"
     t.integer  "musical_group_id"
@@ -460,7 +460,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "concert_musical_groups", ["musical_group_id"], name: "index_concert_musical_groups_on_musical_group_id", using: :btree
   add_index "concert_musical_groups", ["owner_id"], name: "index_concert_musical_groups_on_owner_id", using: :btree
 
-  create_table "concerts", force: true do |t|
+  create_table "concerts", force: :cascade do |t|
     t.string   "concert_date"
     t.string   "concert_title"
     t.integer  "location_id"
@@ -474,7 +474,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "concerts", ["location_id"], name: "index_concerts_on_location_id", using: :btree
   add_index "concerts", ["owner_id"], name: "index_concerts_on_owner_id", using: :btree
 
-  create_table "contacts", force: true do |t|
+  create_table "contacts", force: :cascade do |t|
     t.integer  "identity_id"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -486,7 +486,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "contacts", ["identity_id"], name: "index_contacts_on_identity_id", using: :btree
   add_index "contacts", ["owner_id"], name: "index_contacts_on_owner_id", using: :btree
 
-  create_table "conversations", force: true do |t|
+  create_table "conversations", force: :cascade do |t|
     t.integer  "contact_id"
     t.text     "conversation"
     t.datetime "created_at"
@@ -498,7 +498,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "conversations", ["contact_id"], name: "index_conversations_on_contact_id", using: :btree
   add_index "conversations", ["owner_id"], name: "index_conversations_on_owner_id", using: :btree
 
-  create_table "credit_card_cashbacks", force: true do |t|
+  create_table "credit_card_cashbacks", force: :cascade do |t|
     t.integer  "owner_id"
     t.integer  "credit_card_id"
     t.integer  "cashback_id"
@@ -510,7 +510,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "credit_card_cashbacks", ["credit_card_id"], name: "index_credit_card_cashbacks_on_credit_card_id", using: :btree
   add_index "credit_card_cashbacks", ["owner_id"], name: "index_credit_card_cashbacks_on_owner_id", using: :btree
 
-  create_table "credit_cards", force: true do |t|
+  create_table "credit_cards", force: :cascade do |t|
     t.string   "name"
     t.string   "number"
     t.date     "expires"
@@ -541,7 +541,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "credit_cards", ["pin_encrypted_id"], name: "index_credit_cards_on_pin_encrypted_id", using: :btree
   add_index "credit_cards", ["security_code_encrypted_id"], name: "index_credit_cards_on_security_code_encrypted_id", using: :btree
 
-  create_table "credit_scores", force: true do |t|
+  create_table "credit_scores", force: :cascade do |t|
     t.date     "score_date"
     t.integer  "score"
     t.string   "source"
@@ -553,7 +553,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "credit_scores", ["owner_id"], name: "index_credit_scores_on_owner_id", using: :btree
 
-  create_table "date_locations", force: true do |t|
+  create_table "date_locations", force: :cascade do |t|
     t.integer  "location_id"
     t.integer  "visit_count"
     t.integer  "owner_id"
@@ -564,7 +564,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "date_locations", ["location_id"], name: "index_date_locations_on_location_id", using: :btree
   add_index "date_locations", ["owner_id"], name: "index_date_locations_on_owner_id", using: :btree
 
-  create_table "dental_insurances", force: true do |t|
+  create_table "dental_insurances", force: :cascade do |t|
     t.string   "insurance_name"
     t.integer  "insurance_company_id"
     t.boolean  "defunct"
@@ -588,7 +588,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "dental_insurances", ["password_id"], name: "index_dental_insurances_on_password_id", using: :btree
   add_index "dental_insurances", ["periodic_payment_id"], name: "index_dental_insurances_on_periodic_payment_id", using: :btree
 
-  create_table "dentist_visits", force: true do |t|
+  create_table "dentist_visits", force: :cascade do |t|
     t.date     "visit_date"
     t.integer  "cavities"
     t.text     "notes"
@@ -606,7 +606,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "dentist_visits", ["dentist_id"], name: "index_dentist_visits_on_dentist_id", using: :btree
   add_index "dentist_visits", ["owner_id"], name: "index_dentist_visits_on_owner_id", using: :btree
 
-  create_table "desired_products", force: true do |t|
+  create_table "desired_products", force: :cascade do |t|
     t.string   "product_name"
     t.text     "notes"
     t.integer  "owner_id"
@@ -617,7 +617,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "desired_products", ["owner_id"], name: "index_desired_products_on_owner_id", using: :btree
 
-  create_table "diary_entries", force: true do |t|
+  create_table "diary_entries", force: :cascade do |t|
     t.datetime "diary_time"
     t.text     "entry"
     t.integer  "owner_id"
@@ -629,7 +629,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "diary_entries", ["owner_id"], name: "index_diary_entries_on_owner_id", using: :btree
 
-  create_table "doctor_visits", force: true do |t|
+  create_table "doctor_visits", force: :cascade do |t|
     t.date     "visit_date"
     t.text     "notes"
     t.integer  "doctor_id"
@@ -646,7 +646,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "doctor_visits", ["health_insurance_id"], name: "index_doctor_visits_on_health_insurance_id", using: :btree
   add_index "doctor_visits", ["owner_id"], name: "index_doctor_visits_on_owner_id", using: :btree
 
-  create_table "doctors", force: true do |t|
+  create_table "doctors", force: :cascade do |t|
     t.integer  "contact_id"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -658,7 +658,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "doctors", ["contact_id"], name: "index_doctors_on_contact_id", using: :btree
   add_index "doctors", ["owner_id"], name: "index_doctors_on_owner_id", using: :btree
 
-  create_table "drinks", force: true do |t|
+  create_table "drinks", force: :cascade do |t|
     t.integer  "owner_id"
     t.string   "drink_name"
     t.text     "notes"
@@ -671,7 +671,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "drinks", ["owner_id"], name: "index_drinks_on_owner_id", using: :btree
 
-  create_table "due_items", force: true do |t|
+  create_table "due_items", force: :cascade do |t|
     t.string   "display"
     t.string   "link"
     t.datetime "due_date"
@@ -689,7 +689,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "due_items", ["myplaceonline_due_display_id"], name: "index_due_items_on_myplaceonline_due_display_id", using: :btree
   add_index "due_items", ["owner_id"], name: "index_due_items_on_owner_id", using: :btree
 
-  create_table "encrypted_values", force: true do |t|
+  create_table "encrypted_values", force: :cascade do |t|
     t.string   "val"
     t.binary   "salt"
     t.integer  "user_id"
@@ -700,7 +700,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "encrypted_values", ["user_id"], name: "index_encrypted_values_on_user_id", using: :btree
 
-  create_table "events", force: true do |t|
+  create_table "events", force: :cascade do |t|
     t.string   "event_name"
     t.text     "notes"
     t.datetime "event_time"
@@ -717,7 +717,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "events", ["owner_id"], name: "index_events_on_owner_id", using: :btree
   add_index "events", ["repeat_id"], name: "index_events_on_repeat_id", using: :btree
 
-  create_table "exercises", force: true do |t|
+  create_table "exercises", force: :cascade do |t|
     t.datetime "exercise_start"
     t.datetime "exercise_end"
     t.string   "exercise_activity"
@@ -733,7 +733,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "exercises", ["owner_id"], name: "index_exercises_on_owner_id", using: :btree
 
-  create_table "favorite_products", force: true do |t|
+  create_table "favorite_products", force: :cascade do |t|
     t.string   "product_name"
     t.text     "notes"
     t.integer  "owner_id"
@@ -744,7 +744,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "favorite_products", ["owner_id"], name: "index_favorite_products_on_owner_id", using: :btree
 
-  create_table "feeds", force: true do |t|
+  create_table "feeds", force: :cascade do |t|
     t.string   "name"
     t.string   "url"
     t.integer  "owner_id"
@@ -755,14 +755,14 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "feeds", ["owner_id"], name: "index_feeds_on_owner_id", using: :btree
 
-  create_table "files", force: true do |t|
+  create_table "files", force: :cascade do |t|
     t.integer "identity_file_id"
     t.string  "style"
     t.binary  "file_contents"
     t.integer "visit_count"
   end
 
-  create_table "food_ingredients", force: true do |t|
+  create_table "food_ingredients", force: :cascade do |t|
     t.integer  "owner_id"
     t.integer  "parent_food_id"
     t.integer  "food_id"
@@ -774,7 +774,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "food_ingredients", ["owner_id"], name: "index_food_ingredients_on_owner_id", using: :btree
   add_index "food_ingredients", ["parent_food_id"], name: "index_food_ingredients_on_parent_food_id", using: :btree
 
-  create_table "foods", force: true do |t|
+  create_table "foods", force: :cascade do |t|
     t.integer  "owner_id"
     t.string   "food_name"
     t.text     "notes"
@@ -789,7 +789,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "foods", ["owner_id"], name: "index_foods_on_owner_id", using: :btree
 
-  create_table "gas_stations", force: true do |t|
+  create_table "gas_stations", force: :cascade do |t|
     t.integer  "location_id"
     t.boolean  "gas"
     t.boolean  "diesel"
@@ -804,7 +804,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "gas_stations", ["location_id"], name: "index_gas_stations_on_location_id", using: :btree
   add_index "gas_stations", ["owner_id"], name: "index_gas_stations_on_owner_id", using: :btree
 
-  create_table "group_contacts", force: true do |t|
+  create_table "group_contacts", force: :cascade do |t|
     t.integer  "owner_id"
     t.integer  "group_id"
     t.integer  "contact_id"
@@ -816,7 +816,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "group_contacts", ["group_id"], name: "index_group_contacts_on_group_id", using: :btree
   add_index "group_contacts", ["owner_id"], name: "index_group_contacts_on_owner_id", using: :btree
 
-  create_table "groups", force: true do |t|
+  create_table "groups", force: :cascade do |t|
     t.string   "group_name"
     t.text     "notes"
     t.integer  "owner_id"
@@ -827,7 +827,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "groups", ["owner_id"], name: "index_groups_on_owner_id", using: :btree
 
-  create_table "gun_registrations", force: true do |t|
+  create_table "gun_registrations", force: :cascade do |t|
     t.integer  "location_id"
     t.date     "registered"
     t.date     "expires"
@@ -841,7 +841,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "gun_registrations", ["location_id"], name: "index_gun_registrations_on_location_id", using: :btree
   add_index "gun_registrations", ["owner_id"], name: "index_gun_registrations_on_owner_id", using: :btree
 
-  create_table "guns", force: true do |t|
+  create_table "guns", force: :cascade do |t|
     t.string   "gun_name"
     t.string   "manufacturer_name"
     t.string   "gun_model"
@@ -858,7 +858,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "guns", ["owner_id"], name: "index_guns_on_owner_id", using: :btree
 
-  create_table "headaches", force: true do |t|
+  create_table "headaches", force: :cascade do |t|
     t.datetime "started"
     t.datetime "ended"
     t.integer  "intensity"
@@ -871,7 +871,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "headaches", ["owner_id"], name: "index_headaches_on_owner_id", using: :btree
 
-  create_table "health_insurances", force: true do |t|
+  create_table "health_insurances", force: :cascade do |t|
     t.string   "insurance_name"
     t.integer  "insurance_company_id"
     t.datetime "defunct"
@@ -895,7 +895,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "health_insurances", ["password_id"], name: "index_health_insurances_on_password_id", using: :btree
   add_index "health_insurances", ["periodic_payment_id"], name: "index_health_insurances_on_periodic_payment_id", using: :btree
 
-  create_table "heart_rates", force: true do |t|
+  create_table "heart_rates", force: :cascade do |t|
     t.integer  "beats"
     t.date     "measurement_date"
     t.string   "measurement_source"
@@ -907,7 +907,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "heart_rates", ["owner_id"], name: "index_heart_rates_on_owner_id", using: :btree
 
-  create_table "heights", force: true do |t|
+  create_table "heights", force: :cascade do |t|
     t.decimal  "height_amount",      precision: 10, scale: 2
     t.integer  "amount_type"
     t.date     "measurement_date"
@@ -920,7 +920,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "heights", ["owner_id"], name: "index_heights_on_owner_id", using: :btree
 
-  create_table "hobbies", force: true do |t|
+  create_table "hobbies", force: :cascade do |t|
     t.string   "hobby_name"
     t.text     "notes"
     t.integer  "owner_id"
@@ -931,7 +931,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "hobbies", ["owner_id"], name: "index_hobbies_on_owner_id", using: :btree
 
-  create_table "hypotheses", force: true do |t|
+  create_table "hypotheses", force: :cascade do |t|
     t.string   "name"
     t.text     "notes"
     t.integer  "question_id"
@@ -944,7 +944,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "hypotheses", ["owner_id"], name: "index_hypotheses_on_owner_id", using: :btree
   add_index "hypotheses", ["question_id"], name: "index_hypotheses_on_question_id", using: :btree
 
-  create_table "hypothesis_experiments", force: true do |t|
+  create_table "hypothesis_experiments", force: :cascade do |t|
     t.string   "name"
     t.text     "notes"
     t.date     "started"
@@ -958,7 +958,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "hypothesis_experiments", ["hypothesis_id"], name: "index_hypothesis_experiments_on_hypothesis_id", using: :btree
   add_index "hypothesis_experiments", ["owner_id"], name: "index_hypothesis_experiments_on_owner_id", using: :btree
 
-  create_table "ideas", force: true do |t|
+  create_table "ideas", force: :cascade do |t|
     t.string   "name"
     t.text     "idea"
     t.integer  "owner_id"
@@ -969,7 +969,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "ideas", ["owner_id"], name: "index_ideas_on_owner_id", using: :btree
 
-  create_table "identities", force: true do |t|
+  create_table "identities", force: :cascade do |t|
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -986,7 +986,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "identities", ["owner_id"], name: "index_identities_on_owner_id", using: :btree
 
-  create_table "identity_drivers_licenses", force: true do |t|
+  create_table "identity_drivers_licenses", force: :cascade do |t|
     t.string   "identifier"
     t.string   "region"
     t.string   "sub_region1"
@@ -1000,7 +1000,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "identity_drivers_licenses", ["identity_id"], name: "index_identity_drivers_licenses_on_identity_id", using: :btree
 
-  create_table "identity_emails", force: true do |t|
+  create_table "identity_emails", force: :cascade do |t|
     t.string   "email"
     t.integer  "identity_id"
     t.datetime "created_at"
@@ -1011,7 +1011,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "identity_emails", ["identity_id"], name: "index_identity_emails_on_identity_id", using: :btree
   add_index "identity_emails", ["owner_id"], name: "index_identity_emails_on_owner_id", using: :btree
 
-  create_table "identity_file_folders", force: true do |t|
+  create_table "identity_file_folders", force: :cascade do |t|
     t.string   "folder_name"
     t.integer  "parent_folder_id"
     t.integer  "owner_id"
@@ -1023,7 +1023,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "identity_file_folders", ["owner_id"], name: "index_identity_file_folders_on_owner_id", using: :btree
   add_index "identity_file_folders", ["parent_folder_id"], name: "index_identity_file_folders_on_parent_folder_id", using: :btree
 
-  create_table "identity_files", force: true do |t|
+  create_table "identity_files", force: :cascade do |t|
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -1043,7 +1043,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "identity_files", ["folder_id"], name: "index_identity_files_on_folder_id", using: :btree
   add_index "identity_files", ["owner_id"], name: "index_identity_files_on_owner_id", using: :btree
 
-  create_table "identity_locations", force: true do |t|
+  create_table "identity_locations", force: :cascade do |t|
     t.integer  "location_id"
     t.integer  "identity_id"
     t.datetime "created_at"
@@ -1055,7 +1055,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "identity_locations", ["location_id"], name: "index_identity_locations_on_location_id", using: :btree
   add_index "identity_locations", ["owner_id"], name: "index_identity_locations_on_owner_id", using: :btree
 
-  create_table "identity_phones", force: true do |t|
+  create_table "identity_phones", force: :cascade do |t|
     t.string   "number"
     t.integer  "identity_id"
     t.datetime "created_at"
@@ -1067,7 +1067,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "identity_phones", ["identity_id"], name: "index_identity_phones_on_identity_id", using: :btree
   add_index "identity_phones", ["owner_id"], name: "index_identity_phones_on_owner_id", using: :btree
 
-  create_table "identity_pictures", force: true do |t|
+  create_table "identity_pictures", force: :cascade do |t|
     t.integer  "identity_id"
     t.integer  "identity_file_id"
     t.integer  "owner_id"
@@ -1079,7 +1079,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "identity_pictures", ["identity_id"], name: "index_identity_pictures_on_identity_id", using: :btree
   add_index "identity_pictures", ["owner_id"], name: "index_identity_pictures_on_owner_id", using: :btree
 
-  create_table "identity_relationships", force: true do |t|
+  create_table "identity_relationships", force: :cascade do |t|
     t.integer  "contact_id"
     t.integer  "relationship_type"
     t.integer  "owner_id"
@@ -1092,7 +1092,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "identity_relationships", ["identity_id"], name: "index_identity_relationships_on_identity_id", using: :btree
   add_index "identity_relationships", ["owner_id"], name: "index_identity_relationships_on_owner_id", using: :btree
 
-  create_table "job_salaries", force: true do |t|
+  create_table "job_salaries", force: :cascade do |t|
     t.integer  "owner_id"
     t.integer  "job_id"
     t.date     "started"
@@ -1107,7 +1107,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "job_salaries", ["job_id"], name: "index_job_salaries_on_job_id", using: :btree
   add_index "job_salaries", ["owner_id"], name: "index_job_salaries_on_owner_id", using: :btree
 
-  create_table "jobs", force: true do |t|
+  create_table "jobs", force: :cascade do |t|
     t.string   "job_title"
     t.integer  "company_id"
     t.date     "started"
@@ -1138,7 +1138,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "jobs", ["manager_contact_id"], name: "index_jobs_on_manager_contact_id", using: :btree
   add_index "jobs", ["owner_id"], name: "index_jobs_on_owner_id", using: :btree
 
-  create_table "jokes", force: true do |t|
+  create_table "jokes", force: :cascade do |t|
     t.string   "name"
     t.text     "joke"
     t.string   "source"
@@ -1150,7 +1150,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "jokes", ["owner_id"], name: "index_jokes_on_owner_id", using: :btree
 
-  create_table "life_goals", force: true do |t|
+  create_table "life_goals", force: :cascade do |t|
     t.string   "life_goal_name"
     t.text     "notes"
     t.integer  "position"
@@ -1164,7 +1164,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "life_goals", ["owner_id"], name: "index_life_goals_on_owner_id", using: :btree
 
-  create_table "life_insurances", force: true do |t|
+  create_table "life_insurances", force: :cascade do |t|
     t.string   "insurance_name"
     t.integer  "company_id"
     t.decimal  "insurance_amount",    precision: 10, scale: 2
@@ -1182,7 +1182,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "life_insurances", ["owner_id"], name: "index_life_insurances_on_owner_id", using: :btree
   add_index "life_insurances", ["periodic_payment_id"], name: "index_life_insurances_on_periodic_payment_id", using: :btree
 
-  create_table "list_items", force: true do |t|
+  create_table "list_items", force: :cascade do |t|
     t.string   "name"
     t.integer  "list_id"
     t.datetime "created_at"
@@ -1193,7 +1193,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "list_items", ["list_id"], name: "index_list_items_on_list_id", using: :btree
   add_index "list_items", ["owner_id"], name: "index_list_items_on_owner_id", using: :btree
 
-  create_table "lists", force: true do |t|
+  create_table "lists", force: :cascade do |t|
     t.string   "name"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -1203,7 +1203,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "lists", ["owner_id"], name: "index_lists_on_owner_id", using: :btree
 
-  create_table "loans", force: true do |t|
+  create_table "loans", force: :cascade do |t|
     t.string   "lender"
     t.decimal  "amount",          precision: 10, scale: 2
     t.date     "start"
@@ -1216,7 +1216,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "loans", ["owner_id"], name: "index_loans_on_owner_id", using: :btree
 
-  create_table "location_phones", force: true do |t|
+  create_table "location_phones", force: :cascade do |t|
     t.string   "number"
     t.integer  "location_id"
     t.datetime "created_at"
@@ -1227,7 +1227,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "location_phones", ["location_id"], name: "index_location_phones_on_location_id", using: :btree
   add_index "location_phones", ["owner_id"], name: "index_location_phones_on_owner_id", using: :btree
 
-  create_table "locations", force: true do |t|
+  create_table "locations", force: :cascade do |t|
     t.string   "name"
     t.string   "address1"
     t.string   "address2"
@@ -1247,7 +1247,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "locations", ["owner_id"], name: "index_locations_on_owner_id", using: :btree
 
-  create_table "meal_drinks", force: true do |t|
+  create_table "meal_drinks", force: :cascade do |t|
     t.integer  "owner_id"
     t.integer  "meal_id"
     t.integer  "drink_id"
@@ -1260,7 +1260,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "meal_drinks", ["meal_id"], name: "index_meal_drinks_on_meal_id", using: :btree
   add_index "meal_drinks", ["owner_id"], name: "index_meal_drinks_on_owner_id", using: :btree
 
-  create_table "meal_foods", force: true do |t|
+  create_table "meal_foods", force: :cascade do |t|
     t.integer  "owner_id"
     t.integer  "meal_id"
     t.integer  "food_id"
@@ -1273,7 +1273,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "meal_foods", ["meal_id"], name: "index_meal_foods_on_meal_id", using: :btree
   add_index "meal_foods", ["owner_id"], name: "index_meal_foods_on_owner_id", using: :btree
 
-  create_table "meal_vitamins", force: true do |t|
+  create_table "meal_vitamins", force: :cascade do |t|
     t.integer  "owner_id"
     t.integer  "meal_id"
     t.integer  "vitamin_id"
@@ -1285,7 +1285,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "meal_vitamins", ["owner_id"], name: "index_meal_vitamins_on_owner_id", using: :btree
   add_index "meal_vitamins", ["vitamin_id"], name: "index_meal_vitamins_on_vitamin_id", using: :btree
 
-  create_table "meals", force: true do |t|
+  create_table "meals", force: :cascade do |t|
     t.datetime "meal_time"
     t.text     "notes"
     t.integer  "location_id"
@@ -1300,7 +1300,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "meals", ["location_id"], name: "index_meals_on_location_id", using: :btree
   add_index "meals", ["owner_id"], name: "index_meals_on_owner_id", using: :btree
 
-  create_table "medical_condition_instances", force: true do |t|
+  create_table "medical_condition_instances", force: :cascade do |t|
     t.datetime "condition_start"
     t.datetime "condition_end"
     t.text     "notes"
@@ -1313,7 +1313,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "medical_condition_instances", ["medical_condition_id"], name: "index_medical_condition_instances_on_medical_condition_id", using: :btree
   add_index "medical_condition_instances", ["owner_id"], name: "index_medical_condition_instances_on_owner_id", using: :btree
 
-  create_table "medical_conditions", force: true do |t|
+  create_table "medical_conditions", force: :cascade do |t|
     t.string   "medical_condition_name"
     t.text     "notes"
     t.integer  "owner_id"
@@ -1324,7 +1324,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "medical_conditions", ["owner_id"], name: "index_medical_conditions_on_owner_id", using: :btree
 
-  create_table "medicine_usage_medicines", force: true do |t|
+  create_table "medicine_usage_medicines", force: :cascade do |t|
     t.integer  "owner_id"
     t.integer  "medicine_usage_id"
     t.integer  "medicine_id"
@@ -1336,7 +1336,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "medicine_usage_medicines", ["medicine_usage_id"], name: "index_medicine_usage_medicines_on_medicine_usage_id", using: :btree
   add_index "medicine_usage_medicines", ["owner_id"], name: "index_medicine_usage_medicines_on_owner_id", using: :btree
 
-  create_table "medicine_usages", force: true do |t|
+  create_table "medicine_usages", force: :cascade do |t|
     t.datetime "usage_time"
     t.integer  "medicine_id"
     t.text     "usage_notes"
@@ -1349,7 +1349,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "medicine_usages", ["medicine_id"], name: "index_medicine_usages_on_medicine_id", using: :btree
   add_index "medicine_usages", ["owner_id"], name: "index_medicine_usages_on_owner_id", using: :btree
 
-  create_table "medicines", force: true do |t|
+  create_table "medicines", force: :cascade do |t|
     t.string   "medicine_name"
     t.decimal  "dosage",        precision: 10, scale: 2
     t.integer  "dosage_type"
@@ -1362,7 +1362,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "medicines", ["owner_id"], name: "index_medicines_on_owner_id", using: :btree
 
-  create_table "memberships", force: true do |t|
+  create_table "memberships", force: :cascade do |t|
     t.string   "name"
     t.date     "start_date"
     t.date     "end_date"
@@ -1377,7 +1377,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "memberships", ["owner_id"], name: "index_memberships_on_owner_id", using: :btree
   add_index "memberships", ["periodic_payment_id"], name: "index_memberships_on_periodic_payment_id", using: :btree
 
-  create_table "movie_theaters", force: true do |t|
+  create_table "movie_theaters", force: :cascade do |t|
     t.string   "theater_name"
     t.integer  "location_id"
     t.integer  "visit_count"
@@ -1389,7 +1389,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "movie_theaters", ["location_id"], name: "index_movie_theaters_on_location_id", using: :btree
   add_index "movie_theaters", ["owner_id"], name: "index_movie_theaters_on_owner_id", using: :btree
 
-  create_table "movies", force: true do |t|
+  create_table "movies", force: :cascade do |t|
     t.string   "name"
     t.datetime "watched"
     t.string   "url"
@@ -1403,7 +1403,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "movies", ["owner_id"], name: "index_movies_on_owner_id", using: :btree
   add_index "movies", ["recommender_id"], name: "index_movies_on_recommender_id", using: :btree
 
-  create_table "museums", force: true do |t|
+  create_table "museums", force: :cascade do |t|
     t.integer  "location_id"
     t.string   "museum_id"
     t.integer  "website_id"
@@ -1420,7 +1420,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "museums", ["owner_id"], name: "index_museums_on_owner_id", using: :btree
   add_index "museums", ["website_id"], name: "index_museums_on_website_id", using: :btree
 
-  create_table "musical_groups", force: true do |t|
+  create_table "musical_groups", force: :cascade do |t|
     t.string   "musical_group_name"
     t.text     "notes"
     t.datetime "listened"
@@ -1436,7 +1436,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "musical_groups", ["owner_id"], name: "index_musical_groups_on_owner_id", using: :btree
 
-  create_table "myplaceonline_due_displays", force: true do |t|
+  create_table "myplaceonline_due_displays", force: :cascade do |t|
     t.boolean  "trash"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -1464,7 +1464,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "myplaceonline_due_displays", ["owner_id"], name: "index_myplaceonline_due_displays_on_owner_id", using: :btree
 
-  create_table "myplaceonline_quick_category_displays", force: true do |t|
+  create_table "myplaceonline_quick_category_displays", force: :cascade do |t|
     t.boolean  "trash"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -1474,7 +1474,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "myplaceonline_quick_category_displays", ["owner_id"], name: "index_myplaceonline_quick_category_displays_on_owner_id", using: :btree
 
-  create_table "myplaceonline_searches", force: true do |t|
+  create_table "myplaceonline_searches", force: :cascade do |t|
     t.integer  "owner_id"
     t.boolean  "trash"
     t.datetime "created_at"
@@ -1484,7 +1484,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "myplaceonline_searches", ["owner_id"], name: "index_myplaceonline_searches_on_owner_id", using: :btree
 
-  create_table "myplets", force: true do |t|
+  create_table "myplets", force: :cascade do |t|
     t.integer  "x_coordinate"
     t.integer  "y_coordinate"
     t.string   "title"
@@ -1500,7 +1500,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "myplets", ["owner_id"], name: "index_myplets_on_owner_id", using: :btree
 
-  create_table "notepads", force: true do |t|
+  create_table "notepads", force: :cascade do |t|
     t.string   "title"
     t.text     "notepad_data"
     t.integer  "owner_id"
@@ -1511,7 +1511,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "notepads", ["owner_id"], name: "index_notepads_on_owner_id", using: :btree
 
-  create_table "pains", force: true do |t|
+  create_table "pains", force: :cascade do |t|
     t.string   "pain_location"
     t.integer  "intensity"
     t.datetime "pain_start_time"
@@ -1525,7 +1525,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "pains", ["owner_id"], name: "index_pains_on_owner_id", using: :btree
 
-  create_table "passport_pictures", force: true do |t|
+  create_table "passport_pictures", force: :cascade do |t|
     t.integer  "passport_id"
     t.integer  "identity_file_id"
     t.integer  "owner_id"
@@ -1537,7 +1537,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "passport_pictures", ["owner_id"], name: "index_passport_pictures_on_owner_id", using: :btree
   add_index "passport_pictures", ["passport_id"], name: "index_passport_pictures_on_passport_id", using: :btree
 
-  create_table "passports", force: true do |t|
+  create_table "passports", force: :cascade do |t|
     t.string   "region"
     t.string   "passport_number"
     t.date     "expires"
@@ -1553,7 +1553,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "passports", ["owner_id"], name: "index_passports_on_owner_id", using: :btree
 
-  create_table "password_secrets", force: true do |t|
+  create_table "password_secrets", force: :cascade do |t|
     t.string   "question"
     t.string   "answer"
     t.integer  "answer_encrypted_id"
@@ -1567,7 +1567,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "password_secrets", ["owner_id"], name: "index_password_secrets_on_owner_id", using: :btree
   add_index "password_secrets", ["password_id"], name: "index_password_secrets_on_password_id", using: :btree
 
-  create_table "passwords", force: true do |t|
+  create_table "passwords", force: :cascade do |t|
     t.string   "name"
     t.string   "user"
     t.string   "password"
@@ -1586,7 +1586,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "passwords", ["owner_id"], name: "index_passwords_on_owner_id", using: :btree
   add_index "passwords", ["password_encrypted_id"], name: "index_passwords_on_password_encrypted_id", using: :btree
 
-  create_table "periodic_payments", force: true do |t|
+  create_table "periodic_payments", force: :cascade do |t|
     t.string   "periodic_payment_name"
     t.text     "notes"
     t.date     "started"
@@ -1602,7 +1602,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "periodic_payments", ["owner_id"], name: "index_periodic_payments_on_owner_id", using: :btree
 
-  create_table "phones", force: true do |t|
+  create_table "phones", force: :cascade do |t|
     t.string   "phone_model_name"
     t.string   "phone_number"
     t.integer  "manufacturer_id"
@@ -1639,7 +1639,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "phones", ["owner_id"], name: "index_phones_on_owner_id", using: :btree
   add_index "phones", ["password_id"], name: "index_phones_on_password_id", using: :btree
 
-  create_table "playlist_share_contacts", force: true do |t|
+  create_table "playlist_share_contacts", force: :cascade do |t|
     t.integer  "playlist_share_id"
     t.integer  "contact_id"
     t.integer  "owner_id"
@@ -1651,7 +1651,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "playlist_share_contacts", ["owner_id"], name: "index_playlist_share_contacts_on_owner_id", using: :btree
   add_index "playlist_share_contacts", ["playlist_share_id"], name: "index_playlist_share_contacts_on_playlist_share_id", using: :btree
 
-  create_table "playlist_shares", force: true do |t|
+  create_table "playlist_shares", force: :cascade do |t|
     t.boolean  "email"
     t.integer  "playlist_id"
     t.integer  "owner_id"
@@ -1664,7 +1664,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "playlist_shares", ["owner_id"], name: "index_playlist_shares_on_owner_id", using: :btree
   add_index "playlist_shares", ["playlist_id"], name: "index_playlist_shares_on_playlist_id", using: :btree
 
-  create_table "playlist_songs", force: true do |t|
+  create_table "playlist_songs", force: :cascade do |t|
     t.integer  "playlist_id"
     t.integer  "song_id"
     t.integer  "owner_id"
@@ -1677,7 +1677,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "playlist_songs", ["playlist_id"], name: "index_playlist_songs_on_playlist_id", using: :btree
   add_index "playlist_songs", ["song_id"], name: "index_playlist_songs_on_song_id", using: :btree
 
-  create_table "playlists", force: true do |t|
+  create_table "playlists", force: :cascade do |t|
     t.string   "playlist_name"
     t.integer  "visit_count"
     t.integer  "owner_id"
@@ -1687,7 +1687,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "playlists", ["owner_id"], name: "index_playlists_on_owner_id", using: :btree
 
-  create_table "poems", force: true do |t|
+  create_table "poems", force: :cascade do |t|
     t.string   "poem_name"
     t.text     "poem"
     t.integer  "owner_id"
@@ -1698,7 +1698,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "poems", ["owner_id"], name: "index_poems_on_owner_id", using: :btree
 
-  create_table "point_displays", force: true do |t|
+  create_table "point_displays", force: :cascade do |t|
     t.boolean  "trash"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -1708,7 +1708,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "point_displays", ["owner_id"], name: "index_point_displays_on_owner_id", using: :btree
 
-  create_table "promises", force: true do |t|
+  create_table "promises", force: :cascade do |t|
     t.string   "name"
     t.date     "due"
     t.text     "promise"
@@ -1720,7 +1720,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "promises", ["owner_id"], name: "index_promises_on_owner_id", using: :btree
 
-  create_table "promotions", force: true do |t|
+  create_table "promotions", force: :cascade do |t|
     t.string   "promotion_name"
     t.date     "started"
     t.date     "expires"
@@ -1734,7 +1734,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "promotions", ["owner_id"], name: "index_promotions_on_owner_id", using: :btree
 
-  create_table "questions", force: true do |t|
+  create_table "questions", force: :cascade do |t|
     t.string   "name"
     t.text     "notes"
     t.integer  "owner_id"
@@ -1745,7 +1745,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "questions", ["owner_id"], name: "index_questions_on_owner_id", using: :btree
 
-  create_table "recipes", force: true do |t|
+  create_table "recipes", force: :cascade do |t|
     t.string   "name"
     t.text     "recipe"
     t.integer  "owner_id"
@@ -1756,7 +1756,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "recipes", ["owner_id"], name: "index_recipes_on_owner_id", using: :btree
 
-  create_table "recreational_vehicle_insurances", force: true do |t|
+  create_table "recreational_vehicle_insurances", force: :cascade do |t|
     t.string   "insurance_name"
     t.integer  "company_id"
     t.date     "started"
@@ -1772,7 +1772,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "recreational_vehicle_insurances", ["owner_id"], name: "index_recreational_vehicle_insurances_on_owner_id", using: :btree
   add_index "recreational_vehicle_insurances", ["periodic_payment_id"], name: "index_recreational_vehicle_insurances_on_periodic_payment_id", using: :btree
 
-  create_table "recreational_vehicle_loans", force: true do |t|
+  create_table "recreational_vehicle_loans", force: :cascade do |t|
     t.integer  "recreational_vehicle_id"
     t.integer  "loan_id"
     t.integer  "owner_id"
@@ -1784,7 +1784,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "recreational_vehicle_loans", ["owner_id"], name: "index_recreational_vehicle_loans_on_owner_id", using: :btree
   add_index "recreational_vehicle_loans", ["recreational_vehicle_id"], name: "index_recreational_vehicle_loans_on_recreational_vehicle_id", using: :btree
 
-  create_table "recreational_vehicle_measurements", force: true do |t|
+  create_table "recreational_vehicle_measurements", force: :cascade do |t|
     t.string   "measurement_name"
     t.integer  "measurement_type"
     t.decimal  "width",                   precision: 10, scale: 2
@@ -1799,7 +1799,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "recreational_vehicle_measurements", ["owner_id"], name: "index_recreational_vehicle_measurements_on_owner_id", using: :btree
 
-  create_table "recreational_vehicle_pictures", force: true do |t|
+  create_table "recreational_vehicle_pictures", force: :cascade do |t|
     t.integer  "recreational_vehicle_id"
     t.integer  "identity_file_id"
     t.integer  "owner_id"
@@ -1811,7 +1811,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "recreational_vehicle_pictures", ["owner_id"], name: "index_recreational_vehicle_pictures_on_owner_id", using: :btree
   add_index "recreational_vehicle_pictures", ["recreational_vehicle_id"], name: "index_recreational_vehicle_pictures_on_recreational_vehicle_id", using: :btree
 
-  create_table "recreational_vehicles", force: true do |t|
+  create_table "recreational_vehicles", force: :cascade do |t|
     t.string   "rv_name"
     t.string   "vin"
     t.string   "manufacturer"
@@ -1856,7 +1856,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "recreational_vehicles", ["owner_id"], name: "index_recreational_vehicles_on_owner_id", using: :btree
   add_index "recreational_vehicles", ["vehicle_id"], name: "index_recreational_vehicles_on_vehicle_id", using: :btree
 
-  create_table "repeats", force: true do |t|
+  create_table "repeats", force: :cascade do |t|
     t.date     "start_date"
     t.integer  "period_type"
     t.integer  "period"
@@ -1867,7 +1867,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "repeats", ["owner_id"], name: "index_repeats_on_owner_id", using: :btree
 
-  create_table "restaurants", force: true do |t|
+  create_table "restaurants", force: :cascade do |t|
     t.integer  "location_id"
     t.integer  "rating"
     t.text     "notes"
@@ -1880,7 +1880,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "restaurants", ["location_id"], name: "index_restaurants_on_location_id", using: :btree
   add_index "restaurants", ["owner_id"], name: "index_restaurants_on_owner_id", using: :btree
 
-  create_table "reward_programs", force: true do |t|
+  create_table "reward_programs", force: :cascade do |t|
     t.string   "reward_program_name"
     t.date     "started"
     t.date     "ended"
@@ -1898,7 +1898,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "reward_programs", ["owner_id"], name: "index_reward_programs_on_owner_id", using: :btree
   add_index "reward_programs", ["password_id"], name: "index_reward_programs_on_password_id", using: :btree
 
-  create_table "shares", force: true do |t|
+  create_table "shares", force: :cascade do |t|
     t.string   "token"
     t.string   "myp_model_name"
     t.integer  "model_id"
@@ -1909,7 +1909,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "shares", ["owner_id"], name: "index_shares_on_owner_id", using: :btree
 
-  create_table "shopping_list_items", force: true do |t|
+  create_table "shopping_list_items", force: :cascade do |t|
     t.integer  "owner_id"
     t.integer  "shopping_list_id"
     t.string   "shopping_list_item_name"
@@ -1921,7 +1921,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "shopping_list_items", ["owner_id"], name: "index_shopping_list_items_on_owner_id", using: :btree
   add_index "shopping_list_items", ["shopping_list_id"], name: "index_shopping_list_items_on_shopping_list_id", using: :btree
 
-  create_table "shopping_lists", force: true do |t|
+  create_table "shopping_lists", force: :cascade do |t|
     t.string   "shopping_list_name"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -1931,7 +1931,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "shopping_lists", ["owner_id"], name: "index_shopping_lists_on_owner_id", using: :btree
 
-  create_table "skin_treatments", force: true do |t|
+  create_table "skin_treatments", force: :cascade do |t|
     t.datetime "treatment_time"
     t.string   "treatment_activity"
     t.string   "treatment_location"
@@ -1943,7 +1943,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "skin_treatments", ["owner_id"], name: "index_skin_treatments_on_owner_id", using: :btree
 
-  create_table "sleep_measurements", force: true do |t|
+  create_table "sleep_measurements", force: :cascade do |t|
     t.datetime "sleep_start_time"
     t.datetime "sleep_end_time"
     t.integer  "owner_id"
@@ -1954,7 +1954,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "sleep_measurements", ["owner_id"], name: "index_sleep_measurements_on_owner_id", using: :btree
 
-  create_table "snoozed_due_items", force: true do |t|
+  create_table "snoozed_due_items", force: :cascade do |t|
     t.integer  "owner_id"
     t.string   "display"
     t.string   "link"
@@ -1970,7 +1970,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "snoozed_due_items", ["myplaceonline_due_display_id"], name: "index_snoozed_due_items_on_myplaceonline_due_display_id", using: :btree
   add_index "snoozed_due_items", ["owner_id"], name: "index_snoozed_due_items_on_owner_id", using: :btree
 
-  create_table "songs", force: true do |t|
+  create_table "songs", force: :cascade do |t|
     t.string   "song_name"
     t.decimal  "song_rating",      precision: 10, scale: 2
     t.text     "lyrics"
@@ -1990,7 +1990,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "songs", ["musical_group_id"], name: "index_songs_on_musical_group_id", using: :btree
   add_index "songs", ["owner_id"], name: "index_songs_on_owner_id", using: :btree
 
-  create_table "statuses", force: true do |t|
+  create_table "statuses", force: :cascade do |t|
     t.datetime "status_time"
     t.text     "three_good_things"
     t.integer  "owner_id"
@@ -2005,7 +2005,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "statuses", ["owner_id"], name: "index_statuses_on_owner_id", using: :btree
 
-  create_table "stocks", force: true do |t|
+  create_table "stocks", force: :cascade do |t|
     t.integer  "company_id"
     t.integer  "num_shares"
     t.text     "notes"
@@ -2021,7 +2021,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "stocks", ["owner_id"], name: "index_stocks_on_owner_id", using: :btree
   add_index "stocks", ["password_id"], name: "index_stocks_on_password_id", using: :btree
 
-  create_table "sun_exposures", force: true do |t|
+  create_table "sun_exposures", force: :cascade do |t|
     t.datetime "exposure_start"
     t.datetime "exposure_end"
     t.string   "uncovered_body_parts"
@@ -2035,7 +2035,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "sun_exposures", ["owner_id"], name: "index_sun_exposures_on_owner_id", using: :btree
 
-  create_table "temperatures", force: true do |t|
+  create_table "temperatures", force: :cascade do |t|
     t.datetime "measured"
     t.decimal  "measured_temperature", precision: 10, scale: 2
     t.string   "measurement_source"
@@ -2048,7 +2048,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "temperatures", ["owner_id"], name: "index_temperatures_on_owner_id", using: :btree
 
-  create_table "therapists", force: true do |t|
+  create_table "therapists", force: :cascade do |t|
     t.string   "name"
     t.text     "notes"
     t.integer  "owner_id"
@@ -2061,7 +2061,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "therapists", ["contact_id"], name: "index_therapists_on_contact_id", using: :btree
   add_index "therapists", ["owner_id"], name: "index_therapists_on_owner_id", using: :btree
 
-  create_table "to_dos", force: true do |t|
+  create_table "to_dos", force: :cascade do |t|
     t.string   "short_description"
     t.text     "notes"
     t.integer  "owner_id"
@@ -2072,7 +2072,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "to_dos", ["owner_id"], name: "index_to_dos_on_owner_id", using: :btree
 
-  create_table "trip_pictures", force: true do |t|
+  create_table "trip_pictures", force: :cascade do |t|
     t.integer  "owner_id"
     t.integer  "trip_id"
     t.integer  "identity_file_id"
@@ -2084,7 +2084,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "trip_pictures", ["owner_id"], name: "index_trip_pictures_on_owner_id", using: :btree
   add_index "trip_pictures", ["trip_id"], name: "index_trip_pictures_on_trip_id", using: :btree
 
-  create_table "trips", force: true do |t|
+  create_table "trips", force: :cascade do |t|
     t.integer  "location_id"
     t.date     "started"
     t.date     "ended"
@@ -2099,7 +2099,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "trips", ["location_id"], name: "index_trips_on_location_id", using: :btree
   add_index "trips", ["owner_id"], name: "index_trips_on_owner_id", using: :btree
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                       default: "",    null: false
     t.string   "encrypted_password",          default: "",    null: false
     t.string   "reset_password_token"
@@ -2136,7 +2136,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
-  create_table "vehicle_insurances", force: true do |t|
+  create_table "vehicle_insurances", force: :cascade do |t|
     t.string   "insurance_name"
     t.integer  "company_id"
     t.date     "started"
@@ -2153,7 +2153,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "vehicle_insurances", ["periodic_payment_id"], name: "index_vehicle_insurances_on_periodic_payment_id", using: :btree
   add_index "vehicle_insurances", ["vehicle_id"], name: "index_vehicle_insurances_on_vehicle_id", using: :btree
 
-  create_table "vehicle_loans", force: true do |t|
+  create_table "vehicle_loans", force: :cascade do |t|
     t.integer  "vehicle_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -2164,7 +2164,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "vehicle_loans", ["owner_id"], name: "index_vehicle_loans_on_owner_id", using: :btree
   add_index "vehicle_loans", ["vehicle_id"], name: "index_vehicle_loans_on_vehicle_id", using: :btree
 
-  create_table "vehicle_pictures", force: true do |t|
+  create_table "vehicle_pictures", force: :cascade do |t|
     t.integer  "vehicle_id"
     t.integer  "identity_file_id"
     t.integer  "owner_id"
@@ -2176,7 +2176,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "vehicle_pictures", ["owner_id"], name: "index_vehicle_pictures_on_owner_id", using: :btree
   add_index "vehicle_pictures", ["vehicle_id"], name: "index_vehicle_pictures_on_vehicle_id", using: :btree
 
-  create_table "vehicle_services", force: true do |t|
+  create_table "vehicle_services", force: :cascade do |t|
     t.integer  "vehicle_id"
     t.text     "notes"
     t.string   "short_description"
@@ -2193,7 +2193,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "vehicle_services", ["owner_id"], name: "index_vehicle_services_on_owner_id", using: :btree
   add_index "vehicle_services", ["vehicle_id"], name: "index_vehicle_services_on_vehicle_id", using: :btree
 
-  create_table "vehicle_warranties", force: true do |t|
+  create_table "vehicle_warranties", force: :cascade do |t|
     t.integer  "owner_id"
     t.integer  "warranty_id"
     t.integer  "vehicle_id"
@@ -2205,7 +2205,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "vehicle_warranties", ["vehicle_id"], name: "index_vehicle_warranties_on_vehicle_id", using: :btree
   add_index "vehicle_warranties", ["warranty_id"], name: "index_vehicle_warranties_on_warranty_id", using: :btree
 
-  create_table "vehicles", force: true do |t|
+  create_table "vehicles", force: :cascade do |t|
     t.string   "name"
     t.text     "notes"
     t.date     "owned_start"
@@ -2270,7 +2270,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "vehicles", ["owner_id"], name: "index_vehicles_on_owner_id", using: :btree
 
-  create_table "vitamin_ingredients", force: true do |t|
+  create_table "vitamin_ingredients", force: :cascade do |t|
     t.integer  "owner_id"
     t.integer  "parent_vitamin_id"
     t.integer  "vitamin_id"
@@ -2282,7 +2282,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
   add_index "vitamin_ingredients", ["parent_vitamin_id"], name: "index_vitamin_ingredients_on_parent_vitamin_id", using: :btree
   add_index "vitamin_ingredients", ["vitamin_id"], name: "index_vitamin_ingredients_on_vitamin_id", using: :btree
 
-  create_table "vitamins", force: true do |t|
+  create_table "vitamins", force: :cascade do |t|
     t.integer  "owner_id"
     t.string   "vitamin_name"
     t.text     "notes"
@@ -2295,7 +2295,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "vitamins", ["owner_id"], name: "index_vitamins_on_owner_id", using: :btree
 
-  create_table "warranties", force: true do |t|
+  create_table "warranties", force: :cascade do |t|
     t.string   "warranty_name"
     t.date     "warranty_start"
     t.date     "warranty_end"
@@ -2309,7 +2309,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "warranties", ["owner_id"], name: "index_warranties_on_owner_id", using: :btree
 
-  create_table "websites", force: true do |t|
+  create_table "websites", force: :cascade do |t|
     t.string   "title"
     t.string   "url",         limit: 2000
     t.integer  "owner_id"
@@ -2320,7 +2320,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "websites", ["owner_id"], name: "index_websites_on_owner_id", using: :btree
 
-  create_table "weights", force: true do |t|
+  create_table "weights", force: :cascade do |t|
     t.decimal  "amount",       precision: 10, scale: 2
     t.integer  "amount_type"
     t.date     "measure_date"
@@ -2333,7 +2333,7 @@ ActiveRecord::Schema.define(version: 20151215014755) do
 
   add_index "weights", ["owner_id"], name: "index_weights_on_owner_id", using: :btree
 
-  create_table "wisdoms", force: true do |t|
+  create_table "wisdoms", force: :cascade do |t|
     t.string   "name"
     t.text     "wisdom"
     t.integer  "owner_id"

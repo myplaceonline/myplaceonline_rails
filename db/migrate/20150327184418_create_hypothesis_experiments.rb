@@ -8,7 +8,7 @@ class CreateHypothesisExperiments < ActiveRecord::Migration
       t.references :hypothesis, index: true
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

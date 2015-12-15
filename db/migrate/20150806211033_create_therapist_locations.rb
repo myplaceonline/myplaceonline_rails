@@ -5,7 +5,7 @@ class CreateTherapistLocations < ActiveRecord::Migration
       t.references :therapist, index: true
       t.references :location, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

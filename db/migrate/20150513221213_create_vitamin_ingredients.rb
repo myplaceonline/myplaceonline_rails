@@ -5,7 +5,7 @@ class CreateVitaminIngredients < ActiveRecord::Migration
       t.references :parent_vitamin, index: true
       t.references :vitamin, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

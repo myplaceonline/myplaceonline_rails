@@ -5,7 +5,7 @@ class CreatePoems < ActiveRecord::Migration
       t.text :poem
       t.references :owner, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

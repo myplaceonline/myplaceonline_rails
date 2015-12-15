@@ -9,7 +9,7 @@ class CreateSnoozedDueItems < ActiveRecord::Migration
       t.string :model_name
       t.integer :model_id
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

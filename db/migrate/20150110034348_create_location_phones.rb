@@ -4,7 +4,7 @@ class CreateLocationPhones < ActiveRecord::Migration
       t.string :number
       t.references :location, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

@@ -4,7 +4,7 @@ class CreateIdentityPhones < ActiveRecord::Migration
       t.string :number
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

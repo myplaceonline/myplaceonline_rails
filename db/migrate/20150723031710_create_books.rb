@@ -8,7 +8,7 @@ class CreateBooks < ActiveRecord::Migration
       t.references :owner, index: true
       t.text :notes
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

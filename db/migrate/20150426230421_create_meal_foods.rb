@@ -5,7 +5,7 @@ class CreateMealFoods < ActiveRecord::Migration
       t.references :meal, index: true
       t.references :food, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

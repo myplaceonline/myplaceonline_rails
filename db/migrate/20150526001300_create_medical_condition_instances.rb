@@ -7,7 +7,7 @@ class CreateMedicalConditionInstances < ActiveRecord::Migration
       t.references :medical_condition, index: true
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

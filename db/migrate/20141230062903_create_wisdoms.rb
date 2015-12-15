@@ -5,7 +5,7 @@ class CreateWisdoms < ActiveRecord::Migration
       t.text :wisdom
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

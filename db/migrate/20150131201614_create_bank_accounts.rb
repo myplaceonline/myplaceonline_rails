@@ -13,7 +13,7 @@ class CreateBankAccounts < ActiveRecord::Migration
       t.references :home_address, index: true
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

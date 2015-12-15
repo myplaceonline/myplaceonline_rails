@@ -5,7 +5,7 @@ class CreateVehicleWarranties < ActiveRecord::Migration
       t.references :warranty, index: true
       t.references :vehicle, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

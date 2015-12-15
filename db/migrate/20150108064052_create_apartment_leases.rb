@@ -5,7 +5,7 @@ class CreateApartmentLeases < ActiveRecord::Migration
       t.date :end_date
       t.references :apartment, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

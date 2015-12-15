@@ -125,7 +125,7 @@ class Identity < ActiveRecord::Base
       :contacts => contacts.to_a.delete_if{|x| x.identity_id == id }.map{|x| x.as_json},
       :accomplishments => accomplishments.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :feeds => feeds.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
-      :locations => locations.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
+      :locations => locations.to_a.sort{ |a,b| a.display.downcase <=> b.display.downcase }.map{|x| x.as_json},
       :activities => activities.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :apartments => apartments.to_a.map{|x| x.as_json},
       :jokes => jokes.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},

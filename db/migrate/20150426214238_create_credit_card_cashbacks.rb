@@ -5,7 +5,7 @@ class CreateCreditCardCashbacks < ActiveRecord::Migration
       t.references :credit_card, index: true
       t.references :cashback, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

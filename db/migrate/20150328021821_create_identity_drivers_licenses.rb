@@ -7,7 +7,7 @@ class CreateIdentityDriversLicenses < ActiveRecord::Migration
       t.date :expires
       t.references :ref, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

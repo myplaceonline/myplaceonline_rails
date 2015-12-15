@@ -6,7 +6,7 @@ class CreateChecklistReferences < ActiveRecord::Migration
       t.references :identity, index: true
       t.boolean :pre_checklist
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

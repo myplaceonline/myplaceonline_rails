@@ -4,7 +4,7 @@ class CreateLists < ActiveRecord::Migration
       t.string :name
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

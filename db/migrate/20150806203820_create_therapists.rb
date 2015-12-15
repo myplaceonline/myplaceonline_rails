@@ -5,7 +5,7 @@ class CreateTherapists < ActiveRecord::Migration
       t.text :notes
       t.references :owner, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

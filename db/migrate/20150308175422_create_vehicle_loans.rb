@@ -8,7 +8,7 @@ class CreateVehicleLoans < ActiveRecord::Migration
       t.date :paid_off
       t.decimal :monthly_payment, precision: 10, scale: 2
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

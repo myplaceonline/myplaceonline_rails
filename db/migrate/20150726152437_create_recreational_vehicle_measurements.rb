@@ -10,7 +10,7 @@ class CreateRecreationalVehicleMeasurements < ActiveRecord::Migration
       t.references :owner, index: true
       t.references :recreational_vehicle
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

@@ -3,7 +3,7 @@ class CreateIdentities < ActiveRecord::Migration
     create_table :identities do |t|
       t.references :owner, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

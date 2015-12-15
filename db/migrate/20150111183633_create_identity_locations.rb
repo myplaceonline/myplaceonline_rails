@@ -4,7 +4,7 @@ class CreateIdentityLocations < ActiveRecord::Migration
       t.references :location, index: true
       t.references :ref, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

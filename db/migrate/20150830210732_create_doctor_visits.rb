@@ -9,7 +9,7 @@ class CreateDoctorVisits < ActiveRecord::Migration
       t.boolean :physical
       t.references :owner, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

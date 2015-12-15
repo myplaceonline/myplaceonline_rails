@@ -15,7 +15,7 @@ class CreateVehicles < ActiveRecord::Migration
       t.string :sub_region1
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

@@ -9,7 +9,7 @@ class CreateApartmentTrashPickups < ActiveRecord::Migration
       t.references :apartment, index: true
       t.references :owner, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

@@ -6,7 +6,7 @@ class CreateRestaurants < ActiveRecord::Migration
       t.text :notes
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

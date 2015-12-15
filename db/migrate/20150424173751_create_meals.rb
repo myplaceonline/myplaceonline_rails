@@ -8,7 +8,7 @@ class CreateMeals < ActiveRecord::Migration
       t.decimal :calories, precision: 10, scale: 2
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

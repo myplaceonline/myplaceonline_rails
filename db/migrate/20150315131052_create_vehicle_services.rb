@@ -10,7 +10,7 @@ class CreateVehicleServices < ActiveRecord::Migration
       t.decimal :cost, precision: 10, scale: 2
       t.integer :miles
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

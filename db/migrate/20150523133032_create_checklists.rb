@@ -4,7 +4,7 @@ class CreateChecklists < ActiveRecord::Migration
       t.string :checklist_name
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

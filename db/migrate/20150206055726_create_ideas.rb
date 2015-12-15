@@ -5,7 +5,7 @@ class CreateIdeas < ActiveRecord::Migration
       t.text :idea
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

@@ -6,7 +6,7 @@ class CreateTherapistConversations < ActiveRecord::Migration
       t.text :conversation
       t.date :conversation_date
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

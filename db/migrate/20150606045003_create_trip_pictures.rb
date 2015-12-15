@@ -5,7 +5,7 @@ class CreateTripPictures < ActiveRecord::Migration
       t.references :trip, index: true
       t.references :identity_file, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

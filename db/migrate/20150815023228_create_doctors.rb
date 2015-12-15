@@ -4,7 +4,7 @@ class CreateDoctors < ActiveRecord::Migration
       t.references :contact, index: true
       t.references :owner, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

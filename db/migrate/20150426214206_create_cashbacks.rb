@@ -9,7 +9,7 @@ class CreateCashbacks < ActiveRecord::Migration
       t.decimal :yearly_maximum, precision: 10, scale: 2
       t.text :notes
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

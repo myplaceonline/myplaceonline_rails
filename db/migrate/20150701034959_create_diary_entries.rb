@@ -5,7 +5,7 @@ class CreateDiaryEntries < ActiveRecord::Migration
       t.text :entry
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

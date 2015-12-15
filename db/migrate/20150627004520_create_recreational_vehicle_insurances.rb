@@ -9,7 +9,7 @@ class CreateRecreationalVehicleInsurances < ActiveRecord::Migration
       t.references :recreational_vehicle
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

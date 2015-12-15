@@ -12,7 +12,7 @@ class CreateDentalInsurances < ActiveRecord::Migration
       t.string :group_number
       t.references :owner, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

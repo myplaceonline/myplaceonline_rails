@@ -7,7 +7,7 @@ class CreateTemperatures < ActiveRecord::Migration
       t.integer :temperature_type
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

@@ -6,7 +6,7 @@ class CreateIdentityRelationships < ActiveRecord::Migration
       t.references :identity, index: true
       t.references :ref, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

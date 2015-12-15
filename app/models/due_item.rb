@@ -189,20 +189,35 @@ class DueItem < ActiveRecord::Base
   end
   
   def self.destroy_due_items(user, model)
-    if DueItem.new.respond_to?("myp_model_name")
-      DueItem.destroy_all(owner: user.primary_identity, myp_model_name: model.name)
+    begin
+      if DueItem.new.respond_to?("myp_model_name")
+        DueItem.destroy_all(owner: user.primary_identity, myp_model_name: model.name)
+      end
+    rescue ActiveRecord::DangerousAttributeError => e
+      # Occurs in the full migration
+      Rails.logger.info(e)
     end
   end
   
   def self.create_due_item(args)
-    if DueItem.new.respond_to?("myp_model_name")
-      DueItem.new(args).save!
+    begin
+      if DueItem.new.respond_to?("myp_model_name")
+        DueItem.new(args).save!
+      end
+    rescue ActiveRecord::DangerousAttributeError => e
+      # Occurs in the full migration
+      Rails.logger.info(e)
     end
   end
   
   def self.create_due_item_check(args)
-    if DueItem.new.respond_to?("myp_model_name")
-      DueItem.new(args).check_and_save!
+    begin
+      if DueItem.new.respond_to?("myp_model_name")
+        DueItem.new(args).check_and_save!
+      end
+    rescue ActiveRecord::DangerousAttributeError => e
+      # Occurs in the full migration
+      Rails.logger.info(e)
     end
   end
 
@@ -221,25 +236,30 @@ class DueItem < ActiveRecord::Base
   end
   
   def self.check_snoozed_items(user, myp_model_name, updated_record, update_type)
-    if ::SnoozedDueItem.new.respond_to?("myp_model_name")
-      if !updated_record.nil? && !update_type.nil? && update_type == DueItem::UPDATE_TYPE_DELETE
-        ::SnoozedDueItem.where(owner: user.primary_identity, myp_model_name: myp_model_name, model_id: updated_record.id).each do |snoozed_item|
-          snoozed_item.destroy!
+    begin
+      if ::SnoozedDueItem.new.respond_to?("myp_model_name")
+        if !updated_record.nil? && !update_type.nil? && update_type == DueItem::UPDATE_TYPE_DELETE
+          ::SnoozedDueItem.where(owner: user.primary_identity, myp_model_name: myp_model_name, model_id: updated_record.id).each do |snoozed_item|
+            snoozed_item.destroy!
+          end
+        end
+        
+        ::SnoozedDueItem.where(owner: user.primary_identity, myp_model_name: myp_model_name).where("due_date <= ?", timenow).each do |snoozed_item|
+          create_due_item(
+            display: snoozed_item.display,
+            link: snoozed_item.link,
+            due_date: snoozed_item.due_date,
+            original_due_date: snoozed_item.original_due_date,
+            owner_id: snoozed_item.owner_id,
+            myplaceonline_due_display: snoozed_item.myplaceonline_due_display,
+            myp_model_name: snoozed_item.myp_model_name,
+            model_id: snoozed_item.model_id
+          )
         end
       end
-      
-      ::SnoozedDueItem.where(owner: user.primary_identity, myp_model_name: myp_model_name).where("due_date <= ?", timenow).each do |snoozed_item|
-        create_due_item(
-          display: snoozed_item.display,
-          link: snoozed_item.link,
-          due_date: snoozed_item.due_date,
-          original_due_date: snoozed_item.original_due_date,
-          owner_id: snoozed_item.owner_id,
-          myplaceonline_due_display: snoozed_item.myplaceonline_due_display,
-          myp_model_name: snoozed_item.myp_model_name,
-          model_id: snoozed_item.model_id
-        )
-      end
+    rescue ActiveRecord::DangerousAttributeError => e
+      # Occurs in the full migration
+      Rails.logger.info(e)
     end
   end
 

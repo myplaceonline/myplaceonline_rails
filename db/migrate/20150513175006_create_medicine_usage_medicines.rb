@@ -5,7 +5,7 @@ class CreateMedicineUsageMedicines < ActiveRecord::Migration
       t.references :medicine_usage, index: true
       t.references :medicine, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

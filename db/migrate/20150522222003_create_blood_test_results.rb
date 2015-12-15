@@ -6,7 +6,7 @@ class CreateBloodTestResults < ActiveRecord::Migration
       t.decimal :concentration, precision: 10, scale: 2
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

@@ -7,7 +7,7 @@ class CreateVitamins < ActiveRecord::Migration
       t.decimal :vitamin_amount, precision: 10, scale: 2
       t.integer :amount_type
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

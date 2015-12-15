@@ -10,7 +10,7 @@ class CreateLocations < ActiveRecord::Migration
       t.string :sub_region2
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

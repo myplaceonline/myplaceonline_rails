@@ -7,7 +7,7 @@ class CreateGunRegistrations < ActiveRecord::Migration
       t.references :gun, index: true
       t.references :owner, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

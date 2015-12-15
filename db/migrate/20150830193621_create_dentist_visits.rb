@@ -10,7 +10,7 @@ class CreateDentistVisits < ActiveRecord::Migration
       t.boolean :cleaning
       t.references :owner, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

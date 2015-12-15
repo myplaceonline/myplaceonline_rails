@@ -6,7 +6,7 @@ class CreateSkinTreatments < ActiveRecord::Migration
       t.string :treatment_location
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

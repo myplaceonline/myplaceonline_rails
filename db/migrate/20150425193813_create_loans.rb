@@ -8,7 +8,7 @@ class CreateLoans < ActiveRecord::Migration
       t.decimal :monthly_payment, precision: 10, scale: 2
       t.references :identity, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

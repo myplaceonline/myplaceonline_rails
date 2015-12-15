@@ -4,7 +4,7 @@ class CreateConversations < ActiveRecord::Migration
       t.references :contact, index: true
       t.text :conversation
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

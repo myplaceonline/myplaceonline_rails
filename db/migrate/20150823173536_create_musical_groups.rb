@@ -9,7 +9,7 @@ class CreateMusicalGroups < ActiveRecord::Migration
       t.boolean :secret
       t.references :owner, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end
