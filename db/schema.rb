@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151216002429) do
+ActiveRecord::Schema.define(version: 20151216025802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1625,9 +1625,11 @@ ActiveRecord::Schema.define(version: 20151216002429) do
     t.datetime "updated_at"
     t.integer  "visit_count"
     t.boolean  "suppress_reminder"
+    t.integer  "password_id"
   end
 
   add_index "periodic_payments", ["owner_id"], name: "index_periodic_payments_on_owner_id", using: :btree
+  add_index "periodic_payments", ["password_id"], name: "index_periodic_payments_on_password_id", using: :btree
 
   create_table "phones", force: :cascade do |t|
     t.string   "phone_model_name",         limit: 255
@@ -2376,6 +2378,7 @@ ActiveRecord::Schema.define(version: 20151216002429) do
 
   add_foreign_key "identity_file_shares", "identity_files"
   add_foreign_key "identity_file_shares", "shares"
+  add_foreign_key "periodic_payments", "passwords"
   add_foreign_key "playlist_shares", "shares"
   add_foreign_key "playlists", "identity_files"
 end

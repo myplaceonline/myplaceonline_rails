@@ -5,3 +5,16 @@
 <%= myp_decimal_field(f, :payment_amount, "myplaceonline.periodic_payments.payment_amount", obj.payment_amount) %>
 <%= myp_check_box f, :suppress_reminder, "myplaceonline.periodic_payments.suppress_reminder" %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.periodic_payments.notes", obj.notes) %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :password,
+    existingobj: obj.password,
+    heading: t("myplaceonline.periodic_payments.password"),
+    objform: "passwords/form",
+    existingobjurl: "password_path",
+    searchurl: "/passwords.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>

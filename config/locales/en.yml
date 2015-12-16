@@ -1096,6 +1096,7 @@ en:
       reminder_after: "Periodic Payment %{name} Past Due by %{delta}"
       suppress_reminder: "Suppress Reminder"
       next_payment: "Next Payment"
+      password: "Password"
     jobs:
       job_title: "Job Title"
       started: "Started"

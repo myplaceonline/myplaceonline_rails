@@ -1,7 +1,12 @@
 class PeriodicPayment < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
+  include AllowExistingConcern
 
   validates :periodic_payment_name, presence: true
+  
+  belongs_to :password
+  accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
+  allow_existing :password
   
   def display
     result = periodic_payment_name
