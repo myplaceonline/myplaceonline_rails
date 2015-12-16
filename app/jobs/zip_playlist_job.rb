@@ -66,8 +66,14 @@ class ZipPlaylistJob < ActiveJob::Base
             identity_file.owner = share.owner
             identity_file.save!
             
+            public_share = Share.new
+            public_share.owner = share.owner
+            public_share.token = SecureRandom.hex(10)
+            public_share.save!
+            
             share.playlist.identity_file = identity_file
-            share.playlist.save!
+            share.share = public_share
+            share.save!
             
             content = ERB::Util.html_escape_once(share.body)
             #content += "<p>" + playlists_shared_path(share.playlist) + "</p>"

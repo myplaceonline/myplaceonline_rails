@@ -16,4 +16,5 @@ class PlaylistShare < ActiveRecord::Base
     end
   end
 
+  belongs_to :share
 end

@@ -1,5 +1,6 @@
 class PlaylistsController < MyplaceonlineController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:share, :shared]
+  skip_before_filter :authenticate_user!, :only => [:shared]
   
   def share
     set_obj
@@ -38,7 +39,21 @@ class PlaylistsController < MyplaceonlineController
   end
   
   def shared
-    @obj = model.find_by(id: params[:id])
+    token = params[:token]
+    if !token.blank?
+      @obj = model.find_by(id: params[:id])
+      found = false
+      @obj.playlist_shares.each do |playlist_share|
+        if !playlist_share.share.nil? && playlist_share.share.token == token
+          found = true
+        end
+      end
+      if !found
+        raise CanCan::AccessDenied
+      end
+    else
+      raise CanCan::AccessDenied
+    end
   end
 
   protected
