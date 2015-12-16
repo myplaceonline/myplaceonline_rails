@@ -99,6 +99,10 @@ class Identity < ActiveRecord::Base
   has_many :identity_emails, :foreign_key => 'identity_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_emails, allow_destroy: true, reject_if: :all_blank
   
+  def emails
+    identity_emails.to_a.map{|ie| ie.email }
+  end
+  
   has_many :identity_locations, :foreign_key => 'identity_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_locations, allow_destroy: true, reject_if: :all_blank
   

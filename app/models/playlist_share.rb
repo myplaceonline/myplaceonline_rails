@@ -15,4 +15,5 @@ class PlaylistShare < ActiveRecord::Base
       errors.add(:contacts, I18n.t("myplaceonline.playlists.requires_contacts"))
     end
   end
+
 end

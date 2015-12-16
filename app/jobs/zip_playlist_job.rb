@@ -55,15 +55,36 @@ class ZipPlaylistJob < ActiveJob::Base
         begin
           User.current_user = share.owner.owner
           
-          iff = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.playlists")])
-          identity_file = IdentityFile.build({ folder: iff.id })
-          identity_file.file_file_name = Pathname.new(tfile).basename
-          identity_file.file_file_size = zipdata.length
-          identity_file.file_content_type = "application/zip"
-          identity_file.file = File.open(tfile.path)
-          identity_file.folder = iff
-          identity_file.owner = share.owner
-          identity_file.save!
+          ActiveRecord::Base.transaction do
+            iff = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.playlists")])
+            identity_file = IdentityFile.build({ folder: iff.id })
+            identity_file.file_file_name = Pathname.new(tfile).basename
+            identity_file.file_file_size = zipdata.length
+            identity_file.file_content_type = "application/zip"
+            identity_file.file = File.open(tfile.path)
+            identity_file.folder = iff
+            identity_file.owner = share.owner
+            identity_file.save!
+            
+            share.playlist.identity_file = identity_file
+            share.playlist.save!
+            
+            content = ERB::Util.html_escape_once(share.body)
+            #content += "<p>" + playlists_shared_path(share.playlist) + "</p>"
+            
+            # Once we have the ZIP, now we can send out the email
+            bcc = nil
+            if share.copy_self
+              bcc = User.current_user.email
+            end
+            to = Array.new
+            share.playlist_share_contacts.each do |playlist_share_contact|
+              playlist_share_contact.contact.identity.emails.each do |identity_email|
+                to.push(identity_email)
+              end
+            end
+            Myp.send_email(to, share.subject, content.html_safe, bcc)
+          end
           
         ensure
           User.current_user = nil

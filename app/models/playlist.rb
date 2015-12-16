@@ -8,6 +8,9 @@ class Playlist < ActiveRecord::Base
   
   has_many :playlist_shares
 
+  # zip file of all songs
+  belongs_to :identity_file
+
   def display
     playlist_name
   end

@@ -911,6 +911,15 @@ module Myp
     end
   end
   
+  def self.send_email(to, subject, body, bcc = nil)
+    begin
+      from = I18n.t("myplaceonline.siteEmail")
+      UserMailer.send_email(to, subject, body, bcc).deliver
+    rescue Exception => e
+      puts "Could not send email. Subject: " + subject + ", Body: " + body + ", Email Problem: " + Myp.error_details(e)
+    end
+  end
+  
   def self.instance_to_category(obj)
     search = obj.class.name.pluralize.underscore
     Category.all.each do |category|

@@ -15,6 +15,7 @@
   <%= myp_text_field(f, :subject, "myplaceonline.playlists.subject", @share.subject, true) %>
   <%= myp_text_area(f, :body, "myplaceonline.playlists.body", @share.body) %>
   <%= myp_check_box(f, :email, "myplaceonline.playlists.email") %>
+  <%= myp_check_box(f, :copy_self, "myplaceonline.playlists.copy_self") %>
   <%=
     render layout: 'myplaceonline/childproperties', locals: {
       f: f,

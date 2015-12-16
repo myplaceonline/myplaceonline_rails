@@ -117,15 +117,18 @@ module ApplicationHelper
     html.html_safe
   end
   
+  def file_audio(identity_file)
+    html = <<-HTML
+    <audio src="#{file_view_path(identity_file)}" controls>
+      <p>#{I18n.t("myplaceonline.html5.noaudio")}</p>
+    </audio>
+    #{ url_or_blank(file_download_path(identity_file), t("myplaceonline.files.download"), nil, "ui-btn", true) }
+    HTML
+  end
+  
   def attribute_table_row_file_audio(name, identity_file)
     if !identity_file.nil? && !identity_file.file_content_type.nil? && identity_file.file_content_type.start_with?("audio")
-      html = <<-HTML
-      <audio src="#{file_view_path(identity_file)}" controls>
-        <p>#{I18n.t("myplaceonline.html5.noaudio")}</p>
-      </audio>
-      #{ url_or_blank(file_download_path(identity_file), t("myplaceonline.files.download"), nil, "ui-btn", true) }
-      HTML
-      
+      html = file_audio(identity_file)
       attribute_table_row_content(
         name,
         nil,

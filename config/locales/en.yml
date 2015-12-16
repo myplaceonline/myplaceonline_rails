@@ -1756,3 +1756,6 @@ en:
       delete_contact: "Delete Contact"
       shared_sucess: "Once the playlist is zipped up, emails will be sent."
       requires_contacts: "Please choose at least one contact"
+      copy_self: "Copy Me"
+      shared: "Shared Playlist"
+      download_zip: "Download Zip"

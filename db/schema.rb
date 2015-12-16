@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151215082245) do
+ActiveRecord::Schema.define(version: 20151216000103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1674,6 +1674,7 @@ ActiveRecord::Schema.define(version: 20151215082245) do
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "copy_self"
   end
 
   add_index "playlist_shares", ["owner_id"], name: "index_playlist_shares_on_owner_id", using: :btree
@@ -1693,13 +1694,15 @@ ActiveRecord::Schema.define(version: 20151215082245) do
   add_index "playlist_songs", ["song_id"], name: "index_playlist_songs_on_song_id", using: :btree
 
   create_table "playlists", force: :cascade do |t|
-    t.string   "playlist_name", limit: 255
+    t.string   "playlist_name",    limit: 255
     t.integer  "visit_count"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "identity_file_id"
   end
 
+  add_index "playlists", ["identity_file_id"], name: "index_playlists_on_identity_file_id", using: :btree
   add_index "playlists", ["owner_id"], name: "index_playlists_on_owner_id", using: :btree
 
   create_table "poems", force: :cascade do |t|
@@ -2359,4 +2362,5 @@ ActiveRecord::Schema.define(version: 20151215082245) do
 
   add_index "wisdoms", ["owner_id"], name: "index_wisdoms_on_owner_id", using: :btree
 
+  add_foreign_key "playlists", "identity_files"
 end

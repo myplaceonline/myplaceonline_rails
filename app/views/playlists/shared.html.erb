@@ -1,0 +1,15 @@
+<% content_for :heading do -%><%= @obj.display %><% end -%>
+<h1><%= @obj.display %></h1>
+<% if !@obj.identity_file.nil? %>
+  <%= url_or_blank(file_download_path(@obj.identity_file), t("myplaceonline.playlists.download_zip"), nil, "ui-btn", true) %>
+<% end %>
+<ol>
+  <% @obj.playlist_songs.each do |playlist_song| %>
+    <% if !playlist_song.song.identity_file.nil? %>
+      <li>
+        <p><%= playlist_song.song.display %></p>
+        <%= raw(file_audio(playlist_song.song.identity_file)) %>
+      </li>
+    <% end %>
+  <% end %>
+</ol>

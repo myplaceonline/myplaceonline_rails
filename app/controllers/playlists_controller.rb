@@ -1,16 +1,18 @@
 class PlaylistsController < MyplaceonlineController
-  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:share]
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:share, :shared]
   
   def share
     set_obj
     @share = Myp.new_model(PlaylistShare)
     @share.email = true
+    @share.copy_self = true
     if request.post?
       @share = PlaylistShare.new(
         params.require(:playlist_share).permit(
           :subject,
           :body,
           :email,
+          :copy_self,
           playlist_share_contacts_attributes: [
             :_destroy,
             contact_attributes: [
@@ -33,6 +35,10 @@ class PlaylistsController < MyplaceonlineController
                     }
       end
     end
+  end
+  
+  def shared
+    @obj = model.find_by(id: params[:id])
   end
 
   protected
