@@ -904,7 +904,7 @@ module Myp
         from = User.current_user.email
       end
       if !Rails.env.development?
-        UserMailer.send_support_email(from, subject, body).deliver
+        UserMailer.send_support_email(from, subject, body).deliver_now
       end
     rescue Exception => e
       puts "Could not send email. Subject: " + subject + ", Body: " + body + ", Email Problem: " + Myp.error_details(e)
@@ -914,7 +914,7 @@ module Myp
   def self.send_email(to, subject, body, bcc = nil)
     begin
       from = I18n.t("myplaceonline.siteEmail")
-      UserMailer.send_email(to, subject, body, bcc).deliver
+      UserMailer.send_email(to, subject, body, bcc).deliver_now
     rescue Exception => e
       puts "Could not send email. Subject: " + subject + ", Body: " + body + ", Email Problem: " + Myp.error_details(e)
     end
