@@ -14,9 +14,13 @@
       {
         type: :renderpartial,
         name: :song_attributes,
-        partial: 'myplaceonline/create',
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.playlists.song"),
         objform: "songs/form",
-        autofocus: false
+        existingobjurl: "song_path",
+        searchurl: "/songs.json?perpage=0",
+        edit: false,
+        autofocus: true
       },
       {
         type: 'position',
@@ -26,11 +30,15 @@
   } do |child_fields, childproperty|
 %>
   <%=
-    render partial: 'myplaceonline/create', locals: {
+    render partial: 'myplaceonline/select_or_create', locals: {
       f: child_fields,
       name: :song_attributes,
       existingobj: childproperty.song,
+      heading: t("myplaceonline.playlists.song"),
       objform: "songs/form",
+      existingobjurl: "song_path",
+      searchurl: "/songs.json?perpage=0",
+      edit: true,
       autofocus: false
     }
   %>

@@ -2,6 +2,10 @@ class PlaylistsController < MyplaceonlineController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:share, :shared]
   skip_before_filter :authenticate_user!, :only => [:shared]
   
+  def may_upload
+    true
+  end
+
   def share
     set_obj
     @share = Myp.new_model(PlaylistShare)
@@ -70,7 +74,7 @@ class PlaylistsController < MyplaceonlineController
           :id,
           :_destroy,
           :position,
-          song_attributes: SongsController.params
+          song_attributes: SongsController.params + [:id]
         ]
       )
     end
