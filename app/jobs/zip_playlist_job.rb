@@ -15,6 +15,7 @@ class ZipPlaylistJob < ActiveJob::Base
     Dir.mktmpdir do |dir|
       
       files = Array.new
+      song_identity_files = Array.new
       
       share.playlist.playlist_songs.each do |playlist_song|
         Rails.logger.debug{"Song #{playlist_song.inspect}"}
@@ -34,6 +35,8 @@ class ZipPlaylistJob < ActiveJob::Base
           itemarray.push(f)
           
           files.push(itemarray)
+          
+          song_identity_files.push(playlist_song.song.identity_file)
           
           IO.binwrite(f, data)
         end
@@ -56,6 +59,14 @@ class ZipPlaylistJob < ActiveJob::Base
           User.current_user = share.owner.owner
           
           ActiveRecord::Base.transaction do
+            # We'll create a share with a unique token that we'll
+            # use for the playlist share, each song's identity file and
+            # the identity file for the whole zip
+            public_share = Share.new
+            public_share.owner = share.owner
+            public_share.token = SecureRandom.hex(10)
+            public_share.save!
+            
             iff = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.playlists")])
             identity_file = IdentityFile.build({ folder: iff.id })
             identity_file.file_file_name = Pathname.new(tfile).basename
@@ -66,14 +77,23 @@ class ZipPlaylistJob < ActiveJob::Base
             identity_file.owner = share.owner
             identity_file.save!
             
-            public_share = Share.new
-            public_share.owner = share.owner
-            public_share.token = SecureRandom.hex(10)
-            public_share.save!
+            ifs = IdentityFileShare.new
+            ifs.owner = share.owner
+            ifs.identity_file = identity_file
+            ifs.share = public_share
+            ifs.save!
             
             share.playlist.identity_file = identity_file
             share.share = public_share
             share.save!
+            
+            song_identity_files.each do |song_identity_file|
+              ifs = IdentityFileShare.new
+              ifs.owner = song_identity_file.owner
+              ifs.identity_file = song_identity_file
+              ifs.share = public_share
+              ifs.save!
+            end
             
             content = ERB::Util.html_escape_once(share.body)
             #content += "<p>" + playlists_shared_path(share.playlist) + "</p>"

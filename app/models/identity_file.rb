@@ -15,6 +15,8 @@ class IdentityFile < ActiveRecord::Base
   accepts_nested_attributes_for :folder
   allow_existing :folder, IdentityFileFolder
 
+  has_many :identity_file_shares
+
   def display
     file_file_name
   end
