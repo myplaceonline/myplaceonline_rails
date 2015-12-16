@@ -39,19 +39,20 @@ class PlaylistsController < MyplaceonlineController
   end
   
   def shared
+    @obj = model.find_by(id: params[:id])
+    found = false
+    if !current_user.nil?
+      found = @obj.owner_id == current_user.primary_identity.id
+    end
     token = params[:token]
     if !token.blank?
-      @obj = model.find_by(id: params[:id])
-      found = false
       @obj.playlist_shares.each do |playlist_share|
         if !playlist_share.share.nil? && playlist_share.share.token == token
           found = true
         end
       end
-      if !found
-        raise CanCan::AccessDenied
-      end
-    else
+    end
+    if !found
       raise CanCan::AccessDenied
     end
   end

@@ -1,4 +1,6 @@
 class FilesController < MyplaceonlineController
+  skip_authorization_check :only => [:download, :view]
+  skip_before_filter :authenticate_user!, :only => [:download, :view]
 
   def path_name
     "file"
@@ -13,13 +15,47 @@ class FilesController < MyplaceonlineController
   end
   
   def download
-    set_obj
-    respond_download('attachment', @obj.file.file_contents, @obj.file_file_size)
+    @obj = model.find_by(id: params[:id])
+    if !current_user.nil? && @obj.owner_id == current_user.primary_identity.id
+      respond_download('attachment', @obj.file.file_contents, @obj.file_file_size)
+    else
+      found = false
+      token = params[:token]
+      if !token.blank?
+        @obj.identity_file_shares.each do |ifs|
+          if ifs.share.token == token
+            found = true
+          end
+        end
+      end
+      if !found
+        raise CanCan::AccessDenied
+      else
+        respond_download('attachment', @obj.file.file_contents, @obj.file_file_size)
+      end
+    end
   end
   
   def view
-    set_obj
-    respond_download('inline', @obj.file.file_contents, @obj.file_file_size)
+    @obj = model.find_by(id: params[:id])
+    if !current_user.nil? && @obj.owner_id == current_user.primary_identity.id
+      respond_download('inline', @obj.file.file_contents, @obj.file_file_size)
+    else
+      found = false
+      token = params[:token]
+      if !token.blank?
+        @obj.identity_file_shares.each do |ifs|
+          if ifs.share.token == token
+            found = true
+          end
+        end
+      end
+      if !found
+        raise CanCan::AccessDenied
+      else
+        respond_download('inline', @obj.file.file_contents, @obj.file_file_size)
+      end
+    end
   end
   
   def thumbnail

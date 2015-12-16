@@ -67,6 +67,8 @@ class ZipPlaylistJob < ActiveJob::Base
             public_share.token = SecureRandom.hex(10)
             public_share.save!
             
+            Rails.logger.debug{"Created share #{public_share.inspect}"}
+            
             iff = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.playlists")])
             identity_file = IdentityFile.build({ folder: iff.id })
             identity_file.file_file_name = Pathname.new(tfile).basename
@@ -77,22 +79,31 @@ class ZipPlaylistJob < ActiveJob::Base
             identity_file.owner = share.owner
             identity_file.save!
             
+            Rails.logger.debug{"Created identity file #{identity_file.inspect}"}
+
             ifs = IdentityFileShare.new
             ifs.owner = share.owner
             ifs.identity_file = identity_file
             ifs.share = public_share
             ifs.save!
+
+            Rails.logger.debug{"Created identity file share for zip #{ifs.inspect}"}
             
             share.playlist.identity_file = identity_file
+            share.playlist.save!
+            
             share.share = public_share
             share.save!
             
+            Rails.logger.debug{"Updated playlist zip file and share for share #{share.inspect}"}
+
             song_identity_files.each do |song_identity_file|
               ifs = IdentityFileShare.new
               ifs.owner = song_identity_file.owner
               ifs.identity_file = song_identity_file
               ifs.share = public_share
               ifs.save!
+              Rails.logger.debug{"Created identity file share for song #{ifs.inspect}"}
             end
             
             content = ERB::Util.html_escape_once(share.body)

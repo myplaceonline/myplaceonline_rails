@@ -119,10 +119,10 @@ module ApplicationHelper
   
   def file_audio(identity_file)
     html = <<-HTML
-    <audio src="#{file_view_path(identity_file)}" controls>
+    <audio src="#{file_view_path(identity_file, token: params[:token])}" controls>
       <p>#{I18n.t("myplaceonline.html5.noaudio")}</p>
     </audio>
-    #{ url_or_blank(file_download_path(identity_file), t("myplaceonline.files.download"), nil, "ui-btn", true) }
+    #{ url_or_blank(file_download_path(identity_file, token: params[:token]), t("myplaceonline.files.download"), nil, "ui-btn", true) }
     HTML
   end
   
