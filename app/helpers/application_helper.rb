@@ -781,4 +781,16 @@ module ApplicationHelper
   def extract_id(html)
     html.match("id=\"([^\"]+)\"")[1]
   end
+  
+  def bytes_number(num)
+    if num >= 1073741824
+      (num / 1073741824).to_s + " GB"
+    elsif num >= 1048576
+      (num / 1048576).to_s + " MB"
+    elsif num >= 1024
+      (num / 1024).to_s + " KB"
+    else
+      (num).to_s
+    end
+  end
 end
