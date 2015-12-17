@@ -325,6 +325,7 @@ Rails.application.routes.draw do
   
   get 'admin/test'
   get 'admin/recalculate_all_users_due'
+  get 'admin/create_test_job'
 
   get 'meaning/index'
   get 'meaning', :to => 'meaning#index'

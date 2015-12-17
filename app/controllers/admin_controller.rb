@@ -27,6 +27,9 @@ class AdminController < ApplicationController
   end
   
   def create_test_job
-    AdminJob.perform_later("hello world")
+    TestJob.perform_later("hello world")
+    render json: {
+      :success => true
+    }
   end
 end
