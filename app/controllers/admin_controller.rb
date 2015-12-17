@@ -25,4 +25,8 @@ class AdminController < ApplicationController
       end
     end
   end
+  
+  def create_test_job
+    AdminJob.perform_later("hello world")
+  end
 end
