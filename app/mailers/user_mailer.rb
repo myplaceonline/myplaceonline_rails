@@ -7,12 +7,8 @@ class UserMailer < ActionMailer::Base
     mail(to: Myplaceonline::DEFAULT_SUPPORT_EMAIL, subject: subject)
   end
   
-  def send_email(to, subject, content, bcc = nil)
+  def send_email(to, subject, content, cc = nil, bcc = nil)
     @content = content
-    if bcc.nil?
-      mail(to: to, subject: subject)
-    else
-      mail(to: to, subject: subject, bcc: bcc)
-    end
+    mail(to: to, subject: subject, cc: cc, bcc: bcc)
   end
 end

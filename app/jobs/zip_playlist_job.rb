@@ -110,9 +110,9 @@ class ZipPlaylistJob < ActiveJob::Base
             #content += "<p>" + playlists_shared_path(share.playlist) + "</p>"
             
             # Once we have the ZIP, now we can send out the email
-            bcc = nil
+            cc = nil
             if share.copy_self
-              bcc = User.current_user.email
+              cc = User.current_user.email
             end
             to = Array.new
             share.playlist_share_contacts.each do |playlist_share_contact|
@@ -120,7 +120,7 @@ class ZipPlaylistJob < ActiveJob::Base
                 to.push(identity_email)
               end
             end
-            Myp.send_email(to, share.subject, content.html_safe, bcc)
+            Myp.send_email(to, share.subject, content.html_safe, cc)
           end
           
         ensure
