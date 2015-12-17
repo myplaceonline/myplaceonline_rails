@@ -53,6 +53,7 @@ class PlaylistsController < MyplaceonlineController
       @obj.playlist_shares.each do |playlist_share|
         if !playlist_share.share.nil? && playlist_share.share.token == token
           found = true
+          MyplaceonlineController.increment_visit_count(playlist_share)
         end
       end
     end

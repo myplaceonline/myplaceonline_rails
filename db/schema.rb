@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151217175410) do
+ActiveRecord::Schema.define(version: 20151217181354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1691,6 +1691,7 @@ ActiveRecord::Schema.define(version: 20151217175410) do
     t.datetime "updated_at"
     t.boolean  "copy_self"
     t.integer  "share_id"
+    t.integer  "visit_count"
   end
 
   add_index "playlist_shares", ["owner_id"], name: "index_playlist_shares_on_owner_id", using: :btree
