@@ -24,7 +24,7 @@ class ZipPlaylistJob < ActiveJob::Base
           count = count + 1
           data = playlist_song.song.identity_file.file.file_contents
           name = playlist_song.song.identity_file.file_file_name
-          name = count.to_s.rjust(2, "0") + "-" + name
+          name = count.to_s.rjust(2, "0") + " - " + name
           
           Rails.logger.debug{"Data #{data.length}, name #{name}"}
           
