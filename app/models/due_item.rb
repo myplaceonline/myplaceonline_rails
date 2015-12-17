@@ -12,6 +12,7 @@ class DueItem < ActiveRecord::Base
   # Should match crontab minimum
   MINIMUM_DURATION_SECONDS = 60*5
   
+  DEFAULT_VEHICLE_SERVICE_THRESHOLD_SECONDS = 30*60*60*24
   DEFAULT_EXERCISE_THRESHOLD_SECONDS = 7*60*60*24
   
   DEFAULT_CONTACT_BEST_FRIEND_THRESHOLD_SECONDS = 20*60*60*24
@@ -172,6 +173,10 @@ class DueItem < ActiveRecord::Base
     (mdd.todo_threshold_seconds || DEFAULT_TODO_THRESHOLD_SECONDS).seconds.since
   end
   
+  def self.vehicle_service_threshold(mdd)
+    (mdd.vehicle_service_threshold_seconds || DEFAULT_VEHICLE_SERVICE_THRESHOLD_SECONDS).seconds.since
+  end
+  
   def self.all_due(user)
     DueItem.where(owner: user.primary_identity).order(:due_date)
   end
@@ -273,21 +278,17 @@ class DueItem < ActiveRecord::Base
     destroy_due_items(user, Vehicle)
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
-      Vehicle.where(owner: user.primary_identity).each do |vehicle|
-        vehicle.vehicle_services.each do |service|
-          if service.date_serviced.nil? && !service.date_due.nil?
-            create_due_item_check(
-              display: service.short_description,
-              link: "/vehicles/" + vehicle.id.to_s,
-              due_date: service.date_due,
-              original_due_date: service.date_due,
-              owner: user.primary_identity,
-              myplaceonline_due_display: mdd,
-              myp_model_name: Vehicle.name,
-              model_id: vehicle.id
-            )
-          end
-        end
+      VehicleService.where("owner_id = ? and date_serviced is not null and date_due is not null and date_due > ? and date_due < ?", user.primary_identity, datenow, vehicle_service_threshold(mdd)).each do |service|
+        create_due_item_check(
+          display: service.short_description,
+          link: "/vehicles/" + service.vehicle.id.to_s,
+          due_date: service.date_due,
+          original_due_date: service.date_due,
+          owner: user.primary_identity,
+          myplaceonline_due_display: mdd,
+          myp_model_name: Vehicle.name,
+          model_id: service.vehicle.id
+        )
       end
     end
     

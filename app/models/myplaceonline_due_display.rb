@@ -21,6 +21,7 @@ class MyplaceonlineDueDisplay < ActiveRecord::Base
   timespan_field :event_threshold
   timespan_field :stocks_vest_threshold
   timespan_field :todo_threshold
+  timespan_field :vehicle_service_threshold
   
   after_save { |record| DueItem.recalculate_due(User.current_user) }
   

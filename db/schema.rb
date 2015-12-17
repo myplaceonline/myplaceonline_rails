@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151217181354) do
+ActiveRecord::Schema.define(version: 20151217202807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1489,6 +1489,7 @@ ActiveRecord::Schema.define(version: 20151217181354) do
     t.integer  "event_threshold"
     t.integer  "stocks_vest_threshold"
     t.integer  "todo_threshold"
+    t.integer  "vehicle_service_threshold"
   end
 
   add_index "myplaceonline_due_displays", ["owner_id"], name: "index_myplaceonline_due_displays_on_owner_id", using: :btree

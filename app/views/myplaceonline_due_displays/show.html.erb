@@ -1,6 +1,5 @@
 <% if !@myplet %>
   <%= render layout: "shared/model_show" do %>
-    <%= attribute_table_row(t("myplaceonline.myplaceonline_due_displays.exercise_threshold"), @obj.exercise_threshold) %>
   <% end %>
 <% else %>
   <% if @due.length > 0 %>

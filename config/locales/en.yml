@@ -1687,6 +1687,7 @@ en:
       event_threshold: "Event"
       stocks_vest_threshold: "Stocks Vest"
       todo_threshold: "To Do"
+      vehicle_service_threshold: "Vehicle Service"
     movie_theaters:
       location: "Location"
     gas_stations:
