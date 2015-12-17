@@ -3,6 +3,6 @@ class ApplicationJob < ActiveJob::Base
 
   protected
   def default_url_options
-    Rails.application.config.default_url_options
+    Rails.configuration.default_url_options
   end
 end
