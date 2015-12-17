@@ -1,2 +1,3 @@
 <%= myp_text_field f, :short_description, "myplaceonline.to_dos.short_description", obj.short_description, autofocus %>
+<%= myp_datetime_field(f, :due_time, "myplaceonline.to_dos.due_time", obj.due_time) %>
 <%= myp_text_area_markdown f, :notes, "myplaceonline.to_dos.notes", obj.notes %>

@@ -474,6 +474,7 @@ en:
     to_dos:
       short_description: "Short Description"
       notes: "Notes"
+      due_time: "Due"
     contacts:
       contact: "Contact"
       name: "Full Name"

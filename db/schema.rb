@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151216025802) do
+ActiveRecord::Schema.define(version: 20151217174827) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2100,6 +2100,7 @@ ActiveRecord::Schema.define(version: 20151216025802) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "due_time"
   end
 
   add_index "to_dos", ["owner_id"], name: "index_to_dos_on_owner_id", using: :btree

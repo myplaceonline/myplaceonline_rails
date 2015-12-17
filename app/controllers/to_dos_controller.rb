@@ -5,6 +5,10 @@ class ToDosController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:to_do).permit(:short_description, :notes)
+      params.require(:to_do).permit(
+        :short_description,
+        :due_time,
+        :notes
+      )
     end
 end
