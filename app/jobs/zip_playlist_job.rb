@@ -3,7 +3,7 @@ require 'rubygems'
 require 'zip'
 require 'tempfile'
 
-class ZipPlaylistJob < ActiveJob::Base
+class ZipPlaylistJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
@@ -107,7 +107,7 @@ class ZipPlaylistJob < ActiveJob::Base
             end
             
             content = ERB::Util.html_escape_once(share.body)
-            url = Rails.application.routes.url_helpers.playlists_shared_url(share.playlist, token: public_share.token)
+            url = playlists_shared_url(share.playlist, token: public_share.token)
             content += "<p>" + ActionController::Base.helpers.link_to(url, url) + "</p>"
             
             # Once we have the ZIP, now we can send out the email
