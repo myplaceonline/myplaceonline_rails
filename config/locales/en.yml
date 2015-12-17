@@ -475,6 +475,7 @@ en:
       short_description: "Short Description"
       notes: "Notes"
       due_time: "Due"
+      upcoming: "To Do %{name} in %{delta}"
     contacts:
       contact: "Contact"
       name: "Full Name"
@@ -1685,6 +1686,7 @@ en:
       gun_registration_expiration_threshold: "Gun Registration Expires"
       event_threshold: "Event"
       stocks_vest_threshold: "Stocks Vest"
+      todo_threshold: "To Do"
     movie_theaters:
       location: "Location"
     gas_stations:

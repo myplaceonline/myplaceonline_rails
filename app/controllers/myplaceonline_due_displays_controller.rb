@@ -25,7 +25,8 @@ class MyplaceonlineDueDisplaysController < MyplaceonlineController
       :promotion_threshold,
       :gun_registration_expiration_threshold,
       :event_threshold,
-      :stocks_vest_threshold
+      :stocks_vest_threshold,
+      :todo_threshold
     ]
   end
   

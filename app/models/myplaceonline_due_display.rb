@@ -20,6 +20,7 @@ class MyplaceonlineDueDisplay < ActiveRecord::Base
   timespan_field :gun_registration_expiration_threshold
   timespan_field :event_threshold
   timespan_field :stocks_vest_threshold
+  timespan_field :todo_threshold
   
   after_save { |record| DueItem.recalculate_due(User.current_user) }
   
