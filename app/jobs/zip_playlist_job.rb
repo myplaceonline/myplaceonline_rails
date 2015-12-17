@@ -107,7 +107,8 @@ class ZipPlaylistJob < ActiveJob::Base
             end
             
             content = ERB::Util.html_escape_once(share.body)
-            #content += "<p>" + playlists_shared_path(share.playlist) + "</p>"
+            url = Rails.application.routes.url_helpers.playlists_shared_url(share.playlist, token: public_share.token)
+            content += "<p>" + ActionController::Base.helpers.link_to(url, url) + "</p>"
             
             # Once we have the ZIP, now we can send out the email
             cc = nil
