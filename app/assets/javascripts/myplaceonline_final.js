@@ -578,3 +578,10 @@ function playSound(audioFile) {
     consoleLog("Could not play sound: " + soundError);
   }
 }
+
+function playFirstSong(search) {
+  var audioElements = $(search).find("audio");
+  if (audioElements.length) {
+    audioElements[0].play();
+  }
+}

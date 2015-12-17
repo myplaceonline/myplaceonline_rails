@@ -3,7 +3,7 @@
 <% if !@obj.identity_file.nil? %>
   <%= url_or_blank(file_download_path(@obj.identity_file, token: params[:token]), t("myplaceonline.playlists.download_zip"), nil, "ui-btn", true) %>
 <% end %>
-<ol>
+<ol class="playlist_songs">
   <% @obj.playlist_songs.each do |playlist_song| %>
     <% if !playlist_song.song.identity_file.nil? %>
       <li>
@@ -13,3 +13,30 @@
     <% end %>
   <% end %>
 </ol>
+
+<script type="text/javascript">
+$("audio").each(function() {
+  $(this).on("ended", function() {
+    var li = $(this).parent("li");
+    var search = li[0].nextElementSibling;
+    while (search) {
+      if (search.tagName && search.tagName.toLowerCase() == "li") {
+        var nextAudio = $(search).find("audio");
+        if (nextAudio.length) {
+          nextAudio[0].play();
+          break;
+        }
+      }
+      search = search.nextElementSibling;
+    }
+  });
+});
+</script>
+
+<div data-role="footer" data-position="fixed" data-tap-toggle="false">
+  <div data-role="navbar">
+    <ul>
+      <li><a href="#" data-icon="bars" onclick="playFirstSong('.playlist_songs'); return false;"><%= t('myplaceonline.playlists.play_all') %></a></li>
+    </ul>
+  </div>
+</div>
