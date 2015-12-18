@@ -33,7 +33,11 @@ class PeriodicPaymentsController < MyplaceonlineController
 
   def self.reject_if_blank(attributes)
     attributes.dup.delete_if {|key, value| key.to_s == "suppress_reminder" }.all?{|key, value|
-      value.blank?
+      if key == "password_attributes"
+        PasswordsController.reject_if_blank(value)
+      else
+        value.blank?
+      end
     }
   end
 
