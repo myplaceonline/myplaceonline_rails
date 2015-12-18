@@ -106,7 +106,7 @@ class ZipPlaylistJob < ApplicationJob
               Rails.logger.debug{"Created identity file share for song #{ifs.inspect}"}
             end
             
-            content = ERB::Util.html_escape_once(share.body)
+            content = "<p>" + ERB::Util.html_escape_once(share.body) + "</p>"
             url = playlists_shared_url(share.playlist, token: public_share.token)
             content += "<p>" + ActionController::Base.helpers.link_to(url, url) + "</p>"
             
