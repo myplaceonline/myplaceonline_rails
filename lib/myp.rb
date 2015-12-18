@@ -1,4 +1,5 @@
 require 'i18n'
+require 'fileutils'
 
 module Myp
   # See https://github.com/digitalbazaar/forge/issues/207
@@ -962,5 +963,29 @@ module Myp
   
   def self.heading(name)
     I18n.t("myplaceonline." + name + ".heading_singular")
+  end
+  
+  def self.mktmpdir(&code)
+    random_name = SecureRandom.hex(10)
+    dirname = File.join(Rails.configuration.tmpdir, random_name)
+    Dir.mkdir(dirname)
+    begin
+      code.call(dirname)
+    ensure
+      self.rmdir(dirname)
+    end
+  end
+  
+  def self.rmdir(dir)
+    FileUtils.rm_rf(dir)
+  end
+  
+  def self.tmpfile(prefix, suffix, &code)
+    f = Tempfile.new([prefix, suffix], Rails.configuration.tmpdir)
+    begin
+      code.call(f)
+    ensure
+      File.delete(f)
+    end
   end
 end
