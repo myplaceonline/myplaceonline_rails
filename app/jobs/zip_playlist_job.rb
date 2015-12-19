@@ -2,6 +2,7 @@ require 'tmpdir'
 require 'rubygems'
 require 'zip'
 require 'tempfile'
+require 'fileutils'
 
 class ZipPlaylistJob < ApplicationJob
   queue_as :default
@@ -74,7 +75,13 @@ class ZipPlaylistJob < ApplicationJob
               identity_file.file_file_name = Pathname.new(tfile).basename
               identity_file.file_file_size = zipdata.length
               identity_file.file_content_type = "application/zip"
-              identity_file.file = File.open(tfile.path)
+              if zipdata.length > IdentityFile::SIZE_THRESHOLD_FILESYSTEM
+                dest = Pathname.new(Rails.configuration.filetmpdir).join(File.basename(tfile.path))
+                FileUtils.cp(tfile.path, dest)
+                identity_file.filesystem_path = dest
+              else
+                identity_file.file = File.open(tfile.path)
+              end
               identity_file.folder = iff
               identity_file.owner = share.owner
               identity_file.save!

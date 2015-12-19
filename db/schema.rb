@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151217202807) do
+ActiveRecord::Schema.define(version: 20151218234411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1064,6 +1064,7 @@ ActiveRecord::Schema.define(version: 20151217202807) do
     t.binary   "thumbnail_contents"
     t.integer  "thumbnail_bytes"
     t.integer  "visit_count"
+    t.string   "filesystem_path"
   end
 
   add_index "identity_files", ["encrypted_password_id"], name: "index_identity_files_on_encrypted_password_id", using: :btree

@@ -5,6 +5,7 @@ require 'rails/all'
 require 'log4r'
 require 'log4r/yamlconfigurator'
 require 'log4r/outputter/datefileoutputter'
+require 'fileutils'
 include Log4r
 
 # Require the gems listed in Gemfile, including any gems
@@ -60,7 +61,12 @@ module Myplaceonline
     
     config.invite_code = ENV["INVITE_CODE"].nil? ? "invitecode" : ENV["INVITE_CODE"]
     
-    config.tmpdir = ENV["TMPDIR"].blank? ? Dir.tmpdir : ENV["TMPDIR"]
+    #config.tmpdir = ENV["TMPDIR"].blank? ? Dir.tmpdir : ENV["TMPDIR"]
+    config.tmpdir = Rails.root.join("tmp", "myp").to_s
+    config.filetmpdir = Rails.root.join("tmp", "myp", "files").to_s
+    
+    FileUtils.mkdir_p(config.tmpdir)
+    FileUtils.mkdir_p(config.filetmpdir)
 
     config.active_record.raise_in_transactional_callbacks = true
     

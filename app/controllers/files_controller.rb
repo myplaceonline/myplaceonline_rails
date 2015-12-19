@@ -17,7 +17,7 @@ class FilesController < MyplaceonlineController
   def download
     @obj = model.find_by(id: params[:id])
     if !current_user.nil? && @obj.owner_id == current_user.primary_identity.id
-      respond_download('attachment', @obj.file.file_contents, @obj.file_file_size)
+      respond_download_identity_file('attachment', @obj)
     else
       found = false
       token = params[:token]
@@ -31,7 +31,7 @@ class FilesController < MyplaceonlineController
       if !found
         raise CanCan::AccessDenied
       else
-        respond_download('attachment', @obj.file.file_contents, @obj.file_file_size)
+        respond_download_identity_file('attachment', @obj)
       end
     end
   end
@@ -39,7 +39,7 @@ class FilesController < MyplaceonlineController
   def view
     @obj = model.find_by(id: params[:id])
     if !current_user.nil? && @obj.owner_id == current_user.primary_identity.id
-      respond_download('inline', @obj.file.file_contents, @obj.file_file_size)
+      respond_download_identity_file('inline', @obj)
     else
       found = false
       token = params[:token]
@@ -53,7 +53,7 @@ class FilesController < MyplaceonlineController
       if !found
         raise CanCan::AccessDenied
       else
-        respond_download('inline', @obj.file.file_contents, @obj.file_file_size)
+        respond_download_identity_file('inline', @obj)
       end
     end
   end
@@ -63,7 +63,7 @@ class FilesController < MyplaceonlineController
     if !@obj.thumbnail_contents.nil?
       respond_download('inline', @obj.thumbnail_contents, @obj.thumbnail_bytes)
     else
-      respond_download('inline', @obj.file.file_contents, @obj.file_file_size)
+      respond_download_identity_file('inline', @obj)
     end
   end
   
@@ -152,13 +152,26 @@ class FilesController < MyplaceonlineController
       )
     end
 
-    def respond_download(type, data, data_bytes)
+    def respond_download_identity_file(respond_type, identity_file)
+      if identity_file.filesystem_path.blank?
+        respond_download(respond_type, identity_file.file.file_contents, identity_file.file_file_size)
+      else
+        send_file(
+          identity_file.filesystem_path,
+          :type => @obj.file_content_type,
+          :filename => @obj.file_file_name,
+          :disposition => respond_type
+        )
+      end
+    end
+    
+    def respond_download(respond_type, data, data_bytes)
       response.headers['Content-Length'] = data_bytes.to_s
       send_data(
         data,
         :type => @obj.file_content_type,
         :filename => @obj.file_file_name,
-        :disposition => type
+        :disposition => respond_type
       )
     end
     

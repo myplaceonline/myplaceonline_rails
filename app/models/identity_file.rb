@@ -4,6 +4,8 @@ class IdentityFile < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   
+  SIZE_THRESHOLD_FILESYSTEM = 1048576 * 10
+  
   before_update :do_before_update
 
   belongs_to :encrypted_password, class_name: EncryptedValue, dependent: :destroy
