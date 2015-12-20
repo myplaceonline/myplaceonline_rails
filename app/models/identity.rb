@@ -90,6 +90,7 @@ class Identity < ActiveRecord::Base
   has_many :date_locations, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :playlists, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :bars, :foreign_key => 'owner_id', :dependent => :destroy
+  has_many :treks, :foreign_key => 'owner_id', :dependent => :destroy
   
   has_many :myplets, -> { order('y_coordinate') }, :foreign_key => 'owner_id', :dependent => :destroy
   accepts_nested_attributes_for :myplets, allow_destroy: true, reject_if: :all_blank
@@ -209,6 +210,7 @@ class Identity < ActiveRecord::Base
       :date_locations => date_locations.to_a.map{|x| x.as_json},
       :playlists => playlists.to_a.sort{ |a,b| a.playlist_name.downcase <=> b.playlist_name.downcase }.map{|x| x.as_json},
       :bars => bars.to_a.map{|x| x.as_json},
+      :treks => treks.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

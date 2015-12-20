@@ -134,6 +134,7 @@ class Ability
     can :manage, DateLocation, :owner => identity
     can :manage, Playlist, :owner => identity
     can :manage, Bar, :owner => identity
+    can :manage, Trek, :owner => identity
     
     if user.admin?
       can :manage, User

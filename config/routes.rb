@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :treks
+  post 'treks/new'
+
   resources :bars
   post 'bars/new'
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151220182216) do
+ActiveRecord::Schema.define(version: 20151220184138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2170,6 +2170,31 @@ ActiveRecord::Schema.define(version: 20151220182216) do
 
   add_index "to_dos", ["owner_id"], name: "index_to_dos_on_owner_id", using: :btree
 
+  create_table "trek_pictures", force: :cascade do |t|
+    t.integer  "trek_id"
+    t.integer  "identity_file_id"
+    t.integer  "owner_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "trek_pictures", ["identity_file_id"], name: "index_trek_pictures_on_identity_file_id", using: :btree
+  add_index "trek_pictures", ["owner_id"], name: "index_trek_pictures_on_owner_id", using: :btree
+  add_index "trek_pictures", ["trek_id"], name: "index_trek_pictures_on_trek_id", using: :btree
+
+  create_table "treks", force: :cascade do |t|
+    t.integer  "location_id"
+    t.integer  "rating"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.integer  "owner_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "treks", ["location_id"], name: "index_treks_on_location_id", using: :btree
+  add_index "treks", ["owner_id"], name: "index_treks_on_owner_id", using: :btree
+
   create_table "trip_pictures", force: :cascade do |t|
     t.integer  "owner_id"
     t.integer  "trip_id"
@@ -2461,4 +2486,9 @@ ActiveRecord::Schema.define(version: 20151220182216) do
   add_foreign_key "restaurant_pictures", "identities", column: "owner_id"
   add_foreign_key "restaurant_pictures", "identity_files"
   add_foreign_key "restaurant_pictures", "restaurants"
+  add_foreign_key "trek_pictures", "identities", column: "owner_id"
+  add_foreign_key "trek_pictures", "identity_files"
+  add_foreign_key "trek_pictures", "treks"
+  add_foreign_key "treks", "identities", column: "owner_id"
+  add_foreign_key "treks", "locations"
 end
