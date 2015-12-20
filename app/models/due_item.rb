@@ -767,22 +767,24 @@ class DueItem < ActiveRecord::Base
   def self.due_todos(user, updated_record = nil, update_type = nil)
     destroy_due_items(user, ToDo)
     
-    user.primary_identity.myplaceonline_due_displays.each do |mdd|
-      ToDo.where("owner_id = ? and due_time is not null and due_time > ? and due_time < ?", user.primary_identity, datenow, todo_threshold(mdd)).each do |x|
-        create_due_item_check(
-          display: I18n.t(
-            "myplaceonline.to_dos.upcoming",
-            name: x.display,
-            delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, x.due_time).in_general)
-          ),
-          link: "/to_dos/" + x.id.to_s,
-          due_date: x.due_time,
-          original_due_date: x.due_time,
-          owner: user.primary_identity,
-          myplaceonline_due_display: mdd,
-          myp_model_name: ToDo.name,
-          model_id: x.id
-        )
+    if ToDo.new.respond_to?("due_time")
+      user.primary_identity.myplaceonline_due_displays.each do |mdd|
+        ToDo.where("owner_id = ? and due_time is not null and due_time > ? and due_time < ?", user.primary_identity, datenow, todo_threshold(mdd)).each do |x|
+          create_due_item_check(
+            display: I18n.t(
+              "myplaceonline.to_dos.upcoming",
+              name: x.display,
+              delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, x.due_time).in_general)
+            ),
+            link: "/to_dos/" + x.id.to_s,
+            due_date: x.due_time,
+            original_due_date: x.due_time,
+            owner: user.primary_identity,
+            myplaceonline_due_display: mdd,
+            myp_model_name: ToDo.name,
+            model_id: x.id
+          )
+        end
       end
     end
 

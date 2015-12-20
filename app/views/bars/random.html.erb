@@ -1,0 +1,25 @@
+<% content_for :heading do -%><%= t('myplaceonline.restaurants.random') %><% end -%>
+<h1><%= t('myplaceonline.restaurants.random') %></h1>
+<%= flashes! %>
+<%= form_tag restaurants_random_path do |f| %>
+
+  <%= label_tag 'location', t("myplaceonline.restaurants.location") %>
+  <%= text_field_tag 'location', @location %>
+
+  <%= label_tag 'search', t("myplaceonline.restaurants.search") %>
+  <%= text_field_tag 'search', @search %>
+
+  <%= submit_tag t("myplaceonline.restaurants.submit") %>
+<% end %>
+<% if !@result.nil? %>
+  <% if true %>
+    <%# Yelp redirects https to http, so we cannot use an iframe %>
+    <p><a href="<%= @business.url.gsub(/^http:/, "https:") %>" target="_blank"><%= @business.name %></a></p>
+  <% elsif false %>
+    <% @result.businesses.each do |x| %>
+      <p><a href="<%= x.url.gsub(/^http:/, "https:") %>" target="_blank"><%= x.name %></a></p>
+    <% end %>
+  <% else %>
+    <iframe style="width: 100%; height: 500px;" src="<%= @business.url.gsub(/^http:/, "https:") %>"></iframe>
+  <% end %>
+<% end %>

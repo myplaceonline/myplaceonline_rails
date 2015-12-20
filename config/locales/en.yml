@@ -130,6 +130,7 @@ en:
       complete_due_items: "Complete Due Items"
       date_locations: "Date Locations"
       playlists: "Playlists"
+      bars: "Bars"
     general:
       email: "E-mail"
       password: "Password"
@@ -1184,6 +1185,8 @@ en:
       random: "Random Restaurant"
       search: "Search"
       location: "Location"
+      rating: "Rating"
+      notes: "Notes"
       submit: "Roll"
       pictures: "Pictures"
       picture: "Picture"
@@ -1773,3 +1776,11 @@ en:
       shared: "Shared Playlist"
       download_zip: "Download Zip"
       play_all: "Play All"
+    bars:
+      location: "Location"
+      rating: "Rating"
+      notes: "Notes"
+      pictures: "Pictures"
+      picture: "Picture"
+      add_picture: "Add Picture"
+      delete_picture: "Delete Picture"

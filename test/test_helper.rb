@@ -38,6 +38,10 @@ module MyplaceonlineControllerTest
     raise NotImplementedError
   end
   
+  def do_test_delete
+    true
+  end
+  
   test "should get index" do
     get :index
     assert_response :success
@@ -79,10 +83,12 @@ module MyplaceonlineControllerTest
   end
 
   test "should destroy" do
-    assert_difference(model.name + '.count', -1) do
-      delete :destroy, id: send(model.table_name, model.model_name.singular.downcase)
-    end
+    if do_test_delete
+      assert_difference(model.name + '.count', -1) do
+        delete :destroy, id: send(model.table_name, model.model_name.singular.downcase)
+      end
 
-    assert_redirected_to send(model.table_name + "_path")
+      assert_redirected_to send(model.table_name + "_path")
+    end
   end
 end

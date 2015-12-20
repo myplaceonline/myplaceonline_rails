@@ -1,0 +1,37 @@
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :location,
+    existingobj: obj.location,
+    heading: t("myplaceonline.bars.location"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    autofocus: true
+  }
+%>
+<%= myp_select(f, :rating, "myplaceonline.bars.rating", Myp.translate_options(Myp::RATINGS), obj.rating) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.bars.notes", obj.notes) %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.bars.pictures"),
+    childpropertiesname: :bar_pictures,
+    childproperties: obj.bar_pictures,
+    deletebutton: t("myplaceonline.bars.delete_picture"),
+    addbutton: t("myplaceonline.bars.add_picture"),
+    expanded: obj.bar_pictures.length > 0,
+    formjson: [
+      {
+        type: 'file',
+        name: 'identity_file_attributes.file',
+        placeholder: t("myplaceonline.bars.picture")
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%= child_fields.fields_for :identity_file, childproperty.identity_file do |file_fields| %>
+    <%= myp_file_field file_fields, :file, "myplaceonline.bars.picture", childproperty.identity_file.file %>
+  <% end %>
+<% end %>

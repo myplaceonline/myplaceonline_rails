@@ -133,6 +133,7 @@ class Ability
     can :manage, CompleteDueItem, :owner => identity
     can :manage, DateLocation, :owner => identity
     can :manage, Playlist, :owner => identity
+    can :manage, Bar, :owner => identity
     
     if user.admin?
       can :manage, User

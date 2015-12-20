@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151220172544) do
+ActiveRecord::Schema.define(version: 20151220173323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "accomplishments", force: :cascade do |t|
-    t.string   "name",           limit: 255
+    t.string   "name"
     t.text     "accomplishment"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
 
   create_table "acne_measurements", force: :cascade do |t|
     t.datetime "measurement_datetime"
-    t.string   "acne_location",        limit: 255
+    t.string   "acne_location"
     t.integer  "total_pimples"
     t.integer  "new_pimples"
     t.integer  "worrying_pimples"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "acne_measurements", ["owner_id"], name: "index_acne_measurements_on_owner_id", using: :btree
 
   create_table "activities", force: :cascade do |t|
-    t.string   "name",        limit: 255
+    t.string   "name"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -120,12 +120,12 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "apartments", ["owner_id"], name: "index_apartments_on_owner_id", using: :btree
 
   create_table "bank_accounts", force: :cascade do |t|
-    t.string   "name",                        limit: 255
-    t.string   "account_number",              limit: 255
+    t.string   "name"
+    t.string   "account_number"
     t.integer  "account_number_encrypted_id"
-    t.string   "routing_number",              limit: 255
+    t.string   "routing_number"
     t.integer  "routing_number_encrypted_id"
-    t.string   "pin",                         limit: 255
+    t.string   "pin"
     t.integer  "pin_encrypted_id"
     t.integer  "password_id"
     t.integer  "company_id"
@@ -145,11 +145,36 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "bank_accounts", ["pin_encrypted_id"], name: "index_bank_accounts_on_pin_encrypted_id", using: :btree
   add_index "bank_accounts", ["routing_number_encrypted_id"], name: "index_bank_accounts_on_routing_number_encrypted_id", using: :btree
 
+  create_table "bar_pictures", force: :cascade do |t|
+    t.integer  "bar_id"
+    t.integer  "identity_file_id"
+    t.integer  "owner_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "bar_pictures", ["bar_id"], name: "index_bar_pictures_on_bar_id", using: :btree
+  add_index "bar_pictures", ["identity_file_id"], name: "index_bar_pictures_on_identity_file_id", using: :btree
+  add_index "bar_pictures", ["owner_id"], name: "index_bar_pictures_on_owner_id", using: :btree
+
+  create_table "bars", force: :cascade do |t|
+    t.integer  "location_id"
+    t.integer  "rating"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.integer  "owner_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "bars", ["location_id"], name: "index_bars_on_location_id", using: :btree
+  add_index "bars", ["owner_id"], name: "index_bars_on_owner_id", using: :btree
+
   create_table "blood_concentrations", force: :cascade do |t|
-    t.string   "concentration_name",    limit: 255
+    t.string   "concentration_name"
     t.integer  "concentration_type"
-    t.decimal  "concentration_minimum",             precision: 10, scale: 2
-    t.decimal  "concentration_maximum",             precision: 10, scale: 2
+    t.decimal  "concentration_minimum", precision: 10, scale: 2
+    t.decimal  "concentration_maximum", precision: 10, scale: 2
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -162,7 +187,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
     t.integer  "systolic_pressure"
     t.integer  "diastolic_pressure"
     t.date     "measurement_date"
-    t.string   "measurement_source", limit: 255
+    t.string   "measurement_source"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -197,9 +222,9 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "blood_tests", ["owner_id"], name: "index_blood_tests_on_owner_id", using: :btree
 
   create_table "books", force: :cascade do |t|
-    t.string   "book_name",      limit: 255
-    t.string   "isbn",           limit: 255
-    t.string   "author",         limit: 255
+    t.string   "book_name"
+    t.string   "isbn"
+    t.string   "author"
     t.datetime "when_read"
     t.integer  "owner_id"
     t.text     "notes"
@@ -226,7 +251,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "calculation_elements", ["right_operand_id"], name: "index_calculation_elements_on_right_operand_id", using: :btree
 
   create_table "calculation_forms", force: :cascade do |t|
-    t.string   "name",            limit: 255
+    t.string   "name"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -240,12 +265,12 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "calculation_forms", ["root_element_id"], name: "index_calculation_forms_on_root_element_id", using: :btree
 
   create_table "calculation_inputs", force: :cascade do |t|
-    t.string   "input_name",          limit: 255
-    t.string   "input_value",         limit: 255
+    t.string   "input_name"
+    t.string   "input_value"
     t.integer  "calculation_form_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "variable_name",       limit: 255
+    t.string   "variable_name"
     t.integer  "owner_id"
   end
 
@@ -253,7 +278,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "calculation_inputs", ["owner_id"], name: "index_calculation_inputs_on_owner_id", using: :btree
 
   create_table "calculation_operands", force: :cascade do |t|
-    t.string   "constant_value",         limit: 255
+    t.string   "constant_value"
     t.integer  "calculation_element_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -265,9 +290,9 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "calculation_operands", ["owner_id"], name: "index_calculation_operands_on_owner_id", using: :btree
 
   create_table "calculations", force: :cascade do |t|
-    t.string   "name",                         limit: 255
+    t.string   "name"
     t.integer  "calculation_form_id"
-    t.decimal  "result",                                   precision: 10, scale: 2
+    t.decimal  "result",                       precision: 10, scale: 2
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -309,11 +334,11 @@ ActiveRecord::Schema.define(version: 20151220172544) do
 
   create_table "cashbacks", force: :cascade do |t|
     t.integer  "owner_id"
-    t.decimal  "cashback_percentage",             precision: 10, scale: 2
-    t.string   "applies_to",          limit: 255
+    t.decimal  "cashback_percentage", precision: 10, scale: 2
+    t.string   "applies_to"
     t.date     "start_date"
     t.date     "end_date"
-    t.decimal  "yearly_maximum",                  precision: 10, scale: 2
+    t.decimal  "yearly_maximum",      precision: 10, scale: 2
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -323,14 +348,14 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "cashbacks", ["owner_id"], name: "index_cashbacks_on_owner_id", using: :btree
 
   create_table "categories", force: :cascade do |t|
-    t.string   "name",                  limit: 255
-    t.string   "link",                  limit: 255
+    t.string   "name"
+    t.string   "link"
     t.integer  "position"
     t.integer  "parent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "additional_filtertext", limit: 255
-    t.string   "icon",                  limit: 255
+    t.string   "additional_filtertext"
+    t.string   "icon"
     t.boolean  "explicit"
     t.integer  "user_type_mask"
   end
@@ -352,7 +377,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "category_points_amounts", ["owner_id"], name: "index_category_points_amounts_on_owner_id", using: :btree
 
   create_table "checklist_items", force: :cascade do |t|
-    t.string   "checklist_item_name", limit: 255
+    t.string   "checklist_item_name"
     t.integer  "checklist_id"
     t.integer  "position"
     t.integer  "owner_id"
@@ -377,7 +402,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "checklist_references", ["owner_id"], name: "index_checklist_references_on_owner_id", using: :btree
 
   create_table "checklists", force: :cascade do |t|
-    t.string   "checklist_name", limit: 255
+    t.string   "checklist_name"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -391,7 +416,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
     t.integer  "location_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name",        limit: 255
+    t.string   "name"
     t.text     "notes"
     t.integer  "visit_count"
   end
@@ -401,10 +426,10 @@ ActiveRecord::Schema.define(version: 20151220172544) do
 
   create_table "complete_due_items", force: :cascade do |t|
     t.integer  "owner_id"
-    t.string   "display",                      limit: 255
-    t.string   "link",                         limit: 255
+    t.string   "display"
+    t.string   "link"
     t.datetime "due_date"
-    t.string   "myp_model_name",               limit: 255
+    t.string   "myp_model_name"
     t.integer  "model_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -417,9 +442,9 @@ ActiveRecord::Schema.define(version: 20151220172544) do
 
   create_table "computers", force: :cascade do |t|
     t.date     "purchased"
-    t.decimal  "price",                             precision: 10, scale: 2
-    t.string   "computer_model",        limit: 255
-    t.string   "serial_number",         limit: 255
+    t.decimal  "price",                 precision: 10, scale: 2
+    t.string   "computer_model"
+    t.string   "serial_number"
     t.integer  "manufacturer_id"
     t.integer  "max_resolution_width"
     t.integer  "max_resolution_height"
@@ -427,7 +452,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
     t.integer  "num_cpus"
     t.integer  "num_cores_per_cpu"
     t.boolean  "hyperthreaded"
-    t.decimal  "max_cpu_speed",                     precision: 10, scale: 2
+    t.decimal  "max_cpu_speed",         precision: 10, scale: 2
     t.text     "notes"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -435,11 +460,11 @@ ActiveRecord::Schema.define(version: 20151220172544) do
     t.integer  "administrator_id"
     t.integer  "main_user_id"
     t.integer  "dimensions_type"
-    t.decimal  "width",                             precision: 10, scale: 2
-    t.decimal  "height",                            precision: 10, scale: 2
-    t.decimal  "depth",                             precision: 10, scale: 2
+    t.decimal  "width",                 precision: 10, scale: 2
+    t.decimal  "height",                precision: 10, scale: 2
+    t.decimal  "depth",                 precision: 10, scale: 2
     t.integer  "weight_type"
-    t.decimal  "weight",                            precision: 10, scale: 2
+    t.decimal  "weight",                precision: 10, scale: 2
     t.integer  "visit_count"
   end
 
@@ -473,8 +498,8 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "concert_pictures", ["owner_id"], name: "index_concert_pictures_on_owner_id", using: :btree
 
   create_table "concerts", force: :cascade do |t|
-    t.string   "concert_date",  limit: 255
-    t.string   "concert_title", limit: 255
+    t.string   "concert_date"
+    t.string   "concert_title"
     t.integer  "location_id"
     t.text     "notes"
     t.integer  "owner_id"
@@ -523,15 +548,15 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "credit_card_cashbacks", ["owner_id"], name: "index_credit_card_cashbacks_on_owner_id", using: :btree
 
   create_table "credit_cards", force: :cascade do |t|
-    t.string   "name",                       limit: 255
-    t.string   "number",                     limit: 255
+    t.string   "name"
+    t.string   "number"
     t.date     "expires"
-    t.string   "security_code",              limit: 255
+    t.string   "security_code"
     t.integer  "password_id"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "pin",                        limit: 255
+    t.string   "pin"
     t.text     "notes"
     t.integer  "address_id"
     t.integer  "number_encrypted_id"
@@ -540,7 +565,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
     t.integer  "expires_encrypted_id"
     t.datetime "defunct"
     t.integer  "card_type"
-    t.decimal  "total_credit",                           precision: 10, scale: 2
+    t.decimal  "total_credit",               precision: 10, scale: 2
     t.integer  "visit_count"
     t.boolean  "email_reminders"
   end
@@ -556,7 +581,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   create_table "credit_scores", force: :cascade do |t|
     t.date     "score_date"
     t.integer  "score"
-    t.string   "source",      limit: 255
+    t.string   "source"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -593,15 +618,15 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "dental_insurances", force: :cascade do |t|
-    t.string   "insurance_name",       limit: 255
+    t.string   "insurance_name"
     t.integer  "insurance_company_id"
     t.boolean  "defunct"
     t.integer  "periodic_payment_id"
     t.text     "notes"
     t.integer  "group_company_id"
     t.integer  "password_id"
-    t.string   "account_number",       limit: 255
-    t.string   "group_number",         limit: 255
+    t.string   "account_number"
+    t.string   "group_number"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -635,7 +660,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "dentist_visits", ["owner_id"], name: "index_dentist_visits_on_owner_id", using: :btree
 
   create_table "desired_products", force: :cascade do |t|
-    t.string   "product_name", limit: 255
+    t.string   "product_name"
     t.text     "notes"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -651,7 +676,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "diary_title", limit: 255
+    t.string   "diary_title"
     t.integer  "visit_count"
   end
 
@@ -688,10 +713,10 @@ ActiveRecord::Schema.define(version: 20151220172544) do
 
   create_table "drinks", force: :cascade do |t|
     t.integer  "owner_id"
-    t.string   "drink_name",  limit: 255
+    t.string   "drink_name"
     t.text     "notes"
-    t.decimal  "calories",                precision: 10, scale: 2
-    t.decimal  "price",                   precision: 10, scale: 2
+    t.decimal  "calories",    precision: 10, scale: 2
+    t.decimal  "price",       precision: 10, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
@@ -700,14 +725,15 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "drinks", ["owner_id"], name: "index_drinks_on_owner_id", using: :btree
 
   create_table "due_items", force: :cascade do |t|
-    t.string   "display",                      limit: 255
-    t.string   "link",                         limit: 255
+    t.string   "display"
+    t.string   "link"
     t.datetime "due_date"
-    t.string   "myp_model_name",               limit: 255
+    t.string   "myp_model_name"
     t.integer  "model_id"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "visit_count"
     t.datetime "original_due_date"
     t.boolean  "is_date_arbitrary"
     t.integer  "myplaceonline_due_display_id"
@@ -717,7 +743,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "due_items", ["owner_id"], name: "index_due_items_on_owner_id", using: :btree
 
   create_table "encrypted_values", force: :cascade do |t|
-    t.binary   "val"
+    t.string   "val"
     t.binary   "salt"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -728,7 +754,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "encrypted_values", ["user_id"], name: "index_encrypted_values_on_user_id", using: :btree
 
   create_table "events", force: :cascade do |t|
-    t.string   "event_name",     limit: 255
+    t.string   "event_name"
     t.text     "notes"
     t.datetime "event_time"
     t.integer  "visit_count"
@@ -747,7 +773,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   create_table "exercises", force: :cascade do |t|
     t.datetime "exercise_start"
     t.datetime "exercise_end"
-    t.string   "exercise_activity", limit: 255
+    t.string   "exercise_activity"
     t.text     "notes"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -761,7 +787,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "exercises", ["owner_id"], name: "index_exercises_on_owner_id", using: :btree
 
   create_table "favorite_products", force: :cascade do |t|
-    t.string   "product_name", limit: 255
+    t.string   "product_name"
     t.text     "notes"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -772,8 +798,8 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "favorite_products", ["owner_id"], name: "index_favorite_products_on_owner_id", using: :btree
 
   create_table "feeds", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.string   "url",         limit: 255
+    t.string   "name"
+    t.string   "url"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -784,7 +810,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
 
   create_table "files", force: :cascade do |t|
     t.integer "identity_file_id"
-    t.string  "style",            limit: 255
+    t.string  "style"
     t.binary  "file_contents"
     t.integer "visit_count"
   end
@@ -803,14 +829,14 @@ ActiveRecord::Schema.define(version: 20151220172544) do
 
   create_table "foods", force: :cascade do |t|
     t.integer  "owner_id"
-    t.string   "food_name",   limit: 255
+    t.string   "food_name"
     t.text     "notes"
-    t.decimal  "calories",                precision: 10, scale: 2
-    t.decimal  "price",                   precision: 10, scale: 2
+    t.decimal  "calories",    precision: 10, scale: 2
+    t.decimal  "price",       precision: 10, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "weight_type"
-    t.decimal  "weight",                  precision: 10, scale: 2
+    t.decimal  "weight",      precision: 10, scale: 2
     t.integer  "visit_count"
   end
 
@@ -844,7 +870,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "group_contacts", ["owner_id"], name: "index_group_contacts_on_owner_id", using: :btree
 
   create_table "groups", force: :cascade do |t|
-    t.string   "group_name",  limit: 255
+    t.string   "group_name"
     t.text     "notes"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -869,12 +895,12 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "gun_registrations", ["owner_id"], name: "index_gun_registrations_on_owner_id", using: :btree
 
   create_table "guns", force: :cascade do |t|
-    t.string   "gun_name",          limit: 255
-    t.string   "manufacturer_name", limit: 255
-    t.string   "gun_model",         limit: 255
-    t.decimal  "bullet_caliber",                precision: 10, scale: 2
+    t.string   "gun_name"
+    t.string   "manufacturer_name"
+    t.string   "gun_model"
+    t.decimal  "bullet_caliber",    precision: 10, scale: 2
     t.integer  "max_bullets"
-    t.decimal  "price",                         precision: 10, scale: 2
+    t.decimal  "price",             precision: 10, scale: 2
     t.date     "purchased"
     t.text     "notes"
     t.integer  "owner_id"
@@ -889,7 +915,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
     t.datetime "started"
     t.datetime "ended"
     t.integer  "intensity"
-    t.string   "headache_location", limit: 255
+    t.string   "headache_location"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -899,15 +925,15 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "headaches", ["owner_id"], name: "index_headaches_on_owner_id", using: :btree
 
   create_table "health_insurances", force: :cascade do |t|
-    t.string   "insurance_name",       limit: 255
+    t.string   "insurance_name"
     t.integer  "insurance_company_id"
     t.datetime "defunct"
     t.integer  "periodic_payment_id"
     t.text     "notes"
     t.integer  "group_company_id"
     t.integer  "password_id"
-    t.string   "account_number",       limit: 255
-    t.string   "group_number",         limit: 255
+    t.string   "account_number"
+    t.string   "group_number"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -925,7 +951,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   create_table "heart_rates", force: :cascade do |t|
     t.integer  "beats"
     t.date     "measurement_date"
-    t.string   "measurement_source", limit: 255
+    t.string   "measurement_source"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -935,10 +961,10 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "heart_rates", ["owner_id"], name: "index_heart_rates_on_owner_id", using: :btree
 
   create_table "heights", force: :cascade do |t|
-    t.decimal  "height_amount",                  precision: 10, scale: 2
+    t.decimal  "height_amount",      precision: 10, scale: 2
     t.integer  "amount_type"
     t.date     "measurement_date"
-    t.string   "measurement_source", limit: 255
+    t.string   "measurement_source"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -948,7 +974,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "heights", ["owner_id"], name: "index_heights_on_owner_id", using: :btree
 
   create_table "hobbies", force: :cascade do |t|
-    t.string   "hobby_name",  limit: 255
+    t.string   "hobby_name"
     t.text     "notes"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -959,7 +985,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "hobbies", ["owner_id"], name: "index_hobbies_on_owner_id", using: :btree
 
   create_table "hypotheses", force: :cascade do |t|
-    t.string   "name",        limit: 255
+    t.string   "name"
     t.text     "notes"
     t.integer  "question_id"
     t.integer  "owner_id"
@@ -972,7 +998,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "hypotheses", ["question_id"], name: "index_hypotheses_on_question_id", using: :btree
 
   create_table "hypothesis_experiments", force: :cascade do |t|
-    t.string   "name",          limit: 255
+    t.string   "name"
     t.text     "notes"
     t.date     "started"
     t.date     "ended"
@@ -986,7 +1012,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "hypothesis_experiments", ["owner_id"], name: "index_hypothesis_experiments_on_owner_id", using: :btree
 
   create_table "ideas", force: :cascade do |t|
-    t.string   "name",        limit: 255
+    t.string   "name"
     t.text     "idea"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -1001,22 +1027,22 @@ ActiveRecord::Schema.define(version: 20151220172544) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "points"
-    t.string   "name",       limit: 255
+    t.string   "name"
     t.date     "birthday"
     t.text     "notes"
     t.text     "notepad"
-    t.string   "nickname",   limit: 255
+    t.string   "nickname"
     t.text     "likes"
     t.text     "gift_ideas"
-    t.string   "ktn",        limit: 255
+    t.string   "ktn"
   end
 
   add_index "identities", ["owner_id"], name: "index_identities_on_owner_id", using: :btree
 
   create_table "identity_drivers_licenses", force: :cascade do |t|
-    t.string   "identifier",       limit: 255
-    t.string   "region",           limit: 255
-    t.string   "sub_region1",      limit: 255
+    t.string   "identifier"
+    t.string   "region"
+    t.string   "sub_region1"
     t.date     "expires"
     t.integer  "identity_id"
     t.datetime "created_at"
@@ -1028,7 +1054,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "identity_drivers_licenses", ["identity_id"], name: "index_identity_drivers_licenses_on_identity_id", using: :btree
 
   create_table "identity_emails", force: :cascade do |t|
-    t.string   "email",       limit: 255
+    t.string   "email"
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -1039,7 +1065,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "identity_emails", ["owner_id"], name: "index_identity_emails_on_owner_id", using: :btree
 
   create_table "identity_file_folders", force: :cascade do |t|
-    t.string   "folder_name",      limit: 255
+    t.string   "folder_name"
     t.integer  "parent_folder_id"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -1066,8 +1092,8 @@ ActiveRecord::Schema.define(version: 20151220172544) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "file_file_name",        limit: 255
-    t.string   "file_content_type",     limit: 255
+    t.string   "file_file_name"
+    t.string   "file_content_type"
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
     t.integer  "encrypted_password_id"
@@ -1096,7 +1122,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "identity_locations", ["owner_id"], name: "index_identity_locations_on_owner_id", using: :btree
 
   create_table "identity_phones", force: :cascade do |t|
-    t.string   "number",      limit: 255
+    t.string   "number"
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -1148,7 +1174,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "job_salaries", ["owner_id"], name: "index_job_salaries_on_owner_id", using: :btree
 
   create_table "jobs", force: :cascade do |t|
-    t.string   "job_title",             limit: 255
+    t.string   "job_title"
     t.integer  "company_id"
     t.date     "started"
     t.date     "ended"
@@ -1159,17 +1185,17 @@ ActiveRecord::Schema.define(version: 20151220172544) do
     t.datetime "updated_at"
     t.integer  "days_holiday"
     t.integer  "days_vacation"
-    t.string   "employee_identifier",   limit: 255
-    t.string   "department_name",       limit: 255
-    t.string   "division_name",         limit: 255
-    t.string   "business_unit",         limit: 255
-    t.string   "email",                 limit: 255
-    t.string   "internal_mail_id",      limit: 255
-    t.string   "internal_mail_server",  limit: 255
+    t.string   "employee_identifier"
+    t.string   "department_name"
+    t.string   "division_name"
+    t.string   "business_unit"
+    t.string   "email"
+    t.string   "internal_mail_id"
+    t.string   "internal_mail_server"
     t.integer  "internal_address_id"
-    t.string   "department_identifier", limit: 255
-    t.string   "division_identifier",   limit: 255
-    t.string   "personnel_code",        limit: 255
+    t.string   "department_identifier"
+    t.string   "division_identifier"
+    t.string   "personnel_code"
     t.integer  "visit_count"
   end
 
@@ -1179,9 +1205,9 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "jobs", ["owner_id"], name: "index_jobs_on_owner_id", using: :btree
 
   create_table "jokes", force: :cascade do |t|
-    t.string   "name",        limit: 255
+    t.string   "name"
     t.text     "joke"
-    t.string   "source",      limit: 255
+    t.string   "source"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -1191,7 +1217,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "jokes", ["owner_id"], name: "index_jokes_on_owner_id", using: :btree
 
   create_table "life_goals", force: :cascade do |t|
-    t.string   "life_goal_name", limit: 255
+    t.string   "life_goal_name"
     t.text     "notes"
     t.integer  "position"
     t.datetime "goal_started"
@@ -1205,9 +1231,9 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "life_goals", ["owner_id"], name: "index_life_goals_on_owner_id", using: :btree
 
   create_table "life_insurances", force: :cascade do |t|
-    t.string   "insurance_name",      limit: 255
+    t.string   "insurance_name"
     t.integer  "company_id"
-    t.decimal  "insurance_amount",                precision: 10, scale: 2
+    t.decimal  "insurance_amount",    precision: 10, scale: 2
     t.date     "started"
     t.integer  "periodic_payment_id"
     t.text     "notes"
@@ -1223,7 +1249,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "life_insurances", ["periodic_payment_id"], name: "index_life_insurances_on_periodic_payment_id", using: :btree
 
   create_table "list_items", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string   "name"
     t.integer  "list_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -1234,7 +1260,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "list_items", ["owner_id"], name: "index_list_items_on_owner_id", using: :btree
 
   create_table "lists", force: :cascade do |t|
-    t.string   "name",        limit: 255
+    t.string   "name"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -1244,11 +1270,11 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "lists", ["owner_id"], name: "index_lists_on_owner_id", using: :btree
 
   create_table "loans", force: :cascade do |t|
-    t.string   "lender",          limit: 255
-    t.decimal  "amount",                      precision: 10, scale: 2
+    t.string   "lender"
+    t.decimal  "amount",          precision: 10, scale: 2
     t.date     "start"
     t.date     "paid_off"
-    t.decimal  "monthly_payment",             precision: 10, scale: 2
+    t.decimal  "monthly_payment", precision: 10, scale: 2
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -1257,7 +1283,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "loans", ["owner_id"], name: "index_loans_on_owner_id", using: :btree
 
   create_table "location_phones", force: :cascade do |t|
-    t.string   "number",      limit: 255
+    t.string   "number"
     t.integer  "location_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -1268,20 +1294,20 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "location_phones", ["owner_id"], name: "index_location_phones_on_owner_id", using: :btree
 
   create_table "locations", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.string   "address1",    limit: 255
-    t.string   "address2",    limit: 255
-    t.string   "address3",    limit: 255
-    t.string   "region",      limit: 255
-    t.string   "sub_region1", limit: 255
-    t.string   "sub_region2", limit: 255
+    t.string   "name"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "address3"
+    t.string   "region"
+    t.string   "sub_region1"
+    t.string   "sub_region2"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "postal_code", limit: 255
+    t.string   "postal_code"
     t.text     "notes"
-    t.decimal  "latitude",                precision: 12, scale: 8
-    t.decimal  "longitude",               precision: 12, scale: 8
+    t.decimal  "latitude",    precision: 12, scale: 8
+    t.decimal  "longitude",   precision: 12, scale: 8
     t.integer  "visit_count"
   end
 
@@ -1354,7 +1380,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "medical_condition_instances", ["owner_id"], name: "index_medical_condition_instances_on_owner_id", using: :btree
 
   create_table "medical_conditions", force: :cascade do |t|
-    t.string   "medical_condition_name", limit: 255
+    t.string   "medical_condition_name"
     t.text     "notes"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -1390,8 +1416,8 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "medicine_usages", ["owner_id"], name: "index_medicine_usages_on_owner_id", using: :btree
 
   create_table "medicines", force: :cascade do |t|
-    t.string   "medicine_name", limit: 255
-    t.decimal  "dosage",                    precision: 10, scale: 2
+    t.string   "medicine_name"
+    t.decimal  "dosage",        precision: 10, scale: 2
     t.integer  "dosage_type"
     t.text     "notes"
     t.integer  "owner_id"
@@ -1403,7 +1429,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "medicines", ["owner_id"], name: "index_medicines_on_owner_id", using: :btree
 
   create_table "memberships", force: :cascade do |t|
-    t.string   "name",                  limit: 255
+    t.string   "name"
     t.date     "start_date"
     t.date     "end_date"
     t.integer  "owner_id"
@@ -1411,15 +1437,14 @@ ActiveRecord::Schema.define(version: 20151220172544) do
     t.datetime "updated_at"
     t.text     "notes"
     t.integer  "periodic_payment_id"
-    t.integer  "visit_count"
-    t.string   "membership_identifier", limit: 255
+    t.string   "membership_identifier"
   end
 
   add_index "memberships", ["owner_id"], name: "index_memberships_on_owner_id", using: :btree
   add_index "memberships", ["periodic_payment_id"], name: "index_memberships_on_periodic_payment_id", using: :btree
 
   create_table "movie_theaters", force: :cascade do |t|
-    t.string   "theater_name", limit: 255
+    t.string   "theater_name"
     t.integer  "location_id"
     t.integer  "visit_count"
     t.integer  "owner_id"
@@ -1431,9 +1456,9 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "movie_theaters", ["owner_id"], name: "index_movie_theaters_on_owner_id", using: :btree
 
   create_table "movies", force: :cascade do |t|
-    t.string   "name",           limit: 255
+    t.string   "name"
     t.datetime "watched"
-    t.string   "url",            limit: 255
+    t.string   "url"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -1446,7 +1471,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
 
   create_table "museums", force: :cascade do |t|
     t.integer  "location_id"
-    t.string   "museum_id",     limit: 255
+    t.string   "museum_id"
     t.integer  "website_id"
     t.integer  "museum_type"
     t.text     "notes"
@@ -1454,7 +1479,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "museum_source", limit: 255
+    t.string   "museum_source"
   end
 
   add_index "museums", ["location_id"], name: "index_museums_on_location_id", using: :btree
@@ -1462,7 +1487,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "museums", ["website_id"], name: "index_museums_on_website_id", using: :btree
 
   create_table "musical_groups", force: :cascade do |t|
-    t.string   "musical_group_name", limit: 255
+    t.string   "musical_group_name"
     t.text     "notes"
     t.datetime "listened"
     t.integer  "rating"
@@ -1471,7 +1496,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "musical_genre",      limit: 255
+    t.string   "musical_genre"
     t.integer  "visit_count"
   end
 
@@ -1530,20 +1555,21 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   create_table "myplets", force: :cascade do |t|
     t.integer  "x_coordinate"
     t.integer  "y_coordinate"
-    t.string   "title",         limit: 255
-    t.string   "category_name", limit: 255
+    t.string   "title"
+    t.string   "category_name"
     t.integer  "category_id"
     t.integer  "border_type"
     t.boolean  "collapsed"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "visit_count"
   end
 
   add_index "myplets", ["owner_id"], name: "index_myplets_on_owner_id", using: :btree
 
   create_table "notepads", force: :cascade do |t|
-    t.string   "title",        limit: 255
+    t.string   "title"
     t.text     "notepad_data"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -1554,7 +1580,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "notepads", ["owner_id"], name: "index_notepads_on_owner_id", using: :btree
 
   create_table "pains", force: :cascade do |t|
-    t.string   "pain_location",   limit: 255
+    t.string   "pain_location"
     t.integer  "intensity"
     t.datetime "pain_start_time"
     t.datetime "pain_end_time"
@@ -1580,15 +1606,15 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "passport_pictures", ["passport_id"], name: "index_passport_pictures_on_passport_id", using: :btree
 
   create_table "passports", force: :cascade do |t|
-    t.string   "region",            limit: 255
-    t.string   "passport_number",   limit: 255
+    t.string   "region"
+    t.string   "passport_number"
     t.date     "expires"
     t.date     "issued"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "issuing_authority", limit: 255
-    t.string   "name",              limit: 255
+    t.string   "issuing_authority"
+    t.string   "name"
     t.integer  "visit_count"
     t.text     "notes"
   end
@@ -1596,8 +1622,8 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "passports", ["owner_id"], name: "index_passports_on_owner_id", using: :btree
 
   create_table "password_secrets", force: :cascade do |t|
-    t.string   "question",            limit: 255
-    t.string   "answer",              limit: 255
+    t.string   "question"
+    t.string   "answer"
     t.integer  "answer_encrypted_id"
     t.integer  "password_id"
     t.datetime "created_at"
@@ -1610,18 +1636,18 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "password_secrets", ["password_id"], name: "index_password_secrets_on_password_id", using: :btree
 
   create_table "passwords", force: :cascade do |t|
-    t.string   "name",                  limit: 255
-    t.string   "user",                  limit: 255
-    t.string   "password",              limit: 255
+    t.string   "name"
+    t.string   "user"
+    t.string   "password"
     t.string   "url",                   limit: 2000
     t.text     "notes"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "password_encrypted_id"
-    t.string   "account_number",        limit: 255
+    t.string   "account_number"
     t.datetime "defunct"
-    t.string   "email",                 limit: 255
+    t.string   "email"
     t.integer  "visit_count"
   end
 
@@ -1629,12 +1655,12 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "passwords", ["password_encrypted_id"], name: "index_passwords_on_password_encrypted_id", using: :btree
 
   create_table "periodic_payments", force: :cascade do |t|
-    t.string   "periodic_payment_name", limit: 255
+    t.string   "periodic_payment_name"
     t.text     "notes"
     t.date     "started"
     t.date     "ended"
     t.integer  "date_period"
-    t.decimal  "payment_amount",                    precision: 10, scale: 2
+    t.decimal  "payment_amount",        precision: 10, scale: 2
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -1647,35 +1673,35 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "periodic_payments", ["password_id"], name: "index_periodic_payments_on_password_id", using: :btree
 
   create_table "phones", force: :cascade do |t|
-    t.string   "phone_model_name",         limit: 255
-    t.string   "phone_number",             limit: 255
+    t.string   "phone_model_name"
+    t.string   "phone_number"
     t.integer  "manufacturer_id"
     t.date     "purchased"
-    t.decimal  "price",                                precision: 10, scale: 2
+    t.decimal  "price",                    precision: 10, scale: 2
     t.integer  "operating_system"
-    t.string   "operating_system_version", limit: 255
+    t.string   "operating_system_version"
     t.integer  "max_resolution_width"
     t.integer  "max_resolution_height"
     t.integer  "ram"
     t.integer  "num_cpus"
     t.integer  "num_cores_per_cpu"
     t.boolean  "hyperthreaded"
-    t.decimal  "max_cpu_speed",                        precision: 10, scale: 2
+    t.decimal  "max_cpu_speed",            precision: 10, scale: 2
     t.boolean  "cdma"
     t.boolean  "gsm"
-    t.decimal  "front_camera_megapixels",              precision: 10, scale: 2
-    t.decimal  "back_camera_megapixels",               precision: 10, scale: 2
+    t.decimal  "front_camera_megapixels",  precision: 10, scale: 2
+    t.decimal  "back_camera_megapixels",   precision: 10, scale: 2
     t.text     "notes"
     t.integer  "owner_id"
     t.integer  "password_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "dimensions_type"
-    t.decimal  "width",                                precision: 10, scale: 2
-    t.decimal  "height",                               precision: 10, scale: 2
-    t.decimal  "depth",                                precision: 10, scale: 2
+    t.decimal  "width",                    precision: 10, scale: 2
+    t.decimal  "height",                   precision: 10, scale: 2
+    t.decimal  "depth",                    precision: 10, scale: 2
     t.integer  "weight_type"
-    t.decimal  "weight",                               precision: 10, scale: 2
+    t.decimal  "weight",                   precision: 10, scale: 2
     t.integer  "visit_count"
   end
 
@@ -1699,7 +1725,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
     t.boolean  "email"
     t.integer  "playlist_id"
     t.integer  "owner_id"
-    t.string   "subject",     limit: 255
+    t.string   "subject"
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -1726,7 +1752,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "playlist_songs", ["song_id"], name: "index_playlist_songs_on_song_id", using: :btree
 
   create_table "playlists", force: :cascade do |t|
-    t.string   "playlist_name",    limit: 255
+    t.string   "playlist_name"
     t.integer  "visit_count"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -1738,7 +1764,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "playlists", ["owner_id"], name: "index_playlists_on_owner_id", using: :btree
 
   create_table "poems", force: :cascade do |t|
-    t.string   "poem_name",   limit: 255
+    t.string   "poem_name"
     t.text     "poem"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -1759,7 +1785,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "point_displays", ["owner_id"], name: "index_point_displays_on_owner_id", using: :btree
 
   create_table "promises", force: :cascade do |t|
-    t.string   "name",        limit: 255
+    t.string   "name"
     t.date     "due"
     t.text     "promise"
     t.integer  "owner_id"
@@ -1771,10 +1797,10 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "promises", ["owner_id"], name: "index_promises_on_owner_id", using: :btree
 
   create_table "promotions", force: :cascade do |t|
-    t.string   "promotion_name",   limit: 255
+    t.string   "promotion_name"
     t.date     "started"
     t.date     "expires"
-    t.decimal  "promotion_amount",             precision: 10, scale: 2
+    t.decimal  "promotion_amount", precision: 10, scale: 2
     t.text     "notes"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -1785,7 +1811,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "promotions", ["owner_id"], name: "index_promotions_on_owner_id", using: :btree
 
   create_table "questions", force: :cascade do |t|
-    t.string   "name",        limit: 255
+    t.string   "name"
     t.text     "notes"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -1796,7 +1822,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "questions", ["owner_id"], name: "index_questions_on_owner_id", using: :btree
 
   create_table "recipes", force: :cascade do |t|
-    t.string   "name",        limit: 255
+    t.string   "name"
     t.text     "recipe"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -1807,7 +1833,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "recipes", ["owner_id"], name: "index_recipes_on_owner_id", using: :btree
 
   create_table "recreational_vehicle_insurances", force: :cascade do |t|
-    t.string   "insurance_name",          limit: 255
+    t.string   "insurance_name"
     t.integer  "company_id"
     t.date     "started"
     t.integer  "periodic_payment_id"
@@ -1835,11 +1861,11 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "recreational_vehicle_loans", ["recreational_vehicle_id"], name: "index_recreational_vehicle_loans_on_recreational_vehicle_id", using: :btree
 
   create_table "recreational_vehicle_measurements", force: :cascade do |t|
-    t.string   "measurement_name",        limit: 255
+    t.string   "measurement_name"
     t.integer  "measurement_type"
-    t.decimal  "width",                               precision: 10, scale: 2
-    t.decimal  "height",                              precision: 10, scale: 2
-    t.decimal  "depth",                               precision: 10, scale: 2
+    t.decimal  "width",                   precision: 10, scale: 2
+    t.decimal  "height",                  precision: 10, scale: 2
+    t.decimal  "depth",                   precision: 10, scale: 2
     t.text     "notes"
     t.integer  "owner_id"
     t.integer  "recreational_vehicle_id"
@@ -1862,27 +1888,27 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "recreational_vehicle_pictures", ["recreational_vehicle_id"], name: "index_recreational_vehicle_pictures_on_recreational_vehicle_id", using: :btree
 
   create_table "recreational_vehicles", force: :cascade do |t|
-    t.string   "rv_name",               limit: 255
-    t.string   "vin",                   limit: 255
-    t.string   "manufacturer",          limit: 255
-    t.string   "model",                 limit: 255
+    t.string   "rv_name"
+    t.string   "vin"
+    t.string   "manufacturer"
+    t.string   "model"
     t.integer  "year"
-    t.decimal  "price",                             precision: 10, scale: 2
-    t.decimal  "msrp",                              precision: 10, scale: 2
+    t.decimal  "price",                 precision: 10, scale: 2
+    t.decimal  "msrp",                  precision: 10, scale: 2
     t.date     "purchased"
     t.date     "owned_start"
     t.date     "owned_end"
     t.text     "notes"
     t.integer  "location_purchased_id"
     t.integer  "vehicle_id"
-    t.decimal  "wet_weight",                        precision: 10, scale: 2
+    t.decimal  "wet_weight",            precision: 10, scale: 2
     t.integer  "sleeps"
     t.integer  "dimensions_type"
-    t.decimal  "exterior_length",                   precision: 10, scale: 2
-    t.decimal  "exterior_width",                    precision: 10, scale: 2
-    t.decimal  "exterior_height",                   precision: 10, scale: 2
-    t.decimal  "exterior_height_over",              precision: 10, scale: 2
-    t.decimal  "interior_height",                   precision: 10, scale: 2
+    t.decimal  "exterior_length",       precision: 10, scale: 2
+    t.decimal  "exterior_width",        precision: 10, scale: 2
+    t.decimal  "exterior_height",       precision: 10, scale: 2
+    t.decimal  "exterior_height_over",  precision: 10, scale: 2
+    t.decimal  "interior_height",       precision: 10, scale: 2
     t.integer  "liquid_capacity_type"
     t.integer  "fresh_tank"
     t.integer  "grey_tank"
@@ -1896,9 +1922,9 @@ ActiveRecord::Schema.define(version: 20151220172544) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "exterior_length_over",              precision: 10, scale: 2
-    t.decimal  "slideouts_extra_width",             precision: 10, scale: 2
-    t.decimal  "floor_length",                      precision: 10, scale: 2
+    t.decimal  "exterior_length_over",  precision: 10, scale: 2
+    t.decimal  "slideouts_extra_width", precision: 10, scale: 2
+    t.decimal  "floor_length",          precision: 10, scale: 2
     t.integer  "visit_count"
   end
 
@@ -1943,11 +1969,11 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "restaurants", ["owner_id"], name: "index_restaurants_on_owner_id", using: :btree
 
   create_table "reward_programs", force: :cascade do |t|
-    t.string   "reward_program_name",   limit: 255
+    t.string   "reward_program_name"
     t.date     "started"
     t.date     "ended"
-    t.string   "reward_program_number", limit: 255
-    t.string   "reward_program_status", limit: 255
+    t.string   "reward_program_number"
+    t.string   "reward_program_status"
     t.text     "notes"
     t.integer  "password_id"
     t.integer  "owner_id"
@@ -1961,7 +1987,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "reward_programs", ["password_id"], name: "index_reward_programs_on_password_id", using: :btree
 
   create_table "shares", force: :cascade do |t|
-    t.string   "token",      limit: 255
+    t.string   "token"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -1972,7 +1998,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   create_table "shopping_list_items", force: :cascade do |t|
     t.integer  "owner_id"
     t.integer  "shopping_list_id"
-    t.string   "shopping_list_item_name", limit: 255
+    t.string   "shopping_list_item_name"
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -1982,7 +2008,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "shopping_list_items", ["shopping_list_id"], name: "index_shopping_list_items_on_shopping_list_id", using: :btree
 
   create_table "shopping_lists", force: :cascade do |t|
-    t.string   "shopping_list_name", limit: 255
+    t.string   "shopping_list_name"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -1993,8 +2019,8 @@ ActiveRecord::Schema.define(version: 20151220172544) do
 
   create_table "skin_treatments", force: :cascade do |t|
     t.datetime "treatment_time"
-    t.string   "treatment_activity", limit: 255
-    t.string   "treatment_location", limit: 255
+    t.string   "treatment_activity"
+    t.string   "treatment_location"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -2016,11 +2042,11 @@ ActiveRecord::Schema.define(version: 20151220172544) do
 
   create_table "snoozed_due_items", force: :cascade do |t|
     t.integer  "owner_id"
-    t.string   "display",                      limit: 255
-    t.string   "link",                         limit: 255
+    t.string   "display"
+    t.string   "link"
     t.datetime "due_date"
     t.datetime "original_due_date"
-    t.string   "myp_model_name",               limit: 255
+    t.string   "myp_model_name"
     t.integer  "model_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -2031,8 +2057,8 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "snoozed_due_items", ["owner_id"], name: "index_snoozed_due_items_on_owner_id", using: :btree
 
   create_table "songs", force: :cascade do |t|
-    t.string   "song_name",        limit: 255
-    t.decimal  "song_rating",                  precision: 10, scale: 2
+    t.string   "song_name"
+    t.decimal  "song_rating",      precision: 10, scale: 2
     t.text     "lyrics"
     t.integer  "song_plays"
     t.datetime "lastplay"
@@ -2058,9 +2084,9 @@ ActiveRecord::Schema.define(version: 20151220172544) do
     t.datetime "updated_at"
     t.integer  "feeling"
     t.integer  "visit_count"
-    t.string   "status1",           limit: 255
-    t.string   "status2",           limit: 255
-    t.string   "status3",           limit: 255
+    t.string   "status1"
+    t.string   "status2"
+    t.string   "status3"
   end
 
   add_index "statuses", ["owner_id"], name: "index_statuses_on_owner_id", using: :btree
@@ -2084,9 +2110,9 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   create_table "sun_exposures", force: :cascade do |t|
     t.datetime "exposure_start"
     t.datetime "exposure_end"
-    t.string   "uncovered_body_parts",   limit: 255
-    t.string   "sunscreened_body_parts", limit: 255
-    t.string   "sunscreen_type",         limit: 255
+    t.string   "uncovered_body_parts"
+    t.string   "sunscreened_body_parts"
+    t.string   "sunscreen_type"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -2097,8 +2123,8 @@ ActiveRecord::Schema.define(version: 20151220172544) do
 
   create_table "temperatures", force: :cascade do |t|
     t.datetime "measured"
-    t.decimal  "measured_temperature",             precision: 10, scale: 2
-    t.string   "measurement_source",   limit: 255
+    t.decimal  "measured_temperature", precision: 10, scale: 2
+    t.string   "measurement_source"
     t.integer  "temperature_type"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -2109,7 +2135,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "temperatures", ["owner_id"], name: "index_temperatures_on_owner_id", using: :btree
 
   create_table "therapists", force: :cascade do |t|
-    t.string   "name",        limit: 255
+    t.string   "name"
     t.text     "notes"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -2122,7 +2148,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "therapists", ["owner_id"], name: "index_therapists_on_owner_id", using: :btree
 
   create_table "to_dos", force: :cascade do |t|
-    t.string   "short_description", limit: 255
+    t.string   "short_description"
     t.text     "notes"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -2161,12 +2187,12 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "trips", ["owner_id"], name: "index_trips_on_owner_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                       limit: 255, default: "",    null: false
-    t.string   "encrypted_password",          limit: 255, default: "",    null: false
-    t.string   "reset_password_token",        limit: 255
+    t.string   "email",                       default: "",    null: false
+    t.string   "encrypted_password",          default: "",    null: false
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                           default: 0,     null: false
+    t.integer  "sign_in_count",               default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
@@ -2174,15 +2200,15 @@ ActiveRecord::Schema.define(version: 20151220172544) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "primary_identity_id"
-    t.string   "confirmation_token",          limit: 255
+    t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.integer  "failed_attempts",                         default: 0
-    t.string   "unlock_token",                limit: 255
+    t.integer  "failed_attempts",             default: 0
+    t.string   "unlock_token"
     t.datetime "locked_at"
-    t.string   "unconfirmed_email",           limit: 255
-    t.boolean  "encrypt_by_default",                      default: false
-    t.string   "timezone",                    limit: 255
+    t.string   "unconfirmed_email"
+    t.boolean  "encrypt_by_default",          default: false
+    t.string   "timezone"
     t.integer  "page_transition"
     t.integer  "clipboard_integration"
     t.boolean  "explicit_categories"
@@ -2198,7 +2224,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
   create_table "vehicle_insurances", force: :cascade do |t|
-    t.string   "insurance_name",      limit: 255
+    t.string   "insurance_name"
     t.integer  "company_id"
     t.date     "started"
     t.integer  "periodic_payment_id"
@@ -2240,11 +2266,11 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   create_table "vehicle_services", force: :cascade do |t|
     t.integer  "vehicle_id"
     t.text     "notes"
-    t.string   "short_description", limit: 255
+    t.string   "short_description"
     t.date     "date_due"
     t.date     "date_serviced"
     t.text     "service_location"
-    t.decimal  "cost",                          precision: 10, scale: 2
+    t.decimal  "cost",              precision: 10, scale: 2
     t.integer  "miles"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -2267,65 +2293,65 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "vehicle_warranties", ["warranty_id"], name: "index_vehicle_warranties_on_warranty_id", using: :btree
 
   create_table "vehicles", force: :cascade do |t|
-    t.string   "name",                     limit: 255
+    t.string   "name"
     t.text     "notes"
     t.date     "owned_start"
     t.date     "owned_end"
-    t.string   "vin",                      limit: 255
-    t.string   "manufacturer",             limit: 255
-    t.string   "model",                    limit: 255
+    t.string   "vin"
+    t.string   "manufacturer"
+    t.string   "model"
     t.integer  "year"
-    t.string   "color",                    limit: 255
-    t.string   "license_plate",            limit: 255
-    t.string   "region",                   limit: 255
-    t.string   "sub_region1",              limit: 255
+    t.string   "color"
+    t.string   "license_plate"
+    t.string   "region"
+    t.string   "sub_region1"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "trim_name",                limit: 255
+    t.string   "trim_name"
     t.integer  "dimensions_type"
-    t.decimal  "height",                               precision: 10, scale: 2
-    t.decimal  "width",                                precision: 10, scale: 2
-    t.decimal  "length",                               precision: 10, scale: 2
-    t.decimal  "wheel_base",                           precision: 10, scale: 2
-    t.decimal  "ground_clearance",                     precision: 10, scale: 2
+    t.decimal  "height",                   precision: 10, scale: 2
+    t.decimal  "width",                    precision: 10, scale: 2
+    t.decimal  "length",                   precision: 10, scale: 2
+    t.decimal  "wheel_base",               precision: 10, scale: 2
+    t.decimal  "ground_clearance",         precision: 10, scale: 2
     t.integer  "weight_type"
     t.integer  "doors_type"
     t.integer  "passenger_seats"
-    t.decimal  "gvwr",                                 precision: 10, scale: 2
-    t.decimal  "gcwr",                                 precision: 10, scale: 2
-    t.decimal  "gawr_front",                           precision: 10, scale: 2
-    t.decimal  "gawr_rear",                            precision: 10, scale: 2
-    t.string   "front_axle_details",       limit: 255
-    t.decimal  "front_axle_rating",                    precision: 10, scale: 2
-    t.string   "front_suspension_details", limit: 255
-    t.decimal  "front_suspension_rating",              precision: 10, scale: 2
-    t.string   "rear_axle_details",        limit: 255
-    t.decimal  "rear_axle_rating",                     precision: 10, scale: 2
-    t.string   "rear_suspension_details",  limit: 255
-    t.decimal  "rear_suspension_rating",               precision: 10, scale: 2
-    t.string   "tire_details",             limit: 255
-    t.decimal  "tire_rating",                          precision: 10, scale: 2
-    t.decimal  "tire_diameter",                        precision: 10, scale: 2
-    t.string   "wheel_details",            limit: 255
-    t.decimal  "wheel_rating",                         precision: 10, scale: 2
+    t.decimal  "gvwr",                     precision: 10, scale: 2
+    t.decimal  "gcwr",                     precision: 10, scale: 2
+    t.decimal  "gawr_front",               precision: 10, scale: 2
+    t.decimal  "gawr_rear",                precision: 10, scale: 2
+    t.string   "front_axle_details"
+    t.decimal  "front_axle_rating",        precision: 10, scale: 2
+    t.string   "front_suspension_details"
+    t.decimal  "front_suspension_rating",  precision: 10, scale: 2
+    t.string   "rear_axle_details"
+    t.decimal  "rear_axle_rating",         precision: 10, scale: 2
+    t.string   "rear_suspension_details"
+    t.decimal  "rear_suspension_rating",   precision: 10, scale: 2
+    t.string   "tire_details"
+    t.decimal  "tire_rating",              precision: 10, scale: 2
+    t.decimal  "tire_diameter",            precision: 10, scale: 2
+    t.string   "wheel_details"
+    t.decimal  "wheel_rating",             precision: 10, scale: 2
     t.integer  "engine_type"
     t.integer  "wheel_drive_type"
     t.integer  "wheels_type"
     t.integer  "fuel_tank_capacity_type"
-    t.decimal  "fuel_tank_capacity",                   precision: 10, scale: 2
-    t.decimal  "wet_weight_front",                     precision: 10, scale: 2
-    t.decimal  "wet_weight_rear",                      precision: 10, scale: 2
-    t.decimal  "tailgate_weight",                      precision: 10, scale: 2
+    t.decimal  "fuel_tank_capacity",       precision: 10, scale: 2
+    t.decimal  "wet_weight_front",         precision: 10, scale: 2
+    t.decimal  "wet_weight_rear",          precision: 10, scale: 2
+    t.decimal  "tailgate_weight",          precision: 10, scale: 2
     t.integer  "horsepower"
     t.integer  "cylinders"
     t.integer  "displacement_type"
     t.integer  "doors"
-    t.decimal  "displacement",                         precision: 10, scale: 2
-    t.decimal  "bed_length",                           precision: 10, scale: 2
+    t.decimal  "displacement",             precision: 10, scale: 2
+    t.decimal  "bed_length",               precision: 10, scale: 2
     t.integer  "recreational_vehicle_id"
-    t.decimal  "price",                                precision: 10, scale: 2
-    t.decimal  "msrp",                                 precision: 10, scale: 2
+    t.decimal  "price",                    precision: 10, scale: 2
+    t.decimal  "msrp",                     precision: 10, scale: 2
     t.integer  "visit_count"
   end
 
@@ -2345,9 +2371,9 @@ ActiveRecord::Schema.define(version: 20151220172544) do
 
   create_table "vitamins", force: :cascade do |t|
     t.integer  "owner_id"
-    t.string   "vitamin_name",   limit: 255
+    t.string   "vitamin_name"
     t.text     "notes"
-    t.decimal  "vitamin_amount",             precision: 10, scale: 2
+    t.decimal  "vitamin_amount", precision: 10, scale: 2
     t.integer  "amount_type"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -2357,10 +2383,10 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "vitamins", ["owner_id"], name: "index_vitamins_on_owner_id", using: :btree
 
   create_table "warranties", force: :cascade do |t|
-    t.string   "warranty_name",      limit: 255
+    t.string   "warranty_name"
     t.date     "warranty_start"
     t.date     "warranty_end"
-    t.string   "warranty_condition", limit: 255
+    t.string   "warranty_condition"
     t.text     "notes"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -2371,7 +2397,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "warranties", ["owner_id"], name: "index_warranties_on_owner_id", using: :btree
 
   create_table "websites", force: :cascade do |t|
-    t.string   "title",       limit: 255
+    t.string   "title"
     t.string   "url",         limit: 2000
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -2382,10 +2408,10 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "websites", ["owner_id"], name: "index_websites_on_owner_id", using: :btree
 
   create_table "weights", force: :cascade do |t|
-    t.decimal  "amount",                   precision: 10, scale: 2
+    t.decimal  "amount",       precision: 10, scale: 2
     t.integer  "amount_type"
     t.date     "measure_date"
-    t.string   "source",       limit: 255
+    t.string   "source"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -2395,7 +2421,7 @@ ActiveRecord::Schema.define(version: 20151220172544) do
   add_index "weights", ["owner_id"], name: "index_weights_on_owner_id", using: :btree
 
   create_table "wisdoms", force: :cascade do |t|
-    t.string   "name",        limit: 255
+    t.string   "name"
     t.text     "wisdom"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -2405,6 +2431,11 @@ ActiveRecord::Schema.define(version: 20151220172544) do
 
   add_index "wisdoms", ["owner_id"], name: "index_wisdoms_on_owner_id", using: :btree
 
+  add_foreign_key "bar_pictures", "bars"
+  add_foreign_key "bar_pictures", "identities", column: "owner_id"
+  add_foreign_key "bar_pictures", "identity_files"
+  add_foreign_key "bars", "identities", column: "owner_id"
+  add_foreign_key "bars", "locations"
   add_foreign_key "concert_pictures", "concerts"
   add_foreign_key "concert_pictures", "identities", column: "owner_id"
   add_foreign_key "concert_pictures", "identity_files"

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :bars
+  post 'bars/new'
+
   resources :playlists
   match 'playlists/:id/share', :to => 'playlists#share', via: [:get, :post], as: "playlists_share"
   match 'playlists/:id/shared', :to => 'playlists#shared', via: [:get], as: "playlists_shared"
