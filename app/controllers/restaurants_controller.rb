@@ -21,6 +21,10 @@ class RestaurantsController < MyplaceonlineController
     end
   end
 
+  def may_upload
+    true
+  end
+
   protected
     def insecure
       true
@@ -34,7 +38,16 @@ class RestaurantsController < MyplaceonlineController
       params.require(:restaurant).permit(
         :notes,
         :rating,
-        Myp.select_or_create_permit(params[:restaurant], :location_attributes, LocationsController.param_names)
+        Myp.select_or_create_permit(params[:restaurant], :location_attributes, LocationsController.param_names),
+        restaurant_pictures_attributes: [
+          :id,
+          :_destroy,
+          identity_file_attributes: [
+            :id,
+            :file,
+            :notes
+          ]
+        ]
       )
     end
 end

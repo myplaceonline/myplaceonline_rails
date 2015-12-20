@@ -3,5 +3,11 @@
   <%= attribute_table_row_reference(t("myplaceonline.restaurants.location"), "location_path", @obj.location) %>
   <%= attribute_table_row_select t("myplaceonline.restaurants.rating"), @obj.rating, Myp::RATINGS %>
   <%= attribute_table_row_markdown(t("myplaceonline.restaurants.notes"), @obj.notes) %>
+  <%=
+    render partial: 'myplaceonline/pictures', locals: {
+      pics: @obj.restaurant_pictures,
+      placeholder: "myplaceonline.restaurants.picture"
+    }
+  %>
   
 <% end %>

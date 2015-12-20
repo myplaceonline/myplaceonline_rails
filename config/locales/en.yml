@@ -1185,6 +1185,10 @@ en:
       search: "Search"
       location: "Location"
       submit: "Roll"
+      pictures: "Pictures"
+      picture: "Picture"
+      add_picture: "Add Picture"
+      delete_picture: "Delete Picture"
     promotions:
       promotion_name: "Description"
       started: "Started"

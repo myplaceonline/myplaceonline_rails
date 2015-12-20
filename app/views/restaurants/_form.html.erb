@@ -13,3 +13,25 @@
 %>
 <%= myp_select(f, :rating, "myplaceonline.restaurants.rating", Myp.translate_options(Myp::RATINGS), obj.rating) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.restaurants.notes", obj.notes) %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.restaurants.pictures"),
+    childpropertiesname: :restaurant_pictures,
+    childproperties: obj.restaurant_pictures,
+    deletebutton: t("myplaceonline.restaurants.delete_picture"),
+    addbutton: t("myplaceonline.restaurants.add_picture"),
+    expanded: obj.restaurant_pictures.length > 0,
+    formjson: [
+      {
+        type: 'file',
+        name: 'identity_file_attributes.file',
+        placeholder: t("myplaceonline.restaurants.picture")
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%= child_fields.fields_for :identity_file, childproperty.identity_file do |file_fields| %>
+    <%= myp_file_field file_fields, :file, "myplaceonline.restaurants.picture", childproperty.identity_file.file %>
+  <% end %>
+<% end %>

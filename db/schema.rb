@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151220165342) do
+ActiveRecord::Schema.define(version: 20151220172544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1917,6 +1917,18 @@ ActiveRecord::Schema.define(version: 20151220165342) do
 
   add_index "repeats", ["owner_id"], name: "index_repeats_on_owner_id", using: :btree
 
+  create_table "restaurant_pictures", force: :cascade do |t|
+    t.integer  "restaurant_id"
+    t.integer  "identity_file_id"
+    t.integer  "owner_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "restaurant_pictures", ["identity_file_id"], name: "index_restaurant_pictures_on_identity_file_id", using: :btree
+  add_index "restaurant_pictures", ["owner_id"], name: "index_restaurant_pictures_on_owner_id", using: :btree
+  add_index "restaurant_pictures", ["restaurant_id"], name: "index_restaurant_pictures_on_restaurant_id", using: :btree
+
   create_table "restaurants", force: :cascade do |t|
     t.integer  "location_id"
     t.integer  "rating"
@@ -2401,4 +2413,7 @@ ActiveRecord::Schema.define(version: 20151220165342) do
   add_foreign_key "periodic_payments", "passwords"
   add_foreign_key "playlist_shares", "shares"
   add_foreign_key "playlists", "identity_files"
+  add_foreign_key "restaurant_pictures", "identities", column: "owner_id"
+  add_foreign_key "restaurant_pictures", "identity_files"
+  add_foreign_key "restaurant_pictures", "restaurants"
 end
