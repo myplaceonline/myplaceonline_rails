@@ -1720,6 +1720,10 @@ en:
       notes: "Notes"
       location: "Location"
       upcoming: "Event %{name} in %{delta}"
+      pictures: "Pictures"
+      picture: "Picture"
+      add_picture: "Add Picture"
+      delete_picture: "Delete Picture"
     stocks:
       company: "Company"
       password: "Password"

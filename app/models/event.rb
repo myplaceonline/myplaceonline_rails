@@ -17,4 +17,13 @@ class Event < ActiveRecord::Base
   
   after_save { |record| DueItem.due_events(User.current_user, record, DueItem::UPDATE_TYPE_UPDATE) }
   after_destroy { |record| DueItem.due_events(User.current_user, record, DueItem::UPDATE_TYPE_DELETE) }
+
+  before_validation :update_pic_folders
+  
+  def update_pic_folders
+    put_pictures_in_folder(event_pictures, [I18n.t("myplaceonline.category.events"), display])
+  end
+
+  has_many :event_pictures, :dependent => :destroy
+  accepts_nested_attributes_for :event_pictures, allow_destroy: true, reject_if: :all_blank
 end
