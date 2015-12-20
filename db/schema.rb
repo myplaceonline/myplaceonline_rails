@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151218234411) do
+ActiveRecord::Schema.define(version: 20151220165342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -459,6 +459,18 @@ ActiveRecord::Schema.define(version: 20151218234411) do
   add_index "concert_musical_groups", ["concert_id"], name: "index_concert_musical_groups_on_concert_id", using: :btree
   add_index "concert_musical_groups", ["musical_group_id"], name: "index_concert_musical_groups_on_musical_group_id", using: :btree
   add_index "concert_musical_groups", ["owner_id"], name: "index_concert_musical_groups_on_owner_id", using: :btree
+
+  create_table "concert_pictures", force: :cascade do |t|
+    t.integer  "concert_id"
+    t.integer  "identity_file_id"
+    t.integer  "owner_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "concert_pictures", ["concert_id"], name: "index_concert_pictures_on_concert_id", using: :btree
+  add_index "concert_pictures", ["identity_file_id"], name: "index_concert_pictures_on_identity_file_id", using: :btree
+  add_index "concert_pictures", ["owner_id"], name: "index_concert_pictures_on_owner_id", using: :btree
 
   create_table "concerts", force: :cascade do |t|
     t.string   "concert_date",  limit: 255
@@ -2381,6 +2393,9 @@ ActiveRecord::Schema.define(version: 20151218234411) do
 
   add_index "wisdoms", ["owner_id"], name: "index_wisdoms_on_owner_id", using: :btree
 
+  add_foreign_key "concert_pictures", "concerts"
+  add_foreign_key "concert_pictures", "identities", column: "owner_id"
+  add_foreign_key "concert_pictures", "identity_files"
   add_foreign_key "identity_file_shares", "identity_files"
   add_foreign_key "identity_file_shares", "shares"
   add_foreign_key "periodic_payments", "passwords"

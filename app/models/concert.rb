@@ -21,4 +21,13 @@ class Concert < ActiveRecord::Base
     result.concert_date = Date.today
     result
   end
+
+  before_validation :update_pic_folders
+    
+  def update_pic_folders
+    put_pictures_in_folder(concert_pictures, [I18n.t("myplaceonline.category.concerts"), display])
+  end
+
+  has_many :concert_pictures, :dependent => :destroy
+  accepts_nested_attributes_for :concert_pictures, allow_destroy: true, reject_if: :all_blank
 end

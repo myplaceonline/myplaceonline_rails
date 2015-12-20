@@ -52,3 +52,25 @@
     }
   %>
 <% end %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.concerts.pictures"),
+    childpropertiesname: :concert_pictures,
+    childproperties: obj.concert_pictures,
+    deletebutton: t("myplaceonline.concerts.delete_picture"),
+    addbutton: t("myplaceonline.concerts.add_picture"),
+    expanded: obj.concert_pictures.length > 0,
+    formjson: [
+      {
+        type: 'file',
+        name: 'identity_file_attributes.file',
+        placeholder: t("myplaceonline.concerts.picture")
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%= child_fields.fields_for :identity_file, childproperty.identity_file do |file_fields| %>
+    <%= myp_file_field file_fields, :file, "myplaceonline.concerts.picture", childproperty.identity_file.file %>
+  <% end %>
+<% end %>

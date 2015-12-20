@@ -1467,6 +1467,10 @@ en:
       musical_groups: "Musical Groups"
       add_musical_group: "Add Musical Group"
       delete_musical_group: "Delete Musical Group"
+      pictures: "Pictures"
+      picture: "Picture"
+      add_picture: "Add Picture"
+      delete_picture: "Delete Picture"
     shopping_lists:
       shopping_list_name: "Name"
       add: "Add Item"

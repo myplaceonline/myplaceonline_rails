@@ -1,4 +1,8 @@
 class ConcertsController < MyplaceonlineController
+  def may_upload
+    true
+  end
+
   protected
     def sorts
       ["concerts.concert_date DESC"]
@@ -18,6 +22,15 @@ class ConcertsController < MyplaceonlineController
           :id,
           :_destroy,
           musical_group_attributes: MusicalGroup.params
+        ],
+        concert_pictures_attributes: [
+          :id,
+          :_destroy,
+          identity_file_attributes: [
+            :id,
+            :file,
+            :notes
+          ]
         ]
       )
     end
