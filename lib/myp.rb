@@ -992,4 +992,8 @@ module Myp
       File.delete(f)
     end
   end
+  
+  def self.is_phonegap_request(params)
+    params[:phonegap] == "true"
+  end
 end
