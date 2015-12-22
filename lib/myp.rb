@@ -300,6 +300,7 @@ module Myp
   
   CONTENT_FAQ = self.parse_yaml_to_html("myplaceonline.info.faq_content")
   CONTENT_TIPS = self.parse_yaml_to_html("myplaceonline.info.tips_content")
+  STATUS_IDEAS = self.parse_yaml_to_html("myplaceonline.statuses.status_ideas")
   
   def self.is_web_server?
     defined?(Rails::Server) || defined?(::PhusionPassenger)

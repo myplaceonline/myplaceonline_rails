@@ -5,3 +5,7 @@
 <%= myp_text_field(f, :status3, "myplaceonline.statuses.status3", obj.status3) %>
 <%= myp_text_area_markdown(f, :three_good_things, "myplaceonline.statuses.three_good_things", obj.three_good_things) %>
 <%= myp_select(f, :feeling, "myplaceonline.statuses.feeling", Myp.translate_options(Status::FEELINGS), obj.feeling) %>
+<div data-role="collapsible" data-collapsed="true">
+  <h4><%= t("myplaceonline.statuses.need_help") %></h4>
+  <p><%= raw(Myp::STATUS_IDEAS) %></p>
+</div>

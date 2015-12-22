@@ -1423,6 +1423,15 @@ en:
       status1: "First Good Thing"
       status2: "Second Good Thing"
       status3: "Third Good Thing"
+      need_help: "Need Ideas?"
+      status_ideas: !xml |
+        <![CDATA[
+        Good things can be simple, such as:
+        
+        * Had some nice meals.
+        * Felt fine at work/school/etc.
+        * Talked to some person X.
+        ]]>
       feeling: "General Feeling"
       feeling_okay: "Fine"
       feeling_happy: "Happy"
