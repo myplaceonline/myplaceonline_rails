@@ -727,6 +727,10 @@ module Myp
     result
   end
   
+  def self.use_html5_date_inputs()
+    false
+  end
+  
   def self.number_to_currency(x)
     ActionController::Base.helpers.number_to_currency(x)
   end

@@ -544,7 +544,7 @@ module ApplicationHelper
         element_type = "datetime_local_field"
       end
     end
-    if !Myp.use_html5_inputs
+    if !Myp.use_html5_date_inputs
       element_type = "text_field"
     end
     content_tag(
