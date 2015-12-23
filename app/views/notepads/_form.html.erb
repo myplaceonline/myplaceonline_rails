@@ -13,7 +13,7 @@ rte_wrapper_id = f.object_name.gsub("\[", "_").gsub("\]", "") + "_notepad_data_w
 onPageLoad(function() {
 
   var pm<%= rtevar %> = new ProseMirror({
-    place: document.querySelector("#<%= rte_wrapper_id %>"),
+    place: $("#<%= rte_wrapper_id %>")[0],
     autoInput: true,
     doc: <%= raw(obj.notepad_data.to_json) %>,
     docFormat: "markdown",
