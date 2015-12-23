@@ -15,7 +15,7 @@ onPageLoad(function() {
   var pm<%= rtevar %> = new ProseMirror({
     place: $("#<%= rte_wrapper_id %>")[0],
     autoInput: true,
-    doc: <%= raw(obj.notepad_data.to_json) %>,
+    doc: <%= obj.notepad_data.nil? ? raw("\"\"") : raw(obj.notepad_data.to_json) %>,
     docFormat: "markdown",
     menuBar: {
       float: true
