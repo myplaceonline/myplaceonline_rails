@@ -6,6 +6,6 @@
 #= require noty/themes/default
 #= require myplaceonline_final
 #= require jquery-mobile-datebox
-#= require quill.min
+#= require prosemirror
 #= require dygraph-combined
 #= require magnific-popup
