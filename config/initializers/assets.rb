@@ -11,4 +11,5 @@ Rails.application.config.assets.precompile += %w(
   jquery-mobile/ajax-loader.gif
   application_extra.js
   *.css
+  ckeditor/*
 )

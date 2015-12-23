@@ -6,6 +6,9 @@
 #= require noty/themes/default
 #= require myplaceonline_final
 #= require jquery-mobile-datebox
-#= require prosemirror
 #= require dygraph-combined
 #= require magnific-popup
+#= require ckeditor/init
+#= require ckeditor/config
+#= require ckeditor/plugins/markdown/js/marked
+#= require ckeditor/plugins/markdown/js/to-markdown

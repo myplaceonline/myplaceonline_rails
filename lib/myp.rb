@@ -1,5 +1,6 @@
 require 'i18n'
 require 'fileutils'
+require 'github/markup'
 
 module Myp
   # See https://github.com/digitalbazaar/forge/issues/207
@@ -270,8 +271,8 @@ module Myp
   end
 
   def self.markdown_to_html(markdown)
-    if !markdown.nil?
-      Kramdown::Document.new(markdown).to_html
+    if !markdown.blank?
+      GitHub::Markup::Markdown.new.render(markdown)
     else
       nil
     end

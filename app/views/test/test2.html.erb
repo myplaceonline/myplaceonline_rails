@@ -1,0 +1,34 @@
+<% content_for :heading do -%><%= t('myplaceonline.test.test2.title') %><% end -%>
+<h1><%= t('myplaceonline.test.test2.title') %></h1>
+<p>Test RTE</p>
+<%
+w = Wisdom.new
+w.wisdom = "** Hello World ** <span>Test</span>"
+%>
+<%= form_for w do |f| %>
+  <%
+  text_area = myp_text_area(f, :wisdom, "myplaceonline.test.test2.input1", nil)
+  text_area_id = extract_id(text_area)
+  %>
+  <%= text_area %>
+  <script type="text/javascript">
+  onPageLoad(function() {
+    CKEDITOR.replace(
+      '<%= text_area_id %>',
+      {
+        on: {
+          instanceReady: function(ev) {
+            ev.editor.setData(
+              marked(<%= raw(w.wisdom.to_json) %>, {
+                langPrefix: 'language-',
+                breaks: true,
+                sanitize: true
+              })
+            );
+          }
+        }
+      }
+    );
+  });
+  </script>
+<% end %>
