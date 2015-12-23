@@ -9,7 +9,7 @@ rte_wrapper_id = f.object_name.gsub("\[", "_").gsub("\]", "") + "_notepad_data_w
 %>
 <div id="<%= rte_wrapper_id %>"></div>
 <%= rte_hidden_field %>
-<script>
+<script type="text/javascript">
 onPageLoad(function() {
 
   var pm<%= rtevar %> = new ProseMirror({
