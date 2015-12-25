@@ -50,7 +50,7 @@
         <% if Myp.is_phonegap_request(params, session) %>
           <a href="/" data-icon="carat-l" data-rel="back"><%= t("myplaceonline.general.back") %></a>
         <% else %>
-          <a href="/" data-icon="home" data-iconpos="notext"><%= t("myplaceonline.menu.home") %></a>
+          <a href="/" data-icon="home" data-iconpos="notext" title="<%= t("myplaceonline.menu.home") %>"><%= t("myplaceonline.menu.home") %></a>
         <% end %>
         <h1><%= link_to(header_link, id: "mainbutton", title: header_title_cached) do image_tag(header_icon, alt: header_title_cached) end %>&nbsp;<%= yield(:heading).presence || t('myplaceonline.siteTitle') %></h1>
         <%# We give a unique id to each popup because the menu may be different. %>
