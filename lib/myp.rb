@@ -995,7 +995,7 @@ module Myp
     end
   end
   
-  def self.is_phonegap_request(params)
-    params[:phonegap] == "true"
+  def self.is_phonegap_request(params, session)
+    params[:phonegap] == "true" || session[:phonegap]
   end
 end

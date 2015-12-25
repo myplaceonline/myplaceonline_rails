@@ -26,7 +26,7 @@
   <body>
     <div data-role="page" data-theme="a" data-url="<%= html_escape(request.original_url) %>" data-uniqueid="<%= request.uuid %>">
       <script type="text/javascript">
-        myp.isInitialPhonegapPage = <%= Myp.is_phonegap_request(params) ? "true" : "false" %>;
+        myp.isInitialPhonegapPage = <%= Myp.is_phonegap_request(params, session) ? "true" : "false" %>;
         
         <% if !current_user.nil? %>
           <% if !current_user.page_transition.blank? %>
@@ -44,7 +44,7 @@
       </script>
       <div data-role="header">
         <% header_title_cached = header_title %>
-        <% if Myp.is_phonegap_request(params) %>
+        <% if Myp.is_phonegap_request(params, session) %>
           <a href="/" data-icon="carat-l" data-rel="back"><%= t("myplaceonline.general.back") %></a>
         <% else %>
           <a href="/" data-icon="home" data-iconpos="notext"><%= t("myplaceonline.menu.home") %></a>
