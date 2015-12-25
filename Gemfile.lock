@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/myplaceonline/ckeditor.git
-  revision: 28adf93976147d79485c47df005c4d42b45aded6
+  revision: c09244c36142d0a9183b938fa345cb9d6e2e14b7
   specs:
     ckeditor (4.1.5)
       cocaine
