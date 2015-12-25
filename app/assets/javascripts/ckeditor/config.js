@@ -94,22 +94,29 @@ CKEDITOR.editorConfig = function( config )
 
   // Toolbar groups configuration.
   config.toolbar = [
+    [ 'Bold', 'Italic' ],
+    [ 'NumberedList', 'BulletedList' ],
+    [ 'Outdent', 'Indent'],
+    [ 'Blockquote', 'Link' ],
+    [ 'Maximize', 'Markdown' ]
     // { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
     // { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
     // { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ], items: [ 'Find', 'Replace', '-', 'SelectAll', '-', 'Scayt' ] },
     // { name: 'forms', items: [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
-    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic' ] },
+    //{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic' ] },
     // { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
-    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
+    //{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', 'Outdent', 'Indent', 'Blockquote', 'Link', 'Maximize' ] },
+    //{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
     //{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
-    { name: 'links', items: [ 'Link', 'Unlink' ] },
+    //{ name: 'links', items: [ 'Link' ] },
     // { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
     // { name: 'insert', items: [ 'Image', 'Flash', 'Table', 'HorizontalRule', 'SpecialChar' ] },
     // '/',
-    { name: 'styles', items: [ 'Format' ] },
-    { name: 'Markdown', items: [ 'Markdown' ] }
+    //{ name: 'styles', items: [ 'Format' ] },
+    //{ name: 'Markdown', items: [ 'Markdown' ] }
     // { name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] }
     // { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+    // Maximize
   ];
 
   //config.toolbar_mini = [
@@ -125,4 +132,7 @@ CKEDITOR.editorConfig = function( config )
   config.removePlugins = 'elementspath,contextmenu,liststyle,tabletools';
   //config.startupMode = 'markdown';
   config.format_tags = 'p;h1;h2;h3;h4;h5;h6;pre';
+  config.removeButtons = 'BrowseServer';
+  config.removeDialogTabs = 'link:upload;link:advanced;link:target';
+  config.filebrowserBrowseUrl = '';
 };
