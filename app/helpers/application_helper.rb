@@ -610,7 +610,16 @@ module ApplicationHelper
   end
 
   def myp_text_area_markdown(form, name, placeholder, value, autofocus = false, input_classes = nil)
-    myp_text_area(form, name, I18n.t(placeholder) + " (" + I18n.t("myplaceonline.general.supports_markdown") + ")", value, autofocus, input_classes)
+    if Myp.is_probably_i18n(placeholder)
+      placeholder = I18n.t(placeholder)
+    end
+    result = render(partial: 'myplaceonline/rte', locals: {
+      f: form,
+      markdown_data: value,
+      hidden_field_name: name
+    })
+    form.label(name, placeholder, class: "form_field_label") + result
+    #myp_text_area(form, name, I18n.t(placeholder) + " (" + I18n.t("myplaceonline.general.supports_markdown") + ")", value, autofocus, input_classes)
   end
 
   def myp_check_box(form, name, placeholder, autofocus = false, input_classes = nil)

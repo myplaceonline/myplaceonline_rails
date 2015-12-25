@@ -1,49 +1,11 @@
 <% if !@myplet %>
   <%= myp_text_field(f, :title, "myplaceonline.notepads.title", obj.title, autofocus) %>
 <% end %>
-<%
-rte_container = text_area_tag("rte" + SecureRandom.hex(10))
-rte_container_id = extract_id(rte_container)
-rte_hidden_field = f.hidden_field(:notepad_data)
-rte_hidden_field_id = extract_id(rte_hidden_field)
+<%=
+  render partial: 'myplaceonline/rte', locals: {
+    f: f,
+    markdown_data: obj.notepad_data,
+    hidden_field_name: @myplet.nil? ? :notepad_data : nil,
+    non_hidden_url: "/notepads/" + obj.id.to_s
+  }
 %>
-<%= rte_container %>
-<% if !@myplet %>
-  <%= rte_hidden_field %>
-<% end %>
-<script type="text/javascript">
-onPageLoad(function() {
-  CKEDITOR.replace(
-    '<%= rte_container_id %>',
-    {
-      on: {
-        instanceReady: function(ev) {
-          var initial_data = <%= raw(obj.notepad_data.to_json) %>;
-          ev.editor.setData(
-            marked(initial_data, {
-              langPrefix: 'language-',
-              breaks: true,
-              sanitize: true
-            }),
-            {
-              callback: function(ev) {
-                this.fully_initialized = true;
-              }
-            }
-          );
-        },
-        change: function(ev) {
-          if (ev.editor.fully_initialized) {
-            var markedDownData = toMarkdown(ev.editor.getData());
-            <% if !@myplet %>
-              $("#<%= rte_hidden_field_id %>").attr("value", markedDownData);
-            <% else %>
-              notepad_changed('#<%= rte_container_id %>', '/notepads/<%= obj.id %>', '<%= t("myplaceonline.welcome.notepad") %>', '<%= t("myplaceonline.general.pending_save") %>', '<%= t("myplaceonline.general.saving") %>', '<%= t("myplaceonline.general.saved") %>', markedDownData);
-            <% end %>
-          }
-        }
-      }
-    }
-  );
-});
-</script>
