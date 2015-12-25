@@ -438,6 +438,7 @@ en:
       homepage_saved: "Homepage settings saved"
       sounds: "Sounds"
       enable_sounds: "Enable Sounds"
+      always_autofocus: "Always Autofocus Input"
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"

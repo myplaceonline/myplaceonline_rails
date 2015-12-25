@@ -656,10 +656,6 @@ function playSound(audioFile) {
 function maybeFocus(selector) {
   if (myp.allowFocusPlaceholder) {
     $(selector).focus();
-  } else if (screen && screen.width > screen.height) {
-    // If the screen width is greater than the screen height,
-    // assume the phone is a handheld rotated out with a keyboard
-    $(selector).focus();
   }
 }
 

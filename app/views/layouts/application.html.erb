@@ -35,6 +35,9 @@
           <% if !current_user.clipboard_integration.blank? %>
             myp.clipboard_integration = <%= current_user.clipboard_integration %>;
           <% end %>
+          <% if current_user.always_autofocus %>
+            myp.allowFocusPlaceholder = true;
+          <% end %>
         <% end %>
         
         onPageLoad(function() {
