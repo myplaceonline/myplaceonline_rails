@@ -23,9 +23,7 @@ class Location < ActiveRecord::Base
   
   def display
     result = Myp.appendstr(nil, name, ", ")
-    if name.blank?
-      result = Myp.appendstr(result, address1, ", ")
-    end
+    result = Myp.appendstr(result, address1, ", ")
     result = Myp.appendstr(result, sub_region2, ", ")
     result = Myp.appendstr(result, sub_region1, ", ")
     # If all we have is a region but we have lat/long,
