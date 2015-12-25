@@ -98,6 +98,7 @@ CKEDITOR.editorConfig = function( config )
     [ 'NumberedList', 'BulletedList' ],
     [ 'Outdent', 'Indent'],
     [ 'Blockquote', 'Link' ],
+    [ 'Format' ],
     [ 'Maximize', 'Markdown' ]
     // { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
     // { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
