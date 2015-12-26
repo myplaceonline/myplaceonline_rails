@@ -97,7 +97,7 @@ CKEDITOR.editorConfig = function( config )
     [ 'Bold', 'Italic' ],
     [ 'NumberedList', 'BulletedList' ],
     [ 'Outdent', 'Indent'],
-    [ 'Blockquote', 'Link' ],
+    [ 'Blockquote', 'Link', 'Unlink' ],
     [ 'Format' ],
     [ 'Maximize', 'Markdown' ]
     // { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
