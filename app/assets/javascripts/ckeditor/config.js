@@ -128,7 +128,7 @@ CKEDITOR.editorConfig = function( config )
   //  { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar' ] }
   //];
 
-  config.extraPlugins = 'markdown,codemirror';
+  config.extraPlugins = 'markdown,codemirror,clipboard,autolink';
   // http://stackoverflow.com/questions/2246631/how-to-disable-ckeditor-context-menu
   config.removePlugins = 'elementspath,contextmenu,liststyle,tabletools';
   //config.startupMode = 'markdown';
