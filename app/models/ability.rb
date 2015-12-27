@@ -135,6 +135,7 @@ class Ability
     can :manage, Playlist, :owner => identity
     can :manage, Bar, :owner => identity
     can :manage, Trek, :owner => identity
+    can :manage, MoneyBalance, :owner => identity
     
     if user.admin?
       can :manage, User

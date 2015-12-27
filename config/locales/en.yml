@@ -132,6 +132,7 @@ en:
       playlists: "Playlists"
       bars: "Bars"
       treks: "Treks"
+      money_balances: "Money Balances"
     general:
       email: "E-mail"
       password: "Password"
@@ -1811,3 +1812,5 @@ en:
       picture: "Picture"
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
+    money_balances:
+      contact: "Contact"

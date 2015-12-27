@@ -97,8 +97,6 @@ module Myp
     ["myplaceonline.period_types.nth_sunday", 9]
   ]
 
-  puts "myplaceonline: Initializing categories"
-  
   def self.database_exists?
     begin
       ActiveRecord::Base.connection.table_exists?(Category.table_name)
@@ -106,6 +104,8 @@ module Myp
       false
     end
   end
+  
+  puts "myplaceonline: myp.rb static initialization"
 
   if Myp.database_exists?
     Category.all.each do |existing_category|
@@ -114,7 +114,8 @@ module Myp
         @@all_categories_without_explicit[existing_category.name.to_sym] = existing_category
       end
     end
-    puts "myplaceonline: Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
+    puts "myplaceonline: #{@@all_categories.count} categories cached"
+    #puts "myplaceonline: Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
   end
   
   def self.categories(user)

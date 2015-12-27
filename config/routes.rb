@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :money_balances
+  post 'money_balances/new'
+
   mount Ckeditor::Engine => '/ckeditor'
   
   resources :treks
