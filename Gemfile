@@ -68,6 +68,7 @@ gem 'magnific-popup-rails'
 gem 'log4r'
 gem 'delayed_job_active_record'
 gem 'daemons'
+# Because of https://github.com/ckeditor/ckeditor-dev/pull/237
 gem 'ckeditor', github: 'myplaceonline/ckeditor'
 gem 'github-markup'
 gem 'redcarpet'
