@@ -422,14 +422,21 @@ function processQueuedRequest() {
   myp.queuedRequestThread = null;
 }
 
-function notepad_changed(rte_wrapper_id, url, notepadTitle, pendingSave, saving, saved, new_data) {
+function getBorderTitle(context) {
+  var result = context.html();
+  result = result.replace(/ \(.*\)/g, "");
+  return result;
+}
+
+function notepad_changed(rte_wrapper_id, url, pendingSave, saving, saved, new_data) {
   queueRequest({
     url: url,
     method: "PATCH",
     dataType: "script",
     timestamp: new Date().getTime(),
     presend: function() {
-      $(rte_wrapper_id).parents(".myplet_border").first().find(".myplet_border_title").first().html(notepadTitle + " (" + saving + ")");
+      var titleObj = $(rte_wrapper_id).parents(".myplet_border").first().find(".myplet_border_title_content").first();
+      titleObj.html(getBorderTitle(titleObj) + " (" + saving + ")");
     },
     data: {
       suppress_navigate: true,
@@ -438,16 +445,19 @@ function notepad_changed(rte_wrapper_id, url, notepadTitle, pendingSave, saving,
       }
     },
     done: function(data, textStatus, jqXHR) {
-      $(rte_wrapper_id).parents(".myplet_border").first().find(".myplet_border_title").first().html(notepadTitle + " (" + saved + ")");
+      var titleObj = $(rte_wrapper_id).parents(".myplet_border").first().find(".myplet_border_title_content").first();
+      titleObj.html(getBorderTitle(titleObj) + " (" + saved + ")");
       myp.notepadResetTimeout = window.setTimeout(function() {
         myp.notepadResetTimeout = null;
         if (!myp.notepadTimeout) {
-          $(rte_wrapper_id).parents(".myplet_border").first().find(".myplet_border_title").first().html(notepadTitle);
+          var titleObj = $(rte_wrapper_id).parents(".myplet_border").first().find(".myplet_border_title_content").first();
+          titleObj.html(getBorderTitle(titleObj));
         }
       }, 1500);
     },
     fail: function(jqXHR, textStatus, errorThrown) {
-      $(rte_wrapper_id).parents(".myplet_border").first().find(".myplet_border_title").first().html(notepadTitle);
+      var titleObj = $(rte_wrapper_id).parents(".myplet_border").first().find(".myplet_border_title_content").first();
+      titleObj.html(getBorderTitle(titleObj));
       createErrorNotification("Could not execute " + url + ": " + textStatus);
     }
   });

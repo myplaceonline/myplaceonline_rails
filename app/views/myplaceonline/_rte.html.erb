@@ -38,7 +38,7 @@ onPageLoad(function() {
             <% if !hidden_field_name.nil? %>
               $("#<%= rte_hidden_field_id %>").attr("value", markedDownData);
             <% else %>
-              notepad_changed('#<%= rte_container_id %>', '<%= non_hidden_url %>', '<%= t("myplaceonline.welcome.notepad") %>', '<%= t("myplaceonline.general.pending_save") %>', '<%= t("myplaceonline.general.saving") %>', '<%= t("myplaceonline.general.saved") %>', markedDownData);
+              notepad_changed('#<%= rte_container_id %>', '<%= non_hidden_url %>', '<%= t("myplaceonline.general.pending_save") %>', '<%= t("myplaceonline.general.saving") %>', '<%= t("myplaceonline.general.saved") %>', markedDownData);
             <% end %>
           }
         }

@@ -1,6 +1,19 @@
 <% if @myplet.border_type == 1 && !@nocontent %>
   <ul data-role="listview" data-inset="true" class="myplet_border">
-    <li data-role="list-divider" class="myplet_border_title"><div><table border="0" cellspacing="0" cellpadding="0" style="width: 100%"><tr><td><%= Myp.evaluate_if_probably_i18n(@myplet.title) %></td><td align="right"><%= link_to(edit_myplet_path(@myplet)) do %><%= image_tag("famfamfam/cog.png", alt: t("myplaceonline.myplets.settings"), title: t("myplaceonline.myplets.settings"), height: 16, width: 16) %><% end %></span></td></tr></table></li>
+    <li data-role="list-divider" class="myplet_border_title">
+      <div>
+        <table border="0" cellspacing="0" cellpadding="0" style="width: 100%">
+          <tr>
+            <td class="myplet_border_title_content"><%= Myp.evaluate_if_probably_i18n(@myplet.title) %></td>
+            <td align="right">
+              <%= link_to(edit_myplet_path(@myplet)) do %>
+                <%= image_tag("famfamfam/cog.png", alt: t("myplaceonline.myplets.settings"), title: t("myplaceonline.myplets.settings"), height: 16, width: 16) %>
+              <% end %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </li>
     <li>
 <% end %>
 
