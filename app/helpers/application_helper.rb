@@ -45,7 +45,6 @@ module ApplicationHelper
     valueclass ||= ""
     
     if !is_blank(clipboard_text.to_s)
-
       options = Hash.new
       options[:href] = "#"
       options[:class] = "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable"
@@ -85,7 +84,7 @@ module ApplicationHelper
     result
   end
   
-  def attribute_table_row_content(name, contentclass, content, lastcolumn = nil)
+  def attribute_table_row_content(name, contentclass, content, lastcolumn = "&nbsp;")
     html = <<-HTML
     <tr>
       <td>#{name}</td>

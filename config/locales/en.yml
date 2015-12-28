@@ -1814,3 +1814,13 @@ en:
       delete_picture: "Delete Picture"
     money_balances:
       contact: "Contact"
+      money_balance_items: "Balance Sheet"
+      add: "Add"
+      delete: "Delete"
+      balance: "Balance"
+      you_owe: "You owe %{contact} %{amount}"
+      contact_owes: "%{contact} owes you %{amount}"
+    money_balance_items:
+      money_balance_item_name: "Description"
+      amount: "Amount (Negative Owed to Contact)"
+      item_time: "Date/Time"

@@ -2,5 +2,23 @@
 
   <%= attribute_table_row_reference(t("myplaceonline.money_balances.contact"), "contact_path", @obj.contact) %>
   <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), @obj.notes) %>
+  <% balance = @obj.calculate_balance %>
+  <% if balance == 0 %>
+    <%= attribute_table_row_currency(t("myplaceonline.money_balances.balance"), 0) %>
+  <% elsif balance < 0 %>
+    <%= attribute_table_row_content(
+          t("myplaceonline.money_balances.balance"),
+          "",
+          t("myplaceonline.money_balances.you_owe", contact: @obj.contact.display, amount: Myp.number_to_currency(balance.abs))
+        )
+    %>
+  <% else %>
+    <%= attribute_table_row_content(
+          t("myplaceonline.money_balances.balance"),
+          "",
+          t("myplaceonline.money_balances.contact_owes", contact: @obj.contact.display, amount: Myp.number_to_currency(balance))
+        )
+    %>
+  <% end %>
 
 <% end %>
