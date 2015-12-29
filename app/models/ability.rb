@@ -8,8 +8,24 @@ class Ability
     
     # Return true if allowed
     can do |action, subject_class, subject|
-      if !subject.nil? && subject.respond_to?("owner_id") && subject.owner_id == identity.id
-        true
+      if !subject.nil?
+        if subject.respond_to?("owner_id") && subject.owner_id == identity.id
+          true
+        else
+          action_search = [0]
+          if action == :show
+            action_search.push(1)
+          elsif action == :edit
+            action_search.push(3)
+          end
+          if Permission.where(user: user, subject_class: subject_class.name.pluralize, subject_id: subject.id, action: action_search).length > 0
+            #Rails.logger.debug{"Returning true for #{user.id} #{subject_class.name.pluralize} #{subject.id} #{action}"}
+            true
+          else
+            #Rails.logger.debug{"Returning false for #{user.id} #{subject_class.name.pluralize} #{subject.id} #{action}"}
+            false
+          end
+        end
       else
         false
       end
