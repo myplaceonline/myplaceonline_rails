@@ -1025,4 +1025,8 @@ module Myp
   def self.category_to_model_name(category_name)
     category_name.camelize.singularize
   end
+  
+  def self.model_to_category_name(model)
+    model.name.underscore.pluralize
+  end
 end

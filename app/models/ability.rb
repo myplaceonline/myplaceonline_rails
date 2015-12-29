@@ -18,11 +18,9 @@ class Ability
           elsif action == :edit
             action_search.push(3)
           end
-          if Permission.where(user: user, subject_class: subject_class.name.pluralize, subject_id: subject.id, action: action_search).length > 0
-            #Rails.logger.debug{"Returning true for #{user.id} #{subject_class.name.pluralize} #{subject.id} #{action}"}
+          if Permission.where(user: user, subject_class: Myp.model_to_category_name(subject_class), subject_id: subject.id, action: action_search).length > 0
             true
           else
-            #Rails.logger.debug{"Returning false for #{user.id} #{subject_class.name.pluralize} #{subject.id} #{action}"}
             false
           end
         end
