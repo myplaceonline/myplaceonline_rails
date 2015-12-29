@@ -13,5 +13,5 @@
   }
 %>
 <%= myp_select(f, :action, "myplaceonline.permissions.action", Myp.translate_options(Permission::ACTION_TYPES), obj.action) %>
-<%= myp_select(f, :subject_class, "myplaceonline.permissions.subject_class", Myp.get_category_list, obj.subject_class) %>
+<%= myp_select(f, :subject_class, "myplaceonline.permissions.subject_class", Myp.get_category_list_select, obj.subject_class) %>
 <%= myp_number_field(f, :subject_id, "myplaceonline.permissions.subject_id", obj.subject_id) %>

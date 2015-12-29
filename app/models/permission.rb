@@ -17,7 +17,7 @@ class Permission < ActiveRecord::Base
   def display
     result = user.display
     result = Myp.appendstrwrap(result, Myp.get_select_name(action, Permission::ACTION_TYPES))
-    result = Myp.appendstrwrap(result, subject_class)
+    result = Myp.appendstrwrap(result, category_display)
     if !subject_id.nil?
       result = Myp.appendstrwrap(result, subject_id.to_s)
     end
@@ -29,8 +29,12 @@ class Permission < ActiveRecord::Base
   allow_existing :user
 
   validate do
-    if !subject_id.nil? && Myp.find_existing_object(subject_class.gsub(" ", "").singularize, subject_id).nil?
+    if !subject_id.nil? && Myp.find_existing_object(Myp.category_to_model_name(subject_class), subject_id).nil?
       errors.add(:subject_id, I18n.t("myplaceonline.permissions.invalid_id"))
     end
+  end
+  
+  def category_display
+    Category.where(name: subject_class).take!.human_title
   end
 end

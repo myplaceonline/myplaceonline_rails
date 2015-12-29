@@ -1012,4 +1012,17 @@ module Myp
     
     search.map{|k,v| I18n.t("myplaceonline.category." + v.name) }.sort
   end
+  
+  def self.get_category_list_select
+    search = Myp.categories(User.current_user).merge({
+      "foods" => Category.new(name: "foods"),
+      "drinks" => Category.new(name: "drinks"),
+    })
+    
+    search.map{|k,v| [I18n.t("myplaceonline.category." + v.name), v.name] }.sort_by { |name, value| name }
+  end
+  
+  def self.category_to_model_name(category_name)
+    category_name.camelize.singularize
+  end
 end
