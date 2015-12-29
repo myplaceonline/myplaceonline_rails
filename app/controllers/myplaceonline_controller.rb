@@ -320,9 +320,12 @@ class MyplaceonlineController < ApplicationController
       ).limit(additional_items_max_items).order(model.table_name + ".visit_count DESC")
     end
 
-    def set_obj
-      @obj = model.find_by(id: params[:id], owner_id: current_user.primary_identity.id)
-      authorize! :manage, @obj
+    def set_obj(action = nil)
+      if action.nil?
+        action = action_name
+      end
+      @obj = model.find(params[:id].to_i)
+      authorize! action.to_sym, @obj
     end
     
     def before_show
