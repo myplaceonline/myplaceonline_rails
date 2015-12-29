@@ -21,6 +21,7 @@ class Ability
           if Permission.where(user: user, subject_class: Myp.model_to_category_name(subject_class), subject_id: subject.id, action: action_search).length > 0
             true
           else
+            Rails.logger.debug{"Returning false for #{user.id} #{action} #{Myp.model_to_category_name(subject_class)} #{subject.id}"}
             false
           end
         end
