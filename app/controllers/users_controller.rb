@@ -12,7 +12,10 @@ class UsersController < MyplaceonlineController
   end
   
   def allusers
-    @objs = User.all
+    @objs = []
+    if !params[:value].blank?
+      @objs = User.where('lower(email) = ?', params[:value].strip.downcase)
+    end
   end
 
   protected

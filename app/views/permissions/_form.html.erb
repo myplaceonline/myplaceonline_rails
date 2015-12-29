@@ -8,7 +8,8 @@
     existingobjurl: "user_path",
     searchurl: "/users/allusers.json",
     edit: true,
-    autofocus: autofocus
+    autofocus: autofocus,
+    always_search: true
   }
 %>
 <%= myp_select(f, :action, "myplaceonline.permissions.action", Myp.translate_options(Permission::ACTION_TYPES), obj.action) %>

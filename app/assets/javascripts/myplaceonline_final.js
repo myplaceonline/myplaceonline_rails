@@ -62,10 +62,14 @@ function hookListviewSearch(list, url, afterload) {
     var value = $input.val();
     if (value && value.length > 0 && !$ul[0].allLoaded) {
       jqmSetListMessage($ul, "Searching...");
+      var data = {
+        value: value
+      };
       $.ajax({
         url: url,
         dataType: "json",
-        context: $ul
+        context: $ul,
+        data: data
       }).done(function(data, textStatus, jqXHR) {
         jqmSetList(this, $(data));
         this[0].allLoaded = true;

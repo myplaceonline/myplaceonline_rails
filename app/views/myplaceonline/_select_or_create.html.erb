@@ -4,6 +4,7 @@ collapsed = collapsed.nil? ? false : collapsed
 existingcollapsed = false
 random_name = SecureRandom.hex(10)
 new_item_collapsible_id = random_name + "_new_item"
+always_search ||= false
 
 # If there are no existing items, then expand the new item instead
 if !objform.blank?
@@ -54,6 +55,9 @@ end
               ul.find("li a").each(function(index) {
                 $(this).attr("onclick", "<%= raw(Myp.select_listitem('#' + fieldid)) %>");
               });
+              <% if always_search %>
+                ul[0].allLoaded = false;
+              <% end %>
             });
             <% if autofocus && !existingcollapsed %>
             maybeFocus($("#<%= random_name %>_searchable_container input"));
