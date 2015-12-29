@@ -1,21 +1,11 @@
 class PermissionsController < MyplaceonlineController
   def self.param_names(params)
     [
-      Myp.select_or_create_permit(params, :contact_attributes, ContactsController.param_names),
+      { user_attributes: [:id] },
       :action,
       :subject_class,
       :subject_id
     ]
-  end
-
-  def self.reject_if_blank(attributes)
-    attributes.all?{|key, value|
-      if key == "contact_attributes"
-        ContactsController.reject_if_blank(value)
-      else
-        value.blank?
-      end
-    }
   end
 
   protected

@@ -422,6 +422,7 @@ Rails.application.routes.draw do
     }
   end
 
+  get 'users/allusers'
   resources :users
   post 'users/new'
 

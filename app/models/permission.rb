@@ -10,12 +10,12 @@ class Permission < ActiveRecord::Base
     ["myplaceonline.permissions.action_destroy", 4]
   ]
   
-  validates :contact, presence: true
+  validates :user, presence: true
   validates :action, presence: true
   validates :subject_class, presence: true
   
   def display
-    result = contact.display
+    result = user.display
     result = Myp.appendstrwrap(result, Myp.get_select_name(action, Permission::ACTION_TYPES))
     result = Myp.appendstrwrap(result, subject_class)
     if !subject_id.nil?
@@ -24,9 +24,9 @@ class Permission < ActiveRecord::Base
     result
   end
   
-  belongs_to :contact
-  accepts_nested_attributes_for :contact, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
-  allow_existing :contact
+  belongs_to :user
+  accepts_nested_attributes_for :user, reject_if: :all_blank
+  allow_existing :user
 
   validate do
     if !subject_id.nil? && Myp.find_existing_object(subject_class.gsub(" ", "").singularize, subject_id).nil?

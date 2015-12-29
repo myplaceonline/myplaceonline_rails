@@ -858,10 +858,14 @@ module Myp
     if model.nil?
       model = Object.const_get(targetname.to_s.camelize)
     end
-    obj = model.find_by(
-      id: id,
-      owner: User.current_user.primary_identity
-    )
+    if model.new.respond_to?("owner_id")
+      obj = model.find_by(
+        id: id,
+        owner: User.current_user.primary_identity
+      )
+    else
+      obj = model.find(id)
+    end
     if obj.nil?
       raise "Could not find " + model.to_s + " with ID " + id.to_s
     end

@@ -10,9 +10,11 @@ if !objform.blank?
   i = objform.index('/')
   if i != -1
     m = Object.const_get(objform[0..i-1].singularize.camelize)
-    x = m.send("where", owner_id: current_user.primary_identity.id)
-    if x.length == 0
-      existingcollapsed = true
+    if m.new.respond_to?("owner_id")
+      x = m.send("where", owner_id: current_user.primary_identity.id)
+      if x.length == 0
+        existingcollapsed = true
+      end
     end
   end
 end

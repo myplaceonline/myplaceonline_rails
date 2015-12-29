@@ -1,6 +1,7 @@
 # This is the controller for the administrative view of users, not for
 # the `devise` user stuff
 class UsersController < MyplaceonlineController
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:allusers]
   
   def show_index_footer
     false
@@ -8,6 +9,10 @@ class UsersController < MyplaceonlineController
   
   def show_add
     false
+  end
+  
+  def allusers
+    @objs = User.all
   end
 
   protected

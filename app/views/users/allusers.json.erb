@@ -1,0 +1,8 @@
+<%=
+@objs.map { |obj|
+  {
+    :title => controller.display_obj(obj),
+    :link => controller.obj_path(obj)
+  }
+}.to_json.html_safe
+%>

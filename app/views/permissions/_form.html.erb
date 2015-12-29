@@ -1,13 +1,13 @@
 <%=
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,
-    name: :contact,
-    existingobj: obj.contact,
-    heading: t("myplaceonline.permissions.contact"),
-    objform: "contacts/form",
-    existingobjurl: "contact_path",
-    searchurl: "/contacts.json?perpage=0",
-    edit: edit,
+    name: :user,
+    existingobj: obj.user,
+    heading: t("myplaceonline.permissions.user"),
+    objform: "users/form",
+    existingobjurl: "user_path",
+    searchurl: "/users/allusers.json",
+    edit: true,
     autofocus: autofocus
   }
 %>
