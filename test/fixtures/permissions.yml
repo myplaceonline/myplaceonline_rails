@@ -1,0 +1,5 @@
+permission:
+  owner: identity
+  contact: contact
+  subject_class: Contact
+  action: manage

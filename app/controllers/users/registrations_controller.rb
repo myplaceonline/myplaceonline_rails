@@ -133,12 +133,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     Myp.ensure_encryption_key(session)
     passwords = I18n.t("myplaceonline.category.passwords")
     
-    search = Myp.categories(User.current_user).merge({
-      "foods" => Category.new(name: "foods"),
-      "drinks" => Category.new(name: "drinks"),
-    })
-    
-    @categories = search.map{|k,v| I18n.t("myplaceonline.category." + v.name) }.sort
+    @categories = Myp.get_category_list
     
     if request.post?
       
@@ -149,8 +144,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         flash[:error] = I18n.t("myplaceonline.users.delete_category_missing")
         render :deletecategory
       else
-        
-        foundcat = search.find{|k,v| I18n.t("myplaceonline.category." + v.name) == @category}
+        foundcat = @categories.find{|c| c == @category}
         if !foundcat.nil?
           cl = Object.const_get(@category.singularize)
           ActiveRecord::Base.transaction do

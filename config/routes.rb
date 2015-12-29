@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :permissions
+  post 'permissions/new'
+
   resources :money_balances
   post 'money_balances/new'
 

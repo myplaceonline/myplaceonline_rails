@@ -133,6 +133,7 @@ en:
       bars: "Bars"
       treks: "Treks"
       money_balances: "Money Balances"
+      permissions: "Permissions"
     general:
       email: "E-mail"
       password: "Password"
@@ -1824,3 +1825,14 @@ en:
       money_balance_item_name: "Description"
       amount: "Amount (Negative Owed to Contact)"
       item_time: "Date/Time"
+    permissions:
+      contact: "Contact"
+      action: "Action"
+      subject_class: "Class"
+      subject_id: "ID"
+      action_read: "Read"
+      action_create: "Create"
+      action_update: "Update"
+      action_destroy: "Destroy"
+      action_manage: "Manage"
+      invalid_id: "Invalid ID"

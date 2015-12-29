@@ -999,4 +999,13 @@ module Myp
   def self.is_phonegap_request(params, session)
     params[:phonegap] == "true" || session[:phonegap]
   end
+  
+  def self.get_category_list
+    search = Myp.categories(User.current_user).merge({
+      "foods" => Category.new(name: "foods"),
+      "drinks" => Category.new(name: "drinks"),
+    })
+    
+    search.map{|k,v| I18n.t("myplaceonline.category." + v.name) }.sort
+  end
 end
