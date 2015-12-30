@@ -31,9 +31,9 @@
 </script>
 
 <script type="text/javascript">
-onPageLoad(function() {
+myplaceonline.onPageLoad(function() {
   if (window.localStorage) {
-    window.appsnapshot = getMyplaceonlineSnapshot();
+    window.appsnapshot = myplaceonline.getMyplaceonlineSnapshot();
     if (window.appsnapshot) {
       window.App = Ember.Application.create({
         rootElement: '#emberContainer',
@@ -72,7 +72,7 @@ onPageLoad(function() {
       
       App.IndexView = Ember.View.extend({
         didInsertElement : function() {
-          ensureStyledPage();
+          myplaceonline.ensureStyledPage();
         }
       });
 
@@ -84,7 +84,7 @@ onPageLoad(function() {
       
       App.PasswordsView = Ember.View.extend({
         didInsertElement : function() {
-          ensureStyledPage();
+          myplaceonline.ensureStyledPage();
         }
       });
 
@@ -92,7 +92,7 @@ onPageLoad(function() {
         setupController: function(controller, model) {
           var password = null;
           if (model.password_encrypted_id) {
-            var sessionPassword = getSessionPassword();
+            var sessionPassword = myplaceonline.getSessionPassword();
             var encrypted_value = null;
             $.each(window.appsnapshot.user.encrypted_values, function(i, x) {
               if (x.id == model.password_encrypted_id) {

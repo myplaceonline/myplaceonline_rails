@@ -4,13 +4,13 @@
 </div>
 
 <script type="text/javascript">
-onPageLoad(function() {
+myplaceonline.onPageLoad(function() {
   var search = $("#myplaceonline_search_list");
-  hookListviewSearch(search, "/api/categories.json");
+  myplaceonline.hookListviewSearch(search, "/api/categories.json");
   var list = <%= raw(initialCategoryList) %>;
-  jqmSetList(search, list);
+  myplaceonline.jqmSetList(search, list);
   var input = $("#myplaceonline_search_container input");
-  hookListviewEnter(input, "#myplaceonline_search_list");
-  maybeFocus(input);
+  myplaceonline.hookListviewEnter(input, "#myplaceonline_search_list");
+  myplaceonline.maybeFocus(input);
 });
 </script>

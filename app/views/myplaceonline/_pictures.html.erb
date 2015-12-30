@@ -13,7 +13,7 @@
   
   <% if pics.length > 1 %>
     <script type="text/javascript">
-    onPageLoad(function() {
+    myplaceonline.onPageLoad(function() {
       $('#<%= random_name %>').magnificPopup({
           items: [
             <%= raw(pics.map{ |pic| "{ src: '" + file_view_path(pic.identity_file, :t => Time.now.to_f) + "'}" }.join(", ")) %>

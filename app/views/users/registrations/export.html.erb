@@ -16,8 +16,8 @@
 <% if @download %>
 
 <script type="text/javascript">
-onPageLoad(function() {
-  createSuccessNotification("<%= t("myplaceonline.users.starting_download") %>");
+myplaceonline.onPageLoad(function() {
+  myplaceonline.createSuccessNotification("<%= t("myplaceonline.users.starting_download") %>");
   window.location = '<%= @download %>';
 });
 </script>

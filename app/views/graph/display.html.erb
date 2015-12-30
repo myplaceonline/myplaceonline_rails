@@ -23,8 +23,8 @@
 <% if !@graphdata.blank? %>
   <div id="graphdiv" style="width: 100%"></div>
   <script type="text/javascript">
-    onPageLoad(function() {
-      maybeFocus(".autofocus");
+    myplaceonline.onPageLoad(function() {
+      myplaceonline.maybeFocus(".autofocus");
       var g = new Dygraph(
         document.getElementById("graphdiv"),
 

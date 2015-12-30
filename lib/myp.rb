@@ -504,7 +504,7 @@ module Myp
   end
   
   def self.select_listitem(selector)
-    "$(this).addClass('ui-btn-active'); $('" + selector + "').val(object_extract_id(this)); return false;"
+    "$(this).addClass('ui-btn-active'); $('" + selector + "').val(myplaceonline.objectExtractId(this)); return false;"
   end
   
   def self.display_date(time, current_user)

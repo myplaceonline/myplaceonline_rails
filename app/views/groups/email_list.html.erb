@@ -4,7 +4,7 @@
 <% if @found_emails %>
   <p><%= button_tag t("myplaceonline.general.clipboard"), :onclick => "return false;", data: { "clipboard-text" => @emails } %></p>
   <script type="text/javascript">
-    ensureClipboard($(".clipboardable"));
+    myplaceonline.ensureClipboard($(".clipboardable"));
   </script>
 <% end %>
 <% if !@no_emails.blank? %>

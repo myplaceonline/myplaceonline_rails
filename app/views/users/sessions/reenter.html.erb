@@ -8,8 +8,8 @@
   <%= hidden_field_tag :redirect, @redirect %>
   <div><%= submit_tag t("myplaceonline.general.login") %></div>
 <script type="text/javascript">
-onPageLoad(function() {
-  maybeFocus(".autofocus");
+myplaceonline.onPageLoad(function() {
+  myplaceonline.maybeFocus(".autofocus");
 });
 </script>
 <% end %>

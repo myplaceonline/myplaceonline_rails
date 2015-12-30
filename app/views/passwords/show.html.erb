@@ -22,7 +22,7 @@
   <%= attribute_table_row_boolean(t("myplaceonline.passwords.isencrypted"), @obj.password_encrypted?) %>
   
   <script type="text/javascript">
-  onPageLoad(function() {
+  myplaceonline.onPageLoad(function() {
     if (window.ffclipboard) {
       var link = $('.focusable a');
       link.keypress(function(e) {

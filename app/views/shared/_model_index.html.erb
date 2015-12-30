@@ -89,12 +89,12 @@
   <% end %>
 
   <script type="text/javascript">
-    onPageLoad(function() {
-      hookListviewSearch($(".searchable"), "/<%= controller.paths_name %>.json<%= raw(@query_params_part_all) %>");
+    myplaceonline.onPageLoad(function() {
+      myplaceonline.hookListviewSearch($(".searchable"), "/<%= controller.paths_name %>.json<%= raw(@query_params_part_all) %>");
       var input = $(".searchable_container input");
-      hookListviewEnter(input, ".searchable");
+      myplaceonline.hookListviewEnter(input, ".searchable");
       <% if !@myplet %>
-      maybeFocus(input);
+      myplaceonline.maybeFocus(input);
       <% end %>
     });
   </script>

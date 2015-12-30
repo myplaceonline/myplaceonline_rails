@@ -12,7 +12,7 @@ end
   <%= rte_hidden_field %>
 <% end %>
 <script type="text/javascript">
-onPageLoad(function() {
+myplaceonline.onPageLoad(function() {
   CKEDITOR.replace(
     '<%= rte_container_id %>',
     {
@@ -38,7 +38,7 @@ onPageLoad(function() {
             <% if !hidden_field_name.nil? %>
               $("#<%= rte_hidden_field_id %>").attr("value", markedDownData);
             <% else %>
-              notepad_changed('#<%= rte_container_id %>', '<%= non_hidden_url %>', '<%= t("myplaceonline.general.pending_save") %>', '<%= t("myplaceonline.general.saving") %>', '<%= t("myplaceonline.general.saved") %>', markedDownData);
+              myplaceonline.notepadChanged('#<%= rte_container_id %>', '<%= non_hidden_url %>', '<%= t("myplaceonline.general.pending_save") %>', '<%= t("myplaceonline.general.saving") %>', '<%= t("myplaceonline.general.saved") %>', markedDownData);
             <% end %>
           }
         }

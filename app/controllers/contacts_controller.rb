@@ -108,7 +108,7 @@ class ContactsController < MyplaceonlineController
       if @contact_type.blank?
         ""
       else
-        "and contact_type = " + @contact_type
+        "and contact_type = " + @contact_type.to_s
       end
     end
 

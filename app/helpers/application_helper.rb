@@ -508,7 +508,7 @@ module ApplicationHelper
   def myp_date_field(form, name, placeholder, value, autofocus = false, input_classes = nil, override_datebox_type = nil, date_format = Myplaceonline::DEFAULT_DATE_FORMAT)
     # http://dev.jtsage.com/jQM-DateBox/api/
     # http://dev.jtsage.com/jQM-DateBox/doc/3-0-first-datebox/
-    # Options should match app/assets/javascripts/myplaceonline_final.js form_add_item
+    # Options should match app/assets/javascripts/myplaceonline_final.js formAddItem
     # https://github.com/jtsage/jquery-mobile-datebox/issues/363
     # https://github.com/jtsage/jquery-mobile-datebox/issues/295
     if Myp.is_probably_i18n(placeholder)
@@ -518,7 +518,8 @@ module ApplicationHelper
     hidden_time = nil
     random_name = ""
     close_callback = "false"
-    element_type = "date_field"
+    element_type = "text_field"
+    #element_type = "date_field"
     
     # datebox or calbox
     datebox_type = "calbox"
@@ -536,11 +537,12 @@ module ApplicationHelper
           "data-datebox-use-modal" => "false",
           "data-datebox-use-button" => "false",
           "data-datebox-popup-position" => "window",
-          "data-datebox-close-callback" => "datebox_timebox_closed"
+          "data-datebox-close-callback" => "myplaceonline.datebox_timebox_closed"
         )
         datebox_type = "calbox"
-        close_callback = "datebox_calendar_closed"
-        element_type = "datetime_local_field"
+        close_callback = "myplaceonline.dateboxCalendarClosed"
+        element_type = "text_field"
+        #element_type = "datetime_local_field"
       end
     end
     if !Myp.use_html5_date_inputs

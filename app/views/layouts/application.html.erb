@@ -26,23 +26,23 @@
   <body>
     <div data-role="page" data-theme="a" data-url="<%= html_escape(request.original_url) %>" data-uniqueid="<%= request.uuid %>">
       <script type="text/javascript">
-        myp.isInitialPhonegapPage = <%= Myp.is_phonegap_request(params, session) ? "true" : "false" %>;
+        myplaceonline.setIsInitialPhonegapPage(<%= Myp.is_phonegap_request(params, session) ? "true" : "false" %>);
         
         <% if !current_user.nil? %>
           <% if !current_user.page_transition.blank? %>
             $.mobile.defaultPageTransition = "<%= Myp.page_transition_value_to_jqm(current_user.page_transition) %>";
           <% end %>
           <% if !current_user.clipboard_integration.blank? %>
-            myp.clipboard_integration = <%= current_user.clipboard_integration %>;
+            myplaceonline.setClipboardIntegration(<%= current_user.clipboard_integration %>);
           <% end %>
           <% if current_user.always_autofocus %>
-            myp.allowFocusPlaceholder = true;
+            myplaceonline.setFocusAllowed(true);
           <% end %>
         <% end %>
         
-        onPageLoad(function() {
-          hookListviewSearch($("#mainButtonPopup_search_list"), "/api/categories.json");
-          hookListviewEnter($("#mainButtonPopup_search_container input"), "#mainButtonPopup_search_list");
+        myplaceonline.onPageLoad(function() {
+          myplaceonline.hookListviewSearch($("#mainButtonPopup_search_list"), "/api/categories.json");
+          myplaceonline.hookListviewEnter($("#mainButtonPopup_search_container input"), "#mainButtonPopup_search_list");
         });
       </script>
       <div data-role="header">
@@ -62,7 +62,7 @@
         
         <% if !session[:points_flash].nil? && session[:points_flash] > 0 %>
           <script type="text/javascript">
-            onPageLoad(function() {
+            myplaceonline.onPageLoad(function() {
               // We need to bind to the link element after JQM has created it
               // and bound its own events, so that we can do stuff before
               // JQM stops propagation of it
@@ -72,9 +72,9 @@
               //    $.mobile.silentScroll(div.offset().top);
               //  }
               //});
-              <%= raw("createSuccessNotification('" + t("myplaceonline.points.gotsome", amount: ActionController::Base.helpers.pluralize(session[:points_flash], t("myplaceonline.points.point"))) + "');") %>
+              <%= raw("myplaceonline.createSuccessNotification('" + t("myplaceonline.points.gotsome", amount: ActionController::Base.helpers.pluralize(session[:points_flash], t("myplaceonline.points.point"))) + "');") %>
               <% if current_user.enable_sounds %>
-                <%= raw("playSound('" + root_path + "bubble_gum_pop-Natalie_Wendt-772662403.wav');") %>
+                <%= raw("myplaceonline.playSound('" + root_path + "bubble_gum_pop-Natalie_Wendt-772662403.wav');") %>
               <% end %>
             });
           </script>
@@ -93,7 +93,7 @@
           <% if user_signed_in? %>
           <li><%= link_to t("myplaceonline.buttons.edituser"), edit_user_registration_path, :class => 'ui-btn ui-btn-icon-left ui-icon-user' %></li>
           <li><a href="/info" class="ui-btn ui-btn-icon-left ui-icon-info"><%= t("myplaceonline.info.title") %></a></li>
-          <li><a href="#" class="ui-btn ui-btn-icon-left ui-icon-phone" onclick="quick_feedback('<%= t("myplaceonline.general.quick_feedback") %>'); $('#menuPopup<%= request.uuid %>').popup('close'); return false;"><%= t("myplaceonline.menu.feedback") %></a></li>
+          <li><a href="#" class="ui-btn ui-btn-icon-left ui-icon-phone" onclick="myplaceonline.quickFeedback('<%= t("myplaceonline.general.quick_feedback") %>'); $('#menuPopup<%= request.uuid %>').popup('close'); return false;"><%= t("myplaceonline.menu.feedback") %></a></li>
           <li><%= link_to t("myplaceonline.buttons.logout"), destroy_user_session_path, method: :delete, :class => 'ui-btn ui-btn-icon-left ui-icon-power'  %></li>
           <% else %>
           <li><%= link_to t("myplaceonline.buttons.signin"), new_user_session_path, :class => 'ui-btn ui-btn-icon-left ui-icon-power'  %></li>

@@ -1,7 +1,7 @@
 <%= render layout: "shared/model_index" do %>
   <div class="horizontal_center" data-role="collapsible">
     <h4><%= t("myplaceonline.general.filter") %></h4>
-    <%= myp_select_tag(:contact_type, "myplaceonline.contacts.contact_type", Myp.translate_options(Contact::CONTACT_TYPES), @contact_type, false, nil, false, "refreshWithParam('contact_type', $('#contact_type').val())") %>
+    <%= myp_select_tag(:contact_type, "myplaceonline.contacts.contact_type", Myp.translate_options(Contact::CONTACT_TYPES), @contact_type, false, nil, false, "myplaceonline.refreshWithParam('contact_type', $('#contact_type').val())") %>
   </div>
   <% content_for :footerlinks do %>
     <li><%= link_to t('myplaceonline.contacts.me'), contact_path(current_user.primary_identity.ensure_contact!), "data-icon" => "user" %></li>

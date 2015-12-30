@@ -1,6 +1,6 @@
 <% if @error.nil? %>
   <% if params[:suppress_navigate].nil? %>
-    navigate('<%= controller.obj_path(@obj) %>');
+    myplaceonline.navigate('<%= controller.obj_path(@obj) %>');
   <% end %>
 <% else %>
   alert('Error: ' + <%= @error.to_json.html_safe %>);

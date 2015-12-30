@@ -2,8 +2,8 @@
 
 <% if @isInitialPhonegapRequest %>
   <script type="text/javascript">
-    loadExternalScript("<%= javascript_path('application_extra') %>", false);
-    loadExternalCss("<%= path_to_stylesheet('application') %>");
+    myplaceonline.loadExternalScript("<%= javascript_path('application_extra') %>", false);
+    myplaceonline.loadExternalCss("<%= path_to_stylesheet('application') %>");
   </script>
 <% end %>
 

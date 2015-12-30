@@ -13,7 +13,7 @@
         $("#<%= popupid %>_title").html(title);
         completeButton = $("#<%= popupid %>_complete");
         completeButton.unbind('click').click(function(){
-          showLoading();
+          myplaceonline.showLoading();
           $.ajax({
             url: complete_link,
             method: "POST",
@@ -22,9 +22,9 @@
             p.popup("close");
             $(source).parent().remove();
           }).fail(function(jqXHR, textStatus, errorThrown) {
-            createErrorNotification("Could not execute " + complete_link + ": " + textStatus);
+            myplaceonline.createErrorNotification("Could not execute " + complete_link + ": " + textStatus);
           }).complete(function(jqXHR, textStatus) {
-            hideLoading();
+            myplaceonline.hideLoading();
           });
         });
         $("#<%= popupid %>_snooze_datebox").datebox({
@@ -40,7 +40,7 @@
           minDur: <%= DueItem::MINIMUM_DURATION_SECONDS %>
         });
         $("#<%= popupid %>_snooze").unbind('click').click(function(){
-          showLoading();
+          myplaceonline.showLoading();
           $.ajax({
             url: snooze_link + "?duration=" + encodeURIComponent($("#<%= popupid %>_snooze_datebox").val()),
             method: "POST",
@@ -49,9 +49,9 @@
             p.popup("close");
             $(source).parent().remove();
           }).fail(function(jqXHR, textStatus, errorThrown) {
-            createErrorNotification("Could not execute " + snooze_link + ": " + textStatus);
+            myplaceonline.createErrorNotification("Could not execute " + snooze_link + ": " + textStatus);
           }).complete(function(jqXHR, textStatus) {
-            hideLoading();
+            myplaceonline.hideLoading();
           });
         });
         completeButton.focus();

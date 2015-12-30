@@ -17,7 +17,7 @@ $ ->
 
     subregion_code = $(this).val()
     
-    save_collapsible_states()
+    myplaceonline.saveCollapsibleStates()
     
     name = $(this).attr("name")
     
@@ -25,7 +25,7 @@ $ ->
       "/api/subregions?regionstr=#{subregion_code}&name=#{name}",
       (data) ->
         $(".subregionwrapper").replaceWith(data)
-        ensureStyledPage()
+        myplaceonline.ensureStyledPage()
     )
   )
 
@@ -38,6 +38,6 @@ $ ->
       (data) ->
         $(".values_container").replaceWith(data)
         $(".xvalues_container").replaceWith(data)
-        ensureStyledPage()
+        myplaceonline.ensureStyledPage()
     )
   )

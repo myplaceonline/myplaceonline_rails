@@ -47,11 +47,11 @@ end
         </div>
         <%= sub_fields.hidden_field(:id) %>
         <script type="text/javascript">
-          onPageLoad(function() {
+          myplaceonline.onPageLoad(function() {
             $("#<%= random_name %>_searchable li").each(function(index) {
               $(this).addClass('ui-btn-active');
             });
-            hookListviewSearch($("#<%= random_name %>_searchable"), "<%= searchurl %>", function(ul) {
+            myplaceonline.hookListviewSearch($("#<%= random_name %>_searchable"), "<%= searchurl %>", function(ul) {
               ul.find("li a").each(function(index) {
                 $(this).attr("onclick", "<%= raw(Myp.select_listitem('#' + fieldid)) %>");
               });
@@ -60,7 +60,7 @@ end
               <% end %>
             });
             <% if autofocus && !existingcollapsed %>
-            maybeFocus($("#<%= random_name %>_searchable_container input"));
+            myplaceonline.maybeFocus($("#<%= random_name %>_searchable_container input"));
             <% end %>
           });
         </script>
@@ -77,8 +77,8 @@ end
                first = false
           %>
             <script type="text/javascript">
-              onPageLoad(function() {
-                maybeFocus($("#<%= new_item_collapsible_id %> .autofocus"));
+              myplaceonline.onPageLoad(function() {
+                myplaceonline.maybeFocus($("#<%= new_item_collapsible_id %> .autofocus"));
               });
             </script>
           <% end %>

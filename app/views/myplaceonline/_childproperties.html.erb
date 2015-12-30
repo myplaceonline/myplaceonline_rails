@@ -10,10 +10,10 @@
             <%= child_fields.hidden_field(position_field) %>
           <% end %>
           <div data-role="controlgroup" data-type="horizontal">
-            <a href="#" onclick="return form_remove_item(this);" class="ui-btn ui-btn-icon-left ui-icon-delete ui-btn-inline"><%= deletebutton %></a>
+            <a href="#" onclick="return myplaceonline.formRemoveItem(this);" class="ui-btn ui-btn-icon-left ui-icon-delete ui-btn-inline"><%= deletebutton %></a>
             <% if defined?(position_field) %>
-              <a href="#" onclick="return form_move_item(this, 1);" class="ui-btn ui-btn-icon-left ui-icon-arrow-d ui-btn-inline"><%= t("myplaceonline.general.movedown", name: itemname) %></a>
-              <a href="#" onclick="return form_move_item(this, -1);" class="ui-btn ui-btn-icon-left ui-icon-arrow-u ui-btn-inline"><%= t("myplaceonline.general.moveup", name: itemname) %></a>
+              <a href="#" onclick="return myplaceonline.formMoveItem(this, 1);" class="ui-btn ui-btn-icon-left ui-icon-arrow-d ui-btn-inline"><%= t("myplaceonline.general.movedown", name: itemname) %></a>
+              <a href="#" onclick="return myplaceonline.formMoveItem(this, -1);" class="ui-btn ui-btn-icon-left ui-icon-arrow-u ui-btn-inline"><%= t("myplaceonline.general.moveup", name: itemname) %></a>
             <% end %>
           </div>
         </div>
@@ -22,6 +22,6 @@
     <script type="text/javascript">
     var x<%= random_name %> = <%= raw(formjson.to_json) %>;
     </script>
-    <p><a href="#" onclick="return form_add_item(this, '<%= f.object_name + "[" + childpropertiesname.to_s + "_attributes]" %>', '<%= single_quote_escape(deletebutton) %>', x<%= random_name %>);" class="ui-btn ui-btn-icon-left ui-icon-plus ui-btn-inline"><%= addbutton %></a></p>
+    <p><a href="#" onclick="return myplaceonline.formAddItem(this, '<%= f.object_name + "[" + childpropertiesname.to_s + "_attributes]" %>', '<%= single_quote_escape(deletebutton) %>', x<%= random_name %>);" class="ui-btn ui-btn-icon-left ui-icon-plus ui-btn-inline"><%= addbutton %></a></p>
   </div>
 </div>

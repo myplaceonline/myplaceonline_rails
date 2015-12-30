@@ -7,8 +7,8 @@
     <ul id="myplaceonline_recent_list" data-role="listview" data-inset="true">
     </ul>
     <script type="text/javascript">
-    onPageLoad(function() {
-      jqmSetList($("#myplaceonline_recent_list"), <%= raw(@usefulCategoryList.to_json) %>);
+    myplaceonline.onPageLoad(function() {
+      myplaceonline.jqmSetList($("#myplaceonline_recent_list"), <%= raw(@usefulCategoryList.to_json) %>);
     });
     </script>
 

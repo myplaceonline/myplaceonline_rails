@@ -1,6 +1,6 @@
-hideLoading();
+myplaceonline.hideLoading();
 <% if @error.nil? %>
-navigate(<%= @url.to_json %>);
+myplaceonline.navigate(<%= @url.to_json %>);
 <% else %>
 alert('Error: ' + <%= @error.to_json.html_safe %>);
 <% end %>
