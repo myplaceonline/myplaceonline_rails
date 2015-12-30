@@ -20,6 +20,8 @@ class ApplicationController < ActionController::Base
   
   rescue_from StandardError, :with => :catchall
   
+  utf8_enforcer_workaround
+  
   def catchall(exception)
     if exception.is_a?(Myp::DecryptionKeyUnavailableError)
       redirect_to Myp.reentry_url(request)

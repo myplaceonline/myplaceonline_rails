@@ -32,6 +32,13 @@ var myplaceonline = function(mymodule) {
     }
     return false;
   }
+  
+  // TODO
+  // "For AJAX requests other than GETs, extract the “csrf-token” from the
+  // meta-tag and send as the “X-CSRF-Token” HTTP header."
+  // http://api.rubyonrails.org/classes/ActionView/Helpers/CsrfHelper.html
+  // http://stackoverflow.com/questions/7203304/warning-cant-verify-csrf-token-authenticity-rails
+  // http://api.jquery.com/jQuery.ajaxPrefilter/
 
   // https://github.com/rails/jquery-ujs/wiki/ajax
   $(document).on('ajax:remotipartSubmit', 'form', function() {
@@ -41,7 +48,7 @@ var myplaceonline = function(mymodule) {
 
   $(document).on('ajax:complete', 'form', function(xhr, status) {
     myplaceonline.hideLoading();
-    consoleLog("ajax:complete");
+    myplaceonline.consoleLog("ajax:complete");
     var contentType = status.getResponseHeader("Content-Type");
     // We expect a "successful" submission will return text/javascript
     // which will do something like navigate to the success page
