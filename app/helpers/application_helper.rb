@@ -537,10 +537,10 @@ module ApplicationHelper
           "data-datebox-use-modal" => "false",
           "data-datebox-use-button" => "false",
           "data-datebox-popup-position" => "window",
-          "data-datebox-close-callback" => "myplaceonline.datebox_timebox_closed"
+          "data-datebox-close-callback" => "dateboxTimeboxClosed"
         )
         datebox_type = "calbox"
-        close_callback = "myplaceonline.dateboxCalendarClosed"
+        close_callback = "dateboxCalendarClosed"
         element_type = "text_field"
         #element_type = "datetime_local_field"
       end

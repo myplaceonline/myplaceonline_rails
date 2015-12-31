@@ -492,19 +492,6 @@ var myplaceonline = function(mymodule) {
     });
   }
 
-  function dateboxCalendarClosed(update) {
-    var timebox = $("#" + this.element.data("datetime-id"));
-    timebox.data("calendar-id", this.element.attr("id"));
-    timebox.datebox('open');
-  }
-
-  function dateboxTimeboxClosed(update) {
-    var cal = $("#" + this.element.data("calendar-id"));
-    var calDate = cal.datebox('getTheDate');
-    calDate.setHours(update.date.getHours(), update.date.getMinutes(), update.date.getSeconds(), update.date.getMilliseconds());
-    cal.datebox('setTheDate', calDate);
-  }
-
   function quickFeedback(prompt_text) {
     var result = prompt(prompt_text);
     if (result) {
@@ -624,8 +611,6 @@ var myplaceonline = function(mymodule) {
   mymodule.formMoveItem = formMoveItem;
   mymodule.objectExtractId = objectExtractId;
   mymodule.notepadChanged = notepadChanged;
-  mymodule.dateboxCalendarClosed = dateboxCalendarClosed;
-  mymodule.dateboxTimeboxClosed = dateboxTimeboxClosed;
   mymodule.quickFeedback = quickFeedback;
   mymodule.hideIfChecked = hideIfChecked;
   mymodule.refreshWithParam = refreshWithParam;
@@ -636,3 +621,17 @@ var myplaceonline = function(mymodule) {
   return mymodule;
 
 }(myplaceonline || {});
+
+// jquery-mobile-datebox require global function callbacks
+function dateboxCalendarClosed(update) {
+  var timebox = $("#" + this.element.data("datetime-id"));
+  timebox.data("calendar-id", this.element.attr("id"));
+  timebox.datebox('open');
+}
+
+function dateboxTimeboxClosed(update) {
+  var cal = $("#" + this.element.data("calendar-id"));
+  var calDate = cal.datebox('getTheDate');
+  calDate.setHours(update.date.getHours(), update.date.getMinutes(), update.date.getSeconds(), update.date.getMilliseconds());
+  cal.datebox('setTheDate', calDate);
+}
