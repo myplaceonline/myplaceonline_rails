@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :permissions
   post 'permissions/new'
 
+  match 'money_balances/:id/add', :to => 'money_balances#add', via: [:get, :post, :patch], as: "money_balances_add"
   resources :money_balances
   post 'money_balances/new'
 

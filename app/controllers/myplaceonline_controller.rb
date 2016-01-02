@@ -130,6 +130,14 @@ class MyplaceonlineController < ApplicationController
   end
   
   def update
+    if do_update
+      return after_create_or_update
+    else
+      return render :edit
+    end
+  end
+  
+  def do_update
     update_security
     ActiveRecord::Base.transaction do
       begin
@@ -141,11 +149,7 @@ class MyplaceonlineController < ApplicationController
           raise Myp::CannotFindNestedAttribute, rnf.message + " (code needs attribute setter override?)"
         end
 
-        if @obj.save
-          return after_create_or_update
-        else
-          return render :edit
-        end
+        @obj.save
       ensure
         Permission.current_target = nil
       end

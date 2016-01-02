@@ -27,5 +27,7 @@
 
   <% content_for :postfooterlinks do %>
     <li><%= link_to t('myplaceonline.money_balances.share'), permissions_share_path + "?" + Permission.permission_params(controller.category_name, @obj.id).to_query, "data-icon" => "action" %></li>
+    <li><%= link_to t('myplaceonline.money_balances.i_paid'), money_balances_add_path(@obj, owner_paid: @obj.current_user_owns? ? "true" : "false"), "data-icon" => "eye" %></li>
+    <li><%= link_to t('myplaceonline.money_balances.other_paid', { other: controller.other_display }), money_balances_add_path(@obj, owner_paid: @obj.current_user_owns? ? "false" : "true"), "data-icon" => "eye" %></li>
   <% end %>
 <% end %>

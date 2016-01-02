@@ -438,15 +438,23 @@ module ApplicationHelper
     form.hidden_field(name, value: value)
   end
                        
-  def myp_text_field(form, name, placeholder, value, autofocus = false, input_classes = nil, autocomplete = true)
+  def myp_hidden_field_tag(name, value = nil)
+    hidden_field_tag(name, value)
+  end
+                       
+  def myp_text_field(form, name, placeholder, value, autofocus = false, input_classes = nil, autocomplete = true, options = {})
     if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
-    if autocomplete
-      field = form.text_field(name, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes), value: value)
-    else
-      field = form.text_field(name, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes), value: value, autocomplete: "off")
+    baseoptions = {
+      placeholder: placeholder,
+      class: myp_field_classes(autofocus, input_classes),
+      value: value
+    }
+    if !autocomplete
+      baseoptions[:autocomplete] = "off"
     end
+    field = form.text_field(name, baseoptions.merge(options))
     content_tag(
       :p,
       form.label(name, placeholder, class: myp_label_classes(value)) +
@@ -454,19 +462,25 @@ module ApplicationHelper
     ).html_safe
   end
   
-  def myp_number_field(form, name, placeholder, value, autofocus = false, input_classes = nil, step = nil)
+  def myp_number_field(form, name, placeholder, value, autofocus = false, input_classes = nil, step = nil, options = {})
     if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
+    baseoptions = {
+      placeholder: placeholder,
+      class: myp_field_classes(autofocus, input_classes),
+      value: value,
+      step: step
+    }
     content_tag(
       :p,
       form.label(name, placeholder, class: myp_label_classes(value)) +
-      form.send(Myp.use_html5_inputs ? "number_field" : "text_field", name, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes), value: value, step: step)
+      form.send(Myp.use_html5_inputs ? "number_field" : "text_field", name, baseoptions.merge(options))
     ).html_safe
   end
   
-  def myp_decimal_field(form, name, placeholder, value, autofocus = false, input_classes = nil, step = Myp::DEFAULT_DECIMAL_STEP)
-    myp_number_field(form, name, placeholder, value, autofocus, input_classes, step)
+  def myp_decimal_field(form, name, placeholder, value, autofocus = false, input_classes = nil, step = Myp::DEFAULT_DECIMAL_STEP, options = {})
+    myp_number_field(form, name, placeholder, value, autofocus, input_classes, step, options)
   end
   
   def myp_integer_field(form, name, placeholder, value, autofocus = false, input_classes = nil)

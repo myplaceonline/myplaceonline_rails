@@ -1,0 +1,59 @@
+<% content_for :heading do -%><%= controller.who_paid_title(@owner_paid) %><% end -%>
+<h1><%= controller.who_paid_title(@owner_paid) %></h1>
+<%= flashes! %>
+<% if @obj.errors.any? %>
+  <div class="errors">
+    <ul>
+    <% @obj.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for @obj, :url => money_balances_add_path(@obj), :remote => controller.may_upload, data: { ajax: !controller.may_upload } do |f| %>
+  <% childproperty = MoneyBalanceItem.build %>
+  <%= f.fields_for :money_balance_items, childproperty do |child_fields| %>
+    <div class="owe_container">
+      <%
+      amount_field = myp_decimal_field(child_fields, :source_amount, "myplaceonline.money_balance_items.amount_simple", 0, true, nil, step = Myp::DEFAULT_DECIMAL_STEP, { onkeyup: "myplaceonline.onChangeCascade(this, myplaceonline.toFloatSafe, '.owe_container', '.other_owes', '.other_owes_percent:checked', myplaceonline.transformMultiply)" })
+      amount_field_id = extract_id(amount_field)
+      %>
+      <%= amount_field %>
+      <%= myp_decimal_field(child_fields, :amount, controller.other_owed_name(@owner_paid), 0, false, "other_owes") %>
+      <fieldset data-role="controlgroup" data-type="horizontal">
+        <legend class="form_field_label"><%= controller.other_owed_name(@owner_paid) + " %" %></legend>
+        <% fieldprefix = child_fields.object_name.gsub("\[", "_").gsub("\]", "") + "_other_owes_percent" %>
+        <input name="<%= "#{child_fields.object_name}[other_owes_percent]" %>" id="<%= "#{fieldprefix}50" %>" value="0.5" class="other_owes_percent" checked="checked" type="radio" onchange="myplaceonline.onChangeCascade($('#<%= amount_field_id %>'), myplaceonline.toFloatSafe, '.owe_container', '.other_owes', '.other_owes_percent:checked', myplaceonline.transformMultiply)" />
+        <label for="<%= "#{fieldprefix}50" %>">50%</label>
+        <input name="<%= "#{child_fields.object_name}[other_owes_percent]" %>" id="<%= "#{fieldprefix}100" %>" value="1.0" class="other_owes_percent" type="radio" onchange="myplaceonline.onChangeCascade($('#<%= amount_field_id %>'), myplaceonline.toFloatSafe, '.owe_container', '.other_owes', '.other_owes_percent:checked', myplaceonline.transformMultiply)" />
+        <label for="<%= "#{fieldprefix}100" %>">100%</label>
+      </fieldset>
+    </div>
+    <%= myp_text_field(child_fields, :money_balance_item_name, "myplaceonline.money_balance_items.money_balance_item_name", childproperty.money_balance_item_name) %>
+    <%= myp_datetime_field(child_fields, :item_time, "myplaceonline.money_balance_items.item_time", childproperty.item_time) %>
+    <%= myp_hidden_field(child_fields, :invert, @owner_paid ? false : true) %>
+  <% end %>
+  <%= myp_hidden_field_tag(:owner_paid, @owner_paid) %>
+
+  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="navbar">
+      <ul>
+        <li>
+          <%= f.submit(t("myplaceonline.general.save") + " " + t("myplaceonline.category." + controller.category_name).singularize, "data-icon" => "check", "data-iconpos" => "top", "style" => "background-color: green") %>
+        </li>
+        <li><%= link_to t("myplaceonline.general.cancel"), controller.obj_path, "data-icon" => "back" %></li>
+        <% if content_for?(:footerlinks) %>
+          <%= content_for(:footerlinks) %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+  </script>
+
+<% end %>

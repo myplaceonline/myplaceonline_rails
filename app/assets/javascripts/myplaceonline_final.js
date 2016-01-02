@@ -602,6 +602,34 @@ var myplaceonline = function(mymodule) {
       audioElements[0].play();
     }
   }
+  
+  function onChangeCascade(myobj, transformValueFunc, parentSelector, childSelector, intermediateSelector, intermediateTransform) {
+    var currentValue = $(myobj).val();
+    if (transformValueFunc) {
+      currentValue = transformValueFunc(currentValue);
+    }
+    var parent = $(myobj).parents(parentSelector).first();
+    var searchResult = parent.find(childSelector).first();
+    
+    if (intermediateSelector) {
+      var intermediate = parent.find(intermediateSelector).first().val();
+      currentValue = intermediateTransform(currentValue, intermediate);
+    }
+    
+    searchResult.val(currentValue);
+  }
+  
+  function toFloatSafe(someVal) {
+    var result = parseFloat(someVal);
+    if (!isFinite(result)) {
+      result = 0;
+    }
+    return result;
+  }
+  
+  function transformMultiply(x, y) {
+    return x * y;
+  }
 
   // Public API
   mymodule.hookListviewSearch = hookListviewSearch;
@@ -618,6 +646,9 @@ var myplaceonline = function(mymodule) {
   mymodule.requestGPS = requestGPS;
   mymodule.requestGPS2 = requestGPS2;
   mymodule.playFirstSong = playFirstSong;
+  mymodule.onChangeCascade = onChangeCascade;
+  mymodule.toFloatSafe = toFloatSafe;
+  mymodule.transformMultiply = transformMultiply;
 
   return mymodule;
 
