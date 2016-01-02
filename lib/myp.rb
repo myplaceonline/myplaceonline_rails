@@ -883,6 +883,10 @@ module Myp
     )
   end
   
+  def self.process_headers(request)
+    request.headers.env.dup.delete_if{| key, value | !key.start_with?("HTTP_") }.to_a.map{|kv| "#{kv[0]}=#{kv[1]}"}.join(",\n  ")
+  end
+  
   def self.handle_exception(exception, email = nil, request = nil)
     stack = Myp.error_details(exception)
     body = ""
@@ -905,6 +909,10 @@ module Myp
           "request_method: #{request.request_method.inspect}, " +
           "uuid: #{request.uuid.inspect}" +
           " }\n"
+      headers = request.headers
+      if !headers.nil?
+        body += "Headers: {\n  #{self.process_headers(request)}\n}\n"
+      end
     end
     puts "handle_exception: " + body
     Myp.send_support_email_safe("User Exception", body)
