@@ -21,4 +21,7 @@
     %>
   <% end %>
 
+  <% content_for :postfooterlinks do %>
+    <li><%= link_to t('myplaceonline.money_balances.share'), permissions_share_path + "?" + Permission.permission_params(controller.category_name, @obj.id).to_query, "data-icon" => "action" %></li>
+  <% end %>
 <% end %>

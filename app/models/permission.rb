@@ -2,13 +2,19 @@ class Permission < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   include ModelHelpersConcern
+  
+  ACTION_MANAGE = 1
+  ACTION_READ = 2
+  ACTION_CREATE = 4
+  ACTION_UPDATE = 8
+  ACTION_DESTROY = 16
 
   ACTION_TYPES = [
-    ["myplaceonline.permissions.action_manage", 1],
-    ["myplaceonline.permissions.action_read", 2],
-    ["myplaceonline.permissions.action_create", 4],
-    ["myplaceonline.permissions.action_update", 8],
-    ["myplaceonline.permissions.action_destroy", 16]
+    ["myplaceonline.permissions.action_manage", ACTION_MANAGE],
+    ["myplaceonline.permissions.action_read", ACTION_READ],
+    ["myplaceonline.permissions.action_create", ACTION_CREATE],
+    ["myplaceonline.permissions.action_update", ACTION_UPDATE],
+    ["myplaceonline.permissions.action_destroy", ACTION_DESTROY]
   ]
   
   validates :user, presence: true
@@ -48,6 +54,14 @@ class Permission < ActiveRecord::Base
       Rails.application.routes.url_helpers.send(subject_class.singularize + "_path", subject_id)
     end
   end
+  
+  def url
+    if subject_id.nil?
+      Rails.application.routes.url_helpers.send(subject_class + "_url", Rails.configuration.default_url_options)
+    else
+      Rails.application.routes.url_helpers.send(subject_class.singularize + "_url", subject_id, Rails.configuration.default_url_options)
+    end
+  end
 
   def self.current_target
     Thread.current[:current_target]
@@ -64,5 +78,20 @@ class Permission < ActiveRecord::Base
     else
       target_owner = target.owner
     end
+  end
+  
+  def self.permission_params(subject_class, subject_id, permissions = [Permission::ACTION_READ, Permission::ACTION_UPDATE])
+    result = {
+      permission: {
+        subject_class: subject_class,
+        subject_id: subject_id
+      }
+    }
+    
+    permissions.each do |permission|
+      result[:permission]["actionbit#{permission}"] = "1"
+    end
+
+    result
   end
 end

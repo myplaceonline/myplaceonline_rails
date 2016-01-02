@@ -1,0 +1,54 @@
+<% content_for :heading do -%><%= t('myplaceonline.permissions.share') %><% end -%>
+<h1><%= t('myplaceonline.permissions.share') %></h1>
+<%= flashes! %>
+<% if @permission.errors.any? %>
+  <div class="errors">
+    <ul>
+    <% @permission.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for @permission, :url => permissions_share_path do |f| %>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: f,
+      name: :user,
+      existingobj: @permission.user,
+      heading: t("myplaceonline.permissions.user"),
+      objform: "users/form",
+      existingobjurl: "user_path",
+      searchurl: "/users/allusers.json",
+      edit: true,
+      autofocus: true,
+      always_search: true
+    }
+  %>
+  <%= myp_text_field_tag(:subject, "myplaceonline.permissions.subject", @subject) %>
+  <%= myp_text_area_tag(:body, "myplaceonline.permissions.body", @body) %>
+  <%= myp_check_box_tag(:copy_self, "myplaceonline.permissions.copy_self", @copy_self) %>
+  <%= myp_hidden_field(f, :subject_class, @permission.subject_class) %>
+  <%= myp_hidden_field(f, :subject_id, @permission.subject_id) %>
+  <%= myp_hidden_field(f, :actionbit1, @permission.actionbit1 ? "1" : "0") %>
+  <%= myp_hidden_field(f, :actionbit2, @permission.actionbit2 ? "1" : "0") %>
+  <%= myp_hidden_field(f, :actionbit4, @permission.actionbit4 ? "1" : "0") %>
+  <%= myp_hidden_field(f, :actionbit8, @permission.actionbit8 ? "1" : "0") %>
+  <%= myp_hidden_field(f, :actionbit16, @permission.actionbit16 ? "1" : "0") %>
+  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="navbar">
+      <ul>
+        <li>
+          <%= f.submit(t("myplaceonline.permissions.share"), "data-icon" => "action", "data-iconpos" => "top") %>
+        </li>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+</script>

@@ -13,13 +13,16 @@ class Ability
           if subject.respond_to?("owner_id") && subject.owner_id == identity.id
             true
           else
-            action_search = [0]
+            query = "user_id = ? and subject_class = ? and subject_id = ? and (action & #{Permission::ACTION_MANAGE} != 0"
             if action == :show
-              action_search.push(1)
+              query += " or action & #{Permission::ACTION_READ} != 0"
             elsif action == :edit
-              action_search.push(3)
+              query += " or action & #{Permission::ACTION_UPDATE} != 0"
+            elsif action == :destroy
+              query += " or action & #{Permission::ACTION_DESTROY} != 0"
             end
-            if Permission.where(user: user, subject_class: Myp.model_to_category_name(subject_class), subject_id: subject.id, action: action_search).length > 0
+            query += ")"
+            if Permission.where(query, user.id, Myp.model_to_category_name(subject_class), subject.id).length > 0
               true
             else
               Rails.logger.debug{"Returning false for #{user.id} #{action} #{Myp.model_to_category_name(subject_class)} #{subject.id}"}
