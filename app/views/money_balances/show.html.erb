@@ -1,6 +1,8 @@
 <%= render layout: "shared/model_show" do %>
 
-  <%= attribute_table_row_reference(t("myplaceonline.money_balances.contact"), "contact_path", @obj.contact) %>
+  <% if @obj.current_user_owns? %>
+    <%= attribute_table_row_reference(t("myplaceonline.money_balances.contact"), "contact_path", @obj.contact) %>
+  <% end %>
   <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), @obj.notes) %>
   <% balance = @obj.calculate_balance %>
   <% if balance == 0 %>
@@ -9,14 +11,16 @@
     <%= attribute_table_row_content(
           t("myplaceonline.money_balances.balance"),
           "",
-          t("myplaceonline.money_balances.you_owe", contact: @obj.contact.display, amount: Myp.number_to_currency(balance.abs))
+          t("myplaceonline.money_balances.you_owe", source: @obj.owner.display, contact: @obj.contact.display, amount: Myp.number_to_currency(balance.abs)),
+          attribute_table_row_clipboard(Myp.number_to_currency(balance.abs))
         )
     %>
   <% else %>
     <%= attribute_table_row_content(
           t("myplaceonline.money_balances.balance"),
           "",
-          t("myplaceonline.money_balances.contact_owes", contact: @obj.contact.display, amount: Myp.number_to_currency(balance))
+          t("myplaceonline.money_balances.contact_owes", source: @obj.owner.display, contact: @obj.contact.display, amount: Myp.number_to_currency(balance)),
+          attribute_table_row_clipboard(Myp.number_to_currency(balance))
         )
     %>
   <% end %>

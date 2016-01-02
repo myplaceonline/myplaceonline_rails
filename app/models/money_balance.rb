@@ -6,7 +6,7 @@ class MoneyBalance < ActiveRecord::Base
   validates :contact, presence: true
   
   def display
-    if User.current_user.primary_identity == owner
+    if current_user_owns?
       contact.display
     else
       owner.display + "/" + contact.display

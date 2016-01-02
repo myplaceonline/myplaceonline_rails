@@ -36,5 +36,9 @@ module MyplaceonlineActiveRecordIdentityConcern
         end
       end
     end
+    
+    def current_user_owns?
+      owner == User.current_user.primary_identity
+    end
   end
 end

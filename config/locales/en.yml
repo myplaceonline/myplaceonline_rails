@@ -1819,8 +1819,8 @@ en:
       add: "Add"
       delete: "Delete"
       balance: "Balance"
-      you_owe: "You owe %{contact} %{amount}"
-      contact_owes: "%{contact} owes you %{amount}"
+      you_owe: "%{source} owes %{contact} %{amount}"
+      contact_owes: "%{contact} owes %{source} %{amount}"
       share: "Share"
     money_balance_items:
       money_balance_item_name: "Description"

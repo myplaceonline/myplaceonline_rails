@@ -38,12 +38,7 @@ module ApplicationHelper
     attribute_table_row(name, value, clipboard_text, valueclass)
   end
   
-  def attribute_table_row(name, value, clipboard_text = value, valueclass = nil)
-    if is_blank(value)
-      return nil
-    end
-    valueclass ||= ""
-    
+  def attribute_table_row_clipboard(clipboard_text)
     if !is_blank(clipboard_text.to_s)
       options = Hash.new
       options[:href] = "#"
@@ -51,14 +46,23 @@ module ApplicationHelper
       options[:title] = t("myplaceonline.general.clipboard")
       options["data-clipboard-text"] = HTMLEntities.new.encode(clipboard_text_str(clipboard_text))
       
-      lastcolumn = content_tag(
+      content_tag(
         :a,
         t("myplaceonline.general.clipboard"),
         options
       )
     else
-      lastcolumn = "&nbsp;"
+      "&nbsp;"
     end
+  end
+  
+  def attribute_table_row(name, value, clipboard_text = value, valueclass = nil)
+    if is_blank(value)
+      return nil
+    end
+    valueclass ||= ""
+    
+    lastcolumn = attribute_table_row_clipboard(clipboard_text)
     
     attribute_table_row_content(
       name,
