@@ -309,12 +309,21 @@ class MyplaceonlineController < ApplicationController
     end
   
     def all
+      initial_or = ""
+      can_read_others = Permission.where(
+        "user_id = ? and subject_class = ? and (action & #{Permission::ACTION_MANAGE} != 0 or action & #{Permission::ACTION_READ} != 0)",
+        current_user.id,
+        category_name
+      ).to_a.map{|p| p.subject_id}.join(",")
+      if !can_read_others.blank?
+        initial_or = " or #{model.table_name}.id in (#{can_read_others})"
+      end
       additional = all_additional_sql
       if additional.nil?
         additional = ""
       end
       model.includes(all_includes).joins(all_joins).where(
-        model.table_name + ".owner_id = ? " + additional,
+        "(#{model.table_name}.owner_id = ? #{initial_or}) #{additional}",
         current_user.primary_identity.id
       )
     end
