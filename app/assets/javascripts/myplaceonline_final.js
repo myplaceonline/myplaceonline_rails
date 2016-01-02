@@ -33,12 +33,13 @@ var myplaceonline = function(mymodule) {
     return false;
   }
   
-  // TODO
-  // "For AJAX requests other than GETs, extract the “csrf-token” from the
-  // meta-tag and send as the “X-CSRF-Token” HTTP header."
-  // http://api.rubyonrails.org/classes/ActionView/Helpers/CsrfHelper.html
-  // http://stackoverflow.com/questions/7203304/warning-cant-verify-csrf-token-authenticity-rails
-  // http://api.jquery.com/jQuery.ajaxPrefilter/
+  $.ajaxPrefilter(function(options, originalOptions, xhr) {
+    // "For AJAX requests other than GETs, extract the “csrf-token” from the
+    // meta-tag and send as the “X-CSRF-Token” HTTP header."
+    // http://api.rubyonrails.org/classes/ActionView/Helpers/CsrfHelper.html
+    // http://stackoverflow.com/questions/7203304
+    xhr.setRequestHeader("X-CSRF-Token", $("meta[name='csrf-token']").attr("content"));
+  });
 
   // https://github.com/rails/jquery-ujs/wiki/ajax
   $(document).on('ajax:remotipartSubmit', 'form', function() {
