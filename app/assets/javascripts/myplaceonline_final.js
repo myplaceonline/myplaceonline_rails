@@ -637,7 +637,7 @@ var myplaceonline = function(mymodule) {
       $('<meta name="csrf-param" content="authenticity_token" />').appendTo('head');
       metaTag = $('<meta name="csrf-token" content="" />').appendTo('head');
     }
-    metaTag.attr("content", '<%= form_authenticity_token %>');
+    metaTag.attr("content", token);
   }
 
   // Public API
