@@ -257,4 +257,12 @@ class Identity < ActiveRecord::Base
     end
     result
   end
+  
+  def display
+    result = name
+    if result.blank?
+      result = owner.email
+    end
+    result
+  end
 end
