@@ -1836,3 +1836,4 @@ en:
       action_destroy: "Destroy"
       action_manage: "Manage"
       invalid_id: "Invalid ID"
+      link: "Link"

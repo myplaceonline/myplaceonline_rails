@@ -37,4 +37,12 @@ class Permission < ActiveRecord::Base
   def category_display
     Category.where(name: subject_class).take!.human_title
   end
+  
+  def link
+    if subject_id.nil?
+      Rails.application.routes.url_helpers.send(subject_class + "_path")
+    else
+      Rails.application.routes.url_helpers.send(subject_class.singularize + "_path", subject_id)
+    end
+  end
 end
