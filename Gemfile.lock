@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/myplaceonline/ckeditor.git
-  revision: 0df22d789381ac6ed31256f8c98357928bf581a3
+  revision: 71d45e76c0f7f60431beea9b2c55e3a8ed6f3940
   specs:
     ckeditor (4.1.5)
       cocaine
@@ -55,7 +55,7 @@ GEM
     addressable (2.4.0)
     arel (6.0.3)
     bcrypt (3.1.10)
-    browser (1.0.1)
+    browser (1.1.0)
     builder (3.2.2)
     calculus (0.2.0)
     cancan (1.6.10)
