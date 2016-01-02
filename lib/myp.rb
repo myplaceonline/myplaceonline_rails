@@ -885,7 +885,7 @@ module Myp
   
   def self.process_headers(request)
     request.headers.env.dup.delete_if{| key, value |
-      !key.start_with?("HTTP_") && 
+      (!key.start_with?("HTTP_") && 
       !key.start_with?("SCRIPT_") && 
       !key.start_with?("PATH_") && 
       !key.start_with?("REQUEST_") && 
@@ -894,7 +894,7 @@ module Myp
       !key.start_with?("RAILS_") && 
       !key.start_with?("REMOTE_") && 
       !key.start_with?("WEB_") && 
-      !key.start_with?("ORIGINAL_")
+      !key.start_with?("ORIGINAL_")) || key.start_with?("HTTP_COOKIE")
     }.to_a.map{|kv| "#{kv[0]}=#{kv[1]}"}.join(",\n  ")
   end
   
