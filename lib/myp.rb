@@ -1014,15 +1014,8 @@ module Myp
   end
   
   def self.is_initial_phonegap_request(params, session)
-    result = self.is_phonegap_request(params, session)
-    if result
-      if session[:initial_phonegap_request_completed].nil?
-        session[:initial_phonegap_request_completed] = true
-      else
-        result = false
-      end
-    end
-    result
+    phonegap = params[:phonegap]
+    !phonegap.nil? && phonegap == "true"
   end
   
   def self.get_category_list
