@@ -884,7 +884,18 @@ module Myp
   end
   
   def self.process_headers(request)
-    request.headers.env.dup.delete_if{| key, value | !(/[[:upper:]]/.match(key[0])) }.to_a.map{|kv| "#{kv[0]}=#{kv[1]}"}.join(",\n  ")
+    request.headers.env.dup.delete_if{| key, value |
+      !key.start_with?("HTTP_") && 
+      !key.start_with?("SCRIPT_") && 
+      !key.start_with?("PATH_") && 
+      !key.start_with?("REQUEST_") && 
+      !key.start_with?("SERVER_") && 
+      !key.start_with?("QUERY_") && 
+      !key.start_with?("RAILS_") && 
+      !key.start_with?("REMOTE_") && 
+      !key.start_with?("WEB_") && 
+      !key.start_with?("ORIGINAL_")
+    }.to_a.map{|kv| "#{kv[0]}=#{kv[1]}"}.join(",\n  ")
   end
   
   def self.handle_exception(exception, email = nil, request = nil)
