@@ -48,7 +48,7 @@
           myplaceonline.hookListviewEnter($("#mainButtonPopup_search_container input"), "#mainButtonPopup_search_list");
         });
         
-        $("meta[name='csrf-token']").attr("content", '<%= form_authenticity_token %>');
+        myplaceonline.setCsrfToken('<%= form_authenticity_token %>');
       </script>
       <div data-role="header">
         <% header_title_cached = header_title %>

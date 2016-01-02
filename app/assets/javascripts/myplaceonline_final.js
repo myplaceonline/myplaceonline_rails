@@ -630,6 +630,15 @@ var myplaceonline = function(mymodule) {
   function transformMultiply(x, y) {
     return x * y;
   }
+  
+  function setCsrfToken(token) {
+    var metaTag = $("meta[name='csrf-token']");
+    if (metaTag.length == 0) {
+      $('<meta name="csrf-param" content="authenticity_token" />').appendTo('head');
+      metaTag = $('<meta name="csrf-token" content="" />').appendTo('head');
+    }
+    metaTag.attr("content", '<%= form_authenticity_token %>');
+  }
 
   // Public API
   mymodule.hookListviewSearch = hookListviewSearch;
@@ -649,6 +658,7 @@ var myplaceonline = function(mymodule) {
   mymodule.onChangeCascade = onChangeCascade;
   mymodule.toFloatSafe = toFloatSafe;
   mymodule.transformMultiply = transformMultiply;
+  mymodule.setCsrfToken = setCsrfToken;
 
   return mymodule;
 
