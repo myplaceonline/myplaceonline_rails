@@ -11,7 +11,8 @@ class FavoriteProductsController < MyplaceonlineController
     def obj_params
       params.require(:favorite_product).permit(
         :product_name,
-        :notes
+        :notes,
+        favorite_product_links_attributes: [:id, :_destroy, :link]
       )
     end
 end

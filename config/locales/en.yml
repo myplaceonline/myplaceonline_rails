@@ -1348,6 +1348,10 @@ en:
     favorite_products:
       product_name: "Name"
       notes: "Notes"
+      links: "Links"
+      link: "Link"
+      add_link: "Add Link"
+      delete_link: "Delete Link"
     therapists:
       therapist: "Therapist"
     health_insurances:

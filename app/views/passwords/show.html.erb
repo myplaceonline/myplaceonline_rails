@@ -8,7 +8,7 @@
   <%= attribute_table_row_highlight(t("myplaceonline.passwords.password"), decrypted_password) %>
   <%= attribute_table_row(t("myplaceonline.passwords.user"), @obj.user) %>
   <%= attribute_table_row(t("myplaceonline.passwords.email"), @obj.email) %>
-  <%= attribute_table_row(t("myplaceonline.passwords.url"), url_or_blank(@obj.get_url, nil, decrypted_password), @obj.get_url, "focusable") %>
+  <%= attribute_table_row(t("myplaceonline.passwords.url"), url_or_blank(@obj.get_url, nil, decrypted_password, nil, true, true), @obj.get_url, "focusable") %>
   <%= attribute_table_row(t("myplaceonline.passwords.account_number"), @obj.account_number) %>
   <%= attribute_table_row_markdown(t("myplaceonline.passwords.notes"), @obj.notes) %>
   <%= attribute_table_row_boolean(t("myplaceonline.general.defunct"), !@obj.defunct.nil?) %>

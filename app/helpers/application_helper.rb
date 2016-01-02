@@ -183,12 +183,12 @@ module ApplicationHelper
     end
   end
   
-  def attribute_table_row_url(name, url, may_be_nonurl = false, url_text = nil, clipboard = nil, linkclasses = nil, external = false)
+  def attribute_table_row_url(name, url, may_be_nonurl = false, url_text = nil, clipboard = nil, linkclasses = nil, external = false, external_target_blank = false)
     if may_be_nonurl && !url.blank? && !url.start_with?("/") && !url.start_with?("http:")
       # Probably not a URL, just display raw text
       attribute_table_row(name, url)
     else
-      attribute_table_row(name, url_or_blank(url, url_text, clipboard, linkclasses, external), url, nil)
+      attribute_table_row(name, url_or_blank(url, url_text, clipboard, linkclasses, external, external_target_blank), url, nil)
     end
   end
   
@@ -383,7 +383,7 @@ module ApplicationHelper
     end
   end
   
-  def url_or_blank(url, inner_content = nil, clipboard = nil, linkclasses = nil, external = false)
+  def url_or_blank(url, inner_content = nil, clipboard = nil, linkclasses = nil, external = false, external_target_blank = false)
     if !url.to_s.empty?
       if inner_content.nil? || inner_content.to_s.empty?
         inner_content = url
@@ -395,8 +395,9 @@ module ApplicationHelper
       
       # If it's probably external
       if external || (!url.start_with?("/") || url.start_with?("//"))
-        # external are often download links, so no need to send to another window
-        #options[:target] = "_blank"
+        if external_target_blank
+          options[:target] = "_blank"
+        end
         options["data-ajax"] = "false"
       end
       if !clipboard.nil?

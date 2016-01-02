@@ -1,2 +1,23 @@
 <%= myp_text_field(f, :product_name, "myplaceonline.favorite_products.product_name", obj.product_name, autofocus) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.favorite_products.notes", obj.notes) %>
+<%=
+  render(layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.favorite_products.links"),
+    childpropertiesname: :favorite_product_links,
+    childproperties: obj.favorite_product_links,
+    deletebutton: t("myplaceonline.favorite_products.delete_link"),
+    addbutton: t("myplaceonline.favorite_products.add_link"),
+    expanded: obj.favorite_product_links.length > 0,
+    formjson: [
+      {
+        type: 'text',
+        name: 'link',
+        placeholder: t("myplaceonline.favorite_products.link"),
+        autofocus: true
+      }
+    ]
+  }) do |child_fields, childproperty|
+%>
+  <%= myp_text_field(child_fields, :link, "myplaceonline.favorite_products.link", childproperty.link) %>
+<% end %>
