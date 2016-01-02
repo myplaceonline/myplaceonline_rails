@@ -1,0 +1,44 @@
+<% content_for :heading do -%><%= t("myplaceonline.money_balances.money_balance_items") %><% end -%>
+<h1><%= t("myplaceonline.money_balances.money_balance_items") %></h1>
+
+<ul>
+  <% @obj.money_balance_items.each do |mbi| %>
+    <li>
+      <% if mbi.amount < 0 %>
+        <%=
+          t("myplaceonline.money_balances.paid", {
+              x: @obj.contact.display,
+              y: @obj.owner.display,
+              amount: Myp.number_to_currency(mbi.amount.abs),
+              time: mbi.item_time
+            }
+          )
+        %>
+      <% else %>
+        <%=
+          t("myplaceonline.money_balances.paid", {
+              x: @obj.owner.display,
+              y: @obj.contact.display,
+              amount: Myp.number_to_currency(mbi.amount),
+              time: mbi.item_time
+            }
+          )
+        %>
+      <% end %>
+      <% if !mbi.money_balance_item_name.blank? %>
+        <br/><%= mbi.money_balance_item_name %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<div data-role="footer" data-position="fixed" data-tap-toggle="false">
+  <div data-role="navbar">
+    <ul>
+      <li><%= link_to t("myplaceonline.general.cancel"), controller.obj_path, "data-icon" => "back" %></li>
+      <% if content_for?(:footerlinks) %>
+        <%= content_for(:footerlinks) %>
+      <% end %>
+    </ul>
+  </div>
+</div>

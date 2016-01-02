@@ -1,5 +1,5 @@
 class MoneyBalancesController < MyplaceonlineController
-  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:add]
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:add, :list]
 
   def self.param_names(params)
     [
@@ -11,9 +11,14 @@ class MoneyBalancesController < MyplaceonlineController
         :money_balance_item_name,
         :amount,
         :item_time,
-        :invert
+        :invert,
+        :notes
       ]
     ]
+  end
+  
+  def list
+    set_obj
   end
   
   def add

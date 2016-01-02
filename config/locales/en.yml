@@ -1819,6 +1819,7 @@ en:
       add: "Add"
       delete: "Delete"
       balance: "Balance"
+      list: "List"
       you_owe: "%{source} owes %{contact} %{amount}"
       contact_owes: "%{contact} owes %{source} %{amount}"
       i_paid: "I Paid"
@@ -1826,6 +1827,7 @@ en:
       share: "Share"
       i_owe: "I Owe"
       x_owes: "%{x} Owes"
+      paid: "%{x} paid %{amount} for %{y} @ %{time}"
     money_balance_items:
       money_balance_item_name: "Description"
       amount: "Amount (Negative Owed to Contact)"
