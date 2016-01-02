@@ -1005,6 +1005,18 @@ module Myp
     params[:phonegap] == "true" || session[:phonegap]
   end
   
+  def self.is_initial_phonegap_request(params, session)
+    result = self.is_phonegap_request(params, session)
+    if result
+      if session[:initial_phonegap_request_completed].nil?
+        session[:initial_phonegap_request_completed] = true
+      else
+        result = false
+      end
+    end
+    result
+  end
+  
   def self.get_category_list
     search = Myp.categories(User.current_user).merge({
       "foods" => Category.new(name: "foods"),

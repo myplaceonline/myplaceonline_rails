@@ -6,11 +6,5 @@ class WelcomeController < ApplicationController
     if user_signed_in?
       @myplets = Myplet.where(owner: current_user.primary_identity).order(:x_coordinate, :y_coordinate).all
     end
-    @isInitialPhonegapRequest = Myp.is_phonegap_request(params, session)
-    if @isInitialPhonegapRequest
-      # TODO this is reset if user signs out (need to "transfer" such
-      # session attributes)
-      session[:phonegap] = true
-    end
   end
 end
