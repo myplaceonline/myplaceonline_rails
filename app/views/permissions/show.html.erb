@@ -1,9 +1,13 @@
 <%= render layout: "shared/model_show" do %>
 
   <%= attribute_table_row(t("myplaceonline.permissions.user"), @obj.user.display) %>
-  <%= attribute_table_row_select(t("myplaceonline.permissions.action"), @obj.action, Permission::ACTION_TYPES) %>
   <%= attribute_table_row(t("myplaceonline.permissions.subject_class"), @obj.category_display) %>
   <%= attribute_table_row(t("myplaceonline.permissions.subject_id"), @obj.subject_id) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.permissions.action_manage"), @obj.actionbit1) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.permissions.action_read"), @obj.actionbit2) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.permissions.action_create"), @obj.actionbit4) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.permissions.action_update"), @obj.actionbit8) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.permissions.action_destroy"), @obj.actionbit16) %>
   <%= attribute_table_row_url(t("myplaceonline.permissions.link"), @obj.path) %>
 
 <% end %>

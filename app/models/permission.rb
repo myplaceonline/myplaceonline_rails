@@ -1,18 +1,21 @@
 class Permission < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
+  include ModelHelpersConcern
 
   ACTION_TYPES = [
-    ["myplaceonline.permissions.action_manage", 0],
-    ["myplaceonline.permissions.action_read", 1],
-    ["myplaceonline.permissions.action_create", 2],
-    ["myplaceonline.permissions.action_update", 3],
-    ["myplaceonline.permissions.action_destroy", 4]
+    ["myplaceonline.permissions.action_manage", 1],
+    ["myplaceonline.permissions.action_read", 2],
+    ["myplaceonline.permissions.action_create", 4],
+    ["myplaceonline.permissions.action_update", 8],
+    ["myplaceonline.permissions.action_destroy", 16]
   ]
   
   validates :user, presence: true
   validates :action, presence: true
   validates :subject_class, presence: true
+  
+  bit_flags_transfer :actionbit, Permission::ACTION_TYPES, :action
   
   def display
     result = user.display

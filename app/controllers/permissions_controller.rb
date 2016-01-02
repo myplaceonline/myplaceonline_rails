@@ -2,9 +2,13 @@ class PermissionsController < MyplaceonlineController
   def self.param_names(params)
     [
       { user_attributes: [:id] },
-      :action,
       :subject_class,
-      :subject_id
+      :subject_id,
+      :actionbit1,
+      :actionbit2,
+      :actionbit4,
+      :actionbit8,
+      :actionbit16,
     ]
   end
 

@@ -12,6 +12,10 @@
     always_search: true
   }
 %>
-<%= myp_select(f, :action, "myplaceonline.permissions.action", Myp.translate_options(Permission::ACTION_TYPES), obj.action) %>
+<%= myp_check_box(f, :actionbit1, "myplaceonline.permissions.action_manage") %>
+<%= myp_check_box(f, :actionbit2, "myplaceonline.permissions.action_read") %>
+<%= myp_check_box(f, :actionbit4, "myplaceonline.permissions.action_create") %>
+<%= myp_check_box(f, :actionbit8, "myplaceonline.permissions.action_update") %>
+<%= myp_check_box(f, :actionbit16, "myplaceonline.permissions.action_destroy") %>
 <%= myp_select(f, :subject_class, "myplaceonline.permissions.subject_class", Myp.get_category_list_select, obj.subject_class) %>
 <%= myp_number_field(f, :subject_id, "myplaceonline.permissions.subject_id", obj.subject_id) %>
