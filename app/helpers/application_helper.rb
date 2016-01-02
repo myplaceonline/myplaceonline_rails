@@ -619,7 +619,7 @@ module ApplicationHelper
       markdown_data: value,
       hidden_field_name: name
     })
-    form.label(name, placeholder, class: "form_field_label") + result
+    form.label(name, placeholder, class: "form_field_label") + result + "<br />".html_safe
     #myp_text_area(form, name, I18n.t(placeholder) + " (" + I18n.t("myplaceonline.general.supports_markdown") + ")", value, autofocus, input_classes)
   end
 
