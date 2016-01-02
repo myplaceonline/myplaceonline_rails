@@ -26,13 +26,6 @@ var myplaceonline = function(mymodule) {
   $.noty.defaults.timeout = 3000;
   $.noty.defaults.layout = 'topCenter';
   
-  function startsWith(str, search) {
-    if (str && search && str.length >= search.length && str.substring(0, search.length) == search) {
-      return true;
-    }
-    return false;
-  }
-  
   $.ajaxPrefilter(function(options, originalOptions, xhr) {
     // "For AJAX requests other than GETs, extract the “csrf-token” from the
     // meta-tag and send as the “X-CSRF-Token” HTTP header."
@@ -55,7 +48,7 @@ var myplaceonline = function(mymodule) {
     // which will do something like navigate to the success page
     // (see MyplaceonlineController.may_upload). If it's text/html,
     // then there was probably some error, so we need to display it.
-    if (startsWith(contentType, "text/html")) {
+    if (myplaceonline.startsWith(contentType, "text/html")) {
       myplaceonline.showLoading();
       var html = $(status.responseText);
       var content = html.find(".ui-content");

@@ -50,7 +50,7 @@ class ApiController < ApplicationController
   def quickfeedback
     if !current_user.nil? && !current_user.primary_identity.nil?
       begin
-        UserMailer.send_support_email(current_user.email, "Quick Feedback", request.raw_post).deliver
+        UserMailer.send_support_email(current_user.email, "Quick Feedback", request.raw_post).deliver_now
         render json: {
           :result => true
         }
@@ -65,6 +65,17 @@ class ApiController < ApplicationController
         :result => false
       }
     end
+  end
+  
+  def debug
+    from = Myplaceonline::DEFAULT_SUPPORT_EMAIL
+    if !current_user.nil?
+      from = current_user.email
+    end
+    UserMailer.send_support_email(from, "Javascript Error", request.raw_post).deliver_now
+    render json: {
+      :result => true
+    }
   end
   
   protected

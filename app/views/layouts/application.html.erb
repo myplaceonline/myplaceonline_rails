@@ -55,6 +55,11 @@
         });
         
         myplaceonline.setCsrfToken('<%= form_authenticity_token %>');
+        
+        <% if Rails.env.development? %>
+          myplaceonline.setBaseUrl("<%= "http://#{Rails.configuration.default_url_options[:host]}:#{Rails.configuration.default_url_options[:port]}/" %>");
+        <% end %>
+        
       </script>
       <div data-role="header">
         <% header_title_cached = header_title %>

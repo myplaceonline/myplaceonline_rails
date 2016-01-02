@@ -337,6 +337,7 @@ Rails.application.routes.draw do
   get 'api/categories'
   get 'api/randomString'
   get 'api/subregions'
+  post 'api/debug'
   post 'api/renderpartial'
   post 'api/quickfeedback'
   

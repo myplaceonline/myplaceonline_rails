@@ -1,5 +1,4 @@
 // myplaceonline.js
-// Version 0.13
 //
 // Notes:
 //  * When changing this file, apply the same changes in phonegap and push
@@ -40,6 +39,13 @@ var myplaceonline = function(mymodule) {
   var redirectAnchor = null;
   var clipboard_integration = 1;
   var initialPhonegapPage = false;
+  
+  function startsWith(str, search) {
+    if (str && search && str.length >= search.length && str.substring(0, search.length) == search) {
+      return true;
+    }
+    return false;
+  }
   
   function consoleLog(msg) {
     if (window.console) {
@@ -106,7 +112,7 @@ var myplaceonline = function(mymodule) {
     document.getElementById("debugConsole").value = "Accumulated Messages:\n" + result;
   }
 
-  function sendDebug() {
+  function sendDebug(message, dontAlert) {
     // URL is absolute because the call might come from phonegap
     $.ajax({
       type: "POST",
@@ -115,13 +121,18 @@ var myplaceonline = function(mymodule) {
       contentType: "application/json",
       async: true,
       data: JSON.stringify({
+        message: message,
         messages: debugMessages,
         html: document.documentElement.innerHTML
       })
     }).done(function(data) {
-      alert("We've received your data.");
+      if (!dontAlert) {
+        alert("We've received your data.");
+      }
     }).fail(function(data) {
-      alert("Error contacting our server. Please try again.");
+      if (!dontAlert) {
+        alert("Error contacting our server.");
+      }
     });
   }
 
@@ -223,6 +234,7 @@ var myplaceonline = function(mymodule) {
     consoleLog(msg);
     jserrors++;
     if (jserrors <= maxjserrors) {
+      sendDebug(msg, true);
       alert(msg);
     }
   }
@@ -835,7 +847,8 @@ var myplaceonline = function(mymodule) {
   }
   
   // Public API
-  
+
+  mymodule.startsWith = startsWith;
   mymodule.consoleLog = consoleLog;
   mymodule.consoleDir = consoleDir;
   mymodule.showDebugConsole = showDebugConsole;
@@ -900,6 +913,12 @@ var myplaceonline = function(mymodule) {
   mymodule.getSnapshotKey = function() {
     return snapshotKey;
   };
+  
+  mymodule.setBaseUrl = function(newvalue) {
+    if (newvalue.startsWith("http://localhost")) {
+      baseurl = newvalue;
+    }
+  }
   
   return mymodule;
 
