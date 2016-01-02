@@ -1,4 +1,3 @@
-# Actions: read, create, update, destroy, manage
 class Ability
   include CanCan::Ability
 
@@ -16,7 +15,7 @@ class Ability
             query = "user_id = ? and subject_class = ? and subject_id = ? and (action & #{Permission::ACTION_MANAGE} != 0"
             if action == :show
               query += " or action & #{Permission::ACTION_READ} != 0"
-            elsif action == :edit
+            elsif action == :edit || action == :update
               query += " or action & #{Permission::ACTION_UPDATE} != 0"
             elsif action == :destroy
               query += " or action & #{Permission::ACTION_DESTROY} != 0"
