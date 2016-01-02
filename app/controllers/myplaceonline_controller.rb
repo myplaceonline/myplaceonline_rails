@@ -101,24 +101,30 @@ class MyplaceonlineController < ApplicationController
     end
     ActiveRecord::Base.transaction do
       begin
-        p = obj_params
-        Rails.logger.debug{"Permitted parameters: #{p.inspect}"}
-        @obj = model.new(p)
-      rescue ActiveRecord::RecordNotFound => rnf
-        raise Myp::CannotFindNestedAttribute, rnf.message + " (code needs attribute setter override?)"
-      end
-      
-      save_result = @obj.save
-      
-      Rails.logger.debug{"Saved #{save_result.to_s} for #{@obj.inspect}"}
-      
-      if save_result
-        if has_category
-          Myp.add_point(current_user, category_name, session)
+        Permission.current_target = @obj
+        
+        begin
+          p = obj_params
+          Rails.logger.debug{"Permitted parameters: #{p.inspect}"}
+          @obj = model.new(p)
+        rescue ActiveRecord::RecordNotFound => rnf
+          raise Myp::CannotFindNestedAttribute, rnf.message + " (code needs attribute setter override?)"
         end
-        return after_create_or_update
-      else
-        return render :new
+        
+        save_result = @obj.save
+        
+        Rails.logger.debug{"Saved #{save_result.to_s} for #{@obj.inspect}"}
+        
+        if save_result
+          if has_category
+            Myp.add_point(current_user, category_name, session)
+          end
+          return after_create_or_update
+        else
+          return render :new
+        end
+      ensure
+        Permission.current_target = nil
       end
     end
   end
@@ -126,17 +132,22 @@ class MyplaceonlineController < ApplicationController
   def update
     update_security
     ActiveRecord::Base.transaction do
-
       begin
-        @obj.assign_attributes(obj_params)
-      rescue ActiveRecord::RecordNotFound => rnf
-        raise Myp::CannotFindNestedAttribute, rnf.message + " (code needs attribute setter override?)"
-      end
+        Permission.current_target = @obj
 
-      if @obj.save
-        return after_create_or_update
-      else
-        return render :edit
+        begin
+          @obj.assign_attributes(obj_params)
+        rescue ActiveRecord::RecordNotFound => rnf
+          raise Myp::CannotFindNestedAttribute, rnf.message + " (code needs attribute setter override?)"
+        end
+
+        if @obj.save
+          return after_create_or_update
+        else
+          return render :edit
+        end
+      ensure
+        Permission.current_target = nil
       end
     end
   end

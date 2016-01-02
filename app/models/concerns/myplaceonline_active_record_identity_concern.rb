@@ -13,12 +13,13 @@ module MyplaceonlineActiveRecordIdentityConcern
       if self.respond_to?("owner=")
         current_user = User.current_user
         if !current_user.nil?
+          owner_target = Permission.current_target_owner
           if !self.owner.nil?
-            if self.owner_id != current_user.primary_identity.id
+            if self.owner_id != owner_target.id
               raise "Unauthorized"
             end
           else
-            self.owner = current_user.primary_identity
+            self.owner = owner_target
           end
         else
           raise "User.current_user not set"

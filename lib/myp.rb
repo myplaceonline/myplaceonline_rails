@@ -859,9 +859,10 @@ module Myp
       model = Object.const_get(targetname.to_s.camelize)
     end
     if model.new.respond_to?("owner_id")
+      
       obj = model.find_by(
         id: id,
-        owner: User.current_user.primary_identity
+        owner: Permission.current_target_owner
       )
     else
       obj = model.find(id)
@@ -878,7 +879,7 @@ module Myp
   def self.find_existing_object(class_name, id)
     Object.const_get(class_name.to_s.camelize).find_by(
       id: id,
-      owner: User.current_user.primary_identity
+      owner: Permission.current_target_owner
     )
   end
   

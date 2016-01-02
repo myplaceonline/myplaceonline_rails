@@ -38,11 +38,28 @@ class Permission < ActiveRecord::Base
     Category.where(name: subject_class).take!.human_title
   end
   
-  def link
+  def path
     if subject_id.nil?
       Rails.application.routes.url_helpers.send(subject_class + "_path")
     else
       Rails.application.routes.url_helpers.send(subject_class.singularize + "_path", subject_id)
+    end
+  end
+
+  def self.current_target
+    Thread.current[:current_target]
+  end
+
+  def self.current_target=(target)
+    Thread.current[:current_target] = target
+  end
+  
+  def self.current_target_owner
+    target = Permission.current_target
+    if target.nil?
+      target_owner = User.current_user.primary_identity
+    else
+      target_owner = target.owner
     end
   end
 end
