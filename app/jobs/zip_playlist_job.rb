@@ -124,7 +124,7 @@ class ZipPlaylistJob < ApplicationJob
               end
               to = Array.new
               share.playlist_share_contacts.each do |playlist_share_contact|
-                playlist_share_contact.contact.identity.emails.each do |identity_email|
+                playlist_share_contact.contact.contact_identity.emails.each do |identity_email|
                   to.push(identity_email)
                 end
               end

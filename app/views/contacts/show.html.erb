@@ -1,38 +1,38 @@
 <%= render layout: "shared/model_show" do %>
 
-  <%= attribute_table_row(t("myplaceonline.contacts.name"), @obj.identity.name) %>
-  <%= attribute_table_row(t("myplaceonline.contacts.nickname"), @obj.identity.nickname) %>
-  <%= attribute_table_row(t("myplaceonline.contacts.birthday"), @obj.identity.birthday) %>
-  <% if !@obj.identity.birthday.nil? %>
-    <%= attribute_table_row(t("myplaceonline.contacts.age"), Myp.time_difference_in_general_from_now(@obj.identity.birthday)) %>
-    <%= attribute_table_row(t("myplaceonline.contacts.next_birthday"), Myp.time_difference_in_general_human_detailed_from_now(@obj.identity.next_birthday)) %>
+  <%= attribute_table_row(t("myplaceonline.contacts.name"), @obj.contact_identity.name) %>
+  <%= attribute_table_row(t("myplaceonline.contacts.nickname"), @obj.contact_identity.nickname) %>
+  <%= attribute_table_row(t("myplaceonline.contacts.birthday"), @obj.contact_identity.birthday) %>
+  <% if !@obj.contact_identity.birthday.nil? %>
+    <%= attribute_table_row(t("myplaceonline.contacts.age"), Myp.time_difference_in_general_from_now(@obj.contact_identity.birthday)) %>
+    <%= attribute_table_row(t("myplaceonline.contacts.next_birthday"), Myp.time_difference_in_general_human_detailed_from_now(@obj.contact_identity.next_birthday)) %>
   <% end %>
   <%= attribute_table_row_select t("myplaceonline.contacts.contact_type"), @obj.contact_type, Contact::CONTACT_TYPES %>
-  <%= attribute_table_row_markdown(t("myplaceonline.contacts.notes"), @obj.identity.notes) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.contacts.likes"), @obj.identity.likes) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.contacts.gift_ideas"), @obj.identity.gift_ideas) %>
-  <%= attribute_table_row(t("myplaceonline.contacts.ktn"), @obj.identity.ktn) %>
-  <% @obj.identity.identity_emails.each do |email| %>
+  <%= attribute_table_row_markdown(t("myplaceonline.contacts.notes"), @obj.contact_identity.notes) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.contacts.likes"), @obj.contact_identity.likes) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.contacts.gift_ideas"), @obj.contact_identity.gift_ideas) %>
+  <%= attribute_table_row(t("myplaceonline.contacts.ktn"), @obj.contact_identity.ktn) %>
+  <% @obj.contact_identity.identity_emails.each do |email| %>
     <%= attribute_table_row_email(t("myplaceonline.identities.email"), email.email) %>
   <% end %>
-  <% @obj.identity.identity_phones.each do |phone| %>
+  <% @obj.contact_identity.identity_phones.each do |phone| %>
     <%= attribute_table_row(t("myplaceonline.identities.phone"), phone.number) %>
     <%= attribute_table_row_select t("myplaceonline.identity_phones.phone_type"), phone.phone_type, IdentityPhone::PHONE_TYPES %>
   <% end %>
   <% @obj.all_conversations.each do |conversation| %>
     <%= attribute_table_row_markdown(t("myplaceonline.contacts.conversation") + " (" + Myp.display_date(conversation.conversation_date, current_user) + ")", conversation.conversation) %>
   <% end %>
-  <% @obj.identity.identity_locations.each do |identity_location| %>
+  <% @obj.contact_identity.identity_locations.each do |identity_location| %>
     <%= attribute_table_row_reference(t("myplaceonline.identities.location"), "location_path", identity_location.location) %>
   <% end %>
-  <% @obj.identity.identity_relationships.each do |identity_relationship| %>
+  <% @obj.contact_identity.identity_relationships.each do |identity_relationship| %>
     <% if !identity_relationship.relationship_type.nil? %>
       <%= attribute_table_row_reference(Myp.get_select_name(identity_relationship.relationship_type, IdentityRelationship::RELATIONSHIPS), "contact_path", identity_relationship.contact) %>
     <% else %>
       <%= attribute_table_row_reference(t("myplaceonline.identities.relationship"), "contact_path", identity_relationship.contact) %>
     <% end %>
   <% end %>
-  <% @obj.identity.identity_drivers_licenses.each do |identity_drivers_license| %>
+  <% @obj.contact_identity.identity_drivers_licenses.each do |identity_drivers_license| %>
     <%= table_row_heading(t("myplaceonline.identities.drivers_license")) %>
     <%= attribute_table_row(t("myplaceonline.identities.license_number"), identity_drivers_license.identifier) %>
     <%= attribute_table_row_date(t("myplaceonline.identities.license_expires"), identity_drivers_license.expires) %>
@@ -42,7 +42,7 @@
   <% end %>
   <%=
     render partial: 'myplaceonline/pictures', locals: {
-      pics: @obj.identity.identity_pictures,
+      pics: @obj.contact_identity.identity_pictures,
       placeholder: "myplaceonline.contacts.picture"
     }
   %>

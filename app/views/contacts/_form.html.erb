@@ -1,8 +1,8 @@
-<%= f.fields_for(:identity, obj.identity) do |identity_fields| %>
+<%= f.fields_for(:contact_identity, obj.contact_identity) do |identity_fields| %>
 
-  <%= myp_text_field(identity_fields, :name, "myplaceonline.contacts.name", obj.identity.name, autofocus) %>
-  <%= myp_text_field(identity_fields, :nickname, "myplaceonline.contacts.nickname", obj.identity.nickname) %>
-  <%= myp_date_field(identity_fields, :birthday, "myplaceonline.contacts.birthday", obj.identity.birthday) %>
+  <%= myp_text_field(identity_fields, :name, "myplaceonline.contacts.name", obj.contact_identity.name, autofocus) %>
+  <%= myp_text_field(identity_fields, :nickname, "myplaceonline.contacts.nickname", obj.contact_identity.nickname) %>
+  <%= myp_date_field(identity_fields, :birthday, "myplaceonline.contacts.birthday", obj.contact_identity.birthday) %>
   <%= myp_select(f, :contact_type, "myplaceonline.contacts.contact_type", Myp.translate_options(Contact::CONTACT_TYPES), obj.contact_type) %>
   
   <%=
@@ -10,10 +10,10 @@
       f: identity_fields,
       heading: t("myplaceonline.identities.emails"),
       childpropertiesname: :identity_emails,
-      childproperties: obj.identity.identity_emails,
+      childproperties: obj.contact_identity.identity_emails,
       deletebutton: t("myplaceonline.identities.delete_email"),
       addbutton: t("myplaceonline.identities.add_email"),
-      expanded: obj.identity.identity_emails.length > 0,
+      expanded: obj.contact_identity.identity_emails.length > 0,
       formjson: [
         {
           type: 'text',
@@ -32,10 +32,10 @@
       f: identity_fields,
       heading: t("myplaceonline.identities.phones"),
       childpropertiesname: :identity_phones,
-      childproperties: obj.identity.identity_phones,
+      childproperties: obj.contact_identity.identity_phones,
       deletebutton: t("myplaceonline.identities.delete_phone"),
       addbutton: t("myplaceonline.identities.add_phone"),
-      expanded: obj.identity.identity_phones.length > 0,
+      expanded: obj.contact_identity.identity_phones.length > 0,
       formjson: [
         {
           type: 'text',
@@ -90,10 +90,10 @@
       f: identity_fields,
       heading: t("myplaceonline.identities.locations"),
       childpropertiesname: :identity_locations,
-      childproperties: obj.identity.identity_locations,
+      childproperties: obj.contact_identity.identity_locations,
       deletebutton: t("myplaceonline.identities.delete_location"),
       addbutton: t("myplaceonline.identities.add_location"),
-      expanded: obj.identity.identity_locations.length > 0,
+      expanded: obj.contact_identity.identity_locations.length > 0,
       formjson: [
         {
           type: :renderpartial,
@@ -129,10 +129,10 @@
       f: identity_fields,
       heading: t("myplaceonline.identities.relationships"),
       childpropertiesname: :identity_relationships,
-      childproperties: obj.identity.identity_relationships,
+      childproperties: obj.contact_identity.identity_relationships,
       deletebutton: t("myplaceonline.identities.delete_relationship"),
       addbutton: t("myplaceonline.identities.add_relationship"),
-      expanded: obj.identity.identity_relationships.length > 0,
+      expanded: obj.contact_identity.identity_relationships.length > 0,
       formjson: [
         {
           type: :renderpartial,
@@ -175,10 +175,10 @@
       f: identity_fields,
       heading: t("myplaceonline.identities.drivers_licenses"),
       childpropertiesname: :identity_drivers_licenses,
-      childproperties: obj.identity.identity_drivers_licenses,
+      childproperties: obj.contact_identity.identity_drivers_licenses,
       deletebutton: t("myplaceonline.identities.delete_license"),
       addbutton: t("myplaceonline.identities.add_license"),
-      expanded: obj.identity.identity_drivers_licenses.length > 0,
+      expanded: obj.contact_identity.identity_drivers_licenses.length > 0,
       formjson: [
         {
           type: 'text',
@@ -208,10 +208,10 @@
       f: identity_fields,
       heading: t("myplaceonline.contacts.pictures"),
       childpropertiesname: :identity_pictures,
-      childproperties: obj.identity.identity_pictures,
+      childproperties: obj.contact_identity.identity_pictures,
       deletebutton: t("myplaceonline.contacts.delete_picture"),
       addbutton: t("myplaceonline.contacts.add_picture"),
-      expanded: obj.identity.identity_pictures.length > 0,
+      expanded: obj.contact_identity.identity_pictures.length > 0,
       formjson: [
         {
           type: 'file',
@@ -226,9 +226,9 @@
     <% end %>
   <% end %>
 
-  <%= myp_text_area_markdown(identity_fields, :notes, "myplaceonline.contacts.notes", obj.identity.notes) %>
-  <%= myp_text_area_markdown(identity_fields, :likes, "myplaceonline.contacts.likes", obj.identity.likes) %>
-  <%= myp_text_area_markdown(identity_fields, :gift_ideas, "myplaceonline.contacts.gift_ideas", obj.identity.gift_ideas) %>
-  <%= myp_text_field(identity_fields, :ktn, "myplaceonline.contacts.ktn", obj.identity.ktn) %>
+  <%= myp_text_area_markdown(identity_fields, :notes, "myplaceonline.contacts.notes", obj.contact_identity.notes) %>
+  <%= myp_text_area_markdown(identity_fields, :likes, "myplaceonline.contacts.likes", obj.contact_identity.likes) %>
+  <%= myp_text_area_markdown(identity_fields, :gift_ideas, "myplaceonline.contacts.gift_ideas", obj.contact_identity.gift_ideas) %>
+  <%= myp_text_field(identity_fields, :ktn, "myplaceonline.contacts.ktn", obj.contact_identity.ktn) %>
 
 <% end %>

@@ -4,7 +4,7 @@ class ContactsControllerTest < ActionController::TestCase
   include MyplaceonlineControllerTest
   
   def test_attributes
-    { identity_attributes: { name: "Test" } }
+    { contact_identity_attributes: { name: "Test" } }
   end
 
   def do_test_delete

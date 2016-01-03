@@ -20,7 +20,7 @@ class ContactsController < MyplaceonlineController
         :conversation_date,
         :_destroy
       ],
-      identity_attributes: [
+      contact_identity_attributes: [
         :id,
         :name,
         :nickname,
@@ -84,7 +84,7 @@ class ContactsController < MyplaceonlineController
 
   def self.reject_if_blank(attributes)
     attributes.all?{|key, value|
-      if key == "identity_attributes"
+      if key == "contact_identity_attributes"
         value.all?{|key2, value2| value2.blank?}
       else
         value.blank?
@@ -114,10 +114,10 @@ class ContactsController < MyplaceonlineController
 
     # Join because we're sorting by identity name
     def all_joins
-      :identity
+      :contact_identity
     end
     
     def all_includes
-      :identity
+      :contact_identity
     end
 end

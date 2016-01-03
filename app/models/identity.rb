@@ -130,7 +130,7 @@ class Identity < ActiveRecord::Base
       :movies => movies.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :wisdoms => wisdoms.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :to_dos => to_dos.to_a.sort{ |a,b| a.short_description.downcase <=> b.short_description.downcase }.map{|x| x.as_json},
-      :contacts => contacts.to_a.delete_if{|x| x.identity_id == id }.map{|x| x.as_json},
+      :contacts => contacts.to_a.delete_if{|x| x.contact_identity_id == id }.map{|x| x.as_json},
       :accomplishments => accomplishments.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :feeds => feeds.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
       :locations => locations.to_a.sort{ |a,b| a.display.downcase <=> b.display.downcase }.map{|x| x.as_json},
@@ -226,7 +226,7 @@ class Identity < ActiveRecord::Base
   def ensure_contact!
     result = Contact.find_by(
       owner_id: id,
-      identity_id: id
+      contact_identity_id: id
     )
     if result.nil?
       ActiveRecord::Base.transaction do
@@ -236,7 +236,7 @@ class Identity < ActiveRecord::Base
           self.save!
         end
         result.owner = self
-        result.identity = self
+        result.contact_identity = self
         result.save!
       end
     end

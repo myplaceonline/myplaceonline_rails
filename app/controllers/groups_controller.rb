@@ -6,10 +6,10 @@ class GroupsController < MyplaceonlineController
     
     @found_emails = true
     @emails = @obj.group_contacts.map{ |x|
-      x.contact.identity.identity_emails.length == 0 ? nil : x.contact.identity.identity_emails.map{ |ie| ie.email }.join(", ")
+      x.contact.contact_identity.identity_emails.length == 0 ? nil : x.contact.contact_identity.identity_emails.map{ |ie| ie.email }.join(", ")
     }.reject{ |x| x.nil? }.join(", ")
     @no_emails = @obj.group_contacts.map{ |x|
-      x.contact.identity.identity_emails.length == 0 ? ActionController::Base.helpers.link_to(ActionController::Base.helpers.escape_once(x.contact.display), contact_path(x.contact)) : nil
+      x.contact.contact_identity.identity_emails.length == 0 ? ActionController::Base.helpers.link_to(ActionController::Base.helpers.escape_once(x.contact.display), contact_path(x.contact)) : nil
     }.reject{ |x| x.nil? }.join(", ")
     
     if @emails.blank?

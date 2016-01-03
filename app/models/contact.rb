@@ -13,8 +13,8 @@ class Contact < ActiveRecord::Base
     ["myplaceonline.contacts.party_friend", 8]
   ]
   
-  belongs_to :identity, :dependent => :destroy
-  accepts_nested_attributes_for :identity
+  belongs_to :contact_identity, class_name: Identity, :dependent => :destroy
+  accepts_nested_attributes_for :contact_identity
   
   validate :custom_validation
   
@@ -24,7 +24,7 @@ class Contact < ActiveRecord::Base
   before_destroy :check_if_user_contact, prepend: true
   
   def check_if_user_contact
-    if identity_id == User.current_user.primary_identity.id
+    if contact_identity_id == User.current_user.primary_identity.id
       raise "Cannot delete own identity"
     end
   end
@@ -34,29 +34,29 @@ class Contact < ActiveRecord::Base
   end
   
   def custom_validation
-    if !identity.nil? && identity.name.blank?
+    if !contact_identity.nil? && contact_identity.name.blank?
       errors.add(:name, "not specified")
     end
   end
   
   def as_json(options={})
     super.as_json(options).merge({
-      :identity => identity.as_json
+      :contact_identity => contact_identity.as_json
     })
   end
 
   def display
-    if !identity.nil?
-      result = identity.name
+    if !contact_identity.nil?
+      result = contact_identity.name
       whitespace = result =~ /\s+/
       if whitespace.nil?
-        if !identity.nickname.blank?
-          result = Myp.appendstrwrap(result, identity.nickname)
+        if !contact_identity.nickname.blank?
+          result = Myp.appendstrwrap(result, contact_identity.nickname)
         end
         # Seemingly no last name, so add some other identifier if available
-        if identity.identity_relationships.length > 0 && !identity.identity_relationships[0].relationship_name.nil?
-          relationship = identity.identity_relationships[0]
-          result = Myp.appendstrwrap(result, I18n.t("myplaceonline.contacts.related_to") + " " + relationship.contact.identity.name)
+        if contact_identity.identity_relationships.length > 0 && !contact_identity.identity_relationships[0].relationship_name.nil?
+          relationship = contact_identity.identity_relationships[0]
+          result = Myp.appendstrwrap(result, I18n.t("myplaceonline.contacts.related_to") + " " + relationship.contact.contact_identity.name)
         end
       end
       result
@@ -67,15 +67,15 @@ class Contact < ActiveRecord::Base
   
   def self.build(params = nil)
     result = self.dobuild(params)
-    result.identity = Myp.new_model(Identity)
+    result.contact_identity = Myp.new_model(Identity)
     result
   end
   
   before_validation :update_pic_folders
   
   def update_pic_folders
-    if !identity.nil?
-      put_pictures_in_folder(identity.identity_pictures, [I18n.t("myplaceonline.category.contacts"), display])
+    if !contact_identity.nil?
+      put_pictures_in_folder(contact_identity.identity_pictures, [I18n.t("myplaceonline.category.contacts"), display])
     end
   end
 

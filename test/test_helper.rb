@@ -4,7 +4,7 @@ require 'rails/test_help'
 
 class ActiveSupport::TestCase
   
-  puts "Myplaceonline tests started"
+  puts "Myplaceonline tests started with #{Myp.categories.length} categories"
   
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all

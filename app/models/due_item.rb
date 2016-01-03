@@ -319,9 +319,9 @@ class DueItem < ActiveRecord::Base
         )
       end
 
-      Contact.where(owner: user.primary_identity).includes(:identity).to_a.each do |x|
-        if !x.identity.nil? && !x.identity.birthday.nil?
-          next_birthday = x.identity.next_birthday
+      Contact.where(owner: user.primary_identity).includes(:contact_identity).to_a.each do |x|
+        if !x.contact_identity.nil? && !x.contact_identity.birthday.nil?
+          next_birthday = x.contact_identity.next_birthday
           if next_birthday <= birthday_threshold(mdd)
             diff = TimeDifference.between(datenow, next_birthday)
             diff_in_general = diff.in_general

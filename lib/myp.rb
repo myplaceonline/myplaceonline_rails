@@ -118,7 +118,7 @@ module Myp
     #puts "myplaceonline: Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
   end
   
-  def self.categories(user)
+  def self.categories(user = nil)
     if user.nil? || user.explicit_categories
       @@all_categories
     else
