@@ -35,18 +35,22 @@ module Myplaceonline
     
     puts "Starting @ #{Time.now.to_s} from #{Dir.pwd.to_s} by #{ENV['USER']}"
     
-    log4r_config = YAML.load_file(File.join(File.dirname(__FILE__), "log4r.yml"))
-    log4r_config['log4r_config']['outputters'].each do |outputter|
-      if outputter['filename']
-        outputter['filename'] = outputter['filename'].gsub("%u", ENV['USER'])
-        if Rails.env.production?
-          # may need to know for perms, etc
-          puts "Changing configuration of log4r outputter to " + File.absolute_path(Dir.new(outputter["dirname"])) + "/" + outputter['filename']
+    begin
+      log4r_config = YAML.load_file(File.join(File.dirname(__FILE__), "log4r.yml"))
+      log4r_config['log4r_config']['outputters'].each do |outputter|
+        if outputter['filename']
+          outputter['filename'] = outputter['filename'].gsub("%u", ENV['USER'])
+          if Rails.env.production?
+            # may need to know for perms, etc
+            puts "Changing configuration of log4r outputter to " + File.absolute_path(Dir.new(outputter["dirname"])) + "/" + outputter['filename']
+          end
         end
       end
+      YamlConfigurator.decode_yaml( log4r_config['log4r_config'] )
+      config.logger = Log4r::Logger[Rails.env]
+    rescue StandardError => e
+      puts "Error configuring log4r #{e}"
     end
-    YamlConfigurator.decode_yaml( log4r_config['log4r_config'] )
-    config.logger = Log4r::Logger[Rails.env]
     
     # http://stackoverflow.com/a/5015920/4135310
     config.before_configuration do
