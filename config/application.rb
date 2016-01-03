@@ -48,7 +48,7 @@ module Myplaceonline
       end
       YamlConfigurator.decode_yaml( log4r_config['log4r_config'] )
       config.logger = Log4r::Logger[Rails.env]
-    rescue StandardError => e
+    rescue Exception => e
       puts "Error configuring log4r #{e}"
     end
     
