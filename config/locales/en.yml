@@ -517,6 +517,7 @@ en:
       ktn: "TSA Pre Known Traveler Number (KTN)"
       related_to: "Related to"
       next_birthday: "Next Birthday"
+      new_years_resolution: "Latest New Year's Resolutions"
     files:
       name: "Name"
       download: "Download"
