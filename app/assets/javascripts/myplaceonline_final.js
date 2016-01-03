@@ -609,7 +609,7 @@ var myplaceonline = function(mymodule) {
       currentValue = intermediateTransform(currentValue, intermediate);
     }
     
-    searchResult.val(currentValue);
+    searchResult.val(currentValue.toFixed(2));
   }
   
   function toFloatSafe(someVal) {
