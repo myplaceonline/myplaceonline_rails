@@ -2,99 +2,99 @@ class Identity < ActiveRecord::Base
   include MyplaceonlineActiveRecordBaseConcern
 
   belongs_to :user
-  has_many :passwords, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :identity_files, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :category_points_amounts, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :movies, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :wisdoms, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :to_dos, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :contacts, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :accomplishments, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :feeds, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :locations, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :activities, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :apartments, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :jokes, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :companies, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :promises, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :memberships, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :credit_scores, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :websites, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :credit_cards, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :bank_accounts, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :ideas, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :lists, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :calculation_forms, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :calculations, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :vehicles, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :questions, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :weights, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :blood_pressures, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :heart_rates, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :recipes, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :sleep_measurements, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :heights, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :meals, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :recreational_vehicles, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :acne_measurements, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :exercises, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :sun_exposures, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :medicine_usages, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :pains, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :songs, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :blood_tests, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :checklists, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :medical_conditions, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :life_goals, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :temperatures, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :headaches, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :skin_treatments, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :periodic_payments, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :jobs, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :trips, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :passports, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :promotions, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :reward_programs, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :computers, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :life_insurances, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :diary_entries, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :restaurants, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :camp_locations, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :guns, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :desired_products, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :books, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :favorite_products, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :therapists, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :health_insurances, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :doctors, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :dental_insurances, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :hobbies, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :poems, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :musical_groups, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :dentist_visits, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :doctor_visits, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :statuses, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :notepads, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :myplaceonline_searches, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :myplaceonline_quick_category_displays, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :myplaceonline_due_displays, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :concerts, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :shopping_lists, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :groups, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :phones, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :movie_theaters, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :gas_stations, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :events, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :stocks, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :museums, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :date_locations, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :playlists, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :bars, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :treks, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :money_balances, :foreign_key => 'owner_id', :dependent => :destroy
-  has_many :permissions, :foreign_key => 'owner_id', :dependent => :destroy
+  has_many :passwords, :dependent => :destroy
+  has_many :identity_files, :dependent => :destroy
+  has_many :category_points_amounts, :dependent => :destroy
+  has_many :movies, :dependent => :destroy
+  has_many :wisdoms, :dependent => :destroy
+  has_many :to_dos, :dependent => :destroy
+  has_many :contacts, :dependent => :destroy
+  has_many :accomplishments, :dependent => :destroy
+  has_many :feeds, :dependent => :destroy
+  has_many :locations, :dependent => :destroy
+  has_many :activities, :dependent => :destroy
+  has_many :apartments, :dependent => :destroy
+  has_many :jokes, :dependent => :destroy
+  has_many :companies, :dependent => :destroy
+  has_many :promises, :dependent => :destroy
+  has_many :memberships, :dependent => :destroy
+  has_many :credit_scores, :dependent => :destroy
+  has_many :websites, :dependent => :destroy
+  has_many :credit_cards, :dependent => :destroy
+  has_many :bank_accounts, :dependent => :destroy
+  has_many :ideas, :dependent => :destroy
+  has_many :lists, :dependent => :destroy
+  has_many :calculation_forms, :dependent => :destroy
+  has_many :calculations, :dependent => :destroy
+  has_many :vehicles, :dependent => :destroy
+  has_many :questions, :dependent => :destroy
+  has_many :weights, :dependent => :destroy
+  has_many :blood_pressures, :dependent => :destroy
+  has_many :heart_rates, :dependent => :destroy
+  has_many :recipes, :dependent => :destroy
+  has_many :sleep_measurements, :dependent => :destroy
+  has_many :heights, :dependent => :destroy
+  has_many :meals, :dependent => :destroy
+  has_many :recreational_vehicles, :dependent => :destroy
+  has_many :acne_measurements, :dependent => :destroy
+  has_many :exercises, :dependent => :destroy
+  has_many :sun_exposures, :dependent => :destroy
+  has_many :medicine_usages, :dependent => :destroy
+  has_many :pains, :dependent => :destroy
+  has_many :songs, :dependent => :destroy
+  has_many :blood_tests, :dependent => :destroy
+  has_many :checklists, :dependent => :destroy
+  has_many :medical_conditions, :dependent => :destroy
+  has_many :life_goals, :dependent => :destroy
+  has_many :temperatures, :dependent => :destroy
+  has_many :headaches, :dependent => :destroy
+  has_many :skin_treatments, :dependent => :destroy
+  has_many :periodic_payments, :dependent => :destroy
+  has_many :jobs, :dependent => :destroy
+  has_many :trips, :dependent => :destroy
+  has_many :passports, :dependent => :destroy
+  has_many :promotions, :dependent => :destroy
+  has_many :reward_programs, :dependent => :destroy
+  has_many :computers, :dependent => :destroy
+  has_many :life_insurances, :dependent => :destroy
+  has_many :diary_entries, :dependent => :destroy
+  has_many :restaurants, :dependent => :destroy
+  has_many :camp_locations, :dependent => :destroy
+  has_many :guns, :dependent => :destroy
+  has_many :desired_products, :dependent => :destroy
+  has_many :books, :dependent => :destroy
+  has_many :favorite_products, :dependent => :destroy
+  has_many :therapists, :dependent => :destroy
+  has_many :health_insurances, :dependent => :destroy
+  has_many :doctors, :dependent => :destroy
+  has_many :dental_insurances, :dependent => :destroy
+  has_many :hobbies, :dependent => :destroy
+  has_many :poems, :dependent => :destroy
+  has_many :musical_groups, :dependent => :destroy
+  has_many :dentist_visits, :dependent => :destroy
+  has_many :doctor_visits, :dependent => :destroy
+  has_many :statuses, :dependent => :destroy
+  has_many :notepads, :dependent => :destroy
+  has_many :myplaceonline_searches, :dependent => :destroy
+  has_many :myplaceonline_quick_category_displays, :dependent => :destroy
+  has_many :myplaceonline_due_displays, :dependent => :destroy
+  has_many :concerts, :dependent => :destroy
+  has_many :shopping_lists, :dependent => :destroy
+  has_many :groups, :dependent => :destroy
+  has_many :phones, :dependent => :destroy
+  has_many :movie_theaters, :dependent => :destroy
+  has_many :gas_stations, :dependent => :destroy
+  has_many :events, :dependent => :destroy
+  has_many :stocks, :dependent => :destroy
+  has_many :museums, :dependent => :destroy
+  has_many :date_locations, :dependent => :destroy
+  has_many :playlists, :dependent => :destroy
+  has_many :bars, :dependent => :destroy
+  has_many :treks, :dependent => :destroy
+  has_many :money_balances, :dependent => :destroy
+  has_many :permissions, :dependent => :destroy
   
-  has_many :myplets, -> { order('y_coordinate') }, :foreign_key => 'owner_id', :dependent => :destroy
+  has_many :myplets, -> { order('y_coordinate') }, :dependent => :destroy
   accepts_nested_attributes_for :myplets, allow_destroy: true, reject_if: :all_blank
 
   has_many :identity_phones, :foreign_key => 'parent_identity_id', :dependent => :destroy
@@ -220,12 +220,12 @@ class Identity < ActiveRecord::Base
   end
   
   def calculation_forms_available
-    CalculationForm.where(owner_id: id, is_duplicate: false)
+    CalculationForm.where(identity_id: id, is_duplicate: false)
   end
   
   def ensure_contact!
     result = Contact.find_by(
-      owner_id: id,
+      identity_id: id,
       contact_identity_id: id
     )
     if result.nil?
@@ -235,7 +235,7 @@ class Identity < ActiveRecord::Base
           self.name = I18n.t("myplaceonline.contacts.me")
           self.save!
         end
-        result.owner = self
+        result.identity = self
         result.contact_identity = self
         result.save!
       end

@@ -1,4 +1,4 @@
 diary_entry:
-  owner: identity
+  identity: identity
   diary_time: 2015-01-01 01:01:01
   entry: Test

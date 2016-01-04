@@ -57,14 +57,14 @@ class ZipPlaylistJob < ApplicationJob
           Rails.logger.debug{"Zip data #{zipdata.length}"}
           
           begin
-            User.current_user = share.owner.user
+            User.current_user = share.identity.user
             
             ActiveRecord::Base.transaction do
               # We'll create a share with a unique token that we'll
               # use for the playlist share, each song's identity file and
               # the identity file for the whole zip
               public_share = Share.new
-              public_share.owner = share.owner
+              public_share.identity = share.identity
               public_share.token = SecureRandom.hex(10)
               public_share.save!
               
@@ -83,13 +83,13 @@ class ZipPlaylistJob < ApplicationJob
                 identity_file.file = File.open(tfile.path)
               end
               identity_file.folder = iff
-              identity_file.owner = share.owner
+              identity_file.identity = share.identity
               identity_file.save!
               
               Rails.logger.debug{"Created identity file #{identity_file.inspect}"}
 
               ifs = IdentityFileShare.new
-              ifs.owner = share.owner
+              ifs.identity = share.identity
               ifs.identity_file = identity_file
               ifs.share = public_share
               ifs.save!
@@ -106,7 +106,7 @@ class ZipPlaylistJob < ApplicationJob
 
               song_identity_files.each do |song_identity_file|
                 ifs = IdentityFileShare.new
-                ifs.owner = song_identity_file.owner
+                ifs.identity = song_identity_file.identity
                 ifs.identity_file = song_identity_file
                 ifs.share = public_share
                 ifs.save!

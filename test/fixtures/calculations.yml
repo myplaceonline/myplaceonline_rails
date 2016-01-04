@@ -1,4 +1,4 @@
 calculation:
-  owner: identity
+  identity: identity
   name: Test
   calculation_form: calculation_form

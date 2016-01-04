@@ -15,7 +15,7 @@ class Myplet < ActiveRecord::Base
     # Make sure the user has access to this object
     if !category_name.blank? && !category_id.nil?
       cls = Object.const_get(category_name.camelize.singularize)
-      if cls.where(id: category_id, owner: User.current_user.primary_identity).count == 0
+      if cls.where(id: category_id, identity: User.current_user.primary_identity).count == 0
         errors.add(:category_id, I18n.t("myplaceonline.general.not_auhorized"))
       end
     end
@@ -33,7 +33,7 @@ class Myplet < ActiveRecord::Base
       category_name: x.class.name.underscore.pluralize,
       category_id: x.id,
       border_type: 0,
-      owner: identity
+      identity: identity
     }))
 
     x = MyplaceonlineSearch.new
@@ -45,7 +45,7 @@ class Myplet < ActiveRecord::Base
       category_name: x.class.name.underscore.pluralize,
       category_id: x.id,
       border_type: 0,
-      owner: identity
+      identity: identity
     }))
 
     x = MyplaceonlineQuickCategoryDisplay.new
@@ -57,7 +57,7 @@ class Myplet < ActiveRecord::Base
       category_name: x.class.name.underscore.pluralize,
       category_id: x.id,
       border_type: 1,
-      owner: identity
+      identity: identity
     }))
 
     x = MyplaceonlineDueDisplay.new
@@ -69,7 +69,7 @@ class Myplet < ActiveRecord::Base
       category_name: x.class.name.underscore.pluralize,
       category_id: x.id,
       border_type: 1,
-      owner: identity
+      identity: identity
     }))
 
     x = Notepad.new({
@@ -83,7 +83,7 @@ class Myplet < ActiveRecord::Base
       category_name: x.class.name.underscore.pluralize,
       category_id: x.id,
       border_type: 1,
-      owner: identity
+      identity: identity
     }))
     
     result.each do |myplet|

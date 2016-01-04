@@ -46,7 +46,7 @@ class PlaylistsController < MyplaceonlineController
     @obj = model.find_by(id: params[:id])
     found = false
     if !current_user.nil?
-      found = @obj.owner_id == current_user.primary_identity.id
+      found = @obj.identity_id == current_user.primary_identity.id
     end
     token = params[:token]
     if !token.blank?

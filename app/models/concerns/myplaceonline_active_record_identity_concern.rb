@@ -4,29 +4,30 @@ module MyplaceonlineActiveRecordIdentityConcern
   include MyplaceonlineActiveRecordBaseConcern
 
   included do
-    belongs_to :owner, class_name: Identity
+    # Owner/creator
+    belongs_to :identity
 
     before_create :identity_record_before_save
     before_update :identity_record_before_save
     before_save :identity_record_before_save
 
     def identity_record_before_save
-      if self.respond_to?("owner=")
+      if self.respond_to?("identity=")
         current_user = User.current_user
         if !current_user.nil?
-          owner_target = Permission.current_target_owner
-          if !self.owner.nil?
-            if self.owner_id != owner_target.id
+          identity_target = Permission.current_target_identity
+          if !self.identity.nil?
+            if self.identity_id != identity_target.id
               raise "Unauthorized"
             end
           else
-            self.owner = owner_target
+            self.identity = identity_target
           end
         else
           raise "User.current_user not set"
         end
       else
-        raise "owner= not found"
+        raise "identity= not found"
       end
     end
     
@@ -39,7 +40,7 @@ module MyplaceonlineActiveRecordIdentityConcern
     end
     
     def current_user_owns?
-      owner == User.current_user.primary_identity
+      identity == User.current_user.primary_identity
     end
   end
 end

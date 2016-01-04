@@ -47,7 +47,7 @@ class IdentityFile < ActiveRecord::Base
     result = self.dobuild(params)
     if !params.nil? && !params[:folder].nil?
       folders = IdentityFileFolder.where(
-        owner_id: User.current_user.primary_identity.id,
+        identity_id: User.current_user.primary_identity.id,
         id: params[:folder].to_i
       )
       if folders.size > 0

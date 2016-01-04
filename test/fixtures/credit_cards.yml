@@ -1,5 +1,5 @@
 credit_card:
-  owner: identity
+  identity: identity
   name: Test
   number: 1
   expires: 2015-01-01

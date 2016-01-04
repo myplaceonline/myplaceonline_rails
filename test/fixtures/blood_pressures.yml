@@ -1,5 +1,5 @@
 blood_pressure:
-  owner: identity
+  identity: identity
   systolic_pressure: 120
   diastolic_pressure: 80
   measurement_date: 2015-01-01

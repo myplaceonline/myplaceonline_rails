@@ -11,7 +11,7 @@
     <%= attribute_table_row_content(
           t("myplaceonline.money_balances.balance"),
           "",
-          t("myplaceonline.money_balances.you_owe", source: @obj.owner.display, contact: @obj.contact.display, amount: Myp.number_to_currency(balance.abs)),
+          t("myplaceonline.money_balances.you_owe", source: @obj.identity.display, contact: @obj.contact.display, amount: Myp.number_to_currency(balance.abs)),
           attribute_table_row_clipboard(Myp.number_to_currency(balance.abs))
         )
     %>
@@ -19,7 +19,7 @@
     <%= attribute_table_row_content(
           t("myplaceonline.money_balances.balance"),
           "",
-          t("myplaceonline.money_balances.contact_owes", source: @obj.owner.display, contact: @obj.contact.display, amount: Myp.number_to_currency(balance)),
+          t("myplaceonline.money_balances.contact_owes", source: @obj.identity.display, contact: @obj.contact.display, amount: Myp.number_to_currency(balance)),
           attribute_table_row_clipboard(Myp.number_to_currency(balance))
         )
     %>

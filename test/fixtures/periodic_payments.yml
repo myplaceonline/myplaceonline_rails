@@ -1,3 +1,3 @@
 periodic_payment:
-  owner: identity
+  identity: identity
   periodic_payment_name: Test

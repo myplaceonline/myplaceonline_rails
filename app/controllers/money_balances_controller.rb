@@ -37,7 +37,7 @@ class MoneyBalancesController < MyplaceonlineController
       if @obj.current_user_owns?
         I18n.t("myplaceonline.money_balances.i_paid")
       else
-        I18n.t("myplaceonline.money_balances.other_paid", { other: @obj.owner.display })
+        I18n.t("myplaceonline.money_balances.other_paid", { other: @obj.identity.display })
       end
     else
       if @obj.current_user_owns?
@@ -59,7 +59,7 @@ class MoneyBalancesController < MyplaceonlineController
       if @obj.current_user_owns?
         I18n.t("myplaceonline.money_balances.i_owe")
       else
-        I18n.t("myplaceonline.money_balances.x_owes", { x: @obj.owner.display })
+        I18n.t("myplaceonline.money_balances.x_owes", { x: @obj.identity.display })
       end
     end
   end
@@ -68,7 +68,7 @@ class MoneyBalancesController < MyplaceonlineController
     if @obj.current_user_owns?
       @obj.contact.display
     else
-      @obj.owner.display
+      @obj.identity.display
     end
   end
 

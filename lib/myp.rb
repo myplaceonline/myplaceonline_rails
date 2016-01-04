@@ -141,7 +141,7 @@ module Myp
     # Category.where(parent: nil).order(:position)
     #   .includes(:category_points_amounts)
     #   .where(category_points_amounts:
-    #     {owner: user.primary_identity}
+    #     {identity: user.primary_identity}
     #   )
     #
     # However, this places the where clause at the end instead of as an addition
@@ -184,7 +184,7 @@ module Myp
       FROM categories
       LEFT OUTER JOIN category_points_amounts
         ON category_points_amounts.category_id = categories.id
-            AND category_points_amounts.owner_id = #{
+            AND category_points_amounts.identity_id = #{
                 CategoryPointsAmount.sanitize(user.primary_identity.id)
               }
       #{ where_clause }
@@ -228,7 +228,7 @@ module Myp
         SELECT category_points_amounts.*, categories.name as category_name, categories.icon as category_icon, categories.additional_filtertext as category_additional_filtertext, categories.link as category_link, categories.parent_id as category_parent_id, 0 as select_type
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
-        WHERE category_points_amounts.last_visit IS NOT NULL AND #{ explicit_check } categories.parent_id IS NOT NULL AND category_points_amounts.owner_id = #{
+        WHERE category_points_amounts.last_visit IS NOT NULL AND #{ explicit_check } categories.parent_id IS NOT NULL AND category_points_amounts.identity_id = #{
                 CategoryPointsAmount.sanitize(user.primary_identity.id)
               }
         ORDER BY category_points_amounts.last_visit DESC
@@ -239,7 +239,7 @@ module Myp
         SELECT category_points_amounts.*, categories.name as category_name, categories.icon as category_icon, categories.additional_filtertext as category_additional_filtertext, categories.link as category_link, categories.parent_id as category_parent_id, 1 as select_type
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
-        WHERE category_points_amounts.visits IS NOT NULL AND #{ explicit_check } categories.parent_id IS NOT NULL AND category_points_amounts.owner_id = #{
+        WHERE category_points_amounts.visits IS NOT NULL AND #{ explicit_check } categories.parent_id IS NOT NULL AND category_points_amounts.identity_id = #{
                 CategoryPointsAmount.sanitize(user.primary_identity.id)
               }
         ORDER BY category_points_amounts.visits DESC
@@ -398,7 +398,7 @@ module Myp
       raise "Could not find category " + categoryName + " (check Myp.website_init)"
     end
     cpa = CategoryPointsAmount.find_or_create_by(
-      owner: user.primary_identity,
+      identity: user.primary_identity,
       category: category
     )
     if cpa.visits.nil?
@@ -435,7 +435,7 @@ module Myp
       
       while !category.nil? do
         cpa = CategoryPointsAmount.find_or_create_by(
-          owner: user.primary_identity,
+          identity: user.primary_identity,
           category: category
         )
         if cpa.count.nil?
@@ -471,7 +471,7 @@ module Myp
       user.primary_identity.points = 0
       user.primary_identity.save
       
-      CategoryPointsAmount.where(owner: user.primary_identity).update_all(count: 0)
+      CategoryPointsAmount.where(identity: user.primary_identity).update_all(count: 0)
     end
   end
 
@@ -645,8 +645,8 @@ module Myp
       result = model.new(params)
     end
     current_user = User.current_user
-    if !current_user.nil? && result.respond_to?("owner_id=")
-      result.owner_id = current_user.primary_identity.id
+    if !current_user.nil? && result.respond_to?("identity_id=")
+      result.identity_id = current_user.primary_identity.id
     end
     result
   end
@@ -858,11 +858,11 @@ module Myp
     if model.nil?
       model = Object.const_get(targetname.to_s.camelize)
     end
-    if model.new.respond_to?("owner_id")
+    if model.new.respond_to?("identity_id")
       
       obj = model.find_by(
         id: id,
-        owner: Permission.current_target_owner
+        identity: Permission.current_target_identity
       )
     else
       obj = model.find(id)
@@ -879,7 +879,7 @@ module Myp
   def self.find_existing_object(class_name, id)
     Object.const_get(class_name.to_s.camelize).find_by(
       id: id,
-      owner: Permission.current_target_owner
+      identity: Permission.current_target_identity
     )
   end
   

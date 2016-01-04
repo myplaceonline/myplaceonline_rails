@@ -25,7 +25,7 @@ class PasswordsController < MyplaceonlineController
           
           ActiveRecord::Base.transaction do
             identity_file = IdentityFile.new()
-            identity_file.owner = current_user.primary_identity
+            identity_file.identity = current_user.primary_identity
             identity_file.file = file
             if !@password.to_s.empty?
               identity_file.encrypted_password = Myp.encrypt_from_session(current_user, session, @password)
@@ -53,7 +53,7 @@ class PasswordsController < MyplaceonlineController
   
   def importodf1
     Myp.ensure_encryption_key(session)
-    ifile = IdentityFile.find_by(owner: current_user.primary_identity, id: params[:id])
+    ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
     if !ifile.nil?
       authorize! :manage, ifile
       s = Roo::OpenOffice.new(ifile.file.to_file.path, :password => ifile.get_password(session), :file_warning => :ignore)
@@ -63,7 +63,7 @@ class PasswordsController < MyplaceonlineController
   
   def importodf2
     Myp.ensure_encryption_key(session)
-    ifile = IdentityFile.find_by(owner: current_user.primary_identity, id: params[:id])
+    ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
     if !ifile.nil?
       authorize! :manage, ifile
       @encrypt = current_user.encrypt_by_default
@@ -79,7 +79,7 @@ class PasswordsController < MyplaceonlineController
   
   def importodf3
     Myp.ensure_encryption_key(session)
-    ifile = IdentityFile.find_by(owner: current_user.primary_identity, id: params[:id])
+    ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
     if !ifile.nil?
       authorize! :manage, ifile
       s = Roo::OpenOffice.new(ifile.file.to_file.path, :password => ifile.get_password(session), :file_warning => :ignore)
@@ -118,7 +118,7 @@ class PasswordsController < MyplaceonlineController
             points = 0
             for i in (s.first_row + 1)..last_row
               password = Password.new
-              password.owner_id = current_user.primary_identity.id
+              password.identity_id = current_user.primary_identity.id
 
               password.password = s.cell(i, colindices[:password_column]).to_s
               password.encrypt = @encrypt

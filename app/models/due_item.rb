@@ -58,21 +58,21 @@ class DueItem < ActiveRecord::Base
     }
     if self.is_date_arbitrary
       completed_due_items = ::CompleteDueItem.where(
-        owner_id: self.owner_id,
+        identity_id: self.identity_id,
         myplaceonline_due_display_id: self.myplaceonline_due_display.id,
         myp_model_name: self.myp_model_name,
         model_id: self.model_id
       )
       
       snoozed_due_items = ::SnoozedDueItem.where(
-        owner_id: self.owner_id,
+        identity_id: self.identity_id,
         myplaceonline_due_display_id: self.myplaceonline_due_display.id,
         myp_model_name: self.myp_model_name,
         model_id: self.model_id
       )
     else
       completed_due_items = ::CompleteDueItem.where(
-        owner_id: self.owner_id,
+        identity_id: self.identity_id,
         myplaceonline_due_display_id: self.myplaceonline_due_display.id,
         due_date: self.original_due_date,
         myp_model_name: self.myp_model_name,
@@ -80,7 +80,7 @@ class DueItem < ActiveRecord::Base
       )
       
       snoozed_due_items = ::SnoozedDueItem.where(
-        owner_id: self.owner_id,
+        identity_id: self.identity_id,
         myplaceonline_due_display_id: self.myplaceonline_due_display.id,
         original_due_date: self.original_due_date,
         myp_model_name: self.myp_model_name,
@@ -178,7 +178,7 @@ class DueItem < ActiveRecord::Base
   end
   
   def self.all_due(user)
-    DueItem.where(owner: user.primary_identity).order(:due_date)
+    DueItem.where(identity: user.primary_identity).order(:due_date)
   end
   
   def self.recalculate_due(user)
@@ -202,7 +202,7 @@ class DueItem < ActiveRecord::Base
   def self.destroy_due_items(user, model)
     begin
       if DueItem.new.respond_to?("myp_model_name")
-        DueItem.destroy_all(owner: user.primary_identity, myp_model_name: model.name)
+        DueItem.destroy_all(identity: user.primary_identity, myp_model_name: model.name)
       end
     rescue ActiveRecord::DangerousAttributeError => e
       # Occurs in the full migration
@@ -250,18 +250,18 @@ class DueItem < ActiveRecord::Base
     begin
       if ::SnoozedDueItem.new.respond_to?("myp_model_name")
         if !updated_record.nil? && !update_type.nil? && update_type == DueItem::UPDATE_TYPE_DELETE
-          ::SnoozedDueItem.where(owner: user.primary_identity, myp_model_name: myp_model_name, model_id: updated_record.id).each do |snoozed_item|
+          ::SnoozedDueItem.where(identity: user.primary_identity, myp_model_name: myp_model_name, model_id: updated_record.id).each do |snoozed_item|
             snoozed_item.destroy!
           end
         end
         
-        ::SnoozedDueItem.where(owner: user.primary_identity, myp_model_name: myp_model_name).where("due_date <= ?", timenow).each do |snoozed_item|
+        ::SnoozedDueItem.where(identity: user.primary_identity, myp_model_name: myp_model_name).where("due_date <= ?", timenow).each do |snoozed_item|
           create_due_item(
             display: snoozed_item.display,
             link: snoozed_item.link,
             due_date: snoozed_item.due_date,
             original_due_date: snoozed_item.original_due_date,
-            owner_id: snoozed_item.owner_id,
+            identity_id: snoozed_item.identity_id,
             myplaceonline_due_display: snoozed_item.myplaceonline_due_display,
             myp_model_name: snoozed_item.myp_model_name,
             model_id: snoozed_item.model_id
@@ -278,13 +278,13 @@ class DueItem < ActiveRecord::Base
     destroy_due_items(user, Vehicle)
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
-      VehicleService.where("owner_id = ? and date_serviced is not null and date_due is not null and date_due > ? and date_due < ?", user.primary_identity, datenow, vehicle_service_threshold(mdd)).each do |service|
+      VehicleService.where("identity_id = ? and date_serviced is not null and date_due is not null and date_due > ? and date_due < ?", user.primary_identity, datenow, vehicle_service_threshold(mdd)).each do |service|
         create_due_item_check(
           display: service.short_description,
           link: "/vehicles/" + service.vehicle.id.to_s,
           due_date: service.date_due,
           original_due_date: service.date_due,
-          owner: user.primary_identity,
+          identity: user.primary_identity,
           myplaceonline_due_display: mdd,
           myp_model_name: Vehicle.name,
           model_id: service.vehicle.id
@@ -299,8 +299,8 @@ class DueItem < ActiveRecord::Base
     destroy_due_items(user, Contact)
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
-      IdentityDriversLicense.where("owner_id = ? and expires is not null and expires < ?", user.primary_identity, drivers_license_expiration_threshold(mdd)).each do |drivers_license|
-        contact = Contact.where(owner_id: user.primary_identity.id, identity_id: drivers_license.identity.id).first
+      IdentityDriversLicense.where("identity_id = ? and expires is not null and expires < ?", user.primary_identity, drivers_license_expiration_threshold(mdd)).each do |drivers_license|
+        contact = Contact.where(identity_id: user.primary_identity.id, identity_id: drivers_license.identity.id).first
         diff = TimeDifference.between(timenow, drivers_license.expires)
         diff_in_general = diff.in_general
         create_due_item_check(
@@ -312,14 +312,14 @@ class DueItem < ActiveRecord::Base
           link: "/contacts/" + contact.id.to_s,
           due_date: drivers_license.expires,
           original_due_date: drivers_license.expires,
-          owner: user.primary_identity,
+          identity: user.primary_identity,
           myplaceonline_due_display: mdd,
           myp_model_name: Contact.name,
           model_id: contact.id
         )
       end
 
-      Contact.where(owner: user.primary_identity).includes(:contact_identity).to_a.each do |x|
+      Contact.where(identity: user.primary_identity).includes(:contact_identity).to_a.each do |x|
         if !x.contact_identity.nil? && !x.contact_identity.birthday.nil?
           next_birthday = x.contact_identity.next_birthday
           if next_birthday <= birthday_threshold(mdd)
@@ -334,7 +334,7 @@ class DueItem < ActiveRecord::Base
               link: "/contacts/" + x.id.to_s,
               due_date: next_birthday,
               original_due_date: next_birthday,
-              owner: user.primary_identity,
+              identity: user.primary_identity,
               myplaceonline_due_display: mdd,
               myp_model_name: Contact.name,
               model_id: x.id
@@ -348,7 +348,7 @@ class DueItem < ActiveRecord::Base
         FROM contacts
         LEFT OUTER JOIN conversations
           ON contacts.id = conversations.contact_id
-        WHERE contacts.owner_id = #{user.primary_identity.id}
+        WHERE contacts.identity_id = #{user.primary_identity.id}
           AND contacts.contact_type IS NOT NULL
         GROUP BY contacts.id
         ORDER BY last_conversation_date ASC
@@ -366,7 +366,7 @@ class DueItem < ActiveRecord::Base
               link: "/contacts/" + contact.id.to_s,
               due_date: datenow,
               original_due_date: datenow,
-              owner: user.primary_identity,
+              identity: user.primary_identity,
               myplaceonline_due_display: mdd,
               myp_model_name: Contact.name,
               model_id: contact.id,
@@ -384,7 +384,7 @@ class DueItem < ActiveRecord::Base
                 link: "/contacts/" + contact.id.to_s,
                 due_date: contact.last_conversation_date,
                 original_due_date: contact.last_conversation_date,
-                owner: user.primary_identity,
+                identity: user.primary_identity,
                 myplaceonline_due_display: mdd,
                 myp_model_name: Contact.name,
                 model_id: contact.id
@@ -403,7 +403,7 @@ class DueItem < ActiveRecord::Base
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
       threshold = exercise_threshold(mdd)
-      last_exercise = Exercise.where("owner_id = ? and exercise_start is not null", user.primary_identity).order('exercise_start DESC').limit(1).first
+      last_exercise = Exercise.where("identity_id = ? and exercise_start is not null", user.primary_identity).order('exercise_start DESC').limit(1).first
       if !last_exercise.nil? and last_exercise.exercise_start < threshold
         create_due_item_check(
           display: I18n.t(
@@ -413,7 +413,7 @@ class DueItem < ActiveRecord::Base
           link: "/exercises/new",
           due_date: last_exercise.exercise_start,
           original_due_date: last_exercise.exercise_start,
-          owner: user.primary_identity,
+          identity: user.primary_identity,
           myplaceonline_due_display: mdd,
           myp_model_name: Exercise.name
         )
@@ -427,7 +427,7 @@ class DueItem < ActiveRecord::Base
     destroy_due_items(user, Promotion)
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
-      Promotion.where("owner_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, promotion_threshold(mdd)).each do |promotion|
+      Promotion.where("identity_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, promotion_threshold(mdd)).each do |promotion|
         Rails.logger.debug{"Promotion due #{promotion.inspect}"}
         create_due_item_check(
           display: I18n.t(
@@ -439,7 +439,7 @@ class DueItem < ActiveRecord::Base
           link: "/promotions/" + promotion.id.to_s,
           due_date: promotion.expires,
           original_due_date: promotion.expires,
-          owner: user.primary_identity,
+          identity: user.primary_identity,
           myplaceonline_due_display: mdd,
           myp_model_name: Promotion.name,
           model_id: promotion.id
@@ -454,7 +454,7 @@ class DueItem < ActiveRecord::Base
     destroy_due_items(user, GunRegistration)
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
-      GunRegistration.where("owner_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, gun_registration_expiration_threshold(mdd)).each do |x|
+      GunRegistration.where("identity_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, gun_registration_expiration_threshold(mdd)).each do |x|
         create_due_item_check(
           display: I18n.t(
             "myplaceonline.gun_registrations.expires_soon",
@@ -464,7 +464,7 @@ class DueItem < ActiveRecord::Base
           link: "/guns/" + x.gun.id.to_s,
           due_date: x.expires,
           original_due_date: x.expires,
-          owner: user.primary_identity,
+          identity: user.primary_identity,
           myplaceonline_due_display: mdd,
           myp_model_name: GunRegistration.name,
           model_id: x.gun.id
@@ -479,7 +479,7 @@ class DueItem < ActiveRecord::Base
     destroy_due_items(user, DentistVisit)
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
-      last_dentist_visit = DentistVisit.where("owner_id = ? and cleaning = true", user.primary_identity).order('visit_date DESC').limit(1).first
+      last_dentist_visit = DentistVisit.where("identity_id = ? and cleaning = true", user.primary_identity).order('visit_date DESC').limit(1).first
       if !last_dentist_visit.nil? and last_dentist_visit.visit_date < dentist_visit_threshold(mdd)
         create_due_item_check(
           display: I18n.t(
@@ -489,14 +489,14 @@ class DueItem < ActiveRecord::Base
           link: "/dentist_visits/" + last_dentist_visit.id.to_s,
           due_date: last_dentist_visit.visit_date,
           original_due_date: last_dentist_visit.visit_date,
-          owner: user.primary_identity,
+          identity: user.primary_identity,
           myplaceonline_due_display: mdd,
           myp_model_name: DentistVisit.name,
           model_id: last_dentist_visit.id
         )
       elsif last_dentist_visit.nil?
         # If there are no dentist visits at all but there is a dental insurance company, then notify
-        if DentalInsurance.where("owner_id = ? and (defunct is null)", user.primary_identity).count > 0
+        if DentalInsurance.where("identity_id = ? and (defunct is null)", user.primary_identity).count > 0
           create_due_item_check(
             display: I18n.t(
               "myplaceonline.dentist_visits.no_cleanings"
@@ -504,7 +504,7 @@ class DueItem < ActiveRecord::Base
             link: "/dentist_visits/new",
             due_date: timenow,
             original_due_date: timenow,
-            owner: user.primary_identity,
+            identity: user.primary_identity,
             myplaceonline_due_display: mdd,
             myp_model_name: DentistVisit.name,
             is_date_arbitrary: true
@@ -520,7 +520,7 @@ class DueItem < ActiveRecord::Base
     destroy_due_items(user, DoctorVisit)
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
-      last_doctor_visit = DoctorVisit.where("owner_id = ? and physical = true", user.primary_identity).order('visit_date DESC').limit(1).first
+      last_doctor_visit = DoctorVisit.where("identity_id = ? and physical = true", user.primary_identity).order('visit_date DESC').limit(1).first
       if !last_doctor_visit.nil? and last_doctor_visit.visit_date < doctor_visit_threshold(mdd)
         create_due_item_check(
           display: I18n.t(
@@ -530,14 +530,14 @@ class DueItem < ActiveRecord::Base
           link: "/doctor_visits/" + last_doctor_visit.id.to_s,
           due_date: last_doctor_visit.visit_date,
           original_due_date: last_doctor_visit.visit_date,
-          owner: user.primary_identity,
+          identity: user.primary_identity,
           myplaceonline_due_display: mdd,
           myp_model_name: DoctorVisit.name,
           model_id: last_doctor_visit.id
         )
       elsif last_doctor_visit.nil?
         # If there are no physicals at all but there is a health insurance company, then notify
-        if HealthInsurance.where("owner_id = ? and (defunct is null)", user.primary_identity).count > 0
+        if HealthInsurance.where("identity_id = ? and (defunct is null)", user.primary_identity).count > 0
           create_due_item_check(
             display: I18n.t(
               "myplaceonline.doctor_visits.no_physicals"
@@ -545,7 +545,7 @@ class DueItem < ActiveRecord::Base
             link: "/doctor_visits/new",
             due_date: timenow,
             original_due_date: timenow,
-            owner: user.primary_identity,
+            identity: user.primary_identity,
             myplaceonline_due_display: mdd,
             myp_model_name: DoctorVisit.name,
             is_date_arbitrary: true
@@ -561,7 +561,7 @@ class DueItem < ActiveRecord::Base
     destroy_due_items(user, Status)
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
-      last_status = Status.where("owner_id = ?", user.primary_identity).order('status_time DESC').limit(1).first
+      last_status = Status.where("identity_id = ?", user.primary_identity).order('status_time DESC').limit(1).first
       if !last_status.nil? and last_status.status_time < status_threshold(mdd)
         create_due_item_check(
           display: I18n.t(
@@ -571,7 +571,7 @@ class DueItem < ActiveRecord::Base
           link: "/statuses/new",
           due_date: last_status.status_time,
           original_due_date: last_status.status_time,
-          owner: user.primary_identity,
+          identity: user.primary_identity,
           myplaceonline_due_display: mdd,
           myp_model_name: Status.name,
           model_id: last_status.id
@@ -584,7 +584,7 @@ class DueItem < ActiveRecord::Base
           link: "/statuses/new",
           due_date: timenow,
           original_due_date: timenow,
-          owner: user.primary_identity,
+          identity: user.primary_identity,
           myplaceonline_due_display: mdd,
           myp_model_name: Status.name,
           is_date_arbitrary: true
@@ -601,7 +601,7 @@ class DueItem < ActiveRecord::Base
     today = Date.today
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
-      Apartment.where("owner_id = ?", user.primary_identity).each do |apartment|
+      Apartment.where("identity_id = ?", user.primary_identity).each do |apartment|
         apartment.apartment_trash_pickups.each do |trash_pickup|
           if trash_pickup.repeat
             next_pickup = trash_pickup.repeat.next_instance
@@ -628,7 +628,7 @@ class DueItem < ActiveRecord::Base
                 link: "/apartments/" + apartment.id.to_s,
                 due_date: next_pickup,
                 original_due_date: next_pickup,
-                owner: user.primary_identity,
+                identity: user.primary_identity,
                 myplaceonline_due_display: mdd,
                 myp_model_name: Apartment.name,
                 model_id: apartment.id
@@ -648,7 +648,7 @@ class DueItem < ActiveRecord::Base
     today = Date.today
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
-      PeriodicPayment.where("owner_id = ? and date_period is not null and ended is null", user.primary_identity).each do |x|
+      PeriodicPayment.where("identity_id = ? and date_period is not null and ended is null", user.primary_identity).each do |x|
         if !x.suppress_reminder
           result = x.next_payment
           if !result.nil?
@@ -661,7 +661,7 @@ class DueItem < ActiveRecord::Base
                 link: "/periodic_payments/" + x.id.to_s,
                 due_date: result,
                 original_due_date: result,
-                owner: user.primary_identity,
+                identity: user.primary_identity,
                 myplaceonline_due_display: mdd,
                 myp_model_name: PeriodicPayment.name,
                 model_id: x.id
@@ -676,7 +676,7 @@ class DueItem < ActiveRecord::Base
                 link: "/periodic_payments/" + x.id.to_s,
                 due_date: result,
                 original_due_date: result,
-                owner: user.primary_identity,
+                identity: user.primary_identity,
                 myplaceonline_due_display: mdd,
                 myp_model_name: PeriodicPayment.name,
                 model_id: x.id
@@ -699,7 +699,7 @@ class DueItem < ActiveRecord::Base
                   link: "/periodic_payments/" + x.id.to_s,
                   due_date: result,
                   original_due_date: result,
-                  owner: user.primary_identity,
+                  identity: user.primary_identity,
                   myplaceonline_due_display: mdd,
                   myp_model_name: PeriodicPayment.name,
                   model_id: x.id
@@ -718,7 +718,7 @@ class DueItem < ActiveRecord::Base
     destroy_due_items(user, Event)
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
-      Event.where("owner_id = ? and event_time is not null and event_time > ? and event_time < ?", user.primary_identity, datenow, event_threshold(mdd)).each do |x|
+      Event.where("identity_id = ? and event_time is not null and event_time > ? and event_time < ?", user.primary_identity, datenow, event_threshold(mdd)).each do |x|
         create_due_item_check(
           display: I18n.t(
             "myplaceonline.events.upcoming",
@@ -728,7 +728,7 @@ class DueItem < ActiveRecord::Base
           link: "/events/" + x.id.to_s,
           due_date: x.event_time,
           original_due_date: x.event_time,
-          owner: user.primary_identity,
+          identity: user.primary_identity,
           myplaceonline_due_display: mdd,
           myp_model_name: Event.name,
           model_id: x.id
@@ -743,7 +743,7 @@ class DueItem < ActiveRecord::Base
     destroy_due_items(user, Stock)
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
-      Stock.where("owner_id = ? and vest_date is not null and vest_date > ? and vest_date < ?", user.primary_identity, datenow, stocks_vest_threshold(mdd)).each do |x|
+      Stock.where("identity_id = ? and vest_date is not null and vest_date > ? and vest_date < ?", user.primary_identity, datenow, stocks_vest_threshold(mdd)).each do |x|
         create_due_item_check(
           display: I18n.t(
             "myplaceonline.stocks.upcoming",
@@ -753,7 +753,7 @@ class DueItem < ActiveRecord::Base
           link: "/stocks/" + x.id.to_s,
           due_date: x.vest_date,
           original_due_date: x.vest_date,
-          owner: user.primary_identity,
+          identity: user.primary_identity,
           myplaceonline_due_display: mdd,
           myp_model_name: Stock.name,
           model_id: x.id
@@ -769,7 +769,7 @@ class DueItem < ActiveRecord::Base
     
     if ToDo.new.respond_to?("due_time")
       user.primary_identity.myplaceonline_due_displays.each do |mdd|
-        ToDo.where("owner_id = ? and due_time is not null and due_time > ? and due_time < ?", user.primary_identity, datenow, todo_threshold(mdd)).each do |x|
+        ToDo.where("identity_id = ? and due_time is not null and due_time > ? and due_time < ?", user.primary_identity, datenow, todo_threshold(mdd)).each do |x|
           create_due_item_check(
             display: I18n.t(
               "myplaceonline.to_dos.upcoming",
@@ -779,7 +779,7 @@ class DueItem < ActiveRecord::Base
             link: "/to_dos/" + x.id.to_s,
             due_date: x.due_time,
             original_due_date: x.due_time,
-            owner: user.primary_identity,
+            identity: user.primary_identity,
             myplaceonline_due_display: mdd,
             myp_model_name: ToDo.name,
             model_id: x.id

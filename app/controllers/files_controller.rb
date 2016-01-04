@@ -16,7 +16,7 @@ class FilesController < MyplaceonlineController
   
   def download
     @obj = model.find_by(id: params[:id])
-    if !current_user.nil? && @obj.owner_id == current_user.primary_identity.id
+    if !current_user.nil? && @obj.identity_id == current_user.primary_identity.id
       respond_download_identity_file('attachment', @obj)
     else
       found = false
@@ -38,7 +38,7 @@ class FilesController < MyplaceonlineController
   
   def view
     @obj = model.find_by(id: params[:id])
-    if !current_user.nil? && @obj.owner_id == current_user.primary_identity.id
+    if !current_user.nil? && @obj.identity_id == current_user.primary_identity.id
       respond_download_identity_file('inline', @obj)
     else
       found = false
@@ -72,7 +72,7 @@ class FilesController < MyplaceonlineController
     Myp.ensure_encryption_key(session)
     
     @folders = Hash[IdentityFileFolder.where(
-      owner_id: current_user.primary_identity.id
+      identity_id: current_user.primary_identity.id
     ).order(FileFoldersController.sorts).map{|f| [f.folder_name, f.id]}]
     
     if request.post?
@@ -178,7 +178,7 @@ class FilesController < MyplaceonlineController
     def index_pre_respond()
       if @offset == 0
         @objs2 = IdentityFileFolder.where(
-          owner_id: current_user.primary_identity.id,
+          identity_id: current_user.primary_identity.id,
           parent_folder: nil
         ).order(FileFoldersController.sorts)
       end

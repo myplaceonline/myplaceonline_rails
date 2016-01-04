@@ -1,4 +1,4 @@
 trip:
-  owner: identity
+  identity: identity
   location: location
   started: 2015-01-01

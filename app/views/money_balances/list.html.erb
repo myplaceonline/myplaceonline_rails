@@ -8,7 +8,7 @@
         <%=
           t("myplaceonline.money_balances.paid", {
               x: @obj.contact.display,
-              y: @obj.owner.display,
+              y: @obj.identity.display,
               amount: Myp.number_to_currency(mbi.amount.abs),
               time: mbi.item_time
             }
@@ -17,7 +17,7 @@
       <% else %>
         <%=
           t("myplaceonline.money_balances.paid", {
-              x: @obj.owner.display,
+              x: @obj.identity.display,
               y: @obj.contact.display,
               amount: Myp.number_to_currency(mbi.amount),
               time: mbi.item_time

@@ -9,7 +9,7 @@ class Ability
     can do |action, subject_class, subject|
       if !subject.nil?
         if !user.new_record?
-          if subject.respond_to?("owner_id") && subject.owner_id == identity.id
+          if subject.respond_to?("identity_id") && subject.identity_id == identity.id
             true
           else
             query = "user_id = ? and subject_class = ? and subject_id = ? and (action & #{Permission::ACTION_MANAGE} != 0"

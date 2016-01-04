@@ -1,4 +1,4 @@
 passport:
-  owner: identity
+  identity: identity
   region: United States
   passport_number: 12345

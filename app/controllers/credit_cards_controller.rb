@@ -10,7 +10,7 @@ class CreditCardsController < MyplaceonlineController
   end
 
   def listcashback
-    @cashbacks = CreditCardCashback.where(owner_id: current_user.primary_identity.id).sort{ |x, y| y.cashback.cashback_percentage <=> x.cashback.cashback_percentage }.keep_if{|c| c.expiration_includes_today?}
+    @cashbacks = CreditCardCashback.where(target_id: current_user.primary_identity.id).sort{ |x, y| y.cashback.cashback_percentage <=> x.cashback.cashback_percentage }.keep_if{|c| c.expiration_includes_today?}
   end
 
   def total_credit

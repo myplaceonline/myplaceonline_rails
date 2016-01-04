@@ -9,7 +9,7 @@ class MoneyBalance < ActiveRecord::Base
     if current_user_owns?
       contact.display
     else
-      owner.display + "/" + contact.display
+      identity.display + "/" + contact.display
     end
   end
   

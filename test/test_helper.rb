@@ -60,7 +60,7 @@ module MyplaceonlineControllerTest
     attrs = test_attributes
     if attrs.length > 0
       assert_difference(model.name + '.count') do
-        post :create, model.model_name.singular.downcase => attrs.merge({ owner_id: @user.primary_identity_id })
+        post :create, model.model_name.singular.downcase => attrs.merge({ identity_id: @user.primary_identity_id })
       end
 
       assert_redirected_to send(model.model_name.singular.downcase + "_path", assigns(:obj))

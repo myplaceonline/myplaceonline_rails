@@ -327,7 +327,7 @@ class MyplaceonlineController < ApplicationController
         additional = ""
       end
       model.includes(all_includes).joins(all_joins).where(
-        "(#{model.table_name}.owner_id = ? #{initial_or}) #{additional}",
+        "(#{model.table_name}.identity_id = ? #{initial_or}) #{additional}",
         current_user.primary_identity.id
       )
     end
@@ -338,7 +338,7 @@ class MyplaceonlineController < ApplicationController
         additional = ""
       end
       model.includes(all_includes).joins(all_joins).where(
-        model.table_name + ".owner_id = ? and " + model.table_name + ".visit_count >= ? " + additional,
+        model.table_name + ".identity_id = ? and " + model.table_name + ".visit_count >= ? " + additional,
         current_user.primary_identity,
         additional_items_min_visit_count
       ).limit(additional_items_max_items).order(model.table_name + ".visit_count DESC")

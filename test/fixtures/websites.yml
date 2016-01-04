@@ -1,4 +1,4 @@
 website:
-  owner: identity
+  identity: identity
   title: Test
   url: https://myplaceonline.com/

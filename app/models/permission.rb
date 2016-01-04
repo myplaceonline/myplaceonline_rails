@@ -71,12 +71,12 @@ class Permission < ActiveRecord::Base
     Thread.current[:current_target] = target
   end
   
-  def self.current_target_owner
+  def self.current_target_identity
     target = Permission.current_target
     if target.nil?
-      target_owner = User.current_user.primary_identity
+      target_identity = User.current_user.primary_identity
     else
-      target_owner = target.owner
+      target_identity = target.identity
     end
   end
   

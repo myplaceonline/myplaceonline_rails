@@ -17,7 +17,7 @@ class FoodsController < MyplaceonlineController
     end
     
     def filter_json_index_search()
-      remove_ids = FoodIngredient.where(owner_id: current_user.primary_identity.id).map{|fi| fi.food_id}
+      remove_ids = FoodIngredient.where(identity_id: current_user.primary_identity.id).map{|fi| fi.food_id}
       @objs = @objs.to_a.delete_if{|f| remove_ids.find_index(f.id) }
     end
 end

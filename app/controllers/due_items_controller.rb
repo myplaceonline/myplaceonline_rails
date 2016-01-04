@@ -6,7 +6,7 @@ class DueItemsController < MyplaceonlineController
     set_obj
     ActiveRecord::Base.transaction do
       ::CompleteDueItem.new(
-        owner_id: @obj.owner_id,
+        identity_id: @obj.identity_id,
         myplaceonline_due_display: @obj.myplaceonline_due_display,
         display: @obj.display,
         link: @obj.link,
@@ -16,7 +16,7 @@ class DueItemsController < MyplaceonlineController
         model_id: @obj.model_id
       ).save!
       
-      ::SnoozedDueItem.where(owner: @obj.owner_id, myp_model_name: @obj.myp_model_name, model_id: @obj.model_id).each do |snoozed_item|
+      ::SnoozedDueItem.where(identity: @obj.identity_id, myp_model_name: @obj.myp_model_name, model_id: @obj.model_id).each do |snoozed_item|
         snoozed_item.destroy!
       end
       
@@ -39,7 +39,7 @@ class DueItemsController < MyplaceonlineController
       
       ActiveRecord::Base.transaction do
         ::SnoozedDueItem.new(
-          owner_id: @obj.owner_id,
+          identity_id: @obj.identity_id,
           myplaceonline_due_display: @obj.myplaceonline_due_display,
           display: @obj.display,
           link: @obj.link,

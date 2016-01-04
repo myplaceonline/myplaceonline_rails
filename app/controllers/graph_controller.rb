@@ -38,7 +38,7 @@ class GraphController < MyplaceonlineController
         @selected_xvalues[series_number] = xvalue_name
         
         category_class.where(
-          owner_id: current_user.primary_identity.id
+          identity_id: current_user.primary_identity.id
         ).each do |record|
           x_axis = record.send(xvalue_name)
           y_value = 1

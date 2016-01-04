@@ -1,4 +1,4 @@
 credit_score:
-  owner: identity
+  identity: identity
   score_date: 2015-01-01
   score: 1

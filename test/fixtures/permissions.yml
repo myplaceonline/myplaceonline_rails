@@ -1,5 +1,5 @@
 permission:
-  owner: identity
+  identity: identity
   user: user
   subject_class: contacts
   action: manage

@@ -1,5 +1,5 @@
 temperature:
-  owner: identity
+  identity: identity
   measured_temperature: 1
   temperature_type: 0
   measured: 2015-01-01 01:01:01

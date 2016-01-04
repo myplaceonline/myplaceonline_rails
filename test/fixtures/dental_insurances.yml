@@ -1,3 +1,3 @@
 dental_insurance:
-  owner: identity
+  identity: identity
   insurance_name: Test

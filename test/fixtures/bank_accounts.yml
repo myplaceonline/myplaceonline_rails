@@ -1,5 +1,5 @@
 bank_account:
-  owner: identity
+  identity: identity
   name: Test
   account_number: 1
   routing_number: 1

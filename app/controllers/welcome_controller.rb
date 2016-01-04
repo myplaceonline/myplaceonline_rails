@@ -4,7 +4,7 @@ class WelcomeController < ApplicationController
   
   def index
     if user_signed_in?
-      @myplets = Myplet.where(owner: current_user.primary_identity).order(:x_coordinate, :y_coordinate).all
+      @myplets = Myplet.where(identity: current_user.primary_identity).order(:x_coordinate, :y_coordinate).all
     end
   end
 end

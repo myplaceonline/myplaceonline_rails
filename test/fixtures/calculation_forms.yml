@@ -1,4 +1,4 @@
 calculation_form:
-  owner: identity
+  identity: identity
   name: Test
   root_element: calculation_element

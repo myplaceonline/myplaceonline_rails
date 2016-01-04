@@ -1,3 +1,3 @@
 event:
-  owner: identity
+  identity: identity
   event_name: Test
