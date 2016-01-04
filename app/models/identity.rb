@@ -1,7 +1,7 @@
 class Identity < ActiveRecord::Base
   include MyplaceonlineActiveRecordBaseConcern
 
-  belongs_to :owner, class_name: User
+  belongs_to :user
   has_many :passwords, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :identity_files, :foreign_key => 'owner_id', :dependent => :destroy
   has_many :category_points_amounts, :foreign_key => 'owner_id', :dependent => :destroy
@@ -261,7 +261,7 @@ class Identity < ActiveRecord::Base
   def display
     result = name
     if result.blank?
-      result = owner.email
+      result = user.email
     end
     result
   end

@@ -57,7 +57,7 @@ class ZipPlaylistJob < ApplicationJob
           Rails.logger.debug{"Zip data #{zipdata.length}"}
           
           begin
-            User.current_user = share.owner.owner
+            User.current_user = share.owner.user
             
             ActiveRecord::Base.transaction do
               # We'll create a share with a unique token that we'll

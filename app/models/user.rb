@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
         
         # Create the identity
         @identity = Identity.new
-        @identity.owner = user
+        @identity.user = user
         @identity.save!
         
         # Set the identity in the user

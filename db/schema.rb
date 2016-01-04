@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160103174521) do
+ActiveRecord::Schema.define(version: 20160104061057) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1045,7 +1045,7 @@ ActiveRecord::Schema.define(version: 20160103174521) do
   add_index "ideas", ["owner_id"], name: "index_ideas_on_owner_id", using: :btree
 
   create_table "identities", force: :cascade do |t|
-    t.integer  "owner_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "points"
@@ -1060,7 +1060,7 @@ ActiveRecord::Schema.define(version: 20160103174521) do
     t.text     "new_years_resolution"
   end
 
-  add_index "identities", ["owner_id"], name: "index_identities_on_owner_id", using: :btree
+  add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
 
   create_table "identity_drivers_licenses", force: :cascade do |t|
     t.string   "identifier",       limit: 255
