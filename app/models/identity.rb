@@ -97,30 +97,30 @@ class Identity < ActiveRecord::Base
   has_many :myplets, -> { order('y_coordinate') }, :foreign_key => 'owner_id', :dependent => :destroy
   accepts_nested_attributes_for :myplets, allow_destroy: true, reject_if: :all_blank
 
-  has_many :identity_phones, :foreign_key => 'identity_id', :dependent => :destroy
+  has_many :identity_phones, :foreign_key => 'parent_identity_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_phones, allow_destroy: true, reject_if: :all_blank
   
-  has_many :identity_emails, :foreign_key => 'identity_id', :dependent => :destroy
+  has_many :identity_emails, :foreign_key => 'parent_identity_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_emails, allow_destroy: true, reject_if: :all_blank
   
   def emails
     identity_emails.to_a.map{|ie| ie.email }
   end
   
-  has_many :identity_locations, :foreign_key => 'identity_id', :dependent => :destroy
+  has_many :identity_locations, :foreign_key => 'parent_identity_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_locations, allow_destroy: true, reject_if: :all_blank
   
   def primary_location
     identity_locations.first
   end
   
-  has_many :identity_drivers_licenses, :foreign_key => 'identity_id', :dependent => :destroy
+  has_many :identity_drivers_licenses, :foreign_key => 'parent_identity_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_drivers_licenses, allow_destroy: true, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
   
-  has_many :identity_relationships, :foreign_key => 'identity_id', :dependent => :destroy
+  has_many :identity_relationships, :foreign_key => 'parent_identity_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_relationships, allow_destroy: true, reject_if: :all_blank
   
-  has_many :identity_pictures, :foreign_key => 'identity_id', :dependent => :destroy
+  has_many :identity_pictures, :foreign_key => 'parent_identity_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_pictures, allow_destroy: true, reject_if: :all_blank
   
   def as_json(options={})

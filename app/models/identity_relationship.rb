@@ -21,7 +21,7 @@ class IdentityRelationship < ActiveRecord::Base
     ["myplaceonline.relationships.friend", 15]
   ]
 
-  belongs_to :identity, class_name: Identity
+  belongs_to :parent_identity, class_name: Identity
   
   belongs_to :contact
   accepts_nested_attributes_for :contact, reject_if: :all_blank

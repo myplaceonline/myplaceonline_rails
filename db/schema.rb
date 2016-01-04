@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160104061057) do
+ActiveRecord::Schema.define(version: 20160104062639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1063,29 +1063,29 @@ ActiveRecord::Schema.define(version: 20160104061057) do
   add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
 
   create_table "identity_drivers_licenses", force: :cascade do |t|
-    t.string   "identifier",       limit: 255
-    t.string   "region",           limit: 255
-    t.string   "sub_region1",      limit: 255
+    t.string   "identifier",         limit: 255
+    t.string   "region",             limit: 255
+    t.string   "sub_region1",        limit: 255
     t.date     "expires"
-    t.integer  "identity_id"
+    t.integer  "parent_identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "identity_file_id"
     t.integer  "owner_id"
   end
 
-  add_index "identity_drivers_licenses", ["identity_id"], name: "index_identity_drivers_licenses_on_identity_id", using: :btree
+  add_index "identity_drivers_licenses", ["parent_identity_id"], name: "index_identity_drivers_licenses_on_parent_identity_id", using: :btree
 
   create_table "identity_emails", force: :cascade do |t|
-    t.string   "email",       limit: 255
-    t.integer  "identity_id"
+    t.string   "email",              limit: 255
+    t.integer  "parent_identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id"
   end
 
-  add_index "identity_emails", ["identity_id"], name: "index_identity_emails_on_identity_id", using: :btree
   add_index "identity_emails", ["owner_id"], name: "index_identity_emails_on_owner_id", using: :btree
+  add_index "identity_emails", ["parent_identity_id"], name: "index_identity_emails_on_parent_identity_id", using: :btree
 
   create_table "identity_file_folders", force: :cascade do |t|
     t.string   "folder_name",      limit: 255
@@ -1134,30 +1134,30 @@ ActiveRecord::Schema.define(version: 20160104061057) do
 
   create_table "identity_locations", force: :cascade do |t|
     t.integer  "location_id"
-    t.integer  "identity_id"
+    t.integer  "parent_identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id"
   end
 
-  add_index "identity_locations", ["identity_id"], name: "index_identity_locations_on_identity_id", using: :btree
   add_index "identity_locations", ["location_id"], name: "index_identity_locations_on_location_id", using: :btree
   add_index "identity_locations", ["owner_id"], name: "index_identity_locations_on_owner_id", using: :btree
+  add_index "identity_locations", ["parent_identity_id"], name: "index_identity_locations_on_parent_identity_id", using: :btree
 
   create_table "identity_phones", force: :cascade do |t|
-    t.string   "number",      limit: 255
-    t.integer  "identity_id"
+    t.string   "number",             limit: 255
+    t.integer  "parent_identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id"
     t.integer  "phone_type"
   end
 
-  add_index "identity_phones", ["identity_id"], name: "index_identity_phones_on_identity_id", using: :btree
   add_index "identity_phones", ["owner_id"], name: "index_identity_phones_on_owner_id", using: :btree
+  add_index "identity_phones", ["parent_identity_id"], name: "index_identity_phones_on_parent_identity_id", using: :btree
 
   create_table "identity_pictures", force: :cascade do |t|
-    t.integer  "identity_id"
+    t.integer  "parent_identity_id"
     t.integer  "identity_file_id"
     t.integer  "owner_id"
     t.datetime "created_at"
@@ -1165,21 +1165,21 @@ ActiveRecord::Schema.define(version: 20160104061057) do
   end
 
   add_index "identity_pictures", ["identity_file_id"], name: "index_identity_pictures_on_identity_file_id", using: :btree
-  add_index "identity_pictures", ["identity_id"], name: "index_identity_pictures_on_identity_id", using: :btree
   add_index "identity_pictures", ["owner_id"], name: "index_identity_pictures_on_owner_id", using: :btree
+  add_index "identity_pictures", ["parent_identity_id"], name: "index_identity_pictures_on_parent_identity_id", using: :btree
 
   create_table "identity_relationships", force: :cascade do |t|
     t.integer  "contact_id"
     t.integer  "relationship_type"
     t.integer  "owner_id"
-    t.integer  "identity_id"
+    t.integer  "parent_identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "identity_relationships", ["contact_id"], name: "index_identity_relationships_on_contact_id", using: :btree
-  add_index "identity_relationships", ["identity_id"], name: "index_identity_relationships_on_identity_id", using: :btree
   add_index "identity_relationships", ["owner_id"], name: "index_identity_relationships_on_owner_id", using: :btree
+  add_index "identity_relationships", ["parent_identity_id"], name: "index_identity_relationships_on_parent_identity_id", using: :btree
 
   create_table "job_salaries", force: :cascade do |t|
     t.integer  "owner_id"

@@ -7,5 +7,5 @@ class IdentityPhone < ActiveRecord::Base
     ["myplaceonline.identity_phones.temporary", 2]
   ]
   
-  belongs_to :identity, class_name: Identity
+  belongs_to :parent_identity, class_name: Identity
 end
