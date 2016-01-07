@@ -6,7 +6,9 @@ module Myp
   # See https://github.com/digitalbazaar/forge/issues/207
   DEFAULT_AES_KEY_SIZE = 32
   @@all_categories = Hash.new.with_indifferent_access
-  @@all_categories_without_explicit = Hash.new.with_indifferent_access
+  @@all_categories_without_explicit_without_experimental = Hash.new.with_indifferent_access
+  @@all_categories_without_explicit_with_experimental = Hash.new.with_indifferent_access
+  @@all_categories_without_experimental_with_explicit = Hash.new.with_indifferent_access
 
   # We want at least 128 bits of randomness, so
   # min(POSSIBILITIES_*.length)^DEFAULT_PASSWORD_LENGTH should be >= 2^128
@@ -109,9 +111,21 @@ module Myp
 
   if Myp.database_exists?
     Category.all.each do |existing_category|
+      is_explicit = existing_category.respond_to?("explicit?") && existing_category.explicit?
+      is_experimental = existing_category.respond_to?("experimental?") && existing_category.experimental?
+
       @@all_categories[existing_category.name.to_sym] = existing_category
-      if existing_category.respond_to?("explicit?") && !existing_category.explicit?
-        @@all_categories_without_explicit[existing_category.name.to_sym] = existing_category
+      @@all_categories_without_explicit_with_experimental[existing_category.name.to_sym] = existing_category
+      @@all_categories_without_experimental_with_explicit[existing_category.name.to_sym] = existing_category
+      @@all_categories_without_explicit_without_experimental[existing_category.name.to_sym] = existing_category
+      
+      if is_explicit
+        @@all_categories_without_explicit_with_experimental.delete(existing_category.name.to_sym)
+        @@all_categories_without_explicit_without_experimental.delete(existing_category.name.to_sym)
+      end
+      if is_experimental
+        @@all_categories_without_experimental_with_explicit.delete(existing_category.name.to_sym)
+        @@all_categories_without_explicit_without_experimental.delete(existing_category.name.to_sym)
       end
     end
     puts "myplaceonline: #{@@all_categories.count} categories cached"
@@ -119,10 +133,18 @@ module Myp
   end
   
   def self.categories(user = nil)
-    if user.nil? || user.explicit_categories
+    if user.nil?
       @@all_categories
     else
-      @@all_categories_without_explicit
+      if user.explicit_categories && !user.experimental_categories
+        @@all_categories_without_experimental_with_explicit
+      elsif !user.explicit_categories && user.experimental_categories
+        @@all_categories_without_explicit_with_experimental
+      elsif !user.explicit_categories && !user.experimental_categories
+        @@all_categories_without_explicit_without_experimental
+      else
+        @@all_categories
+      end
     end
   end
 
@@ -174,7 +196,7 @@ module Myp
     end
 
     # By default, we don't show explicit categories
-    explicit_check = Myp.get_categories_explicit_check_sql(user)
+    explicit_check = Myp.get_categories_check_sql(user)
     if explicit_check.length > 0
       where_clause += " AND " + explicit_check
     end
@@ -206,9 +228,13 @@ module Myp
     }
   end
   
-  def self.get_categories_explicit_check_sql(user)
-    if user.nil? || !user.explicit_categories
-      "(categories.explicit IS NULL OR categories.explicit = false)"
+  def self.get_categories_check_sql(user)
+    if !user.explicit_categories && !user.experimental_categories
+      "(categories.explicit IS NULL AND categories.experimental IS NULL)"
+    elsif user.explicit_categories && !user.experimental_categories
+      "(categories.experimental IS NULL)"
+    elsif !user.explicit_categories && user.experimental_categories
+      "(categories.explicit IS NULL)"
     else
       ""
     end
@@ -217,7 +243,7 @@ module Myp
   def self.useful_categories(user, recentlyVisited = 2, mostVisited = 3)
     # Prefer last visit over number of visits
     
-    explicit_check = Myp.get_categories_explicit_check_sql(user)
+    explicit_check = Myp.get_categories_check_sql(user)
     
     if explicit_check.length > 0
       explicit_check += " AND "

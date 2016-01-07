@@ -422,6 +422,7 @@ en:
       starting_download: "Starting Download. This can take some time..."
       categories: "Categories"
       explicit_categories: "Show Explicit Categories"
+      experimental_categories: "Show Experimental Categories"
       email: "E-mail"
       sign_in_count: "Sign-in Count"
       last_sign_in_at: "Last Sign-in Time"
