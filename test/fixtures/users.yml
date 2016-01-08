@@ -2,3 +2,4 @@ user:
   email: "testuser1@myplaceonline.com"
   primary_identity: identity
   explicit_categories: true
+  experimental_categories: true

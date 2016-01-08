@@ -11,4 +11,8 @@ class ToDosController < MyplaceonlineController
         :notes
       )
     end
+
+    def insecure
+      true
+    end
 end
