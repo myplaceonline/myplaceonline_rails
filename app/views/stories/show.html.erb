@@ -1,0 +1,7 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.stories.story_name"), @obj.story_name) %>
+  <%= attribute_table_row_datetime(t("myplaceonline.stories.story_time"), @obj.story_time) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.stories.story"), @obj.story) %>
+  
+<% end %>

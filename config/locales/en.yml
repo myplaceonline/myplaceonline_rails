@@ -135,6 +135,7 @@ en:
       money_balances: "Money Balances"
       permissions: "Permissions"
       receipts: "Receipts"
+      stories: "Stories"
     general:
       email: "E-mail"
       password: "Password"
@@ -1877,3 +1878,7 @@ en:
       file: "File"
       add_file: "Add File"
       delete_file: "Delete File"
+    stories:
+      story_name: "Name"
+      story_time: "Date/Time"
+      story: "Story"

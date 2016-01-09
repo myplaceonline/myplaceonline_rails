@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :stories
+  post 'stories/new'
+
   resources :receipts
   post 'receipts/new'
 
