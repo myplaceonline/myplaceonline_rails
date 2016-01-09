@@ -7,7 +7,7 @@ class Receipt < ActiveRecord::Base
   before_validation :update_file_folders
   
   def update_file_folders
-    put_pictures_in_folder(receipt_files, [I18n.t("myplaceonline.category.receipts"), display])
+    put_files_in_folder(receipt_files, [I18n.t("myplaceonline.category.receipts"), display])
   end
 
   has_many :receipt_files, :dependent => :destroy

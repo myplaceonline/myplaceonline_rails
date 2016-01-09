@@ -10,6 +10,7 @@ class MoneyBalancesController < MyplaceonlineController
         :_destroy,
         :money_balance_item_name,
         :amount,
+        :original_amount,
         :item_time,
         :invert,
         :notes

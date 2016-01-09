@@ -15,7 +15,7 @@ class Bar < ActiveRecord::Base
   before_validation :update_pic_folders
     
   def update_pic_folders
-    put_pictures_in_folder(bar_pictures, [I18n.t("myplaceonline.category.bars"), display])
+    put_files_in_folder(bar_pictures, [I18n.t("myplaceonline.category.bars"), display])
   end
 
   has_many :bar_pictures, :dependent => :destroy

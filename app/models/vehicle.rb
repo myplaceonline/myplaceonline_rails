@@ -30,7 +30,7 @@ class Vehicle < ActiveRecord::Base
   before_validation :update_pic_folders
   
   def update_pic_folders
-    put_pictures_in_folder(vehicle_pictures, [I18n.t("myplaceonline.category.vehicles"), name])
+    put_files_in_folder(vehicle_pictures, [I18n.t("myplaceonline.category.vehicles"), name])
   end
   
   has_many :vehicle_warranties, :dependent => :destroy

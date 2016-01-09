@@ -75,7 +75,7 @@ class Contact < ActiveRecord::Base
   
   def update_pic_folders
     if !contact_identity.nil?
-      put_pictures_in_folder(contact_identity.identity_pictures, [I18n.t("myplaceonline.category.contacts"), display])
+      put_files_in_folder(contact_identity.identity_pictures, [I18n.t("myplaceonline.category.contacts"), display])
     end
   end
 

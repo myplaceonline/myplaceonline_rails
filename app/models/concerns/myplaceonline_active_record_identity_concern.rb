@@ -31,10 +31,10 @@ module MyplaceonlineActiveRecordIdentityConcern
       end
     end
     
-    def put_pictures_in_folder(pictures, folders)
-      pictures.each do |pic|
-        if pic.identity_file.folder.nil?
-          pic.identity_file.folder = IdentityFileFolder.find_or_create(folders)
+    def put_files_in_folder(files, folders)
+      files.each do |file|
+        if file.identity_file.folder.nil?
+          file.identity_file.folder = IdentityFileFolder.find_or_create(folders)
         end
       end
     end

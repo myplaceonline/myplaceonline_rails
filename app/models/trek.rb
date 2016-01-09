@@ -15,7 +15,7 @@ class Trek < ActiveRecord::Base
   before_validation :update_pic_folders
     
   def update_pic_folders
-    put_pictures_in_folder(trek_pictures, [I18n.t("myplaceonline.category.treks"), display])
+    put_files_in_folder(trek_pictures, [I18n.t("myplaceonline.category.treks"), display])
   end
 
   has_many :trek_pictures, :dependent => :destroy

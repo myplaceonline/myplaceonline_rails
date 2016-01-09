@@ -31,7 +31,7 @@ class Trip < ActiveRecord::Base
         folders.push(self.location.display_general_region)
       end
     end
-    put_pictures_in_folder(trip_pictures, folders)
+    put_files_in_folder(trip_pictures, folders)
   end
   
   def display

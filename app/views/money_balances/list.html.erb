@@ -28,6 +28,15 @@
       <% if !mbi.money_balance_item_name.blank? %>
         <br/><%= mbi.money_balance_item_name %>
       <% end %>
+      <% if !mbi.original_amount.nil? %>
+        <br/>
+        <%=
+          t("myplaceonline.money_balances.original_amount_description", {
+              original_amount: Myp.number_to_currency(mbi.original_amount.abs),
+            }
+          )
+        %>
+      <% end %>
     </li>
   <% end %>
 </ul>

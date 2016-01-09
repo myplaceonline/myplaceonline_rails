@@ -15,7 +15,7 @@ class Restaurant < ActiveRecord::Base
   before_validation :update_pic_folders
     
   def update_pic_folders
-    put_pictures_in_folder(restaurant_pictures, [I18n.t("myplaceonline.category.restaurants"), display])
+    put_files_in_folder(restaurant_pictures, [I18n.t("myplaceonline.category.restaurants"), display])
   end
 
   has_many :restaurant_pictures, :dependent => :destroy

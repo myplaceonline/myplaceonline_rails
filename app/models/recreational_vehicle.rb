@@ -21,7 +21,7 @@ class RecreationalVehicle < ActiveRecord::Base
   before_validation :update_pic_folders
   
   def update_pic_folders
-    put_pictures_in_folder(recreational_vehicle_pictures, [I18n.t("myplaceonline.category.recreational_vehicles"), display])
+    put_files_in_folder(recreational_vehicle_pictures, [I18n.t("myplaceonline.category.recreational_vehicles"), display])
   end
 
   has_many :recreational_vehicle_insurances, :dependent => :destroy

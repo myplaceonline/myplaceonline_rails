@@ -16,7 +16,7 @@
   <%= f.fields_for :money_balance_items, childproperty do |child_fields| %>
     <div class="owe_container">
       <%
-      amount_field = myp_decimal_field(child_fields, :source_amount, "myplaceonline.money_balance_items.amount_simple", nil, true, nil, step = Myp::DEFAULT_DECIMAL_STEP, { onkeyup: "myplaceonline.onChangeCascade(this, myplaceonline.toFloatSafe, '.owe_container', '.other_owes', '.other_owes_percent:checked', myplaceonline.transformMultiply)" })
+      amount_field = myp_decimal_field(child_fields, :original_amount, "myplaceonline.money_balance_items.amount_simple", nil, true, nil, step = Myp::DEFAULT_DECIMAL_STEP, { onkeyup: "myplaceonline.onChangeCascade(this, myplaceonline.toFloatSafe, '.owe_container', '.other_owes', '.other_owes_percent:checked', myplaceonline.transformMultiply)" })
       amount_field_id = extract_id(amount_field)
       %>
       <%= amount_field %>

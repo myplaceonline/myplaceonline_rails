@@ -9,7 +9,7 @@ class AcneMeasurement < ActiveRecord::Base
   before_validation :update_pic_folders
   
   def update_pic_folders
-    put_pictures_in_folder(acne_measurement_pictures, [I18n.t("myplaceonline.category.acne_measurements"), display])
+    put_files_in_folder(acne_measurement_pictures, [I18n.t("myplaceonline.category.acne_measurements"), display])
   end
 
   def display
