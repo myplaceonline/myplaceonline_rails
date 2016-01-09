@@ -1882,3 +1882,7 @@ en:
       story_name: "Name"
       story_time: "Date/Time"
       story: "Story"
+      pictures: "Pictures"
+      picture: "Picture"
+      add_picture: "Add Picture"
+      delete_picture: "Delete Picture"

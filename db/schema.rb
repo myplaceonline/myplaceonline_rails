@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160109222058) do
+ActiveRecord::Schema.define(version: 20160109224237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2209,6 +2209,18 @@ ActiveRecord::Schema.define(version: 20160109222058) do
 
   add_index "stories", ["identity_id"], name: "index_stories_on_identity_id", using: :btree
 
+  create_table "story_pictures", force: :cascade do |t|
+    t.integer  "story_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "story_pictures", ["identity_file_id"], name: "index_story_pictures_on_identity_file_id", using: :btree
+  add_index "story_pictures", ["identity_id"], name: "index_story_pictures_on_identity_id", using: :btree
+  add_index "story_pictures", ["story_id"], name: "index_story_pictures_on_story_id", using: :btree
+
   create_table "sun_exposures", force: :cascade do |t|
     t.datetime "exposure_start"
     t.datetime "exposure_end"
@@ -2592,6 +2604,9 @@ ActiveRecord::Schema.define(version: 20160109222058) do
   add_foreign_key "restaurant_pictures", "identity_files"
   add_foreign_key "restaurant_pictures", "restaurants"
   add_foreign_key "stories", "identities"
+  add_foreign_key "story_pictures", "identities"
+  add_foreign_key "story_pictures", "identity_files"
+  add_foreign_key "story_pictures", "stories"
   add_foreign_key "trek_pictures", "identities"
   add_foreign_key "trek_pictures", "identity_files"
   add_foreign_key "trek_pictures", "treks"

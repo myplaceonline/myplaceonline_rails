@@ -1,4 +1,8 @@
 class StoriesController < MyplaceonlineController
+  def may_upload
+    true
+  end
+
   protected
     def insecure
       true
@@ -12,7 +16,16 @@ class StoriesController < MyplaceonlineController
       params.require(:story).permit(
         :story_name,
         :story_time,
-        :story
+        :story,
+        story_pictures_attributes: [
+          :id,
+          :_destroy,
+          identity_file_attributes: [
+            :id,
+            :file,
+            :notes
+          ]
+        ]
       )
     end
 end
