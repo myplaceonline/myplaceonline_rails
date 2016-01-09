@@ -148,12 +148,17 @@ class MyplaceonlineController < ApplicationController
         rescue ActiveRecord::RecordNotFound => rnf
           raise Myp::CannotFindNestedAttribute, rnf.message + " (code needs attribute setter override?)"
         end
+        
+        do_update_before_save
 
         @obj.save
       ensure
         Permission.current_target = nil
       end
     end
+  end
+  
+  def do_update_before_save
   end
   
   def after_create_or_update

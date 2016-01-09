@@ -1835,6 +1835,7 @@ en:
       i_owe: "I Owe"
       x_owes: "%{x} Owes"
       paid: "%{x} paid %{amount} for %{y} @ %{time}"
+      paid_notime: "%{x} paid %{amount} for %{y} @ %{time}"
       original_amount_description: "Total: %{original_amount}"
     money_balance_items:
       money_balance_item_name: "Description"

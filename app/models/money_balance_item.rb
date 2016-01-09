@@ -32,4 +32,25 @@ class MoneyBalanceItem < ActiveRecord::Base
       end
     end
   end
+  
+  def independent_description(withtime = true)
+    name = withtime ? "myplaceonline.money_balances.paid" : "myplaceonline.money_balances.paid_notime"
+    if amount < 0
+      I18n.t(name, {
+          x: money_balance.contact.display,
+          y: money_balance.identity.display,
+          amount: Myp.number_to_currency(amount.abs),
+          time: item_time
+        }
+      )
+    else
+      I18n.t(name, {
+          x: money_balance.identity.display,
+          y: money_balance.contact.display,
+          amount: Myp.number_to_currency(amount),
+          time: item_time
+        }
+      )
+    end
+  end
 end

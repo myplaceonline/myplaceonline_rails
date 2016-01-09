@@ -78,6 +78,13 @@ class Contact < ActiveRecord::Base
       put_files_in_folder(contact_identity.identity_pictures, [I18n.t("myplaceonline.category.contacts"), display])
     end
   end
+  
+  def send_email(subject, body, cc = nil, bcc = nil)
+    to = contact_identity.emails
+    if to.length > 0
+      Myp.send_email(to, subject, body, cc, bcc)
+    end
+  end
 
   after_save { |record| DueItem.due_contacts(User.current_user, record, DueItem::UPDATE_TYPE_UPDATE) }
   after_destroy { |record| DueItem.due_contacts(User.current_user, record, DueItem::UPDATE_TYPE_DELETE) }

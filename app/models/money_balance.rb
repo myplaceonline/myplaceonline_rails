@@ -27,4 +27,15 @@ class MoneyBalance < ActiveRecord::Base
     end
     result
   end
+  
+  def independent_description
+    balance = calculate_balance
+    if balance == 0
+      Myp.number_to_currency(0)
+    elsif balance < 0
+      I18n.t("myplaceonline.money_balances.you_owe", source: identity.display, contact: contact.display, amount: Myp.number_to_currency(balance.abs))
+    else
+      I18n.t("myplaceonline.money_balances.contact_owes", source: identity.display, contact: contact.display, amount: Myp.number_to_currency(balance))
+    end
+  end
 end

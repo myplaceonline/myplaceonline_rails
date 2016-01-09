@@ -28,11 +28,26 @@ class MoneyBalancesController < MyplaceonlineController
     @owner_paid = params[:owner_paid].to_bool
     if request.patch?
       if do_update
+        if !@new_item.nil?
+          if @new_item.current_user_owns?
+            to = @obj.contact
+          else
+            to = @obj.identity.ensure_contact!
+          end
+          to.send_email(@new_item.independent_description(false), @obj.independent_description, User.current_user.primary_identity.emails)
+        end
         return after_create_or_update
       end
     end
   end
   
+  def do_update_before_save
+    i = @obj.money_balance_items.index{|mbi| mbi.new_record?}
+    if !i.nil?
+      @new_item = @obj.money_balance_items[i]
+    end
+  end
+
   def who_paid_title(owner_paid)
     if owner_paid
       if @obj.current_user_owns?
