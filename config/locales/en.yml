@@ -134,6 +134,7 @@ en:
       treks: "Treks"
       money_balances: "Money Balances"
       permissions: "Permissions"
+      receipts: "Receipts"
     general:
       email: "E-mail"
       password: "Password"
@@ -1865,3 +1866,12 @@ en:
       default_subject: "A %{subject_class} has been shared with you"
       default_body: "Hi, %{contact} has shared the following %{subject_class} with you:"
       shared_sucess: "An email has been sent with the share link"
+    receipts:
+      receipt_name: "Name"
+      receipt_time: "Date/Time"
+      amount: "Amount"
+      notes: "Notes"
+      files: "Files"
+      file: "File"
+      add_file: "Add File"
+      delete_file: "Delete File"

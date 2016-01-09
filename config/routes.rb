@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :receipts
+  post 'receipts/new'
+
   match 'permissions/share', :to => 'permissions#share', via: [:get, :post], as: "permissions_share"
   resources :permissions
   post 'permissions/new'

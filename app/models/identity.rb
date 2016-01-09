@@ -93,6 +93,7 @@ class Identity < ActiveRecord::Base
   has_many :treks, :dependent => :destroy
   has_many :money_balances, :dependent => :destroy
   has_many :permissions, :dependent => :destroy
+  has_many :receipts, :dependent => :destroy
   
   has_many :myplets, -> { order('y_coordinate') }, :dependent => :destroy
   accepts_nested_attributes_for :myplets, allow_destroy: true, reject_if: :all_blank
@@ -215,6 +216,7 @@ class Identity < ActiveRecord::Base
       :treks => treks.to_a.map{|x| x.as_json},
       :money_balances => money_balances.to_a.map{|x| x.as_json},
       :permissions => permissions.to_a.map{|x| x.as_json},
+      :receipts => receipts.to_a.sort{ |a,b| a.receipt_name.downcase <=> b.receipt_name.downcase }.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

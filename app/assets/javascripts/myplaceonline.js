@@ -877,6 +877,7 @@ var myplaceonline = function(mymodule) {
   mymodule.setMyplaceonlineSnapshot = setMyplaceonlineSnapshot;
   mymodule.getMyplaceonlineSnapshot = getMyplaceonlineSnapshot;
   mymodule.getSessionPassword = getSessionPassword;
+  mymodule.getJSON = getJSON;
 
   mymodule.isFocusAllowed = function() {
     return allowFocusPlaceholder;

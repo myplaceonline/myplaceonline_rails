@@ -60,7 +60,7 @@ var myplaceonline = function(mymodule) {
   });
 
   $(document).on('ajax:error', 'form', function(xhr, status, error) {
-    myplaceonline.criticalError("Error submitting form: " + getJSON(status) + ", " + getJSON(error));
+    myplaceonline.criticalError("Error submitting form: " + myplaceonline.getJSON(status) + ", " + myplaceonline.getJSON(error));
   });
 
   $(document).on("click", "#mainbutton", function(eventData) {

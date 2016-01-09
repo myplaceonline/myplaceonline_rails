@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160107170216) do
+ActiveRecord::Schema.define(version: 20160109171359) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1885,6 +1885,31 @@ ActiveRecord::Schema.define(version: 20160107170216) do
 
   add_index "questions", ["identity_id"], name: "index_questions_on_identity_id", using: :btree
 
+  create_table "receipt_files", force: :cascade do |t|
+    t.integer  "receipt_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "receipt_files", ["identity_file_id"], name: "index_receipt_files_on_identity_file_id", using: :btree
+  add_index "receipt_files", ["identity_id"], name: "index_receipt_files_on_identity_id", using: :btree
+  add_index "receipt_files", ["receipt_id"], name: "index_receipt_files_on_receipt_id", using: :btree
+
+  create_table "receipts", force: :cascade do |t|
+    t.string   "receipt_name"
+    t.datetime "receipt_time"
+    t.decimal  "amount",       precision: 10, scale: 2
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "receipts", ["identity_id"], name: "index_receipts_on_identity_id", using: :btree
+
   create_table "recipes", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.text     "recipe"
@@ -2546,6 +2571,10 @@ ActiveRecord::Schema.define(version: 20160107170216) do
   add_foreign_key "permissions", "users"
   add_foreign_key "playlist_shares", "shares"
   add_foreign_key "playlists", "identity_files"
+  add_foreign_key "receipt_files", "identities"
+  add_foreign_key "receipt_files", "identity_files"
+  add_foreign_key "receipt_files", "receipts"
+  add_foreign_key "receipts", "identities"
   add_foreign_key "restaurant_pictures", "identities"
   add_foreign_key "restaurant_pictures", "identity_files"
   add_foreign_key "restaurant_pictures", "restaurants"

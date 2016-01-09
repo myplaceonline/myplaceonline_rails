@@ -1,0 +1,7 @@
+<%# locals: files, placeholder %>
+
+<% if !files.nil? && files.length > 0 %>
+  <% files.each do |file| %>
+    <%= attribute_table_row_file(t(placeholder), file.identity_file) %>
+  <% end %>
+<% end %>

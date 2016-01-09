@@ -108,30 +108,40 @@ module Myp
   end
   
   puts "myplaceonline: myp.rb static initialization"
-
-  if Myp.database_exists?
-    Category.all.each do |existing_category|
-      is_explicit = existing_category.respond_to?("explicit?") && existing_category.explicit?
-      is_experimental = existing_category.respond_to?("experimental?") && existing_category.experimental?
-
-      @@all_categories[existing_category.name.to_sym] = existing_category
-      @@all_categories_without_explicit_with_experimental[existing_category.name.to_sym] = existing_category
-      @@all_categories_without_experimental_with_explicit[existing_category.name.to_sym] = existing_category
-      @@all_categories_without_explicit_without_experimental[existing_category.name.to_sym] = existing_category
+  
+  def self.initialize_categories
+    if Myp.database_exists?
       
-      if is_explicit
-        @@all_categories_without_explicit_with_experimental.delete(existing_category.name.to_sym)
-        @@all_categories_without_explicit_without_experimental.delete(existing_category.name.to_sym)
+      @@all_categories.clear
+      @@all_categories_without_explicit_with_experimental.clear
+      @@all_categories_without_experimental_with_explicit.clear
+      @@all_categories_without_explicit_without_experimental.clear
+      
+      Category.all.each do |existing_category|
+        is_explicit = existing_category.respond_to?("explicit?") && existing_category.explicit?
+        is_experimental = existing_category.respond_to?("experimental?") && existing_category.experimental?
+
+        @@all_categories[existing_category.name.to_sym] = existing_category
+        @@all_categories_without_explicit_with_experimental[existing_category.name.to_sym] = existing_category
+        @@all_categories_without_experimental_with_explicit[existing_category.name.to_sym] = existing_category
+        @@all_categories_without_explicit_without_experimental[existing_category.name.to_sym] = existing_category
+        
+        if is_explicit
+          @@all_categories_without_explicit_with_experimental.delete(existing_category.name.to_sym)
+          @@all_categories_without_explicit_without_experimental.delete(existing_category.name.to_sym)
+        end
+        if is_experimental
+          @@all_categories_without_experimental_with_explicit.delete(existing_category.name.to_sym)
+          @@all_categories_without_explicit_without_experimental.delete(existing_category.name.to_sym)
+        end
       end
-      if is_experimental
-        @@all_categories_without_experimental_with_explicit.delete(existing_category.name.to_sym)
-        @@all_categories_without_explicit_without_experimental.delete(existing_category.name.to_sym)
-      end
+      puts "myplaceonline: #{@@all_categories.count} categories cached"
+      #puts "myplaceonline: Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
     end
-    puts "myplaceonline: #{@@all_categories.count} categories cached"
-    #puts "myplaceonline: Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
   end
   
+  initialize_categories
+
   def self.categories(user = nil)
     if user.nil?
       @@all_categories

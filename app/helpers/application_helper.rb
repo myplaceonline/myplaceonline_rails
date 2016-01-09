@@ -142,6 +142,24 @@ module ApplicationHelper
     end
   end
   
+  def attribute_table_row_file(name, identity_file)
+    if !identity_file.nil?
+      attribute_table_row_content(
+        identity_file.display,
+        nil,
+        url_or_blank(
+          file_download_path(identity_file),
+          t("myplaceonline.files.download"),
+          nil,
+          nil,
+          true
+        )
+      )
+    else
+      nil
+    end
+  end
+  
   def attribute_table_row_image(name, identity_file, link_to_original = true)
     if !identity_file.nil? && !identity_file.file_content_type.nil? && (identity_file.file_content_type.start_with?("image"))
       if identity_file.thumbnail_contents.nil?
