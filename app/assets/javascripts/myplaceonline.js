@@ -111,6 +111,10 @@ var myplaceonline = function(mymodule) {
     }
     document.getElementById("debugConsole").value = "Accumulated Messages:\n" + result;
   }
+  
+  function getAllHTML() {
+    return document.documentElement ? document.documentElement.innerHTML : "documentElement null";
+  }
 
   function sendDebug(message, dontAlert) {
     // URL is absolute because the call might come from phonegap
@@ -123,7 +127,7 @@ var myplaceonline = function(mymodule) {
       data: JSON.stringify({
         message: message,
         messages: debugMessages,
-        html: document.documentElement.innerHTML
+        html: getAllHTML()
       })
     }).done(function(data) {
       if (!dontAlert) {
@@ -736,7 +740,7 @@ var myplaceonline = function(mymodule) {
   }
 
   function alertHTML() {
-    consoleLog(document.documentElement.innerHTML);
+    consoleLog(getAllHTML());
     showDebugConsole();
   }
 
