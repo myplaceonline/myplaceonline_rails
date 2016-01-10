@@ -116,7 +116,16 @@ var myplaceonline = function(mymodule) {
     return document.documentElement ? document.documentElement.innerHTML : "documentElement null";
   }
 
-  function sendDebug(message, dontAlert) {
+  function sendDebug(message, dontAlert, errorObj) {
+    var stackTrace = null;
+    if (Error) {
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack
+      stackTrace = new Error().stack;
+      
+      if (errorObj) {
+        stackTrace += "\n\nOriginal stack:\n" + errorObj.stack;
+      }
+    }
     // URL is absolute because the call might come from phonegap
     $.ajax({
       type: "POST",
@@ -127,7 +136,8 @@ var myplaceonline = function(mymodule) {
       data: JSON.stringify({
         message: message,
         messages: debugMessages,
-        html: getAllHTML()
+        html: getAllHTML(),
+        stack: stackTrace
       })
     }).done(function(data) {
       if (!dontAlert) {
@@ -233,17 +243,17 @@ var myplaceonline = function(mymodule) {
     }
   }
 
-  function criticalError(msg) {
+  function criticalError(msg, errorObj) {
     msg = "Browser Error. Please copy and report the following details to " + contact_email + ": " + msg;
     consoleLog(msg);
     jserrors++;
     if (jserrors <= maxjserrors) {
-      sendDebug(msg, true);
+      sendDebug(msg, true, errorObj);
       alert(msg);
     }
   }
 
-  window.onerror = function(msg, url, line) {
+  window.onerror = function(msg, url, line, colno, errorObj) {
     // If you return true, then error alerts (like in older versions of 
     // Internet Explorer) will be suppressed.
     var suppressErrorAlert = true;
@@ -289,9 +299,13 @@ var myplaceonline = function(mymodule) {
       criticalError(e);
     }
 
-    var errorMsg = details + "\nurl: " + url + "\nline #: " + line + "\ntype: " + t;
+    var errorMsg = details + "\nurl: " + url + "\nline #: " + line;
+    if (colno) {
+      errorMsg += " (" + colno + ")";
+    }
+    errorMsg += "\ntype: " + t;
 
-    criticalError(errorMsg);
+    criticalError(errorMsg, errorObj);
 
     holderrors += "\n\n" + errorMsg;
     if (jsondetails) {
