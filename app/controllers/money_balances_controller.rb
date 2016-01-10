@@ -34,7 +34,7 @@ class MoneyBalancesController < MyplaceonlineController
           else
             to = @obj.identity.ensure_contact!
           end
-          to.send_email(@new_item.independent_description(false), @obj.independent_description, User.current_user.primary_identity.emails)
+          to.send_email(@new_item.independent_description(false), @obj.independent_description)
         end
         return after_create_or_update
       end
