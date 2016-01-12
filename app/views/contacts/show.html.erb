@@ -20,7 +20,7 @@
     <%= attribute_table_row(t("myplaceonline.identities.phone"), phone.number) %>
     <%= attribute_table_row_select t("myplaceonline.identity_phones.phone_type"), phone.phone_type, IdentityPhone::PHONE_TYPES %>
   <% end %>
-  <% @obj.all_conversations.each do |conversation| %>
+  <% @obj.all_conversations.take(5).each do |conversation| %>
     <%= attribute_table_row_markdown(t("myplaceonline.contacts.conversation") + " (" + Myp.display_date(conversation.conversation_date, current_user) + ")", conversation.conversation) %>
   <% end %>
   <% @obj.contact_identity.identity_locations.each do |identity_location| %>
