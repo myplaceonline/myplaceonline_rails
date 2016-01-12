@@ -111,6 +111,12 @@ class MyplaceonlineController < ApplicationController
           raise Myp::CannotFindNestedAttribute, rnf.message + " (code needs attribute setter override?)"
         end
         
+        if nested
+          parent_name = parent_model.table_name.singularize.downcase
+          parent_id = parent_model.table_name.singularize.downcase + "_id"
+          @obj.send("#{parent_name}=", Myp.find_existing_object(parent_model, params[parent_id]))
+        end
+        
         save_result = @obj.save
         
         Rails.logger.debug{"Saved #{save_result.to_s} for #{@obj.inspect}"}
@@ -169,7 +175,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def redirect_to_obj
-    redirect_to @obj
+    redirect_to obj_path
   end
 
   def destroy
@@ -213,11 +219,19 @@ class MyplaceonlineController < ApplicationController
   end
   
   def obj_path(obj = @obj)
-    send(path_name + "_path", obj)
+    if nested
+      send(path_name + "_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+    else
+      send(path_name + "_path", obj)
+    end
   end
   
   def edit_obj_path(obj = @obj)
-    send("edit_" + path_name + "_path", obj)
+    if nested
+      send("edit_" + path_name + "_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+    else
+      send("edit_" + path_name + "_path", obj)
+    end
   end
   
   def new_path(context = nil)
@@ -270,6 +284,18 @@ class MyplaceonlineController < ApplicationController
   
   def show_created_updated
     true
+  end
+  
+  def show_path(obj)
+    if nested
+      send("#{path_name}_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+    else
+      send("#{path_name}_path", obj)
+    end
+  end
+  
+  def form_path
+    paths_name + "/form"
   end
   
   protected
@@ -331,6 +357,10 @@ class MyplaceonlineController < ApplicationController
       if additional.nil?
         additional = ""
       end
+      if nested
+        parent_id = parent_model.table_name.singularize.downcase + "_id"
+        additional += " AND #{model.table_name}.#{parent_id} = #{ActionController::Base.helpers.sanitize(params[parent_id.to_sym])}"
+      end
       model.includes(all_includes).joins(all_joins).where(
         "(#{model.table_name}.identity_id = ? #{initial_or}) #{additional}",
         current_user.primary_identity.id
@@ -353,7 +383,12 @@ class MyplaceonlineController < ApplicationController
       if action.nil?
         action = action_name
       end
-      @obj = model.find(params[:id].to_i)
+      if nested
+        parent_id = parent_model.table_name.singularize.downcase + "_id"
+        @obj = model.where("id = ? and #{parent_id} = ?", params[:id].to_i, params[parent_id.to_sym].to_i).take!
+      else
+        @obj = model.find(params[:id].to_i)
+      end
       authorize! action.to_sym, @obj
     end
     
@@ -397,6 +432,14 @@ class MyplaceonlineController < ApplicationController
     def showmyplet
     end
     
+    def nested
+      false
+    end
+    
+    def parent_model
+      nil
+    end
+
     def edit_prerespond
     end
 end

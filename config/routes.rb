@@ -316,7 +316,10 @@ Rails.application.routes.draw do
   resources :accomplishments
   post 'accomplishments/new'
 
-  resources :contacts
+  resources :contacts do
+    resources :conversations
+    post 'conversations/new'
+  end
   post 'contacts/new'
 
   resources :to_dos

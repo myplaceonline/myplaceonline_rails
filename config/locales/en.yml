@@ -136,6 +136,7 @@ en:
       permissions: "Permissions"
       receipts: "Receipts"
       stories: "Stories"
+      conversations: "Conversations"
     general:
       email: "E-mail"
       password: "Password"

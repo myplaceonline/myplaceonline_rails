@@ -47,4 +47,8 @@
       placeholder: "myplaceonline.contacts.picture"
     }
   %>
+
+  <% content_for :postfooterlinks do %>
+    <li><%= link_to t('myplaceonline.contacts.conversations'), contact_conversations_path(@obj), "data-icon" => "phone" %></li>
+  <% end %>
 <% end %>

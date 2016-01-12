@@ -52,7 +52,7 @@
       @objs.each do |obj|
       %>
         <li>
-          <%= link_to controller.display_obj(obj), send("#{controller.path_name}_path", obj) %>
+          <%= link_to controller.display_obj(obj), controller.show_path(obj) %>
         </li>
       <%
       end
