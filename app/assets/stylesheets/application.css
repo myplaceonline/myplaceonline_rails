@@ -141,11 +141,6 @@ div.ui-checkbox + label {
   overflow: auto;
 }
 
-#myplaceonline_welcome_score, #myplaceonline_points_show {
-  font-size: 2em;
-  font-weight: bold;
-}
-
 .myplet_border > li > ul {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
