@@ -41,6 +41,11 @@ class MyplaceonlineController < ApplicationController
 
     index_pre_respond()
     
+    if nested
+      parent_id = parent_model.table_name.singularize.downcase + "_id"
+      @parent = Myp.find_existing_object(parent_model, params[parent_id])
+    end
+    
     # Save off any query parameters which might be used by AJAX callbacks to
     # index.json.erb (for example, for a full item search)
     @query_params_part = Myp.query_parameters_uri_part(request)
