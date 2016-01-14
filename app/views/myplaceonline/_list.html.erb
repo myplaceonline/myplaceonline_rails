@@ -1,0 +1,32 @@
+<%# locals: array of CategoryForIdentity, ulid: string, filter: boolean, filter_placeholder: string %>
+<%
+  ulid ||= nil
+  filter ||= false
+  filter_placeholder ||= ""
+%>
+
+<% if !items.nil? && items.length > 0 %>
+
+  <%= content_tag("ul", id: ulid, data: {role: "listview", inset: "true", filter: filter, "filter-placeholder" => filter_placeholder}) do %>
+    <% items.each do |item| %>
+      <%
+      filtertext = item.title
+      if !item.filtertext.blank?
+        filtertext = item.filtertext
+      end
+      %>
+      <%= content_tag("li", data: {filtertext: filtertext}) do %>
+        <%= link_to(item.link) do %>
+          <% if !item.icon.blank? %>
+            <%= image_tag(item.icon.gsub("/assets/", ""), alt: item.title, title: item.title, height: 16, weight: 16, class: "ui-li-icon") %>
+          <% end %>
+          <%= item.title %>
+          <% if !item.count.nil? %>
+            <span class="ui-li-count"><%= item.count %></span>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+  
+<% end %>

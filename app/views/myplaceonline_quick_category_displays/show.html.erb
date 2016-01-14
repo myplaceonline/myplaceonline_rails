@@ -2,15 +2,9 @@
   <%= render layout: "shared/model_show" do %>
   <% end %>
 <% else %>
-  <% if @usefulCategoryList.length > 0 %>
-
-    <ul id="myplaceonline_recent_list" data-role="listview" data-inset="true">
-    </ul>
-    <script type="text/javascript">
-    myplaceonline.onPageLoad(function() {
-      myplaceonline.jqmSetList($("#myplaceonline_recent_list"), <%= raw(@usefulCategoryList.to_json) %>);
-    });
-    </script>
-
-  <% end %>
+  <%=
+    render partial: 'myplaceonline/list', locals: {
+      items: @usefulCategoryList
+    }
+  %>
 <% end %>

@@ -285,7 +285,7 @@ module Myp
     .uniq{ |cpa| cpa.category_id }.map{ |cpa|
       CategoryForIdentity.new(
         Category.human_title(cpa.category_name),
-        cpa.category_link,
+        "/" + cpa.category_link,
         cpa.count.nil? ? 0 : cpa.count,
         cpa.category_id,
         cpa.category_parent_id,
@@ -304,6 +304,34 @@ module Myp
       @parent_id = parent_id
       @filtertext = filtertext
       @icon = ActionController::Base.helpers.asset_path(icon, type: :image)
+    end
+    
+    def title
+      @title
+    end
+    
+    def link
+      @link
+    end
+    
+    def count
+      @count
+    end
+    
+    def id
+      @id
+    end
+    
+    def parent_id
+      @parent_id
+    end
+    
+    def filtertext
+      @filtertext
+    end
+    
+    def icon
+      @icon
     end
   end
 

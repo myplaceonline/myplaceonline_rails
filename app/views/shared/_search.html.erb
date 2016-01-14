@@ -1,16 +1,25 @@
-<div id="myplaceonline_search_container">
-  <ul id="myplaceonline_search_list" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="<%= t("myplaceonline.search.search_categories") %>">
-  </ul>
+<%
+id = "myplaceonline_search_" + SecureRandom.hex(10)
+container_id = id + "_container"
+%>
+
+<div id="<%= container_id %>">
+  <%=
+    render partial: 'myplaceonline/list', locals: {
+      items: list,
+      ulid: id,
+      filter: true,
+      filter_placeholder: t("myplaceonline.search.search_categories")
+    }
+  %>
 </div>
 
 <script type="text/javascript">
 myplaceonline.onPageLoad(function() {
-  var search = $("#myplaceonline_search_list");
+  var search = $("#<%= id %>");
   myplaceonline.hookListviewSearch(search, "/api/categories.json");
-  var list = <%= raw(initialCategoryList) %>;
-  myplaceonline.jqmSetList(search, list);
-  var input = $("#myplaceonline_search_container input");
-  myplaceonline.hookListviewEnter(input, "#myplaceonline_search_list");
+  var input = $("#<%= container_id %> input");
+  myplaceonline.hookListviewEnter(input, "#<%= id %>");
   myplaceonline.maybeFocus(input);
 });
 </script>

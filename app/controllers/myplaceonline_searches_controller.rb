@@ -1,6 +1,6 @@
 class MyplaceonlineSearchesController < MyplaceonlineController
   def showmyplet
-    @initialCategoryList = Myp.categories_for_current_user(current_user, -1).to_json
+    @initialCategoryList = Myp.categories_for_current_user(current_user, -1)
   end
   
   protected
