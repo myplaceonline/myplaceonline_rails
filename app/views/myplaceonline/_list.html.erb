@@ -18,7 +18,7 @@
       <%= content_tag("li", data: {filtertext: filtertext}) do %>
         <%= link_to(item.link) do %>
           <% if !item.icon.blank? %>
-            <%= image_tag(item.icon.gsub("/assets/", ""), alt: item.title, title: item.title, height: 16, weight: 16, class: "ui-li-icon") %>
+            <%= tag("img", src: image_path(item.icon.gsub("/assets/", "")), alt: item.title, title: item.title, height: 16, weight: 16, class: "ui-li-icon") %>
           <% end %>
           <%= item.title %>
           <% if !item.count.nil? %>
