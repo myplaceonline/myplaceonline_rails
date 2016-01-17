@@ -461,7 +461,7 @@ module ApplicationHelper
     hidden_field_tag(name, value)
   end
                        
-  def myp_text_field(form, name, placeholder, value, autofocus = false, input_classes = nil, autocomplete = true, options = {})
+  def myp_text_field(form, name, placeholder, value, autofocus = false, input_classes = nil, autocomplete = true, options = {}, remote_autocomplete_model: nil)
     if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
@@ -474,11 +474,41 @@ module ApplicationHelper
       baseoptions[:autocomplete] = "off"
     end
     field = form.text_field(name, baseoptions.merge(options))
-    content_tag(
+    result = content_tag(
       :p,
       form.label(name, placeholder, class: myp_label_classes(value)) +
       field
     ).html_safe
+    
+    if !remote_autocomplete_model.nil?
+      id = extract_id(result)
+      autocomplete_id = id + "_remote_autocomplete"
+      puts form.to_model.inspect
+      additional = <<-eos
+        <ul data-role="listview" data-inset="true" data-filter="true" data-filter-reveal="true" data-input="##{id}" id="#{autocomplete_id}">
+        </ul>
+        <script type="text/javascript">
+          myplaceonline.onPageLoad(function() {
+            $("##{autocomplete_id}").on("click", "li", function() {
+              $("##{id}").val($(this).text());
+              $("##{autocomplete_id} li").addClass("ui-screen-hidden");
+            });
+            myplaceonline.hookListviewSearch($("##{autocomplete_id}"), "/api/distinct_values.json?table_name=#{remote_autocomplete_model}&column_name=#{name}");
+            
+            // When hooking up our input to the listview autocomplete with data-input, enter is squashed
+            $("##{id}").on('keydown', function(e) {
+              var code = (e.keyCode ? e.keyCode : e.which);
+              if (code == 13) {
+                $(this.form).find(":submit").first().click();
+              }
+            });
+          });
+        </script>
+      eos
+      result += additional.html_safe
+    end
+    
+    result
   end
   
   def myp_number_field(form, name, placeholder, value, autofocus = false, input_classes = nil, step = nil, options = {})

@@ -86,14 +86,19 @@ class ApiController < ApplicationController
         model = Object.const_get(table_name)
         if !model.nil?
           if !model.column_names.index(column_name).nil?
-            render json: {
-              success: true,
-              values: model.find_by_sql(%{
-                SELECT DISTINCT #{column_name}
-                FROM #{model.table_name}
-                WHERE identity_id = #{User.current_user.primary_identity.id}
-                ORDER BY #{column_name}
-              }).map{|x| x.send(column_name) }.delete_if{|x| x.blank?}
+            render json: model.find_by_sql(%{
+              SELECT DISTINCT #{column_name}
+              FROM #{model.table_name}
+              WHERE identity_id = #{User.current_user.primary_identity.id}
+              ORDER BY #{column_name}
+            }).map{|x| x.send(column_name) }.delete_if{|x| x.blank?}.map{|x|
+              {
+                title: x,
+                #link: "#",
+                #count: Integer,
+                #filtertext: String,
+                #icon: String
+              }
             }
           else
             json_error("column_name invalid")

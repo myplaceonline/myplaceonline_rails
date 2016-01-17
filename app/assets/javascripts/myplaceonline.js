@@ -792,15 +792,21 @@ var myplaceonline = function(mymodule) {
       if (x.filtertext) {
         filtertext = x.filtertext;
       }
-      var icon = "";
+      html += "<li data-filtertext='" + filtertext + "'>";
+      if (x.link) {
+        html += "<a href='" + x.link + "'>";
+      }
       if (x.icon) {
-        icon = "<img alt='" + x.title + "' title='" + x.title + "' class='ui-li-icon' height='16' width='16' src='" + x.icon + "' />";
+        html += "<img alt='" + x.title + "' title='" + x.title + "' class='ui-li-icon' height='16' width='16' src='" + x.icon + "' />";
       }
-      if (typeof x.count !== 'undefined') {
-        html += "<li data-filtertext='" + filtertext + "'><a href='" + x.link + "'>" + icon + x.title + " <span class='ui-li-count'>" + x.count + "</span></a></li>";
-      } else {
-        html += "<li data-filtertext='" + filtertext + "'><a href='" + x.link + "'>" + icon + x.title + "</a></li>";
+      if (x.count) {
+        html += " <span class='ui-li-count'>" + x.count + "</span>";
       }
+      html += x.title;
+      if (x.link) {
+        html += "</a>";
+      }
+      html += "</li>";
     });
     list.html(html);
     list.listview("refresh");
