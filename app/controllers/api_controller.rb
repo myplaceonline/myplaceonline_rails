@@ -78,6 +78,37 @@ class ApiController < ApplicationController
     }
   end
   
+  def distinct_values
+    table_name = params[:table_name]
+    if !table_name.blank?
+      column_name = params[:column_name]
+      if !column_name.blank?
+        model = Object.const_get(table_name)
+        if !model.nil?
+          if !model.column_names.index(column_name).nil?
+            render json: {
+              success: true,
+              values: model.find_by_sql(%{
+                SELECT DISTINCT #{column_name}
+                FROM #{model.table_name}
+                WHERE identity_id = #{User.current_user.primary_identity.id}
+                ORDER BY #{column_name}
+              }).map{|x| x.send(column_name) }.delete_if{|x| x.blank?}
+            }
+          else
+            json_error("column_name invalid")
+          end
+        else
+          json_error("table_name invalid")
+        end
+      else
+        json_error("column_name not specified")
+      end
+    else
+      json_error("table_name not specified")
+    end
+  end
+  
   protected
     def json_error(error)
       render json: {

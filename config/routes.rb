@@ -349,6 +349,7 @@ Rails.application.routes.draw do
   post 'api/debug'
   post 'api/renderpartial'
   post 'api/quickfeedback'
+  get 'api/distinct_values'
   
   get 'admin/test'
   get 'admin/recalculate_all_users_due'
