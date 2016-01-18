@@ -3,7 +3,7 @@ sudo: false
 
 # http://docs.travis-ci.com/user/ci-environment/#Ruby-%28aka-common%29-VM-images
 rvm:
-  - 1.9.3
+  - 2.2.1
 
 before_script:
   - cp config/database.yml.travis config/database.yml
