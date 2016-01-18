@@ -60,10 +60,10 @@ class Myplet < ActiveRecord::Base
       identity: identity
     }))
 
-    x = MyplaceonlineDueDisplay.new
+    x = Calendar.new
     x.save!
     result.push(Myplet.new({
-      title: "myplaceonline.myplets.titles.myplaceonline_due_display",
+      title: "myplaceonline.myplets.titles.calendar",
       y_coordinate: 3,
       x_coordinate: 0,
       category_name: x.class.name.underscore.pluralize,

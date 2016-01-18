@@ -75,8 +75,8 @@ Rails.application.routes.draw do
   resources :concerts
   post 'concerts/new'
 
-  resources :myplaceonline_due_displays
-  post 'myplaceonline_due_displays/new'
+  resources :calendars
+  post 'calendars/new'
 
   resources :myplaceonline_quick_category_displays
   post 'myplaceonline_quick_category_displays/new'

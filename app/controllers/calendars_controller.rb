@@ -1,4 +1,4 @@
-class MyplaceonlineDueDisplaysController < MyplaceonlineController
+class CalendarsController < MyplaceonlineController
   def showmyplet
     @due = DueItem.all_due(current_user)
     if @due.length == 0
@@ -32,11 +32,11 @@ class MyplaceonlineDueDisplaysController < MyplaceonlineController
   
   protected
     def sorts
-      ["myplaceonline_due_displays.updated_at DESC"]
+      ["calendars.updated_at DESC"]
     end
 
     def obj_params
-      params.require(:myplaceonline_due_display).permit(permit_params)
+      params.require(:calendar).permit(permit_params)
     end
 
     def has_category

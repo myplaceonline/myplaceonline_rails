@@ -1,7 +1,7 @@
 class DueItem < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
   
-  belongs_to :myplaceonline_due_display
+  belongs_to :calendar
 
   UPDATE_TYPE_UPDATE = 1
   UPDATE_TYPE_DELETE = 2
@@ -59,21 +59,21 @@ class DueItem < ActiveRecord::Base
     if self.is_date_arbitrary
       completed_due_items = ::CompleteDueItem.where(
         identity_id: self.identity_id,
-        myplaceonline_due_display_id: self.myplaceonline_due_display.id,
+        calendar_id: self.calendar.id,
         myp_model_name: self.myp_model_name,
         model_id: self.model_id
       )
       
       snoozed_due_items = ::SnoozedDueItem.where(
         identity_id: self.identity_id,
-        myplaceonline_due_display_id: self.myplaceonline_due_display.id,
+        calendar_id: self.calendar.id,
         myp_model_name: self.myp_model_name,
         model_id: self.model_id
       )
     else
       completed_due_items = ::CompleteDueItem.where(
         identity_id: self.identity_id,
-        myplaceonline_due_display_id: self.myplaceonline_due_display.id,
+        calendar_id: self.calendar.id,
         due_date: self.original_due_date,
         myp_model_name: self.myp_model_name,
         model_id: self.model_id
@@ -81,7 +81,7 @@ class DueItem < ActiveRecord::Base
       
       snoozed_due_items = ::SnoozedDueItem.where(
         identity_id: self.identity_id,
-        myplaceonline_due_display_id: self.myplaceonline_due_display.id,
+        calendar_id: self.calendar.id,
         original_due_date: self.original_due_date,
         myp_model_name: self.myp_model_name,
         model_id: self.model_id
@@ -262,7 +262,7 @@ class DueItem < ActiveRecord::Base
             due_date: snoozed_item.due_date,
             original_due_date: snoozed_item.original_due_date,
             identity_id: snoozed_item.identity_id,
-            myplaceonline_due_display: snoozed_item.myplaceonline_due_display,
+            calendar: snoozed_item.calendar,
             myp_model_name: snoozed_item.myp_model_name,
             model_id: snoozed_item.model_id
           )
@@ -277,7 +277,7 @@ class DueItem < ActiveRecord::Base
   def self.due_vehicles(user, updated_record = nil, update_type = nil)
     destroy_due_items(user, Vehicle)
     
-    user.primary_identity.myplaceonline_due_displays.each do |mdd|
+    user.primary_identity.calendars.each do |mdd|
       VehicleService.where("identity_id = ? and date_serviced is not null and date_due is not null and date_due > ? and date_due < ?", user.primary_identity, datenow, vehicle_service_threshold(mdd)).each do |service|
         create_due_item_check(
           display: service.short_description,
@@ -285,7 +285,7 @@ class DueItem < ActiveRecord::Base
           due_date: service.date_due,
           original_due_date: service.date_due,
           identity: user.primary_identity,
-          myplaceonline_due_display: mdd,
+          calendar: mdd,
           myp_model_name: Vehicle.name,
           model_id: service.vehicle.id
         )
@@ -298,7 +298,7 @@ class DueItem < ActiveRecord::Base
   def self.due_contacts(user, updated_record = nil, update_type = nil)
     destroy_due_items(user, Contact)
     
-    user.primary_identity.myplaceonline_due_displays.each do |mdd|
+    user.primary_identity.calendars.each do |mdd|
       IdentityDriversLicense.where("identity_id = ? and expires is not null and expires < ?", user.primary_identity, drivers_license_expiration_threshold(mdd)).each do |drivers_license|
         contact = Contact.where(identity_id: user.primary_identity.id, contact_identity_id: drivers_license.identity.id).first
         diff = TimeDifference.between(timenow, drivers_license.expires)
@@ -313,7 +313,7 @@ class DueItem < ActiveRecord::Base
           due_date: drivers_license.expires,
           original_due_date: drivers_license.expires,
           identity: user.primary_identity,
-          myplaceonline_due_display: mdd,
+          calendar: mdd,
           myp_model_name: Contact.name,
           model_id: contact.id
         )
@@ -335,7 +335,7 @@ class DueItem < ActiveRecord::Base
               due_date: next_birthday,
               original_due_date: next_birthday,
               identity: user.primary_identity,
-              myplaceonline_due_display: mdd,
+              calendar: mdd,
               myp_model_name: Contact.name,
               model_id: x.id
             )
@@ -367,7 +367,7 @@ class DueItem < ActiveRecord::Base
               due_date: datenow,
               original_due_date: datenow,
               identity: user.primary_identity,
-              myplaceonline_due_display: mdd,
+              calendar: mdd,
               myp_model_name: Contact.name,
               model_id: contact.id,
               is_date_arbitrary: true
@@ -385,7 +385,7 @@ class DueItem < ActiveRecord::Base
                 due_date: contact.last_conversation_date,
                 original_due_date: contact.last_conversation_date,
                 identity: user.primary_identity,
-                myplaceonline_due_display: mdd,
+                calendar: mdd,
                 myp_model_name: Contact.name,
                 model_id: contact.id
               )
@@ -401,7 +401,7 @@ class DueItem < ActiveRecord::Base
   def self.due_exercises(user, updated_record = nil, update_type = nil)
     destroy_due_items(user, Exercise)
     
-    user.primary_identity.myplaceonline_due_displays.each do |mdd|
+    user.primary_identity.calendars.each do |mdd|
       threshold = exercise_threshold(mdd)
       last_exercise = Exercise.where("identity_id = ? and exercise_start is not null", user.primary_identity).order('exercise_start DESC').limit(1).first
       if !last_exercise.nil? and last_exercise.exercise_start < threshold
@@ -414,7 +414,7 @@ class DueItem < ActiveRecord::Base
           due_date: last_exercise.exercise_start,
           original_due_date: last_exercise.exercise_start,
           identity: user.primary_identity,
-          myplaceonline_due_display: mdd,
+          calendar: mdd,
           myp_model_name: Exercise.name
         )
       end
@@ -426,7 +426,7 @@ class DueItem < ActiveRecord::Base
   def self.due_promotions(user, updated_record = nil, update_type = nil)
     destroy_due_items(user, Promotion)
     
-    user.primary_identity.myplaceonline_due_displays.each do |mdd|
+    user.primary_identity.calendars.each do |mdd|
       Promotion.where("identity_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, promotion_threshold(mdd)).each do |promotion|
         Rails.logger.debug{"Promotion due #{promotion.inspect}"}
         create_due_item_check(
@@ -440,7 +440,7 @@ class DueItem < ActiveRecord::Base
           due_date: promotion.expires,
           original_due_date: promotion.expires,
           identity: user.primary_identity,
-          myplaceonline_due_display: mdd,
+          calendar: mdd,
           myp_model_name: Promotion.name,
           model_id: promotion.id
         )
@@ -453,7 +453,7 @@ class DueItem < ActiveRecord::Base
   def self.due_gun_registrations(user, updated_record = nil, update_type = nil)
     destroy_due_items(user, GunRegistration)
     
-    user.primary_identity.myplaceonline_due_displays.each do |mdd|
+    user.primary_identity.calendars.each do |mdd|
       GunRegistration.where("identity_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, gun_registration_expiration_threshold(mdd)).each do |x|
         create_due_item_check(
           display: I18n.t(
@@ -465,7 +465,7 @@ class DueItem < ActiveRecord::Base
           due_date: x.expires,
           original_due_date: x.expires,
           identity: user.primary_identity,
-          myplaceonline_due_display: mdd,
+          calendar: mdd,
           myp_model_name: GunRegistration.name,
           model_id: x.gun.id
         )
@@ -478,7 +478,7 @@ class DueItem < ActiveRecord::Base
   def self.due_dental_cleanings(user, updated_record = nil, update_type = nil)
     destroy_due_items(user, DentistVisit)
     
-    user.primary_identity.myplaceonline_due_displays.each do |mdd|
+    user.primary_identity.calendars.each do |mdd|
       last_dentist_visit = DentistVisit.where("identity_id = ? and cleaning = true", user.primary_identity).order('visit_date DESC').limit(1).first
       if !last_dentist_visit.nil? and last_dentist_visit.visit_date < dentist_visit_threshold(mdd)
         create_due_item_check(
@@ -490,7 +490,7 @@ class DueItem < ActiveRecord::Base
           due_date: last_dentist_visit.visit_date,
           original_due_date: last_dentist_visit.visit_date,
           identity: user.primary_identity,
-          myplaceonline_due_display: mdd,
+          calendar: mdd,
           myp_model_name: DentistVisit.name,
           model_id: last_dentist_visit.id
         )
@@ -505,7 +505,7 @@ class DueItem < ActiveRecord::Base
             due_date: timenow,
             original_due_date: timenow,
             identity: user.primary_identity,
-            myplaceonline_due_display: mdd,
+            calendar: mdd,
             myp_model_name: DentistVisit.name,
             is_date_arbitrary: true
           )
@@ -519,7 +519,7 @@ class DueItem < ActiveRecord::Base
   def self.due_physicals(user, updated_record = nil, update_type = nil)
     destroy_due_items(user, DoctorVisit)
     
-    user.primary_identity.myplaceonline_due_displays.each do |mdd|
+    user.primary_identity.calendars.each do |mdd|
       last_doctor_visit = DoctorVisit.where("identity_id = ? and physical = true", user.primary_identity).order('visit_date DESC').limit(1).first
       if !last_doctor_visit.nil? and last_doctor_visit.visit_date < doctor_visit_threshold(mdd)
         create_due_item_check(
@@ -531,7 +531,7 @@ class DueItem < ActiveRecord::Base
           due_date: last_doctor_visit.visit_date,
           original_due_date: last_doctor_visit.visit_date,
           identity: user.primary_identity,
-          myplaceonline_due_display: mdd,
+          calendar: mdd,
           myp_model_name: DoctorVisit.name,
           model_id: last_doctor_visit.id
         )
@@ -546,7 +546,7 @@ class DueItem < ActiveRecord::Base
             due_date: timenow,
             original_due_date: timenow,
             identity: user.primary_identity,
-            myplaceonline_due_display: mdd,
+            calendar: mdd,
             myp_model_name: DoctorVisit.name,
             is_date_arbitrary: true
           )
@@ -560,7 +560,7 @@ class DueItem < ActiveRecord::Base
   def self.due_status(user, updated_record = nil, update_type = nil)
     destroy_due_items(user, Status)
     
-    user.primary_identity.myplaceonline_due_displays.each do |mdd|
+    user.primary_identity.calendars.each do |mdd|
       last_status = Status.where("identity_id = ?", user.primary_identity).order('status_time DESC').limit(1).first
       if !last_status.nil? and last_status.status_time < status_threshold(mdd)
         create_due_item_check(
@@ -572,7 +572,7 @@ class DueItem < ActiveRecord::Base
           due_date: last_status.status_time,
           original_due_date: last_status.status_time,
           identity: user.primary_identity,
-          myplaceonline_due_display: mdd,
+          calendar: mdd,
           myp_model_name: Status.name,
           model_id: last_status.id
         )
@@ -585,7 +585,7 @@ class DueItem < ActiveRecord::Base
           due_date: timenow,
           original_due_date: timenow,
           identity: user.primary_identity,
-          myplaceonline_due_display: mdd,
+          calendar: mdd,
           myp_model_name: Status.name,
           is_date_arbitrary: true
         )
@@ -600,7 +600,7 @@ class DueItem < ActiveRecord::Base
     
     today = Date.today
     
-    user.primary_identity.myplaceonline_due_displays.each do |mdd|
+    user.primary_identity.calendars.each do |mdd|
       Apartment.where("identity_id = ?", user.primary_identity).each do |apartment|
         apartment.apartment_trash_pickups.each do |trash_pickup|
           if trash_pickup.repeat
@@ -629,7 +629,7 @@ class DueItem < ActiveRecord::Base
                 due_date: next_pickup,
                 original_due_date: next_pickup,
                 identity: user.primary_identity,
-                myplaceonline_due_display: mdd,
+                calendar: mdd,
                 myp_model_name: Apartment.name,
                 model_id: apartment.id
               )
@@ -647,7 +647,7 @@ class DueItem < ActiveRecord::Base
     
     today = Date.today
     
-    user.primary_identity.myplaceonline_due_displays.each do |mdd|
+    user.primary_identity.calendars.each do |mdd|
       PeriodicPayment.where("identity_id = ? and date_period is not null and ended is null", user.primary_identity).each do |x|
         if !x.suppress_reminder
           result = x.next_payment
@@ -662,7 +662,7 @@ class DueItem < ActiveRecord::Base
                 due_date: result,
                 original_due_date: result,
                 identity: user.primary_identity,
-                myplaceonline_due_display: mdd,
+                calendar: mdd,
                 myp_model_name: PeriodicPayment.name,
                 model_id: x.id
               )
@@ -677,7 +677,7 @@ class DueItem < ActiveRecord::Base
                 due_date: result,
                 original_due_date: result,
                 identity: user.primary_identity,
-                myplaceonline_due_display: mdd,
+                calendar: mdd,
                 myp_model_name: PeriodicPayment.name,
                 model_id: x.id
               )
@@ -700,7 +700,7 @@ class DueItem < ActiveRecord::Base
                   due_date: result,
                   original_due_date: result,
                   identity: user.primary_identity,
-                  myplaceonline_due_display: mdd,
+                  calendar: mdd,
                   myp_model_name: PeriodicPayment.name,
                   model_id: x.id
                 )
@@ -717,7 +717,7 @@ class DueItem < ActiveRecord::Base
   def self.due_events(user, updated_record = nil, update_type = nil)
     destroy_due_items(user, Event)
     
-    user.primary_identity.myplaceonline_due_displays.each do |mdd|
+    user.primary_identity.calendars.each do |mdd|
       Event.where("identity_id = ? and event_time is not null and event_time > ? and event_time < ?", user.primary_identity, datenow, event_threshold(mdd)).each do |x|
         create_due_item_check(
           display: I18n.t(
@@ -729,7 +729,7 @@ class DueItem < ActiveRecord::Base
           due_date: x.event_time,
           original_due_date: x.event_time,
           identity: user.primary_identity,
-          myplaceonline_due_display: mdd,
+          calendar: mdd,
           myp_model_name: Event.name,
           model_id: x.id
         )
@@ -742,7 +742,7 @@ class DueItem < ActiveRecord::Base
   def self.due_stocks_vest(user, updated_record = nil, update_type = nil)
     destroy_due_items(user, Stock)
     
-    user.primary_identity.myplaceonline_due_displays.each do |mdd|
+    user.primary_identity.calendars.each do |mdd|
       Stock.where("identity_id = ? and vest_date is not null and vest_date > ? and vest_date < ?", user.primary_identity, datenow, stocks_vest_threshold(mdd)).each do |x|
         create_due_item_check(
           display: I18n.t(
@@ -754,7 +754,7 @@ class DueItem < ActiveRecord::Base
           due_date: x.vest_date,
           original_due_date: x.vest_date,
           identity: user.primary_identity,
-          myplaceonline_due_display: mdd,
+          calendar: mdd,
           myp_model_name: Stock.name,
           model_id: x.id
         )
@@ -768,7 +768,7 @@ class DueItem < ActiveRecord::Base
     destroy_due_items(user, ToDo)
     
     if ToDo.new.respond_to?("due_time")
-      user.primary_identity.myplaceonline_due_displays.each do |mdd|
+      user.primary_identity.calendars.each do |mdd|
         ToDo.where("identity_id = ? and due_time is not null and due_time > ? and due_time < ?", user.primary_identity, datenow, todo_threshold(mdd)).each do |x|
           create_due_item_check(
             display: I18n.t(
@@ -780,7 +780,7 @@ class DueItem < ActiveRecord::Base
             due_date: x.due_time,
             original_due_date: x.due_time,
             identity: user.primary_identity,
-            myplaceonline_due_display: mdd,
+            calendar: mdd,
             myp_model_name: ToDo.name,
             model_id: x.id
           )

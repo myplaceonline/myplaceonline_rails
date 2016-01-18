@@ -1,4 +1,4 @@
-class MyplaceonlineDueDisplay < ActiveRecord::Base
+class Calendar < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
   include TimespanConcern
   

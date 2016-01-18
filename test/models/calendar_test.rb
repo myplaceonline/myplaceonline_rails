@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class MyplaceonlineDueDisplayTest < ActiveSupport::TestCase
+class CalendarTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

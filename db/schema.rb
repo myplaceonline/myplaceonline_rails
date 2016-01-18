@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160113042145) do
+ActiveRecord::Schema.define(version: 20160118022556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -303,6 +303,36 @@ ActiveRecord::Schema.define(version: 20160113042145) do
   add_index "calculations", ["calculation_form_id"], name: "index_calculations_on_calculation_form_id", using: :btree
   add_index "calculations", ["identity_id"], name: "index_calculations_on_identity_id", using: :btree
 
+  create_table "calendars", force: :cascade do |t|
+    t.boolean  "trash"
+    t.integer  "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "visit_count"
+    t.integer  "exercise_threshold"
+    t.integer  "contact_best_friend_threshold"
+    t.integer  "contact_good_friend_threshold"
+    t.integer  "contact_acquaintance_threshold"
+    t.integer  "contact_best_family_threshold"
+    t.integer  "contact_good_family_threshold"
+    t.integer  "dentist_visit_threshold"
+    t.integer  "doctor_visit_threshold"
+    t.integer  "status_threshold"
+    t.integer  "trash_pickup_threshold"
+    t.integer  "periodic_payment_before_threshold"
+    t.integer  "periodic_payment_after_threshold"
+    t.integer  "drivers_license_expiration_threshold"
+    t.integer  "birthday_threshold"
+    t.integer  "promotion_threshold"
+    t.integer  "gun_registration_expiration_threshold"
+    t.integer  "event_threshold"
+    t.integer  "stocks_vest_threshold"
+    t.integer  "todo_threshold"
+    t.integer  "vehicle_service_threshold"
+  end
+
+  add_index "calendars", ["identity_id"], name: "index_calendars_on_identity_id", using: :btree
+
   create_table "camp_locations", force: :cascade do |t|
     t.integer  "location_id"
     t.boolean  "vehicle_parking"
@@ -427,19 +457,19 @@ ActiveRecord::Schema.define(version: 20160113042145) do
 
   create_table "complete_due_items", force: :cascade do |t|
     t.integer  "identity_id"
-    t.string   "display",                      limit: 255
-    t.string   "link",                         limit: 255
+    t.string   "display",           limit: 255
+    t.string   "link",              limit: 255
     t.datetime "due_date"
-    t.string   "myp_model_name",               limit: 255
+    t.string   "myp_model_name",    limit: 255
     t.integer  "model_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "original_due_date"
-    t.integer  "myplaceonline_due_display_id"
+    t.integer  "calendar_id"
   end
 
+  add_index "complete_due_items", ["calendar_id"], name: "index_complete_due_items_on_calendar_id", using: :btree
   add_index "complete_due_items", ["identity_id"], name: "index_complete_due_items_on_identity_id", using: :btree
-  add_index "complete_due_items", ["myplaceonline_due_display_id"], name: "index_complete_due_items_on_myplaceonline_due_display_id", using: :btree
 
   create_table "computers", force: :cascade do |t|
     t.date     "purchased"
@@ -726,21 +756,21 @@ ActiveRecord::Schema.define(version: 20160113042145) do
   add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
 
   create_table "due_items", force: :cascade do |t|
-    t.string   "display",                      limit: 255
-    t.string   "link",                         limit: 255
+    t.string   "display",           limit: 255
+    t.string   "link",              limit: 255
     t.datetime "due_date"
-    t.string   "myp_model_name",               limit: 255
+    t.string   "myp_model_name",    limit: 255
     t.integer  "model_id"
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "original_due_date"
     t.boolean  "is_date_arbitrary"
-    t.integer  "myplaceonline_due_display_id"
+    t.integer  "calendar_id"
   end
 
+  add_index "due_items", ["calendar_id"], name: "index_due_items_on_calendar_id", using: :btree
   add_index "due_items", ["identity_id"], name: "index_due_items_on_identity_id", using: :btree
-  add_index "due_items", ["myplaceonline_due_display_id"], name: "index_due_items_on_myplaceonline_due_display_id", using: :btree
 
   create_table "encrypted_values", force: :cascade do |t|
     t.binary   "val"
@@ -1554,36 +1584,6 @@ ActiveRecord::Schema.define(version: 20160113042145) do
 
   add_index "musical_groups", ["identity_id"], name: "index_musical_groups_on_identity_id", using: :btree
 
-  create_table "myplaceonline_due_displays", force: :cascade do |t|
-    t.boolean  "trash"
-    t.integer  "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "visit_count"
-    t.integer  "exercise_threshold"
-    t.integer  "contact_best_friend_threshold"
-    t.integer  "contact_good_friend_threshold"
-    t.integer  "contact_acquaintance_threshold"
-    t.integer  "contact_best_family_threshold"
-    t.integer  "contact_good_family_threshold"
-    t.integer  "dentist_visit_threshold"
-    t.integer  "doctor_visit_threshold"
-    t.integer  "status_threshold"
-    t.integer  "trash_pickup_threshold"
-    t.integer  "periodic_payment_before_threshold"
-    t.integer  "periodic_payment_after_threshold"
-    t.integer  "drivers_license_expiration_threshold"
-    t.integer  "birthday_threshold"
-    t.integer  "promotion_threshold"
-    t.integer  "gun_registration_expiration_threshold"
-    t.integer  "event_threshold"
-    t.integer  "stocks_vest_threshold"
-    t.integer  "todo_threshold"
-    t.integer  "vehicle_service_threshold"
-  end
-
-  add_index "myplaceonline_due_displays", ["identity_id"], name: "index_myplaceonline_due_displays_on_identity_id", using: :btree
-
   create_table "myplaceonline_quick_category_displays", force: :cascade do |t|
     t.boolean  "trash"
     t.integer  "identity_id"
@@ -2132,19 +2132,19 @@ ActiveRecord::Schema.define(version: 20160113042145) do
 
   create_table "snoozed_due_items", force: :cascade do |t|
     t.integer  "identity_id"
-    t.string   "display",                      limit: 255
-    t.string   "link",                         limit: 255
+    t.string   "display",           limit: 255
+    t.string   "link",              limit: 255
     t.datetime "due_date"
     t.datetime "original_due_date"
-    t.string   "myp_model_name",               limit: 255
+    t.string   "myp_model_name",    limit: 255
     t.integer  "model_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "myplaceonline_due_display_id"
+    t.integer  "calendar_id"
   end
 
+  add_index "snoozed_due_items", ["calendar_id"], name: "index_snoozed_due_items_on_calendar_id", using: :btree
   add_index "snoozed_due_items", ["identity_id"], name: "index_snoozed_due_items_on_identity_id", using: :btree
-  add_index "snoozed_due_items", ["myplaceonline_due_display_id"], name: "index_snoozed_due_items_on_myplaceonline_due_display_id", using: :btree
 
   create_table "songs", force: :cascade do |t|
     t.string   "song_name",        limit: 255

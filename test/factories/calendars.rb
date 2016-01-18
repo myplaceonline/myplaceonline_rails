@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :myplaceonline_due_display do
+  factory :calendar do
     trash false
 owner nil
   end

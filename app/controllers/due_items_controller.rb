@@ -7,7 +7,7 @@ class DueItemsController < MyplaceonlineController
     ActiveRecord::Base.transaction do
       ::CompleteDueItem.new(
         identity_id: @obj.identity_id,
-        myplaceonline_due_display: @obj.myplaceonline_due_display,
+        calendar: @obj.calendar,
         display: @obj.display,
         link: @obj.link,
         due_date: @obj.due_date,
@@ -40,7 +40,7 @@ class DueItemsController < MyplaceonlineController
       ActiveRecord::Base.transaction do
         ::SnoozedDueItem.new(
           identity_id: @obj.identity_id,
-          myplaceonline_due_display: @obj.myplaceonline_due_display,
+          calendar: @obj.calendar,
           display: @obj.display,
           link: @obj.link,
           due_date: new_due_date,
