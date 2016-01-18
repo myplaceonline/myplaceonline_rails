@@ -483,7 +483,6 @@ module ApplicationHelper
     if !remote_autocomplete_model.nil?
       id = extract_id(result)
       autocomplete_id = id + "_remote_autocomplete"
-      puts form.to_model.inspect
       additional = <<-eos
         <ul data-role="listview" data-inset="true" data-filter="true" data-filter-reveal="true" data-input="##{id}" id="#{autocomplete_id}">
         </ul>

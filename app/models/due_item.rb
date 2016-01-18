@@ -300,7 +300,7 @@ class DueItem < ActiveRecord::Base
     
     user.primary_identity.myplaceonline_due_displays.each do |mdd|
       IdentityDriversLicense.where("identity_id = ? and expires is not null and expires < ?", user.primary_identity, drivers_license_expiration_threshold(mdd)).each do |drivers_license|
-        contact = Contact.where(identity_id: user.primary_identity.id, identity_id: drivers_license.identity.id).first
+        contact = Contact.where(identity_id: user.primary_identity.id, contact_identity_id: drivers_license.identity.id).first
         diff = TimeDifference.between(timenow, drivers_license.expires)
         diff_in_general = diff.in_general
         create_due_item_check(
