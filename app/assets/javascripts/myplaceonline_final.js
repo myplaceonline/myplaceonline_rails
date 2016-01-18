@@ -82,27 +82,33 @@ var myplaceonline = function(mymodule) {
       var $ul = $(this);
       var $input = $(data.input);
       var value = $input.val();
-      if (value && value.length > 0 && !$ul[0].allLoaded) {
-        myplaceonline.jqmSetListMessage($ul, "Searching...");
-        var data = {
-          value: value
-        };
-        $.ajax({
-          url: url,
-          dataType: "json",
-          context: $ul,
-          data: data
-        }).done(function(data, textStatus, jqXHR) {
-          myplaceonline.jqmSetList(this, $(data));
-          this[0].allLoaded = true;
-          if (afterload) {
-            afterload(this);
-          }
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-          myplaceonline.jqmSetListMessage(this, "Error, please try again.");
-        });
+      if (value && value.length > 0) {
+        listviewSearch($ul, url, value, afterload);
       }
     });
+  }
+  
+  function listviewSearch(list, url, value, afterload) {
+    if (!list[0].allLoaded) {
+      myplaceonline.jqmSetListMessage(list, "Searching...");
+      var data = {
+        value: value
+      };
+      $.ajax({
+        url: url,
+        dataType: "json",
+        context: list,
+        data: data
+      }).done(function(data, textStatus, jqXHR) {
+        myplaceonline.jqmSetList(this, $(data));
+        this[0].allLoaded = true;
+        if (afterload) {
+          afterload(this);
+        }
+      }).fail(function(jqXHR, textStatus, errorThrown) {
+        myplaceonline.jqmSetListMessage(this, "Error, please try again.");
+      });
+    }
   }
 
   function hookListviewEnter(listInput, listIdentifier) {
@@ -652,6 +658,7 @@ var myplaceonline = function(mymodule) {
   mymodule.toFloatSafe = toFloatSafe;
   mymodule.transformMultiply = transformMultiply;
   mymodule.setCsrfToken = setCsrfToken;
+  mymodule.listviewSearch = listviewSearch;
 
   return mymodule;
 

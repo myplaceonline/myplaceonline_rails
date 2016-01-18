@@ -1,3 +1,3 @@
 <%= myp_date_field(f, :score_date, "myplaceonline.credit_scores.score_date", obj.score_date) %>
 <%= myp_number_field(f, :score, "myplaceonline.credit_scores.score", obj.score) %>
-<%= myp_text_field(f, :source, "myplaceonline.credit_scores.source", obj.source, remote_autocomplete_model: obj.class) %>
+<%= myp_text_field(f, :source, "myplaceonline.credit_scores.source", obj.source, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>

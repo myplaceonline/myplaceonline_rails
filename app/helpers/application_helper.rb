@@ -461,7 +461,7 @@ module ApplicationHelper
     hidden_field_tag(name, value)
   end
                        
-  def myp_text_field(form, name, placeholder, value, autofocus = false, input_classes = nil, autocomplete = true, options = {}, remote_autocomplete_model: nil)
+  def myp_text_field(form, name, placeholder, value, autofocus = false, input_classes = nil, autocomplete = true, options = {}, remote_autocomplete_model: nil, remote_autocomplete_all: false)
     if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
@@ -483,8 +483,22 @@ module ApplicationHelper
     if !remote_autocomplete_model.nil?
       id = extract_id(result)
       autocomplete_id = id + "_remote_autocomplete"
+      remote_autocomplete_all_script = ""
+      if remote_autocomplete_all
+        remote_autocomplete_all_script = <<-eos
+          $("##{id}").on("focus", function() {
+            myplaceonline.listviewSearch($("##{autocomplete_id}"), "/api/distinct_values.json?table_name=#{remote_autocomplete_model}&column_name=#{name}", null);
+            $("##{autocomplete_id} li").removeClass("ui-screen-hidden");
+          });
+          $("##{id}").on("blur", function() {
+            setTimeout(function() {
+              $("##{autocomplete_id} li").addClass("ui-screen-hidden");
+            }, 500);
+          });
+        eos
+      end
       additional = <<-eos
-        <ul data-role="listview" data-inset="true" data-filter="true" data-filter-reveal="true" data-input="##{id}" id="#{autocomplete_id}">
+        <ul data-role="listview" data-inset="true" data-filter="true" data-filter-reveal="#{remote_autocomplete_all ? false : true}" data-input="##{id}" id="#{autocomplete_id}">
         </ul>
         <script type="text/javascript">
           myplaceonline.onPageLoad(function() {
@@ -501,6 +515,8 @@ module ApplicationHelper
                 $(this.form).find(":submit").first().click();
               }
             });
+            
+            #{remote_autocomplete_all_script}
           });
         </script>
       eos
