@@ -1205,6 +1205,11 @@ en:
       picture: "Picture"
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
+      visited: "Visited"
+      not_visited: "Not Visited"
+      location: "Location"
+      notes: "Notes"
+      rating: "Rating"
     promotions:
       promotion_name: "Description"
       started: "Started"
@@ -1265,10 +1270,6 @@ en:
       diary_time: "Time"
       entry: "Entry"
       diary_title: "Title"
-    restaurants:
-      location: "Location"
-      notes: "Notes"
-      rating: "Rating"
     ratings:
       zero: "0 (Lowest)"
       one: "1"

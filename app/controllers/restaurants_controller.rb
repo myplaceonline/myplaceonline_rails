@@ -1,6 +1,14 @@
 class RestaurantsController < MyplaceonlineController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:random]
 
+  def index
+    @not_visited = params[:not_visited]
+    if !@not_visited.blank?
+      @not_visited = @not_visited.to_bool
+    end
+    super
+  end
+
   def random
     @search = params[:search]
     @location = params[:location]
@@ -37,6 +45,7 @@ class RestaurantsController < MyplaceonlineController
     def obj_params
       params.require(:restaurant).permit(
         :notes,
+        :visited,
         :rating,
         Myp.select_or_create_permit(params[:restaurant], :location_attributes, LocationsController.param_names),
         restaurant_pictures_attributes: [
@@ -49,5 +58,13 @@ class RestaurantsController < MyplaceonlineController
           ]
         ]
       )
+    end
+
+    def all_additional_sql
+      if @not_visited
+        "and (visited is null or visited = false)"
+      else
+        nil
+      end
     end
 end

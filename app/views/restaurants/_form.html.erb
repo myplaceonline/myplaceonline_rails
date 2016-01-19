@@ -12,6 +12,7 @@
   }
 %>
 <%= myp_select(f, :rating, "myplaceonline.restaurants.rating", Myp.translate_options(Myp::RATINGS), obj.rating) %>
+<%= myp_check_box(f, :visited, "myplaceonline.restaurants.visited") %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.restaurants.notes", obj.notes) %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
