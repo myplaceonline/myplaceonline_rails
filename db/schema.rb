@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160119050324) do
+ActiveRecord::Schema.define(version: 20160120030754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -700,6 +700,20 @@ ActiveRecord::Schema.define(version: 20160119050324) do
   end
 
   add_index "desired_products", ["identity_id"], name: "index_desired_products_on_identity_id", using: :btree
+
+  create_table "dessert_locations", force: :cascade do |t|
+    t.integer  "location_id"
+    t.integer  "rating"
+    t.text     "notes"
+    t.boolean  "visited"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "dessert_locations", ["identity_id"], name: "index_dessert_locations_on_identity_id", using: :btree
+  add_index "dessert_locations", ["location_id"], name: "index_dessert_locations_on_location_id", using: :btree
 
   create_table "diary_entries", force: :cascade do |t|
     t.datetime "diary_time"
@@ -2581,6 +2595,8 @@ ActiveRecord::Schema.define(version: 20160119050324) do
   add_foreign_key "concert_pictures", "concerts"
   add_foreign_key "concert_pictures", "identities"
   add_foreign_key "concert_pictures", "identity_files"
+  add_foreign_key "dessert_locations", "identities"
+  add_foreign_key "dessert_locations", "locations"
   add_foreign_key "event_pictures", "events"
   add_foreign_key "event_pictures", "identities"
   add_foreign_key "event_pictures", "identity_files"

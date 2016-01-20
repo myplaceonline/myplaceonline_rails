@@ -137,6 +137,7 @@ en:
       receipts: "Receipts"
       stories: "Stories"
       conversations: "Conversations"
+      dessert_locations: "Dessert Locations"
     general:
       email: "E-mail"
       password: "Password"
@@ -1207,9 +1208,6 @@ en:
       delete_picture: "Delete Picture"
       visited: "Visited"
       not_visited: "Not Visited"
-      location: "Location"
-      notes: "Notes"
-      rating: "Rating"
     promotions:
       promotion_name: "Description"
       started: "Started"
@@ -1888,3 +1886,9 @@ en:
       picture: "Picture"
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
+    dessert_locations:
+      location: "Location"
+      rating: "Rating"
+      notes: "Notes"
+      visited: "Visited"
+      not_visited: "Not Visited"

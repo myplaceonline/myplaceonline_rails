@@ -1,0 +1,16 @@
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :location,
+    existingobj: obj.location,
+    heading: t("myplaceonline.dessert_locations.location"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    autofocus: true
+  }
+%>
+<%= myp_select(f, :rating, "myplaceonline.dessert_locations.rating", Myp.translate_options(Myp::RATINGS), obj.rating) %>
+<%= myp_check_box(f, :visited, "myplaceonline.dessert_locations.visited") %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.dessert_locations.notes", obj.notes) %>

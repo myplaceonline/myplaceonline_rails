@@ -1,0 +1,2 @@
+module DessertLocationsHelper
+end
