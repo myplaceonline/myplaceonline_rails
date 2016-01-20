@@ -25,7 +25,8 @@ class MoneyBalancesController < MyplaceonlineController
   def add
     set_obj
     # X paid a bill and Y either owes 100%, 50%, or some other percent
-    @owner_paid = params[:owner_paid].to_bool
+    onwer_paid_str = params[:owner_paid].blank? ? "true" : params[:owner_paid]
+    @owner_paid = onwer_paid_str
     if request.patch?
       if do_update
         if !@new_item.nil?
@@ -34,7 +35,11 @@ class MoneyBalancesController < MyplaceonlineController
           else
             to = @obj.identity.ensure_contact!
           end
-          to.send_email(@new_item.independent_description(false), @obj.independent_description)
+          body = @obj.independent_description
+          if !@new_item.money_balance_item_name.blank?
+            body += "\n\n" + @new_item.money_balance_item_name
+          end
+          to.send_email(@new_item.independent_description(false), body)
         end
         return after_create_or_update
       end
