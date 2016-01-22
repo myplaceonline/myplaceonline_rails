@@ -23,6 +23,7 @@ class MoneyBalancesController < MyplaceonlineController
   end
   
   def add
+    Myp.ensure_encryption_key(session)
     set_obj
     # X paid a bill and Y either owes 100%, 50%, or some other percent
     onwer_paid_str = params[:owner_paid].blank? ? "true" : params[:owner_paid]
@@ -37,7 +38,7 @@ class MoneyBalancesController < MyplaceonlineController
           end
           body = @obj.independent_description
           if !@new_item.money_balance_item_name.blank?
-            body += "\n\n" + @new_item.money_balance_item_name
+            body = @new_item.money_balance_item_name + "\n\n" + body
           end
           to.send_email(@new_item.independent_description(false), body)
         end
