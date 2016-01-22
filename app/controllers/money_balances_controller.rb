@@ -26,7 +26,7 @@ class MoneyBalancesController < MyplaceonlineController
     set_obj
     # X paid a bill and Y either owes 100%, 50%, or some other percent
     onwer_paid_str = params[:owner_paid].blank? ? "true" : params[:owner_paid]
-    @owner_paid = onwer_paid_str
+    @owner_paid = onwer_paid_str.to_bool
     if request.patch?
       if do_update
         if !@new_item.nil?
