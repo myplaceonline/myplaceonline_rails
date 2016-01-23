@@ -38,7 +38,8 @@ class Users::SessionsController < Devise::SessionsController
     end
     
     if params.has_key?(:redirect)
-      @redirect = URI.parse(params[:redirect]).path
+      @redirect = URI.parse(params[:redirect]).to_s
+      
     end
     
     if request.post?
