@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :desired_locations
+  post 'desired_locations/new'
+
   resources :dessert_locations
   post 'dessert_locations/new'
 

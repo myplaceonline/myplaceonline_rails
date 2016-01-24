@@ -1,0 +1,2 @@
+module DesiredLocationsHelper
+end

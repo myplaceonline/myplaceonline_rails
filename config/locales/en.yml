@@ -138,6 +138,7 @@ en:
       stories: "Stories"
       conversations: "Conversations"
       dessert_locations: "Dessert Locations"
+      desired_locations: "Desired Locations"
     general:
       email: "E-mail"
       password: "Password"
@@ -1892,3 +1893,5 @@ en:
       notes: "Notes"
       visited: "Visited"
       not_visited: "Not Visited"
+    desired_locations:
+      location: "Location"
