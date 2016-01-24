@@ -565,6 +565,7 @@ en:
       request_gps: "Request GPS"
     activities:
       name: "Name"
+      notes: "Notes"
     apartments:
       location: "Address"
       landlord: "Landlord"

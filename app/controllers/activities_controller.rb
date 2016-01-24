@@ -9,6 +9,6 @@ class ActivitiesController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:activity).permit(:name)
+      params.require(:activity).permit(:name, :notes)
     end
 end
