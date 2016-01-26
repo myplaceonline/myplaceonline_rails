@@ -38,7 +38,7 @@ class MoneyBalancesController < MyplaceonlineController
           end
           body = @obj.independent_description
           if !@new_item.money_balance_item_name.blank?
-            body = @new_item.money_balance_item_name + "\n\n" + body
+            body = @new_item.money_balance_item_name + "... \n\n" + body
           end
           to.send_email(@new_item.independent_description(false), body)
         end
