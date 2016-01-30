@@ -29,7 +29,6 @@ class DueItem < ActiveRecord::Base
   DEFAULT_DRIVERS_LICENSE_EXPIRATION_THRESHOLD_SECONDS = 60*60*60*24
   DEFAULT_BIRTHDAY_THRESHOLD_SECONDS = 60*60*60*24
   DEFAULT_EVENT_THRESHOLD_SECONDS = 30*60*60*24
-  DEFAULT_STOCKS_VEST_THRESHOLD_SECONDS = 30*60*60*24
 
   def short_date
     if Date.today.year > due_date.year
@@ -146,10 +145,6 @@ class DueItem < ActiveRecord::Base
   
   def self.event_threshold(calendar)
     (calendar.event_threshold_seconds || DEFAULT_EVENT_THRESHOLD_SECONDS).seconds.since
-  end
-  
-  def self.stocks_vest_threshold(calendar)
-    (calendar.stocks_vest_threshold_seconds || DEFAULT_STOCKS_VEST_THRESHOLD_SECONDS).seconds.since
   end
   
   def self.pending_calendar_items(user, calendar)
@@ -592,30 +587,5 @@ class DueItem < ActiveRecord::Base
     end
 
     check_snoozed_items(user, Event.name, updated_record, update_type)
-  end
-  
-  def self.due_stocks_vest(user, updated_record = nil, update_type = nil)
-    destroy_due_items(user, Stock)
-    
-    user.primary_identity.calendars.each do |calendar|
-      Stock.where("identity_id = ? and vest_date is not null and vest_date > ? and vest_date < ?", user.primary_identity, datenow, stocks_vest_threshold(calendar)).each do |x|
-        create_due_item_check(
-          display: I18n.t(
-            "myplaceonline.stocks.upcoming",
-            name: x.display,
-            delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, x.vest_date).in_general)
-          ),
-          link: "/stocks/" + x.id.to_s,
-          due_date: x.vest_date,
-          original_due_date: x.vest_date,
-          identity: user.primary_identity,
-          calendar: calendar,
-          myp_model_name: Stock.name,
-          model_id: x.id
-        )
-      end
-    end
-
-    check_snoozed_items(user, Stock.name, updated_record, update_type)
   end
 end
