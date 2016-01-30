@@ -67,6 +67,7 @@
           <% else %>
             <a href="<%= calendar_item_reminder_pending.calendar_item.link %>"><%= calendar_item_reminder_pending.calendar_item.display %> <span class="ui-li-count"><%= calendar_item_reminder_pending.calendar_item.short_date %></span></a>
           <% end %>
+          <a href="#" onclick="return due_item_popup(this, '<%= calendar_item_reminder_pending.calendar_item.display.gsub("'", "") %>', '<%= calendar_item_reminder_pending_complete_path(calendar_item_reminder_pending) %>', '<%= calendar_item_reminder_pending_snooze_path(calendar_item_reminder_pending) %>');"><%= calendar_item_reminder_pending.calendar_item.display %></a>
         </li>
       <% end %>
     </ul>

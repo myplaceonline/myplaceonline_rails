@@ -83,4 +83,12 @@ class User < ActiveRecord::Base
   def self.current_user=(usr)
     Thread.current[:current_user] = usr
   end
+  
+  def time_now
+    result = Time.now
+    if !timezone.blank?
+      result = ActiveSupport::TimeZone[timezone].now
+    end
+    result
+  end
 end

@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   
+  match 'calendar_item_reminder_pendings/:id/complete', :to => 'calendar_item_reminder_pendings#complete', via: [:post], as: "calendar_item_reminder_pending_complete"
+  match 'calendar_item_reminder_pendings/:id/snooze', :to => 'calendar_item_reminder_pendings#snooze', via: [:post], as: "calendar_item_reminder_pending_snooze"
+  resources :calendar_item_reminder_pendings
+  
   resources :desired_locations
   post 'desired_locations/new'
 

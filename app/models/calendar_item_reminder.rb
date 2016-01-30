@@ -14,11 +14,7 @@ class CalendarItemReminder < ActiveRecord::Base
         # Only check reminders that don't already have items pending
         if calendar_item_reminder.calendar_item_reminder_pendings.count == 0
           if !calendar_item_reminder.calendar_item.calendar_item_time.nil?
-            time_target = Time.now
-            if !user.timezone.blank?
-              time_target = ActiveSupport::TimeZone[user.timezone].now
-            end
-            if calendar_item_reminder.calendar_item.calendar_item_time - calendar_item_reminder.threshold_in_seconds.seconds <= time_target
+            if calendar_item_reminder.calendar_item.calendar_item_time - calendar_item_reminder.threshold_in_seconds.seconds <= user.time_now
               CalendarItemReminderPending.new(
                 calendar_item_reminder: calendar_item_reminder,
                 calendar: calendar_item_reminder.calendar_item.calendar,

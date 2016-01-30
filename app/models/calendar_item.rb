@@ -6,8 +6,11 @@ class CalendarItem < ActiveRecord::Base
   has_many :calendar_item_reminders, :dependent => :destroy
   
   def display
-    model = Object.const_get(model_class)
-    model.display_calendar_item(self)
+    if @cached_display.nil?
+      model = Object.const_get(model_class)
+      @cached_display = model.display_calendar_item(self)
+    end
+    @cached_display
   end
   
   def link
