@@ -23,7 +23,6 @@ class DueItem < ActiveRecord::Base
   DEFAULT_PERIODIC_PAYMENT_BEFORE_THRESHOLD_SECONDS = 3*60*60*24
   DEFAULT_PERIODIC_PAYMENT_AFTER_THRESHOLD_SECONDS = 3*60*60*24
 
-  DEFAULT_DRIVERS_LICENSE_EXPIRATION_THRESHOLD_SECONDS = 60*60*60*24
   DEFAULT_BIRTHDAY_THRESHOLD_SECONDS = 60*60*60*24
 
   def short_date
@@ -111,10 +110,6 @@ class DueItem < ActiveRecord::Base
     (calendar.status_threshold_seconds || DEFAULT_STATUS_THRESHOLD_SECONDS).seconds.ago
   end
 
-  def self.drivers_license_expiration_threshold(calendar)
-    (calendar.drivers_license_expiration_threshold_seconds || DEFAULT_DRIVERS_LICENSE_EXPIRATION_THRESHOLD_SECONDS).seconds.since
-  end
-  
   def self.birthday_threshold(calendar)
     (calendar.birthday_threshold_seconds || DEFAULT_BIRTHDAY_THRESHOLD_SECONDS).seconds.since
   end
@@ -226,26 +221,6 @@ class DueItem < ActiveRecord::Base
     destroy_due_items(user, Contact)
     
     user.primary_identity.calendars.each do |calendar|
-      IdentityDriversLicense.where("identity_id = ? and expires is not null and expires < ?", user.primary_identity, drivers_license_expiration_threshold(calendar)).each do |drivers_license|
-        contact = Contact.where(identity_id: user.primary_identity.id, contact_identity_id: drivers_license.identity.id).first
-        diff = TimeDifference.between(timenow, drivers_license.expires)
-        diff_in_general = diff.in_general
-        create_due_item_check(
-          display: I18n.t(
-            "myplaceonline.identities.license_expiring",
-            license: drivers_license.display,
-            time: Myp.time_difference_in_general_human(diff_in_general)
-          ),
-          link: "/contacts/" + contact.id.to_s,
-          due_date: drivers_license.expires,
-          original_due_date: drivers_license.expires,
-          identity: user.primary_identity,
-          calendar: calendar,
-          myp_model_name: Contact.name,
-          model_id: contact.id
-        )
-      end
-
       Contact.where(identity: user.primary_identity).includes(:contact_identity).to_a.each do |x|
         if !x.contact_identity.nil? && !x.contact_identity.birthday.nil?
           next_birthday = x.contact_identity.next_birthday
