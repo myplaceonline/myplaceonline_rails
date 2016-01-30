@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
         # Create default myplets
         Myplet.default_myplets(@identity)
         
-        DueItem.recalculate_due(user)
+        Status.new.on_after_destroy
       end
     end
   end

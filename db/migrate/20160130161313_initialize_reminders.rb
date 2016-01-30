@@ -48,5 +48,9 @@ class InitializeReminders < ActiveRecord::Migration
       User.current_user = x.identity.user
       x.on_after_save
     end
+    Status.all.each do |x|
+      User.current_user = x.identity.user
+      x.on_after_save
+    end
   end
 end

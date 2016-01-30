@@ -18,7 +18,6 @@ class DueItem < ActiveRecord::Base
   DEFAULT_CONTACT_BEST_FAMILY_THRESHOLD_SECONDS = 20*60*60*24
   DEFAULT_CONTACT_GOOD_FAMILY_THRESHOLD_SECONDS = 45*60*60*24
 
-  DEFAULT_STATUS_THRESHOLD_SECONDS = 60*60*16
   DEFAULT_TRASH_PICKUP_THRESHOLD_SECONDS = 2*60*60*24
   DEFAULT_PERIODIC_PAYMENT_BEFORE_THRESHOLD_SECONDS = 3*60*60*24
   DEFAULT_PERIODIC_PAYMENT_AFTER_THRESHOLD_SECONDS = 3*60*60*24
@@ -106,10 +105,6 @@ class DueItem < ActiveRecord::Base
     result
   end
   
-  def self.status_threshold(calendar)
-    (calendar.status_threshold_seconds || DEFAULT_STATUS_THRESHOLD_SECONDS).seconds.ago
-  end
-
   def self.birthday_threshold(calendar)
     (calendar.birthday_threshold_seconds || DEFAULT_BIRTHDAY_THRESHOLD_SECONDS).seconds.since
   end
@@ -298,44 +293,6 @@ class DueItem < ActiveRecord::Base
     end
 
     check_snoozed_items(user, Contact.name, updated_record, update_type)
-  end
-  
-  def self.due_status(user, updated_record = nil, update_type = nil)
-    destroy_due_items(user, Status)
-    
-    user.primary_identity.calendars.each do |calendar|
-      last_status = Status.where("identity_id = ?", user.primary_identity).order('status_time DESC').limit(1).first
-      if !last_status.nil? and last_status.status_time < status_threshold(calendar)
-        create_due_item_check(
-          display: I18n.t(
-            "myplaceonline.statuses.no_recent_status",
-            delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, last_status.status_time).in_general)
-          ),
-          link: "/statuses/new",
-          due_date: last_status.status_time,
-          original_due_date: last_status.status_time,
-          identity: user.primary_identity,
-          calendar: calendar,
-          myp_model_name: Status.name,
-          model_id: last_status.id
-        )
-      elsif last_status.nil?
-        create_due_item_check(
-          display: I18n.t(
-            "myplaceonline.statuses.no_statuses"
-          ),
-          link: "/statuses/new",
-          due_date: timenow,
-          original_due_date: timenow,
-          identity: user.primary_identity,
-          calendar: calendar,
-          myp_model_name: Status.name,
-          is_date_arbitrary: true
-        )
-      end
-    end
-
-    check_snoozed_items(user, Status.name, updated_record, update_type)
   end
   
   def self.due_apartments(user, updated_record = nil, update_type = nil)

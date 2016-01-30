@@ -40,10 +40,10 @@ class CalendarItem < ActiveRecord::Base
 
   def self.has_persistent_calendar_item(identity, calendar, model)
     CalendarItem.where(
-      "identity_id = ? and calendar_id = ? and model_class = ?",
-      identity,
-      calendar,
-      model.name
+      identity: identity,
+      calendar: calendar,
+      model_class: model.name,
+      persistent: true
     ).count > 0
   end
   
