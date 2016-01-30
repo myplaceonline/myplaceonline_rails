@@ -133,9 +133,7 @@ class CalendarItem < ActiveRecord::Base
       
       calendar_item_reminder.save!
       
-      # Non-persistent items will only have a reminder pending if the reminder
-      # threshold has been crossed - leave it up to the crontab to figure
-      # that out
+      DueItem.recalculate_due(identity.user)
       
       calendar_item
     end

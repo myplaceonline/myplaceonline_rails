@@ -3,7 +3,7 @@ class Calendar < ActiveRecord::Base
   include TimespanConcern
   
   DEFAULT_REMINDER_TYPE = Myp::REPEAT_TYPE_SECONDS
-  DEFAULT_REMINDER_AMOUNT = 1.day
+  DEFAULT_REMINDER_AMOUNT = 2.days
   
   has_many :calendar_items, :dependent => :destroy
 

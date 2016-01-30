@@ -30,7 +30,6 @@ class DueItem < ActiveRecord::Base
   DEFAULT_BIRTHDAY_THRESHOLD_SECONDS = 60*60*60*24
   DEFAULT_EVENT_THRESHOLD_SECONDS = 30*60*60*24
   DEFAULT_STOCKS_VEST_THRESHOLD_SECONDS = 30*60*60*24
-  DEFAULT_TODO_THRESHOLD_SECONDS = 7*60*60*24
 
   def short_date
     if Date.today.year > due_date.year
@@ -151,10 +150,6 @@ class DueItem < ActiveRecord::Base
   
   def self.stocks_vest_threshold(calendar)
     (calendar.stocks_vest_threshold_seconds || DEFAULT_STOCKS_VEST_THRESHOLD_SECONDS).seconds.since
-  end
-  
-  def self.todo_threshold(calendar)
-    (calendar.todo_threshold_seconds || DEFAULT_TODO_THRESHOLD_SECONDS).seconds.since
   end
   
   def self.pending_calendar_items(user, calendar)
@@ -623,35 +618,4 @@ class DueItem < ActiveRecord::Base
 
     check_snoozed_items(user, Stock.name, updated_record, update_type)
   end
-  
-  def self.due_todos(user, updated_record = nil, update_type = nil)
-    destroy_due_items(user, ToDo)
-    
-    if ToDo.new.respond_to?("due_time")
-      user.primary_identity.calendars.each do |calendar|
-        ToDo.where("identity_id = ? and due_time is not null and due_time > ? and due_time < ?", user.primary_identity, datenow, todo_threshold(calendar)).each do |x|
-          create_due_item_check(
-            display: I18n.t(
-              "myplaceonline.to_dos.upcoming",
-              name: x.display,
-              delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, x.due_time).in_general)
-            ),
-            link: "/to_dos/" + x.id.to_s,
-            due_date: x.due_time,
-            original_due_date: x.due_time,
-            identity: user.primary_identity,
-            calendar: calendar,
-            myp_model_name: ToDo.name,
-            model_id: x.id
-          )
-        end
-      end
-    end
-
-    check_snoozed_items(user, ToDo.name, updated_record, update_type)
-  end
-  
-  # Reminder: When adding a new type of due item processing, consider
-  # if the model should have after_save/after_destroy processing to 
-  # recalculate due items
 end
