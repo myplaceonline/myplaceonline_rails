@@ -9,7 +9,4 @@ class Gun < ActiveRecord::Base
   def display
     gun_name
   end
-
-  after_save { |record| DueItem.due_gun_registrations(User.current_user, record, DueItem::UPDATE_TYPE_UPDATE) }
-  after_destroy { |record| DueItem.due_gun_registrations(User.current_user, record, DueItem::UPDATE_TYPE_DELETE) }
 end

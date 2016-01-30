@@ -28,8 +28,6 @@ class DueItem < ActiveRecord::Base
 
   DEFAULT_DRIVERS_LICENSE_EXPIRATION_THRESHOLD_SECONDS = 60*60*60*24
   DEFAULT_BIRTHDAY_THRESHOLD_SECONDS = 60*60*60*24
-  DEFAULT_PROMOTION_THRESHOLD_SECONDS = 60*60*60*24
-  DEFAULT_GUN_REGISTRATION_EXPIRATION_THRESHOLD_SECONDS = 60*60*60*24
   DEFAULT_EVENT_THRESHOLD_SECONDS = 30*60*60*24
   DEFAULT_STOCKS_VEST_THRESHOLD_SECONDS = 30*60*60*24
   DEFAULT_TODO_THRESHOLD_SECONDS = 7*60*60*24
@@ -133,14 +131,6 @@ class DueItem < ActiveRecord::Base
   
   def self.birthday_threshold(calendar)
     (calendar.birthday_threshold_seconds || DEFAULT_BIRTHDAY_THRESHOLD_SECONDS).seconds.since
-  end
-  
-  def self.promotion_threshold(calendar)
-    (calendar.promotion_threshold_seconds || DEFAULT_PROMOTION_THRESHOLD_SECONDS).seconds.since
-  end
-  
-  def self.gun_registration_expiration_threshold(calendar)
-    (calendar.gun_registration_expiration_threshold_seconds || DEFAULT_GUN_REGISTRATION_EXPIRATION_THRESHOLD_SECONDS).seconds.since
   end
   
   def self.trash_pickup_threshold(calendar)
@@ -384,114 +374,6 @@ class DueItem < ActiveRecord::Base
     end
 
     check_snoozed_items(user, Exercise.name, updated_record, update_type)
-  end
-  
-  def self.due_promotions(user, updated_record = nil, update_type = nil)
-    destroy_due_items(user, Promotion)
-    
-    user.primary_identity.calendars.each do |calendar|
-      Promotion.where("identity_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, promotion_threshold(calendar)).each do |promotion|
-        Rails.logger.debug{"Promotion due #{promotion.inspect}"}
-        create_due_item_check(
-          display: I18n.t(
-            "myplaceonline.promotions.expires_soon",
-            promotion_name: promotion.promotion_name,
-            promotion_amount: Myp.number_to_currency(promotion.promotion_amount.nil? ? 0 : promotion.promotion_amount),
-            expires_when: Myp.time_difference_in_general_human(TimeDifference.between(timenow, promotion.expires).in_general)
-          ),
-          link: "/promotions/" + promotion.id.to_s,
-          due_date: promotion.expires,
-          original_due_date: promotion.expires,
-          identity: user.primary_identity,
-          calendar: calendar,
-          myp_model_name: Promotion.name,
-          model_id: promotion.id
-        )
-      end
-    end
-    
-    check_snoozed_items(user, Promotion.name, updated_record, update_type)
-  end
-  
-  def self.due_gun_registrations(user, updated_record = nil, update_type = nil)
-    destroy_due_items(user, GunRegistration)
-    
-    user.primary_identity.calendars.each do |calendar|
-      GunRegistration.where("identity_id = ? and expires is not null and expires > ? and expires < ?", user.primary_identity, datenow, gun_registration_expiration_threshold(calendar)).each do |x|
-        create_due_item_check(
-          display: I18n.t(
-            "myplaceonline.gun_registrations.expires_soon",
-            gun_name: x.gun.display,
-            delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, x.expires).in_general)
-          ),
-          link: "/guns/" + x.gun.id.to_s,
-          due_date: x.expires,
-          original_due_date: x.expires,
-          identity: user.primary_identity,
-          calendar: calendar,
-          myp_model_name: GunRegistration.name,
-          model_id: x.gun.id
-        )
-      end
-    end
-
-    check_snoozed_items(user, GunRegistration.name, updated_record, update_type)
-  end
-  
-  def self.due_dental_cleanings(user, updated_record = nil, update_type = nil)
-    #destroy_due_items(user, DentistVisit)
-    
-    user.primary_identity.calendars.each do |calendar|
-      
-#       last_dentist_visit = DentistVisit.where(
-#         "identity_id = ? and cleaning = true",
-#         user.primary_identity
-#       ).order('visit_date DESC').limit(1).first
-#       
-#       if last_dentist_visit.nil?
-#         if DentalInsurance.where("identity_id = ? and (defunct is null)", user.primary_identity).count > 0
-# 
-#           # If there are no dental visits for a cleaning and there is dental
-#           # insurance, then create a persistent reminder to get a dental
-#           # cleaning (if one doesn't already exist)
-#           self.ensure_persistent_calendar_item(user.primary_identity, calendar, DentistVisit)
-#         end
-#       end
-      
-#       if !last_dentist_visit.nil? and last_dentist_visit.visit_date < dentist_visit_threshold(calendar)
-#         create_due_item_check(
-#           display: I18n.t(
-#             "myplaceonline.dentist_visits.no_cleaning_for",
-#             delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, last_dentist_visit.visit_date).in_general)
-#           ),
-#           link: "/dentist_visits/" + last_dentist_visit.id.to_s,
-#           due_date: last_dentist_visit.visit_date,
-#           original_due_date: last_dentist_visit.visit_date,
-#           identity: user.primary_identity,
-#           calendar: calendar,
-#           myp_model_name: DentistVisit.name,
-#           model_id: last_dentist_visit.id
-#         )
-#       elsif last_dentist_visit.nil?
-#         # If there are no dentist visits at all but there is a dental insurance company, then notify
-#         if DentalInsurance.where("identity_id = ? and (defunct is null)", user.primary_identity).count > 0
-#           create_due_item_check(
-#             display: I18n.t(
-#               "myplaceonline.dentist_visits.no_cleanings"
-#             ),
-#             link: "/dentist_visits/new",
-#             due_date: timenow,
-#             original_due_date: timenow,
-#             identity: user.primary_identity,
-#             calendar: calendar,
-#             myp_model_name: DentistVisit.name,
-#             is_date_arbitrary: true
-#           )
-#         end
-#       end
-     end
-     
-#     check_snoozed_items(user, DentistVisit.name, updated_record, update_type)
   end
   
   def self.due_physicals(user, updated_record = nil, update_type = nil)

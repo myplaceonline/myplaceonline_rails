@@ -2,6 +2,8 @@ class GunRegistration < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
+  DEFAULT_GUN_REGISTRATION_EXPIRATION_THRESHOLD_SECONDS = 60.days
+
   belongs_to :gun
   validates :expires, presence: true
   
@@ -13,6 +15,41 @@ class GunRegistration < ActiveRecord::Base
     Myp.display_date(expires, User.current_user)
   end
 
-  after_save { |record| DueItem.due_gun_registrations(User.current_user, record, DueItem::UPDATE_TYPE_UPDATE) }
-  after_destroy { |record| DueItem.due_gun_registrations(User.current_user, record, DueItem::UPDATE_TYPE_DELETE) }
+  def self.calendar_item_display(calendar_item)
+    gun_registration = calendar_item.find_model_object
+    I18n.t(
+      "myplaceonline.gun_registrations.expires_soon",
+      gun_name: gun_registration.gun.display,
+      delta: Myp.time_difference_in_general_human(TimeDifference.between(User.current_user.time_now, gun_registration.expires).in_general)
+    )
+  end
+
+  def self.calendar_item_link(calendar_item)
+    Rails.application.routes.url_helpers.send("gun_path", calendar_item.find_model_object.gun)
+  end
+  
+  after_commit :on_after_save, on: [:create, :update]
+  
+  def on_after_save
+    ActiveRecord::Base.transaction do
+      CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
+      User.current_user.primary_identity.calendars.each do |calendar|
+        CalendarItem.create_calendar_item(
+          User.current_user.primary_identity,
+          calendar,
+          self.class,
+          expires,
+          (calendar.gun_registration_expiration_threshold_seconds || DEFAULT_GUN_REGISTRATION_EXPIRATION_THRESHOLD_SECONDS),
+          Calendar::DEFAULT_REMINDER_TYPE,
+          model_id: id
+        )
+      end
+    end
+  end
+  
+  after_commit :on_after_destroy, on: :destroy
+  
+  def on_after_destroy
+    CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, self.id)
+  end
 end
