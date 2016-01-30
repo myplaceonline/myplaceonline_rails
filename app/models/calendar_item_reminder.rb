@@ -13,14 +13,22 @@ class CalendarItemReminder < ActiveRecord::Base
 
         # Only check reminders that don't already have items pending
         if calendar_item_reminder.calendar_item_reminder_pendings.count == 0
+          now = user.time_now
           if !calendar_item_reminder.calendar_item.calendar_item_time.nil?
-            if calendar_item_reminder.calendar_item.calendar_item_time - calendar_item_reminder.threshold_in_seconds.seconds <= user.time_now
+            if calendar_item_reminder.calendar_item.calendar_item_time - calendar_item_reminder.threshold_in_seconds.seconds <= now &&
+                !calendar_item_reminder.is_expired(now)
               CalendarItemReminderPending.new(
                 calendar_item_reminder: calendar_item_reminder,
                 calendar: calendar_item_reminder.calendar_item.calendar,
                 calendar_item: calendar_item_reminder.calendar_item,
                 identity: user.primary_identity
               ).save!
+            end
+          end
+          
+          if calendar_item_reminder.is_expired(now)
+            calendar_item_reminder.calendar_item_reminder_pendings.each do |calendar_item_reminder_pending|
+              calendar_item_reminder_pending.destroy!
             end
           end
         end
@@ -35,5 +43,25 @@ class CalendarItemReminder < ActiveRecord::Base
     else
       raise "TODO"
     end
+  end
+  
+  def expires_in_seconds
+    if expire_amount.nil? || expire_type.nil?
+      0
+    elsif expire_type == Myp::REPEAT_TYPE_SECONDS
+      expire_amount
+    else
+      raise "TODO"
+    end
+  end
+  
+  def is_expired(dt)
+    result = false
+    if !expire_amount.nil?
+      if calendar_item.calendar_item_time + expires_in_seconds.seconds < dt
+        result = true
+      end
+    end
+    result
   end
 end

@@ -103,24 +103,25 @@ class CalendarItem < ActiveRecord::Base
     end
   end
   
-  def self.create_calendar_item(identity, calendar, model, calendar_item_time, reminder_threshold_amount, reminder_threshold_type, model_id: nil)
+  def self.create_calendar_item(
+    identity,
+    calendar,
+    model,
+    calendar_item_time,
+    reminder_threshold_amount,
+    reminder_threshold_type,
+    model_id: nil,
+    expire_amount: nil,
+    expire_type: nil
+  )
     ActiveRecord::Base.transaction do
-      if model_id.nil?
-        calendar_item = CalendarItem.new(
-          identity: identity,
-          calendar: calendar,
-          model_class: model.name,
-          calendar_item_time: calendar_item_time
-        )
-      else
-        calendar_item = CalendarItem.new(
-          identity: identity,
-          calendar: calendar,
-          model_class: model.name,
-          model_id: model_id,
-          calendar_item_time: calendar_item_time
-        )
-      end
+      calendar_item = CalendarItem.new(
+        identity: identity,
+        calendar: calendar,
+        model_class: model.name,
+        model_id: model_id,
+        calendar_item_time: calendar_item_time
+      )
       
       calendar_item.save!
       
@@ -128,7 +129,9 @@ class CalendarItem < ActiveRecord::Base
         identity: identity,
         calendar_item: calendar_item,
         threshold_amount: reminder_threshold_amount,
-        threshold_type: reminder_threshold_type
+        threshold_type: reminder_threshold_type,
+        expire_amount: expire_amount,
+        expire_type: expire_type
       )
       
       calendar_item_reminder.save!
