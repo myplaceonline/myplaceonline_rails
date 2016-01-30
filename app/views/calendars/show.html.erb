@@ -2,7 +2,7 @@
   <%= render layout: "shared/model_show" do %>
   <% end %>
 <% else %>
-  <% if @due.length > 0 %>
+  <% if @calendar_item_reminder_pendings.length > 0 %>
   
     <% popupid = "due" + request.uuid.to_s + "_" + @obj.id.to_s %>
 
@@ -60,10 +60,13 @@
     </script>
 
     <ul data-role="listview" data-inset="true" data-split-icon="gear">
-      <% @due.each do |due_item| %>
+      <% @calendar_item_reminder_pendings.each do |calendar_item_reminder_pending| %>
         <li>
-          <a href="<%= due_item.link %>"><%= due_item.display %> <span class="ui-li-count"><%= due_item.short_date %></span></a>
-          <a href="#" onclick="return due_item_popup(this, '<%= due_item.display.gsub("'", "") %>', '<%= due_item_complete_path(due_item) %>', '<%= due_item_snooze_path(due_item) %>');"><%= due_item.display %></a>
+          <% if calendar_item_reminder_pending.calendar_item.calendar_item_time.nil? %>
+            <a href="<%= calendar_item_reminder_pending.calendar_item.link %>"><%= calendar_item_reminder_pending.calendar_item.display %></a>
+          <% else %>
+            <a href="<%= calendar_item_reminder_pending.calendar_item.link %>"><%= calendar_item_reminder_pending.calendar_item.display %> <span class="ui-li-count"><%= calendar_item_reminder_pending.calendar_item.short_date %></span></a>
+          <% end %>
         </li>
       <% end %>
     </ul>

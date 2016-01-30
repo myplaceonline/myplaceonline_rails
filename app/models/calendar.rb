@@ -2,6 +2,11 @@ class Calendar < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
   include TimespanConcern
   
+  DEFAULT_REMINDER_TYPE = Myp::REPEAT_TYPE_SECONDS
+  DEFAULT_REMINDER_AMOUNT = 1.day
+  
+  has_many :calendar_items, :dependent => :destroy
+
   timespan_field :exercise_threshold
   timespan_field :contact_best_friend_threshold
   timespan_field :contact_good_friend_threshold

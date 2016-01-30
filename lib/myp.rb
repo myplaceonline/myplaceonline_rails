@@ -99,6 +99,8 @@ module Myp
     ["myplaceonline.period_types.nth_sunday", 9]
   ]
 
+  REPEAT_TYPE_SECONDS = 1
+  
   def self.database_exists?
     begin
       ActiveRecord::Base.connection.table_exists?(Category.table_name)
@@ -1121,5 +1123,9 @@ module Myp
   
   def self.model_to_category_name(model)
     model.name.underscore.pluralize
+  end
+  
+  def self.count(model, identity)
+    model.where(identity: identity).count
   end
 end

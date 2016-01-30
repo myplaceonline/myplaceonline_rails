@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160124023704) do
+ActiveRecord::Schema.define(version: 20160130161313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -304,6 +304,54 @@ ActiveRecord::Schema.define(version: 20160124023704) do
   add_index "calculations", ["calculation_form_id"], name: "index_calculations_on_calculation_form_id", using: :btree
   add_index "calculations", ["identity_id"], name: "index_calculations_on_identity_id", using: :btree
 
+  create_table "calendar_item_reminder_pendings", force: :cascade do |t|
+    t.integer  "calendar_item_reminder_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "calendar_id"
+    t.integer  "calendar_item_id"
+  end
+
+  add_index "calendar_item_reminder_pendings", ["calendar_id"], name: "index_calendar_item_reminder_pendings_on_calendar_id", using: :btree
+  add_index "calendar_item_reminder_pendings", ["calendar_item_id"], name: "index_calendar_item_reminder_pendings_on_calendar_item_id", using: :btree
+  add_index "calendar_item_reminder_pendings", ["calendar_item_reminder_id"], name: "index_calendar_item_reminder_pendings_on_cir_id", using: :btree
+  add_index "calendar_item_reminder_pendings", ["identity_id"], name: "index_calendar_item_reminder_pendings_on_identity_id", using: :btree
+
+  create_table "calendar_item_reminders", force: :cascade do |t|
+    t.integer  "threshold_amount"
+    t.integer  "threshold_type"
+    t.integer  "repeat_amount"
+    t.integer  "repeat_type"
+    t.integer  "expire_amount"
+    t.integer  "expire_type"
+    t.integer  "calendar_item_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "calendar_item_reminders", ["calendar_item_id"], name: "index_calendar_item_reminders_on_calendar_item_id", using: :btree
+  add_index "calendar_item_reminders", ["identity_id"], name: "index_calendar_item_reminders_on_identity_id", using: :btree
+
+  create_table "calendar_items", force: :cascade do |t|
+    t.integer  "calendar_id"
+    t.datetime "calendar_item_time"
+    t.text     "notes"
+    t.boolean  "persistent"
+    t.integer  "repeat_amount"
+    t.integer  "repeat_type"
+    t.string   "model_class"
+    t.integer  "model_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "context_info"
+  end
+
+  add_index "calendar_items", ["calendar_id"], name: "index_calendar_items_on_calendar_id", using: :btree
+  add_index "calendar_items", ["identity_id"], name: "index_calendar_items_on_identity_id", using: :btree
+
   create_table "calendars", force: :cascade do |t|
     t.boolean  "trash"
     t.integer  "identity_id"
@@ -330,6 +378,8 @@ ActiveRecord::Schema.define(version: 20160124023704) do
     t.integer  "stocks_vest_threshold"
     t.integer  "todo_threshold"
     t.integer  "vehicle_service_threshold"
+    t.integer  "reminder_repeat_amount"
+    t.integer  "reminder_repeat_type"
   end
 
   add_index "calendars", ["identity_id"], name: "index_calendars_on_identity_id", using: :btree
@@ -2604,6 +2654,14 @@ ActiveRecord::Schema.define(version: 20160124023704) do
   add_foreign_key "bar_pictures", "identity_files"
   add_foreign_key "bars", "identities"
   add_foreign_key "bars", "locations"
+  add_foreign_key "calendar_item_reminder_pendings", "calendar_item_reminders"
+  add_foreign_key "calendar_item_reminder_pendings", "calendar_items"
+  add_foreign_key "calendar_item_reminder_pendings", "calendars"
+  add_foreign_key "calendar_item_reminder_pendings", "identities"
+  add_foreign_key "calendar_item_reminders", "calendar_items"
+  add_foreign_key "calendar_item_reminders", "identities"
+  add_foreign_key "calendar_items", "calendars"
+  add_foreign_key "calendar_items", "identities"
   add_foreign_key "concert_pictures", "concerts"
   add_foreign_key "concert_pictures", "identities"
   add_foreign_key "concert_pictures", "identity_files"

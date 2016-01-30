@@ -1,7 +1,7 @@
 class CalendarsController < MyplaceonlineController
   def showmyplet
-    @due = DueItem.all_due(current_user)
-    if @due.length == 0
+    @calendar_item_reminder_pendings = DueItem.pending_calendar_items(current_user, @obj)
+    if @calendar_item_reminder_pendings.length == 0
       @nocontent = true
     end
   end

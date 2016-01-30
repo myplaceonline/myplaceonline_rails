@@ -18,7 +18,7 @@ class DentalInsurance < ActiveRecord::Base
   allow_existing :group_company, Company
 
   belongs_to :periodic_payment
-  accepts_nested_attributes_for :periodic_payment, reject_if: :all_blank
+  accepts_nested_attributes_for :periodic_payment, reject_if: proc { |attributes| PeriodicPaymentsController.reject_if_blank(attributes) }
   allow_existing :periodic_payment
 
   belongs_to :password
@@ -32,6 +32,35 @@ class DentalInsurance < ActiveRecord::Base
   attr_accessor :is_defunct
   boolean_time_transfer :is_defunct, :defunct
 
-  after_save { |record| DueItem.due_dental_cleanings(User.current_user, record, DueItem::UPDATE_TYPE_UPDATE) }
-  after_destroy { |record| DueItem.due_dental_cleanings(User.current_user, record, DueItem::UPDATE_TYPE_DELETE) }
+  after_commit :on_after_create, on: :create
+  
+  def on_after_create
+    last_dentist_visit = DentistVisit.last_cleaning(
+      User.current_user.primary_identity,
+    )
+
+    if last_dentist_visit.nil?
+      User.current_user.primary_identity.calendars.each do |calendar|
+        # If there are no dental visits for a cleaning and there is dental
+        # insurance, then create a persistent reminder to get a dental
+        # cleaning (if one doesn't already exist)
+        CalendarItem.ensure_persistent_calendar_item(
+          User.current_user.primary_identity,
+          calendar,
+          DentistVisit
+        )
+      end
+    end
+  end
+  
+  after_commit :on_after_destroy, on: :destroy
+  
+  def on_after_destroy
+    if Myp.count(DentalInsurance, User.current_user.primary_identity) == 0
+      CalendarItem.destroy_calendar_items(
+        User.current_user.primary_identity,
+        DentistVisit
+      )
+    end
+  end
 end

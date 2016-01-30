@@ -21,7 +21,6 @@ class DueItem < ActiveRecord::Base
   DEFAULT_CONTACT_BEST_FAMILY_THRESHOLD_SECONDS = 20*60*60*24
   DEFAULT_CONTACT_GOOD_FAMILY_THRESHOLD_SECONDS = 45*60*60*24
 
-  DEFAULT_DENTIST_VISIT_THRESHOLD_SECONDS = 7*4*5*60*60*24
   DEFAULT_DOCTOR_VISIT_THRESHOLD_SECONDS = 11*4*5*60*60*24
   DEFAULT_STATUS_THRESHOLD_SECONDS = 60*60*16
   DEFAULT_TRASH_PICKUP_THRESHOLD_SECONDS = 2*60*60*24
@@ -121,10 +120,6 @@ class DueItem < ActiveRecord::Base
     result
   end
   
-  def self.dentist_visit_threshold(calendar)
-    (calendar.dentist_visit_threshold_seconds || DEFAULT_DENTIST_VISIT_THRESHOLD_SECONDS).seconds.ago
-  end
-  
   def self.doctor_visit_threshold(calendar)
     (calendar.doctor_visit_threshold_seconds || DEFAULT_DOCTOR_VISIT_THRESHOLD_SECONDS).seconds.ago
   end
@@ -177,25 +172,32 @@ class DueItem < ActiveRecord::Base
     (calendar.vehicle_service_threshold_seconds || DEFAULT_VEHICLE_SERVICE_THRESHOLD_SECONDS).seconds.since
   end
   
-  def self.all_due(user)
-    DueItem.where(identity: user.primary_identity).order(:due_date)
+  def self.pending_calendar_items(user, calendar)
+    CalendarItemReminderPending
+      .includes(:calendar, :calendar_item)
+      .where(
+        identity: user.primary_identity,
+        calendar: calendar
+      )
+      .order("created_at DESC")
   end
   
   def self.recalculate_due(user)
     ActiveRecord::Base.transaction do
-      due_vehicles(user)
-      due_contacts(user)
-      due_exercises(user)
-      due_promotions(user)
-      due_gun_registrations(user)
-      due_dental_cleanings(user)
-      due_physicals(user)
-      due_status(user)
-      due_apartments(user)
-      due_periodic_payments(user)
-      due_events(user)
-      due_stocks_vest(user)
-      due_todos(user)
+      #due_vehicles(user)
+      #due_contacts(user)
+      #due_exercises(user)
+      #due_promotions(user)
+      #due_gun_registrations(user)
+      #due_dental_cleanings(user)
+      #due_physicals(user)
+      #due_status(user)
+      #due_apartments(user)
+      #due_periodic_payments(user)
+      #due_events(user)
+      #due_stocks_vest(user)
+      #due_todos(user)
+      CalendarItemReminder.ensure_pending(user)
     end
   end
   
@@ -476,44 +478,59 @@ class DueItem < ActiveRecord::Base
   end
   
   def self.due_dental_cleanings(user, updated_record = nil, update_type = nil)
-    destroy_due_items(user, DentistVisit)
+    #destroy_due_items(user, DentistVisit)
     
     user.primary_identity.calendars.each do |calendar|
-      last_dentist_visit = DentistVisit.where("identity_id = ? and cleaning = true", user.primary_identity).order('visit_date DESC').limit(1).first
-      if !last_dentist_visit.nil? and last_dentist_visit.visit_date < dentist_visit_threshold(calendar)
-        create_due_item_check(
-          display: I18n.t(
-            "myplaceonline.dentist_visits.no_cleaning_for",
-            delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, last_dentist_visit.visit_date).in_general)
-          ),
-          link: "/dentist_visits/" + last_dentist_visit.id.to_s,
-          due_date: last_dentist_visit.visit_date,
-          original_due_date: last_dentist_visit.visit_date,
-          identity: user.primary_identity,
-          calendar: calendar,
-          myp_model_name: DentistVisit.name,
-          model_id: last_dentist_visit.id
-        )
-      elsif last_dentist_visit.nil?
-        # If there are no dentist visits at all but there is a dental insurance company, then notify
-        if DentalInsurance.where("identity_id = ? and (defunct is null)", user.primary_identity).count > 0
-          create_due_item_check(
-            display: I18n.t(
-              "myplaceonline.dentist_visits.no_cleanings"
-            ),
-            link: "/dentist_visits/new",
-            due_date: timenow,
-            original_due_date: timenow,
-            identity: user.primary_identity,
-            calendar: calendar,
-            myp_model_name: DentistVisit.name,
-            is_date_arbitrary: true
-          )
-        end
-      end
-    end
-    
-    check_snoozed_items(user, DentistVisit.name, updated_record, update_type)
+      
+#       last_dentist_visit = DentistVisit.where(
+#         "identity_id = ? and cleaning = true",
+#         user.primary_identity
+#       ).order('visit_date DESC').limit(1).first
+#       
+#       if last_dentist_visit.nil?
+#         if DentalInsurance.where("identity_id = ? and (defunct is null)", user.primary_identity).count > 0
+# 
+#           # If there are no dental visits for a cleaning and there is dental
+#           # insurance, then create a persistent reminder to get a dental
+#           # cleaning (if one doesn't already exist)
+#           self.ensure_persistent_calendar_item(user.primary_identity, calendar, DentistVisit)
+#         end
+#       end
+      
+#       if !last_dentist_visit.nil? and last_dentist_visit.visit_date < dentist_visit_threshold(calendar)
+#         create_due_item_check(
+#           display: I18n.t(
+#             "myplaceonline.dentist_visits.no_cleaning_for",
+#             delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, last_dentist_visit.visit_date).in_general)
+#           ),
+#           link: "/dentist_visits/" + last_dentist_visit.id.to_s,
+#           due_date: last_dentist_visit.visit_date,
+#           original_due_date: last_dentist_visit.visit_date,
+#           identity: user.primary_identity,
+#           calendar: calendar,
+#           myp_model_name: DentistVisit.name,
+#           model_id: last_dentist_visit.id
+#         )
+#       elsif last_dentist_visit.nil?
+#         # If there are no dentist visits at all but there is a dental insurance company, then notify
+#         if DentalInsurance.where("identity_id = ? and (defunct is null)", user.primary_identity).count > 0
+#           create_due_item_check(
+#             display: I18n.t(
+#               "myplaceonline.dentist_visits.no_cleanings"
+#             ),
+#             link: "/dentist_visits/new",
+#             due_date: timenow,
+#             original_due_date: timenow,
+#             identity: user.primary_identity,
+#             calendar: calendar,
+#             myp_model_name: DentistVisit.name,
+#             is_date_arbitrary: true
+#           )
+#         end
+#       end
+     end
+     
+#     check_snoozed_items(user, DentistVisit.name, updated_record, update_type)
   end
   
   def self.due_physicals(user, updated_record = nil, update_type = nil)
