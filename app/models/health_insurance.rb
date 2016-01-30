@@ -32,6 +32,35 @@ class HealthInsurance < ActiveRecord::Base
   attr_accessor :is_defunct
   boolean_time_transfer :is_defunct, :defunct
 
-  after_save { |record| DueItem.due_physicals(User.current_user, record, DueItem::UPDATE_TYPE_UPDATE) }
-  after_destroy { |record| DueItem.due_physicals(User.current_user, record, DueItem::UPDATE_TYPE_DELETE) }
+  after_commit :on_after_create, on: :create
+  
+  def on_after_create
+    last_physical = DoctorVisit.last_physical(
+      User.current_user.primary_identity
+    )
+
+    if last_physical.nil?
+      User.current_user.primary_identity.calendars.each do |calendar|
+        # If there are no doctor visits for a physical and there is health
+        # insurance, then create a persistent reminder to get a physical
+        # (if one doesn't already exist)
+        CalendarItem.ensure_persistent_calendar_item(
+          User.current_user.primary_identity,
+          calendar,
+          DoctorVisit
+        )
+      end
+    end
+  end
+  
+  after_commit :on_after_destroy, on: :destroy
+  
+  def on_after_destroy
+    if Myp.count(HealthInsurance, User.current_user.primary_identity) == 0
+      CalendarItem.destroy_calendar_items(
+        User.current_user.primary_identity,
+        DoctorVisit
+      )
+    end
+  end
 end

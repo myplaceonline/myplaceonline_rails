@@ -1,6 +1,8 @@
 class Exercise < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
 
+  DEFAULT_EXERCISE_THRESHOLD_SECONDS = 3.days
+  
   validates :exercise_start, presence: true
   
   def display
@@ -13,6 +15,61 @@ class Exercise < ActiveRecord::Base
     result
   end
 
-  after_save { |record| DueItem.due_exercises(User.current_user, record, DueItem::UPDATE_TYPE_UPDATE) }
-  after_destroy { |record| DueItem.due_exercises(User.current_user, record, DueItem::UPDATE_TYPE_DELETE) }
+  def self.last_exercise(identity)
+    Exercise.where(
+      identity: identity
+    ).order('exercise_start DESC').limit(1).first
+  end
+
+  def self.calendar_item_display(calendar_item)
+    I18n.t(
+      "myplaceonline.exercises.havent_exercised_for",
+      delta: Myp.time_difference_in_general_human(TimeDifference.between(User.current_user.time_now, calendar_item.calendar_item_time).in_general)
+    )
+  end
+  
+  after_commit :on_after_save, on: [:create, :update]
+  
+  def on_after_save
+    last_exercise = Exercise.last_exercise(
+      User.current_user.primary_identity,
+    )
+
+    if !last_exercise.nil?
+      ActiveRecord::Base.transaction do
+        CalendarItem.destroy_calendar_items(
+          User.current_user.primary_identity,
+          Exercise
+        )
+
+        User.current_user.primary_identity.calendars.each do |calendar|
+          CalendarItem.create_calendar_item(
+            User.current_user.primary_identity,
+            calendar,
+            Exercise,
+            last_exercise.exercise_start + (calendar.exercise_threshold_seconds || DEFAULT_EXERCISE_THRESHOLD_SECONDS).seconds,
+            Calendar::DEFAULT_REMINDER_AMOUNT,
+            Calendar::DEFAULT_REMINDER_TYPE
+          )
+        end
+      end
+    end
+  end
+  
+  after_commit :on_after_destroy, on: :destroy
+  
+  def on_after_destroy
+    last_exercise = Exercise.last_exercise(
+      User.current_user.primary_identity,
+    )
+    
+    if last_exercise.nil?
+      CalendarItem.destroy_calendar_items(
+        User.current_user.primary_identity,
+        Exercise
+      )
+    else
+      on_after_save
+    end
+  end
 end

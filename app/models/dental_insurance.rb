@@ -36,7 +36,7 @@ class DentalInsurance < ActiveRecord::Base
   
   def on_after_create
     last_dentist_visit = DentistVisit.last_cleaning(
-      User.current_user.primary_identity,
+      User.current_user.primary_identity
     )
 
     if last_dentist_visit.nil?

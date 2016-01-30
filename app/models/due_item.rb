@@ -12,15 +12,12 @@ class DueItem < ActiveRecord::Base
   # Should match crontab minimum
   MINIMUM_DURATION_SECONDS = 60*5
   
-  DEFAULT_EXERCISE_THRESHOLD_SECONDS = 7*60*60*24
-  
   DEFAULT_CONTACT_BEST_FRIEND_THRESHOLD_SECONDS = 20*60*60*24
   DEFAULT_CONTACT_GOOD_FRIEND_THRESHOLD_SECONDS = 45*60*60*24
   DEFAULT_CONTACT_ACQUAINTANCE_THRESHOLD_SECONDS = 90*60*60*24
   DEFAULT_CONTACT_BEST_FAMILY_THRESHOLD_SECONDS = 20*60*60*24
   DEFAULT_CONTACT_GOOD_FAMILY_THRESHOLD_SECONDS = 45*60*60*24
 
-  DEFAULT_DOCTOR_VISIT_THRESHOLD_SECONDS = 11*4*5*60*60*24
   DEFAULT_STATUS_THRESHOLD_SECONDS = 60*60*16
   DEFAULT_TRASH_PICKUP_THRESHOLD_SECONDS = 2*60*60*24
   DEFAULT_PERIODIC_PAYMENT_BEFORE_THRESHOLD_SECONDS = 3*60*60*24
@@ -92,10 +89,6 @@ class DueItem < ActiveRecord::Base
     completed_due_items.length == 0 && snoozed_due_items.length == 0
   end
   
-  def self.exercise_threshold(calendar)
-    (calendar.exercise_threshold_seconds || DEFAULT_EXERCISE_THRESHOLD_SECONDS).seconds.ago
-  end
-  
   def self.timenow
     Time.now
   end
@@ -112,10 +105,6 @@ class DueItem < ActiveRecord::Base
     result[4] = (calendar.contact_best_family_threshold_seconds || DEFAULT_CONTACT_BEST_FAMILY_THRESHOLD_SECONDS).seconds.ago
     result[5] = (calendar.contact_good_family_threshold_seconds || DEFAULT_CONTACT_GOOD_FAMILY_THRESHOLD_SECONDS).seconds.ago
     result
-  end
-  
-  def self.doctor_visit_threshold(calendar)
-    (calendar.doctor_visit_threshold_seconds || DEFAULT_DOCTOR_VISIT_THRESHOLD_SECONDS).seconds.ago
   end
   
   def self.status_threshold(calendar)
@@ -334,72 +323,6 @@ class DueItem < ActiveRecord::Base
     end
 
     check_snoozed_items(user, Contact.name, updated_record, update_type)
-  end
-  
-  def self.due_exercises(user, updated_record = nil, update_type = nil)
-    destroy_due_items(user, Exercise)
-    
-    user.primary_identity.calendars.each do |calendar|
-      threshold = exercise_threshold(calendar)
-      last_exercise = Exercise.where("identity_id = ? and exercise_start is not null", user.primary_identity).order('exercise_start DESC').limit(1).first
-      if !last_exercise.nil? and last_exercise.exercise_start < threshold
-        create_due_item_check(
-          display: I18n.t(
-            "myplaceonline.exercises.havent_exercised_for",
-            delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, last_exercise.exercise_start).in_general)
-          ),
-          link: "/exercises/new",
-          due_date: last_exercise.exercise_start,
-          original_due_date: last_exercise.exercise_start,
-          identity: user.primary_identity,
-          calendar: calendar,
-          myp_model_name: Exercise.name
-        )
-      end
-    end
-
-    check_snoozed_items(user, Exercise.name, updated_record, update_type)
-  end
-  
-  def self.due_physicals(user, updated_record = nil, update_type = nil)
-    destroy_due_items(user, DoctorVisit)
-    
-    user.primary_identity.calendars.each do |calendar|
-      last_doctor_visit = DoctorVisit.where("identity_id = ? and physical = true", user.primary_identity).order('visit_date DESC').limit(1).first
-      if !last_doctor_visit.nil? and last_doctor_visit.visit_date < doctor_visit_threshold(calendar)
-        create_due_item_check(
-          display: I18n.t(
-            "myplaceonline.doctor_visits.no_physical_for",
-            delta: Myp.time_difference_in_general_human(TimeDifference.between(timenow, last_doctor_visit.visit_date).in_general)
-          ),
-          link: "/doctor_visits/" + last_doctor_visit.id.to_s,
-          due_date: last_doctor_visit.visit_date,
-          original_due_date: last_doctor_visit.visit_date,
-          identity: user.primary_identity,
-          calendar: calendar,
-          myp_model_name: DoctorVisit.name,
-          model_id: last_doctor_visit.id
-        )
-      elsif last_doctor_visit.nil?
-        # If there are no physicals at all but there is a health insurance company, then notify
-        if HealthInsurance.where("identity_id = ? and (defunct is null)", user.primary_identity).count > 0
-          create_due_item_check(
-            display: I18n.t(
-              "myplaceonline.doctor_visits.no_physicals"
-            ),
-            link: "/doctor_visits/new",
-            due_date: timenow,
-            original_due_date: timenow,
-            identity: user.primary_identity,
-            calendar: calendar,
-            myp_model_name: DoctorVisit.name,
-            is_date_arbitrary: true
-          )
-        end
-      end
-    end
-
-    check_snoozed_items(user, DoctorVisit.name, updated_record, update_type)
   end
   
   def self.due_status(user, updated_record = nil, update_type = nil)
