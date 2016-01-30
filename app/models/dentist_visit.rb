@@ -26,7 +26,7 @@ class DentistVisit < ActiveRecord::Base
     result
   end
   
-  def self.display_calendar_item(calendar_item)
+  def self.calendar_item_display(calendar_item)
     if calendar_item.calendar_item_time.nil?
       I18n.t("myplaceonline.dentist_visits.no_cleanings")
     else
@@ -52,20 +52,22 @@ class DentistVisit < ActiveRecord::Base
     )
 
     if !last_dentist_visit.nil?
-      CalendarItem.destroy_calendar_items(
-        User.current_user.primary_identity,
-        DentistVisit
-      )
-
-      User.current_user.primary_identity.calendars.each do |calendar|
-        CalendarItem.create_calendar_item(
+      ActiveRecord::Base.transaction do
+        CalendarItem.destroy_calendar_items(
           User.current_user.primary_identity,
-          calendar,
-          DentistVisit,
-          last_dentist_visit.visit_date + (calendar.dentist_visit_threshold_seconds || DEFAULT_DENTIST_VISIT_THRESHOLD_SECONDS).seconds,
-          Calendar::DEFAULT_REMINDER_AMOUNT,
-          Calendar::DEFAULT_REMINDER_TYPE
+          DentistVisit
         )
+
+        User.current_user.primary_identity.calendars.each do |calendar|
+          CalendarItem.create_calendar_item(
+            User.current_user.primary_identity,
+            calendar,
+            DentistVisit,
+            last_dentist_visit.visit_date + (calendar.dentist_visit_threshold_seconds || DEFAULT_DENTIST_VISIT_THRESHOLD_SECONDS).seconds,
+            Calendar::DEFAULT_REMINDER_AMOUNT,
+            Calendar::DEFAULT_REMINDER_TYPE
+          )
+        end
       end
     end
   end

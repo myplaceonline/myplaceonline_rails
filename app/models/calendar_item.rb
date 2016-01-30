@@ -8,15 +8,21 @@ class CalendarItem < ActiveRecord::Base
   def display
     if @cached_display.nil?
       model = Object.const_get(model_class)
-      @cached_display = model.display_calendar_item(self)
+      @cached_display = model.calendar_item_display(self)
     end
     @cached_display
   end
   
   def link
-    if model_id.nil?
-      "/" + model_class.pluralize.underscore + "/new"
+    model = Object.const_get(model_class)
+    if model.respond_to?("calendar_item_link")
+      model.calendar_item_link(self)
     else
+      if model_id.nil?
+        "/" + model_class.pluralize.underscore + "/new"
+      else
+        "/" + model_class.pluralize.underscore + "/" + model_id.to_s
+      end
     end
   end
 
@@ -26,6 +32,10 @@ class CalendarItem < ActiveRecord::Base
     else
       Myp.display_date_short(calendar_item_time, User.current_user)
     end
+  end
+  
+  def find_model_object
+    Object.const_get(model_class).find(model_id.to_i)
   end
 
   def self.has_persistent_calendar_item(identity, calendar, model)
@@ -74,23 +84,43 @@ class CalendarItem < ActiveRecord::Base
     end
   end
   
-  def self.destroy_calendar_items(identity, model)
-    CalendarItem.where(
-      identity: identity,
-      model_class: model.name
-    ).each do |calendar_item|
-      calendar_item.destroy!
+  def self.destroy_calendar_items(identity, model, model_id: nil)
+    if model_id.nil?
+      CalendarItem.where(
+        identity: identity,
+        model_class: model.name
+      ).each do |calendar_item|
+        calendar_item.destroy!
+      end
+    else
+      CalendarItem.where(
+        identity: identity,
+        model_class: model.name,
+        model_id: model_id
+      ).each do |calendar_item|
+        calendar_item.destroy!
+      end
     end
   end
   
-  def self.create_calendar_item(identity, calendar, model, calendar_item_time, reminder_threshold_amount, reminder_threshold_type)
+  def self.create_calendar_item(identity, calendar, model, calendar_item_time, reminder_threshold_amount, reminder_threshold_type, model_id: nil)
     ActiveRecord::Base.transaction do
-      calendar_item = CalendarItem.new(
-        identity: identity,
-        calendar: calendar,
-        model_class: model.name,
-        calendar_item_time: calendar_item_time
-      )
+      if model_id.nil?
+        calendar_item = CalendarItem.new(
+          identity: identity,
+          calendar: calendar,
+          model_class: model.name,
+          calendar_item_time: calendar_item_time
+        )
+      else
+        calendar_item = CalendarItem.new(
+          identity: identity,
+          calendar: calendar,
+          model_class: model.name,
+          model_id: model_id,
+          calendar_item_time: calendar_item_time
+        )
+      end
       
       calendar_item.save!
       

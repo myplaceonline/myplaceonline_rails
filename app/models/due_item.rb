@@ -12,7 +12,6 @@ class DueItem < ActiveRecord::Base
   # Should match crontab minimum
   MINIMUM_DURATION_SECONDS = 60*5
   
-  DEFAULT_VEHICLE_SERVICE_THRESHOLD_SECONDS = 30*60*60*24
   DEFAULT_EXERCISE_THRESHOLD_SECONDS = 7*60*60*24
   
   DEFAULT_CONTACT_BEST_FRIEND_THRESHOLD_SECONDS = 20*60*60*24
@@ -168,10 +167,6 @@ class DueItem < ActiveRecord::Base
     (calendar.todo_threshold_seconds || DEFAULT_TODO_THRESHOLD_SECONDS).seconds.since
   end
   
-  def self.vehicle_service_threshold(calendar)
-    (calendar.vehicle_service_threshold_seconds || DEFAULT_VEHICLE_SERVICE_THRESHOLD_SECONDS).seconds.since
-  end
-  
   def self.pending_calendar_items(user, calendar)
     CalendarItemReminderPending
       .includes(:calendar, :calendar_item)
@@ -184,19 +179,6 @@ class DueItem < ActiveRecord::Base
   
   def self.recalculate_due(user)
     ActiveRecord::Base.transaction do
-      #due_vehicles(user)
-      #due_contacts(user)
-      #due_exercises(user)
-      #due_promotions(user)
-      #due_gun_registrations(user)
-      #due_dental_cleanings(user)
-      #due_physicals(user)
-      #due_status(user)
-      #due_apartments(user)
-      #due_periodic_payments(user)
-      #due_events(user)
-      #due_stocks_vest(user)
-      #due_todos(user)
       CalendarItemReminder.ensure_pending(user)
     end
   end
@@ -274,27 +256,6 @@ class DueItem < ActiveRecord::Base
       # Occurs in the full migration
       Rails.logger.info(e)
     end
-  end
-
-  def self.due_vehicles(user, updated_record = nil, update_type = nil)
-    destroy_due_items(user, Vehicle)
-    
-    user.primary_identity.calendars.each do |calendar|
-      VehicleService.where("identity_id = ? and date_serviced is not null and date_due is not null and date_due > ? and date_due < ?", user.primary_identity, datenow, vehicle_service_threshold(calendar)).each do |service|
-        create_due_item_check(
-          display: service.short_description,
-          link: "/vehicles/" + service.vehicle.id.to_s,
-          due_date: service.date_due,
-          original_due_date: service.date_due,
-          identity: user.primary_identity,
-          calendar: calendar,
-          myp_model_name: Vehicle.name,
-          model_id: service.vehicle.id
-        )
-      end
-    end
-    
-    check_snoozed_items(user, Vehicle.name, updated_record, update_type)
   end
   
   def self.due_contacts(user, updated_record = nil, update_type = nil)
