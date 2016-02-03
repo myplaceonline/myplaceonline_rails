@@ -100,6 +100,12 @@ module Myp
   ]
 
   REPEAT_TYPE_SECONDS = 1
+  REPEAT_TYPE_MINUTES = 2
+  REPEAT_TYPE_HOURS = 4
+  REPEAT_TYPE_DAYS = 8
+  REPEAT_TYPE_WEEKS = 16
+  REPEAT_TYPE_MONTHS = 32
+  REPEAT_TYPE_YEARS = 64
   
   def self.database_exists?
     begin

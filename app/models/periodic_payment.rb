@@ -51,7 +51,4 @@ class PeriodicPayment < ActiveRecord::Base
     end
     result
   end
-
-  after_save { |record| DueItem.due_periodic_payments(User.current_user, record, DueItem::UPDATE_TYPE_UPDATE) }
-  after_destroy { |record| DueItem.due_periodic_payments(User.current_user, record, DueItem::UPDATE_TYPE_DELETE) }
 end

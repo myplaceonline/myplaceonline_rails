@@ -362,7 +362,7 @@ Rails.application.routes.draw do
   get 'api/distinct_values'
   
   get 'admin/test'
-  get 'admin/recalculate_all_users_due'
+  get 'admin/ensure_pending_all_users'
   get 'admin/create_test_job'
 
   get 'meaning/index'

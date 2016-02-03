@@ -1,7 +1,34 @@
 class Identity < ActiveRecord::Base
   include MyplaceonlineActiveRecordBaseConcern
 
+  DEFAULT_BIRTHDAY_THRESHOLD_SECONDS = 60.days
+  
+  CALENDAR_ITEM_CONTEXT_BIRTHDAY = "birthday"
+  
+  has_one :contact, class_name: Contact, foreign_key: :contact_identity_id
+  
+  def ensure_contact!
+    result = Contact.find_by(
+      identity_id: id,
+      contact_identity_id: id
+    )
+    if result.nil?
+      ActiveRecord::Base.transaction do
+        result = Contact.new
+        if self.name.blank?
+          self.name = I18n.t("myplaceonline.contacts.me")
+          self.save!
+        end
+        result.identity = self
+        result.contact_identity = self
+        result.save!
+      end
+    end
+    result
+  end
+  
   belongs_to :user
+  
   has_many :passwords, :dependent => :destroy
   has_many :identity_files, :dependent => :destroy
   has_many :category_points_amounts, :dependent => :destroy
@@ -231,26 +258,6 @@ class Identity < ActiveRecord::Base
     CalculationForm.where(identity_id: id, is_duplicate: false)
   end
   
-  def ensure_contact!
-    result = Contact.find_by(
-      identity_id: id,
-      contact_identity_id: id
-    )
-    if result.nil?
-      ActiveRecord::Base.transaction do
-        result = Contact.new
-        if self.name.blank?
-          self.name = I18n.t("myplaceonline.contacts.me")
-          self.save!
-        end
-        result.identity = self
-        result.contact_identity = self
-        result.save!
-      end
-    end
-    result
-  end
-  
   def last_weight
     weights.to_a.sort{ |a,b| b.measure_date <=> a.measure_date }.first
   end
@@ -272,5 +279,49 @@ class Identity < ActiveRecord::Base
       result = user.email
     end
     result
+  end
+
+  def self.calendar_item_display(calendar_item)
+    identity = calendar_item.find_model_object
+    I18n.t(
+      "myplaceonline.contacts.upcoming_birthday",
+      name: identity.display,
+      delta: Myp.time_difference_in_general_human(TimeDifference.between(User.current_user.time_now, identity.next_birthday).in_general)
+    )
+  end
+  
+  after_commit :on_after_save, on: [:create, :update]
+  
+  def on_after_save
+    if !birthday.nil?
+      ActiveRecord::Base.transaction do
+        User.current_user.primary_identity.calendars.each do |calendar|
+          on_after_destroy
+          CalendarItem.create_calendar_item(
+            User.current_user.primary_identity,
+            calendar,
+            self.class,
+            next_birthday,
+            (calendar.birthday_threshold_seconds || DEFAULT_BIRTHDAY_THRESHOLD_SECONDS),
+            Calendar::DEFAULT_REMINDER_TYPE,
+            model_id: id,
+            repeat_amount: 1,
+            repeat_type: Myp::REPEAT_TYPE_YEARS,
+            context_info: Identity::CALENDAR_ITEM_CONTEXT_BIRTHDAY
+          )
+        end
+      end
+    end
+  end
+  
+  after_commit :on_after_destroy, on: :destroy
+  
+  def on_after_destroy
+    CalendarItem.destroy_calendar_items(
+      User.current_user.primary_identity,
+      self.class,
+      model_id: id,
+      context_info: Identity::CALENDAR_ITEM_CONTEXT_BIRTHDAY
+    )
   end
 end

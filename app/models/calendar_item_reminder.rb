@@ -1,11 +1,84 @@
 class CalendarItemReminder < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
 
+  DEFAULT_SNOOZE_TEXT = "1, 00:00:00"
+  
+  # Should match crontab minimum
+  MINIMUM_DURATION_SECONDS = 60*5
+  
   belongs_to :calendar_item
 
   has_many :calendar_item_reminder_pendings, :dependent => :destroy
   
+  def self.ensure_pending_all_users()
+    Rails.logger.info("ensure_pending_all_users start")
+    User.all.each do |user|
+      begin
+        User.current_user = user
+        self.ensure_pending(user)
+      ensure
+        User.current_user = nil
+      end
+    end
+    Rails.logger.info("ensure_pending_all_users end")
+  end
+
   def self.ensure_pending(user)
+    
+    # Check if we need to create any future repeat events
+    CalendarItem
+      .includes(:calendar_item_reminders)
+      .where("repeat_amount is not null and is_repeat is null and identity_id = ?", user.primary_identity)
+      .each do |calendar_item|
+        
+        # Find the newest repeat item
+        latest_repeat = CalendarItem
+          .where(
+            is_repeat: true,
+            model_class: calendar_item.model_class,
+            model_id: calendar_item.model_id,
+            context_info: calendar_item.context_info,
+            persistent: calendar_item.persistent
+          )
+          .order("calendar_item_time DESC")
+          .limit(1)
+          .first
+          
+        if latest_repeat.nil?
+          latest_repeat = calendar_item
+        end
+        
+        # Keep creating repeat items until we hit the target
+        target = user.time_now + calendar_item.calendar.largest_threshold_seconds
+        
+        while latest_repeat.calendar_item_time < target
+          case calendar_item.repeat_type
+          when Myp::REPEAT_TYPE_YEARS
+            repeated_calendar_item = calendar_item.dup
+            repeated_calendar_item.calendar_item_time = Date.new(
+              latest_repeat.calendar_item_time.year + 1,
+              latest_repeat.calendar_item_time.month,
+              latest_repeat.calendar_item_time.day
+            )
+            repeated_calendar_item.calendar_id = calendar_item.calendar_id
+            repeated_calendar_item.identity_id = calendar_item.identity_id
+            repeated_calendar_item.is_repeat = true
+            repeated_calendar_item.save!
+            
+            calendar_item.calendar_item_reminders.each do |calendar_item_reminder|
+              new_calendar_item_reminder = calendar_item_reminder.dup
+              new_calendar_item_reminder.calendar_item = repeated_calendar_item
+              new_calendar_item_reminder.identity_id = repeated_calendar_item.identity_id
+              new_calendar_item_reminder.save!
+            end
+            
+            latest_repeat = repeated_calendar_item
+          else
+            raise "TOOD"
+          end
+        end
+    end
+    
     CalendarItemReminder
       .includes(:calendar_item_reminder_pendings, :calendar_item)
       .where(identity: user.primary_identity)

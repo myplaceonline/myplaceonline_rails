@@ -11,8 +11,8 @@ class AdminController < ApplicationController
     }
   end
   
-  def recalculate_all_users_due
-    DueItem.recalculate_all_users_due
+  def ensure_pending_all_users
+    CalendarItemReminder.ensure_pending_all_users
     render json: {
       :success => true
     }

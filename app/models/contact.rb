@@ -13,6 +13,12 @@ class Contact < ActiveRecord::Base
     ["myplaceonline.contacts.party_friend", 8]
   ]
   
+  DEFAULT_CONTACT_BEST_FRIEND_THRESHOLD_SECONDS = 20.days
+  DEFAULT_CONTACT_GOOD_FRIEND_THRESHOLD_SECONDS = 45.days
+  DEFAULT_CONTACT_ACQUAINTANCE_THRESHOLD_SECONDS = 90.days
+  DEFAULT_CONTACT_BEST_FAMILY_THRESHOLD_SECONDS = 20.days
+  DEFAULT_CONTACT_GOOD_FAMILY_THRESHOLD_SECONDS = 45.days
+
   belongs_to :contact_identity, class_name: Identity, :dependent => :destroy
   accepts_nested_attributes_for :contact_identity
   
@@ -86,6 +92,100 @@ class Contact < ActiveRecord::Base
     end
   end
 
-  after_save { |record| DueItem.due_contacts(User.current_user, record, DueItem::UPDATE_TYPE_UPDATE) }
-  after_destroy { |record| DueItem.due_contacts(User.current_user, record, DueItem::UPDATE_TYPE_DELETE) }
+  def self.contact_type_threshold(calendar)
+    result = Hash.new
+    result[0] = (calendar.contact_best_friend_threshold_seconds || DEFAULT_CONTACT_BEST_FRIEND_THRESHOLD_SECONDS)
+    result[1] = (calendar.contact_good_friend_threshold_seconds || DEFAULT_CONTACT_GOOD_FRIEND_THRESHOLD_SECONDS)
+    result[2] = (calendar.contact_acquaintance_threshold_seconds || DEFAULT_CONTACT_ACQUAINTANCE_THRESHOLD_SECONDS)
+    result[4] = (calendar.contact_best_family_threshold_seconds || DEFAULT_CONTACT_BEST_FAMILY_THRESHOLD_SECONDS)
+    result[5] = (calendar.contact_good_family_threshold_seconds || DEFAULT_CONTACT_GOOD_FAMILY_THRESHOLD_SECONDS)
+    result
+  end
+  
+  def last_conversation_date
+    result = ActiveRecord::Base.connection.select_one(%{
+      select max(conversation_date)
+      from conversations
+      where identity_id = #{identity.id}
+            and contact_id = #{id}
+    })["max"]
+    if !result.blank?
+      result = result.to_date
+    end
+    result
+  end
+
+  def self.calendar_item_display(calendar_item)
+    contact = calendar_item.find_model_object
+    if calendar_item.persistent
+      I18n.t(
+        "myplaceonline.contacts.no_conversations",
+        name: contact.display,
+        contact_type: Myp.get_select_name(contact.contact_type, Contact::CONTACT_TYPES)
+      )
+    else
+      I18n.t(
+        "myplaceonline.contacts.no_conversations_since",
+        name: contact.display,
+        contact_type: Myp.get_select_name(contact.contact_type, Contact::CONTACT_TYPES),
+        delta: Myp.time_difference_in_general_human(TimeDifference.between(User.current_user.time_now, contact.last_conversation_date).in_general)
+      )
+    end
+  end
+  
+  def self.calendar_item_link(calendar_item)
+    contact = calendar_item.find_model_object
+    "/contacts/#{contact.id}/conversations/new"
+  end
+
+  after_commit :on_after_save, on: [:create, :update]
+  
+  def on_after_save
+    ActiveRecord::Base.transaction do
+      # Always destroy first because if the contact was updated to not
+      # be of the type to have a conversation reminder, then we need to
+      # delete any persistent reminders
+      on_after_destroy
+      if !contact_type.nil?
+        User.current_user.primary_identity.calendars.each do |calendar|
+          contact_threshold = Contact.contact_type_threshold(calendar)[contact_type]
+          if !contact_threshold.nil?
+            last = last_conversation_date
+            if last.nil?
+              CalendarItem.create_persistent_calendar_item(
+                User.current_user.primary_identity,
+                calendar,
+                Contact,
+                model_id: id,
+                context_info: Conversation::CALENDAR_ITEM_CONTEXT_CONVERSATION
+              )
+            else
+              next_conversation = last + contact_threshold.seconds
+              CalendarItem.create_calendar_item(
+                User.current_user.primary_identity,
+                calendar,
+                Contact,
+                next_conversation,
+                Calendar::DEFAULT_REMINDER_AMOUNT,
+                Calendar::DEFAULT_REMINDER_TYPE,
+                model_id: id,
+                context_info: Conversation::CALENDAR_ITEM_CONTEXT_CONVERSATION
+              )
+            end
+          end
+        end
+      end
+    end
+  end
+  
+  after_commit :on_after_destroy, on: :destroy
+  
+  def on_after_destroy
+    CalendarItem.destroy_calendar_items(
+      User.current_user.primary_identity,
+      Contact,
+      model_id: id,
+      context_info: Conversation::CALENDAR_ITEM_CONTEXT_CONVERSATION
+    )
+  end
 end

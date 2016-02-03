@@ -1,9 +1,9 @@
 <%= myp_timespan_field(f, :exercise_threshold, "myplaceonline.calendars.exercise_threshold", obj.exercise_threshold, false, Exercise::DEFAULT_EXERCISE_THRESHOLD_SECONDS) %>
-<%= myp_timespan_field(f, :contact_best_friend_threshold, "myplaceonline.calendars.contact_best_friend_threshold", obj.contact_best_friend_threshold, false, DueItem::DEFAULT_CONTACT_BEST_FRIEND_THRESHOLD_SECONDS) %>
-<%= myp_timespan_field(f, :contact_good_friend_threshold, "myplaceonline.calendars.contact_good_friend_threshold", obj.contact_good_friend_threshold, false, DueItem::DEFAULT_CONTACT_GOOD_FRIEND_THRESHOLD_SECONDS) %>
-<%= myp_timespan_field(f, :contact_acquaintance_threshold, "myplaceonline.calendars.contact_acquaintance_threshold", obj.contact_acquaintance_threshold, false, DueItem::DEFAULT_CONTACT_ACQUAINTANCE_THRESHOLD_SECONDS) %>
-<%= myp_timespan_field(f, :contact_best_family_threshold, "myplaceonline.calendars.contact_best_family_threshold", obj.contact_best_family_threshold, false, DueItem::DEFAULT_CONTACT_BEST_FAMILY_THRESHOLD_SECONDS) %>
-<%= myp_timespan_field(f, :contact_good_family_threshold, "myplaceonline.calendars.contact_good_family_threshold", obj.contact_good_family_threshold, false, DueItem::DEFAULT_CONTACT_GOOD_FAMILY_THRESHOLD_SECONDS) %>
+<%= myp_timespan_field(f, :contact_best_friend_threshold, "myplaceonline.calendars.contact_best_friend_threshold", obj.contact_best_friend_threshold, false, Contact::DEFAULT_CONTACT_BEST_FRIEND_THRESHOLD_SECONDS) %>
+<%= myp_timespan_field(f, :contact_good_friend_threshold, "myplaceonline.calendars.contact_good_friend_threshold", obj.contact_good_friend_threshold, false, Contact::DEFAULT_CONTACT_GOOD_FRIEND_THRESHOLD_SECONDS) %>
+<%= myp_timespan_field(f, :contact_acquaintance_threshold, "myplaceonline.calendars.contact_acquaintance_threshold", obj.contact_acquaintance_threshold, false, Contact::DEFAULT_CONTACT_ACQUAINTANCE_THRESHOLD_SECONDS) %>
+<%= myp_timespan_field(f, :contact_best_family_threshold, "myplaceonline.calendars.contact_best_family_threshold", obj.contact_best_family_threshold, false, Contact::DEFAULT_CONTACT_BEST_FAMILY_THRESHOLD_SECONDS) %>
+<%= myp_timespan_field(f, :contact_good_family_threshold, "myplaceonline.calendars.contact_good_family_threshold", obj.contact_good_family_threshold, false, Contact::DEFAULT_CONTACT_GOOD_FAMILY_THRESHOLD_SECONDS) %>
 <%= myp_timespan_field(f, :dentist_visit_threshold, "myplaceonline.calendars.dentist_visit_threshold", obj.dentist_visit_threshold, false, DentistVisit::DEFAULT_DENTIST_VISIT_THRESHOLD_SECONDS) %>
 <%= myp_timespan_field(f, :doctor_visit_threshold, "myplaceonline.calendars.doctor_visit_threshold", obj.doctor_visit_threshold, false, DoctorVisit::DEFAULT_DOCTOR_VISIT_THRESHOLD_SECONDS) %>
 <%= myp_timespan_field(f, :status_threshold, "myplaceonline.calendars.status_threshold", obj.status_threshold, false, Status::DEFAULT_STATUS_THRESHOLD_SECONDS) %>
@@ -11,7 +11,7 @@
 <%= myp_timespan_field(f, :periodic_payment_before_threshold, "myplaceonline.calendars.periodic_payment_before_threshold", obj.periodic_payment_before_threshold, false, DueItem::DEFAULT_PERIODIC_PAYMENT_BEFORE_THRESHOLD_SECONDS) %>
 <%= myp_timespan_field(f, :periodic_payment_after_threshold, "myplaceonline.calendars.periodic_payment_after_threshold", obj.periodic_payment_after_threshold, false, DueItem::DEFAULT_PERIODIC_PAYMENT_AFTER_THRESHOLD_SECONDS) %>
 <%= myp_timespan_field(f, :drivers_license_expiration_threshold, "myplaceonline.calendars.drivers_license_expiration_threshold", obj.drivers_license_expiration_threshold, false, IdentityDriversLicense::DEFAULT_DRIVERS_LICENSE_EXPIRATION_THRESHOLD_SECONDS) %>
-<%= myp_timespan_field(f, :birthday_threshold, "myplaceonline.calendars.birthday_threshold", obj.birthday_threshold, false, DueItem::DEFAULT_BIRTHDAY_THRESHOLD_SECONDS) %>
+<%= myp_timespan_field(f, :birthday_threshold, "myplaceonline.calendars.birthday_threshold", obj.birthday_threshold, false, Identity::DEFAULT_BIRTHDAY_THRESHOLD_SECONDS) %>
 <%= myp_timespan_field(f, :promotion_threshold, "myplaceonline.calendars.promotion_threshold", obj.promotion_threshold, false, Promotion::DEFAULT_PROMOTION_THRESHOLD_SECONDS) %>
 <% if current_user.explicit_categories %>
   <%= myp_timespan_field(f, :gun_registration_expiration_threshold, "myplaceonline.calendars.gun_registration_expiration_threshold", obj.gun_registration_expiration_threshold, false, GunRegistration::DEFAULT_GUN_REGISTRATION_EXPIRATION_THRESHOLD_SECONDS) %>

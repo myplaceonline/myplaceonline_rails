@@ -14,6 +14,6 @@ if Myp.is_web_server? || Rails.env.test?
   end
 
   if Myp.database_exists? && !Rails.env.test?
-    DueItem.recalculate_all_users_due
+    CalendarItemReminder.ensure_pending_all_users
   end
 end

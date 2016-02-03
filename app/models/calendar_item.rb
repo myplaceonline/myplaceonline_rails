@@ -37,6 +37,20 @@ class CalendarItem < ActiveRecord::Base
   def find_model_object
     Object.const_get(model_class).find(model_id.to_i)
   end
+  
+  def largest_reminder_threshold_seconds
+    result = nil
+    calendar_item_reminders.each do |calendar_item_reminder|
+      secs = Calendar.amount_to_seconds(
+        calendar_item_reminder.threshold_amount,
+        calendar_item_reminder.threshold_type
+      )
+      if result.nil? || secs > result
+        result = secs
+      end
+    end
+    result
+  end
 
   def self.has_persistent_calendar_item(identity, calendar, model)
     CalendarItem.where(
@@ -47,13 +61,21 @@ class CalendarItem < ActiveRecord::Base
     ).count > 0
   end
   
-  def self.create_persistent_calendar_item(identity, calendar, model)
+  def self.create_persistent_calendar_item(
+    identity,
+    calendar,
+    model,
+    model_id: nil,
+    context_info: nil
+  )
     ActiveRecord::Base.transaction do
       calendar_item = CalendarItem.new(
         identity: identity,
         calendar: calendar,
         persistent: true,
-        model_class: model.name
+        model_class: model.name,
+        model_id: model_id,
+        context_info: context_info
       )
       
       calendar_item.save!
@@ -84,22 +106,16 @@ class CalendarItem < ActiveRecord::Base
     end
   end
   
-  def self.destroy_calendar_items(identity, model, model_id: nil)
-    if model_id.nil?
-      CalendarItem.where(
-        identity: identity,
-        model_class: model.name
-      ).each do |calendar_item|
-        calendar_item.destroy!
-      end
-    else
-      CalendarItem.where(
-        identity: identity,
-        model_class: model.name,
-        model_id: model_id
-      ).each do |calendar_item|
-        calendar_item.destroy!
-      end
+  # Note that the default context_info of nil means that any items with
+  # a non-NULL context_info will not be destroyed
+  def self.destroy_calendar_items(identity, model, model_id: nil, context_info: nil)
+    CalendarItem.where(
+      identity: identity,
+      model_class: model.name,
+      model_id: model_id,
+      context_info: context_info
+    ).each do |calendar_item|
+      calendar_item.destroy!
     end
   end
   
@@ -112,7 +128,10 @@ class CalendarItem < ActiveRecord::Base
     reminder_threshold_type,
     model_id: nil,
     expire_amount: nil,
-    expire_type: nil
+    expire_type: nil,
+    repeat_amount: nil,
+    repeat_type: nil,
+    context_info: nil
   )
     ActiveRecord::Base.transaction do
       calendar_item = CalendarItem.new(
@@ -120,7 +139,10 @@ class CalendarItem < ActiveRecord::Base
         calendar: calendar,
         model_class: model.name,
         model_id: model_id,
-        calendar_item_time: calendar_item_time
+        calendar_item_time: calendar_item_time,
+        repeat_amount: repeat_amount,
+        repeat_type: repeat_type,
+        context_info: context_info
       )
       
       calendar_item.save!
@@ -136,7 +158,7 @@ class CalendarItem < ActiveRecord::Base
       
       calendar_item_reminder.save!
       
-      DueItem.recalculate_due(identity.user)
+      CalendarItemReminder.ensure_pending(identity.user)
       
       calendar_item
     end

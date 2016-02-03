@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160130161313) do
+ActiveRecord::Schema.define(version: 20160203035945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -347,6 +347,7 @@ ActiveRecord::Schema.define(version: 20160130161313) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.string   "context_info"
+    t.boolean  "is_repeat"
   end
 
   add_index "calendar_items", ["calendar_id"], name: "index_calendar_items_on_calendar_id", using: :btree
