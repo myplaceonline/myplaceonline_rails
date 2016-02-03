@@ -2,6 +2,9 @@ class PeriodicPayment < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
+  DEFAULT_PERIODIC_PAYMENT_BEFORE_THRESHOLD_SECONDS = 3.days
+  DEFAULT_PERIODIC_PAYMENT_AFTER_THRESHOLD_SECONDS = 3.days
+
   validates :periodic_payment_name, presence: true
   
   belongs_to :password
@@ -35,7 +38,7 @@ class PeriodicPayment < ActiveRecord::Base
       result = started
     elsif date_period == 0
       result = Date.new(today.year, today.month)
-    elsif date_period == 1
+    elsif date_period == 1 || date_period == 2
       result = Date.new(today.year)
     end
     if !result.nil?
@@ -50,5 +53,47 @@ class PeriodicPayment < ActiveRecord::Base
       end
     end
     result
+  end
+  
+  def self.calendar_item_display(calendar_item)
+    periodic_payment = calendar_item.find_model_object
+    I18n.t(
+      "myplaceonline.periodic_payments.reminder_before",
+      name: periodic_payment.display,
+      delta: Myp.time_difference_in_general_human(TimeDifference.between(User.current_user.time_now, periodic_payment.next_payment).in_general)
+    )
+  end
+  
+  after_commit :on_after_save, on: [:create, :update]
+  
+  def on_after_save
+    ActiveRecord::Base.transaction do
+      on_after_destroy
+      if !suppress_reminder
+        User.current_user.primary_identity.calendars.each do |calendar|
+          CalendarItem.create_calendar_item(
+            User.current_user.primary_identity,
+            calendar,
+            self.class,
+            next_payment,
+            (calendar.periodic_payment_before_threshold_seconds || DEFAULT_PERIODIC_PAYMENT_BEFORE_THRESHOLD_SECONDS),
+            Calendar::DEFAULT_REMINDER_TYPE,
+            model_id: id,
+            repeat_amount: 1,
+            repeat_type: Myp.period_to_repeat_type(date_period)
+          )
+        end
+      end
+    end
+  end
+  
+  after_commit :on_after_destroy, on: :destroy
+  
+  def on_after_destroy
+    CalendarItem.destroy_calendar_items(
+      User.current_user.primary_identity,
+      self.class,
+      model_id: id
+    )
   end
 end

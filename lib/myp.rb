@@ -113,6 +113,7 @@ module Myp
   REPEAT_TYPE_NTH_FRIDAY = 2048
   REPEAT_TYPE_NTH_SATURDAY = 4096
   REPEAT_TYPE_NTH_SUNDAY = 8192
+  REPEAT_TYPE_6MONTHS = 16384
   
   def self.period_type_to_repeat_type(period_type)
     case period_type
@@ -163,6 +164,32 @@ module Myp
       8
     when Myp::REPEAT_TYPE_NTH_SUNDAY
       9
+    else
+      raise "TODO"
+    end
+  end
+  
+  def self.period_to_repeat_type(period)
+    case period
+    when 0
+      Myp::REPEAT_TYPE_MONTHS
+    when 1
+      Myp::REPEAT_TYPE_YEARS
+    when 2
+      Myp::REPEAT_TYPE_6MONTHS
+    else
+      raise "TODO"
+    end
+  end
+  
+  def self.repeat_type_to_period(repeat_type)
+    case repeat_type
+    when Myp::REPEAT_TYPE_MONTHS
+      0
+    when Myp::REPEAT_TYPE_YEARS
+      1
+    when Myp::REPEAT_TYPE_6MONTHS
+      2
     else
       raise "TODO"
     end

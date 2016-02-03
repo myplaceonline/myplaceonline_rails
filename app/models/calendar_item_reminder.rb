@@ -31,6 +31,8 @@ class CalendarItemReminder < ActiveRecord::Base
       .where("repeat_amount is not null and is_repeat is null and identity_id = ?", user.primary_identity)
       .each do |calendar_item|
         
+        Rails.logger.debug{"ensure_pending calendar_item=#{calendar_item.inspect}"}
+
         # Find the newest repeat item
         latest_repeat = CalendarItem
           .where(
@@ -45,12 +47,15 @@ class CalendarItemReminder < ActiveRecord::Base
           .first
           
         if latest_repeat.nil?
+          Rails.logger.debug{"no repeat items found"}
           latest_repeat = calendar_item
         end
         
         # Keep creating repeat items until we hit the target
         target = user.time_now + calendar_item.calendar.largest_threshold_seconds
         
+        Rails.logger.debug{"target=#{target}"}
+
         while latest_repeat.calendar_item_time < target
           timesource = latest_repeat.calendar_item_time
           new_time = case calendar_item.repeat_type
@@ -66,6 +71,8 @@ class CalendarItemReminder < ActiveRecord::Base
             timesource + calendar_item.repeat_amount.weeks
           when Myp::REPEAT_TYPE_MONTHS
             timesource + calendar_item.repeat_amount.months
+          when Myp::REPEAT_TYPE_6MONTHS
+            timesource + (calendar_item.repeat_amount * 6).months
           when Myp::REPEAT_TYPE_YEARS
             timesource + calendar_item.repeat_amount.years
           when Myp::REPEAT_TYPE_NTH_MONDAY, Myp::REPEAT_TYPE_NTH_TUESDAY, Myp::REPEAT_TYPE_NTH_WEDNESDAY, Myp::REPEAT_TYPE_NTH_THURSDAY, Myp::REPEAT_TYPE_NTH_FRIDAY, Myp::REPEAT_TYPE_NTH_SATURDAY, Myp::REPEAT_TYPE_NTH_SUNDAY
@@ -95,7 +102,11 @@ class CalendarItemReminder < ActiveRecord::Base
           end
           
           latest_repeat = repeated_calendar_item
+          
+          Rails.logger.debug{"latest_repeat=#{latest_repeat.inspect}"}
         end
+
+        Rails.logger.debug{"completed calendar_item"}
     end
     
     CalendarItemReminder
