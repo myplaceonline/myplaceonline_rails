@@ -3,14 +3,9 @@ class DueItem < ActiveRecord::Base
   
   belongs_to :calendar
 
-  DEFAULT_TRASH_PICKUP_THRESHOLD_SECONDS = 2*60*60*24
   DEFAULT_PERIODIC_PAYMENT_BEFORE_THRESHOLD_SECONDS = 3*60*60*24
   DEFAULT_PERIODIC_PAYMENT_AFTER_THRESHOLD_SECONDS = 3*60*60*24
 
-  def self.trash_pickup_threshold(calendar)
-    (calendar.trash_pickup_threshold_seconds || DEFAULT_TRASH_PICKUP_THRESHOLD_SECONDS).seconds
-  end
-  
   def self.periodic_payment_threshold_after(calendar)
     (calendar.periodic_payment_after_threshold_seconds || DEFAULT_PERIODIC_PAYMENT_AFTER_THRESHOLD_SECONDS).seconds
   end

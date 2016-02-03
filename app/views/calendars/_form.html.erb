@@ -7,7 +7,7 @@
 <%= myp_timespan_field(f, :dentist_visit_threshold, "myplaceonline.calendars.dentist_visit_threshold", obj.dentist_visit_threshold, false, DentistVisit::DEFAULT_DENTIST_VISIT_THRESHOLD_SECONDS) %>
 <%= myp_timespan_field(f, :doctor_visit_threshold, "myplaceonline.calendars.doctor_visit_threshold", obj.doctor_visit_threshold, false, DoctorVisit::DEFAULT_DOCTOR_VISIT_THRESHOLD_SECONDS) %>
 <%= myp_timespan_field(f, :status_threshold, "myplaceonline.calendars.status_threshold", obj.status_threshold, false, Status::DEFAULT_STATUS_THRESHOLD_SECONDS) %>
-<%= myp_timespan_field(f, :trash_pickup_threshold, "myplaceonline.calendars.trash_pickup_threshold", obj.trash_pickup_threshold, false, DueItem::DEFAULT_TRASH_PICKUP_THRESHOLD_SECONDS) %>
+<%= myp_timespan_field(f, :trash_pickup_threshold, "myplaceonline.calendars.trash_pickup_threshold", obj.trash_pickup_threshold, false, ApartmentTrashPickup::DEFAULT_TRASH_PICKUP_THRESHOLD_SECONDS) %>
 <%= myp_timespan_field(f, :periodic_payment_before_threshold, "myplaceonline.calendars.periodic_payment_before_threshold", obj.periodic_payment_before_threshold, false, DueItem::DEFAULT_PERIODIC_PAYMENT_BEFORE_THRESHOLD_SECONDS) %>
 <%= myp_timespan_field(f, :periodic_payment_after_threshold, "myplaceonline.calendars.periodic_payment_after_threshold", obj.periodic_payment_after_threshold, false, DueItem::DEFAULT_PERIODIC_PAYMENT_AFTER_THRESHOLD_SECONDS) %>
 <%= myp_timespan_field(f, :drivers_license_expiration_threshold, "myplaceonline.calendars.drivers_license_expiration_threshold", obj.drivers_license_expiration_threshold, false, IdentityDriversLicense::DEFAULT_DRIVERS_LICENSE_EXPIRATION_THRESHOLD_SECONDS) %>

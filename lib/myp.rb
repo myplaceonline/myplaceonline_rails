@@ -106,6 +106,67 @@ module Myp
   REPEAT_TYPE_WEEKS = 16
   REPEAT_TYPE_MONTHS = 32
   REPEAT_TYPE_YEARS = 64
+  REPEAT_TYPE_NTH_MONDAY = 128
+  REPEAT_TYPE_NTH_TUESDAY = 256
+  REPEAT_TYPE_NTH_WEDNESDAY = 512
+  REPEAT_TYPE_NTH_THURSDAY = 1024
+  REPEAT_TYPE_NTH_FRIDAY = 2048
+  REPEAT_TYPE_NTH_SATURDAY = 4096
+  REPEAT_TYPE_NTH_SUNDAY = 8192
+  
+  def self.period_type_to_repeat_type(period_type)
+    case period_type
+    when 0
+      Myp::REPEAT_TYPE_DAYS
+    when 1
+      Myp::REPEAT_TYPE_WEEKS
+    when 2
+      Myp::REPEAT_TYPE_MONTHS
+    when 3
+      Myp::REPEAT_TYPE_NTH_MONDAY
+    when 4
+      Myp::REPEAT_TYPE_NTH_TUESDAY
+    when 5
+      Myp::REPEAT_TYPE_NTH_WEDNESDAY
+    when 6
+      Myp::REPEAT_TYPE_NTH_THURSDAY
+    when 7
+      Myp::REPEAT_TYPE_NTH_FRIDAY
+    when 8
+      Myp::REPEAT_TYPE_NTH_SATURDAY
+    when 9
+      Myp::REPEAT_TYPE_NTH_SUNDAY
+    else
+      raise "TODO"
+    end
+  end
+  
+  def self.repeat_type_to_period_type(repeat_type)
+    case repeat_type
+    when Myp::REPEAT_TYPE_DAYS
+      0
+    when Myp::REPEAT_TYPE_WEEKS
+      1
+    when Myp::REPEAT_TYPE_MONTHS
+      2
+    when Myp::REPEAT_TYPE_NTH_MONDAY
+      3
+    when Myp::REPEAT_TYPE_NTH_TUESDAY
+      4
+    when Myp::REPEAT_TYPE_NTH_WEDNESDAY
+      5
+    when Myp::REPEAT_TYPE_NTH_THURSDAY
+      6
+    when Myp::REPEAT_TYPE_NTH_FRIDAY
+      7
+    when Myp::REPEAT_TYPE_NTH_SATURDAY
+      8
+    when Myp::REPEAT_TYPE_NTH_SUNDAY
+      9
+    else
+      raise "TODO"
+    end
+  end
   
   def self.database_exists?
     begin

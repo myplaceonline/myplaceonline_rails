@@ -52,30 +52,49 @@ class CalendarItemReminder < ActiveRecord::Base
         target = user.time_now + calendar_item.calendar.largest_threshold_seconds
         
         while latest_repeat.calendar_item_time < target
-          case calendar_item.repeat_type
+          timesource = latest_repeat.calendar_item_time
+          new_time = case calendar_item.repeat_type
+          when Myp::REPEAT_TYPE_SECONDS
+            timesource + calendar_item.repeat_amount.seconds
+          when Myp::REPEAT_TYPE_MINUTES
+            timesource + calendar_item.repeat_amount.minutes
+          when Myp::REPEAT_TYPE_HOURS
+            timesource + calendar_item.repeat_amount.hours
+          when Myp::REPEAT_TYPE_DAYS
+            timesource + calendar_item.repeat_amount.days
+          when Myp::REPEAT_TYPE_WEEKS
+            timesource + calendar_item.repeat_amount.weeks
+          when Myp::REPEAT_TYPE_MONTHS
+            timesource + calendar_item.repeat_amount.months
           when Myp::REPEAT_TYPE_YEARS
-            repeated_calendar_item = calendar_item.dup
-            repeated_calendar_item.calendar_item_time = Date.new(
-              latest_repeat.calendar_item_time.year + 1,
-              latest_repeat.calendar_item_time.month,
-              latest_repeat.calendar_item_time.day
-            )
-            repeated_calendar_item.calendar_id = calendar_item.calendar_id
-            repeated_calendar_item.identity_id = calendar_item.identity_id
-            repeated_calendar_item.is_repeat = true
-            repeated_calendar_item.save!
-            
-            calendar_item.calendar_item_reminders.each do |calendar_item_reminder|
-              new_calendar_item_reminder = calendar_item_reminder.dup
-              new_calendar_item_reminder.calendar_item = repeated_calendar_item
-              new_calendar_item_reminder.identity_id = repeated_calendar_item.identity_id
-              new_calendar_item_reminder.save!
-            end
-            
-            latest_repeat = repeated_calendar_item
+            timesource + calendar_item.repeat_amount.years
+          when Myp::REPEAT_TYPE_NTH_MONDAY, Myp::REPEAT_TYPE_NTH_TUESDAY, Myp::REPEAT_TYPE_NTH_WEDNESDAY, Myp::REPEAT_TYPE_NTH_THURSDAY, Myp::REPEAT_TYPE_NTH_FRIDAY, Myp::REPEAT_TYPE_NTH_SATURDAY, Myp::REPEAT_TYPE_NTH_SUNDAY
+            # Causes infinite loop because it's always in the same month
+            #Repeat.new(
+            #  start_date: timesource,
+            #  period: calendar_item.repeat_amount,
+            #  period_type: Myp.repeat_type_to_period_type(calendar_item.repeat_type)
+            #).next_instance
+            raise "TODO"
           else
-            raise "TOOD"
+            raise "TODO"
           end
+          
+          repeated_calendar_item = calendar_item.dup
+          repeated_calendar_item.calendar_item_time = new_time
+          repeated_calendar_item.calendar_id = calendar_item.calendar_id
+          repeated_calendar_item.identity_id = calendar_item.identity_id
+          repeated_calendar_item.is_repeat = true
+          repeated_calendar_item.save!
+          
+          calendar_item.calendar_item_reminders.each do |calendar_item_reminder|
+            new_calendar_item_reminder = calendar_item_reminder.dup
+            new_calendar_item_reminder.calendar_item = repeated_calendar_item
+            new_calendar_item_reminder.identity_id = repeated_calendar_item.identity_id
+            new_calendar_item_reminder.save!
+          end
+          
+          latest_repeat = repeated_calendar_item
         end
     end
     
