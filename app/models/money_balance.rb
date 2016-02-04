@@ -20,6 +20,9 @@ class MoneyBalance < ActiveRecord::Base
   has_many :money_balance_items, -> { order('item_time DESC') }, :dependent => :destroy
   accepts_nested_attributes_for :money_balance_items, allow_destroy: true, reject_if: :all_blank
   
+  has_many :money_balance_item_templates, :dependent => :destroy
+  accepts_nested_attributes_for :money_balance_item_templates, allow_destroy: true, reject_if: :all_blank
+  
   def calculate_balance
     result = 0.0
     if money_balance_items.length > 0

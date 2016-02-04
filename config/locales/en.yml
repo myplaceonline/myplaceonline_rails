@@ -139,6 +139,7 @@ en:
       conversations: "Conversations"
       dessert_locations: "Dessert Locations"
       desired_locations: "Desired Locations"
+      money_balance_item_templates: "Balance Templates"
     general:
       email: "E-mail"
       password: "Password"
@@ -1840,6 +1841,7 @@ en:
       paid: "%{x} paid %{amount} for %{y} @ %{time}"
       paid_notime: "%{x} paid %{amount} for %{y}"
       original_amount_description: "Total: %{original_amount}"
+      templates: "Templates"
     money_balance_items:
       money_balance_item_name: "Description"
       amount: "Amount (Negative Owed to Contact)"
@@ -1896,3 +1898,9 @@ en:
       not_visited: "Not Visited"
     desired_locations:
       location: "Location"
+    money_balance_item_templates:
+      amount: "Amount"
+      original_amount: "Original Amount"
+      notes: "Notes"
+      money_balance_item_name: "Description"
+      money_balance: "Money Balance"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160203052153) do
+ActiveRecord::Schema.define(version: 20160203231621) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1575,6 +1575,21 @@ ActiveRecord::Schema.define(version: 20160203052153) do
   add_index "memberships", ["identity_id"], name: "index_memberships_on_identity_id", using: :btree
   add_index "memberships", ["periodic_payment_id"], name: "index_memberships_on_periodic_payment_id", using: :btree
 
+  create_table "money_balance_item_templates", force: :cascade do |t|
+    t.decimal  "amount",                  precision: 10, scale: 2
+    t.decimal  "original_amount",         precision: 10, scale: 2
+    t.string   "money_balance_item_name"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.integer  "money_balance_id"
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+  end
+
+  add_index "money_balance_item_templates", ["identity_id"], name: "index_money_balance_item_templates_on_identity_id", using: :btree
+  add_index "money_balance_item_templates", ["money_balance_id"], name: "index_money_balance_item_templates_on_money_balance_id", using: :btree
+
   create_table "money_balance_items", force: :cascade do |t|
     t.integer  "money_balance_id"
     t.integer  "identity_id"
@@ -2677,6 +2692,8 @@ ActiveRecord::Schema.define(version: 20160203052153) do
   add_foreign_key "favorite_product_links", "identities"
   add_foreign_key "identity_file_shares", "identity_files"
   add_foreign_key "identity_file_shares", "shares"
+  add_foreign_key "money_balance_item_templates", "identities"
+  add_foreign_key "money_balance_item_templates", "money_balances"
   add_foreign_key "money_balance_items", "identities"
   add_foreign_key "money_balance_items", "money_balances"
   add_foreign_key "money_balances", "contacts"

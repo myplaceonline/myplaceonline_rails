@@ -22,7 +22,10 @@ Rails.application.routes.draw do
 
   match 'money_balances/:id/add', :to => 'money_balances#add', via: [:get, :post, :patch], as: "money_balances_add"
   match 'money_balances/:id/list', :to => 'money_balances#list', via: [:get], as: "money_balances_list"
-  resources :money_balances
+  resources :money_balances do
+    resources :money_balance_item_templates
+    post 'money_balance_item_templates/new'
+  end
   post 'money_balances/new'
 
   mount Ckeditor::Engine => '/ckeditor'

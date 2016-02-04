@@ -1,0 +1,5 @@
+<%= render layout: "shared/model_index" do %>
+  <% content_for :footerlinks do %>
+    <li><%= link_to t('myplaceonline.money_balance_item_templates.money_balance'), money_balance_path(@parent), "data-icon" => "back" %></li>
+  <% end %>
+<% end %>

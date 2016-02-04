@@ -103,6 +103,10 @@ class MoneyBalancesController < MyplaceonlineController
       end
     }
   end
+  
+  def show_add
+    false
+  end
 
   protected
     def sorts
