@@ -1904,3 +1904,5 @@ en:
       notes: "Notes"
       money_balance_item_name: "Description"
       money_balance: "Money Balance"
+      add_i_paid: "Add I Paid Template"
+      add_other_paid: "Add %{other} Paid Template"

@@ -112,10 +112,14 @@
     <% if controller.show_index_footer %>
       <div data-role="footer" data-position="fixed" data-tap-toggle="false">
           <div data-role="navbar">
-              <ul>
+            <ul>
+              <% if content_for?(:allfooterlinks) %>
+                <%= content_for(:allfooterlinks) %>
+              <% else %>
                 <li><%= link_to t("myplaceonline.general.add") + " " + t("myplaceonline.category." + controller.category_name).singularize, controller.new_path, "data-icon" => "plus" %></li>
                 <%= content_for(:footerlinks) %>
-              </ul>
+              <% end %>
+            </ul>
           </div>
       </div>
     <% end %>

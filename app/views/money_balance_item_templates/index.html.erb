@@ -1,5 +1,7 @@
 <%= render layout: "shared/model_index" do %>
-  <% content_for :footerlinks do %>
+  <% content_for :allfooterlinks do %>
+    <li><%= link_to t("myplaceonline.money_balance_item_templates.add_i_paid"), new_money_balance_money_balance_item_template_path(owner_paid: @parent.current_user_owns? ? "true" : "false"), "data-icon" => "eye" %></li>
+    <li><%= link_to t("myplaceonline.money_balance_item_templates.add_other_paid", { other: controller.other_display }), new_money_balance_money_balance_item_template_path(owner_paid: @parent.current_user_owns? ? "false" : "true"), "data-icon" => "user" %></li>
     <li><%= link_to t('myplaceonline.money_balance_item_templates.money_balance'), money_balance_path(@parent), "data-icon" => "back" %></li>
   <% end %>
 <% end %>

@@ -55,15 +55,19 @@ class MoneyBalancesController < MyplaceonlineController
   end
 
   def who_paid_title(owner_paid)
+    MoneyBalancesController.who_paid_title(@obj, owner_paid)
+  end
+  
+  def self.who_paid_title(obj, owner_paid)
     if owner_paid
-      if @obj.current_user_owns?
+      if obj.current_user_owns?
         I18n.t("myplaceonline.money_balances.i_paid")
       else
-        I18n.t("myplaceonline.money_balances.other_paid", { other: @obj.identity.display })
+        I18n.t("myplaceonline.money_balances.other_paid", { other: obj.identity.display })
       end
     else
-      if @obj.current_user_owns?
-        I18n.t("myplaceonline.money_balances.other_paid", { other: @obj.contact.display })
+      if obj.current_user_owns?
+        I18n.t("myplaceonline.money_balances.other_paid", { other: obj.contact.display })
       else
         I18n.t("myplaceonline.money_balances.i_paid")
       end
@@ -71,17 +75,21 @@ class MoneyBalancesController < MyplaceonlineController
   end
   
   def other_owed_name(owner_paid)
+    MoneyBalancesController.other_owed_name(@obj, owner_paid)
+  end
+
+  def self.other_owed_name(obj, owner_paid)
     if owner_paid
-      if @obj.current_user_owns?
-        I18n.t("myplaceonline.money_balances.x_owes", { x: @obj.contact.display })
+      if obj.current_user_owns?
+        I18n.t("myplaceonline.money_balances.x_owes", { x: obj.contact.display })
       else
         I18n.t("myplaceonline.money_balances.i_owe")
       end
     else
-      if @obj.current_user_owns?
+      if obj.current_user_owns?
         I18n.t("myplaceonline.money_balances.i_owe")
       else
-        I18n.t("myplaceonline.money_balances.x_owes", { x: @obj.identity.display })
+        I18n.t("myplaceonline.money_balances.x_owes", { x: obj.identity.display })
       end
     end
   end

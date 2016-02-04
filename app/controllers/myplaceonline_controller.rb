@@ -40,11 +40,8 @@ class MyplaceonlineController < ApplicationController
     end
 
     index_pre_respond()
-    
-    if nested
-      parent_id = parent_model.table_name.singularize.downcase + "_id"
-      @parent = Myp.find_existing_object(parent_model, params[parent_id])
-    end
+
+    set_parent
     
     # Save off any query parameters which might be used by AJAX callbacks to
     # index.json.erb (for example, for a full item search)
@@ -62,6 +59,13 @@ class MyplaceonlineController < ApplicationController
     else
       indexmyplet
       render action: "index", layout: "myplet"
+    end
+  end
+  
+  def set_parent
+    if nested
+      parent_id = parent_model.table_name.singularize.downcase + "_id"
+      @parent = Myp.find_existing_object(parent_model, params[parent_id])
     end
   end
 
@@ -83,6 +87,7 @@ class MyplaceonlineController < ApplicationController
     if !insecure
       Myp.ensure_encryption_key(session)
     end
+    set_parent
     @obj = Myp.new_model(model)
     @url = new_path
     if request.post?
@@ -301,6 +306,10 @@ class MyplaceonlineController < ApplicationController
   
   def form_path
     paths_name + "/form"
+  end
+  
+  def new_title
+    I18n.t("myplaceonline.general.add") + " " + I18n.t("myplaceonline.category." + category_name).singularize
   end
   
   protected
