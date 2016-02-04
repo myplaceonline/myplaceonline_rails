@@ -10,6 +10,7 @@ class CreateCalendarItems < ActiveRecord::Migration
       t.string :model_class
       t.integer :model_id
       t.references :identity, index: true, foreign_key: true
+      t.boolean :is_repeat
 
       t.timestamps null: false
     end
