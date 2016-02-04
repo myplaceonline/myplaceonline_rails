@@ -43,7 +43,8 @@ class MoneyBalanceItemTemplatesController < MyplaceonlineController
         :amount,
         :original_amount,
         :money_balance_item_name,
-        :notes
+        :notes,
+        :invert
       )
     end
     
@@ -61,5 +62,11 @@ class MoneyBalanceItemTemplatesController < MyplaceonlineController
 
     def parent_model
       MoneyBalance
+    end
+
+    def edit_prerespond
+      @owner_paid = @obj.amount < 0 ? (@obj.current_user_owns? ? false : true) : (@obj.current_user_owns? ? true : false)
+      @obj.amount = @obj.amount.abs
+      @obj.original_amount = @obj.original_amount.abs
     end
 end

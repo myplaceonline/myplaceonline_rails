@@ -712,9 +712,9 @@ module Myp
     end
   end
   
-  def self.display_currency(obj, current_user)
+  def self.display_currency(obj, current_user = nil)
     if !obj.blank?
-      "$" + obj.to_s
+      self.number_to_currency(obj)
     else
       nil
     end

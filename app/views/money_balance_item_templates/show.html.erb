@@ -1,6 +1,6 @@
 <%= render layout: "shared/model_show" do %>
   <%= attribute_table_row(t("myplaceonline.money_balance_item_templates.money_balance_item_name"), @obj.money_balance_item_name) %>
-  <%= attribute_table_row_currency(t("myplaceonline.money_balance_item_templates.amount"), @obj.amount) %>
+  <%= attribute_table_row(t("myplaceonline.money_balance_item_templates.amount"), MoneyBalancesController.who_paid_title(@obj.money_balance, @obj.amount < 0 ? (@obj.current_user_owns? ? false : true) : (@obj.current_user_owns? ? true : false)) + " " + Myp.display_currency(@obj.amount.abs)) %>
   <%= attribute_table_row_markdown(t("myplaceonline.money_balance_item_templates.notes"), @obj.notes) %>
 
   <% content_for :postfooterlinks do %>

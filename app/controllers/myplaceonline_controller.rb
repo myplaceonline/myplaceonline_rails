@@ -87,8 +87,8 @@ class MyplaceonlineController < ApplicationController
     if !insecure
       Myp.ensure_encryption_key(session)
     end
-    set_parent
     @obj = Myp.new_model(model)
+    set_parent
     @url = new_path
     if request.post?
       create
@@ -399,6 +399,7 @@ class MyplaceonlineController < ApplicationController
       end
       if nested
         parent_id = parent_model.table_name.singularize.downcase + "_id"
+        @parent = Myp.find_existing_object(parent_model, params[parent_id])
         @obj = model.where("id = ? and #{parent_id} = ?", params[:id].to_i, params[parent_id.to_sym].to_i).take!
       else
         @obj = model.find(params[:id].to_i)
