@@ -5,5 +5,6 @@
 
   <% content_for :postfooterlinks do %>
     <li><%= link_to t('myplaceonline.money_balance_item_templates.money_balance'), money_balance_path(@obj.money_balance), "data-icon" => "user" %></li>
+    <li><%= link_to t('myplaceonline.money_balance_item_templates.apply'), money_balances_add_path(@obj.money_balance, owner_paid: @owner_paid ? "true" : "false", amount: @obj.amount.abs, original_amount: @obj.amount.abs, percent_default: 1.0, description: @obj.money_balance_item_name), "data-icon" => "check" %></li>
   <% end %>
 <% end %>

@@ -26,8 +26,16 @@ class MoneyBalancesController < MyplaceonlineController
     Myp.ensure_encryption_key(session)
     set_obj
     # X paid a bill and Y either owes 100%, 50%, or some other percent
-    onwer_paid_str = params[:owner_paid].blank? ? "true" : params[:owner_paid]
-    @owner_paid = onwer_paid_str.to_bool
+    owner_paid_str = params[:owner_paid].blank? ? "true" : params[:owner_paid]
+    @owner_paid = owner_paid_str.to_bool
+    @amount = params[:amount]
+    @original_amount = params[:original_amount]
+    @description = params[:description]
+    @checkbox_percent50 = " checked=\"checked\""
+    @checkbox_percent100 = params[:percent_default] == "1.0" ? " checked=\"checked\"" : ""
+    if !@checkbox_percent100.blank?
+      @checkbox_percent50 = ""
+    end
     if request.patch?
       if do_update
         if !@new_item.nil?

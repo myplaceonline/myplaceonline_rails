@@ -63,10 +63,19 @@ class MoneyBalanceItemTemplatesController < MyplaceonlineController
     def parent_model
       MoneyBalance
     end
+    
+    def calculate_owner_paid
+      @owner_paid = @obj.amount < 0 ? (@obj.current_user_owns? ? false : true) : (@obj.current_user_owns? ? true : false)
+    end
 
     def edit_prerespond
-      @owner_paid = @obj.amount < 0 ? (@obj.current_user_owns? ? false : true) : (@obj.current_user_owns? ? true : false)
+      calculate_owner_paid
       @obj.amount = @obj.amount.abs
       @obj.original_amount = @obj.original_amount.abs
+    end
+    
+    def before_show
+      calculate_owner_paid
+      super
     end
 end
