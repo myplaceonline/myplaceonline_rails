@@ -50,6 +50,6 @@ class Promotion < ActiveRecord::Base
   after_commit :on_after_destroy, on: :destroy
   
   def on_after_destroy
-    CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, self.id)
+    CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: self.id)
   end
 end
