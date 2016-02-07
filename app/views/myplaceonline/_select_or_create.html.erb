@@ -24,6 +24,10 @@ end
 # unless new isn't shown
 if !edit
   existingcollapsed = true
+  
+  if !existingobj.id.nil?
+    existingcollapsed = false
+  end
 end
 
 %>
@@ -68,7 +72,14 @@ end
     </div>
     <% if !edit %>
       <div id="<%= new_item_collapsible_id %>" data-role="collapsible" data-collapsed="<%= !existingcollapsed %>">
-        <% first = true %>
+        <%
+          first = true
+          if !existingobj.id.nil?
+            # There's an existing object selected, so don't fill in the form
+            # with those attributes
+            existingobj = Myp.new_model(objform[0..(objform.index('/')-1)].singularize.camelize.constantize)
+          end
+        %>
         <%= f.fields_for name, existingobj do |sub_fields| %>
           <h3><%= (edit ? t("myplaceonline.general.edit") : t("myplaceonline.general.new")) + " " + heading %></h3>
           <%= render partial: objform + ".html", locals: { f: sub_fields, obj: existingobj, edit: edit, autofocus: autofocus } %>
