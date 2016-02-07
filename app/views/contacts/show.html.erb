@@ -7,7 +7,8 @@
     <%= attribute_table_row(t("myplaceonline.contacts.age"), Myp.time_difference_in_general_from_now(@obj.contact_identity.birthday)) %>
     <%= attribute_table_row(t("myplaceonline.contacts.next_birthday"), Myp.time_difference_in_general_human_detailed_from_now(@obj.contact_identity.next_birthday)) %>
   <% end %>
-  <%= attribute_table_row_select t("myplaceonline.contacts.contact_type"), @obj.contact_type, Contact::CONTACT_TYPES %>
+  <%= attribute_table_row_select(t("myplaceonline.contacts.contact_type"), @obj.contact_type, Contact::CONTACT_TYPES) %>
+  <%= attribute_table_row_select(t("myplaceonline.contacts.sex_type"), @obj.contact_identity.sex_type, Contact::SEX_TYPES) %>
   <%= attribute_table_row_markdown(t("myplaceonline.contacts.notes"), @obj.contact_identity.notes) %>
   <%= attribute_table_row_markdown(t("myplaceonline.contacts.likes"), @obj.contact_identity.likes) %>
   <%= attribute_table_row_markdown(t("myplaceonline.contacts.gift_ideas"), @obj.contact_identity.gift_ideas) %>

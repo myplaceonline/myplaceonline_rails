@@ -10,7 +10,14 @@ class Contact < ActiveRecord::Base
     ["myplaceonline.contacts.good_family", 5],
     ["myplaceonline.contacts.neighbor", 6],
     ["myplaceonline.contacts.former_neighbor", 7],
-    ["myplaceonline.contacts.party_friend", 8]
+    ["myplaceonline.contacts.party_friend", 8],
+    ["myplaceonline.contacts.dog", 9],
+    ["myplaceonline.contacts.cat", 10]
+  ]
+  
+  SEX_TYPES = [
+    ["myplaceonline.contacts.sex_female", 0],
+    ["myplaceonline.contacts.sex_male", 1]
   ]
   
   DEFAULT_CONTACT_BEST_FRIEND_THRESHOLD_SECONDS = 20.days

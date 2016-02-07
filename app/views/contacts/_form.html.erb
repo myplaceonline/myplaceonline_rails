@@ -4,6 +4,7 @@
   <%= myp_text_field(identity_fields, :nickname, "myplaceonline.contacts.nickname", obj.contact_identity.nickname) %>
   <%= myp_date_field(identity_fields, :birthday, "myplaceonline.contacts.birthday", obj.contact_identity.birthday) %>
   <%= myp_select(f, :contact_type, "myplaceonline.contacts.contact_type", Myp.translate_options(Contact::CONTACT_TYPES), obj.contact_type) %>
+  <%= myp_select(identity_fields, :sex_type, "myplaceonline.contacts.sex_type", Myp.translate_options(Contact::SEX_TYPES), obj.contact_identity.sex_type) %>
   
   <%=
     render(layout: 'myplaceonline/childproperties', locals: {

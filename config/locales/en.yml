@@ -497,6 +497,7 @@ en:
       age: "Age"
       notes: "Notes"
       me: "Me"
+      sex_type: "Sex"
       conversation: "Conversation"
       conversations: "Conversations"
       add_conversation: "Add Conversation"
@@ -525,6 +526,10 @@ en:
       related_to: "Related to"
       next_birthday: "Next Birthday"
       new_years_resolution: "Latest New Year's Resolutions"
+      dog: "Dog"
+      cat: "Cat"
+      sex_male: "Male"
+      sex_female: "Female"
     files:
       name: "Name"
       download: "Download"

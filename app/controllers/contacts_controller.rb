@@ -29,6 +29,7 @@ class ContactsController < MyplaceonlineController
         :likes,
         :gift_ideas,
         :ktn,
+        :sex_type,
         :new_years_resolution,
         identity_phones_attributes: [
           :id,
