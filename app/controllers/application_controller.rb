@@ -37,18 +37,28 @@ class ApplicationController < ActionController::Base
   end
   
   def around_request
-    request_accessor = instance_variable_get(:@_request)
-    User.current_user = current_user
-    Thread.current[:current_session] = request_accessor.session
-    if !current_user.nil?
-      request_accessor.session[:myp_email] = current_user.email
+    overwrote = false
+    begin
+      # only do this once per request
+      if User.current_user.nil?
+        overwrote = true
+        request_accessor = instance_variable_get(:@_request)
+        User.current_user = current_user
+        Thread.current[:current_session] = request_accessor.session
+        if !current_user.nil?
+          request_accessor.session[:myp_email] = current_user.email
+        end
+        Thread.current[:request] = request_accessor
+      end
+      
+      yield
+    ensure
+      if overwrote
+        User.current_user = nil
+        Thread.current[:current_session] = nil
+        Thread.current[:request] = nil
+      end
     end
-    Thread.current[:request] = request_accessor
-    yield
-  ensure
-    User.current_user = nil
-    Thread.current[:current_session] = nil
-    Thread.current[:request] = nil
   end
   
   def self.current_session

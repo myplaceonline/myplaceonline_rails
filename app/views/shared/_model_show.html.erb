@@ -1,44 +1,63 @@
-<% if !@myplet %>
-  <% content_for :heading do -%><%= controller.display_obj(@obj) %><% end -%>
-<% end %>
+<% if !@nested_show %>
+  <% if !@myplet %>
+    <% content_for :heading do -%><%= controller.display_obj(@obj) %><% end -%>
+  <% end %>
 
-<h1><%= controller.display_obj(@obj) %></h1>
+  <h1><%= controller.display_obj(@obj) %></h1>
 
-<% if !@myplet %>
-  <%= flashes! %>
+  <% if !@myplet %>
+    <%= flashes! %>
+  <% end %>
+<% else %>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+      <div data-role="collapsible" data-collapsed="true">
+        <h3><%= controller.display_obj(@obj) %></h3>
 <% end %>
 
 <% yielded = yield %>
 
-<% if !@myplet %>
-  <%= content_for(:beforetable) %>
+<% if !@nested_show %>
+  <% if !@myplet %>
+    <%= content_for(:beforetable) %>
+  <% end %>
 <% end %>
 
-<table data-role="table" data-mode="reflow" class="ui-responsive tablestripes normalwidth firstcolumnbold noheadertable">
-  <thead>
-    <tr>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  <tbody>
-  
-    <%= yielded %>
+  <table data-role="table" data-mode="reflow" class="ui-responsive tablestripes normalwidth firstcolumnbold noheadertable">
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    <tbody>
+    
+      <%= yielded %>
 
-    <% if controller.show_created_updated %>
-      <%= attribute_table_row(t("myplaceonline.general.created"), Myp.display_time(@obj.created_at, current_user)) %>
-      <%= attribute_table_row(t("myplaceonline.general.last_updated"), Myp.display_time(@obj.updated_at, current_user)) %>
-    <% end %>
+      <% if controller.show_created_updated %>
+        <%= attribute_table_row(t("myplaceonline.general.created"), Myp.display_time(@obj.created_at, current_user)) %>
+        <%= attribute_table_row(t("myplaceonline.general.last_updated"), Myp.display_time(@obj.updated_at, current_user)) %>
+      <% end %>
 
-  </tbody>
-</table>
+    </tbody>
+  </table>
 
-<% if !@myplet %>
-  <%= content_for(:aftertable) %>
+<% if !@nested_show %>
+  <% if !@myplet %>
+    <%= content_for(:aftertable) %>
 
-  <script type="text/javascript">
-  myplaceonline.ensureClipboard($(".clipboardable"));
-  </script>
+    <script type="text/javascript">
+    myplaceonline.ensureClipboard($(".clipboardable"));
+    </script>
 
-  <%= render partial: "shared/model_show_footer" %>
+    <%= render partial: "shared/model_show_footer" %>
+  <% end %>
+<% end %>
+
+<% if @nested_show %>
+      </div>
+    </td>
+    <td>&nbsp;</td>
+  </tr>
 <% end %>

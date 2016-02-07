@@ -229,7 +229,24 @@ module ApplicationHelper
   def attribute_table_row_reference(name, pathfunc, ref)
     if !ref.nil?
       url = send(pathfunc, ref)
-      attribute_table_row(name, url_or_blank(url, ref.display), url)
+      result = attribute_table_row(name, url_or_blank(url, ref.display), url)
+      if Thread.current[:show_nest_level].nil?
+        begin
+          Thread.current[:show_nest_level] = 1
+          render_result = renderActionInOtherController(
+              Object.const_get(ref.class.name.pluralize + "Controller"),
+              :show,
+              {
+                id: ref.id,
+                nested_show: true
+              }
+            ).html_safe
+          result += render_result
+        ensure
+          Thread.current[:show_nest_level] = nil
+        end
+      end
+      result
     else
       nil
     end
@@ -868,6 +885,10 @@ module ApplicationHelper
     # TODO before_actions are not called (process_action is protected and
     # calling it through a public wrapper doesn't work)
     c.dispatch(action, request)
+    if c.response.response_code == 302
+      # Assume password required redirect
+      raise Myp::DecryptionKeyUnavailableError
+    end
     c.response.body
   end
   

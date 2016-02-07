@@ -80,9 +80,12 @@ class MyplaceonlineController < ApplicationController
     if sensitive
       Myp.ensure_encryption_key(session)
     end
+    @nested_show = params[:nested_show]
     before_show
     @myplet = params[:myplet]
-    if !@myplet
+    if @nested_show
+      render action: "show", layout: "blank"
+    elsif !@myplet
       respond_with(@obj)
     else
       showmyplet
