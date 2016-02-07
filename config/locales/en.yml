@@ -624,6 +624,7 @@ en:
     websites:
       title: "Title"
       url: "Link"
+      to_visit: "To Visit"
     credit_cards:
       name: "Name"
       number: "Number"

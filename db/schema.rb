@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160207004626) do
+ActiveRecord::Schema.define(version: 20160207011245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2638,6 +2638,7 @@ ActiveRecord::Schema.define(version: 20160207004626) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.boolean  "to_visit"
   end
 
   add_index "websites", ["identity_id"], name: "index_websites_on_identity_id", using: :btree

@@ -1,2 +1,3 @@
-<%= myp_text_field f, :url, "myplaceonline.websites.url", obj.url, autofocus %>
-<%= myp_text_field f, :title, "myplaceonline.websites.title", obj.title %>
+<%= myp_text_field(f, :url, "myplaceonline.websites.url", obj.url, autofocus) %>
+<%= myp_text_field(f, :title, "myplaceonline.websites.title", obj.title) %>
+<%= myp_check_box(f, :to_visit, "myplaceonline.websites.to_visit", obj.to_visit) %>
