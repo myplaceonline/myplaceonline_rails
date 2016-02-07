@@ -10,14 +10,16 @@ class MembershipsController < MyplaceonlineController
     result
   end
 
-  def self.param_names(params)
+  def self.param_names
     [
+      :id,
+      :_destroy,
       :name,
       :start_date,
       :end_date,
       :notes,
       :membership_identifier,
-      Myp.select_or_create_permit(params, :periodic_payment_attributes, PeriodicPaymentsController.param_names(params[:periodic_payment_attributes]))
+      periodic_payment_attributes: PeriodicPaymentsController.param_names
     ]
   end
 
@@ -28,7 +30,7 @@ class MembershipsController < MyplaceonlineController
 
     def obj_params
       params.require(:membership).permit(
-        MembershipsController.param_names(params[:membership])
+        MembershipsController.param_names
       )
     end
 end

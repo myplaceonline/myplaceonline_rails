@@ -1,11 +1,16 @@
 # `region` is country, `sub_region1` is state, and `sub_region2` is city.
 class Location < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
+  include AllowExistingConcern
   
   validate :at_least_one
   
   has_many :location_phones, :dependent => :destroy
   accepts_nested_attributes_for :location_phones, allow_destroy: true, reject_if: :all_blank
+  
+  belongs_to :website
+  accepts_nested_attributes_for :website, reject_if: proc { |attributes| WebsitesController.reject_if_blank(attributes) }
+  allow_existing :website
   
   def at_least_one
     if [name, address1, address2, address3, region, sub_region1, sub_region2].reject(&:blank?).size == 0

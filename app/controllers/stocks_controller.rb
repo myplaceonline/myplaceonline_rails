@@ -9,8 +9,8 @@ class StocksController < MyplaceonlineController
         :num_shares,
         :vest_date,
         :notes,
-        Myp.select_or_create_permit(params[:stock], :company_attributes, CompaniesController.param_names(params[:stock][:company_attributes])),
-        Myp.select_or_create_permit(params[:stock], :password_attributes, PasswordsController.param_names)
+        company_attributes: CompaniesController.param_names,
+        password_attributes: PasswordsController.param_names
       )
     end
 end

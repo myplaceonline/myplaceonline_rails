@@ -7,7 +7,7 @@ class TherapistsController < MyplaceonlineController
 
     def obj_params
       params.require(:therapist).permit(
-        Myp.select_or_create_permit(params[:therapist], :contact_attributes, ContactsController.param_names)
+        contact_attributes: ContactsController.param_names
       )
     end
 end

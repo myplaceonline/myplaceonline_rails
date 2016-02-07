@@ -69,7 +69,7 @@ class PeriodicPayment < ActiveRecord::Base
   def on_after_save
     ActiveRecord::Base.transaction do
       on_after_destroy
-      if !suppress_reminder
+      if !suppress_reminder && !next_payment.nil?
         User.current_user.primary_identity.calendars.each do |calendar|
           CalendarItem.create_calendar_item(
             User.current_user.primary_identity,

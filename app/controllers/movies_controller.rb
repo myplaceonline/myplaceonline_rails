@@ -13,7 +13,7 @@ class MoviesController < MyplaceonlineController
         :name,
         :url,
         :is_watched,
-        Myp.select_or_create_permit(params[:movie], :recommender_attributes, ContactsController.param_names)
+        recommender_attributes: ContactsController.param_names
       )
     end
 end

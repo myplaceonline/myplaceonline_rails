@@ -30,8 +30,8 @@ class PhonesController < MyplaceonlineController
         :depth,
         :weight_type,
         :weight,
-        Myp.select_or_create_permit(params[:phone], :manufacturer_attributes, CompaniesController.param_names(params[:phone][:manufacturer_attributes])),
-        Myp.select_or_create_permit(params[:phone], :password_attributes, PasswordsController.param_names)
+        manufacturer_attributes: CompaniesController.param_names,
+        password_attributes: PasswordsController.param_names
       )
     end
 end

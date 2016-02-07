@@ -176,6 +176,8 @@ class PasswordsController < MyplaceonlineController
   
   def self.param_names
     [
+      :id,
+      :_destroy,
       :name,
       :user,
       :password,

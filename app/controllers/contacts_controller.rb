@@ -13,6 +13,8 @@ class ContactsController < MyplaceonlineController
 
   def self.param_names
     [
+      :id,
+      :_destroy,
       :contact_type,
       conversations_attributes: [
         :id,
@@ -41,9 +43,7 @@ class ContactsController < MyplaceonlineController
         identity_locations_attributes: [
           :id,
           :_destroy,
-          {
-            location_attributes: LocationsController.param_names + [:id]
-          }
+          location_attributes: LocationsController.param_names
         ],
         identity_drivers_licenses_attributes: [
           :id,
@@ -52,24 +52,20 @@ class ContactsController < MyplaceonlineController
           :region,
           :sub_region1,
           :_destroy,
-          {
-            identity_file_attributes: [
-              :id,
-              :file,
-              :_destroy
-            ]
-          }
+          identity_file_attributes: [
+            :id,
+            :file,
+            :_destroy
+          ]
         ],
         identity_relationships_attributes: [
           :id,
           :relationship_type,
           :_destroy,
-          {
-            contact_attributes: [
-              :id,
-              :_destroy
-            ]
-          }
+          contact_attributes: [
+            :id,
+            :_destroy
+          ]
         ],
         identity_pictures_attributes: [
           :id,

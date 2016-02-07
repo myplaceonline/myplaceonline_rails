@@ -22,9 +22,9 @@ class JobsController < MyplaceonlineController
         :department_identifier,
         :division_identifier,
         :personnel_code,
-        Myp.select_or_create_permit(params[:job], :company_attributes, CompaniesController.param_names(params[:job][:company_attributes])),
-        Myp.select_or_create_permit(params[:job], :manager_contact_attributes, ContactsController.param_names),
-        Myp.select_or_create_permit(params[:job], :internal_address_attributes, LocationsController.param_names),
+        company_attributes: CompaniesController.param_names,
+        manager_contact_attributes: ContactsController.param_names,
+        internal_address_attributes: LocationsController.param_names,
         job_salaries_attributes: [
           :id,
           :_destroy,

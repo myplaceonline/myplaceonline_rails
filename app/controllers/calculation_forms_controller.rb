@@ -2,6 +2,7 @@ class CalculationFormsController < MyplaceonlineController
   def self.param_names
     [
       :id,
+      :_destroy,
       :name,
       :equation,
       :is_duplicate,

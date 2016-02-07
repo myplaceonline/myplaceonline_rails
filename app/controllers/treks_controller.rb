@@ -16,7 +16,7 @@ class TreksController < MyplaceonlineController
       params.require(:trek).permit(
         :notes,
         :rating,
-        Myp.select_or_create_permit(params[:trek], :location_attributes, LocationsController.param_names),
+        location_attributes: LocationsController.param_names,
         trek_pictures_attributes: [
           :id,
           :_destroy,

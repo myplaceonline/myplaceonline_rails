@@ -3,11 +3,10 @@ class RecreationalVehiclesController < MyplaceonlineController
     true
   end
 
-  def self.param_names(params)
-    if params.nil? || (params.length == 1 && !params["id"].nil?)
-      return []
-    end
+  def self.param_names
     [
+      :id,
+      :_destroy,
       :rv_name,
       :notes,
       :owned_start,
@@ -40,7 +39,7 @@ class RecreationalVehiclesController < MyplaceonlineController
       :refrigerator,
       :slideouts_extra_width,
       :floor_length,
-      Myp.select_or_create_permit(params[:recreational_vehicle], :location_purchased_attributes, LocationsController.param_names),
+      location_purchased_attributes: LocationsController.param_names,
       recreational_vehicle_loans_attributes: [
         :id,
         :_destroy,
@@ -61,8 +60,8 @@ class RecreationalVehiclesController < MyplaceonlineController
         :started,
         :notes,
         :_destroy,
-        company_attributes: CompaniesController.param_names(params[:recreational_vehicle][:recreational_vehicle_insurances_attributes]) + [:id],
-        periodic_payment_attributes: PeriodicPaymentsController.param_names(params[:recreational_vehicle][:recreational_vehicle_insurances_attributes]) + [:id]
+        company_attributes: CompaniesController.param_names,
+        periodic_payment_attributes: PeriodicPaymentsController.param_names
       ],
       recreational_vehicle_measurements_attributes: [
         :id,
@@ -87,6 +86,6 @@ class RecreationalVehiclesController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:recreational_vehicle).permit(RecreationalVehiclesController.param_names(params))
+      params.require(:recreational_vehicle).permit(RecreationalVehiclesController.param_names)
     end
 end

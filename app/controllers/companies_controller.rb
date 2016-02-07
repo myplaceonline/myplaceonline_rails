@@ -1,10 +1,12 @@
 class CompaniesController < MyplaceonlineController
   
-  def self.param_names(params)
+  def self.param_names
     [
+      :id,
+      :_destroy,
       :name,
       :notes,
-      Myp.select_or_create_permit(params, :location_attributes, LocationsController.param_names)
+      location_attributes: LocationsController.param_names
     ]
   end
 
@@ -25,7 +27,7 @@ class CompaniesController < MyplaceonlineController
     
     def obj_params
       params.require(:company).permit(
-        CompaniesController.param_names(params[:company])
+        CompaniesController.param_names
       )
     end
 end

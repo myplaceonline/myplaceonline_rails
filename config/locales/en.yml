@@ -575,6 +575,7 @@ en:
       longitude: "Longitude"
       latitude_longitude: "Latitude/Longitude"
       request_gps: "Request GPS"
+      website: "Website"
     activities:
       name: "Name"
       notes: "Notes"

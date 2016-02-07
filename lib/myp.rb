@@ -117,6 +117,8 @@ module Myp
   
   def self.period_type_to_repeat_type(period_type)
     case period_type
+    when nil
+      nil
     when 0
       Myp::REPEAT_TYPE_DAYS
     when 1
@@ -144,6 +146,8 @@ module Myp
   
   def self.repeat_type_to_period_type(repeat_type)
     case repeat_type
+    when nil
+      nil
     when Myp::REPEAT_TYPE_DAYS
       0
     when Myp::REPEAT_TYPE_WEEKS
@@ -171,6 +175,8 @@ module Myp
   
   def self.period_to_repeat_type(period)
     case period
+    when nil
+      nil
     when 0
       Myp::REPEAT_TYPE_MONTHS
     when 1
@@ -184,6 +190,8 @@ module Myp
   
   def self.repeat_type_to_period(repeat_type)
     case repeat_type
+    when nil
+      nil
     when Myp::REPEAT_TYPE_MONTHS
       0
     when Myp::REPEAT_TYPE_YEARS
@@ -836,23 +844,6 @@ module Myp
 
   def self.translate_options(options)
     options.map{|o| [I18n.t(o[0]), o[1]]}
-  end
-  
-  # When a form uses views/myplaceonline/_select_or_create.html.erb,
-  # there's an accordian which either selects an existing item by ID,
-  # or allows the creation of a new item. This function checks if the former
-  # is submitted by checking if the id parameter (params[name][:id]) is
-  # non-blank. If so, then only the "id" name is returned for permitted
-  # parameters. If id is blank, we'll return the last parameter (all_array),
-  # and also add on id just to avoid the unpermitted parameter warning (even
-  # though we know it's blank and unused).
-  def self.select_or_create_permit(params, name, all_array)
-    if !params.nil? && !params[name].nil? && params[name][:id].blank?
-      # Push :id on even though we know it's blank to avoid the unpermitted parameter warning
-      { name => all_array.push(:id) }
-    else
-      { name => [:id] }
-    end
   end
   
   def self.includes_today?(start_date, end_date)

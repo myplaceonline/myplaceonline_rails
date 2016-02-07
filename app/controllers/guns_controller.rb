@@ -19,8 +19,8 @@ class GunsController < MyplaceonlineController
           :_destroy,
           :registered,
           :expires,
-          location_attributes: LocationsController.param_names + [:id, :_destroy]
-        ],
+          location_attributes: LocationsController.param_names
+        ]
       )
     end
 end

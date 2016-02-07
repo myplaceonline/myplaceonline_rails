@@ -65,7 +65,7 @@ class VehiclesController < MyplaceonlineController
         :displacement,
         :price,
         :msrp,
-        Myp.select_or_create_permit(params[:vehicle], :recreational_vehicle_attributes, RecreationalVehiclesController.param_names(params[:vehicle][:recreational_vehicle_attributes])),
+        recreational_vehicle_attributes: RecreationalVehiclesController.param_names,
         vehicle_loans_attributes: [
           :id,
           :_destroy,
@@ -88,8 +88,8 @@ class VehiclesController < MyplaceonlineController
           :started,
           :notes,
           :_destroy,
-          company_attributes: CompaniesController.param_names(params[:vehicle][:vehicle_insurances_attributes]) + [:id],
-          periodic_payment_attributes: PeriodicPaymentsController.param_names(params[:vehicle][:vehicle_insurances_attributes]) + [:id]
+          company_attributes: CompaniesController.param_names,
+          periodic_payment_attributes: PeriodicPaymentsController.param_names
         ],
         vehicle_pictures_attributes: [
           :id,

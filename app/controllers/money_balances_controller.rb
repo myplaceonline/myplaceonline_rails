@@ -1,10 +1,12 @@
 class MoneyBalancesController < MyplaceonlineController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:add, :list]
 
-  def self.param_names(params)
+  def self.param_names
     [
-      Myp.select_or_create_permit(params, :contact_attributes, ContactsController.param_names),
+      :id,
+      :_destroy,
       :notes,
+      contact_attributes: ContactsController.param_names,
       money_balance_items_attributes: [
         :id,
         :_destroy,
@@ -134,7 +136,7 @@ class MoneyBalancesController < MyplaceonlineController
 
     def obj_params
       params.require(:money_balance).permit(
-        MoneyBalancesController.param_names(params[:money_balance])
+        MoneyBalancesController.param_names
       )
     end
 end

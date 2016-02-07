@@ -16,7 +16,7 @@ class BarsController < MyplaceonlineController
       params.require(:bar).permit(
         :notes,
         :rating,
-        Myp.select_or_create_permit(params[:bar], :location_attributes, LocationsController.param_names),
+        location_attributes: LocationsController.param_names,
         bar_pictures_attributes: [
           :id,
           :_destroy,

@@ -18,8 +18,10 @@ class PeriodicPaymentsController < MyplaceonlineController
     end
   end
 
-  def self.param_names(params)
+  def self.param_names
     [
+      :id,
+      :_destroy,
       :periodic_payment_name,
       :notes,
       :started,
@@ -27,7 +29,7 @@ class PeriodicPaymentsController < MyplaceonlineController
       :date_period,
       :payment_amount,
       :suppress_reminder,
-      Myp.select_or_create_permit(params, :password_attributes, PasswordsController.param_names),
+      password_attributes: PasswordsController.param_names
     ]
   end
 
@@ -48,7 +50,7 @@ class PeriodicPaymentsController < MyplaceonlineController
 
     def obj_params
       params.require(:periodic_payment).permit(
-        PeriodicPaymentsController.param_names(params[:periodic_payment])
+        PeriodicPaymentsController.param_names
       )
     end
 end

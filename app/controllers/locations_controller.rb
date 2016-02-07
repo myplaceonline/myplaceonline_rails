@@ -1,6 +1,8 @@
 class LocationsController < MyplaceonlineController
   def self.param_names
     [
+      :id,
+      :_destroy,
       :name,
       :address1,
       :address2,
@@ -12,12 +14,19 @@ class LocationsController < MyplaceonlineController
       :notes,
       :latitude,
       :longitude,
-      location_phones_attributes: [:id, :number, :_destroy]
+      location_phones_attributes: [:id, :number, :_destroy],
+      website_attributes: WebsitesController.param_names
     ]
   end
   
   def self.reject_if_blank(attributes)
-    attributes.dup.delete_if {|key, value| key.to_s == "region" }.all? {|key, value| value.blank?}
+    attributes.dup.delete_if {|key, value| key.to_s == "region" }.all?{|key, value|
+      if key == "website_attributes"
+        WebsitesController.reject_if_blank(value)
+      else
+        value.blank?
+      end
+    }
   end
 
   protected

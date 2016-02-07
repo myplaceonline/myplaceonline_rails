@@ -23,7 +23,7 @@ class DessertLocationsController < MyplaceonlineController
         :notes,
         :visited,
         :rating,
-        Myp.select_or_create_permit(params[:dessert_location], :location_attributes, LocationsController.param_names)
+        location_attributes: LocationsController.param_names
       )
     end
 

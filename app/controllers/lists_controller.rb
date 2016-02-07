@@ -1,10 +1,10 @@
 class ListsController < MyplaceonlineController
   def self.param_names
     [
+      :id,
+      :_destroy,
       :name,
-      {
-        list_items_attributes: [:id, :name, :_destroy]
-      }
+      list_items_attributes: [:id, :name, :_destroy]
     ]
   end
 

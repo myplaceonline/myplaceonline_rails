@@ -42,3 +42,17 @@ function location_gps_success<%= random_name %>(location) {
 %>
   <%= myp_text_field(child_fields, :number, "myplaceonline.locations.phone", childproperty.number) %>
 <% end %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :website,
+    existingobj: obj.website,
+    heading: t("myplaceonline.locations.website"),
+    objform: "websites/form",
+    existingobjurl: "website_path",
+    searchurl: "/websites.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    collapsed: obj.website.nil?
+  }
+%>

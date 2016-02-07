@@ -11,8 +11,8 @@ class DentistVisitsController < MyplaceonlineController
         :paid,
         :cleaning,
         :notes,
-        Myp.select_or_create_permit(params[:dentist_visit], :dentist_attributes, DoctorsController.param_names(params[:dentist_visit][:dentist_attributes])),
-        Myp.select_or_create_permit(params[:dentist_visit], :dental_insurance_attributes, DentalInsurancesController.param_names(params[:dentist_visit][:dental_insurance_attributes]))
+        dentist_attributes: DoctorsController.param_names,
+        dental_insurance_attributes: DentalInsurancesController.param_names
       )
     end
 end

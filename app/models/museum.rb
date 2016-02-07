@@ -21,7 +21,7 @@ class Museum < ActiveRecord::Base
   allow_existing :location
   
   belongs_to :website
-  accepts_nested_attributes_for :website, reject_if: :all_blank
+  accepts_nested_attributes_for :website, reject_if: proc { |attributes| WebsitesController.reject_if_blank(attributes) }
   allow_existing :website
   
   def display

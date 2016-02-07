@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160207031258) do
+ActiveRecord::Schema.define(version: 20160207031651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1454,9 +1454,11 @@ ActiveRecord::Schema.define(version: 20160207031258) do
     t.decimal  "latitude",                precision: 12, scale: 8
     t.decimal  "longitude",               precision: 12, scale: 8
     t.integer  "visit_count"
+    t.integer  "website_id"
   end
 
   add_index "locations", ["identity_id"], name: "index_locations_on_identity_id", using: :btree
+  add_index "locations", ["website_id"], name: "index_locations_on_website_id", using: :btree
 
   create_table "meal_drinks", force: :cascade do |t|
     t.integer  "identity_id"
@@ -2733,6 +2735,7 @@ ActiveRecord::Schema.define(version: 20160207031258) do
   add_foreign_key "favorite_product_links", "identities"
   add_foreign_key "identity_file_shares", "identity_files"
   add_foreign_key "identity_file_shares", "shares"
+  add_foreign_key "locations", "websites"
   add_foreign_key "money_balance_item_templates", "identities"
   add_foreign_key "money_balance_item_templates", "money_balances"
   add_foreign_key "money_balance_items", "identities"

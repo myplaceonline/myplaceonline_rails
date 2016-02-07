@@ -14,7 +14,7 @@ class MealsController < MyplaceonlineController
         :notes,
         :price,
         :calories,
-        Myp.select_or_create_permit(params[:meal], :location_attributes, LocationsController.param_names),
+        location_attributes: LocationsController.param_names,
         meal_foods_attributes: [
           :id,
           :_destroy,

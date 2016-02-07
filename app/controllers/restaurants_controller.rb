@@ -47,7 +47,7 @@ class RestaurantsController < MyplaceonlineController
         :notes,
         :visited,
         :rating,
-        Myp.select_or_create_permit(params[:restaurant], :location_attributes, LocationsController.param_names),
+        location_attributes: LocationsController.param_names,
         restaurant_pictures_attributes: [
           :id,
           :_destroy,

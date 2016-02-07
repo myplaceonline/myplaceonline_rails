@@ -1,9 +1,10 @@
 class PermissionsController < MyplaceonlineController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:share]
 
-  def self.param_names(params)
+  def self.param_names
     [
-      { user_attributes: [:id] },
+      :id,
+      :_destroy,
       :subject_class,
       :subject_id,
       :actionbit1,
@@ -11,13 +12,14 @@ class PermissionsController < MyplaceonlineController
       :actionbit4,
       :actionbit8,
       :actionbit16,
+      user_attributes: [:id]
     ]
   end
 
   def share
     @permission = Permission.new(
       params.require(:permission).permit(
-        PermissionsController.param_names(params[:permission])
+        PermissionsController.param_names
       )
     )
     @subject = I18n.t("myplaceonline.permissions.default_subject", {
@@ -58,7 +60,7 @@ class PermissionsController < MyplaceonlineController
 
     def obj_params
       params.require(:permission).permit(
-        PermissionsController.param_names(params[:permission])
+        PermissionsController.param_names
       )
     end
 end

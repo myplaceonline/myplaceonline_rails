@@ -1,8 +1,10 @@
 class DoctorsController < MyplaceonlineController
-  def self.param_names(params)
+  def self.param_names
     [
+      :id,
+      :_destroy,
       :doctor_type,
-      Myp.select_or_create_permit(params, :contact_attributes, ContactsController.param_names)
+      contact_attributes: ContactsController.param_names
     ]
   end
 
@@ -23,7 +25,7 @@ class DoctorsController < MyplaceonlineController
 
     def obj_params
       params.require(:doctor).permit(
-        DoctorsController.param_names(params[:doctor])
+        DoctorsController.param_names
       )
     end
 end

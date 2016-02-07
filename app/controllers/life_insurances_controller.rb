@@ -11,8 +11,8 @@ class LifeInsurancesController < MyplaceonlineController
         :started,
         :notes,
         :life_insurance_type,
-        Myp.select_or_create_permit(params[:life_insurance], :company_attributes, CompaniesController.param_names(params[:life_insurance][:company_attributes])),
-        Myp.select_or_create_permit(params[:life_insurance], :periodic_payment_attributes, PeriodicPaymentsController.param_names(params[:life_insurance][:periodic_payment_attributes]))
+        company_attributes: CompaniesController.param_names,
+        periodic_payment_attributes: PeriodicPaymentsController.param_names
       )
     end
 end

@@ -24,9 +24,9 @@ class ComputersController < MyplaceonlineController
         :depth,
         :weight_type,
         :weight,
-        Myp.select_or_create_permit(params[:computer], :manufacturer_attributes, CompaniesController.param_names(params[:computer][:manufacturer_attributes])),
-        Myp.select_or_create_permit(params[:computer], :administrator_attributes, PasswordsController.param_names),
-        Myp.select_or_create_permit(params[:computer], :main_user_attributes, PasswordsController.param_names)
+        manufacturer_attributes: CompaniesController.param_names,
+        administrator_attributes: PasswordsController.param_names,
+        main_user_attributes: PasswordsController.param_names
       )
     end
 end
