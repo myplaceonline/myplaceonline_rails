@@ -221,6 +221,8 @@ en:
       notes: "Notes"
       not_auhorized: "Not Authorized"
       close: "Close"
+      expires: "%{display} Expires in %{delta}"
+      expired: "%{display} Expired %{delta} Ago"
     html5:
       noaudio: "Your browser doesn't support embedded audio."
     periods:
@@ -1721,6 +1723,7 @@ en:
       complete: "Complete"
       snooze: "Snooze"
     calendars:
+      general_threshold: "General Reminder"
       exercise_threshold: "Last Exercise"
       contact_best_friend_threshold: "Best Friend Last Contact"
       contact_good_friend_threshold: "Good Friend Last Contact"

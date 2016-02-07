@@ -7,6 +7,7 @@ class Calendar < ActiveRecord::Base
   
   has_many :calendar_items, :dependent => :destroy
 
+  timespan_field :general_threshold
   timespan_field :exercise_threshold
   timespan_field :contact_best_friend_threshold
   timespan_field :contact_good_friend_threshold
@@ -30,6 +31,7 @@ class Calendar < ActiveRecord::Base
   
   def largest_threshold_seconds
     result = Calendar.max(
+      Calendar::DEFAULT_REMINDER_AMOUNT,
       Exercise::DEFAULT_EXERCISE_THRESHOLD_SECONDS,
       Contact::DEFAULT_CONTACT_BEST_FRIEND_THRESHOLD_SECONDS,
       Contact::DEFAULT_CONTACT_GOOD_FRIEND_THRESHOLD_SECONDS,
@@ -51,6 +53,9 @@ class Calendar < ActiveRecord::Base
       ToDo::DEFAULT_TODO_THRESHOLD_SECONDS,
       VehicleService::DEFAULT_VEHICLE_SERVICE_THRESHOLD_SECONDS
     ).seconds
+    if !general_threshold_seconds.nil? && general_threshold_seconds > result
+      result = general_threshold_seconds.seconds
+    end
     if !exercise_threshold_seconds.nil? && exercise_threshold_seconds > result
       result = exercise_threshold_seconds.seconds
     end
