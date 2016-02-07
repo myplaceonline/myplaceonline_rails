@@ -174,39 +174,6 @@
   <%=
     render(layout: 'myplaceonline/childproperties', locals: {
       f: identity_fields,
-      heading: t("myplaceonline.identities.drivers_licenses"),
-      childpropertiesname: :identity_drivers_licenses,
-      childproperties: obj.contact_identity.identity_drivers_licenses,
-      deletebutton: t("myplaceonline.identities.delete_license"),
-      addbutton: t("myplaceonline.identities.add_license"),
-      expanded: obj.contact_identity.identity_drivers_licenses.length > 0,
-      formjson: [
-        {
-          type: 'text',
-          name: 'identifier',
-          placeholder: t("myplaceonline.identities.license_number"),
-          autofocus: true
-        },
-        {
-          type: 'date',
-          name: 'expires',
-          placeholder: t("myplaceonline.identities.license_expires")
-        }
-      ]
-    }) do |child_fields, childproperty|
-  %>
-    <%= myp_text_field(child_fields, :identifier, "myplaceonline.identities.license_number", childproperty.identifier) %>
-    <%= myp_date_field(child_fields, :expires, "myplaceonline.identities.license_expires", childproperty.expires) %>
-    <%= myp_region_field(child_fields, :region, "myplaceonline.general.region", childproperty.region) %>
-    <%= myp_subregion_field(child_fields, :sub_region1, "myplaceonline.general.sub_region1", childproperty.region, childproperty.sub_region1) %>
-    <%= child_fields.fields_for(:identity_file, childproperty.identity_file || IdentityFile.new) do |file_fields| %>
-      <%= myp_file_field(file_fields, :file, "myplaceonline.identities.license_picture", childproperty.identity_file || IdentityFile.new) %>
-    <% end %>
-  <% end %>
-  
-  <%=
-    render(layout: 'myplaceonline/childproperties', locals: {
-      f: identity_fields,
       heading: t("myplaceonline.contacts.pictures"),
       childpropertiesname: :identity_pictures,
       childproperties: obj.contact_identity.identity_pictures,
@@ -228,9 +195,45 @@
   <% end %>
 
   <%= myp_text_area_markdown(identity_fields, :notes, "myplaceonline.contacts.notes", obj.contact_identity.notes) %>
-  <%= myp_text_area_markdown(identity_fields, :likes, "myplaceonline.contacts.likes", obj.contact_identity.likes) %>
-  <%= myp_text_area_markdown(identity_fields, :gift_ideas, "myplaceonline.contacts.gift_ideas", obj.contact_identity.gift_ideas) %>
-  <%= myp_text_field(identity_fields, :ktn, "myplaceonline.contacts.ktn", obj.contact_identity.ktn) %>
-  <%= myp_text_field(identity_fields, :new_years_resolution, "myplaceonline.contacts.new_years_resolution", obj.contact_identity.new_years_resolution) %>
+
+  <div data-role="collapsible" data-collapsed="true">
+    <h3><%= t("myplaceonline.contacts.extra") %></h3>
+    <%= myp_text_area_markdown(identity_fields, :likes, "myplaceonline.contacts.likes", obj.contact_identity.likes) %>
+    <%= myp_text_area_markdown(identity_fields, :gift_ideas, "myplaceonline.contacts.gift_ideas", obj.contact_identity.gift_ideas) %>
+    <%= myp_text_field(identity_fields, :ktn, "myplaceonline.contacts.ktn", obj.contact_identity.ktn) %>
+    <%= myp_text_field(identity_fields, :new_years_resolution, "myplaceonline.contacts.new_years_resolution", obj.contact_identity.new_years_resolution) %>
+    <%=
+      render(layout: 'myplaceonline/childproperties', locals: {
+        f: identity_fields,
+        heading: t("myplaceonline.identities.drivers_licenses"),
+        childpropertiesname: :identity_drivers_licenses,
+        childproperties: obj.contact_identity.identity_drivers_licenses,
+        deletebutton: t("myplaceonline.identities.delete_license"),
+        addbutton: t("myplaceonline.identities.add_license"),
+        expanded: obj.contact_identity.identity_drivers_licenses.length > 0,
+        formjson: [
+          {
+            type: 'text',
+            name: 'identifier',
+            placeholder: t("myplaceonline.identities.license_number"),
+            autofocus: true
+          },
+          {
+            type: 'date',
+            name: 'expires',
+            placeholder: t("myplaceonline.identities.license_expires")
+          }
+        ]
+      }) do |child_fields, childproperty|
+    %>
+      <%= myp_text_field(child_fields, :identifier, "myplaceonline.identities.license_number", childproperty.identifier) %>
+      <%= myp_date_field(child_fields, :expires, "myplaceonline.identities.license_expires", childproperty.expires) %>
+      <%= myp_region_field(child_fields, :region, "myplaceonline.general.region", childproperty.region) %>
+      <%= myp_subregion_field(child_fields, :sub_region1, "myplaceonline.general.sub_region1", childproperty.region, childproperty.sub_region1) %>
+      <%= child_fields.fields_for(:identity_file, childproperty.identity_file || IdentityFile.new) do |file_fields| %>
+        <%= myp_file_field(file_fields, :file, "myplaceonline.identities.license_picture", childproperty.identity_file || IdentityFile.new) %>
+      <% end %>
+    <% end %>
+  </div>
 
 <% end %>

@@ -530,6 +530,7 @@ en:
       cat: "Cat"
       sex_male: "Male"
       sex_female: "Female"
+      extra: "Extra Fields"
     files:
       name: "Name"
       download: "Download"
