@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160207013007) do
+ActiveRecord::Schema.define(version: 20160207021537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -221,6 +221,18 @@ ActiveRecord::Schema.define(version: 20160207013007) do
   end
 
   add_index "blood_tests", ["identity_id"], name: "index_blood_tests_on_identity_id", using: :btree
+
+  create_table "book_stores", force: :cascade do |t|
+    t.integer  "location_id"
+    t.integer  "rating"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "book_stores", ["identity_id"], name: "index_book_stores_on_identity_id", using: :btree
+  add_index "book_stores", ["location_id"], name: "index_book_stores_on_location_id", using: :btree
 
   create_table "books", force: :cascade do |t|
     t.string   "book_name",      limit: 255
@@ -2685,6 +2697,8 @@ ActiveRecord::Schema.define(version: 20160207013007) do
   add_foreign_key "bar_pictures", "identity_files"
   add_foreign_key "bars", "identities"
   add_foreign_key "bars", "locations"
+  add_foreign_key "book_stores", "identities"
+  add_foreign_key "book_stores", "locations"
   add_foreign_key "calendar_item_reminder_pendings", "calendar_item_reminders"
   add_foreign_key "calendar_item_reminder_pendings", "calendar_items"
   add_foreign_key "calendar_item_reminder_pendings", "calendars"

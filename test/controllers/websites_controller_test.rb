@@ -4,6 +4,6 @@ class WebsitesControllerTest < ActionController::TestCase
   include MyplaceonlineControllerTest
   
   def test_attributes
-    { url: "https://myplaceonline.com/" }
+    { title: "Myplaceonline", url: "https://myplaceonline.com/" }
   end
 end

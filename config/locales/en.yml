@@ -140,6 +140,7 @@ en:
       dessert_locations: "Dessert Locations"
       desired_locations: "Desired Locations"
       money_balance_item_templates: "Balance Templates"
+      book_stores: "Book Stores"
     general:
       email: "E-mail"
       password: "Password"
@@ -1919,3 +1920,6 @@ en:
       add_i_paid: "Add I Paid Template"
       add_other_paid: "Add %{other} Paid Template"
       apply: "Apply"
+    book_stores:
+      location: "Location"
+      rating: "Rating"

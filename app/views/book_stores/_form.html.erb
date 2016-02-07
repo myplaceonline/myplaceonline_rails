@@ -1,0 +1,14 @@
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :location,
+    existingobj: obj.location,
+    heading: t("myplaceonline.book_stores.location"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    autofocus: true
+  }
+%>
+<%= myp_select(f, :rating, "myplaceonline.book_stores.rating", Myp.translate_options(Myp::RATINGS), obj.rating) %>
