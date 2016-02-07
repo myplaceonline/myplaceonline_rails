@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160207012019) do
+ActiveRecord::Schema.define(version: 20160207013007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2632,6 +2632,18 @@ ActiveRecord::Schema.define(version: 20160207012019) do
 
   add_index "warranties", ["identity_id"], name: "index_warranties_on_identity_id", using: :btree
 
+  create_table "website_passwords", force: :cascade do |t|
+    t.integer  "website_id"
+    t.integer  "password_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "website_passwords", ["identity_id"], name: "index_website_passwords_on_identity_id", using: :btree
+  add_index "website_passwords", ["password_id"], name: "index_website_passwords_on_password_id", using: :btree
+  add_index "website_passwords", ["website_id"], name: "index_website_passwords_on_website_id", using: :btree
+
   create_table "websites", force: :cascade do |t|
     t.string   "title",       limit: 255
     t.string   "url",         limit: 2000
@@ -2722,4 +2734,7 @@ ActiveRecord::Schema.define(version: 20160207012019) do
   add_foreign_key "trek_pictures", "treks"
   add_foreign_key "treks", "identities"
   add_foreign_key "treks", "locations"
+  add_foreign_key "website_passwords", "identities"
+  add_foreign_key "website_passwords", "passwords"
+  add_foreign_key "website_passwords", "websites"
 end

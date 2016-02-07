@@ -1,3 +1,41 @@
 <%= myp_text_field(f, :url, "myplaceonline.websites.url", obj.url, autofocus) %>
 <%= myp_text_field(f, :title, "myplaceonline.websites.title", obj.title) %>
 <%= myp_check_box(f, :to_visit, "myplaceonline.websites.to_visit", obj.to_visit) %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.websites.passwords"),
+    childpropertiesname: :website_passwords,
+    childproperties: obj.website_passwords,
+    deletebutton: t("myplaceonline.websites.delete_password"),
+    addbutton: t("myplaceonline.websites.add_password"),
+    expanded: obj.website_passwords.length > 0,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :password_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.websites.password"),
+        objform: "passwords/form",
+        existingobjurl: "password_path",
+        searchurl: "/passwords.json?perpage=0",
+        edit: false,
+        autofocus: true
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :password_attributes,
+      existingobj: childproperty.password,
+      heading: t("myplaceonline.websites.password"),
+      objform: "passwords/form",
+      existingobjurl: "password_path",
+      searchurl: "/passwords.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
+<% end %>

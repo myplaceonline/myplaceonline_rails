@@ -11,7 +11,12 @@ class WebsitesController < MyplaceonlineController
     [
       :title,
       :url,
-      :to_visit
+      :to_visit,
+      website_passwords_attributes: [
+        :id,
+        :_destroy,
+        password_attributes: PasswordsController.param_names + [:id]
+      ]
     ]
   end
   

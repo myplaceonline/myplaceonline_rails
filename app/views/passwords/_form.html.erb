@@ -1,17 +1,21 @@
-<%= myp_text_field f, :name, "myplaceonline.passwords.name", obj.name, autofocus %>
-<%= myp_text_field f, :user, "myplaceonline.passwords.user", obj.user %>
-<%= myp_text_field f, :email, "myplaceonline.passwords.email", obj.email %>
-<%= myp_text_field f, :password, "myplaceonline.passwords.password", obj.password, false, nil, false %>
+<%= myp_text_field(f, :name, "myplaceonline.passwords.name", obj.name, autofocus) %>
+<%= myp_text_field(f, :user, "myplaceonline.passwords.user", obj.user) %>
+<%= myp_text_field(f, :email, "myplaceonline.passwords.email", obj.email) %>
+<%
+  password_field = myp_text_field(f, :password, "myplaceonline.passwords.password", obj.password, false, nil, false)
+  password_field_id = extract_id(password_field)
+%>
+<%= password_field %>
 <%=
   render partial: 'myplaceonline/generaterandom', locals: {
     heading: t("myplaceonline.passwords.generate_password"),
     lengthplaceholder: t("myplaceonline.passwords.generate_password_length"),
-    destination: "$('#password_password')",
+    destination: "$('##{password_field_id}')",
     button: t("myplaceonline.passwords.generate_password_button")
   }
 %>
-<%= myp_check_box f, :encrypt, "myplaceonline.passwords.encrypt" %>
-<%= myp_text_field f, :url, "myplaceonline.passwords.url", obj.url %>
+<%= myp_check_box(f, :encrypt, "myplaceonline.passwords.encrypt") %>
+<%= myp_text_field(f, :url, "myplaceonline.passwords.url", obj.url) %>
 <%= myp_text_field(f, :account_number, "myplaceonline.passwords.account_number", obj.account_number) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.passwords.notes", obj.notes) %>
 <%= myp_check_box(f, :is_defunct, "myplaceonline.general.defunct") %>
