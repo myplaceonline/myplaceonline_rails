@@ -122,7 +122,7 @@ class MyplaceonlineController < ApplicationController
         end
         
         if do_check_double_post
-          return true
+          return after_create_or_update
         end
         
         if nested
@@ -158,21 +158,26 @@ class MyplaceonlineController < ApplicationController
   end
   
   def do_check_double_post
-    # If an item of this model type was created within the last few seconds
-    # then just assume it was a double POST
-    last_item = model
-      .where("identity_id = ?", current_user.primary_identity.id)
-      .order("created_at DESC")
-      .limit(1)
-      .first
-      
-    if !last_item.nil?
-      if last_item.created_at + 3.seconds >= Time.now.utc
-        @obj = last_item
-        Rails.logger.debug{"Detected double post"}
-        return true
+    
+    # Don't check this in test because test might quickly be creating items
+    if !Rails.env.test?
+      # If an item of this model type was created within the last few seconds
+      # then just assume it was a double POST
+      last_item = model
+        .where("identity_id = ?", current_user.primary_identity.id)
+        .order("created_at DESC")
+        .limit(1)
+        .first
+        
+      if !last_item.nil?
+        if last_item.created_at + 3.seconds >= Time.now.utc
+          @obj = last_item
+          Rails.logger.debug{"Detected double post"}
+          return true
+        end
       end
     end
+    
     false
   end
   
