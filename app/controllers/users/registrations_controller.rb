@@ -187,11 +187,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
     Myp.ensure_encryption_key(session)
     @explicit_categories = current_user.explicit_categories
     @experimental_categories = current_user.experimental_categories
+    @items_per_page = current_user.items_per_page
     if request.post?
       @explicit_categories = params[:explicit_categories]
       @experimental_categories = params[:experimental_categories]
+      @items_per_page = params[:items_per_page]
       current_user.explicit_categories = @explicit_categories
       current_user.experimental_categories = @experimental_categories
+      current_user.items_per_page = @items_per_page
       current_user.save!
       redirect_to users_advanced_path,
         :flash => { :notice => I18n.t("myplaceonline.general.saved") }

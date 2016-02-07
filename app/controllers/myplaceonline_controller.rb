@@ -21,8 +21,15 @@ class MyplaceonlineController < ApplicationController
     if @offset < 0
       @offset = 0
     end
-    
-    @perpage = params[:perpage].nil? ? 20 : params[:perpage].to_i
+
+    if params[:perpage].nil?
+      @perpage = 20
+      if !current_user.items_per_page.nil?
+        @perpage = current_user.items_per_page.to_i
+      end
+    else
+      @perpage = params[:perpage].to_i
+    end
     
     cached_all = all
     @count = cached_all.count

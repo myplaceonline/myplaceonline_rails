@@ -448,6 +448,7 @@ en:
       sounds: "Sounds"
       enable_sounds: "Enable Sounds"
       always_autofocus: "Always Autofocus Input"
+      items_per_page: "Items Per Page"
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"

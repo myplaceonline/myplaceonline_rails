@@ -14,6 +14,7 @@
         <%= label_tag :experimental_categories, t("myplaceonline.users.experimental_categories") %>
         <%= check_box_tag :experimental_categories, 1, @experimental_categories, data: { "role" => "flipswitch" } %>
       </p>
+      <%= myp_text_field_tag(:items_per_page, t("myplaceonline.users.items_per_page"), @items_per_page) %>
     </div>
   </fieldset>
   <div><%= submit_tag t("myplaceonline.general.save") %></div>
