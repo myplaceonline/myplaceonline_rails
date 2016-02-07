@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160207021537) do
+ActiveRecord::Schema.define(version: 20160207024139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2630,6 +2630,17 @@ ActiveRecord::Schema.define(version: 20160207021537) do
 
   add_index "vitamins", ["identity_id"], name: "index_vitamins_on_identity_id", using: :btree
 
+  create_table "volunteering_activities", force: :cascade do |t|
+    t.string   "volunteering_activity_name"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "volunteering_activities", ["identity_id"], name: "index_volunteering_activities_on_identity_id", using: :btree
+
   create_table "warranties", force: :cascade do |t|
     t.string   "warranty_name",      limit: 255
     t.date     "warranty_start"
@@ -2748,6 +2759,7 @@ ActiveRecord::Schema.define(version: 20160207021537) do
   add_foreign_key "trek_pictures", "treks"
   add_foreign_key "treks", "identities"
   add_foreign_key "treks", "locations"
+  add_foreign_key "volunteering_activities", "identities"
   add_foreign_key "website_passwords", "identities"
   add_foreign_key "website_passwords", "passwords"
   add_foreign_key "website_passwords", "websites"

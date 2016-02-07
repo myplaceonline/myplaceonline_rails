@@ -141,6 +141,7 @@ en:
       desired_locations: "Desired Locations"
       money_balance_item_templates: "Balance Templates"
       book_stores: "Book Stores"
+      volunteering_activities: "Volunteering Activities"
     general:
       email: "E-mail"
       password: "Password"
@@ -1923,3 +1924,6 @@ en:
     book_stores:
       location: "Location"
       rating: "Rating"
+    volunteering_activities:
+      volunteering_activity_name: "Name"
+      notes: "Notes"

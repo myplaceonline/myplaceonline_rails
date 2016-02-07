@@ -125,6 +125,7 @@ class Identity < ActiveRecord::Base
   has_many :dessert_locations, :dependent => :destroy
   has_many :desired_locations, :dependent => :destroy
   has_many :book_stores, :dependent => :destroy
+  has_many :volunteering_activities, :dependent => :destroy
   
   has_many :myplets, -> { order('y_coordinate') }, :dependent => :destroy
   accepts_nested_attributes_for :myplets, allow_destroy: true, reject_if: :all_blank
@@ -252,6 +253,7 @@ class Identity < ActiveRecord::Base
       :dessert_locations => dessert_locations.to_a.map{|x| x.as_json},
       :desired_locations => desired_locations.to_a.map{|x| x.as_json},
       :book_stores => book_stores.to_a.map{|x| x.as_json},
+      :volunteering_activities => volunteering_activities.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end
