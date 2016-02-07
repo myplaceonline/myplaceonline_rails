@@ -344,10 +344,10 @@ ActiveRecord::Schema.define(version: 20160206143411) do
     t.string   "model_class"
     t.integer  "model_id"
     t.integer  "identity_id"
+    t.boolean  "is_repeat"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.string   "context_info"
-    t.boolean  "is_repeat"
   end
 
   add_index "calendar_items", ["calendar_id"], name: "index_calendar_items_on_calendar_id", using: :btree

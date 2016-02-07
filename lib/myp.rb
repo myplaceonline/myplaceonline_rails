@@ -579,6 +579,7 @@ module Myp
   
   def self.modify_points(user, categoryName, amount, session = nil)
     ActiveRecord::Base.transaction do
+      
       if user.primary_identity.points.nil?
         user.primary_identity.points = 0
       end
@@ -586,7 +587,12 @@ module Myp
       if user.primary_identity.points < 0
         user.primary_identity.points = 0
       end
-      user.primary_identity.save
+      
+      # Don't use the normal ActiveRecord update mechanism because that
+      # will fire commit hooks which for Identity will re-do calendar
+      # entries
+      #user.primary_identity.save
+      ActiveRecord::Base.connection.update_sql("update identities set points = #{user.primary_identity.points} where id = #{user.primary_identity.id}")
       
       category = Myp.categories(user)[categoryName]
       if category.nil?

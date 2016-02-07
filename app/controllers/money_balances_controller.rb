@@ -37,8 +37,11 @@ class MoneyBalancesController < MyplaceonlineController
       @checkbox_percent50 = ""
     end
     if request.patch?
-      if do_update
+      Rails.logger.debug{"Adding money balance item"}
+      if do_update(check_double_post: true)
+        Rails.logger.debug{"do_update returned true"}
         if !@new_item.nil?
+          Rails.logger.debug{"new_item: #{@new_item}"}
           if @new_item.current_user_owns?
             to = @obj.contact
           else

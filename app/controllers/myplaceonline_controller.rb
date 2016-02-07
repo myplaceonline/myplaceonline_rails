@@ -121,6 +121,10 @@ class MyplaceonlineController < ApplicationController
           raise Myp::CannotFindNestedAttribute, rnf.message + " (code needs attribute setter override?)"
         end
         
+        if do_check_double_post
+          return true
+        end
+        
         if nested
           parent_name = parent_model.table_name.singularize.downcase
           parent_id = parent_model.table_name.singularize.downcase + "_id"
@@ -153,8 +157,28 @@ class MyplaceonlineController < ApplicationController
     end
   end
   
-  def do_update
+  def do_check_double_post
+    # If an item of this model type was created within the last few seconds
+    # then just assume it was a double POST
+    last_item = model
+      .where("identity_id = ?", current_user.primary_identity.id)
+      .order("created_at DESC")
+      .limit(1)
+      .first
+      
+    if !last_item.nil?
+      if last_item.created_at + 3.seconds >= Time.now.utc
+        @obj = last_item
+        Rails.logger.debug{"Detected double post"}
+        return true
+      end
+    end
+    false
+  end
+  
+  def do_update(check_double_post: false)
     update_security
+    
     ActiveRecord::Base.transaction do
       begin
         Permission.current_target = @obj
@@ -163,6 +187,12 @@ class MyplaceonlineController < ApplicationController
           @obj.assign_attributes(obj_params)
         rescue ActiveRecord::RecordNotFound => rnf
           raise Myp::CannotFindNestedAttribute, rnf.message + " (code needs attribute setter override?)"
+        end
+        
+        if check_double_post
+          if do_check_double_post
+            return true
+          end
         end
         
         do_update_before_save
