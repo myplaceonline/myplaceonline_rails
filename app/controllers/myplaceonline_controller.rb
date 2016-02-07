@@ -347,6 +347,14 @@ class MyplaceonlineController < ApplicationController
     I18n.t("myplaceonline.general.add") + " " + I18n.t("myplaceonline.category." + category_name).singularize
   end
   
+  def data_split_icon
+    "check"
+  end
+  
+  def split_link(obj)
+    ""
+  end
+  
   protected
   
     def obj_params

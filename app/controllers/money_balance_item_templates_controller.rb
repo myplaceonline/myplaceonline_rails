@@ -8,8 +8,8 @@ class MoneyBalanceItemTemplatesController < MyplaceonlineController
   end
   
   def new
-    onwer_paid_str = params[:owner_paid].blank? ? "true" : params[:owner_paid]
-    @owner_paid = onwer_paid_str.to_bool
+    owner_paid_str = params[:owner_paid].blank? ? "true" : params[:owner_paid]
+    @owner_paid = owner_paid_str.to_bool
     super
   end
 
@@ -31,6 +31,20 @@ class MoneyBalanceItemTemplatesController < MyplaceonlineController
 
   def new_title
     who_paid_title(@owner_paid)
+  end
+
+  def split_link(obj)
+    ActionController::Base.helpers.link_to(
+      I18n.t("myplaceonline.money_balance_item_templates.apply"),
+      money_balances_add_path(
+                              obj.money_balance,
+                              owner_paid: do_calculate_owner_paid(obj) ? "true" : "false",
+                              amount: obj.amount.abs,
+                              original_amount: obj.amount.abs,
+                              percent_default: 1.0,
+                              description: obj.money_balance_item_name
+                             )
+    )
   end
 
   protected
@@ -65,7 +79,11 @@ class MoneyBalanceItemTemplatesController < MyplaceonlineController
     end
     
     def calculate_owner_paid
-      @owner_paid = @obj.amount < 0 ? (@obj.current_user_owns? ? false : true) : (@obj.current_user_owns? ? true : false)
+      @owner_paid = do_calculate_owner_paid(@obj)
+    end
+
+    def do_calculate_owner_paid(obj)
+      obj.amount < 0 ? (obj.current_user_owns? ? false : true) : (obj.current_user_owns? ? true : false)
     end
 
     def edit_prerespond

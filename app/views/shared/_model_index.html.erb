@@ -33,7 +33,7 @@
   <% end %>
 
   <div class="searchable_container">
-    <ul class="searchable" data-role="listview" data-inset="true" data-filter="true">
+    <ul class="searchable" data-role="listview" data-inset="true" data-filter="true" data-split-icon="<%= controller.data_split_icon %>">
       <%
       if !@objs2.nil? && controller.second_list_before
         @objs2.each do |obj|
@@ -53,6 +53,7 @@
       %>
         <li>
           <%= link_to controller.display_obj(obj), controller.show_path(obj) %>
+          <%= controller.split_link(obj) %>
         </li>
       <%
       end
