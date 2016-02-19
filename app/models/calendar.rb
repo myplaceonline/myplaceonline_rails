@@ -28,6 +28,7 @@ class Calendar < ActiveRecord::Base
   timespan_field :stocks_vest_threshold
   timespan_field :todo_threshold
   timespan_field :vehicle_service_threshold
+  timespan_field :happy_things_threshold
   
   def largest_threshold_seconds
     result = Calendar.max(
@@ -51,7 +52,8 @@ class Calendar < ActiveRecord::Base
       Event::DEFAULT_EVENT_THRESHOLD_SECONDS,
       Stock::DEFAULT_STOCKS_VEST_THRESHOLD_SECONDS,
       ToDo::DEFAULT_TODO_THRESHOLD_SECONDS,
-      VehicleService::DEFAULT_VEHICLE_SERVICE_THRESHOLD_SECONDS
+      VehicleService::DEFAULT_VEHICLE_SERVICE_THRESHOLD_SECONDS,
+      HappyThing::DEFAULT_HAPPY_THINGS_THRESHOLD
     ).seconds
     if !general_threshold_seconds.nil? && general_threshold_seconds > result
       result = general_threshold_seconds.seconds
@@ -115,6 +117,9 @@ class Calendar < ActiveRecord::Base
     end
     if !vehicle_service_threshold_seconds.nil? && vehicle_service_threshold_seconds > result
       result = vehicle_service_threshold_seconds.seconds
+    end
+    if !happy_things_threshold_seconds.nil? && happy_things_threshold_seconds > result
+      result = happy_things_threshold_seconds.seconds
     end
     result
   end

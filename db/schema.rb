@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160219181239) do
+ActiveRecord::Schema.define(version: 20160219182035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -394,6 +394,7 @@ ActiveRecord::Schema.define(version: 20160219181239) do
     t.integer  "reminder_repeat_amount"
     t.integer  "reminder_repeat_type"
     t.integer  "general_threshold"
+    t.integer  "happy_things_threshold"
   end
 
   add_index "calendars", ["identity_id"], name: "index_calendars_on_identity_id", using: :btree

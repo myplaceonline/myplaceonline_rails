@@ -1749,6 +1749,7 @@ en:
       stocks_vest_threshold: "Stocks Vest"
       todo_threshold: "To Do"
       vehicle_service_threshold: "Vehicle Service"
+      happy_things_threshold: "Happy Things Period"
     movie_theaters:
       location: "Location"
     gas_stations:
@@ -1941,3 +1942,4 @@ en:
       max_uses: "Maximum Uses"
     happy_things:
       happy_thing_name: "Name"
+      reminder: "Next Happy Thing %{name} %{delta}"
