@@ -490,6 +490,7 @@ en:
       watched: "Watched"
       url: "Website"
       recommender: "Recommender"
+      genre: "Genre"
     wisdoms:
       name: "Wisdom Name"
       wisdom: "Wisdom"

@@ -13,6 +13,7 @@ class MoviesController < MyplaceonlineController
         :name,
         :url,
         :is_watched,
+        :genre,
         recommender_attributes: ContactsController.param_names
       )
     end

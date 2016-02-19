@@ -1,6 +1,7 @@
-<%= myp_text_field f, :name, "myplaceonline.movies.name", obj.name, autofocus %>
-<%= myp_text_field f, :url, "myplaceonline.movies.url", obj.url %>
-<%= myp_check_box f, :is_watched, "myplaceonline.movies.watched" %>
+<%= myp_text_field(f, :name, "myplaceonline.movies.name", obj.name, autofocus) %>
+<%= myp_text_field(f, :genre, "myplaceonline.movies.genre", obj.genre, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
+<%= myp_text_field(f, :url, "myplaceonline.movies.url", obj.url) %>
+<%= myp_check_box(f, :is_watched, "myplaceonline.movies.watched") %>
 <%=
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,
