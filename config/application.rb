@@ -61,10 +61,6 @@ module Myplaceonline
 
     config.autoload_paths += %W(#{config.root}/lib)
     
-    config.require_invite_code = ENV["REQUIRE_INVITE_CODE"].nil? ? false : (ENV["REQUIRE_INVITE_CODE"].eql? "true")
-    
-    config.invite_code = ENV["INVITE_CODE"].nil? ? "invitecode" : ENV["INVITE_CODE"]
-    
     #config.tmpdir = ENV["TMPDIR"].blank? ? Dir.tmpdir : ENV["TMPDIR"]
     config.tmpdir = Rails.root.join("tmp", "myp").to_s
     config.filetmpdir = Rails.root.join("tmp", "myp", "files").to_s

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160219113358) do
+ActiveRecord::Schema.define(version: 20160219114544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1302,6 +1302,18 @@ ActiveRecord::Schema.define(version: 20160219113358) do
   add_index "identity_relationships", ["contact_id"], name: "index_identity_relationships_on_contact_id", using: :btree
   add_index "identity_relationships", ["identity_id"], name: "index_identity_relationships_on_identity_id", using: :btree
   add_index "identity_relationships", ["parent_identity_id"], name: "index_identity_relationships_on_parent_identity_id", using: :btree
+
+  create_table "invite_codes", force: :cascade do |t|
+    t.string   "code"
+    t.integer  "current_uses"
+    t.integer  "max_uses"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "invite_codes", ["identity_id"], name: "index_invite_codes_on_identity_id", using: :btree
 
   create_table "job_salaries", force: :cascade do |t|
     t.integer  "identity_id"
@@ -2735,6 +2747,7 @@ ActiveRecord::Schema.define(version: 20160219113358) do
   add_foreign_key "favorite_product_links", "identities"
   add_foreign_key "identity_file_shares", "identity_files"
   add_foreign_key "identity_file_shares", "shares"
+  add_foreign_key "invite_codes", "identities"
   add_foreign_key "locations", "websites"
   add_foreign_key "money_balance_item_templates", "identities"
   add_foreign_key "money_balance_item_templates", "money_balances"

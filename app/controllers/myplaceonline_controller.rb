@@ -384,6 +384,9 @@ class MyplaceonlineController < ApplicationController
     end
     
     def before_all_actions
+      if requires_admin && !current_user.admin?
+        raise CanCan::AccessDenied
+      end
     end
     
     def all_additional_sql
@@ -509,5 +512,9 @@ class MyplaceonlineController < ApplicationController
     end
 
     def edit_prerespond
+    end
+    
+    def requires_admin
+      false
     end
 end

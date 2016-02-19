@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :invite_codes
+  post 'invite_codes/new'
+
   resources :volunteering_activities
   post 'volunteering_activities/new'
 

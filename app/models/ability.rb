@@ -5,7 +5,9 @@ class Ability
     user ||= User.new
     identity = user.primary_identity
     
-    # Return true if allowed
+    # If the user owns the object, then they can do anything;
+    # Otherwise, check the Permissions table
+    
     can do |action, subject_class, subject|
       if !subject.nil?
         if !user.new_record?
@@ -42,6 +44,7 @@ class Ability
     
     if user.admin?
       can :manage, User
+      can :manage, InviteCode
     end
   end
 end

@@ -1229,4 +1229,8 @@ module Myp
       I18n.t("myplaceonline.general.delta_time_upcoming", delta: delta)
     end
   end
+  
+  def self.requires_invite_code
+    !Rails.env.development? && !Rails.env.test?
+  end
 end

@@ -1,7 +1,7 @@
 <% content_for :heading do -%><%= t("myplaceonline.general.register") %><% end -%>
 <h1><%= t("myplaceonline.general.register") %></h1>
 
-<% if Rails.configuration.require_invite_code %>
+<% if Myp.requires_invite_code %>
   <p><%= raw(t("myplaceonline.general.requires_invite_code")) %></p>
 <% end %>
 
@@ -9,7 +9,7 @@
   <%= devise_error_messages! %>
   <%= flashes! %>
 
-  <% if Rails.configuration.require_invite_code %>
+  <% if Myp.requires_invite_code %>
     <div>
       <%= f.label :invite_code, class: "ui-hidden-accessible" %>
       <%= f.password_field :invite_code, class: "autofocus", autocomplete: "off", placeholder: t("myplaceonline.users.invite") %>
@@ -18,7 +18,7 @@
 
   <div>
     <%= f.label :email, class: "ui-hidden-accessible" %>
-    <% if Rails.configuration.require_invite_code %>
+    <% if Myp.requires_invite_code %>
       <%= f.email_field :email, placeholder: t("myplaceonline.general.email") %>
     <% else %>
       <%= f.email_field :email, class: "autofocus", placeholder: t("myplaceonline.general.email") %>

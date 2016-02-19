@@ -43,4 +43,8 @@ class UsersController < MyplaceonlineController
     def additional_items?
       false
     end
+
+    def requires_admin
+      true
+    end
 end

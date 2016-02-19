@@ -19,9 +19,10 @@ class User < ActiveRecord::Base
   attr_accessor :invite_code
   
   validates_each :invite_code, :on => :create do |record, attr, value|
-    if Rails.configuration.require_invite_code
-      record.errors.add attr, I18n.t("myplaceonline.users.invite_invalid") unless
-        value && value == Rails.configuration.invite_code
+    if Myp.requires_invite_code
+      if !InviteCode.valid_code?(value)
+        record.errors.add attr, I18n.t("myplaceonline.users.invite_invalid")
+      end
     end
   end
   
@@ -90,5 +91,13 @@ class User < ActiveRecord::Base
       result = ActiveSupport::TimeZone[timezone].now
     end
     result
+  end
+
+  after_commit :on_after_create, on: [:create]
+  
+  def on_after_create
+    if Myp.requires_invite_code
+      InviteCode.increment_code(invite_code)
+    end
   end
 end

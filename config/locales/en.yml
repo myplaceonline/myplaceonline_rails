@@ -142,6 +142,7 @@ en:
       money_balance_item_templates: "Balance Templates"
       book_stores: "Book Stores"
       volunteering_activities: "Volunteering Activities"
+      invite_codes: "Invite Codes"
     general:
       email: "E-mail"
       password: "Password"
@@ -1933,3 +1934,7 @@ en:
     volunteering_activities:
       volunteering_activity_name: "Name"
       notes: "Notes"
+    invite_codes:
+      code: "Code"
+      current_uses: "Current Uses"
+      max_uses: "Maximum Uses"
