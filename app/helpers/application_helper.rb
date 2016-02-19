@@ -477,7 +477,8 @@ module ApplicationHelper
   def myp_hidden_field_tag(name, value = nil)
     hidden_field_tag(name, value)
   end
-                       
+
+  # remote_autocomplete_all: if true, show all items on focus; otherwise, show only items that match what's typed
   def myp_text_field(form, name, placeholder, value, autofocus = false, input_classes = nil, autocomplete = true, options = {}, remote_autocomplete_model: nil, remote_autocomplete_all: false)
     if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
