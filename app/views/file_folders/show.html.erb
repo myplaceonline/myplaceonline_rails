@@ -7,6 +7,20 @@
       files = @obj.identity_files
       if files.size > 0
     %>
+        <% if identity_files_include_pics?(files) %>
+          <br />
+          <%= attribute_table_start %>
+            <% random_name = "slideshow-" + SecureRandom.hex(10) %>
+            <%= attribute_table_row_span(link_to(t("myplaceonline.pictures.slideshow"), "#", class: "ui-btn", id: random_name)) %>
+            <%=
+              render partial: 'myplaceonline/picture_slideshow', locals: {
+                pics: files,
+                random_name: random_name
+              }
+            %>
+          <%= attribute_table_end %>
+        <% end %>
+        
         <div class="searchable_container">
           <ul class="searchable" data-role="listview" data-inset="true">
             <li data-role="list-divider"><%= t("myplaceonline.file_folders.files") %></li>

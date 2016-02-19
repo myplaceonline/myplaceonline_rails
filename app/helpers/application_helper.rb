@@ -29,6 +29,26 @@ module ApplicationHelper
         (value.length == 0 || value == "&nbsp;"))
   end
   
+  def attribute_table_start
+    %{
+  <table data-role="table" data-mode="reflow" class="ui-responsive tablestripes normalwidth firstcolumnbold noheadertable">
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    <tbody>
+    }.html_safe
+  end
+  
+  def attribute_table_end
+    %{
+    </tbody>
+  </table>
+    }.html_safe
+  end
+  
   def attribute_table_row_highlight(name, value, clipboard_text = value, valueclass = nil)
     if valueclass.nil?
       valueclass = "bghighlight"
@@ -158,6 +178,10 @@ module ApplicationHelper
     else
       nil
     end
+  end
+  
+  def file_image?(identity_file)
+    !identity_file.nil? && !identity_file.file_content_type.nil? && (identity_file.file_content_type.start_with?("image"))
   end
   
   def attribute_table_row_image(name, identity_file, link_to_original = true)
@@ -907,5 +931,9 @@ module ApplicationHelper
     else
       (num).to_s
     end
+  end
+  
+  def identity_files_include_pics?(identity_files)
+    identity_files.any?{|identity_file| file_image?(identity_file) }
   end
 end

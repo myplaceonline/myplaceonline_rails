@@ -2,8 +2,9 @@
 
 <% if !pics.nil? && pics.length > 0 %>
 
+  <% random_name = "slideshow-" + SecureRandom.hex(10) %>
+  
   <% if pics.length > 1 %>
-    <% random_name = "slideshow-" + SecureRandom.hex(10) %>
     <%= attribute_table_row_span(link_to(t("myplaceonline.pictures.slideshow"), "#", class: "ui-btn", id: random_name)) %>
   <% end %>
   
@@ -12,18 +13,11 @@
   <% end %>
   
   <% if pics.length > 1 %>
-    <script type="text/javascript">
-    myplaceonline.onPageLoad(function() {
-      $('#<%= random_name %>').magnificPopup({
-          items: [
-            <%= raw(pics.map{ |pic| "{ src: '" + file_view_path(pic.identity_file, :t => Time.now.to_f) + "'}" }.join(", ")) %>
-          ],
-          gallery: {
-            enabled: true
-          },
-          type: 'image'
-      });
-    });
-    </script>
+    <%=
+      render partial: 'myplaceonline/picture_slideshow', locals: {
+        pics: pics.map{|p| p.identity_file},
+        random_name: random_name
+      }
+    %>
   <% end %>
 <% end %>
