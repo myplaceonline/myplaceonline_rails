@@ -11,3 +11,17 @@
     autofocus: true
   }
 %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :website,
+    existingobj: obj.website,
+    heading: t("myplaceonline.locations.website"),
+    objform: "websites/form",
+    existingobjurl: "website_path",
+    searchurl: "/websites.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    collapsed: obj.website.nil?
+  }
+%>

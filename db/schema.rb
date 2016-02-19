@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160219182035) do
+ActiveRecord::Schema.define(version: 20160219183331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -762,10 +762,12 @@ ActiveRecord::Schema.define(version: 20160219182035) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "website_id"
   end
 
   add_index "desired_locations", ["identity_id"], name: "index_desired_locations_on_identity_id", using: :btree
   add_index "desired_locations", ["location_id"], name: "index_desired_locations_on_location_id", using: :btree
+  add_index "desired_locations", ["website_id"], name: "index_desired_locations_on_website_id", using: :btree
 
   create_table "desired_products", force: :cascade do |t|
     t.string   "product_name", limit: 255
@@ -2750,6 +2752,7 @@ ActiveRecord::Schema.define(version: 20160219182035) do
   add_foreign_key "concert_pictures", "identity_files"
   add_foreign_key "desired_locations", "identities"
   add_foreign_key "desired_locations", "locations"
+  add_foreign_key "desired_locations", "websites"
   add_foreign_key "dessert_locations", "identities"
   add_foreign_key "dessert_locations", "locations"
   add_foreign_key "event_pictures", "events"
