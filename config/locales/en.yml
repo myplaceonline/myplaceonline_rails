@@ -144,6 +144,7 @@ en:
       volunteering_activities: "Volunteering Activities"
       invite_codes: "Invite Codes"
       happy_things: "Happy Things"
+      annuities: "Annuities"
     general:
       email: "E-mail"
       password: "Password"
@@ -1948,3 +1949,5 @@ en:
     happy_things:
       happy_thing_name: "Name"
       reminder: "Next Happy Thing %{name} %{delta}"
+    annuities:
+      annuity_name: "Name"
