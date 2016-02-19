@@ -135,7 +135,7 @@ class Contact < ActiveRecord::Base
         "myplaceonline.contacts.no_conversations_since",
         name: contact.display,
         contact_type: Myp.get_select_name(contact.contact_type, Contact::CONTACT_TYPES),
-        delta: Myp.time_difference_in_general_human(TimeDifference.between(User.current_user.time_now, contact.last_conversation_date).in_general)
+        delta: Myp.time_delta(contact.last_conversation_date)
       )
     end
   end

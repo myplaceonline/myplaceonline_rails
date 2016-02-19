@@ -19,7 +19,7 @@ class IdentityDriversLicense < ActiveRecord::Base
     I18n.t(
       "myplaceonline.identities.license_expiring",
       license: idl.display,
-      time: Myp.time_difference_in_general_human(TimeDifference.between(User.current_user.time_now, idl.expires).in_general)
+      time: Myp.time_delta(idl.expires)
     )
   end
   

@@ -21,7 +21,7 @@ class ApartmentTrashPickup < ActiveRecord::Base
     I18n.t(
       "myplaceonline.apartments.trash_pickup_reminder",
       trash_type: Myp.get_select_name(trash_pickup.trash_type, ApartmentTrashPickup::TRASH_TYPES),
-      delta: Myp.time_difference_in_general_human(TimeDifference.between(User.current_user.time_now, trash_pickup.repeat.next_instance).in_general)
+      delta: Myp.time_delta(calendar_item.calendar_item_time)
     )
   end
   

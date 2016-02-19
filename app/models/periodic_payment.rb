@@ -60,7 +60,7 @@ class PeriodicPayment < ActiveRecord::Base
     I18n.t(
       "myplaceonline.periodic_payments.reminder_before",
       name: periodic_payment.display,
-      delta: Myp.time_difference_in_general_human(TimeDifference.between(User.current_user.time_now, periodic_payment.next_payment).in_general)
+      delta: Myp.time_delta(calendar_item.calendar_item_time)
     )
   end
   

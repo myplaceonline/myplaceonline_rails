@@ -24,7 +24,7 @@ class Stock < ActiveRecord::Base
     I18n.t(
       "myplaceonline.stocks.upcoming",
       name: stock.display,
-      delta: Myp.time_difference_in_general_human(TimeDifference.between(User.current_user.time_now, stock.vest_date).in_general)
+      delta: Myp.time_delta(stock.vest_date)
     )
   end
   

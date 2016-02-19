@@ -1219,4 +1219,14 @@ module Myp
   def self.count(model, identity)
     model.where(identity: identity).count
   end
+  
+  def self.time_delta(target)
+    now = User.current_user.time_now
+    delta = Myp.time_difference_in_general_human(TimeDifference.between(now, target).in_general)
+    if now > target
+      I18n.t("myplaceonline.general.delta_time_past", delta: delta)
+    else
+      I18n.t("myplaceonline.general.delta_time_upcoming", delta: delta)
+    end
+  end
 end

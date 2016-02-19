@@ -14,7 +14,7 @@ class ToDo < ActiveRecord::Base
     I18n.t(
       "myplaceonline.to_dos.upcoming",
       name: to_do.display,
-      delta: Myp.time_difference_in_general_human(TimeDifference.between(User.current_user.time_now, to_do.due_time).in_general)
+      delta: Myp.time_delta(to_do.due_time)
     )
   end
 

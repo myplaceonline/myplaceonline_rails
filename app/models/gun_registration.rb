@@ -20,7 +20,7 @@ class GunRegistration < ActiveRecord::Base
     I18n.t(
       "myplaceonline.gun_registrations.expires_soon",
       gun_name: gun_registration.gun.display,
-      delta: Myp.time_difference_in_general_human(TimeDifference.between(User.current_user.time_now, gun_registration.expires).in_general)
+      delta: Myp.time_delta(gun_registration.expires)
     )
   end
 

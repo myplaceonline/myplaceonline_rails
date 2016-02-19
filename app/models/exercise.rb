@@ -24,7 +24,7 @@ class Exercise < ActiveRecord::Base
   def self.calendar_item_display(calendar_item)
     I18n.t(
       "myplaceonline.exercises.havent_exercised_for",
-      delta: Myp.time_difference_in_general_human(TimeDifference.between(User.current_user.time_now, calendar_item.calendar_item_time).in_general)
+      delta: Myp.time_delta(calendar_item.calendar_item_time)
     )
   end
   

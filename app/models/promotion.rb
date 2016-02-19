@@ -22,7 +22,7 @@ class Promotion < ActiveRecord::Base
       "myplaceonline.promotions.expires_soon",
       promotion_name: promotion.promotion_name,
       promotion_amount: Myp.number_to_currency(promotion.promotion_amount.nil? ? 0 : promotion.promotion_amount),
-      expires_when: Myp.time_difference_in_general_human(TimeDifference.between(User.current_user.time_now, promotion.expires).in_general)
+      expires_when: Myp.time_delta(promotion.expires)
     )
   end
   

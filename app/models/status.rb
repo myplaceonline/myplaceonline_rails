@@ -54,7 +54,7 @@ class Status < ActiveRecord::Base
     else
       I18n.t(
         "myplaceonline.statuses.no_recent_status",
-        delta: Myp.time_difference_in_general_human(TimeDifference.between(User.current_user.time_now, calendar_item.calendar_item_time).in_general)
+        delta: Myp.time_delta(calendar_item.calendar_item_time)
       )
     end
   end

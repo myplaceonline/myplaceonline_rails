@@ -290,7 +290,7 @@ class Identity < ActiveRecord::Base
     I18n.t(
       "myplaceonline.contacts.upcoming_birthday",
       name: identity.display,
-      delta: Myp.time_difference_in_general_human(TimeDifference.between(User.current_user.time_now, identity.next_birthday).in_general)
+      delta: Myp.time_delta(identity.next_birthday)
     )
   end
   

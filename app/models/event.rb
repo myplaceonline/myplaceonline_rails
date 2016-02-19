@@ -31,7 +31,7 @@ class Event < ActiveRecord::Base
     I18n.t(
       "myplaceonline.events.upcoming",
       name: event.display,
-      delta: Myp.time_difference_in_general_human(TimeDifference.between(User.current_user.time_now, event.event_time).in_general)
+      delta: Myp.time_delta(event.event_time)
     )
   end
   

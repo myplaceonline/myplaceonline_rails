@@ -23,7 +23,7 @@ class Membership < ActiveRecord::Base
     I18n.t(
       message_type,
       display: obj.display,
-      delta: Myp.time_difference_in_general_human(TimeDifference.between(now, obj.end_date).in_general)
+      delta: Myp.time_delta(obj.end_date)
     )
   end
   
