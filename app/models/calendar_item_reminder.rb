@@ -109,27 +109,66 @@ class CalendarItemReminder < ActiveRecord::Base
         Rails.logger.debug{"completed calendar_item"}
     end
     
+    Rails.logger.debug{"checking calendar item reminder pendings"}
+    
     CalendarItemReminder
       .includes(:calendar_item_reminder_pendings, :calendar_item)
       .where(identity: user.primary_identity)
       .each do |calendar_item_reminder|
 
+        Rails.logger.debug{"checking reminder=#{calendar_item_reminder.inspect}"}
+        
         # Only check reminders that don't already have items pending
         if calendar_item_reminder.calendar_item_reminder_pendings.count == 0
           now = user.time_now
           if !calendar_item_reminder.calendar_item.calendar_item_time.nil?
+
+            Rails.logger.debug{"calendar_item_time = #{calendar_item_reminder.calendar_item.calendar_item_time}"}
+        
             if calendar_item_reminder.calendar_item.calendar_item_time - calendar_item_reminder.threshold_in_seconds.seconds <= now &&
                 !calendar_item_reminder.is_expired(now)
-              CalendarItemReminderPending.new(
+              
+              Rails.logger.debug{"meets threshold of #{calendar_item_reminder.threshold_in_seconds.seconds}"}
+        
+              # If there's a max_pending (often 1), then delete any pending
+              # items beyond that amount
+              if !calendar_item_reminder.max_pending.nil?
+                CalendarItemReminderPending.find_by_sql(
+                  %{
+                    SELECT calendar_item_reminder_pendings.*
+                    FROM calendar_item_reminder_pendings
+                      INNER JOIN calendar_items
+                        ON calendar_item_reminder_pendings.calendar_item_id = calendar_items.id
+                    WHERE calendar_item_reminder_pendings.calendar_id = #{calendar_item_reminder.calendar_item.calendar.id}
+                      AND calendar_item_reminder_pendings.identity_id = #{user.primary_identity.id}
+                      AND calendar_items.model_class #{Myp.sanitize_with_null(calendar_item_reminder.calendar_item.model_class)}
+                      AND calendar_items.model_id #{Myp.sanitize_with_null(calendar_item_reminder.calendar_item.model_id)}
+                    ORDER BY calendar_items.calendar_item_time ASC
+                  }
+                ).first(calendar_item_reminder.max_pending).each{
+                  |x|
+                  Rails.logger.debug{"destroying pending item #{x.inspect}"}
+                  x.destroy!
+                }
+              end
+              
+              new_pending = CalendarItemReminderPending.new(
                 calendar_item_reminder: calendar_item_reminder,
                 calendar: calendar_item_reminder.calendar_item.calendar,
                 calendar_item: calendar_item_reminder.calendar_item,
                 identity: user.primary_identity
-              ).save!
+              )
+              
+              new_pending.save!
+
+              Rails.logger.debug{"created new pending item #{new_pending.inspect}"}
             end
           end
           
           if calendar_item_reminder.is_expired(now)
+            
+            Rails.logger.debug{"reminder expired, deleting all pendings"}
+            
             calendar_item_reminder.calendar_item_reminder_pendings.each do |calendar_item_reminder_pending|
               calendar_item_reminder_pending.destroy!
             end

@@ -131,7 +131,8 @@ class CalendarItem < ActiveRecord::Base
     expire_type: nil,
     repeat_amount: nil,
     repeat_type: nil,
-    context_info: nil
+    context_info: nil,
+    max_pending: nil
   )
     ActiveRecord::Base.transaction do
       calendar_item = CalendarItem.new(
@@ -153,7 +154,8 @@ class CalendarItem < ActiveRecord::Base
         threshold_amount: reminder_threshold_amount,
         threshold_type: reminder_threshold_type,
         expire_amount: expire_amount,
-        expire_type: expire_type
+        expire_type: expire_type,
+        max_pending: max_pending
       )
       
       calendar_item_reminder.save!

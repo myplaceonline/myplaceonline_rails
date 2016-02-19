@@ -46,7 +46,8 @@ class ApartmentTrashPickup < ActiveRecord::Base
             Calendar::DEFAULT_REMINDER_TYPE,
             model_id: id,
             repeat_amount: repeat.period,
-            repeat_type: Myp.period_type_to_repeat_type(repeat.period_type)
+            repeat_type: Myp.period_type_to_repeat_type(repeat.period_type),
+            max_pending: 1
           )
         end
       end

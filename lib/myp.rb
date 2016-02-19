@@ -1233,4 +1233,12 @@ module Myp
   def self.requires_invite_code
     !Rails.env.development? && !Rails.env.test?
   end
+  
+  def self.sanitize_with_null(val)
+    if val.nil?
+      " IS NULL"
+    else
+      " = " + ActiveRecord::Base.sanitize(val)
+    end
+  end
 end
