@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160219183331) do
+ActiveRecord::Schema.define(version: 20160219184327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -875,6 +875,18 @@ ActiveRecord::Schema.define(version: 20160219183331) do
   end
 
   add_index "encrypted_values", ["user_id"], name: "index_encrypted_values_on_user_id", using: :btree
+
+  create_table "event_contacts", force: :cascade do |t|
+    t.integer  "event_id"
+    t.integer  "contact_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "event_contacts", ["contact_id"], name: "index_event_contacts_on_contact_id", using: :btree
+  add_index "event_contacts", ["event_id"], name: "index_event_contacts_on_event_id", using: :btree
+  add_index "event_contacts", ["identity_id"], name: "index_event_contacts_on_identity_id", using: :btree
 
   create_table "event_pictures", force: :cascade do |t|
     t.integer  "event_id"
@@ -2755,6 +2767,9 @@ ActiveRecord::Schema.define(version: 20160219183331) do
   add_foreign_key "desired_locations", "websites"
   add_foreign_key "dessert_locations", "identities"
   add_foreign_key "dessert_locations", "locations"
+  add_foreign_key "event_contacts", "contacts"
+  add_foreign_key "event_contacts", "events"
+  add_foreign_key "event_contacts", "identities"
   add_foreign_key "event_pictures", "events"
   add_foreign_key "event_pictures", "identities"
   add_foreign_key "event_pictures", "identity_files"

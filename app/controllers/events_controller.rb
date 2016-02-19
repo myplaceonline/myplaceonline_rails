@@ -24,6 +24,11 @@ class EventsController < MyplaceonlineController
             :file,
             :notes
           ]
+        ],
+        event_contacts_attributes: [
+          :id,
+          :_destroy,
+          contact_attributes: ContactsController.param_names
         ]
       )
     end

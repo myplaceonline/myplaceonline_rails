@@ -1775,6 +1775,10 @@ en:
       picture: "Picture"
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
+      contacts: "Contacts"
+      contact: "Contact"
+      add_contact: "Add Contact"
+      delete_contact: "Delete Contact"
     stocks:
       company: "Company"
       password: "Password"

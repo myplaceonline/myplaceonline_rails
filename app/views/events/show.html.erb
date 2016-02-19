@@ -18,5 +18,8 @@
       placeholder: "myplaceonline.events.picture"
     }
   %>
+  <% @obj.event_contacts.each do |wrapper| %>
+    <%= attribute_table_row_reference(t("myplaceonline.events.contact"), "contact_path", wrapper.contact) %>
+  <% end %>
   
 <% end %>

@@ -26,6 +26,9 @@ class Event < ActiveRecord::Base
   has_many :event_pictures, :dependent => :destroy
   accepts_nested_attributes_for :event_pictures, allow_destroy: true, reject_if: :all_blank
 
+  has_many :event_contacts, :dependent => :destroy
+  accepts_nested_attributes_for :event_contacts, allow_destroy: true, reject_if: :all_blank
+
   def self.calendar_item_display(calendar_item)
     event = calendar_item.find_model_object
     I18n.t(
