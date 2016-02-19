@@ -5,7 +5,7 @@ class InviteCode < ActiveRecord::Base
   validates :max_uses, presence: true
   
   def display
-    code
+    code + " (" + current_uses.to_s + "/" + max_uses.to_s + ")"
   end
 
   def self.build(params = nil)
