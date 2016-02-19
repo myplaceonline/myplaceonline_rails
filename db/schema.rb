@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160219190142) do
+ActiveRecord::Schema.define(version: 20160219191638) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1986,6 +1986,17 @@ ActiveRecord::Schema.define(version: 20160219190142) do
   add_index "playlists", ["identity_file_id"], name: "index_playlists_on_identity_file_id", using: :btree
   add_index "playlists", ["identity_id"], name: "index_playlists_on_identity_id", using: :btree
 
+  create_table "podcasts", force: :cascade do |t|
+    t.integer  "feed_id"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "podcasts", ["feed_id"], name: "index_podcasts_on_feed_id", using: :btree
+  add_index "podcasts", ["identity_id"], name: "index_podcasts_on_identity_id", using: :btree
+
   create_table "poems", force: :cascade do |t|
     t.string   "poem_name",   limit: 255
     t.text     "poem"
@@ -2804,6 +2815,8 @@ ActiveRecord::Schema.define(version: 20160219190142) do
   add_foreign_key "permissions", "users"
   add_foreign_key "playlist_shares", "shares"
   add_foreign_key "playlists", "identity_files"
+  add_foreign_key "podcasts", "feeds"
+  add_foreign_key "podcasts", "identities"
   add_foreign_key "receipt_files", "identities"
   add_foreign_key "receipt_files", "identity_files"
   add_foreign_key "receipt_files", "receipts"

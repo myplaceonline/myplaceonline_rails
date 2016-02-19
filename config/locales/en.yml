@@ -145,6 +145,7 @@ en:
       invite_codes: "Invite Codes"
       happy_things: "Happy Things"
       annuities: "Annuities"
+      podcasts: "Podcasts"
     general:
       email: "E-mail"
       password: "Password"
@@ -1951,3 +1952,5 @@ en:
       reminder: "Next Happy Thing %{name} %{delta}"
     annuities:
       annuity_name: "Name"
+    podcasts:
+      feed: "Feed"

@@ -42,7 +42,7 @@ module MyplaceonlineControllerTest
   end
   
   def do_test_delete
-    true
+    false
   end
   
   test "should get index" do
@@ -86,6 +86,8 @@ module MyplaceonlineControllerTest
   end
 
   test "should destroy" do
+    # This ends up deleting constraints because we just use the same one everywhere
+    # so need to figure that out
     if do_test_delete
       assert_difference(model.name + '.count', -1) do
         delete :destroy, id: send(model.table_name, model.model_name.singular.downcase)

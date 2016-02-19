@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :podcasts
+  post 'podcasts/new'
+
   resources :annuities
   post 'annuities/new'
 

@@ -1,0 +1,13 @@
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :feed,
+    existingobj: obj.feed,
+    heading: t("myplaceonline.podcasts.feed"),
+    objform: "feeds/form",
+    existingobjurl: "feed_path",
+    searchurl: "/feeds.json?perpage=0",
+    edit: edit,
+    autofocus: true
+  }
+%>

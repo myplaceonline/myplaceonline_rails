@@ -128,6 +128,7 @@ class Identity < ActiveRecord::Base
   has_many :volunteering_activities, :dependent => :destroy
   has_many :happy_things, :dependent => :destroy
   has_many :annuities, :dependent => :destroy
+  has_many :podcasts, :dependent => :destroy
   
   has_many :myplets, -> { order('y_coordinate') }, :dependent => :destroy
   accepts_nested_attributes_for :myplets, allow_destroy: true, reject_if: :all_blank
@@ -258,6 +259,7 @@ class Identity < ActiveRecord::Base
       :volunteering_activities => volunteering_activities.to_a.map{|x| x.as_json},
       :happy_things => happy_things.to_a.sort{ |a,b| a.happy_thing_name.downcase <=> b.happy_thing_name.downcase }.map{|x| x.as_json},
       :annuities => annuities.to_a.sort{ |a,b| a.annuity_name.downcase <=> b.annuity_name.downcase }.map{|x| x.as_json},
+      :podcasts => podcasts.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end
