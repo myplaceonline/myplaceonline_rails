@@ -1,0 +1,6 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.happy_things.happy_thing_name"), @obj.happy_thing_name) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), @obj.notes) %>
+  
+<% end %>

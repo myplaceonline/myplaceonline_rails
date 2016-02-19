@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :happy_things
+  post 'happy_things/new'
+
   resources :invite_codes
   post 'invite_codes/new'
 

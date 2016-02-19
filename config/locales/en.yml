@@ -143,6 +143,7 @@ en:
       book_stores: "Book Stores"
       volunteering_activities: "Volunteering Activities"
       invite_codes: "Invite Codes"
+      happy_things: "Happy Things"
     general:
       email: "E-mail"
       password: "Password"
@@ -1938,3 +1939,5 @@ en:
       code: "Code"
       current_uses: "Current Uses"
       max_uses: "Maximum Uses"
+    happy_things:
+      happy_thing_name: "Name"
