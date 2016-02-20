@@ -9,10 +9,29 @@ class Ability
     # Otherwise, check the Permissions table
     
     can do |action, subject_class, subject|
+      result = false
       if !subject.nil?
-        if !user.new_record?
+        
+        # If token is a query parameter, then check the share table
+        if !request.nil? && !request.query_parameters.nil?
+          token = request.query_parameters["token"]
+          if !token.blank?
+            if !PermissionShare.find_by_sql(%{
+              SELECT permission_shares.*
+              FROM permission_shares
+                INNER JOIN shares on permission_shares.share_id = shares.id
+              WHERE shares.token = #{ActiveRecord::Base.sanitize(token)}
+                AND permission_shares.subject_class = #{ActiveRecord::Base.sanitize(subject.class.name)}
+                AND permission_shares.subject_id = #{subject.id}
+            }).first.nil?
+              result = true
+            end
+          end
+        end
+        
+        if !result && !user.new_record?
           if subject.respond_to?("identity_id") && subject.identity_id == identity.id
-            true
+            result = true
           else
             query = "user_id = ? and subject_class = ? and subject_id = ? and (action & #{Permission::ACTION_MANAGE} != 0"
             if action == :show
@@ -28,18 +47,14 @@ class Ability
             end
             query += ")"
             if Permission.where(query, user.id, Myp.model_to_category_name(subject_class), subject.id).length > 0
-              true
+              result = true
             else
               Rails.logger.debug{"Returning false for #{user.id} #{action} #{Myp.model_to_category_name(subject_class)} #{subject.id}"}
-              false
             end
           end
-        else
-          false
         end
-      else
-        false
       end
+      result
     end
     
     if user.admin?

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160219204343) do
+ActiveRecord::Schema.define(version: 20160219215311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1882,6 +1882,34 @@ ActiveRecord::Schema.define(version: 20160219204343) do
   add_index "periodic_payments", ["identity_id"], name: "index_periodic_payments_on_identity_id", using: :btree
   add_index "periodic_payments", ["password_id"], name: "index_periodic_payments_on_password_id", using: :btree
 
+  create_table "permission_share_contacts", force: :cascade do |t|
+    t.integer  "contact_id"
+    t.integer  "permission_share_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "permission_share_contacts", ["contact_id"], name: "index_permission_share_contacts_on_contact_id", using: :btree
+  add_index "permission_share_contacts", ["identity_id"], name: "index_permission_share_contacts_on_identity_id", using: :btree
+  add_index "permission_share_contacts", ["permission_share_id"], name: "index_permission_share_contacts_on_permission_share_id", using: :btree
+
+  create_table "permission_shares", force: :cascade do |t|
+    t.string   "subject_class"
+    t.integer  "subject_id"
+    t.string   "subject"
+    t.text     "body"
+    t.boolean  "email"
+    t.boolean  "copy_self"
+    t.integer  "share_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "permission_shares", ["identity_id"], name: "index_permission_shares_on_identity_id", using: :btree
+  add_index "permission_shares", ["share_id"], name: "index_permission_shares_on_share_id", using: :btree
+
   create_table "permissions", force: :cascade do |t|
     t.integer  "action"
     t.string   "subject_class"
@@ -2812,6 +2840,11 @@ ActiveRecord::Schema.define(version: 20160219204343) do
   add_foreign_key "money_balances", "contacts"
   add_foreign_key "money_balances", "identities"
   add_foreign_key "periodic_payments", "passwords"
+  add_foreign_key "permission_share_contacts", "contacts"
+  add_foreign_key "permission_share_contacts", "identities"
+  add_foreign_key "permission_share_contacts", "permission_shares"
+  add_foreign_key "permission_shares", "identities"
+  add_foreign_key "permission_shares", "shares"
   add_foreign_key "permissions", "identities"
   add_foreign_key "permissions", "users"
   add_foreign_key "playlist_shares", "shares"

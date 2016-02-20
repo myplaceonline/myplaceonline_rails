@@ -1,5 +1,5 @@
 class PermissionsController < MyplaceonlineController
-  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:share]
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:share, :share_token]
 
   def self.param_names
     [
@@ -53,6 +53,65 @@ class PermissionsController < MyplaceonlineController
     end
   end
 
+  def share_token
+    @share = Myp.new_model(PermissionShare)
+    @share.email = true
+    @share.copy_self = true
+    @share.subject_class = params[:subject_class]
+    @share.subject_id = params[:subject_id]
+    if request.post?
+      @share = PermissionShare.new(
+        params.require(:permission_share).permit(
+          :subject,
+          :body,
+          :email,
+          :copy_self,
+          :subject_class,
+          :subject_id,
+          permission_share_contacts_attributes: [
+            :_destroy,
+            contact_attributes: [
+              :id
+            ]
+          ]
+        )
+      )
+      @share.identity = User.current_user.primary_identity
+      
+      public_share = Share.new
+      public_share.identity = @share.identity
+      public_share.token = SecureRandom.hex(10)
+      public_share.save!
+      
+      @share.share = public_share
+      
+      save_result = @share.save
+      if save_result
+
+        content = "<p>" + ERB::Util.html_escape_once(@share.body) + "</p>\n\n"
+        url = "/" + @share.subject_class.underscore.pluralize + "/" + @share.subject_id.to_s + "?token=" + public_share.token
+        content += "<p>" + ActionController::Base.helpers.link_to(url, url) + "</p>"
+        
+        cc = nil
+        if @share.copy_self
+          cc = User.current_user.email
+        end
+        to = Array.new
+        @share.permission_share_contacts.each do |permission_share_contact|
+          permission_share_contact.contact.contact_identity.emails.each do |identity_email|
+            to.push(identity_email)
+          end
+        end
+        Myp.send_email(to, @share.subject, content.html_safe, cc)
+
+        redirect_to "/",
+          :flash => { :notice =>
+                      I18n.t("myplaceonline.permissions.shared_sucess")
+                    }
+      end
+    end
+  end
+  
   protected
     def sorts
       ["permissions.updated_at DESC"]

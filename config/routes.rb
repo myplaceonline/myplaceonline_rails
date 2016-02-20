@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   post 'receipts/new'
 
   match 'permissions/share', :to => 'permissions#share', via: [:get, :post], as: "permissions_share"
+  match 'permissions/share_token', :to => 'permissions#share_token', via: [:get, :post], as: "permissions_share_token"
   resources :permissions
   post 'permissions/new'
 

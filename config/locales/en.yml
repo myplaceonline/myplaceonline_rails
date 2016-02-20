@@ -1903,6 +1903,8 @@ en:
       default_subject: "A %{subject_class} has been shared with you"
       default_body: "Hi, %{contact} has shared the following %{subject_class} with you:"
       shared_sucess: "An email has been sent with the share link"
+      share_token: "Share with Contacts"
+      requires_contacts: "Please choose at least one contact"
     receipts:
       receipt_name: "Name"
       receipt_time: "Date/Time"
