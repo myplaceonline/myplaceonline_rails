@@ -402,7 +402,7 @@ class MyplaceonlineController < ApplicationController
     end
     
     def additional_items?
-      true
+      @obj.respond_to?("visit_count")
     end
   
     def additional_items_min_visit_count

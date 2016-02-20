@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :shares
+  post 'shares/new'
+
   resources :podcasts
   post 'podcasts/new'
 

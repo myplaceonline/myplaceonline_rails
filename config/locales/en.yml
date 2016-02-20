@@ -146,6 +146,7 @@ en:
       happy_things: "Happy Things"
       annuities: "Annuities"
       podcasts: "Podcasts"
+      shares: "Shares"
     general:
       email: "E-mail"
       password: "Password"
@@ -1956,3 +1957,5 @@ en:
       annuity_name: "Name"
     podcasts:
       feed: "Feed"
+    shares:
+      token: "Token"
