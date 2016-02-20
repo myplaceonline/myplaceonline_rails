@@ -95,6 +95,8 @@ end
           <% end %>
         <% end %>
       </div>
+    <% else %>
+      <p><%= link_to t("myplaceonline.general.create_new"), "/" + existingobj.class.name.underscore.pluralize + "/new", :class => 'ui-btn ui-btn-icon-left ui-icon-plus ui-btn-inline' %></p>
     <% end %>
   </div>
 </div>

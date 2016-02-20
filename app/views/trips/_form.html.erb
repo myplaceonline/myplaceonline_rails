@@ -37,3 +37,16 @@
     <%= myp_file_field(file_fields, :file, "myplaceonline.trips.picture", childproperty.identity_file.file) %>
   <% end %>
 <% end %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :hotel,
+    existingobj: obj.hotel,
+    heading: t("myplaceonline.trips.hotel"),
+    objform: "hotels/form",
+    existingobjurl: "hotel_path",
+    searchurl: "/hotels.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>

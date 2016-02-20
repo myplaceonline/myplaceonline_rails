@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160220224452) do
+ActiveRecord::Schema.define(version: 20160220224804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2534,8 +2534,10 @@ ActiveRecord::Schema.define(version: 20160220224452) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.integer  "hotel_id"
   end
 
+  add_index "trips", ["hotel_id"], name: "index_trips_on_hotel_id", using: :btree
   add_index "trips", ["identity_id"], name: "index_trips_on_identity_id", using: :btree
   add_index "trips", ["location_id"], name: "index_trips_on_location_id", using: :btree
 
@@ -2884,6 +2886,7 @@ ActiveRecord::Schema.define(version: 20160220224452) do
   add_foreign_key "trek_pictures", "treks"
   add_foreign_key "treks", "identities"
   add_foreign_key "treks", "locations"
+  add_foreign_key "trips", "hotels"
   add_foreign_key "volunteering_activities", "identities"
   add_foreign_key "website_passwords", "identities"
   add_foreign_key "website_passwords", "passwords"

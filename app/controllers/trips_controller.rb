@@ -27,7 +27,8 @@ class TripsController < MyplaceonlineController
             :file,
             :notes
           ]
-        ]
+        ],
+        hotel_attributes: HotelsController.param_names
       )
     end
 end

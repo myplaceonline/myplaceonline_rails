@@ -231,6 +231,7 @@ en:
       expired: "%{display} Expired %{delta}"
       delta_time_upcoming: "in %{delta}"
       delta_time_past: "%{delta} ago"
+      create_new: "Create New"
     html5:
       noaudio: "Your browser doesn't support embedded audio."
     periods:
@@ -1187,6 +1188,7 @@ en:
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
       duration: "Length"
+      hotel: "Hotel"
     passports:
       region: "Country"
       passport_number: "Passport Number"
