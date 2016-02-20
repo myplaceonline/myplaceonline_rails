@@ -13,6 +13,7 @@ class HotelsController < MyplaceonlineController
         :notes,
         :overall_rating,
         :breakfast_rating,
+        :room_number,
         location_attributes: LocationsController.param_names
       )
     end

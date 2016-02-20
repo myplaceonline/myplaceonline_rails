@@ -11,6 +11,7 @@
     autofocus: true
   }
 %>
+<%= myp_number_field(f, :room_number, "myplaceonline.hotels.room_number", obj.room_number) %>
 <%= myp_select(f, :overall_rating, "myplaceonline.hotels.overall_rating", Myp.translate_options(Myp::RATINGS), obj.overall_rating) %>
 <%= myp_select(f, :breakfast_rating, "myplaceonline.hotels.breakfast_rating", Myp.translate_options(Myp::RATINGS), obj.breakfast_rating) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
