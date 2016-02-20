@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :hotels
+  post 'hotels/new'
+
   resources :shares
   post 'shares/new'
 

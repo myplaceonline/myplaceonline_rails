@@ -147,6 +147,7 @@ en:
       annuities: "Annuities"
       podcasts: "Podcasts"
       shares: "Shares"
+      hotels: "Hotels"
     general:
       email: "E-mail"
       password: "Password"
@@ -1959,3 +1960,7 @@ en:
       feed: "Feed"
     shares:
       token: "Token"
+    hotels:
+      location: "Location"
+      overall_rating: "Overall Rating"
+      breakfast_rating: "Breakfast Rating"

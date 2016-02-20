@@ -1,0 +1,8 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row_reference(t("myplaceonline.hotels.location"), "location_path", @obj.location) %>
+  <%= attribute_table_row_select(t("myplaceonline.hotels.overall_rating"), @obj.overall_rating, Myp::RATINGS) %>
+  <%= attribute_table_row_select(t("myplaceonline.hotels.breakfast_rating"), @obj.breakfast_rating, Myp::RATINGS) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), @obj.notes) %>
+  
+<% end %>
