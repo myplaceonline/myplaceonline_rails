@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160220224804) do
+ActiveRecord::Schema.define(version: 20160222013343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,15 @@ ActiveRecord::Schema.define(version: 20160220224804) do
   end
 
   add_index "activities", ["identity_id"], name: "index_activities_on_identity_id", using: :btree
+
+  create_table "alerts_displays", force: :cascade do |t|
+    t.integer  "identity_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.boolean  "suppress_hotel"
+  end
+
+  add_index "alerts_displays", ["identity_id"], name: "index_alerts_displays_on_identity_id", using: :btree
 
   create_table "annuities", force: :cascade do |t|
     t.string   "annuity_name"
@@ -2813,6 +2822,7 @@ ActiveRecord::Schema.define(version: 20160220224804) do
 
   add_index "wisdoms", ["identity_id"], name: "index_wisdoms_on_identity_id", using: :btree
 
+  add_foreign_key "alerts_displays", "identities"
   add_foreign_key "annuities", "identities"
   add_foreign_key "bar_pictures", "bars"
   add_foreign_key "bar_pictures", "identities"

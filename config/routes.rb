@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :alerts_displays
+  post 'alerts_displays/new'
+
   resources :hotels
   post 'hotels/new'
 

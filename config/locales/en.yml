@@ -148,6 +148,7 @@ en:
       podcasts: "Podcasts"
       shares: "Shares"
       hotels: "Hotels"
+      alerts_displays: "Alerts Displays"
     general:
       email: "E-mail"
       password: "Password"
@@ -1967,3 +1968,5 @@ en:
       overall_rating: "Overall Rating"
       breakfast_rating: "Breakfast Rating"
       room_number: "Room Number"
+    alerts_displays:
+      suppress_hotel: "Suppress Hotel Alerts"
