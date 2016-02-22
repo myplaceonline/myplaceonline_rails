@@ -1,6 +1,6 @@
 class PlaylistsController < MyplaceonlineController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:share, :shared]
-  skip_before_filter :authenticate_user!, :only => [:shared]
+  skip_before_filter :do_authenticate_user, :only => [:shared]
   
   def may_upload
     true

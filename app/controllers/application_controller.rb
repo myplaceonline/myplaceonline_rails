@@ -6,8 +6,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   # By default, all pages require authentication unless the controller has
-  #   skip_before_filter :authenticate_user!
-  before_action :authenticate_user!
+  #   skip_before_filter :do_authenticate_user
+  #before_action :authenticate_user!
+  before_action :do_authenticate_user
   
   around_filter :around_request
   
@@ -20,6 +21,10 @@ class ApplicationController < ActionController::Base
   rescue_from StandardError, :with => :catchall
   
   utf8_enforcer_workaround
+  
+  def do_authenticate_user
+    authenticate_user!
+  end
   
   def catchall(exception)
     if exception.is_a?(Myp::DecryptionKeyUnavailableError)

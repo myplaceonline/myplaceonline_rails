@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :permission_shares
+  post 'permission_shares/new'
+
   resources :alerts_displays
   post 'alerts_displays/new'
 
