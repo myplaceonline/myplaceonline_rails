@@ -26,12 +26,18 @@ class ApplicationController < ActionController::Base
     catch_result = catch(:warden) do
       authenticate_user!
     end
-    if !catch_result.is_a?(User)
+    
+    # If catch_result is a Hash, then we assume it's {scope: :user} and
+    # it's somebody trying to access a resource; otherwise, it might just be
+    # somebody failing to login for some reason (e.g. password) and we
+    # let that fall through (re-throw not needed)
+    
+    if catch_result.is_a?(Hash)
       # authenticate_user! failed
       
       warden.set_user(User.guest, {run_callbacks: false})
-      
-      # throw :warden, catch_result
+    #else
+    #  throw :warden, catch_result
     end
   end
 

@@ -41,6 +41,7 @@ class User < ActiveRecord::Base
     User.new(
       id: GUEST_ID,
       email: GUEST_EMAIL,
+      primary_identity_id: GUEST_ID,
       primary_identity: Identity.new(
         id: GUEST_ID
       )
