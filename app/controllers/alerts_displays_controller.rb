@@ -7,7 +7,24 @@ class AlertsDisplaysController < MyplaceonlineController
   end
   
   def showmyplet
-    
+    @nocontent = true
+    now = User.current_user.time_now
+    @trip = Trip.where(
+      %{
+        identity_id = ? AND
+        started IS NOT NULL AND
+        ended IS NOT NULL AND
+        hotel_id IS NOT NULL AND
+        ? >= started AND
+        ? <= ended
+      },
+      User.current_user.primary_identity.id,
+      now,
+      now
+    ).first
+    if !@trip.nil?
+      @nocontent = false
+    end
   end
   
   protected

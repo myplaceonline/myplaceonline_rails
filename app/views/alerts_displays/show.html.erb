@@ -2,5 +2,8 @@
   <%= render layout: "shared/model_show" do %>
   <% end %>
 <% else %>
-  Hello World <%= @obj.suppress_hotel ? "suppress" : "no suppress" %>
+  <% if !@trip.nil? %>
+    <p><%= @trip.hotel.display %></p>
+    <p><%= @trip.display %></p>
+  <% end %>
 <% end %>

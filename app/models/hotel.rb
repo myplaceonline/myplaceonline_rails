@@ -9,6 +9,8 @@ class Hotel < ActiveRecord::Base
   allow_existing :location
   
   def display
-    location.display
+    result = location.display_really_simple
+    result = Myp.appendstr(result, room_number.to_s, nil, " (" + I18n.t("myplaceonline.hotels.room_number") + " ", ")")
+    result
   end
 end
