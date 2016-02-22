@@ -23,9 +23,18 @@ class ApplicationController < ActionController::Base
   utf8_enforcer_workaround
   
   def do_authenticate_user
-    authenticate_user!
+    catch_result = catch(:warden) do
+      authenticate_user!
+    end
+    if !catch_result.is_a?(User)
+      # authenticate_user! failed
+      
+      warden.set_user(User.guest, {run_callbacks: false})
+      
+      # throw :warden, catch_result
+    end
   end
-  
+
   def catchall(exception)
     if exception.is_a?(Myp::DecryptionKeyUnavailableError)
       redirect_to Myp.reentry_url(request)

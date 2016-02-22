@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
     ["myplaceonline.users.type_normal", 0],
     ["myplaceonline.users.type_admin", 1]
   ]
+  
+  GUEST_ID = -1
+  GUEST_EMAIL = "guest@myplaceonline.com"
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -32,6 +35,16 @@ class User < ActiveRecord::Base
     else
       false
     end
+  end
+  
+  def self.guest
+    User.new(
+      id: GUEST_ID,
+      email: GUEST_EMAIL,
+      primary_identity: Identity.new(
+        id: GUEST_ID
+      )
+    )
   end
   
   def display
@@ -99,5 +112,9 @@ class User < ActiveRecord::Base
     if Myp.requires_invite_code
       InviteCode.increment_code(invite_code)
     end
+  end
+  
+  def guest?
+    id == GUEST_ID
   end
 end

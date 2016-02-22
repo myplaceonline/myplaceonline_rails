@@ -6,7 +6,7 @@ class Ability
     identity = user.primary_identity
     
     # If the user owns the object, then they can do anything;
-    # Otherwise, check the Permissions table
+    # Otherwise, check the Shares and Permissions tables
     
     can do |action, subject_class, subject|
       result = false
@@ -54,6 +54,7 @@ class Ability
           end
         end
       end
+      Rails.logger.debug{"Authorize returning #{result} for user #{user.id}, subject #{subject}"}
       result
     end
     
