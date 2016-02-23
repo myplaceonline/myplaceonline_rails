@@ -78,6 +78,7 @@ class ZipPlaylistJob < ApplicationJob
               if zipdata.length > IdentityFile::SIZE_THRESHOLD_FILESYSTEM
                 dest = Pathname.new(Rails.configuration.filetmpdir).join(File.basename(tfile.path))
                 FileUtils.cp(tfile.path, dest)
+                FileUtils.chmod(0755, dest)
                 identity_file.filesystem_path = dest
               else
                 identity_file.file = File.open(tfile.path)
