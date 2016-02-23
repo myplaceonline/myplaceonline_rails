@@ -234,6 +234,7 @@ en:
       delta_time_upcoming: "in %{delta}"
       delta_time_past: "%{delta} ago"
       create_new: "Create New"
+      share: "Share"
     html5:
       noaudio: "Your browser doesn't support embedded audio."
     periods:

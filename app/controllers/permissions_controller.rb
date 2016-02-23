@@ -59,6 +59,10 @@ class PermissionsController < MyplaceonlineController
     @share.copy_self = true
     @share.subject_class = params[:subject_class]
     @share.subject_id = params[:subject_id]
+
+    @check_obj = Object.const_get(@share.subject_class).find_by(id: @share.subject_id)
+    authorize! :show, @check_obj
+
     if request.post?
       @share = PermissionShare.new(
         params.require(:permission_share).permit(
