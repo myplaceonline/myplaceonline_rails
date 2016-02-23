@@ -79,7 +79,14 @@ class Ability
           end
         end
       end
+
+      if user.guest? && action != :show
+        Rails.logger.debug{"Guest can only do show action (tried #{action})"}
+        result = false
+      end
+
       Rails.logger.debug{"Authorize returning #{result} for user #{user.id}, subject #{subject}"}
+      
       result
     end
     

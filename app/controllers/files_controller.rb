@@ -1,6 +1,6 @@
 class FilesController < MyplaceonlineController
-  skip_authorization_check :only => [:download, :view]
-  skip_before_filter :do_authenticate_user, :only => [:download, :view]
+  #skip_authorization_check :only => [:download, :view, :thumbnail]
+  #skip_before_filter :do_authenticate_user, :only => [:download, :view, :thumbnail]
 
   def path_name
     "file"
@@ -27,7 +27,8 @@ class FilesController < MyplaceonlineController
   end
   
   def thumbnail
-    set_obj
+    @obj = model.find_by(id: params[:id])
+    authorize! :show, @obj
     if !@obj.thumbnail_contents.nil?
       respond_download('inline', @obj.thumbnail_contents, @obj.thumbnail_bytes)
     else
