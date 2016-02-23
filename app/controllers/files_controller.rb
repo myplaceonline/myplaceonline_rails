@@ -16,46 +16,14 @@ class FilesController < MyplaceonlineController
   
   def download
     @obj = model.find_by(id: params[:id])
-    if !current_user.nil? && @obj.identity_id == current_user.primary_identity.id
-      respond_download_identity_file('attachment', @obj)
-    else
-      found = false
-      token = params[:token]
-      if !token.blank?
-        @obj.identity_file_shares.each do |ifs|
-          if ifs.share.token == token
-            found = true
-          end
-        end
-      end
-      if !found
-        raise CanCan::AccessDenied
-      else
-        respond_download_identity_file('attachment', @obj)
-      end
-    end
+    authorize! :show, @obj
+    respond_download_identity_file('attachment', @obj)
   end
   
   def view
     @obj = model.find_by(id: params[:id])
-    if !current_user.nil? && @obj.identity_id == current_user.primary_identity.id
-      respond_download_identity_file('inline', @obj)
-    else
-      found = false
-      token = params[:token]
-      if !token.blank?
-        @obj.identity_file_shares.each do |ifs|
-          if ifs.share.token == token
-            found = true
-          end
-        end
-      end
-      if !found
-        raise CanCan::AccessDenied
-      else
-        respond_download_identity_file('inline', @obj)
-      end
-    end
+    authorize! :show, @obj
+    respond_download_identity_file('inline', @obj)
   end
   
   def thumbnail

@@ -6,7 +6,7 @@
     myplaceonline.onPageLoad(function() {
       $('#<%= random_name %>').magnificPopup({
           items: [
-            <%= raw(pics.map{ |pic| "{ src: '" + file_view_path(pic, :t => Time.now.to_f) + "'}" }.join(", ")) %>
+            <%= raw(pics.map{ |pic| "{ src: '" + file_view_path(pic, :t => Time.now.to_f, token: params[:token]) + "'}" }.join(", ")) %>
           ],
           gallery: {
             enabled: true
