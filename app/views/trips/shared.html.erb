@@ -1,7 +1,10 @@
 <% content_for :heading do -%><%= @obj.display %><% end -%>
 <h1><%= @obj.display %></h1>
+<% if !@obj.identity_file.nil? %>
+  <p><%= url_or_blank(file_download_path(@obj.identity_file, token: params[:token]), t("myplaceonline.trips.download_zip") + " (" + bytes_number(@obj.identity_file.file_file_size) + ")", nil, "ui-btn ui-btn-inline", true) %></p>
+<% end %>
 <% random_name = "slideshow-" + SecureRandom.hex(10) %>
-<%= link_to(t("myplaceonline.pictures.slideshow"), "#", class: "ui-btn", id: random_name) %>
+<p><%= link_to(t("myplaceonline.pictures.slideshow"), "#", class: "ui-btn ui-btn-inline", id: random_name) %></p>
 <%=
   render partial: 'myplaceonline/picture_slideshow', locals: {
     pics: @obj.trip_pictures.map{|x| x.identity_file},

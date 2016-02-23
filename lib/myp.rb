@@ -1044,6 +1044,12 @@ module Myp
     )
   end
   
+  def self.find_existing_object!(class_name, id)
+    Object.const_get(class_name.to_s.camelize).find_by(
+      id: id
+    )
+  end
+  
   def self.process_headers(request)
     request.headers.env.dup.delete_if{| key, value |
       (!key.start_with?("HTTP_") && 

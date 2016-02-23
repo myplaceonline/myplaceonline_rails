@@ -16,6 +16,8 @@ class Trip < ActiveRecord::Base
   has_many :trip_pictures, :dependent => :destroy
   accepts_nested_attributes_for :trip_pictures, allow_destroy: true, reject_if: :all_blank
   
+  belongs_to :identity_file
+
   before_validation :update_pic_folders
   
   def update_pic_folders
@@ -52,5 +54,101 @@ class Trip < ActiveRecord::Base
   
   def self.has_shared_page?
     true
+  end
+  
+  def self.share_async?
+    true
+  end
+  
+  def self.execute_async(permission_share)
+    
+    obj = Myp.find_existing_object!(permission_share.subject_class, permission_share.subject_id)
+
+    count = 0
+    
+    Myp.mktmpdir do |dir|
+      
+      files = Array.new
+      identity_files = Array.new
+      
+      obj.trip_pictures.each do |trip_picture|
+        if !trip_picture.identity_file.nil?
+          count = count + 1
+          data = trip_picture.identity_file.file.file_contents
+          name = trip_picture.identity_file.file_file_name
+          
+          f = File.join(dir, name)
+
+          itemarray = Array.new
+          itemarray.push(name)
+          itemarray.push(f)
+          
+          files.push(itemarray)
+          
+          identity_files.push(trip_picture.identity_file)
+          
+          IO.binwrite(f, data)
+        end
+      end
+      
+      if count > 0
+        Myp.tmpfile("trip" + obj.id.to_s + "_", ".zip") do |tfile|
+          Zip::File.open(tfile.path, Zip::File::CREATE) do |zipfile|
+            files.each do |filename|
+              zipfile.add(filename[0], filename[1])
+            end
+          end
+          
+          zipdata = IO.binread(tfile.path)
+          
+          begin
+            User.current_user = obj.identity.user
+            
+            ActiveRecord::Base.transaction do
+              iff = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.trips")])
+              identity_file = IdentityFile.build({ folder: iff.id })
+              identity_file.file_file_name = Pathname.new(tfile).basename
+              identity_file.file_file_size = zipdata.length
+              identity_file.file_content_type = "application/zip"
+              if zipdata.length > IdentityFile::SIZE_THRESHOLD_FILESYSTEM
+                dest = Pathname.new(Rails.configuration.filetmpdir).join(File.basename(tfile.path))
+                FileUtils.cp(tfile.path, dest)
+                identity_file.filesystem_path = dest
+              else
+                identity_file.file = File.open(tfile.path)
+              end
+              identity_file.folder = iff
+              identity_file.identity = obj.identity
+              identity_file.save!
+              
+              obj.identity_file = identity_file
+              obj.save!
+              
+              psc = PermissionShareChild.new
+              psc.identity = obj.identity
+              psc.share = permission_share.share
+              psc.subject_class = IdentityFile.name
+              psc.subject_id = identity_file.id
+              psc.permission_share = permission_share
+              psc.save!
+
+              identity_files.each do |identity_file|
+                psc = PermissionShareChild.new
+                psc.identity = obj.identity
+                psc.share = permission_share.share
+                psc.subject_class = IdentityFile.name
+                psc.subject_id = identity_file.id
+                psc.permission_share = permission_share
+                psc.save!
+              end
+              
+              permission_share.send_email
+            end
+          ensure
+            User.current_user = nil
+          end
+        end
+      end
+    end
   end
 end

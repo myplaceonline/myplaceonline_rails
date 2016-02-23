@@ -1191,6 +1191,7 @@ en:
       delete_picture: "Delete Picture"
       duration: "Length"
       hotel: "Hotel"
+      download_zip: "Download Zip"
     passports:
       region: "Country"
       passport_number: "Passport Number"
@@ -1909,6 +1910,7 @@ en:
       default_subject: "A %{subject_class} has been shared with you"
       default_body: "Hi, %{contact} has shared the following %{subject_class} with you:"
       shared_sucess: "An email has been sent with the share link"
+      shared_sucess_async: "An email will be sent with the share link once it's ready"
       share_token: "Share with Contacts"
       requires_contacts: "Please choose at least one contact"
     receipts:

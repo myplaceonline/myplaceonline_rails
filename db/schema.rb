@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160222013343) do
+ActiveRecord::Schema.define(version: 20160223051754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1906,6 +1906,20 @@ ActiveRecord::Schema.define(version: 20160222013343) do
   add_index "periodic_payments", ["identity_id"], name: "index_periodic_payments_on_identity_id", using: :btree
   add_index "periodic_payments", ["password_id"], name: "index_periodic_payments_on_password_id", using: :btree
 
+  create_table "permission_share_children", force: :cascade do |t|
+    t.string   "subject_class"
+    t.integer  "subject_id"
+    t.integer  "permission_share_id"
+    t.integer  "identity_id"
+    t.integer  "share_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "permission_share_children", ["identity_id"], name: "index_permission_share_children_on_identity_id", using: :btree
+  add_index "permission_share_children", ["permission_share_id"], name: "index_permission_share_children_on_permission_share_id", using: :btree
+  add_index "permission_share_children", ["share_id"], name: "index_permission_share_children_on_share_id", using: :btree
+
   create_table "permission_share_contacts", force: :cascade do |t|
     t.integer  "contact_id"
     t.integer  "permission_share_id"
@@ -2544,9 +2558,11 @@ ActiveRecord::Schema.define(version: 20160222013343) do
     t.datetime "updated_at"
     t.integer  "visit_count"
     t.integer  "hotel_id"
+    t.integer  "identity_file_id"
   end
 
   add_index "trips", ["hotel_id"], name: "index_trips_on_hotel_id", using: :btree
+  add_index "trips", ["identity_file_id"], name: "index_trips_on_identity_file_id", using: :btree
   add_index "trips", ["identity_id"], name: "index_trips_on_identity_id", using: :btree
   add_index "trips", ["location_id"], name: "index_trips_on_location_id", using: :btree
 
@@ -2869,6 +2885,9 @@ ActiveRecord::Schema.define(version: 20160222013343) do
   add_foreign_key "money_balances", "contacts"
   add_foreign_key "money_balances", "identities"
   add_foreign_key "periodic_payments", "passwords"
+  add_foreign_key "permission_share_children", "identities"
+  add_foreign_key "permission_share_children", "permission_shares"
+  add_foreign_key "permission_share_children", "shares"
   add_foreign_key "permission_share_contacts", "contacts"
   add_foreign_key "permission_share_contacts", "identities"
   add_foreign_key "permission_share_contacts", "permission_shares"
@@ -2897,6 +2916,7 @@ ActiveRecord::Schema.define(version: 20160222013343) do
   add_foreign_key "treks", "identities"
   add_foreign_key "treks", "locations"
   add_foreign_key "trips", "hotels"
+  add_foreign_key "trips", "identity_files"
   add_foreign_key "volunteering_activities", "identities"
   add_foreign_key "website_passwords", "identities"
   add_foreign_key "website_passwords", "passwords"

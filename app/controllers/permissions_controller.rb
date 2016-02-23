@@ -88,26 +88,21 @@ class PermissionsController < MyplaceonlineController
       save_result = @share.save
       if save_result
 
-        content = "<p>" + ERB::Util.html_escape_once(@share.body) + "</p>\n\n"
-        url = "/" + @share.subject_class.underscore.pluralize + "/" + @share.subject_id.to_s + "?token=" + public_share.token
-        content += "<p>" + ActionController::Base.helpers.link_to(url, url) + "</p>"
-        
-        cc = nil
-        if @share.copy_self
-          cc = User.current_user.email
-        end
-        to = Array.new
-        @share.permission_share_contacts.each do |permission_share_contact|
-          permission_share_contact.contact.contact_identity.emails.each do |identity_email|
-            to.push(identity_email)
-          end
-        end
-        Myp.send_email(to, @share.subject, content.html_safe, cc)
+        if @share.async?
+          ShareJob.perform_later(@share)
 
-        redirect_to "/",
-          :flash => { :notice =>
-                      I18n.t("myplaceonline.permissions.shared_sucess")
-                    }
+          redirect_to "/",
+            :flash => { :notice =>
+                        I18n.t("myplaceonline.permissions.shared_sucess_async")
+                      }
+        else
+          @share.send_email
+
+          redirect_to "/",
+            :flash => { :notice =>
+                        I18n.t("myplaceonline.permissions.shared_sucess")
+                      }
+        end
       end
     end
   end
