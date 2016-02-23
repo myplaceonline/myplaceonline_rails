@@ -200,10 +200,10 @@ module ApplicationHelper
       end
       # Include a unique query parameter all the time because the thumbnail
       # may have been updated
-      content = image_tag(file_thumbnail_path(identity_file, :t => Time.now.to_f))
+      content = image_tag(file_thumbnail_path(identity_file, :t => Time.now.to_f, token: params[:token]))
       if link_to_original
         url_or_blank(
-          file_view_path(identity_file),
+          file_view_path(identity_file, token: params[:token]),
           content,
           nil,
           "externallink",

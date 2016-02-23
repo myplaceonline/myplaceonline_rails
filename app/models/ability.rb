@@ -26,6 +26,19 @@ class Ability
             }).first.nil?
               result = true
             end
+            
+            if !result
+              if !PermissionShareChild.find_by_sql(%{
+                SELECT permission_share_children.*
+                FROM permission_share_children
+                  INNER JOIN shares on permission_share_children.share_id = shares.id
+                WHERE shares.token = #{ActiveRecord::Base.sanitize(token)}
+                  AND permission_share_children.subject_class = #{ActiveRecord::Base.sanitize(subject.class.name)}
+                  AND permission_share_children.subject_id = #{subject.id}
+              }).first.nil?
+                result = true
+              end
+            end
           end
         end
         
