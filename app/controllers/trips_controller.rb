@@ -3,6 +3,11 @@ class TripsController < MyplaceonlineController
     true
   end
   
+  def shared
+    @obj = model.find_by(id: params[:id])
+    authorize! :show, @obj
+  end
+
   protected
     def sorts
       ["trips.started DESC"]

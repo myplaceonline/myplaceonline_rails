@@ -8,7 +8,7 @@ class PermissionShare < ActiveRecord::Base
   validates :subject_class, presence: true
   validates :subject_id, presence: true
 
-  has_many :permission_share_contacts
+  has_many :permission_share_contacts, :dependent => :destroy
   accepts_nested_attributes_for :permission_share_contacts, allow_destroy: true, reject_if: :all_blank
   
   validate :has_contacts
@@ -32,6 +32,11 @@ class PermissionShare < ActiveRecord::Base
   belongs_to :share
   
   def link
-    url_for("/" + subject_class.underscore.pluralize + "/" + subject_id.to_s + "?token=" + share.token)
+    mainlink = "/" + subject_class.underscore.pluralize + "/" + subject_id.to_s
+    clazz = Object.const_get(subject_class)
+    if clazz.respond_to?("has_shared_page?") && clazz.has_shared_page?
+      mainlink += "/shared"
+    end
+    url_for(mainlink + "?token=" + share.token)
   end
 end

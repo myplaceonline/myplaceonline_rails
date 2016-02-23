@@ -49,4 +49,8 @@ class Trip < ActiveRecord::Base
     end
     result
   end
+  
+  def self.has_shared_page?
+    true
+  end
 end
