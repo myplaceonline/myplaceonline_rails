@@ -184,7 +184,7 @@ module ApplicationHelper
     !identity_file.nil? && !identity_file.file_content_type.nil? && (identity_file.file_content_type.start_with?("image"))
   end
   
-  def attribute_table_row_image(name, identity_file, link_to_original = true)
+  def image_content(identity_file, link_to_original = true)
     if !identity_file.nil? && !identity_file.file_content_type.nil? && (identity_file.file_content_type.start_with?("image"))
       if identity_file.thumbnail_contents.nil?
         image = Magick::Image::from_blob(identity_file.file.file_contents)
@@ -200,26 +200,31 @@ module ApplicationHelper
       end
       # Include a unique query parameter all the time because the thumbnail
       # may have been updated
-      image_content = image_tag(file_thumbnail_path(identity_file, :t => Time.now.to_f))
+      content = image_tag(file_thumbnail_path(identity_file, :t => Time.now.to_f))
       if link_to_original
-        attribute_table_row_content(
-          name,
+        url_or_blank(
+          file_view_path(identity_file),
+          content,
           nil,
-          url_or_blank(
-            file_view_path(identity_file),
-            image_content,
-            nil,
-            "externallink",
-            true
-          )
+          "externallink",
+          true
         )
       else
-        attribute_table_row_content(
-          name,
-          nil,
-          image_content
-        )
+        content
       end
+    else
+      nil
+    end
+  end
+  
+  def attribute_table_row_image(name, identity_file, link_to_original = true)
+    content = image_content(identity_file, link_to_original)
+    if !content.nil?
+      attribute_table_row_content(
+        name,
+        nil,
+        content
+      )
     else
       nil
     end

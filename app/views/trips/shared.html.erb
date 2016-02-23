@@ -1,2 +1,13 @@
 <% content_for :heading do -%><%= @obj.display %><% end -%>
 <h1><%= @obj.display %></h1>
+<% random_name = "slideshow-" + SecureRandom.hex(10) %>
+<%= link_to(t("myplaceonline.pictures.slideshow"), "#", class: "ui-btn", id: random_name) %>
+<%=
+  render partial: 'myplaceonline/picture_slideshow', locals: {
+    pics: @obj.trip_pictures.map{|x| x.identity_file},
+    random_name: random_name
+  }
+%>
+<% @obj.trip_pictures.each do |pic| %>
+  <%= image_content(pic.identity_file) %>
+<% end %>
