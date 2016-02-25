@@ -302,6 +302,10 @@ class Identity < ActiveRecord::Base
     )
   end
   
+  def self.calendar_item_link(calendar_item)
+    Rails.application.routes.url_helpers.send("contact_path", calendar_item.find_model_object.contact)
+  end
+  
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
