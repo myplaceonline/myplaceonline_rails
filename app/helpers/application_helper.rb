@@ -252,6 +252,10 @@ module ApplicationHelper
     attribute_table_row(name, Myp.markdown_to_html(markdown), markdown, "markdowncell")
   end
   
+  def markdown_content(markdown)
+    Myp.markdown_to_html(markdown).html_safe
+  end
+  
   def attribute_table_row_boolean(name, val)
     attribute_table_row(name, val ? t("myplaceonline.general.yes") : t("myplaceonline.general.no"))
   end

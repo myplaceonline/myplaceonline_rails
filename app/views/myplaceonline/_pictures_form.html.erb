@@ -20,5 +20,6 @@
   <%= child_fields.fields_for :identity_file, childproperty.identity_file do |file_fields| %>
     <%= myp_file_field(file_fields, :file, "myplaceonline.pictures.picture", childproperty.identity_file.file) %>
     <%= myp_text_field(file_fields, :file_file_name, "myplaceonline.files.file_file_name", childproperty.identity_file.file_file_name) %>
+    <p><%= image_content(childproperty.identity_file) %></p>
   <% end %>
 <% end %>
