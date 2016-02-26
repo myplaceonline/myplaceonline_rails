@@ -16,5 +16,6 @@
   
   <% content_for :postfooterlinks do %>
     <li><%= link_to t("myplaceonline.general.share"), permissions_share_token_path(subject_class: @obj.class.name, subject_id: @obj.id), "data-icon" => "action" %></li>
+    <li><%= link_to t("myplaceonline.trips.show_shared"), trip_shared_path(@obj), "data-icon" => "search" %></li>
   <% end %>
 <% end %>

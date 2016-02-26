@@ -214,7 +214,7 @@ Rails.application.routes.draw do
   post 'passports/new'
 
   resources :trips
-  match 'trips/:id/shared', :to => 'trips#shared', via: [:get], as: "trips_shared"
+  match 'trips/:id/shared', :to => 'trips#shared', via: [:get], as: "trip_shared"
   post 'trips/new'
 
   resources :jobs

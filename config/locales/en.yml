@@ -1198,6 +1198,7 @@ en:
       duration: "Length"
       hotel: "Hotel"
       download_zip: "Download Zip"
+      show_shared: "Display"
     passports:
       region: "Country"
       passport_number: "Passport Number"
