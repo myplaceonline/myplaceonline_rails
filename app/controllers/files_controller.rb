@@ -92,7 +92,7 @@ class FilesController < MyplaceonlineController
         
         image = Magick::Image.from_blob(@obj.file.file_contents).first
         
-        Myp.tmpfile("file" + @obj.id.to_s + "_", @obj.file_extension) do |tfile|
+        Myp.tmpfile("file" + @obj.id.to_s + "_", "") do |tfile|
           image.background_color = "none"
           image.rotate!(degrees)
           image.write(tfile.path)
