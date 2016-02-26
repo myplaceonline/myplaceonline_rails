@@ -1,5 +1,6 @@
 class Passport < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
+  include AllowExistingConcern
 
   validates :region, presence: true
   validates :passport_number, presence: true

@@ -1,5 +1,6 @@
 class Receipt < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
+  include AllowExistingConcern
 
   validates :receipt_name, presence: true
   validates :receipt_time, presence: true

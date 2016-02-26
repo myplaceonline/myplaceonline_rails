@@ -1,5 +1,6 @@
 class Story < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
+  include AllowExistingConcern
 
   validates :story_name, presence: true
   validates :story_time, presence: true
