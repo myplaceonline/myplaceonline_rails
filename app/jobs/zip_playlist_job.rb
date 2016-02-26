@@ -115,7 +115,7 @@ class ZipPlaylistJob < ApplicationJob
               end
               
               content = "<p>" + ERB::Util.html_escape_once(share.body) + "</p>\n\n"
-              url = playlists_shared_url(share.playlist, token: public_share.token)
+              url = playlist_shared_url(share.playlist, token: public_share.token)
               content += "<p>" + ActionController::Base.helpers.link_to(url, url) + "</p>"
               
               # Once we have the ZIP, now we can send out the email

@@ -602,6 +602,32 @@ var myplaceonline = function(mymodule) {
     }
   }
   
+  function playNextSong(search) {
+    var audioElements = $(search).find("audio");
+    if (audioElements.length) {
+      for (var i = 0; i < audioElements.length - 1; i++) {
+        if (!audioElements[i].paused) {
+          audioElements[i].pause();
+          audioElements[i + 1].play();
+          break;
+        }
+      }
+    }
+  }
+  
+  function playPreviousSong(search) {
+    var audioElements = $(search).find("audio");
+    if (audioElements.length) {
+      for (var i = 1; i < audioElements.length; i++) {
+        if (!audioElements[i].paused) {
+          audioElements[i].pause();
+          audioElements[i - 1].play();
+          break;
+        }
+      }
+    }
+  }
+  
   function onChangeCascade(myobj, transformValueFunc, parentSelector, childSelector, intermediateSelector, intermediateTransform) {
     var currentValue = $(myobj).val();
     if (transformValueFunc) {
@@ -654,6 +680,8 @@ var myplaceonline = function(mymodule) {
   mymodule.requestGPS = requestGPS;
   mymodule.requestGPS2 = requestGPS2;
   mymodule.playFirstSong = playFirstSong;
+  mymodule.playNextSong = playNextSong;
+  mymodule.playPreviousSong = playPreviousSong;
   mymodule.onChangeCascade = onChangeCascade;
   mymodule.toFloatSafe = toFloatSafe;
   mymodule.transformMultiply = transformMultiply;
