@@ -12,6 +12,7 @@ class Receipt < ActiveRecord::Base
 
   has_many :receipt_files, :dependent => :destroy
   accepts_nested_attributes_for :receipt_files, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :receipt_files, [{:name => :identity_file}]
 
   def display
     Myp.appendstrwrap(receipt_name, Myp.display_datetime_short(receipt_time, User.current_user))

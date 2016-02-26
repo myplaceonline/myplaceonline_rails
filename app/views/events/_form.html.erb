@@ -26,27 +26,12 @@
   }
 %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render partial: "myplaceonline/pictures_form", locals: {
     f: f,
-    heading: t("myplaceonline.events.pictures"),
-    childpropertiesname: :event_pictures,
-    childproperties: obj.event_pictures,
-    deletebutton: t("myplaceonline.events.delete_picture"),
-    addbutton: t("myplaceonline.events.add_picture"),
-    expanded: obj.event_pictures.length > 0,
-    formjson: [
-      {
-        type: 'file',
-        name: 'identity_file_attributes.file',
-        placeholder: t("myplaceonline.events.picture")
-      }
-    ]
-  } do |child_fields, childproperty|
+    obj: obj,
+    pictures_field: :event_pictures
+  }
 %>
-  <%= child_fields.fields_for :identity_file, childproperty.identity_file do |file_fields| %>
-    <%= myp_file_field file_fields, :file, "myplaceonline.events.picture", childproperty.identity_file.file %>
-  <% end %>
-<% end %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,

@@ -17,15 +17,7 @@ class TreksController < MyplaceonlineController
         :notes,
         :rating,
         location_attributes: LocationsController.param_names,
-        trek_pictures_attributes: [
-          :id,
-          :_destroy,
-          identity_file_attributes: [
-            :id,
-            :file,
-            :notes
-          ]
-        ]
+        trek_pictures_attributes: FilesController.multi_param_names
       )
     end
 end

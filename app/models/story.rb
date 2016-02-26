@@ -12,6 +12,7 @@ class Story < ActiveRecord::Base
 
   has_many :story_pictures, :dependent => :destroy
   accepts_nested_attributes_for :story_pictures, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :story_pictures, [{:name => :identity_file}]
   
   def display
     Myp.appendstrwrap(story_name, Myp.display_datetime_short(story_time, User.current_user))

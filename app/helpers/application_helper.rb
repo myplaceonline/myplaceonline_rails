@@ -220,6 +220,7 @@ module ApplicationHelper
   def attribute_table_row_image(name, identity_file, link_to_original = true)
     content = image_content(identity_file, link_to_original)
     if !content.nil?
+      content += "<p class=\"horizontal_center\">#{url_or_blank(file_path(identity_file, token: params[:token]), identity_file.file_file_name, nil, "", true)} | #{url_or_blank(file_download_path(identity_file, token: params[:token]), t("myplaceonline.files.download"), nil, "", true)}</p>".html_safe
       attribute_table_row_content(
         name,
         nil,

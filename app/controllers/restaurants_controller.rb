@@ -48,15 +48,7 @@ class RestaurantsController < MyplaceonlineController
         :visited,
         :rating,
         location_attributes: LocationsController.param_names,
-        restaurant_pictures_attributes: [
-          :id,
-          :_destroy,
-          identity_file_attributes: [
-            :id,
-            :file,
-            :notes
-          ]
-        ]
+        restaurant_pictures_attributes: FilesController.multi_param_names
       )
     end
 

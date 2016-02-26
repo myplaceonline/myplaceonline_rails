@@ -3,24 +3,9 @@
 <%= myp_decimal_field(f, :amount, "myplaceonline.receipts.amount", obj.amount) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.receipts.notes", obj.notes) %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render partial: "myplaceonline/pictures_form", locals: {
     f: f,
-    heading: t("myplaceonline.receipts.files"),
-    childpropertiesname: :receipt_files,
-    childproperties: obj.receipt_files,
-    deletebutton: t("myplaceonline.receipts.delete_file"),
-    addbutton: t("myplaceonline.receipts.add_file"),
-    expanded: obj.receipt_files.length > 0,
-    formjson: [
-      {
-        type: 'file',
-        name: 'identity_file_attributes.file',
-        placeholder: t("myplaceonline.receipts.file")
-      }
-    ]
-  } do |child_fields, childproperty|
+    obj: obj,
+    pictures_field: :receipt_files
+  }
 %>
-  <%= child_fields.fields_for :identity_file, childproperty.identity_file do |file_fields| %>
-    <%= myp_file_field file_fields, :file, "myplaceonline.receipts.file", childproperty.identity_file.file %>
-  <% end %>
-<% end %>

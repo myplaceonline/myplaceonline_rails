@@ -256,27 +256,12 @@
   }
 %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render partial: "myplaceonline/pictures_form", locals: {
     f: f,
-    heading: t("myplaceonline.vehicles.pictures"),
-    childpropertiesname: :vehicle_pictures,
-    childproperties: obj.vehicle_pictures,
-    deletebutton: t("myplaceonline.vehicles.delete_picture"),
-    addbutton: t("myplaceonline.vehicles.add_picture"),
-    expanded: obj.vehicle_pictures.length > 0,
-    formjson: [
-      {
-        type: 'file',
-        name: 'identity_file_attributes.file',
-        placeholder: t("myplaceonline.vehicles.picture")
-      }
-    ]
-  } do |child_fields, childproperty|
+    obj: obj,
+    pictures_field: :vehicle_pictures
+  }
 %>
-  <%= child_fields.fields_for :identity_file, childproperty.identity_file do |file_fields| %>
-    <%= myp_file_field(file_fields, :file, "myplaceonline.vehicles.picture", childproperty.identity_file.file) %>
-  <% end %>
-<% end %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,

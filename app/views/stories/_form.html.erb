@@ -2,24 +2,9 @@
 <%= myp_datetime_field(f, :story_time, "myplaceonline.stories.story_time", obj.story_time) %>
 <%= myp_text_area_markdown(f, :story, "myplaceonline.stories.story", obj.story) %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render partial: "myplaceonline/pictures_form", locals: {
     f: f,
-    heading: t("myplaceonline.stories.pictures"),
-    childpropertiesname: :story_pictures,
-    childproperties: obj.story_pictures,
-    deletebutton: t("myplaceonline.stories.delete_picture"),
-    addbutton: t("myplaceonline.stories.add_picture"),
-    expanded: obj.story_pictures.length > 0,
-    formjson: [
-      {
-        type: 'file',
-        name: 'identity_file_attributes.file',
-        placeholder: t("myplaceonline.stories.picture")
-      }
-    ]
-  } do |child_fields, childproperty|
+    obj: obj,
+    pictures_field: :story_pictures
+  }
 %>
-  <%= child_fields.fields_for :identity_file, childproperty.identity_file do |file_fields| %>
-    <%= myp_file_field file_fields, :file, "myplaceonline.stories.picture", childproperty.identity_file.file %>
-  <% end %>
-<% end %>

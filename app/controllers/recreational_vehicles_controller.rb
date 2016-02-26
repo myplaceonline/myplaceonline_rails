@@ -45,15 +45,7 @@ class RecreationalVehiclesController < MyplaceonlineController
         :_destroy,
         loan_attributes: Loan.params
       ],
-      recreational_vehicle_pictures_attributes: [
-        :id,
-        :_destroy,
-        identity_file_attributes: [
-          :id,
-          :file,
-          :notes
-        ]
-      ],
+      recreational_vehicle_pictures_attributes: FilesController.multi_param_names,
       recreational_vehicle_insurances_attributes: [
         :id,
         :insurance_name,

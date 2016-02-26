@@ -16,27 +16,12 @@
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.trips.notes", obj.notes) %>
 <%= myp_check_box(f, :work, "myplaceonline.trips.work") %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render partial: "myplaceonline/pictures_form", locals: {
     f: f,
-    heading: t("myplaceonline.trips.pictures"),
-    childpropertiesname: :trip_pictures,
-    childproperties: obj.trip_pictures,
-    deletebutton: t("myplaceonline.trips.delete_picture"),
-    addbutton: t("myplaceonline.jobs.add_picture"),
-    expanded: obj.trip_pictures.length > 0,
-    formjson: [
-      {
-        type: 'file',
-        name: 'identity_file_attributes.file',
-        placeholder: t("myplaceonline.trips.picture")
-      }
-    ]
-  } do |child_fields, childproperty|
+    obj: obj,
+    pictures_field: :trip_pictures
+  }
 %>
-  <%= child_fields.fields_for :identity_file, childproperty.identity_file do |file_fields| %>
-    <%= myp_file_field(file_fields, :file, "myplaceonline.trips.picture", childproperty.identity_file.file) %>
-  <% end %>
-<% end %>
 <%=
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,
@@ -47,6 +32,7 @@
     existingobjurl: "hotel_path",
     searchurl: "/hotels.json?perpage=0",
     edit: edit,
-    autofocus: false
+    autofocus: false,
+    collapsed: obj.hotel.nil?
   }
 %>

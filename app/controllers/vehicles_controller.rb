@@ -91,15 +91,7 @@ class VehiclesController < MyplaceonlineController
           company_attributes: CompaniesController.param_names,
           periodic_payment_attributes: PeriodicPaymentsController.param_names
         ],
-        vehicle_pictures_attributes: [
-          :id,
-          :_destroy,
-          identity_file_attributes: [
-            :id,
-            :file,
-            :notes
-          ]
-        ],
+        vehicle_pictures_attributes: FilesController.multi_param_names,
         vehicle_warranties_attributes: [
           :id,
           :_destroy,

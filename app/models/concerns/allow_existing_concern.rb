@@ -25,24 +25,40 @@ module AllowExistingConcern extend ActiveSupport::Concern
       
       def allow_existing_children(name, children)
         define_method("#{name.to_s}_attributes=") do |attributes|
-          super(attributes)
+          attrs_to_delete = Array.new
           self.send("#{name.to_s}").each do |x|
             attributes.each do |key, value|
               children.each do |child|
                 child_name = child[:name].to_s
-                if value["_destroy"] != "1" && !value["#{child_name}_attributes"].blank?
-                  idobj = value["#{child_name}_attributes"]["id"]
+                child_attributes = value["#{child_name}_attributes"]
+                if value["_destroy"] != "1" && !child_attributes.blank?
+                  idobj = child_attributes["id"]
                   if !idobj.blank?
                     child_value = x.send(child_name)
                     id = idobj.to_i
                     if !child_value.nil? && child_value.id == id
-                      Myp.set_existing_object(x, child_name, child[:model], id)
+                      child_obj = Myp.set_existing_object(x, child_name, child[:model], id)
+                      child_attributes.delete_if {|innerkey, innervalue| innerkey == "id" }
+                      
+                      # Calling super(attributes) re-loads this item we loaded
+                      # above with the set_existing_object call, and doesn't
+                      # update attributes (security feature), so we explicitly
+                      # update them here. However, we also have to delete
+                      # these attributes later so that the objects aren't
+                      # overwritten. We still have to call
+                      # `super(attributes)` because a new item may have been
+                      # item at the same time an existing item was updated
+                      
+                      child_obj.assign_attributes(child_attributes)
+                      attrs_to_delete.push(key)
                     end
                   end
                 end
               end
             end
           end
+          attributes.delete_if {|innerkey, innervalue| !attrs_to_delete.find_index{|atd| atd == innerkey}.nil? }
+          super(attributes)
         end
       end
   end

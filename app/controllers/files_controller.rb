@@ -147,6 +147,24 @@ class FilesController < MyplaceonlineController
   def self.second_list_icon(obj)
     ActionController::Base.helpers.image_tag("famfamfam/folder.png", alt: obj.display, title: obj.display, class: "ui-li-icon", height: 16, width: 16)
   end
+  
+  def self.param_names
+    [
+      :id,
+      :file,
+      :file_file_name,
+      :notes,
+      folder_attributes: [ :id ]
+    ]
+  end
+  
+  def self.multi_param_names
+    [
+      :id,
+      :_destroy,
+      identity_file_attributes: FilesController.param_names
+    ]
+  end
 
   protected
 
@@ -159,12 +177,7 @@ class FilesController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:identity_file).permit(
-        :file,
-        :notes,
-        :file_file_name,
-        folder_attributes: [ :id ]
-      )
+      params.require(:identity_file).permit(FilesController.param_names)
     end
 
     def respond_download_identity_file(respond_type, identity_file)

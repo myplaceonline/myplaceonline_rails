@@ -1,0 +1,24 @@
+<%# arguments: { f: "form", obj: "object", pictures_field: "symbol" } %>
+<%=
+  render layout: "myplaceonline/childproperties", locals: {
+    f: f,
+    heading: t("myplaceonline.pictures.pictures"),
+    childpropertiesname: pictures_field,
+    childproperties: obj.send(pictures_field.to_s),
+    deletebutton: t("myplaceonline.pictures.delete_picture"),
+    addbutton: t("myplaceonline.pictures.add_picture"),
+    expanded: obj.send(pictures_field.to_s).length > 0,
+    formjson: [
+      {
+        type: "file",
+        name: "identity_file_attributes.file",
+        placeholder: t("myplaceonline.pictures.picture")
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%= child_fields.fields_for :identity_file, childproperty.identity_file do |file_fields| %>
+    <%= myp_file_field(file_fields, :file, "myplaceonline.pictures.picture", childproperty.identity_file.file) %>
+    <%= myp_text_field(file_fields, :file_file_name, "myplaceonline.files.file_file_name", childproperty.identity_file.file_file_name) %>
+  <% end %>
+<% end %>

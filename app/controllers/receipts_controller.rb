@@ -18,15 +18,7 @@ class ReceiptsController < MyplaceonlineController
         :receipt_time,
         :amount,
         :notes,
-        receipt_files_attributes: [
-          :id,
-          :_destroy,
-          identity_file_attributes: [
-            :id,
-            :file,
-            :notes
-          ]
-        ]
+        receipt_files_attributes: FilesController.multi_param_names
       )
     end
 end

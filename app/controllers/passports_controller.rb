@@ -33,15 +33,7 @@ class PassportsController < MyplaceonlineController
         :issuing_authority,
         :name,
         :notes,
-        passport_pictures_attributes: [
-          :id,
-          :_destroy,
-          identity_file_attributes: [
-            :id,
-            :file,
-            :notes
-          ]
-        ]
+        passport_pictures_attributes: FilesController.multi_param_names
       )
     end
 end

@@ -10,6 +10,7 @@ class Passport < ActiveRecord::Base
   
   has_many :passport_pictures, :dependent => :destroy
   accepts_nested_attributes_for :passport_pictures, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :passport_pictures, [{:name => :identity_file}]
 
   before_validation :update_pic_folders
   

@@ -20,4 +20,5 @@ class Bar < ActiveRecord::Base
 
   has_many :bar_pictures, :dependent => :destroy
   accepts_nested_attributes_for :bar_pictures, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :bar_pictures, [{:name => :identity_file}]
 end

@@ -24,15 +24,7 @@ class TripsController < MyplaceonlineController
         :notes,
         :work,
         location_attributes: LocationsController.param_names,
-        trip_pictures_attributes: [
-          :id,
-          :_destroy,
-          identity_file_attributes: [
-            :id,
-            :file,
-            :notes
-          ]
-        ],
+        trip_pictures_attributes: FilesController.multi_param_names,
         hotel_attributes: HotelsController.param_names
       )
     end

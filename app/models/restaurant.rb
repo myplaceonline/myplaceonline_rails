@@ -20,4 +20,5 @@ class Restaurant < ActiveRecord::Base
 
   has_many :restaurant_pictures, :dependent => :destroy
   accepts_nested_attributes_for :restaurant_pictures, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :restaurant_pictures, [{:name => :identity_file}]
 end

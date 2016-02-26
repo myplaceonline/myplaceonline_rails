@@ -1020,7 +1020,6 @@ module Myp
       model = Object.const_get(targetname.to_s.camelize)
     end
     if model.new.respond_to?("identity_id")
-      
       obj = model.find_by(
         id: id,
         identity: Permission.current_target_identity
@@ -1035,6 +1034,7 @@ module Myp
       "#{targetname.to_s}=",
       obj
     )
+    obj
   end
   
   def self.find_existing_object(class_name, id)

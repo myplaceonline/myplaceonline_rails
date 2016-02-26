@@ -20,4 +20,5 @@ class Trek < ActiveRecord::Base
 
   has_many :trek_pictures, :dependent => :destroy
   accepts_nested_attributes_for :trek_pictures, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :trek_pictures, [{:name => :identity_file}]
 end

@@ -23,15 +23,7 @@ class ConcertsController < MyplaceonlineController
           :_destroy,
           musical_group_attributes: MusicalGroup.params
         ],
-        concert_pictures_attributes: [
-          :id,
-          :_destroy,
-          identity_file_attributes: [
-            :id,
-            :file,
-            :notes
-          ]
-        ]
+        concert_pictures_attributes: FilesController.multi_param_names
       )
     end
 end

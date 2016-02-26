@@ -26,6 +26,7 @@ class Vehicle < ActiveRecord::Base
 
   has_many :vehicle_pictures, :dependent => :destroy
   accepts_nested_attributes_for :vehicle_pictures, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :vehicle_pictures, [{:name => :identity_file}]
 
   before_validation :update_pic_folders
   

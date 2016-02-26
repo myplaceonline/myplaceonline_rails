@@ -17,15 +17,7 @@ class StoriesController < MyplaceonlineController
         :story_name,
         :story_time,
         :story,
-        story_pictures_attributes: [
-          :id,
-          :_destroy,
-          identity_file_attributes: [
-            :id,
-            :file,
-            :notes
-          ]
-        ]
+        story_pictures_attributes: FilesController.multi_param_names
       )
     end
 end

@@ -1713,6 +1713,10 @@ en:
       weight: "Weight"
     pictures:
       slideshow: "Pictures Slideshow"
+      pictures: "Pictures"
+      picture: "Picture"
+      add_picture: "Add Picture"
+      delete_picture: "Delete Picture"
     trash:
       type_general: "General Trash"
       type_recycling: "Recycling"

@@ -30,4 +30,5 @@ class Concert < ActiveRecord::Base
 
   has_many :concert_pictures, :dependent => :destroy
   accepts_nested_attributes_for :concert_pictures, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :concert_pictures, [{:name => :identity_file}]
 end

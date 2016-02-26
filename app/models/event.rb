@@ -25,6 +25,7 @@ class Event < ActiveRecord::Base
 
   has_many :event_pictures, :dependent => :destroy
   accepts_nested_attributes_for :event_pictures, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :event_pictures, [{:name => :identity_file}]
 
   has_many :event_contacts, :dependent => :destroy
   accepts_nested_attributes_for :event_contacts, allow_destroy: true, reject_if: :all_blank
