@@ -95,6 +95,12 @@ class FilesController < MyplaceonlineController
         Myp.tmpfile("file" + @obj.id.to_s + "_", "") do |tfile|
           image.background_color = "none"
           image.rotate!(degrees)
+          
+          # Reset any EXIF orientation data when rotating
+          if image.respond_to?("orientation=")
+            image.orientation = Magick::UndefinedOrientation
+          end
+          
           image.write(tfile.path)
           
           tfile.flush
