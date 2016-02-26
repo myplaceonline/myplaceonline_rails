@@ -9,7 +9,10 @@
   <%= attribute_table_row_image(t("myplaceonline.files.inline_image"), @obj) %>
   
   <% content_for :postfooterlinks do %>
-    <li><%= link_to t('myplaceonline.files.move'), file_move_path(@obj), "data-icon" => "arrow-r" %></li>
+    <li><%= link_to t("myplaceonline.files.rotateclock90"), file_rotate_path(@obj, degrees: 90), "data-icon" => "forward" %></li>
+    <li><%= link_to t("myplaceonline.files.rotatecounterclock90"), file_rotate_path(@obj, degrees: -90), "data-icon" => "back" %></li>
+    <li><%= link_to t("myplaceonline.files.rotate180"), file_rotate_path(@obj, degrees: 180), "data-icon" => "gear" %></li>
+    <li><%= link_to t("myplaceonline.files.move"), file_move_path(@obj), "data-icon" => "arrow-r" %></li>
     <% if !@obj.folder.nil? %>
       <li><%= link_to t('myplaceonline.files.folder'), file_folder_path(@obj.folder), "data-icon" => "back" %></li>
     <% end %>

@@ -38,9 +38,13 @@ class IdentityFile < ActiveRecord::Base
   def do_before_update
     if self.file_file_size_changed?
       # Make sure any thumbnail is cleared (if it's a picture)
-      self.thumbnail_contents = nil
-      self.thumbnail_bytes = nil
+      clear_thumbnail
     end
+  end
+  
+  def clear_thumbnail
+    self.thumbnail_contents = nil
+    self.thumbnail_bytes = nil
   end
   
   def self.build(params = nil)
@@ -61,5 +65,14 @@ class IdentityFile < ActiveRecord::Base
     super.as_json(options).merge({
       "thumbnail_contents" => thumbnail_contents.nil? ? nil : ::Base64.strict_encode64(thumbnail_contents)
     })
+  end
+  
+  def file_extension
+    i = file_file_name.index(".")
+    if !i.nil?
+      file_file_name[i..-1]
+    else
+      nil
+    end
   end
 end

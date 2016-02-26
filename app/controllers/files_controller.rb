@@ -82,6 +82,52 @@ class FilesController < MyplaceonlineController
     end
   end
   
+  def rotate
+    set_obj
+    degrees_str = params[:degrees]
+    if !degrees_str.blank?
+      
+      degrees = degrees_str.to_i
+      if degrees >= -360 && degrees <= 360
+        
+        image = Magick::Image.from_blob(@obj.file.file_contents).first
+        
+        Myp.tmpfile("file" + @obj.id.to_s + "_", @obj.file_extension) do |tfile|
+          image.background_color = "none"
+          image.rotate!(degrees)
+          image.write(tfile.path)
+          
+          tfile.flush
+          
+          uploaded_file = ActionDispatch::Http::UploadedFile.new(
+            tempfile: tfile,
+            filename: @obj.file_file_name,
+            type: @obj.file_content_type
+          )
+          
+          @obj.clear_thumbnail
+          @obj.file = uploaded_file
+          @obj.save!
+        end
+
+        redirect_to file_path(@obj),
+          :flash => { :notice =>
+                      I18n.t("myplaceonline.files.saved")
+                    }
+      else
+        redirect_to file_path(@obj),
+          :flash => { :notice =>
+                      I18n.t("myplaceonline.files.no_degrees")
+                    }
+      end
+    else
+      redirect_to file_path(@obj),
+        :flash => { :notice =>
+                    I18n.t("myplaceonline.files.no_degrees")
+                  }
+    end
+  end
+  
   def may_upload
     true
   end
