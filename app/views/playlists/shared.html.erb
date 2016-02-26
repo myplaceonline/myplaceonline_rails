@@ -1,4 +1,4 @@
-<% content_for :heading do -%><%= @obj.display %><% end -%>
+<% content_for :heading do -%><%= page_heading(@obj, controller) %><% end -%>
 <h1><%= @obj.display %></h1>
 <% if !@obj.identity_file.nil? %>
   <%= url_or_blank(file_download_path(@obj.identity_file, token: params[:token]), t("myplaceonline.playlists.download_zip") + " (" + bytes_number(@obj.identity_file.file_file_size) + ")", nil, "ui-btn ui-btn-inline", true) %>

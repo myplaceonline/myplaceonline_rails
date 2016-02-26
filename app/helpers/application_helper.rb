@@ -20,6 +20,16 @@ module ApplicationHelper
     html.html_safe
   end
   
+  def page_heading(obj, controller)
+    result = I18n.t("myplaceonline.category.#{controller.category_name}").singularize
+    obj_display = controller.display_obj(obj)
+    if !obj_display.nil?
+      result += ": "
+      result += obj_display
+    end
+    result
+  end
+  
   def is_blank(value, strip = true)
     if strip && value.is_a?(String) && !value.nil?
       value = value.strip

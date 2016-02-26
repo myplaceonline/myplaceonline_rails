@@ -1,6 +1,6 @@
 <% if !@nested_show %>
   <% if !@myplet %>
-    <% content_for :heading do -%><%= controller.display_obj(@obj) %><% end -%>
+    <% content_for :heading do -%><%= page_heading(@obj, controller) %><% end -%>
   <% end %>
 
   <h1><%= controller.display_obj(@obj) %></h1>

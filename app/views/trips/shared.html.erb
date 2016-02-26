@@ -1,4 +1,4 @@
-<% content_for :heading do -%><%= @obj.display %><% end -%>
+<% content_for :heading do -%><%= page_heading(@obj, controller) %><% end -%>
 <div class="horizontal_center">
 <h1><%= @obj.display %></h1>
 <% if !@obj.notes.blank? %>
