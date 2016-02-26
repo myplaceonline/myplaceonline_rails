@@ -221,11 +221,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
     Myp.ensure_encryption_key(session)
     @page_transition = current_user.page_transition
     @always_autofocus = current_user.always_autofocus
+    @show_timestamps = current_user.show_timestamps
     if request.post?
       @page_transition = params[:page_transition]
       @always_autofocus = params[:always_autofocus]
+      @show_timestamps = params[:show_timestamps]
       current_user.page_transition = @page_transition
       current_user.always_autofocus = @always_autofocus
+      current_user.show_timestamps = @show_timestamps
       current_user.save!
       redirect_to edit_user_registration_path,
         :flash => { :notice => I18n.t("myplaceonline.users.appearance_saved") }

@@ -465,6 +465,7 @@ en:
       enable_sounds: "Enable Sounds"
       always_autofocus: "Always Autofocus Input"
       items_per_page: "Items Per Page"
+      show_timestamps: "Show Created/Updated Timestamps"
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"
