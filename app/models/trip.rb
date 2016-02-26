@@ -42,7 +42,11 @@ class Trip < ActiveRecord::Base
   end
   
   def display
-    result = Myp.display_date_short_year(started, User.current_user)
+    if ended.nil?
+      result = Myp.display_date_short_year(started, User.current_user)
+    else
+      result = Myp.display_date_short(started, User.current_user)
+    end
     if !ended.nil?
       result += " - " + Myp.display_date_short_year(ended, User.current_user)
     end
