@@ -1,0 +1,10 @@
+<% content_for :heading do -%><%= t("myplaceonline.help.title") %><% end -%>
+
+<ul data-role="listview" data-inset="true">
+  <li>
+    <%= link_to(help_features_path) do %>
+      <%= image_tag("FatCow_Icons16x16/class_module.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.help.features") %>
+    <% end %>
+  </li>
+</ul>

@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   
+  get 'help/index'
+  get 'help/features'
+  get 'help/highlights'
+  get 'help/category'
+  get 'help', :to => 'help#index'
+
   resources :permission_shares
   post 'permission_shares/new'
 

@@ -1,0 +1,12 @@
+<% content_for :heading do -%><%= t("myplaceonline.help.highlights") %><% end -%>
+
+<ul data-role="listview" data-inset="true">
+  <% @categories.each do |category| %>
+    <li>
+      <%= link_to(help_category_path(name: category.name)) do %>
+        <%= image_tag(category.icon, size: "16x16", class: "ui-li-icon") %>
+        <%= category.human_title %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

@@ -316,6 +316,7 @@ en:
       privacy: "Privacy Policy"
       terms: "Terms of Service"
       faq: "Frequently Asked Questions"
+      help: "Help"
       faq_content: !xml |
         <![CDATA[
         # Frequently Asked Questions
@@ -364,6 +365,27 @@ en:
         1. Hold `Shift` and click the icon in the top header and a small box will pop up with a search box to quickly jump to a different category.
         1. Hold `Control` and click the icon in the top header to go to the homepage.
         1. Press `Enter` in any search/filter box to go to the first result.
+        
+        ]]>
+    help:
+      title: "Help"
+      features: "Features"
+      highlights: "Highlights"
+      no_help: "No help for this category yet"
+      category_trips: !xml |
+        <![CDATA[
+        ## Sharing
+        
+        Click on a [trip](/trips/) and then click the `Share` button. Select or
+        create a set of contacts with email addresses, and a link will be
+        emailed out to those email addresses. The link contains a unique token
+        so that the person does not have to sign up for myplaceonline to see
+        the trip (although this means that anyone with that link can see it).
+        
+        The link will take the person to a page with the description of the
+        trip, thumbnails of all pictures for the trip, and a slideshow of the
+        pictures. You can see what this page looks like by clicking the
+        `Display` button on the trip.
         
         ]]>
     search:
