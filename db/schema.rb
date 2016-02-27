@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160227010541) do
+ActiveRecord::Schema.define(version: 20160227012505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1048,6 +1048,18 @@ ActiveRecord::Schema.define(version: 20160227010541) do
   add_index "group_contacts", ["contact_id"], name: "index_group_contacts_on_contact_id", using: :btree
   add_index "group_contacts", ["group_id"], name: "index_group_contacts_on_group_id", using: :btree
   add_index "group_contacts", ["identity_id"], name: "index_group_contacts_on_identity_id", using: :btree
+
+  create_table "group_references", force: :cascade do |t|
+    t.integer  "identity_id"
+    t.integer  "parent_group_id"
+    t.integer  "group_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "group_references", ["group_id"], name: "index_group_references_on_group_id", using: :btree
+  add_index "group_references", ["identity_id"], name: "index_group_references_on_identity_id", using: :btree
+  add_index "group_references", ["parent_group_id"], name: "index_group_references_on_parent_group_id", using: :btree
 
   create_table "groups", force: :cascade do |t|
     t.string   "group_name",  limit: 255
@@ -2877,6 +2889,9 @@ ActiveRecord::Schema.define(version: 20160227010541) do
   add_foreign_key "event_pictures", "identity_files"
   add_foreign_key "favorite_product_links", "favorite_products"
   add_foreign_key "favorite_product_links", "identities"
+  add_foreign_key "group_references", "groups"
+  add_foreign_key "group_references", "groups", column: "parent_group_id"
+  add_foreign_key "group_references", "identities"
   add_foreign_key "happy_things", "identities"
   add_foreign_key "hotels", "identities"
   add_foreign_key "hotels", "locations"

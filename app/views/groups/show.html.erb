@@ -5,6 +5,9 @@
   <% @obj.group_contacts.each do |wrapper| %>
     <%= attribute_table_row_reference(t("myplaceonline.groups.contact"), "contact_path", wrapper.contact) %>
   <% end %>
+  <% @obj.group_references.each do |wrapper| %>
+    <%= attribute_table_row_reference(t("myplaceonline.groups.group_reference"), "group_path", wrapper.group) %>
+  <% end %>
   
   <% content_for :postfooterlinks do %>
     <li><%= link_to t('myplaceonline.groups.email_list'), groups_email_list_path(@obj), "data-icon" => "bars" %></li>

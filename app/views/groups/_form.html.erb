@@ -38,3 +38,41 @@
     }
   %>
 <% end %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.groups.group_references"),
+    childpropertiesname: :group_references,
+    childproperties: obj.group_references,
+    deletebutton: t("myplaceonline.groups.delete_group_reference"),
+    addbutton: t("myplaceonline.groups.add_group_references"),
+    expanded: obj.group_references.length > 0,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :group_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.groups.group_reference"),
+        objform: "groups/form",
+        existingobjurl: "group_path",
+        searchurl: "/groups.json?perpage=0",
+        edit: false,
+        autofocus: true
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :group_attributes,
+      existingobj: childproperty.group,
+      heading: t("myplaceonline.groups.group_reference"),
+      objform: "groups/form",
+      existingobjurl: "group_path",
+      searchurl: "/groups.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
+<% end %>

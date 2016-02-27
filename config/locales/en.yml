@@ -1651,6 +1651,10 @@ en:
       email_list: "Email List"
       no_emails: "No contacts in the group have emails"
       which_no_emails: "The following contacts did not have emails: %{list}"
+      group_reference: "Group Reference"
+      group_references: "Group References"
+      add_group_reference: "Add Group Reference"
+      delete_group_reference: "Delete Group Reference"
     terms: !xml |
       <![CDATA[
       
