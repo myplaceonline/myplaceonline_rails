@@ -12,51 +12,22 @@
 <% end %>
 
 <%= form_for @share, :url => permissions_share_token_path do |f| %>
-  <%= myp_text_field(f, :subject, "myplaceonline.permissions.subject", @share.subject, true) %>
-  <%= myp_text_area_markdown(f, :body, "myplaceonline.permissions.body", @share.body) %>
-  <%= myp_check_box(f, :copy_self, "myplaceonline.permissions.copy_self") %>
-  <%= myp_hidden_field(f, :email, @share.email) %>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: f,
+      name: :email_attributes,
+      existingobj: @share.email,
+      heading: t("myplaceonline.permission_shares.email"),
+      objform: "emails/form",
+      existingobjurl: "email_path",
+      searchurl: "/emails.json?perpage=0",
+      edit: true,
+      autofocus: true,
+      only_new: true
+    }
+  %>
   <%= myp_hidden_field(f, :subject_class, @share.subject_class) %>
   <%= myp_hidden_field(f, :subject_id, @share.subject_id) %>
-  <%=
-    render layout: 'myplaceonline/childproperties', locals: {
-      f: f,
-      heading: t("myplaceonline.permissions.contacts"),
-      childpropertiesname: :permission_share_contacts,
-      childproperties: @share.permission_share_contacts,
-      deletebutton: t("myplaceonline.permissions.delete_contact"),
-      addbutton: t("myplaceonline.permissions.add_contact"),
-      expanded: true,
-      formjson: [
-        {
-          type: :renderpartial,
-          name: :contact_attributes,
-          partial: 'myplaceonline/select_or_create',
-          heading: t("myplaceonline.permissions.contact"),
-          objform: "contacts/form",
-          existingobjurl: "contact_path",
-          searchurl: "/contacts.json?perpage=0",
-          edit: true,
-          autofocus: true,
-          force_existing: true
-        }
-      ]
-    } do |child_fields, childproperty|
-  %>
-    <%=
-      render partial: 'myplaceonline/select_or_create', locals: {
-        f: child_fields,
-        name: :contact_attributes,
-        existingobj: childproperty.contact,
-        heading: t("myplaceonline.permissions.contact"),
-        objform: "contacts/form",
-        existingobjurl: "contact_path",
-        searchurl: "/contacts.json?perpage=0",
-        edit: true,
-        autofocus: false
-      }
-    %>
-  <% end %>
   
   <div data-role="footer" data-position="fixed" data-tap-toggle="false">
     <div data-role="navbar">

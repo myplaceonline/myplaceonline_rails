@@ -55,26 +55,18 @@ class PermissionsController < MyplaceonlineController
 
   def share_token
     @share = Myp.new_model(PermissionShare)
-    @share.email = true
     @share.copy_self = true
     @share.subject_class = params[:subject_class]
     @share.subject_id = params[:subject_id]
+    @share.email = Myp.new_model(Email)
+    @share.email.email_category = @share.subject_class
 
     if request.post?
       @share = PermissionShare.new(
         params.require(:permission_share).permit(
-          :subject,
-          :body,
-          :email,
-          :copy_self,
           :subject_class,
           :subject_id,
-          permission_share_contacts_attributes: [
-            :_destroy,
-            contact_attributes: [
-              :id
-            ]
-          ]
+          email_attributes: EmailsController.param_names
         )
       )
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160227072859) do
+ActiveRecord::Schema.define(version: 20160227122046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1989,31 +1989,20 @@ ActiveRecord::Schema.define(version: 20160227072859) do
   add_index "permission_share_children", ["permission_share_id"], name: "index_permission_share_children_on_permission_share_id", using: :btree
   add_index "permission_share_children", ["share_id"], name: "index_permission_share_children_on_share_id", using: :btree
 
-  create_table "permission_share_contacts", force: :cascade do |t|
-    t.integer  "contact_id"
-    t.integer  "permission_share_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-  end
-
-  add_index "permission_share_contacts", ["contact_id"], name: "index_permission_share_contacts_on_contact_id", using: :btree
-  add_index "permission_share_contacts", ["identity_id"], name: "index_permission_share_contacts_on_identity_id", using: :btree
-  add_index "permission_share_contacts", ["permission_share_id"], name: "index_permission_share_contacts_on_permission_share_id", using: :btree
-
   create_table "permission_shares", force: :cascade do |t|
     t.string   "subject_class"
     t.integer  "subject_id"
     t.string   "subject"
     t.text     "body"
-    t.boolean  "email"
     t.boolean  "copy_self"
     t.integer  "share_id"
     t.integer  "identity_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "email_id"
   end
 
+  add_index "permission_shares", ["email_id"], name: "index_permission_shares_on_email_id", using: :btree
   add_index "permission_shares", ["identity_id"], name: "index_permission_shares_on_identity_id", using: :btree
   add_index "permission_shares", ["share_id"], name: "index_permission_shares_on_share_id", using: :btree
 
@@ -2952,9 +2941,7 @@ ActiveRecord::Schema.define(version: 20160227072859) do
   add_foreign_key "permission_share_children", "identities"
   add_foreign_key "permission_share_children", "permission_shares"
   add_foreign_key "permission_share_children", "shares"
-  add_foreign_key "permission_share_contacts", "contacts"
-  add_foreign_key "permission_share_contacts", "identities"
-  add_foreign_key "permission_share_contacts", "permission_shares"
+  add_foreign_key "permission_shares", "emails"
   add_foreign_key "permission_shares", "identities"
   add_foreign_key "permission_shares", "shares"
   add_foreign_key "permissions", "identities"

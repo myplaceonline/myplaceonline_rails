@@ -5,7 +5,11 @@ existingcollapsed = false
 random_name = SecureRandom.hex(10)
 new_item_collapsible_id = random_name + "_new_item"
 always_search ||= false
-allow_new = existingobj.id.nil?
+only_new ||= false
+allow_new = true
+if !existingobj.nil? && !existingobj.id.nil?
+  allow_new = false
+end
 
 # If there are no existing items, then expand the new item instead
 if !objform.blank?
@@ -38,42 +42,44 @@ end
 <div data-role="collapsible" data-collapsed="<%= collapsed %>">
   <h4><%= heading %></h4>
   <div data-role="collapsible-set">
-    <div data-role="collapsible" data-collapsed="<%= existingcollapsed %>">
-      <%= f.fields_for name, existingobj do |sub_fields| %>
-        <%
-          fieldid = sub_fields.object_name.gsub("\[", "_").gsub("\]", "") + "_id"
-        %>
-        <h3><%= t("myplaceonline.general.existing") + " " + heading %></h3>
-        <div id="<%= random_name %>_searchable_container">
-          <ul id="<%= random_name %>_searchable" data-role="listview" data-inset="true" data-filter="true" data-icon="false" data-filter-placeholder="<%= t("myplaceonline.search.placeholder") %>">
-            <% if !existingobj.nil? && !existingobj.id.nil? %>
-              <li>
-                <%= link_to existingobj.display, send(existingobjurl, existingobj), onclick: Myp.select_listitem('#' + fieldid) %>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-        <%= sub_fields.hidden_field(:id) %>
-        <script type="text/javascript">
-          myplaceonline.onPageLoad(function() {
-            $("#<%= random_name %>_searchable li").each(function(index) {
-              $(this).addClass('ui-btn-active');
-            });
-            myplaceonline.hookListviewSearch($("#<%= random_name %>_searchable"), "<%= searchurl %>", function(ul) {
-              ul.find("li a").each(function(index) {
-                $(this).attr("onclick", "<%= raw(Myp.select_listitem('#' + fieldid)) %>");
+    <% if !only_new %>
+      <div data-role="collapsible" data-collapsed="<%= existingcollapsed %>">
+        <%= f.fields_for name, existingobj do |sub_fields| %>
+          <%
+            fieldid = sub_fields.object_name.gsub("\[", "_").gsub("\]", "") + "_id"
+          %>
+          <h3><%= t("myplaceonline.general.existing") + " " + heading %></h3>
+          <div id="<%= random_name %>_searchable_container">
+            <ul id="<%= random_name %>_searchable" data-role="listview" data-inset="true" data-filter="true" data-icon="false" data-filter-placeholder="<%= t("myplaceonline.search.placeholder") %>">
+              <% if !existingobj.nil? && !existingobj.id.nil? %>
+                <li>
+                  <%= link_to existingobj.display, send(existingobjurl, existingobj), onclick: Myp.select_listitem('#' + fieldid) %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+          <%= sub_fields.hidden_field(:id) %>
+          <script type="text/javascript">
+            myplaceonline.onPageLoad(function() {
+              $("#<%= random_name %>_searchable li").each(function(index) {
+                $(this).addClass('ui-btn-active');
               });
-              <% if always_search %>
-                ul[0].allLoaded = false;
+              myplaceonline.hookListviewSearch($("#<%= random_name %>_searchable"), "<%= searchurl %>", function(ul) {
+                ul.find("li a").each(function(index) {
+                  $(this).attr("onclick", "<%= raw(Myp.select_listitem('#' + fieldid)) %>");
+                });
+                <% if always_search %>
+                  ul[0].allLoaded = false;
+                <% end %>
+              });
+              <% if autofocus && !existingcollapsed %>
+              myplaceonline.maybeFocus($("#<%= random_name %>_searchable_container input"));
               <% end %>
             });
-            <% if autofocus && !existingcollapsed %>
-            myplaceonline.maybeFocus($("#<%= random_name %>_searchable_container input"));
-            <% end %>
-          });
-        </script>
-      <% end %>
-    </div>
+          </script>
+        <% end %>
+      </div>
+    <% end %>
     <% if allow_new %>
       <div id="<%= new_item_collapsible_id %>" data-role="collapsible" data-collapsed="<%= !existingcollapsed %>">
         <%

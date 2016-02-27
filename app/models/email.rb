@@ -24,9 +24,15 @@ class Email < ActiveRecord::Base
     end
   end
 
-  def send_email
-    content_plain = body
+  def send_email(body2_html = nil, body2_plain = nil)
     content = "<p>" + Myp.markdown_to_html(body) + "</p>"
+    if !body2_html.nil?
+      content += "\n\n" + body2_html
+    end
+    content_plain = body
+    if !body2_plain.nil?
+      content_plain += "\n\n" + body2_plain
+    end
     
     targets = {}
 

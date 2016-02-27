@@ -4,32 +4,17 @@ class PermissionShare < ActiveRecord::Base
   include ActionDispatch::Routing
   include Rails.application.routes.url_helpers
 
-  validates :subject, presence: true
+  validates :email, presence: true
   validates :subject_class, presence: true
   validates :subject_id, presence: true
 
-  has_many :permission_share_contacts, :dependent => :destroy
-  accepts_nested_attributes_for :permission_share_contacts, allow_destroy: true, reject_if: :all_blank
-  
   has_many :permission_share_children, :dependent => :destroy
   
-  validate :has_contacts
-  
+  belongs_to :email
+  accepts_nested_attributes_for :email, reject_if: :all_blank
+
   def display
     subject_class + "/" + subject_id.to_s
-  end
-  
-  def has_contacts
-    if permission_share_contacts.length == 0
-      errors.add(:contacts, I18n.t("myplaceonline.permissions.requires_contacts"))
-    end
-  end
-
-  validate do
-    Rails.logger.debug{"Validating #{subject_class}:#{subject_id}"}
-    if Myp.find_existing_object(subject_class, subject_id).nil?
-      errors.add(:subject_id, I18n.t("myplaceonline.permissions.invalid_id"))
-    end
   end
   
   belongs_to :share
@@ -41,6 +26,10 @@ class PermissionShare < ActiveRecord::Base
       mainlink += "/shared"
     end
     url_for(mainlink + "?token=" + share.token)
+  end
+  
+  def get_obj
+    Object.const_get(subject_class).find_by(id: subject_id)
   end
   
   def simple_path
@@ -58,23 +47,19 @@ class PermissionShare < ActiveRecord::Base
   end
   
   def send_email
-    content_plain = body
-    content = "<p>" + Myp.markdown_to_html(body) + "</p>\n\n"
-    
     url = link
-    content += "<p>" + ActionController::Base.helpers.link_to(url, url) + "</p>"
-    content_plain += "\n\n" + url
-    
-    bcc = nil
-    if copy_self
-      bcc = identity.user.email
-    end
-    to = Array.new
-    permission_share_contacts.each do |permission_share_contact|
-      permission_share_contact.contact.contact_identity.emails.each do |identity_email|
-        to.push(identity_email)
-      end
-    end
-    Myp.send_email(to, subject, content.html_safe, nil, bcc, content_plain)
+    obj = get_obj
+    prefix = obj.display
+    cat = Myp.instance_to_category(obj)
+    tcat = I18n.t("myplaceonline.category.#{cat.name}").singularize
+    email.send_email(
+      "<p>#{tcat}: #{prefix}</p><p>" + ActionController::Base.helpers.link_to(url, url) + "</p>",
+      tcat + ": " + prefix + "\n\n" + url
+    )
+  end
+
+  protected
+  def default_url_options
+    Rails.configuration.default_url_options
   end
 end

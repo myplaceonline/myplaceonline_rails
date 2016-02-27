@@ -2025,6 +2025,7 @@ en:
     permission_shares:
       url: "Link"
       share: "Share"
+      email: "Email"
     contact:
       name: "Name"
       email: "Email"
