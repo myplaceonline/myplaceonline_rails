@@ -18,7 +18,7 @@ module Myplaceonline
   DEFAULT_DATE_FORMAT = "%A, %b %d, %Y"
   DEFAULT_TIME_FORMAT = "%A, %b %d, %Y %-l:%M:%S %p"
   JQM_DATEBOX_TIMEBOX_FORMAT = "%I:%M %p"
-  DEFAULT_SUPPORT_EMAIL = "contact@myplaceonline.com"
+  DEFAULT_SUPPORT_EMAIL = "Myplaceonline.com <contact@myplaceonline.com>"
   # End mirrored constants
   
   class Application < Rails::Application
