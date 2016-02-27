@@ -538,7 +538,9 @@ en:
       upcoming: "To Do %{name} %{delta}"
     contacts:
       contact: "Contact"
-      name: "Full Name"
+      name: "First Name"
+      middle_name: "Middle Name"
+      last_name: "Last Name"
       nickname: "Nick Name"
       birthday: "Birthday"
       age: "Age"
@@ -578,7 +580,7 @@ en:
       sex_male: "Male"
       sex_female: "Female"
       extra: "Extra Fields"
-      company: "Company"
+      company: "Work"
     files:
       name: "Name"
       download: "Download"

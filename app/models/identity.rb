@@ -292,6 +292,8 @@ class Identity < ActiveRecord::Base
   
   def display
     result = name
+    result = Myp.appendstr(result, middle_name)
+    result = Myp.appendstr(result, last_name)
     if result.blank?
       result = user.email
     end

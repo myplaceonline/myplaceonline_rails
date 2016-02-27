@@ -60,7 +60,7 @@ class Contact < ActiveRecord::Base
 
   def display
     if !contact_identity.nil?
-      result = contact_identity.name
+      result = contact_identity.display
       whitespace = result =~ /\s+/
       if whitespace.nil?
         if !contact_identity.nickname.blank?

@@ -25,6 +25,8 @@ class ContactsController < MyplaceonlineController
       contact_identity_attributes: [
         :id,
         :name,
+        :middle_name,
+        :last_name,
         :nickname,
         :birthday,
         :notes,

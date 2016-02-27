@@ -1,6 +1,8 @@
 <%= f.fields_for(:contact_identity, obj.contact_identity) do |identity_fields| %>
 
   <%= myp_text_field(identity_fields, :name, "myplaceonline.contacts.name", obj.contact_identity.name, autofocus) %>
+  <%= myp_text_field(identity_fields, :middle_name, "myplaceonline.contacts.middle_name", obj.contact_identity.middle_name) %>
+  <%= myp_text_field(identity_fields, :last_name, "myplaceonline.contacts.last_name", obj.contact_identity.last_name) %>
   <%= myp_text_field(identity_fields, :nickname, "myplaceonline.contacts.nickname", obj.contact_identity.nickname) %>
   <%= myp_date_field(identity_fields, :birthday, "myplaceonline.contacts.birthday", obj.contact_identity.birthday) %>
   <%= myp_select(f, :contact_type, "myplaceonline.contacts.contact_type", Myp.translate_options(Contact::CONTACT_TYPES), obj.contact_type) %>
