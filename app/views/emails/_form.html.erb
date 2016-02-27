@@ -41,3 +41,42 @@
     }
   %>
 <% end %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.emails.groups"),
+    childpropertiesname: :email_groups,
+    childproperties: obj.email_groups,
+    deletebutton: t("myplaceonline.emails.delete_group"),
+    addbutton: t("myplaceonline.emails.add_group"),
+    expanded: true,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :group_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.emails.group"),
+        objform: "groups/form",
+        existingobjurl: "group_path",
+        searchurl: "/groups.json?perpage=0",
+        edit: true,
+        autofocus: true,
+        force_existing: true
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :group_attributes,
+      existingobj: childproperty.group,
+      heading: t("myplaceonline.emails.group"),
+      objform: "groups/form",
+      existingobjurl: "group_path",
+      searchurl: "/groups.json?perpage=0",
+      edit: true,
+      autofocus: false
+    }
+  %>
+<% end %>

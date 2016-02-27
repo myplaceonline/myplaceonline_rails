@@ -18,6 +18,40 @@ class GroupsController < MyplaceonlineController
     end
   end
   
+  def self.reject_if_blank(attributes)
+    attributes.all?{|key, value|
+      value.blank?
+    }
+  end
+  
+  def self.param_names
+    [
+      :id,
+      :group_name,
+      :notes,
+      group_contacts_attributes: [
+        :id,
+        :_destroy,
+        contact_attributes: ContactsController.param_names
+      ],
+      group_references_attributes: [
+        :id,
+        :_destroy,
+        group_attributes: [
+          :id,
+          :_destroy,
+          :group_name,
+          :notes,
+          group_contacts_attributes: [
+            :id,
+            :_destroy,
+            contact_attributes: ContactsController.param_names
+          ]
+        ]
+      ]
+    ]
+  end
+
   protected
     def insecure
       true
@@ -28,29 +62,6 @@ class GroupsController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:group).permit(
-        :group_name,
-        :notes,
-        group_contacts_attributes: [
-          :id,
-          :_destroy,
-          contact_attributes: ContactsController.param_names
-        ],
-        group_references_attributes: [
-          :id,
-          :_destroy,
-          group_attributes: [
-            :id,
-            :_destroy,
-            :group_name,
-            :notes,
-            group_contacts_attributes: [
-              :id,
-              :_destroy,
-              contact_attributes: ContactsController.param_names
-            ]
-          ]
-        ]
-      )
+      params.require(:group).permit(GroupsController.param_names)
     end
 end
