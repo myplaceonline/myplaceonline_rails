@@ -7,7 +7,7 @@
   <% end %>
   
   <% content_for :postfooterlinks do %>
-    <li><%= link_to t("myplaceonline.playlists.share"), playlists_share_path(@obj), "data-icon" => "action" %></li>
+    <li><%= link_to t("myplaceonline.general.share"), permissions_share_token_path(subject_class: @obj.class.name, subject_id: @obj.id), "data-icon" => "action" %></li>
     <li><%= link_to t("myplaceonline.playlists.show_shared"), playlist_shared_path(@obj), "data-icon" => "search" %></li>
   <% end %>
 <% end %>
