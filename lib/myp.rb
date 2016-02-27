@@ -1110,10 +1110,10 @@ module Myp
     end
   end
   
-  def self.send_email(to, subject, body, cc = nil, bcc = nil, body_plain = nil)
+  def self.send_email(to, subject, body, cc = nil, bcc = nil, body_plain = nil, reply_to = nil)
     begin
       from = I18n.t("myplaceonline.siteEmail")
-      UserMailer.send_email(to, subject, body, cc, bcc, body_plain).deliver_now
+      UserMailer.send_email(to, subject, body, cc, bcc, body_plain, reply_to).deliver_now
     rescue Exception => e
       puts "Could not send email. Subject: " + subject + ", Body: " + body + ", Email Problem: " + Myp.error_details(e)
     end

@@ -85,10 +85,12 @@ class Email < ActiveRecord::Base
       final_content = content + "\n\n"
       final_content += "<p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category), unsubscribe_category_link)}</p>\n"
       final_content += "<p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display), unsubscribe_all_link)}</p>"
+      final_content += "\n<p>\n--\n<br />\n#{identity.display_short}<br />\n#{identity.user.email}</p>"
       
       final_content_plain = content_plain + "\n\n"
       final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category)}: #{unsubscribe_category_link}\n"
       final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display)}: #{unsubscribe_all_link}"
+      final_content_plain += "\n\n--\n#{identity.display_short}\n#{identity.user.email}\n"
 
       Myp.send_email(
         to_hash.keys,
@@ -96,7 +98,8 @@ class Email < ActiveRecord::Base
         final_content.html_safe,
         cc_hash.keys,
         bcc_hash.keys,
-        final_content_plain
+        final_content_plain,
+        identity.user.email
       )
     end
   end
@@ -115,7 +118,7 @@ class Email < ActiveRecord::Base
   def self.build(params = nil)
     result = self.dobuild(params)
     result.use_bcc = true
-    result.copy_self = true
+    #result.copy_self = true
     result
   end
 

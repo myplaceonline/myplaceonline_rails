@@ -301,6 +301,14 @@ class Identity < ActiveRecord::Base
     end
     result
   end
+  
+  def display_short
+    result = name
+    if result.blank?
+      result = display
+    end
+    result
+  end
 
   def self.calendar_item_display(calendar_item)
     identity = calendar_item.find_model_object
