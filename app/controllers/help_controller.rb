@@ -17,7 +17,12 @@ class HelpController < ApplicationController
     if @content.blank? || @content.start_with?("translation missing")
       @content = I18n.t("myplaceonline.help.no_help")
     else
-      @content = Myp.parse_yaml_to_html(@content).html_safe
+      @content = Myp.parse_yaml_to_html(@content)
+      r = Regexp.new('{image:([^}]+)}')
+      @content = @content.gsub(r) {|m| ActionController::Base.helpers.image_tag("help/categories/#{@category.name}/#{$1}")}
+      @content = @content.html_safe
+      
+      #"screenshot1.png")
     end
   end
 end

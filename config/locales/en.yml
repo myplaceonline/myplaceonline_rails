@@ -384,8 +384,14 @@ en:
         
         The link will take the person to a page with the description of the
         trip, thumbnails of all pictures for the trip, and a slideshow of the
-        pictures. You can see what this page looks like by clicking the
-        `Display` button on the trip.
+        pictures. There will also be a `Download Zip` button at the bottom
+        of the page will lets the person download a `.zip` file of all the
+        pictures.
+        
+        You can see what this page looks like by clicking the
+        `Display` button on the trip. Here is an example:
+        
+        {image:display_trip.png}
         
         ]]>
     search:
