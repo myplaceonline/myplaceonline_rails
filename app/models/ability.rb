@@ -16,27 +16,41 @@ class Ability
         if !request.nil? && !request.query_parameters.nil?
           token = request.query_parameters["token"]
           if !token.blank?
-            if !PermissionShare.find_by_sql(%{
+            ps = PermissionShare.find_by_sql(%{
               SELECT permission_shares.*
               FROM permission_shares
                 INNER JOIN shares on permission_shares.share_id = shares.id
               WHERE shares.token = #{ActiveRecord::Base.sanitize(token)}
                 AND permission_shares.subject_class = #{ActiveRecord::Base.sanitize(subject.class.name)}
                 AND permission_shares.subject_id = #{subject.id}
-            }).first.nil?
+                AND (shares.max_use_count IS NULL OR shares.use_count + 1 <= shares.max_use_count)
+            }).first
+            if !ps.nil?
               result = true
+              if !ps.share.use_count.nil?
+                ps.share.update_column(:use_count, ps.share.use_count + 1)
+              else
+                ps.share.update_column(:use_count, 1)
+              end
             end
             
             if !result
-              if !PermissionShareChild.find_by_sql(%{
+              psc = PermissionShareChild.find_by_sql(%{
                 SELECT permission_share_children.*
                 FROM permission_share_children
                   INNER JOIN shares on permission_share_children.share_id = shares.id
                 WHERE shares.token = #{ActiveRecord::Base.sanitize(token)}
                   AND permission_share_children.subject_class = #{ActiveRecord::Base.sanitize(subject.class.name)}
                   AND permission_share_children.subject_id = #{subject.id}
-              }).first.nil?
+                  AND (shares.max_use_count IS NULL OR shares.use_count + 1 <= shares.max_use_count)
+              }).first
+              if !psc.nil?
                 result = true
+                if !psc.share.use_count.nil?
+                  psc.share.update_column(:use_count, psc.share.use_count + 1)
+                else
+                  psc.share.update_column(:use_count, 1)
+                end
               end
             end
           end

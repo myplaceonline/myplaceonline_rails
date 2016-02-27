@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160227023225) do
+ActiveRecord::Schema.define(version: 20160227031758) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2290,10 +2290,12 @@ ActiveRecord::Schema.define(version: 20160227023225) do
   add_index "reward_programs", ["password_id"], name: "index_reward_programs_on_password_id", using: :btree
 
   create_table "shares", force: :cascade do |t|
-    t.string   "token",       limit: 255
+    t.string   "token",         limit: 255
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "use_count"
+    t.integer  "max_use_count"
   end
 
   add_index "shares", ["identity_id"], name: "index_shares_on_identity_id", using: :btree
