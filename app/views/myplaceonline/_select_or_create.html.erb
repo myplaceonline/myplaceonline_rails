@@ -86,7 +86,7 @@ end
         %>
         <%= f.fields_for name, existingobj do |sub_fields| %>
           <h3><%= t("myplaceonline.general.new") + " " + heading %></h3>
-          <%= render partial: objform + ".html", locals: { f: sub_fields, obj: existingobj, edit: false, autofocus: autofocus } %>
+          <%= render partial: objform + ".html", locals: { f: sub_fields, obj: existingobj, edit: false, autofocus: autofocus, nested: true } %>
           <%
              if existingcollapsed && autofocus && first
                first = false

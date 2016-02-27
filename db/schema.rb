@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160227062423) do
+ActiveRecord::Schema.define(version: 20160227072859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1569,6 +1569,18 @@ ActiveRecord::Schema.define(version: 20160227062423) do
   add_index "location_phones", ["identity_id"], name: "index_location_phones_on_identity_id", using: :btree
   add_index "location_phones", ["location_id"], name: "index_location_phones_on_location_id", using: :btree
 
+  create_table "location_pictures", force: :cascade do |t|
+    t.integer  "location_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "location_pictures", ["identity_file_id"], name: "index_location_pictures_on_identity_file_id", using: :btree
+  add_index "location_pictures", ["identity_id"], name: "index_location_pictures_on_identity_id", using: :btree
+  add_index "location_pictures", ["location_id"], name: "index_location_pictures_on_location_id", using: :btree
+
   create_table "locations", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.string   "address1",    limit: 255
@@ -2926,6 +2938,9 @@ ActiveRecord::Schema.define(version: 20160227062423) do
   add_foreign_key "hotels", "locations"
   add_foreign_key "identities", "companies"
   add_foreign_key "invite_codes", "identities"
+  add_foreign_key "location_pictures", "identities"
+  add_foreign_key "location_pictures", "identity_files"
+  add_foreign_key "location_pictures", "locations"
   add_foreign_key "locations", "websites"
   add_foreign_key "money_balance_item_templates", "identities"
   add_foreign_key "money_balance_item_templates", "money_balances"

@@ -20,5 +20,11 @@
     <%= attribute_table_row(t("myplaceonline.locations.phone"), phone.number) %>
   <% end %>
   <%= attribute_table_row_reference(t("myplaceonline.locations.website"), "website_path", @obj.website) %>
+  <%=
+    render partial: 'myplaceonline/pictures', locals: {
+      pics: @obj.location_pictures,
+      placeholder: "myplaceonline.locations.picture"
+    }
+  %>
 
 <% end %>

@@ -26,6 +26,16 @@ class Location < ActiveRecord::Base
     end
   end
   
+  before_validation :update_pic_folders
+  
+  def update_pic_folders
+    put_files_in_folder(location_pictures, [I18n.t("myplaceonline.category.locations"), display])
+  end
+
+  has_many :location_pictures, :dependent => :destroy
+  accepts_nested_attributes_for :location_pictures, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :location_pictures, [{:name => :identity_file}]
+
   def display
     result = Myp.appendstr(nil, name, ", ")
     result = Myp.appendstr(result, address1, ", ")

@@ -629,6 +629,10 @@ en:
       latitude_longitude: "Latitude/Longitude"
       request_gps: "Request GPS"
       website: "Website"
+      pictures: "Pictures"
+      picture: "Picture"
+      add_picture: "Add Picture"
+      delete_picture: "Delete Picture"
     activities:
       name: "Name"
       notes: "Notes"
@@ -2049,5 +2053,5 @@ en:
       invalid_token: "Invalid Token"
       unsubscribed_all: "Successfully unsubscribed from all categories."
       unsubscribed_category: "Successfully unsubscribed from %{category} posts."
-      link_unsubscribe_all: "Unsubscribe From All Emails From %{user}"
-      link_unsubscribe_category: "Unsubscribe From %{user}'s '%{category}' Emails"
+      link_unsubscribe_all: "Unsubscribe from all emails from %{user}"
+      link_unsubscribe_category: "Unsubscribe from %{user}'s '%{category}' emails"

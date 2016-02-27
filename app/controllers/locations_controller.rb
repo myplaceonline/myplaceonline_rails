@@ -15,7 +15,8 @@ class LocationsController < MyplaceonlineController
       :latitude,
       :longitude,
       location_phones_attributes: [:id, :number, :_destroy],
-      website_attributes: WebsitesController.param_names
+      website_attributes: WebsitesController.param_names,
+      location_pictures_attributes: FilesController.multi_param_names
     ]
   end
   
@@ -27,6 +28,10 @@ class LocationsController < MyplaceonlineController
         value.blank?
       end
     }
+  end
+
+  def may_upload
+    true
   end
 
   protected
