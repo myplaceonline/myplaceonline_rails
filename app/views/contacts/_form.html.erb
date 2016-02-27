@@ -251,6 +251,7 @@
         <%= myp_file_field(file_fields, :file, "myplaceonline.identities.license_picture", childproperty.identity_file || IdentityFile.new) %>
       <% end %>
     <% end %>
+    <%= myp_check_box(f, :hide, "myplaceonline.contacts.hide") %>
   </div>
 
 <% end %>

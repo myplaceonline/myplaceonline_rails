@@ -5,8 +5,14 @@ class ContactsController < MyplaceonlineController
   
   def index
     @contact_type = params[:contact_type]
+    @hidden = params[:hidden]
     if !@contact_type.blank?
       @contact_type = @contact_type.to_i
+    end
+    if !@hidden.nil?
+      @hidden = @hidden.to_bool
+    else
+      @hidden = false
     end
     super
   end
@@ -16,6 +22,7 @@ class ContactsController < MyplaceonlineController
       :id,
       :_destroy,
       :contact_type,
+      :hide,
       conversations_attributes: [
         :id,
         :conversation,
@@ -106,11 +113,15 @@ class ContactsController < MyplaceonlineController
     end
 
     def all_additional_sql
-      if @contact_type.blank?
-        ""
+      if @hidden
+        result = ""
       else
-        "and contact_type = " + @contact_type.to_s
+        result = " and (hide is null or hide = false)"
       end
+      if !@contact_type.blank?
+        result = Myp.appendstr(result, " and contact_type = " + @contact_type.to_s)
+      end
+      result
     end
 
     # Join because we're sorting by identity name

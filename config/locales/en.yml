@@ -581,6 +581,8 @@ en:
       sex_female: "Female"
       extra: "Extra Fields"
       company: "Work"
+      hide: "Hide"
+      hidden: "Hidden"
     files:
       name: "Name"
       download: "Download"

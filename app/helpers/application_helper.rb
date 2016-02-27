@@ -266,8 +266,12 @@ module ApplicationHelper
     Myp.markdown_to_html(markdown).html_safe
   end
   
-  def attribute_table_row_boolean(name, val)
-    attribute_table_row(name, val ? t("myplaceonline.general.yes") : t("myplaceonline.general.no"))
+  def attribute_table_row_boolean(name, val, hide_if_false: true)
+    if hide_if_false && !val
+      nil
+    else
+      attribute_table_row(name, val ? t("myplaceonline.general.yes") : t("myplaceonline.general.no"))
+    end
   end
 
   def attribute_table_row_reference(name, pathfunc, ref)
