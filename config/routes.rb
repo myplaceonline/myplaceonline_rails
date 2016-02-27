@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  get 'unsubscribe/index'
+  get 'unsubscribe', :to => 'unsubscribe#index'
+
   resources :emails
   post 'emails/new'
 

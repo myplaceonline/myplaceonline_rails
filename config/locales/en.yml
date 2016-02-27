@@ -2043,3 +2043,6 @@ en:
       add_group: "Add Group"
       delete_group: "Delete Group"
       use_bcc: "Use Blind Carbon Copy"
+    unsubscribe:
+      title: "Unsubscribe"
+      past: "Unsubscribed"

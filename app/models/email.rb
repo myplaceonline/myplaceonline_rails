@@ -67,7 +67,7 @@ class Email < ActiveRecord::Base
       et.token = SecureRandom.hex(10)
       et.email = target
       et.save!
-      
+
       final_content = content + "\n\n"
       final_content_plain = content_plain + "\n\n"
 
