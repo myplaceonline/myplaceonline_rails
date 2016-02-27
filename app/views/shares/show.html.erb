@@ -1,5 +1,7 @@
 <%= render layout: "shared/model_show" do %>
 
   <%= attribute_table_row(t("myplaceonline.shares.token"), @obj.token) %>
+  <%= attribute_table_row(t("myplaceonline.shares.use_count"), @obj.use_count) %>
+  <%= attribute_table_row(t("myplaceonline.shares.max_use_count"), @obj.max_use_count) %>
   
 <% end %>

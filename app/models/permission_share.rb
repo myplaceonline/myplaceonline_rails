@@ -16,7 +16,7 @@ class PermissionShare < ActiveRecord::Base
   validate :has_contacts
   
   def display
-    id.to_s
+    subject_class + "/" + subject_id.to_s
   end
   
   def has_contacts

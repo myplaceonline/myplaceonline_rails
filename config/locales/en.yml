@@ -2019,6 +2019,8 @@ en:
       feed: "Feed"
     shares:
       token: "Token"
+      use_count: "Use Count"
+      max_use_count: "Maximum Use Count"
     hotels:
       location: "Location"
       overall_rating: "Overall Rating"
@@ -2028,6 +2030,7 @@ en:
       suppress_hotel: "Suppress Hotel Alerts"
     permission_shares:
       url: "Link"
+      share: "Share"
     contact:
       name: "Name"
       email: "Email"

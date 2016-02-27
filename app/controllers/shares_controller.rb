@@ -10,7 +10,9 @@ class SharesController < MyplaceonlineController
 
     def obj_params
       params.require(:share).permit(
-        :token
+        :token,
+        :use_count,
+        :max_use_count
       )
     end
 end
