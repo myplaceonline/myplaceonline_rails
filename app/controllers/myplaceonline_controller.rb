@@ -149,6 +149,7 @@ class MyplaceonlineController < ApplicationController
           if has_category
             Myp.add_point(current_user, category_name, session)
           end
+          after_create
           return after_create_or_update
         else
           return render :new
@@ -516,5 +517,8 @@ class MyplaceonlineController < ApplicationController
     
     def requires_admin
       false
+    end
+    
+    def after_create
     end
 end
