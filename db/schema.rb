@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160226224729) do
+ActiveRecord::Schema.define(version: 20160227002102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1242,8 +1242,10 @@ ActiveRecord::Schema.define(version: 20160226224729) do
     t.string   "ktn",                  limit: 255
     t.text     "new_years_resolution"
     t.integer  "sex_type"
+    t.integer  "company_id"
   end
 
+  add_index "identities", ["company_id"], name: "index_identities_on_company_id", using: :btree
   add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
 
   create_table "identity_drivers_licenses", force: :cascade do |t|
@@ -2875,6 +2877,7 @@ ActiveRecord::Schema.define(version: 20160226224729) do
   add_foreign_key "happy_things", "identities"
   add_foreign_key "hotels", "identities"
   add_foreign_key "hotels", "locations"
+  add_foreign_key "identities", "companies"
   add_foreign_key "identity_file_shares", "identity_files"
   add_foreign_key "identity_file_shares", "shares"
   add_foreign_key "invite_codes", "identities"

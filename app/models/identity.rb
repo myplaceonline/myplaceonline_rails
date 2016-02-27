@@ -1,5 +1,6 @@
 class Identity < ActiveRecord::Base
   include MyplaceonlineActiveRecordBaseConcern
+  include AllowExistingConcern
 
   DEFAULT_BIRTHDAY_THRESHOLD_SECONDS = 60.days
   
@@ -160,6 +161,10 @@ class Identity < ActiveRecord::Base
   has_many :identity_pictures, :foreign_key => 'parent_identity_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_pictures, allow_destroy: true, reject_if: :all_blank
   
+  belongs_to :company
+  accepts_nested_attributes_for :company, reject_if: proc { |attributes| CompaniesController.reject_if_blank(attributes) }
+  allow_existing :company
+
   def as_json(options={})
     super.as_json(options).merge({
       :category_points_amounts => category_points_amounts.to_a.map{|x| x.as_json},

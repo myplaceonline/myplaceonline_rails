@@ -75,7 +75,8 @@ class ContactsController < MyplaceonlineController
             :file,
             :notes
           ]
-        ]
+        ],
+        company_attributes: CompaniesController.param_names
       ]
     ]
   end

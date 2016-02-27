@@ -370,7 +370,7 @@ en:
     help:
       title: "Help"
       features: "Features"
-      highlights: "Highlights"
+      highlights: "Feature Highlights"
       no_help: "No help for this category yet"
       category_trips: !xml |
         <![CDATA[
@@ -578,6 +578,7 @@ en:
       sex_male: "Male"
       sex_female: "Female"
       extra: "Extra Fields"
+      company: "Company"
     files:
       name: "Name"
       download: "Download"

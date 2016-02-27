@@ -194,6 +194,21 @@
     <% end %>
   <% end %>
 
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: identity_fields,
+      name: :company,
+      existingobj: obj.contact_identity.company,
+      heading: t("myplaceonline.contacts.company"),
+      objform: "companies/form",
+      existingobjurl: "company_path",
+      searchurl: "/companies.json?perpage=0",
+      edit: edit,
+      autofocus: false,
+      collapsed: obj.contact_identity.company.nil?
+    }
+  %>
+
   <%= myp_text_area_markdown(identity_fields, :notes, "myplaceonline.contacts.notes", obj.contact_identity.notes) %>
 
   <div data-role="collapsible" data-collapsed="true">

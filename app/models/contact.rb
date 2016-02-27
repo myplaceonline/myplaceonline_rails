@@ -72,6 +72,9 @@ class Contact < ActiveRecord::Base
           result = Myp.appendstrwrap(result, I18n.t("myplaceonline.contacts.related_to") + " " + relationship.contact.contact_identity.name)
         end
       end
+      if !contact_identity.company.nil?
+        result = Myp.appendstrwrap(result, contact_identity.company.display)
+      end
       result
     else
       I18n.t("myplaceonline.general.unknown")
