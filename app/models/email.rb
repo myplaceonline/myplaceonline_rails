@@ -25,27 +25,45 @@ class Email < ActiveRecord::Base
     content_plain = body
     content = "<p>" + Myp.markdown_to_html(body) + "</p>"
     
-    to_hash = {}
-    cc_hash = {}
-    bcc_hash = {}
-    
-    target_hash = use_bcc ? bcc_hash : to_hash
-
-    if copy_self
-      bcc_hash[identity.user.email] = true
-    end
+    targets = {}
 
     email_contacts.each do |email_contact|
       email_contact.contact.contact_identity.emails.each do |identity_email|
-        target_hash[identity_email] = true
+        targets[identity_email] = true
       end
     end
 
     email_groups.each do |email_group|
-      process_group(target_hash, email_group.group)
+      process_group(targets, email_group.group)
     end
+    
+    targets.keys.each do |target|
+      to_hash = {}
+      cc_hash = {}
+      bcc_hash = {}
+      
+      if use_bcc
+        bcc_hash[target] = true
+      else
+        cc_hash[target] = true
+      end
 
-    Myp.send_email(to_hash.keys, subject, content.html_safe, cc_hash.keys, bcc_hash.keys, content_plain)
+      if copy_self
+        bcc_hash[identity.user.email] = true
+      end
+      
+      final_content = content + "\n\n"
+      final_content_plain = content_plain + "\n\n"
+
+      Myp.send_email(
+        to_hash.keys,
+        subject,
+        final_content.html_safe,
+        cc_hash.keys,
+        bcc_hash.keys,
+        final_content_plain
+      )
+    end
   end
   
   def process_group(to_hash, group)
