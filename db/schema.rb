@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160227060101) do
+ActiveRecord::Schema.define(version: 20160227062423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -910,6 +910,20 @@ ActiveRecord::Schema.define(version: 20160227060101) do
   add_index "email_groups", ["email_id"], name: "index_email_groups_on_email_id", using: :btree
   add_index "email_groups", ["group_id"], name: "index_email_groups_on_group_id", using: :btree
   add_index "email_groups", ["identity_id"], name: "index_email_groups_on_identity_id", using: :btree
+
+  create_table "email_tokens", force: :cascade do |t|
+    t.string   "email"
+    t.string   "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "email_unsubscriptions", force: :cascade do |t|
+    t.string   "email"
+    t.string   "category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "emails", force: :cascade do |t|
     t.string   "subject"

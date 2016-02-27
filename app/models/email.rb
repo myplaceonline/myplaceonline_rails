@@ -37,7 +37,18 @@ class Email < ActiveRecord::Base
       process_group(targets, email_group.group)
     end
     
-    targets.keys.each do |target|
+    target_emails = targets.keys
+    target_emails.delete_if{
+      |target_email|
+
+      !EmailUnsubscription.where(
+        "email = ? and (category is null or category = ?)",
+        target_email,
+        email_category
+      ).first.nil?
+    }
+    
+    target_emails.each do |target|
       to_hash = {}
       cc_hash = {}
       bcc_hash = {}
@@ -51,6 +62,11 @@ class Email < ActiveRecord::Base
       if copy_self
         bcc_hash[identity.user.email] = true
       end
+      
+      et = EmailToken.new
+      et.token = SecureRandom.hex(10)
+      et.email = target
+      et.save!
       
       final_content = content + "\n\n"
       final_content_plain = content_plain + "\n\n"
