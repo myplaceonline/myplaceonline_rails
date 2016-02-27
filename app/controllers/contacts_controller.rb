@@ -93,7 +93,13 @@ class ContactsController < MyplaceonlineController
   def self.reject_if_blank(attributes)
     attributes.all?{|key, value|
       if key == "contact_identity_attributes"
-        value.all?{|key2, value2| value2.blank?}
+        value.all?{|key2, value2|
+          if key2 == "company_attributes"
+            CompaniesController.reject_if_blank(value2)
+          else
+            value2.blank?
+          end
+        }
       else
         value.blank?
       end

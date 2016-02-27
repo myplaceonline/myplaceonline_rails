@@ -2033,3 +2033,8 @@ en:
       body: "Body"
       copy_self: "Blind Carbon Copy Me"
       email_category: "Category"
+      requires_contacts: "Requires Contacts"
+      contact: "Contact"
+      contacts: "Contacts"
+      add_contact: "Add Contact"
+      delete_contact: "Delete Contact"

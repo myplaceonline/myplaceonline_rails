@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160227044629) do
+ActiveRecord::Schema.define(version: 20160227050610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -886,6 +886,18 @@ ActiveRecord::Schema.define(version: 20160227044629) do
 
   add_index "due_items", ["calendar_id"], name: "index_due_items_on_calendar_id", using: :btree
   add_index "due_items", ["identity_id"], name: "index_due_items_on_identity_id", using: :btree
+
+  create_table "email_contacts", force: :cascade do |t|
+    t.integer  "email_id"
+    t.integer  "identity_id"
+    t.integer  "contact_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "email_contacts", ["contact_id"], name: "index_email_contacts_on_contact_id", using: :btree
+  add_index "email_contacts", ["email_id"], name: "index_email_contacts_on_email_id", using: :btree
+  add_index "email_contacts", ["identity_id"], name: "index_email_contacts_on_identity_id", using: :btree
 
   create_table "emails", force: :cascade do |t|
     t.string   "subject"
@@ -2864,6 +2876,9 @@ ActiveRecord::Schema.define(version: 20160227044629) do
   add_foreign_key "desired_locations", "websites"
   add_foreign_key "dessert_locations", "identities"
   add_foreign_key "dessert_locations", "locations"
+  add_foreign_key "email_contacts", "contacts"
+  add_foreign_key "email_contacts", "emails"
+  add_foreign_key "email_contacts", "identities"
   add_foreign_key "emails", "identities"
   add_foreign_key "event_contacts", "contacts"
   add_foreign_key "event_contacts", "events"

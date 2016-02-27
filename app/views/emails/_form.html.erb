@@ -2,3 +2,42 @@
 <%= myp_text_field(f, :email_category, "myplaceonline.emails.email_category", obj.email_category, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
 <%= myp_text_area_markdown(f, :body, "myplaceonline.emails.body", obj.body) %>
 <%= myp_check_box(f, :copy_self, "myplaceonline.emails.copy_self") %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.emails.contacts"),
+    childpropertiesname: :email_contacts,
+    childproperties: obj.email_contacts,
+    deletebutton: t("myplaceonline.emails.delete_contact"),
+    addbutton: t("myplaceonline.emails.add_contact"),
+    expanded: true,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :contact_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.emails.contact"),
+        objform: "contacts/form",
+        existingobjurl: "contact_path",
+        searchurl: "/contacts.json?perpage=0",
+        edit: true,
+        autofocus: true,
+        force_existing: true
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :contact_attributes,
+      existingobj: childproperty.contact,
+      heading: t("myplaceonline.emails.contact"),
+      objform: "contacts/form",
+      existingobjurl: "contact_path",
+      searchurl: "/contacts.json?perpage=0",
+      edit: true,
+      autofocus: false
+    }
+  %>
+<% end %>

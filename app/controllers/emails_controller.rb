@@ -9,7 +9,14 @@ class EmailsController < MyplaceonlineController
         :subject,
         :body,
         :copy_self,
-        :email_category
+        :email_category,
+        email_contacts_attributes: [
+          :id,
+          :_destroy,
+          contact_attributes: [
+            :id
+          ]
+        ]
       )
     end
 end

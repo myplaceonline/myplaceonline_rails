@@ -4,5 +4,8 @@
   <%= attribute_table_row(t("myplaceonline.emails.email_category"), @obj.email_category) %>
   <%= attribute_table_row_markdown(t("myplaceonline.emails.body"), @obj.body) %>
   <%= attribute_table_row_boolean(t("myplaceonline.emails.copy_self"), @obj.copy_self) %>
+  <% @obj.email_contacts.each do |wrapper| %>
+    <%= attribute_table_row_reference(t("myplaceonline.emails.contact"), "contact_path", wrapper.contact) %>
+  <% end %>
   
 <% end %>
