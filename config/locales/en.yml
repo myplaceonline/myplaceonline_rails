@@ -2027,3 +2027,10 @@ en:
       suppress_hotel: "Suppress Hotel Alerts"
     permission_shares:
       url: "Link"
+    contact:
+      name: "Name"
+      email: "Email"
+      subject: "Subject"
+      body: "Body"
+      send: "Send"
+      sent: "Email successfully sent. We'll try to respond soon."

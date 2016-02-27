@@ -421,7 +421,7 @@ Rails.application.routes.draw do
   get 'search', :to => 'search#index'
 
   get 'info/index'
-  get 'info/contact'
+  match 'info/contact', via: [:get, :post]
   get 'info/credits'
   get 'info/diagnostics'
   get 'info/faq'
