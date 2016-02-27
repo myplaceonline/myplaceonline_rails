@@ -307,7 +307,10 @@ class Identity < ActiveRecord::Base
   end
   
   def display_short
-    result = name
+    result = nickname
+    if result.blank?
+      result = name
+    end
     if result.blank?
       result = display
     end
