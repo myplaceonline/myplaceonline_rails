@@ -36,9 +36,10 @@ $("audio").each(function() {
 <div data-role="footer" data-position="fixed" data-tap-toggle="false">
   <div data-role="navbar">
     <ul>
-      <li><a href="#" data-icon="arrow-l" onclick="myplaceonline.playPreviousSong('.playlist_songs'); return false;"><%= t('myplaceonline.playlists.play_previous') %></a></li>
       <li><a href="#" data-icon="bars" onclick="myplaceonline.playFirstSong('.playlist_songs'); return false;"><%= t('myplaceonline.playlists.play_all') %></a></li>
+      <li><a href="#" data-icon="arrow-l" onclick="myplaceonline.playPreviousSong('.playlist_songs'); return false;"><%= t('myplaceonline.playlists.play_previous') %></a></li>
       <li><a href="#" data-icon="arrow-r" onclick="myplaceonline.playNextSong('.playlist_songs'); return false;"><%= t('myplaceonline.playlists.play_next') %></a></li>
+      <li><a href="#" data-icon="delete" onclick="myplaceonline.pauseSongs('.playlist_songs'); return false;"><%= t('myplaceonline.playlists.pause') %></a></li>
     </ul>
   </div>
 </div>

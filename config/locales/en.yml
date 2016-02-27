@@ -1893,10 +1893,11 @@ en:
       copy_self: "Copy Me"
       shared: "Shared Playlist"
       download_zip: "Download Zip"
-      play_all: "Play All"
+      play_all: "Play"
       play_previous: "Previous"
       play_next: "Next"
       show_shared: "Display"
+      pause_all: "Pause"
     bars:
       location: "Location"
       rating: "Rating"

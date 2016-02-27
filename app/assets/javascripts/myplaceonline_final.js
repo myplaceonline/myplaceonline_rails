@@ -628,6 +628,17 @@ var myplaceonline = function(mymodule) {
     }
   }
   
+  function pauseSongs(search) {
+    var audioElements = $(search).find("audio");
+    if (audioElements.length) {
+      for (var i = 0; i < audioElements.length; i++) {
+        if (!audioElements[i].paused) {
+          audioElements[i].pause();
+        }
+      }
+    }
+  }
+  
   function onChangeCascade(myobj, transformValueFunc, parentSelector, childSelector, intermediateSelector, intermediateTransform) {
     var currentValue = $(myobj).val();
     if (transformValueFunc) {
@@ -682,6 +693,7 @@ var myplaceonline = function(mymodule) {
   mymodule.playFirstSong = playFirstSong;
   mymodule.playNextSong = playNextSong;
   mymodule.playPreviousSong = playPreviousSong;
+  mymodule.pauseSongs = pauseSongs;
   mymodule.onChangeCascade = onChangeCascade;
   mymodule.toFloatSafe = toFloatSafe;
   mymodule.transformMultiply = transformMultiply;
