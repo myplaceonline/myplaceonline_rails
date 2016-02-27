@@ -25,7 +25,7 @@ class PermissionShare < ActiveRecord::Base
     if clazz.respond_to?("has_shared_page?") && clazz.has_shared_page?
       mainlink += "/shared"
     end
-    url_for(mainlink + "?token=" + share.token)
+    Myp.root_url + mainlink + "?token=" + share.token
   end
   
   def get_obj
@@ -53,13 +53,8 @@ class PermissionShare < ActiveRecord::Base
     cat = Myp.instance_to_category(obj)
     tcat = I18n.t("myplaceonline.category.#{cat.name}").singularize
     email.send_email(
-      "<p>#{tcat}: #{prefix}</p><p>" + ActionController::Base.helpers.link_to(url, url) + "</p>",
+      "<p>#{tcat}: " + ActionController::Base.helpers.link_to(prefix, url) + "</p>",
       tcat + ": " + prefix + "\n\n" + url
     )
-  end
-
-  protected
-  def default_url_options
-    Rails.configuration.default_url_options
   end
 end

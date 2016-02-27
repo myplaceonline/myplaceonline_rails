@@ -2048,6 +2048,11 @@ en:
       add_group: "Add Group"
       delete_group: "Delete Group"
       use_bcc: "Use Blind Carbon Copy"
+      variables: "Variables"
+      variables_details: !xml |
+        <![CDATA[
+        * %{name}: The short name of the contact. Example: "Hey %{name}, ..."
+        ]]>
     unsubscribe:
       title: "Unsubscribe"
       past: "Unsubscribed"

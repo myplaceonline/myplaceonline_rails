@@ -146,6 +146,10 @@ class Identity < ActiveRecord::Base
     identity_emails.to_a.map{|ie| ie.email }
   end
   
+  def phones
+    identity_phones.to_a.map{|ip| ip.number }
+  end
+  
   has_many :identity_locations, :foreign_key => 'parent_identity_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_locations, allow_destroy: true, reject_if: :all_blank
   

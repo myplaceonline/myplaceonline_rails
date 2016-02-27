@@ -25,6 +25,7 @@ class Email < ActiveRecord::Base
   end
 
   def send_email(body2_html = nil, body2_plain = nil)
+    
     content = "<p>" + Myp.markdown_to_html(body) + "</p>"
     if !body2_html.nil?
       content += "\n\n" + body2_html
@@ -38,7 +39,7 @@ class Email < ActiveRecord::Base
 
     email_contacts.each do |email_contact|
       email_contact.contact.contact_identity.emails.each do |identity_email|
-        targets[identity_email] = true
+        targets[identity_email] = email_contact.contact
       end
     end
 
@@ -46,9 +47,8 @@ class Email < ActiveRecord::Base
       process_group(targets, email_group.group)
     end
     
-    target_emails = targets.keys
-    target_emails.delete_if{
-      |target_email|
+    targets.delete_if{
+      |target_email, target_contact|
 
       !EmailUnsubscription.where(
         "email = ? and (category is null or category = ?)",
@@ -59,7 +59,7 @@ class Email < ActiveRecord::Base
     
     user_display = identity.display
     
-    target_emails.each do |target|
+    targets.each do |target, contact|
       to_hash = {}
       cc_hash = {}
       bcc_hash = {}
@@ -82,16 +82,22 @@ class Email < ActiveRecord::Base
       unsubscribe_all_link = unsubscribe_url(email: target, token: et.token)
       unsubscribe_category_link = unsubscribe_url(email: target, category: email_category, token: et.token)
 
-      final_content = content + "\n\n"
+      final_content = content + "\n\n<p>&nbsp;</p>\n<hr />\n"
       final_content += "<p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category), unsubscribe_category_link)}</p>\n"
       final_content += "<p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display), unsubscribe_all_link)}</p>"
-      final_content += "\n<p>\n--\n<br />\n#{identity.display_short}<br />\n#{identity.user.email}</p>"
+      final_content += "\n<p>\n--\n<br />\n#{identity.display_short}<br />\n#{identity.user.email}"
+      final_content += "\n<br />\n" + identity.phones.map{|p| "<a href=\"tel:#{p}\">#{p}</a>"}.join(" | ")
+      final_content += "</p>"
       
-      final_content_plain = content_plain + "\n\n"
+      final_content_plain = content_plain + "\n\n\n===============\n\n"
       final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category)}: #{unsubscribe_category_link}\n"
       final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display)}: #{unsubscribe_all_link}"
       final_content_plain += "\n\n--\n#{identity.display_short}\n#{identity.user.email}\n"
-
+      final_content_plain += identity.phones.join(" | ")
+      
+      final_content = final_content.gsub("%{name}", contact.contact_identity.display_short)
+      final_content_plain = final_content_plain.gsub("%{name}", contact.contact_identity.display_short)
+      
       Myp.send_email(
         to_hash.keys,
         subject,
@@ -101,13 +107,15 @@ class Email < ActiveRecord::Base
         final_content_plain,
         identity.user.email
       )
+      
+      sleep(1.0)
     end
   end
   
   def process_group(to_hash, group)
     group.group_contacts.each do |group_contact|
       group_contact.contact.contact_identity.emails.each do |identity_email|
-        to_hash[identity_email] = true
+        to_hash[identity_email] = group_contact.contact
       end
     end
     group.group_references.each do |group_reference|

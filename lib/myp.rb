@@ -471,6 +471,7 @@ module Myp
   CONTENT_FAQ = self.parse_yaml_to_html("myplaceonline.info.faq_content")
   CONTENT_TIPS = self.parse_yaml_to_html("myplaceonline.info.tips_content")
   STATUS_IDEAS = self.parse_yaml_to_html("myplaceonline.statuses.status_ideas")
+  EMAIL_VARIABLES = self.parse_yaml_to_html("myplaceonline.emails.variables_details")
   
   def self.is_web_server?
     defined?(Rails::Server) || defined?(::PhusionPassenger)
@@ -1114,6 +1115,7 @@ module Myp
     begin
       from = I18n.t("myplaceonline.siteEmail")
       UserMailer.send_email(to, subject, body, cc, bcc, body_plain, reply_to).deliver_now
+      Rails.logger.info{"send_email to: #{to}, cc: #{cc}, bcc: #{bcc}"}
     rescue Exception => e
       puts "Could not send email. Subject: " + subject + ", Body: " + body + ", Email Problem: " + Myp.error_details(e)
     end
@@ -1246,5 +1248,13 @@ module Myp
     else
       " = " + ActiveRecord::Base.sanitize(val)
     end
+  end
+  
+  def self.root_url
+    Rails.application.routes.url_helpers.root_url(
+      protocol: Rails.configuration.default_url_options[:protocol],
+      host: Rails.configuration.default_url_options[:host],
+      port: Rails.configuration.default_url_options[:port]
+    ).chomp('/')
   end
 end
