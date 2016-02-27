@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160227031758) do
+ActiveRecord::Schema.define(version: 20160227044629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -886,6 +886,19 @@ ActiveRecord::Schema.define(version: 20160227031758) do
 
   add_index "due_items", ["calendar_id"], name: "index_due_items_on_calendar_id", using: :btree
   add_index "due_items", ["identity_id"], name: "index_due_items_on_identity_id", using: :btree
+
+  create_table "emails", force: :cascade do |t|
+    t.string   "subject"
+    t.text     "body"
+    t.boolean  "copy_self"
+    t.string   "email_category"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "emails", ["identity_id"], name: "index_emails_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: :cascade do |t|
     t.binary   "val"
@@ -2851,6 +2864,7 @@ ActiveRecord::Schema.define(version: 20160227031758) do
   add_foreign_key "desired_locations", "websites"
   add_foreign_key "dessert_locations", "identities"
   add_foreign_key "dessert_locations", "locations"
+  add_foreign_key "emails", "identities"
   add_foreign_key "event_contacts", "contacts"
   add_foreign_key "event_contacts", "events"
   add_foreign_key "event_contacts", "identities"

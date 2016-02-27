@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :emails
+  post 'emails/new'
+
   get 'help/index'
   get 'help/features'
   get 'help/highlights'

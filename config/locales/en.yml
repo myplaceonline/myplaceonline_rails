@@ -150,6 +150,7 @@ en:
       hotels: "Hotels"
       alerts_displays: "Alerts Displays"
       permission_shares: "Permission Shares"
+      emails: "Emails"
     general:
       email: "E-mail"
       password: "Password"
@@ -2027,3 +2028,8 @@ en:
       body: "Body"
       send: "Send"
       sent: "Email successfully sent. We'll try to respond soon."
+    emails:
+      subject: "Subject"
+      body: "Body"
+      copy_self: "Blind Carbon Copy Me"
+      email_category: "Category"

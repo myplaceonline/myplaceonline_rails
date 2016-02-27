@@ -1,0 +1,5 @@
+email:
+  identity: identity
+  subject: Test
+  body: Body
+  email_category: Category

@@ -131,6 +131,7 @@ class Identity < ActiveRecord::Base
   has_many :annuities, :dependent => :destroy
   has_many :podcasts, :dependent => :destroy
   has_many :hotels, :dependent => :destroy
+  has_many :emails, :dependent => :destroy
   
   has_many :myplets, -> { order('y_coordinate') }, :dependent => :destroy
   accepts_nested_attributes_for :myplets, allow_destroy: true, reject_if: :all_blank
@@ -267,6 +268,7 @@ class Identity < ActiveRecord::Base
       :annuities => annuities.to_a.sort{ |a,b| a.annuity_name.downcase <=> b.annuity_name.downcase }.map{|x| x.as_json},
       :podcasts => podcasts.to_a.map{|x| x.as_json},
       :hotels => hotels.to_a.map{|x| x.as_json},
+      :emails => emails.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end
