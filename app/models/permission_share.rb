@@ -43,6 +43,10 @@ class PermissionShare < ActiveRecord::Base
     url_for(mainlink + "?token=" + share.token)
   end
   
+  def simple_path
+    "/" + subject_class.underscore.pluralize + "/" + subject_id.to_s
+  end
+  
   def async?
     clazz = Object.const_get(subject_class)
     clazz.respond_to?("share_async?") && clazz.share_async?
@@ -54,9 +58,12 @@ class PermissionShare < ActiveRecord::Base
   end
   
   def send_email
-    content = "<p>" + ERB::Util.html_escape_once(body) + "</p>\n\n"
+    content_plain = body
+    content = "<p>" + Myp.markdown_to_html(body) + "</p>\n\n"
+    
     url = link
     content += "<p>" + ActionController::Base.helpers.link_to(url, url) + "</p>"
+    content_plain += "\n\n" + url
     
     bcc = nil
     if copy_self
@@ -68,6 +75,6 @@ class PermissionShare < ActiveRecord::Base
         to.push(identity_email)
       end
     end
-    Myp.send_email(to, subject, content.html_safe, nil, bcc)
+    Myp.send_email(to, subject, content.html_safe, nil, bcc, content_plain)
   end
 end

@@ -96,14 +96,14 @@ class PermissionsController < MyplaceonlineController
         if @share.async?
           ShareJob.perform_later(@share)
 
-          redirect_to "/",
+          redirect_to @share.simple_path,
             :flash => { :notice =>
                         I18n.t("myplaceonline.permissions.shared_sucess_async")
                       }
         else
           @share.send_email
 
-          redirect_to "/",
+          redirect_to @share.simple_path,
             :flash => { :notice =>
                         I18n.t("myplaceonline.permissions.shared_sucess")
                       }

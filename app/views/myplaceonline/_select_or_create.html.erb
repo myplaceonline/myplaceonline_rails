@@ -29,6 +29,11 @@ if !existingobj.id.nil?
   existingcollapsed = false
 end
 
+force_existing ||= false
+if force_existing
+  existingcollapsed = false
+end
+
 %>
 <div data-role="collapsible" data-collapsed="<%= collapsed %>">
   <h4><%= heading %></h4>
