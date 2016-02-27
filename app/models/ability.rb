@@ -39,18 +39,6 @@ class Ability
                 result = true
               end
             end
-            
-            if !result && subject.class.name == IdentityFile.name
-              if !IdentityFileShare.find_by_sql(%{
-                SELECT identity_file_shares.*
-                FROM identity_file_shares
-                  INNER JOIN shares on identity_file_shares.share_id = shares.id
-                WHERE shares.token = #{ActiveRecord::Base.sanitize(token)}
-                  AND identity_file_shares.identity_file_id = #{subject.id}
-              }).first.nil?
-                result = true
-              end
-            end
           end
         end
         

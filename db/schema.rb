@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160227015047) do
+ActiveRecord::Schema.define(version: 20160227023225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1300,18 +1300,6 @@ ActiveRecord::Schema.define(version: 20160227015047) do
   add_index "identity_file_folders", ["identity_id"], name: "index_identity_file_folders_on_identity_id", using: :btree
   add_index "identity_file_folders", ["parent_folder_id"], name: "index_identity_file_folders_on_parent_folder_id", using: :btree
 
-  create_table "identity_file_shares", force: :cascade do |t|
-    t.integer  "identity_file_id"
-    t.integer  "share_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-  end
-
-  add_index "identity_file_shares", ["identity_file_id"], name: "index_identity_file_shares_on_identity_file_id", using: :btree
-  add_index "identity_file_shares", ["identity_id"], name: "index_identity_file_shares_on_identity_id", using: :btree
-  add_index "identity_file_shares", ["share_id"], name: "index_identity_file_shares_on_share_id", using: :btree
-
   create_table "identity_files", force: :cascade do |t|
     t.integer  "identity_id"
     t.datetime "created_at"
@@ -2015,35 +2003,6 @@ ActiveRecord::Schema.define(version: 20160227015047) do
   add_index "phones", ["identity_id"], name: "index_phones_on_identity_id", using: :btree
   add_index "phones", ["manufacturer_id"], name: "index_phones_on_manufacturer_id", using: :btree
   add_index "phones", ["password_id"], name: "index_phones_on_password_id", using: :btree
-
-  create_table "playlist_share_contacts", force: :cascade do |t|
-    t.integer  "playlist_share_id"
-    t.integer  "contact_id"
-    t.integer  "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "playlist_share_contacts", ["contact_id"], name: "index_playlist_share_contacts_on_contact_id", using: :btree
-  add_index "playlist_share_contacts", ["identity_id"], name: "index_playlist_share_contacts_on_identity_id", using: :btree
-  add_index "playlist_share_contacts", ["playlist_share_id"], name: "index_playlist_share_contacts_on_playlist_share_id", using: :btree
-
-  create_table "playlist_shares", force: :cascade do |t|
-    t.boolean  "email"
-    t.integer  "playlist_id"
-    t.integer  "identity_id"
-    t.string   "subject",     limit: 255
-    t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "copy_self"
-    t.integer  "share_id"
-    t.integer  "visit_count"
-  end
-
-  add_index "playlist_shares", ["identity_id"], name: "index_playlist_shares_on_identity_id", using: :btree
-  add_index "playlist_shares", ["playlist_id"], name: "index_playlist_shares_on_playlist_id", using: :btree
-  add_index "playlist_shares", ["share_id"], name: "index_playlist_shares_on_share_id", using: :btree
 
   create_table "playlist_songs", force: :cascade do |t|
     t.integer  "playlist_id"
@@ -2905,8 +2864,6 @@ ActiveRecord::Schema.define(version: 20160227015047) do
   add_foreign_key "hotels", "identities"
   add_foreign_key "hotels", "locations"
   add_foreign_key "identities", "companies"
-  add_foreign_key "identity_file_shares", "identity_files"
-  add_foreign_key "identity_file_shares", "shares"
   add_foreign_key "invite_codes", "identities"
   add_foreign_key "locations", "websites"
   add_foreign_key "money_balance_item_templates", "identities"
@@ -2926,7 +2883,6 @@ ActiveRecord::Schema.define(version: 20160227015047) do
   add_foreign_key "permission_shares", "shares"
   add_foreign_key "permissions", "identities"
   add_foreign_key "permissions", "users"
-  add_foreign_key "playlist_shares", "shares"
   add_foreign_key "playlists", "identity_files"
   add_foreign_key "podcasts", "feeds"
   add_foreign_key "podcasts", "identities"
