@@ -313,6 +313,7 @@ var myplaceonline = function(mymodule) {
         myplaceonline.ensureStyledPage();
         // Fire off any onPageLoad events
         $.mobile.pageContainer.trigger("pagecontainershow");
+        scrollDown(200);
       }).fail(function(jqXHR, textStatus, errorThrown) {
         myplaceonline.createErrorNotification("Could not execute " + url + ": " + textStatus);
       }).complete(function(jqXHR, textStatus) {
@@ -320,6 +321,15 @@ var myplaceonline = function(mymodule) {
       });
     }
     return false;
+  }
+
+  function scrollDown(amount, easingType) {
+    if (!easingType) {
+      easingType = "easeInSine";
+    }
+    $('html, body').stop().animate({
+      scrollTop : $(window).scrollTop() + amount
+    }, 650, easingType);
   }
 
   function html_calculation_operand(item, heading, idPrefix, namePrefix, input_name) {
