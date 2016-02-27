@@ -2049,3 +2049,5 @@ en:
       invalid_token: "Invalid Token"
       unsubscribed_all: "Successfully unsubscribed from all categories."
       unsubscribed_category: "Successfully unsubscribed from %{category} posts."
+      link_unsubscribe_all: "Unsubscribe From All Emails From %{user}"
+      link_unsubscribe_category: "Unsubscribe From %{user}'s '%{category}' Emails"

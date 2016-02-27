@@ -1,5 +1,8 @@
 class Email < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
+  include ActionView::Helpers
+  include ActionDispatch::Routing
+  include Rails.application.routes.url_helpers
 
   validates :subject, presence: true
   validates :body, presence: true
@@ -48,6 +51,8 @@ class Email < ActiveRecord::Base
       ).first.nil?
     }
     
+    user_display = identity.display
+    
     target_emails.each do |target|
       to_hash = {}
       cc_hash = {}
@@ -67,9 +72,17 @@ class Email < ActiveRecord::Base
       et.token = SecureRandom.hex(10)
       et.email = target
       et.save!
+      
+      unsubscribe_all_link = unsubscribe_url(email: target, token: et.token)
+      unsubscribe_category_link = unsubscribe_url(email: target, category: email_category, token: et.token)
 
       final_content = content + "\n\n"
+      final_content += "<p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category), unsubscribe_category_link)}</p>\n"
+      final_content += "<p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display), unsubscribe_all_link)}</p>"
+      
       final_content_plain = content_plain + "\n\n"
+      final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category)}: #{unsubscribe_category_link}\n"
+      final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display)}: #{unsubscribe_all_link}"
 
       Myp.send_email(
         to_hash.keys,
@@ -98,5 +111,10 @@ class Email < ActiveRecord::Base
     result.use_bcc = true
     result.copy_self = true
     result
+  end
+
+  protected
+  def default_url_options
+    Rails.configuration.default_url_options
   end
 end
