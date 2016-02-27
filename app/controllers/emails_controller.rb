@@ -6,6 +6,7 @@ class EmailsController < MyplaceonlineController
       :body,
       :copy_self,
       :email_category,
+      :use_bcc,
       email_contacts_attributes: [
         :id,
         :_destroy,

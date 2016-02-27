@@ -1,6 +1,7 @@
 <%= myp_text_field(f, :subject, "myplaceonline.emails.subject", obj.subject, autofocus) %>
 <%= myp_text_field(f, :email_category, "myplaceonline.emails.email_category", obj.email_category, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
 <%= myp_text_area_markdown(f, :body, "myplaceonline.emails.body", obj.body) %>
+<%= myp_check_box(f, :use_bcc, "myplaceonline.emails.use_bcc") %>
 <%= myp_check_box(f, :copy_self, "myplaceonline.emails.copy_self") %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
