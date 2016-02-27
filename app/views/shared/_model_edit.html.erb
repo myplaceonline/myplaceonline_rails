@@ -1,4 +1,4 @@
-<% content_for :heading do -%><%= controller.display_obj(@obj) %><% end -%>
+<% content_for :heading do -%><%= I18n.t("myplaceonline.general.edit") + " " + page_heading(@obj, controller) %><% end -%>
 <h1><%= controller.display_obj(@obj) %></h1>
 <%= flashes! %>
 
