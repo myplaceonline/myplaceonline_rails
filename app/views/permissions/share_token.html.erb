@@ -13,9 +13,9 @@
 
 <%= form_for @share, :url => permissions_share_token_path do |f| %>
   <%= myp_text_field(f, :subject, "myplaceonline.permissions.subject", @share.subject, true) %>
-  <%= myp_text_area(f, :body, "myplaceonline.permissions.body", @share.body) %>
-  <%= myp_check_box(f, :email, "myplaceonline.permissions.email") %>
+  <%= myp_text_area_markdown(f, :body, "myplaceonline.permissions.body", @share.body) %>
   <%= myp_check_box(f, :copy_self, "myplaceonline.permissions.copy_self") %>
+  <%= myp_hidden_field(f, :email, @share.email) %>
   <%= myp_hidden_field(f, :subject_class, @share.subject_class) %>
   <%= myp_hidden_field(f, :subject_id, @share.subject_id) %>
   <%=

@@ -58,9 +58,9 @@ class PermissionShare < ActiveRecord::Base
     url = link
     content += "<p>" + ActionController::Base.helpers.link_to(url, url) + "</p>"
     
-    cc = nil
+    bcc = nil
     if copy_self
-      cc = identity.user.email
+      bcc = identity.user.email
     end
     to = Array.new
     permission_share_contacts.each do |permission_share_contact|
@@ -68,6 +68,6 @@ class PermissionShare < ActiveRecord::Base
         to.push(identity_email)
       end
     end
-    Myp.send_email(to, subject, content.html_safe, cc)
+    Myp.send_email(to, subject, content.html_safe, nil, bcc)
   end
 end
