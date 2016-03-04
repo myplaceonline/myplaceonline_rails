@@ -151,6 +151,8 @@ en:
       alerts_displays: "Alerts Displays"
       permission_shares: "Permission Shares"
       emails: "Emails"
+      obscure: "Obscure"
+      drafts: "Drafts"
     general:
       email: "E-mail"
       password: "Password"
@@ -2061,3 +2063,5 @@ en:
       unsubscribed_category: "Successfully unsubscribed from %{category} posts."
       link_unsubscribe_all: "Unsubscribe from all myplaceonline emails from %{user}"
       link_unsubscribe_category: "Unsubscribe from %{user}'s '%{category}' emails"
+    drafts:
+      draft_name: "Name"

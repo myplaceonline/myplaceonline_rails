@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   
+  resources :drafts
+  post 'drafts/new'
+
+  get 'obscure/index'
+  get 'obscure', :to => 'obscure#index'
+
   get 'unsubscribe/index'
   get 'unsubscribe', :to => 'unsubscribe#index'
 

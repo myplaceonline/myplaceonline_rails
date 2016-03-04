@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160227122046) do
+ActiveRecord::Schema.define(version: 20160304234348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -856,6 +856,17 @@ ActiveRecord::Schema.define(version: 20160227122046) do
 
   add_index "doctors", ["contact_id"], name: "index_doctors_on_contact_id", using: :btree
   add_index "doctors", ["identity_id"], name: "index_doctors_on_identity_id", using: :btree
+
+  create_table "drafts", force: :cascade do |t|
+    t.string   "draft_name"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "drafts", ["identity_id"], name: "index_drafts_on_identity_id", using: :btree
 
   create_table "drinks", force: :cascade do |t|
     t.integer  "identity_id"
@@ -2904,6 +2915,7 @@ ActiveRecord::Schema.define(version: 20160227122046) do
   add_foreign_key "desired_locations", "websites"
   add_foreign_key "dessert_locations", "identities"
   add_foreign_key "dessert_locations", "locations"
+  add_foreign_key "drafts", "identities"
   add_foreign_key "email_contacts", "contacts"
   add_foreign_key "email_contacts", "emails"
   add_foreign_key "email_contacts", "identities"
