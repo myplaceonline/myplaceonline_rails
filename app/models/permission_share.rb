@@ -32,6 +32,10 @@ class PermissionShare < ActiveRecord::Base
     Object.const_get(subject_class).find_by(id: subject_id)
   end
   
+  def has_obj
+    !subject_class.nil?
+  end
+  
   def simple_path
     "/" + subject_class.underscore.pluralize + "/" + subject_id.to_s
   end
@@ -56,5 +60,13 @@ class PermissionShare < ActiveRecord::Base
       "<p>#{tcat}: " + ActionController::Base.helpers.link_to(prefix, url) + "</p>",
       tcat + ": " + prefix + "\n\n" + url
     )
+  end
+  
+  def child_selections_list
+    if !child_selections.blank?
+      child_selections.split(",").map{|x| x.to_i}
+    else
+      []
+    end
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160306072300) do
+ActiveRecord::Schema.define(version: 20160306103254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2009,9 +2009,10 @@ ActiveRecord::Schema.define(version: 20160306072300) do
     t.boolean  "copy_self"
     t.integer  "share_id"
     t.integer  "identity_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.integer  "email_id"
+    t.string   "child_selections"
   end
 
   add_index "permission_shares", ["email_id"], name: "index_permission_shares_on_email_id", using: :btree

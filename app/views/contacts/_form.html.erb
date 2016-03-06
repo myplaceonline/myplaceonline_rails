@@ -1,6 +1,6 @@
 <%= f.fields_for(:contact_identity, obj.contact_identity) do |identity_fields| %>
 
-  <% simpleform = param_bool(:simpleform) %>
+  <% simpleform = Myp.param_bool(params, :simpleform) %>
 
   <%= myp_text_field(identity_fields, :name, "myplaceonline.contacts.name", obj.contact_identity.name, autofocus) %>
   <%= myp_text_field(identity_fields, :middle_name, "myplaceonline.contacts.middle_name", obj.contact_identity.middle_name) %>

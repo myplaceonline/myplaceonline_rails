@@ -1,26 +1,24 @@
 <%# locals: pics, random_name %>
 
 <% if !pics.nil? && pics.length > 0 %>
-  <% if pics.length > 1 %>
-    <script type="text/javascript">
-    myplaceonline.onPageLoad(function() {
-      $('#<%= random_name %>').magnificPopup({
-          items: [
-            <%= raw(pics.map{ |pic|
-                  #title = pic.file_file_name
-                  title = nil
-                  if !pic.notes.blank?
-                    title = pic.notes
-                  end
-                  "{ title: #{title.to_json}, src: '" + file_view_path(pic, :t => Time.now.to_f, token: params[:token]) + "'}"
-                }.join(", ")) %>
-          ],
-          gallery: {
-            enabled: true
-          },
-          type: 'image'
-      });
+  <script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    $('#<%= random_name %>').magnificPopup({
+        items: [
+          <%= raw(pics.map{ |pic|
+                #title = pic.file_file_name
+                title = nil
+                if !pic.notes.blank?
+                  title = pic.notes
+                end
+                "{ title: #{title.to_json}, src: '" + file_view_path(pic, :t => Time.now.to_f, token: params[:token]) + "'}"
+              }.join(", ")) %>
+        ],
+        gallery: {
+          enabled: true
+        },
+        type: 'image'
     });
-    </script>
-  <% end %>
+  });
+  </script>
 <% end %>

@@ -1244,6 +1244,8 @@ en:
       story: "Story"
       add_story: "Add Story"
       delete_story: "Delete Story"
+      share: "Share"
+      share_description: "Select the pictures to share:"
     passports:
       region: "Country"
       passport_number: "Passport Number"

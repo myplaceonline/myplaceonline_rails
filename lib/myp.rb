@@ -1257,4 +1257,18 @@ module Myp
       port: Rails.configuration.default_url_options[:port]
     ).chomp('/')
   end
+
+  def self.param_bool(params, name)
+    result = false
+    v = params[name]
+    if !v.blank?
+      result = v.to_s.to_bool
+    end
+    result
+  end
+  
+  def self.object_type_human(obj)
+    cat = Myp.instance_to_category(obj)
+    I18n.t("myplaceonline.category.#{cat.name}").singularize
+  end
 end

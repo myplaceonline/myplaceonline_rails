@@ -139,7 +139,7 @@ class Email < ActiveRecord::Base
     #result.use_bcc = true
     #result.copy_self = true
     
-    if !params["email_source_class"].blank?
+    if !params.nil? && !params["email_source_class"].blank?
       obj = Myp.find_existing_object(params["email_source_class"], params["email_source_id"].to_i)
       result.subject = obj.display
       result.body = obj.send(params["email_source_body_field"])

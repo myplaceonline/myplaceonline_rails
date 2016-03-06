@@ -58,19 +58,27 @@ class PermissionsController < MyplaceonlineController
     @share.copy_self = true
     @share.subject_class = params[:subject_class]
     @share.subject_id = params[:subject_id]
+    @share.child_selections = params[:child_selections]
     @share.email = Myp.new_model(Email)
     @share.email.email_category = @share.subject_class
+
+    if @share.has_obj
+      @check_obj = @share.get_obj
+      authorize! :show, @check_obj
+      @share.email.subject = Myp.object_type_human(@check_obj) + ": " + @check_obj.display
+    end
 
     if request.post?
       @share = PermissionShare.new(
         params.require(:permission_share).permit(
           :subject_class,
           :subject_id,
+          :child_selections,
           email_attributes: EmailsController.param_names
         )
       )
 
-      @check_obj = Object.const_get(@share.subject_class).find_by(id: @share.subject_id)
+      @check_obj = @share.get_obj
       authorize! :show, @check_obj
 
       @share.identity = User.current_user.primary_identity

@@ -75,12 +75,15 @@ class Trip < ActiveRecord::Base
 
     count = 0
     
+    include_pics = permission_share.child_selections_list
+    source_list = obj.trip_pictures.to_a.dup.keep_if{|x| !include_pics.index(x.id).nil? }
+    
     Myp.mktmpdir do |dir|
       
       files = Array.new
       identity_files = Array.new
       
-      obj.trip_pictures.each do |trip_picture|
+      source_list.each do |trip_picture|
         if !trip_picture.identity_file.nil?
           count = count + 1
           data = trip_picture.identity_file.file.file_contents

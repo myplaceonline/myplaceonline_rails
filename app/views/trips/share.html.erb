@@ -1,0 +1,41 @@
+<% content_for :heading do -%><%= t('myplaceonline.trips.share') %><% end -%>
+<h1><%= t('myplaceonline.trips.share') %></h1>
+<%= flashes! %>
+<% if @obj.errors.any? %>
+  <div class="errors">
+    <ul>
+    <% @obj.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<p><%= t("myplaceonline.trips.share_description") %></p>
+<hr />
+<%= form_tag do %>
+  <% @obj.trip_pictures.each do |trip_pic| %>
+    <%= myp_check_box_tag("pic#{trip_pic.id}", trip_pic.identity_file.display, @checked_values[trip_pic.id]) %>
+    <p><%= image_content(trip_pic.identity_file) %></p>
+    <% if !trip_pic.identity_file.notes.blank? %>
+      <p><%= markdown_content(trip_pic.identity_file.notes) %></p>
+    <% end %>
+    <hr />
+  <% end %>
+  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="navbar">
+      <ul>
+        <li>
+          <%= submit_tag(t("myplaceonline.permissions.share"), "data-icon" => "action", "data-iconpos" => "top") %>
+        </li>
+        <li><%= link_to t("myplaceonline.general.cancel"), controller.obj_path, "data-icon" => "back" %></li>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+</script>
