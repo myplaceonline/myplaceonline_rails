@@ -91,7 +91,7 @@ class ContactsController < MyplaceonlineController
   end
 
   def self.reject_if_blank(attributes)
-    attributes.all?{|key, value|
+    attributes.dup.delete_if {|key, value| key.to_s == "hide" }.all?{|key, value|
       if key == "contact_identity_attributes"
         value.all?{|key2, value2|
           if key2 == "company_attributes"
