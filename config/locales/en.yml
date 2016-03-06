@@ -2056,6 +2056,7 @@ en:
       delete_group: "Delete Group"
       use_bcc: "Use Blind Carbon Copy"
       variables: "Variables"
+      email_notices: "A separate email is sent to each contact. Note: emails are unencrypted."
       variables_details: !xml |
         <![CDATA[
         * %{name}: The short name of the contact. Example: "Hey %{name}, ..."

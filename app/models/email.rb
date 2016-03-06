@@ -67,7 +67,7 @@ class Email < ActiveRecord::Base
       if use_bcc
         bcc_hash[target] = true
       else
-        cc_hash[target] = true
+        to_hash[target] = true
       end
 
       if copy_self
@@ -136,7 +136,7 @@ class Email < ActiveRecord::Base
 
   def self.build(params = nil)
     result = self.dobuild(params)
-    result.use_bcc = true
+    #result.use_bcc = true
     #result.copy_self = true
     result
   end
