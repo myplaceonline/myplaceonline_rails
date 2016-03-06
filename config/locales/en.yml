@@ -2071,3 +2071,4 @@ en:
       link_unsubscribe_category: "Unsubscribe from %{user}'s '%{category}' emails"
     drafts:
       draft_name: "Name"
+      email: "Email"
