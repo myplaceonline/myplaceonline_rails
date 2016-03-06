@@ -174,6 +174,19 @@ class Identity < ActiveRecord::Base
   belongs_to :company
   accepts_nested_attributes_for :company, reject_if: proc { |attributes| CompaniesController.reject_if_blank(attributes) }
   allow_existing :company
+  
+  validate do
+    splits = name.split(" ")
+    if splits.length > 1
+      self.name = splits[0]
+      self.last_name = splits[splits.length-1]
+      if splits.length > 2
+        splits.delete_at(0)
+        splits.delete_at(splits.length - 1)
+        self.middle_name = splits.join(" ")
+      end
+    end
+  end
 
   def as_json(options={})
     super.as_json(options).merge({
