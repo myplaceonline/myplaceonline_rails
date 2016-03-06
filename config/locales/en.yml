@@ -506,6 +506,7 @@ en:
       add_email: "Add E-mail"
       delete_email: "Delete E-mail"
       email: "E-mail"
+      email_secondary: "Secondary"
       locations: "Addresses"
       add_location: "Add Address"
       delete_location: "Delete Address"

@@ -33,6 +33,7 @@
     }) do |child_fields, childproperty|
   %>
     <%= myp_text_field(child_fields, :email, "myplaceonline.identities.email", childproperty.email) %>
+    <%= myp_check_box(child_fields, :secondary, "myplaceonline.identities.email_secondary") %>
   <% end %>
 
   <% if !simpleform %>

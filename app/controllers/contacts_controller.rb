@@ -48,7 +48,12 @@ class ContactsController < MyplaceonlineController
           :phone_type,
           :_destroy
         ],
-        identity_emails_attributes: [:id, :email, :_destroy],
+        identity_emails_attributes: [
+          :id,
+          :_destroy,
+          :email,
+          :secondary
+        ],
         identity_locations_attributes: [
           :id,
           :_destroy,

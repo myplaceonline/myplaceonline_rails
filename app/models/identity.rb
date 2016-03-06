@@ -148,7 +148,7 @@ class Identity < ActiveRecord::Base
   accepts_nested_attributes_for :identity_emails, allow_destroy: true, reject_if: :all_blank
   
   def emails
-    identity_emails.to_a.map{|ie| ie.email }
+    identity_emails.to_a.delete_if{|ie| ie.secondary }.map{|ie| ie.email }
   end
   
   def phones
