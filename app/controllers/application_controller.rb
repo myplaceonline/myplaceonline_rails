@@ -58,6 +58,7 @@ class ApplicationController < ActionController::Base
   
   def around_request
     overwrote = false
+    overwrote2 = false
     begin
       # only do this once per request
       if User.current_user.nil?
@@ -69,6 +70,9 @@ class ApplicationController < ActionController::Base
           request_accessor.session[:myp_email] = current_user.email
         end
         Thread.current[:request] = request_accessor
+      end
+      if Thread.current[:nest_count].nil?
+        overwrote2 = true
         Thread.current[:nest_count] = 0
       end
       
@@ -78,6 +82,8 @@ class ApplicationController < ActionController::Base
         User.current_user = nil
         Thread.current[:current_session] = nil
         Thread.current[:request] = nil
+      end
+      if overwrote2
         Thread.current[:nest_count] = nil
       end
     end
