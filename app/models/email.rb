@@ -81,18 +81,29 @@ class Email < ActiveRecord::Base
       
       unsubscribe_all_link = unsubscribe_url(email: target, token: et.token)
       unsubscribe_category_link = unsubscribe_url(email: target, category: email_category, token: et.token)
+      
+      user_display_short = identity.display_short
+      user_email = identity.user.email
 
       final_content = content + "\n\n<p>&nbsp;</p>\n<hr />\n"
       final_content += "<p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category), unsubscribe_category_link)}</p>\n"
       final_content += "<p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display), unsubscribe_all_link)}</p>"
-      final_content += "\n<p>\n--\n<br />\n#{identity.display_short}<br />\n#{identity.user.email}"
+      final_content += "\n<p>\n--\n<br />\n"
+      if user_display_short != user_email
+        final_content += "#{user_display_short}<br />\n"
+      end
+      final_content += "#{user_email}"
       final_content += "\n<br />\n" + identity.phones.map{|p| "<a href=\"tel:#{p}\">#{p}</a>"}.join(" | ")
       final_content += "</p>"
       
       final_content_plain = content_plain + "\n\n\n===============\n\n"
       final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category)}: #{unsubscribe_category_link}\n"
       final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display)}: #{unsubscribe_all_link}"
-      final_content_plain += "\n\n--\n#{identity.display_short}\n#{identity.user.email}\n"
+      final_content_plain += "\n\n--\n"
+      if user_display_short != user_email
+        final_content_plain += "#{user_display_short}\n"
+      end
+      final_content_plain += "#{user_email}\n"
       final_content_plain += identity.phones.join(" | ")
       
       final_content = final_content.gsub("%{name}", contact.contact_identity.display_short)
