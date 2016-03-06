@@ -1,6 +1,9 @@
 class Trip < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
+  include ActionView::Helpers
+  include ActionDispatch::Routing
+  include Rails.application.routes.url_helpers
 
   validates :location, presence: true
   validates :started, presence: true
@@ -155,7 +158,7 @@ class Trip < ActiveRecord::Base
                 psc.save!
               end
               
-              permission_share.send_email
+              permission_share.send_email(obj)
             end
           ensure
             User.current_user = nil
@@ -163,5 +166,23 @@ class Trip < ActiveRecord::Base
         end
       end
     end
+  end
+  
+  def add_email_html(target_email, target_contact, permission_share)
+    result = ""
+    trip_pictures.each do |trip_picture|
+      if !permission_share.permission_share_children.index{|psc| psc.subject_id == trip_picture.identity_file.id}.nil?
+        result += "\n<hr />\n<p>#{ActionController::Base.helpers.image_tag(file_thumbnail_url(trip_picture.identity_file, token: permission_share.share.token))}</p>"
+        if !trip_picture.identity_file.notes.blank?
+          result += "\n<p>#{Myp.markdown_to_html(trip_picture.identity_file.notes)}</p>"
+        end
+      end
+    end
+    result
+  end
+
+  protected
+  def default_url_options
+    Rails.configuration.default_url_options
   end
 end

@@ -50,7 +50,7 @@ class PermissionShare < ActiveRecord::Base
     clazz.execute_share(self)
   end
   
-  def send_email
+  def send_email(target_obj = nil)
     url = link
     obj = get_obj
     prefix = obj.display
@@ -58,7 +58,9 @@ class PermissionShare < ActiveRecord::Base
     tcat = I18n.t("myplaceonline.category.#{cat.name}").singularize
     email.send_email(
       "<p>#{tcat}: " + ActionController::Base.helpers.link_to(prefix, url) + "</p>",
-      tcat + ": " + prefix + "\n\n" + url
+      tcat + ": " + prefix + "\n\n" + url,
+      target_obj,
+      self
     )
   end
   

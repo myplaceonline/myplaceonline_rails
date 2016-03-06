@@ -43,7 +43,7 @@ class Email < ActiveRecord::Base
     targets
   end
   
-  def send_email(body2_html = nil, body2_plain = nil)
+  def send_email(body2_html = nil, body2_plain = nil, target_obj = nil, permission_share = nil)
     
     content = "<p>" + Myp.markdown_to_html(body) + "</p>"
     if !body2_html.nil?
@@ -102,6 +102,10 @@ class Email < ActiveRecord::Base
 
         if !personalization.nil? && !personalization.additional_text.blank?
           final_content += "<p>" + Myp.markdown_to_html(personalization.additional_text) + "</p>"
+        end
+        
+        if !target_obj.nil? && target_obj.respond_to?("add_email_html")
+          final_content += target_obj.add_email_html(target, contact, permission_share)
         end
         
         final_content += "<hr />\n"
