@@ -1425,6 +1425,7 @@ en:
       notes: "Notes"
       when_read: "Date Read"
       recommender: "Recommender"
+      review: "Review"
     warranties:
       heading: "Warranties"
       add: "Add Warranty"
