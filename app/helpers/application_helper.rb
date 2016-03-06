@@ -960,4 +960,13 @@ module ApplicationHelper
   def identity_files_include_pics?(identity_files)
     identity_files.any?{|identity_file| file_image?(identity_file) }
   end
+  
+  def param_bool(name)
+    result = false
+    v = params[name]
+    if !v.blank?
+      result = v.to_s.to_bool
+    end
+    result
+  end
 end
