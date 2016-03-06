@@ -13,6 +13,9 @@
     }
   %>
   <%= attribute_table_row_reference(t("myplaceonline.trips.hotel"), "hotel_path", @obj.hotel) %>
+  <% @obj.trip_stories.each do |wrapper| %>
+    <%= attribute_table_row_reference(t("myplaceonline.trips.story"), "story_path", wrapper.story) %>
+  <% end %>
   
   <% content_for :postfooterlinks do %>
     <li><%= link_to t("myplaceonline.general.share"), permissions_share_token_path(subject_class: @obj.class.name, subject_id: @obj.id), "data-icon" => "action" %></li>

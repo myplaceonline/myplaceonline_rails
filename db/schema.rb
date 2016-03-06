@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160304234348) do
+ActiveRecord::Schema.define(version: 20160306070327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2598,6 +2598,18 @@ ActiveRecord::Schema.define(version: 20160304234348) do
   add_index "trip_pictures", ["identity_id"], name: "index_trip_pictures_on_identity_id", using: :btree
   add_index "trip_pictures", ["trip_id"], name: "index_trip_pictures_on_trip_id", using: :btree
 
+  create_table "trip_stories", force: :cascade do |t|
+    t.integer  "trip_id"
+    t.integer  "story_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "trip_stories", ["identity_id"], name: "index_trip_stories_on_identity_id", using: :btree
+  add_index "trip_stories", ["story_id"], name: "index_trip_stories_on_story_id", using: :btree
+  add_index "trip_stories", ["trip_id"], name: "index_trip_stories_on_trip_id", using: :btree
+
   create_table "trips", force: :cascade do |t|
     t.integer  "location_id"
     t.date     "started"
@@ -2977,6 +2989,9 @@ ActiveRecord::Schema.define(version: 20160304234348) do
   add_foreign_key "trek_pictures", "treks"
   add_foreign_key "treks", "identities"
   add_foreign_key "treks", "locations"
+  add_foreign_key "trip_stories", "identities"
+  add_foreign_key "trip_stories", "stories"
+  add_foreign_key "trip_stories", "trips"
   add_foreign_key "trips", "hotels"
   add_foreign_key "trips", "identity_files"
   add_foreign_key "volunteering_activities", "identities"

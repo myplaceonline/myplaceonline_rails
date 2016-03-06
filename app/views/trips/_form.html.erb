@@ -36,3 +36,41 @@
     collapsed: obj.hotel.nil?
   }
 %>
+<%=
+  render layout: "myplaceonline/childproperties", locals: {
+    f: f,
+    heading: t("myplaceonline.trips.stories"),
+    childpropertiesname: :trip_stories,
+    childproperties: obj.trip_stories,
+    deletebutton: t("myplaceonline.trips.delete_story"),
+    addbutton: t("myplaceonline.trips.add_story"),
+    expanded: obj.trip_stories.length > 0,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :story_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.trips.story"),
+        objform: "stories/form",
+        existingobjurl: "story_path",
+        searchurl: "/stories.json?perpage=0",
+        edit: true,
+        autofocus: true
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :story_attributes,
+      existingobj: childproperty.story,
+      heading: t("myplaceonline.trips.story"),
+      objform: "stories/form",
+      existingobjurl: "story_path",
+      searchurl: "/stories.json?perpage=0",
+      edit: true,
+      autofocus: false
+    }
+  %>
+<% end %>

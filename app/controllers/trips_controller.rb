@@ -25,7 +25,12 @@ class TripsController < MyplaceonlineController
         :work,
         location_attributes: LocationsController.param_names,
         trip_pictures_attributes: FilesController.multi_param_names,
-        hotel_attributes: HotelsController.param_names
+        hotel_attributes: HotelsController.param_names,
+        trip_stories_attributes: [
+          :id,
+          :_destroy,
+          story_attributes: StoriesController.param_names
+        ]
       )
     end
 end

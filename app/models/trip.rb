@@ -17,6 +17,10 @@ class Trip < ActiveRecord::Base
   accepts_nested_attributes_for :trip_pictures, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :trip_pictures, [{:name => :identity_file}]
   
+  has_many :trip_stories, :dependent => :destroy
+  accepts_nested_attributes_for :trip_stories, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :trip_stories, [{:name => :story}]
+  
   belongs_to :identity_file
 
   before_validation :update_pic_folders

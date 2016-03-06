@@ -1240,6 +1240,10 @@ en:
       hotel: "Hotel"
       download_zip: "Download Zip"
       show_shared: "Display"
+      stories: "Stories"
+      story: "Story"
+      add_story: "Add Story"
+      delete_story: "Delete Story"
     passports:
       region: "Country"
       passport_number: "Passport Number"
