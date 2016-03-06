@@ -19,11 +19,11 @@ class Playlist < ActiveRecord::Base
     true
   end
   
-  def self.share_async?
+  def self.share_async?(permission_share)
     true
   end
   
-  def self.execute_async(permission_share)
+  def self.execute_share(permission_share)
     
     obj = Myp.find_existing_object!(permission_share.subject_class, permission_share.subject_id)
 

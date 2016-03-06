@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get 'help', :to => 'help#index'
 
   resources :permission_shares
+  match 'permission_shares/:id/personalize', :to => 'permission_shares#personalize', via: [:get, :patch], as: "permission_shares_personalize"
   post 'permission_shares/new'
 
   resources :alerts_displays

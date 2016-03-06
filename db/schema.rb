@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160306113007) do
+ActiveRecord::Schema.define(version: 20160306121809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -922,6 +922,19 @@ ActiveRecord::Schema.define(version: 20160306113007) do
   add_index "email_groups", ["email_id"], name: "index_email_groups_on_email_id", using: :btree
   add_index "email_groups", ["group_id"], name: "index_email_groups_on_group_id", using: :btree
   add_index "email_groups", ["identity_id"], name: "index_email_groups_on_identity_id", using: :btree
+
+  create_table "email_personalizations", force: :cascade do |t|
+    t.string   "target"
+    t.text     "additional_text"
+    t.boolean  "do_send"
+    t.integer  "identity_id"
+    t.integer  "email_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "email_personalizations", ["email_id"], name: "index_email_personalizations_on_email_id", using: :btree
+  add_index "email_personalizations", ["identity_id"], name: "index_email_personalizations_on_identity_id", using: :btree
 
   create_table "email_tokens", force: :cascade do |t|
     t.string   "email"
@@ -2937,6 +2950,8 @@ ActiveRecord::Schema.define(version: 20160306113007) do
   add_foreign_key "email_groups", "emails"
   add_foreign_key "email_groups", "groups"
   add_foreign_key "email_groups", "identities"
+  add_foreign_key "email_personalizations", "emails"
+  add_foreign_key "email_personalizations", "identities"
   add_foreign_key "emails", "identities"
   add_foreign_key "event_contacts", "contacts"
   add_foreign_key "event_contacts", "events"

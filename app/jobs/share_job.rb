@@ -10,7 +10,7 @@ class ShareJob < ApplicationJob
   def perform(*args)
     Rails.logger.debug{"Started ShareJob"}
     permission_share = args[0]
-    permission_share.execute_async
+    permission_share.execute_share
     Rails.logger.debug{"Finished ShareJob"}
   end
 end

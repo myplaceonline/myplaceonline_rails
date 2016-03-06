@@ -2,6 +2,7 @@ class EmailsController < MyplaceonlineController
   
   def self.param_names
     [
+      :id,
       :subject,
       :body,
       :copy_self,
@@ -16,6 +17,11 @@ class EmailsController < MyplaceonlineController
         :id,
         :_destroy,
         group_attributes: GroupsController.param_names
+      ],
+      email_personalizations_attributes: [
+        :do_send,
+        :target,
+        :additional_text
       ]
     ]
   end

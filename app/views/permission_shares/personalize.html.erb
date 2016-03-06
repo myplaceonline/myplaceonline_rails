@@ -1,0 +1,43 @@
+<% content_for :heading do -%><%= t('myplaceonline.permission_shares.personalize') %><% end -%>
+<h1><%= t('myplaceonline.permission_shares.personalize') %></h1>
+<%= flashes! %>
+<% if @obj.errors.any? %>
+  <div class="errors">
+    <ul>
+    <% @obj.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<p><%= t("myplaceonline.permission_shares.personalize_description") %></p>
+<hr />
+<%= form_for @obj, :url => permission_shares_personalize_path(@obj) do |f| %>
+  <%= f.fields_for :email, @obj.email do |sub_fields| %>
+    <% @obj.email.email_personalizations.each do |email_personalization| %>
+      <%= sub_fields.fields_for :email_personalizations, email_personalization do |personalization_fields| %>
+        <%= myp_check_box(personalization_fields, :do_send, email_personalization.contact.display + " (" + email_personalization.target + ")") %>
+        <%= myp_text_area_markdown(personalization_fields, :additional_text, t("myplaceonline.email_personalizations.additional_text"), email_personalization.additional_text) %>
+        <%= myp_hidden_field(personalization_fields, :target, email_personalization.target) %>
+        <hr />
+      <% end %>
+    <% end %>
+  <% end %>
+  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="navbar">
+      <ul>
+        <li>
+          <%= f.submit(t("myplaceonline.permission_shares.share"), "data-icon" => "action", "data-iconpos" => "top") %>
+        </li>
+        <li><%= link_to t("myplaceonline.general.cancel"), @obj.simple_path, "data-icon" => "back" %></li>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+</script>

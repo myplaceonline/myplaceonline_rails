@@ -42,12 +42,12 @@ class PermissionShare < ActiveRecord::Base
   
   def async?
     clazz = Object.const_get(subject_class)
-    clazz.respond_to?("share_async?") && clazz.share_async?
+    clazz.respond_to?("share_async?") && clazz.share_async?(self)
   end
   
-  def execute_async
+  def execute_share
     clazz = Object.const_get(subject_class)
-    clazz.execute_async(self)
+    clazz.execute_share(self)
   end
   
   def send_email

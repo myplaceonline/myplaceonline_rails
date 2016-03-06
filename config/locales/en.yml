@@ -2036,6 +2036,8 @@ en:
       url: "Link"
       share: "Share"
       email: "Email"
+      personalize: "Personalize"
+      personalize_description: "Select recipients and optionally personalize each message:"
     contact:
       name: "Name"
       email: "Email"
@@ -2075,3 +2077,5 @@ en:
     drafts:
       draft_name: "Name"
       email: "Email"
+    email_personalizations:
+      additional_text: "Persoanlized Note"
