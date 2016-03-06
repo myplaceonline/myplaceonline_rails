@@ -28,6 +28,10 @@ class Identity < ActiveRecord::Base
     result
   end
   
+  def default_name?
+    name == I18n.t("myplaceonline.contacts.me")
+  end
+  
   belongs_to :user
   
   has_many :passwords, :dependent => :destroy
@@ -310,8 +314,11 @@ class Identity < ActiveRecord::Base
   
   def display_short
     result = nickname
-    if result.blank?
+    if result.blank? && !default_name?
       result = name
+    end
+    if result.blank? && !user.nil?
+      result = user.email
     end
     if result.blank?
       result = display
