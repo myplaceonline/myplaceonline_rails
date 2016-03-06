@@ -69,6 +69,7 @@ class ApplicationController < ActionController::Base
           request_accessor.session[:myp_email] = current_user.email
         end
         Thread.current[:request] = request_accessor
+        Thread.current[:nest_count] = 0
       end
       
       yield
@@ -77,6 +78,7 @@ class ApplicationController < ActionController::Base
         User.current_user = nil
         Thread.current[:current_session] = nil
         Thread.current[:request] = nil
+        Thread.current[:nest_count] = nil
       end
     end
   end
