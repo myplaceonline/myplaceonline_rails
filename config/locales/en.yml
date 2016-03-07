@@ -382,38 +382,37 @@ en:
         You may share a trip and its pictures through email:
         
         1. Create a [trip](/trips/new) and give it a location and start date.
-        Any notes you put into the trip will be shared. Add one or more
-        pictures to the trip. After saving, click the `Share` button at the
-        bottom. For example:
+        Add one or more pictures to the trip. After saving, click the `Share`
+        button at the bottom. For example:
         
-        {image:help/categories/trips/create_trip1.png}
+            {image:help/categories/trips/create_trip1.png}
         
         1. Select which pictures to share. By default, all pictures are
         shared. When finished selecting, click the `Share` button at the
         bottom:
         
-        {image:help/categories/trips/share1.png}
+            {image:help/categories/trips/share1.png}
         
         1. Enter a subject and body of the email. You may use the placeholder
         `%{name}` which will be replaced by the contact name.
         
-        {image:help/categories/trips/share2.png}
+            {image:help/categories/trips/share2.png}
         
         1. If you plan to share with the same group of people in the future,
         create a group:
         
-        {image:help/categories/trips/share4.png}
+            {image:help/categories/trips/share4.png}
         
         1. Click `New Group` and enter a group name (next time, search for
         this name in the `Existing Group` box):
         
-        {image:help/categories/trips/share5.png}
+            {image:help/categories/trips/share5.png}
         
         1. Add as many contacts as you want. For each contact, click
         `New Contact`, enter at least a first name, and then add one or more
         email addresses (this is where the system will send the emails).
         
-        {image:help/categories/trips/share6.png}
+            {image:help/categories/trips/share6.png}
         
         1. Instead of using groups, you can add individual contacts as well.
         These are not mutually exclusive, so you can select one or more groups
@@ -427,14 +426,14 @@ en:
         be put at the bottom of the email just for that person. Click `Share`
         when complete:
         
-        {image:help/categories/trips/share7.png}
+            {image:help/categories/trips/share7.png}
         
         1. In about 5 minutes, the emails will be sent to the contacts.
         Remember that myplaceonline cannot guarantee email delivery. Even if you
         blind carbon copy yourself and receive a copy, we do not track email
         opens so you can never be sure the email arrived or was opened. The
         email will be addressed from `Myplaceonline.com` although a `Reply-To`
-        it setup so that if the person clicks reply, they will automatically
+        is setup so that if the person clicks reply, they will automatically
         reply to your email address. The user will have a link to the shared
         trip view. This link has a unique token so that only they, or anyone
         they forward the link to, can see the page. Thumbnails of the images
@@ -445,7 +444,7 @@ en:
         go to the [contacts](/contacts) page and click on the `Me` button
         to edit your contact.
         
-        {image:help/categories/trips/share8.png}
+            {image:help/categories/trips/share8.png}
         
         ]]>
     search:
