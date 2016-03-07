@@ -4,11 +4,13 @@ module EncryptedConcern extend ActiveSupport::Concern
       def belongs_to_encrypted(name)
         
         if !respond_to?(:encrypt)
+
           define_method("encrypt") do
             if @encrypt.nil?
               @encrypt = send("#{name}_encrypted?")
             end
-            @encrypt
+            result = @encrypt
+            result
           end
           
           define_method("encrypt=") do |newvalue|
@@ -33,7 +35,7 @@ module EncryptedConcern extend ActiveSupport::Concern
         end
         
         define_method("#{name}_finalize") do |encrypt = false|
-          if self.send("#{name}_changed?")
+          if self.send("#{name}_changed?") || (self.send("#{name}_encrypted?") && !self.encrypt) || (!self.send("#{name}_encrypted?") && self.encrypt)
             do_encrypt = encrypt || self[:encrypt] == true || (self.respond_to?("encrypt") && (self.encrypt == "1" || self.encrypt == true))
             if do_encrypt
               new_encrypted_value = Myp.encrypt_from_session(
@@ -52,8 +54,10 @@ module EncryptedConcern extend ActiveSupport::Concern
               end
             else
               if send("#{name}_encrypted?")
-                self.send("#{name}_encrypted").destroy!
+                existing_encrypted_value = self.send("#{name}_encrypted")
                 self.send("#{name}_encrypted=", nil)
+                self.save!
+                existing_encrypted_value.destroy!
               end
             end
           end

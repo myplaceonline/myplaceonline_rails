@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160307041317) do
+ActiveRecord::Schema.define(version: 20160307043446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2506,12 +2506,14 @@ ActiveRecord::Schema.define(version: 20160307041317) do
     t.integer  "password_id"
     t.integer  "visit_count"
     t.integer  "identity_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "ssh_private_key_encrypted_id"
   end
 
   add_index "ssh_keys", ["identity_id"], name: "index_ssh_keys_on_identity_id", using: :btree
   add_index "ssh_keys", ["password_id"], name: "index_ssh_keys_on_password_id", using: :btree
+  add_index "ssh_keys", ["ssh_private_key_encrypted_id"], name: "index_ssh_keys_on_ssh_private_key_encrypted_id", using: :btree
 
   create_table "statuses", force: :cascade do |t|
     t.datetime "status_time"
@@ -3047,6 +3049,7 @@ ActiveRecord::Schema.define(version: 20160307041317) do
   add_foreign_key "restaurant_pictures", "identities"
   add_foreign_key "restaurant_pictures", "identity_files"
   add_foreign_key "restaurant_pictures", "restaurants"
+  add_foreign_key "ssh_keys", "encrypted_values", column: "ssh_private_key_encrypted_id"
   add_foreign_key "ssh_keys", "identities"
   add_foreign_key "ssh_keys", "passwords"
   add_foreign_key "stories", "identities"

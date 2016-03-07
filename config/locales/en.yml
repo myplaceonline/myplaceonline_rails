@@ -2142,3 +2142,4 @@ en:
       ssh_private_key: "SSH Private Key"
       ssh_public_key: "SSH Public Key"
       password: "SSH Key Password"
+      is_encrypted: "Is Encrypted?"
