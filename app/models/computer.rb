@@ -24,4 +24,7 @@ class Computer < ActiveRecord::Base
   belongs_to :main_user, class_name: Password
   accepts_nested_attributes_for :main_user, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
   allow_existing :main_user, Password
+
+  has_many :computer_ssh_keys, :dependent => :destroy
+  accepts_nested_attributes_for :computer_ssh_keys, allow_destroy: true, reject_if: :all_blank
 end

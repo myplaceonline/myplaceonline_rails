@@ -1390,6 +1390,10 @@ en:
       depth: "Depth"
       weight_type: "Weight Type"
       weight: "Weight"
+      ssh_keys: "SSH Keys"
+      ssh_key: "SSH Key"
+      add_ssh_key: "Add SSH Key"
+      delete_ssh_key: "Delete SSH Key"
     life_insurances:
       insurance_name: "Name"
       insurance_amount: "Amount"

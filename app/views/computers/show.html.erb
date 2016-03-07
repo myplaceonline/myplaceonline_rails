@@ -19,5 +19,8 @@
   <%= attribute_table_row_dimensions(t("myplaceonline.computers.height"), @obj.height, @obj.dimensions_type) %>
   <%= attribute_table_row_dimensions(t("myplaceonline.computers.depth"), @obj.depth, @obj.dimensions_type) %>
   <%= attribute_table_row_weight(t("myplaceonline.computers.weight"), @obj.weight, @obj.weight_type) %>
+  <% @obj.computer_ssh_keys.each do |wrapper| %>
+    <%= attribute_table_row_reference(t("myplaceonline.computers.ssh_key"), "ssh_key_path", wrapper.ssh_key) %>
+  <% end %>
   
 <% end %>

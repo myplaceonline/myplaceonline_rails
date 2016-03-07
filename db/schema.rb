@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160307043446) do
+ActiveRecord::Schema.define(version: 20160307052625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -581,6 +581,18 @@ ActiveRecord::Schema.define(version: 20160307043446) do
 
   add_index "complete_due_items", ["calendar_id"], name: "index_complete_due_items_on_calendar_id", using: :btree
   add_index "complete_due_items", ["identity_id"], name: "index_complete_due_items_on_identity_id", using: :btree
+
+  create_table "computer_ssh_keys", force: :cascade do |t|
+    t.integer  "computer_id"
+    t.integer  "ssh_key_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "computer_ssh_keys", ["computer_id"], name: "index_computer_ssh_keys_on_computer_id", using: :btree
+  add_index "computer_ssh_keys", ["identity_id"], name: "index_computer_ssh_keys_on_identity_id", using: :btree
+  add_index "computer_ssh_keys", ["ssh_key_id"], name: "index_computer_ssh_keys_on_ssh_key_id", using: :btree
 
   create_table "computers", force: :cascade do |t|
     t.date     "purchased"
@@ -2984,6 +2996,9 @@ ActiveRecord::Schema.define(version: 20160307043446) do
   add_foreign_key "calendar_item_reminders", "identities"
   add_foreign_key "calendar_items", "calendars"
   add_foreign_key "calendar_items", "identities"
+  add_foreign_key "computer_ssh_keys", "computers"
+  add_foreign_key "computer_ssh_keys", "identities"
+  add_foreign_key "computer_ssh_keys", "ssh_keys"
   add_foreign_key "concert_pictures", "concerts"
   add_foreign_key "concert_pictures", "identities"
   add_foreign_key "concert_pictures", "identity_files"

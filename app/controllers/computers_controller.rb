@@ -26,7 +26,12 @@ class ComputersController < MyplaceonlineController
         :weight,
         manufacturer_attributes: CompaniesController.param_names,
         administrator_attributes: PasswordsController.param_names,
-        main_user_attributes: PasswordsController.param_names
+        main_user_attributes: PasswordsController.param_names,
+        computer_ssh_keys_attributes: [
+          :id,
+          :_destroy,
+          ssh_key_attributes: SshKeysController.param_names
+        ]
       )
     end
 end

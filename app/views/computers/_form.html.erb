@@ -55,3 +55,41 @@
 <%= myp_decimal_field(f, :depth, "myplaceonline.computers.depth", obj.depth) %>
 <%= myp_select(f, :weight_type, "myplaceonline.computers.weight_type", Myp.translate_options(Myp::WEIGHTS), obj.weight_type) %>
 <%= myp_decimal_field(f, :weight, "myplaceonline.computers.weight", obj.weight) %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.computers.ssh_keys"),
+    childpropertiesname: :computer_ssh_keys,
+    childproperties: obj.computer_ssh_keys,
+    deletebutton: t("myplaceonline.computers.delete_ssh_key"),
+    addbutton: t("myplaceonline.computers.add_ssh_key"),
+    expanded: obj.computer_ssh_keys.length > 0,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :ssh_key_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.computers.ssh_key"),
+        objform: "ssh_keys/form",
+        existingobjurl: "ssh_key_path",
+        searchurl: "/ssh_keys.json?perpage=0",
+        edit: false,
+        autofocus: true
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :ssh_key_attributes,
+      existingobj: childproperty.ssh_key,
+      heading: t("myplaceonline.computers.ssh_key"),
+      objform: "ssh_keys/form",
+      existingobjurl: "ssh_key_path",
+      searchurl: "/ssh_keys.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
+<% end %>
