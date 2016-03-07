@@ -9,12 +9,15 @@ class UnsubscribeController < ApplicationController
     
     @content = ""
     
-    if !EmailToken.where(email: email, token: token).first.nil?
+    token = EmailToken.where(email: email, token: token).first
+    
+    if !token.nil?
       flash.clear
       
       eu = EmailUnsubscription.new
       eu.email = email
       eu.category = category
+      eu.identity = token.identity
       eu.save!
       
       if category.blank?

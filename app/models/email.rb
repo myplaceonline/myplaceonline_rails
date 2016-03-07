@@ -60,9 +60,10 @@ class Email < ActiveRecord::Base
       |target_email, target_contact|
 
       !EmailUnsubscription.where(
-        "email = ? and (category is null or category = ?)",
+        "email = ? and (category is null or category = ?) and (identity_id is null or identity_id = ?)",
         target_email,
-        email_category
+        email_category,
+        identity.id
       ).first.nil?
     }
     
@@ -86,6 +87,7 @@ class Email < ActiveRecord::Base
       et = EmailToken.new
       et.token = SecureRandom.hex(10)
       et.email = target
+      et.identity = identity
       et.save!
       
       unsubscribe_all_link = unsubscribe_url(email: target, token: et.token)

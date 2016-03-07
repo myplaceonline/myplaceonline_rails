@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160306121809) do
+ActiveRecord::Schema.define(version: 20160307004106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -939,16 +939,22 @@ ActiveRecord::Schema.define(version: 20160306121809) do
   create_table "email_tokens", force: :cascade do |t|
     t.string   "email"
     t.string   "token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "identity_id"
   end
+
+  add_index "email_tokens", ["identity_id"], name: "index_email_tokens_on_identity_id", using: :btree
 
   create_table "email_unsubscriptions", force: :cascade do |t|
     t.string   "email"
     t.string   "category"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "identity_id"
   end
+
+  add_index "email_unsubscriptions", ["identity_id"], name: "index_email_unsubscriptions_on_identity_id", using: :btree
 
   create_table "emails", force: :cascade do |t|
     t.string   "subject"
@@ -2952,6 +2958,8 @@ ActiveRecord::Schema.define(version: 20160306121809) do
   add_foreign_key "email_groups", "identities"
   add_foreign_key "email_personalizations", "emails"
   add_foreign_key "email_personalizations", "identities"
+  add_foreign_key "email_tokens", "identities"
+  add_foreign_key "email_unsubscriptions", "identities"
   add_foreign_key "emails", "identities"
   add_foreign_key "event_contacts", "contacts"
   add_foreign_key "event_contacts", "events"
