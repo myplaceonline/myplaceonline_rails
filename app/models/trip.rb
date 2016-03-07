@@ -106,6 +106,8 @@ class Trip < ActiveRecord::Base
         end
       end
       
+      Rails.logger.info{"Trip execute_share. count: #{count}, obj: #{obj.inspect}"}
+
       if count > 0
         Myp.tmpfile("trip" + obj.id.to_s + "_", ".zip") do |tfile|
           Zip::File.open(tfile.path, Zip::File::CREATE) do |zipfile|
