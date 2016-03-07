@@ -33,10 +33,10 @@ class MoneyBalancesController < MyplaceonlineController
     @amount = params[:amount]
     @original_amount = params[:original_amount]
     @description = params[:description]
-    @checkbox_percent50 = " checked=\"checked\""
-    @checkbox_percent100 = params[:percent_default] == "1.0" ? " checked=\"checked\"" : ""
-    if !@checkbox_percent100.blank?
-      @checkbox_percent50 = ""
+    @checkbox_percent100 = " checked=\"checked\""
+    @checkbox_percent50 = params[:percent_default] == "0.5" ? " checked=\"checked\"" : ""
+    if !@checkbox_percent50.blank?
+      @checkbox_percent100 = ""
     end
     if request.patch?
       Rails.logger.debug{"Adding money balance item"}

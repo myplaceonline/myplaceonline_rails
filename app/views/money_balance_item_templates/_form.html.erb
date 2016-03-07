@@ -9,9 +9,9 @@
   <fieldset data-role="controlgroup" data-type="horizontal">
     <legend class="form_field_label"><%= controller.other_owed_name(@owner_paid) + " %" %></legend>
     <% fieldprefix = f.object_name.gsub("\[", "_").gsub("\]", "") + "_other_owes_percent" %>
-    <input name="<%= "#{f.object_name}[other_owes_percent]" %>" id="<%= "#{fieldprefix}50" %>" value="0.5" class="other_owes_percent" checked="checked" type="radio" onchange="myplaceonline.onChangeCascade($('#<%= amount_field_id %>'), myplaceonline.toFloatSafe, '.owe_container', '.other_owes', '.other_owes_percent:checked', myplaceonline.transformMultiply)" />
+    <input name="<%= "#{f.object_name}[other_owes_percent]" %>" id="<%= "#{fieldprefix}50" %>" value="0.5" class="other_owes_percent" type="radio" onchange="myplaceonline.onChangeCascade($('#<%= amount_field_id %>'), myplaceonline.toFloatSafe, '.owe_container', '.other_owes', '.other_owes_percent:checked', myplaceonline.transformMultiply)" />
     <label for="<%= "#{fieldprefix}50" %>">50%</label>
-    <input name="<%= "#{f.object_name}[other_owes_percent]" %>" id="<%= "#{fieldprefix}100" %>" value="1.0" class="other_owes_percent" type="radio" onchange="myplaceonline.onChangeCascade($('#<%= amount_field_id %>'), myplaceonline.toFloatSafe, '.owe_container', '.other_owes', '.other_owes_percent:checked', myplaceonline.transformMultiply)" />
+    <input name="<%= "#{f.object_name}[other_owes_percent]" %>" id="<%= "#{fieldprefix}100" %>" value="1.0" class="other_owes_percent" checked="checked" type="radio" onchange="myplaceonline.onChangeCascade($('#<%= amount_field_id %>'), myplaceonline.toFloatSafe, '.owe_container', '.other_owes', '.other_owes_percent:checked', myplaceonline.transformMultiply)" />
     <label for="<%= "#{fieldprefix}100" %>">100%</label>
   </fieldset>
 </div>
