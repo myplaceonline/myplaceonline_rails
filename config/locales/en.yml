@@ -379,22 +379,73 @@ en:
         <![CDATA[
         ## Sharing
         
-        Click on a [trip](/trips/) and then click the `Share` button. Select or
-        create a set of contacts with email addresses, and a link will be
-        emailed out to those email addresses. The link contains a unique token
-        so that the person does not have to sign up for myplaceonline to see
-        the trip (although this means that anyone with that link can see it).
+        You may share a trip and its pictures through email:
         
-        The link will take the person to a page with the description of the
-        trip, thumbnails of all pictures for the trip, and a slideshow of the
-        pictures. There will also be a `Download Zip` button at the bottom
-        of the page will lets the person download a `.zip` file of all the
-        pictures.
+        1. Create a [trip](/trips/new) and give it a location and start date.
+        Any notes you put into the trip will be shared. Add one or more
+        pictures to the trip. After saving, click the `Share` button at the
+        bottom. For example:
         
-        You can see what this page looks like by clicking the
-        `Display` button on the trip. Here is an example:
+        {image:help/categories/trips/create_trip1.png}
         
-        {image:help/categories/trips/display_trip.png}
+        1. Select which pictures to share. By default, all pictures are
+        shared. When finished selecting, click the `Share` button at the
+        bottom:
+        
+        {image:help/categories/trips/share1.png}
+        
+        1. Enter a subject and body of the email. You may use the placeholder
+        `%{name}` which will be replaced by the contact name.
+        
+        {image:help/categories/trips/share2.png}
+        
+        1. If you plan to share with the same group of people in the future,
+        create a group:
+        
+        {image:help/categories/trips/share4.png}
+        
+        1. Click `New Group` and enter a group name (next time, search for
+        this name in the `Existing Group` box):
+        
+        {image:help/categories/trips/share5.png}
+        
+        1. Add as many contacts as you want. For each contact, click
+        `New Contact`, enter at least a first name, and then add one or more
+        email addresses (this is where the system will send the emails).
+        
+        {image:help/categories/trips/share6.png}
+        
+        1. Instead of using groups, you can add individual contacts as well.
+        These are not mutually exclusive, so you can select one or more groups
+        as well as one or more contacts, and emails will be sent to all of them.
+        Click `Share` at the bottom when ready.
+        
+        1. On the next page, you may uncheck any contacts that you do not
+        want to email. This is useful if you use a group and you want to
+        exclude some people for some reason. In addition, you can add a
+        personalization to any checked person and this additional text will
+        be put at the bottom of the email just for that person. Click `Share`
+        when complete:
+        
+        {image:help/categories/trips/share7.png}
+        
+        1. In about 5 minutes, the emails will be sent to the contacts.
+        Remember that myplaceonline cannot guarantee email delivery. Even if you
+        blind carbon copy yourself and receive a copy, we do not track email
+        opens so you can never be sure the email arrived or was opened. The
+        email will be addressed from `Myplaceonline.com` although a `Reply-To`
+        it setup so that if the person clicks reply, they will automatically
+        reply to your email address. The user will have a link to the shared
+        trip view. This link has a unique token so that only they, or anyone
+        they forward the link to, can see the page. Thumbnails of the images
+        will also be included in the HTML version of the email. The user
+        is able to unsubscribe from `Trip` emails or all emails from you.
+        By default, the signature at the bottom will only include your email
+        address. If you want your name and/or phone numbers in the signature,
+        go to the [contacts](/contacts) page and click on the `Me` button
+        to edit your contact.
+        
+        {image:help/categories/trips/share8.png}
         
         ]]>
     search:

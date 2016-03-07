@@ -19,7 +19,7 @@ class HelpController < ApplicationController
     else
       @content = Myp.parse_yaml_to_html(@content)
       r = Regexp.new('{image:([^}]+)}')
-      @content = @content.gsub(r) {|m| ActionController::Base.helpers.image_tag("#{$1}")}
+      @content = @content.gsub(r) {|m| ActionController::Base.helpers.image_tag("#{$1}", class: "help_image")}
       @content = @content.html_safe
     end
   end

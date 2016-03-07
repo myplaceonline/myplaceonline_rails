@@ -145,3 +145,7 @@ div.ui-checkbox + label {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
+
+.help_image {
+  border: 1px solid gray;
+}

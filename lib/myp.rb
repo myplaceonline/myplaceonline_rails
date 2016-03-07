@@ -1136,7 +1136,7 @@ module Myp
   end
 
   def self.is_probably_i18n(str)
-    !str.nil? && str.include?("myplaceonline.")
+    !str.nil? && str.start_with?("myplaceonline.")
   end
   
   def self.evaluate_if_probably_i18n(str)
