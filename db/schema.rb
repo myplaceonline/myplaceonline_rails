@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160307013021) do
+ActiveRecord::Schema.define(version: 20160307041317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2499,6 +2499,20 @@ ActiveRecord::Schema.define(version: 20160307013021) do
   add_index "songs", ["identity_id"], name: "index_songs_on_identity_id", using: :btree
   add_index "songs", ["musical_group_id"], name: "index_songs_on_musical_group_id", using: :btree
 
+  create_table "ssh_keys", force: :cascade do |t|
+    t.string   "ssh_key_name"
+    t.text     "ssh_private_key"
+    t.text     "ssh_public_key"
+    t.integer  "password_id"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "ssh_keys", ["identity_id"], name: "index_ssh_keys_on_identity_id", using: :btree
+  add_index "ssh_keys", ["password_id"], name: "index_ssh_keys_on_password_id", using: :btree
+
   create_table "statuses", force: :cascade do |t|
     t.datetime "status_time"
     t.text     "three_good_things"
@@ -3033,6 +3047,8 @@ ActiveRecord::Schema.define(version: 20160307013021) do
   add_foreign_key "restaurant_pictures", "identities"
   add_foreign_key "restaurant_pictures", "identity_files"
   add_foreign_key "restaurant_pictures", "restaurants"
+  add_foreign_key "ssh_keys", "identities"
+  add_foreign_key "ssh_keys", "passwords"
   add_foreign_key "stories", "identities"
   add_foreign_key "story_pictures", "identities"
   add_foreign_key "story_pictures", "identity_files"

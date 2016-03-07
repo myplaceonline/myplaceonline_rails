@@ -1,0 +1,5 @@
+ssh_key:
+  identity: identity
+  ssh_key_name: Test
+  ssh_private_key: Test
+  ssh_public_key: Test

@@ -1,0 +1,16 @@
+<%= myp_text_field(f, :ssh_key_name, "myplaceonline.ssh_keys.ssh_key_name", obj.ssh_key_name, true) %>
+<%= myp_text_area_markdown(f, :ssh_public_key, "myplaceonline.ssh_keys.ssh_public_key", obj.ssh_public_key) %>
+<%= myp_text_area_markdown(f, :ssh_private_key, "myplaceonline.ssh_keys.ssh_private_key", obj.ssh_private_key) %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :password,
+    existingobj: obj.password,
+    heading: t("myplaceonline.ssh_keys.password"),
+    objform: "passwords/form",
+    existingobjurl: "password_path",
+    searchurl: "/passwords.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>

@@ -154,6 +154,7 @@ en:
       obscure: "Obscure"
       drafts: "Drafts"
       awesome_lists: "Awesome Lists"
+      ssh_keys: "SSH Keys"
     general:
       email: "E-mail"
       password: "Password"
@@ -2136,3 +2137,8 @@ en:
       item: "Item"
       add_item: "Add Item"
       delete_item: "Delete Item"
+    ssh_keys:
+      ssh_key_name: "SSH Key Description"
+      ssh_private_key: "SSH Private Key"
+      ssh_public_key: "SSH Public Key"
+      password: "SSH Key Password"

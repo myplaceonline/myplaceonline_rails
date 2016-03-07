@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :ssh_keys
+  post 'ssh_keys/new'
+
   resources :awesome_lists
   post 'awesome_lists/new'
 
