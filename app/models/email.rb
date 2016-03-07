@@ -84,6 +84,8 @@ class Email < ActiveRecord::Base
         bcc_hash[identity.user.email] = true
       end
       
+      Rails.logger.info{"Email check: #{target}"}
+
       et = EmailToken.new
       et.token = SecureRandom.hex(10)
       et.email = target
@@ -140,6 +142,8 @@ class Email < ActiveRecord::Base
         final_content = final_content.gsub("%{name}", contact.contact_identity.display_short)
         final_content_plain = final_content_plain.gsub("%{name}", contact.contact_identity.display_short)
         
+        Rails.logger.info{"Sending email"}
+
         Myp.send_email(
           to_hash.keys,
           subject,
