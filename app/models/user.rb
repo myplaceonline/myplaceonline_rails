@@ -107,6 +107,14 @@ class User < ActiveRecord::Base
     result
   end
 
+  def date_now
+    result = Date.today
+    if !timezone.blank?
+      result = ActiveSupport::TimeZone[timezone].today
+    end
+    result
+  end
+
   after_commit :on_after_create, on: [:create]
   
   def on_after_create
