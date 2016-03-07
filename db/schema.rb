@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160307004106) do
+ActiveRecord::Schema.define(version: 20160307013021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,6 +139,29 @@ ActiveRecord::Schema.define(version: 20160307004106) do
   add_index "apartments", ["identity_id"], name: "index_apartments_on_identity_id", using: :btree
   add_index "apartments", ["landlord_id"], name: "index_apartments_on_landlord_id", using: :btree
   add_index "apartments", ["location_id"], name: "index_apartments_on_location_id", using: :btree
+
+  create_table "awesome_list_items", force: :cascade do |t|
+    t.string   "item_name"
+    t.integer  "awesome_list_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "awesome_list_items", ["awesome_list_id"], name: "index_awesome_list_items_on_awesome_list_id", using: :btree
+  add_index "awesome_list_items", ["identity_id"], name: "index_awesome_list_items_on_identity_id", using: :btree
+
+  create_table "awesome_lists", force: :cascade do |t|
+    t.integer  "location_id"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "awesome_lists", ["identity_id"], name: "index_awesome_lists_on_identity_id", using: :btree
+  add_index "awesome_lists", ["location_id"], name: "index_awesome_lists_on_location_id", using: :btree
 
   create_table "bank_accounts", force: :cascade do |t|
     t.string   "name",                        limit: 255
@@ -2926,6 +2949,10 @@ ActiveRecord::Schema.define(version: 20160307004106) do
 
   add_foreign_key "alerts_displays", "identities"
   add_foreign_key "annuities", "identities"
+  add_foreign_key "awesome_list_items", "awesome_lists"
+  add_foreign_key "awesome_list_items", "identities"
+  add_foreign_key "awesome_lists", "identities"
+  add_foreign_key "awesome_lists", "locations"
   add_foreign_key "bar_pictures", "bars"
   add_foreign_key "bar_pictures", "identities"
   add_foreign_key "bar_pictures", "identity_files"

@@ -153,6 +153,7 @@ en:
       emails: "Emails"
       obscure: "Obscure"
       drafts: "Drafts"
+      awesome_lists: "Awesome Lists"
     general:
       email: "E-mail"
       password: "Password"
@@ -2129,3 +2130,9 @@ en:
       email: "Email"
     email_personalizations:
       additional_text: "Personalized Note"
+    awesome_lists:
+      location: "Location"
+      items: "Items"
+      item: "Item"
+      add_item: "Add Item"
+      delete_item: "Delete Item"

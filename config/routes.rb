@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :awesome_lists
+  post 'awesome_lists/new'
+
   resources :drafts
   post 'drafts/new'
 
