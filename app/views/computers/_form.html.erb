@@ -15,6 +15,7 @@
 <%= myp_date_field(f, :purchased, "myplaceonline.computers.purchased", obj.purchased) %>
 <%= myp_decimal_field(f, :price, "myplaceonline.computers.price", obj.price) %>
 <%= myp_text_field(f, :serial_number, "myplaceonline.computers.serial_number", obj.serial_number) %>
+<%= myp_text_field(f, :hostname, "myplaceonline.computers.hostname", obj.hostname) %>
 <%= myp_integer_field(f, :max_resolution_width, "myplaceonline.computers.max_resolution_width", obj.max_resolution_width) %>
 <%= myp_integer_field(f, :max_resolution_height, "myplaceonline.computers.max_resolution_height", obj.max_resolution_height) %>
 <%= myp_integer_field(f, :ram, "myplaceonline.computers.ram", obj.ram) %>
@@ -75,6 +76,11 @@
         searchurl: "/ssh_keys.json?perpage=0",
         edit: false,
         autofocus: true
+      },
+      {
+        type: 'text',
+        name: 'username',
+        placeholder: t("myplaceonline.computers.ssh_key_username")
       }
     ]
   } do |child_fields, childproperty|
@@ -92,4 +98,5 @@
       autofocus: false
     }
   %>
+  <%= myp_text_field(child_fields, :username, "myplaceonline.computers.ssh_key_username", childproperty.username) %>
 <% end %>

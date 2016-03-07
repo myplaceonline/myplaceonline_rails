@@ -1394,6 +1394,8 @@ en:
       ssh_key: "SSH Key"
       add_ssh_key: "Add SSH Key"
       delete_ssh_key: "Delete SSH Key"
+      hostname: "Hostname"
+      ssh_key_username: "Username"
     life_insurances:
       insurance_name: "Name"
       insurance_amount: "Amount"

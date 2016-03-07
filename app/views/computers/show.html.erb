@@ -5,6 +5,7 @@
   <%= attribute_table_row_date(t("myplaceonline.computers.purchased"), @obj.purchased) %>
   <%= attribute_table_row_currency(t("myplaceonline.computers.price"), @obj.price) %>
   <%= attribute_table_row(t("myplaceonline.computers.serial_number"), @obj.serial_number) %>
+  <%= attribute_table_row(t("myplaceonline.computers.hostname"), @obj.hostname) %>
   <%= attribute_table_row(t("myplaceonline.computers.max_resolution_width"), @obj.max_resolution_width) %>
   <%= attribute_table_row(t("myplaceonline.computers.max_resolution_height"), @obj.max_resolution_height) %>
   <%= attribute_table_row(t("myplaceonline.computers.ram"), @obj.ram) %>
@@ -21,6 +22,7 @@
   <%= attribute_table_row_weight(t("myplaceonline.computers.weight"), @obj.weight, @obj.weight_type) %>
   <% @obj.computer_ssh_keys.each do |wrapper| %>
     <%= attribute_table_row_reference(t("myplaceonline.computers.ssh_key"), "ssh_key_path", wrapper.ssh_key) %>
+    <%= attribute_table_row(t("myplaceonline.computers.ssh_key_username"), wrapper.username) %>
   <% end %>
   
 <% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160307052625) do
+ActiveRecord::Schema.define(version: 20160307053852) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -588,6 +588,7 @@ ActiveRecord::Schema.define(version: 20160307052625) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "username"
   end
 
   add_index "computer_ssh_keys", ["computer_id"], name: "index_computer_ssh_keys_on_computer_id", using: :btree
@@ -620,6 +621,7 @@ ActiveRecord::Schema.define(version: 20160307052625) do
     t.integer  "weight_type"
     t.decimal  "weight",                            precision: 10, scale: 2
     t.integer  "visit_count"
+    t.string   "hostname"
   end
 
   add_index "computers", ["administrator_id"], name: "index_computers_on_administrator_id", using: :btree
