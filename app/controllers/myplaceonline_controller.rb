@@ -72,7 +72,7 @@ class MyplaceonlineController < ApplicationController
   def set_parent
     if nested
       parent_id = parent_model.table_name.singularize.downcase + "_id"
-      @parent = Myp.find_existing_object(parent_model, params[parent_id])
+      @parent = Myp.find_existing_object(parent_model, params[parent_id], false)
     end
   end
 
@@ -456,7 +456,7 @@ class MyplaceonlineController < ApplicationController
       end
       if nested
         parent_id = parent_model.table_name.singularize.downcase + "_id"
-        @parent = Myp.find_existing_object(parent_model, params[parent_id])
+        @parent = Myp.find_existing_object(parent_model, params[parent_id], false)
         @obj = model.where("id = ? and #{parent_id} = ?", params[:id].to_i, params[parent_id.to_sym].to_i).take!
       else
         @obj = model.find(params[:id].to_i)

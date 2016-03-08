@@ -1038,11 +1038,17 @@ module Myp
     obj
   end
   
-  def self.find_existing_object(class_name, id)
-    Object.const_get(class_name.to_s.camelize).find_by(
-      id: id,
-      identity: Permission.current_target_identity
-    )
+  def self.find_existing_object(class_name, id, use_security = true)
+    if use_security
+      Object.const_get(class_name.to_s.camelize).find_by(
+        id: id,
+        identity: Permission.current_target_identity
+      )
+    else
+      Object.const_get(class_name.to_s.camelize).find_by(
+        id: id
+      )
+    end
   end
   
   def self.find_existing_object!(class_name, id)
