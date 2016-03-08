@@ -178,7 +178,7 @@ class Identity < ActiveRecord::Base
   allow_existing :company
   
   validate do
-    if self.last_name.blank?
+    if !name.blank? && self.last_name.blank?
       splits = name.split(" ")
       if splits.length > 1
         self.name = splits[0]
