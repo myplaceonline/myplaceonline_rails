@@ -138,7 +138,9 @@ class MyplaceonlineController < ApplicationController
         if nested
           parent_name = parent_model.table_name.singularize.downcase
           parent_id = parent_model.table_name.singularize.downcase + "_id"
-          @obj.send("#{parent_name}=", Myp.find_existing_object(parent_model, params[parent_id]))
+          new_parent = Myp.find_existing_object(parent_model, params[parent_id], false)
+          Rails.logger.debug{"Setting parent #{parent_id} to #{new_parent.inspect}"}
+          @obj.send("#{parent_name}=", new_parent)
         end
         
         save_result = @obj.save
@@ -276,7 +278,10 @@ class MyplaceonlineController < ApplicationController
   
   def obj_path(obj = @obj)
     if nested
-      send(path_name + "_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+      send_params = {id: obj.id}
+      parent_id = parent_model.table_name.singularize.downcase + "_id"
+      send_params[parent_id] = @parent.id
+      send(path_name + "_path", send_params)
     else
       send(path_name + "_path", obj)
     end
