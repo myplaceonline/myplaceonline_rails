@@ -278,10 +278,7 @@ class MyplaceonlineController < ApplicationController
   
   def obj_path(obj = @obj)
     if nested
-      send_params = {id: obj.id}
-      parent_id = parent_model.table_name.singularize.downcase + "_id"
-      send_params[parent_id] = @parent.id
-      send(path_name + "_path", send_params)
+      send(path_name + "_path", obj.send(parent_model.table_name.singularize.downcase), obj)
     else
       send(path_name + "_path", obj)
     end
