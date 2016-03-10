@@ -20,4 +20,5 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.singular /^(headache)s/i, '\1'
   
   inflect.irregular 'foot', 'feet'
+  inflect.irregular 'cafe', 'cafes'
 end

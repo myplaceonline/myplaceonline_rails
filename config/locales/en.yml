@@ -156,6 +156,7 @@ en:
       awesome_lists: "Awesome Lists"
       ssh_keys: "SSH Keys"
       specialists: "Specialists"
+      cafes: "Cafés"
     general:
       email: "E-mail"
       password: "Password"
@@ -2155,3 +2156,7 @@ en:
       specialist_type: "Type"
       type_ultrasound: "Ultrasound"
       type_dermatologist: "Dermatologist"
+    cafes:
+      location: "Location"
+      rating: "Rating"
+      notes: "Notes"

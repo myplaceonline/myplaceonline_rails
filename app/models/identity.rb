@@ -140,6 +140,7 @@ class Identity < ActiveRecord::Base
   has_many :awesome_lists, :dependent => :destroy
   has_many :ssh_keys, :dependent => :destroy
   has_many :specialists, :dependent => :destroy
+  has_many :cafes, :dependent => :destroy
   
   has_many :myplets, -> { order('y_coordinate') }, :dependent => :destroy
   accepts_nested_attributes_for :myplets, allow_destroy: true, reject_if: :all_blank
@@ -300,6 +301,7 @@ class Identity < ActiveRecord::Base
       :awesome_lists => awesome_lists.to_a.map{|x| x.as_json},
       :ssh_keys => ssh_keys.to_a.sort{ |a,b| a.ssh_key_name.downcase <=> b.ssh_key_name.downcase }.map{|x| x.as_json},
       :specialists => specialists.to_a.map{|x| x.as_json},
+      :cafes => cafes.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end
