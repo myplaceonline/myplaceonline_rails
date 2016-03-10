@@ -155,6 +155,7 @@ en:
       drafts: "Drafts"
       awesome_lists: "Awesome Lists"
       ssh_keys: "SSH Keys"
+      specialists: "Specialists"
     general:
       email: "E-mail"
       password: "Password"
@@ -2149,3 +2150,8 @@ en:
       ssh_public_key: "SSH Public Key"
       password: "SSH Key Password"
       is_encrypted: "Is Encrypted?"
+    specialists:
+      specialist: "Specialist"
+      specialist_type: "Type"
+      type_ultrasound: "Ultrasound"
+      type_dermatologist: "Dermatologist"
