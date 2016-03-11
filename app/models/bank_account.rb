@@ -23,7 +23,7 @@ class BankAccount < ActiveRecord::Base
 
   validate do
     if account_number.blank? && account_number_encrypted.nil?
-      errors.add(:account_number, t("myplaceonline.general.non_blank"))
+      errors.add(:account_number, I18n.t("myplaceonline.general.non_blank"))
     end
   end
 
@@ -33,7 +33,7 @@ class BankAccount < ActiveRecord::Base
 
   validate do
     if routing_number.blank? && routing_number_encrypted.nil?
-      errors.add(:routing_number, t("myplaceonline.general.non_blank"))
+      errors.add(:routing_number, I18n.t("myplaceonline.general.non_blank"))
     end
   end
 
