@@ -47,6 +47,10 @@ class MoneyBalanceItemTemplatesController < MyplaceonlineController
     )
   end
 
+  def do_calculate_owner_paid(obj)
+    obj.amount > 0
+  end
+
   protected
     def sorts
       ["money_balance_item_templates.amount ASC"]
@@ -80,10 +84,6 @@ class MoneyBalanceItemTemplatesController < MyplaceonlineController
     
     def calculate_owner_paid
       @owner_paid = do_calculate_owner_paid(@obj)
-    end
-
-    def do_calculate_owner_paid(obj)
-      obj.amount < 0 ? (obj.current_user_owns? ? false : true) : (obj.current_user_owns? ? true : false)
     end
 
     def edit_prerespond

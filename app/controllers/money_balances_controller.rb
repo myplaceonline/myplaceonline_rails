@@ -60,6 +60,17 @@ class MoneyBalancesController < MyplaceonlineController
     end
   end
   
+  def redirect_to_obj
+    if @new_item.nil?
+      redirect_to obj_path,
+        :flash => { :notice =>
+                    @new_item.independent_description(false)
+                  }
+    else
+      redirect_to obj_path
+    end
+  end
+
   def do_update_before_save
     i = @obj.money_balance_items.index{|mbi| mbi.new_record?}
     if !i.nil?

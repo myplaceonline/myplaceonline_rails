@@ -121,7 +121,11 @@ class MyplaceonlineController < ApplicationController
     end
     ActiveRecord::Base.transaction do
       begin
-        Permission.current_target = @obj
+        if @parent.nil?
+          Permission.current_target = @obj
+        else
+          Permission.current_target = @parent
+        end
         
         begin
           p = obj_params
@@ -148,6 +152,28 @@ class MyplaceonlineController < ApplicationController
         Rails.logger.debug{"Saved #{save_result.to_s} for #{@obj.inspect}"}
         
         if save_result
+          
+          Rails.logger.debug{"Parent: #{@parent.inspect}, current owns? #{@obj.current_user_owns?}"}
+          
+          if !@parent.nil? && !@obj.current_user_owns?
+            existing_permission = Permission.where(
+              user_id: User.current_user.id,
+              subject_class: Myp.model_to_category_name(@parent.class),
+              subject_id: @parent.id
+            ).first
+            
+            Rails.logger.debug{"Existing permission: #{existing_permission.inspect}"}
+            
+            if !existing_permission.nil?
+              Permission.new(
+                identity_id: existing_permission.identity_id,
+                user_id: existing_permission.user_id,
+                subject_class: Myp.model_to_category_name(model),
+                subject_id: @obj.id,
+                action: existing_permission.action
+              ).save!
+            end
+          end
           if has_category
             Myp.add_point(current_user, category_name, session)
           end
@@ -199,7 +225,11 @@ class MyplaceonlineController < ApplicationController
     
     ActiveRecord::Base.transaction do
       begin
-        Permission.current_target = @obj
+        if @parent.nil?
+          Permission.current_target = @obj
+        else
+          Permission.current_target = @parent
+        end
 
         begin
           @obj.assign_attributes(obj_params)
