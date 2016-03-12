@@ -194,8 +194,20 @@ module ApplicationHelper
     !identity_file.nil? && !identity_file.file_content_type.nil? && (identity_file.file_content_type.start_with?("image"))
   end
   
+  def has_image(identity_file)
+    continue_checking = true
+    if !identity_file.nil? && !identity_file.file.nil?
+      begin
+        identity_file.file.file_contents
+      rescue
+        continue_checking = false
+      end
+    end
+    !identity_file.nil? && !identity_file.file.nil? && continue_checking && !identity_file.file_content_type.nil? && (identity_file.file_content_type.start_with?("image"))
+  end
+  
   def image_content(identity_file, link_to_original = true)
-    if !identity_file.nil? && !identity_file.file_content_type.nil? && (identity_file.file_content_type.start_with?("image"))
+    if has_image(identity_file)
       if identity_file.thumbnail_contents.nil?
         image = Magick::Image::from_blob(identity_file.file.file_contents)
         image = image.first

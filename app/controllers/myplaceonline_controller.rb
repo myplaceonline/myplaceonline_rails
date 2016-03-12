@@ -9,6 +9,8 @@ class MyplaceonlineController < ApplicationController
   respond_to :html, :json
 
   def index
+    deny_guest
+    
     if sensitive
       Myp.ensure_encryption_key(session)
     end
@@ -94,6 +96,8 @@ class MyplaceonlineController < ApplicationController
   end
   
   def new
+    deny_guest
+    
     if !insecure
       Myp.ensure_encryption_key(session)
     end
@@ -108,6 +112,8 @@ class MyplaceonlineController < ApplicationController
   end
 
   def edit
+    deny_guest
+    
     Myp.ensure_encryption_key(session)
     @url = obj_path(@obj)
     edit_prerespond
@@ -115,6 +121,8 @@ class MyplaceonlineController < ApplicationController
   end
   
   def create
+    deny_guest
+    
     Rails.logger.debug{"create"}
     if !insecure
       Myp.ensure_encryption_key(session)
@@ -189,6 +197,8 @@ class MyplaceonlineController < ApplicationController
   end
   
   def update
+    deny_guest
+    
     if do_update
       return after_create_or_update
     else
@@ -267,6 +277,8 @@ class MyplaceonlineController < ApplicationController
   end
 
   def destroy
+    deny_guest
+    
     Myp.ensure_encryption_key(session)
     ActiveRecord::Base.transaction do
       @obj.destroy
@@ -399,6 +411,12 @@ class MyplaceonlineController < ApplicationController
   end
   
   protected
+  
+    def deny_guest
+      if current_user.guest?
+        raise CanCan::AccessDenied
+      end
+    end
   
     def obj_params
       raise NotImplementedError
