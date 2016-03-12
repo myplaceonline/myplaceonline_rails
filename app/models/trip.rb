@@ -31,17 +31,17 @@ class Trip < ActiveRecord::Base
   def update_pic_folders
     folders = Array.new
     folders.push(I18n.t("myplaceonline.category.trips"))
-    if !self.location.region_name.blank?
+    if !self.location.nil? && !self.location.region_name.blank?
       folders.push(self.location.region_name)
     end
-    if !self.location.sub_region1_name.blank?
+    if !self.location.nil? && !self.location.sub_region1_name.blank?
       folders.push(self.location.sub_region1_name)
     end
-    if !self.location.sub_region2.blank?
+    if !self.location.nil? && !self.location.sub_region2.blank?
       folders.push(self.location.sub_region2)
     end
     if folders.length == 1
-      if !self.location.display_general_region.blank?
+      if !self.location.nil? && !self.location.display_general_region.blank?
         folders.push(self.location.display_general_region)
       end
     end
