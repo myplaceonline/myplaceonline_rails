@@ -21,21 +21,21 @@ class BankAccount < ActiveRecord::Base
   belongs_to_encrypted :account_number
   before_validation :account_number_finalize
 
-  validate do
-    if account_number.blank? && account_number_encrypted.nil?
-      errors.add(:account_number, I18n.t("myplaceonline.general.non_blank"))
-    end
-  end
+  #validate do
+  #  if account_number.blank? && account_number_encrypted.nil?
+  #    errors.add(:account_number, I18n.t("myplaceonline.general.non_blank"))
+  #  end
+  #end
 
   belongs_to :routing_number_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
   belongs_to_encrypted :routing_number
   before_validation :routing_number_finalize
 
-  validate do
-    if routing_number.blank? && routing_number_encrypted.nil?
-      errors.add(:routing_number, I18n.t("myplaceonline.general.non_blank"))
-    end
-  end
+  #validate do
+  #  if routing_number.blank? && routing_number_encrypted.nil?
+  #    errors.add(:routing_number, I18n.t("myplaceonline.general.non_blank"))
+  #  end
+  #end
 
   belongs_to :pin_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
   belongs_to_encrypted :pin
