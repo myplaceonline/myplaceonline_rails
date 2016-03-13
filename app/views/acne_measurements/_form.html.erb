@@ -4,24 +4,9 @@
 <%= myp_integer_field(f, :total_pimples, "myplaceonline.acne_measurements.total_pimples", obj.total_pimples) %>
 <%= myp_text_field(f, :acne_location, "myplaceonline.acne_measurements.acne_location", obj.acne_location) %>
 <%=
-  render(layout: 'myplaceonline/childproperties', locals: {
+  render partial: "myplaceonline/pictures_form", locals: {
     f: f,
-    heading: t("myplaceonline.acne_measurements.pictures"),
-    childpropertiesname: :acne_measurement_pictures,
-    childproperties: obj.acne_measurement_pictures,
-    deletebutton: t("myplaceonline.acne_measurements.delete_picture"),
-    addbutton: t("myplaceonline.acne_measurements.add_picture"),
-    expanded: obj.acne_measurement_pictures.length > 0,
-    formjson: [
-      {
-        type: 'file',
-        name: 'identity_file_attributes.file',
-        placeholder: t("myplaceonline.acne_measurements.picture")
-      }
-    ]
-  }) do |child_fields, childproperty|
+    obj: obj,
+    pictures_field: :acne_measurement_pictures
+  }
 %>
-  <%= child_fields.fields_for(:identity_file, childproperty.identity_file) do |file_fields| %>
-    <%= myp_file_field(file_fields, :file, "myplaceonline.acne_measurements.picture", childproperty.identity_file.file) %>
-  <% end %>
-<% end %>

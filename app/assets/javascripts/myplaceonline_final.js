@@ -75,6 +75,9 @@ var myplaceonline = function(mymodule) {
       return true;
     }
   });
+  
+  $(document).on("change", ":file", function() {
+  });
 
   // http://view.jquerymobile.com/master/demos/listview-autocomplete-remote/
   function hookListviewSearch(list, url, afterload) {
