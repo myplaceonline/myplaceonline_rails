@@ -141,6 +141,7 @@ class Identity < ActiveRecord::Base
   has_many :ssh_keys, :dependent => :destroy
   has_many :specialists, :dependent => :destroy
   has_many :cafes, :dependent => :destroy
+  has_many :charities, :dependent => :destroy
   
   has_many :myplets, -> { order('y_coordinate') }, :dependent => :destroy
   accepts_nested_attributes_for :myplets, allow_destroy: true, reject_if: :all_blank

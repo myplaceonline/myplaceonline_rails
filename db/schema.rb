@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160310093044) do
+ActiveRecord::Schema.define(version: 20160314064442) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -530,6 +530,19 @@ ActiveRecord::Schema.define(version: 20160310093044) do
 
   add_index "category_points_amounts", ["category_id"], name: "index_category_points_amounts_on_category_id", using: :btree
   add_index "category_points_amounts", ["identity_id"], name: "index_category_points_amounts_on_identity_id", using: :btree
+
+  create_table "charities", force: :cascade do |t|
+    t.integer  "location_id"
+    t.text     "notes"
+    t.integer  "rating"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "charities", ["identity_id"], name: "index_charities_on_identity_id", using: :btree
+  add_index "charities", ["location_id"], name: "index_charities_on_location_id", using: :btree
 
   create_table "checklist_items", force: :cascade do |t|
     t.string   "checklist_item_name", limit: 255
@@ -3025,6 +3038,8 @@ ActiveRecord::Schema.define(version: 20160310093044) do
   add_foreign_key "calendar_item_reminders", "identities"
   add_foreign_key "calendar_items", "calendars"
   add_foreign_key "calendar_items", "identities"
+  add_foreign_key "charities", "identities"
+  add_foreign_key "charities", "locations"
   add_foreign_key "computer_ssh_keys", "computers"
   add_foreign_key "computer_ssh_keys", "identities"
   add_foreign_key "computer_ssh_keys", "ssh_keys"

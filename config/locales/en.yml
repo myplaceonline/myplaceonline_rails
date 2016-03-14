@@ -157,6 +157,7 @@ en:
       ssh_keys: "SSH Keys"
       specialists: "Specialists"
       cafes: "Cafés"
+      charities: "Charities"
     general:
       email: "E-mail"
       password: "Password"
@@ -2157,6 +2158,10 @@ en:
       type_ultrasound: "Ultrasound"
       type_dermatologist: "Dermatologist"
     cafes:
+      location: "Location"
+      rating: "Rating"
+      notes: "Notes"
+    charities:
       location: "Location"
       rating: "Rating"
       notes: "Notes"
