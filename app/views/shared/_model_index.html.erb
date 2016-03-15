@@ -85,13 +85,13 @@
 
   <% if @count > @perpage %>
     <div class="horizontal_center small">
-      <%= @count %> <%= t("myplaceonline.category." + controller.category_name) %>, <%= @perpage %> <%= t("myplaceonline.general.perpage") %> (<%= link_to(t("myplaceonline.general.all"), "/" + controller.paths_name + @query_params_part_all) %>)
+      <%= @count %> <%= t("myplaceonline.category." + controller.category_name) %>, <%= @perpage %> <%= t("myplaceonline.general.perpage") %> (<%= link_to(t("myplaceonline.general.all"), send("#{controller.paths_name}_path") + @query_params_part_all) %>)
     </div>
   <% end %>
 
   <script type="text/javascript">
     myplaceonline.onPageLoad(function() {
-      myplaceonline.hookListviewSearch($(".searchable"), "/<%= controller.paths_name %>.json<%= raw(@query_params_part_all) %>");
+      myplaceonline.hookListviewSearch($(".searchable"), "<%= send("#{controller.paths_name}_path") %>.json<%= raw(@query_params_part_all) %>");
       var input = $(".searchable_container input");
       myplaceonline.hookListviewEnter(input, ".searchable");
       <% if !@myplet %>
