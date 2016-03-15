@@ -543,6 +543,9 @@ module Myp
     generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(encrypted_value.salt, Myp::DEFAULT_AES_KEY_SIZE)
     crypt = ActiveSupport::MessageEncryptor.new(generated_key, :serializer => SimpleSerializer.new)
     result = crypt.decrypt_and_verify(encrypted_value.val)
+    if !result.nil?
+      result.force_encoding("utf-8")
+    end
     if result.start_with?(Myp.eye_catcher_marshalled)
       result = Marshal::load(result[Myp.eye_catcher_marshalled.length..-1])
     end
