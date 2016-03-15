@@ -158,6 +158,7 @@ en:
       specialists: "Specialists"
       cafes: "Cafés"
       charities: "Charities"
+      calendar_items: "Calendar Items"
     general:
       email: "E-mail"
       password: "Password"
@@ -1863,6 +1864,7 @@ en:
       complete: "Complete"
       snooze: "Snooze"
     calendars:
+      calendar_items: "Items"
       general_threshold: "General Reminder"
       exercise_threshold: "Last Exercise"
       contact_best_friend_threshold: "Best Friend Last Contact"
@@ -2165,3 +2167,6 @@ en:
       location: "Location"
       rating: "Rating"
       notes: "Notes"
+    calendar_items:
+      calendar: "Calendar"
+      calendar_item_time: "Date/Time"

@@ -307,7 +307,27 @@ class MyplaceonlineController < ApplicationController
   end
     
   def display_obj(obj)
-    obj.display
+    result = obj.display
+    if result.nil?
+      result = HTMLEntities.new.encode(obj.to_s)
+    end
+    result
+  end
+  
+  def use_bubble?
+    false
+  end
+  
+  def display_obj_bubble(obj)
+    if use_bubble?
+      " <span class=\"ui-li-count\">#{bubble_text(obj)}</span>"
+    else
+      ""
+    end
+  end
+  
+  def bubble_text(obj)
+    ""
   end
     
   def model

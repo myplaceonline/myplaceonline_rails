@@ -1,5 +1,8 @@
 <% if !@myplet %>
   <%= render layout: "shared/model_show" do %>
+    <% content_for :postfooterlinks do %>
+      <li><%= link_to t('myplaceonline.calendars.calendar_items'), calendar_calendar_items_path(@obj), "data-icon" => "bars" %></li>
+    <% end %>
   <% end %>
 <% else %>
   <% if @calendar_item_reminder_pendings.length > 0 %>

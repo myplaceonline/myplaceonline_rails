@@ -52,7 +52,7 @@
       @objs.each do |obj|
       %>
         <li>
-          <%= link_to controller.display_obj(obj), controller.show_path(obj) %>
+          <%= link_to((controller.display_obj(obj) + controller.display_obj_bubble(obj)).html_safe, controller.show_path(obj)) %>
           <%= controller.split_link(obj) %>
         </li>
       <%

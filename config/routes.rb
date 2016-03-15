@@ -153,7 +153,9 @@ Rails.application.routes.draw do
   resources :concerts
   post 'concerts/new'
 
-  resources :calendars
+  resources :calendars do
+    resources :calendar_items
+  end
   post 'calendars/new'
 
   resources :myplaceonline_quick_category_displays
