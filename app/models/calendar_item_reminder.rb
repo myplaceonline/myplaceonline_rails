@@ -52,7 +52,7 @@ class CalendarItemReminder < ActiveRecord::Base
         end
         
         # Keep creating repeat items until we hit the target
-        target = user.time_now + calendar_item.calendar.largest_threshold_seconds
+        target = Time.now + calendar_item.calendar.largest_threshold_seconds
         
         Rails.logger.debug{"target=#{target}"}
 
@@ -120,7 +120,7 @@ class CalendarItemReminder < ActiveRecord::Base
         
         # Only check reminders that don't already have items pending
         if calendar_item_reminder.calendar_item_reminder_pendings.count == 0
-          now = user.time_now
+          now = Time.now
           if !calendar_item_reminder.calendar_item.calendar_item_time.nil?
 
             Rails.logger.debug{"calendar_item_time = #{calendar_item_reminder.calendar_item.calendar_item_time}"}
