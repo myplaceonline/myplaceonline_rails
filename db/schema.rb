@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160314173845) do
+ActiveRecord::Schema.define(version: 20160316042105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2247,6 +2247,17 @@ ActiveRecord::Schema.define(version: 20160314173845) do
 
   add_index "questions", ["identity_id"], name: "index_questions_on_identity_id", using: :btree
 
+  create_table "quests", force: :cascade do |t|
+    t.string   "quest_title"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "quests", ["identity_id"], name: "index_quests_on_identity_id", using: :btree
+
   create_table "receipt_files", force: :cascade do |t|
     t.integer  "receipt_id"
     t.integer  "identity_file_id"
@@ -3101,6 +3112,7 @@ ActiveRecord::Schema.define(version: 20160314173845) do
   add_foreign_key "playlists", "identity_files"
   add_foreign_key "podcasts", "feeds"
   add_foreign_key "podcasts", "identities"
+  add_foreign_key "quests", "identities"
   add_foreign_key "receipt_files", "identities"
   add_foreign_key "receipt_files", "identity_files"
   add_foreign_key "receipt_files", "receipts"

@@ -159,6 +159,7 @@ en:
       cafes: "Cafés"
       charities: "Charities"
       calendar_items: "Calendar Items"
+      quests: "Quests"
     general:
       email: "E-mail"
       password: "Password"
@@ -2159,6 +2160,7 @@ en:
       specialist_type: "Type"
       type_ultrasound: "Ultrasound"
       type_dermatologist: "Dermatologist"
+      type_cosmetologist: "Cosmetologist"
     cafes:
       location: "Location"
       rating: "Rating"
@@ -2170,3 +2172,5 @@ en:
     calendar_items:
       calendar: "Calendar"
       calendar_item_time: "Date/Time"
+    quests:
+      quest_title: "Name"

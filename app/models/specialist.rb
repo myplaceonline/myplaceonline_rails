@@ -4,7 +4,8 @@ class Specialist < ActiveRecord::Base
 
   SPECIALIST_TYPES = [
     ["myplaceonline.specialists.type_ultrasound", 0],
-    ["myplaceonline.specialists.type_dermatologist", 1]
+    ["myplaceonline.specialists.type_dermatologist", 1],
+    ["myplaceonline.specialists.type_cosmetologist", 2]
   ]
 
   validates :contact, presence: true

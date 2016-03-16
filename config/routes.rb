@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :quests
+  post 'quests/new'
+
   resources :charities
   post 'charities/new'
 
