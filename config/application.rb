@@ -20,6 +20,8 @@ module Myplaceonline
   JQM_DATEBOX_TIMEBOX_FORMAT = "%I:%M %p"
   DEFAULT_SUPPORT_EMAIL = "Myplaceonline.com <contact@myplaceonline.com>"
   # End mirrored constants
+
+  DEFAULT_ROOT_EMAIL = "root@myplaceonline.com"
   
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
