@@ -118,7 +118,7 @@ class User < ActiveRecord::Base
   after_commit :on_after_create, on: [:create]
   
   def on_after_create
-    if Myp.requires_invite_code
+    if Myp.requires_invite_code && !invite_code.nil? # Users can be created outside the web process
       InviteCode.increment_code(invite_code)
     end
   end
