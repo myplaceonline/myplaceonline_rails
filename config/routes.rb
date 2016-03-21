@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :timings
+  post 'timings/new'
+
   resources :quests
   post 'quests/new'
 

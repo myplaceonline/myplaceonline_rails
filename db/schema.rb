@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160316042105) do
+ActiveRecord::Schema.define(version: 20160319164332) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2673,6 +2673,17 @@ ActiveRecord::Schema.define(version: 20160316042105) do
   add_index "therapists", ["contact_id"], name: "index_therapists_on_contact_id", using: :btree
   add_index "therapists", ["identity_id"], name: "index_therapists_on_identity_id", using: :btree
 
+  create_table "timings", force: :cascade do |t|
+    t.string   "timing_name"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "timings", ["identity_id"], name: "index_timings_on_identity_id", using: :btree
+
   create_table "to_dos", force: :cascade do |t|
     t.string   "short_description", limit: 255
     t.text     "notes"
@@ -3129,6 +3140,7 @@ ActiveRecord::Schema.define(version: 20160316042105) do
   add_foreign_key "story_pictures", "identities"
   add_foreign_key "story_pictures", "identity_files"
   add_foreign_key "story_pictures", "stories"
+  add_foreign_key "timings", "identities"
   add_foreign_key "trek_pictures", "identities"
   add_foreign_key "trek_pictures", "identity_files"
   add_foreign_key "trek_pictures", "treks"

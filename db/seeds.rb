@@ -112,7 +112,8 @@ Category.create!([
   {id: 111, name: "specialists", link: "specialists", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/user_medical.png", explicit: nil, user_type_mask: nil, experimental: nil},
   {id: 112, name: "cafes", link: "cafes", position: 0, parent_id: 2, additional_filtertext: "coffee shop", icon: "FatCow_Icons16x16/cup.png", explicit: nil, user_type_mask: nil, experimental: nil},
   {id: 113, name: "charities", link: "charities", position: 0, parent_id: 3, additional_filtertext: "non profit volunteer help foundation gift philanthropy donate", icon: "FatCow_Icons16x16/support.png", explicit: nil, user_type_mask: nil, experimental: nil},
-  {id: 114, name: "quests", link: "quests", position: 0, parent_id: 3, additional_filtertext: nil, icon: "FatCow_Icons16x16/magnifier.png", explicit: nil, user_type_mask: nil, experimental: nil}
+  {id: 114, name: "quests", link: "quests", position: 0, parent_id: 3, additional_filtertext: nil, icon: "FatCow_Icons16x16/magnifier.png", explicit: nil, user_type_mask: nil, experimental: nil},
+  {id: 115, name: "timings", link: "timings", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/time.png", explicit: nil, user_type_mask: nil, experimental: nil}
 ])
 
 user = User.new
@@ -121,6 +122,7 @@ user.email = "root@myplaceonline.com"
 user.password = "password"
 user.password_confirmation = user.password
 user.confirmed_at = Time.now
+user.user_type = 1
 user.save(:validate => false)
 
 User.current_user = user

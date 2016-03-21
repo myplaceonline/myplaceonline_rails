@@ -160,6 +160,7 @@ en:
       charities: "Charities"
       calendar_items: "Calendar Items"
       quests: "Quests"
+      timings: "Timings"
     general:
       email: "E-mail"
       password: "Password"
@@ -2174,3 +2175,5 @@ en:
       calendar_item_time: "Date/Time"
     quests:
       quest_title: "Name"
+    timings:
+      timing_name: "Name"
