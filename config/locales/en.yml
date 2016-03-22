@@ -161,6 +161,7 @@ en:
       calendar_items: "Calendar Items"
       quests: "Quests"
       timings: "Timings"
+      timing_events: "Timing Events"
     general:
       email: "E-mail"
       password: "Password"
@@ -2177,3 +2178,10 @@ en:
       quest_title: "Name"
     timings:
       timing_name: "Name"
+      timing_event: "Event"
+      timing_events: "Events"
+      add_timing_event: "Add Event"
+      delete_timing_event: "Delete Event"
+    timing_events:
+      timing_event_start: "Start"
+      timing_event_end: "End"

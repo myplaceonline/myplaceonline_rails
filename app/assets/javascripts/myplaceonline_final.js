@@ -19,6 +19,9 @@ var myplaceonline = function(mymodule) {
   
   var DEFAULT_DATE_FORMAT = "%A, %b %d, %Y";
   var DEFAULT_TIME_FORMAT = "%A, %b %d, %Y %-l:%M:%S %p";
+  var JQM_DATEBOX_TIMEBOX_FORMAT = "%I:%M %p"
+  var DEFAULT_SUPPORT_EMAIL = "Myplaceonline.com <contact@myplaceonline.com>"
+
   var queuedRequests = [];
   var queuedRequestThread = null;
   var notepadResetTimeout = null;
@@ -170,6 +173,17 @@ var myplaceonline = function(mymodule) {
   function get_name_as_id(namePrefix) {
     return namePrefix.replace(/\[/g, '_').replace(/\]/g, '');
   }
+  
+  function randomString(length) {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for(var i = 0; i < length; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    return text;
+  }
 
   function formAddItem(link, namePrefix, deletePlaceholder, items, singletonMessage, nonIndexBased) {
     var index = -1;
@@ -246,9 +260,16 @@ var myplaceonline = function(mymodule) {
       
       defaultValue = defaultValue.replace(/'/g, '').replace(/"/g, '');
       
-      if (item.type == "date") {
+      if (item.type == "date" || item.type == "datetime") {
         // Options should match app/helps/application_helper.rb myp_date_field
-        html += "<p><input type='" + (myplaceonline.isFocusAllowed() ? "text" : "text") + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='" + defaultValue + "' class='" + cssclasses + "' data-role='datebox' data-datebox-mode='calbox' data-datebox-override-date-format='" + DEFAULT_DATE_FORMAT + "' data-datebox-use-focus='true' data-datebox-use-clear-button='true' data-datebox-use-modal='false' data-datebox-cal-use-pickers='true' data-datebox-cal-year-pick-min='-100' data-datebox-cal-year-pick-max='10' data-datebox-cal-no-header='true' /></p>";
+        var random_name = "";
+        html += "<p>"
+        if (item.type == "datetime") {
+          random_name = randomString(10);
+          html += "<input type='hidden' id='" + random_name + "' name='" + random_name + "' placeholder='" + item.placeholder + "' value='" + item.timeboxValue + "' data-role='datebox' data-datebox-mode='timebox' data-datebox-override-date-format='" + JQM_DATEBOX_TIMEBOX_FORMAT + "' data-datebox-use-focus='true' data-datebox-use-modal='false' data-datebox-use-button='false' data-datebox-popup-position='window' data-datebox-close-callback='dateboxTimeboxClosed' />";
+        }
+        html += "<input type='" + (myplaceonline.isFocusAllowed() ? "text" : "text") + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='" + defaultValue + "' class='" + cssclasses + "' data-role='datebox' data-datebox-mode='calbox' data-datebox-override-date-format='" + (item.type == "datetime" ? DEFAULT_TIME_FORMAT : DEFAULT_DATE_FORMAT) + "' data-datebox-use-focus='true' data-datebox-use-clear-button='true' data-datebox-use-modal='false' data-datebox-cal-use-pickers='true' data-datebox-cal-year-pick-min='-100' data-datebox-cal-year-pick-max='10' data-datebox-cal-no-header='true' data-datebox-close-callback='" + (item.type == "datetime" ? "dateboxCalendarClosed" : "false") + "' data-datetime-id='" + random_name + "' />";
+        html += "</p>";
       } else if (item.type == "random") {
         // Duplicated in views/myplaceonline/_generaterandom.html.erb
         html += '<div data-role="collapsible"><h3>' + item.heading + '</h3><p><input type="' + (myplaceonline.isFocusAllowed() ? "number" : "text") + '" class="generate_password_length" value="" placeholder="' + item.lengthplaceholder + '" /></p><p><a href="#" class="ui-btn" onclick="myplaceonline.getRemoteString(' + item.destination + ', $(this).parents(\'div\').first().find(\'.generate_password_length\').val()); return false;">' + item.button + '</a></p></div>';
@@ -717,7 +738,7 @@ var myplaceonline = function(mymodule) {
 
 }(myplaceonline || {});
 
-// jquery-mobile-datebox require global function callbacks
+// jquery-mobile-datebox requires global function callbacks
 function dateboxCalendarClosed(update) {
   var timebox = $("#" + this.element.data("datetime-id"));
   timebox.data("calendar-id", this.element.attr("id"));
@@ -725,6 +746,7 @@ function dateboxCalendarClosed(update) {
 }
 
 function dateboxTimeboxClosed(update) {
+  
   var cal = $("#" + this.element.data("calendar-id"));
   var calDate = cal.datebox('getTheDate');
   calDate.setHours(update.date.getHours(), update.date.getMinutes(), update.date.getSeconds(), update.date.getMilliseconds());

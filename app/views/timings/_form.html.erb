@@ -1,2 +1,37 @@
 <%= myp_text_field(f, :timing_name, "myplaceonline.timings.timing_name", obj.timing_name, autofocus) %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.timings.timing_events"),
+    childpropertiesname: :timing_events,
+    childproperties: obj.timing_events,
+    deletebutton: t("myplaceonline.timings.delete_timing_event"),
+    addbutton: t("myplaceonline.timings.add_timing_event"),
+    expanded: true,
+    formjson: [
+      {
+        type: 'datetime',
+        name: 'timing_event_start',
+        placeholder: t("myplaceonline.timing_events.timing_event_start"),
+        value: DateTime.now.to_s,
+        timeboxValue: DateTime.now.to_s(:timebox),
+        autofocus: false
+      },
+      {
+        type: 'datetime',
+        name: 'timing_event_end',
+        placeholder: t("myplaceonline.timing_events.timing_event_end")
+      },
+      {
+        type: 'textarea',
+        name: 'notes',
+        placeholder: t("myplaceonline.general.notes")
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%= myp_datetime_field(child_fields, :timing_event_start, "myplaceonline.timing_events.timing_event_start", childproperty.timing_event_start) %>
+  <%= myp_datetime_field(child_fields, :timing_event_end, "myplaceonline.timing_events.timing_event_end", childproperty.timing_event_end) %>
+  <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.general.notes", childproperty.notes) %>
+<% end %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>

@@ -11,7 +11,8 @@ class TimingsController < MyplaceonlineController
     def obj_params
       params.require(:timing).permit(
         :timing_name,
-        :notes
+        :notes,
+        timing_events_attributes: [:id, :_destroy, :timing_event_start, :timing_event_end, :notes]
       )
     end
 end

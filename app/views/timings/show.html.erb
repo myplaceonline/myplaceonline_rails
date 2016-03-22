@@ -2,5 +2,11 @@
 
   <%= attribute_table_row(t("myplaceonline.timings.timing_name"), @obj.timing_name) %>
   <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), @obj.notes) %>
+  <% @obj.timing_events.each do |x| %>
+    <%= table_row_heading(t("myplaceonline.timings.timing_event")) %>
+    <%= attribute_table_row_datetime(t("myplaceonline.timing_events.timing_event_start"), x.timing_event_start) %>
+    <%= attribute_table_row_datetime(t("myplaceonline.timing_events.timing_event_end"), x.timing_event_end) %>
+    <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), x.notes) %>
+  <% end %>
   
 <% end %>

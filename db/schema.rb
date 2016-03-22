@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160319164332) do
+ActiveRecord::Schema.define(version: 20160321055524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2673,6 +2673,20 @@ ActiveRecord::Schema.define(version: 20160319164332) do
   add_index "therapists", ["contact_id"], name: "index_therapists_on_contact_id", using: :btree
   add_index "therapists", ["identity_id"], name: "index_therapists_on_identity_id", using: :btree
 
+  create_table "timing_events", force: :cascade do |t|
+    t.integer  "timing_id"
+    t.datetime "timing_event_start"
+    t.datetime "timing_event_end"
+    t.text     "notes"
+    t.integer  "identity_id"
+    t.integer  "visit_count"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "timing_events", ["identity_id"], name: "index_timing_events_on_identity_id", using: :btree
+  add_index "timing_events", ["timing_id"], name: "index_timing_events_on_timing_id", using: :btree
+
   create_table "timings", force: :cascade do |t|
     t.string   "timing_name"
     t.text     "notes"
@@ -3140,6 +3154,8 @@ ActiveRecord::Schema.define(version: 20160319164332) do
   add_foreign_key "story_pictures", "identities"
   add_foreign_key "story_pictures", "identity_files"
   add_foreign_key "story_pictures", "stories"
+  add_foreign_key "timing_events", "identities"
+  add_foreign_key "timing_events", "timings"
   add_foreign_key "timings", "identities"
   add_foreign_key "trek_pictures", "identities"
   add_foreign_key "trek_pictures", "identity_files"
