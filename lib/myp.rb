@@ -798,6 +798,28 @@ module Myp
     result
   end
   
+  def self.seconds_to_time_in_general_human_detailed_hms(seconds)
+    if !seconds.nil?
+      diff = {
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      }
+      if seconds >= 3600
+        diff[:hours] = (seconds / 3600).to_i
+        seconds = seconds % 3600
+      end
+      if seconds >= 60
+        diff[:minutes] = (seconds / 60).to_i
+        seconds = seconds % 60
+      end
+      diff[:seconds] = seconds
+      Myp.time_difference_in_general_human_detailed_hms(diff, "")
+    else
+      nil
+    end
+  end
+  
   def self.time_difference_in_general_human_detailed_hms(diff, result)
     if diff[:hours] > 0
       if result.length > 0

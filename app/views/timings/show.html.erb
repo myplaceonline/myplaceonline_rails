@@ -2,6 +2,9 @@
 
   <%= attribute_table_row(t("myplaceonline.timings.timing_name"), @obj.timing_name) %>
   <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), @obj.notes) %>
+  <%= attribute_table_row(t("myplaceonline.timings.average_duration"), Myp.seconds_to_time_in_general_human_detailed_hms(@obj.average_duration)) %>
+  <%= attribute_table_row(t("myplaceonline.timings.minimum_duration"), Myp.seconds_to_time_in_general_human_detailed_hms(@obj.minimum_duration)) %>
+  <%= attribute_table_row(t("myplaceonline.timings.maximum_duration"), Myp.seconds_to_time_in_general_human_detailed_hms(@obj.maximum_duration)) %>
   <% @obj.timing_events.each do |x| %>
     <%= table_row_heading(t("myplaceonline.timings.timing_event")) %>
     <%= attribute_table_row_datetime(t("myplaceonline.timing_events.timing_event_start"), x.timing_event_start) %>
