@@ -3,6 +3,10 @@ class TimingEvent < ActiveRecord::Base
   include AllowExistingConcern
 
   belongs_to :timing
+  
+  def display
+    Myp.seconds_to_time_in_general_human_detailed_hms(duration)
+  end
 
   validates :timing_event_start, presence: true
   validates :timing_event_end, presence: true
@@ -15,5 +19,11 @@ class TimingEvent < ActiveRecord::Base
 
   def duration
     (timing_event_end - timing_event_start).seconds
+  end
+
+  def self.build(params = nil)
+    result = self.dobuild(params)
+    result.timing_event_start = User.current_user.time_now
+    result
   end
 end

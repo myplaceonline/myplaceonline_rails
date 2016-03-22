@@ -1,4 +1,8 @@
 class TimingsController < MyplaceonlineController
+  def show_add
+    false
+  end
+  
   protected
     def insecure
       true

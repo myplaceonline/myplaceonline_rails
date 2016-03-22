@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   
-  resources :timings
+  resources :timings do
+    resources :timing_events
+    post 'timing_events/new'
+  end
   post 'timings/new'
 
   resources :quests
