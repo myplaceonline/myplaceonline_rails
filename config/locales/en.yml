@@ -2133,6 +2133,7 @@ en:
         * %{name}: The short name of the contact. Example: "Hey %{name}, ..."
         ]]>
       send_sucess_async: "The emails will be sent in about 5 minutes"
+      subject_shared: "Shared"
     unsubscribe:
       title: "Unsubscribe"
       past: "Unsubscribed"

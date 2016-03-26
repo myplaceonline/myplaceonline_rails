@@ -65,7 +65,7 @@ class PermissionsController < MyplaceonlineController
     if @share.has_obj
       @check_obj = @share.get_obj
       authorize! :show, @check_obj
-      @share.email.subject = Myp.object_type_human(@check_obj) + ": " + @check_obj.display
+      @share.email.set_subject(Myp.object_type_human(@check_obj) + ": " + @check_obj.display)
     end
 
     if request.post?
