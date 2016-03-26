@@ -174,7 +174,16 @@ class Trip < ActiveRecord::Base
     result = ""
     trip_pictures.each do |trip_picture|
       if !permission_share.permission_share_children.index{|psc| psc.subject_id == trip_picture.identity_file.id}.nil?
-        result += "\n<hr />\n<p>#{ActionController::Base.helpers.image_tag(file_thumbnail_url(trip_picture.identity_file, token: permission_share.share.token))}</p>"
+        result += "\n<hr />\n<p>#{ActionController::Base.helpers.link_to file_view_url(
+            trip_picture.identity_file, token: permission_share.share.token
+          ) do
+            ActionController::Base.helpers.image_tag(
+              file_thumbnail_url(
+                trip_picture.identity_file, token: permission_share.share.token
+              )
+            )
+          end
+        }</p>"
         if !trip_picture.identity_file.notes.blank?
           result += "\n<p>#{Myp.markdown_to_html(trip_picture.identity_file.notes)}</p>"
         end
