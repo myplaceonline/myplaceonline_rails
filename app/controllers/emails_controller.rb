@@ -31,6 +31,13 @@ class EmailsController < MyplaceonlineController
     super
   end
   
+  def redirect_to_obj
+    redirect_to obj_path,
+            :flash => { :notice =>
+                        I18n.t("myplaceonline.emails.send_sucess_async")
+                      }
+  end
+
   protected
     def sorts
       ["emails.updated_at DESC"]

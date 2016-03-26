@@ -402,8 +402,12 @@ en:
         
             {image:help/categories/trips/share1.png}
         
-        1. Enter a subject and body of the email. You may use the placeholder
-        `%{name}` which will be replaced by the contact name.
+        1. Enter a subject and body of the email. For the subject, we recommend
+        starting it with `Name Shared: `, and we'll add that by default. The
+        reason for this is that the email will come from `Myplaceonline.com`
+        so it may be useful for the recipient to quickly know who sent the email
+        without having to check it. For the body, you may use the
+        placeholder `%{name}` which will be replaced by the contact name.
         
             {image:help/categories/trips/share2.png}
         
@@ -2033,7 +2037,7 @@ en:
       default_subject: "A %{subject_class} has been shared with you"
       default_body: "Hi, %{contact} has shared the following %{subject_class} with you:"
       shared_sucess: "An email has been sent with the share link"
-      shared_sucess_async: "The email will be sent with the share link in about 5 minutes"
+      shared_sucess_async: "The email(s) will be sent with the share link in about 5 minutes"
       share_token: "Share with Contacts"
       requires_contacts: "Please choose at least one contact"
     receipts:
@@ -2132,7 +2136,7 @@ en:
         <![CDATA[
         * %{name}: The short name of the contact. Example: "Hey %{name}, ..."
         ]]>
-      send_sucess_async: "The emails will be sent in about 5 minutes"
+      send_sucess_async: "The email(s) will be sent in about 5 minutes"
       subject_shared: "Shared"
     unsubscribe:
       title: "Unsubscribe"
