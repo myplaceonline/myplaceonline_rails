@@ -27,7 +27,7 @@ class EmailsController < MyplaceonlineController
   end
 
   def after_create
-    @obj.send_email
+    AsyncEmailJob.perform_later(@obj)
     super
   end
   
