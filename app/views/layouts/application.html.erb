@@ -24,7 +24,7 @@
     <%= favicon_link_tag("favicon.ico") %>
   </head>
   <body>
-    <div data-role="page" data-theme="a" data-url="<%= html_escape(request.original_url) %>" data-uniqueid="<%= request.uuid %>">
+    <div data-role="page" data-theme="a" data-url="<%= html_escape(Myp.original_url(request)) %>" data-uniqueid="<%= request.uuid %>">
       <%# When JQM makes an AJAX requests, it replaces the existing content DIV but anything in HEAD is discarded %>
       <%# so here we can run any code to update HEAD %>
       <script type="text/javascript">

@@ -1381,4 +1381,12 @@ module Myp
       count = count + 1
     end
   end
+  
+  def self.original_url(request)
+    result = request.original_url
+    if Rails.env.production? && result.start_with?("http:")
+      result = "https:" + result[5..-1]
+    end
+    result
+  end
 end
