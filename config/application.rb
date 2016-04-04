@@ -62,11 +62,14 @@ module Myplaceonline
     end
 
     config.autoload_paths += %W(#{config.root}/lib)
-    
+
     #config.tmpdir = ENV["TMPDIR"].blank? ? Dir.tmpdir : ENV["TMPDIR"]
     config.tmpdir = Rails.root.join("tmp", "myp").to_s
     config.filetmpdir = Rails.root.join("tmp", "myp", "files").to_s
-    
+    if !ENV["PERMDIR"].blank?
+      config.filetmpdir = ENV["PERMDIR"] + "uploads"
+    end
+
     FileUtils.mkdir_p(config.tmpdir)
     FileUtils.mkdir_p(config.filetmpdir)
 
