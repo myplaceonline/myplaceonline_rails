@@ -1,8 +1,9 @@
 <% content_for :heading do -%><%= t('myplaceonline.info.serverinfo') %><% end -%>
 
 <h1><%= t('myplaceonline.info.serverinfo') %></h1>
+
 <ul>
-  <li>Server: <%= `hostname` %></li>
+  <li>Server: <%= ENV["NODENAME"] %></li>
 </ul>
 
 <% if current_user.admin? %>
