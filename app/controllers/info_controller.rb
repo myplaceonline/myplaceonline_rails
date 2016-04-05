@@ -6,6 +6,7 @@ class InfoController < ApplicationController
   def credits; end
   def diagnostics; end
   def faq; end
+  def serverinfo; end
 
   def contact
     @obj = SiteContact.new

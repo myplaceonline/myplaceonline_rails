@@ -1,0 +1,16 @@
+<% content_for :heading do -%><%= t('myplaceonline.info.serverinfo') %><% end -%>
+
+<h1><%= t('myplaceonline.info.serverinfo') %></h1>
+<ul>
+  <li>Server: <%= `hostname` %></li>
+</ul>
+
+<% if current_user.admin? %>
+  <hr />
+  <h1>Environment Variables</h1>
+  <% ENV.to_a.sort.each do |key, val| %>
+  <ul>
+    <li><%= key %>=<%= val %></li>
+  </ul>
+  <% end %>
+<% end %>

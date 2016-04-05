@@ -460,6 +460,7 @@ Rails.application.routes.draw do
   get 'search/show'
   get 'search', :to => 'search#index'
 
+  get 'info/diagnostics/serverinfo', :to => 'info#serverinfo'
   get 'info/index'
   match 'info/contact', via: [:get, :post]
   get 'info/credits'
