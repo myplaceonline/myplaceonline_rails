@@ -2117,8 +2117,8 @@ en:
       send: "Send"
       sent: "Email successfully sent. We'll try to respond soon."
     emails:
-      subject: "Subject"
-      body: "Body"
+      subject: "Email Subject"
+      body: "Email Body"
       copy_self: "Blind Carbon Copy Me"
       email_category: "Category"
       requires_contacts: "Requires Contacts"

@@ -198,8 +198,10 @@ class Email < ActiveRecord::Base
     
     if !params.nil? && !params["email_source_class"].blank?
       obj = Myp.find_existing_object(params["email_source_class"], params["email_source_id"].to_i)
-      result.set_subject(obj.display)
+      obj_display = obj.display
+      result.set_subject(obj_display)
       result.body = obj.send(params["email_source_body_field"])
+      result.set_body_if_blank(obj_display)
     end
     
     result
@@ -214,6 +216,12 @@ class Email < ActiveRecord::Base
       end
     else
       self.subject += new_subject
+    end
+  end
+  
+  def set_body_if_blank(new_body)
+    if self.body.blank?
+      self.body = new_body
     end
   end
 
