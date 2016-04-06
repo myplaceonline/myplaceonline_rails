@@ -12,12 +12,24 @@ class CalendarItemReminder < ActiveRecord::Base
   
   def self.ensure_pending_all_users()
     Rails.logger.info("ensure_pending_all_users start")
-    User.all.each do |user|
-      begin
-        User.current_user = user
-        self.ensure_pending(user)
-      ensure
-        User.current_user = nil
+    got_lock = false
+    begin
+      got_lock = Myp.database_advisory_lock(1)
+      if got_lock
+        User.all.each do |user|
+          begin
+            User.current_user = user
+            self.ensure_pending(user)
+          ensure
+            User.current_user = nil
+          end
+        end
+      else
+        Rails.logger.info("ensure_pending_all_users failed lock")
+      end
+    ensure
+      if got_lock
+        Myp.database_advisory_unlock(1)
       end
     end
     Rails.logger.info("ensure_pending_all_users end")

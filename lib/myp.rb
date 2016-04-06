@@ -1389,4 +1389,20 @@ module Myp
     end
     result
   end
+  
+  def self.database_advisory_lock(key)
+    if ActiveRecord::Base.connection.instance_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
+      ActiveRecord::Base.connection.select_value("select pg_try_advisory_lock(#{key})") == "t"
+    else
+      true
+    end
+  end
+
+  def self.database_advisory_unlock(key)
+    if ActiveRecord::Base.connection.instance_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
+      ActiveRecord::Base.connection.execute("select pg_advisory_unlock(#{key})")
+    else
+      true
+    end
+  end
 end
