@@ -704,7 +704,7 @@ en:
       latitude: "Latitude"
       longitude: "Longitude"
       latitude_longitude: "Latitude/Longitude"
-      request_gps: "Request GPS"
+      request_gps: "Request Current GPS"
       website: "Website"
       pictures: "Pictures"
       picture: "Picture"
