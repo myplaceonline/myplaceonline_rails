@@ -23,7 +23,7 @@ class Exercise < ActiveRecord::Base
 
   def self.calendar_item_display(calendar_item)
     I18n.t(
-      "myplaceonline.exercises.havent_exercised_for",
+      "myplaceonline.exercises.next_exercise",
       delta: Myp.time_delta(calendar_item.calendar_item_time)
     )
   end
@@ -48,7 +48,7 @@ class Exercise < ActiveRecord::Base
             calendar,
             Exercise,
             last_exercise.exercise_start + (calendar.exercise_threshold_seconds || DEFAULT_EXERCISE_THRESHOLD_SECONDS).seconds,
-            Calendar::DEFAULT_REMINDER_AMOUNT,
+            1.hours,
             Calendar::DEFAULT_REMINDER_TYPE
           )
         end

@@ -31,7 +31,7 @@ class DoctorVisit < ActiveRecord::Base
       I18n.t("myplaceonline.doctor_visits.no_physicals")
     else
       I18n.t(
-        "myplaceonline.doctor_visits.no_physical_for",
+        "myplaceonline.doctor_visits.next_physical",
         delta: Myp.time_delta(calendar_item.calendar_item_time)
       )
     end

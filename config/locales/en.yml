@@ -1141,7 +1141,7 @@ en:
       notes: "Notes"
       situps: "Situps"
       pushups: "Pushups"
-      havent_exercised_for: "Last Exercise %{delta}"
+      next_exercise: "Next Exercise %{delta}"
       cardio_time: "Cardio Time (Minutes)"
     sun_exposures:
       exposure_start: "Start Date/Time"
@@ -1589,7 +1589,7 @@ en:
       notes: "Notes"
       dental_insurance: "Dental Insurance"
       no_cleaning_for: "Next Dental Cleaning %{delta}"
-      no_cleanings: "No Dental Cleanings"
+      next_cleaning: "No Dental Cleanings"
     doctor_visits:
       visit_date: "Date"
       paid: "Paid"
@@ -1597,7 +1597,7 @@ en:
       doctor: "Doctor"
       notes: "Notes"
       health_insurance: "Health Insurance"
-      no_physical_for: "Next Health Physical %{delta}"
+      next_physical: "Next Health Physical %{delta}"
       no_physicals: "No Health Physicals"
     statuses:
       status_time: "Time"
