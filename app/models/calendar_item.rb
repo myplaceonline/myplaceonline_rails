@@ -119,6 +119,15 @@ class CalendarItem < ActiveRecord::Base
     end
   end
   
+  # max_pending: The maximum number of concurrently outstanding reminders for
+  #              this item. This is often used with a value of 1 with a
+  #              repeating item for which there should only ever be a single
+  #              reminder. For example, ApartmentTrashPickup uses this so that,
+  #              if the trash is scheduled to be picked up once a week, a
+  #              reminder is created for every week, but if the user forgets to
+  #              do the trash one week, or if they forget to complete the item,
+  #              and the next week comes around, then the previous reminders
+  #              are deleted.
   def self.create_calendar_item(
     identity,
     calendar,
