@@ -4,6 +4,7 @@
 
 <ul>
   <li>Server: <%= ENV["NODENAME"] %></li>
+  <li>Source Revision: <a href="https://github.com/myplaceonline/myplaceonline_rails/commit/<%= ENV["SOURCE_REVISION"] %>"><%= ENV["SOURCE_REVISION"] %></a></li>
 </ul>
 
 <% if current_user.admin? %>

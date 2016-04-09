@@ -31,7 +31,7 @@ class DentistVisit < ActiveRecord::Base
       I18n.t("myplaceonline.dentist_visits.no_cleanings")
     else
       I18n.t(
-        "myplaceonline.dentist_visits.no_cleaning_for",
+        "myplaceonline.dentist_visits.next_cleaning",
         delta: Myp.time_delta(calendar_item.calendar_item_time)
       )
     end
