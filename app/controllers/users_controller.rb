@@ -18,6 +18,14 @@ class UsersController < MyplaceonlineController
     end
   end
 
+  def use_bubble?
+    true
+  end
+
+  def bubble_text(obj)
+    Myp.display_date_short_year(obj.last_sign_in_at, current_user)
+  end
+
   protected
     def all
       authorize! :manage, User
