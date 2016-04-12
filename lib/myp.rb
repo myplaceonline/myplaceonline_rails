@@ -1273,6 +1273,10 @@ module Myp
     !phonegap.nil? && phonegap == "true"
   end
   
+  def self.has_phone?(request)
+    true
+  end
+  
   def self.get_category_list
     search = Myp.categories(User.current_user).merge({
       "foods" => Category.new(name: "foods"),
