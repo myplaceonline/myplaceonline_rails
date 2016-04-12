@@ -1,3 +1,7 @@
 <% content_for :heading do -%><%= t('myplaceonline.api.title') %><% end -%>
 
 <h1><%= t('myplaceonline.api.title') %></h1>
+
+<ul>
+  <li><%= link_to("randomString", api_randomString_path, "data-ajax" => false) %>: <%= t("myplaceonline.api.randomString", :default_length => Myp::DEFAULT_PASSWORD_LENGTH, :chars => Myp::POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL.join("")) %></li>
+</ul>

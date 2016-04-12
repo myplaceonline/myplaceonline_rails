@@ -477,6 +477,7 @@ en:
       search_categories: "Search Categories"
     api:
       title: "API"
+      randomString: "Generate a random string of characters between 1 and 512 characters (?length, default %{default_length}), from the set of characters: %{chars}"
     passwords:
       name: "Service Name"
       user: "User ID"

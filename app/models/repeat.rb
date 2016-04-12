@@ -52,4 +52,43 @@ class Repeat < ActiveRecord::Base
       :period
     ]
   end
+  
+  def self.create_calendar_reminders(
+    obj,
+    reminder_threshold_amount_name,
+    reminder_threshold_amount_default,
+    reminder_threshold_type,
+    destroy: true,
+    repeat_obj: obj.repeat,
+    max_pending: 1,
+    expire_amount: nil,
+    expire_type: nil
+  )
+    if !repeat_obj.nil?
+      
+      Rails.logger.debug{"Repeat create_calendar_reminders object #{obj.inspect}, repeat object #{repeat_obj.inspect}"}
+      
+      ActiveRecord::Base.transaction do
+        User.current_user.primary_identity.calendars.each do |calendar|
+          if destroy
+            obj.on_after_destroy
+          end
+          CalendarItem.create_calendar_item(
+            User.current_user.primary_identity,
+            calendar,
+            obj.class,
+            repeat_obj.next_instance,
+            (calendar.send(reminder_threshold_amount_name) || reminder_threshold_amount_default),
+            reminder_threshold_type,
+            model_id: obj.id,
+            repeat_amount: repeat_obj.period,
+            repeat_type: Myp.period_type_to_repeat_type(repeat_obj.period_type),
+            max_pending: max_pending,
+            expire_amount: expire_amount,
+            expire_type: expire_type
+          )
+        end
+      end
+    end
+  end
 end

@@ -33,25 +33,12 @@ class ApartmentTrashPickup < ActiveRecord::Base
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
-    if !repeat.nil?
-      ActiveRecord::Base.transaction do
-        User.current_user.primary_identity.calendars.each do |calendar|
-          on_after_destroy
-          CalendarItem.create_calendar_item(
-            User.current_user.primary_identity,
-            calendar,
-            self.class,
-            repeat.next_instance,
-            (calendar.trash_pickup_threshold_seconds || DEFAULT_TRASH_PICKUP_THRESHOLD_SECONDS),
-            Calendar::DEFAULT_REMINDER_TYPE,
-            model_id: id,
-            repeat_amount: repeat.period,
-            repeat_type: Myp.period_type_to_repeat_type(repeat.period_type),
-            max_pending: 1
-          )
-        end
-      end
-    end
+    Repeat.create_calendar_reminders(
+      self,
+      "trash_pickup_threshold_seconds",
+      DEFAULT_TRASH_PICKUP_THRESHOLD_SECONDS,
+      Calendar::DEFAULT_REMINDER_TYPE
+    )
   end
   
   after_commit :on_after_destroy, on: :destroy

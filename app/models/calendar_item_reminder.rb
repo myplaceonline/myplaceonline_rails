@@ -70,52 +70,68 @@ class CalendarItemReminder < ActiveRecord::Base
 
         while latest_repeat.calendar_item_time < target
           timesource = latest_repeat.calendar_item_time
+          
+          Rails.logger.debug{"loop processing #{timesource.inspect}"}
+          
           new_time = case calendar_item.repeat_type
-          when Myp::REPEAT_TYPE_SECONDS
-            timesource + calendar_item.repeat_amount.seconds
-          when Myp::REPEAT_TYPE_MINUTES
-            timesource + calendar_item.repeat_amount.minutes
-          when Myp::REPEAT_TYPE_HOURS
-            timesource + calendar_item.repeat_amount.hours
-          when Myp::REPEAT_TYPE_DAYS
-            timesource + calendar_item.repeat_amount.days
-          when Myp::REPEAT_TYPE_WEEKS
-            timesource + calendar_item.repeat_amount.weeks
-          when Myp::REPEAT_TYPE_MONTHS
-            timesource + calendar_item.repeat_amount.months
-          when Myp::REPEAT_TYPE_6MONTHS
-            timesource + (calendar_item.repeat_amount * 6).months
-          when Myp::REPEAT_TYPE_YEARS
-            timesource + calendar_item.repeat_amount.years
-          when Myp::REPEAT_TYPE_NTH_MONDAY, Myp::REPEAT_TYPE_NTH_TUESDAY, Myp::REPEAT_TYPE_NTH_WEDNESDAY, Myp::REPEAT_TYPE_NTH_THURSDAY, Myp::REPEAT_TYPE_NTH_FRIDAY, Myp::REPEAT_TYPE_NTH_SATURDAY, Myp::REPEAT_TYPE_NTH_SUNDAY
-            # Causes infinite loop because it's always in the same month
-            #Repeat.new(
-            #  start_date: timesource,
-            #  period: calendar_item.repeat_amount,
-            #  period_type: Myp.repeat_type_to_period_type(calendar_item.repeat_type)
-            #).next_instance
-            raise "TODO"
+            when Myp::REPEAT_TYPE_SECONDS
+              timesource + calendar_item.repeat_amount.seconds
+            when Myp::REPEAT_TYPE_MINUTES
+              timesource + calendar_item.repeat_amount.minutes
+            when Myp::REPEAT_TYPE_HOURS
+              timesource + calendar_item.repeat_amount.hours
+            when Myp::REPEAT_TYPE_DAYS
+              timesource + calendar_item.repeat_amount.days
+            when Myp::REPEAT_TYPE_WEEKS
+              timesource + calendar_item.repeat_amount.weeks
+            when Myp::REPEAT_TYPE_MONTHS
+              timesource + calendar_item.repeat_amount.months
+            when Myp::REPEAT_TYPE_6MONTHS
+              timesource + (calendar_item.repeat_amount * 6).months
+            when Myp::REPEAT_TYPE_YEARS
+              timesource + calendar_item.repeat_amount.years
+            when Myp::REPEAT_TYPE_NTH_MONDAY, Myp::REPEAT_TYPE_NTH_TUESDAY, Myp::REPEAT_TYPE_NTH_WEDNESDAY, Myp::REPEAT_TYPE_NTH_THURSDAY, Myp::REPEAT_TYPE_NTH_FRIDAY, Myp::REPEAT_TYPE_NTH_SATURDAY, Myp::REPEAT_TYPE_NTH_SUNDAY
+              wday = Myp.repeat_type_nth_to_wday(calendar_item.repeat_type)
+              x = Myp.find_nth_weekday(timesource.year, timesource.month, wday, calendar_item.repeat_amount)
+              if x.nil? || x <= timesource
+                if timesource.month == 12
+                  x = Myp.find_nth_weekday(timesource.year + 1, 1, wday, calendar_item.repeat_amount)
+                else
+                  x = Myp.find_nth_weekday(timesource.year, timesource.month + 1, wday, calendar_item.repeat_amount)
+                end
+              end
+              if !x.nil? && x < target
+                Rails.logger.debug{"repeat nth returning #{x.inspect}"}
+                x
+              else
+                Rails.logger.debug{"repeat nth returning nil"}
+                nil
+              end
+            else
+              raise "TODO"
+            end
+          
+          if !new_time.nil?
+            repeated_calendar_item = calendar_item.dup
+            repeated_calendar_item.calendar_item_time = new_time
+            repeated_calendar_item.calendar_id = calendar_item.calendar_id
+            repeated_calendar_item.identity_id = calendar_item.identity_id
+            repeated_calendar_item.is_repeat = true
+            repeated_calendar_item.save!
+            
+            calendar_item.calendar_item_reminders.each do |calendar_item_reminder|
+              new_calendar_item_reminder = calendar_item_reminder.dup
+              new_calendar_item_reminder.calendar_item = repeated_calendar_item
+              new_calendar_item_reminder.identity_id = repeated_calendar_item.identity_id
+              new_calendar_item_reminder.save!
+            end
+            
+            latest_repeat = repeated_calendar_item
+            
+            Rails.logger.debug{"latest_repeat=#{latest_repeat.inspect}"}
           else
-            raise "TODO"
+            break
           end
-          
-          repeated_calendar_item = calendar_item.dup
-          repeated_calendar_item.calendar_item_time = new_time
-          repeated_calendar_item.calendar_id = calendar_item.calendar_id
-          repeated_calendar_item.identity_id = calendar_item.identity_id
-          repeated_calendar_item.is_repeat = true
-          repeated_calendar_item.save!
-          
-          calendar_item.calendar_item_reminders.each do |calendar_item_reminder|
-            new_calendar_item_reminder = calendar_item_reminder.dup
-            new_calendar_item_reminder.calendar_item = repeated_calendar_item
-            new_calendar_item_reminder.identity_id = repeated_calendar_item.identity_id
-            new_calendar_item_reminder.save!
-          end
-          
-          latest_repeat = repeated_calendar_item
-          
-          Rails.logger.debug{"latest_repeat=#{latest_repeat.inspect}"}
         end
 
         Rails.logger.debug{"completed calendar_item"}

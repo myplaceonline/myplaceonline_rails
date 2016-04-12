@@ -172,7 +172,51 @@ module Myp
       raise "TODO"
     end
   end
+
+  def self.repeat_type_nth_to_wday(repeat_type)
+    case repeat_type
+    when nil
+      nil
+    when Myp::REPEAT_TYPE_NTH_SUNDAY
+      0
+    when Myp::REPEAT_TYPE_NTH_MONDAY
+      1
+    when Myp::REPEAT_TYPE_NTH_TUESDAY
+      2
+    when Myp::REPEAT_TYPE_NTH_WEDNESDAY
+      3
+    when Myp::REPEAT_TYPE_NTH_THURSDAY
+      4
+    when Myp::REPEAT_TYPE_NTH_FRIDAY
+      5
+    when Myp::REPEAT_TYPE_NTH_SATURDAY
+      6
+    else
+      raise "TODO"
+    end
+  end
   
+  def self.find_nth_weekday(year, month, wday, nth)
+    x = Date.new(year, month, 1)
+    found = false
+    weekcount = 0
+    while x.month == month
+      if x.wday == wday
+        weekcount = weekcount + 1
+        if weekcount == nth
+          found = true
+          break
+        end
+      end
+      x += 1.day
+    end
+    if found
+      x
+    else
+      nil
+    end
+  end
+
   def self.period_to_repeat_type(period)
     case period
     when nil

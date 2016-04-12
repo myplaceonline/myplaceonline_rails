@@ -442,6 +442,7 @@ Rails.application.routes.draw do
   post 'api/renderpartial'
   post 'api/quickfeedback'
   get 'api/distinct_values'
+  get 'api', :to => 'api#index'
   
   get 'admin/test'
   get 'admin/ensure_pending_all_users'
