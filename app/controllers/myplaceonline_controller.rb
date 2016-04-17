@@ -432,6 +432,10 @@ class MyplaceonlineController < ApplicationController
     ""
   end
   
+  def new_save_text
+    I18n.t("myplaceonline.general.save") + " " + I18n.t("myplaceonline.category." + category_name).singularize
+  end
+  
   protected
   
     def deny_guest

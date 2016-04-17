@@ -80,6 +80,10 @@ class EmailsController < MyplaceonlineController
     end
   end
 
+  def new_save_text
+    I18n.t("myplaceonline.emails.send") + " " + I18n.t("myplaceonline.category." + category_name).singularize + "(s)"
+  end
+
   protected
     def sorts
       ["emails.updated_at DESC"]

@@ -12,7 +12,7 @@
     <div data-role="navbar">
       <ul>
         <li>
-          <%= f.submit(t("myplaceonline.general.save") + " " + t("myplaceonline.category." + controller.category_name).singularize, "data-icon" => "check", "data-iconpos" => "top", "style" => "background-color: green") %>
+          <%= f.submit(controller.new_save_text, "data-icon" => "check", "data-iconpos" => "top", "style" => "background-color: green") %>
         </li>
         <% if content_for?(:footerlinks) %>
           <%= content_for(:footerlinks) %>
