@@ -26,10 +26,14 @@ class EmailsController < MyplaceonlineController
       ]
     ]
   end
-
+  
   def after_create
     if !@obj.draft
-      AsyncEmailJob.perform_later(@obj)
+      if send_immediately
+        AsyncEmailJob.perform_now(@obj)
+      else
+        AsyncEmailJob.perform_later(@obj)
+      end
     end
     super
   end
@@ -38,7 +42,7 @@ class EmailsController < MyplaceonlineController
     if !@obj.draft
       redirect_to obj_path,
               :flash => { :notice =>
-                          I18n.t("myplaceonline.emails.send_sucess_async")
+                          I18n.t(send_immediately ? "myplaceonline.emails.send_sucess_sync" : "myplaceonline.emails.send_sucess_async")
                         }
     else
       super
@@ -68,5 +72,9 @@ class EmailsController < MyplaceonlineController
       else
         nil
       end
+    end
+    
+    def send_immediately
+      @obj.email_groups.count == 0 && @obj.email_contacts.count < 5
     end
 end
