@@ -13,7 +13,7 @@ class CalculationFormsController < MyplaceonlineController
   end
 
   protected
-    def all_additional_sql
+    def all_additional_sql(strict)
       "and is_duplicate = false"
     end
     

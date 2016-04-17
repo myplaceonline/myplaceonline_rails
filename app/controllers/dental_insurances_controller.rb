@@ -52,8 +52,8 @@ class DentalInsurancesController < MyplaceonlineController
       )
     end
 
-    def all_additional_sql
-      if @defunct.blank? || !@defunct
+    def all_additional_sql(strict)
+      if (@defunct.blank? || !@defunct) && !strict
         "and defunct is null"
       else
         nil

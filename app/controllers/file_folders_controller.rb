@@ -37,7 +37,7 @@ class FileFoldersController < MyplaceonlineController
 
   protected
 
-    def all_additional_sql
+    def all_additional_sql(strict)
       "and parent_folder_id is null"
     end
 

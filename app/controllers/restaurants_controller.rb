@@ -52,8 +52,8 @@ class RestaurantsController < MyplaceonlineController
       )
     end
 
-    def all_additional_sql
-      if @not_visited
+    def all_additional_sql(strict)
+      if @not_visited && !strict
         "and (visited is null or visited = false)"
       else
         nil

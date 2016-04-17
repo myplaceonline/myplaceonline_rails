@@ -12,8 +12,8 @@ class PassportsController < MyplaceonlineController
   end
 
   protected
-    def all_additional_sql
-      if @expired.blank? || !@expired
+    def all_additional_sql(strict)
+      if (@expired.blank? || !@expired) && !strict
         "and (expires is null or expires > now())"
       else
         nil

@@ -62,8 +62,8 @@ class EmailsController < MyplaceonlineController
       params.require(:email).permit(EmailsController.param_names)
     end
 
-    def all_additional_sql
-      if @draft
+    def all_additional_sql(strict)
+      if @draft && !strict
         "and draft = true"
       else
         nil

@@ -174,7 +174,7 @@ class FilesController < MyplaceonlineController
 
   protected
 
-    def all_additional_sql
+    def all_additional_sql(strict)
       "and folder_id is null"
     end
 

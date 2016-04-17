@@ -47,8 +47,8 @@ class WebsitesController < MyplaceonlineController
       )
     end
 
-    def all_additional_sql
-      if @to_visit
+    def all_additional_sql(strict)
+      if @to_visit && !strict
         "and to_visit = true"
       else
         nil

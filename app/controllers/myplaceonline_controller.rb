@@ -33,6 +33,8 @@ class MyplaceonlineController < ApplicationController
       @perpage = params[:perpage].to_i
     end
     
+    @count_all = all(strict: true).count
+    
     cached_all = all
     @count = cached_all.count
     if @perpage <= 0
@@ -460,7 +462,7 @@ class MyplaceonlineController < ApplicationController
       end
     end
     
-    def all_additional_sql
+    def all_additional_sql(strict)
       nil
     end
     
@@ -483,8 +485,8 @@ class MyplaceonlineController < ApplicationController
     def additional_items_max_items
       5
     end
-  
-    def all
+
+    def all(strict: false)
       initial_or = ""
       can_read_others = Permission.where(
         "user_id = ? and subject_class = ? and (action & #{Permission::ACTION_MANAGE} != 0 or action & #{Permission::ACTION_READ} != 0)",
@@ -494,7 +496,7 @@ class MyplaceonlineController < ApplicationController
       if !can_read_others.blank?
         initial_or = " or #{model.table_name}.id in (#{can_read_others})"
       end
-      additional = all_additional_sql
+      additional = all_additional_sql(strict)
       if additional.nil?
         additional = ""
       end
@@ -508,8 +510,8 @@ class MyplaceonlineController < ApplicationController
       )
     end
     
-    def additional_items
-      additional = all_additional_sql
+    def additional_items(strict: false)
+      additional = all_additional_sql(strict)
       if additional.nil?
         additional = ""
       end

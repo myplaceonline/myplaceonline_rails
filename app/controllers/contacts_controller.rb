@@ -123,16 +123,20 @@ class ContactsController < MyplaceonlineController
       )
     end
 
-    def all_additional_sql
-      if @hidden
-        result = ""
+    def all_additional_sql(strict)
+      if strict
+        nil
       else
-        result = " and (hide is null or hide = false)"
+        if @hidden
+          result = ""
+        else
+          result = " and (hide is null or hide = false)"
+        end
+        if !@contact_type.blank?
+          result = Myp.appendstr(result, " and contact_type = " + @contact_type.to_s)
+        end
+        result
       end
-      if !@contact_type.blank?
-        result = Myp.appendstr(result, " and contact_type = " + @contact_type.to_s)
-      end
-      result
     end
 
     # Join because we're sorting by identity name

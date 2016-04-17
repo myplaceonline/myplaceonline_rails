@@ -12,8 +12,8 @@ class RewardProgramsController < MyplaceonlineController
       ["lower(reward_programs.reward_program_name) ASC"]
     end
 
-    def all_additional_sql
-      if !@program_type.blank?
+    def all_additional_sql(strict)
+      if !@program_type.blank? && !strict
         "and program_type = " + @program_type
       else
         nil
