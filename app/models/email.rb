@@ -45,7 +45,7 @@ class Email < ActiveRecord::Base
   
   def send_email(body2_html = nil, body2_plain = nil, target_obj = nil, permission_share = nil)
     
-    content = "<p>" + Myp.markdown_to_html(body) + "</p>"
+    content = Myp.markdown_to_html(body)
     if !body2_html.nil?
       content += "\n\n" + body2_html
     end
@@ -112,32 +112,36 @@ class Email < ActiveRecord::Base
           final_content += target_obj.add_email_html(target, contact, permission_share)
         end
         
-        final_content += "<hr />\n"
-        final_content += "<p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category), unsubscribe_category_link)}</p>\n"
-        final_content += "<p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display), unsubscribe_all_link)}</p>"
-        final_content += "\n<p>\n--\n<br />\n"
+        final_content += "\n<p>\n--<br />\n"
         if user_display_short != user_email
           final_content += "#{user_display_short}<br />\n"
         end
-        final_content += "#{user_email}"
-        final_content += "\n<br />\n" + identity.phones.map{|p| "<a href=\"tel:#{p}\">#{p}</a>"}.join(" | ")
-        final_content += "</p>"
+        final_content += "<a href=\"mailto:#{user_email}\">#{user_email}</a>"
+        final_content += "<br />\n" + identity.phones.map{|p| "<a href=\"tel:#{p}\">#{p}</a>"}.join(" | ")
+        final_content += "\n</p>\n\n"
+
+        final_content += "<hr />\n"
+        final_content += "<p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category), unsubscribe_category_link)}</p>\n"
+        final_content += "<p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display), unsubscribe_all_link)}</p>"
         
         final_content_plain = content_plain + "\n\n"
 
         if !personalization.nil? && !personalization.additional_text.blank?
-          final_content_plain += personalization.additional_text + "\n"
+          final_content_plain += personalization.additional_text + "\n\n"
         end
         
-        final_content_plain += "\n===============\n\n"
-        final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category)}: #{unsubscribe_category_link}\n"
-        final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display)}: #{unsubscribe_all_link}"
-        final_content_plain += "\n\n--\n"
+        final_content_plain += "--\n"
         if user_display_short != user_email
           final_content_plain += "#{user_display_short}\n"
         end
         final_content_plain += "#{user_email}\n"
-        final_content_plain += identity.phones.join(" | ")
+        if identity.phones.count > 0
+        final_content_plain += identity.phones.join(" | ") + "\n"
+        end
+
+        final_content_plain += "\n==\n\n"
+        final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category)}: #{unsubscribe_category_link}\n"
+        final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display)}: #{unsubscribe_all_link}"
         
         final_content = final_content.gsub("%{name}", contact.contact_identity.display_short)
         final_content_plain = final_content_plain.gsub("%{name}", contact.contact_identity.display_short)
