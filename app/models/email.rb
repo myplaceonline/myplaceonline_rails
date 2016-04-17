@@ -139,10 +139,10 @@ class Email < ActiveRecord::Base
         end
         final_content_plain += "#{user_email}\n"
         if identity.phones.count > 0
-        final_content_plain += identity.phones.join(" | ") + "\n"
+          final_content_plain += identity.phones.join(" | ") + "\n"
         end
 
-        final_content_plain += "\n==\n\n"
+        final_content_plain += "\n==\n"
         final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category)}: #{unsubscribe_category_link}\n"
         final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display)}: #{unsubscribe_all_link}"
         
