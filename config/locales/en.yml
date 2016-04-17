@@ -2135,6 +2135,7 @@ en:
       requires_contacts: "Requires Contacts"
       contact: "Contact"
       contacts: "Contacts"
+      draft: "Draft"
       add_contact: "Add Contact"
       delete_contact: "Delete Contact"
       group: "Group"

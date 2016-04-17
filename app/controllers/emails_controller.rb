@@ -8,6 +8,7 @@ class EmailsController < MyplaceonlineController
       :copy_self,
       :email_category,
       :use_bcc,
+      :draft,
       email_contacts_attributes: [
         :id,
         :_destroy,
@@ -27,15 +28,29 @@ class EmailsController < MyplaceonlineController
   end
 
   def after_create
-    AsyncEmailJob.perform_later(@obj)
+    if !@obj.draft
+      AsyncEmailJob.perform_later(@obj)
+    end
     super
   end
   
   def redirect_to_obj
-    redirect_to obj_path,
-            :flash => { :notice =>
-                        I18n.t("myplaceonline.emails.send_sucess_async")
-                      }
+    if !@obj.draft
+      redirect_to obj_path,
+              :flash => { :notice =>
+                          I18n.t("myplaceonline.emails.send_sucess_async")
+                        }
+    else
+      super
+    end
+  end
+
+  def index
+    @draft = params[:draft]
+    if !@draft.blank?
+      @draft = @draft.to_bool
+    end
+    super
   end
 
   protected
@@ -45,5 +60,13 @@ class EmailsController < MyplaceonlineController
 
     def obj_params
       params.require(:email).permit(EmailsController.param_names)
+    end
+
+    def all_additional_sql
+      if @draft
+        "and draft = true"
+      else
+        nil
+      end
     end
 end
