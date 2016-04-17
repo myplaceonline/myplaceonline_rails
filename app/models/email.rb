@@ -105,10 +105,10 @@ class Email < ActiveRecord::Base
       
       if personalization.nil? || personalization.do_send
         
-        final_content = content + "\n\n<p>&nbsp;</p>\n"
+        final_content = content
 
         if !personalization.nil? && !personalization.additional_text.blank?
-          final_content += "<p>" + Myp.markdown_to_html(personalization.additional_text) + "</p>"
+          final_content += "\n\n" + Myp.markdown_to_html(personalization.additional_text)
         end
         
         if !target_obj.nil? && target_obj.respond_to?("add_email_html")

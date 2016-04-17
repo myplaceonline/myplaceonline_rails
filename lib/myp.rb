@@ -684,6 +684,12 @@ module Myp
     end
   end
   
+  def self.clear_points_flash(session)
+    if !session.nil?
+      session[:points_flash] = nil
+    end
+  end
+  
   def self.warn(message)
     # TODO send admin notification
   end

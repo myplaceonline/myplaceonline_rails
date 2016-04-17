@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   get 'unsubscribe', :to => 'unsubscribe#index'
 
   resources :emails
+  match 'emails/:id/personalize', :to => 'emails#personalize', via: [:get, :patch], as: "emails_personalize"
   post 'emails/new'
 
   get 'help/index'

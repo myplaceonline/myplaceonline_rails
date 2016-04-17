@@ -2136,6 +2136,10 @@ en:
       contact: "Contact"
       contacts: "Contacts"
       draft: "Draft"
+      send: "Send"
+      personalize_description: "Select recipients and optionally personalize each message:"
+      personalize: "Personalize"
+      personalize_title: "Add personalized messages for certain people. Also, if you selected a group, personalization allows you to exclude emails to certain people in the selected groups."
       add_contact: "Add Contact"
       delete_contact: "Delete Contact"
       group: "Group"
@@ -2143,8 +2147,8 @@ en:
       add_group: "Add Group"
       delete_group: "Delete Group"
       use_bcc: "Use Blind Carbon Copy"
-      variables: "Variables"
-      email_notices: "A separate email is sent to each contact. Note: emails are unencrypted."
+      variables: "Replacements"
+      email_notices: "A separate email is sent to each contact. Note: Emails are unencrypted."
       variables_details: !xml |
         <![CDATA[
         * %{name}: The short name of the contact. Example: "Hey %{name}, ..."
