@@ -2151,7 +2151,7 @@ en:
         ]]>
       send_sucess_async: "The email(s) will be sent in about 5 minutes"
       send_sucess_sync: "The email(s) have been sent"
-      subject_shared: "Shared"
+      subject_shared: "shared"
     unsubscribe:
       title: "Unsubscribe"
       past: "Unsubscribed"
