@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160417222728) do
+ActiveRecord::Schema.define(version: 20160418010157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2784,6 +2784,7 @@ ActiveRecord::Schema.define(version: 20160417222728) do
     t.integer  "visit_count"
     t.integer  "hotel_id"
     t.integer  "identity_file_id"
+    t.boolean  "notify_emergency_contacts"
   end
 
   add_index "trips", ["hotel_id"], name: "index_trips_on_hotel_id", using: :btree

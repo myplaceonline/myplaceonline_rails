@@ -1323,6 +1323,8 @@ en:
       delete_story: "Delete Story"
       share: "Share"
       share_description: "Select the pictures to share:"
+      notify_emergency_contacts: "Notify Emergency Contacts"
+      emergency_contact_email: "%{contact} created a trip to %{location} starting on %{start_date} until %{end_date}. Map: %{map}"
     passports:
       region: "Country"
       passport_number: "Passport Number"
@@ -2150,7 +2152,7 @@ en:
       use_bcc: "Use Blind Carbon Copy"
       variables: "Replacements"
       email_notices: "A separate email is sent to each contact. Note: Emails are unencrypted."
-      category_emergency: "Emergency"
+      category_emergency: "Emergency Contact"
       variables_details: !xml |
         <![CDATA[
         * %{name}: The short name of the contact. Example: "Hey %{name}, ..."
@@ -2218,3 +2220,5 @@ en:
       error_end: "End time cannot be before start time"
     emergency_contacts:
       email: "Email"
+      subject_new: "Notice: %{contact} has created a new %{category}"
+      subject_edit: "Notice: %{contact} has updated an existing %{category}"

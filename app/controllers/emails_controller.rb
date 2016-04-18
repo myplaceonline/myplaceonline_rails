@@ -35,7 +35,7 @@ class EmailsController < MyplaceonlineController
   def after_create
     if !@obj.draft
       if !@obj.personalize
-        final_send
+        @obj.process
       end
     end
     super
@@ -74,7 +74,7 @@ class EmailsController < MyplaceonlineController
         email_personalizations_attributes: EmailsController.email_personalizations_attributes 
       ))
       if @obj.save
-        final_send
+        @obj.process
         final_redirect
       end
     end
@@ -100,23 +100,11 @@ class EmailsController < MyplaceonlineController
         nil
       end
     end
-    
-    def send_immediately
-      @obj.email_groups.count == 0 && @obj.email_contacts.count < 5
-    end
-    
-    def final_send
-      if send_immediately
-        AsyncEmailJob.perform_now(@obj)
-      else
-        AsyncEmailJob.perform_later(@obj)
-      end
-    end
-    
+        
     def final_redirect
       redirect_to obj_path,
             :flash => { :notice =>
-                        I18n.t(send_immediately ? "myplaceonline.emails.send_sucess_sync" : "myplaceonline.emails.send_sucess_async")
+                        I18n.t(@obj.send_immediately ? "myplaceonline.emails.send_sucess_sync" : "myplaceonline.emails.send_sucess_async")
                       }
     end
 end

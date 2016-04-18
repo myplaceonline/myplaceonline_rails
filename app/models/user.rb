@@ -126,4 +126,8 @@ class User < ActiveRecord::Base
   def guest?
     id == GUEST_ID
   end
+  
+  def has_emergency_contacts?
+    primary_identity.emergency_contacts.count > 0
+  end
 end

@@ -19,4 +19,25 @@ class EmergencyContact < ActiveRecord::Base
     result.email.email_category = I18n.t("myplaceonline.emails.category_emergency")
     result
   end
+  
+  def send_contact(is_new, obj, description)
+    cat = Myp.instance_to_category(obj).human_title_singular
+    e = email.dup
+    email.email_contacts.each do |email_contact|
+      e.email_contacts << email_contact.dup
+    end
+    email.email_groups.each do |email_group|
+      e.email_groups << email_group.dup
+    end
+    e.subject = I18n.t(
+      is_new ? "myplaceonline.emergency_contacts.subject_new" : "myplaceonline.emergency_contacts.subject_edit",
+      {
+        contact: identity.display_short,
+        category: cat
+      }
+    )
+    e.body = description
+    e.save!
+    e.process
+  end
 end

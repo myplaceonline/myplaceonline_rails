@@ -1,4 +1,4 @@
-<%= myp_date_field(f, :started, "myplaceonline.trips.started", obj.started, autofocus) %>
+<%= myp_date_field(f, :started, "myplaceonline.trips.started", obj.started, edit ? false : autofocus) %>
 <%=
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,
@@ -73,4 +73,7 @@
       autofocus: false
     }
   %>
+<% end %>
+<% if current_user.has_emergency_contacts? %>
+  <%= myp_check_box(f, :notify_emergency_contacts, "myplaceonline.trips.notify_emergency_contacts") %>
 <% end %>

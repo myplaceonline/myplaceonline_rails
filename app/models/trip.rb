@@ -192,6 +192,45 @@ class Trip < ActiveRecord::Base
     result
   end
 
+  after_commit :on_after_create, on: [:create]
+  after_commit :on_after_update, on: [:update]
+  
+  def on_after_create
+    send_to_emergency_contacts(true)
+  end
+  
+  def on_after_update
+    #send_to_emergency_contacts(false)
+  end
+  
+  def send_to_emergency_contacts(is_new)
+    if notify_emergency_contacts
+      identity.emergency_contacts.each do |emergency_contact|
+        emergency_contact.send_contact(
+          is_new,
+          self,
+          I18n.t("myplaceonline.trips.emergency_contact_email",
+            {
+              contact: identity.display_short,
+              location: location.display,
+              start_date: Myp.display_date_short_year(started, User.current_user),
+              end_date: ended.nil? ? I18n.t("myplaceonline.general.unknown") : Myp.display_date_short_year(ended, User.current_user),
+              map: location.map_url
+            }
+          )
+        )
+      end
+    end
+  end
+  
+  def self.build(params = nil)
+    result = self.dobuild(params)
+    if User.current_user.has_emergency_contacts?
+      result.notify_emergency_contacts = true
+    end
+    result
+  end
+
   protected
   def default_url_options
     Rails.configuration.default_url_options

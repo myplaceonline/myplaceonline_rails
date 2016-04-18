@@ -48,6 +48,7 @@ class TripsController < MyplaceonlineController
         :ended,
         :notes,
         :work,
+        :notify_emergency_contacts,
         location_attributes: LocationsController.param_names,
         trip_pictures_attributes: FilesController.multi_param_names,
         hotel_attributes: HotelsController.param_names,

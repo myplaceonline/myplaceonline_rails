@@ -232,6 +232,18 @@ class Email < ActiveRecord::Base
     end
   end
 
+  def send_immediately
+    email_groups.count == 0 && email_contacts.count < 5
+  end
+  
+  def process
+    if send_immediately
+      AsyncEmailJob.perform_now(self)
+    else
+      AsyncEmailJob.perform_later(self)
+    end
+  end
+
   protected
   def default_url_options
     Rails.configuration.default_url_options

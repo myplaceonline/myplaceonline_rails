@@ -8,12 +8,20 @@ class Category < ActiveRecord::Base
     Category.human_title(name)
   end
   
+  def human_title_singular
+    Category.human_title_singular(name)
+  end
+  
   def filtertext
     Category.filtertext(name, additional_filtertext)
   end
   
   def self.human_title(name)
     I18n.t("myplaceonline.category." + name.downcase)
+  end
+  
+  def self.human_title_singular(name)
+    I18n.t("myplaceonline.category." + name.downcase).singularize
   end
   
   def self.filtertext(name, additional_filtertext)
