@@ -1,0 +1,87 @@
+<%= f.fields_for :email, obj.email do |sub_fields| %>
+  <%= myp_hidden_field(sub_fields, :subject, obj.email.subject) %>
+  <%= myp_hidden_field(sub_fields, :email_category, obj.email.email_category) %>
+  <%= myp_hidden_field(sub_fields, :body, obj.email.body) %>
+  <%= myp_hidden_field(sub_fields, :personalize, obj.email.personalize) %>
+  <%= myp_hidden_field(sub_fields, :draft, obj.email.draft) %>
+  <%= myp_hidden_field(sub_fields, :copy_self, obj.email.copy_self) %>
+  <%=
+    render layout: 'myplaceonline/childproperties', locals: {
+      f: sub_fields,
+      heading: t("myplaceonline.emails.contacts"),
+      childpropertiesname: :email_contacts,
+      childproperties: obj.email.email_contacts,
+      deletebutton: t("myplaceonline.emails.delete_contact"),
+      addbutton: t("myplaceonline.emails.add_contact"),
+      expanded: true,
+      formjson: [
+        {
+          type: :renderpartial,
+          name: :contact_attributes,
+          partial: 'myplaceonline/select_or_create',
+          heading: t("myplaceonline.emails.contact"),
+          objform: "contacts/form",
+          existingobjurl: "contact_path",
+          searchurl: "/contacts.json?perpage=0",
+          edit: true,
+          autofocus: true,
+          force_existing: true,
+          simpleform: true
+        }
+      ]
+    } do |child_fields, childproperty|
+  %>
+    <%=
+      render partial: 'myplaceonline/select_or_create', locals: {
+        f: child_fields,
+        name: :contact_attributes,
+        existingobj: childproperty.contact,
+        heading: t("myplaceonline.emails.contact"),
+        objform: "contacts/form",
+        existingobjurl: "contact_path",
+        searchurl: "/contacts.json?perpage=0",
+        edit: true,
+        autofocus: false
+      }
+    %>
+  <% end %>
+  <%=
+    render layout: 'myplaceonline/childproperties', locals: {
+      f: sub_fields,
+      heading: t("myplaceonline.emails.groups"),
+      childpropertiesname: :email_groups,
+      childproperties: obj.email.email_groups,
+      deletebutton: t("myplaceonline.emails.delete_group"),
+      addbutton: t("myplaceonline.emails.add_group"),
+      expanded: true,
+      formjson: [
+        {
+          type: :renderpartial,
+          name: :group_attributes,
+          partial: 'myplaceonline/select_or_create',
+          heading: t("myplaceonline.emails.group"),
+          objform: "groups/form",
+          existingobjurl: "group_path",
+          searchurl: "/groups.json?perpage=0",
+          edit: true,
+          autofocus: true,
+          force_existing: true
+        }
+      ]
+    } do |child_fields, childproperty|
+  %>
+    <%=
+      render partial: 'myplaceonline/select_or_create', locals: {
+        f: child_fields,
+        name: :group_attributes,
+        existingobj: childproperty.group,
+        heading: t("myplaceonline.emails.group"),
+        objform: "groups/form",
+        existingobjurl: "group_path",
+        searchurl: "/groups.json?perpage=0",
+        edit: true,
+        autofocus: false
+      }
+    %>
+  <% end %>
+<% end %>

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :emergency_contacts
+  post 'emergency_contacts/new'
+
   resources :timings do
     resources :timing_events
     post 'timing_events/new'

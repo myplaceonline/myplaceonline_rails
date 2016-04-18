@@ -162,6 +162,7 @@ en:
       quests: "Quests"
       timings: "Timings"
       timing_events: "Timing Events"
+      emergency_contacts: "Emergency Contacts"
     general:
       email: "E-mail"
       password: "Password"
@@ -2149,6 +2150,7 @@ en:
       use_bcc: "Use Blind Carbon Copy"
       variables: "Replacements"
       email_notices: "A separate email is sent to each contact. Note: Emails are unencrypted."
+      category_emergency: "Emergency"
       variables_details: !xml |
         <![CDATA[
         * %{name}: The short name of the contact. Example: "Hey %{name}, ..."
@@ -2214,3 +2216,5 @@ en:
       timing_event_start: "Start"
       timing_event_end: "End"
       error_end: "End time cannot be before start time"
+    emergency_contacts:
+      email: "Email"

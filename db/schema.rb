@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160417213026) do
+ActiveRecord::Schema.define(version: 20160417222728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1034,6 +1034,17 @@ ActiveRecord::Schema.define(version: 20160417213026) do
   end
 
   add_index "emails", ["identity_id"], name: "index_emails_on_identity_id", using: :btree
+
+  create_table "emergency_contacts", force: :cascade do |t|
+    t.integer  "email_id"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "emergency_contacts", ["email_id"], name: "index_emergency_contacts_on_email_id", using: :btree
+  add_index "emergency_contacts", ["identity_id"], name: "index_emergency_contacts_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: :cascade do |t|
     t.binary   "val"
@@ -3101,6 +3112,8 @@ ActiveRecord::Schema.define(version: 20160417213026) do
   add_foreign_key "email_tokens", "identities"
   add_foreign_key "email_unsubscriptions", "identities"
   add_foreign_key "emails", "identities"
+  add_foreign_key "emergency_contacts", "emails"
+  add_foreign_key "emergency_contacts", "identities"
   add_foreign_key "event_contacts", "contacts"
   add_foreign_key "event_contacts", "events"
   add_foreign_key "event_contacts", "identities"
