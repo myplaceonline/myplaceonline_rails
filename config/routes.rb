@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :tv_shows
+  post 'tv_shows/new'
+
   resources :emergency_contacts
   post 'emergency_contacts/new'
 

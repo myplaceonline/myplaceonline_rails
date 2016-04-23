@@ -164,6 +164,7 @@ en:
       timing_events: "Timing Events"
       emergency_contacts: "Emergency Contacts"
       calendar_item_reminders: "Calendar Item Reminders"
+      tv_shows: "TV Shows"
     general:
       email: "E-mail"
       password: "Password"
@@ -2227,3 +2228,9 @@ en:
       email: "Email"
       subject_new: "Notice: %{contact} has created a new %{category}"
       subject_edit: "Notice: %{contact} has updated an existing %{category}"
+    tv_shows:
+      tv_show_name: "Show Name"
+      watched: "Watched"
+      url: "Website"
+      recommender: "Recommender"
+      tv_genre: "Genre"

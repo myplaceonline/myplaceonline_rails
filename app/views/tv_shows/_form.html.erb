@@ -1,0 +1,19 @@
+<%= myp_text_field(f, :tv_show_name, "myplaceonline.tv_shows.tv_show_name", obj.tv_show_name, autofocus) %>
+<%= myp_text_field(f, :tv_genre, "myplaceonline.tv_shows.tv_genre", obj.tv_genre, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
+<%= myp_text_field(f, :url, "myplaceonline.tv_shows.url", obj.url) %>
+<%= myp_check_box(f, :is_watched, "myplaceonline.tv_shows.watched") %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :recommender,
+    existingobj: obj.recommender,
+    heading: t("myplaceonline.tv_shows.recommender"),
+    objform: "contacts/form",
+    existingobjurl: "contact_path",
+    searchurl: "/contacts.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    collapsed: true,
+    force_existing: true
+  }
+%>

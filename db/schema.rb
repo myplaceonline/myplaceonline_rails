@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160418010157) do
+ActiveRecord::Schema.define(version: 20160423182441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2792,6 +2792,22 @@ ActiveRecord::Schema.define(version: 20160418010157) do
   add_index "trips", ["identity_id"], name: "index_trips_on_identity_id", using: :btree
   add_index "trips", ["location_id"], name: "index_trips_on_location_id", using: :btree
 
+  create_table "tv_shows", force: :cascade do |t|
+    t.string   "tv_show_name"
+    t.text     "notes"
+    t.datetime "watched"
+    t.string   "url"
+    t.integer  "recommender_id"
+    t.string   "tv_genre"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "tv_shows", ["identity_id"], name: "index_tv_shows_on_identity_id", using: :btree
+  add_index "tv_shows", ["recommender_id"], name: "index_tv_shows_on_recommender_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                       limit: 255, default: "",    null: false
     t.string   "encrypted_password",          limit: 255, default: "",    null: false
@@ -3183,6 +3199,8 @@ ActiveRecord::Schema.define(version: 20160418010157) do
   add_foreign_key "trip_stories", "trips"
   add_foreign_key "trips", "hotels"
   add_foreign_key "trips", "identity_files"
+  add_foreign_key "tv_shows", "contacts", column: "recommender_id"
+  add_foreign_key "tv_shows", "identities"
   add_foreign_key "volunteering_activities", "identities"
   add_foreign_key "website_passwords", "identities"
   add_foreign_key "website_passwords", "passwords"
