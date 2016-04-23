@@ -163,6 +163,7 @@ en:
       timings: "Timings"
       timing_events: "Timing Events"
       emergency_contacts: "Emergency Contacts"
+      calendar_item_reminders: "Calendar Item Reminders"
     general:
       email: "E-mail"
       password: "Password"
@@ -1930,7 +1931,7 @@ en:
       event_end_time: "End Date/Time"
       notes: "Notes"
       location: "Location"
-      upcoming: "Event %{name} %{delta}"
+      upcoming: "Event: %{name} %{delta}"
       pictures: "Pictures"
       picture: "Picture"
       add_picture: "Add Picture"
@@ -2203,6 +2204,9 @@ en:
     calendar_items:
       calendar: "Calendar"
       calendar_item_time: "Date/Time"
+      calendar_item_reminders: "Reminders"
+    calendar_item_reminders:
+      calendar_item: "Item"
     quests:
       quest_title: "Name"
     timings:

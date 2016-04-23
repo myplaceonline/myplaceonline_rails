@@ -167,7 +167,9 @@ Rails.application.routes.draw do
   post 'concerts/new'
 
   resources :calendars do
-    resources :calendar_items
+    resources :calendar_items do
+      resources :calendar_item_reminders
+    end
   end
   post 'calendars/new'
 

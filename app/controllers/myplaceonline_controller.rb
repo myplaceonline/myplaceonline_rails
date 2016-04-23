@@ -75,8 +75,8 @@ class MyplaceonlineController < ApplicationController
   
   def set_parent
     if nested
-      parent_id = parent_model.table_name.singularize.downcase + "_id"
-      @parent = Myp.find_existing_object(parent_model, params[parent_id], false)
+      parent_id = parent_model_last.table_name.singularize.downcase + "_id"
+      @parent = Myp.find_existing_object(parent_model_last, params[parent_id], false)
     end
   end
 
@@ -150,9 +150,9 @@ class MyplaceonlineController < ApplicationController
         end
         
         if nested
-          parent_name = parent_model.table_name.singularize.downcase
-          parent_id = parent_model.table_name.singularize.downcase + "_id"
-          new_parent = Myp.find_existing_object(parent_model, params[parent_id], false)
+          parent_name = parent_model_last.table_name.singularize.downcase
+          parent_id = parent_model_last.table_name.singularize.downcase + "_id"
+          new_parent = Myp.find_existing_object(parent_model_last, params[parent_id], false)
           Rails.logger.debug{"Setting parent #{parent_id} to #{new_parent.inspect}"}
           @obj.send("#{parent_name}=", new_parent)
         end
@@ -356,6 +356,14 @@ class MyplaceonlineController < ApplicationController
     end
   end
   
+  def show_path(obj)
+    if nested
+      send("#{path_name}_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+    else
+      send("#{path_name}_path", obj)
+    end
+  end
+  
   def new_path(context = nil)
     send("new_" + path_name + "_path")
   end
@@ -406,14 +414,6 @@ class MyplaceonlineController < ApplicationController
   
   def show_created_updated
     true
-  end
-  
-  def show_path(obj)
-    if nested
-      send("#{path_name}_path", obj.send(parent_model.table_name.singularize.downcase), obj)
-    else
-      send("#{path_name}_path", obj)
-    end
   end
   
   def form_path
@@ -506,7 +506,7 @@ class MyplaceonlineController < ApplicationController
         additional = ""
       end
       if nested
-        parent_id = parent_model.table_name.singularize.downcase + "_id"
+        parent_id = parent_model_last.table_name.singularize.downcase + "_id"
         additional += " AND #{model.table_name}.#{parent_id} = #{ActionController::Base.helpers.sanitize(params[parent_id.to_sym])}"
       end
       model.includes(all_includes).joins(all_joins).where(
@@ -532,8 +532,8 @@ class MyplaceonlineController < ApplicationController
         action = action_name
       end
       if nested
-        parent_id = parent_model.table_name.singularize.downcase + "_id"
-        @parent = Myp.find_existing_object(parent_model, params[parent_id], false)
+        parent_id = parent_model_last.table_name.singularize.downcase + "_id"
+        @parent = Myp.find_existing_object(parent_model_last, params[parent_id], false)
         @obj = model.where("id = ? and #{parent_id} = ?", params[:id].to_i, params[parent_id.to_sym].to_i).take!
       else
         @obj = model.find(params[:id].to_i)
@@ -587,6 +587,26 @@ class MyplaceonlineController < ApplicationController
     
     def parent_model
       nil
+    end
+    
+    def parent_model_list
+      result = parent_model
+      if !result.instance_of?(Array)
+        if !result.nil?
+          result = [result]
+        else
+          result = []
+        end
+      end
+      result
+    end
+    
+    def parent_model_last
+      result = parent_model
+      if result.instance_of?(Array)
+        result = result[result.length - 1]
+      end
+      result
     end
 
     def edit_prerespond
