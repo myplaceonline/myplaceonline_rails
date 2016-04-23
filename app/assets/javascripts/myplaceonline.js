@@ -249,7 +249,13 @@ var myplaceonline = function(mymodule) {
     jserrors++;
     if (jserrors <= maxjserrors) {
       sendDebug(msg, true, errorObj);
-      alert(msg);
+      // Originally we alerted a certain number of JS errors, but it seems the
+      // common case is that the user does a JQM navigate which does some
+      // unexpected DOM manipulation. TODO: create some sort of UI element
+      // that shows that their browser session might be in a weird state,
+      // show the list of warnings, and recommend to consider refreshing.
+      
+      // alert(msg);
     }
   }
 
