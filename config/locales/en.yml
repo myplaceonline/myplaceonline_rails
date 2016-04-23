@@ -1886,6 +1886,7 @@ en:
       complete: "Complete"
       snooze: "Snooze"
     calendars:
+      calendar: "Calendar"
       calendar_items: "Items"
       general_threshold: "General Reminder"
       exercise_threshold: "Last Exercise"

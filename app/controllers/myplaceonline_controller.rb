@@ -19,7 +19,7 @@ class MyplaceonlineController < ApplicationController
       Myp.visit(current_user, category_name)
     end
     
-    @offset = params[:offset].nil? ? 0 : params[:offset].to_i
+    @offset = params[:offset].nil? ? get_default_offset : params[:offset].to_i
     if @offset < 0
       @offset = 0
     end
@@ -490,6 +490,7 @@ class MyplaceonlineController < ApplicationController
       5
     end
 
+    # strict: true allows getting all items (usually for a total count)
     def all(strict: false)
       initial_or = ""
       can_read_others = Permission.where(
@@ -596,5 +597,9 @@ class MyplaceonlineController < ApplicationController
     end
     
     def after_create
+    end
+    
+    def get_default_offset
+      0
     end
 end

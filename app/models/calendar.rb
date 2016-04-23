@@ -6,6 +6,10 @@ class Calendar < ActiveRecord::Base
   DEFAULT_REMINDER_AMOUNT = 2.days
   
   has_many :calendar_items, :dependent => :destroy
+  
+  def display
+    I18n.t("myplaceonline.calendars.calendar")
+  end
 
   timespan_field :general_threshold
   timespan_field :exercise_threshold
