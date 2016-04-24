@@ -14,4 +14,8 @@ class Group < ActiveRecord::Base
   def display
     group_name
   end
+  
+  def all_contacts
+    group_contacts.map{|gc| gc.contact} + group_references.map{|gf| gf.group.all_contacts}.flatten
+  end
 end

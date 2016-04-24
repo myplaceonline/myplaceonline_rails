@@ -158,6 +158,7 @@ Rails.application.routes.draw do
   resources :groups
   post 'groups/new'
   match 'groups/:id/email_list', :to => 'groups#email_list', via: [:get], as: "groups_email_list"
+  match 'groups/:id/missing_list', :to => 'groups#missing_list', via: [:get], as: "groups_missing_list"
 
   match 'tools/gps', via: [:get, :post]
   get 'tools/index'

@@ -1,0 +1,5 @@
+<% content_for :heading do -%><%= t('myplaceonline.groups.missing') %><% end -%>
+<h1><%= t('myplaceonline.groups.missing') %></h1>
+<% @missing_contacts.each do |c| %>
+  <p><%= link_to c.display, contact_path(c) %></p>
+<% end %>

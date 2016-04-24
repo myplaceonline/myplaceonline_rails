@@ -11,6 +11,7 @@
   
   <% content_for :postfooterlinks do %>
     <li><%= link_to t('myplaceonline.groups.email_list'), groups_email_list_path(@obj), "data-icon" => "bars" %></li>
+    <li><%= link_to t('myplaceonline.groups.missing'), groups_missing_list_path(@obj), "data-icon" => "search" %></li>
   <% end %>
   
 <% end %>

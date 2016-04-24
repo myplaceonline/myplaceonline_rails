@@ -1,5 +1,5 @@
 class GroupsController < MyplaceonlineController
-  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:email_list]
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:email_list, :missing_list]
 
   def email_list
     set_obj
@@ -16,6 +16,13 @@ class GroupsController < MyplaceonlineController
       @emails = I18n.t("myplaceonline.groups.no_emails")
       @found_emails = false
     end
+  end
+  
+  def missing_list
+    set_obj
+    
+    @missing_contacts = Contact.where("identity_id = ? and id NOT IN (?)", User.current_user.primary_identity.id, @obj.all_contacts.map{|c| c.id})
+    
   end
   
   def self.reject_if_blank(attributes)
