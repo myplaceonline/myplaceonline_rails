@@ -12,6 +12,6 @@ class Book < ActiveRecord::Base
   allow_existing :recommender, Contact
   
   def display
-    book_name
+    Myp.appendstrwrap(book_name, author)
   end
 end
