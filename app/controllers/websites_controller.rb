@@ -27,6 +27,8 @@ class WebsitesController < MyplaceonlineController
     attributes.dup.delete_if {|key, value| key.to_s == "to_visit" }.all?{|key, value|
       if key == "password_attributes"
         PasswordsController.reject_if_blank(value)
+      elsif key == "recommender_attributes"
+        ContactsController.reject_if_blank(value)
       else
         value.blank?
       end
