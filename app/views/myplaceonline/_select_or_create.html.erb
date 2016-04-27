@@ -90,20 +90,30 @@ end
             existingobj = Myp.new_model(objform[0..(objform.index('/')-1)].singularize.camelize.constantize)
           end
         %>
-        <%= f.fields_for name, existingobj do |sub_fields| %>
-          <h3><%= t("myplaceonline.general.new") + " " + heading %></h3>
-          <%= render partial: objform + ".html", locals: { f: sub_fields, obj: existingobj, edit: false, autofocus: autofocus, nested: true } %>
-          <%
-             if existingcollapsed && autofocus && first
-               first = false
-          %>
-            <script type="text/javascript">
-              myplaceonline.onPageLoad(function() {
-                myplaceonline.maybeFocus($("#<%= new_item_collapsible_id %> .autofocus"));
-              });
-            </script>
-          <% end %>
-        <% end %>
+        <%
+        begin
+          if Myp.push_marker(:select_or_create_stack) < 5
+        %>
+            <%= f.fields_for name, existingobj do |sub_fields| %>
+              <h3><%= t("myplaceonline.general.new") + " " + heading %></h3>
+              <%= render partial: objform + ".html", locals: { f: sub_fields, obj: existingobj, edit: false, autofocus: autofocus, nested: true } %>
+              <%
+                if existingcollapsed && autofocus && first
+                  first = false
+              %>
+                <script type="text/javascript">
+                  myplaceonline.onPageLoad(function() {
+                    myplaceonline.maybeFocus($("#<%= new_item_collapsible_id %> .autofocus"));
+                  });
+                </script>
+              <% end %>
+            <% end %>
+        <%
+          end
+        ensure
+          Myp.pop_marker(:select_or_create_stack)
+        end
+        %>
       </div>
     <% else %>
       <p><%= link_to t("myplaceonline.general.create_new"), "/" + existingobj.class.name.underscore.pluralize + "/new", :class => 'ui-btn ui-btn-icon-left ui-icon-plus ui-btn-inline' %></p>

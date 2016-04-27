@@ -6,5 +6,6 @@
   <% @obj.website_passwords.each do |wrapper| %>
     <%= attribute_table_row_reference(t("myplaceonline.websites.password"), "password_path", wrapper.password) %>
   <% end %>
+  <%= attribute_table_row_reference(t("myplaceonline.websites.recommender"), "contact_path", @obj.recommender) %>
   
 <% end %>

@@ -1,6 +1,6 @@
 <%= myp_text_field(f, :url, "myplaceonline.websites.url", obj.url, autofocus) %>
 <%= myp_text_field(f, :title, "myplaceonline.websites.title", obj.title) %>
-<%= myp_check_box(f, :to_visit, "myplaceonline.websites.to_visit", obj.to_visit) %>
+<%= myp_check_box(f, :to_visit, "myplaceonline.websites.to_visit") %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,
@@ -39,3 +39,18 @@
     }
   %>
 <% end %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :recommender,
+    existingobj: obj.recommender,
+    heading: t("myplaceonline.websites.recommender"),
+    objform: "contacts/form",
+    existingobjurl: "contact_path",
+    searchurl: "/contacts.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    collapsed: true,
+    force_existing: true
+  }
+%>

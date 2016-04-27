@@ -773,6 +773,7 @@ en:
       add_password: "Add Password"
       delete_password: "Delete Password"
       password: "Password"
+      recommender: "Recommender"
     credit_cards:
       name: "Name"
       number: "Number"

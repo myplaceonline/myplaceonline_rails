@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160423182441) do
+ActiveRecord::Schema.define(version: 20160424175819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3046,16 +3046,18 @@ ActiveRecord::Schema.define(version: 20160423182441) do
   add_index "website_passwords", ["website_id"], name: "index_website_passwords_on_website_id", using: :btree
 
   create_table "websites", force: :cascade do |t|
-    t.string   "title",       limit: 255
-    t.string   "url",         limit: 2000
+    t.string   "title",          limit: 255
+    t.string   "url",            limit: 2000
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
     t.boolean  "to_visit"
+    t.integer  "recommender_id"
   end
 
   add_index "websites", ["identity_id"], name: "index_websites_on_identity_id", using: :btree
+  add_index "websites", ["recommender_id"], name: "index_websites_on_recommender_id", using: :btree
 
   create_table "weights", force: :cascade do |t|
     t.decimal  "amount",                   precision: 10, scale: 2
@@ -3205,4 +3207,5 @@ ActiveRecord::Schema.define(version: 20160423182441) do
   add_foreign_key "website_passwords", "identities"
   add_foreign_key "website_passwords", "passwords"
   add_foreign_key "website_passwords", "websites"
+  add_foreign_key "websites", "contacts", column: "recommender_id"
 end

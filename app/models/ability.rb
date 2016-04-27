@@ -87,7 +87,7 @@ class Ability
         result = false
       end
 
-      Rails.logger.debug{"Authorize returning #{result} for user #{user.id}, subject #{subject}"}
+      Rails.logger.debug{"Authorize returning #{result} for user #{user.id}, subject #{subject.inspect}"}
       
       result
     end

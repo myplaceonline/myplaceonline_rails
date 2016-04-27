@@ -5,8 +5,6 @@
   <%= attribute_table_row_boolean(t("myplaceonline.movies.watched"), !@obj.watched.nil?) %>
   <%= attribute_table_row(t("myplaceonline.movies.watched"), @obj.watched) %>
   <%= attribute_table_row_url(t("myplaceonline.movies.url"), @obj.url) %>
-  <% if !@obj.recommender.nil? %>
-    <%= attribute_table_row_reference(t("myplaceonline.movies.recommender"), "contact_path", @obj.recommender) %>
-  <% end %>
+  <%= attribute_table_row_reference(t("myplaceonline.movies.recommender"), "contact_path", @obj.recommender) %>
   
 <% end %>

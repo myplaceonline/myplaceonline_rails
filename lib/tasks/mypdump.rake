@@ -26,7 +26,11 @@ user.save!
     
 Myplet.default_myplets(identity)
 
-Myp.import_museums
+if ENV["SKIP_LARGE_IMPORTS"].nil?
+  Myp.import_museums
+end
+
+# Modifications to this file go into mypdump.rake
 }
     }
   end

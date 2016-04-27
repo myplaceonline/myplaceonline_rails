@@ -17,7 +17,7 @@ class ContactsController < MyplaceonlineController
     super
   end
 
-  def self.param_names
+  def self.param_names(include_website: true)
     [
       :id,
       :_destroy,
@@ -57,7 +57,7 @@ class ContactsController < MyplaceonlineController
         identity_locations_attributes: [
           :id,
           :_destroy,
-          location_attributes: LocationsController.param_names
+          location_attributes: LocationsController.param_names(include_website: include_website)
         ],
         identity_drivers_licenses_attributes: [
           :id,
@@ -90,7 +90,7 @@ class ContactsController < MyplaceonlineController
             :notes
           ]
         ],
-        company_attributes: CompaniesController.param_names
+        company_attributes: CompaniesController.param_names(include_website: include_website)
       ]
     ]
   end
