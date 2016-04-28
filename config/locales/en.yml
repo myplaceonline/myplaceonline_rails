@@ -1867,6 +1867,7 @@ en:
       days: "Every X Days From Start"
       weeks: "Every X Weeks From Start"
       months: "Every X Months From Start"
+      years: "Every X Years From Start"
       nth_monday: "Nth Monday of the Month"
       nth_tuesday: "Nth Tuesday of the Month"
       nth_wednesday: "Nth Wednesday of the Month"

@@ -18,7 +18,7 @@ class WebsiteDomain < ActiveRecord::Base
 
   has_many :website_domain_registrations, :dependent => :destroy
   accepts_nested_attributes_for :website_domain_registrations, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :website_domain_registrations, [{:name => :periodic_payment}]
+  allow_existing_children :website_domain_registrations, [{:name => :repeat}, {:name => :periodic_payment}]
 
   def display
     domain_name

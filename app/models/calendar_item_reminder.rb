@@ -86,6 +86,8 @@ class CalendarItemReminder < ActiveRecord::Base
               timesource + calendar_item.repeat_amount.weeks
             when Myp::REPEAT_TYPE_MONTHS
               timesource + calendar_item.repeat_amount.months
+            when Myp::REPEAT_TYPE_YEARS
+              timesource + calendar_item.repeat_amount.years
             when Myp::REPEAT_TYPE_6MONTHS
               timesource + (calendar_item.repeat_amount * 6).months
             when Myp::REPEAT_TYPE_YEARS

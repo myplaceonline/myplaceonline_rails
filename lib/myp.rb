@@ -90,6 +90,7 @@ module Myp
     ["myplaceonline.period_types.days", 0],
     ["myplaceonline.period_types.weeks", 1],
     ["myplaceonline.period_types.months", 2],
+    ["myplaceonline.period_types.years", 10],
     ["myplaceonline.period_types.nth_monday", 3],
     ["myplaceonline.period_types.nth_tuesday", 4],
     ["myplaceonline.period_types.nth_wednesday", 5],
@@ -125,6 +126,8 @@ module Myp
       Myp::REPEAT_TYPE_WEEKS
     when 2
       Myp::REPEAT_TYPE_MONTHS
+    when 10
+      Myp::REPEAT_TYPE_YEARS
     when 3
       Myp::REPEAT_TYPE_NTH_MONDAY
     when 4
@@ -154,6 +157,8 @@ module Myp
       1
     when Myp::REPEAT_TYPE_MONTHS
       2
+    when Myp::REPEAT_TYPE_YEARS
+      10
     when Myp::REPEAT_TYPE_NTH_MONDAY
       3
     when Myp::REPEAT_TYPE_NTH_TUESDAY

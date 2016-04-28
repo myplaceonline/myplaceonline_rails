@@ -38,6 +38,8 @@ class Repeat < ActiveRecord::Base
           result = result.advance(weeks: period)
         elsif period_type == 2
           result = result.advance(weeks: 4*period)
+        elsif period_type == 10
+          result = result.advance(years: period)
         end
       end
     end
