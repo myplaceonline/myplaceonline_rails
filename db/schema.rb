@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160428030946) do
+ActiveRecord::Schema.define(version: 20160428034429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -453,6 +453,7 @@ ActiveRecord::Schema.define(version: 20160428030946) do
     t.integer  "reminder_repeat_type"
     t.integer  "general_threshold"
     t.integer  "happy_things_threshold"
+    t.integer  "website_domain_registration_threshold"
   end
 
   add_index "calendars", ["identity_id"], name: "index_calendars_on_identity_id", using: :btree
@@ -3033,6 +3034,20 @@ ActiveRecord::Schema.define(version: 20160428030946) do
 
   add_index "warranties", ["identity_id"], name: "index_warranties_on_identity_id", using: :btree
 
+  create_table "website_domain_registrations", force: :cascade do |t|
+    t.integer  "website_domain_id"
+    t.integer  "repeat_id"
+    t.integer  "periodic_payment_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "website_domain_registrations", ["identity_id"], name: "index_website_domain_registrations_on_identity_id", using: :btree
+  add_index "website_domain_registrations", ["periodic_payment_id"], name: "index_website_domain_registrations_on_periodic_payment_id", using: :btree
+  add_index "website_domain_registrations", ["repeat_id"], name: "index_website_domain_registrations_on_repeat_id", using: :btree
+  add_index "website_domain_registrations", ["website_domain_id"], name: "index_website_domain_registrations_on_website_domain_id", using: :btree
+
   create_table "website_domain_ssh_keys", force: :cascade do |t|
     t.integer  "website_domain_id"
     t.integer  "identity_id"
@@ -3232,6 +3247,10 @@ ActiveRecord::Schema.define(version: 20160428030946) do
   add_foreign_key "tv_shows", "contacts", column: "recommender_id"
   add_foreign_key "tv_shows", "identities"
   add_foreign_key "volunteering_activities", "identities"
+  add_foreign_key "website_domain_registrations", "identities"
+  add_foreign_key "website_domain_registrations", "periodic_payments"
+  add_foreign_key "website_domain_registrations", "repeats"
+  add_foreign_key "website_domain_registrations", "website_domains"
   add_foreign_key "website_domain_ssh_keys", "identities"
   add_foreign_key "website_domain_ssh_keys", "ssh_keys"
   add_foreign_key "website_domain_ssh_keys", "website_domains"

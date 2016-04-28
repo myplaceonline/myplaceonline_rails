@@ -1915,6 +1915,7 @@ en:
       todo_threshold: "To Do"
       vehicle_service_threshold: "Vehicle Service"
       happy_things_threshold: "Happy Things Period"
+      website_domain_registration_threshold: "Website Domain Registration"
     movie_theaters:
       location: "Location"
     gas_stations:
@@ -2246,3 +2247,9 @@ en:
       add_ssh_key: "Add SSH Key"
       delete_ssh_key: "Delete SSH Key"
       ssh_key_username: "Username"
+      registration_reminder: "Domain Registration %{delta}"
+      website_domain_registration: "Registration"
+      website_domain_registrations: "Registrations"
+      website_domain_registrations_add: "Add Registration"
+      website_domain_registrations_delete: "Delete Registration"
+      website_domain_registrations_periodic_payment: "Payment"

@@ -26,7 +26,8 @@ class CalendarsController < MyplaceonlineController
       :gun_registration_expiration_threshold,
       :event_threshold,
       :stocks_vest_threshold,
-      :todo_threshold
+      :todo_threshold,
+      :website_domain_registration_threshold
     ]
   end
   

@@ -22,6 +22,9 @@
 <%= myp_timespan_field(f, :todo_threshold, "myplaceonline.calendars.todo_threshold", obj.todo_threshold, false, ToDo::DEFAULT_TODO_THRESHOLD_SECONDS) %>
 <%= myp_timespan_field(f, :vehicle_service_threshold, "myplaceonline.calendars.vehicle_service_threshold", obj.vehicle_service_threshold, false, VehicleService::DEFAULT_VEHICLE_SERVICE_THRESHOLD_SECONDS) %>
 <%= myp_timespan_field(f, :happy_things_threshold, "myplaceonline.calendars.happy_things_threshold", obj.happy_things_threshold, false, HappyThing::DEFAULT_HAPPY_THINGS_THRESHOLD) %>
+<% if current_user.experimental_categories %>
+  <%= myp_timespan_field(f, :website_domain_registration_threshold, "myplaceonline.calendars.website_domain_registration_threshold", obj.website_domain_registration_threshold, false, WebsiteDomainRegistration::DEFAULT_WEBSITE_DOMAIN_REGISTRATION_THRESHOLD_SECONDS) %>
+<% end %>
 <% myplet_form ||= false %>
 <% if myplet_form %>
   <p><%= link_to t("myplaceonline.calendars.calendar"), calendar_path(obj), :class => 'ui-btn ui-btn-icon-left ui-icon-info ui-btn-inline' %></p>

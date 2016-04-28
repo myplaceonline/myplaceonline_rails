@@ -70,4 +70,58 @@
   %>
   <%= myp_text_field(child_fields, :username, "myplaceonline.website_domains.ssh_key_username", childproperty.username) %>
 <% end %>
+<%=
+  render(layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.website_domains.website_domain_registrations"),
+    childpropertiesname: :website_domain_registrations,
+    childproperties: obj.website_domain_registrations,
+    deletebutton: t("myplaceonline.website_domains.website_domain_registrations_delete"),
+    addbutton: t("myplaceonline.website_domains.website_domain_registrations_add"),
+    expanded: obj.website_domain_registrations.length > 0,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :repeat_attributes,
+        partial: 'myplaceonline/create',
+        objform: "repeats/form",
+        autofocus: false
+      },
+      {
+        type: :renderpartial,
+        name: :periodic_payment_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.website_domains.website_domain_registrations_periodic_payment"),
+        objform: "periodic_payments/form",
+        existingobjurl: "periodic_payment_path",
+        searchurl: "/periodic_payments.json?perpage=0",
+        edit: false,
+        autofocus: false
+      }
+    ]
+  }) do |child_fields, childproperty|
+%>
+  <%=
+    render partial: 'myplaceonline/create', locals: {
+      f: child_fields,
+      name: :repeat_attributes,
+      existingobj: childproperty.repeat,
+      objform: "repeats/form",
+      autofocus: false
+    }
+  %>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :periodic_payment_attributes,
+      existingobj: childproperty.periodic_payment,
+      heading: t("myplaceonline.website_domains.website_domain_registrations_periodic_payment"),
+      objform: "periodic_payments/form",
+      existingobjurl: "periodic_payment_path",
+      searchurl: "/periodic_payments.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
+<% end %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>

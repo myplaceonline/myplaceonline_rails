@@ -15,6 +15,12 @@ class WebsiteDomainsController < MyplaceonlineController
           :_destroy,
           :username,
           ssh_key_attributes: SshKeysController.param_names
+        ],
+        website_domain_registrations_attributes: [
+          :id,
+          :_destroy,
+          repeat_attributes: Repeat.params,
+          periodic_payment_attributes: PeriodicPaymentsController.param_names
         ]
       )
     end
