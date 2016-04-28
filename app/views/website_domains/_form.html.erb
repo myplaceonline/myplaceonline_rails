@@ -26,4 +26,48 @@
     collapsed: obj.domain_host.nil? ? true : false
   }
 %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.website_domains.ssh_keys"),
+    childpropertiesname: :website_domain_ssh_keys,
+    childproperties: obj.website_domain_ssh_keys,
+    deletebutton: t("myplaceonline.website_domains.delete_ssh_key"),
+    addbutton: t("myplaceonline.website_domains.add_ssh_key"),
+    expanded: obj.website_domain_ssh_keys.length > 0,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :ssh_key_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.website_domains.ssh_key"),
+        objform: "ssh_keys/form",
+        existingobjurl: "ssh_key_path",
+        searchurl: "/ssh_keys.json?perpage=0",
+        edit: false,
+        autofocus: true
+      },
+      {
+        type: 'text',
+        name: 'username',
+        placeholder: t("myplaceonline.website_domains.ssh_key_username")
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :ssh_key_attributes,
+      existingobj: childproperty.ssh_key,
+      heading: t("myplaceonline.website_domains.ssh_key"),
+      objform: "ssh_keys/form",
+      existingobjurl: "ssh_key_path",
+      searchurl: "/ssh_keys.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
+  <%= myp_text_field(child_fields, :username, "myplaceonline.website_domains.ssh_key_username", childproperty.username) %>
+<% end %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>

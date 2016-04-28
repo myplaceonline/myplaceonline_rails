@@ -2241,3 +2241,8 @@ en:
       domain_name: "Name"
       website: "URL"
       domain_host: "Host"
+      ssh_keys: "SSH Keys"
+      ssh_key: "SSH Key"
+      add_ssh_key: "Add SSH Key"
+      delete_ssh_key: "Delete SSH Key"
+      ssh_key_username: "Username"

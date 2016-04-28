@@ -13,6 +13,9 @@ class WebsiteDomain < ActiveRecord::Base
   accepts_nested_attributes_for :domain_host, reject_if: proc { |attributes| MembershipsController.reject_if_blank(attributes) }
   allow_existing :domain_host, Membership
   
+  has_many :website_domain_ssh_keys, :dependent => :destroy
+  accepts_nested_attributes_for :website_domain_ssh_keys, allow_destroy: true, reject_if: :all_blank
+
   def display
     domain_name
   end
