@@ -1,0 +1,29 @@
+<%= myp_text_field(f, :domain_name, "myplaceonline.website_domains.domain_name", obj.domain_name, autofocus) %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :website,
+    existingobj: obj.website,
+    heading: t("myplaceonline.website_domains.website"),
+    objform: "websites/form",
+    existingobjurl: "website_path",
+    searchurl: "/websites.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :domain_host,
+    existingobj: obj.domain_host,
+    heading: t("myplaceonline.website_domains.domain_host"),
+    objform: "memberships/form",
+    existingobjurl: "membership_path",
+    searchurl: "/memberships.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    collapsed: obj.domain_host.nil? ? true : false
+  }
+%>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>

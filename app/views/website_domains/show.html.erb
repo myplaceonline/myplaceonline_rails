@@ -1,0 +1,8 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.website_domains.domain_name"), @obj.domain_name) %>
+  <%= attribute_table_row_reference(t("myplaceonline.website_domains.website"), "website_path", @obj.website) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.website_domains.notes"), @obj.notes) %>
+  <%= attribute_table_row_reference(t("myplaceonline.website_domains.domain_host"), "membership_path", @obj.domain_host) %>
+  
+<% end %>

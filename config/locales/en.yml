@@ -165,6 +165,7 @@ en:
       emergency_contacts: "Emergency Contacts"
       calendar_item_reminders: "Calendar Item Reminders"
       tv_shows: "TV Shows"
+      website_domains: "Website Domains"
     general:
       email: "E-mail"
       password: "Password"
@@ -2236,3 +2237,7 @@ en:
       url: "Website"
       recommender: "Recommender"
       tv_genre: "Genre"
+    website_domains:
+      domain_name: "Name"
+      website: "URL"
+      domain_host: "Host"

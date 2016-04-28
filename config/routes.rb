@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :website_domains
+  post 'website_domains/new'
+
   resources :tv_shows
   post 'tv_shows/new'
 

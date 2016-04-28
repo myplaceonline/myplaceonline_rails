@@ -1,0 +1,4 @@
+website_domain:
+  identity: identity
+  domain_name: Test
+  website: website
