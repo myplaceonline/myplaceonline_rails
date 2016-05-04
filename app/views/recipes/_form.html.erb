@@ -1,2 +1,9 @@
 <%= myp_text_field(f, :name, "myplaceonline.recipes.name", obj.name, autofocus) %>
 <%= myp_text_area_markdown(f, :recipe, "myplaceonline.recipes.recipe", obj.recipe) %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    pictures_field: :recipe_pictures
+  }
+%>

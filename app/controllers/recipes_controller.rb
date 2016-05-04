@@ -1,4 +1,8 @@
 class RecipesController < MyplaceonlineController
+  def may_upload
+    true
+  end
+
   protected
     def insecure
       true
@@ -9,6 +13,10 @@ class RecipesController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:recipe).permit(:name, :recipe)
+      params.require(:recipe).permit(
+        :name,
+        :recipe,
+        recipe_pictures_attributes: FilesController.multi_param_names
+      )
     end
 end

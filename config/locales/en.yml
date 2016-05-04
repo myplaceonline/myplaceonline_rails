@@ -1005,6 +1005,10 @@ en:
     recipes:
       name: "Recipe Name"
       recipe: "Recipe"
+      pictures: "Pictures"
+      picture: "Picture"
+      add_picture: "Add Picture"
+      delete_picture: "Delete Picture"
     sleep_measurements:
       sleep_start_time: "Sleep Started"
       sleep_end_time: "Sleep Ended"

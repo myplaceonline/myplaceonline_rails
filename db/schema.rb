@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160428034429) do
+ActiveRecord::Schema.define(version: 20160504051927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2297,6 +2297,18 @@ ActiveRecord::Schema.define(version: 20160428034429) do
 
   add_index "receipts", ["identity_id"], name: "index_receipts_on_identity_id", using: :btree
 
+  create_table "recipe_pictures", force: :cascade do |t|
+    t.integer  "recipe_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "recipe_pictures", ["identity_file_id"], name: "index_recipe_pictures_on_identity_file_id", using: :btree
+  add_index "recipe_pictures", ["identity_id"], name: "index_recipe_pictures_on_identity_id", using: :btree
+  add_index "recipe_pictures", ["recipe_id"], name: "index_recipe_pictures_on_recipe_id", using: :btree
+
   create_table "recipes", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.text     "recipe"
@@ -3219,6 +3231,9 @@ ActiveRecord::Schema.define(version: 20160428034429) do
   add_foreign_key "receipt_files", "identity_files"
   add_foreign_key "receipt_files", "receipts"
   add_foreign_key "receipts", "identities"
+  add_foreign_key "recipe_pictures", "identities"
+  add_foreign_key "recipe_pictures", "identity_files"
+  add_foreign_key "recipe_pictures", "recipes"
   add_foreign_key "restaurant_pictures", "identities"
   add_foreign_key "restaurant_pictures", "identity_files"
   add_foreign_key "restaurant_pictures", "restaurants"
