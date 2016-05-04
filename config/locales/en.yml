@@ -376,9 +376,9 @@ en:
 
         Symmetric [AES-256-CBC](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) and a [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2)+HMAC+SHA1 key derivation function with an 8 byte salt and 65536 iterations.
         
-        ### How is data encrypted when exported to JSON?
+        ### How is data encrypted when exported?
 
-        Symmetric [AES-256](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) and an [S2K](https://tools.ietf.org/html/rfc4880)+SHA512 key derivation function with an 8 byte salt and 65536 iterations.
+        When [exporting all of your data](/users/export) into a downloadable file, you may optionally encrypt the file using symmetric [AES-256](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) and an [S2K](https://tools.ietf.org/html/rfc4880)+SHA512 key derivation function with an 8 byte salt and 65536 iterations.
         
         ### Why isn't encryption enabled by default?
         

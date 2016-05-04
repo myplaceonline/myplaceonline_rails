@@ -161,7 +161,7 @@ class Identity < ActiveRecord::Base
     identity_emails.to_a.delete_if{|ie| ie.secondary }.map{|ie| ie.email }
   end
   
-  def phones
+  def phone_numbers
     identity_phones.to_a.map{|ip| ip.number }
   end
   
