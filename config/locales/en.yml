@@ -346,11 +346,15 @@ en:
         > 
         > Positive education: positive psychology and classroom interventions, Seligman et al, Oxford Review of Education, 2009, [http://www.sas.upenn.edu/~duckwort/images/upperdarbypd/10082012_PDReading.pdf](http://www.sas.upenn.edu/~duckwort/images/upperdarbypd/10082012_PDReading.pdf)
         
+        ### What is the purpose of the points system?
+        
+        The points system is an experiment to try to help people balance the three dimensions of happiness mentioned above.
+        
         ### How safe is my data?
         
-        Regarding the availability of your data, it is stored in a PostgreSQL database which is asynchronously but nearly instantaneously streamed to a backup database (see [our architecture](https://github.com/myplaceonline/myplaceonline/blob/master/doc/Development.md#architecture)). If the main database server crashes, your data will most likely be safe. The only potential danger of losing your data is if something happens to the entire Digital Ocean San Francisco data center because the architecture is currently limited to a single data center.
+        Regarding the availability of your data, it is stored in a PostgreSQL database which is asynchronously but nearly instantaneously streamed to a backup database (see [our architecture](https://github.com/myplaceonline/myplaceonline/blob/master/doc/Development.md#architecture)). If the main database server crashes, your data will most likely be safe. The only potential danger of losing your data is if something happens to the entire [Digital Ocean](https://www.digitalocean.com/) San Francisco data center because the architecture is currently limited to a single data center.
         
-        Regarding the security of your data, see the `Security` section below.
+        If you are concerned that your data is stored in the United States, you may use symmetric encryption for certain sensitive data (see the `Security` section below), or run the website locally.
         
         ## <a name="security"></a>Security
         
