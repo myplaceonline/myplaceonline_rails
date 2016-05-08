@@ -2,6 +2,8 @@ class ApiController < ApplicationController
 
   skip_authorization_check
   
+  skip_before_action :verify_authenticity_token, only: [:debug]
+  
   def index
   end
   
