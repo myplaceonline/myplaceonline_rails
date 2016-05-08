@@ -75,6 +75,10 @@ class ApiController < ApplicationController
       from = current_user.email
     end
     UserMailer.send_support_email(from, "Javascript Error", request.raw_post).deliver_now
+    
+    # So that a script kiddie doesn't DoS our email server
+    sleep(1.0)
+    
     render json: {
       :result => true
     }
