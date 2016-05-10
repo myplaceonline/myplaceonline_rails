@@ -555,6 +555,9 @@ en:
       clipboard_settings_saved: "Clipboard Settings Saved"
       clipboard_integration: "Clipboard Integration"
       clipboard_transform_numbers: "Append Space To Copied Numbers"
+      diagnostics_settings_saved: "Diagnostics Settings Saved"
+      diagnostics_settings: "Diagnostics Settings"
+      always_enable_debug: "Always Enable Debugging Mode"
       starting_download: "Starting Download. This can take some time..."
       categories: "Categories"
       explicit_categories: "Show Explicit Categories"
@@ -580,6 +583,7 @@ en:
       always_autofocus: "Always Autofocus Input"
       items_per_page: "Items Per Page"
       show_timestamps: "Show Created/Updated Timestamps"
+      diagnostics: "Diagnostics"
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"

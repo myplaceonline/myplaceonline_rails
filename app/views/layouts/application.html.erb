@@ -28,6 +28,7 @@
       <%# When JQM makes an AJAX requests, it replaces the existing content DIV but anything in HEAD is discarded %>
       <%# so here we can run any code to update HEAD %>
       <script type="text/javascript">
+          myplaceonline.setDebug(false);
         <% if Myp.is_initial_phonegap_request(params, session) %>
           myplaceonline.setIsInitialPhonegapPage(true);
           myplaceonline.loadExternalScript("<%= javascript_path('application_extra') %>", false);
@@ -45,6 +46,9 @@
           <% end %>
           <% if current_user.always_autofocus %>
             myplaceonline.setFocusAllowed(true);
+          <% end %>
+          <% if current_user.always_enable_debug %>
+            myplaceonline.setDebug(true);
           <% end %>
         <% end %>
         

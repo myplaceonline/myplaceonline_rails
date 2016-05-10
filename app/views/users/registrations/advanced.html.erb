@@ -34,4 +34,10 @@
       <%= t("myplaceonline.users.homepage") %>
     <% end %>
   </li>
+  <li>
+    <%= link_to users_diagnostics_path do %>
+      <%= image_tag("famfamfam/bug.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.users.diagnostics") %>
+    <% end %>
+  </li>
 </ul>

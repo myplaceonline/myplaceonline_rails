@@ -19,7 +19,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   prepend_before_filter :authenticate_scope!, only: [
     :edit, :update, :destroy, :changepassword, :changeemail, :resetpoints,
     :advanced, :deletecategory, :security, :export, :appearance, :clipboard,
-    :homepage
+    :homepage, :diagnostics
   ]
   
   before_filter :configure_permitted_parameters
@@ -280,6 +280,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
         :flash => { :notice => I18n.t("myplaceonline.users.clipboard_settings_saved") }
     else
       render :clipboard
+    end
+  end
+  
+  def diagnostics
+    Myp.ensure_encryption_key(session)
+    @always_enable_debug = current_user.always_enable_debug
+    if request.post?
+      @always_enable_debug = params[:always_enable_debug]
+      current_user.always_enable_debug = @always_enable_debug
+      current_user.save!
+      redirect_to edit_user_registration_path,
+        :flash => { :notice => I18n.t("myplaceonline.users.diagnostics_settings_saved") }
+    else
+      render :diagnostics
     end
   end
   

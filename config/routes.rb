@@ -531,6 +531,7 @@ Rails.application.routes.draw do
       match 'users/export', :to => 'users/registrations#export', via: [:get, :post]
       match 'users/offline', :to => 'users/registrations#offline', via: [:get, :post]
       match 'users/changetimezone', :to => 'users/registrations#changetimezone', via: [:get, :post]
+      match 'users/diagnostics', :to => 'users/registrations#diagnostics', via: [:get, :post]
     end
 
     devise_for :users, controllers: {

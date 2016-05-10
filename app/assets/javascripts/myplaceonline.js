@@ -255,7 +255,9 @@ var myplaceonline = function(mymodule) {
       // that shows that their browser session might be in a weird state,
       // show the list of warnings, and recommend to consider refreshing.
       
-      // alert(msg);
+      if (debug) {
+        alert(msg);
+      }
     }
   }
 

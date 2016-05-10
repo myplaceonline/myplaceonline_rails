@@ -1,0 +1,12 @@
+<% content_for :heading do -%><%= t("myplaceonline.users.diagnostics_settings") %><% end -%>
+<h1><%= t("myplaceonline.users.diagnostics_settings") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag do %>
+  <fieldset>
+    <%= label_tag :always_enable_debug, t("myplaceonline.users.always_enable_debug") %>
+    <%= check_box_tag :always_enable_debug, 1, @always_enable_debug, data: { "role" => "flipswitch" } %>
+  </fieldset>
+  <div><%= submit_tag t("myplaceonline.general.save") %></div>
+<% end %>
