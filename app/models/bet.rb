@@ -8,7 +8,7 @@ class Bet < ActiveRecord::Base
   accepts_nested_attributes_for :bet_contacts, allow_destroy: true, reject_if: :all_blank
 
   def display
-    bet_name
+    Myp.appendstrwrap(bet_name, Myp.display_date_short_year(bet_end_date, User.current_user))
   end
 
   def self.build(params = nil)
