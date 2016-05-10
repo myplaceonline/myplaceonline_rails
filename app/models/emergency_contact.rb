@@ -29,14 +29,20 @@ class EmergencyContact < ActiveRecord::Base
     email.email_groups.each do |email_group|
       e.email_groups << email_group.dup
     end
+    e_verb = "myplaceonline.emergency_contacts.verb_created"
+    if obj.respond_to?("emergency_contact_create_verb")
+      e_verb = obj.emergency_contact_create_verb
+    end
     e.subject = I18n.t(
       is_new ? "myplaceonline.emergency_contacts.subject_new" : "myplaceonline.emergency_contacts.subject_edit",
       {
         contact: identity.display_short,
-        category: cat
+        category: cat,
+        verb: I18n.t(e_verb)
       }
     )
     e.body = description
+    e.body += "\n\n" + I18n.t("myplaceonline.emergency_contacts.why_contacted")
     e.save!
     e.process
   end

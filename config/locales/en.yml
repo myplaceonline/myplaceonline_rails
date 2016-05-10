@@ -1336,7 +1336,7 @@ en:
       share: "Share"
       share_description: "Select the pictures to share:"
       notify_emergency_contacts: "Notify Emergency Contacts"
-      emergency_contact_email: "%{contact} created a trip to %{location} starting on %{start_date} until %{end_date}. Map: %{map}"
+      emergency_contact_email: "%{contact} planned a trip to %{location} starting on %{start_date} until %{end_date}. Map: %{map}"
     passports:
       region: "Country"
       passport_number: "Passport Number"
@@ -2239,8 +2239,11 @@ en:
       error_end: "End time cannot be before start time"
     emergency_contacts:
       email: "Email"
-      subject_new: "Notice: %{contact} has created a new %{category}"
+      verb_created: "created"
+      verb_planned: "planned"
+      subject_new: "Notice: %{contact} has %{verb} a new %{category}"
       subject_edit: "Notice: %{contact} has updated an existing %{category}"
+      why_contacted: "You are receiving this because you are registered as an emergency contact."
     tv_shows:
       tv_show_name: "Show Name"
       watched: "Watched"

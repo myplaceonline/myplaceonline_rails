@@ -196,6 +196,7 @@ class Trip < ActiveRecord::Base
   after_commit :on_after_update, on: [:update]
   
   def on_after_create
+    Rails.logger.debug{"Trip on_after_create"}
     send_to_emergency_contacts(true)
   end
   
@@ -206,6 +207,7 @@ class Trip < ActiveRecord::Base
   def send_to_emergency_contacts(is_new)
     if notify_emergency_contacts
       identity.emergency_contacts.each do |emergency_contact|
+        Rails.logger.debug{"Emergency contact #{emergency_contact.inspect}"}
         emergency_contact.send_contact(
           is_new,
           self,
@@ -229,6 +231,10 @@ class Trip < ActiveRecord::Base
       result.notify_emergency_contacts = true
     end
     result
+  end
+  
+  def emergency_contact_create_verb
+    "myplaceonline.emergency_contacts.verb_planned"
   end
 
   protected
