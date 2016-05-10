@@ -1,0 +1,7 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.bets.bet_name"), @obj.bet_name) %>
+  <%= attribute_table_row_currency(t("myplaceonline.bets.bet_amount"), @obj.bet_amount) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.bets.notes"), @obj.notes) %>
+  
+<% end %>

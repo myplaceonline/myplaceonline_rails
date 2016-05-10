@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160510185035) do
+ActiveRecord::Schema.define(version: 20160510195929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -213,6 +213,22 @@ ActiveRecord::Schema.define(version: 20160510185035) do
 
   add_index "bars", ["identity_id"], name: "index_bars_on_identity_id", using: :btree
   add_index "bars", ["location_id"], name: "index_bars_on_location_id", using: :btree
+
+  create_table "bets", force: :cascade do |t|
+    t.string   "bet_name"
+    t.date     "bet_start_date"
+    t.date     "bet_end_date"
+    t.decimal  "bet_amount",           precision: 10, scale: 2
+    t.decimal  "odds_ratio",           precision: 10, scale: 2
+    t.boolean  "odds_direction_owner"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+  end
+
+  add_index "bets", ["identity_id"], name: "index_bets_on_identity_id", using: :btree
 
   create_table "blood_concentrations", force: :cascade do |t|
     t.string   "concentration_name",    limit: 255
@@ -3150,6 +3166,7 @@ ActiveRecord::Schema.define(version: 20160510185035) do
   add_foreign_key "bar_pictures", "identity_files"
   add_foreign_key "bars", "identities"
   add_foreign_key "bars", "locations"
+  add_foreign_key "bets", "identities"
   add_foreign_key "book_stores", "identities"
   add_foreign_key "book_stores", "locations"
   add_foreign_key "cafes", "identities"

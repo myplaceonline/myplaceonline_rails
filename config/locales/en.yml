@@ -166,6 +166,7 @@ en:
       calendar_item_reminders: "Calendar Item Reminders"
       tv_shows: "TV Shows"
       website_domains: "Website Domains"
+      bets: "Bets"
     general:
       email: "E-mail"
       password: "Password"
@@ -2269,3 +2270,11 @@ en:
       website_domain_registrations_add: "Add Registration"
       website_domain_registrations_delete: "Delete Registration"
       website_domain_registrations_periodic_payment: "Payment"
+    bets:
+      bet_name: "Bet"
+      notes: "Conditions"
+      bet_start_date: "Starts"
+      bet_end_date: "Ends"
+      bet_amount: "Amount"
+      odds_ratio: "Odds Ratio"
+      odds_direction_owner: "Odds in Favor of Me"

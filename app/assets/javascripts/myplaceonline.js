@@ -258,6 +258,8 @@ var myplaceonline = function(mymodule) {
       if (debug) {
         alert(msg);
       }
+      
+      // refreshPage();
     }
   }
 

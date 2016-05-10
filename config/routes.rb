@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :bets
+  post 'bets/new'
+
   resources :website_domains
   post 'website_domains/new'
 
