@@ -12,7 +12,12 @@ class BetsController < MyplaceonlineController
         :bet_end_date,
         :bet_amount,
         :odds_ratio,
-        :odds_direction_owner
+        :odds_direction_owner,
+        bet_contacts_attributes: [
+          :id,
+          :_destroy,
+          contact_attributes: ContactsController.param_names
+        ]
       )
     end
 end

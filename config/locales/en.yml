@@ -2278,3 +2278,7 @@ en:
       bet_amount: "Amount"
       odds_ratio: "Odds Ratio"
       odds_direction_owner: "Odds in Favor of Me"
+      contact: "Contact"
+      contacts: "Contacts"
+      add_contact: "Add Contact"
+      delete_contact: "Delete Contact"

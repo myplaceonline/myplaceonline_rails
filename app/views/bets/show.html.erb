@@ -7,5 +7,8 @@
   <%= attribute_table_row_date(t("myplaceonline.bets.bet_start_date"), @obj.bet_start_date) %>
   <%= attribute_table_row_date(t("myplaceonline.bets.bet_end_date"), @obj.bet_end_date) %>
   <%= attribute_table_row_markdown(t("myplaceonline.bets.notes"), @obj.notes) %>
+  <% @obj.bet_contacts.each do |wrapper| %>
+    <%= attribute_table_row_reference(t("myplaceonline.emails.contact"), "contact_path", wrapper.contact) %>
+  <% end %>
 
 <% end %>
