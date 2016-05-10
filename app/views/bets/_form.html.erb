@@ -1,3 +1,7 @@
 <%= myp_text_field(f, :bet_name, "myplaceonline.bets.bet_name", obj.bet_name, autofocus) %>
 <%= myp_decimal_field(f, :bet_amount, "myplaceonline.bets.bet_amount", obj.bet_amount) %>
+<%= myp_decimal_field(f, :odds_ratio, "myplaceonline.bets.odds_ratio", obj.odds_ratio) %>
+<%= myp_check_box(f, :odds_direction_owner, "myplaceonline.bets.odds_direction_owner") %>
+<%= myp_date_field(f, :bet_start_date, "myplaceonline.bets.bet_start_date", obj.bet_start_date) %>
+<%= myp_date_field(f, :bet_end_date, "myplaceonline.bets.bet_end_date", obj.bet_end_date) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.bets.notes", obj.notes) %>

@@ -7,4 +7,10 @@ class Bet < ActiveRecord::Base
   def display
     bet_name
   end
+
+  def self.build(params = nil)
+    result = self.dobuild(params)
+    result.odds_direction_owner = true
+    result
+  end
 end
