@@ -26,6 +26,14 @@ class Location < ActiveRecord::Base
     end
   end
   
+  def region_short_name
+    if !region.blank?
+      Carmen::Country.coded(region).code
+    else
+      nil
+    end
+  end
+  
   before_validation :update_pic_folders
   
   def update_pic_folders
@@ -46,12 +54,14 @@ class Location < ActiveRecord::Base
     if result.blank? && address2.blank? && address3.blank? && !latitude.blank? && !longitude.blank?
       result = latitude.to_s + "," + longitude.to_s
     else
-      result = Myp.appendstr(result, region, ", ")
       if result.blank?
         result = Myp.appendstr(result, address2, ", ")
       end
       if result.blank?
         result = Myp.appendstr(result, address3, ", ")
+      end
+      if result.blank? || region != "US"
+        result = Myp.appendstr(result, region, ", ")
       end
     end
     result
@@ -62,7 +72,9 @@ class Location < ActiveRecord::Base
     result = Myp.appendstr(nil, name, ", ")
     result = Myp.appendstr(result, sub_region2, ", ")
     result = Myp.appendstr(result, sub_region1, ", ")
-    result = Myp.appendstr(result, region, ", ")
+    if result.blank? || region != "US"
+      result = Myp.appendstr(result, region, ", ")
+    end
     if result.blank?
       result = Myp.appendstr(result, address2, ", ")
     end
@@ -131,6 +143,24 @@ class Location < ActiveRecord::Base
     end
   end
   
+  def sub_region1_short_name
+    if !region.blank? && !sub_region1.blank?
+      reg = Carmen::Country.coded(region)
+      if reg.subregions.length > 0
+        subregion = reg.subregions.coded(sub_region1)
+        if !subregion.nil?
+          subregion.code
+        else
+          sub_region1
+        end
+      else
+        sub_region1
+      end
+    else
+      nil
+    end
+  end
+  
   def address_one_line(usename = true)
     result = nil
     if usename
@@ -140,9 +170,11 @@ class Location < ActiveRecord::Base
     result = Myp.appendstr(result, address2, ", ")
     result = Myp.appendstr(result, address3, ", ")
     result = Myp.appendstr(result, sub_region2, ", ")
-    result = Myp.appendstr(result, sub_region1_name, ", ")
+    result = Myp.appendstr(result, sub_region1_short_name, ", ")
     result = Myp.appendstr(result, postal_code, " ")
-    result = Myp.appendstr(result, region_name, ", ")
+    if result.blank? || region != "US"
+      result = Myp.appendstr(result, region_short_name, ", ")
+    end
     result
   end
   
@@ -153,9 +185,11 @@ class Location < ActiveRecord::Base
     result = Myp.appendstr(result, address2, ", ")
     result = Myp.appendstr(result, address3, ", ")
     result = Myp.appendstr(result, sub_region2, ", ")
-    result = Myp.appendstr(result, sub_region1, ", ")
+    result = Myp.appendstr(result, sub_region1_short_name, ", ")
     result = Myp.appendstr(result, postal_code, " ")
-    result = Myp.appendstr(result, region, ", ")
+    if result.blank? || region != "US"
+      result = Myp.appendstr(result, region_short_name, ", ")
+    end
     result
   end
   
