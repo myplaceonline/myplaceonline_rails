@@ -1,7 +1,4 @@
 Category.create!([
-  {id: 2, name: "joy", link: "joy", position: 1, parent_id: nil, additional_filtertext: nil, icon: "famfamfam/emoticon_smile.png", explicit: nil, user_type_mask: nil, experimental: nil},
-  {id: 3, name: "meaning", link: "meaning", position: 2, parent_id: nil, additional_filtertext: nil, icon: "famfamfam/lightbulb.png", explicit: nil, user_type_mask: nil, experimental: nil},
-  {id: 1, name: "order", link: "order", position: 0, parent_id: nil, additional_filtertext: nil, icon: "famfamfam/bricks.png", explicit: nil, user_type_mask: nil, experimental: nil},
   {id: 57, name: "reward_programs", link: "reward_programs", position: 0, parent_id: 51, additional_filtertext: "loyalty", icon: "FatCow_Icons16x16/teddy_bear.png", explicit: nil, user_type_mask: nil, experimental: nil},
   {id: 50, name: "skin_treatments", link: "skin_treatments", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/user_nude.png", explicit: nil, user_type_mask: nil, experimental: nil},
   {id: 66, name: "favorite_products", link: "favorite_products", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/star.png", explicit: nil, user_type_mask: nil, experimental: nil},
@@ -65,6 +62,7 @@ Category.create!([
   {id: 67, name: "therapists", link: "therapists", position: 0, parent_id: 3, additional_filtertext: nil, icon: "FatCow_Icons16x16/account_functions.png", explicit: nil, user_type_mask: nil, experimental: nil},
   {id: 68, name: "health_insurances", link: "health_insurances", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/support.png", explicit: nil, user_type_mask: nil, experimental: nil},
   {id: 69, name: "random", link: "random", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/dice.png", explicit: nil, user_type_mask: nil, experimental: nil},
+  {id: 2, name: "joy", link: "joy", position: 0, parent_id: nil, additional_filtertext: nil, icon: "famfamfam/emoticon_smile.png", explicit: nil, user_type_mask: nil, experimental: nil},
   {id: 70, name: "doctors", link: "doctors", position: 0, parent_id: 29, additional_filtertext: "dentists", icon: "FatCow_Icons16x16/user_medical.png", explicit: nil, user_type_mask: nil, experimental: nil},
   {id: 71, name: "dental_insurances", link: "dental_insurances", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/tooth.png", explicit: nil, user_type_mask: nil, experimental: nil},
   {id: 72, name: "hobbies", link: "hobbies", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/paper_airplane.png", explicit: nil, user_type_mask: nil, experimental: nil},
@@ -117,7 +115,9 @@ Category.create!([
   {id: 116, name: "emergency_contacts", link: "emergency_contacts", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/life_vest.png", explicit: nil, user_type_mask: nil, experimental: nil},
   {id: 117, name: "tv_shows", link: "tv_shows", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/television.png", explicit: nil, user_type_mask: nil, experimental: nil},
   {id: 118, name: "website_domains", link: "website_domains", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/domain_names_advanced.png", explicit: nil, user_type_mask: nil, experimental: true},
-  {id: 119, name: "bets", link: "bets", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/chess_horse.png", explicit: nil, user_type_mask: nil, experimental: nil}
+  {id: 119, name: "bets", link: "bets", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/chess_horse.png", explicit: nil, user_type_mask: nil, experimental: nil},
+  {id: 1, name: "order", link: "order", position: 2, parent_id: nil, additional_filtertext: nil, icon: "famfamfam/bricks.png", explicit: nil, user_type_mask: nil, experimental: nil},
+  {id: 3, name: "meaning", link: "meaning", position: 1, parent_id: nil, additional_filtertext: nil, icon: "famfamfam/lightbulb.png", explicit: nil, user_type_mask: nil, experimental: nil}
 ])
 
 user = User.new
