@@ -195,8 +195,8 @@ en:
       clipboard: "Copy to Clipboard"
       encrypt: "Encrypt"
       is_encrypted: "Is Encrypted?"
-      metadescription: "myplaceonline is a virtual life assistant."
-      metakeywords: "myplaceonline, virtual life assistant, life assistant, organizer, passwords"
+      metadescription: "myplaceonline: joy and meaning maximizer"
+      metakeywords: "myplaceonline, joy, meaning, order"
       submit: "Submit"
       created: "Created"
       last_updated: "Last Updated"
@@ -272,7 +272,7 @@ en:
       home: "Home"
       feedback: "Quick Feedback"
     welcome:
-      intro_html: "myplaceonline is a virtual life assistant. We'll never sell your private data. The code is %{opensourcelink} if you want to review it or run it on your computer."
+      intro_html: "myplaceonline is a joy and meaning maximizer. We'll never sell your private data. The code is %{opensourcelink} if you want to review it or run it on your computer."
       opensourcelink: "open source"
       motto: "organize, <strong>harmonize</strong>, <em>maximize</em>."
       due: "Due"
@@ -284,14 +284,14 @@ en:
           <div data-role="collapsible" data-collapsed="true" data-collapsed-icon="eye" and data-expanded-icon="eye">
             <h3>Screenshots</h3>
             <p>%{screenshot1}</p>
-            <p>%{screenshot2}</p>
             <p>%{screenshot3}</p>
             <p>%{screenshot4}</p>
+            <p>%{screenshot2}</p>
           </div>
-          <div data-role="collapsible" data-collapsed="true" data-collapsed-icon="gear" and data-expanded-icon="gear">
+          <!--<div data-role="collapsible" data-collapsed="true" data-collapsed-icon="gear" and data-expanded-icon="gear">
             <h3>Features</h3>
             <p>%{feature_details}</p>
-          </div>
+          </div>-->
         </div>
         
         ]]>
