@@ -1501,4 +1501,12 @@ module Myp
       a1
     end
   end
+  
+  def self.blank_fallback(str, fallback)
+    if str.blank?
+      fallback
+    else
+      str
+    end
+  end
 end

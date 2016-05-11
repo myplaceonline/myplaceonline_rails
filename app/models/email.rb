@@ -243,7 +243,48 @@ class Email < ActiveRecord::Base
       AsyncEmailJob.perform_later(self)
     end
   end
+  
+  def self.send_emails_to_contacts_and_groups_by_properties(subject, body_markdown, obj, contacts_property, groups_property)
+    contacts = []
+    groups = []
+    
+    if !contacts_property.nil?
+      contacts = obj.send(contacts_property).map{|prop| prop.contact}
+    end
+    
+    if !groups_property.nil?
+      groups = obj.send(groups_property).map{|prop| prop.group}
+    end
+    
+    category = Myp.instance_to_category(obj).human_title
 
+    self.send_emails_to_contacts_and_groups(category, subject, body_markdown, contacts, groups)
+  end
+  
+  def self.send_emails_to_contacts_and_groups(category, subject, body_markdown, contacts, groups)
+    if (!contacts.nil? && contacts.length > 0) || (!groups.nil? && groups.length > 0)
+      e = Email.new
+      e.email_category = category
+      e.identity = User.current_user.primary_identity
+      contacts.each do |contact|
+        ec = EmailContact.new
+        ec.contact = contact
+        ec.identity = e.identity
+        e.email_contacts << ec
+      end
+      groups.each do |group|
+        eg = EmailGroup.new
+        eg.group = group
+        eg.identity = e.identity
+        e.email_groups << eg
+      end
+      e.subject = subject
+      e.body = body_markdown
+      e.save!
+      e.process
+    end
+  end
+  
   protected
   def default_url_options
     Rails.configuration.default_url_options

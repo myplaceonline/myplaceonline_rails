@@ -2271,7 +2271,7 @@ en:
       website_domain_registrations_delete: "Delete Registration"
       website_domain_registrations_periodic_payment: "Payment"
     bets:
-      bet_name: "Bet"
+      bet_name: "Bet Name"
       notes: "Conditions"
       bet_start_date: "Starts"
       bet_end_date: "Ends"
@@ -2282,3 +2282,9 @@ en:
       contacts: "Contacts"
       add_contact: "Add Contact"
       delete_contact: "Delete Contact"
+      bet_created: "%{owner} created a new bet with you for %{amount} on the topic of %{bet_name}. The odds ratio is %{odds_ratio} to 1 in %{favor_order}. The bet ends on %{end_date}. The conditions are:\n\n%{conditions}"
+      bet_updated: "%{owner} updated an existing bet with you to %{amount} on the topic of %{bet_name}. The odds ratio is %{odds_ratio} to 1 in %{favor_order}. The bet ends on %{end_date}. The conditions are:\n\n%{conditions}"
+      favor_order_owner: "%{owner}'s favor"
+      favor_order_other: "your favor"
+      unspecified_end_date: "Unspecified"
+      no_conditions: "No extra conditions"
