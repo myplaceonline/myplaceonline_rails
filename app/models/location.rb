@@ -83,6 +83,13 @@ class Location < ActiveRecord::Base
     result
   end
   
+  def display_address_lines
+    result = Myp.appendstr(nil, address1)
+    result = Myp.appendstr(result, address2, ", ")
+    result = Myp.appendstr(result, address3, ", ")
+    result
+  end
+  
   def display_general_region
     result = ""
     if !sub_region2.blank?
