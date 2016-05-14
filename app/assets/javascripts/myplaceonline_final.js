@@ -82,6 +82,76 @@ var myplaceonline = function(mymodule) {
   $(document).on("change", ":file", function() {
   });
 
+  function jqmSetListMessage(list, message) {
+    list.html("<li data-role=\"visible\">" + message + "</li>");
+    list.listview("refresh");
+    list.trigger("updatelayout");
+  }
+
+  /* items: [{title: String, link: String, count: Integer, filtertext: String, icon: String}, ...] */
+  function jqmSetList(list, items, header) {
+    var html = "";
+    if (header) {
+      html += "<li data-role='list-divider'>" + header + "</li>";
+    }
+    $.each(items, function (i, x) {
+      var filtertext = x.title;
+      if (x.filtertext) {
+        filtertext = x.filtertext;
+      }
+      html += "<li data-filtertext='" + filtertext + "'";
+      if (x.forcevisible) {
+        html += " data-forcevisible='true'";
+      }
+      if (x.divider) {
+        html += " data-role='list-divider'";
+      }
+      html += ">";
+      if (x.link) {
+        html += "<a href='" + x.link + "'>";
+      }
+      if (x.icon) {
+        html += "<img alt='" + x.title + "' title='" + x.title + "' class='ui-li-icon' height='16' width='16' src='" + x.icon + "' />";
+      }
+      if (x.count) {
+        html += " <span class='ui-li-count'>" + x.count + "</span>";
+      }
+      html += x.title;
+      if (x.link) {
+        html += "</a>";
+      }
+      html += "</li>";
+    });
+    list.html(html);
+    list.listview("refresh");
+    list.trigger("updatelayout");
+    
+    // Store the actual data also
+    list.data("rawItems", items);
+  }
+
+  function jqmReplaceListSection(list, sectionTitle, items) {
+    var existingItems = list.data("rawItems");
+    var result = [];
+    var i;
+    var state = 0;
+    for (i = 0; i < existingItems.length; i++) {
+      var existingItem = existingItems[i];
+      if (existingItem.divider) {
+        result.push(existingItem);
+        if (existingItem.title == sectionTitle) {
+          state = 1;
+          Array.prototype.push.apply(result, items);
+        } else {
+          state = 0;
+        }
+      } else if (state == 0) {
+        result.push(existingItem);
+      }
+    }
+    jqmSetList(list, result);
+  }
+  
   // http://view.jquerymobile.com/master/demos/listview-autocomplete-remote/
   function hookListviewSearch(list, url, afterload) {
     list.on("listviewbeforefilter", function(e, data) {
@@ -127,6 +197,109 @@ var myplaceonline = function(mymodule) {
         }
       }
       return true;
+    });
+  }
+  
+  function remoteDataLoad(remote, value, list) {
+    var requestData = {
+      q: value
+    };
+    $.ajax({
+      url: remote.url,
+      dataType: "json",
+      context: {list: list, remote: remote},
+      data: requestData
+    }).done(function(data, textStatus, jqXHR) {
+      jqmReplaceListSection(this.list, this.remote.title, data);
+      if (this.list.data("afterload")) {
+        this.list.data("afterload")(this.list);
+      }
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+      jqmReplaceListSection(this.list, this.remote.title, [{title: "Error. Please try again.", filtertext: value}]);
+    });
+  }
+  
+  // http://demos.jquerymobile.com/1.4.5/filterable/
+  function remoteDataListInitialize(list, remotes, afterload) {
+    
+    list.data("remotes", remotes);
+    list.data("afterload", afterload);
+    
+    // This is called every time the filter changes
+    list.on("filterablebeforefilter", function(e, data) {
+      
+      e.preventDefault();
+      var $ul = $(this);
+      
+      if (!$ul.data("originalItems")) {
+        // If this is the first filter, then save off the original items
+        // in case we ever want to revert back
+        $ul.data("originalItems", $ul.html());
+      }
+      
+      var $input = $(data.input);
+      var value = $input.val();
+      if (!value) {
+        value = "";
+      }
+      value = value.trim();
+      
+      var previousSearch = $ul.data("previousSearch");
+      $ul.data("previousSearch", value);
+      
+      if (previousSearch == value) {
+        return;
+      }
+      
+      if (value.length > 0) {
+        
+        var i;
+        var remotesList = $ul.data("remotes");
+        
+        // Clear out the original list on the first search
+        if (!$ul.data("hasInitialized")) {
+          
+          // Create the categories and an item showing search status
+          var searching = new Array(remotesList.length * 2);
+          for (i = 0; i < remotesList.length; i++) {
+            var remote = remotesList[i];
+            searching[i*2] = {title: remote.title, forcevisible: true, divider: true};
+            searching[(i*2)+1] = {title: "Searching...", filtertext: value};
+          }
+          myplaceonline.jqmSetList($ul, searching);
+          
+          // Do the actual searches
+          for (i = 0; i < remotesList.length; i++) {
+            var remote = remotesList[i];
+            remoteDataLoad(remote, value, $ul);
+          }
+
+          $ul.data("hasInitialized", true);
+        } else {
+          for (i = 0; i < remotesList.length; i++) {
+            var remote = remotesList[i];
+            if (!remote.static_list) {
+              jqmReplaceListSection($ul, remote.title, [{title: "Searching...", filtertext: value}]);
+              remoteDataLoad(remote, value, $ul);
+            }
+          }
+        }
+      } else {
+        $ul.html($ul.data("originalItems"));
+        
+        if ($ul.data("afterload")) {
+          $ul.data("afterload")($ul);
+        }
+        
+        $ul.data("hasInitialized", false);
+      }
+      
+
+      //if ($.mobile.getAttribute( this, "role" ) == "visible") {
+      //  return false;
+      //}
+      //searchValue = searchValue.toLowerCase();
+      //return ( ( "" + ( $.mobile.getAttribute( this, "filtertext" ) || $( this ).text() ) ).toLowerCase().indexOf( searchValue ) === -1 );
     });
   }
 
@@ -733,6 +906,9 @@ var myplaceonline = function(mymodule) {
   mymodule.transformMultiply = transformMultiply;
   mymodule.setCsrfToken = setCsrfToken;
   mymodule.listviewSearch = listviewSearch;
+  mymodule.remoteDataListInitialize = remoteDataListInitialize;
+  mymodule.jqmSetListMessage = jqmSetListMessage;
+  mymodule.jqmSetList = jqmSetList;
 
   return mymodule;
 

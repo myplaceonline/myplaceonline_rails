@@ -40,6 +40,13 @@ var myplaceonline = function(mymodule) {
   var clipboard_integration = 1;
   var initialPhonegapPage = false;
   
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
+  if (!String.prototype.trim) {
+    String.prototype.trim = function() {
+      return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+    };
+  }
+  
   function startsWith(str, search) {
     if (str && search && str.length >= search.length && str.substring(0, search.length) == search) {
       return true;
@@ -422,7 +429,7 @@ var myplaceonline = function(mymodule) {
     // Override the default filterCallback to always show list items with
     // data-role="visible" in addition to the default behavior
     $.mobile.filterable.prototype.options.filterCallback = function (index, searchValue) {
-      if ($.mobile.getAttribute( this, "role" ) == "visible") {
+      if ($.mobile.getAttribute( this, "role" ) == "visible" || $.mobile.getAttribute( this, "forcevisible" )) {
         return false;
       }
       searchValue = searchValue.toLowerCase();
@@ -785,44 +792,6 @@ var myplaceonline = function(mymodule) {
     return true;
   }
 
-  function jqmSetListMessage(list, message) {
-    list.html("<li data-role=\"visible\">" + message + "</li>");
-    list.listview("refresh");
-    list.trigger("updatelayout");
-  }
-
-  /* items: [{title: String, link: String, count: Integer, filtertext: String, icon: String}, ...] */
-  function jqmSetList(list, items, header) {
-    var html = "";
-    if (header) {
-      html += "<li data-role='list-divider'>" + header + "</li>";
-    }
-    $.each(items, function (i, x) {
-      var filtertext = x.title;
-      if (x.filtertext) {
-        filtertext = x.filtertext;
-      }
-      html += "<li data-filtertext='" + filtertext + "'>";
-      if (x.link) {
-        html += "<a href='" + x.link + "'>";
-      }
-      if (x.icon) {
-        html += "<img alt='" + x.title + "' title='" + x.title + "' class='ui-li-icon' height='16' width='16' src='" + x.icon + "' />";
-      }
-      if (x.count) {
-        html += " <span class='ui-li-count'>" + x.count + "</span>";
-      }
-      html += x.title;
-      if (x.link) {
-        html += "</a>";
-      }
-      html += "</li>";
-    });
-    list.html(html);
-    list.listview("refresh");
-    list.trigger("updatelayout");
-  }
-
   function ensureClipboard(objects) {
     // If we're in PhoneGap, use the clipboard plugin; otherwise,
     // check if the user has overriden clipboard integration and use that
@@ -905,8 +874,6 @@ var myplaceonline = function(mymodule) {
   mymodule.alertHTML = alertHTML;
   mymodule.showLoading = showLoading;
   mymodule.hideLoading = hideLoading;
-  mymodule.jqmSetListMessage = jqmSetListMessage;
-  mymodule.jqmSetList = jqmSetList;
   mymodule.ensureClipboard = ensureClipboard;
   mymodule.setMyplaceonlineSnapshot = setMyplaceonlineSnapshot;
   mymodule.getMyplaceonlineSnapshot = getMyplaceonlineSnapshot;

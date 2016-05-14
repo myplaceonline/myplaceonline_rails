@@ -9,7 +9,13 @@ class ApiController < ApplicationController
   
   def categories
     respond_to do |format|
-      format.json { render json: Myp.categories_for_current_user(current_user, nil, true)}
+      format.json { render json: Myp.categories_for_current_user(current_user, nil, true) }
+    end
+  end
+  
+  def search
+    respond_to do |format|
+      format.json { render json: Myp.full_text_search(current_user, params[:q]) }
     end
   end
   

@@ -252,6 +252,8 @@ en:
       delta_time_past: "%{delta} ago"
       create_new: "Create New"
       share: "Share"
+      categories: "Categories"
+      everything: "Everything"
     html5:
       noaudio: "Your browser doesn't support embedded audio."
     periods:

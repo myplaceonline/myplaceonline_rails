@@ -452,6 +452,7 @@ Rails.application.routes.draw do
   get 'welcome/index'
   get 'api/index'
   get 'api/categories'
+  get 'api/search'
   get 'api/randomString'
   get 'api/subregions'
   post 'api/debug'

@@ -311,7 +311,7 @@ module Myp
     end
   end
 
-  # Return a list of CategoryForIdentity objects.
+  # Return a list of ListItemRow objects.
   # Assumes user is logged in.
   #
   # If parent is nil, search for all categories.
@@ -379,7 +379,7 @@ module Myp
           "categories.position ASC, categories.name ASC"
       }
     }).map{ |category|
-      CategoryForIdentity.new(
+      ListItemRow.new(
         category.human_title,
         "/" + category.link,
         category.points_amount.nil? ? 0 : category.points_amount,
@@ -436,7 +436,7 @@ module Myp
       )
     })
     .uniq{ |cpa| cpa.category_id }.map{ |cpa|
-      CategoryForIdentity.new(
+      ListItemRow.new(
         Category.human_title(cpa.category_name),
         "/" + cpa.category_link,
         cpa.count.nil? ? 0 : cpa.count,
@@ -448,7 +448,7 @@ module Myp
     }
   end
 
-  class CategoryForIdentity
+  class ListItemRow
     def initialize(title, link, count, id, parent_id, filtertext, icon)
       @title = title
       @link = link
@@ -1207,14 +1207,18 @@ module Myp
     end
   end
   
-  def self.instance_to_category(obj)
+  def self.instance_to_category(obj, raise_if_not_found = true)
     search = obj.class.name.pluralize.underscore
     Category.all.each do |category|
       if category.name == search
         return category
       end
     end
-    raise "Could not find category from " + search
+    if raise_if_not_found
+      raise "Could not find category from " + search
+    else
+      nil
+    end
   end
   
   def self.instance_to_category_human_readable(obj)
@@ -1508,5 +1512,43 @@ module Myp
     else
       str
     end
+  end
+  
+  def self.full_text_search(user, search)
+
+    # UserIndex.query(filtered: { query: { match_phrase_prefix: { _all: "awesome" } }, filter: { match: { identity_id: 1 } } }).to_a
+    search_results = UserIndex.query(
+      filtered: {
+        query: {
+          match_phrase_prefix: {
+            _all: search
+          }
+        },
+        filter: {
+          match: {
+            identity_id: user.primary_identity_id
+          }
+        }
+      }
+    ).limit(5).load.to_a
+    
+    search_results.map{|search_result|
+      category = Myp.instance_to_category(search_result, false)
+      if !category.nil?
+        ListItemRow.new(
+          category.human_title_singular + ": " + search_result.display,
+          "/" + category.name + "/" + search_result.id.to_s,
+          nil,
+          nil,
+          nil,
+          search,
+          category.icon
+        )
+      end
+    }.compact
+  end
+  
+  def self.full_text_search?
+    ENV["FTS"] == "true"
   end
 end

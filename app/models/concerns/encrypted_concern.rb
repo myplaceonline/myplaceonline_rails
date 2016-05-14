@@ -26,6 +26,7 @@ module EncryptedConcern extend ActiveSupport::Concern
           if !send("#{name}_encrypted?")
             result = super()
           else
+            # Rails.logger.debug{"Decrypting #{self.inspect}"}
             result = Myp.decrypt_from_session(
               ApplicationController.current_session,
               send("#{name}_encrypted")
