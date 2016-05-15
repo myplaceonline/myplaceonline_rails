@@ -1549,6 +1549,6 @@ module Myp
   end
   
   def self.full_text_search?
-    ENV["FTS"] == "true"
+    !ENV["FTS_TARGET"].blank?
   end
 end

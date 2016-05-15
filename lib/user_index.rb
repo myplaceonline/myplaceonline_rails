@@ -43,6 +43,8 @@ class UserIndex < Chewy::Index
           # https://www.elastic.co/guide/en/elasticsearch/reference/current/number.html
           field :identity_id, type: "integer"
         end
+        
+        klass.update_index("user#" + klass.name.underscore.downcase, :self)
       end
     end
   end
