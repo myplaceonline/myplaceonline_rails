@@ -8,6 +8,8 @@ class UserIndex < Chewy::Index
     }
   }
   
+  @indices = {}
+  
   Dir[Rails.root.join("app/models/*.rb").to_s].each do |filename|
     klass = File.basename(filename, ".rb").camelize.constantize
     next unless klass.ancestors.include?(ActiveRecord::Base)
@@ -28,9 +30,9 @@ class UserIndex < Chewy::Index
       # Only create a type if it has some text fields
       if string_columns.length > 0
         
-        #puts "Type: #{klass.name}"
+        Rails.logger.debug{"UserIndex Creating type for: #{klass.name}"}
         
-        define_type klass do
+        defined_type = define_type klass do
 
           # https://www.elastic.co/guide/en/elasticsearch/reference/current/string.html
           #field :allstrings
@@ -44,8 +46,14 @@ class UserIndex < Chewy::Index
           field :identity_id, type: "integer"
         end
         
+        @indices[klass.name] = defined_type
+        
         klass.update_index("user#" + klass.name.underscore.downcase, :self)
+      else
+        Rails.logger.debug{"UserIndex Skipping #{klass.name}"}
       end
     end
   end
+  
+  Rails.logger.debug{"UserIndex indices=#{@indices.keys.sort.join(", ")}"}
 end

@@ -1,5 +1,5 @@
 class Identity < ActiveRecord::Base
-  include MyplaceonlineActiveRecordBaseConcern
+  include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   DEFAULT_BIRTHDAY_THRESHOLD_SECONDS = 60.days

@@ -1536,9 +1536,12 @@ module Myp
           }
         }
       }
-    ).limit(5).load.to_a
+    ).limit(10).load.to_a
     
     search_results.map{|search_result|
+      if search_result.class == Identity
+        search_result = search_result.contact
+      end
       category = Myp.instance_to_category(search_result, false)
       if !category.nil?
         ListItemRow.new(
