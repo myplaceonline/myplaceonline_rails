@@ -228,7 +228,9 @@ var myplaceonline = function(mymodule) {
     // This is called every time the filter changes
     list.on("filterablebeforefilter", function(e, data) {
       
-      e.preventDefault();
+      // Call preventDefault to stop the subsequent filtering logic from executing
+      // e.preventDefault();
+      
       var $ul = $(this);
       
       if (!$ul.data("originalItems")) {
@@ -245,9 +247,15 @@ var myplaceonline = function(mymodule) {
       value = value.trim();
       
       var previousSearch = $ul.data("previousSearch");
+      
+      myplaceonline.consoleLog("remoteDataList search " + value + " (previous: " + previousSearch + ")");
+      
       $ul.data("previousSearch", value);
       
       if (previousSearch == value) {
+        
+        myplaceonline.consoleLog("remoteDataList returning without action");
+        
         return;
       }
       
@@ -259,6 +267,8 @@ var myplaceonline = function(mymodule) {
         // Clear out the original list on the first search
         if (!$ul.data("hasInitialized")) {
           
+          myplaceonline.consoleLog("remoteDataList performing initial search");
+
           // Create the categories and an item showing search status
           var searching = new Array(remotesList.length * 2);
           for (i = 0; i < remotesList.length; i++) {
@@ -276,15 +286,20 @@ var myplaceonline = function(mymodule) {
 
           $ul.data("hasInitialized", true);
         } else {
+          
+          myplaceonline.consoleLog("remoteDataList Refreshing dynamic categories if needed");
+          
           for (i = 0; i < remotesList.length; i++) {
             var remote = remotesList[i];
             if (!remote.static_list) {
+              myplaceonline.consoleLog("remoteDataList Re-searching " + remote.title);
               jqmReplaceListSection($ul, remote.title, [{title: "Searching...", filtertext: value}]);
               remoteDataLoad(remote, value, $ul);
             }
           }
         }
       } else {
+        myplaceonline.consoleLog("remoteDataList Resetting item");
         $ul.html($ul.data("originalItems"));
         
         if ($ul.data("afterload")) {
