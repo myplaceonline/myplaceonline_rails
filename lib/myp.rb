@@ -294,6 +294,12 @@ module Myp
   end
   
   initialize_categories
+  
+  if !ENV["FTS_TARGET"].blank?
+    puts "Configuring full text search with #{ENV["FTS_TARGET"]}"
+    Chewy.root_strategy = :active_job
+    Chewy.settings = {host: ENV["FTS_TARGET"]}
+  end
 
   def self.categories(user = nil)
     if user.nil?

@@ -15,10 +15,5 @@ if Myp.is_web_server? || Rails.env.test?
 
   if Myp.database_exists? && !Rails.env.test?
     CalendarItemReminder.ensure_pending_all_users
-    if !ENV["FTS_TARGET"].blank?
-      puts "Configuring full text search with #{ENV["FTS_TARGET"]}"
-      Chewy.root_strategy = :active_job
-      Chewy.settings = {host: ENV["FTS_TARGET"]}
-    end
   end
 end
