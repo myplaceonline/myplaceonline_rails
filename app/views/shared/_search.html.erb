@@ -18,7 +18,7 @@ container_id = id + "_container"
 myplaceonline.onPageLoad(function() {
   var search = $("#<%= id %>");
   var input = $("#<%= container_id %> input");
-  //myplaceonline.hookListviewEnter(input, "#<%= id %>");
+  myplaceonline.hookListviewEnter(input, "#<%= id %>");
   myplaceonline.remoteDataListInitialize(search, [
     {title: "<%= t("myplaceonline.general.categories") %>", url: "/api/categories.json", static_list: true}
     <% if Myp.full_text_search? %>

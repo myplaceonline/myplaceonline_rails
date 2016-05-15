@@ -135,21 +135,23 @@ var myplaceonline = function(mymodule) {
     var result = [];
     var i;
     var state = 0;
-    for (i = 0; i < existingItems.length; i++) {
-      var existingItem = existingItems[i];
-      if (existingItem.divider) {
-        result.push(existingItem);
-        if (existingItem.title == sectionTitle) {
-          state = 1;
-          Array.prototype.push.apply(result, items);
-        } else {
-          state = 0;
+    if (existingItems) {
+      for (i = 0; i < existingItems.length; i++) {
+        var existingItem = existingItems[i];
+        if (existingItem.divider) {
+          result.push(existingItem);
+          if (existingItem.title == sectionTitle) {
+            state = 1;
+            Array.prototype.push.apply(result, items);
+          } else {
+            state = 0;
+          }
+        } else if (state == 0) {
+          result.push(existingItem);
         }
-      } else if (state == 0) {
-        result.push(existingItem);
       }
+      jqmSetList(list, result);
     }
-    jqmSetList(list, result);
   }
   
   // http://view.jquerymobile.com/master/demos/listview-autocomplete-remote/
@@ -190,10 +192,11 @@ var myplaceonline = function(mymodule) {
   function hookListviewEnter(listInput, listIdentifier) {
     listInput.keyup(function(e) {
       if (e.which == 13) {
-        var searchList = $(listIdentifier + " li:not(.ui-screen-hidden)");
+        var searchList = $(listIdentifier + " li:not(.ui-screen-hidden)").filter(":not(.ui-li-divider)");
         if (searchList.size() > 0) {
           e.preventDefault();
-          myplaceonline.navigate(searchList.filter(":first").children("a").attr("href"));
+          var child = searchList.filter(":first");
+          myplaceonline.navigate(child.children("a").attr("href"));
         }
       }
       return true;
