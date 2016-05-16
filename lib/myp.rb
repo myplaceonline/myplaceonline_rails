@@ -18,6 +18,8 @@ module Myp
   
   DEFAULT_DECIMAL_STEP = "0.01"
   
+  FULL_TEXT_SEARCH_TYPE = 1
+  
   WEIGHTS = [
     ["myplaceonline.general.pounds", 0]
   ]
@@ -1522,39 +1524,71 @@ module Myp
   
   def self.full_text_search(user, search)
 
-    # UserIndex.query(filtered: { query: { match_phrase_prefix: { _all: "awesome" } }, filter: { match: { identity_id: 1 } } }).to_a
-    search_results = UserIndex.query(
-      filtered: {
-        query: {
-          match_phrase_prefix: {
-            _all: search
+    if search.nil?
+      search = ""
+    end
+    search = search.strip.downcase
+    if !search.blank?
+      if Myp::FULL_TEXT_SEARCH_TYPE == 0
+        search_results = UserIndex.query(
+          filtered: {
+            query: {
+              match_phrase_prefix: {
+                _all: search
+              }
+            },
+            filter: {
+              match: {
+                identity_id: user.primary_identity_id
+              }
+            }
           }
-        },
-        filter: {
-          match: {
-            identity_id: user.primary_identity_id
+        ).limit(10).load.to_a
+      elsif Myp::FULL_TEXT_SEARCH_TYPE == 1
+        search_results = UserIndex.query(
+          filtered: {
+            query: {
+              wildcard: {
+                name: {
+                  value: "*" + search + "*"
+                }
+              }
+            },
+            filter: {
+              match: {
+                identity_id: user.primary_identity_id
+              }
+            }
           }
-        }
-      }
-    ).limit(10).load.to_a
-    
-    search_results.map{|search_result|
-      if search_result.class == Identity
-        search_result = search_result.contact
+        ).limit(10).load.to_a
       end
-      category = Myp.instance_to_category(search_result, false)
-      if !category.nil?
-        ListItemRow.new(
-          category.human_title_singular + ": " + search_result.display,
-          "/" + category.name + "/" + search_result.id.to_s,
-          nil,
-          nil,
-          nil,
-          search,
-          category.icon
-        )
+      
+      search_results.sort! do |sr1, sr2|
+        x1 = sr1.respond_to?("visit_count") && !sr1.visit_count.nil? ? sr1.visit_count : 0
+        x2 = sr2.respond_to?("visit_count") && !sr2.visit_count.nil? ? sr2.visit_count : 0
+        x2 <=> x1
       end
-    }.compact
+      
+      search_results.map{|search_result|
+        if search_result.class == Identity
+          search_result = search_result.contact
+        end
+        category = Myp.instance_to_category(search_result, false)
+        if !category.nil?
+          ListItemRow.new(
+            category.human_title_singular + ": " + search_result.display,
+            "/" + category.name + "/" + search_result.id.to_s,
+            nil,
+            nil,
+            nil,
+            search,
+            category.icon
+          )
+        end
+      }.compact
+    else
+      []
+    end
   end
   
   def self.full_text_search?
