@@ -3,7 +3,7 @@
   <% end %>
 <% else %>
   <% if !@trip.nil? %>
-    <p><%= @trip.display %></p>
+    <p><%= link_to(t("myplaceonline.trips.trip"), url_for(@trip)) %>: <%= @trip.display %></p>
     <% if !@trip.location.map_url.blank? %>
       <p><%= t("myplaceonline.trips.location") %>: <%= link_to(@trip.location.display, @trip.location.map_url) %></p>
     <% else %>

@@ -1323,6 +1323,7 @@ en:
       salary_period: "Salary Period"
       salary_yearly: "Yearly Salary (Pre-Tax)"
     trips:
+      trip: "Trip"
       started: "Started"
       ended: "Ended"
       notes: "Notes"
