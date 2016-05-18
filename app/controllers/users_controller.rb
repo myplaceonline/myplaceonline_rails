@@ -2,6 +2,7 @@
 # the `devise` user stuff
 class UsersController < MyplaceonlineController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:allusers]
+  skip_before_action :before_all_actions, only: [:allusers]
   
   def show_index_footer
     false
@@ -14,7 +15,7 @@ class UsersController < MyplaceonlineController
   def allusers
     @objs = []
     if !params[:value].blank?
-      @objs = User.where('lower(email) = ?', params[:value].strip.downcase)
+      @objs = User.where("lower(email) = ?", params[:value].strip.downcase)
     end
   end
 

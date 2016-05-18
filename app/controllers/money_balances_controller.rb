@@ -38,16 +38,56 @@ class MoneyBalancesController < MyplaceonlineController
     if !@checkbox_percent50.blank?
       @checkbox_percent100 = ""
     end
+    @credit_card = params[:credit_card]
+    
+    # Create a list of credit cards with cashback percentages. Only bother to do
+    # this if the current user is paying - we don't have the credit card
+    # cashback information for the other user.
+    # The sort order is: Default Cashback, Visit Count, Cashback Percentage
+    @all_cashbacks = []
+    if (@owner_paid && @obj.current_user_owns?) || (!@owner_paid && !@obj.current_user_owns?)
+      @all_cashbacks = User.current_user.primary_identity.credit_cards.map{|credit_card|
+        credit_card.credit_card_cashbacks.map{|cc_cashback| cc_cashback.cashback}
+      }.flatten.compact.reject{|cashback| cashback.expired?}.sort{|cashback1, cashback2|
+        if cashback1.default_cashback && cashback2.default_cashback
+          visit_count1 = cashback1.credit_card_cashback.credit_card.visit_count
+          if visit_count1.nil?
+            visit_count1 = 0
+          end
+          visit_count2 = cashback2.credit_card_cashback.credit_card.visit_count
+          if visit_count2.nil?
+            visit_count2 = 0
+          end
+          if visit_count1 == visit_count2
+            cashback2.cashback_percentage <=> cashback1.cashback_percentage
+          else
+            visit_count2 <=> visit_count1
+          end
+        elsif cashback1.default_cashback
+          -1
+        elsif cashback2.default_cashback
+          1
+        else
+          cashback2.cashback_percentage <=> cashback1.cashback_percentage
+        end
+      }.map do |cashback|
+        [
+          cashback.credit_card_cashback.credit_card.display(false) + " - " + cashback.cashback_percentage.to_s + "%" + (cashback.applies_to.blank? ? "" :  " (" + cashback.applies_to + ")"),
+          cashback.cashback_percentage.to_s
+        ]
+      end
+    end
+    
     if request.patch?
       Rails.logger.debug{"Adding money balance item"}
       if do_update(check_double_post: true)
         Rails.logger.debug{"do_update returned true"}
         if !@new_item.nil?
-          Rails.logger.debug{"new_item: #{@new_item}"}
+          Rails.logger.debug{"new_item: #{@new_item}, obj #{@obj.inspect}"}
           if @new_item.current_user_owns?
             to = @obj.contact
           else
-            to = @obj.identity.ensure_contact!
+            to = @obj.identity
           end
           body = @obj.independent_description
           if !@new_item.money_balance_item_name.blank?
@@ -61,7 +101,7 @@ class MoneyBalancesController < MyplaceonlineController
   end
   
   def redirect_to_obj
-    if @new_item.nil?
+    if !@new_item.nil?
       redirect_to obj_path,
         :flash => { :notice =>
                     @new_item.independent_description(false)

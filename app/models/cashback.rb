@@ -3,6 +3,16 @@ class Cashback < ActiveRecord::Base
 
   validates :cashback_percentage, presence: true
 
+  has_one :credit_card_cashback
+  
+  def expired?
+    if !end_date.nil? && end_date <= Date.today
+      true
+    else
+      false
+    end
+  end
+
   def self.params
     [
       :id,

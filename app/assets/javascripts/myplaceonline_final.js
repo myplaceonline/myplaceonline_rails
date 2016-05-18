@@ -864,17 +864,22 @@ var myplaceonline = function(mymodule) {
     }
   }
   
-  function onChangeCascade(myobj, transformValueFunc, parentSelector, childSelector, intermediateSelector, intermediateTransform) {
+  function onChangeCascade(myobj, transformValueFunc, parentSelector, childSelector, intermediateSelector, intermediateTransform, finalTransform) {
     var currentValue = $(myobj).val();
     if (transformValueFunc) {
       currentValue = transformValueFunc(currentValue);
     }
     var parent = $(myobj).parents(parentSelector).first();
     var searchResult = parent.find(childSelector).first();
+    var intermediate = null;
     
     if (intermediateSelector) {
-      var intermediate = parent.find(intermediateSelector).first().val();
+      intermediate = parent.find(intermediateSelector).first().val();
       currentValue = intermediateTransform(currentValue, intermediate);
+    }
+    
+    if (finalTransform) {
+      currentValue = finalTransform(currentValue, intermediate);
     }
     
     searchResult.val(currentValue.toFixed(2));

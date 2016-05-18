@@ -412,4 +412,8 @@ class Identity < ActiveRecord::Base
       context_info: Identity::CALENDAR_ITEM_CONTEXT_BIRTHDAY
     )
   end
+
+  def send_email(subject, body, cc = nil, bcc = nil)
+    Myp.send_email(user.email, subject, body, cc, bcc)
+  end
 end

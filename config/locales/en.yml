@@ -2045,6 +2045,7 @@ en:
       paid_notime: "%{x} paid %{amount} for %{y}"
       original_amount_description: "Total: %{original_amount}"
       templates: "Templates"
+      credit_card: "Credit Card"
     money_balance_items:
       money_balance_item_name: "Description"
       amount: "Amount (Negative Owed to Contact)"
