@@ -2294,3 +2294,6 @@ en:
       favor_order_other: "your favor"
       unspecified_end_date: "Unspecified"
       no_conditions: "No extra conditions"
+    administration:
+      title: "Administration"
+      users: "User List"

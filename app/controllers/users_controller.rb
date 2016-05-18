@@ -28,7 +28,7 @@ class UsersController < MyplaceonlineController
   end
 
   protected
-    def all
+    def all(strict: false)
       authorize! :manage, User
       User.all
     end

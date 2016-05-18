@@ -493,6 +493,9 @@ Rails.application.routes.draw do
   get 'info/terms'
   get 'info', :to => 'info#index'
   
+  get 'administration/index'
+  get 'administration', :to => 'administration#index'
+
   get 'offline/index'
   get 'offline', :to => 'offline#index'
   
