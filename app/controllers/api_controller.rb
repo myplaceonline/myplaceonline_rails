@@ -126,6 +126,26 @@ class ApiController < ApplicationController
     end
   end
   
+  def sleep_time
+    if !current_user.nil? && current_user.admin?
+      duration = params[:duration]
+      if duration.blank?
+        duration = 1
+      else
+        duration = duration.to_f
+      end
+      sleep(duration)
+      render json: {
+        :result => true,
+        :message => "Slept for #{duration} s"
+      }
+    else
+      render json: {
+        :result => false
+      }
+    end
+  end
+  
   protected
     def json_error(error)
       render json: {

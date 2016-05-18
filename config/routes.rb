@@ -455,6 +455,7 @@ Rails.application.routes.draw do
   get 'api/search'
   get 'api/randomString'
   get 'api/subregions'
+  get 'api/sleep_time'
   post 'api/debug'
   post 'api/renderpartial'
   post 'api/quickfeedback'
