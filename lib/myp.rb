@@ -1525,7 +1525,11 @@ module Myp
     if search.nil?
       search = ""
     end
+    
     search = search.strip.downcase
+    
+    Rails.logger.debug{"full_text_search: '#{search}'"}
+    
     if !search.blank?
       if Myp::FULL_TEXT_SEARCH_TYPE == 0
         search_results = UserIndex.query(
@@ -1567,7 +1571,7 @@ module Myp
         x2 <=> x1
       end
       
-      search_results.map{|search_result|
+      results = search_results.map{|search_result|
         if search_result.class == Identity
           search_result = search_result.contact
         end
@@ -1585,8 +1589,12 @@ module Myp
         end
       }.compact
     else
-      []
+      reuslts = []
     end
+    
+    Rails.logger.debug{"full_text_search results: #{results.length}"}
+
+    results
   end
   
   def self.full_text_search?

@@ -203,22 +203,26 @@ var myplaceonline = function(mymodule) {
     });
   }
   
-  function remoteDataLoad(remote, value, list) {
+  function remoteDataLoad(remote, value, list, filterCount) {
     var requestData = {
       q: value
     };
     $.ajax({
       url: remote.url,
       dataType: "json",
-      context: {list: list, remote: remote},
+      context: {list: list, remote: remote, filterCount: filterCount},
       data: requestData
     }).done(function(data, textStatus, jqXHR) {
-      jqmReplaceListSection(this.list, this.remote.title, data);
-      if (this.list.data("afterload")) {
-        this.list.data("afterload")(this.list);
+      if (this.filterCount == this.list.data("filterCount")) {
+        jqmReplaceListSection(this.list, this.remote.title, data);
+        if (this.list.data("afterload")) {
+          this.list.data("afterload")(this.list);
+        }
       }
     }).fail(function(jqXHR, textStatus, errorThrown) {
-      jqmReplaceListSection(this.list, this.remote.title, [{title: "Error. Please try again.", filtertext: value}]);
+      if (this.filterCount == this.list.data("filterCount")) {
+        jqmReplaceListSection(this.list, this.remote.title, [{title: "Error. Please try again.", filtertext: value}]);
+      }
     });
   }
   
@@ -242,12 +246,18 @@ var myplaceonline = function(mymodule) {
         $ul.data("originalItems", $ul.html());
       }
       
+      var filterCount = $ul.data("filterCount");
+      if (!filterCount) {
+        filterCount = 0;
+      }
+      filterCount++;
+      $ul.data("filterCount", filterCount);
+      
       var $input = $(data.input);
       var value = $input.val();
       if (!value) {
         value = "";
       }
-      value = value.trim();
       
       var previousSearch = $ul.data("previousSearch");
       
@@ -262,6 +272,8 @@ var myplaceonline = function(mymodule) {
         return;
       }
       
+      value = value.trim();
+
       if (value.length > 0) {
         
         var i;
@@ -284,7 +296,7 @@ var myplaceonline = function(mymodule) {
           // Do the actual searches
           for (i = 0; i < remotesList.length; i++) {
             var remote = remotesList[i];
-            remoteDataLoad(remote, value, $ul);
+            remoteDataLoad(remote, value, $ul, filterCount);
           }
 
           $ul.data("hasInitialized", true);
@@ -297,7 +309,7 @@ var myplaceonline = function(mymodule) {
             if (!remote.static_list) {
               myplaceonline.consoleLog("remoteDataList Re-searching " + remote.title);
               jqmReplaceListSection($ul, remote.title, [{title: "Searching...", filtertext: value}]);
-              remoteDataLoad(remote, value, $ul);
+              remoteDataLoad(remote, value, $ul, filterCount);
             }
           }
         }
