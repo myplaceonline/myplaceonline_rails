@@ -456,6 +456,7 @@ Rails.application.routes.draw do
   get 'api/randomString'
   get 'api/subregions'
   get 'api/sleep_time'
+  get 'api/hello_world'
   post 'api/debug'
   post 'api/renderpartial'
   post 'api/quickfeedback'
@@ -484,6 +485,7 @@ Rails.application.routes.draw do
   match 'info/contact', via: [:get, :post]
   get 'info/credits'
   get 'info/diagnostics'
+  get 'info/sleep_time'
   get 'info/faq'
   get 'info/tips'
   get 'info/about'

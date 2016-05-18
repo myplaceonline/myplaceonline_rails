@@ -146,6 +146,12 @@ class ApiController < ApplicationController
     end
   end
   
+  def hello_world
+    render json: {
+      message: "Hello World"
+    }
+  end
+  
   protected
     def json_error(error)
       render json: {

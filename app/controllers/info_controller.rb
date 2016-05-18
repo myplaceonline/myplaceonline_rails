@@ -8,6 +8,19 @@ class InfoController < ApplicationController
   def faq; end
   def serverinfo; end
 
+  def sleep_time
+    if !current_user.nil? && current_user.admin?
+      duration = params[:duration]
+      if duration.blank?
+        duration = 1
+      else
+        duration = duration.to_f
+      end
+      sleep(duration)
+    end
+    redirect_to info_diagnostics_path
+  end
+
   def contact
     @obj = SiteContact.new
     if request.post?
