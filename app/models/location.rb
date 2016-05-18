@@ -44,7 +44,7 @@ class Location < ActiveRecord::Base
   accepts_nested_attributes_for :location_pictures, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :location_pictures, [{:name => :identity_file}]
 
-  def display
+  def display(use_full_region_name: false)
     result = Myp.appendstr(nil, name, ", ")
     result = Myp.appendstr(result, address1, ", ")
     result = Myp.appendstr(result, sub_region2, ", ")
@@ -61,7 +61,7 @@ class Location < ActiveRecord::Base
         result = Myp.appendstr(result, address3, ", ")
       end
       if result.blank? || region != "US"
-        result = Myp.appendstr(result, region, ", ")
+        result = Myp.appendstr(result, use_full_region_name ? region_name : region, ", ")
       end
     end
     result

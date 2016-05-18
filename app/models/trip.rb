@@ -214,7 +214,7 @@ class Trip < ActiveRecord::Base
           I18n.t("myplaceonline.trips.emergency_contact_email",
             {
               contact: identity.display_short,
-              location: location.display,
+              location: location.display(use_full_region_name: true),
               start_date: Myp.display_date_short_year(started, User.current_user),
               end_date: ended.nil? ? I18n.t("myplaceonline.general.unknown") : Myp.display_date_short_year(ended, User.current_user),
               map: location.map_url
