@@ -64,7 +64,7 @@ class Event < ActiveRecord::Base
       DEFAULT_EVENT_THRESHOLD_SECONDS,
       Calendar::DEFAULT_REMINDER_TYPE,
       destroy: false,
-      expire_amount: 2.days.seconds.to_i,
+      expire_amount: 1.days.seconds.to_i,
       expire_type: Calendar::DEFAULT_REMINDER_TYPE
     )
   end
