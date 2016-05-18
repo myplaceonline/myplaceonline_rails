@@ -23,7 +23,7 @@ class Exercise < ActiveRecord::Base
 
   def self.calendar_item_display(calendar_item)
     I18n.t(
-      "myplaceonline.exercises.next_exercise",
+      "myplaceonline.exercises.last_exercise",
       delta: Myp.time_delta(calendar_item.calendar_item_time)
     )
   end

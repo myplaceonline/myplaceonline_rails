@@ -1162,7 +1162,7 @@ en:
       notes: "Notes"
       situps: "Situps"
       pushups: "Pushups"
-      next_exercise: "Next Exercise %{delta}"
+      last_exercise: "Last Exercise %{delta}"
       cardio_time: "Cardio Time (Minutes)"
     sun_exposures:
       exposure_start: "Start Date/Time"
