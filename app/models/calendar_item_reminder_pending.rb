@@ -6,12 +6,14 @@ class CalendarItemReminderPending < ActiveRecord::Base
   belongs_to :calendar
 
   def self.pending_items(user, calendar)
-    CalendarItemReminderPending
+    items = CalendarItemReminderPending
       .includes(:calendar, :calendar_item)
       .where(
         identity: user.primary_identity,
         calendar: calendar
       )
-      .order("created_at DESC")
+      .order("created_at DESC").to_a
+    items.sort!{|x, y| x.calendar_item.calendar_item_time <=> y.calendar_item.calendar_item_time }
+    items
   end
 end
