@@ -1197,9 +1197,7 @@ module Myp
       if !User.current_user.nil?
         from = User.current_user.email
       end
-      if !Rails.env.development?
-        UserMailer.send_support_email(from, subject, body).deliver_now
-      end
+      UserMailer.send_support_email(from, subject, body).deliver_now
     rescue Exception => e
       puts "Could not send email. Subject: " + subject + ", Body: " + body + ", Email Problem: " + Myp.error_details(e)
     end
