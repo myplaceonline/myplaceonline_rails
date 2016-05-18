@@ -79,34 +79,3 @@ class Event < ActiveRecord::Base
     )
   end
 end
-
-  def self.create_calendar_reminders(
-    obj,
-    reminder_threshold_amount,
-    reminder_threshold_type,
-    destroy: true,
-    repeat_obj: obj.repeat,
-    max_pending: 1
-  )
-    if !repeat_obj.nil?
-      ActiveRecord::Base.transaction do
-        User.current_user.primary_identity.calendars.each do |calendar|
-          if destroy
-            obj.on_after_destroy
-          end
-          CalendarItem.create_calendar_item(
-            User.current_user.primary_identity,
-            calendar,
-            obj.class,
-            repeat_obj.next_instance,
-            reminder_threshold_amount,
-            reminder_threshold_type,
-            model_id: obj.id,
-            repeat_amount: repeat_obj.period,
-            repeat_type: Myp.period_type_to_repeat_type(repeat_obj.period_type),
-            max_pending: max_pending
-          )
-        end
-      end
-    end
-  end
