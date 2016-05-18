@@ -141,16 +141,16 @@ class CalendarItemReminder < ActiveRecord::Base
     
     Rails.logger.debug{"checking calendar item reminder pendings"}
     
+    now = Time.now
+    
     CalendarItemReminder
       .includes(:calendar_item_reminder_pendings, :calendar_item)
       .where(identity: user.primary_identity)
       .each do |calendar_item_reminder|
 
-        Rails.logger.debug{"checking reminder=#{calendar_item_reminder.inspect}"}
+        Rails.logger.debug{"checking reminder=#{calendar_item_reminder.inspect}. Item: #{calendar_item_reminder.calendar_item.display}"}
         
-        # Only check reminders that don't already have items pending
         if calendar_item_reminder.calendar_item_reminder_pendings.count == 0
-          now = Time.now
           if !calendar_item_reminder.calendar_item.calendar_item_time.nil?
 
             Rails.logger.debug{"calendar_item_time = #{calendar_item_reminder.calendar_item.calendar_item_time}"}
@@ -194,14 +194,17 @@ class CalendarItemReminder < ActiveRecord::Base
               Rails.logger.debug{"created new pending item #{new_pending.inspect}"}
             end
           end
+        end
+        
+        is_expired = calendar_item_reminder.is_expired(now)
+
+        Rails.logger.debug{"is_expired = #{is_expired}"}
+
+        if is_expired
+          Rails.logger.debug{"reminder expired, deleting #{calendar_item_reminder.calendar_item_reminder_pendings.count} pendings"}
           
-          if calendar_item_reminder.is_expired(now)
-            
-            Rails.logger.debug{"reminder expired, deleting all pendings"}
-            
-            calendar_item_reminder.calendar_item_reminder_pendings.each do |calendar_item_reminder_pending|
-              calendar_item_reminder_pending.destroy!
-            end
+          calendar_item_reminder.calendar_item_reminder_pendings.each do |calendar_item_reminder_pending|
+            calendar_item_reminder_pending.destroy!
           end
         end
     end
@@ -230,7 +233,7 @@ class CalendarItemReminder < ActiveRecord::Base
   def is_expired(dt)
     result = false
     if !expire_amount.nil?
-      if calendar_item.calendar_item_time + expires_in_seconds.seconds < dt
+      if !calendar_item.calendar_item_time.nil? && calendar_item.calendar_item_time + expires_in_seconds.seconds < dt
         result = true
       end
     end
