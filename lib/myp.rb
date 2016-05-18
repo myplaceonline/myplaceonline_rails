@@ -1572,24 +1572,29 @@ module Myp
       end
       
       results = search_results.map{|search_result|
+        result = nil
         if search_result.class == Identity
           search_result = search_result.contact
         end
-        category = Myp.instance_to_category(search_result, false)
-        if !category.nil?
-          ListItemRow.new(
-            category.human_title_singular + ": " + search_result.display,
-            "/" + category.name + "/" + search_result.id.to_s,
-            nil,
-            nil,
-            nil,
-            search,
-            category.icon
-          )
+        has_defunct = search_result.respond_to?("defunct")
+        if !has_defunct || (has_defunct && !search_result.defunct)
+          category = Myp.instance_to_category(search_result, false)
+          if !category.nil?
+            result = ListItemRow.new(
+              category.human_title_singular + ": " + search_result.display,
+              "/" + category.name + "/" + search_result.id.to_s,
+              nil,
+              nil,
+              nil,
+              search,
+              category.icon
+            )
+          end
         end
+        result
       }.compact
     else
-      reuslts = []
+      results = []
     end
     
     Rails.logger.debug{"full_text_search results: #{results.length}"}
