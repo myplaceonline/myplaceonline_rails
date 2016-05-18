@@ -201,7 +201,7 @@ class Trip < ActiveRecord::Base
   end
   
   def on_after_update
-    #send_to_emergency_contacts(false)
+    send_to_emergency_contacts(false)
   end
   
   def send_to_emergency_contacts(is_new)
@@ -217,7 +217,8 @@ class Trip < ActiveRecord::Base
               location: location.display(use_full_region_name: true),
               start_date: Myp.display_date_short_year(started, User.current_user),
               end_date: ended.nil? ? I18n.t("myplaceonline.general.unknown") : Myp.display_date_short_year(ended, User.current_user),
-              map: location.map_url
+              map: location.map_url,
+              verb: is_new ? I18n.t("myplaceonline.trips.emergency_contact_email_new") : I18n.t("myplaceonline.trips.emergency_contact_email_updated")
             }
           )
         )

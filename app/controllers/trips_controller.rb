@@ -59,4 +59,8 @@ class TripsController < MyplaceonlineController
         ]
       )
     end
+
+    def edit_prerespond
+      @obj.notify_emergency_contacts = false
+    end
 end

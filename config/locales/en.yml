@@ -1344,7 +1344,9 @@ en:
       share: "Share"
       share_description: "Select the pictures to share:"
       notify_emergency_contacts: "Notify Emergency Contacts"
-      emergency_contact_email: "%{contact} planned a trip to %{location} starting on %{start_date} until %{end_date}.\n\nMap: %{map}"
+      emergency_contact_email_new: "planned"
+      emergency_contact_email_updated: "updated"
+      emergency_contact_email: "%{contact} %{verb} a trip to %{location} starting on %{start_date} until %{end_date}.\n\nMap: %{map}"
     passports:
       region: "Country"
       passport_number: "Passport Number"
