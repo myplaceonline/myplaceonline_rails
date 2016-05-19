@@ -61,7 +61,7 @@
       <%= t("myplaceonline.info.help") %>
     <% end %>
   </li>
-  <% if current_user.admin? %>
+  <% if !current_user.nil? && current_user.admin? %>
     <li>
       <%= link_to(administration_path) do %>
         <%= image_tag("famfamfam/wrench.png", size: "16x16", class: "ui-li-icon") %>

@@ -10,7 +10,7 @@
       <%= t("myplaceonline.info.serverinfo") %>
     <% end %>
   </li>
-  <% if current_user.admin? %>
+  <% if !current_user.nil? && current_user.admin? %>
     <li><%= link_to("Long Request (5s)", info_sleep_time_path(duration: 5)) %></li>
     <li><%= link_to("Long Request (15s)", info_sleep_time_path(duration: 15)) %></li>
     <li><%= link_to("Long Request (30s)", info_sleep_time_path(duration: 30)) %></li>
