@@ -2288,6 +2288,8 @@ en:
       contacts: "Contacts"
       add_contact: "Add Contact"
       delete_contact: "Delete Contact"
+      bet_created_subject: "New Bet Created"
+      bet_updated_subject: "Bet Updated"
       bet_created: "%{owner} created a new bet with you for %{amount} on the topic of %{bet_name}. The odds ratio is %{odds_ratio} to 1 in %{favor_order}. The bet ends on %{end_date}. The conditions are:\n\n%{conditions}"
       bet_updated: "%{owner} updated an existing bet with you to %{amount} on the topic of %{bet_name}. The odds ratio is %{odds_ratio} to 1 in %{favor_order}. The bet ends on %{end_date}. The conditions are:\n\n%{conditions}"
       favor_order_owner: "%{owner}'s favor"
@@ -2297,3 +2299,10 @@ en:
     administration:
       title: "Administration"
       users: "User List"
+      send_email:
+        title: "Send Email to All Users"
+        subject: "Subject"
+        sent: "Email will be sent to all users in about 5 minutes"
+        body: "Body"
+        category: "Category"
+        default_category: "Announcement"

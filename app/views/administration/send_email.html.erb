@@ -1,0 +1,34 @@
+<% content_for :heading do -%><%= t("myplaceonline.administration.send_email.title") %><% end -%>
+<h1><%= t("myplaceonline.administration.send_email.title") %></h1>
+
+<%= flashes! %>
+<% if @email.errors.any? %>
+  <div class="errors">
+    <ul>
+    <% @email.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for @email, :url => administration_send_email_path do |f| %>
+  <%= myp_text_field(f, :email_category, "myplaceonline.administration.send_email.category", @email.email_category) %>
+  <%= myp_text_field(f, :subject, "myplaceonline.administration.send_email.subject", @email.subject, true) %>
+  <%= myp_text_area_markdown(f, :body, "myplaceonline.administration.send_email.body", @email.body) %>
+  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="navbar">
+      <ul>
+        <li>
+          <%= f.submit(t("myplaceonline.administration.send_email.title"), "data-icon" => "action", "data-iconpos" => "top") %>
+        </li>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+</script>

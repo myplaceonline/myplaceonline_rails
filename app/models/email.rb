@@ -22,7 +22,7 @@ class Email < ActiveRecord::Base
   end
 
   validate do
-    if email_contacts.length == 0 && email_groups.length == 0
+    if !draft && email_contacts.length == 0 && email_groups.length == 0
       errors.add(:email_contacts, I18n.t("myplaceonline.permissions.requires_contacts"))
     end
   end
@@ -56,20 +56,29 @@ class Email < ActiveRecord::Base
     
     targets = all_targets
 
-    targets.delete_if{
-      |target_email, target_contact|
-
-      !EmailUnsubscription.where(
+    targets.each do |target, contact|
+      process_single_target(target, contact, content, content_plain, target_obj, permission_share)
+    end
+  end
+  
+  def process_single_target(target, contact = nil, content = nil, content_plain = nil, target_obj = nil, permission_share = nil)
+    Rails.logger.debug{"Email process_single_target target: #{target}"}
+    if EmailUnsubscription.where(
         "email = ? and (category is null or category = ?) and (identity_id is null or identity_id = ?)",
-        target_email,
+        target,
         email_category,
         identity.id
       ).first.nil?
-    }
+      
+      if content.nil?
+        content = Myp.markdown_to_html(body)
+      end
+      if content_plain.nil?
+        content_plain = body
+      end
+
+      user_display = identity.display
     
-    user_display = identity.display
-    
-    targets.each do |target, contact|
       to_hash = {}
       cc_hash = {}
       bcc_hash = {}
@@ -146,10 +155,12 @@ class Email < ActiveRecord::Base
         final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category)}: #{unsubscribe_category_link}\n"
         final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display)}: #{unsubscribe_all_link}"
         
-        final_content = final_content.gsub("%{name}", contact.contact_identity.display_short)
-        final_content_plain = final_content_plain.gsub("%{name}", contact.contact_identity.display_short)
+        if !contact.nil?
+          final_content = final_content.gsub("%{name}", contact.contact_identity.display_short)
+          final_content_plain = final_content_plain.gsub("%{name}", contact.contact_identity.display_short)
+        end
         
-        Rails.logger.info{"Sending email"}
+        Rails.logger.info{"Sending email to #{target}"}
 
         Myp.send_email(
           to_hash.keys,
@@ -161,21 +172,23 @@ class Email < ActiveRecord::Base
           identity.user.email
         )
         
-        async = User.current_user.nil?
-        begin
-          if async
-            User.current_user = self.identity.user
-          end
-          # If we sent an email, add a conversation
-          Conversation.new(
-            contact: contact,
-            identity: identity,
-            conversation: "[#{subject}](/emails/#{id})",
-            conversation_date: User.current_user.date_now
-          ).save!
-        ensure
-          if async
-            User.current_user = nil
+        if !contact.nil?
+          async = User.current_user.nil?
+          begin
+            if async
+              User.current_user = self.identity.user
+            end
+            # If we sent an email, add a conversation
+            Conversation.new(
+              contact: contact,
+              identity: identity,
+              conversation: "[#{subject}](/emails/#{id})",
+              conversation_date: User.current_user.date_now
+            ).save!
+          ensure
+            if async
+              User.current_user = nil
+            end
           end
         end
         
@@ -262,6 +275,11 @@ class Email < ActiveRecord::Base
   end
   
   def self.send_emails_to_contacts_and_groups(category, subject, body_markdown, contacts, groups)
+    e = create_email_to_contacts_and_groups(category, subject, body_markdown, contacts, groups)
+    e.process
+  end
+  
+  def self.create_email_to_contacts_and_groups(category, subject, body_markdown, contacts, groups)
     if (!contacts.nil? && contacts.length > 0) || (!groups.nil? && groups.length > 0)
       e = Email.new
       e.email_category = category
@@ -281,7 +299,9 @@ class Email < ActiveRecord::Base
       e.subject = subject
       e.body = body_markdown
       e.save!
-      e.process
+      e
+    else
+      nil
     end
   end
   

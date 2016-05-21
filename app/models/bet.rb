@@ -31,7 +31,7 @@ class Bet < ActiveRecord::Base
   
   def on_after_create_or_update(create)
     Email.send_emails_to_contacts_and_groups_by_properties(
-      "subject",
+      I18n.t("myplaceonline.bets.bet_" + (create ? "created" : "updated") + "_subject"),
       I18n.t(
         "myplaceonline.bets.bet_" + (create ? "created" : "updated"),
         owner: identity.display_short,
