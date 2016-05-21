@@ -215,14 +215,14 @@ var myplaceonline = function(mymodule) {
     }).done(function(data, textStatus, jqXHR) {
       if (this.filterCount == this.list.data("filterCount")) {
         jqmReplaceListSection(this.list, this.remote.title, data);
+        this.remote.failed = false;
         if (this.list.data("afterload")) {
           this.list.data("afterload")(this.list);
         }
       }
     }).fail(function(jqXHR, textStatus, errorThrown) {
-      if (this.filterCount == this.list.data("filterCount")) {
-        jqmReplaceListSection(this.list, this.remote.title, [{title: "Error. Please try again.", filtertext: value}]);
-      }
+      this.remote.failed = true;
+      myplaceonline.createErrorNotification("Error loading " + this.remote.title + ". Please try again.");
     });
   }
   
@@ -306,7 +306,7 @@ var myplaceonline = function(mymodule) {
           
           for (i = 0; i < remotesList.length; i++) {
             var remote = remotesList[i];
-            if (!remote.static_list) {
+            if (!remote.static_list || remote.failed) {
               myplaceonline.consoleLog("remoteDataList Re-searching " + remote.title);
               jqmReplaceListSection($ul, remote.title, [{title: "Searching...", filtertext: value}]);
               remoteDataLoad(remote, value, $ul, filterCount);
