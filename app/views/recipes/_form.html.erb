@@ -1,4 +1,5 @@
 <%= myp_text_field(f, :name, "myplaceonline.recipes.name", obj.name, autofocus) %>
+<%= myp_text_field(f, :recipe_category, "myplaceonline.recipes.recipe_category", obj.recipe_category, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
 <%= myp_text_area_markdown(f, :recipe, "myplaceonline.recipes.recipe", obj.recipe) %>
 <%=
   render partial: "myplaceonline/pictures_form", locals: {

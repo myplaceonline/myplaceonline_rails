@@ -16,6 +16,7 @@ class RecipesController < MyplaceonlineController
       params.require(:recipe).permit(
         :name,
         :recipe,
+        :recipe_category,
         recipe_pictures_attributes: FilesController.multi_param_names
       )
     end
