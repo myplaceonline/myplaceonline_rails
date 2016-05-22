@@ -18,3 +18,7 @@
     <li><%= link_to("Long Request (65s)", info_sleep_time_path(duration: 65)) %></li>
   <% end %>
 </ul>
+
+<ul>
+  <li><%= t("myplaceonline.info.diagnostic_details.identity") %>: <%= current_user.primary_identity.id %></li>
+</ul>

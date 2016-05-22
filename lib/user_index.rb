@@ -1,9 +1,29 @@
 class UserIndex < Chewy::Index
   settings analysis: {
+    filter: {
+      edge_ngram_filter: {
+        type: "edge_ngram",
+        min_gram: 2,
+        max_gram: 10
+      }
+    },
     analyzer: {
-      title: {
-        tokenizer: 'standard',
-        filter: ['lowercase', 'asciifolding']
+      default_index: {
+        type: "custom",
+        tokenizer: "standard",
+        filter: [
+          "lowercase",
+          "asciifolding",
+          "edge_ngram_filter"
+        ]
+      },
+      default_search: {
+        type: "custom",
+        tokenizer: "whitespace",
+        filter: [
+          "lowercase",
+          "asciifolding"
+        ]
       }
     }
   }

@@ -213,6 +213,7 @@ var myplaceonline = function(mymodule) {
       context: {list: list, remote: remote, filterCount: filterCount},
       data: requestData
     }).done(function(data, textStatus, jqXHR) {
+      myplaceonline.consoleLog("remoteDataLoad done " + this.remote.title + ", " + this.filterCount);
       if (this.filterCount == this.list.data("filterCount")) {
         jqmReplaceListSection(this.list, this.remote.title, data);
         this.remote.failed = false;
@@ -220,9 +221,11 @@ var myplaceonline = function(mymodule) {
           this.list.data("afterload")(this.list);
         }
       }
+      myplaceonline.consoleLog("remoteDataLoad finished done");
     }).fail(function(jqXHR, textStatus, errorThrown) {
       this.remote.failed = true;
       myplaceonline.createErrorNotification("Error loading " + this.remote.title + ". Please try again.");
+      myplaceonline.consoleLog("remoteDataLoad finished fail");
     });
   }
   
@@ -261,7 +264,7 @@ var myplaceonline = function(mymodule) {
       
       var previousSearch = $ul.data("previousSearch");
       
-      myplaceonline.consoleLog("remoteDataList search " + value + " (previous: " + previousSearch + ")");
+      myplaceonline.consoleLog("remoteDataList search " + value + " (previous: " + previousSearch + "), count " + filterCount);
       
       $ul.data("previousSearch", value);
       
@@ -296,9 +299,16 @@ var myplaceonline = function(mymodule) {
           // Do the actual searches
           for (i = 0; i < remotesList.length; i++) {
             var remote = remotesList[i];
+
+            myplaceonline.consoleLog("remoteDataLoad started " + remote.title);
+
             remoteDataLoad(remote, value, $ul, filterCount);
+
+            myplaceonline.consoleLog("remoteDataLoad returned for " + remote.title);
           }
 
+          myplaceonline.consoleLog("remoteDataList setting initialized");
+          
           $ul.data("hasInitialized", true);
         } else {
           
@@ -306,20 +316,31 @@ var myplaceonline = function(mymodule) {
           
           for (i = 0; i < remotesList.length; i++) {
             var remote = remotesList[i];
+            
             if (!remote.static_list || remote.failed) {
+
               myplaceonline.consoleLog("remoteDataList Re-searching " + remote.title);
+
               jqmReplaceListSection($ul, remote.title, [{title: "Searching...", filtertext: value}]);
+
               remoteDataLoad(remote, value, $ul, filterCount);
             }
+            
+            myplaceonline.consoleLog("remoteDataList Finished processing " + remote.title);
           }
+
+          myplaceonline.consoleLog("remoteDataList finished non static searches");
         }
       } else {
         myplaceonline.consoleLog("remoteDataList Resetting item");
+
         $ul.html($ul.data("originalItems"));
         
         if ($ul.data("afterload")) {
           $ul.data("afterload")($ul);
         }
+        
+        myplaceonline.consoleLog("remoteDataList Reset hasInitialized");
         
         $ul.data("hasInitialized", false);
       }

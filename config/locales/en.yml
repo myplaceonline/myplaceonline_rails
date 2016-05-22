@@ -401,6 +401,8 @@ en:
         1. Press `Enter` in any search/filter box to go to the first result.
         
         ]]>
+      diagnostic_details:
+        identity: "Identity identifier"
     help:
       title: "Help"
       features: "Features"

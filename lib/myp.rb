@@ -18,8 +18,6 @@ module Myp
   
   DEFAULT_DECIMAL_STEP = "0.01"
   
-  FULL_TEXT_SEARCH_TYPE = 1
-  
   WEIGHTS = [
     ["myplaceonline.general.pounds", 0]
   ]
@@ -1531,39 +1529,22 @@ module Myp
     Rails.logger.debug{"full_text_search: '#{search}'"}
     
     if !search.blank?
-      if Myp::FULL_TEXT_SEARCH_TYPE == 0
-        search_results = UserIndex.query(
-          filtered: {
-            query: {
-              match_phrase_prefix: {
-                _all: search
-              }
-            },
-            filter: {
-              match: {
-                identity_id: user.primary_identity_id
-              }
+      
+      # http://stackoverflow.com/questions/37082797/elastic-search-edge-ngram-match-query-on-all-being-ignored
+      search_results = UserIndex.query(
+        filtered: {
+          query: {
+            match: {
+              _all: search
+            }
+          },
+          filter: {
+            match: {
+              identity_id: user.primary_identity_id
             }
           }
-        ).limit(10).load.to_a
-      elsif Myp::FULL_TEXT_SEARCH_TYPE == 1
-        search_results = UserIndex.query(
-          filtered: {
-            query: {
-              wildcard: {
-                name: {
-                  value: "*" + search + "*"
-                }
-              }
-            },
-            filter: {
-              match: {
-                identity_id: user.primary_identity_id
-              }
-            }
-          }
-        ).limit(10).load.to_a
-      end
+        }
+      ).limit(10).load.to_a
       
       search_results.sort! do |sr1, sr2|
         x1 = sr1.respond_to?("visit_count") && !sr1.visit_count.nil? ? sr1.visit_count : 0
