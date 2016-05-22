@@ -214,7 +214,7 @@ var myplaceonline = function(mymodule) {
       data: requestData
     }).done(function(data, textStatus, jqXHR) {
       myplaceonline.consoleLog("remoteDataLoad done " + this.remote.title + ", " + this.filterCount);
-      if (this.filterCount == this.list.data("filterCount")) {
+      if (this.remote.static_list || this.filterCount == this.list.data("filterCount")) {
         jqmReplaceListSection(this.list, this.remote.title, data);
         this.remote.failed = false;
         if (this.list.data("afterload")) {
