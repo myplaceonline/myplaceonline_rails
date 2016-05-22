@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160522015118) do
+ActiveRecord::Schema.define(version: 20160522111946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,18 @@ ActiveRecord::Schema.define(version: 20160522015118) do
   end
 
   add_index "activities", ["identity_id"], name: "index_activities_on_identity_id", using: :btree
+
+  create_table "admin_emails", force: :cascade do |t|
+    t.integer  "email_id"
+    t.integer  "identity_id"
+    t.string   "send_only_to"
+    t.string   "exclude_emails"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "admin_emails", ["email_id"], name: "index_admin_emails_on_email_id", using: :btree
+  add_index "admin_emails", ["identity_id"], name: "index_admin_emails_on_identity_id", using: :btree
 
   create_table "alerts_displays", force: :cascade do |t|
     t.integer  "identity_id"
@@ -3169,6 +3181,8 @@ ActiveRecord::Schema.define(version: 20160522015118) do
 
   add_index "wisdoms", ["identity_id"], name: "index_wisdoms_on_identity_id", using: :btree
 
+  add_foreign_key "admin_emails", "emails"
+  add_foreign_key "admin_emails", "identities"
   add_foreign_key "alerts_displays", "identities"
   add_foreign_key "annuities", "identities"
   add_foreign_key "awesome_list_items", "awesome_lists"

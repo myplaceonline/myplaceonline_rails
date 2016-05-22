@@ -5,20 +5,24 @@ class AdministrationController < ApplicationController
   def index; end
 
   def send_email
-    @email = Email.new(email_category: I18n.t("myplaceonline.administration.send_email.default_category"))
+    @admin_email = AdminEmail.new(
+      email: Email.new(email_category: I18n.t("myplaceonline.administration.send_email.default_category"))
+    )
     
     if request.post?
-      @email = Email.new(
-        params.require(:email).permit(
-          EmailsController.param_names
+      @admin_email = AdminEmail.new(
+        params.require(:admin_email).permit(
+          :send_only_to,
+          :exclude_emails,
+          email_attributes: EmailsController.param_names
         )
       )
 
       # There are no contacts or groups, so it must be a draft
-      @email.draft = true
+      @admin_email.email.draft = true
 
-      if @email.save
-        AdminSendEmailJob.perform_later(@email)
+      if @admin_email.save
+        AdminSendEmailJob.perform_later(@admin_email)
         redirect_to administration_path,
           :flash => { :notice => I18n.t("myplaceonline.administration.send_email.sent") }
       end

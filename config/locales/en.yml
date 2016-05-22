@@ -2307,5 +2307,7 @@ en:
         sent: "Email will be sent to all users in about 5 minutes"
         body: "Body"
         category: "Category"
-        default_category: "Announcement"
+        default_category: "Myplaceonline Announcement"
+        only_send_to: "Only Send to These Email Addresses (Comma Separated)"
+        exclude_emails: "Exclude These Email Addresses (Comma Separated)"
       invite_codes: "Invite Codes"

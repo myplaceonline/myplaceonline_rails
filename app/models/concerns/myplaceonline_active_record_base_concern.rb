@@ -2,6 +2,7 @@ module MyplaceonlineActiveRecordBaseConcern
   extend ActiveSupport::Concern
   
   included do
+    
     def self.build(params = nil)
       self.dobuild(params)
     end
