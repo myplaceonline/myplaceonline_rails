@@ -39,6 +39,7 @@ var myplaceonline = function(mymodule) {
   var redirectAnchor = null;
   var clipboard_integration = 1;
   var initialPhonegapPage = false;
+  var pendingPageLoads = [];
   
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
   if (!String.prototype.trim) {
@@ -375,6 +376,9 @@ var myplaceonline = function(mymodule) {
     }
     
     $(document).bind("pagecontainershow.mypshow", function( e, ui ) {
+      
+      resetPendingPageLoads();
+      
       var activePage = getActivePage();
       
       /*
@@ -489,8 +493,23 @@ var myplaceonline = function(mymodule) {
   // http://api.jquerymobile.com/pagecontainer/#event-show
   function onPageLoad(func) {
     $(document).one("pagecontainershow", $.mobile.pageContainer, func);
+    pendingPageLoads.push(func);
+  }
+  
+  function resetPendingPageLoads() {
+    pendingPageLoads = [];
   }
 
+  function runPendingPageLoads() {
+    var i;
+    for (i = 0; i < pendingPageLoads.length; i++) {
+      var pendingPageLoad = pendingPageLoads[i];
+      $(document).off("pagecontainershow", $.mobile.pageContainer, pendingPageLoad);
+      pendingPageLoad();
+    }
+    resetPendingPageLoads();
+  }
+  
   function pageloaded(uniqueid, func, namespace) {
     consoleLog("pageloaded hooking " + uniqueid + ", " + namespace);
     if ( $.mobile ) {
@@ -879,6 +898,7 @@ var myplaceonline = function(mymodule) {
   mymodule.getMyplaceonlineSnapshot = getMyplaceonlineSnapshot;
   mymodule.getSessionPassword = getSessionPassword;
   mymodule.getJSON = getJSON;
+  mymodule.runPendingPageLoads = runPendingPageLoads;
 
   mymodule.isFocusAllowed = function() {
     return allowFocusPlaceholder;

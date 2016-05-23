@@ -45,8 +45,8 @@ var myplaceonline = function(mymodule) {
 
   $(document).on('ajax:complete', 'form', function(xhr, status) {
     myplaceonline.hideLoading();
-    myplaceonline.consoleLog("ajax:complete");
     var contentType = status.getResponseHeader("Content-Type");
+    myplaceonline.consoleLog("ajax:complete " + contentType);
     // We expect a "successful" submission will return text/javascript
     // which will do something like navigate to the success page
     // (see MyplaceonlineController.may_upload). If it's text/html,
@@ -55,10 +55,17 @@ var myplaceonline = function(mymodule) {
       myplaceonline.showLoading();
       var html = $(status.responseText);
       var content = html.find(".ui-content");
+      
+      //myplaceonline.consoleLog("ajax:complete content " + content.html());
+      
       $(".ui-content").replaceWith(content);
       myplaceonline.ensureStyledPage();
       myplaceonline.hideLoading();
       myplaceonline.scrollTop();
+      if (myplaceonline.runPendingPageLoads) {
+        // TODO remove once new app build is out
+        myplaceonline.runPendingPageLoads();
+      }
     }
   });
 
