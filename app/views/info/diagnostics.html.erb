@@ -1,4 +1,4 @@
-<% content_for :heading do -%><%= t('myplaceonline.info.diagnostics') %><% end -%>
+<% content_for :heading do -%><%= t("myplaceonline.info.diagnostics") %><% end -%>
 
 <ul data-role="listview" data-inset="true">
   <li><a href="#" onclick="myplaceonline.setDebug(true); myplaceonline.alertHTML(); return false;">Show HTML</a></li>
@@ -19,6 +19,8 @@
   <% end %>
 </ul>
 
-<ul>
-  <li><%= t("myplaceonline.info.diagnostic_details.identity") %>: <%= current_user.primary_identity.id %></li>
-</ul>
+<% if !current_user.nil? %>
+  <ul>
+    <li><%= t("myplaceonline.info.diagnostic_details.identity") %>: <%= current_user.primary_identity.id %></li>
+  </ul>
+<% end %>
