@@ -2194,6 +2194,7 @@ en:
       title: "Unsubscribe"
       past: "Unsubscribed"
       invalid_token: "Invalid Token"
+      reply_hint: "Reply to this email to chat with %{respond_to}."
       unsubscribed_all: "Successfully unsubscribed from all categories."
       unsubscribed_category: "Successfully unsubscribed from %{category} posts."
       link_unsubscribe_all: "Unsubscribe from all myplaceonline emails from %{user}"
@@ -2312,3 +2313,5 @@ en:
         only_send_to: "Only Send to These Email Addresses (Comma Separated)"
         exclude_emails: "Exclude These Email Addresses (Comma Separated)"
       invite_codes: "Invite Codes"
+    share:
+      link: "Link"

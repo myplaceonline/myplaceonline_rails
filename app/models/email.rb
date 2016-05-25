@@ -5,7 +5,7 @@ class Email < ActiveRecord::Base
   include Rails.application.routes.url_helpers
 
   validates :subject, presence: true
-  validates :body, presence: true
+  #validates :body, presence: true
   validates :email_category, presence: true
 
   has_many :email_contacts, :dependent => :destroy
@@ -44,14 +44,27 @@ class Email < ActiveRecord::Base
   end
   
   def send_email(body2_html = nil, body2_plain = nil, target_obj = nil, permission_share = nil)
-    
+
     content = Myp.markdown_to_html(body)
-    if !body2_html.nil?
-      content += "\n\n" + body2_html
+    if content.nil?
+      content = ""
     end
+    if !body2_html.nil?
+      if !content.blank?
+        content += "\n\n"
+      end
+      content += body2_html
+    end
+    
     content_plain = body
+    if content_plain.nil?
+      content_plain = ""
+    end
     if !body2_plain.nil?
-      content_plain += "\n\n" + body2_plain
+      if !content_plain.blank?
+        content_plain += "\n\n"
+      end
+      content_plain += body2_plain
     end
     
     targets = all_targets
@@ -133,6 +146,7 @@ class Email < ActiveRecord::Base
         final_content += "\n</p>\n\n"
 
         final_content += "<hr />\n"
+        final_content += "<p>#{I18n.t("myplaceonline.unsubscribe.reply_hint", respond_to: user_display)}</p>\n"
         final_content += "<p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category), unsubscribe_category_link)}</p>\n"
         final_content += "<p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display), unsubscribe_all_link)}</p>"
         
@@ -140,6 +154,13 @@ class Email < ActiveRecord::Base
 
         if !personalization.nil? && !personalization.additional_text.blank?
           final_content_plain += personalization.additional_text + "\n\n"
+        end
+        
+        if !target_obj.nil? && target_obj.respond_to?("add_email_plain")
+          more_plain = target_obj.add_email_plain(target, contact, permission_share)
+          if !more_plain.blank?
+            final_content_plain += more_plain + "\n\n"
+          end
         end
         
         final_content_plain += "--\n"
@@ -151,8 +172,9 @@ class Email < ActiveRecord::Base
           final_content_plain += identity.phone_numbers.join(" | ") + "\n"
         end
 
-        final_content_plain += "\n==\n"
-        final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category)}: #{unsubscribe_category_link}\n"
+        final_content_plain += "\n==\n\n"
+        final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.reply_hint", respond_to: user_display)}\n\n"
+        final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category)}: #{unsubscribe_category_link}\n\n"
         final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display)}: #{unsubscribe_all_link}"
         
         if !contact.nil?

@@ -16,7 +16,14 @@
 <% @pics.each do |pic| %>
   <p><%= image_content(pic.identity_file) %></p>
   <% if !pic.identity_file.notes.blank? %>
-    <p><%= markdown_content(pic.identity_file.notes) %></p>
+    <%= markdown_content(pic.identity_file.notes) %>
+  <% end %>
+  <hr />
+<% end %>
+<% @obj.trip_stories.each do |trip_story| %>
+  <h2><%= t("myplaceonline.trips.story") %>: <%= trip_story.story.story_name %></h2>
+  <% if !trip_story.story.story.blank? %>
+    <%= markdown_content(trip_story.story.story) %>
   <% end %>
   <hr />
 <% end %>

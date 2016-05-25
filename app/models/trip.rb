@@ -174,7 +174,7 @@ class Trip < ActiveRecord::Base
     result = ""
     trip_pictures.each do |trip_picture|
       if !permission_share.permission_share_children.index{|psc| psc.subject_id == trip_picture.identity_file.id}.nil?
-        result += "\n<hr />\n<p>#{ActionController::Base.helpers.link_to file_view_url(
+        result += "\n<hr />\n  <p>#{ActionController::Base.helpers.link_to file_view_url(
             trip_picture.identity_file, token: permission_share.share.token
           ) do
             ActionController::Base.helpers.image_tag(
@@ -185,13 +185,52 @@ class Trip < ActiveRecord::Base
           end
         }</p>"
         if !trip_picture.identity_file.notes.blank?
-          result += "\n<p>#{Myp.markdown_to_html(trip_picture.identity_file.notes)}</p>"
+          result += "\n#{Myp.markdown_to_html(trip_picture.identity_file.notes)}"
+        end
+      end
+    end
+    if trip_stories.count > 0
+      result += "\n<hr />\n<p>Stories:</p>\n<ul>\n"
+      trip_stories.each do |trip_story|
+        result += "  <li>#{trip_story.story.story_name}\n"
+        if !trip_story.story.story.blank?
+          result += "    #{Myp.markdown_to_html(trip_story.story.story)}\n"
+        end
+        result += "  </li>\n"
+      end
+      result += "</ul>\n"
+    end
+    result
+  end
+
+  def add_email_plain(target_email, target_contact, permission_share)
+    result = ""
+    if trip_pictures.count > 0
+      result += "Pictures:\n=========\n"
+      trip_pictures.each do |trip_picture|
+        if !permission_share.permission_share_children.index{|psc| psc.subject_id == trip_picture.identity_file.id}.nil?
+          result += "* " + file_thumbnail_url(
+            trip_picture.identity_file, token: permission_share.share.token
+          ) + "\n"
+          if !trip_picture.identity_file.notes.blank?
+            result += "   #{trip_picture.identity_file.notes}\n"
+          end
+        end
+      end
+      result += "\n"
+    end
+    if trip_stories.count > 0
+      result += "Stories:\n========\n"
+      trip_stories.each do |trip_story|
+        result += "* #{trip_story.story.story_name}\n"
+        if !trip_story.story.story.blank?
+          result += "   #{trip_story.story.story}\n"
         end
       end
     end
     result
   end
-
+  
   after_commit :on_after_create, on: [:create]
   after_commit :on_after_update, on: [:update]
   

@@ -58,7 +58,7 @@ class PermissionShare < ActiveRecord::Base
     tcat = I18n.t("myplaceonline.category.#{cat.name}").singularize
     email.send_email(
       "<p>#{tcat}: " + ActionController::Base.helpers.link_to(prefix, url) + "</p>",
-      tcat + ": " + prefix + "\n\n" + url,
+      "#{tcat}: #{prefix}\n\n#{I18n.t("myplaceonline.share.link")}: #{url}",
       target_obj,
       self
     )

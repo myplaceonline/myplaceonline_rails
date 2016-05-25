@@ -67,7 +67,10 @@ class PermissionsController < MyplaceonlineController
       authorize! :show, @check_obj
       check_obj_display = @check_obj.display
       @share.email.set_subject(Myp.object_type_human(@check_obj) + ": " + check_obj_display)
-      @share.email.set_body_if_blank(check_obj_display)
+      
+      # We don't set a body because the body will usually have a link
+      # with the object display anyway (see permission_share:send_email)
+      # @share.email.set_body_if_blank(check_obj_display)
     end
 
     if request.post?
