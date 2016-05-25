@@ -95,7 +95,7 @@ var myplaceonline = function(mymodule) {
     list.trigger("updatelayout");
   }
 
-  /* items: [{title: String, link: String, count: Integer, filtertext: String, icon: String}, ...] */
+  /* items: [{title: String, link: String, count: Integer, filtertext: String, icon: String, splitLink: String, splitLinkTitle: String}, ...] */
   function jqmSetList(list, items, header) {
     var html = "";
     if (header) {
@@ -126,6 +126,9 @@ var myplaceonline = function(mymodule) {
       html += x.title;
       if (x.link) {
         html += "</a>";
+      }
+      if (x.splitLink) {
+        html += "<a href='" + x.splitLink + "'>" + x.splitLinkTitle + "</a>";
       }
       html += "</li>";
     });

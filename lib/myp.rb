@@ -392,7 +392,9 @@ module Myp
         category.id,
         category.parent_id,
         category.filtertext,
-        category.icon
+        category.icon,
+        "/" + category.link + "/new",
+        I18n.t("myplaceonline.general.add")
       )
     }
   end
@@ -449,13 +451,15 @@ module Myp
         cpa.category_id,
         cpa.category_parent_id,
         Category.filtertext(cpa.category_name, cpa.category_additional_filtertext),
-        cpa.category_icon
+        cpa.category_icon,
+        "/" + cpa.category_link + "/new",
+        I18n.t("myplaceonline.general.add")
       )
     }
   end
 
   class ListItemRow
-    def initialize(title, link, count, id, parent_id, filtertext, icon)
+    def initialize(title, link, count, id, parent_id, filtertext, icon, splitLink = nil, splitLinkTitle = nil)
       @title = title
       @link = link
       @count = count
@@ -463,6 +467,8 @@ module Myp
       @parent_id = parent_id
       @filtertext = filtertext
       @icon = ActionController::Base.helpers.asset_path(icon, type: :image)
+      @splitLink = splitLink
+      @splitLinkTitle = splitLinkTitle
     end
     
     def title
@@ -491,6 +497,14 @@ module Myp
     
     def icon
       @icon
+    end
+    
+    def splitLink
+      @splitLink
+    end
+    
+    def splitLinkTitle
+      @splitLinkTitle
     end
   end
 
