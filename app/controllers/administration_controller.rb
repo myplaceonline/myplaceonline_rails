@@ -28,6 +28,13 @@ class AdministrationController < ApplicationController
       end
     end
   end
+  
+  def gc
+    GC.start
+    sleep(5.0)
+    redirect_to administration_path,
+          :flash => { :notice => I18n.t("myplaceonline.administration.gc_collected") }
+  end
 
   def check_admin
     Myp.ensure_encryption_key(session)

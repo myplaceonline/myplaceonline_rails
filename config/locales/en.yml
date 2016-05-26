@@ -2313,5 +2313,7 @@ en:
         only_send_to: "Only Send to These Email Addresses (Comma Separated)"
         exclude_emails: "Exclude These Email Addresses (Comma Separated)"
       invite_codes: "Invite Codes"
+      gc: "Collect Garbage"
+      gc_collected: "Garbage Collection Started"
     share:
       link: "Link"
