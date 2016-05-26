@@ -17,7 +17,6 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    SyslogLogger (2.0)
     actionmailer (4.2.6)
       actionpack (= 4.2.6)
       actionview (= 4.2.6)
@@ -256,7 +255,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  SyslogLogger
   calculus
   cancan
   carmen
