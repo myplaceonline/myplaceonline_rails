@@ -365,7 +365,7 @@ var myplaceonline = function(mymodule) {
     $.mobile.hoverDelay = 100;
     $.mobile.defaultPageTransition = "slide";
     $.ajaxSetup({
-      timeout: 15000
+      timeout: 60000
     });
     
     if (navigator) {
