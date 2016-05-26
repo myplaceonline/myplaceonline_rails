@@ -393,8 +393,8 @@ module Myp
         category.parent_id,
         category.filtertext,
         category.icon,
-        "/" + category.link + "/new",
-        I18n.t("myplaceonline.general.add")
+        category.simple ? nil : "/" + category.link + "/new",
+        category.simple ? nil : I18n.t("myplaceonline.general.add")
       )
     }
   end
@@ -422,7 +422,7 @@ module Myp
     
     CategoryPointsAmount.find_by_sql(%{
       (
-        SELECT category_points_amounts.*, categories.name as category_name, categories.icon as category_icon, categories.additional_filtertext as category_additional_filtertext, categories.link as category_link, categories.parent_id as category_parent_id, 0 as select_type
+        SELECT category_points_amounts.*, categories.name as category_name, categories.icon as category_icon, categories.additional_filtertext as category_additional_filtertext, categories.link as category_link, categories.parent_id as category_parent_id, 0 as select_type, categories.simple as category_simple
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
         WHERE category_points_amounts.last_visit IS NOT NULL AND #{ explicit_check } categories.parent_id IS NOT NULL AND category_points_amounts.identity_id = #{
@@ -433,7 +433,7 @@ module Myp
       )
       UNION ALL
       (
-        SELECT category_points_amounts.*, categories.name as category_name, categories.icon as category_icon, categories.additional_filtertext as category_additional_filtertext, categories.link as category_link, categories.parent_id as category_parent_id, 1 as select_type
+        SELECT category_points_amounts.*, categories.name as category_name, categories.icon as category_icon, categories.additional_filtertext as category_additional_filtertext, categories.link as category_link, categories.parent_id as category_parent_id, 1 as select_type, categories.simple as category_simple
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
         WHERE category_points_amounts.visits IS NOT NULL AND #{ explicit_check } categories.parent_id IS NOT NULL AND category_points_amounts.identity_id = #{
@@ -452,8 +452,8 @@ module Myp
         cpa.category_parent_id,
         Category.filtertext(cpa.category_name, cpa.category_additional_filtertext),
         cpa.category_icon,
-        "/" + cpa.category_link + "/new",
-        I18n.t("myplaceonline.general.add")
+        cpa.category_simple ? nil : "/" + cpa.category_link + "/new",
+        cpa.category_simple ? nil : I18n.t("myplaceonline.general.add")
       )
     }
   end
