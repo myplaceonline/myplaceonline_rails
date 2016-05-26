@@ -26,6 +26,9 @@
             <span class="ui-li-count"><%= item.count %></span>
           <% end %>
         <% end %>
+        <% if !item.splitLink.blank? %>
+          <%= link_to(item.splitLinkTitle, item.splitLink) %>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>
