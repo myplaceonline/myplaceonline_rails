@@ -1882,6 +1882,7 @@ en:
       picture: "Picture"
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
+      remaining_pictures: "Remaining Pictures (%{count})"
     trash:
       type_general: "General Trash"
       type_recycling: "Recycling"

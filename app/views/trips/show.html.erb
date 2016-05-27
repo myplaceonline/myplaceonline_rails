@@ -9,7 +9,9 @@
   <%=
     render partial: 'myplaceonline/pictures', locals: {
       pics: @obj.trip_pictures,
-      placeholder: "myplaceonline.trips.picture"
+      placeholder: "myplaceonline.trips.picture",
+      limitobj: @obj,
+      limitwithlink: "trip_trip_pictures_path"
     }
   %>
   <%= attribute_table_row_reference(t("myplaceonline.trips.hotel"), "hotel_path", @obj.hotel) %>

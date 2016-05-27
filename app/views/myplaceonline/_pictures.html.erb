@@ -8,8 +8,22 @@
     <%= attribute_table_row_span(link_to(t("myplaceonline.pictures.slideshow"), "#", class: "ui-btn", id: random_name)) %>
   <% end %>
   
-  <% pics.each do |pic| %>
+  <%
+    limitwithlink ||= nil
+    process_pics = pics
+    limited = false
+    piclimit = 5
+    if !limitwithlink.blank? && process_pics.length > piclimit
+      process_pics = process_pics.take(piclimit)
+      limited = true
+    end
+  %>
+  <% process_pics.each do |pic| %>
     <%= attribute_table_row_image(t(placeholder), pic.identity_file) %>
+  <% end %>
+
+  <% if limited %>
+    <%= attribute_table_row_span(link_to(t("myplaceonline.pictures.remaining_pictures", count: pics.length), send(limitwithlink, limitobj), class: "ui-btn")) %>
   <% end %>
   
   <% if pics.length > 1 %>

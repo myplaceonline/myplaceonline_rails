@@ -1,5 +1,8 @@
 require "base64"
 
+# TODO
+# https://github.com/willbryant/columns_on_demand
+# https://github.com/jorgemanrubia/lazy_columns
 class IdentityFile < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
