@@ -89,7 +89,7 @@ class Trip < ActiveRecord::Base
       source_list.each do |trip_picture|
         if !trip_picture.identity_file.nil?
           count = count + 1
-          data = trip_picture.identity_file.file.file_contents
+          data = trip_picture.identity_file.get_file_contents
           name = trip_picture.identity_file.file_file_name
           
           f = File.join(dir, name)

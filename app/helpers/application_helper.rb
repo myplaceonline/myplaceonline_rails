@@ -196,27 +196,29 @@ module ApplicationHelper
   
   def has_image(identity_file)
     continue_checking = true
-    if !identity_file.nil? && !identity_file.file.nil?
-      begin
-        identity_file.file.file_contents
-      rescue
-        continue_checking = false
-      end
-    end
     !identity_file.nil? && !identity_file.file.nil? && continue_checking && !identity_file.file_content_type.nil? && (identity_file.file_content_type.start_with?("image"))
   end
   
   def image_content(identity_file, link_to_original = true)
     if has_image(identity_file)
-      if identity_file.thumbnail_contents.nil?
-        image = Magick::Image::from_blob(identity_file.file.file_contents)
+      if identity_file.thumbnail_contents.nil? && !identity_file.thumbnail_skip
+        Rails.logger.debug{"image_content: Generating thumbnail for #{identity_file.id}"}
+        image = Magick::Image::from_blob(identity_file.get_file_contents)
+        Rails.logger.debug{"image_content: Loaded image"}
         image = image.first
+        Rails.logger.debug{"image_content: Acquired first image cols #{image.columns}"}
         max_width = 400
         if image.columns > max_width
+          Rails.logger.debug{"image_content: Requires thumbnailing"}
           image.resize_to_fit!(max_width)
           blob = image.to_blob
           identity_file.thumbnail_contents = blob
           identity_file.thumbnail_bytes = blob.length
+          identity_file.save!
+          Rails.logger.debug{"image_content: Saved thumbnail"}
+        else
+          Rails.logger.debug{"image_content: Thumbnail not required"}
+          identity_file.thumbnail_skip = true
           identity_file.save!
         end
       end

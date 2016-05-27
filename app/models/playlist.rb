@@ -37,7 +37,7 @@ class Playlist < ActiveRecord::Base
       obj.playlist_songs.each do |playlist_song|
         if !playlist_song.song.identity_file.nil?
           count = count + 1
-          data = playlist_song.song.identity_file.file.file_contents
+          data = playlist_song.song.identity_file.get_file_contents
           name = playlist_song.song.identity_file.file_file_name
           name = count.to_s.rjust(2, "0") + " - " + name
           

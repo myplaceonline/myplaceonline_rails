@@ -30,8 +30,10 @@ class FilesController < MyplaceonlineController
     @obj = model.find_by(id: params[:id])
     authorize! :show, @obj
     if !@obj.thumbnail_contents.nil?
+      Rails.logger.debug{"FilesController.thumbnail: found thumbnail_contents #{@obj.thumbnail_bytes}"}
       respond_download('inline', @obj.thumbnail_contents, @obj.thumbnail_bytes)
     else
+      Rails.logger.debug{"FilesController.thumbnail: no thumbnail, sending whole image"}
       respond_download_identity_file('inline', @obj)
     end
   end
@@ -90,7 +92,7 @@ class FilesController < MyplaceonlineController
       degrees = degrees_str.to_i
       if degrees >= -360 && degrees <= 360
         
-        image = Magick::Image.from_blob(@obj.file.file_contents).first
+        image = Magick::Image.from_blob(@obj.get_file_contents).first
         
         Myp.tmpfile("file" + @obj.id.to_s + "_", "") do |tfile|
           image.background_color = "none"
@@ -188,8 +190,10 @@ class FilesController < MyplaceonlineController
 
     def respond_download_identity_file(respond_type, identity_file)
       if identity_file.filesystem_path.blank?
-        respond_download(respond_type, identity_file.file.file_contents, identity_file.file_file_size)
+        Rails.logger.debug{"FilesController.respond_download_identity_file: Not on the filesystem"}
+        respond_download(respond_type, identity_file.get_file_contents, identity_file.file_file_size)
       else
+        Rails.logger.debug{"FilesController.respond_download_identity_file: Sending from #{identity_file.filesystem_path}"}
         send_file(
           identity_file.filesystem_path,
           :type => @obj.file_content_type,

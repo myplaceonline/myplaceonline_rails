@@ -19,7 +19,7 @@ class IdentityFile < ActiveRecord::Base
   
   # Unclear why but validations don't get called
   #validate do
-  #  if file.nil? || file.file_contents.nil? || file.file_contents.length == 0
+  #  if file.nil? || get_file_contents.nil? || get_file_contents.length == 0
   #    errors.add(:file, I18n.t("myplaceonline.general.non_blank"))
   #  end
   #end
@@ -64,6 +64,7 @@ class IdentityFile < ActiveRecord::Base
   def clear_thumbnail
     self.thumbnail_contents = nil
     self.thumbnail_bytes = nil
+    self.thumbnail_skip = nil
   end
   
   def self.build(params = nil)
@@ -93,5 +94,17 @@ class IdentityFile < ActiveRecord::Base
     else
       nil
     end
+  end
+  
+  def get_file_contents
+    Rails.logger.info{"get_file_contents: Request for full image contents id #{self.id}"}
+    result = nil
+    if !self.file.nil?
+      #puts caller
+      #FileProxy.where(identity_file_id: self.id).first.file_contents
+      result = file.file_contents
+    end
+    Rails.logger.info{"get_file_contents: Returning #{ result.nil? ? 0 : result.length }"}
+    result
   end
 end
