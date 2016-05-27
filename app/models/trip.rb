@@ -75,82 +75,77 @@ class Trip < ActiveRecord::Base
   def self.execute_share(permission_share)
     
     obj = Myp.find_existing_object!(permission_share.subject_class, permission_share.subject_id)
+    
+    do_zip = false
 
     count = 0
-    
     include_pics = permission_share.child_selections_list
     source_list = obj.trip_pictures.to_a.dup.keep_if{|x| !include_pics.index(x.id).nil? }
-    
-    Myp.mktmpdir do |dir|
-      
-      files = Array.new
-      identity_files = Array.new
-      
-      source_list.each do |trip_picture|
-        if !trip_picture.identity_file.nil?
-          count = count + 1
-          data = trip_picture.identity_file.get_file_contents
-          name = trip_picture.identity_file.file_file_name
-          
-          f = File.join(dir, name)
-
-          itemarray = Array.new
-          itemarray.push(name)
-          itemarray.push(f)
-          
-          files.push(itemarray)
-          
-          identity_files.push(trip_picture.identity_file)
-          
-          IO.binwrite(f, data)
-        end
+    identity_files = Array.new
+    source_list.each do |trip_picture|
+      if !trip_picture.identity_file.nil?
+        count = count + 1
+        identity_files.push(trip_picture.identity_file)
       end
+    end
+    begin
+      User.current_user = obj.identity.user
       
-      Rails.logger.info{"Trip execute_share. count: #{count}, obj: #{obj.inspect}"}
-
-      if count > 0
-        Myp.tmpfile("trip" + obj.id.to_s + "_", ".zip") do |tfile|
-          Zip::File.open(tfile.path, Zip::File::CREATE) do |zipfile|
-            files.each do |filename|
-              zipfile.add(filename[0], filename[1])
-            end
-          end
-          
-          zipdata = IO.binread(tfile.path)
-          
-          begin
-            User.current_user = obj.identity.user
+      ActiveRecord::Base.transaction do
+        if do_zip
+          Myp.mktmpdir do |dir|
             
-            ActiveRecord::Base.transaction do
-              iff = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.trips")])
-              identity_file = IdentityFile.build({ folder: iff.id })
-              identity_file.file_file_name = Pathname.new(tfile).basename
-              identity_file.file_file_size = zipdata.length
-              identity_file.file_content_type = "application/zip"
-              if zipdata.length > IdentityFile::SIZE_THRESHOLD_FILESYSTEM
-                dest = Pathname.new(Rails.configuration.filetmpdir).join(File.basename(tfile.path))
-                FileUtils.cp(tfile.path, dest)
-                FileUtils.chmod(0755, dest)
-                identity_file.filesystem_path = dest
-              else
-                identity_file.file = File.open(tfile.path)
-              end
-              identity_file.folder = iff
-              identity_file.identity = obj.identity
-              identity_file.save!
-              
-              obj.identity_file = identity_file
-              obj.save!
-              
-              psc = PermissionShareChild.new
-              psc.identity = obj.identity
-              psc.share = permission_share.share
-              psc.subject_class = IdentityFile.name
-              psc.subject_id = identity_file.id
-              psc.permission_share = permission_share
-              psc.save!
+            files = Array.new
+            
+            source_list.each do |trip_picture|
+              if !trip_picture.identity_file.nil?
+                data = trip_picture.identity_file.get_file_contents
+                name = trip_picture.identity_file.file_file_name
+                
+                f = File.join(dir, name)
 
-              identity_files.each do |identity_file|
+                itemarray = Array.new
+                itemarray.push(name)
+                itemarray.push(f)
+                
+                files.push(itemarray)
+                
+                IO.binwrite(f, data)
+              end
+            end
+            
+            Rails.logger.info{"Trip execute_share. count: #{count}, obj: #{obj.inspect}"}
+
+            if count > 0
+              Myp.tmpfile("trip" + obj.id.to_s + "_", ".zip") do |tfile|
+                Zip::File.open(tfile.path, Zip::File::CREATE) do |zipfile|
+                  files.each do |filename|
+                    zipfile.add(filename[0], filename[1])
+                  end
+                end
+                
+                zipdata = IO.binread(tfile.path)
+                
+                iff = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.trips")])
+                identity_file = IdentityFile.build({ folder: iff.id })
+                identity_file.file_file_name = Pathname.new(tfile).basename
+                identity_file.file_file_size = zipdata.length
+                identity_file.file_content_type = "application/zip"
+                if zipdata.length > IdentityFile::SIZE_THRESHOLD_FILESYSTEM
+                  dest = Pathname.new(Rails.configuration.filetmpdir).join(File.basename(tfile.path))
+                  FileUtils.cp(tfile.path, dest)
+                  FileUtils.chmod(0755, dest)
+                  identity_file.filesystem_path = dest
+                else
+                  identity_file.file = File.open(tfile.path)
+                end
+                identity_file.folder = iff
+                identity_file.identity = obj.identity
+                identity_file.save!
+                
+                obj.identity_file = identity_file
+                obj.save!
+                
                 psc = PermissionShareChild.new
                 psc.identity = obj.identity
                 psc.share = permission_share.share
@@ -159,14 +154,24 @@ class Trip < ActiveRecord::Base
                 psc.permission_share = permission_share
                 psc.save!
               end
-              
-              permission_share.send_email(obj)
             end
-          ensure
-            User.current_user = nil
           end
         end
+
+        identity_files.each do |identity_file|
+          psc = PermissionShareChild.new
+          psc.identity = obj.identity
+          psc.share = permission_share.share
+          psc.subject_class = IdentityFile.name
+          psc.subject_id = identity_file.id
+          psc.permission_share = permission_share
+          psc.save!
+        end
+        
+        permission_share.send_email(obj)
       end
+    ensure
+      User.current_user = nil
     end
   end
   
