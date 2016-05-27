@@ -286,7 +286,7 @@ module ApplicationHelper
     end
   end
 
-  def attribute_table_row_reference(name, pathfunc, ref)
+  def attribute_table_row_reference(name, pathfunc, ref, controllerName: nil)
     if !ref.nil?
       url = send(pathfunc, ref)
       result = attribute_table_row(name, url_or_blank(url, ref.display), url)
@@ -295,7 +295,7 @@ module ApplicationHelper
           Thread.current[:show_nest_level] = 1
           Thread.current[:nest_count] = Thread.current[:nest_count] + 1
           render_result = renderActionInOtherController(
-              Object.const_get(ref.class.name.pluralize + "Controller"),
+              Object.const_get(controllerName.nil? ? ref.class.name.pluralize + "Controller" : controllerName),
               :show,
               {
                 id: ref.id,

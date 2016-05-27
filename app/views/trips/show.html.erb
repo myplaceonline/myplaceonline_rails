@@ -20,5 +20,7 @@
   <% content_for :postfooterlinks do %>
     <li><%= link_to t("myplaceonline.general.share"), trip_share_path(@obj), "data-icon" => "action" %></li>
     <li><%= link_to t("myplaceonline.trips.show_shared"), trip_shared_path(@obj), "data-icon" => "search" %></li>
+    <li><%= link_to t("myplaceonline.trips.pictures"), trip_trip_pictures_path(@obj), "data-icon" => "grid" %></li>
+    <li><%= link_to t("myplaceonline.trips.add_picture"), new_trip_trip_picture_path(@obj), "data-icon" => "plus" %></li>
   <% end %>
 <% end %>

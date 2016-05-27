@@ -167,6 +167,7 @@ en:
       tv_shows: "TV Shows"
       website_domains: "Website Domains"
       bets: "Bets"
+      trip_pictures: "Trip Pictures"
     general:
       email: "E-mail"
       password: "Password"
@@ -2317,3 +2318,6 @@ en:
       gc_collected: "Garbage Collection Started"
     share:
       link: "Link"
+    trip_pictures:
+      trip: "Trip"
+      picture: "Picture"

@@ -5,13 +5,21 @@ class IdentityFile < ActiveRecord::Base
   include AllowExistingConcern
   
   SIZE_THRESHOLD_FILESYSTEM = 1048576 * 10
-  
+
+  before_create :do_before_create
   before_update :do_before_update
 
   belongs_to :encrypted_password, class_name: EncryptedValue, dependent: :destroy
 
   has_attached_file :file, :storage => :database
   do_not_validate_attachment_file_type :file
+  
+  # Unclear why but validations don't get called
+  #validate do
+  #  if file.nil? || file.file_contents.nil? || file.file_contents.length == 0
+  #    errors.add(:file, I18n.t("myplaceonline.general.non_blank"))
+  #  end
+  #end
   
   belongs_to :folder, class_name: IdentityFileFolder
   accepts_nested_attributes_for :folder
@@ -33,6 +41,14 @@ class IdentityFile < ActiveRecord::Base
   
   def size
     file_file_size
+  end
+  
+  def do_before_create
+    if file_file_name.blank? && !file.nil?
+      if !file.queued_for_write.nil? && file.queued_for_write[:original]
+        self.file_file_name = file.queued_for_write[:original].original_filename
+      end
+    end
   end
   
   def do_before_update

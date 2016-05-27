@@ -274,7 +274,10 @@ Rails.application.routes.draw do
   resources :passports
   post 'passports/new'
 
-  resources :trips
+  resources :trips do
+    resources :trip_pictures
+    post 'trip_pictures/new'
+  end
   match 'trips/:id/shared', :to => 'trips#shared', via: [:get], as: "trip_shared"
   match 'trips/:id/share', :to => 'trips#share', via: [:get, :post], as: "trip_share"
   post 'trips/new'
