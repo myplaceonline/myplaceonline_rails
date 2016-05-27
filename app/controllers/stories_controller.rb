@@ -5,11 +5,18 @@ class StoriesController < MyplaceonlineController
   
   def self.param_names
     [
+      :id,
       :story_name,
       :story_time,
       :story,
       story_pictures_attributes: FilesController.multi_param_names
     ]
+  end
+
+  def self.reject_if_blank(attributes)
+    attributes.dup.delete_if {|key, value| key.to_s == "story_time" }.all?{|key, value|
+      value.blank?
+    }
   end
 
   protected
