@@ -226,6 +226,13 @@ module ApplicationHelper
           identity_file.save!
         end
       end
+      
+      if has_thumbnail(identity_file) && identity_file.thumbnail_hash.nil?
+        Rails.logger.debug{"image_content: Updating hash for already generated thumbnail"}
+        identity_file.thumbnail_hash = Digest::MD5.hexdigest(identity_file.thumbnail_contents)
+        identity_file.save!
+      end
+      
       # Include a unique query parameter all the time because the thumbnail
       # may have been updated
       if has_thumbnail(identity_file)
