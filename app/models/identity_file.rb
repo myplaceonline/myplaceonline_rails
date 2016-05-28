@@ -65,6 +65,7 @@ class IdentityFile < ActiveRecord::Base
     self.thumbnail_contents = nil
     self.thumbnail_bytes = nil
     self.thumbnail_skip = nil
+    self.thumbnail_hash = nil
   end
   
   def self.build(params = nil)

@@ -195,8 +195,11 @@ module ApplicationHelper
   end
   
   def has_image(identity_file)
-    continue_checking = true
-    !identity_file.nil? && !identity_file.file.nil? && continue_checking && !identity_file.file_content_type.nil? && (identity_file.file_content_type.start_with?("image"))
+    !identity_file.nil? && !identity_file.file.nil? && !identity_file.file_content_type.nil? && (identity_file.file_content_type.start_with?("image"))
+  end
+  
+  def has_thumbnail(identity_file)
+    !identity_file.nil? && !identity_file.thumbnail_skip && !identity_file.thumbnail_contents.nil?
   end
   
   def image_content(identity_file, link_to_original = true)
@@ -214,6 +217,7 @@ module ApplicationHelper
           blob = image.to_blob
           identity_file.thumbnail_contents = blob
           identity_file.thumbnail_bytes = blob.length
+          identity_file.thumbnail_hash = Digest::MD5.hexdigest(blob)
           identity_file.save!
           Rails.logger.debug{"image_content: Saved thumbnail"}
         else
@@ -224,7 +228,11 @@ module ApplicationHelper
       end
       # Include a unique query parameter all the time because the thumbnail
       # may have been updated
-      content = image_tag(file_thumbnail_path(identity_file, :t => Time.now.to_f, token: params[:token]))
+      if has_thumbnail(identity_file)
+        content = image_tag(file_thumbnail_path(identity_file, :h => identity_file.thumbnail_hash, token: params[:token]))
+      else
+        content = image_tag(file_view_path(identity_file, token: params[:token]))
+      end
       if link_to_original
         url_or_blank(
           file_view_path(identity_file, token: params[:token]),
