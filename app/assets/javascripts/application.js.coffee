@@ -5,8 +5,6 @@
 #= require jquery.easing
 #= require myplaceonline
 #= require jquery.mobile
-#= require handlebars-v2.0.0
-#= require ember-1.9.0
 #= require forge.min
 
 $ ->
