@@ -1,4 +1,21 @@
-<%# arguments: { f: "form", obj: "object", pictures_field: "symbol" } %>
+<%# arguments: { f: "form", obj: "object", pictures_field: "symbol", position_field: "symbol", itemname: "string" } %>
+<%
+  position_field ||= nil
+  itemname ||= nil
+  formjson = [
+    {
+      type: "file",
+      name: "identity_file_attributes.file",
+      placeholder: t("myplaceonline.pictures.picture")
+    }
+  ]
+  if !position_field.nil?
+    formjson.push({
+      type: "position",
+      name: position_field.to_s
+    })
+  end
+%>
 <%=
   render layout: "myplaceonline/childproperties", locals: {
     f: f,
@@ -8,13 +25,9 @@
     deletebutton: t("myplaceonline.pictures.delete_picture"),
     addbutton: t("myplaceonline.pictures.add_picture"),
     expanded: obj.send(pictures_field.to_s).length > 0,
-    formjson: [
-      {
-        type: "file",
-        name: "identity_file_attributes.file",
-        placeholder: t("myplaceonline.pictures.picture")
-      }
-    ]
+    position_field: position_field,
+    itemname: itemname,
+    formjson: formjson
   } do |child_fields, childproperty|
 %>
   <% if has_image(childproperty.identity_file) %>

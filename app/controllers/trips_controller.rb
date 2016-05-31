@@ -50,7 +50,7 @@ class TripsController < MyplaceonlineController
         :work,
         :notify_emergency_contacts,
         location_attributes: LocationsController.param_names,
-        trip_pictures_attributes: FilesController.multi_param_names,
+        trip_pictures_attributes: FilesController.multi_param_names + [:position],
         hotel_attributes: HotelsController.param_names,
         trip_stories_attributes: [
           :id,

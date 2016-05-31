@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160527235558) do
+ActiveRecord::Schema.define(version: 20160531180142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2814,6 +2814,7 @@ ActiveRecord::Schema.define(version: 20160527235558) do
     t.integer  "identity_file_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "position"
   end
 
   add_index "trip_pictures", ["identity_file_id"], name: "index_trip_pictures_on_identity_file_id", using: :btree

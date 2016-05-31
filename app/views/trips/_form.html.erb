@@ -19,7 +19,9 @@
   render partial: "myplaceonline/pictures_form", locals: {
     f: f,
     obj: obj,
-    pictures_field: :trip_pictures
+    pictures_field: :trip_pictures,
+    position_field: :position,
+    itemname: t("myplaceonline.trips.picture")
   }
 %>
 <%=
