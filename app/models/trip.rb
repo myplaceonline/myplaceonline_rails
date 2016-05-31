@@ -177,18 +177,30 @@ class Trip < ActiveRecord::Base
   
   def add_email_html(target_email, target_contact, permission_share)
     result = ""
+    # Do not link images by default because this seems to increase the chances
+    # that Gmail classifies the email as a promotion
+    link_images = false
     trip_pictures.each do |trip_picture|
       if !permission_share.permission_share_children.index{|psc| psc.subject_id == trip_picture.identity_file.id}.nil?
-        result += "\n<hr />\n  <p>#{ActionController::Base.helpers.link_to file_view_url(
-            trip_picture.identity_file, token: permission_share.share.token
-          ) do
-            ActionController::Base.helpers.image_tag(
-              file_thumbnail_url(
-                trip_picture.identity_file, token: permission_share.share.token
+        result += "\n<hr />\n  <p>"
+        if link_images
+          result += ActionController::Base.helpers.link_to file_view_url(
+              trip_picture.identity_file, token: permission_share.share.token
+            ) do
+              ActionController::Base.helpers.image_tag(
+                file_thumbnail_url(
+                  trip_picture.identity_file, token: permission_share.share.token
+                )
               )
+            end
+        else
+          result += ActionController::Base.helpers.image_tag(
+            file_thumbnail_url(
+              trip_picture.identity_file, token: permission_share.share.token
             )
-          end
-        }</p>"
+          )
+        end
+        result += "</p>"
         if !trip_picture.identity_file.notes.blank?
           result += "\n#{Myp.markdown_to_html(trip_picture.identity_file.notes)}"
         end
