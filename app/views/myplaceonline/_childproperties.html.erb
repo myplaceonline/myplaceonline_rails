@@ -1,17 +1,20 @@
+<%
+  position_field ||= nil
+%>
 <div data-role="collapsible"<%= defined?(expanded) && expanded ? raw(" data-collapsed=\"false\"") : "" %>>
   <h3><%= heading %></h3>
   <% random_name = SecureRandom.hex(10) %>
-  <div id="itemswrapper<%= random_name %>" class="itemswrapper"<%= defined?(position_field) ? raw(" data-position-field=\"" + position_field.to_s + "\"") : "" %>>
+  <div id="itemswrapper<%= random_name %>" class="itemswrapper"<%= !position_field.nil? ? raw(" data-position-field=\"" + position_field.to_s + "\"") : "" %>>
     <% childproperties.each do |childproperty| %>
       <%= f.fields_for childpropertiesname, childproperty do |child_fields| %>
         <div class="itemwrapper itemswrapper<%= random_name %>" data-nameprefix="<%= child_fields.object_name %>">
           <%= yield child_fields, childproperty %>
-          <% if defined?(position_field) %>
+          <% if !position_field.nil? %>
             <%= child_fields.hidden_field(position_field) %>
           <% end %>
           <div data-role="controlgroup" data-type="horizontal">
             <a href="#" onclick="return myplaceonline.formRemoveItem(this);" class="ui-btn ui-btn-icon-left ui-icon-delete ui-btn-inline"><%= deletebutton %></a>
-            <% if defined?(position_field) %>
+            <% if !position_field.nil? %>
               <a href="#" onclick="return myplaceonline.formMoveItem(this, 1);" class="ui-btn ui-btn-icon-left ui-icon-arrow-d ui-btn-inline"><%= t("myplaceonline.general.movedown", name: itemname) %></a>
               <a href="#" onclick="return myplaceonline.formMoveItem(this, -1);" class="ui-btn ui-btn-icon-left ui-icon-arrow-u ui-btn-inline"><%= t("myplaceonline.general.moveup", name: itemname) %></a>
             <% end %>
