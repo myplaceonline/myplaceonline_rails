@@ -177,6 +177,7 @@ class Trip < ActiveRecord::Base
   
   def add_email_html(target_email, target_contact, permission_share)
     result = ""
+
     # Do not link images by default because this seems to increase the chances
     # that Gmail classifies the email as a promotion
     link_images = false
@@ -206,6 +207,11 @@ class Trip < ActiveRecord::Base
         end
       end
     end
+    
+    if trip_pictures.length > 0
+      result += "\n\n<hr />\n<p>" + I18n.t("myplaceonline.trips.click_pics") + "</p>\n"
+    end
+    
     if trip_stories.count > 0
       result += "\n<hr />\n<p>Stories:</p>\n<ul>\n"
       trip_stories.each do |trip_story|
@@ -234,7 +240,7 @@ class Trip < ActiveRecord::Base
           end
         end
       end
-      result += "\n"
+      result += "\n" + I18n.t("myplaceonline.trips.click_pics") + "\n\n"
     end
     if trip_stories.count > 0
       result += "Stories:\n========\n"
