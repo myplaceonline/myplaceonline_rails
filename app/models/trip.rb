@@ -240,10 +240,10 @@ class Trip < ActiveRecord::Base
           end
         end
       end
-      result += "\n" + I18n.t("myplaceonline.trips.click_pics") + "\n\n"
+      result += "\n" + I18n.t("myplaceonline.trips.click_pics") + "\n"
     end
     if trip_stories.count > 0
-      result += "Stories:\n========\n"
+      result += "\nStories:\n========\n"
       trip_stories.each do |trip_story|
         result += "* #{trip_story.story.story_name}\n"
         if !trip_story.story.story.blank?

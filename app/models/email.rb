@@ -159,7 +159,7 @@ class Email < ActiveRecord::Base
         if !target_obj.nil? && target_obj.respond_to?("add_email_plain")
           more_plain = target_obj.add_email_plain(target, contact, permission_share)
           if !more_plain.blank?
-            final_content_plain += more_plain + "\n\n"
+            final_content_plain += more_plain + "\n"
           end
         end
         
