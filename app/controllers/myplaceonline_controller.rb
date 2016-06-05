@@ -109,6 +109,7 @@ class MyplaceonlineController < ApplicationController
     if request.post?
       create
     else
+      new_prerespond
       respond_with(@obj)
     end
   end
@@ -646,6 +647,9 @@ class MyplaceonlineController < ApplicationController
     end
 
     def edit_prerespond
+    end
+    
+    def new_prerespond
     end
     
     def requires_admin

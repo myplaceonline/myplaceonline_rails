@@ -107,4 +107,20 @@ class EmailsController < MyplaceonlineController
                         I18n.t(@obj.send_immediately ? "myplaceonline.emails.send_sucess_sync" : "myplaceonline.emails.send_sucess_async")
                       }
     end
+
+    def new_prerespond
+      duplicate = params[:duplicate]
+      if !duplicate.blank?
+        duplicate_obj = Myp.find_existing_object(Email, duplicate)
+        @obj.subject = duplicate_obj.subject
+        @obj.email_category = duplicate_obj.email_category
+        @obj.body = duplicate_obj.body
+        duplicate_obj.email_contacts.each do |email_contact|
+          @obj.email_contacts << EmailContact.new(contact: email_contact.contact)
+        end
+        duplicate_obj.email_groups.each do |email_group|
+          @obj.email_groups << EmailGroup.new(group: email_group.group)
+        end
+      end
+    end
 end
