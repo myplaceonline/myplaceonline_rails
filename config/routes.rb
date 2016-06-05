@@ -275,6 +275,7 @@ Rails.application.routes.draw do
   post 'passports/new'
 
   resources :trips do
+    get 'trip_pictures/destroy_all'
     resources :trip_pictures
     post 'trip_pictures/new'
   end
@@ -463,6 +464,7 @@ Rails.application.routes.draw do
   post 'api/debug'
   post 'api/renderpartial'
   post 'api/quickfeedback'
+  post 'api/newfile'
   get 'api/distinct_values'
   get 'api', :to => 'api#index'
   

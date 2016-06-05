@@ -11,6 +11,10 @@ class TripPicturesController < MyplaceonlineController
     "trip_pictures/form"
   end
 
+  def index_delete_all_link?
+    true
+  end
+
   protected
     def insecure
       true

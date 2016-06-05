@@ -23,7 +23,7 @@
   <% end %>
 
   <% if limited %>
-    <%= attribute_table_row_span(link_to(t("myplaceonline.pictures.remaining_pictures", count: pics.length), send(limitwithlink, limitobj), class: "ui-btn")) %>
+    <%= attribute_table_row_span(link_to(t("myplaceonline.pictures.remaining_pictures", count: pics.length - piclimit), send(limitwithlink, limitobj), class: "ui-btn")) %>
   <% end %>
   
   <% if pics.length > 1 %>

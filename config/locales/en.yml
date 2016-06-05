@@ -183,6 +183,7 @@ en:
       signup: "Sign Up"
       edit: "Edit"
       delete: "Delete"
+      delete_all: "Delete All"
       deleteaccount: "Delete Account"
       register: "Register"
       import: "Import"
@@ -701,6 +702,7 @@ en:
       rotatecounterclock90: "Rotate 90° Counter-Clockwise"
       rotate180: "Rotate 180°"
       no_degrees: "No Degrees Specified"
+      file_success: "Successfully uploaded %{name}"
     accomplishments:
       name: "Name"
       accomplishment: "Wisdom"
@@ -1882,8 +1884,10 @@ en:
       pictures: "Pictures"
       picture: "Picture"
       add_picture: "Add Picture"
+      add_pictures: "Add Picture(s)"
       delete_picture: "Delete Picture"
       remaining_pictures: "Remaining Pictures (%{count})"
+      multiple_allowed: "You may select multiple files:"
     trash:
       type_general: "General Trash"
       type_recycling: "Recycling"

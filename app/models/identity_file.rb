@@ -108,4 +108,43 @@ class IdentityFile < ActiveRecord::Base
     Rails.logger.info{"get_file_contents: Returning #{ result.nil? ? 0 : result.length }"}
     result
   end
+  
+  def has_image?
+    !self.file.nil? && !self.file_content_type.nil? && (self.file_content_type.start_with?("image"))
+  end
+
+  def has_thumbnail?
+    !self.thumbnail_skip && !self.thumbnail_contents.nil?
+  end
+
+  def ensure_thumbnail
+    if self.thumbnail_contents.nil? && !self.thumbnail_skip
+      Rails.logger.debug{"image_content: Generating thumbnail for #{self.id}"}
+      image = Magick::Image::from_blob(self.get_file_contents)
+      Rails.logger.debug{"image_content: Loaded image"}
+      image = image.first
+      Rails.logger.debug{"image_content: Acquired first image cols #{image.columns}"}
+      max_width = 400
+      if image.columns > max_width
+        Rails.logger.debug{"image_content: Requires thumbnailing"}
+        image.resize_to_fit!(max_width)
+        blob = image.to_blob
+        self.thumbnail_contents = blob
+        self.thumbnail_bytes = blob.length
+        self.thumbnail_hash = Digest::MD5.hexdigest(blob)
+        self.save!
+        Rails.logger.debug{"image_content: Saved thumbnail"}
+      else
+        Rails.logger.debug{"image_content: Thumbnail not required"}
+        self.thumbnail_skip = true
+        self.save!
+      end
+    end
+    
+    if has_thumbnail? && thumbnail_hash.nil?
+      Rails.logger.debug{"image_content: Updating hash for already generated thumbnail"}
+      self.thumbnail_hash = Digest::MD5.hexdigest(self.thumbnail_contents)
+      self.save!
+    end
+  end
 end

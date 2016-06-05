@@ -202,52 +202,43 @@ module ApplicationHelper
     !identity_file.nil? && !identity_file.thumbnail_skip && !identity_file.thumbnail_contents.nil?
   end
   
-  def image_content(identity_file, link_to_original = true)
+  def image_content(identity_file, link_to_original = true, useParams: true)
     if has_image(identity_file)
-      if identity_file.thumbnail_contents.nil? && !identity_file.thumbnail_skip
-        Rails.logger.debug{"image_content: Generating thumbnail for #{identity_file.id}"}
-        image = Magick::Image::from_blob(identity_file.get_file_contents)
-        Rails.logger.debug{"image_content: Loaded image"}
-        image = image.first
-        Rails.logger.debug{"image_content: Acquired first image cols #{image.columns}"}
-        max_width = 400
-        if image.columns > max_width
-          Rails.logger.debug{"image_content: Requires thumbnailing"}
-          image.resize_to_fit!(max_width)
-          blob = image.to_blob
-          identity_file.thumbnail_contents = blob
-          identity_file.thumbnail_bytes = blob.length
-          identity_file.thumbnail_hash = Digest::MD5.hexdigest(blob)
-          identity_file.save!
-          Rails.logger.debug{"image_content: Saved thumbnail"}
-        else
-          Rails.logger.debug{"image_content: Thumbnail not required"}
-          identity_file.thumbnail_skip = true
-          identity_file.save!
-        end
-      end
-      
-      if has_thumbnail(identity_file) && identity_file.thumbnail_hash.nil?
-        Rails.logger.debug{"image_content: Updating hash for already generated thumbnail"}
-        identity_file.thumbnail_hash = Digest::MD5.hexdigest(identity_file.thumbnail_contents)
-        identity_file.save!
-      end
+      identity_file.ensure_thumbnail
       
       # Include a unique query parameter all the time because the thumbnail
       # may have been updated
       if has_thumbnail(identity_file)
-        content = image_tag(file_thumbnail_path(identity_file, :h => identity_file.thumbnail_hash, token: params[:token]))
+        if useParams
+          content = image_tag(file_thumbnail_path(identity_file, :h => identity_file.thumbnail_hash, token: params[:token]))
+        else
+          content = image_tag(file_thumbnail_path(identity_file, :h => identity_file.thumbnail_hash))
+        end
       else
-        content = image_tag(file_view_path(identity_file, token: params[:token]))
+        if useParams
+          content = image_tag(file_view_path(identity_file, token: params[:token]))
+        else
+          content = image_tag(file_view_path(identity_file))
+        end
       end
       if link_to_original
-        url_or_blank(
-          file_view_path(identity_file, token: params[:token]),
-          content,
-          nil,
-          "externallink",
-          true
-        )
+        if useParams
+          url_or_blank(
+            file_view_path(identity_file, token: params[:token]),
+            content,
+            nil,
+            "externallink",
+            true
+          )
+        else
+          url_or_blank(
+            file_view_path(identity_file),
+            content,
+            nil,
+            "externallink",
+            true
+          )
+        end
       else
         content
       end

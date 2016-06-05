@@ -25,6 +25,7 @@ var myplaceonline = function(mymodule) {
   var queuedRequests = [];
   var queuedRequestThread = null;
   var notepadResetTimeout = null;
+  var lastuniqueid = 1;
   
   $.noty.defaults.timeout = 3000;
   $.noty.defaults.layout = 'topCenter';
@@ -63,7 +64,6 @@ var myplaceonline = function(mymodule) {
       myplaceonline.hideLoading();
       myplaceonline.scrollTop();
       if (myplaceonline.runPendingPageLoads) {
-        // TODO remove once new app build is out
         myplaceonline.runPendingPageLoads();
       }
     }
@@ -87,6 +87,107 @@ var myplaceonline = function(mymodule) {
   });
   
   $(document).on("change", ":file", function() {
+    var $this = $(this);
+    if (this.files && this.files.length > 0) {
+      if ($this.data("useprogress")) {
+        
+        // We hide the input element immediately and then we'll destroy it
+        // when all the files have been uploaded
+        $this.hide();
+        $this.attr("files_selected", this.files.length);
+        $this.attr("files_processed", 0);
+        
+        var i = 0;
+        for (i = 0; i < this.files.length; i++) {
+          var file = this.files[i];
+          var filename = file.name;
+          var filesize = file.size;
+          var filetype = file.type;
+          
+          var formData = new FormData();
+          formData.append(this.name, file);
+                 
+          // We need to include the object ID
+          // https://developer.mozilla.org/en-US/docs/Web/API/Location
+          formData.append("urlpath", window.location.pathname);
+          formData.append("urlsearch", window.location.search);
+          formData.append("urlhash", window.location.hash);
+                 
+          if ($this.data("position_field")) {
+            formData.append("position_field", $this.data("position_field"));
+          }
+                 
+          var progressid = nextUniqueId();
+          
+          // Create a progress element and cancel button right below the
+          // input field
+          var newhtml = $("<fieldset class=\"progress_fieldset\"><legend>" + encodeEntities(filename) + "</legend><progress id=\"" + progressid + "\" class=\"width100\"></progress><button class=\"ui-btn\">Cancel</button></fieldset>");
+          newhtml.on('click', 'button', function(e) {
+            e.preventDefault();
+          });
+          newhtml.insertAfter($this);
+
+          $.ajax({
+            type: "POST",
+            url: "/api/newfile",
+            data: formData,
+            timeout: 0,
+            context: {
+              tracker: newhtml,
+              fileControl: $this
+            },
+            xhr: function() {
+              var myXhr = $.ajaxSettings.xhr();
+              if (myXhr.upload){
+                $(myXhr.upload).bind("progress", { progressid: progressid }, function(e) {
+                  if (e.originalEvent.lengthComputable) {
+                    $("#" + e.data.progressid).attr({
+                      value: e.originalEvent.loaded,
+                      max: e.originalEvent.total
+                    });
+                  }
+                }, false);
+              }
+              return myXhr;
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+          }).done(function(data) {
+            if (data.result) {
+              
+              this.tracker.remove();
+              
+              // Assume the file element's name is of the form:
+              // $nameprefix[$number][identity_file_attributes][file]
+              // So for the first parameter of the formAddItem call, we can
+              // just chop off everything after $nameprefix
+              
+              var namePrefix = this.fileControl.attr("name");
+              namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
+              namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
+              namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
+              formAddItem(this.fileControl.parents(".itemswrapper").first().children().first(), namePrefix, data.deletePlaceholder, data.items);
+              form_set_positions(this.fileControl);
+              myplaceonline.createSuccessNotification(data.successNotification + " (" + (parseInt(this.fileControl.attr("files_processed")) + 1) + "/" + this.fileControl.attr("files_selected") + ")");
+            } else {
+              alert("Unknown error. We've been notified. You may try again although we recommend refreshing the page first to remove any invalid state.");
+            }
+          }).fail(function(data) {
+            alert("Unknown error. We've been notified. You may try again although we recommend refreshing the page first to remove any invalid state.");
+          }).always(function() {
+            var files_processed = this.fileControl.attr("files_processed");
+            files_processed++;
+            this.fileControl.attr("files_processed", files_processed);
+            if (files_processed == this.fileControl.attr("files_selected")) {
+              var itemswrapper = this.fileControl.parents(".itemswrapper").first();
+              this.fileControl.parents(".itemwrapper").first().remove();
+              form_set_positions(itemswrapper, true);
+            }
+          });
+        }
+      }
+    }
   });
 
   function jqmSetListMessage(list, message) {
@@ -94,7 +195,7 @@ var myplaceonline = function(mymodule) {
     list.listview("refresh");
     list.trigger("updatelayout");
   }
-
+  
   /* items: [{title: String, link: String, count: Integer, filtertext: String, icon: String, splitLink: String, splitLinkTitle: String}, ...] */
   function jqmSetList(list, items, header) {
     var html = "";
@@ -494,6 +595,10 @@ var myplaceonline = function(mymodule) {
       
       defaultValue = defaultValue.replace(/'/g, '').replace(/"/g, '');
       
+      if (item.value && item.value.length > 0 && item.placeholder && item.placeholder.length > 0) {
+        html += "<b>" + encodeEntities(item.placeholder) + "</b><br />";
+      }
+      
       if (item.type == "date" || item.type == "datetime") {
         // Options should match app/helps/application_helper.rb myp_date_field
         var random_name = "";
@@ -522,6 +627,8 @@ var myplaceonline = function(mymodule) {
         item.id = "remote_placeholder_" + id;
         html += "<p id='" + item.id + "'>Loading...</p>";
         futures.push(item);
+      } else if (item.type == "raw") {
+        html += item.value;
       } else {
         var inputType = item.type;
         if (item.type == "position") {
@@ -533,9 +640,22 @@ var myplaceonline = function(mymodule) {
             inputType = "text";
           }
         }
-        html += "<p><input type='" + inputType + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='" + defaultValue + "' class='" + cssclasses + "'";
+        html += "<p>";
+        if (item.allowmultiple) {
+          html += item.multiple_allowed + "<br />";
+        }
+        html += "<input type='" + inputType + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='" + defaultValue + "' class='" + cssclasses + "'";
         if (item.step) {
           html += " step='" + item.step + "'";
+        }
+        if (item.useprogress) {
+          html += " data-useprogress='true'";
+        }
+        if (item.position_field) {
+          html += " data-position_field='" + item.position_field + "'";
+        }
+        if (item.allowmultiple) {
+          html += " multiple";
         }
         html += " /></p>";
       }
@@ -657,19 +777,21 @@ var myplaceonline = function(mymodule) {
     return itemswrapper.find("." + itemswrapper_id);
   }
 
-  function form_set_positions(obj) {
-    var itemswrapper = $(obj).parents(".itemswrapper").first();
+  function form_set_positions(obj, atItemsWrapper) {
+    var itemswrapper = atItemsWrapper ? obj : $(obj).parents(".itemswrapper").first();
     var data_position_field = itemswrapper.data("position-field");
-    var itemswrapper_id = itemswrapper.attr("id");
-    var itemwrappers = itemswrapper.find("." + itemswrapper_id);
-    var position = 1;
-    itemwrappers.each(function() {
-      var itemwrapper = $(this);
-      var itemwrapper_nameprefix = itemwrapper.data("nameprefix");
-      var position_id = get_name_as_id(itemwrapper_nameprefix) + "_" + data_position_field;
-      $("#" + position_id).val(position);
-      position++;
-    });
+    if (data_position_field) {
+      var itemswrapper_id = itemswrapper.attr("id");
+      var itemwrappers = itemswrapper.find("." + itemswrapper_id);
+      var position = 1;
+      itemwrappers.each(function() {
+        var itemwrapper = $(this);
+        var itemwrapper_nameprefix = itemwrapper.data("nameprefix");
+        var position_id = get_name_as_id(itemwrapper_nameprefix) + "_" + data_position_field;
+        $("#" + position_id).val(position);
+        position++;
+      });
+    }
   }
 
   function objectExtractId(obj) {
@@ -948,6 +1070,15 @@ var myplaceonline = function(mymodule) {
     }
     metaTag.attr("content", token);
   }
+  
+  function nextUniqueId() {
+    lastuniqueid++;
+    return "element" + lastuniqueid;
+  }
+
+  function encodeEntities(str) {
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
 
   // Public API
   mymodule.hookListviewSearch = hookListviewSearch;
@@ -975,6 +1106,7 @@ var myplaceonline = function(mymodule) {
   mymodule.remoteDataListInitialize = remoteDataListInitialize;
   mymodule.jqmSetListMessage = jqmSetListMessage;
   mymodule.jqmSetList = jqmSetList;
+  mymodule.encodeEntities = encodeEntities;
 
   return mymodule;
 

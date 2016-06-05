@@ -149,3 +149,13 @@ div.ui-checkbox + label {
 .help_image {
   border: 1px solid gray;
 }
+
+.progress_fieldset {
+  padding: 10px 30px 10px 10px !important;
+  border-width: 1px !important;
+  margin: 10px !important;
+}
+
+.width100 {
+  width: 100% !important;
+}

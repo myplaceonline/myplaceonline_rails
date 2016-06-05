@@ -2,7 +2,7 @@ class MyplaceonlineController < ApplicationController
   before_action :before_all_actions
   before_action :set_obj, only: [:show, :edit, :update, :destroy]
   
-  DEFAULT_SKIP_AUTHORIZATION_CHECK = [:index, :new, :create]
+  DEFAULT_SKIP_AUTHORIZATION_CHECK = [:index, :new, :create, :destroy_all]
   
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK
 
@@ -292,6 +292,22 @@ class MyplaceonlineController < ApplicationController
     redirect_to index_path
   end
 
+  def destroy_all
+    Myp.ensure_encryption_key(session)
+    deny_guest
+    ActiveRecord::Base.transaction do
+      all.each do |obj|
+        authorize! :destroy, obj
+        obj.destroy
+        if has_category
+          Myp.subtract_point(current_user, category_name, session)
+        end
+      end
+    end
+
+    redirect_to index_path
+  end
+
   def path_name
     model.model_name.singular.to_s.downcase
   end
@@ -368,6 +384,15 @@ class MyplaceonlineController < ApplicationController
     send("new_" + path_name + "_path")
   end
   
+  def destroy_all_path(context = nil)
+    if nested
+      set_parent
+      send("#{path_name.pluralize}_destroy_all_path", @parent)
+    else
+      send("#{path_name.pluralize}_destroy_all_path")
+    end
+  end
+  
   # See myplaceonline_final.js, ajax:remotipartSubmit
   # 
   # If new/update succeeds, navigate JS returned in:
@@ -434,6 +459,10 @@ class MyplaceonlineController < ApplicationController
   
   def new_save_text
     I18n.t("myplaceonline.general.save") + " " + I18n.t("myplaceonline.category." + category_name).singularize
+  end
+  
+  def index_destroy_all_link?
+    false
   end
   
   protected
