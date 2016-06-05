@@ -3,7 +3,7 @@ class UserIndex < Chewy::Index
     filter: {
       edge_ngram_filter: {
         type: "edge_ngram",
-        min_gram: 2,
+        min_gram: 1,
         max_gram: 10
       }
     },

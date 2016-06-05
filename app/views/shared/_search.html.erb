@@ -1,6 +1,11 @@
 <%
 id = "myplaceonline_search_" + SecureRandom.hex(10)
 container_id = id + "_container"
+select_html = select_tag(:newitemcategory, options_for_select(Myp.categories(current_user)
+  .map{|k,v| v}
+  .sort{|a,b| a.human_title_singular <=> b.human_title_singular}
+  .map{|x| [x.human_title_singular, "/" + x.link + "/new"]}
+)).gsub("\"", "'").gsub("\n", "")
 %>
 
 <div id="<%= container_id %>">
@@ -20,9 +25,24 @@ myplaceonline.onPageLoad(function() {
   var input = $("#<%= container_id %> input");
   myplaceonline.hookListviewEnter(input, "#<%= id %>");
   myplaceonline.remoteDataListInitialize(search, [
-    {title: "<%= t("myplaceonline.general.categories") %>", url: "/api/categories.json", static_list: true}
+    {
+      title: "<%= t("myplaceonline.general.categories") %>",
+      url: "/api/categories.json",
+      static_list: true
+    }
     <% if Myp.full_text_search? %>
-    , {title: "<%= t("myplaceonline.general.everything") %>", url: "/api/search.json"}
+    , {
+        title: "<%= t("myplaceonline.general.everything") %>",
+        url: "/api/search.json",
+        noresults: function(list, remote, section, search) {
+          myplaceonline.jqmReplaceListSection(list, section, [{
+            title: "<%= t("myplaceonline.everything.no_results") %><form action='<%= api_newitem_path %>' style='display: inline;'><%= raw(select_html) %><input type='hidden' name='q' value='" + myplaceonline.encodeEntities(search) + "' /><input type='submit' value='Go' /></form>",
+            filtertext: search,
+            fake: true
+          }]);
+          $("#newitemcategory").focus();
+        }
+      }
     <% end %>
   ]);
   myplaceonline.maybeFocus(input);

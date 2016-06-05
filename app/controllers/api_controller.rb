@@ -299,6 +299,10 @@ class ApiController < ApplicationController
     render json: result
   end
   
+  def newitem
+    redirect_to params[:newitemcategory] + "?prefill=" + params[:q]
+  end
+  
   protected
     def json_error(error)
       render json: {

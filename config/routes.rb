@@ -465,6 +465,7 @@ Rails.application.routes.draw do
   get 'api/subregions'
   get 'api/sleep_time'
   get 'api/hello_world'
+  get 'api/newitem'
   post 'api/debug'
   post 'api/renderpartial'
   post 'api/quickfeedback'

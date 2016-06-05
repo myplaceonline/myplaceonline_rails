@@ -288,6 +288,32 @@ var myplaceonline = function(mymodule) {
       jqmSetList(list, result);
     }
   }
+
+  function jqmSectionHasMatch(list, sectionTitle, search) {
+    var result = false;
+    var existingItems = list.data("rawItems");
+    var i;
+    var state = 0;
+    if (existingItems && search) {
+      var searchLower = search.toLowerCase();
+      for (i = 0; i < existingItems.length; i++) {
+        var existingItem = existingItems[i];
+        if (existingItem.divider) {
+          if (existingItem.title == sectionTitle) {
+            state = 1;
+          } else {
+            state = 0;
+          }
+        } else if (state == 1) {
+          if (!existingItem.fake && (existingItem.title.toLowerCase().indexOf(searchLower) != -1 || existingItem.filtertext.toLowerCase().indexOf(searchLower) != -1)) {
+            result = true;
+            break;
+          }
+        }
+      }
+    }
+    return result;
+  }
   
   // http://view.jquerymobile.com/master/demos/listview-autocomplete-remote/
   function hookListviewSearch(list, url, afterload) {
@@ -345,7 +371,7 @@ var myplaceonline = function(mymodule) {
     $.ajax({
       url: remote.url,
       dataType: "json",
-      context: {list: list, remote: remote, filterCount: filterCount},
+      context: {list: list, remote: remote, filterCount: filterCount, q: value},
       data: requestData
     }).done(function(data, textStatus, jqXHR) {
       myplaceonline.consoleLog("remoteDataLoad done " + this.remote.title + ", " + this.filterCount);
@@ -354,6 +380,10 @@ var myplaceonline = function(mymodule) {
         this.remote.failed = false;
         if (this.list.data("afterload")) {
           this.list.data("afterload")(this.list);
+        }
+        
+        if (this.remote.noresults && !jqmSectionHasMatch(this.list, this.remote.title, this.q)) {
+          this.remote.noresults(this.list, this.remote, this.remote.title, this.q);
         }
       }
       myplaceonline.consoleLog("remoteDataLoad finished done");
@@ -365,7 +395,7 @@ var myplaceonline = function(mymodule) {
   }
   
   // http://demos.jquerymobile.com/1.4.5/filterable/
-  function remoteDataListInitialize(list, remotes, afterload) {
+  function remoteDataListInitialize(list, remotes, afterload, noresults) {
     
     list.data("remotes", remotes);
     list.data("afterload", afterload);
@@ -427,7 +457,7 @@ var myplaceonline = function(mymodule) {
           for (i = 0; i < remotesList.length; i++) {
             var remote = remotesList[i];
             searching[i*2] = {title: remote.title, forcevisible: true, divider: true};
-            searching[(i*2)+1] = {title: "Searching...", filtertext: value};
+            searching[(i*2)+1] = {title: "Searching...", filtertext: value, fake: true};
           }
           myplaceonline.jqmSetList($ul, searching);
           
@@ -456,9 +486,13 @@ var myplaceonline = function(mymodule) {
 
               myplaceonline.consoleLog("remoteDataList Re-searching " + remote.title);
 
-              jqmReplaceListSection($ul, remote.title, [{title: "Searching...", filtertext: value}]);
+              jqmReplaceListSection($ul, remote.title, [{title: "Searching...", filtertext: value, fake: true}]);
 
               remoteDataLoad(remote, value, $ul, filterCount);
+            } else if (remote.static_list) {
+              if (remote.noresults && !jqmSectionHasMatch($ul, remote.title, value)) {
+                remote.noresults($ul, remote, remote.title, value);
+              }
             }
             
             myplaceonline.consoleLog("remoteDataList Finished processing " + remote.title);
@@ -479,13 +513,6 @@ var myplaceonline = function(mymodule) {
         
         $ul.data("hasInitialized", false);
       }
-      
-
-      //if ($.mobile.getAttribute( this, "role" ) == "visible") {
-      //  return false;
-      //}
-      //searchValue = searchValue.toLowerCase();
-      //return ( ( "" + ( $.mobile.getAttribute( this, "filtertext" ) || $( this ).text() ) ).toLowerCase().indexOf( searchValue ) === -1 );
     });
   }
 
@@ -1101,7 +1128,7 @@ var myplaceonline = function(mymodule) {
   }
 
   function encodeEntities(str) {
-    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#27;");
   }
 
   // Public API
@@ -1131,6 +1158,7 @@ var myplaceonline = function(mymodule) {
   mymodule.jqmSetListMessage = jqmSetListMessage;
   mymodule.jqmSetList = jqmSetList;
   mymodule.encodeEntities = encodeEntities;
+  mymodule.jqmReplaceListSection = jqmReplaceListSection;
 
   return mymodule;
 

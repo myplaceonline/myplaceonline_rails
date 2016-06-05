@@ -257,6 +257,10 @@ en:
       share: "Share"
       categories: "Categories"
       everything: "Everything"
+    categories:
+      no_results: "No Categories Found. Create New "
+    everything:
+      no_results: "No Data Found. Create New "
     html5:
       noaudio: "Your browser doesn't support embedded audio."
     periods:
