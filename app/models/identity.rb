@@ -370,7 +370,7 @@ class Identity < ActiveRecord::Base
     I18n.t(
       "myplaceonline.contacts.upcoming_birthday",
       name: identity.display,
-      delta: Myp.time_delta(identity.next_birthday)
+      delta: Myp.time_delta(calendar_item.calendar_item_time)
     )
   end
   

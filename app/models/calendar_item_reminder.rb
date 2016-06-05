@@ -10,6 +10,10 @@ class CalendarItemReminder < ActiveRecord::Base
 
   has_many :calendar_item_reminder_pendings, :dependent => :destroy
   
+  def display
+    Myp.display_datetime(calendar_item.calendar_item_time, User.current_user)
+  end
+  
   def self.ensure_pending_all_users()
     Rails.logger.info("ensure_pending_all_users start")
     got_lock = false
