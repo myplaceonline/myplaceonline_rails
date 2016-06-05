@@ -1532,7 +1532,7 @@ module Myp
     end
   end
   
-  def self.full_text_search(user, search)
+  def self.full_text_search(user, search, category: nil)
 
     if search.nil?
       search = ""
@@ -1547,20 +1547,51 @@ module Myp
     if !search.blank?
       
       # http://stackoverflow.com/questions/37082797/elastic-search-edge-ngram-match-query-on-all-being-ignored
-      search_results = UserIndex.query(
-        filtered: {
-          query: {
-            match: {
-              _all: search
-            }
-          },
-          filter: {
-            match: {
-              identity_id: user.primary_identity_id
+      
+      if category.blank?
+        query = {
+          filtered: {
+            query: {
+              match: {
+                _all: search
+              }
+            },
+            filter: {
+              match: {
+                identity_id: user.primary_identity_id
+              }
             }
           }
         }
-      ).limit(10).load.to_a
+      else
+        query = {
+          filtered: {
+            query: {
+              bool: {
+                must: [
+                  {
+                    match: {
+                      _all: search
+                    }
+                  },
+                  {
+                    match: {
+                      _type: category.singularize
+                    }
+                  }
+                ]
+              }
+            },
+            filter: {
+              match: {
+                identity_id: user.primary_identity_id
+              }
+            }
+          }
+        }
+      end
+      
+      search_results = UserIndex.query(query).limit(10).load.to_a
       
       search_results.sort! do |sr1, sr2|
         x1 = sr1.respond_to?("visit_count") && !sr1.visit_count.nil? ? sr1.visit_count : 0

@@ -92,9 +92,10 @@
   <script type="text/javascript">
     myplaceonline.onPageLoad(function() {
       myplaceonline.remoteDataListInitialize($(".searchable"), [
-        {title: "<%= t("myplaceonline.category." + controller.category_name) %>", url: "<%= send("#{controller.paths_name}_path") %>.json<%= raw(@query_params_part_all) %>", static_list: true}
         <% if Myp.full_text_search? %>
-        , {title: "<%= t("myplaceonline.general.everything") %>", url: "/api/search.json"}
+          {title: "<%= t("myplaceonline.category." + controller.category_name) %>", url: "/api/search.json?category=<%= controller.category_name %>"}
+        <% else %>
+          {title: "<%= t("myplaceonline.category." + controller.category_name) %>", url: "<%= send("#{controller.paths_name}_path") %>.json<%= raw(@query_params_part_all) %>", static_list: true}
         <% end %>
       ]);
       var input = $(".searchable_container input");
