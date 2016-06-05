@@ -26,6 +26,9 @@
 
   <script type="text/javascript">
   myplaceonline.onPageLoad(function() {
+    <% if !params[:prefill].blank? %>
+      $(".autofocus").attr("value", <%= raw(params[:prefill].to_json) %>);
+    <% end %>
     myplaceonline.maybeFocus(".autofocus");
   });
   </script>
