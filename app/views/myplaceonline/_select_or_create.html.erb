@@ -64,7 +64,9 @@ end
               $("#<%= random_name %>_searchable li").each(function(index) {
                 $(this).addClass('ui-btn-active');
               });
-              myplaceonline.hookListviewSearch($("#<%= random_name %>_searchable"), "<%= searchurl %>", function(ul) {
+              myplaceonline.remoteDataListInitialize($("#<%= random_name %>_searchable"), [
+                {title: "<%= t("myplaceonline.general.existing") + " " + heading %>", url: "<%= searchurl %>", static_list: true}
+              ], function(ul) {
                 ul.find("li a").each(function(index) {
                   $(this).attr("onclick", "<%= raw(Myp.select_listitem('#' + fieldid)) %>");
                 });

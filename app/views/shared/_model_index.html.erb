@@ -91,7 +91,12 @@
 
   <script type="text/javascript">
     myplaceonline.onPageLoad(function() {
-      myplaceonline.hookListviewSearch($(".searchable"), "<%= send("#{controller.paths_name}_path") %>.json<%= raw(@query_params_part_all) %>");
+      myplaceonline.remoteDataListInitialize($(".searchable"), [
+        {title: "<%= t("myplaceonline.category." + controller.category_name) %>", url: "<%= send("#{controller.paths_name}_path") %>.json<%= raw(@query_params_part_all) %>", static_list: true}
+        <% if Myp.full_text_search? %>
+        , {title: "<%= t("myplaceonline.general.everything") %>", url: "/api/search.json"}
+        <% end %>
+      ]);
       var input = $(".searchable_container input");
       myplaceonline.hookListviewEnter(input, ".searchable");
       <% if !@myplet %>
