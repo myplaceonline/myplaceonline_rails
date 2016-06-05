@@ -160,16 +160,25 @@ class ApiController < ApplicationController
     urlpath = params[:urlpath]
     urlsearch = params[:urlpath]
     urlhash = params[:urlhash]
+    
+    Rails.logger.debug{"newfile urlpath: #{urlpath}"}
+    
     if !urlpath.blank?
       spliturl = urlpath.split('/')
       if spliturl.length >= 3
         objclass = spliturl[1].singularize
         objid = spliturl[2]
-        obj = Myp.find_existing_object(objclass, objid, false)
-        authorize! :edit, obj
         
-        # Alrighty, we've got the object and the user is authorized, so
-        # now we can start the real work
+        if objid != "new"
+          obj = Myp.find_existing_object(objclass, objid, false)
+          authorize! :edit, obj
+
+          # Alrighty, we've got the object and the user is authorized, so
+          # now we can start the real work
+          Rails.logger.debug{"obj: #{obj.inspect}"}
+        else
+          obj = nil
+        end
         
         # We'll only have the file object, so just follow the path of params
         # for the object down to right above the file leaf node
@@ -178,7 +187,7 @@ class ApiController < ApplicationController
         prevkey = nil
         prevkey_full = nil
 
-        Rails.logger.debug{"initial node: #{paramnode}, obj: #{obj.inspect}"}
+        Rails.logger.debug{"initial node: #{paramnode}"}
         
         keepgoing = true
         while keepgoing do
@@ -201,32 +210,25 @@ class ApiController < ApplicationController
               if prevkey_full.end_with?("_attributes")
                 
                 Rails.logger.debug{"prevkey: #{prevkey}"}
-
-                prevkeyclass = Object.const_get(prevkey.singularize.to_s.camelize)
-
-                newfilewrapper = prevkeyclass.new(val)
                 
-                prevnode.send(prevkey) << newfilewrapper
+                if !obj.nil?
+                  prevkeyclass = Object.const_get(prevkey.singularize.to_s.camelize)
 
-                Rails.logger.debug{"saving: #{prevnode.inspect}"}
+                  newfilewrapper = prevkeyclass.new(val)
+                  
+                  prevnode.send(prevkey) << newfilewrapper
 
-                prevnode.save!
+                  Rails.logger.debug{"saving: #{prevnode.inspect}"}
 
-                newfile = newfilewrapper.identity_file
-                
-              else
-                Rails.logger.debug{"prevkey: #{prevkey}"}
+                  prevnode.save!
 
-                newfile = IdentityFile.new(val["identity_file_attributes"])
+                  newfile = newfilewrapper.identity_file
+                else
+                  newfile = IdentityFile.create(val["identity_file_attributes"])
+                end
 
                 Rails.logger.debug{"newfile: #{newfile.inspect}"}
-                
-                #prevnode.send(prevkey) << newfile
-
-                Rails.logger.debug{"prevkey: #{prevkey}, saving: #{prevnode.inspect}"}
-
-                #prevnode.save!
-                
+              else
                 raise "todo"
               end
               
@@ -278,17 +280,20 @@ class ApiController < ApplicationController
               prevnode = obj
               prevkey = key
               prevkey_full = pair[0]
-              obj = obj[ikey]
-              
-              Rails.logger.debug{"nested indexed node: #{obj.inspect}"}
-              
+              if !obj.nil?
+                obj = obj[ikey]
+                Rails.logger.debug{"nested indexed node: #{obj.inspect}"}
+              end
             end
           else
             prevnode = obj
             prevkey = key
             prevkey_full = pair[0]
-            obj = obj.send(key)
-            Rails.logger.debug{"nested node: #{obj.inspect}"}
+            
+            if !obj.nil?
+              obj = obj.send(key)
+              Rails.logger.debug{"nested node: #{obj.inspect}"}
+            end
           end
         end
       end
