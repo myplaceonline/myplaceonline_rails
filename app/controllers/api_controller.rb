@@ -232,8 +232,6 @@ class ApiController < ApplicationController
                 raise "todo"
               end
               
-              newfile.ensure_thumbnail
-              
               items = [
                 {
                   type: "raw",

@@ -1331,8 +1331,8 @@ en:
       salary_yearly: "Yearly Salary (Pre-Tax)"
     trips:
       trip: "Trip"
-      started: "Started"
-      ended: "Ended"
+      started: "Start"
+      ended: "End"
       notes: "Notes"
       location: "Location"
       work: "Work"

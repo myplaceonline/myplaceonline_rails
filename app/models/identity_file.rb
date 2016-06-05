@@ -47,6 +47,7 @@ class IdentityFile < ActiveRecord::Base
   end
   
   def do_before_create
+    Rails.logger.debug{"IdentityFile do_before_create"}
     if file_file_name.blank? && !file.nil?
       if !file.queued_for_write.nil? && file.queued_for_write[:original]
         self.file_file_name = file.queued_for_write[:original].original_filename
@@ -55,6 +56,7 @@ class IdentityFile < ActiveRecord::Base
   end
   
   def do_before_update
+    Rails.logger.debug{"IdentityFile do_before_update"}
     if self.file_file_size_changed?
       # Make sure any thumbnail is cleared (if it's a picture)
       clear_thumbnail
@@ -101,16 +103,20 @@ class IdentityFile < ActiveRecord::Base
     Rails.logger.info{"get_file_contents: Request for full image contents id #{self.id}"}
     result = nil
     if !self.file.nil?
-      #puts caller
-      #FileProxy.where(identity_file_id: self.id).first.file_contents
-      result = file.file_contents
+      result = self.file.file_contents
     end
     Rails.logger.info{"get_file_contents: Returning #{ result.nil? ? 0 : result.length }"}
     result
   end
   
-  def has_image?
-    !self.file.nil? && !self.file_content_type.nil? && (self.file_content_type.start_with?("image"))
+  after_commit :on_after_save, on: [:create, :update]
+  
+  def on_after_save
+    ensure_thumbnail
+  end
+
+  def is_image?
+    !self.file.nil? && !self.file_content_type.blank? && self.file_content_type.start_with?("image")
   end
 
   def has_thumbnail?
@@ -118,7 +124,8 @@ class IdentityFile < ActiveRecord::Base
   end
 
   def ensure_thumbnail
-    if self.thumbnail_contents.nil? && !self.thumbnail_skip
+    Rails.logger.debug{"IdentityFile ensure_thumbnail"}
+    if is_image? && self.thumbnail_contents.nil? && !self.thumbnail_skip
       Rails.logger.debug{"image_content: Generating thumbnail for #{self.id}"}
       image = Magick::Image::from_blob(self.get_file_contents)
       Rails.logger.debug{"image_content: Loaded image"}

@@ -285,6 +285,15 @@ class Trip < ActiveRecord::Base
           )
         )
       end
+      
+      # Always reset this on a create because otherwise if a save is done
+      # on the Trip outside the normal form method (where we could take care
+      # to set it to false), like adding a picture, then we'll notify
+      # emergency contacts of each change
+      if is_new
+        self.notify_emergency_contacts = false
+        self.save!
+      end
     end
   end
   

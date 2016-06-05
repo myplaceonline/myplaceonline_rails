@@ -11,7 +11,7 @@ class TripPicturesController < MyplaceonlineController
     "trip_pictures/form"
   end
 
-  def index_delete_all_link?
+  def index_destroy_all_link?
     true
   end
 
