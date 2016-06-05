@@ -1538,6 +1538,8 @@ module Myp
       search = ""
     end
     
+    original_search = search
+    
     search = search.strip.downcase
     
     Rails.logger.debug{"full_text_search: '#{search}'"}
@@ -1581,7 +1583,7 @@ module Myp
               nil,
               nil,
               nil,
-              search,
+              original_search,
               category.icon
             )
           end

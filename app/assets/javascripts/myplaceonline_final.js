@@ -440,8 +440,6 @@ var myplaceonline = function(mymodule) {
         return;
       }
       
-      value = value.trim();
-
       if (value.length > 0) {
         
         var i;
