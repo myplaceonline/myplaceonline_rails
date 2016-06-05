@@ -235,7 +235,7 @@ class ApiController < ApplicationController
               items = [
                 {
                   type: "raw",
-                  value: "<p>" + MyplaceonlineController.helpers.image_tag(file_thumbnail_path(newfile, :h => newfile.thumbnail_hash)) + "</p>"
+                  value: "<p>" + MyplaceonlineController.helpers.image_tag(file_thumbnail_path(newfile, :h => newfile.thumbnail_hash), alt: newfile.display, title: newfile.display) + "</p>"
                 },
                 {
                   type: "text",

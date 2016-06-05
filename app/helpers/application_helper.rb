@@ -210,15 +210,15 @@ module ApplicationHelper
       # may have been updated
       if has_thumbnail(identity_file)
         if useParams
-          content = image_tag(file_thumbnail_path(identity_file, :h => identity_file.thumbnail_hash, token: params[:token]))
+          content = image_tag(file_thumbnail_path(identity_file, :h => identity_file.thumbnail_hash, token: params[:token]), alt: identity_file.display, title: identity_file.display)
         else
-          content = image_tag(file_thumbnail_path(identity_file, :h => identity_file.thumbnail_hash))
+          content = image_tag(file_thumbnail_path(identity_file, :h => identity_file.thumbnail_hash), alt: identity_file.display, title: identity_file.display)
         end
       else
         if useParams
-          content = image_tag(file_view_path(identity_file, token: params[:token]))
+          content = image_tag(file_view_path(identity_file, token: params[:token]), alt: identity_file.display, title: identity_file.display)
         else
-          content = image_tag(file_view_path(identity_file))
+          content = image_tag(file_view_path(identity_file), alt: identity_file.display, title: identity_file.display)
         end
       end
       if link_to_original
