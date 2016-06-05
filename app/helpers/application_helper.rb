@@ -152,7 +152,7 @@ module ApplicationHelper
   
   def file_audio(identity_file)
     html = <<-HTML
-    <audio src="#{file_view_path(identity_file, token: params[:token])}" preload="none" controls>
+    <audio src="#{file_view_name_path(identity_file, identity_file.urlname, token: params[:token])}" preload="none" controls>
       <p>#{I18n.t("myplaceonline.html5.noaudio")}</p>
     </audio>
     #{ url_or_blank(file_download_path(identity_file, token: params[:token]), t("myplaceonline.files.download"), nil, "ui-btn ui-btn-inline", true) }
@@ -210,21 +210,21 @@ module ApplicationHelper
       # may have been updated
       if has_thumbnail(identity_file)
         if useParams
-          content = image_tag(file_thumbnail_path(identity_file, :h => identity_file.thumbnail_hash, token: params[:token]), alt: identity_file.display, title: identity_file.display)
+          content = image_tag(file_thumbnail_name_path(identity_file, identity_file.urlname, :h => identity_file.thumbnail_hash, token: params[:token]), alt: identity_file.display, title: identity_file.display)
         else
-          content = image_tag(file_thumbnail_path(identity_file, :h => identity_file.thumbnail_hash), alt: identity_file.display, title: identity_file.display)
+          content = image_tag(file_thumbnail_name_path(identity_file, identity_file.urlname, :h => identity_file.thumbnail_hash), alt: identity_file.display, title: identity_file.display)
         end
       else
         if useParams
-          content = image_tag(file_view_path(identity_file, token: params[:token]), alt: identity_file.display, title: identity_file.display)
+          content = image_tag(file_view_name_path(identity_file, identity_file.urlname, token: params[:token]), alt: identity_file.display, title: identity_file.display)
         else
-          content = image_tag(file_view_path(identity_file), alt: identity_file.display, title: identity_file.display)
+          content = image_tag(file_view_name_path(identity_file, identity_file.urlname), alt: identity_file.display, title: identity_file.display)
         end
       end
       if link_to_original
         if useParams
           url_or_blank(
-            file_view_path(identity_file, token: params[:token]),
+            file_view_name_path(identity_file, identity_file.urlname, token: params[:token]),
             content,
             nil,
             "externallink",
@@ -232,7 +232,7 @@ module ApplicationHelper
           )
         else
           url_or_blank(
-            file_view_path(identity_file),
+            file_view_name_path(identity_file, identity_file.urlname),
             content,
             nil,
             "externallink",
@@ -250,7 +250,7 @@ module ApplicationHelper
   def attribute_table_row_image(name, identity_file, link_to_original = true)
     content = image_content(identity_file, link_to_original)
     if !content.nil?
-      content += "<p>#{url_or_blank(file_path(identity_file, token: params[:token]), identity_file.file_file_name, nil, "", true)} | #{url_or_blank(file_download_path(identity_file, token: params[:token]), t("myplaceonline.files.download"), nil, "", true)}</p>".html_safe
+      content += "<p>#{url_or_blank(file_path(identity_file, token: params[:token]), identity_file.file_file_name, nil, "", true)} | #{url_or_blank(file_download_name_path(identity_file, identity_file.urlname, token: params[:token]), t("myplaceonline.files.download"), nil, "", true)}</p>".html_safe
       if !identity_file.notes.blank?
         content += Myp.markdown_to_html(identity_file.notes).html_safe
       end

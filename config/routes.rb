@@ -445,10 +445,14 @@ Rails.application.routes.draw do
   resources :identity_files, :as => "files", :path => "files", :controller => "files"
   post 'files/new'
   match 'files/:id/rotate', :to => 'files#rotate', via: [:get, :post], as: "file_rotate"
-  match 'files/:id/download', :to => 'files#download', via: [:get], as: "file_download"
-  match 'files/:id/view', :to => 'files#view', via: [:get], as: "file_view"
-  match 'files/:id/thumbnail', :to => 'files#thumbnail', via: [:get], as: "file_thumbnail"
   match 'files/:id/move', :to => 'files#move', via: [:get, :post], as: "file_move"
+
+  match 'files/:id/view', :to => 'files#view', via: [:get], as: "file_view"
+  match 'files/:id/view/:imagename', :to => 'files#view', via: [:get], as: "file_view_name"
+  match 'files/:id/thumbnail', :to => 'files#thumbnail', via: [:get], as: "file_thumbnail"
+  match 'files/:id/thumbnail/:imagename', :to => 'files#thumbnail', via: [:get], as: "file_thumbnail_name"
+  match 'files/:id/download', :to => 'files#download', via: [:get], as: "file_download"
+  match 'files/:id/download/:imagename', :to => 'files#download', via: [:get], as: "file_download_name"
 
   resources :identity_file_folders, :as => "file_folders", :path => "file_folders", :controller => "file_folders"
   post 'file_folders/new'

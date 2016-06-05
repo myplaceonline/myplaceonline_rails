@@ -33,6 +33,10 @@ class IdentityFile < ActiveRecord::Base
   def display
     file_file_name
   end
+  
+  def urlname
+    file_file_name
+  end
 
   def get_password(session)
     if !encrypted_password.nil?

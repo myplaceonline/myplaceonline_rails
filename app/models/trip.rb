@@ -185,19 +185,19 @@ class Trip < ActiveRecord::Base
       if !permission_share.permission_share_children.index{|psc| psc.subject_id == trip_picture.identity_file.id}.nil?
         result += "\n<hr />\n  <p>"
         if link_images
-          result += ActionController::Base.helpers.link_to file_view_url(
-              trip_picture.identity_file, token: permission_share.share.token
+          result += ActionController::Base.helpers.link_to file_view_name_url(
+              trip_picture.identity_file, trip_picture.identity_file.urlname, token: permission_share.share.token
             ) do
               ActionController::Base.helpers.image_tag(
-                file_thumbnail_url(
-                  trip_picture.identity_file, token: permission_share.share.token
+                file_thumbnail_name_url(
+                  trip_picture.identity_file, trip_picture.identity_file.urlname, token: permission_share.share.token
                 )
               )
             end
         else
           result += ActionController::Base.helpers.image_tag(
-            file_thumbnail_url(
-              trip_picture.identity_file, token: permission_share.share.token
+            file_thumbnail_name_url(
+              trip_picture.identity_file, trip_picture.identity_file.urlname, token: permission_share.share.token
             )
           )
         end
@@ -232,8 +232,8 @@ class Trip < ActiveRecord::Base
       result += "Pictures:\n=========\n"
       trip_pictures.each do |trip_picture|
         if !permission_share.permission_share_children.index{|psc| psc.subject_id == trip_picture.identity_file.id}.nil?
-          result += "* " + file_thumbnail_url(
-            trip_picture.identity_file, token: permission_share.share.token
+          result += "* " + file_thumbnail_name_url(
+            trip_picture.identity_file, trip_picture.identity_file.urlname, token: permission_share.share.token
           ) + "\n"
           if !trip_picture.identity_file.notes.blank?
             result += "   #{trip_picture.identity_file.notes}\n"
