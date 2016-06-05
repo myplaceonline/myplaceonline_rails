@@ -122,20 +122,19 @@ var myplaceonline = function(mymodule) {
           // Create a progress element and cancel button right below the
           // input field
           var newhtml = $("<fieldset class=\"progress_fieldset\"><legend>" + encodeEntities(filename) + "</legend><progress id=\"" + progressid + "\" class=\"width100\"></progress><button class=\"ui-btn\">Cancel</button></fieldset>");
-          newhtml.on('click', 'button', function(e) {
-            e.preventDefault();
-          });
           newhtml.insertAfter($this);
+          
+          var filecontext = {
+            tracker: newhtml,
+            fileControl: $this
+          };
 
-          $.ajax({
+          var jqxhr = $.ajax({
             type: "POST",
             url: "/api/newfile",
             data: formData,
             timeout: 0,
-            context: {
-              tracker: newhtml,
-              fileControl: $this
-            },
+            context: filecontext,
             xhr: function() {
               var myXhr = $.ajaxSettings.xhr();
               if (myXhr.upload){
@@ -174,7 +173,9 @@ var myplaceonline = function(mymodule) {
               alert("Unknown error. We've been notified. You may try again although we recommend refreshing the page first to remove any invalid state.");
             }
           }).fail(function(data) {
-            alert("Unknown error. We've been notified. You may try again although we recommend refreshing the page first to remove any invalid state.");
+            if (data.statusText != "abort") {
+              alert("Unknown error. We've been notified. You may try again although we recommend refreshing the page first to remove any invalid state.");
+            }
           }).always(function() {
             var files_processed = this.fileControl.attr("files_processed");
             files_processed++;
@@ -183,6 +184,29 @@ var myplaceonline = function(mymodule) {
               var itemswrapper = this.fileControl.parents(".itemswrapper").first();
               this.fileControl.parents(".itemwrapper").first().remove();
               form_set_positions(itemswrapper, true);
+            }
+          });
+          
+          filecontext.jqxhr = jqxhr
+
+          newhtml.on("click", "button", filecontext, function(e) {
+            e.preventDefault();
+            
+            // If it already completed successfully, then don't bother doing
+            // anything
+            if (e.data.jqxhr.readyState != 4) {
+              // It didn't complete, so abort the request to stop sending
+              // any pending data
+              e.data.jqxhr.abort();
+              
+              // However, it's possible the full POST has already been sent,
+              // in which case the file is already attached to the parent
+              // object. So we need to delete the file, so what we'll
+              // do is mark the context as pending delete and then when the
+              // request finishes, if the user hasn't completely navigated away,
+              // then we can separately delete it
+              
+              filecontext.pendingDelete = true; // TODO handle on the other side
             }
           });
         }

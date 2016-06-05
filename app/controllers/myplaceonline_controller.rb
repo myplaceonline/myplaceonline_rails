@@ -305,7 +305,14 @@ class MyplaceonlineController < ApplicationController
       end
     end
 
-    redirect_to index_path
+    if nested
+      set_parent
+      redirect_to url_for(@parent),
+          :flash => { :notice => I18n.t("myplaceonline.general.all_deleted") }
+    else
+      redirect_to index_path,
+          :flash => { :notice => I18n.t("myplaceonline.general.all_deleted") }
+    end
   end
 
   def path_name

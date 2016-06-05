@@ -155,7 +155,7 @@ class ApiController < ApplicationController
   
   def newfile
     result = {
-      :result => result
+      :result => false
     }
     urlpath = params[:urlpath]
     urlsearch = params[:urlpath]
@@ -231,12 +231,6 @@ class ApiController < ApplicationController
               end
               
               newfile.ensure_thumbnail
-              
-              if newfile.has_thumbnail?
-                html = "thubmnail"
-              else
-                html = "no thumbnail"
-              end
               
               items = [
                 {

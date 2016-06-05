@@ -184,6 +184,7 @@ en:
       edit: "Edit"
       delete: "Delete"
       delete_all: "Delete All"
+      all_deleted: "All items deleted successfully"
       deleteaccount: "Delete Account"
       register: "Register"
       import: "Import"
