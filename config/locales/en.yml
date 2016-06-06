@@ -257,6 +257,7 @@ en:
       share: "Share"
       categories: "Categories"
       everything: "Everything"
+      search: "Search"
     categories:
       no_results: "No Categories Found. Create New "
     everything:
