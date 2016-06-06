@@ -170,11 +170,11 @@ var myplaceonline = function(mymodule) {
               form_set_positions(this.fileControl);
               myplaceonline.createSuccessNotification(data.successNotification + " (" + (parseInt(this.fileControl.attr("files_processed")) + 1) + "/" + this.fileControl.attr("files_selected") + ")");
             } else {
-              alert("Unknown error. We've been notified. You may try again although we recommend refreshing the page first to remove any invalid state.");
+              myplaceonline.createErrorNotification("Unknown error. We've been notified. You may try again although we recommend refreshing the page first to remove any invalid state.");
             }
           }).fail(function(data) {
             if (data.statusText != "abort") {
-              alert("Unknown error. We've been notified. You may try again although we recommend refreshing the page first to remove any invalid state.");
+              myplaceonline.createErrorNotification("Unknown error. We've been notified. You may try again although we recommend refreshing the page first to remove any invalid state.");
             }
           }).always(function() {
             var files_processed = this.fileControl.attr("files_processed");
