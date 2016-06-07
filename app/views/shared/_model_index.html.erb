@@ -93,7 +93,7 @@
     myplaceonline.onPageLoad(function() {
       myplaceonline.remoteDataListInitialize($(".searchable"), [
         <% if Myp.full_text_search? %>
-          {title: "<%= t("myplaceonline.category." + controller.category_name) %>", url: "/api/search.json?category=<%= controller.category_name %>"}
+          {title: "<%= t("myplaceonline.category." + controller.category_name) %>", url: "/api/search.json?category=<%= controller.search_index_name %>"}
         <% else %>
           {title: "<%= t("myplaceonline.category." + controller.category_name) %>", url: "<%= send("#{controller.paths_name}_path") %>.json<%= raw(@query_params_part_all) %>", static_list: true}
         <% end %>

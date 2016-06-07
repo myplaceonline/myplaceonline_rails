@@ -473,6 +473,10 @@ class MyplaceonlineController < ApplicationController
     false
   end
   
+  def search_index_name
+    category_name
+  end
+  
   protected
   
     def deny_guest

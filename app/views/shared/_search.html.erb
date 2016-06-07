@@ -36,7 +36,7 @@ myplaceonline.onPageLoad(function() {
         url: "/api/search.json",
         noresults: function(list, remote, section, search) {
           myplaceonline.jqmReplaceListSection(list, section, [{
-            title: "<%= t("myplaceonline.everything.no_results") %><form action='<%= api_newitem_path %>' style='display: inline;'><%= raw(select_html) %><input type='hidden' name='q' value='" + myplaceonline.encodeEntities(search) + "' /><input type='submit' value='Go' /></form>",
+            title: "<%= t("myplaceonline.everything.no_results") %><br/><form action='<%= api_newitem_path %>' style='display: inline;'><%= raw(select_html) %><input type='hidden' name='q' value='" + myplaceonline.encodeEntities(search) + "' /><br /><input type='submit' value='Go' /></form>",
             filtertext: search,
             fake: true
           }]);

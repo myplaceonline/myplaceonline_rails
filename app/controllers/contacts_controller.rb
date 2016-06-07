@@ -111,6 +111,10 @@ class ContactsController < MyplaceonlineController
     }
   end
 
+  def search_index_name
+    Identity.table_name
+  end
+  
   protected
 
     def sorts
