@@ -1,0 +1,12 @@
+<%= render layout: "shared/model_index" do %>
+  <%=
+    render partial: 'myplaceonline/filter_select', locals: {
+      filters: [
+        {
+          :name => :not_visited,
+          :display => "myplaceonline.meadows.not_visited"
+        }
+      ]
+    }
+  %>
+<% end %>

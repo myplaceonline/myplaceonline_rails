@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :meadows
+  post 'meadows/new'
+  
   resources :bets
   post 'bets/new'
 

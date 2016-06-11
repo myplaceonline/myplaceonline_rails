@@ -1,0 +1,8 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row_reference(t("myplaceonline.meadows.location"), "location_path", @obj.location) %>
+  <%= attribute_table_row_select(t("myplaceonline.meadows.rating"), @obj.rating, Myp::RATINGS) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.meadows.visited"), @obj.visited) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.meadows.notes"), @obj.notes) %>
+  
+<% end %>

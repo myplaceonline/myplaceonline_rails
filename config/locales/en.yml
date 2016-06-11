@@ -168,6 +168,7 @@ en:
       website_domains: "Website Domains"
       bets: "Bets"
       trip_pictures: "Trip Pictures"
+      meadows: "Meadows"
     general:
       email: "E-mail"
       password: "Password"
@@ -2334,3 +2335,9 @@ en:
     trip_pictures:
       trip: "Trip"
       picture: "Picture"
+    meadows:
+      location: "Location"
+      rating: "Rating"
+      notes: "Notes"
+      visited: "Visited"
+      not_visited: "Not Visited"
