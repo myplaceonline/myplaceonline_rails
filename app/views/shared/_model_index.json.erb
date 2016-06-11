@@ -1,8 +1,21 @@
 <%=
-@objs.map { |obj|
-  {
-    :title => controller.display_obj(obj),
-    :link => controller.obj_path(obj)
-  }
-}.to_json.html_safe
+if params[:select_or_create] == "true"
+  @objs.map { |obj|
+    t = controller.display_obj(obj)
+    l = controller.obj_path(obj)
+    {
+      :title => t,
+      :link => l,
+      :splitLink => l,
+      :splitLinkTitle => t
+    }
+  }.to_json.html_safe
+else
+  @objs.map { |obj|
+    {
+      :title => controller.display_obj(obj),
+      :link => controller.obj_path(obj)
+    }
+  }.to_json.html_safe
+end
 %>

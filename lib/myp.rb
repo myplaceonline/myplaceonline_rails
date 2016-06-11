@@ -1633,4 +1633,12 @@ module Myp
   def self.full_text_search?
     !ENV["FTS_TARGET"].blank?
   end
+  
+  def self.append_query_parameter(url, param_name, param_value)
+    if url.index("?").nil?
+      url + "?" + param_name + "=" + param_value
+    else
+      url + "&" + param_name + "=" + param_value
+    end
+  end
 end

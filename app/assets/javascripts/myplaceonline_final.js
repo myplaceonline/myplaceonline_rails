@@ -253,7 +253,7 @@ var myplaceonline = function(mymodule) {
         html += "</a>";
       }
       if (x.splitLink) {
-        html += "<a href='" + x.splitLink + "'>" + x.splitLinkTitle + "</a>";
+        html += "<a href='" + x.splitLink + "' class='splitlink'>" + x.splitLinkTitle + "</a>";
       }
       html += "</li>";
     });

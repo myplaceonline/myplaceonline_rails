@@ -53,7 +53,8 @@ end
             <ul id="<%= random_name %>_searchable" data-role="listview" data-inset="true" data-filter="true" data-icon="false" data-filter-placeholder="<%= t("myplaceonline.search.placeholder") %>">
               <% if !existingobj.nil? && !existingobj.id.nil? %>
                 <li>
-                  <%= link_to existingobj.display, send(existingobjurl, existingobj), onclick: Myp.select_listitem('#' + fieldid) %>
+                  <%= link_to(existingobj.display, send(existingobjurl, existingobj), onclick: Myp.select_listitem('#' + fieldid)) %>
+                  <%= link_to(existingobj.display, send(existingobjurl, existingobj), :class => "splitlink") %>
                 </li>
               <% end %>
             </ul>
@@ -65,9 +66,9 @@ end
                 $(this).addClass('ui-btn-active');
               });
               myplaceonline.remoteDataListInitialize($("#<%= random_name %>_searchable"), [
-                {title: "<%= t("myplaceonline.general.existing") + " " + heading %>", url: "<%= searchurl %>", static_list: true}
+                {title: "<%= t("myplaceonline.general.existing") + " " + heading %>", url: "<%= raw(Myp.append_query_parameter(searchurl, "select_or_create", "true")) %>", static_list: true}
               ], function(ul) {
-                ul.find("li a").each(function(index) {
+                ul.find("li a:not(.splitlink)").each(function(index) {
                   $(this).attr("onclick", "<%= raw(Myp.select_listitem('#' + fieldid)) %>");
                 });
                 <% if always_search %>
