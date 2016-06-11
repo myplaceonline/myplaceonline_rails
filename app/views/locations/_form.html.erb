@@ -45,7 +45,9 @@ $("#<%= extract_id(postal_code_field) %>").on("keyup", function(x) {
   }).done(function(data, textStatus, jqXHR) {
     // Responses can come in out-of-order; only take the latest
     if (this.postal_code_field.data("queryCount") == this.queryCount && data.result) {
-      $("#<%= extract_id(sub_region1_field) %>").val(data.sub_region1);
+      var sub_region1_field = $("#<%= extract_id(sub_region1_field) %>");
+      sub_region1_field.val(data.sub_region1);
+      sub_region1_field.selectmenu("refresh");
       $("#<%= extract_id(sub_region2_field) %>").val(data.sub_region2);
       myplaceonline.createSuccessNotification(data.looked_up_postal_code);
     }

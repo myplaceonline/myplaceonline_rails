@@ -310,6 +310,18 @@ class ApiController < ApplicationController
     q = params[:q]
     region = params[:region]
     if !q.blank? && !region.blank?
+      info = ZIP_CODE.find(q)
+      if !info.nil?
+        result[:sub_region1] = info["state"]
+        result[:sub_region2] = info["city"].titleize
+        result[:looked_up_postal_code] = I18n.t(
+          "myplaceonline.locations.looked_up_postal_code",
+          sub_region1: result[:sub_region1],
+          sub_region2: result[:sub_region2],
+          postal_code: q
+        )
+        result[:result] = true
+      end
     end
     render json: result
   end
