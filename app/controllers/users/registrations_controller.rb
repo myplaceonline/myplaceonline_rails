@@ -395,7 +395,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   protected
   
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up).push(:invite_code)
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:invite_code])
   end
   
   def after_sign_up_path_for(resource)
