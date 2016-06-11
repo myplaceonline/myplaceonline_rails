@@ -110,6 +110,7 @@ class MyplaceonlineController < ApplicationController
       create
     else
       new_prerespond
+      Rails.logger.debug{"myplaceonline_controller new: #{@obj.inspect}"}
       respond_with(@obj)
     end
   end

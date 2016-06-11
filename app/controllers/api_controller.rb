@@ -303,6 +303,17 @@ class ApiController < ApplicationController
     redirect_to params[:newitemcategory] + "?prefill=" + params[:q]
   end
   
+  def postal_code_search
+    result = {
+      result: false
+    }
+    q = params[:q]
+    region = params[:region]
+    if !q.blank? && !region.blank?
+    end
+    render json: result
+  end
+
   protected
     def json_error(error)
       render json: {

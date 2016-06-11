@@ -3,18 +3,55 @@
 <%= myp_text_field(f, :address1, "myplaceonline.locations.address1", obj.address1) %>
 <%= myp_text_field(f, :address2, "myplaceonline.locations.address2", obj.address2) %>
 <%= myp_text_field(f, :address3, "myplaceonline.locations.address3", obj.address3) %>
-<%= myp_text_field(f, :sub_region2, "myplaceonline.general.sub_region2", obj.sub_region2) %>
-<%= myp_subregion_field(f, :sub_region1, "myplaceonline.general.sub_region1", obj.region, obj.sub_region1) %>
-<%= myp_text_field(f, :postal_code, "myplaceonline.locations.postal_code", obj.postal_code) %>
-<%= myp_region_field(f, :region, "myplaceonline.general.region", obj.region) %>
 <%
-latitude_field = myp_decimal_field(f, :latitude, "myplaceonline.locations.latitude", obj.latitude, false, nil, 0.0000001)
-longitude_field = myp_decimal_field(f, :longitude, "myplaceonline.locations.longitude", obj.longitude, false, nil, 0.0000001)
-random_name = SecureRandom.hex(10)
+  region_field = myp_region_field(f, :region, "myplaceonline.general.region", obj.region)
+  postal_code_field = myp_text_field(f, :postal_code, "myplaceonline.locations.postal_code", obj.postal_code)
+  sub_region2_field = myp_text_field(f, :sub_region2, "myplaceonline.general.sub_region2", obj.sub_region2)
+  sub_region1_field = myp_subregion_field(f, :sub_region1, "myplaceonline.general.sub_region1", obj.region, obj.sub_region1)
+%>
+<%= region_field %>
+<%= postal_code_field %>
+<%= sub_region2_field %>
+<%= sub_region1_field %>
+<%
+  latitude_field = myp_decimal_field(f, :latitude, "myplaceonline.locations.latitude", obj.latitude, false, nil, 0.00000001)
+  longitude_field = myp_decimal_field(f, :longitude, "myplaceonline.locations.longitude", obj.longitude, false, nil, 0.00000001)
+  random_name = SecureRandom.hex(10)
 %>
 <%= latitude_field %>
 <%= longitude_field %>
 <script>
+
+$("#<%= extract_id(postal_code_field) %>").on("keyup", function(x) {
+  var $this = $(this);
+  var postal_code = $this.val();
+  var queryCount = $this.data("queryCount");
+  if (!queryCount) {
+    queryCount = 0;
+  }
+  queryCount++;
+  $this.data("queryCount", queryCount);
+  $.get({
+    url: "/api/postal_code_search",
+    dataType: "json",
+    context: {
+      postal_code_field: $this,
+      queryCount: queryCount
+    },
+    data: {
+      q: postal_code,
+      region: $("#<%= extract_id(region_field) %>").val()
+    }
+  }).done(function(data, textStatus, jqXHR) {
+    // Responses can come in out-of-order; only take the latest
+    if (this.postal_code_field.data("queryCount") == this.queryCount && data.result) {
+      $("#<%= extract_id(sub_region1_field) %>").val(data.sub_region1);
+      $("#<%= extract_id(sub_region2_field) %>").val(data.sub_region2);
+      myplaceonline.createSuccessNotification(data.looked_up_postal_code);
+    }
+  });
+});
+
 function location_gps_success<%= random_name %>(location) {
   $("#<%= extract_id(latitude_field) %>").val(location.coords.latitude);
   $("#<%= extract_id(longitude_field) %>").val(location.coords.longitude);
