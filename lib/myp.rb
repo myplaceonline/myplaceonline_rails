@@ -1463,6 +1463,33 @@ module Myp
     end
   end
   
+  def self.import_zip_codes
+    file = Rails.root.join('lib', 'data', 'zip_code_lookup', 'zip_code_lookup.yml')
+
+    zip_codes = YAML.load_file(file)
+    
+    UsZipCode.delete_all
+
+    zip_codes.each do |zip_code|
+      if zip_code.length == 2
+        code = zip_code[0]
+        json = zip_code[1]
+        UsZipCode.create(
+          zip_code: code,
+          city: json["city"].titleize,
+          state: json["state"],
+          latitude: json["latitude"].to_f, 
+          longitude: json["longitude"].to_f,
+          county: json["county"].titleize,
+        )
+      else
+        raise "Error"
+      end
+    end
+    
+    true
+  end
+  
   def self.original_url(request)
     result = request.original_url
     if Rails.env.production? && result.start_with?("http:")

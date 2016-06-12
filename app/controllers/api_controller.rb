@@ -309,11 +309,11 @@ class ApiController < ApplicationController
     }
     q = params[:q]
     region = params[:region]
-    if !q.blank? && !region.blank?
-      info = ZIP_CODE.find(q)
-      if !info.nil?
-        result[:sub_region1] = info["state"]
-        result[:sub_region2] = info["city"].titleize
+    if !q.blank? && q.length == 5 && !region.blank?
+      zip_code = UsZipCode.where(zip_code: q).first
+      if !zip_code.nil?
+        result[:sub_region1] = zip_code.state
+        result[:sub_region2] = zip_code.city
         result[:looked_up_postal_code] = I18n.t(
           "myplaceonline.locations.looked_up_postal_code",
           sub_region1: result[:sub_region1],
