@@ -19,7 +19,7 @@ class DiaryEntry < ActiveRecord::Base
   
   validate do
     if entry.blank? && entry_encrypted.nil?
-      errors.add(:entry, t("myplaceonline.general.non_blank"))
+      errors.add(:entry, I18n.t("myplaceonline.general.non_blank"))
     end
   end
 
