@@ -16,7 +16,12 @@ class DiaryEntriesController < MyplaceonlineController
       params.require(:diary_entry).permit(
         :diary_time,
         :entry,
-        :diary_title
+        :diary_title,
+        :encrypt
       )
+    end
+
+    def sensitive
+      true
     end
 end

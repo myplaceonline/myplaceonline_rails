@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160612014517) do
+ActiveRecord::Schema.define(version: 20160617023606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -928,10 +928,12 @@ ActiveRecord::Schema.define(version: 20160612014517) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "diary_title", limit: 255
+    t.string   "diary_title",        limit: 255
     t.integer  "visit_count"
+    t.integer  "entry_encrypted_id"
   end
 
+  add_index "diary_entries", ["entry_encrypted_id"], name: "index_diary_entries_on_entry_encrypted_id", using: :btree
   add_index "diary_entries", ["identity_id"], name: "index_diary_entries_on_identity_id", using: :btree
 
   create_table "doctor_visits", force: :cascade do |t|
@@ -3254,6 +3256,7 @@ ActiveRecord::Schema.define(version: 20160612014517) do
   add_foreign_key "desired_locations", "websites"
   add_foreign_key "dessert_locations", "identities"
   add_foreign_key "dessert_locations", "locations"
+  add_foreign_key "diary_entries", "encrypted_values", column: "entry_encrypted_id"
   add_foreign_key "drafts", "identities"
   add_foreign_key "email_contacts", "contacts"
   add_foreign_key "email_contacts", "emails"
