@@ -4,6 +4,9 @@ class TimingEvent < ActiveRecord::Base
 
   belongs_to :timing
   
+  validates :timing_event_start, presence: true
+  validates :timing_event_end, presence: true
+  
   def display
     Myp.seconds_to_time_in_general_human_detailed_hms(duration)
   end
