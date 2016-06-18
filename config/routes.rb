@@ -500,6 +500,7 @@ Rails.application.routes.draw do
   get 'info/credits'
   get 'info/diagnostics'
   get 'info/sleep_time'
+  get 'info/raise_server_exception'
   get 'info/faq'
   get 'info/tips'
   get 'info/about'

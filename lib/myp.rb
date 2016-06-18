@@ -1199,6 +1199,7 @@ module Myp
         body += "Headers: {\n  #{self.process_headers(request)}\n}\n"
       end
     end
+    body += "\nServer: #{ENV["NODENAME"]}"
     puts "handle_exception: " + body
     Myp.send_support_email_safe("User Exception", body)
   end
