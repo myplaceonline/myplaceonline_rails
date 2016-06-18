@@ -347,7 +347,12 @@ class MyplaceonlineController < ApplicationController
   
   def display_obj_bubble(obj)
     if use_bubble?
-      " <span class=\"ui-li-count\">#{bubble_text(obj)}</span>"
+      btext = bubble_text(obj)
+      if !btext.blank?
+        " <span class=\"ui-li-count\">#{btext}</span>"
+      else
+        ""
+      end
     else
       ""
     end

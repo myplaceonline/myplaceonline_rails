@@ -3,9 +3,17 @@ class EventsController < MyplaceonlineController
     true
   end
 
+  def use_bubble?
+    true
+  end
+  
+  def bubble_text(obj)
+    Myp.display_date_short_year(obj.event_time, User.current_user)
+  end
+
   protected
     def sorts
-      ["lower(events.event_name) ASC"]
+      ["events.event_time DESC"]
     end
     
     def obj_params
