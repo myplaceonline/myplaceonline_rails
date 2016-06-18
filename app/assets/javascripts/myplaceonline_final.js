@@ -935,11 +935,17 @@ var myplaceonline = function(mymodule) {
     var result = prompt(prompt_text);
     if (result) {
       var url = "/api/quickfeedback.json";
+      var data = {
+        user_input: result,
+        urlpath: window.location.pathname,
+        urlsearch: window.location.search,
+        urlhash: window.location.hash
+      };
       $.ajax({
         url: url,
         method: "POST",
         dataType: "json",
-        data: result
+        data: data
       }).done(function(data, textStatus, jqXHR) {
         myplaceonline.createSuccessNotification("Feedback submitted successfully");
       }).fail(function(jqXHR, textStatus, errorThrown) {

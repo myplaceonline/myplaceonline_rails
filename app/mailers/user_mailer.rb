@@ -1,9 +1,14 @@
 class UserMailer < ActionMailer::Base
   default from: Myplaceonline::DEFAULT_SUPPORT_EMAIL
   
-  def send_support_email(from, subject, content)
+  def send_support_email(from, subject, content, content_plain = nil)
     @from = from
     @content = content
+    if !content_plain.nil?
+      @content_plain = content_plain
+    else
+      @content_plain = @content
+    end
     mail(to: Myplaceonline::DEFAULT_SUPPORT_EMAIL, subject: subject)
   end
   

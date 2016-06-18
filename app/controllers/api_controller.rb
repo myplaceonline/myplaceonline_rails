@@ -58,8 +58,15 @@ class ApiController < ApplicationController
   
   def quickfeedback
     if !current_user.nil? && !current_user.primary_identity.nil?
+      user_input = params[:user_input]
       begin
-        UserMailer.send_support_email(current_user.email, "Quick Feedback", request.raw_post).deliver_now
+        content = user_input + "\n\n" + params.except(:user_input).inspect
+        UserMailer.send_support_email(
+          current_user.email,
+          "Quick Feedback",
+          content,
+          content
+        ).deliver_now
         render json: {
           :result => true
         }
