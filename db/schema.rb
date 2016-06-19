@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160617023606) do
+ActiveRecord::Schema.define(version: 20160619165716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3122,6 +3122,20 @@ ActiveRecord::Schema.define(version: 20160617023606) do
 
   add_index "warranties", ["identity_id"], name: "index_warranties_on_identity_id", using: :btree
 
+  create_table "web_comics", force: :cascade do |t|
+    t.string   "web_comic_name"
+    t.integer  "website_id"
+    t.integer  "feed_id"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "web_comics", ["feed_id"], name: "index_web_comics_on_feed_id", using: :btree
+  add_index "web_comics", ["identity_id"], name: "index_web_comics_on_identity_id", using: :btree
+  add_index "web_comics", ["website_id"], name: "index_web_comics_on_website_id", using: :btree
+
   create_table "website_domain_registrations", force: :cascade do |t|
     t.integer  "website_domain_id"
     t.integer  "repeat_id"
@@ -3348,6 +3362,9 @@ ActiveRecord::Schema.define(version: 20160617023606) do
   add_foreign_key "tv_shows", "contacts", column: "recommender_id"
   add_foreign_key "tv_shows", "identities"
   add_foreign_key "volunteering_activities", "identities"
+  add_foreign_key "web_comics", "feeds"
+  add_foreign_key "web_comics", "identities"
+  add_foreign_key "web_comics", "websites"
   add_foreign_key "website_domain_registrations", "identities"
   add_foreign_key "website_domain_registrations", "periodic_payments"
   add_foreign_key "website_domain_registrations", "repeats"

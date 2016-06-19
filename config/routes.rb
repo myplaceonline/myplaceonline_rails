@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :web_comics
+  post 'web_comics/new'
+  
   resources :meadows
   post 'meadows/new'
   

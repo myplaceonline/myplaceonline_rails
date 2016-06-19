@@ -1,0 +1,2 @@
+module WebComicsHelper
+end

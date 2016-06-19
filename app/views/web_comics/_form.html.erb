@@ -1,0 +1,28 @@
+<%= myp_text_field(f, :web_comic_name, "myplaceonline.web_comics.web_comic_name", obj.web_comic_name, autofocus) %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :website,
+    existingobj: obj.website,
+    heading: t("myplaceonline.web_comics.website"),
+    objform: "websites/form",
+    existingobjurl: "website_path",
+    searchurl: "/websites.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :feed,
+    existingobj: obj.feed,
+    heading: t("myplaceonline.web_comics.feed"),
+    objform: "feeds/form",
+    existingobjurl: "feed_path",
+    searchurl: "/feeds.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    collapsed: obj.feed.nil?
+  }
+%>

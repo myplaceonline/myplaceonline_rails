@@ -169,6 +169,7 @@ en:
       bets: "Bets"
       trip_pictures: "Trip Pictures"
       meadows: "Meadows"
+      web_comics: "Web Comics"
     general:
       email: "E-mail"
       password: "Password"
@@ -2342,3 +2343,7 @@ en:
       notes: "Notes"
       visited: "Visited"
       not_visited: "Not Visited"
+    web_comics:
+      web_comic_name: "Name"
+      website: "Website"
+      feed: "Feed"

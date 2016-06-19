@@ -149,6 +149,7 @@ class Identity < ActiveRecord::Base
   has_many :website_domains, :dependent => :destroy
   has_many :bets, :dependent => :destroy
   has_many :meadows, :dependent => :destroy
+  has_many :web_comics, :dependent => :destroy
   
   has_many :myplets, -> { order('y_coordinate') }, :dependent => :destroy
   accepts_nested_attributes_for :myplets, allow_destroy: true, reject_if: :all_blank
@@ -317,6 +318,7 @@ class Identity < ActiveRecord::Base
       :website_domains => website_domains.to_a.sort{ |a,b| a.domain_name.downcase <=> b.domain_name.downcase }.map{|x| x.as_json},
       :bets => bets.to_a.sort{ |a,b| a.bet_name.downcase <=> b.bet_name.downcase }.map{|x| x.as_json},
       :meadows => meadows.to_a.map{|x| x.as_json},
+      :web_comics => web_comics.to_a.sort{ |a,b| a.web_comic_name.downcase <=> b.web_comic_name.downcase }.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

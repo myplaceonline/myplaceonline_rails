@@ -1,0 +1,7 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.web_comics.web_comic_name"), @obj.web_comic_name) %>
+  <%= attribute_table_row_reference(t("myplaceonline.web_comics.website"), "website_path", @obj.website) %>
+  <%= attribute_table_row_reference(t("myplaceonline.web_comics.feed"), "feed_path", @obj.feed) %>
+  
+<% end %>

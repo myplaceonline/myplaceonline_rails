@@ -118,7 +118,8 @@ Category.create!([
   {id: 3, name: "meaning", link: "meaning", position: 1, parent_id: nil, additional_filtertext: nil, icon: "famfamfam/lightbulb.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: true},
   {id: 51, name: "finance", link: "finance", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/coins.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: true},
   {id: 112, name: "cafes", link: "cafes", position: 0, parent_id: 2, additional_filtertext: "coffee shop cafe", icon: "FatCow_Icons16x16/cup.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 152, name: "meadows", link: "meadows", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/butterfly.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
+  {id: 152, name: "meadows", link: "meadows", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/butterfly.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 153, name: "web_comics", link: "web_comics", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/stickman.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
 ])
 
 user = User.new
