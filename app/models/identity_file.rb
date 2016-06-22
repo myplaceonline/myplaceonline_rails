@@ -123,14 +123,18 @@ class IdentityFile < ActiveRecord::Base
     !self.file.nil? && !self.file_content_type.blank? && self.file_content_type.start_with?("image")
   end
 
+  def is_thumbnailable?
+    self.file_content_type.index("x-xcf").nil?
+  end
+  
   def has_thumbnail?
     !self.thumbnail_skip && !self.thumbnail_contents.nil?
   end
 
   def ensure_thumbnail
     Rails.logger.debug{"IdentityFile ensure_thumbnail"}
-    if is_image? && self.thumbnail_contents.nil? && !self.thumbnail_skip
-      Rails.logger.debug{"image_content: Generating thumbnail for #{self.id}"}
+    if is_image? && self.thumbnail_contents.nil? && !self.thumbnail_skip && is_thumbnailable?
+      Rails.logger.debug{"image_content: Generating thumbnail for #{self.id}, type #{self.file_content_type}"}
       image = Magick::Image::from_blob(self.get_file_contents)
       Rails.logger.debug{"image_content: Loaded image"}
       image = image.first
