@@ -1,0 +1,8 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.projects.project_name"), @obj.project_name) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), @obj.notes) %>
+  <%= attribute_table_row_date(t("myplaceonline.projects.start_date"), @obj.start_date) %>
+  <%= attribute_table_row_date(t("myplaceonline.projects.end_date"), @obj.end_date) %>
+  
+<% end %>

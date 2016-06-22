@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :projects
+  post 'projects/new'
+  
   resources :web_comics
   post 'web_comics/new'
   

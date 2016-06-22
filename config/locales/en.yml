@@ -170,6 +170,7 @@ en:
       trip_pictures: "Trip Pictures"
       meadows: "Meadows"
       web_comics: "Web Comics"
+      projects: "Projects"
     general:
       email: "E-mail"
       password: "Password"
@@ -2349,3 +2350,7 @@ en:
       web_comic_name: "Name"
       website: "Website"
       feed: "Feed"
+    projects:
+      project_name: "Name"
+      start_date: "Start Date"
+      end_date: "End Date"
