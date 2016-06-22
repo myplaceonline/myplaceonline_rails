@@ -1475,6 +1475,7 @@ en:
       cell: "Cell"
       home: "Home"
       temporary: "Temporary"
+      phone: "Phone"
     diary_entries:
       diary_time: "Time"
       entry: "Entry"

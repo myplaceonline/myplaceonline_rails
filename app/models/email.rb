@@ -142,7 +142,9 @@ class Email < ActiveRecord::Base
           final_content += "#{user_display_short}<br />\n"
         end
         final_content += "<a href=\"mailto:#{user_email}\">#{user_email}</a>"
-        final_content += "<br />\n" + identity.phone_numbers.map{|p| "<a href=\"tel:#{p}\">#{p}</a>"}.join(" | ")
+        if identity.phone_numbers.count > 0
+          final_content += identity.identity_phones.to_a.map{|p| "\n<br />#{p.context_info}: <a href=\"tel:#{p.number}\">#{p.number}</a>"}.join("")
+        end
         final_content += "\n</p>\n\n"
 
         final_content += "<hr />\n"
@@ -169,7 +171,7 @@ class Email < ActiveRecord::Base
         end
         final_content_plain += "#{user_email}\n"
         if identity.phone_numbers.count > 0
-          final_content_plain += identity.phone_numbers.join(" | ") + "\n"
+          final_content_plain += identity.identity_phones.to_a.map{|p| "#{p.context_info}: #{p.number}\n"}.join("")
         end
 
         final_content_plain += "\n==\n\n"
