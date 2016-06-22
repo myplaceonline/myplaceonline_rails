@@ -193,7 +193,8 @@ class Email < ActiveRecord::Base
           cc_hash.keys,
           bcc_hash.keys,
           final_content_plain,
-          identity.user.email
+          identity.user.email,
+          from_prefix: user_display_short
         )
         
         if !contact.nil?

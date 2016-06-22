@@ -2187,6 +2187,7 @@ en:
       contacts: "Contacts"
       draft: "Draft"
       send: "Send"
+      from_prefix_context: "from"
       personalize_description: "Select recipients and optionally personalize each message:"
       personalize: "Personalize"
       personalize_title: "Add personalized messages for certain people. Also, if you selected a group, personalization allows you to exclude emails to certain people in the selected groups."
