@@ -338,6 +338,7 @@ en:
     info:
       title: "Information"
       apk: "Android Beta APK"
+      apk: "Android Test Application APK"
       about: "About Myplaceonline"
       contact: "Contact"
       credits: "Credits"
