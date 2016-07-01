@@ -55,7 +55,7 @@ GEM
     addressable (2.4.0)
     arel (6.0.3)
     bcrypt (3.1.11)
-    browser (2.1.0)
+    browser (2.2.0)
     builder (3.2.2)
     calculus (0.2.0)
     cancan (1.6.10)
@@ -91,13 +91,13 @@ GEM
       railties (>= 4.1.0, < 5.1)
       responders
       warden (~> 1.2.3)
-    elasticsearch (1.0.17)
-      elasticsearch-api (= 1.0.17)
-      elasticsearch-transport (= 1.0.17)
-    elasticsearch-api (1.0.17)
+    elasticsearch (1.0.18)
+      elasticsearch-api (= 1.0.18)
+      elasticsearch-transport (= 1.0.18)
+    elasticsearch-api (1.0.18)
       multi_json
     elasticsearch-rails (0.1.9)
-    elasticsearch-transport (1.0.17)
+    elasticsearch-transport (1.0.18)
       faraday
       multi_json
     erubis (2.7.0)
@@ -250,7 +250,7 @@ GEM
       faraday (~> 0.8, >= 0.8.0)
       faraday_middleware (~> 0.8, >= 0.8.0)
       simple_oauth (~> 0.3.1)
-    zeroclipboard-rails (0.1.1)
+    zeroclipboard-rails (0.1.2)
       railties (>= 3.1)
 
 PLATFORMS
@@ -306,3 +306,6 @@ DEPENDENCIES
   utf8_enforcer_workaround
   yelp
   zeroclipboard-rails
+
+BUNDLED WITH
+   1.10.6
