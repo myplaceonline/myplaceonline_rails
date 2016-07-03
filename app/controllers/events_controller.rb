@@ -24,7 +24,7 @@ class EventsController < MyplaceonlineController
         :notes,
         location_attributes: LocationsController.param_names,
         repeat_attributes: Repeat.params,
-        event_pictures_attributes: FilesController.multi_param_names,
+        event_pictures_attributes: FilesController.multi_param_names + [:position],
         event_contacts_attributes: [
           :id,
           :_destroy,

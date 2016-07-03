@@ -23,7 +23,7 @@ class Event < ActiveRecord::Base
     put_files_in_folder(event_pictures, [I18n.t("myplaceonline.category.events"), display])
   end
 
-  has_many :event_pictures, :dependent => :destroy
+  has_many :event_pictures, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
   accepts_nested_attributes_for :event_pictures, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :event_pictures, [{:name => :identity_file}]
 

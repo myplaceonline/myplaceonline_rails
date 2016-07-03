@@ -9,6 +9,7 @@
     heading: Myp.heading("repeats"),
     existingobj: obj.repeat,
     objform: "repeats/form",
+    collapsed: obj.repeat.nil?,
     autofocus: false
   }
 %>
@@ -22,6 +23,7 @@
     existingobjurl: "location_path",
     searchurl: "/locations.json?perpage=0",
     edit: edit,
+    collapsed: obj.location.nil?,
     autofocus: false
   }
 %>
@@ -29,6 +31,7 @@
   render partial: "myplaceonline/pictures_form", locals: {
     f: f,
     obj: obj,
+    position_field: :position,
     pictures_field: :event_pictures
   }
 %>

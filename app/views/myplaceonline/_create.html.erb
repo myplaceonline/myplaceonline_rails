@@ -1,11 +1,12 @@
 <%
 existingobj ||= Myp.new_model(objform[0..(objform.index('/')-1)].singularize.camelize.constantize)
+collapsed = collapsed.nil? ? false : collapsed
 random_name = "createitem_" + SecureRandom.hex(10)
 first = true
 heading ||= ""
 %>
 <% if !heading.blank? %>
-  <div id="<%= random_name %>" data-role="collapsible" data-collapsed="false">
+  <div id="<%= random_name %>" data-role="collapsible" data-collapsed="<%= collapsed %>">
     <h4><%= heading %></h4>
 <% else %>
   <div id="<%= random_name %>">
