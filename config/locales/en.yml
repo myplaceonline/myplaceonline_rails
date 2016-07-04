@@ -1394,6 +1394,8 @@ en:
       grandmother: "Grandmother"
       grandfather: "Grandfather"
       friend: "Friend"
+      dog: "Dog"
+      cat: "Cat"
     identity_relationships:
       relationship_type: "Relationship"
     graphs:

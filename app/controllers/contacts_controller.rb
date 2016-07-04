@@ -17,7 +17,7 @@ class ContactsController < MyplaceonlineController
     super
   end
 
-  def self.param_names(include_website: true)
+  def self.param_names(include_website: true, recurse: true)
     [
       :id,
       :_destroy,
@@ -76,10 +76,13 @@ class ContactsController < MyplaceonlineController
           :id,
           :relationship_type,
           :_destroy,
-          contact_attributes: [
-            :id,
-            :_destroy
-          ]
+          contact_attributes:
+            recurse ?
+              ContactsController.param_names(include_website: include_website, recurse: false) :
+              [
+                :id,
+                :_destroy
+              ]
         ],
         identity_pictures_attributes: [
           :id,
