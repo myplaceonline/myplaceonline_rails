@@ -7,5 +7,6 @@
     <%= attribute_table_row_reference(t("myplaceonline.websites.password"), "password_path", wrapper.password) %>
   <% end %>
   <%= attribute_table_row_reference(t("myplaceonline.websites.recommender"), "contact_path", @obj.recommender) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), @obj.notes) %>
   
 <% end %>
