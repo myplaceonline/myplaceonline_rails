@@ -1,4 +1,12 @@
 class CampLocationsController < MyplaceonlineController
+  def search_index_name
+    Location.table_name
+  end
+
+  def search_parent_category
+    category_name.singularize
+  end
+
   protected
     def sorts
       ["camp_locations.updated_at DESC"]

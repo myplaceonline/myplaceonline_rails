@@ -1,4 +1,12 @@
 class DesiredLocationsController < MyplaceonlineController
+  def search_index_name
+    Location.table_name
+  end
+
+  def search_parent_category
+    category_name.singularize
+  end
+
   def self.reject_if_blank(attributes)
     attributes.dup.all?{|key, value|
       if key == "website_attributes"

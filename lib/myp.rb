@@ -1560,7 +1560,7 @@ module Myp
     end
   end
   
-  def self.full_text_search(user, search, category: nil)
+  def self.full_text_search(user, search, category: nil, parent_category: nil)
 
     if search.nil?
       search = ""
@@ -1620,6 +1620,22 @@ module Myp
       end
       
       search_results = UserIndex.query(query).limit(10).load.to_a
+      
+      # If category isn't blank and it searched a subitem, then we need
+      # to map those back to the original category item
+      if !parent_category.blank?
+        parent_category_class = Object.const_get(Myp.category_to_model_name(parent_category))
+        
+        search_results = search_results.map do |search_result|
+          new_search_result = parent_category_class.where(category.singularize + "_id" => search_result.id).first
+          if !new_search_result.blank?
+            new_search_result
+          else
+            nil
+          end
+        end
+        search_results = search_results.compact
+      end
       
       search_results.sort! do |sr1, sr2|
         x1 = sr1.respond_to?("visit_count") && !sr1.visit_count.nil? ? sr1.visit_count : 0

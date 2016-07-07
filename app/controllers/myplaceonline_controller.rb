@@ -483,6 +483,10 @@ class MyplaceonlineController < ApplicationController
     category_name
   end
   
+  def search_parent_category
+    nil
+  end
+  
   protected
   
     def deny_guest

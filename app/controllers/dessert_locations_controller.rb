@@ -1,6 +1,14 @@
 class DessertLocationsController < MyplaceonlineController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:random]
 
+  def search_index_name
+    Location.table_name
+  end
+
+  def search_parent_category
+    category_name.singularize
+  end
+
   def index
     @not_visited = params[:not_visited]
     if !@not_visited.blank?

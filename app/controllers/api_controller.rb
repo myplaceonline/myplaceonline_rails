@@ -16,7 +16,7 @@ class ApiController < ApplicationController
   
   def search
     respond_to do |format|
-      format.json { render json: Myp.full_text_search(current_user, params[:q], category: params[:category]) }
+      format.json { render json: Myp.full_text_search(current_user, params[:q], category: params[:category], parent_category: params[:parent_category]) }
     end
   end
   

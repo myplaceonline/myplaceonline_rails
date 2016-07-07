@@ -33,6 +33,14 @@ class TripsController < MyplaceonlineController
     end
   end
 
+  def search_index_name
+    Location.table_name
+  end
+
+  def search_parent_category
+    category_name.singularize
+  end
+
   protected
     def sorts
       ["trips.started DESC"]
