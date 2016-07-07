@@ -5,8 +5,7 @@ class Password < ActiveRecord::Base
   include EncryptedConcern
   include ModelHelpersConcern
   
-  belongs_to :password_encrypted,
-      class_name: EncryptedValue, dependent: :destroy, :autosave => true
+  belongs_to :password_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
   belongs_to_encrypted :password
   before_validation :password_finalize
   before_validation :set_encrypt_for_secrets

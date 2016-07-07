@@ -35,4 +35,8 @@
   });
   </script>
 
+  <% content_for :postfooterlinks do %>
+    <li><%= link_to t("myplaceonline.general.share"), passwords_share_path(@obj), "data-icon" => "action" %></li>
+  <% end %>
+
 <% end %>

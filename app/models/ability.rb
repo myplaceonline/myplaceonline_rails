@@ -67,6 +67,9 @@ class Ability
               query += " or action & #{Permission::ACTION_UPDATE} != 0"
             elsif action == :destroy
               query += " or action & #{Permission::ACTION_DESTROY} != 0"
+            elsif subject.respond_to?("permission_action")
+              permission_action = subject.permission_action(action)
+              query += " or action & #{permission_action} != 0"
             else
               # If it's any other action, it's probably custom and so just
               # assume it's an edit
@@ -76,7 +79,7 @@ class Ability
             if Permission.where(query, user.id, Myp.model_to_category_name(subject_class), subject.id).length > 0
               result = true
             else
-              Rails.logger.debug{"Returning false for #{user.id} #{action} #{Myp.model_to_category_name(subject_class)} #{subject.id}"}
+              Rails.logger.debug{"Returning false for user: #{user.id}, action: #{action}, category: #{Myp.model_to_category_name(subject_class)}, subject: #{subject.id}"}
             end
           end
         end

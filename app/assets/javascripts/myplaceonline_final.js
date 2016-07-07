@@ -394,6 +394,22 @@ var myplaceonline = function(mymodule) {
     });
   }
   
+  function remoteDataListReset(list, skipListReset) {
+    myplaceonline.consoleLog("remoteDataList Resetting");
+
+    if (!skipListReset) {
+      list.html(list.data("originalItems"));
+
+      if (list.data("afterload")) {
+        list.data("afterload")(list);
+      }
+    }
+    
+    myplaceonline.consoleLog("remoteDataList setting hasInitialized");
+    
+    list.data("hasInitialized", false);
+  }
+  
   // http://demos.jquerymobile.com/1.4.5/filterable/
   function remoteDataListInitialize(list, remotes, afterload, noresults) {
     
@@ -499,17 +515,7 @@ var myplaceonline = function(mymodule) {
           myplaceonline.consoleLog("remoteDataList finished non static searches");
         }
       } else {
-        myplaceonline.consoleLog("remoteDataList Resetting item");
-
-        $ul.html($ul.data("originalItems"));
-        
-        if ($ul.data("afterload")) {
-          $ul.data("afterload")($ul);
-        }
-        
-        myplaceonline.consoleLog("remoteDataList Reset hasInitialized");
-        
-        $ul.data("hasInitialized", false);
+        remoteDataListReset($ul);
       }
     });
   }
@@ -1163,6 +1169,7 @@ var myplaceonline = function(mymodule) {
   mymodule.jqmSetList = jqmSetList;
   mymodule.encodeEntities = encodeEntities;
   mymodule.jqmReplaceListSection = jqmReplaceListSection;
+  mymodule.remoteDataListReset = remoteDataListReset;
 
   return mymodule;
 

@@ -1,6 +1,9 @@
 require 'roo'
 
 class PasswordsController < MyplaceonlineController
+  
+  SHARE_EXPIRE = 2.days
+  
   skip_authorization_check :only => [:index, :new, :create, :import, :importodf]
   
   def index
@@ -198,6 +201,73 @@ class PasswordsController < MyplaceonlineController
 
   def self.reject_if_blank(attributes)
     attributes.dup.delete_if {|key, value| key.to_s == "encrypt" || key.to_s == "is_defunct" }.all? {|key, value| value.blank?}
+  end
+  
+  def share
+    set_obj
+    
+    if request.patch? || request.post?
+      @password_share = PasswordShare.new(
+        params.require(:password_share).permit(
+          user_attributes: [:id]
+        )
+      )
+      @password_share.unencrypted_password = @obj.password
+      
+      @obj.password_secrets.each do |password_secret|
+        @password_share.password_secret_shares << PasswordSecretShare.new(
+          password_secret: password_secret,
+          identity: @obj.identity,
+          unencrypted_answer: password_secret.answer
+        )
+      end
+    else
+      @password_share = PasswordShare.new
+    end
+
+    @password_share.password = @obj
+    @password_share.identity = @obj.identity
+
+    if request.patch? || request.post?
+      ActiveRecord::Base.transaction do
+        @password_share.save!
+        
+        Permission.create(
+          action: Permission::ACTION_READ,
+          subject_class: PasswordShare.name.underscore.pluralize,
+          subject_id: @password_share.id,
+          identity_id: @password_share.identity.id,
+          user_id: @password_share.user.id
+        )
+        
+        url = Rails.application.routes.url_helpers.send("password_shares_transfer_url", @password_share.id, Rails.configuration.default_url_options)
+        
+        share_details = I18n.t(
+          "myplaceonline.passwords.share_details",
+          user: @password_share.identity.display,
+          time: Myp.seconds_to_time_in_general_human_detailed_hms(PasswordsController::SHARE_EXPIRE)
+        )
+        
+        Myp.send_email(
+          @password_share.user.email,
+          I18n.t(
+            "myplaceonline.passwords.share_subject",
+            user: @password_share.identity.display
+          ),
+          "<p>#{share_details}</p>\n\n<p>#{ActionController::Base.helpers.link_to(url, url)}</p>".html_safe,
+          nil,
+          nil,
+          share_details + "\n\n" + url
+        )
+
+        return redirect_to password_path(@obj),
+          :flash => { :notice =>
+                      I18n.t("myplaceonline.passwords.shared_sucess")
+                    }
+      end
+    else
+      render :share
+    end
   end
 
   protected

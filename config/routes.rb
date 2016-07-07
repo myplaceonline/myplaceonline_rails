@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   
+  match 'password_shares/:id/transfer', :to => 'password_shares#transfer', via: [:get], as: "password_shares_transfer"
+  resources :password_shares
+  post 'password_shares/new'
+  
   resources :projects
   post 'projects/new'
   
@@ -522,6 +526,7 @@ Rails.application.routes.draw do
   get 'offline/index'
   get 'offline', :to => 'offline#index'
   
+  match 'passwords/:id/share', :to => 'passwords#share', via: [:get, :patch, :post], as: "passwords_share"
   get 'passwords/import'
   match 'passwords/import/odf', :to => 'passwords#importodf', via: [:get, :post]
   match 'passwords/import/odf/:id/step1', :to => 'passwords#importodf1', via: [:get, :post], :as => "passwords_import_odf1"

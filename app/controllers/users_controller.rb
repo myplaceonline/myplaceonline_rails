@@ -14,8 +14,9 @@ class UsersController < MyplaceonlineController
   
   def allusers
     @objs = []
-    if !params[:value].blank?
-      @objs = User.where("lower(email) = ?", params[:value].strip.downcase)
+    if !params[:q].blank?
+      @objs = User.where("lower(email) = ?", params[:q].strip.downcase)
+      Rails.logger.debug{"allusers results: #{@objs.length}"}
     end
   end
 

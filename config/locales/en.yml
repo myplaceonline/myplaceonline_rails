@@ -171,6 +171,7 @@ en:
       meadows: "Meadows"
       web_comics: "Web Comics"
       projects: "Projects"
+      password_shares: "Password Shares"
     general:
       email: "E-mail"
       password: "Password"
@@ -531,6 +532,11 @@ en:
       remove_question: "Delete Question"
       how_to_decrypt: "The encrypted file may be decrypted with the command line %{gpg} tool:"
       email: "E-mail"
+      share_description: "If you ever change your password, you'll have to re-share the new password."
+      shared_sucess: "An e-mail has been sent with the shared password"
+      share_details: "%{user} shared a password with you. It will expire in %{time}. Click the following link to accept this:"
+      share_subject: "%{user} shared a password with you"
+      transfer_success: "Password successfully transferred"
     users:
       invite: "Invite Code"
       invite_invalid: "invalid"

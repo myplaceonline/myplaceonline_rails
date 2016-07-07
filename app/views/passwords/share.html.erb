@@ -1,0 +1,49 @@
+<% content_for :heading do -%><%= t("myplaceonline.general.share") %><% end -%>
+<h1><%= t("myplaceonline.general.share") %></h1>
+<%= flashes! %>
+<% if @obj.errors.any? %>
+  <div class="errors">
+    <ul>
+    <% @obj.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<p><%= t("myplaceonline.passwords.share_description") %></p>
+<%= form_for @password_share, :url => passwords_share_path(@obj) do |f| %>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: f,
+      name: :user,
+      heading: t("myplaceonline.permissions.user"),
+      objform: "users/form",
+      existingobj: @password_share.user,
+      existingobjurl: "user_path",
+      searchurl: "/users/allusers.json",
+      edit: true,
+      autofocus: true,
+      always_search: true,
+      allow_new: false,
+      force_existing: true,
+      create_new: false
+    }
+  %>
+  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="navbar">
+      <ul>
+        <li>
+          <%= submit_tag(t("myplaceonline.general.share"), "data-icon" => "action", "data-iconpos" => "top") %>
+        </li>
+        <li><%= link_to t("myplaceonline.general.cancel"), controller.obj_path, "data-icon" => "back" %></li>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+</script>

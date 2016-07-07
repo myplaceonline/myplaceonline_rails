@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160704173635) do
+ActiveRecord::Schema.define(version: 20160707041456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2096,6 +2096,19 @@ ActiveRecord::Schema.define(version: 20160704173635) do
 
   add_index "passports", ["identity_id"], name: "index_passports_on_identity_id", using: :btree
 
+  create_table "password_secret_shares", force: :cascade do |t|
+    t.integer  "password_secret_id"
+    t.integer  "password_share_id"
+    t.integer  "identity_id"
+    t.string   "unencrypted_answer"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "password_secret_shares", ["identity_id"], name: "index_password_secret_shares_on_identity_id", using: :btree
+  add_index "password_secret_shares", ["password_secret_id"], name: "index_password_secret_shares_on_password_secret_id", using: :btree
+  add_index "password_secret_shares", ["password_share_id"], name: "index_password_secret_shares_on_password_share_id", using: :btree
+
   create_table "password_secrets", force: :cascade do |t|
     t.string   "question",            limit: 255
     t.string   "answer",              limit: 255
@@ -2109,6 +2122,19 @@ ActiveRecord::Schema.define(version: 20160704173635) do
   add_index "password_secrets", ["answer_encrypted_id"], name: "index_password_secrets_on_answer_encrypted_id", using: :btree
   add_index "password_secrets", ["identity_id"], name: "index_password_secrets_on_identity_id", using: :btree
   add_index "password_secrets", ["password_id"], name: "index_password_secrets_on_password_id", using: :btree
+
+  create_table "password_shares", force: :cascade do |t|
+    t.integer  "password_id"
+    t.integer  "user_id"
+    t.integer  "identity_id"
+    t.string   "unencrypted_password"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "password_shares", ["identity_id"], name: "index_password_shares_on_identity_id", using: :btree
+  add_index "password_shares", ["password_id"], name: "index_password_shares_on_password_id", using: :btree
+  add_index "password_shares", ["user_id"], name: "index_password_shares_on_user_id", using: :btree
 
   create_table "passwords", force: :cascade do |t|
     t.string   "name",                  limit: 255
@@ -3329,6 +3355,12 @@ ActiveRecord::Schema.define(version: 20160704173635) do
   add_foreign_key "money_balance_items", "money_balances"
   add_foreign_key "money_balances", "contacts"
   add_foreign_key "money_balances", "identities"
+  add_foreign_key "password_secret_shares", "identities"
+  add_foreign_key "password_secret_shares", "password_secrets"
+  add_foreign_key "password_secret_shares", "password_shares"
+  add_foreign_key "password_shares", "identities"
+  add_foreign_key "password_shares", "passwords"
+  add_foreign_key "password_shares", "users"
   add_foreign_key "periodic_payments", "passwords"
   add_foreign_key "permission_share_children", "identities"
   add_foreign_key "permission_share_children", "permission_shares"
