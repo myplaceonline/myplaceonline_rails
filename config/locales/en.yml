@@ -264,6 +264,7 @@ en:
       categories: "Categories"
       everything: "Everything"
       search: "Search"
+      archived: "Archived"
     categories:
       no_results: "No Results. Create New "
     everything:
