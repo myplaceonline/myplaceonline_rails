@@ -50,6 +50,7 @@
   <a href="#" onclick="return requestWebsiteTitle(this);" class="website_title_button ui-btn <%= obj.url.blank? ? "ui-disabled" : "" %>"><%= t("myplaceonline.websites.request_title") %></a>
   <%= title_field %>
 </div>
+<%= myp_text_field(f, :website_category, "myplaceonline.websites.website_category", obj.website_category, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
 <%= myp_check_box(f, :to_visit, "myplaceonline.websites.to_visit") %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {

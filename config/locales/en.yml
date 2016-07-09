@@ -813,6 +813,7 @@ en:
       password: "Password"
       recommender: "Recommender"
       request_title: "Request Title from Link"
+      website_category: "Category"
     credit_cards:
       name: "Name"
       number: "Number"

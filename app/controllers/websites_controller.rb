@@ -15,6 +15,7 @@ class WebsitesController < MyplaceonlineController
       :url,
       :to_visit,
       :notes,
+      :website_category,
       website_passwords_attributes: [
         :id,
         :_destroy,

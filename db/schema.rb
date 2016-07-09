@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160709171349) do
+ActiveRecord::Schema.define(version: 20160709205501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3281,8 +3281,8 @@ ActiveRecord::Schema.define(version: 20160709171349) do
   add_index "website_passwords", ["website_id"], name: "index_website_passwords_on_website_id", using: :btree
 
   create_table "websites", force: :cascade do |t|
-    t.string   "title",          limit: 255
-    t.string   "url",            limit: 2000
+    t.string   "title",            limit: 255
+    t.string   "url",              limit: 2000
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -3290,6 +3290,7 @@ ActiveRecord::Schema.define(version: 20160709171349) do
     t.boolean  "to_visit"
     t.integer  "recommender_id"
     t.text     "notes"
+    t.string   "website_category"
   end
 
   add_index "websites", ["identity_id"], name: "index_websites_on_identity_id", using: :btree
