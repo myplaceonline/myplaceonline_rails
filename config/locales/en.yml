@@ -2376,4 +2376,17 @@ en:
       flight_name: "Flight Name"
       flight_start_date: "Flight Start Date"
       confirmation_number: "Confirmation Number"
-
+      flight_legs: "Flight Legs"
+      flight_leg_delete: "Delete Flight Leg"
+      flight_leg_add: "Add Flight Leg"
+    flight_legs:
+      flight_leg: "Flight Leg"
+      flight_number: "Flight Number"
+      flight_company: "Airline"
+      depart_airport_code: "Departing Airport Code"
+      depart_location: "Departing Location"
+      depart_time: "Departing Time"
+      arrival_airport_code: "Arrival Airport Code"
+      arrival_location: "Arrival Location"
+      arrive_time: "Arrival Time"
+      seat_number: "Seat Number"

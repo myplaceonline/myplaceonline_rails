@@ -2,3 +2,132 @@
 <%= myp_date_field(f, :flight_start_date, "myplaceonline.flights.flight_start_date", obj.flight_start_date) %>
 <%= myp_text_field(f, :confirmation_number, "myplaceonline.flights.confirmation_number", obj.confirmation_number) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.flights.flight_legs"),
+    childpropertiesname: :flight_legs,
+    childproperties: obj.flight_legs,
+    deletebutton: t("myplaceonline.flights.flight_leg_delete"),
+    addbutton: t("myplaceonline.flights.flight_leg_add"),
+    expanded: obj.flight_legs.length > 0,
+    position_field: :position,
+    itemname: t("myplaceonline.flight_legs.flight_leg"),
+    formjson: [
+      {
+        type: 'text',
+        name: 'flight_number',
+        placeholder: t("myplaceonline.flight_legs.flight_number"),
+        autofocus: true
+      },
+      {
+        type: :renderpartial,
+        name: :flight_company_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.flight_legs.flight_company"),
+        objform: "companies/form",
+        existingobjurl: "company_path",
+        searchurl: "/companies.json?perpage=0",
+        edit: false,
+        autofocus: false
+      },
+      {
+        type: 'datetime',
+        name: 'depart_time',
+        placeholder: t("myplaceonline.flight_legs.depart_time")
+      },
+      {
+        type: 'text',
+        name: 'depart_airport_code',
+        placeholder: t("myplaceonline.flight_legs.depart_airport_code")
+      },
+      {
+        type: :renderpartial,
+        name: :depart_location_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.flight_legs.depart_location"),
+        objform: "locations/form",
+        existingobjurl: "location_path",
+        searchurl: "/locations.json?perpage=0",
+        edit: false,
+        autofocus: false
+      },
+      {
+        type: 'datetime',
+        name: 'arrive_time',
+        placeholder: t("myplaceonline.flight_legs.arrive_time")
+      },
+      {
+        type: 'text',
+        name: 'arrival_airport_code',
+        placeholder: t("myplaceonline.flight_legs.arrival_airport_code")
+      },
+      {
+        type: :renderpartial,
+        name: :arrival_location_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.flight_legs.arrival_location"),
+        objform: "locations/form",
+        existingobjurl: "location_path",
+        searchurl: "/locations.json?perpage=0",
+        edit: false,
+        autofocus: false
+      },
+      {
+        type: 'text',
+        name: 'seat_number',
+        placeholder: t("myplaceonline.flight_legs.seat_number")
+      },
+      {
+        type: 'position',
+        name: 'position'
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%= myp_text_field(child_fields, :flight_number, "myplaceonline.flight_legs.flight_number", childproperty.flight_number) %>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :flight_company_attributes,
+      existingobj: childproperty.flight_company,
+      heading: t("myplaceonline.flight_legs.flight_company"),
+      objform: "companies/form",
+      existingobjurl: "company_path",
+      searchurl: "/companies.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
+  <%= myp_datetime_field(child_fields, :depart_time, "myplaceonline.flight_legs.depart_time", childproperty.depart_time) %>
+  <%= myp_text_field(child_fields, :depart_airport_code, "myplaceonline.flight_legs.depart_airport_code", childproperty.depart_airport_code) %>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :depart_location_attributes,
+      existingobj: childproperty.depart_location,
+      heading: t("myplaceonline.flight_legs.depart_location"),
+      objform: "locations/form",
+      existingobjurl: "location_path",
+      searchurl: "/locations.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
+  <%= myp_datetime_field(child_fields, :arrive_time, "myplaceonline.flight_legs.arrive_time", childproperty.arrive_time) %>
+  <%= myp_text_field(child_fields, :arrival_airport_code, "myplaceonline.flight_legs.arrival_airport_code", childproperty.arrival_airport_code) %>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :arrival_location_attributes,
+      existingobj: childproperty.arrival_location,
+      heading: t("myplaceonline.flight_legs.arrival_location"),
+      objform: "locations/form",
+      existingobjurl: "location_path",
+      searchurl: "/locations.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
+  <%= myp_text_field(child_fields, :seat_number, "myplaceonline.flight_legs.seat_number", childproperty.seat_number) %>
+<% end %>

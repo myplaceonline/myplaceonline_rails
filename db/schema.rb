@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160709034548) do
+ActiveRecord::Schema.define(version: 20160709035530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1198,6 +1198,29 @@ ActiveRecord::Schema.define(version: 20160709034548) do
     t.binary  "file_contents"
     t.integer "visit_count"
   end
+
+  create_table "flight_legs", force: :cascade do |t|
+    t.integer  "flight_id"
+    t.integer  "flight_number"
+    t.integer  "flight_company_id"
+    t.string   "depart_airport_code"
+    t.integer  "depart_location_id"
+    t.datetime "depart_time"
+    t.string   "arrival_airport_code"
+    t.integer  "arrival_location_id"
+    t.datetime "arrive_time"
+    t.string   "seat_number"
+    t.integer  "position"
+    t.integer  "identity_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "flight_legs", ["arrival_location_id"], name: "index_flight_legs_on_arrival_location_id", using: :btree
+  add_index "flight_legs", ["depart_location_id"], name: "index_flight_legs_on_depart_location_id", using: :btree
+  add_index "flight_legs", ["flight_company_id"], name: "index_flight_legs_on_flight_company_id", using: :btree
+  add_index "flight_legs", ["flight_id"], name: "index_flight_legs_on_flight_id", using: :btree
+  add_index "flight_legs", ["identity_id"], name: "index_flight_legs_on_identity_id", using: :btree
 
   create_table "flights", force: :cascade do |t|
     t.string   "flight_name"
@@ -3360,6 +3383,11 @@ ActiveRecord::Schema.define(version: 20160709034548) do
   add_foreign_key "event_pictures", "identity_files"
   add_foreign_key "favorite_product_links", "favorite_products"
   add_foreign_key "favorite_product_links", "identities"
+  add_foreign_key "flight_legs", "companies", column: "flight_company_id"
+  add_foreign_key "flight_legs", "flights"
+  add_foreign_key "flight_legs", "identities"
+  add_foreign_key "flight_legs", "locations", column: "arrival_location_id"
+  add_foreign_key "flight_legs", "locations", column: "depart_location_id"
   add_foreign_key "flights", "identities"
   add_foreign_key "group_references", "groups"
   add_foreign_key "group_references", "groups", column: "parent_group_id"
