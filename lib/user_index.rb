@@ -35,7 +35,7 @@ class UserIndex < Chewy::Index
     next unless klass.ancestors.include?(ActiveRecord::Base)
     
     # Only process classes that are tied to an identity
-    if klass.include?(MyplaceonlineActiveRecordIdentityConcern)
+    if klass.include?(MyplaceonlineActiveRecordIdentityConcern) && ActiveRecord::Base.connection.table_exists?(klass.table_name)
       string_columns = []
       klass.columns.each do |column|
         if column.type == :string || column.type == :text
