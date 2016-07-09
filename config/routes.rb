@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :password_shares
   post 'password_shares/new'
   
+  match 'projects/:id/delete_by_index', :to => 'projects#delete_by_index', via: [:post], as: "project_delete_by_index"
   resources :projects do
     resources :project_issues
     post 'project_issues/new'

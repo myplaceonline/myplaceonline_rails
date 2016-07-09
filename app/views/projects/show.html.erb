@@ -1,18 +1,39 @@
 <%= render layout: "shared/model_show" do %>
 
-  <%= attribute_table_row(t("myplaceonline.projects.project_name"), @obj.project_name) %>
+  <%# attribute_table_row(t("myplaceonline.projects.project_name"), @obj.project_name) %>
   <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), @obj.notes) %>
   <%= attribute_table_row_date(t("myplaceonline.projects.start_date"), @obj.start_date) %>
   <%= attribute_table_row_date(t("myplaceonline.projects.end_date"), @obj.end_date) %>
 
   <% content_for :aftertable do %>
+  
+    <script type="text/javascript">
+    function delete_project_issue(obj) {
+      var x = obj.attr("id");
+      x = x.substring(15);
+      var link = "<%= project_delete_by_index_url(@obj.id) %>?index=" + x;
+      myplaceonline.showLoading();
+      $.ajax({
+        url: link,
+        method: "POST",
+        dataType: "json"
+      }).done(function(data, textStatus, jqXHR) {
+        myplaceonline.createSuccessNotification("Successfully deleted");
+      }).fail(function(jqXHR, textStatus, errorThrown) {
+        myplaceonline.createErrorNotification("Could not execute " + link + ": " + textStatus);
+      }).complete(function(jqXHR, textStatus) {
+        myplaceonline.hideLoading();
+      });
+    }
+    </script>
+    
     <% i = 0 %>
     <% @obj.project_issues.each do |issue| %>
       <%
       container_name = "issue_container" + i.to_s
       %>
-      <div id="<%= container_name %>">
-        <%= myp_check_box_tag("issue" + i.to_s, issue.issue_name, false, false, nil, "return myplaceonline.hideIfChecked(this, $(this).parents('#" + container_name + "').first());") %>
+      <div id="<%= container_name %>" class="issue_container">
+        <%= myp_check_box_tag("issue" + i.to_s, issue.issue_name, false, false, nil, "return myplaceonline.hideIfChecked(this, $(this).parents('#" + container_name + "').first(), delete_project_issue);") %>
         <%= markdown_content(issue.notes) %>
       </div>
       <% i = i + 1 %>

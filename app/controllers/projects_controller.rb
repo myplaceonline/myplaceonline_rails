@@ -2,6 +2,20 @@ class ProjectsController < MyplaceonlineController
   def show_created_updated
     false
   end
+  
+  def delete_by_index
+    set_obj
+    
+    result = {
+      result: false
+    }
+    index = params[:index]
+    if !index.blank?
+      @obj.project_issues[index.to_i].destroy!
+      result[:result] = true
+    end
+    render json: result
+  end
 
   protected
     def insecure

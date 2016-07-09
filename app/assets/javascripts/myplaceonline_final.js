@@ -973,15 +973,18 @@ var myplaceonline = function(mymodule) {
     }
   }
 
-  function hideIfChecked(checkbox, objectToHide) {
+  function hideIfChecked(checkbox, objectToHide, callback) {
     if (checkbox.checked) {
       addClass($(checkbox).parent().children("label").first(), "hiding");
       if (!objectToHide) {
         objectToHide = $(checkbox).parent();
       }
-      var hideTimeout = window.setTimeout(function(objectToHide) {
-        objectToHide.fadeOut();
-      }, 1000, objectToHide);
+      var hideTimeout = window.setTimeout(function(x) {
+        x.objectToHide.fadeOut();
+        if (x.callback) {
+          x.callback(x.objectToHide);
+        }
+      }, 1000, { objectToHide: objectToHide, callback: callback });
       $(checkbox).data("myplaceonline-is-hiding", hideTimeout);
     } else {
       if ($(checkbox).data("myplaceonline-is-hiding")) {
