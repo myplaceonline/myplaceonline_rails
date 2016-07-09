@@ -11,7 +11,7 @@
     function delete_project_issue(obj) {
       var x = obj.attr("id");
       x = x.substring(15);
-      var link = "<%= project_delete_by_index_url(@obj.id) %>?index=" + x;
+      var link = "<%= project_delete_by_index_url(@obj.id) %>?issue_id=" + x;
       myplaceonline.showLoading();
       $.ajax({
         url: link,
@@ -27,16 +27,14 @@
     }
     </script>
     
-    <% i = 0 %>
     <% @obj.project_issues.each do |issue| %>
       <%
-      container_name = "issue_container" + i.to_s
+      container_name = "issue_container" + issue.id.to_s
       %>
       <div id="<%= container_name %>" class="issue_container">
-        <%= myp_check_box_tag("issue" + i.to_s, issue.issue_name, false, false, nil, "return myplaceonline.hideIfChecked(this, $(this).parents('#" + container_name + "').first(), delete_project_issue);") %>
+        <%= myp_check_box_tag("issue" + issue.id.to_s, issue.issue_name, false, false, nil, "return myplaceonline.hideIfChecked(this, $(this).parents('#" + container_name + "').first(), delete_project_issue);") %>
         <%= markdown_content(issue.notes) %>
       </div>
-      <% i = i + 1 %>
     <% end %>
   <% end %>
   

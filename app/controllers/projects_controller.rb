@@ -9,9 +9,9 @@ class ProjectsController < MyplaceonlineController
     result = {
       result: false
     }
-    index = params[:index]
-    if !index.blank?
-      @obj.project_issues[index.to_i].destroy!
+    issue_id = params[:issue_id]
+    if !issue_id.blank?
+      @obj.project_issues[@obj.project_issues.index{|i| i.id == issue_id.to_i}].destroy!
       result[:result] = true
     end
     render json: result
