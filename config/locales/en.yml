@@ -812,6 +812,7 @@ en:
       delete_password: "Delete Password"
       password: "Password"
       recommender: "Recommender"
+      request_title: "Request Title from Link"
     credit_cards:
       name: "Name"
       number: "Number"

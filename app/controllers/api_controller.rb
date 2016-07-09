@@ -333,6 +333,35 @@ class ApiController < ApplicationController
     render json: result
   end
 
+  def website_title
+    result = {
+      result: false
+    }
+    link = params[:link]
+    if !link.blank?
+      if !link.downcase.start_with?("http")
+        link = "https://" + link
+      end
+      if link.index(".").nil?
+        link = link + ".com/"
+      end
+      result[:link] = link
+      
+      begin
+        c = Curl::Easy.new(link)
+        c.ssl_verify_peer = false
+        c.follow_location = true
+        c.perform
+        result[:title] = c.body_str[/.*<(title|TITLE)>([^>]*)<\/(title|TITLE)>/,2]
+        result[:result] = true
+        Rails.logger.debug{"title: #{result[:title]}, body: #{c.body_str}"}
+      rescue => e
+        result[:error] = e.to_s
+      end
+    end
+    render json: result
+  end
+
   protected
     def json_error(error)
       render json: {

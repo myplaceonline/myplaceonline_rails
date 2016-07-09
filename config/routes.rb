@@ -478,6 +478,7 @@ Rails.application.routes.draw do
   post 'file_folders/new'
 
   get 'welcome/index'
+  get 'api/website_title'
   get 'api/index'
   get 'api/categories'
   get 'api/search'

@@ -1,5 +1,55 @@
-<%= myp_text_field(f, :url, "myplaceonline.websites.url", obj.url, autofocus) %>
-<%= myp_text_field(f, :title, "myplaceonline.websites.title", obj.title) %>
+<div class="action_wrapper">
+  <%
+  link_field = myp_text_field(f, :url, "myplaceonline.websites.url", obj.url, autofocus, "website_link")
+  link_field_id = extract_id(link_field)
+  title_field = myp_text_field(f, :title, "myplaceonline.websites.title", obj.title, false, "website_title")
+  title_field_id = extract_id(title_field)
+  %>
+  <%= link_field %>
+  <script>
+  myplaceonline.onPageLoad(function() {
+    $("#<%= link_field_id %>").on("input", function() {
+      var button = $(this).parents(".action_wrapper").first().find(".website_title_button").first();
+      if ($(this).val().length == 0) {
+        button.addClass("ui-disabled");
+      } else {
+        button.removeClass("ui-disabled");
+      }
+    });
+  });
+  
+  function requestWebsiteTitle(button) {
+    var wrapper = $(button).parents(".action_wrapper").first();
+    var link = wrapper.find(".website_link").first().val();
+    myplaceonline.showLoading();
+    var remoteUrl = "/api/website_title?link=" + encodeURIComponent(link);
+    $.ajax({
+      url: remoteUrl,
+      method: "GET",
+      dataType: "json",
+      context: {
+        wrapper: wrapper
+      }
+    }).done(function(data, textStatus, jqXHR) {
+      if (data.result) {
+        var title = this.wrapper.find(".website_title").first();
+        title.val(data.title);
+        this.wrapper.find(".website_link").first().val(data.link);
+        title.focus();
+      } else {
+        myplaceonline.createErrorNotification("Could not process " + data.link + ": " + data.error);
+      }
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+      myplaceonline.createErrorNotification("Could not execute " + remoteUrl + ": " + textStatus);
+    }).complete(function(jqXHR, textStatus) {
+      myplaceonline.hideLoading();
+    });
+    return false;
+  }
+  </script>
+  <a href="#" onclick="return requestWebsiteTitle(this);" class="website_title_button ui-btn <%= obj.url.blank? ? "ui-disabled" : "" %>"><%= t("myplaceonline.websites.request_title") %></a>
+  <%= title_field %>
+</div>
 <%= myp_check_box(f, :to_visit, "myplaceonline.websites.to_visit") %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
