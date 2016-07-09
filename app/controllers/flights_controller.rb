@@ -5,7 +5,7 @@ class FlightsController < MyplaceonlineController
     end
 
     def sorts
-      ["lower(flights.flight_name) ASC"]
+      ["flights.flight_start_date DESC", "lower(flights.flight_name) ASC"]
     end
 
     def obj_params

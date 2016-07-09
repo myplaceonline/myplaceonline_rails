@@ -7,6 +7,6 @@ class Flight < ActiveRecord::Base
   accepts_nested_attributes_for :flight_legs, allow_destroy: true, reject_if: :all_blank
 
   def display
-    flight_name
+    Myp.appendstrwrap(flight_name, Myp.display_date_short_year(flight_start_date, User.current_user))
   end
 end
