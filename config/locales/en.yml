@@ -173,6 +173,7 @@ en:
       projects: "Projects"
       password_shares: "Password Shares"
       project_issues: "Project Issues"
+      flights: "Flights"
     general:
       email: "E-mail"
       password: "Password"
@@ -2371,3 +2372,8 @@ en:
     project_issues:
       issue_name: "Issue"
       project: "Project"
+    flights:
+      flight_name: "Flight Name"
+      flight_start_date: "Flight Start Date"
+      confirmation_number: "Confirmation Number"
+

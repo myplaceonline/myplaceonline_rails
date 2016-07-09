@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160708154614) do
+ActiveRecord::Schema.define(version: 20160709034548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1198,6 +1198,19 @@ ActiveRecord::Schema.define(version: 20160708154614) do
     t.binary  "file_contents"
     t.integer "visit_count"
   end
+
+  create_table "flights", force: :cascade do |t|
+    t.string   "flight_name"
+    t.date     "flight_start_date"
+    t.string   "confirmation_number"
+    t.integer  "visit_count"
+    t.text     "notes"
+    t.integer  "identity_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "flights", ["identity_id"], name: "index_flights_on_identity_id", using: :btree
 
   create_table "food_ingredients", force: :cascade do |t|
     t.integer  "identity_id"
@@ -3347,6 +3360,7 @@ ActiveRecord::Schema.define(version: 20160708154614) do
   add_foreign_key "event_pictures", "identity_files"
   add_foreign_key "favorite_product_links", "favorite_products"
   add_foreign_key "favorite_product_links", "identities"
+  add_foreign_key "flights", "identities"
   add_foreign_key "group_references", "groups"
   add_foreign_key "group_references", "groups", column: "parent_group_id"
   add_foreign_key "group_references", "identities"

@@ -376,6 +376,7 @@ var myplaceonline = function(mymodule) {
     }).done(function(data, textStatus, jqXHR) {
       myplaceonline.consoleLog("remoteDataLoad done " + this.remote.title + ", " + this.filterCount);
       if (this.remote.static_list || this.filterCount == this.list.data("filterCount")) {
+        myplaceonline.consoleLog("remoteDataLoad filterCount is the latest");
         jqmReplaceListSection(this.list, this.remote.title, data);
         this.remote.failed = false;
         if (this.list.data("afterload")) {
@@ -385,6 +386,8 @@ var myplaceonline = function(mymodule) {
         if (this.remote.noresults && !jqmSectionHasMatch(this.list, this.remote.title, this.q)) {
           this.remote.noresults(this.list, this.remote, this.remote.title, this.q);
         }
+      } else {
+        myplaceonline.consoleLog("remoteDataLoad filterCount is not the latest, skipping");
       }
       myplaceonline.consoleLog("remoteDataLoad finished done");
     }).fail(function(jqXHR, textStatus, errorThrown) {

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :flights
+  post 'flights/new'
+
   match 'password_shares/:id/transfer', :to => 'password_shares#transfer', via: [:get], as: "password_shares_transfer"
   resources :password_shares
   post 'password_shares/new'

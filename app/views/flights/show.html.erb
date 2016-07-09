@@ -1,0 +1,8 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.flights.flight_name"), @obj.flight_name) %>
+  <%= attribute_table_row(t("myplaceonline.flights.confirmation_number"), @obj.confirmation_number) %>
+  <%= attribute_table_row_date(t("myplaceonline.flights.flight_start_date"), @obj.flight_start_date) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), @obj.notes) %>
+  
+<% end %>
