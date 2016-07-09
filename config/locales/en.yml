@@ -658,6 +658,7 @@ en:
       name: "First Name"
       middle_name: "Middle Name"
       last_name: "Last Name"
+      full_name: "Full Name"
       nickname: "Nick Name"
       birthday: "Birthday"
       age: "Age"

@@ -346,6 +346,10 @@ class Identity < ActiveRecord::Base
     result
   end
   
+  def full_name
+    Myp.appendstr(Myp.appendstr(name, middle_name), last_name)
+  end
+  
   def display
     result = name
     result = Myp.appendstr(result, middle_name)
