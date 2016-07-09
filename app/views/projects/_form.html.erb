@@ -2,3 +2,36 @@
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
 <%= myp_date_field(f, :start_date, "myplaceonline.projects.start_date", obj.start_date) %>
 <%= myp_date_field(f, :end_date, "myplaceonline.projects.end_date", obj.end_date) %>
+<%=
+  render(layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.projects.project_issues"),
+    childpropertiesname: :project_issues,
+    childproperties: obj.project_issues,
+    deletebutton: t("myplaceonline.projects.project_issue_delete"),
+    addbutton: t("myplaceonline.projects.project_issue_add"),
+    expanded: obj.project_issues.length > 0,
+    position_field: :position,
+    itemname: t("myplaceonline.projects.project_issue"),
+    formjson: [
+      {
+        type: 'text',
+        name: 'issue_name',
+        placeholder: t("myplaceonline.project_issues.issue_name"),
+        autofocus: true
+      },
+      {
+        type: 'textarea',
+        name: 'notes',
+        placeholder: t("myplaceonline.general.notes")
+      },
+      {
+        type: 'position',
+        name: 'position'
+      }
+    ]
+  }) do |child_fields, childproperty|
+%>
+  <%= myp_text_field(child_fields, :issue_name, "myplaceonline.project_issues.issue_name", childproperty.issue_name) %>
+  <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.general.notes", obj.notes) %>
+<% end %>

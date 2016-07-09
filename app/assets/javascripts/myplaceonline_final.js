@@ -973,23 +973,25 @@ var myplaceonline = function(mymodule) {
     }
   }
 
-  function hideIfChecked(obj) {
-    if (obj.checked) {
-      addClass($(obj).parent().children("label").first(), "hiding");
-      var objectToHide = $(obj).parent();
-      var hideTimeout = window.setTimeout(function() {
+  function hideIfChecked(checkbox, objectToHide) {
+    if (checkbox.checked) {
+      addClass($(checkbox).parent().children("label").first(), "hiding");
+      if (!objectToHide) {
+        objectToHide = $(checkbox).parent();
+      }
+      var hideTimeout = window.setTimeout(function(objectToHide) {
         objectToHide.fadeOut();
-      }, 1000);
-      $(obj).data("myplaceonline-is-hiding", hideTimeout);
+      }, 1000, objectToHide);
+      $(checkbox).data("myplaceonline-is-hiding", hideTimeout);
     } else {
-      if ($(obj).data("myplaceonline-is-hiding")) {
-        window.clearTimeout($(obj).data("myplaceonline-is-hiding"));
-        removeClass($(obj).parent().children("label").first(), "hiding");
+      if ($(checkbox).data("myplaceonline-is-hiding")) {
+        window.clearTimeout($(checkbox).data("myplaceonline-is-hiding"));
+        removeClass($(checkbox).parent().children("label").first(), "hiding");
       }
     }
     return false;
   }
-
+  
   function refreshWithParam(paramName, paramValue) {
     var url = removeParam(window.location.search, paramName);
     if (url.indexOf('?') == -1) {

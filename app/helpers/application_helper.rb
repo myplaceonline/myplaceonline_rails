@@ -286,7 +286,12 @@ module ApplicationHelper
   end
   
   def markdown_content(markdown)
-    Myp.markdown_to_html(markdown).html_safe
+    result = Myp.markdown_to_html(markdown)
+    if !result.nil?
+      result.html_safe
+    else
+      nil
+    end
   end
   
   def attribute_table_row_boolean(name, val, hide_if_false: true)

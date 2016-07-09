@@ -1,0 +1,9 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row(t("myplaceonline.project_issues.issue_name"), @obj.issue_name) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), @obj.notes) %>
+
+  <% content_for :postfooterlinks do %>
+    <li><%= link_to t('myplaceonline.project_issues.project'), project_path(@obj.project), "data-icon" => "back" %></li>
+  <% end %>
+<% end %>

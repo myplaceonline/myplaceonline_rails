@@ -4,7 +4,10 @@ Rails.application.routes.draw do
   resources :password_shares
   post 'password_shares/new'
   
-  resources :projects
+  resources :projects do
+    resources :project_issues
+    post 'project_issues/new'
+  end
   post 'projects/new'
   
   resources :web_comics

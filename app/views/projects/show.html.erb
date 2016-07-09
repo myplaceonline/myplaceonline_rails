@@ -4,5 +4,24 @@
   <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), @obj.notes) %>
   <%= attribute_table_row_date(t("myplaceonline.projects.start_date"), @obj.start_date) %>
   <%= attribute_table_row_date(t("myplaceonline.projects.end_date"), @obj.end_date) %>
+
+  <% content_for :aftertable do %>
+    <% i = 0 %>
+    <% @obj.project_issues.each do |issue| %>
+      <%
+      container_name = "issue_container" + i.to_s
+      %>
+      <div id="<%= container_name %>">
+        <%= myp_check_box_tag("issue" + i.to_s, issue.issue_name, false, false, nil, "return myplaceonline.hideIfChecked(this, $(this).parents('#" + container_name + "').first());") %>
+        <%= markdown_content(issue.notes) %>
+      </div>
+      <% i = i + 1 %>
+    <% end %>
+  <% end %>
   
+  <% content_for :postfooterlinks do %>
+    <li><%= link_to t('myplaceonline.projects.project_issues'), project_project_issues_path(@obj), "data-icon" => "bars" %></li>
+    <li><%= link_to t('myplaceonline.projects.project_issue_add'), new_project_project_issue_path(@obj), "data-icon" => "plus" %></li>
+  <% end %>
+
 <% end %>

@@ -1,0 +1,5 @@
+<%= render layout: "shared/model_index" do %>
+  <% content_for :footerlinks do %>
+    <li><%= link_to t('myplaceonline.project_issues.project'), project_path(@parent), "data-icon" => "back" %></li>
+  <% end %>
+<% end %>

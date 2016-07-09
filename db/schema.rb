@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160707041456) do
+ActiveRecord::Schema.define(version: 20160708154614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2313,6 +2313,19 @@ ActiveRecord::Schema.define(version: 20160707041456) do
 
   add_index "point_displays", ["identity_id"], name: "index_point_displays_on_identity_id", using: :btree
 
+  create_table "project_issues", force: :cascade do |t|
+    t.integer  "project_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.string   "issue_name"
+    t.text     "notes"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "project_issues", ["identity_id"], name: "index_project_issues_on_identity_id", using: :btree
+  add_index "project_issues", ["project_id"], name: "index_project_issues_on_project_id", using: :btree
+
   create_table "projects", force: :cascade do |t|
     t.string   "project_name"
     t.text     "notes"
@@ -3373,6 +3386,8 @@ ActiveRecord::Schema.define(version: 20160707041456) do
   add_foreign_key "playlists", "identity_files"
   add_foreign_key "podcasts", "feeds"
   add_foreign_key "podcasts", "identities"
+  add_foreign_key "project_issues", "identities"
+  add_foreign_key "project_issues", "projects"
   add_foreign_key "projects", "identities"
   add_foreign_key "quests", "identities"
   add_foreign_key "receipt_files", "identities"

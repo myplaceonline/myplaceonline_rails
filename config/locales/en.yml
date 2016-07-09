@@ -172,6 +172,7 @@ en:
       web_comics: "Web Comics"
       projects: "Projects"
       password_shares: "Password Shares"
+      project_issues: "Project Issues"
     general:
       email: "E-mail"
       password: "Password"
@@ -2363,3 +2364,10 @@ en:
       project_name: "Name"
       start_date: "Start Date"
       end_date: "End Date"
+      project_issue: "Issue"
+      project_issues: "Issues"
+      project_issue_add: "Add Issue"
+      project_issue_delete: "Delete Issue"
+    project_issues:
+      issue_name: "Issue"
+      project: "Project"
