@@ -4,6 +4,21 @@ class WebsitesController < MyplaceonlineController
     if !@to_visit.blank?
       @to_visit = @to_visit.to_bool
     end
+    
+    @categories = ActiveRecord::Base.connection.execute("select distinct website_category from websites where website_category is not null and identity_id = #{current_user.primary_identity.id} order by website_category").map{|row| row["website_category"] }
+    
+    @categories.each do |category|
+      
+      instance_name = "category_" + Myp.string_to_variable_name(category)
+      instance_value = nil
+      
+      if !params[instance_name.to_sym].blank?
+        instance_value = params[instance_name.to_sym].to_bool
+      end
+      
+      instance_variable_set("@" + instance_name, instance_value)
+    end
+    
     super
   end
 
@@ -54,9 +69,20 @@ class WebsitesController < MyplaceonlineController
 
     def all_additional_sql(strict)
       if @to_visit && !strict
-        "and to_visit = true"
+        result = "and to_visit = true"
       else
-        nil
+        result = nil
       end
+      
+      if !strict
+        @categories.each do |category|
+          instance_name = "category_" + Myp.string_to_variable_name(category)
+          if instance_variable_get("@" + instance_name)
+            result = Myp.appendstr(result, "website_category = " + ActiveRecord::Base.sanitize(category), " ", leftwrap = " and ")
+          end
+        end
+      end
+      
+      result
     end
 end

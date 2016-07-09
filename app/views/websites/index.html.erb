@@ -6,7 +6,7 @@
           :name => :to_visit,
           :display => "myplaceonline.websites.to_visit"
         }
-      ]
+      ] + @categories.map{|category| { name: "category_" + Myp.string_to_variable_name(category), display: category } }
     }
   %>
 <% end %>

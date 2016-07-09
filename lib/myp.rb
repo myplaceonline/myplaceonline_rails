@@ -1685,4 +1685,8 @@ module Myp
       url + "&" + param_name + "=" + param_value
     end
   end
+  
+  def self.string_to_variable_name(str)
+    str.gsub(/[^a-zA-Z]/, "")
+  end
 end
