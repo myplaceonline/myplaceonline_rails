@@ -1031,6 +1031,7 @@ module Myp
   
   def self.appendstr(str, what, delimeter = " ", leftwrap = nil, rightwrap = nil)
     if !what.blank?
+      what = what.to_s
       if str.nil?
         str = ""
       else

@@ -5,7 +5,7 @@ class CreditScore < ActiveRecord::Base
   validates :score, presence: true
   
   def display
-    Myp.display_date(score_date, User.current_user) + " (" + score.to_s + ")"
+    Myp.appendstrwrap(Myp.appendstrwrap(Myp.display_date(score_date, User.current_user), score), source)
   end
   
   def self.build(params = nil)
