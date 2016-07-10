@@ -9,4 +9,6 @@
     non_hidden_url: "/notepads/" + obj.id.to_s
   }
 %>
-<%= myp_check_box(f, :is_archived, "myplaceonline.general.archived") %>
+<% if !@myplet %>
+  <%= myp_check_box(f, :is_archived, "myplaceonline.general.archived") %>
+<% end %>
