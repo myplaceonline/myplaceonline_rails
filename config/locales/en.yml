@@ -2005,6 +2005,11 @@ en:
       contact: "Contact"
       add_contact: "Add Contact"
       delete_contact: "Delete Contact"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"
     stocks:
       company: "Company"
       password: "Password"
