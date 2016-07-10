@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160709205501) do
+ActiveRecord::Schema.define(version: 20160710000940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2256,6 +2256,18 @@ ActiveRecord::Schema.define(version: 20160709205501) do
   add_index "permissions", ["identity_id"], name: "index_permissions_on_identity_id", using: :btree
   add_index "permissions", ["user_id"], name: "index_permissions_on_user_id", using: :btree
 
+  create_table "phone_files", force: :cascade do |t|
+    t.integer  "phone_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "phone_files", ["identity_file_id"], name: "index_phone_files_on_identity_file_id", using: :btree
+  add_index "phone_files", ["identity_id"], name: "index_phone_files_on_identity_id", using: :btree
+  add_index "phone_files", ["phone_id"], name: "index_phone_files_on_phone_id", using: :btree
+
   create_table "phones", force: :cascade do |t|
     t.string   "phone_model_name",         limit: 255
     t.string   "phone_number",             limit: 255
@@ -3427,6 +3439,9 @@ ActiveRecord::Schema.define(version: 20160709205501) do
   add_foreign_key "permission_shares", "shares"
   add_foreign_key "permissions", "identities"
   add_foreign_key "permissions", "users"
+  add_foreign_key "phone_files", "identities"
+  add_foreign_key "phone_files", "identity_files"
+  add_foreign_key "phone_files", "phones"
   add_foreign_key "playlists", "identity_files"
   add_foreign_key "podcasts", "feeds"
   add_foreign_key "podcasts", "identities"

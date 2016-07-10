@@ -1,4 +1,8 @@
 class PhonesController < MyplaceonlineController
+  def may_upload
+    true
+  end
+
   protected
     def sorts
       ["lower(phones.phone_model_name) ASC"]
@@ -31,7 +35,8 @@ class PhonesController < MyplaceonlineController
         :weight_type,
         :weight,
         manufacturer_attributes: CompaniesController.param_names,
-        password_attributes: PasswordsController.param_names
+        password_attributes: PasswordsController.param_names,
+        phone_files_attributes: FilesController.multi_param_names
       )
     end
 end

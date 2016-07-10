@@ -26,4 +26,14 @@ class Phone < ActiveRecord::Base
   belongs_to :password
   accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
   allow_existing :password
+
+  before_validation :update_phone_files
+  
+  has_many :phone_files, :dependent => :destroy
+  accepts_nested_attributes_for :phone_files, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :phone_files, [{:name => :identity_file}]
+
+  def update_phone_files
+    put_files_in_folder(phone_files, [I18n.t("myplaceonline.category.phones"), display])
+  end
 end

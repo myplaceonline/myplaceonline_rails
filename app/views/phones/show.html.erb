@@ -24,5 +24,11 @@
   <%= attribute_table_row_dimensions(t("myplaceonline.phones.height"), @obj.height, @obj.dimensions_type) %>
   <%= attribute_table_row_dimensions(t("myplaceonline.phones.depth"), @obj.depth, @obj.dimensions_type) %>
   <%= attribute_table_row_weight(t("myplaceonline.phones.weight"), @obj.weight, @obj.weight_type) %>
+  <%=
+    render partial: 'myplaceonline/pictures', locals: {
+      pics: @obj.phone_files,
+      placeholder: "myplaceonline.phones.file"
+    }
+  %>
   
 <% end %>

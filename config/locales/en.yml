@@ -1905,6 +1905,11 @@ en:
       depth: "Depth"
       weight_type: "Weight Type"
       weight: "Weight"
+      files: "Files"
+      file: "File"
+      add_file: "Add File"
+      add_files: "Add File(s)"
+      delete_file: "Delete File"
     pictures:
       slideshow: "Pictures Slideshow"
       pictures: "Pictures"

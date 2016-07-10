@@ -48,3 +48,15 @@
 <%= myp_decimal_field(f, :depth, "myplaceonline.phones.depth", obj.depth) %>
 <%= myp_select(f, :weight_type, "myplaceonline.phones.weight_type", Myp.translate_options(Myp::WEIGHTS), obj.weight_type) %>
 <%= myp_decimal_field(f, :weight, "myplaceonline.phones.weight", obj.weight) %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    pictures_field: :phone_files,
+    item_placeholder: "myplaceonline.phones.file",
+    heading: "myplaceonline.phones.files",
+    addbutton: "myplaceonline.phones.add_file",
+    addbutton_multi: "myplaceonline.phones.add_files",
+    deletebutton: "myplaceonline.phones.delete_file",
+  }
+%>
