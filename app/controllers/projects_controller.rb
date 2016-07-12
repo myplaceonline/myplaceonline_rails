@@ -17,6 +17,17 @@ class ProjectsController < MyplaceonlineController
     render json: result
   end
 
+  def data_split_icon
+    "plus"
+  end
+  
+  def split_link(obj)
+    ActionController::Base.helpers.link_to(
+      I18n.t("myplaceonline.projects.project_issue_add"),
+      project_project_issues_new_path(obj)
+    )
+  end
+
   protected
     def insecure
       true
