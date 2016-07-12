@@ -33,5 +33,5 @@
   }) do |child_fields, childproperty|
 %>
   <%= myp_text_field(child_fields, :issue_name, "myplaceonline.project_issues.issue_name", childproperty.issue_name) %>
-  <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.general.notes", obj.notes) %>
+  <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.general.notes", childproperty.notes) %>
 <% end %>
