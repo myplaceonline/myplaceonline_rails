@@ -34,8 +34,10 @@ class MoneyBalancesController < MyplaceonlineController
     @original_amount = params[:original_amount]
     @description = params[:description]
     @checkbox_percent100 = " checked=\"checked\""
+    @checkbox_percent75 = params[:percent_default] == "0.25" ? " checked=\"checked\"" : ""
     @checkbox_percent50 = params[:percent_default] == "0.5" ? " checked=\"checked\"" : ""
-    if !@checkbox_percent50.blank?
+    @checkbox_percent25 = params[:percent_default] == "0.75" ? " checked=\"checked\"" : ""
+    if !@checkbox_percent25.blank? ||!@checkbox_percent50.blank? || !@checkbox_percent75.blank? 
       @checkbox_percent100 = ""
     end
     @credit_card = params[:credit_card]

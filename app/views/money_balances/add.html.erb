@@ -50,8 +50,12 @@
       <fieldset data-role="controlgroup" data-type="horizontal">
         <legend class="form_field_label"><%= controller.other_owed_name(@owner_paid) + " %" %></legend>
         <% fieldprefix = child_fields.object_name.gsub("\[", "_").gsub("\]", "") + "_other_owes_percent" %>
+        <input name="<%= "#{child_fields.object_name}[other_owes_percent]" %>" id="<%= "#{fieldprefix}25" %>" value="0.25" class="other_owes_percent" <%= @checkbox_percent25 %> type="radio" onchange="myplaceonline.onChangeCascade($('#<%= amount_field_id %>'), myplaceonline.toFloatSafe, '.owe_container', '.other_owes', '.other_owes_percent:checked', myplaceonline.transformMultiply, transformWithCashback)" />
+        <label for="<%= "#{fieldprefix}25" %>">25%</label>
         <input name="<%= "#{child_fields.object_name}[other_owes_percent]" %>" id="<%= "#{fieldprefix}50" %>" value="0.5" class="other_owes_percent" <%= @checkbox_percent50 %> type="radio" onchange="myplaceonline.onChangeCascade($('#<%= amount_field_id %>'), myplaceonline.toFloatSafe, '.owe_container', '.other_owes', '.other_owes_percent:checked', myplaceonline.transformMultiply, transformWithCashback)" />
         <label for="<%= "#{fieldprefix}50" %>">50%</label>
+        <input name="<%= "#{child_fields.object_name}[other_owes_percent]" %>" id="<%= "#{fieldprefix}75" %>" value="0.75" class="other_owes_percent" <%= @checkbox_percent75 %> type="radio" onchange="myplaceonline.onChangeCascade($('#<%= amount_field_id %>'), myplaceonline.toFloatSafe, '.owe_container', '.other_owes', '.other_owes_percent:checked', myplaceonline.transformMultiply, transformWithCashback)" />
+        <label for="<%= "#{fieldprefix}75" %>">75%</label>
         <input name="<%= "#{child_fields.object_name}[other_owes_percent]" %>" id="<%= "#{fieldprefix}100" %>" value="1.0" class="other_owes_percent" <%= @checkbox_percent100 %> type="radio" onchange="myplaceonline.onChangeCascade($('#<%= amount_field_id %>'), myplaceonline.toFloatSafe, '.owe_container', '.other_owes', '.other_owes_percent:checked', myplaceonline.transformMultiply, transformWithCashback)" />
         <label for="<%= "#{fieldprefix}100" %>">100%</label>
       </fieldset>
