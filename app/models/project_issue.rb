@@ -9,4 +9,8 @@ class ProjectIssue < ActiveRecord::Base
   def display
     issue_name
   end
+  
+  def final_search_result
+    project
+  end
 end

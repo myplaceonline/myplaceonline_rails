@@ -1644,17 +1644,19 @@ module Myp
         x2 <=> x1
       end
       
-      results = search_results.map{|search_result|
+      results = search_results.map do |search_result|
         result = nil
-        if search_result.class == Identity
-          search_result = search_result.contact
+        additional_text = ""
+        if search_result.respond_to?("final_search_result")
+          additional_text = " (" + search_result.display + ")"
+          search_result = search_result.final_search_result
         end
         has_defunct = search_result.respond_to?("defunct")
         if !has_defunct || (has_defunct && !search_result.defunct)
           category = Myp.instance_to_category(search_result, false)
           if !category.nil?
             result = ListItemRow.new(
-              category.human_title_singular + ": " + search_result.display,
+              category.human_title_singular + ": " + search_result.display + additional_text,
               "/" + category.name + "/" + search_result.id.to_s,
               nil,
               nil,
@@ -1662,10 +1664,13 @@ module Myp
               original_search,
               category.icon
             )
+          else
+            Rails.logger.debug{"full_text_search found result but not category: #{search_result}"}
           end
         end
         result
-      }.compact
+      end
+      results = results.compact
     else
       results = []
     end
