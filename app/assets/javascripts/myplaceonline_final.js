@@ -806,11 +806,11 @@ var myplaceonline = function(mymodule) {
     return false;
   }
 
-  function formMoveItem(obj, direction) {
+  function formMoveItem(obj, moveType) {
     // Find the itemwrapper for our obj
     var itemwrapper = $(obj).parents(".itemwrapper").first();
 
-    if (direction == 1) {
+    if (moveType == 1) {
       var search = itemwrapper[0].nextElementSibling;
       while (search) {
         if ($(search).hasClass("itemwrapper")) {
@@ -821,7 +821,7 @@ var myplaceonline = function(mymodule) {
         }
         search = search.nextElementSibling;
       }
-    } else if (direction == -1) {
+    } else if (moveType == -1) {
       var search = itemwrapper[0].previousElementSibling;
       while (search) {
         if ($(search).hasClass("itemwrapper")) {
@@ -831,6 +831,34 @@ var myplaceonline = function(mymodule) {
           break;
         }
         search = search.previousElementSibling;
+      }
+    } else if (moveType == 2) {
+      var finalWrapper = null;
+      var search = itemwrapper[0].nextElementSibling;
+      while (search) {
+        if ($(search).hasClass("itemwrapper")) {
+          finalWrapper = search;
+        }
+        search = search.nextElementSibling;
+      }
+      if (finalWrapper) {
+        itemwrapper.remove();
+        $(finalWrapper).after(itemwrapper);
+        itemwrapper.trigger('create');
+      }
+    } else if (moveType == -2) {
+      var finalWrapper = null;
+      var search = itemwrapper[0].previousElementSibling;
+      while (search) {
+        if ($(search).hasClass("itemwrapper")) {
+          finalWrapper = search;
+        }
+        search = search.previousElementSibling;
+      }
+      if (finalWrapper) {
+        itemwrapper.remove();
+        $(finalWrapper).before(itemwrapper);
+        itemwrapper.trigger('create');
       }
     }
     

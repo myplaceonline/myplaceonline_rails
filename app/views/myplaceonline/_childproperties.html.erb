@@ -17,6 +17,8 @@
             <% if !position_field.nil? %>
               <a href="#" onclick="return myplaceonline.formMoveItem(this, 1);" class="ui-btn ui-btn-icon-left ui-icon-arrow-d ui-btn-inline"><%= t("myplaceonline.general.movedown", name: itemname) %></a>
               <a href="#" onclick="return myplaceonline.formMoveItem(this, -1);" class="ui-btn ui-btn-icon-left ui-icon-arrow-u ui-btn-inline"><%= t("myplaceonline.general.moveup", name: itemname) %></a>
+              <a href="#" onclick="return myplaceonline.formMoveItem(this, 2);" class="ui-btn ui-btn-icon-left ui-icon-arrow-d ui-btn-inline"><%= t("myplaceonline.general.movebottom", name: itemname) %></a>
+              <a href="#" onclick="return myplaceonline.formMoveItem(this, -2);" class="ui-btn ui-btn-icon-left ui-icon-arrow-d ui-btn-inline"><%= t("myplaceonline.general.movetop", name: itemname) %></a>
             <% end %>
           </div>
         </div>
