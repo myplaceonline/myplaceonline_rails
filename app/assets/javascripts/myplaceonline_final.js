@@ -764,7 +764,16 @@ var myplaceonline = function(mymodule) {
       easingType = "easeInSine";
     }
     $('html, body').stop().animate({
-      scrollTop : $(window).scrollTop() + amount
+      scrollTop: $(window).scrollTop() + amount
+    }, 650, easingType);
+  }
+
+  function scrollTo(y, easingType) {
+    if (!easingType) {
+      easingType = "easeInSine";
+    }
+    $('html, body').stop().animate({
+      scrollTop: y
     }, 650, easingType);
   }
 
@@ -826,6 +835,7 @@ var myplaceonline = function(mymodule) {
     }
     
     form_set_positions(obj);
+    scrollTo(itemwrapper.offset().top);
     return false;
   }
 
