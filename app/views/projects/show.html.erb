@@ -33,7 +33,9 @@
       %>
       <div id="<%= container_name %>" class="issue_container">
         <%= myp_check_box_tag("issue" + issue.id.to_s, issue.issue_name, false, false, nil, "return myplaceonline.hideIfChecked(this, $(this).parents('#" + container_name + "').first(), delete_project_issue);") %>
-        <%= markdown_content(issue.notes) %>
+        <div style="padding-left: 40px">
+          <%= markdown_content(issue.notes) %>
+        </div>
       </div>
     <% end %>
   <% end %>
