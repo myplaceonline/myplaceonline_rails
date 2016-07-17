@@ -1695,4 +1695,52 @@ module Myp
   def self.string_to_variable_name(str)
     str.gsub(/[^a-zA-Z]/, "")
   end
+  
+  def self.website_info(link)
+    if !link.blank?
+      original_link = link
+      if !link.downcase.start_with?("http")
+        addedhttps = true
+        link = "https://" + link
+      end
+      if link.index(".").nil? && link.index("localhost").nil?
+        link = link + ".com/"
+      end
+      
+      Rails.logger.debug{"link: #{link}"}
+      
+      timeout = 5 # seconds
+
+      begin
+        c = Curl::Easy.new(link)
+        c.ssl_verify_peer = false
+        c.follow_location = true
+        c.timeout = timeout
+        c.perform
+        
+        Rails.logger.debug{"returned: #{c.body_str}"}
+      rescue => e
+        Rails.logger.debug{"caught #{e.to_s}"}
+        if addedhttps && e.to_s.index("Invalid HTTP format").nil?
+          link = "http://" + original_link
+          Rails.logger.debug{"re-request link: #{link}"}
+          c = Curl::Easy.new(link)
+          c.ssl_verify_peer = false
+          c.follow_location = true
+          c.timeout = timeout
+          c.perform
+          Rails.logger.debug{"returned: #{c.body_str}"}
+        else
+          raise e
+        end
+      end
+      
+      {
+        title: c.body_str[/.*<(title|TITLE)>([^>]*)<\/(title|TITLE)>/,2],
+        link: link
+      }
+    else
+      nil
+    end
+  end
 end
