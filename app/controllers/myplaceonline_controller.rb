@@ -142,7 +142,14 @@ class MyplaceonlineController < ApplicationController
         begin
           p = obj_params
           Rails.logger.debug{"Permitted parameters: #{p.inspect}"}
-          @obj = model.new(p)
+          
+          # If there's an ID, then we're actually updating instead of creating
+          if p[:id].blank?
+            @obj = model.new(p)
+          else
+            set_obj(p: p)
+            @obj.assign_attributes(p)
+          end
         rescue ActiveRecord::RecordNotFound => rnf
           raise Myp::CannotFindNestedAttribute, rnf.message + " (code needs attribute setter override?)"
         end
@@ -578,16 +585,16 @@ class MyplaceonlineController < ApplicationController
       ).limit(additional_items_max_items).order(model.table_name + ".visit_count DESC")
     end
 
-    def set_obj(action = nil)
+    def set_obj(action = nil, p: params)
       if action.nil?
         action = action_name
       end
       if nested
         parent_id = parent_model_last.table_name.singularize.downcase + "_id"
-        @parent = Myp.find_existing_object(parent_model_last, params[parent_id], false)
-        @obj = model.where("id = ? and #{parent_id} = ?", params[:id].to_i, params[parent_id.to_sym].to_i).take!
+        @parent = Myp.find_existing_object(parent_model_last, p[parent_id], false)
+        @obj = model.where("id = ? and #{parent_id} = ?", p[:id].to_i, p[parent_id.to_sym].to_i).take!
       else
-        @obj = model.find(params[:id].to_i)
+        @obj = model.find(p[:id].to_i)
       end
       authorize! action.to_sym, @obj
     end

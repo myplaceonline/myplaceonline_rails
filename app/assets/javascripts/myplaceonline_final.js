@@ -105,9 +105,10 @@ var myplaceonline = function(mymodule) {
           var filetype = file.type;
           
           var formData = new FormData();
+
+          // We need to include the parent object ID, if any
           formData.append(this.name, file);
                  
-          // We need to include the object ID
           // https://developer.mozilla.org/en-US/docs/Web/API/Location
           formData.append("urlpath", window.location.pathname);
           formData.append("urlsearch", window.location.search);
@@ -157,18 +158,26 @@ var myplaceonline = function(mymodule) {
               
               this.tracker.remove();
               
-              // Assume the file element's name is of the form:
-              // $nameprefix[$number][identity_file_attributes][file]
-              // So for the first parameter of the formAddItem call, we can
-              // just chop off everything after $nameprefix
-              
-              var namePrefix = this.fileControl.attr("name");
-              namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
-              namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
-              namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
-              formAddItem(this.fileControl.parents(".itemswrapper").first().children().first(), namePrefix, data.deletePlaceholder, data.items);
-              form_set_positions(this.fileControl);
-              myplaceonline.createSuccessNotification(data.successNotification + " (" + (parseInt(this.fileControl.attr("files_processed")) + 1) + "/" + this.fileControl.attr("files_selected") + ")");
+              if (data.singular) {
+                $(data.items[0].value).insertAfter(this.fileControl);
+                $("<input type='hidden' name='identity_file[id]' value='" + data.id + "' />").insertAfter(this.fileControl);
+                
+                // Don't show a success notification because then the user might not click Save
+                // myplaceonline.createSuccessNotification(data.successNotification);
+              } else {
+                // Assume the file element's name is of the form:
+                // $nameprefix[$number][identity_file_attributes][file]
+                // So for the first parameter of the formAddItem call, we can
+                // just chop off everything after $nameprefix
+                
+                var namePrefix = this.fileControl.attr("name");
+                namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
+                namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
+                namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
+                formAddItem(this.fileControl.parents(".itemswrapper").first().children().first(), namePrefix, data.deletePlaceholder, data.items);
+                form_set_positions(this.fileControl);
+                myplaceonline.createSuccessNotification(data.successNotification + " (" + (parseInt(this.fileControl.attr("files_processed")) + 1) + "/" + this.fileControl.attr("files_selected") + ")");
+              }
             } else {
               myplaceonline.createErrorNotification("Unknown error. We've been notified. You may try again although we recommend refreshing the page first to remove any invalid state.");
             }
@@ -182,8 +191,12 @@ var myplaceonline = function(mymodule) {
             this.fileControl.attr("files_processed", files_processed);
             if (files_processed == this.fileControl.attr("files_selected")) {
               var itemswrapper = this.fileControl.parents(".itemswrapper").first();
-              this.fileControl.parents(".itemwrapper").first().remove();
-              form_set_positions(itemswrapper, true);
+              if (itemswrapper.length > 0) {
+                this.fileControl.parents(".itemwrapper").first().remove();
+                form_set_positions(itemswrapper, true);
+              } else {
+                this.fileControl.remove();
+              }
             }
           });
           
@@ -206,7 +219,7 @@ var myplaceonline = function(mymodule) {
               // request finishes, if the user hasn't completely navigated away,
               // then we can separately delete it
               
-              filecontext.pendingDelete = true; // TODO handle on the other side
+              filecontext.pendingDelete = true; // TODO handle on the server side
             }
           });
         }

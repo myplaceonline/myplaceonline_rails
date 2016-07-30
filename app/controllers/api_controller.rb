@@ -176,6 +176,10 @@ class ApiController < ApplicationController
         objclass = spliturl[1].singularize
         objid = spliturl[2]
         
+        if !objid.index("?").nil?
+          objid = objid[0..objid.index("?")-1]
+        end
+        
         if objid != "new"
           obj = Myp.find_existing_object(objclass, objid, false)
           authorize! :edit, obj
@@ -196,17 +200,21 @@ class ApiController < ApplicationController
 
         Rails.logger.debug{"initial node: #{paramnode}"}
         
-        keepgoing = true
-        while keepgoing do
+        keepgoing = !paramnode.nil?
+        iterations = 0
+        while keepgoing && iterations < 500 do
           pair = paramnode.to_a[0]
           key = pair[0]
           val = paramnode = pair[1]
+          iterations = iterations + 1
           
           Rails.logger.debug{"key: #{key}, val: #{val}"}
           
           if key.end_with?("_attributes")
             key = key[0..key.index("_attributes")-1]
           end
+          
+          # Regex checking for only digits
           if !!(key =~ /\A[-+]?[0-9]+\z/)
             ikey = key.to_i
             
@@ -238,44 +246,8 @@ class ApiController < ApplicationController
               else
                 raise "todo"
               end
-              
-              items = [
-                {
-                  type: "raw",
-                  value: "<p>" + MyplaceonlineController.helpers.image_tag(file_thumbnail_name_path(newfile, newfile.urlname, :h => newfile.thumbnail_hash), alt: newfile.display, title: newfile.display) + "</p>"
-                },
-                {
-                  type: "text",
-                  name: "identity_file_attributes.file_file_name",
-                  placeholder: t("myplaceonline.files.file_file_name"),
-                  value: newfile.file_file_name
-                },
-                {
-                  type: "textarea",
-                  name: "identity_file_attributes.notes",
-                  placeholder: t("myplaceonline.general.notes"),
-                  value: newfile.notes
-                },
-                {
-                  type: "hidden",
-                  name: "identity_file_attributes.id",
-                  value: newfile.id.to_s
-                }
-              ]
-              
-              if params[:position_field]
-                items.push({
-                  type: "position",
-                  name: params[:position_field]
-                })
-              end
 
-              result = {
-                result: true,
-                deletePlaceholder: I18n.t("myplaceonline.general.delete"),
-                successNotification: I18n.t("myplaceonline.files.file_success", name: newfile.file_file_name),
-                items: items
-              }
+              result = create_newfile_result(newfile, params)
               
               keepgoing = false
 
@@ -301,9 +273,59 @@ class ApiController < ApplicationController
             end
           end
         end
+        if !result[:result]
+          # Just a simple add of a file
+          if !params[:identity_file].nil?
+            newfile = IdentityFile.create(params.require(:identity_file).permit(FilesController.param_names))
+            Rails.logger.debug{"newfile final: #{newfile.inspect}"}
+            result = create_newfile_result(newfile, params, singular: true)
+          end
+        end
       end
     end
     render json: result
+  end
+  
+  def create_newfile_result(newfile, params, singular: false)
+    items = [
+      {
+        type: "raw",
+        value: "<p>" + MyplaceonlineController.helpers.image_tag(file_thumbnail_name_path(newfile, newfile.urlname, :h => newfile.thumbnail_hash), alt: newfile.display, title: newfile.display) + "</p>"
+      },
+      {
+        type: "text",
+        name: "identity_file_attributes.file_file_name",
+        placeholder: t("myplaceonline.files.file_file_name"),
+        value: newfile.file_file_name
+      },
+      {
+        type: "textarea",
+        name: "identity_file_attributes.notes",
+        placeholder: t("myplaceonline.general.notes"),
+        value: newfile.notes
+      },
+      {
+        type: "hidden",
+        name: "identity_file_attributes.id",
+        value: newfile.id.to_s
+      }
+    ]
+    
+    if params[:position_field]
+      items.push({
+        type: "position",
+        name: params[:position_field]
+      })
+    end
+
+    {
+      result: true,
+      deletePlaceholder: I18n.t("myplaceonline.general.delete"),
+      successNotification: I18n.t("myplaceonline.files.file_success", name: newfile.file_file_name),
+      items: items,
+      singular: singular,
+      id: newfile.id
+    }
   end
   
   def newitem

@@ -757,7 +757,7 @@ module ApplicationHelper
     ).html_safe
   end
 
-  def myp_file_field(form, name, placeholder, value, autofocus = false, input_classes = nil)
+  def myp_file_field(form, name, placeholder, value, autofocus = false, input_classes = nil, useprogress: true)
     if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
@@ -767,7 +767,7 @@ module ApplicationHelper
     content_tag(
       :p,
       form.label(name, placeholder, class: "form_field_label") +
-      form.file_field(name, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes), value: value)
+      form.file_field(name, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes), value: value, data: { useprogress: useprogress })
     ).html_safe
   end
   
