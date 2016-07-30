@@ -407,7 +407,42 @@ var myplaceonline = function(mymodule) {
           scrollY(anchor.offset().top);
         }
       }
+      
+      if (inPhoneGap) {
+        $("input:file").each(function(index) {
+          var jFile = $(this);
+          $("<button class='take_picture_button ui-btn'>Take Picture</button>").insertAfter(jFile);
+        });
+      }
     });
+
+    if (inPhoneGap) {
+      $(document).on("click", ".take_picture_button", function(e) {
+        consoleLog("Launching phone camera");
+        navigator.camera.getPicture(function(fileURI) {
+          consoleLog("Successfully captured picture at " + fileURI);
+          window.resolveLocalFileSystemURL(fileURI, 
+            function(fileEntry) {
+              fileEntry.file(function(file) {
+                consoleLog("Got File object");
+              }, function() {
+                criticalError("Could not get file object");
+              });
+            },
+            function() {
+              criticalError("Error resolving picture location");
+            }
+          );
+        }, function() {
+          criticalError("Error getting picture");
+        }, {
+          // https://github.com/apache/cordova-plugin-camera#module_camera.CameraOptions
+          destinationType: window.Camera.DestinationType.FILE_URI,
+          sourceType: window.Camera.PictureSourceType.CAMERA
+        });
+        return false;
+      });
+    }
 
     // https://github.com/jquery/jquery-mobile/issues/3249
     $(document).on("pagecontainerhide.fixcache", $.mobile.pageContainer, function(event, ui) {
@@ -629,6 +664,7 @@ var myplaceonline = function(mymodule) {
   }
 
   function loadExternalCss(url, multiple) {
+    consoleLog("loadExternalCss: url " + url + ", multiple " + multiple);
     if (!multiple) {
       for (var i in loadedScripts) {
         if (loadedScripts[i] == url) {
