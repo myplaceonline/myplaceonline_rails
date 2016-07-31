@@ -423,6 +423,7 @@ var myplaceonline = function(mymodule) {
     $(document).on("click", ".take_picture_button", function(e) {
       if (inPhoneGap) {
         consoleLog("Launching phone camera");
+        $takePictureButton = $(this);
         $inputFileElement = $(this).prev("input:file").first();
         consoleDir($inputFileElement);
         navigator.camera.getPicture(function(fileURI) {
@@ -431,6 +432,8 @@ var myplaceonline = function(mymodule) {
             function(fileEntry) {
               fileEntry.file(function(file) {
                 consoleLog("Got File object");
+                consoleDir(file);
+                $takePictureButton.hide();
                 prepareUploadFiles($inputFileElement, 1);
                 uploadFile(file, $inputFileElement);
               }, function() {
@@ -536,11 +539,14 @@ var myplaceonline = function(mymodule) {
     var filesize = file.size;
     var filetype = file.type;
     
+    consoleLog("uploadFile name: " + filename + ", size: " + filesize + ", type: " + filetype);
+    consoleDir(file);
+    
     var formData = new FormData();
 
     // We need to include the parent object ID, if any
     formData.append($inputFileElement.attr("name"), file);
-            
+
     // https://developer.mozilla.org/en-US/docs/Web/API/Location
     formData.append("urlpath", window.location.pathname);
     formData.append("urlsearch", window.location.search);
