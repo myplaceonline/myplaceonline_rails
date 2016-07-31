@@ -25,7 +25,6 @@ var myplaceonline = function(mymodule) {
   var queuedRequests = [];
   var queuedRequestThread = null;
   var notepadResetTimeout = null;
-  var lastuniqueid = 1;
   
   $.noty.defaults.timeout = 3000;
   $.noty.defaults.layout = 'topCenter';
@@ -91,142 +90,17 @@ var myplaceonline = function(mymodule) {
     if (this.files && this.files.length > 0) {
       if ($this.data("useprogress")) {
         
-        // We hide the input element immediately and then we'll destroy it
-        // when all the files have been uploaded
-        $this.hide();
-        $this.attr("files_selected", this.files.length);
-        $this.attr("files_processed", 0);
+        myplaceonline.prepareUploadFiles($this, this.files.length);
         
         var i = 0;
         for (i = 0; i < this.files.length; i++) {
           var file = this.files[i];
-          var filename = file.name;
-          var filesize = file.size;
-          var filetype = file.type;
-          
-          var formData = new FormData();
-
-          // We need to include the parent object ID, if any
-          formData.append(this.name, file);
-                 
-          // https://developer.mozilla.org/en-US/docs/Web/API/Location
-          formData.append("urlpath", window.location.pathname);
-          formData.append("urlsearch", window.location.search);
-          formData.append("urlhash", window.location.hash);
-                 
-          if ($this.data("position_field")) {
-            formData.append("position_field", $this.data("position_field"));
-          }
-                 
-          var progressid = nextUniqueId();
-          
-          // Create a progress element and cancel button right below the
-          // input field
-          var newhtml = $("<fieldset class=\"progress_fieldset\"><legend>" + encodeEntities(filename) + "</legend><progress id=\"" + progressid + "\" class=\"width100\"></progress><button class=\"ui-btn\">Cancel</button></fieldset>");
-          newhtml.insertAfter($this);
-          
-          var filecontext = {
-            tracker: newhtml,
-            fileControl: $this
-          };
-
-          var jqxhr = $.ajax({
-            type: "POST",
-            url: "/api/newfile",
-            data: formData,
-            timeout: 0,
-            context: filecontext,
-            xhr: function() {
-              var myXhr = $.ajaxSettings.xhr();
-              if (myXhr.upload){
-                $(myXhr.upload).bind("progress", { progressid: progressid }, function(e) {
-                  if (e.originalEvent.lengthComputable) {
-                    $("#" + e.data.progressid).attr({
-                      value: e.originalEvent.loaded,
-                      max: e.originalEvent.total
-                    });
-                  }
-                }, false);
-              }
-              return myXhr;
-            },
-            cache: false,
-            contentType: false,
-            processData: false
-          }).done(function(data) {
-            if (data.result) {
-              
-              this.tracker.remove();
-              
-              if (data.singular) {
-                $(data.items[0].value).insertAfter(this.fileControl);
-                $("<input type='hidden' name='identity_file[id]' value='" + data.id + "' />").insertAfter(this.fileControl);
-                
-                // Don't show a success notification because then the user might not click Save
-                // myplaceonline.createSuccessNotification(data.successNotification);
-              } else {
-                // Assume the file element's name is of the form:
-                // $nameprefix[$number][identity_file_attributes][file]
-                // So for the first parameter of the formAddItem call, we can
-                // just chop off everything after $nameprefix
-                
-                var namePrefix = this.fileControl.attr("name");
-                namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
-                namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
-                namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
-                formAddItem(this.fileControl.parents(".itemswrapper").first().children().first(), namePrefix, data.deletePlaceholder, data.items);
-                form_set_positions(this.fileControl);
-                myplaceonline.createSuccessNotification(data.successNotification + " (" + (parseInt(this.fileControl.attr("files_processed")) + 1) + "/" + this.fileControl.attr("files_selected") + ")");
-              }
-            } else {
-              myplaceonline.createErrorNotification("Unknown error. We've been notified. You may try again although we recommend refreshing the page first to remove any invalid state.");
-            }
-          }).fail(function(data) {
-            if (data.statusText != "abort") {
-              myplaceonline.createErrorNotification("Unknown error. We've been notified. You may try again although we recommend refreshing the page first to remove any invalid state.");
-            }
-          }).always(function() {
-            var files_processed = this.fileControl.attr("files_processed");
-            files_processed++;
-            this.fileControl.attr("files_processed", files_processed);
-            if (files_processed == this.fileControl.attr("files_selected")) {
-              var itemswrapper = this.fileControl.parents(".itemswrapper").first();
-              if (itemswrapper.length > 0) {
-                this.fileControl.parents(".itemwrapper").first().remove();
-                form_set_positions(itemswrapper, true);
-              } else {
-                this.fileControl.remove();
-              }
-            }
-          });
-          
-          filecontext.jqxhr = jqxhr
-
-          newhtml.on("click", "button", filecontext, function(e) {
-            e.preventDefault();
-            
-            // If it already completed successfully, then don't bother doing
-            // anything
-            if (e.data.jqxhr.readyState != 4) {
-              // It didn't complete, so abort the request to stop sending
-              // any pending data
-              e.data.jqxhr.abort();
-              
-              // However, it's possible the full POST has already been sent,
-              // in which case the file is already attached to the parent
-              // object. So we need to delete the file, so what we'll
-              // do is mark the context as pending delete and then when the
-              // request finishes, if the user hasn't completely navigated away,
-              // then we can separately delete it
-              
-              filecontext.pendingDelete = true; // TODO handle on the server side
-            }
-          });
+          myplaceonline.uploadFile(file, $this);
         }
       }
     }
   });
-
+  
   function jqmSetListMessage(list, message) {
     list.html("<li data-role=\"visible\">" + message + "</li>");
     list.listview("refresh");
@@ -667,7 +541,7 @@ var myplaceonline = function(mymodule) {
       defaultValue = defaultValue.replace(/'/g, '').replace(/"/g, '');
       
       if (item.value && item.value.length > 0 && item.placeholder && item.placeholder.length > 0) {
-        html += "<b>" + encodeEntities(item.placeholder) + "</b><br />";
+        html += "<b>" + myplaceonline.encodeEntities(item.placeholder) + "</b><br />";
       }
       
       if (item.type == "date" || item.type == "datetime") {
@@ -1191,15 +1065,6 @@ var myplaceonline = function(mymodule) {
     metaTag.attr("content", token);
   }
   
-  function nextUniqueId() {
-    lastuniqueid++;
-    return "element" + lastuniqueid;
-  }
-
-  function encodeEntities(str) {
-    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#27;");
-  }
-
   // Public API
   mymodule.hookListviewSearch = hookListviewSearch;
   mymodule.hookListviewEnter = hookListviewEnter;
@@ -1226,9 +1091,9 @@ var myplaceonline = function(mymodule) {
   mymodule.remoteDataListInitialize = remoteDataListInitialize;
   mymodule.jqmSetListMessage = jqmSetListMessage;
   mymodule.jqmSetList = jqmSetList;
-  mymodule.encodeEntities = encodeEntities;
   mymodule.jqmReplaceListSection = jqmReplaceListSection;
   mymodule.remoteDataListReset = remoteDataListReset;
+  mymodule.form_set_positions = form_set_positions;
 
   return mymodule;
 

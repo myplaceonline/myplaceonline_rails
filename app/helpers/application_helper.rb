@@ -260,15 +260,19 @@ module ApplicationHelper
         content
       )
     else
-      content = "<p>#{url_or_blank(file_path(identity_file, token: params[:token]), identity_file.file_file_name, nil, "", true)} | #{url_or_blank(file_download_name_path(identity_file, identity_file.urlname, token: params[:token]), t("myplaceonline.files.download"), nil, "", true)}</p>".html_safe
-      if !identity_file.notes.blank?
-        content += Myp.markdown_to_html(identity_file.notes).html_safe
+      if !identity_file.nil?
+        content = "<p>#{url_or_blank(file_path(identity_file, token: params[:token]), identity_file.file_file_name, nil, "", true)} | #{url_or_blank(file_download_name_path(identity_file, identity_file.urlname, token: params[:token]), t("myplaceonline.files.download"), nil, "", true)}</p>".html_safe
+        if !identity_file.notes.blank?
+          content += Myp.markdown_to_html(identity_file.notes).html_safe
+        end
+        attribute_table_row_content(
+          name,
+          nil,
+          content
+        )
+      else
+        nil
       end
-      attribute_table_row_content(
-        name,
-        nil,
-        content
-      )
     end
   end
   
@@ -757,7 +761,7 @@ module ApplicationHelper
     ).html_safe
   end
 
-  def myp_file_field(form, name, placeholder, value, autofocus = false, input_classes = nil, useprogress: true)
+  def myp_file_field(form, name, placeholder, value, autofocus = false, input_classes = nil, useprogress: false)
     if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end

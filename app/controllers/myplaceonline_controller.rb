@@ -232,7 +232,7 @@ class MyplaceonlineController < ApplicationController
       if !last_item.nil?
         if last_item.created_at + 3.seconds >= Time.now.utc
           @obj = last_item
-          Rails.logger.debug{"Detected double post"}
+          Rails.logger.warn{"Detected double post #{last_item.inspect}"}
           return true
         end
       end

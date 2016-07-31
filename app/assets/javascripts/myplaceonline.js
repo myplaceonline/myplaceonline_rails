@@ -4,6 +4,7 @@
 //  * When changing this file, apply the same changes in phonegap and push
 //    out a new app build:
 //    $ cp app/assets/ja*/myplaceonline.js ../myplaceonline_phonegap/www/js/
+//    $ cp www/js/myplaceonline.js ../myplaceonline_rails/app/assets/ja*/
 //  * This file should be loaded after jQuery but before jQueryMobile,
 //    so any jQueryMobile specific executions (outside function definitions
 //    and callbacks) may be done in the mobileinit callback.
@@ -40,6 +41,7 @@ var myplaceonline = function(mymodule) {
   var clipboard_integration = 1;
   var initialPhonegapPage = false;
   var pendingPageLoads = [];
+  var lastuniqueid = 1;
   
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
   if (!String.prototype.trim) {
@@ -411,20 +413,26 @@ var myplaceonline = function(mymodule) {
       if (inPhoneGap) {
         $("input:file").each(function(index) {
           var jFile = $(this);
-          $("<button class='take_picture_button ui-btn'>Take Picture</button>").insertAfter(jFile);
+          if (jFile.data("useprogress")) {
+            $("<button class='take_picture_button ui-btn'>Take Picture</button>").insertAfter(jFile);
+          }
         });
       }
     });
 
-    if (inPhoneGap) {
-      $(document).on("click", ".take_picture_button", function(e) {
+    $(document).on("click", ".take_picture_button", function(e) {
+      if (inPhoneGap) {
         consoleLog("Launching phone camera");
+        $inputFileElement = $(this).prev("input:file").first();
+        consoleDir($inputFileElement);
         navigator.camera.getPicture(function(fileURI) {
           consoleLog("Successfully captured picture at " + fileURI);
           window.resolveLocalFileSystemURL(fileURI, 
             function(fileEntry) {
               fileEntry.file(function(file) {
                 consoleLog("Got File object");
+                prepareUploadFiles($inputFileElement, 1);
+                uploadFile(file, $inputFileElement);
               }, function() {
                 criticalError("Could not get file object");
               });
@@ -440,9 +448,9 @@ var myplaceonline = function(mymodule) {
           destinationType: window.Camera.DestinationType.FILE_URI,
           sourceType: window.Camera.PictureSourceType.CAMERA
         });
-        return false;
-      });
-    }
+      }
+      return false;
+    });
 
     // https://github.com/jquery/jquery-mobile/issues/3249
     $(document).on("pagecontainerhide.fixcache", $.mobile.pageContainer, function(event, ui) {
@@ -514,6 +522,139 @@ var myplaceonline = function(mymodule) {
       // ui.deferred.reject( ui.absUrl, ui.options );
     });
   });
+
+  function prepareUploadFiles($inputFileElement, numFiles) {
+    // We hide the input element immediately and then we'll destroy it
+    // when all the files have been uploaded
+    $inputFileElement.hide();
+    $inputFileElement.attr("files_selected", numFiles);
+    $inputFileElement.attr("files_processed", 0);
+  }
+  
+  function uploadFile(file, $inputFileElement) {
+    var filename = file.name;
+    var filesize = file.size;
+    var filetype = file.type;
+    
+    var formData = new FormData();
+
+    // We need to include the parent object ID, if any
+    formData.append($inputFileElement.attr("name"), file);
+            
+    // https://developer.mozilla.org/en-US/docs/Web/API/Location
+    formData.append("urlpath", window.location.pathname);
+    formData.append("urlsearch", window.location.search);
+    formData.append("urlhash", window.location.hash);
+            
+    if ($inputFileElement.data("position_field")) {
+      formData.append("position_field", $inputFileElement.data("position_field"));
+    }
+            
+    var progressid = nextUniqueId();
+    
+    // Create a progress element and cancel button right below the
+    // input field
+    var newhtml = $("<fieldset class=\"progress_fieldset\"><legend>" + encodeEntities(filename) + "</legend><progress id=\"" + progressid + "\" class=\"width100\"></progress><button class=\"ui-btn\">Cancel</button></fieldset>");
+    newhtml.insertAfter($inputFileElement);
+    
+    var filecontext = {
+      tracker: newhtml,
+      fileControl: $inputFileElement
+    };
+
+    var jqxhr = $.ajax({
+      type: "POST",
+      url: "/api/newfile",
+      data: formData,
+      timeout: 0,
+      context: filecontext,
+      xhr: function() {
+        var myXhr = $.ajaxSettings.xhr();
+        if (myXhr.upload){
+          $(myXhr.upload).bind("progress", { progressid: progressid }, function(e) {
+            if (e.originalEvent.lengthComputable) {
+              $("#" + e.data.progressid).attr({
+                value: e.originalEvent.loaded,
+                max: e.originalEvent.total
+              });
+            }
+          }, false);
+        }
+        return myXhr;
+      },
+      cache: false,
+      contentType: false,
+      processData: false
+    }).done(function(data) {
+      if (data.result) {
+        
+        this.tracker.remove();
+        
+        if (data.singular) {
+          $(data.items[0].value).insertAfter(this.fileControl);
+          $("<input type='hidden' name='identity_file[id]' value='" + data.id + "' />").insertAfter(this.fileControl);
+          
+          // Don't show a success notification because then the user might not click Save
+          // myplaceonline.createSuccessNotification(data.successNotification);
+        } else {
+          // Assume the file element's name is of the form:
+          // $nameprefix[$number][identity_file_attributes][file]
+          // So for the first parameter of the formAddItem call, we can
+          // just chop off everything after $nameprefix
+          
+          var namePrefix = this.fileControl.attr("name");
+          namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
+          namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
+          namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
+          myplaceonline.formAddItem(this.fileControl.parents(".itemswrapper").first().children().first(), namePrefix, data.deletePlaceholder, data.items);
+          myplaceonline.form_set_positions(this.fileControl);
+          myplaceonline.createSuccessNotification(data.successNotification + " (" + (parseInt(this.fileControl.attr("files_processed")) + 1) + "/" + this.fileControl.attr("files_selected") + ")");
+        }
+      } else {
+        myplaceonline.createErrorNotification("Unknown error. We've been notified. You may try again although we recommend refreshing the page first to remove any invalid state.");
+      }
+    }).fail(function(data) {
+      if (data.statusText != "abort") {
+        myplaceonline.createErrorNotification("Unknown error. We've been notified. You may try again although we recommend refreshing the page first to remove any invalid state.");
+      }
+    }).always(function() {
+      var files_processed = this.fileControl.attr("files_processed");
+      files_processed++;
+      this.fileControl.attr("files_processed", files_processed);
+      if (files_processed == this.fileControl.attr("files_selected")) {
+        var itemswrapper = this.fileControl.parents(".itemswrapper").first();
+        if (itemswrapper.length > 0) {
+          this.fileControl.parents(".itemwrapper").first().remove();
+          myplaceonline.form_set_positions(itemswrapper, true);
+        } else {
+          this.fileControl.remove();
+        }
+      }
+    });
+    
+    filecontext.jqxhr = jqxhr;
+
+    newhtml.on("click", "button", filecontext, function(e) {
+      e.preventDefault();
+      
+      // If it already completed successfully, then don't bother doing
+      // anything
+      if (e.data.jqxhr.readyState != 4) {
+        // It didn't complete, so abort the request to stop sending
+        // any pending data
+        e.data.jqxhr.abort();
+        
+        // However, it's possible the full POST has already been sent,
+        // in which case the file is already attached to the parent
+        // object. So we need to delete the file, so what we'll
+        // do is mark the context as pending delete and then when the
+        // request finishes, if the user hasn't completely navigated away,
+        // then we can separately delete it
+        
+        filecontext.pendingDelete = true; // TODO handle on the server side
+      }
+    });
+  }
 
   function getActivePageUID() {
     var result = null;
@@ -904,6 +1045,15 @@ var myplaceonline = function(mymodule) {
     return window.sessionPassword;
   }
   
+  function nextUniqueId() {
+    lastuniqueid++;
+    return "element" + lastuniqueid;
+  }
+
+  function encodeEntities(str) {
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#27;");
+  }
+
   // Public API
 
   mymodule.startsWith = startsWith;
@@ -935,6 +1085,10 @@ var myplaceonline = function(mymodule) {
   mymodule.getSessionPassword = getSessionPassword;
   mymodule.getJSON = getJSON;
   mymodule.runPendingPageLoads = runPendingPageLoads;
+  mymodule.prepareUploadFiles = prepareUploadFiles;
+  mymodule.uploadFile = uploadFile;
+  mymodule.nextUniqueId = nextUniqueId;
+  mymodule.encodeEntities = encodeEntities;
 
   mymodule.isFocusAllowed = function() {
     return allowFocusPlaceholder;
