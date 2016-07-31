@@ -261,7 +261,12 @@ module ApplicationHelper
       )
     else
       if !identity_file.nil?
-        content = "<p>#{url_or_blank(file_path(identity_file, token: params[:token]), identity_file.file_file_name, nil, "", true)} | #{url_or_blank(file_download_name_path(identity_file, identity_file.urlname, token: params[:token]), t("myplaceonline.files.download"), nil, "", true)}</p>".html_safe
+        if identity_file.urlname.blank?
+          download_path = file_download_path(identity_file, token: params[:token])
+        else
+          download_path = file_download_name_path(identity_file, identity_file.urlname, token: params[:token])
+        end
+        content = "<p>#{url_or_blank(file_path(identity_file, token: params[:token]), identity_file.file_file_name, nil, "", true)} | #{url_or_blank(download_path, t("myplaceonline.files.download"), nil, "", true)}</p>".html_safe
         if !identity_file.notes.blank?
           content += Myp.markdown_to_html(identity_file.notes).html_safe
         end
