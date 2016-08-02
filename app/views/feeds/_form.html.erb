@@ -1,2 +1,12 @@
-<%= myp_text_field(f, :name, "myplaceonline.feeds.name", obj.name, autofocus) %>
-<%= myp_text_field(f, :url, "myplaceonline.feeds.url", obj.url) %>
+<%=
+  render partial: "myplaceonline/link_and_title", locals: {
+    f: f,
+    obj: obj,
+    autofocus: autofocus,
+    link_name: :url,
+    link_placeholder: "myplaceonline.feeds.url",
+    title_name: :name,
+    title_placeholder: "myplaceonline.feeds.name",
+    button_text: "myplaceonline.websites.request_title"
+  }
+%>
