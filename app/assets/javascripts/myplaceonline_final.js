@@ -670,7 +670,7 @@ var myplaceonline = function(mymodule) {
 
   function form_add_item_set_html(insertBefore, html, toFocus) {
     $(html).insertBefore(insertBefore);
-    $(insertBefore).parent().trigger('create');
+    myplaceonline.prepareNewContent($(insertBefore).parent());
     if (toFocus) {
       myplaceonline.maybeFocus("#" + toFocus);
     }

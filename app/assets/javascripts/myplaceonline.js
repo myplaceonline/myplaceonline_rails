@@ -359,7 +359,25 @@ var myplaceonline = function(mymodule) {
     }
     return null;
   }
-
+  
+  function prepareNewContent($element) {
+    var process = null;
+    if ($element) {
+      $element.trigger("create");
+      process = $element.children("input:file");
+    } else {
+      process = $("input:file");
+    }
+    if (inPhoneGap) {
+      process.each(function(index) {
+        var $this = $(this);
+        if ($this.data("useprogress")) {
+          $("<button class='take_picture_button ui-btn'>Take Picture</button>").insertAfter($this);
+        }
+      });
+    }
+  }
+  
   // http://api.jquerymobile.com/global-config/
   $(document).on("mobileinit.myp", function() {
     consoleLog("mobileinit.myp");
@@ -410,14 +428,7 @@ var myplaceonline = function(mymodule) {
         }
       }
       
-      if (inPhoneGap) {
-        $("input:file").each(function(index) {
-          var jFile = $(this);
-          if (jFile.data("useprogress")) {
-            $("<button class='take_picture_button ui-btn'>Take Picture</button>").insertAfter(jFile);
-          }
-        });
-      }
+      prepareNewContent(null);
     });
 
     $(document).on("click", ".take_picture_button", function(e) {
@@ -1140,6 +1151,7 @@ var myplaceonline = function(mymodule) {
   mymodule.uploadFile = uploadFile;
   mymodule.nextUniqueId = nextUniqueId;
   mymodule.encodeEntities = encodeEntities;
+  mymodule.prepareNewContent = prepareNewContent;
 
   mymodule.isFocusAllowed = function() {
     return allowFocusPlaceholder;
