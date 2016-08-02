@@ -8,7 +8,7 @@ class DentistVisit < ActiveRecord::Base
   validates :visit_date, presence: true
   
   def display
-    Myp.display_datetime_short(visit_date, User.current_user)
+    Myp.display_date_short_year(visit_date, User.current_user)
   end
   
   belongs_to :dental_insurance
