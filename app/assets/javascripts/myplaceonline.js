@@ -433,9 +433,44 @@ var myplaceonline = function(mymodule) {
               fileEntry.file(function(file) {
                 consoleLog("Got File object");
                 consoleDir(file);
+                // See http://stackoverflow.com/questions/38688006/why-doesnt-formdata-append-file-from-fileentry-upload-correctly
                 $takePictureButton.hide();
                 prepareUploadFiles($inputFileElement, 1);
-                uploadFile(file, $inputFileElement);
+                //uploadFile(file, $inputFileElement);
+                var ft = new FileTransfer();
+                var params = {
+                  urlpath: window.location.pathname,
+                  urlsearch: window.location.search,
+                  urlhash: window.location.hash
+                };
+                if ($inputFileElement.data("position_field")) {
+                  params.position_field = $inputFileElement.data("position_field");
+                }
+                ft.upload(
+                  fileURI,
+                  encodeURI(app.base_url + "/api/newfile"),
+                  function(result) {
+                    var resultObj = jQuery.parseJSON(result.response);
+                    consoleDir(resultObj);
+                    uploadFileSuccess(resultObj, null, $inputFileElement);
+                    uploadFileAlways($inputFileElement);
+                  },
+                  function(error) {
+                    consoleDir(error);
+                    criticalError("Could not upload file: " + error.body);
+                    consoleLog("upload error source " + error.source);
+                    consoleLog("upload error target " + error.target);
+                  },
+                  {
+                    fileKey: $inputFileElement.attr("name"),
+                    fileName: file.name,
+                    mimeType: file.type,
+                    params: params,
+                    headers: {
+                      "X-CSRF-Token": $("meta[name='csrf-token']").attr("content")
+                    }
+                  }
+                );
               }, function() {
                 criticalError("Could not get file object");
               });
@@ -534,6 +569,53 @@ var myplaceonline = function(mymodule) {
     $inputFileElement.attr("files_processed", 0);
   }
   
+  function uploadFileSuccess(data, tracker, fileControl) {
+    if (data.result) {
+      
+      if (tracker) {
+        tracker.remove();
+      }
+      
+      if (data.singular) {
+        $(data.items[0].value).insertAfter(fileControl);
+        $("<input type='hidden' name='identity_file[id]' value='" + data.id + "' />").insertAfter(fileControl);
+        
+        // Don't show a success notification because then the user might not click Save
+        // myplaceonline.createSuccessNotification(data.successNotification);
+      } else {
+        // Assume the file element's name is of the form:
+        // $nameprefix[$number][identity_file_attributes][file]
+        // So for the first parameter of the formAddItem call, we can
+        // just chop off everything after $nameprefix
+        
+        var namePrefix = fileControl.attr("name");
+        namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
+        namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
+        namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
+        myplaceonline.formAddItem(fileControl.parents(".itemswrapper").first().children().first(), namePrefix, data.deletePlaceholder, data.items);
+        myplaceonline.form_set_positions(fileControl);
+        myplaceonline.createSuccessNotification(data.successNotification + " (" + (parseInt(fileControl.attr("files_processed")) + 1) + "/" + fileControl.attr("files_selected") + ")");
+      }
+    } else {
+      myplaceonline.createErrorNotification("Unknown error. We've been notified. You may try again although we recommend refreshing the page first to remove any invalid state.");
+    }
+  }
+  
+  function uploadFileAlways(fileControl) {
+    var files_processed = fileControl.attr("files_processed");
+    files_processed++;
+    fileControl.attr("files_processed", files_processed);
+    if (files_processed == fileControl.attr("files_selected")) {
+      var itemswrapper = fileControl.parents(".itemswrapper").first();
+      if (itemswrapper.length > 0) {
+        fileControl.parents(".itemwrapper").first().remove();
+        myplaceonline.form_set_positions(itemswrapper, true);
+      } else {
+        fileControl.remove();
+      }
+    }
+  }
+  
   function uploadFile(file, $inputFileElement) {
     var filename = file.name;
     var filesize = file.size;
@@ -592,50 +674,13 @@ var myplaceonline = function(mymodule) {
       contentType: false,
       processData: false
     }).done(function(data) {
-      if (data.result) {
-        
-        this.tracker.remove();
-        
-        if (data.singular) {
-          $(data.items[0].value).insertAfter(this.fileControl);
-          $("<input type='hidden' name='identity_file[id]' value='" + data.id + "' />").insertAfter(this.fileControl);
-          
-          // Don't show a success notification because then the user might not click Save
-          // myplaceonline.createSuccessNotification(data.successNotification);
-        } else {
-          // Assume the file element's name is of the form:
-          // $nameprefix[$number][identity_file_attributes][file]
-          // So for the first parameter of the formAddItem call, we can
-          // just chop off everything after $nameprefix
-          
-          var namePrefix = this.fileControl.attr("name");
-          namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
-          namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
-          namePrefix = namePrefix.substring(0, namePrefix.lastIndexOf('['));
-          myplaceonline.formAddItem(this.fileControl.parents(".itemswrapper").first().children().first(), namePrefix, data.deletePlaceholder, data.items);
-          myplaceonline.form_set_positions(this.fileControl);
-          myplaceonline.createSuccessNotification(data.successNotification + " (" + (parseInt(this.fileControl.attr("files_processed")) + 1) + "/" + this.fileControl.attr("files_selected") + ")");
-        }
-      } else {
-        myplaceonline.createErrorNotification("Unknown error. We've been notified. You may try again although we recommend refreshing the page first to remove any invalid state.");
-      }
+      uploadFileSuccess(data, this.tracker, this.fileControl);
     }).fail(function(data) {
       if (data.statusText != "abort") {
         myplaceonline.createErrorNotification("Unknown error. We've been notified. You may try again although we recommend refreshing the page first to remove any invalid state.");
       }
     }).always(function() {
-      var files_processed = this.fileControl.attr("files_processed");
-      files_processed++;
-      this.fileControl.attr("files_processed", files_processed);
-      if (files_processed == this.fileControl.attr("files_selected")) {
-        var itemswrapper = this.fileControl.parents(".itemswrapper").first();
-        if (itemswrapper.length > 0) {
-          this.fileControl.parents(".itemwrapper").first().remove();
-          myplaceonline.form_set_positions(itemswrapper, true);
-        } else {
-          this.fileControl.remove();
-        }
-      }
+      uploadFileAlways(this.fileControl);
     });
     
     filecontext.jqxhr = jqxhr;
