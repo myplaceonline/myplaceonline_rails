@@ -361,14 +361,16 @@ var myplaceonline = function(mymodule) {
   }
   
   function prepareNewContent($element) {
-    var process = null;
     if ($element) {
       $element.trigger("create");
-      process = $element.children("input:file");
-    } else {
-      process = $("input:file");
     }
     if (inPhoneGap) {
+      var process = null;
+      if ($element) {
+        process = $element.find("input:file");
+      } else {
+        process = $("input:file");
+      }
       process.each(function(index) {
         var $this = $(this);
         if ($this.data("useprogress")) {
@@ -445,6 +447,8 @@ var myplaceonline = function(mymodule) {
                 consoleLog("Got File object");
                 consoleDir(file);
                 // See http://stackoverflow.com/questions/38688006/why-doesnt-formdata-append-file-from-fileentry-upload-correctly
+                $uploading = $("<p>Uploading...</p>");
+                $uploading.insertAfter($takePictureButton);
                 $takePictureButton.hide();
                 prepareUploadFiles($inputFileElement, 1);
                 //uploadFile(file, $inputFileElement);
@@ -461,12 +465,14 @@ var myplaceonline = function(mymodule) {
                   fileURI,
                   encodeURI(app.base_url + "/api/newfile"),
                   function(result) {
+                    $uploading.remove();
                     var resultObj = jQuery.parseJSON(result.response);
                     consoleDir(resultObj);
                     uploadFileSuccess(resultObj, null, $inputFileElement);
                     uploadFileAlways($inputFileElement);
                   },
                   function(error) {
+                    $uploading.remove();
                     consoleDir(error);
                     criticalError("Could not upload file: " + error.body);
                     consoleLog("upload error source " + error.source);
