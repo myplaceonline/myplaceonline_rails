@@ -6,7 +6,10 @@ class AdministrationController < ApplicationController
 
   def send_email
     @admin_email = AdminEmail.new(
-      email: Email.new(email_category: I18n.t("myplaceonline.administration.send_email.default_category"))
+      email: Email.new(
+               email_category: I18n.t("myplaceonline.administration.send_email.default_category"),
+               subject: I18n.t("myplaceonline.administration.send_email.default_category") + ": "
+             )
     )
     
     if request.post?
