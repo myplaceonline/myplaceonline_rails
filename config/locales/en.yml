@@ -1620,6 +1620,9 @@ en:
       doctor_type: "Type"
       type_primary_care: "Primary Care"
       type_dentist: "Dentist"
+      type_ultrasound: "Ultrasound"
+      type_dermatologist: "Dermatologist"
+      type_cosmetologist: "Cosmetologist"
     dental_insurances:
       insurance_name: "Name"
       notes: "Notes"
@@ -2275,12 +2278,6 @@ en:
       ssh_public_key: "SSH Public Key"
       password: "SSH Key Password"
       is_encrypted: "Is Encrypted?"
-    specialists:
-      specialist: "Specialist"
-      specialist_type: "Type"
-      type_ultrasound: "Ultrasound"
-      type_dermatologist: "Dermatologist"
-      type_cosmetologist: "Cosmetologist"
     cafes:
       location: "Location"
       rating: "Rating"

@@ -4,7 +4,10 @@ class Doctor < ActiveRecord::Base
 
   DOCTOR_TYPES = [
     ["myplaceonline.doctors.type_primary_care", 0],
-    ["myplaceonline.doctors.type_dentist", 1]
+    ["myplaceonline.doctors.type_dentist", 1],
+    ["myplaceonline.doctors.type_ultrasound", 2],
+    ["myplaceonline.doctors.type_dermatologist", 3],
+    ["myplaceonline.doctors.type_cosmetologist", 4]
   ]
 
   validates :contact, presence: true
