@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   
   match 'projects/:id/delete_by_index', :to => 'projects#delete_by_index', via: [:post], as: "project_delete_by_index"
   resources :projects do
+    match 'project_issues/:id/movetop', :to => 'project_issues#movetop', via: [:get], as: "project_issues_movetop"
     resources :project_issues
     post 'project_issues/new'
   end

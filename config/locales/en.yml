@@ -2396,6 +2396,7 @@ en:
     project_issues:
       issue_name: "Issue"
       project: "Project"
+      moved_top: "Successfully moved issue to the top"
     flights:
       flight_name: "Flight Name"
       flight_start_date: "Flight Start Date"

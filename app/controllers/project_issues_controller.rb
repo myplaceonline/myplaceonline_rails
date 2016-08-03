@@ -7,6 +7,37 @@ class ProjectIssuesController < MyplaceonlineController
     "project_issues/form"
   end
 
+  def data_split_icon
+    "arrow-u"
+  end
+  
+  def split_link(obj)
+    ActionController::Base.helpers.link_to(
+      I18n.t("myplaceonline.projects.project_issue_add"),
+      project_project_issues_movetop_path(obj.project, obj)
+    )
+  end
+  
+  def movetop
+    set_obj
+    original_position = @obj.position
+    ActiveRecord::Base.transaction do
+      i = 2
+      @parent.project_issues.each do |issue|
+        if issue.id == @obj.id
+          @obj.position = 1
+          @obj.save!
+        else
+          issue.position = i
+          i = i + 1
+          issue.save!
+        end
+      end
+    end
+    redirect_to project_project_issues_path(@parent),
+      :flash => { :notice => I18n.t("myplaceonline.project_issues.moved_top") }
+  end
+  
   protected
     def insecure
       true
