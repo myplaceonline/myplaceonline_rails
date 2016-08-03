@@ -267,6 +267,8 @@ en:
       everything: "Everything"
       search: "Search"
       archived: "Archived"
+      select_all: "Select All"
+      deselect_all: "Deselect All"
     categories:
       no_results: "No Results. Create New "
     everything:
@@ -703,6 +705,7 @@ en:
       company: "Work"
       hide: "Hide"
       hidden: "Hidden"
+      groups: "Groups"
     files:
       name: "Name"
       download: "Download"

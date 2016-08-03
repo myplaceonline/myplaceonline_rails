@@ -118,6 +118,40 @@ class ContactsController < MyplaceonlineController
     Identity.table_name
   end
   
+  def groups
+    set_obj
+    @groups = Group.where(identity_id: User.current_user.primary_identity.id).order(:group_name)
+    @contact_groups = GroupContact.where(identity_id: User.current_user.primary_identity.id, contact_id: @obj.id).map{|g| g.group_id}
+    
+    if request.post?
+      @groups.each do |group|
+        is_in_group = !@contact_groups.index(group.id).nil?
+        if params["group" + group.id.to_s]
+          if is_in_group
+            # Nothing to do, already in group
+          else
+            # Need to add to the group
+            GroupContact.create(
+              identity_id: User.current_user.primary_identity.id,
+              group_id: group.id,
+              contact_id: @obj.id
+            )
+          end
+        else
+          if is_in_group
+            # Remove the contact from the group
+            GroupContact.where(identity_id: User.current_user.primary_identity.id, contact_id: @obj.id, group_id: group.id).take!.destroy!
+          else
+            # Nothing to do, already not in group
+          end
+        end
+      end
+
+      # Reset in case there were changes
+      @contact_groups = GroupContact.where(identity_id: User.current_user.primary_identity.id, contact_id: @obj.id).map{|g| g.group_id}
+    end
+  end
+  
   protected
 
     def sorts

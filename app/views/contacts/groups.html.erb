@@ -1,0 +1,24 @@
+<% content_for :heading do -%><%= @obj.display %><% end -%>
+
+<h1><%= @obj.display %></h1>
+
+<%= flashes! %>
+
+<%= form_tag contact_groups_path(@obj), method: :post do %>
+  <% @groups.each do |group| %>
+    <%= myp_check_box_tag("group" + group.id.to_s, group.group_name, !@contact_groups.index(group.id).nil?) %>
+  <% end %>
+
+  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="navbar">
+      <ul>
+        <li>
+          <%= submit_tag(t("myplaceonline.general.save"), "data-icon" => "check", "data-iconpos" => "top", "style" => "background-color: green") %>
+        </li>
+        <li><%= link_to t("myplaceonline.general.cancel"), controller.obj_path, "data-icon" => "back" %></li>
+        <li><%= link_to t("myplaceonline.general.select_all"), "#", "data-icon" => "check", onclick: "$(':checkbox').each(function() {$(this).prop('checked', true).checkboxradio('refresh');}); return false;" %></li>
+        <li><%= link_to t("myplaceonline.general.deselect_all"), "#", "data-icon" => "delete", onclick: "$(':checkbox').each(function() {$(this).prop('checked', false).checkboxradio('refresh');}); return false;" %></li>
+      </ul>
+    </div>
+  </div>
+<% end %>

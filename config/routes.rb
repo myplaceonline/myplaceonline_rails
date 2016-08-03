@@ -447,6 +447,7 @@ Rails.application.routes.draw do
   resources :accomplishments
   post 'accomplishments/new'
 
+  match 'contacts/:id/groups', :to => 'contacts#groups', via: [:get, :post], as: "contact_groups"
   resources :contacts do
     resources :conversations
     post 'conversations/new'
