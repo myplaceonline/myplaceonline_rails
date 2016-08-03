@@ -14,6 +14,13 @@ class MedicalConditionsController < MyplaceonlineController
           :condition_start,
           :condition_end,
           :notes
+        ],
+        medical_condition_treatments_attributes: [
+          :id,
+          :_destroy,
+          :treatment_date,
+          :treatment_description,
+          :notes
         ]
       )
     end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160710000940) do
+ActiveRecord::Schema.define(version: 20160803021916) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1877,6 +1877,21 @@ ActiveRecord::Schema.define(version: 20160710000940) do
   add_index "medical_condition_instances", ["identity_id"], name: "index_medical_condition_instances_on_identity_id", using: :btree
   add_index "medical_condition_instances", ["medical_condition_id"], name: "index_medical_condition_instances_on_medical_condition_id", using: :btree
 
+  create_table "medical_condition_treatments", force: :cascade do |t|
+    t.integer  "identity_id"
+    t.integer  "medical_condition_id"
+    t.date     "treatment_date"
+    t.text     "notes"
+    t.string   "treatment_description"
+    t.integer  "doctor_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "medical_condition_treatments", ["doctor_id"], name: "index_medical_condition_treatments_on_doctor_id", using: :btree
+  add_index "medical_condition_treatments", ["identity_id"], name: "index_medical_condition_treatments_on_identity_id", using: :btree
+  add_index "medical_condition_treatments", ["medical_condition_id"], name: "index_medical_condition_treatments_on_medical_condition_id", using: :btree
+
   create_table "medical_conditions", force: :cascade do |t|
     t.string   "medical_condition_name", limit: 255
     t.text     "notes"
@@ -3418,6 +3433,9 @@ ActiveRecord::Schema.define(version: 20160710000940) do
   add_foreign_key "locations", "websites"
   add_foreign_key "meadows", "identities"
   add_foreign_key "meadows", "locations"
+  add_foreign_key "medical_condition_treatments", "doctors"
+  add_foreign_key "medical_condition_treatments", "identities"
+  add_foreign_key "medical_condition_treatments", "medical_conditions"
   add_foreign_key "money_balance_item_templates", "identities"
   add_foreign_key "money_balance_item_templates", "money_balances"
   add_foreign_key "money_balance_items", "identities"

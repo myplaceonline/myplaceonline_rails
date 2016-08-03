@@ -1284,10 +1284,18 @@ en:
       instance: "Instance"
       add: "Add Instance"
       delete: "Delete Instance"
+      treatments: "Treatments"
+      treatment: "Treatment"
+      add_treatment: "Add Treatment"
+      delete_treatment: "Delete Treatment"
     medical_condition_instances:
       condition_start: "Start"
       condition_end: "End"
       notes: "Notes"
+    medical_condition_treatments:
+      treatment_date: "Date"
+      treatment_description: "Description"
+      doctor: "Doctor"
     life_goals:
       life_goal_name: "Goal"
       notes: "Notes"

@@ -33,3 +33,36 @@
   <%= myp_date_field(child_fields, :condition_end, "myplaceonline.medical_condition_instances.condition_end", childproperty.condition_end) %>
   <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.medical_condition_instances.notes", childproperty.notes) %>
 <% end %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.medical_conditions.treatments"),
+    childpropertiesname: :medical_condition_treatments,
+    childproperties: obj.medical_condition_treatments,
+    deletebutton: t("myplaceonline.medical_conditions.delete_treatment"),
+    addbutton: t("myplaceonline.medical_conditions.add_treatment"),
+    expanded: true,
+    itemname: t("myplaceonline.medical_conditions.treatment"),
+    formjson: [
+      {
+        type: 'date',
+        name: 'treatment_date',
+        placeholder: t("myplaceonline.medical_condition_treatments.treatment_date")
+      },
+      {
+        type: 'text',
+        name: 'treatment_description',
+        placeholder: t("myplaceonline.medical_condition_treatments.treatment_description")
+      },
+      {
+        type: 'textarea',
+        name: 'notes',
+        placeholder: t("myplaceonline.general.notes")
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%= myp_date_field(child_fields, :treatment_date, "myplaceonline.medical_condition_treatments.treatment_date", childproperty.treatment_date) %>
+  <%= myp_text_field(child_fields, :condition_end, "myplaceonline.medical_condition_treatments.treatment_description", childproperty.treatment_description) %>
+  <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.general.notes", childproperty.notes) %>
+<% end %>
