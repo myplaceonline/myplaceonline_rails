@@ -139,7 +139,6 @@ class Identity < ActiveRecord::Base
   has_many :drafts, :dependent => :destroy
   has_many :awesome_lists, :dependent => :destroy
   has_many :ssh_keys, :dependent => :destroy
-  has_many :specialists, :dependent => :destroy
   has_many :cafes, :dependent => :destroy
   has_many :charities, :dependent => :destroy
   has_many :quests, :dependent => :destroy
@@ -311,7 +310,6 @@ class Identity < ActiveRecord::Base
       :drafts => drafts.to_a.sort{ |a,b| a.draft_name.downcase <=> b.draft_name.downcase }.map{|x| x.as_json},
       :awesome_lists => awesome_lists.to_a.map{|x| x.as_json},
       :ssh_keys => ssh_keys.to_a.sort{ |a,b| a.ssh_key_name.downcase <=> b.ssh_key_name.downcase }.map{|x| x.as_json},
-      :specialists => specialists.to_a.map{|x| x.as_json},
       :cafes => cafes.to_a.map{|x| x.as_json},
       :quests => quests.to_a.sort{ |a,b| a.quest_title.downcase <=> b.quest_title.downcase }.map{|x| x.as_json},
       :timings => timings.to_a.sort{ |a,b| a.timing_name.downcase <=> b.timing_name.downcase }.map{|x| x.as_json},

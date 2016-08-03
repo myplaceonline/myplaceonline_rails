@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160803034432) do
+ActiveRecord::Schema.define(version: 20160803035542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2758,18 +2758,6 @@ ActiveRecord::Schema.define(version: 20160803034432) do
   add_index "songs", ["identity_id"], name: "index_songs_on_identity_id", using: :btree
   add_index "songs", ["musical_group_id"], name: "index_songs_on_musical_group_id", using: :btree
 
-  create_table "specialists", force: :cascade do |t|
-    t.integer  "contact_id"
-    t.integer  "specialist_type"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
-  add_index "specialists", ["contact_id"], name: "index_specialists_on_contact_id", using: :btree
-  add_index "specialists", ["identity_id"], name: "index_specialists_on_identity_id", using: :btree
-
   create_table "ssh_keys", force: :cascade do |t|
     t.string   "ssh_key_name"
     t.text     "ssh_private_key"
@@ -3480,8 +3468,6 @@ ActiveRecord::Schema.define(version: 20160803034432) do
   add_foreign_key "restaurant_pictures", "identities"
   add_foreign_key "restaurant_pictures", "identity_files"
   add_foreign_key "restaurant_pictures", "restaurants"
-  add_foreign_key "specialists", "contacts"
-  add_foreign_key "specialists", "identities"
   add_foreign_key "ssh_keys", "encrypted_values", column: "ssh_private_key_encrypted_id"
   add_foreign_key "ssh_keys", "identities"
   add_foreign_key "ssh_keys", "passwords"

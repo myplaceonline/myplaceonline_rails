@@ -13,7 +13,7 @@ class ActiveSupport::TestCase
 end
 
 class ActionController::TestCase
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
   
   def setup
     @request.env["devise.mapping"] = Devise.mappings[:user]

@@ -47,9 +47,6 @@ Rails.application.routes.draw do
   resources :cafes
   post 'cafes/new'
 
-  resources :specialists
-  post 'specialists/new'
-
   resources :ssh_keys
   post 'ssh_keys/new'
 
