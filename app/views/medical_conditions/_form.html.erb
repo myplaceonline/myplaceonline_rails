@@ -47,7 +47,8 @@
       {
         type: 'date',
         name: 'treatment_date',
-        placeholder: t("myplaceonline.medical_condition_treatments.treatment_date")
+        placeholder: t("myplaceonline.medical_condition_treatments.treatment_date"),
+        autofocus: true
       },
       {
         type: 'text',
@@ -58,6 +59,32 @@
         type: 'textarea',
         name: 'notes',
         placeholder: t("myplaceonline.general.notes")
+      },
+      {
+        type: :renderpartial,
+        name: :doctor_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.medical_condition_treatments.doctor"),
+        objform: "doctors/form",
+        existingobjurl: "doctor_path",
+        searchurl: "/doctors.json?perpage=0",
+        edit: true,
+        autofocus: false,
+        force_existing: true,
+        simpleform: true
+      },
+      {
+        type: :renderpartial,
+        name: :location_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.medical_condition_treatments.location"),
+        objform: "locations/form",
+        existingobjurl: "location_path",
+        searchurl: "/locations.json?perpage=0",
+        edit: true,
+        autofocus: false,
+        force_existing: true,
+        simpleform: true
       }
     ]
   } do |child_fields, childproperty|
@@ -65,4 +92,30 @@
   <%= myp_date_field(child_fields, :treatment_date, "myplaceonline.medical_condition_treatments.treatment_date", childproperty.treatment_date) %>
   <%= myp_text_field(child_fields, :condition_end, "myplaceonline.medical_condition_treatments.treatment_description", childproperty.treatment_description) %>
   <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.general.notes", childproperty.notes) %>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :doctor_attributes,
+      existingobj: childproperty.doctor,
+      heading: t("myplaceonline.medical_condition_treatments.doctor"),
+      objform: "doctors/form",
+      existingobjurl: "doctor_path",
+      searchurl: "/doctors.json?perpage=0",
+      edit: true,
+      autofocus: false
+    }
+  %>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :location_attributes,
+      existingobj: childproperty.location,
+      heading: t("myplaceonline.medical_condition_treatments.location"),
+      objform: "locations/form",
+      existingobjurl: "location_path",
+      searchurl: "/locations.json?perpage=0",
+      edit: true,
+      autofocus: false
+    }
+  %>
 <% end %>

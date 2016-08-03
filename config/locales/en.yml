@@ -1296,6 +1296,7 @@ en:
       treatment_date: "Date"
       treatment_description: "Description"
       doctor: "Doctor"
+      location: "Location"
     life_goals:
       life_goal_name: "Goal"
       notes: "Notes"

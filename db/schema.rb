@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160803021916) do
+ActiveRecord::Schema.define(version: 20160803023856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1886,10 +1886,12 @@ ActiveRecord::Schema.define(version: 20160803021916) do
     t.integer  "doctor_id"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.integer  "location_id"
   end
 
   add_index "medical_condition_treatments", ["doctor_id"], name: "index_medical_condition_treatments_on_doctor_id", using: :btree
   add_index "medical_condition_treatments", ["identity_id"], name: "index_medical_condition_treatments_on_identity_id", using: :btree
+  add_index "medical_condition_treatments", ["location_id"], name: "index_medical_condition_treatments_on_location_id", using: :btree
   add_index "medical_condition_treatments", ["medical_condition_id"], name: "index_medical_condition_treatments_on_medical_condition_id", using: :btree
 
   create_table "medical_conditions", force: :cascade do |t|
@@ -3435,6 +3437,7 @@ ActiveRecord::Schema.define(version: 20160803021916) do
   add_foreign_key "meadows", "locations"
   add_foreign_key "medical_condition_treatments", "doctors"
   add_foreign_key "medical_condition_treatments", "identities"
+  add_foreign_key "medical_condition_treatments", "locations"
   add_foreign_key "medical_condition_treatments", "medical_conditions"
   add_foreign_key "money_balance_item_templates", "identities"
   add_foreign_key "money_balance_item_templates", "money_balances"

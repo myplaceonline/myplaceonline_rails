@@ -13,6 +13,8 @@
     <%= attribute_table_row_date(t("myplaceonline.medical_condition_treatments.treatment_date"), x.treatment_date) %>
     <%= attribute_table_row(t("myplaceonline.medical_condition_treatments.treatment_description"), x.treatment_description) %>
     <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), x.notes) %>
+    <%= attribute_table_row_reference(t("myplaceonline.medical_condition_treatments.doctor"), "doctor_path", x.doctor) %>
+    <%= attribute_table_row_reference(t("myplaceonline.medical_condition_treatments.location"), "location_path", x.location) %>
   <% end %>
   
 <% end %>

@@ -20,7 +20,9 @@ class MedicalConditionsController < MyplaceonlineController
           :_destroy,
           :treatment_date,
           :treatment_description,
-          :notes
+          :notes,
+          doctor_attributes: DoctorsController.param_names,
+          location_attributes: LocationsController.param_names
         ]
       )
     end
