@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160803035542) do
+ActiveRecord::Schema.define(version: 20160804022952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2431,6 +2431,19 @@ ActiveRecord::Schema.define(version: 20160803035542) do
 
   add_index "promotions", ["identity_id"], name: "index_promotions_on_identity_id", using: :btree
 
+  create_table "quest_files", force: :cascade do |t|
+    t.integer  "quest_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "quest_files", ["identity_file_id"], name: "index_quest_files_on_identity_file_id", using: :btree
+  add_index "quest_files", ["identity_id"], name: "index_quest_files_on_identity_id", using: :btree
+  add_index "quest_files", ["quest_id"], name: "index_quest_files_on_quest_id", using: :btree
+
   create_table "questions", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.text     "notes"
@@ -3457,6 +3470,9 @@ ActiveRecord::Schema.define(version: 20160803035542) do
   add_foreign_key "project_issues", "identities"
   add_foreign_key "project_issues", "projects"
   add_foreign_key "projects", "identities"
+  add_foreign_key "quest_files", "identities"
+  add_foreign_key "quest_files", "identity_files"
+  add_foreign_key "quest_files", "quests"
   add_foreign_key "quests", "identities"
   add_foreign_key "receipt_files", "identities"
   add_foreign_key "receipt_files", "identity_files"

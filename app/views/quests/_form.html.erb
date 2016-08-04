@@ -1,2 +1,15 @@
 <%= myp_text_field(f, :quest_title, "myplaceonline.quests.quest_title", obj.quest_title, autofocus) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :quest_files,
+    item_placeholder: "myplaceonline.quests.file",
+    heading: "myplaceonline.quests.files",
+    addbutton: "myplaceonline.quests.add_file",
+    addbutton_multi: "myplaceonline.quests.add_files",
+    deletebutton: "myplaceonline.quests.delete_file"
+  }
+%>

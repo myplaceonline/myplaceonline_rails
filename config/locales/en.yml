@@ -2295,6 +2295,11 @@ en:
       calendar_item: "Item"
     quests:
       quest_title: "Name"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"
     timings:
       timing_name: "Name"
       timing_event: "Event"

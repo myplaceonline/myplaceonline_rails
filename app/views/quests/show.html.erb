@@ -2,5 +2,11 @@
 
   <%= attribute_table_row(t("myplaceonline.quests.quest_title"), @obj.quest_title) %>
   <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), @obj.notes) %>
+  <%=
+    render partial: 'myplaceonline/pictures', locals: {
+      pics: @obj.quest_files,
+      placeholder: "myplaceonline.quests.file"
+    }
+  %>
   
 <% end %>
