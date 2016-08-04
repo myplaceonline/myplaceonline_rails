@@ -1,2 +1,15 @@
 <%= myp_text_field(f, :name, "myplaceonline.wisdoms.name", obj.name, autofocus) %>
 <%= myp_text_area_markdown(f, :wisdom, "myplaceonline.wisdoms.wisdom", obj.wisdom) %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :wisdom_files,
+    item_placeholder: "myplaceonline.wisdoms.file",
+    heading: "myplaceonline.wisdoms.files",
+    addbutton: "myplaceonline.wisdoms.add_file",
+    addbutton_multi: "myplaceonline.wisdoms.add_files",
+    deletebutton: "myplaceonline.wisdoms.delete_file"
+  }
+%>

@@ -653,6 +653,11 @@ en:
     wisdoms:
       name: "Wisdom Name"
       wisdom: "Wisdom"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"
     to_dos:
       short_description: "Short Description"
       notes: "Notes"

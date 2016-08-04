@@ -1,4 +1,8 @@
 class WisdomsController < MyplaceonlineController
+  def may_upload
+    true
+  end
+
   protected
     def insecure
       true
@@ -11,7 +15,8 @@ class WisdomsController < MyplaceonlineController
     def obj_params
       params.require(:wisdom).permit(
         :name,
-        :wisdom
+        :wisdom,
+        wisdom_files_attributes: FilesController.multi_param_names
       )
     end
 end

@@ -2,5 +2,11 @@
 
   <%= attribute_table_row(t("myplaceonline.wisdoms.name"), @obj.name) %>
   <%= attribute_table_row_markdown(t("myplaceonline.wisdoms.wisdom"), @obj.wisdom) %>
+  <%=
+    render partial: 'myplaceonline/pictures', locals: {
+      pics: @obj.wisdom_files,
+      placeholder: "myplaceonline.wisdoms.file"
+    }
+  %>
   
 <% end %>
