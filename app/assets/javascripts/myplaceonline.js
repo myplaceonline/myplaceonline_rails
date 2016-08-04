@@ -146,7 +146,7 @@ var myplaceonline = function(mymodule) {
       data: JSON.stringify({
         message: message,
         messages: debugMessages,
-        html: getAllHTML(),
+        //html: getAllHTML(),
         stack: stackTrace
       })
     }).done(function(data) {
