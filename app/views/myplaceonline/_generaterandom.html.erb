@@ -1,6 +1,10 @@
 <%# Logic duplicated in myplaceonline_final.js formAddItem %>
 <div data-role="collapsible">
   <h3><%= heading %></h3>
-  <p><input type="number" class="generate_password_length" value="" placeholder="<%= lengthplaceholder %>" /></p>
-  <p><a href="#" class="ui-btn" onclick="myplaceonline.getRemoteString(<%= destination %>, $(this).parents('div').first().find('.generate_password_length').val()); return false;"><%= button %></a></p>
+  <p><a href="#" class="ui-btn" onclick="myplaceonline.getRemoteString(<%= destination %>, $(this).parents('div').first().find('.generate_password_length').val(), $(this).parents('div').first().find('.generate_password_special').prop('checked')); return false;"><%= button %></a></p>
+  <div data-role="collapsible">
+    <h3><%= t("myplaceonline.passwords.generate_options") %></h3>
+    <p><input type="number" class="generate_password_length" value="" placeholder="<%= lengthplaceholder %>" /></p>
+    <p><%= myp_check_box_tag("generate_password_special", "myplaceonline.passwords.generate_special", true, false, "generate_password_special") %></p>
+  </div>
 </div>

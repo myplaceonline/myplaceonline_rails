@@ -28,8 +28,15 @@ class ApiController < ApplicationController
         length = Myp::DEFAULT_PASSWORD_LENGTH
       end
     end
-    possibilities = Myp::POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL
+    special = true
+    if !params[:special].blank?
+      special = params[:special].to_bool
+    end
+    possibilities = special ? Myp::POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL : Myp::POSSIBILITIES_ALPHANUMERIC
     result = (0...length).map { possibilities[SecureRandom.random_number(possibilities.length)] }.join
+    if special
+      result[SecureRandom.random_number(result.length)] = Myp::POSSIBILITIES_SPECIAL[SecureRandom.random_number(Myp::POSSIBILITIES_SPECIAL.length)]
+    end
     render json: {
       :randomString => result
     }

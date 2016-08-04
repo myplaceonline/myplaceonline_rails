@@ -410,14 +410,19 @@ var myplaceonline = function(mymodule) {
     });
   }
 
-  function getRemoteString(destination, length) {
+  function getRemoteString(destination, length, specialChars) {
     myplaceonline.showLoading();
     var url = "/api/randomString";
     if (length) {
       length = parseInt(length);
       if (length > 0) {
-        url += "?length=" + length;
+        url += url.indexOf('?') == -1 ? "?" : "&";
+        url += "length=" + encodeURIComponent(length);
       }
+    }
+    if (typeof specialChars != 'undefined') {
+      url += url.indexOf('?') == -1 ? "?" : "&";
+      url += "special=" + encodeURIComponent(specialChars);
     }
     $.ajax({
       url: url,

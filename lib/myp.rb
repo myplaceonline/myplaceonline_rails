@@ -14,7 +14,8 @@ module Myp
   # min(POSSIBILITIES_*.length)^DEFAULT_PASSWORD_LENGTH should be >= 2^128
   DEFAULT_PASSWORD_LENGTH = 22
   POSSIBILITIES_ALPHANUMERIC = [('0'..'9'), ('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
-  POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL = [('0'..'9'), ('a'..'z'), ('A'..'Z'), ['_', '-', '!']].map { |i| i.to_a }.flatten
+  POSSIBILITIES_SPECIAL = ['_', '-', '!']
+  POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL = [('0'..'9'), ('a'..'z'), ('A'..'Z'), POSSIBILITIES_SPECIAL].map { |i| i.to_a }.flatten
   
   DEFAULT_DECIMAL_STEP = "0.01"
   
