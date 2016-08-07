@@ -2,3 +2,4 @@ text_message:
   identity: identity
   body: Body
   message_category: Category
+  draft: true
