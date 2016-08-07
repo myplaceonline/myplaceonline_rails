@@ -32,30 +32,29 @@ class AdministrationController < ApplicationController
     end
   end
   
-  def send_sms
-    @admin_email = AdminEmail.new(
-      email: Email.new(
-               email_category: I18n.t("myplaceonline.administration.send_email.default_category"),
-               subject: I18n.t("myplaceonline.administration.send_email.default_category") + ": "
+  def send_text_message
+    @admin_text_message = AdminTextMessage.new(
+      text_message: TextMessage.new(
+               message_category: I18n.t("myplaceonline.administration.send_text_message.default_category")
              )
     )
     
     if request.post?
-      @admin_email = AdminEmail.new(
-        params.require(:admin_email).permit(
+      @admin_text_message = AdminTextMessage.new(
+        params.require(:admin_text_message).permit(
           :send_only_to,
-          :exclude_emails,
-          email_attributes: EmailsController.param_names
+          :exclude_numbers,
+          text_message_attributes: TextMessagesController.param_names
         )
       )
 
       # There are no contacts or groups, so it must be a draft
-      @admin_email.email.draft = true
+      @admin_text_message.text_message.draft = true
 
-      if @admin_email.save
-        AdminSendEmailJob.perform_later(@admin_email)
+      if @admin_text_message.save
+        AdminSendTextMessageJob.perform_later(@admin_text_message)
         redirect_to administration_path,
-          :flash => { :notice => I18n.t("myplaceonline.administration.send_email.sent") }
+          :flash => { :notice => I18n.t("myplaceonline.administration.send_text_message.sent") }
       end
     end
   end

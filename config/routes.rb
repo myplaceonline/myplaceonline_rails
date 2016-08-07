@@ -529,6 +529,7 @@ Rails.application.routes.draw do
   get 'info', :to => 'info#index'
   
   match 'administration/send_email', via: [:get, :post]
+  match 'administration/send_text_message', via: [:get, :post]
   get 'administration/gc'
   get 'administration/index'
   get 'administration', :to => 'administration#index'

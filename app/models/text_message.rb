@@ -41,16 +41,13 @@ class TextMessage < ActiveRecord::Base
   def send_sms()
     targets = all_targets
 
-    content = "#{identity.display_short} #{I18n.t("myplaceonline.emails.from_prefix_context")} #{I18n.t("myplaceonline.siteTitle")} #{I18n.t("myplaceonline.emails.subject_shared")}: "
-    content += body
-    
     targets.each do |target, contact|
-      process_single_target(target, content, contact)
+      process_single_target(target, nil, contact)
     end
     if copy_self
       User.current_user.primary_identity.identity_phones.each do |identity_phone|
         if identity_phone.accepts_sms?
-          process_single_target(identity_phone.number, content)
+          process_single_target(identity_phone.number)
         end
       end
     end
@@ -59,6 +56,11 @@ class TextMessage < ActiveRecord::Base
   def process_single_target(target, content = nil, contact = nil)
     Rails.logger.debug{"SMS process_single_target target: #{target}"}
 
+    if content.nil?
+      content = "#{identity.display_short} #{I18n.t("myplaceonline.emails.from_prefix_context")} #{I18n.t("myplaceonline.siteTitle")} #{I18n.t("myplaceonline.emails.subject_shared")}: "
+      content += body
+    end
+    
     if TextMessageUnsubscription.where(
         "phone_number = ? and (category is null or category = ?) and (identity_id is null or identity_id = ?)",
         target,
