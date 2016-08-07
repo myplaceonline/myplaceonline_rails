@@ -20,7 +20,7 @@ class TextMessagesController < MyplaceonlineController
     ]
   end
   
-  def after_create
+  def after_create_or_update
     if !@obj.draft
       @obj.process
     end

@@ -2430,7 +2430,7 @@ en:
       arrive_time: "Arrival Time"
       seat_number: "Seat Number"
     text_messages:
-      body: "Email Body"
+      body: "Text Message"
       copy_self: "Blind Carbon Copy Me"
       message_category: "Category"
       contact: "Contact"

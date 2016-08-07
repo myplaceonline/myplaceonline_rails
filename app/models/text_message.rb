@@ -40,13 +40,17 @@ class TextMessage < ActiveRecord::Base
   
   def send_sms()
     targets = all_targets
+
+    content = "#{identity.display_short} #{I18n.t("myplaceonline.emails.from_prefix_context")} #{I18n.t("myplaceonline.siteTitle")} #{I18n.t("myplaceonline.emails.subject_shared")}: "
+    content += body
+    
     targets.each do |target, contact|
-      process_single_target(target, body, contact)
+      process_single_target(target, content, contact)
     end
     if copy_self
       User.current_user.primary_identity.identity_phones.each do |identity_phone|
         if identity_phone.accepts_sms?
-          process_single_target(identity_phone.number, body)
+          process_single_target(identity_phone.number, content)
         end
       end
     end
@@ -101,14 +105,6 @@ class TextMessage < ActiveRecord::Base
     group.group_references.each do |group_reference|
       process_group(to_hash, group_reference.group)
     end
-  end
-
-  def self.build(params = nil)
-    result = self.dobuild(params)
-    if !User.current_user.nil?
-      result.body = "#{User.current_user.primary_identity.display_short} #{I18n.t("myplaceonline.emails.from_prefix_context")} #{I18n.t("myplaceonline.siteTitle")} #{I18n.t("myplaceonline.emails.subject_shared")}: "
-    end
-    result
   end
 
   def send_immediately
