@@ -9,7 +9,8 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w(
   jquery-mobile/icons-png/*.png
   jquery-mobile/ajax-loader.gif
-  application_extra.js
   *.css
   ckeditor/*
 )
+
+# application_extra.js
