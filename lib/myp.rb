@@ -1,6 +1,7 @@
 require 'i18n'
 require 'fileutils'
 require 'github/markup'
+require 'twilio-ruby'
 
 module Myp
   # See https://github.com/digitalbazaar/forge/issues/207
@@ -1744,4 +1745,32 @@ module Myp
       nil
     end
   end
+  
+  @@twilio_client = nil
+  @@twilio_number = nil
+  
+  def self.initialize_sms
+    if !ENV["TWILIO_NUMBER"].blank?
+      Rails.logger.info{"Twilio credentials available, initializing..."}
+      @@twilio_number = ENV["TWILIO_NUMBER"]
+      @@twilio_client = Twilio::REST::Client.new(ENV["TWILIO_ACCOUNT"], ENV["TWILIO_AUTH"])
+    else
+      Rails.logger.info{"Twilio not configured"}
+    end
+  end
+  
+  def self.send_sms(to: nil, body: nil, from: @@twilio_number)
+    if !@@twilio_client.nil?
+      Rails.logger.info{"Sending twilio SMS to: #{to}, body: #{body}"}
+      @@twilio_client.messages.create(
+        from: from,
+        to: to,
+        body: body
+      )
+    else
+      Rails.logger.info{"Not sending twilio SMS: #{to}, body: #{body}"}
+    end
+  end
+
+  Myp.initialize_sms
 end

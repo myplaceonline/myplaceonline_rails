@@ -21,4 +21,8 @@ class IdentityPhone < ActiveRecord::Base
       I18n.t("myplaceonline.identity_phones.phone")
     end
   end
+  
+  def accepts_sms?
+    phone_type.nil? || phone_type == 0
+  end
 end

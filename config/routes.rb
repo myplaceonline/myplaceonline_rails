@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :text_messages
+  post 'text_messages/new'
+
   resources :flights
   post 'flights/new'
 

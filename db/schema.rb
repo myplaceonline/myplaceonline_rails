@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160804025258) do
+ActiveRecord::Schema.define(version: 20160806192001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2869,6 +2869,54 @@ ActiveRecord::Schema.define(version: 20160804025258) do
 
   add_index "temperatures", ["identity_id"], name: "index_temperatures_on_identity_id", using: :btree
 
+  create_table "text_message_contacts", force: :cascade do |t|
+    t.integer  "text_message_id"
+    t.integer  "contact_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "text_message_contacts", ["contact_id"], name: "index_text_message_contacts_on_contact_id", using: :btree
+  add_index "text_message_contacts", ["identity_id"], name: "index_text_message_contacts_on_identity_id", using: :btree
+  add_index "text_message_contacts", ["text_message_id"], name: "index_text_message_contacts_on_text_message_id", using: :btree
+
+  create_table "text_message_groups", force: :cascade do |t|
+    t.integer  "text_message_id"
+    t.integer  "group_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "text_message_groups", ["group_id"], name: "index_text_message_groups_on_group_id", using: :btree
+  add_index "text_message_groups", ["identity_id"], name: "index_text_message_groups_on_identity_id", using: :btree
+  add_index "text_message_groups", ["text_message_id"], name: "index_text_message_groups_on_text_message_id", using: :btree
+
+  create_table "text_message_unsubscriptions", force: :cascade do |t|
+    t.string   "phone_number"
+    t.string   "category"
+    t.integer  "identity_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "text_message_unsubscriptions", ["identity_id"], name: "index_text_message_unsubscriptions_on_identity_id", using: :btree
+
+  create_table "text_messages", force: :cascade do |t|
+    t.text     "body"
+    t.boolean  "copy_self"
+    t.string   "message_category"
+    t.boolean  "draft"
+    t.boolean  "personalize"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "text_messages", ["identity_id"], name: "index_text_messages_on_identity_id", using: :btree
+
   create_table "therapists", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.text     "notes"
@@ -3504,6 +3552,14 @@ ActiveRecord::Schema.define(version: 20160804025258) do
   add_foreign_key "story_pictures", "identities"
   add_foreign_key "story_pictures", "identity_files"
   add_foreign_key "story_pictures", "stories"
+  add_foreign_key "text_message_contacts", "contacts"
+  add_foreign_key "text_message_contacts", "identities"
+  add_foreign_key "text_message_contacts", "text_messages"
+  add_foreign_key "text_message_groups", "groups"
+  add_foreign_key "text_message_groups", "identities"
+  add_foreign_key "text_message_groups", "text_messages"
+  add_foreign_key "text_message_unsubscriptions", "identities"
+  add_foreign_key "text_messages", "identities"
   add_foreign_key "timing_events", "identities"
   add_foreign_key "timing_events", "timings"
   add_foreign_key "timings", "identities"
