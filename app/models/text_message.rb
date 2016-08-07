@@ -54,7 +54,7 @@ class TextMessage < ActiveRecord::Base
   end
   
   def process_single_target(target, content = nil, contact = nil)
-    Rails.logger.debug{"SMS process_single_target target: #{target}"}
+    Rails.logger.debug{"SMS process_single_target target: #{target}, content: #{content}"}
 
     if content.nil?
       content = "#{identity.display_short} #{I18n.t("myplaceonline.emails.from_prefix_context")} #{I18n.t("myplaceonline.siteTitle")} #{I18n.t("myplaceonline.emails.subject_shared")}: "
