@@ -16,7 +16,13 @@ class BooksController < MyplaceonlineController
         :is_read,
         :notes,
         :review,
-        recommender_attributes: ContactsController.param_names
+        recommender_attributes: ContactsController.param_names,
+        book_quotes_attributes: [
+          :id,
+          :_destroy,
+          :book_quote,
+          :pages
+        ]
       )
     end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160807032949) do
+ActiveRecord::Schema.define(version: 20160810043229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -316,6 +316,18 @@ ActiveRecord::Schema.define(version: 20160807032949) do
   end
 
   add_index "blood_tests", ["identity_id"], name: "index_blood_tests_on_identity_id", using: :btree
+
+  create_table "book_quotes", force: :cascade do |t|
+    t.integer  "book_id"
+    t.text     "book_quote"
+    t.string   "pages"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "book_quotes", ["book_id"], name: "index_book_quotes_on_book_id", using: :btree
+  add_index "book_quotes", ["identity_id"], name: "index_book_quotes_on_identity_id", using: :btree
 
   create_table "book_stores", force: :cascade do |t|
     t.integer  "location_id"
@@ -3442,6 +3454,8 @@ ActiveRecord::Schema.define(version: 20160807032949) do
   add_foreign_key "bet_contacts", "contacts"
   add_foreign_key "bet_contacts", "identities"
   add_foreign_key "bets", "identities"
+  add_foreign_key "book_quotes", "books"
+  add_foreign_key "book_quotes", "identities"
   add_foreign_key "book_stores", "identities"
   add_foreign_key "book_stores", "locations"
   add_foreign_key "cafes", "identities"

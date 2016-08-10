@@ -26,7 +26,7 @@ Rails.application.configure do
 
   #config.assets.compress = false
 
-  # Compress JavaScripts and CSS. See also config/initializers/assets.rb
+  # Compress JavaScripts and CSS. See also config/initializers/assets.rb - may need to update version for changes to these to take effect
   #config.assets.js_compressor = :uglifier
   config.assets.js_compressor = NoCompression.new
   config.assets.css_compressor = :sass

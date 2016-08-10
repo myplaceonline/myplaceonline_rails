@@ -1589,6 +1589,13 @@ en:
       when_read: "Date Read"
       recommender: "Recommender"
       review: "Review"
+      book_quote: "Book Quote"
+      book_quotes: "Book Quotes"
+      add_book_quote: "Add Book Quote"
+      delete_book_quote: "Delete Book Quote"
+    book_quotes:
+      book_quote: "Quote"
+      pages: "Page(s)"
     warranties:
       heading: "Warranties"
       add: "Add Warranty"

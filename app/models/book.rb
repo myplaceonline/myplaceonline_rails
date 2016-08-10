@@ -11,6 +11,9 @@ class Book < ActiveRecord::Base
   accepts_nested_attributes_for :recommender, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
   allow_existing :recommender, Contact
   
+  has_many :book_quotes, -> { order("pages ASC, updated_at DESC") }, :dependent => :destroy
+  accepts_nested_attributes_for :book_quotes, allow_destroy: true, reject_if: :all_blank
+  
   def display
     Myp.appendstrwrap(book_name, author)
   end

@@ -718,7 +718,7 @@ module Myp
   end
   
   def self.warn(message)
-    # TODO send admin notification
+    Rails.logger.warn{message}
   end
   
   def self.reset_points(user)
@@ -1755,7 +1755,9 @@ module Myp
       @@twilio_number = ENV["TWILIO_NUMBER"]
       @@twilio_client = Twilio::REST::Client.new(ENV["TWILIO_ACCOUNT"], ENV["TWILIO_AUTH"])
     else
-      Rails.logger.info{"Twilio not configured"}
+      if Rails.env.production?
+        Rails.logger.warn{"Twilio not configured"}
+      end
     end
   end
   
