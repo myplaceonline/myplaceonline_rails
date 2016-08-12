@@ -13,6 +13,8 @@
     expanded: obj.project_issues.length > 0,
     position_field: :position,
     itemname: t("myplaceonline.projects.project_issue"),
+    child_items_link: "project_project_issues_path",
+    obj: obj,
     formjson: [
       {
         type: 'text',

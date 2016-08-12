@@ -1,32 +1,47 @@
 <%
   position_field ||= nil
+  child_items_link ||= nil
+  max_items ||= 25
 %>
 <div data-role="collapsible"<%= defined?(expanded) && expanded ? raw(" data-collapsed=\"false\"") : "" %>>
   <h3><%= heading %></h3>
-  <% random_name = SecureRandom.hex(10) %>
-  <div id="itemswrapper<%= random_name %>" class="itemswrapper"<%= !position_field.nil? ? raw(" data-position-field=\"" + position_field.to_s + "\"") : "" %>>
-    <% childproperties.each do |childproperty| %>
-      <%= f.fields_for childpropertiesname, childproperty do |child_fields| %>
-        <div class="itemwrapper itemswrapper<%= random_name %>" data-nameprefix="<%= child_fields.object_name %>">
-          <%= yield child_fields, childproperty %>
-          <% if !position_field.nil? %>
-            <%= child_fields.hidden_field(position_field) %>
+  <%
+    random_name = SecureRandom.hex(10)
+    
+    # The browser can only handle so much, so if there are more than a certain number of items and if
+    # there are forms for editing child items, then just redirect to that
+    if childproperties.length <= max_items || child_items_link.blank?
+  %>
+      <div id="itemswrapper<%= random_name %>" class="itemswrapper"<%= !position_field.nil? ? raw(" data-position-field=\"" + position_field.to_s + "\"") : "" %>>
+        <% childproperties.each do |childproperty| %>
+          <%= f.fields_for childpropertiesname, childproperty do |child_fields| %>
+            <div class="itemwrapper itemswrapper<%= random_name %>" data-nameprefix="<%= child_fields.object_name %>">
+              <%= yield child_fields, childproperty %>
+              <% if !position_field.nil? %>
+                <%= child_fields.hidden_field(position_field) %>
+              <% end %>
+              <div data-role="controlgroup" data-type="horizontal">
+                <a href="#" onclick="return myplaceonline.formRemoveItem(this);" class="ui-btn ui-btn-icon-left ui-icon-delete ui-btn-inline"><%= deletebutton %></a>
+                <% if !position_field.nil? %>
+                  <a href="#" onclick="return myplaceonline.formMoveItem(this, 1);" class="ui-btn ui-btn-icon-left ui-icon-arrow-d ui-btn-inline"><%= t("myplaceonline.general.movedown", name: itemname) %></a>
+                  <a href="#" onclick="return myplaceonline.formMoveItem(this, -1);" class="ui-btn ui-btn-icon-left ui-icon-arrow-u ui-btn-inline"><%= t("myplaceonline.general.moveup", name: itemname) %></a>
+                  <a href="#" onclick="return myplaceonline.formMoveItem(this, 2);" class="ui-btn ui-btn-icon-left ui-icon-arrow-d ui-btn-inline"><%= t("myplaceonline.general.movebottom", name: itemname) %></a>
+                  <a href="#" onclick="return myplaceonline.formMoveItem(this, -2);" class="ui-btn ui-btn-icon-left ui-icon-arrow-d ui-btn-inline"><%= t("myplaceonline.general.movetop", name: itemname) %></a>
+                <% end %>
+              </div>
+            </div>
           <% end %>
-          <div data-role="controlgroup" data-type="horizontal">
-            <a href="#" onclick="return myplaceonline.formRemoveItem(this);" class="ui-btn ui-btn-icon-left ui-icon-delete ui-btn-inline"><%= deletebutton %></a>
-            <% if !position_field.nil? %>
-              <a href="#" onclick="return myplaceonline.formMoveItem(this, 1);" class="ui-btn ui-btn-icon-left ui-icon-arrow-d ui-btn-inline"><%= t("myplaceonline.general.movedown", name: itemname) %></a>
-              <a href="#" onclick="return myplaceonline.formMoveItem(this, -1);" class="ui-btn ui-btn-icon-left ui-icon-arrow-u ui-btn-inline"><%= t("myplaceonline.general.moveup", name: itemname) %></a>
-              <a href="#" onclick="return myplaceonline.formMoveItem(this, 2);" class="ui-btn ui-btn-icon-left ui-icon-arrow-d ui-btn-inline"><%= t("myplaceonline.general.movebottom", name: itemname) %></a>
-              <a href="#" onclick="return myplaceonline.formMoveItem(this, -2);" class="ui-btn ui-btn-icon-left ui-icon-arrow-d ui-btn-inline"><%= t("myplaceonline.general.movetop", name: itemname) %></a>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
-    <% end %>
-    <script type="text/javascript">
-    var x<%= random_name %> = <%= raw(formjson.to_json) %>;
-    </script>
-    <p><a href="#" onclick="return myplaceonline.formAddItem(this, '<%= f.object_name + "[" + childpropertiesname.to_s + "_attributes]" %>', '<%= single_quote_escape(deletebutton) %>', x<%= random_name %>);" class="ui-btn ui-btn-icon-left ui-icon-plus ui-btn-inline"><%= addbutton %></a></p>
-  </div>
+        <% end %>
+        <script type="text/javascript">
+        var x<%= random_name %> = <%= raw(formjson.to_json) %>;
+        </script>
+        <p><a href="#" onclick="return myplaceonline.formAddItem(this, '<%= f.object_name + "[" + childpropertiesname.to_s + "_attributes]" %>', '<%= single_quote_escape(deletebutton) %>', x<%= random_name %>);" class="ui-btn ui-btn-icon-left ui-icon-plus ui-btn-inline"><%= addbutton %></a></p>
+      </div>
+  <%
+    else
+  %>
+      <%= link_to(t("myplaceonline.general.edit") + " " + heading, send(child_items_link, obj), class: "ui-btn") %>
+  <%
+    end
+  %>
 </div>
