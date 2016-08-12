@@ -21,7 +21,8 @@
     existingobjurl: "contact_path",
     searchurl: "/contacts.json?perpage=0",
     edit: edit,
-    autofocus: false
+    autofocus: false,
+    collapsed: obj.landlord.nil?
   }
 %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.apartments.notes", obj.notes) %>

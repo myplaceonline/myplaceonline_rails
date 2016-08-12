@@ -8,7 +8,7 @@ class Apartment < ActiveRecord::Base
   allow_existing :location
 
   belongs_to :landlord, class_name: Contact, :autosave => true
-  accepts_nested_attributes_for :landlord, reject_if: :all_blank
+  accepts_nested_attributes_for :landlord, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
   allow_existing :landlord, Contact
 
   has_many :apartment_leases, :dependent => :destroy
@@ -35,5 +35,11 @@ class Apartment < ActiveRecord::Base
 
   def display
     location.display
+  end
+
+  def self.build(params = nil)
+    result = self.dobuild(params)
+    result.apartment_leases << ApartmentLease.new
+    result
   end
 end
