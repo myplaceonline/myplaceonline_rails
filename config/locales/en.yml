@@ -2483,3 +2483,8 @@ en:
       duplicate: "Duplicate"
     business_cards:
       contact: "Contact"
+      files: "Pictures"
+      file: "Picture"
+      add_file: "Add Picture"
+      add_files: "Add Picture(s)"
+      delete_file: "Delete Picture"

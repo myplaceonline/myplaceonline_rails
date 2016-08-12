@@ -13,3 +13,16 @@
   }
 %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :business_card_files,
+    item_placeholder: "myplaceonline.business_cards.file",
+    heading: "myplaceonline.business_cards.files",
+    addbutton: "myplaceonline.business_cards.add_file",
+    addbutton_multi: "myplaceonline.business_cards.add_files",
+    deletebutton: "myplaceonline.business_cards.delete_file"
+  }
+%>
