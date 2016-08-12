@@ -13,4 +13,12 @@ class ProjectIssue < ActiveRecord::Base
   def final_search_result
     project
   end
+
+  after_commit :on_after_create, on: [:create]
+  
+  def on_after_create
+    if position.nil?
+      self.project.set_positions
+    end
+  end
 end

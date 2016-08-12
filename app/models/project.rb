@@ -9,4 +9,15 @@ class Project < ActiveRecord::Base
   def display
     project_name
   end
+  
+  def set_positions
+    ActiveRecord::Base.transaction do
+      i = 1
+      project_issues.each do |issue|
+        issue.position = i
+        i = i + 1
+        issue.save!
+      end
+    end
+  end
 end
