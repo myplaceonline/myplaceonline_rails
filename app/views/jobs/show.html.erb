@@ -27,7 +27,6 @@
   <%= attribute_table_row(t("myplaceonline.jobs.personnel_code"), @obj.personnel_code) %>
   <%= attribute_table_row_markdown(t("myplaceonline.jobs.notes"), @obj.notes) %>
   <%= attribute_table_row_reference(t("myplaceonline.jobs.company"), "company_path", @obj.company) %>
-  <%= attribute_table_row_reference(t("myplaceonline.jobs.manager_contact"), "contact_path", @obj.manager_contact) %>
   <% @obj.job_managers.each do |wrapper| %>
     <%= table_row_heading(t("myplaceonline.jobs.manager")) %>
     <%= attribute_table_row_reference(t("myplaceonline.jobs.manager"), "contact_path", wrapper.contact) %>
