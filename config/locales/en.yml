@@ -1366,6 +1366,13 @@ en:
       department_identifier: "Department ID"
       division_identifier: "Division ID"
       personnel_code: "Personnel Code"
+      managers: "Managers"
+      manager: "Manager"
+      add_manager: "Add Manager"
+      delete_manager: "Delete Manager"
+    job_managers:
+      start_date: "Start Date"
+      end_date: "End Date"
     job_salaries:
       started: "Started"
       ended: "Ended"

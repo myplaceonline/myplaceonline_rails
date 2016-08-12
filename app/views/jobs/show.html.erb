@@ -28,6 +28,13 @@
   <%= attribute_table_row_markdown(t("myplaceonline.jobs.notes"), @obj.notes) %>
   <%= attribute_table_row_reference(t("myplaceonline.jobs.company"), "company_path", @obj.company) %>
   <%= attribute_table_row_reference(t("myplaceonline.jobs.manager_contact"), "contact_path", @obj.manager_contact) %>
+  <% @obj.job_managers.each do |wrapper| %>
+    <%= table_row_heading(t("myplaceonline.jobs.manager")) %>
+    <%= attribute_table_row_reference(t("myplaceonline.jobs.manager"), "contact_path", wrapper.contact) %>
+    <%= attribute_table_row_date(t("myplaceonline.job_managers.start_date"), wrapper.start_date) %>
+    <%= attribute_table_row_date(t("myplaceonline.job_managers.end_date"), wrapper.end_date) %>
+    <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), wrapper.notes) %>
+  <% end %>
   <%= attribute_table_row_reference(t("myplaceonline.jobs.internal_address"), "location_path", @obj.internal_address) %>
   <% @obj.job_salaries.each do |js| %>
     <%= table_row_heading(t("myplaceonline.jobs.job_salaries")) %>

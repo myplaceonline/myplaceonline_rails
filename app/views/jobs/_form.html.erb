@@ -41,6 +41,64 @@
   }
 %>
 <%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.jobs.managers"),
+    childpropertiesname: :job_managers,
+    childproperties: obj.job_managers,
+    deletebutton: t("myplaceonline.jobs.delete_manager"),
+    addbutton: t("myplaceonline.jobs.add_manager"),
+    expanded: obj.job_managers.length > 0,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :contact_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.jobs.manager"),
+        objform: "contacts/form",
+        existingobjurl: "contact_path",
+        searchurl: "/contacts.json?perpage=0",
+        edit: true,
+        autofocus: true,
+        force_existing: true,
+        simpleform: true
+      },
+      {
+        type: 'date',
+        name: 'start_date',
+        placeholder: t("myplaceonline.job_managers.start_date")
+      },
+      {
+        type: 'date',
+        name: 'end_date',
+        placeholder: t("myplaceonline.job_managers.end_date")
+      },
+      {
+        type: 'textarea',
+        name: 'notes',
+        placeholder: t("myplaceonline.general.notes")
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :contact_attributes,
+      existingobj: childproperty.contact,
+      heading: t("myplaceonline.jobs.manager"),
+      objform: "contacts/form",
+      existingobjurl: "contact_path",
+      searchurl: "/contacts.json?perpage=0",
+      edit: true,
+      autofocus: false
+    }
+  %>
+  <%= myp_date_field(child_fields, :start_date, "myplaceonline.job_managers.start_date", childproperty.start_date) %>
+  <%= myp_date_field(child_fields, :end_date, "myplaceonline.job_managers.end_date", childproperty.end_date) %>
+  <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.general.notes", childproperty.notes) %>
+<% end %>
+<%=
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,
     name: :internal_address,

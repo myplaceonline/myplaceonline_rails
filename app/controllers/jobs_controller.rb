@@ -33,6 +33,14 @@ class JobsController < MyplaceonlineController
           :notes,
           :salary,
           :salary_period
+        ],
+        job_managers_attributes: [
+          :id,
+          :_destroy,
+          :start_date,
+          :end_date,
+          :notes,
+          contact_attributes: ContactsController.param_names
         ]
       )
     end
