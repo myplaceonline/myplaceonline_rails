@@ -10,13 +10,18 @@ class Project < ActiveRecord::Base
     project_name
   end
   
-  def set_positions
+  def set_positions(top_id: nil)
     ActiveRecord::Base.transaction do
-      i = 1
+      i = top_id.nil? ? 1 : 2
       project_issues.each do |issue|
-        issue.position = i
-        i = i + 1
-        issue.save!
+        if !top_id.nil? && issue.id == top_id
+          issue.position = 1
+          issue.save!
+        else
+          issue.position = i
+          i = i + 1
+          issue.save!
+        end
       end
     end
   end

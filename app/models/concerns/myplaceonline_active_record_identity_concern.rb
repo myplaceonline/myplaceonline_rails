@@ -16,12 +16,18 @@ module MyplaceonlineActiveRecordIdentityConcern
         current_user = User.current_user
         if !current_user.nil?
           identity_target = Permission.current_target_identity
-          if !self.identity.nil?
+          if !self.identity_id.nil?
             if self.identity_id != identity_target.id
               raise "Unauthorized"
             end
+          elsif identity_target.nil?
+            if self.id == 0
+              # Special case when database is being seeded
+            else
+              raise "Identity target is nil"
+            end
           else
-            self.identity = identity_target
+            self.identity_id = identity_target.id
           end
         else
           raise "User.current_user not set"

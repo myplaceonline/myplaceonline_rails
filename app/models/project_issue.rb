@@ -2,6 +2,8 @@ class ProjectIssue < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
+  attr_accessor :top
+
   validates :issue_name, presence: true
   
   belongs_to :project
@@ -18,7 +20,11 @@ class ProjectIssue < ActiveRecord::Base
   
   def on_after_create
     if position.nil?
-      self.project.set_positions
+      if self.top == "1"
+        self.project.set_positions(top_id: self.id)
+      else
+        self.project.set_positions
+      end
     end
   end
 end

@@ -49,7 +49,9 @@ class ProjectIssuesController < MyplaceonlineController
 
     def obj_params
       params.require(:project_issue).permit(
-        :issue_name, :notes
+        :issue_name,
+        :notes,
+        :top
       )
     end
     
