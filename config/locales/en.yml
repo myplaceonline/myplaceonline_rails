@@ -2426,6 +2426,10 @@ en:
       project: "Project"
       moved_top: "Successfully moved issue to the top"
       move_top: "Move to the Top"
+      notifiers: "Subscribers"
+      notifier: "Subscriber"
+      add_notifier: "Add Subscriber"
+      delete_notifier: "Delete Subscriber"
     flights:
       flight_name: "Flight Name"
       flight_start_date: "Flight Start Date"

@@ -8,6 +8,9 @@ class ProjectIssue < ActiveRecord::Base
   
   belongs_to :project
 
+  has_many :project_issue_notifiers, :dependent => :destroy
+  accepts_nested_attributes_for :project_issue_notifiers, allow_destroy: true, reject_if: :all_blank
+
   def display
     issue_name
   end

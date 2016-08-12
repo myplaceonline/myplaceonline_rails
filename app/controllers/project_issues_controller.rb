@@ -51,7 +51,12 @@ class ProjectIssuesController < MyplaceonlineController
       params.require(:project_issue).permit(
         :issue_name,
         :notes,
-        :top
+        :top,
+        project_issue_notifiers_attributes: [
+          :id,
+          :_destroy,
+          contact_attributes: ContactsController.param_names
+        ]
       )
     end
     

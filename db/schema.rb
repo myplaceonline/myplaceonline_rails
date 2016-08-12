@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810043229) do
+ActiveRecord::Schema.define(version: 20160812182243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2403,6 +2403,18 @@ ActiveRecord::Schema.define(version: 20160810043229) do
 
   add_index "point_displays", ["identity_id"], name: "index_point_displays_on_identity_id", using: :btree
 
+  create_table "project_issue_notifiers", force: :cascade do |t|
+    t.integer  "contact_id"
+    t.integer  "project_issue_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "project_issue_notifiers", ["contact_id"], name: "index_project_issue_notifiers_on_contact_id", using: :btree
+  add_index "project_issue_notifiers", ["identity_id"], name: "index_project_issue_notifiers_on_identity_id", using: :btree
+  add_index "project_issue_notifiers", ["project_issue_id"], name: "index_project_issue_notifiers_on_project_issue_id", using: :btree
+
   create_table "project_issues", force: :cascade do |t|
     t.integer  "project_id"
     t.integer  "identity_id"
@@ -3556,6 +3568,9 @@ ActiveRecord::Schema.define(version: 20160810043229) do
   add_foreign_key "playlists", "identity_files"
   add_foreign_key "podcasts", "feeds"
   add_foreign_key "podcasts", "identities"
+  add_foreign_key "project_issue_notifiers", "contacts"
+  add_foreign_key "project_issue_notifiers", "identities"
+  add_foreign_key "project_issue_notifiers", "project_issues"
   add_foreign_key "project_issues", "identities"
   add_foreign_key "project_issues", "projects"
   add_foreign_key "projects", "identities"
