@@ -4,6 +4,7 @@ class IdentityPhone < ActiveRecord::Base
   PHONE_TYPES = [
     ["myplaceonline.identity_phones.cell", 0],
     ["myplaceonline.identity_phones.home", 1],
+    ["myplaceonline.identity_phones.work", 3],
     ["myplaceonline.identity_phones.temporary", 2]
   ]
   
@@ -17,6 +18,8 @@ class IdentityPhone < ActiveRecord::Base
       I18n.t("myplaceonline.identity_phones.home")
     when 2
       I18n.t("myplaceonline.identity_phones.temporary")
+    when 3
+      I18n.t("myplaceonline.identity_phones.work")
     else
       I18n.t("myplaceonline.identity_phones.phone")
     end
