@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :business_cards
+  post 'business_cards/new'
+
   resources :text_messages
   post 'text_messages/new'
 

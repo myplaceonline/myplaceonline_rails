@@ -6,6 +6,7 @@ random_name = SecureRandom.hex(10)
 new_item_collapsible_id = random_name + "_new_item"
 always_search ||= false
 only_new ||= false
+simpleform ||= nil
 if !(defined?(create_new))
   create_new = true
 end
@@ -104,7 +105,7 @@ end
         %>
             <%= f.fields_for name, existingobj do |sub_fields| %>
               <h3><%= t("myplaceonline.general.new") + " " + heading %></h3>
-              <%= render partial: objform + ".html", locals: { f: sub_fields, obj: existingobj, edit: false, autofocus: autofocus, nested: true } %>
+              <%= render partial: objform + ".html", locals: { f: sub_fields, obj: existingobj, edit: false, autofocus: autofocus, nested: true, simpleform: simpleform } %>
               <%
                 if existingcollapsed && autofocus && first
                   first = false

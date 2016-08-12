@@ -1,6 +1,10 @@
 <%= f.fields_for(:contact_identity, obj.contact_identity) do |identity_fields| %>
 
-  <% simpleform = Myp.param_bool(params, :simpleform) %>
+  <%
+  if !defined?(simpleform)
+    simpleform = Myp.param_bool(params, :simpleform)
+  end
+  %>
 
   <%= myp_text_field(identity_fields, :name, "myplaceonline.contacts.name", obj.contact_identity.name, autofocus) %>
   <%= myp_text_field(identity_fields, :middle_name, "myplaceonline.contacts.middle_name", obj.contact_identity.middle_name) %>
@@ -21,7 +25,7 @@
       childproperties: obj.contact_identity.identity_emails,
       deletebutton: t("myplaceonline.identities.delete_email"),
       addbutton: t("myplaceonline.identities.add_email"),
-      expanded: obj.contact_identity.identity_emails.length > 0 || simpleform,
+      expanded: obj.contact_identity.identity_emails.length > 0,
       formjson: [
         {
           type: 'text',
@@ -36,35 +40,36 @@
     <%= myp_check_box(child_fields, :secondary, "myplaceonline.identities.email_secondary") %>
   <% end %>
 
+  <%=
+    render(layout: 'myplaceonline/childproperties', locals: {
+      f: identity_fields,
+      heading: t("myplaceonline.identities.phones"),
+      childpropertiesname: :identity_phones,
+      childproperties: obj.contact_identity.identity_phones,
+      deletebutton: t("myplaceonline.identities.delete_phone"),
+      addbutton: t("myplaceonline.identities.add_phone"),
+      expanded: obj.contact_identity.identity_phones.length > 0,
+      formjson: [
+        {
+          type: 'text',
+          name: 'number',
+          placeholder: t("myplaceonline.identities.phone"),
+          autofocus: true
+        },
+        {
+          type: 'select',
+          name: 'phone_type',
+          options: IdentityPhone::PHONE_TYPES.map{|x,y| [I18n.t(x),y]}.as_json,
+          placeholder: t("myplaceonline.identity_phones.phone_type")
+        }
+      ]
+    }) do |child_fields, childproperty|
+  %>
+    <%= myp_text_field(child_fields, :number, "myplaceonline.identities.phone", childproperty.number) %>
+    <%= myp_select(child_fields, :phone_type, "myplaceonline.identity_phones.phone_type", Myp.translate_options(IdentityPhone::PHONE_TYPES), childproperty.phone_type) %>
+  <% end %>
+
   <% if !simpleform %>
-    <%=
-      render(layout: 'myplaceonline/childproperties', locals: {
-        f: identity_fields,
-        heading: t("myplaceonline.identities.phones"),
-        childpropertiesname: :identity_phones,
-        childproperties: obj.contact_identity.identity_phones,
-        deletebutton: t("myplaceonline.identities.delete_phone"),
-        addbutton: t("myplaceonline.identities.add_phone"),
-        expanded: obj.contact_identity.identity_phones.length > 0,
-        formjson: [
-          {
-            type: 'text',
-            name: 'number',
-            placeholder: t("myplaceonline.identities.phone"),
-            autofocus: true
-          },
-          {
-            type: 'select',
-            name: 'phone_type',
-            options: IdentityPhone::PHONE_TYPES.map{|x,y| [I18n.t(x),y]}.as_json,
-            placeholder: t("myplaceonline.identity_phones.phone_type")
-          }
-        ]
-      }) do |child_fields, childproperty|
-    %>
-      <%= myp_text_field(child_fields, :number, "myplaceonline.identities.phone", childproperty.number) %>
-      <%= myp_select(child_fields, :phone_type, "myplaceonline.identity_phones.phone_type", Myp.translate_options(IdentityPhone::PHONE_TYPES), childproperty.phone_type) %>
-    <% end %>
 
     <%=
       render(layout: 'myplaceonline/childproperties', locals: {
