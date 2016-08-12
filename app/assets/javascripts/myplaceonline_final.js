@@ -913,19 +913,29 @@ var myplaceonline = function(mymodule) {
         objectToHide = $(checkbox).parent();
       }
       var hideTimeout = window.setTimeout(function(x) {
-        x.objectToHide.fadeOut();
         if (x.callback) {
-          x.callback(x.objectToHide);
+          x.callback(x.objectToHide, $(checkbox));
+        } else {
+          completeCheckboxHiding(x.objectToHide);
         }
       }, 1000, { objectToHide: objectToHide, callback: callback });
       $(checkbox).data("myplaceonline-is-hiding", hideTimeout);
     } else {
       if ($(checkbox).data("myplaceonline-is-hiding")) {
-        window.clearTimeout($(checkbox).data("myplaceonline-is-hiding"));
-        removeClass($(checkbox).parent().children("label").first(), "hiding");
+        cancelCheckboxHiding($(checkbox));
       }
     }
     return false;
+  }
+  
+  function completeCheckboxHiding(objectToHide) {
+    objectToHide.fadeOut();
+  }
+  
+  function cancelCheckboxHiding($checkbox) {
+    window.clearTimeout($checkbox.data("myplaceonline-is-hiding"));
+    removeClass($checkbox.parent().children("label").first(), "hiding");
+    $checkbox.prop('checked', false).checkboxradio('refresh');
   }
   
   function refreshWithParam(paramName, paramValue) {
@@ -1099,6 +1109,8 @@ var myplaceonline = function(mymodule) {
   mymodule.jqmReplaceListSection = jqmReplaceListSection;
   mymodule.remoteDataListReset = remoteDataListReset;
   mymodule.form_set_positions = form_set_positions;
+  mymodule.cancelCheckboxHiding = cancelCheckboxHiding;
+  mymodule.completeCheckboxHiding = completeCheckboxHiding;
 
   return mymodule;
 

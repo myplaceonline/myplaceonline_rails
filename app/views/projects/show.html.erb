@@ -8,7 +8,7 @@
   <% content_for :aftertable do %>
   
     <script type="text/javascript">
-    function delete_project_issue(obj) {
+    function delete_project_issue(obj, $checkbox) {
       var x = obj.attr("id");
       x = x.substring(15);
       var link = "<%= project_delete_by_index_url(@obj.id) %>?issue_id=" + x;
@@ -16,11 +16,22 @@
       $.ajax({
         url: link,
         method: "POST",
-        dataType: "json"
+        dataType: "json",
+        context: {
+          obj: obj,
+          checkbox: $checkbox
+        }
       }).done(function(data, textStatus, jqXHR) {
-        myplaceonline.createSuccessNotification("Successfully deleted");
+        if (data.result) {
+          myplaceonline.completeCheckboxHiding(this.obj);
+          myplaceonline.createSuccessNotification("Successfully deleted");
+        } else {
+          myplaceonline.cancelCheckboxHiding(this.checkbox);
+          myplaceonline.createErrorNotification("Failed to complete project issue due to invalid submission data");
+        }
       }).fail(function(jqXHR, textStatus, errorThrown) {
         myplaceonline.createErrorNotification("Could not execute " + link + ": " + textStatus);
+        myplaceonline.cancelCheckboxHiding(this.checkbox);
       }).complete(function(jqXHR, textStatus) {
         myplaceonline.hideLoading();
       });

@@ -101,6 +101,16 @@ class Contact < ActiveRecord::Base
       Myp.send_email(to, subject, body, cc, bcc)
     end
   end
+  
+  def send_email_with_conversation(category, subject, body_markdown)
+    email = Email.new
+    email.set_subject(subject)
+    email.set_body_if_blank(body_markdown)
+    email.email_category = category
+    email.email_contacts << EmailContact.new(contact: self)
+    email.save!
+    email.process
+  end
 
   def self.contact_type_threshold(calendar)
     result = Hash.new
