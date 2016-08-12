@@ -16,3 +16,16 @@
     autofocus: false
   }
 %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :membership_files,
+    item_placeholder: "myplaceonline.memberships.file",
+    heading: "myplaceonline.memberships.files",
+    addbutton: "myplaceonline.memberships.add_file",
+    addbutton_multi: "myplaceonline.memberships.add_files",
+    deletebutton: "myplaceonline.memberships.delete_file"
+  }
+%>

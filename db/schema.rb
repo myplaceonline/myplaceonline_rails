@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160812221452) do
+ActiveRecord::Schema.define(version: 20160812222058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2007,6 +2007,19 @@ ActiveRecord::Schema.define(version: 20160812221452) do
 
   add_index "medicines", ["identity_id"], name: "index_medicines_on_identity_id", using: :btree
 
+  create_table "membership_files", force: :cascade do |t|
+    t.integer  "membership_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "membership_files", ["identity_file_id"], name: "index_membership_files_on_identity_file_id", using: :btree
+  add_index "membership_files", ["identity_id"], name: "index_membership_files_on_identity_id", using: :btree
+  add_index "membership_files", ["membership_id"], name: "index_membership_files_on_membership_id", using: :btree
+
   create_table "memberships", force: :cascade do |t|
     t.string   "name",                  limit: 255
     t.date     "start_date"
@@ -3589,6 +3602,9 @@ ActiveRecord::Schema.define(version: 20160812221452) do
   add_foreign_key "medical_condition_treatments", "identities"
   add_foreign_key "medical_condition_treatments", "locations"
   add_foreign_key "medical_condition_treatments", "medical_conditions"
+  add_foreign_key "membership_files", "identities"
+  add_foreign_key "membership_files", "identity_files"
+  add_foreign_key "membership_files", "memberships"
   add_foreign_key "money_balance_item_templates", "identities"
   add_foreign_key "money_balance_item_templates", "money_balances"
   add_foreign_key "money_balance_items", "identities"

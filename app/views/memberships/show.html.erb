@@ -6,5 +6,11 @@
   <%= attribute_table_row(t("myplaceonline.memberships.end_date"), Myp.display_date(@obj.end_date, current_user)) %>
   <%= attribute_table_row_markdown(t("myplaceonline.memberships.notes"), @obj.notes) %>
   <%= attribute_table_row_reference(t("myplaceonline.memberships.periodic_payment"), "periodic_payment_path", @obj.periodic_payment) %>
+  <%=
+    render partial: 'myplaceonline/pictures', locals: {
+      pics: @obj.membership_files,
+      placeholder: "myplaceonline.memberships.file"
+    }
+  %>
   
 <% end %>

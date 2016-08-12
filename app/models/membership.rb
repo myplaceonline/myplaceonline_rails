@@ -53,4 +53,14 @@ class Membership < ActiveRecord::Base
   def on_after_destroy
     CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: self.id)
   end
+
+  has_many :membership_files, :dependent => :destroy
+  accepts_nested_attributes_for :membership_files, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :membership_files, [{:name => :identity_file}]
+
+  before_validation :update_file_folders
+  
+  def update_file_folders
+    put_files_in_folder(membership_files, [I18n.t("myplaceonline.category.memberships"), display])
+  end
 end

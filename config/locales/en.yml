@@ -813,6 +813,11 @@ en:
       notes: "Notes"
       periodic_payment: "Periodic Payment"
       membership_identifier: "Number/Identifier"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"
     credit_scores:
       score_date: "Score Date"
       score: "Score"

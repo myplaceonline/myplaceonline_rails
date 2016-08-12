@@ -19,8 +19,13 @@ class MembershipsController < MyplaceonlineController
       :end_date,
       :notes,
       :membership_identifier,
-      periodic_payment_attributes: PeriodicPaymentsController.param_names
+      periodic_payment_attributes: PeriodicPaymentsController.param_names,
+      membership_files_attributes: FilesController.multi_param_names
     ]
+  end
+
+  def may_upload
+    true
   end
 
   protected
