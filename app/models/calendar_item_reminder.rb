@@ -15,7 +15,7 @@ class CalendarItemReminder < ActiveRecord::Base
   end
   
   def self.ensure_pending_all_users()
-    Rails.logger.info("ensure_pending_all_users start")
+    Rails.logger.info("CalendarItemReminder.ensure_pending_all_users start")
     got_lock = false
     begin
       got_lock = Myp.database_advisory_lock(1)
@@ -147,6 +147,9 @@ class CalendarItemReminder < ActiveRecord::Base
     
     now = Time.now
     
+    # Debug
+    # select i.id as item_id, i.calendar_item_time, i.is_repeat, r.id as calendar_item_reminder_id, r.threshold_amount, r.threshold_type, r.repeat_amount, r.repeat_type, r.expire_amount, r.expire_type, r.max_pending, p.id as pending_id from calendar_items i left outer join calendar_item_reminders r on i.id = r.calendar_item_id left outer join calendar_item_reminder_pendings p on p.calendar_item_reminder_id = r.id where i.model_class = 'ApartmentTrashPickup' and i.model_id = 1 order by i.calendar_item_time;
+    
     CalendarItemReminder
       .includes(:calendar_item_reminder_pendings, :calendar_item)
       .where(identity: user.primary_identity)
@@ -166,8 +169,25 @@ class CalendarItemReminder < ActiveRecord::Base
         
               # If there's a max_pending (often 1), then delete any pending
               # items beyond that amount
+              new_pending = CalendarItemReminderPending.new(
+                calendar_item_reminder: calendar_item_reminder,
+                calendar: calendar_item_reminder.calendar_item.calendar,
+                calendar_item: calendar_item_reminder.calendar_item,
+                identity: user.primary_identity
+              )
+              
+              Rails.logger.debug{"creating new pending reminder #{new_pending.inspect}"}
+
+              begin
+                new_pending.save!
+
+                Rails.logger.debug{"created new pending item #{new_pending.inspect}"}
+              rescue ActiveRecord::InvalidForeignKey => ifk
+                Rails.logger.debug{"InvalidForeignKey while trying to create new pending item, probably benign. #{ifk.inspect}"}
+              end
+
               if !calendar_item_reminder.max_pending.nil?
-                CalendarItemReminderPending.find_by_sql(
+                pendings_result = CalendarItemReminderPending.find_by_sql(
                   %{
                     SELECT calendar_item_reminder_pendings.*
                     FROM calendar_item_reminder_pendings
@@ -179,23 +199,20 @@ class CalendarItemReminder < ActiveRecord::Base
                       AND calendar_items.model_id #{Myp.sanitize_with_null(calendar_item_reminder.calendar_item.model_id)}
                     ORDER BY calendar_items.calendar_item_time ASC
                   }
-                ).first(calendar_item_reminder.max_pending).each{
-                  |x|
-                  Rails.logger.debug{"destroying pending item #{x.inspect}"}
-                  x.destroy!
-                }
+                )
+                
+                number_to_delete = pendings_result.count - calendar_item_reminder.max_pending
+                
+                if number_to_delete > 0
+                  pendings_result.first(number_to_delete).each do |x|
+                    
+                    # There's no point to keep the actual reminder around since we know there must be more recent
+                    # ${max_pending} reminder(s)
+                    Rails.logger.debug{"destroying excessive reminder #{x.calendar_item_reminder.inspect}; #{x.inspect}"}
+                    x.calendar_item_reminder.destroy!
+                  end
+                end
               end
-              
-              new_pending = CalendarItemReminderPending.new(
-                calendar_item_reminder: calendar_item_reminder,
-                calendar: calendar_item_reminder.calendar_item.calendar,
-                calendar_item: calendar_item_reminder.calendar_item,
-                identity: user.primary_identity
-              )
-              
-              new_pending.save!
-
-              Rails.logger.debug{"created new pending item #{new_pending.inspect}"}
             end
           end
         end
@@ -211,6 +228,8 @@ class CalendarItemReminder < ActiveRecord::Base
             calendar_item_reminder_pending.destroy!
           end
         end
+        
+        Rails.logger.debug{"finshed checking reminder"}
     end
   end
   
