@@ -12,7 +12,7 @@
   <% if Myp.requires_invite_code %>
     <div>
       <%= f.label :invite_code, class: "ui-hidden-accessible" %>
-      <%= f.password_field :invite_code, class: "autofocus", autocomplete: "off", placeholder: t("myplaceonline.users.invite") %>
+      <%= f.password_field :invite_code, class: "autofocus", autocomplete: "invite-code", placeholder: t("myplaceonline.users.invite") %>
     </div>
   <% end %>
 
@@ -29,16 +29,16 @@
     <%= f.label :password, class: "ui-hidden-accessible" %>
     <%=
       if @validatable
-        f.password_field :password, autocomplete: "off", placeholder: t("myplaceonline.general.passwordwithmin", minchars: @minimum_password_length)
+        f.password_field :password, autocomplete: "mpassword", placeholder: t("myplaceonline.general.passwordwithmin", minchars: @minimum_password_length)
       else
-        f.password_field :password, autocomplete: "off", placeholder: t("myplaceonline.general.password")
+        f.password_field :password, autocomplete: "mpassword", placeholder: t("myplaceonline.general.password")
       end
     %>
   </div>
 
   <div>
     <%= f.label :password_confirmation, class: "ui-hidden-accessible" %>
-    <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: t("myplaceonline.general.password2") %>
+    <%= f.password_field :password_confirmation, autocomplete: "mpassword2", placeholder: t("myplaceonline.general.password2") %>
   </div>
 
   <%= label_tag :agree_terms, raw(t("myplaceonline.users.agree_terms", :terms => link_to(t("myplaceonline.info.terms"), "/info/terms"))) %>

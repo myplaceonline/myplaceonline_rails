@@ -4,7 +4,7 @@
 <p><%= t("myplaceonline.errors.nosessionpassword") %></p>
 <%= form_tag do %>
   <div><%= label_tag :password, nil, class: "ui-hidden-accessible" %>
-    <%= password_field_tag :password, nil, class: "autofocus", autocomplete: "off", placeholder: t("myplaceonline.general.password") %></div>
+    <%= password_field_tag :password, nil, class: "autofocus", autocomplete: "mpassword", placeholder: t("myplaceonline.general.password") %></div>
   <%= hidden_field_tag :redirect, @redirect %>
   <div><%= submit_tag t("myplaceonline.general.login") %></div>
 <script type="text/javascript">

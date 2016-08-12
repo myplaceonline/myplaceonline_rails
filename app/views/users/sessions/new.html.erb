@@ -9,7 +9,7 @@
 
   <div>
     <%= f.label :password, class: "ui-hidden-accessible" %>
-    <%= f.password_field :password, autocomplete: "off", placeholder: t("myplaceonline.general.password") %>
+    <%= f.password_field :password, autocomplete: "mpassword", placeholder: t("myplaceonline.general.password") %>
   </div>
 
   <% if devise_mapping.rememberable? -%>
