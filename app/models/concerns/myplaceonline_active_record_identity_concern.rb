@@ -24,7 +24,8 @@ module MyplaceonlineActiveRecordIdentityConcern
             if self.id == 0
               # Special case when database is being seeded
             else
-              raise "Identity target is nil"
+              #raise "Identity target is nil"
+              # This was here as kind of an assert, but it breaks creating a new user
             end
           else
             self.identity_id = identity_target.id

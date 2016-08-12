@@ -23,7 +23,6 @@ class JobsController < MyplaceonlineController
         :division_identifier,
         :personnel_code,
         company_attributes: CompaniesController.param_names,
-        manager_contact_attributes: ContactsController.param_names,
         internal_address_attributes: LocationsController.param_names,
         job_salaries_attributes: [
           :id,
