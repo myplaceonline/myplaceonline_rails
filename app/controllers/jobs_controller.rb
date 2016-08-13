@@ -31,7 +31,8 @@ class JobsController < MyplaceonlineController
           :ended,
           :notes,
           :salary,
-          :salary_period
+          :salary_period,
+          :new_title
         ],
         job_managers_attributes: [
           :id,

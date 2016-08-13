@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160812222058) do
+ActiveRecord::Schema.define(version: 20160813020410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1702,6 +1702,7 @@ ActiveRecord::Schema.define(version: 20160812222058) do
     t.integer  "salary_period"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "new_title"
   end
 
   add_index "job_salaries", ["identity_id"], name: "index_job_salaries_on_identity_id", using: :btree

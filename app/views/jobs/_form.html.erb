@@ -133,6 +133,11 @@
         type: 'textarea',
         name: 'notes',
         placeholder: t("myplaceonline.job_salaries.notes")
+      },
+      {
+        type: 'text',
+        name: 'new_title',
+        placeholder: t("myplaceonline.job_salaries.new_title")
       }
     ]
   } do |child_fields, childproperty|
@@ -142,4 +147,5 @@
   <%= myp_decimal_field(child_fields, :salary, "myplaceonline.job_salaries.salary", childproperty.salary) %>
   <%= myp_select(child_fields, :salary_period, "myplaceonline.job_salaries.salary_period", Myp.translate_options(Myp::PERIODS), childproperty.salary_period) %>
   <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.job_salaries.notes", childproperty.notes) %>
+  <%= myp_text_field(child_fields, :new_title, "myplaceonline.job_salaries.new_title", childproperty.new_title) %>
 <% end %>
