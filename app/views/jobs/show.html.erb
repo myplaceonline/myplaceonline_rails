@@ -49,5 +49,12 @@
     <%= attribute_table_row_markdown(t("myplaceonline.job_salaries.notes"), js.notes) %>
     <%= attribute_table_row(t("myplaceonline.job_salaries.new_title"), js.new_title) %>
   <% end %>
+  <% @obj.job_reviews.each do |x| %>
+    <%= table_row_heading(t("myplaceonline.jobs.review")) %>
+    <%= attribute_table_row_date(t("myplaceonline.job_reviews.review_date"), x.review_date) %>
+    <%= attribute_table_row(t("myplaceonline.job_reviews.company_score"), x.company_score) %>
+    <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), x.notes) %>
+    <%= attribute_table_row_reference(t("myplaceonline.job_reviews.contact"), "contact_path", x.contact) %>
+  <% end %>
 
 <% end %>

@@ -149,3 +149,61 @@
   <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.job_salaries.notes", childproperty.notes) %>
   <%= myp_text_field(child_fields, :new_title, "myplaceonline.job_salaries.new_title", childproperty.new_title) %>
 <% end %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.jobs.reviews"),
+    childpropertiesname: :job_reviews,
+    childproperties: obj.job_reviews,
+    deletebutton: t("myplaceonline.jobs.delete_review"),
+    addbutton: t("myplaceonline.jobs.add_review"),
+    expanded: obj.job_reviews.length > 0,
+    formjson: [
+      {
+        type: 'date',
+        name: 'review_date',
+        placeholder: t("myplaceonline.job_reviews.review_date")
+      },
+      {
+        type: 'text',
+        name: 'company_score',
+        placeholder: t("myplaceonline.job_reviews.company_score")
+      },
+      {
+        type: 'textarea',
+        name: 'notes',
+        placeholder: t("myplaceonline.general.notes")
+      },
+      {
+        type: :renderpartial,
+        name: :contact_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.job_reviews.contact"),
+        objform: "contacts/form",
+        existingobjurl: "contact_path",
+        searchurl: "/contacts.json?perpage=0",
+        edit: true,
+        autofocus: true,
+        force_existing: true,
+        simpleform: true
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%= myp_date_field(child_fields, :review_date, "myplaceonline.job_reviews.review_date", childproperty.review_date) %>
+  <%= myp_text_field(child_fields, :company_score, "myplaceonline.job_reviews.company_score", childproperty.company_score) %>
+  <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.general.notes", childproperty.notes) %>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :contact_attributes,
+      existingobj: childproperty.contact,
+      heading: t("myplaceonline.job_reviews.contact"),
+      objform: "contacts/form",
+      existingobjurl: "contact_path",
+      searchurl: "/contacts.json?perpage=0",
+      edit: true,
+      autofocus: false
+    }
+  %>
+<% end %>

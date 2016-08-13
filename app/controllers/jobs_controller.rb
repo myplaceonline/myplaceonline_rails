@@ -41,6 +41,14 @@ class JobsController < MyplaceonlineController
           :end_date,
           :notes,
           contact_attributes: ContactsController.param_names
+        ],
+        job_reviews_attributes: [
+          :id,
+          :_destroy,
+          :review_date,
+          :company_score,
+          :notes,
+          contact_attributes: ContactsController.param_names
         ]
       )
     end
