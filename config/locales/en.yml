@@ -1376,10 +1376,10 @@ en:
       manager: "Manager"
       add_manager: "Add Manager"
       delete_manager: "Delete Manager"
-      review: "Review"
-      reviews: "Reviews"
-      add_review: "Add Review"
-      delete_review: "Delete Review"
+      review: "Evaluation"
+      reviews: "Evaluations"
+      add_review: "Add Evaluation"
+      delete_review: "Delete Evaluation"
     job_managers:
       start_date: "Start Date"
       end_date: "End Date"
@@ -1392,9 +1392,9 @@ en:
       salary_yearly: "Yearly Salary (Pre-Tax)"
       new_title: "New Title"
     job_reviews:
-      review_date: "Review Date"
+      review_date: "Evaluation Date"
       company_score: "Company Score"
-      contact: "Reviewer"
+      contact: "Evaluator"
     trips:
       trip: "Trip"
       started: "Start"
