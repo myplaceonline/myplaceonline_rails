@@ -1,4 +1,8 @@
 class JobsController < MyplaceonlineController
+  def may_upload
+    true
+  end
+
   protected
     def sorts
       ["lower(jobs.job_title) ASC"]
@@ -48,7 +52,8 @@ class JobsController < MyplaceonlineController
           :review_date,
           :company_score,
           :notes,
-          contact_attributes: ContactsController.param_names
+          contact_attributes: ContactsController.param_names,
+          job_reviews_attributes: FilesController.multi_param_names
         ]
       )
     end

@@ -1395,6 +1395,11 @@ en:
       review_date: "Evaluation Date"
       company_score: "Company Score"
       contact: "Evaluator"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"
     trips:
       trip: "Trip"
       started: "Start"

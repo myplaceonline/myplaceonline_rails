@@ -55,6 +55,12 @@
     <%= attribute_table_row(t("myplaceonline.job_reviews.company_score"), x.company_score) %>
     <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), x.notes) %>
     <%= attribute_table_row_reference(t("myplaceonline.job_reviews.contact"), "contact_path", x.contact) %>
+    <%=
+      render partial: 'myplaceonline/pictures', locals: {
+        pics: x.job_review_files,
+        placeholder: "myplaceonline.job_reviews.file"
+      }
+    %>
   <% end %>
 
 <% end %>

@@ -183,7 +183,7 @@
         existingobjurl: "contact_path",
         searchurl: "/contacts.json?perpage=0",
         edit: true,
-        autofocus: true,
+        autofocus: false,
         force_existing: true,
         simpleform: true
       }
@@ -204,6 +204,19 @@
       searchurl: "/contacts.json?perpage=0",
       edit: true,
       autofocus: false
+    }
+  %>
+  <%=
+    render partial: "myplaceonline/pictures_form", locals: {
+      f: child_fields,
+      obj: childproperty,
+      position_field: :position,
+      pictures_field: :job_review_files,
+      item_placeholder: "myplaceonline.job_reviews.file",
+      heading: "myplaceonline.job_reviews.files",
+      addbutton: "myplaceonline.job_reviews.add_file",
+      addbutton_multi: "myplaceonline.job_reviews.add_files",
+      deletebutton: "myplaceonline.job_reviews.delete_file"
     }
   %>
 <% end %>

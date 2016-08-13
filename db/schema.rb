@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160813021216) do
+ActiveRecord::Schema.define(version: 20160813022454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1691,6 +1691,19 @@ ActiveRecord::Schema.define(version: 20160813021216) do
   add_index "job_managers", ["contact_id"], name: "index_job_managers_on_contact_id", using: :btree
   add_index "job_managers", ["identity_id"], name: "index_job_managers_on_identity_id", using: :btree
   add_index "job_managers", ["job_id"], name: "index_job_managers_on_job_id", using: :btree
+
+  create_table "job_review_files", force: :cascade do |t|
+    t.integer  "job_review_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "job_review_files", ["identity_file_id"], name: "index_job_review_files_on_identity_file_id", using: :btree
+  add_index "job_review_files", ["identity_id"], name: "index_job_review_files_on_identity_id", using: :btree
+  add_index "job_review_files", ["job_review_id"], name: "index_job_review_files_on_job_review_id", using: :btree
 
   create_table "job_reviews", force: :cascade do |t|
     t.integer  "job_id"
@@ -3608,6 +3621,9 @@ ActiveRecord::Schema.define(version: 20160813021216) do
   add_foreign_key "job_managers", "contacts"
   add_foreign_key "job_managers", "identities"
   add_foreign_key "job_managers", "jobs"
+  add_foreign_key "job_review_files", "identities"
+  add_foreign_key "job_review_files", "identity_files"
+  add_foreign_key "job_review_files", "job_reviews"
   add_foreign_key "job_reviews", "contacts"
   add_foreign_key "job_reviews", "identities"
   add_foreign_key "job_reviews", "jobs"
