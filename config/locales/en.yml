@@ -175,6 +175,7 @@ en:
       flights: "Flights"
       text_messages: "Text Messages"
       business_cards: "Business Cards"
+      problem_reports: "Problem Reports"
     general:
       email: "E-mail"
       password: "Password"
@@ -2508,3 +2509,10 @@ en:
       add_file: "Add Picture"
       add_files: "Add Picture(s)"
       delete_file: "Delete Picture"
+    problem_reports:
+      report_name: "Report Name"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"

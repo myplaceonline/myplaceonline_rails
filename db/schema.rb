@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160813022454) do
+ActiveRecord::Schema.define(version: 20160814210522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2485,6 +2485,30 @@ ActiveRecord::Schema.define(version: 20160813022454) do
 
   add_index "point_displays", ["identity_id"], name: "index_point_displays_on_identity_id", using: :btree
 
+  create_table "problem_report_files", force: :cascade do |t|
+    t.integer  "problem_report_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "problem_report_files", ["identity_file_id"], name: "index_problem_report_files_on_identity_file_id", using: :btree
+  add_index "problem_report_files", ["identity_id"], name: "index_problem_report_files_on_identity_id", using: :btree
+  add_index "problem_report_files", ["problem_report_id"], name: "index_problem_report_files_on_problem_report_id", using: :btree
+
+  create_table "problem_reports", force: :cascade do |t|
+    t.string   "report_name"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "problem_reports", ["identity_id"], name: "index_problem_reports_on_identity_id", using: :btree
+
   create_table "project_issue_notifiers", force: :cascade do |t|
     t.integer  "contact_id"
     t.integer  "project_issue_id"
@@ -3667,6 +3691,10 @@ ActiveRecord::Schema.define(version: 20160813022454) do
   add_foreign_key "playlists", "identity_files"
   add_foreign_key "podcasts", "feeds"
   add_foreign_key "podcasts", "identities"
+  add_foreign_key "problem_report_files", "identities"
+  add_foreign_key "problem_report_files", "identity_files"
+  add_foreign_key "problem_report_files", "problem_reports"
+  add_foreign_key "problem_reports", "identities"
   add_foreign_key "project_issue_notifiers", "contacts"
   add_foreign_key "project_issue_notifiers", "identities"
   add_foreign_key "project_issue_notifiers", "project_issues"
