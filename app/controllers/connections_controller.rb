@@ -14,10 +14,15 @@ class ConnectionsController < MyplaceonlineController
     Myp.ensure_encryption_key(session)
     @obj = model.where(id: params[:id].to_i, connection_request_token: params[:token]).first
     if !@obj.nil?
-      @obj.connection_status = Connection::STATUS_CONNECTED
-      @obj.save!
-      redirect_to connections_path,
-        :flash => { :notice => I18n.t("myplaceonline.connections.connection_accepted", name: @obj.identity.display) }
+      if @obj.user.id == User.current_user.id
+        @obj.connection_status = Connection::STATUS_CONNECTED
+        @obj.save!
+        redirect_to connections_path,
+          :flash => { :notice => I18n.t("myplaceonline.connections.connection_accepted", name: @obj.identity.display) }
+      else
+        redirect_to connections_path,
+          :flash => { :notice => I18n.t("myplaceonline.connections.connection_accept_invalid") }
+      end
     else
       redirect_to connections_path,
         :flash => { :notice => I18n.t("myplaceonline.connections.connection_accept_invalid") }
