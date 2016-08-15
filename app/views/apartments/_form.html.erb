@@ -76,6 +76,19 @@
   <%= myp_number_field(child_fields, :deposit, "myplaceonline.apartments.deposit", childproperty.deposit) %>
   <%= myp_number_field(child_fields, :moveout_fee, "myplaceonline.apartments.moveout_fee", childproperty.moveout_fee) %>
   <%= myp_date_field(child_fields, :terminate_by, "myplaceonline.apartments.terminate_by", childproperty.terminate_by) %>
+  <%=
+    render partial: "myplaceonline/pictures_form", locals: {
+      f: child_fields,
+      obj: childproperty,
+      position_field: :position,
+      pictures_field: :apartment_lease_files,
+      item_placeholder: "myplaceonline.apartment_leases.file",
+      heading: "myplaceonline.apartment_leases.files",
+      addbutton: "myplaceonline.apartment_leases.add_file",
+      addbutton_multi: "myplaceonline.apartment_leases.add_files",
+      deletebutton: "myplaceonline.apartment_leases.delete_file"
+    }
+  %>
 <% end %>
 <%=
   render(layout: 'myplaceonline/childproperties', locals: {

@@ -18,6 +18,12 @@
 * #{t("myplaceonline.apartments.terminate_by")}: #{Myp.display_date(lease.terminate_by, current_user)}
       }
     ) %>
+    <%=
+      render partial: 'myplaceonline/pictures', locals: {
+        pics: lease.apartment_lease_files,
+        placeholder: "myplaceonline.apartment_leases.file"
+      }
+    %>
 
   <% end %>
   <% @obj.apartment_trash_pickups.each do |wrapper| %>

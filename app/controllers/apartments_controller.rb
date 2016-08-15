@@ -21,7 +21,17 @@ class ApartmentsController < MyplaceonlineController
         :notes,
         location_attributes: LocationsController.param_names,
         landlord_attributes: ContactsController.param_names,
-        apartment_leases_attributes: [:id, :start_date, :end_date, :monthly_rent, :moveout_fee, :deposit, :terminate_by, :_destroy],
+        apartment_leases_attributes: [
+          :id,
+          :start_date,
+          :end_date,
+          :monthly_rent,
+          :moveout_fee,
+          :deposit,
+          :terminate_by,
+          :_destroy,
+          apartment_lease_files_attributes: FilesController.multi_param_names
+        ],
         apartment_trash_pickups_attributes: [
           :id,
           :_destroy,

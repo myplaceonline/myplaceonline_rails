@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160815003143) do
+ActiveRecord::Schema.define(version: 20160815073213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,19 @@ ActiveRecord::Schema.define(version: 20160815003143) do
   end
 
   add_index "annuities", ["identity_id"], name: "index_annuities_on_identity_id", using: :btree
+
+  create_table "apartment_lease_files", force: :cascade do |t|
+    t.integer  "apartment_lease_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "apartment_lease_files", ["apartment_lease_id"], name: "index_apartment_lease_files_on_apartment_lease_id", using: :btree
+  add_index "apartment_lease_files", ["identity_file_id"], name: "index_apartment_lease_files_on_identity_file_id", using: :btree
+  add_index "apartment_lease_files", ["identity_id"], name: "index_apartment_lease_files_on_identity_id", using: :btree
 
   create_table "apartment_leases", force: :cascade do |t|
     t.date     "start_date"
@@ -3572,6 +3585,9 @@ ActiveRecord::Schema.define(version: 20160815003143) do
   add_foreign_key "admin_text_messages", "text_messages"
   add_foreign_key "alerts_displays", "identities"
   add_foreign_key "annuities", "identities"
+  add_foreign_key "apartment_lease_files", "apartment_leases"
+  add_foreign_key "apartment_lease_files", "identities"
+  add_foreign_key "apartment_lease_files", "identity_files"
   add_foreign_key "awesome_list_items", "awesome_lists"
   add_foreign_key "awesome_list_items", "identities"
   add_foreign_key "awesome_lists", "identities"

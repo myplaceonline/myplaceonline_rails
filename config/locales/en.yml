@@ -796,6 +796,13 @@ en:
       trash_type: "Trash Type"
       next_pickup: "Next Pickup"
       trash_pickup_reminder: "%{trash_type} Pickup %{delta}"
+      apartment_leases: "Apartment Leases"
+    apartment_leases:
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"
     jokes:
       name: "Joke Name"
       joke: "Joke"
