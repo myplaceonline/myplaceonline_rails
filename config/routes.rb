@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :connections
+  post 'connections/new'
+
   resources :problem_reports
   post 'problem_reports/new'
 

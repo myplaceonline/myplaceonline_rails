@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160814210742) do
+ActiveRecord::Schema.define(version: 20160814233950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -783,6 +783,18 @@ ActiveRecord::Schema.define(version: 20160814210742) do
 
   add_index "concerts", ["identity_id"], name: "index_concerts_on_identity_id", using: :btree
   add_index "concerts", ["location_id"], name: "index_concerts_on_location_id", using: :btree
+
+  create_table "connections", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "connection_status"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "connections", ["identity_id"], name: "index_connections_on_identity_id", using: :btree
+  add_index "connections", ["user_id"], name: "index_connections_on_user_id", using: :btree
 
   create_table "contacts", force: :cascade do |t|
     t.integer  "contact_identity_id"
@@ -3599,6 +3611,8 @@ ActiveRecord::Schema.define(version: 20160814210742) do
   add_foreign_key "concert_pictures", "concerts"
   add_foreign_key "concert_pictures", "identities"
   add_foreign_key "concert_pictures", "identity_files"
+  add_foreign_key "connections", "identities"
+  add_foreign_key "connections", "users"
   add_foreign_key "desired_locations", "identities"
   add_foreign_key "desired_locations", "locations"
   add_foreign_key "desired_locations", "websites"

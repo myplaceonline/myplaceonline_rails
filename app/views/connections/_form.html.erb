@@ -1,0 +1,17 @@
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :user,
+    heading: t("myplaceonline.connections.user"),
+    objform: "users/form",
+    existingobj: obj.user,
+    existingobjurl: "user_path",
+    searchurl: "/users/allusers.json",
+    edit: true,
+    autofocus: true,
+    always_search: true,
+    allow_new: false,
+    force_existing: true,
+    create_new: false
+  }
+%>

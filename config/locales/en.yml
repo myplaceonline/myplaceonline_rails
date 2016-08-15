@@ -176,6 +176,7 @@ en:
       text_messages: "Text Messages"
       business_cards: "Business Cards"
       problem_reports: "Problem Reports"
+      connections: "Connections"
     general:
       email: "E-mail"
       password: "Password"
@@ -2516,3 +2517,6 @@ en:
       add_file: "Add File/Picture"
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
+    connections:
+      user: "User"
+      friends_self: "You're already friends with yourself :)"
