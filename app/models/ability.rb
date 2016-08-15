@@ -9,6 +9,9 @@ class Ability
     # Otherwise, check the Shares and Permissions tables
     
     can do |action, subject_class, subject|
+      
+      Rails.logger.debug{"Ability checking action: #{action.inspect}, subject_class: #{subject_class.inspect}, subject: #{subject.inspect}"}
+      
       result = false
       if !subject.nil?
         

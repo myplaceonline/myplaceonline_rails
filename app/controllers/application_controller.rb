@@ -23,10 +23,16 @@ class ApplicationController < ActionController::Base
   utf8_enforcer_workaround
   
   def do_authenticate_user
+    Rails.logger.debug{"do_authenticate_user entry"}
+
     catch_result = catch(:warden) do
+      Rails.logger.debug{"calling authenticate_user!"}
       authenticate_user!
+      Rails.logger.debug{"returned successfully"}
     end
     
+    Rails.logger.debug{"catch_result: #{catch_result.inspect}"}
+
     # If catch_result is a Hash, then we assume it's {scope: :user} and
     # it's somebody trying to access a resource; otherwise, it might just be
     # somebody failing to login for some reason (e.g. password) and we
@@ -35,13 +41,18 @@ class ApplicationController < ActionController::Base
     if catch_result.is_a?(Hash)
       # authenticate_user! failed
       
+      Rails.logger.debug{"Setting user to guest: #{User.guest.inspect}"}
+      
       warden.set_user(User.guest, {run_callbacks: false})
+
     #else
     #  throw :warden, catch_result
+
     end
   end
 
   def catchall(exception)
+    Rails.logger.debug{"catchall: #{exception.inspect}"}
     if exception.is_a?(Myp::DecryptionKeyUnavailableError)
       redirect_to Myp.reentry_url(request)
     elsif exception.is_a?(CanCan::AccessDenied)

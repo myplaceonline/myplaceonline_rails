@@ -498,6 +498,7 @@ class MyplaceonlineController < ApplicationController
   
     def deny_guest
       if current_user.guest?
+        Rails.logger.debug{"Denying guest access"}
         raise CanCan::AccessDenied
       end
     end

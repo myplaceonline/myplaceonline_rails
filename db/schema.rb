@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160815000958) do
+ActiveRecord::Schema.define(version: 20160815003143) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -789,8 +789,9 @@ ActiveRecord::Schema.define(version: 20160815000958) do
     t.integer  "connection_status"
     t.integer  "visit_count"
     t.integer  "identity_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "connection_request_token"
   end
 
   add_index "connections", ["identity_id"], name: "index_connections_on_identity_id", using: :btree
