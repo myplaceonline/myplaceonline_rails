@@ -23,6 +23,12 @@ class ConnectionsController < MyplaceonlineController
           Permission.current_target = nil
         end
         
+        # Create our own connection
+        my_connection = Connection.new
+        my_connection.connection_status = Connection::STATUS_CONNECTED
+        my_connection.user = @obj.identity.user
+        my_connection.save!
+        
         body_markdown = I18n.t(
           "myplaceonline.connections.connection_accepted_body",
           name: User.current_user.display,
@@ -50,7 +56,7 @@ class ConnectionsController < MyplaceonlineController
         :flash => { :notice => I18n.t("myplaceonline.connections.connection_accept_invalid") }
     end
   end
-
+  
   protected
     def insecure
       true
@@ -62,5 +68,9 @@ class ConnectionsController < MyplaceonlineController
 
     def obj_params
       params.require(:connection).permit(ConnectionsController.param_names)
+    end
+    
+    def after_create
+      redirect_to obj_path, :flash => { :notice => I18n.t("myplaceonline.connections.connection_pending", name: @obj.user.display) }
     end
 end

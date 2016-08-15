@@ -196,7 +196,11 @@ class MyplaceonlineController < ApplicationController
           if has_category
             Myp.add_point(current_user, category_name, session)
           end
-          after_create
+          after_create_result = after_create
+          if !after_create_result.nil?
+            Rails.logger.debug{"after_create_result not nil"}
+            return after_create_result
+          end
           return after_create_or_update
         else
           return render :new
