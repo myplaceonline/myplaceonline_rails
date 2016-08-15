@@ -498,6 +498,10 @@ class MyplaceonlineController < ApplicationController
     nil
   end
   
+  def share_permissions
+    [Permission::ACTION_READ]
+  end
+  
   protected
   
     def deny_guest
@@ -602,6 +606,9 @@ class MyplaceonlineController < ApplicationController
         @obj = model.find(p[:id].to_i)
       end
       authorize! action.to_sym, @obj
+      
+      # If this succeeds, then set the identity context for nested authorization checks
+      Ability.context_identity = @obj.identity
     end
     
     def before_show

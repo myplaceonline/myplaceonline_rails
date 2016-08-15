@@ -182,6 +182,10 @@ class MoneyBalancesController < MyplaceonlineController
     false
   end
 
+  def share_permissions
+    [Permission::ACTION_READ, Permission::ACTION_UPDATE]
+  end
+
   protected
     def sorts
       ["money_balances.updated_at DESC"]

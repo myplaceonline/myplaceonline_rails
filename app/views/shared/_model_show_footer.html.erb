@@ -16,7 +16,7 @@
             <% if controller.show_add %>
               <li><%= link_to controller.add_another_name, controller.new_path(@obj), "data-icon" => "plus" %></li>
             <% end %>
-            <li><%= link_to t('myplaceonline.permission_shares.share'), permissions_share_path + "?" + Permission.permission_params(controller.category_name, @obj.id, [Permission::ACTION_READ]).to_query, "data-icon" => "action" %></li>
+            <li><%= link_to t('myplaceonline.permission_shares.share'), permissions_share_path + "?" + Permission.permission_params(controller.category_name, @obj.id, controller.share_permissions).to_query, "data-icon" => "action" %></li>
             <% if content_for?(:postfooterlinks) %>
               <%= content_for(:postfooterlinks) %>
             <% end %>

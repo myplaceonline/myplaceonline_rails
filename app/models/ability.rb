@@ -3,14 +3,23 @@ class Ability
 
   def initialize(user, request = nil)
     user ||= User.new
-    identity = user.primary_identity
+
+    Rails.logger.debug{"Ability user: #{user.inspect}"}
+
+    if Ability.context_identity.nil?
+      identity = user.primary_identity
+      Rails.logger.debug{"Ability identity from user: #{identity.inspect}"}
+    else
+      identity = Ability.context_identity
+      Rails.logger.debug{"Ability identity from thread: #{identity.inspect}"}
+    end
     
     # If the user owns the object, then they can do anything;
     # Otherwise, check the Shares and Permissions tables
     
     can do |action, subject_class, subject|
       
-      Rails.logger.debug{"Ability checking action: #{action.inspect}, subject_class: #{subject_class.inspect}, subject: #{subject.inspect}"}
+      Rails.logger.debug{"Ability checking action: #{action.inspect}, subject_class: #{subject_class.inspect}, subject: #{subject.inspect} with identity #{identity.inspect}"}
       
       result = false
       if !subject.nil?
@@ -19,6 +28,7 @@ class Ability
         if !request.nil? && !request.query_parameters.nil?
           token = request.query_parameters["token"]
           if !token.blank?
+            Rails.logger.debug{"Found token: #{token}"}
             ps = PermissionShare.find_by_sql(%{
               SELECT permission_shares.*
               FROM permission_shares
@@ -61,6 +71,7 @@ class Ability
         
         if !result && !user.new_record?
           if subject.respond_to?("identity_id") && subject.identity_id == identity.id
+            Rails.logger.debug{"Identities match: subject: #{subject.inspect}, identity: #{identity.inspect}"}
             result = true
           else
             query = "user_id = ? and subject_class = ? and subject_id = ? and (action & #{Permission::ACTION_MANAGE} != 0"
@@ -79,7 +90,9 @@ class Ability
               query += " or action & #{Permission::ACTION_UPDATE} != 0"
             end
             query += ")"
-            if Permission.where(query, user.id, Myp.model_to_category_name(subject_class), subject.id).length > 0
+            permission_results = Permission.where(query, user.id, Myp.model_to_category_name(subject_class), subject.id)
+            if permission_results.length > 0
+              Rails.logger.debug{"Found permissions: #{permission_results.inspect}"}
               result = true
             else
               Rails.logger.debug{"Returning false for user: #{user.id}, action: #{action}, category: #{Myp.model_to_category_name(subject_class)}, subject: #{subject.id}"}
@@ -102,5 +115,13 @@ class Ability
       can :manage, User
       can :manage, InviteCode
     end
+  end
+
+  def self.context_identity
+    Thread.current[:ability_context_identity]
+  end
+
+  def self.context_identity=(identity)
+    #Thread.current[:ability_context_identity] = identity
   end
 end

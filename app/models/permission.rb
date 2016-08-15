@@ -82,7 +82,7 @@ class Permission < ActiveRecord::Base
     end
   end
   
-  def self.permission_params(subject_class, subject_id, permissions = [Permission::ACTION_READ, Permission::ACTION_UPDATE])
+  def self.permission_params(subject_class, subject_id, permissions)
     result = {
       permission: {
         subject_class: subject_class,
