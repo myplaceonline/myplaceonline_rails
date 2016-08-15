@@ -2526,3 +2526,5 @@ en:
       connection_accept_invalid: "Invalid parameters"
       connection_accepted_body: "You are now connected with [%{name}](%{link})"
       connection_pending: "An email has been sent to %{name} to complete the connection request"
+      status_pending: "Status: Waiting for %{name} to accept the connection request. You may ask them to check their email or spam folder."
+      status_connected: "Status: You are connected with %{name}."
