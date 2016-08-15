@@ -37,11 +37,14 @@ class UserIndex < Chewy::Index
     # Only process classes that are tied to an identity
     if klass.include?(MyplaceonlineActiveRecordIdentityConcern) && ActiveRecord::Base.connection.table_exists?(klass.table_name)
       string_columns = []
+      has_visit_count = false
       klass.columns.each do |column|
         if column.type == :string || column.type == :text
           if klass.instance_methods.index("#{column.name}_encrypted?".to_sym).nil?
             string_columns.push(column)
           end
+        elsif column.name == "visit_count"
+          has_visit_count = true
         elsif column.type != :integer && column.type != :datetime && column.type != :date && column.type != :boolean && column.type != :decimal && column.type != :binary && column.type != :inet
           # TODO enforce https://www.elastic.co/blog/great-mapping-refactoring
         end
@@ -63,7 +66,11 @@ class UserIndex < Chewy::Index
           end
           
           # https://www.elastic.co/guide/en/elasticsearch/reference/current/number.html
-          field :identity_id, type: "integer"
+          field :identity_id, type: "integer", include_in_all: false
+          
+          if has_visit_count
+            field :visit_count, type: "integer", include_in_all: false
+          end
         end
         
         @indices[klass.name] = defined_type

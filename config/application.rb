@@ -23,7 +23,31 @@ module Myplaceonline
 
   DEFAULT_ROOT_EMAIL = "root@myplaceonline.com"
   
+  class MyplaceonlineRequestStrategy
+    def initialize(app)
+      @app = app
+    end
+    
+    def reset
+      Ability.context_identity = nil
+    end
+
+    def call(env)
+      begin
+        Rails.logger.debug{"MyplaceonlineRequestStrategy entry"}
+        reset
+        @app.call(env)
+      ensure
+        Rails.logger.debug{"MyplaceonlineRequestStrategy exit"}
+        reset
+      end
+    end
+  end
+
+  
   class Application < Rails::Application
+    config.middleware.insert_after(Rails::Rack::Logger, MyplaceonlineRequestStrategy)
+    
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

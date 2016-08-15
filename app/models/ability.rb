@@ -122,6 +122,6 @@ class Ability
   end
 
   def self.context_identity=(identity)
-    #Thread.current[:ability_context_identity] = identity
+    Thread.current[:ability_context_identity] = identity
   end
 end

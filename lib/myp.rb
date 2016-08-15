@@ -1624,55 +1624,8 @@ module Myp
       
       search_results = UserIndex.query(query).limit(10).load.to_a
       
-      # If category isn't blank and it searched a subitem, then we need
-      # to map those back to the original category item
-      if !parent_category.blank?
-        parent_category_class = Object.const_get(Myp.category_to_model_name(parent_category))
-        
-        search_results = search_results.map do |search_result|
-          new_search_result = parent_category_class.where(category.singularize + "_id" => search_result.id).first
-          if !new_search_result.blank?
-            new_search_result
-          else
-            nil
-          end
-        end
-        search_results = search_results.compact
-      end
+      results = Myp.process_search_results(search_results, parent_category)
       
-      search_results.sort! do |sr1, sr2|
-        x1 = sr1.respond_to?("visit_count") && !sr1.visit_count.nil? ? sr1.visit_count : 0
-        x2 = sr2.respond_to?("visit_count") && !sr2.visit_count.nil? ? sr2.visit_count : 0
-        x2 <=> x1
-      end
-      
-      results = search_results.map do |search_result|
-        result = nil
-        additional_text = ""
-        if search_result.respond_to?("final_search_result")
-          additional_text = " (" + search_result.display + ")"
-          search_result = search_result.final_search_result
-        end
-        has_defunct = search_result.respond_to?("defunct")
-        if !has_defunct || (has_defunct && !search_result.defunct)
-          category = Myp.instance_to_category(search_result, false)
-          if !category.nil?
-            result = ListItemRow.new(
-              category.human_title_singular + ": " + search_result.display + additional_text,
-              "/" + category.name + "/" + search_result.id.to_s,
-              nil,
-              nil,
-              nil,
-              original_search,
-              category.icon
-            )
-          else
-            Rails.logger.debug{"full_text_search found result but not category: #{search_result}"}
-          end
-        end
-        result
-      end
-      results = results.compact
     else
       results = []
     end
@@ -1682,6 +1635,84 @@ module Myp
     results
   end
   
+  def self.process_search_results(search_results, parent_category = nil, original_search = nil)
+    # If category isn't blank and it searched a subitem, then we need
+    # to map those back to the original category item
+    if !parent_category.blank?
+      parent_category_class = Object.const_get(Myp.category_to_model_name(parent_category))
+      
+      search_results = search_results.map do |search_result|
+        new_search_result = parent_category_class.where(category.singularize + "_id" => search_result.id).first
+        if !new_search_result.blank?
+          new_search_result
+        else
+          nil
+        end
+      end
+      search_results = search_results.compact
+    end
+    
+    search_results.sort! do |sr1, sr2|
+      x1 = sr1.respond_to?("visit_count") && !sr1.visit_count.nil? ? sr1.visit_count : 0
+      x2 = sr2.respond_to?("visit_count") && !sr2.visit_count.nil? ? sr2.visit_count : 0
+      x2 <=> x1
+    end
+    
+    results = search_results.map do |search_result|
+      result = nil
+      additional_text = ""
+      if search_result.respond_to?("final_search_result")
+        additional_text = " (" + search_result.display + ")"
+        search_result = search_result.final_search_result
+      end
+      has_defunct = search_result.respond_to?("defunct")
+      if !has_defunct || (has_defunct && !search_result.defunct)
+        category = Myp.instance_to_category(search_result, false)
+        if !category.nil?
+          result = ListItemRow.new(
+            category.human_title_singular + ": " + search_result.display + additional_text,
+            "/" + category.name + "/" + search_result.id.to_s,
+            nil,
+            nil,
+            nil,
+            original_search,
+            category.icon
+          )
+        else
+          Rails.logger.debug{"full_text_search found result but not category: #{search_result}"}
+        end
+      end
+      result
+    end
+    results = results.compact
+    results
+  end
+  
+  def self.highly_visited(user)
+
+    Rails.logger.debug{"highly_visited"}
+    
+    # http://stackoverflow.com/questions/37082797/elastic-search-edge-ngram-match-query-on-all-being-ignored
+    
+    query = {
+      filtered: {
+        filter: {
+          match: {
+            identity_id: user.primary_identity_id
+          }
+        }
+      }
+    }
+    
+    search_results = UserIndex.query(query).order(visit_count: :desc).limit(10).load.to_a
+    
+    results = Myp.process_search_results(search_results)
+    
+    Rails.logger.debug{"full_text_search results: #{results.length}"}
+
+    results
+  end
+
   def self.full_text_search?
     !ENV["FTS_TARGET"].blank?
   end
