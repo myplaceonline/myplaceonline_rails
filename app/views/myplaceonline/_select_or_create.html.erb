@@ -7,6 +7,7 @@ new_item_collapsible_id = random_name + "_new_item"
 always_search ||= false
 only_new ||= false
 simpleform ||= nil
+existingitems ||= nil
 if !(defined?(create_new))
   create_new = true
 end
@@ -62,6 +63,15 @@ end
                   <%= link_to(existingobj.display, send(existingobjurl, existingobj), onclick: Myp.select_listitem('#' + fieldid)) %>
                   <%= link_to(existingobj.display, send(existingobjurl, existingobj), :class => "splitlink") %>
                 </li>
+              <% end %>
+              <% if !existingitems.nil? %>
+                <% existingitems.each do |item| %>
+                  <%=
+                    render partial: 'myplaceonline/list_item', locals: {
+                      item: item
+                    }
+                  %>
+                <% end %>
               <% end %>
             </ul>
           </div>

@@ -1,0 +1,8 @@
+<%=
+@objs.map { |obj|
+  {
+    :title => obj.display,
+    :link => user_path(obj)
+  }
+}.to_json.html_safe
+%>

@@ -12,30 +12,54 @@
 <% end %>
 
 <%= form_for @permission, :url => permissions_share_path do |f| %>
-  <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
-      f: f,
-      name: :user,
-      existingobj: @permission.user,
-      heading: t("myplaceonline.permissions.user"),
-      objform: "users/form",
-      existingobjurl: "user_path",
-      searchurl: "/users/allusers.json",
-      edit: true,
-      autofocus: true,
-      always_search: true
-    }
+  <%
+  connections = Connection.where(
+    identity_id: User.current_user.primary_identity_id,
+    connection_status: Connection::STATUS_CONNECTED
+  )
+  if connections.length > 0
+  %>
+    <%=
+      render partial: 'myplaceonline/select_or_create', locals: {
+        f: f,
+        name: :user,
+        heading: t("myplaceonline.permissions.connection"),
+        objform: "users/form",
+        existingobj: @permission.user,
+        existingobjurl: "user_path",
+        searchurl: "/connections/allconnections.json",
+        edit: true,
+        autofocus: true,
+        allow_new: false,
+        force_existing: true,
+        create_new: false,
+        existingitems: connections.map{|x| Myp::ListItemRow.new(x.user.display, user_path(x.user)) }
+      }
+    %>
+  <%
+  else
+  %>
+    <div data-role="collapsible" data-collapsed="false">
+      <h4><%= t("myplaceonline.category.connections") %></h4>
+        <%= t("myplaceonline.connections.no_connections") %>
+        <%= link_to(t("myplaceonline.connections.add_connection"), connections_new_path, class: "ui-btn") %>
+    </div>
+  <%
+  end
   %>
   <%= myp_text_field_tag(:subject, "myplaceonline.permissions.subject", @subject) %>
   <%= myp_text_area_tag(:body, "myplaceonline.permissions.body", @body) %>
-  <%= myp_check_box_tag(:copy_self, "myplaceonline.permissions.copy_self", @copy_self) %>
+  <%# myp_check_box_tag(:copy_self, "myplaceonline.permissions.copy_self", @copy_self) %>
   <%= myp_hidden_field(f, :subject_class, @permission.subject_class) %>
   <%= myp_hidden_field(f, :subject_id, @permission.subject_id) %>
-  <%= myp_hidden_field(f, :actionbit1, @permission.actionbit1 ? "1" : "0") %>
-  <%= myp_hidden_field(f, :actionbit2, @permission.actionbit2 ? "1" : "0") %>
-  <%= myp_hidden_field(f, :actionbit4, @permission.actionbit4 ? "1" : "0") %>
-  <%= myp_hidden_field(f, :actionbit8, @permission.actionbit8 ? "1" : "0") %>
-  <%= myp_hidden_field(f, :actionbit16, @permission.actionbit16 ? "1" : "0") %>
+  <div data-role="collapsible" data-collapsed="false">
+    <h4><%= t("myplaceonline.permissions.action_types") %></h4>
+    <%= myp_hidden_field(f, :actionbit1, @permission.actionbit1 ? "1" : "0") %>
+    <%= myp_check_box(f, :actionbit2, "myplaceonline.permissions.action_read") %>
+    <%= myp_hidden_field(f, :actionbit4, @permission.actionbit4 ? "1" : "0") %>
+    <%= myp_check_box(f, :actionbit8, "myplaceonline.permissions.action_update") %>
+    <%= myp_check_box(f, :actionbit16, "myplaceonline.permissions.action_destroy") %>
+  </div>
   <div data-role="footer" data-position="fixed" data-tap-toggle="false">
     <div data-role="navbar">
       <ul>

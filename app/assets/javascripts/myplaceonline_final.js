@@ -306,6 +306,11 @@ var myplaceonline = function(mymodule) {
     list.data("remotes", remotes);
     list.data("afterload", afterload);
     
+    // Call afterload for any existing items
+    if (afterload) {
+      afterload(list);
+    }
+    
     // This is called every time the filter changes
     list.on("filterablebeforefilter", function(e, data) {
       

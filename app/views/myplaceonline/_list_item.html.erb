@@ -1,0 +1,21 @@
+<%# locals: { item } %>
+<%
+filtertext = item.title
+if !item.filtertext.blank?
+  filtertext = item.filtertext
+end
+%>
+<%= content_tag("li", data: {filtertext: filtertext}) do %>
+  <%= link_to(item.link) do %>
+    <% if !item.icon.blank? %>
+      <%= tag("img", src: item.icon, alt: item.title, title: item.title, height: 16, weight: 16, class: "ui-li-icon") %>
+    <% end %>
+    <%= item.title %>
+    <% if !item.count.nil? %>
+      <span class="ui-li-count"><%= item.count %></span>
+    <% end %>
+  <% end %>
+  <% if !item.splitLink.blank? %>
+    <%= link_to(item.splitLinkTitle, item.splitLink) %>
+  <% end %>
+<% end %>

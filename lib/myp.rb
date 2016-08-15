@@ -461,7 +461,7 @@ module Myp
   end
 
   class ListItemRow
-    def initialize(title, link, count, id, parent_id, filtertext, icon, splitLink = nil, splitLinkTitle = nil)
+    def initialize(title, link, count = nil, id = nil, parent_id = nil, filtertext = nil, icon = nil, splitLink = nil, splitLinkTitle = nil)
       @title = title
       @link = link
       @count = count
@@ -1775,4 +1775,32 @@ module Myp
   end
 
   Myp.initialize_sms
+  
+  def self.process_param_braces(params)
+    result = params.dup
+    result.dup.each do |key, value|
+      if !key.match(/%5[bBdD]/).nil?
+        Myp.process_param_braces_recurse(result, key, value)
+      end
+    end
+    result
+  end
+  
+  def self.process_param_braces_recurse(hash, key, value)
+    pieces = key.split(/%5[bBdD]/)
+    target = hash
+    last = nil
+    pieces.first(pieces.length - 1).each do |piece|
+      last = piece
+      next_hash = target[piece]
+      if next_hash.nil?
+        target[piece] = Hash.new
+        next_hash = target[piece]
+      end
+      target = next_hash
+    end
+    last_piece = pieces[pieces.length - 1]
+    target[last_piece] = value
+    hash.delete(key)
+  end
 end

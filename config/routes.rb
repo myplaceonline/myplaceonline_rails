@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  get 'connections/allconnections'
   match 'connections/:id/accept', :to => 'connections#accept', via: [:get], as: "connection_accept"
   resources :connections
   post 'connections/new'

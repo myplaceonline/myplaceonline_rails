@@ -1,6 +1,6 @@
 class ConnectionsController < MyplaceonlineController
 
-  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:accept]
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:accept, :allconnections]
 
   def self.param_names
     [
@@ -10,6 +10,17 @@ class ConnectionsController < MyplaceonlineController
     ]
   end
   
+  def allconnections
+    @objs = Connection.where(
+      identity_id: User.current_user.primary_identity_id,
+      connection_status: Connection::STATUS_CONNECTED
+    ).map{|x| x.user}
+    if !params[:q].blank?
+      search = params[:q].strip.downcase
+      @objs.delete_if{|x| x.display.index(search).nil? }
+    end
+  end
+
   def accept
     Myp.ensure_encryption_key(session)
     @obj = model.where(id: params[:id].to_i, connection_request_token: params[:token]).first

@@ -2173,6 +2173,7 @@ en:
       action_update: "Update"
       action_destroy: "Destroy"
       action_manage: "Manage"
+      action_types: "Permissions"
       invalid_id: "Invalid ID"
       link: "Link"
       share: "Share"
@@ -2190,6 +2191,7 @@ en:
       shared_sucess_async: "The email(s) will be sent with the share link in about 5 minutes"
       share_token: "Share with Contacts"
       requires_contacts: "Please choose at least one contact"
+      connection: "Connection"
     receipts:
       receipt_name: "Name"
       receipt_time: "Date/Time"
@@ -2518,7 +2520,7 @@ en:
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
     connections:
-      user: "User"
+      user: "User (by email)"
       with_self: "You're already connected with yourself :-)"
       connection_request_subject: "%{name} would like to be connected"
       connection_request_body: "Click the following link to accept the connection request from %{name}:\n\n[Accept Connection Request](%{link})"
@@ -2528,3 +2530,5 @@ en:
       connection_pending: "An email has been sent to %{name} to complete the connection request"
       status_pending: "Status: Waiting for %{name} to accept the connection request. You may ask them to check their email or spam folder."
       status_connected: "Status: You are connected with %{name}."
+      no_connections: "No connections. First you must connect with, or invite, the person:"
+      add_connection: "Add Connection"

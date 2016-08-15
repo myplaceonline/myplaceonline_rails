@@ -17,8 +17,10 @@ class PermissionsController < MyplaceonlineController
   end
 
   def share
+    processed_params = Myp.process_param_braces(params)
+    Rails.logger.debug{"Processed params: #{processed_params}"}
     @permission = Permission.new(
-      params.require(:permission).permit(
+      processed_params.require(:permission).permit(
         PermissionsController.param_names
       )
     )
@@ -30,7 +32,6 @@ class PermissionsController < MyplaceonlineController
       contact: User.current_user.display,
       link: @permission.url
     })
-    @copy_self = true
     if request.post?
       save_result = @permission.save
       if save_result
