@@ -2524,3 +2524,4 @@ en:
       connection_request_body: "Click the following link to accept the connection request from %{name}:\n\n[Accept Connection Request](%{link})"
       connection_accepted: "You are now connected with %{name}"
       connection_accept_invalid: "Invalid parameters"
+      connection_accepted_body: "You are now connected with [%{name}](%{link})"

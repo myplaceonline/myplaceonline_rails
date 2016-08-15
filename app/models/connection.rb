@@ -22,7 +22,7 @@ class Connection < ActiveRecord::Base
     if self.connection_request_token.nil?
       self.connection_request_token = SecureRandom.hex(10)
     end
-    if !user.nil? && user.id == User.current_user.id
+    if self.id.nil? && !user.nil? && user.id == User.current_user.id
       errors.add(:user, I18n.t("myplaceonline.connections.with_self"))
     end
   end
