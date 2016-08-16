@@ -20,7 +20,7 @@ class AlertsDisplaysController < MyplaceonlineController
       User.current_user.primary_identity.id,
       now,
       now
-    ).first
+    ).order("started desc").first
     if !@trip.nil?
       @nocontent = false
     end
