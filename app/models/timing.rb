@@ -10,9 +10,13 @@ class Timing < ActiveRecord::Base
     timing_name
   end
   
+  def ready_timing_events
+    timing_events.to_a.dup.keep_if{|x| x.ready?}
+  end
+  
   def minimum_duration
     result = nil
-    timing_events.each do |x|
+    ready_timing_events.each do |x|
       duration = x.duration
       if result.nil?
         result = duration
@@ -27,7 +31,7 @@ class Timing < ActiveRecord::Base
   
   def maximum_duration
     result = nil
-    timing_events.each do |x|
+    ready_timing_events.each do |x|
       duration = x.duration
       if result.nil?
         result = duration
@@ -41,8 +45,9 @@ class Timing < ActiveRecord::Base
   end
   
   def average_duration
-    if timing_events.size > 0
-      array = timing_events.map{|x| x.duration}
+    x = ready_timing_events
+    if x.size > 0
+      array = x.map{|x| x.duration}
       array.inject{ |sum, el| sum + el }.to_f / array.size
     else
       nil

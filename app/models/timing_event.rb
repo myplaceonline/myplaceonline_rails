@@ -5,19 +5,24 @@ class TimingEvent < ActiveRecord::Base
   belongs_to :timing
   
   validates :timing_event_start, presence: true
-  validates :timing_event_end, presence: true
+  #validates :timing_event_end, presence: true
   
   def display
-    Myp.seconds_to_time_in_general_human_detailed_hms(duration)
+    if ready?
+      Myp.seconds_to_time_in_general_human_detailed_hms(duration)
+    else
+      I18n.t("myplaceonline.timing_events.pending", start: Myp.display_datetime_short(timing_event_start, User.current_user))
+    end
   end
 
-  validates :timing_event_start, presence: true
-  validates :timing_event_end, presence: true
-  
   validate do
-    if timing_event_start > timing_event_end
+    if ready? && timing_event_start > timing_event_end
       errors.add(:timing_event_end, I18n.t("myplaceonline.timing_events.error_end"))
     end
+  end
+  
+  def ready?
+    !timing_event_end.nil?
   end
 
   def duration

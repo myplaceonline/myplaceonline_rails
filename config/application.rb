@@ -30,6 +30,7 @@ module Myplaceonline
     
     def reset
       Ability.context_identity = nil
+      User.current_user = nil
     end
 
     def call(env)

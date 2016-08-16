@@ -2367,6 +2367,7 @@ en:
       timing_event_start: "Start"
       timing_event_end: "End"
       error_end: "End time cannot be before start time"
+      pending: "Pending (Started %{start})"
     emergency_contacts:
       email: "Email"
       verb_created: "created"
