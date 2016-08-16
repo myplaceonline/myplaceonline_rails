@@ -14,7 +14,6 @@ class AlertsDisplaysController < MyplaceonlineController
         identity_id = ? AND
         started IS NOT NULL AND
         ended IS NOT NULL AND
-        hotel_id IS NOT NULL AND
         ? >= started AND
         ? <= ended
       },

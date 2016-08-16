@@ -9,10 +9,12 @@
     <% else %>
       <p><%= t("myplaceonline.trips.location") %>: <%= @trip.location.display_really_simple %></p>
     <% end %>
-    <% if !@trip.hotel.location.map_url.blank? %>
-      <p><%= t("myplaceonline.trips.hotel") %>: <%= link_to(@trip.hotel.display, @trip.hotel.location.map_url) %></p>
-    <% else %>
-      <p><%= t("myplaceonline.trips.hotel") %>: <%= @trip.hotel.display %></p>
+    <% if !@trip.hotel.nil? %>
+      <% if !@trip.hotel.location.map_url.blank? %>
+        <p><%= t("myplaceonline.trips.hotel") %>: <%= link_to(@trip.hotel.display, @trip.hotel.location.map_url) %></p>
+      <% else %>
+        <p><%= t("myplaceonline.trips.hotel") %>: <%= @trip.hotel.display %></p>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
