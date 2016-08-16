@@ -68,6 +68,7 @@ class ApplicationController < ActionController::Base
   end
   
   def around_request
+    Rails.logger.debug{"application_controller around_request entry"}
     overwrote = false
     overwrote2 = false
     begin
@@ -75,6 +76,7 @@ class ApplicationController < ActionController::Base
       if User.current_user.nil?
         overwrote = true
         request_accessor = instance_variable_get(:@_request)
+        Rails.logger.debug{"Setting User.current_user = #{current_user.inspect}"}
         User.current_user = current_user
         Thread.current[:current_session] = request_accessor.session
         if !current_user.nil?
@@ -97,6 +99,7 @@ class ApplicationController < ActionController::Base
       if overwrote2
         Thread.current[:nest_count] = nil
       end
+      Rails.logger.debug{"application_controller around_request exit"}
     end
   end
   

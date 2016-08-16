@@ -9,7 +9,7 @@ class UserMailer < ActionMailer::Base
     else
       @content_plain = @content
     end
-    mail(to: Myplaceonline::DEFAULT_SUPPORT_EMAIL, subject: subject)
+    mail(from: Myplaceonline::DEFAULT_SUPPORT_EMAIL, to: Myplaceonline::DEFAULT_SUPPORT_EMAIL, subject: subject, reply_to: @from)
   end
   
   def send_email(to, subject, content, cc = nil, bcc = nil, content_plain = nil, reply_to = nil, from_prefix: nil)

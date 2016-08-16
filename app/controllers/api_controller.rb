@@ -91,11 +91,10 @@ class ApiController < ApplicationController
   end
   
   def debug
-    from = Myplaceonline::DEFAULT_SUPPORT_EMAIL
-    if !current_user.nil?
-      from = current_user.email
-    end
-    UserMailer.send_support_email(from, "Javascript Error", request.raw_post).deliver_now
+    
+    body_markdown = "Message: " + params[:message] + "\n\n" + "Stack: " + params[:stack]
+    
+    Myp.send_support_email_safe("Browser Error", Myp.markdown_to_html(body_markdown.gsub("\n", "<br />\n")).html_safe, body_markdown)
     
     # So that a script kiddie doesn't DoS our email server
     sleep(1.0)

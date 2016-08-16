@@ -1207,13 +1207,13 @@ module Myp
     Myp.send_support_email_safe("User Exception", body)
   end
   
-  def self.send_support_email_safe(subject, body)
+  def self.send_support_email_safe(subject, body, body_plain = nil)
     begin
       from = I18n.t("myplaceonline.siteEmail")
       if !User.current_user.nil?
         from = User.current_user.email
       end
-      UserMailer.send_support_email(from, subject, body).deliver_now
+      UserMailer.send_support_email(from, subject, body, body_plain).deliver_now
     rescue Exception => e
       puts "Could not send email. Subject: " + subject + ", Body: " + body + ", Email Problem: " + Myp.error_details(e)
     end

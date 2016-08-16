@@ -1123,7 +1123,6 @@ var myplaceonline = function(mymodule) {
 
 // jquery-mobile-datebox requires global function callbacks
 function dateboxCalendarClosed(update) {
-  
   // If the input element's value is blank, then we assume
   // the user has hit the clear button and we don't bother
   // asking for the time
