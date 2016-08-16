@@ -1123,13 +1123,18 @@ var myplaceonline = function(mymodule) {
 
 // jquery-mobile-datebox requires global function callbacks
 function dateboxCalendarClosed(update) {
-  var timebox = $("#" + this.element.data("datetime-id"));
-  timebox.data("calendar-id", this.element.attr("id"));
-  timebox.datebox('open');
+  
+  // If the input element's value is blank, then we assume
+  // the user has hit the clear button and we don't bother
+  // asking for the time
+  if (this.element.val().length > 0) {
+    var timebox = $("#" + this.element.data("datetime-id"));
+    timebox.data("calendar-id", this.element.attr("id"));
+    timebox.datebox('open');
+  }
 }
 
 function dateboxTimeboxClosed(update) {
-  
   var cal = $("#" + this.element.data("calendar-id"));
   var calDate = cal.datebox('getTheDate');
   calDate.setHours(update.date.getHours(), update.date.getMinutes(), update.date.getSeconds(), update.date.getMilliseconds());
