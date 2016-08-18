@@ -263,18 +263,18 @@ var myplaceonline = function(mymodule) {
     }
   }
   
-  function remoteDataLoad(remote, value, list, filterCount) {
+  function remoteDataLoad(remote, value, list) {
     var requestData = {
       q: value
     };
     $.ajax({
       url: remote.url,
       dataType: "json",
-      context: {list: list, remote: remote, filterCount: filterCount, q: value},
+      context: {list: list, remote: remote, filterCount: remote.filterCount, q: value},
       data: requestData
     }).done(function(data, textStatus, jqXHR) {
-      myplaceonline.consoleLog("remoteDataLoad done " + this.remote.title + ", " + this.filterCount);
-      if (this.remote.static_list || this.filterCount == this.list.data("filterCount")) {
+      myplaceonline.consoleLog("remoteDataLoad done " + this.remote.title + ", " + this.remote.filterCount + ", " + this.filterCount);
+      if (this.remote.static_list || this.filterCount == this.remote.filterCount) {
         myplaceonline.consoleLog("remoteDataLoad filterCount is the latest");
         
         listLoadComplete(this.list, this.remote, data, this.q);
@@ -331,13 +331,19 @@ var myplaceonline = function(mymodule) {
         $ul.data("originalItems", $ul.html());
       }
       
-      var filterCount = $ul.data("filterCount");
-      if (!filterCount) {
-        filterCount = 0;
+      var i;
+      var remotesList = $ul.data("remotes");
+      for (i = 0; i < remotesList.length; i++) {
+        var remote = remotesList[i];
+        var filterCount = remote.filterCount;
+        if (!filterCount) {
+          filterCount = 0;
+        }
+        filterCount++;
+        remote.filterCount = filterCount;
+        myplaceonline.consoleLog("remoteDataList search " + value + " (previous: " + previousSearch + "), remote " + remote.title + ", count " + filterCount);
       }
-      filterCount++;
-      $ul.data("filterCount", filterCount);
-      
+        
       var $input = $(data.input);
       var value = $input.val();
       if (!value) {
@@ -345,8 +351,6 @@ var myplaceonline = function(mymodule) {
       }
       
       var previousSearch = $ul.data("previousSearch");
-      
-      myplaceonline.consoleLog("remoteDataList search " + value + " (previous: " + previousSearch + "), count " + filterCount);
       
       $ul.data("previousSearch", value);
       
@@ -358,9 +362,6 @@ var myplaceonline = function(mymodule) {
       }
       
       if (value.length > 0) {
-        
-        var i;
-        var remotesList = $ul.data("remotes");
         
         // Clear out the original list on the first search
         if (!$ul.data("hasInitialized")) {
@@ -385,7 +386,7 @@ var myplaceonline = function(mymodule) {
             } else {
               myplaceonline.consoleLog("remoteDataLoad started " + remote.title);
 
-              remoteDataLoad(remote, value, $ul, filterCount);
+              remoteDataLoad(remote, value, $ul);
 
               myplaceonline.consoleLog("remoteDataLoad returned for " + remote.title);
             }
@@ -407,7 +408,7 @@ var myplaceonline = function(mymodule) {
 
               jqmReplaceListSection($ul, remote.title, [{title: "Searching...", filtertext: value, fake: true}]);
 
-              remoteDataLoad(remote, value, $ul, filterCount);
+              remoteDataLoad(remote, value, $ul);
             } else if (remote.static_list) {
               if (remote.noresults && !jqmSectionHasMatch($ul, remote.title, value)) {
                 remote.noresults($ul, remote, remote.title, value);
