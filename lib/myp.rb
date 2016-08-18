@@ -1629,7 +1629,8 @@ module Myp
         }
       end
       
-      search_results = UserIndex.query(query).order(visit_count: :desc).limit(10).load.to_a
+      # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html
+      search_results = UserIndex.query(query).order(visit_count: {order: :desc, missing: :_last}).limit(10).load.to_a
       
       results = Myp.process_search_results(search_results, parent_category, original_search)
       

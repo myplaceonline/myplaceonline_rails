@@ -179,6 +179,7 @@ en:
       problem_reports: "Problem Reports"
       connections: "Connections"
       email_personalizations: "Email Personalizations"
+      identities: "Identities"
     general:
       email: "E-mail"
       password: "Password"
