@@ -310,6 +310,9 @@ Rails.application.routes.draw do
     get 'trip_pictures/destroy_all'
     resources :trip_pictures
     post 'trip_pictures/new'
+
+    resources :trip_stories
+    post 'trip_stories/new'
   end
   match 'trips/:id/shared', :to => 'trips#shared', via: [:get], as: "trip_shared"
   match 'trips/:id/share', :to => 'trips#share', via: [:get, :post], as: "trip_share"

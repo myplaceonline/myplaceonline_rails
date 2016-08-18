@@ -270,6 +270,8 @@ class MyplaceonlineController < ApplicationController
         
         do_update_before_save
 
+        Rails.logger.debug{"saving updated obj: #{@obj.inspect}"}
+
         @obj.save
       ensure
         Permission.current_target = nil

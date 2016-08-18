@@ -180,6 +180,7 @@ en:
       connections: "Connections"
       email_personalizations: "Email Personalizations"
       identities: "Identities"
+      trip_stories: "Trip Stories"
     general:
       email: "E-mail"
       password: "Password"
@@ -2447,6 +2448,8 @@ en:
     trip_pictures:
       trip: "Trip"
       picture: "Picture"
+    trip_stories:
+      trip: "Trip"
     meadows:
       location: "Location"
       rating: "Rating"

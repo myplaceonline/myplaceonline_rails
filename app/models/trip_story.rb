@@ -7,4 +7,8 @@ class TripStory < ActiveRecord::Base
   belongs_to :story
   accepts_nested_attributes_for :story, reject_if: proc { |attributes| StoriesController.reject_if_blank(attributes) }
   allow_existing :story
+  
+  def display
+    story.display
+  end
 end
