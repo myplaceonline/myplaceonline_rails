@@ -8,4 +8,8 @@ class ChecklistItem < ActiveRecord::Base
   def display
     checklist_item_name
   end
+
+  def final_search_result
+    checklist
+  end
 end

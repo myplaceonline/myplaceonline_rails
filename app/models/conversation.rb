@@ -29,4 +29,8 @@ class Conversation < ActiveRecord::Base
   def on_after_destroy
     contact.on_after_destroy
   end
+
+  def final_search_result
+    contact
+  end
 end

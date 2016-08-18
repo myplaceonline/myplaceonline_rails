@@ -133,6 +133,7 @@ en:
       bars: "Bars"
       treks: "Treks"
       money_balances: "Money Balances"
+      money_balance_items: "Money Balance Items"
       permissions: "Permissions"
       receipts: "Receipts"
       stories: "Stories"
@@ -177,6 +178,7 @@ en:
       business_cards: "Business Cards"
       problem_reports: "Problem Reports"
       connections: "Connections"
+      email_personalizations: "Email Personalizations"
     general:
       email: "E-mail"
       password: "Password"

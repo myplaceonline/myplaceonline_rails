@@ -113,12 +113,14 @@ var myplaceonline = function(mymodule) {
     if (header) {
       html += "<li data-role='list-divider'>" + header + "</li>";
     }
+    myplaceonline.consoleLog("Updating list items");
+    myplaceonline.consoleDir(items);
     $.each(items, function (i, x) {
       var filtertext = x.title;
       if (x.filtertext) {
         filtertext = x.filtertext;
       }
-      html += "<li data-filtertext='" + filtertext + "'";
+      html += "<li data-filtertext='" + myplaceonline.encodeEntities(filtertext) + "'";
       if (x.forcevisible) {
         html += " data-forcevisible='true'";
       }
@@ -130,20 +132,21 @@ var myplaceonline = function(mymodule) {
         html += "<a href='" + x.link + "'>";
       }
       if (x.icon) {
-        html += "<img alt='" + x.title + "' title='" + x.title + "' class='ui-li-icon' height='16' width='16' src='" + x.icon + "' />";
+        html += "<img alt='" + myplaceonline.encodeEntities(x.title) + "' title='" + myplaceonline.encodeEntities(x.title) + "' class='ui-li-icon' height='16' width='16' src='" + x.icon + "' />";
       }
       if (x.count) {
         html += " <span class='ui-li-count'>" + x.count + "</span>";
       }
-      html += x.title;
+      html += myplaceonline.encodeEntities(x.title);
       if (x.link) {
         html += "</a>";
       }
       if (x.splitLink) {
-        html += "<a href='" + x.splitLink + "' class='splitlink'>" + x.splitLinkTitle + "</a>";
+        html += "<a href='" + x.splitLink + "' class='splitlink'>" + myplaceonline.encodeEntities(x.splitLinkTitle) + "</a>";
       }
       html += "</li>";
     });
+    //myplaceonline.consoleLog("Updating HTML: " + html);
     list.html(html);
     list.listview("refresh");
     list.trigger("updatelayout");
@@ -275,7 +278,10 @@ var myplaceonline = function(mymodule) {
     }).done(function(data, textStatus, jqXHR) {
       myplaceonline.consoleLog("remoteDataLoad done " + this.remote.title + ", " + this.remote.filterCount + ", " + this.filterCount);
       if (this.remote.static_list || this.filterCount == this.remote.filterCount) {
-        myplaceonline.consoleLog("remoteDataLoad filterCount is the latest");
+        
+        myplaceonline.consoleLog("remoteDataLoad filterCount is the latest, result length = " + data.length);
+        
+        myplaceonline.consoleDir(data);
         
         listLoadComplete(this.list, this.remote, data, this.q);
 
@@ -285,8 +291,10 @@ var myplaceonline = function(mymodule) {
       myplaceonline.consoleLog("remoteDataLoad finished done");
     }).fail(function(jqXHR, textStatus, errorThrown) {
       this.remote.failed = true;
-      myplaceonline.createErrorNotification("Error loading " + this.remote.title + ". Please try again.");
-      myplaceonline.consoleLog("remoteDataLoad finished fail");
+      var errorMessage = "Error performing search. Please try again and check your internet connection.";
+      myplaceonline.createErrorNotification(errorMessage);
+      jqmReplaceListSection(this.list, this.remote.title, [{ title: errorMessage }]);
+      myplaceonline.criticalError(errorMessage + " to remote " + this.remote.title + ", query " + this.q + ", jqXHR: " + jqXHR.readyState + "," + jqXHR.status + ", " + jqXHR.responseText + ", " + jqXHR.responseXML + ", status: " + textStatus, errorThrown);
     });
   }
   

@@ -719,6 +719,7 @@ module Myp
   
   def self.warn(message)
     Rails.logger.warn{message}
+    Myp.send_support_email_safe("Warning", message)
   end
   
   def self.reset_points(user)
@@ -1230,7 +1231,13 @@ module Myp
   end
   
   def self.instance_to_category(obj, raise_if_not_found = true)
-    search = obj.class.name.pluralize.underscore
+    if obj.class == IdentityFileFolder
+      return Category.new(name: "file_folders")
+    elsif obj.class == IdentityFile
+      search = "files"
+    else
+      search = obj.class.name.pluralize.underscore
+    end
     Category.all.each do |category|
       if category.name == search
         return category
@@ -1622,9 +1629,9 @@ module Myp
         }
       end
       
-      search_results = UserIndex.query(query).limit(10).load.to_a
+      search_results = UserIndex.query(query).order(visit_count: :desc).limit(10).load.to_a
       
-      results = Myp.process_search_results(search_results, parent_category)
+      results = Myp.process_search_results(search_results, parent_category, original_search)
       
     else
       results = []
@@ -1662,12 +1669,26 @@ module Myp
       result = nil
       additional_text = ""
       if search_result.respond_to?("final_search_result")
-        additional_text = " (" + search_result.display + ")"
+        additional_text = " (" + I18n.t("myplaceonline.category." + search_result.class.name.pluralize.underscore).singularize
+        extra = search_result.display
+        if !extra.blank?
+          additional_text += ": " + extra
+        end
+        additional_text += ")"
         search_result = search_result.final_search_result
       end
+      Rails.logger.debug{"search_result: #{search_result}"}
       has_defunct = search_result.respond_to?("defunct")
       if !has_defunct || (has_defunct && !search_result.defunct)
         category = Myp.instance_to_category(search_result, false)
+        if category.nil? && search_result.class != Share
+          temp_cat_name = search_result.class.name.pluralize.underscore
+          if I18n.exists?("myplaceonline.categories." + temp_cat_name)
+            category = Category.new(name: temp_cat_name)
+          else
+            Myp.warn("full_text_search found result but not category (perhaps use final_search_result?): #{search_result}")
+          end
+        end
         if !category.nil?
           result = ListItemRow.new(
             category.human_title_singular + ": " + search_result.display + additional_text,
@@ -1678,13 +1699,12 @@ module Myp
             original_search,
             category.icon
           )
-        else
-          Rails.logger.debug{"full_text_search found result but not category: #{search_result}"}
         end
       end
       result
     end
     results = results.compact
+    Rails.logger.debug{"results: #{results.inspect}"}
     results
   end
   

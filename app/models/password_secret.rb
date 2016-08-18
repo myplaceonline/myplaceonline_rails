@@ -14,4 +14,8 @@ class PasswordSecret < ActiveRecord::Base
     end
     super.as_json(options)
   end
+  
+  def final_search_result
+    password
+  end
 end

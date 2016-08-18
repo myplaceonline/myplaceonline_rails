@@ -47,7 +47,7 @@
           <% if current_user.always_autofocus %>
             myplaceonline.setFocusAllowed(true);
           <% end %>
-          <% if current_user.always_enable_debug %>
+          <% if !Rails.env.production? || current_user.always_enable_debug %>
             myplaceonline.setDebug(true);
           <% end %>
         <% end %>

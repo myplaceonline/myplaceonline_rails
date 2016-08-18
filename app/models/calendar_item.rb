@@ -174,4 +174,8 @@ class CalendarItem < ActiveRecord::Base
       calendar_item
     end
   end
+
+  def final_search_result
+    calendar
+  end
 end

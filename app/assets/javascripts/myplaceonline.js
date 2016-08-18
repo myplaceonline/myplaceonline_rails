@@ -58,10 +58,10 @@ var myplaceonline = function(mymodule) {
   }
   
   function consoleLog(msg) {
-    if (window.console) {
-      window.console.log(msg);
-    }
     if (debug) {
+      if (window.console) {
+        window.console.log(msg);
+      }
       var t = new Date().toTimeString();
       var i = t.indexOf(' ');
       if (i != -1) {
@@ -72,7 +72,7 @@ var myplaceonline = function(mymodule) {
   }
 
   function consoleDir(obj) {
-    if (obj) {
+    if (obj && debug) {
       if (window.console && window.console.dir) {
         window.console.dir(obj);
       }

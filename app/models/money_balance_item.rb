@@ -55,4 +55,8 @@ class MoneyBalanceItem < ActiveRecord::Base
       )
     end
   end
+
+  def final_search_result
+    money_balance
+  end
 end
