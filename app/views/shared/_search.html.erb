@@ -28,7 +28,8 @@ myplaceonline.onPageLoad(function() {
     {
       title: "<%= t("myplaceonline.general.categories") %>",
       url: "/api/categories.json",
-      static_list: true
+      static_list: true,
+      preloaded_list: <%= raw(Myp.categories_for_current_user(current_user, nil, true).to_json) %>
     }
     <% if Myp.full_text_search? %>
     , {

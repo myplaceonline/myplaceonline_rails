@@ -192,7 +192,7 @@ var myplaceonline = function(mymodule) {
             state = 0;
           }
         } else if (state == 1) {
-          if (!existingItem.fake && (existingItem.title.toLowerCase().indexOf(searchLower) != -1 || existingItem.filtertext.toLowerCase().indexOf(searchLower) != -1)) {
+          if (!existingItem.fake && (existingItem.title.toLowerCase().indexOf(searchLower) != -1 || (existingItem.filtertext && existingItem.filtertext.toLowerCase().indexOf(searchLower) != -1))) {
             result = true;
             break;
           }
@@ -251,6 +251,18 @@ var myplaceonline = function(mymodule) {
     });
   }
   
+  function listLoadComplete($list, context, items, query) {
+    jqmReplaceListSection($list, context.title, items);
+    context.failed = false;
+    if ($list.data("afterload")) {
+      $list.data("afterload")($list);
+    }
+    
+    if (context.noresults && !jqmSectionHasMatch($list, context.title, query)) {
+      context.noresults($list, context, context.title, query);
+    }
+  }
+  
   function remoteDataLoad(remote, value, list, filterCount) {
     var requestData = {
       q: value
@@ -264,15 +276,9 @@ var myplaceonline = function(mymodule) {
       myplaceonline.consoleLog("remoteDataLoad done " + this.remote.title + ", " + this.filterCount);
       if (this.remote.static_list || this.filterCount == this.list.data("filterCount")) {
         myplaceonline.consoleLog("remoteDataLoad filterCount is the latest");
-        jqmReplaceListSection(this.list, this.remote.title, data);
-        this.remote.failed = false;
-        if (this.list.data("afterload")) {
-          this.list.data("afterload")(this.list);
-        }
         
-        if (this.remote.noresults && !jqmSectionHasMatch(this.list, this.remote.title, this.q)) {
-          this.remote.noresults(this.list, this.remote, this.remote.title, this.q);
-        }
+        listLoadComplete(this.list, this.remote, data, this.q);
+
       } else {
         myplaceonline.consoleLog("remoteDataLoad filterCount is not the latest, skipping");
       }
@@ -373,12 +379,16 @@ var myplaceonline = function(mymodule) {
           // Do the actual searches
           for (i = 0; i < remotesList.length; i++) {
             var remote = remotesList[i];
+            
+            if (remote.preloaded_list) {
+              listLoadComplete($ul, remote, remote.preloaded_list, value);
+            } else {
+              myplaceonline.consoleLog("remoteDataLoad started " + remote.title);
 
-            myplaceonline.consoleLog("remoteDataLoad started " + remote.title);
+              remoteDataLoad(remote, value, $ul, filterCount);
 
-            remoteDataLoad(remote, value, $ul, filterCount);
-
-            myplaceonline.consoleLog("remoteDataLoad returned for " + remote.title);
+              myplaceonline.consoleLog("remoteDataLoad returned for " + remote.title);
+            }
           }
 
           myplaceonline.consoleLog("remoteDataList setting initialized");
