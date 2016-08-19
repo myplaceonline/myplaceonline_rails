@@ -7,4 +7,12 @@
       items: @usefulCategoryList
     }
   %>
+  <% if @usefulItemsList.length > 0 %>
+    <hr />
+    <%=
+      render partial: 'myplaceonline/list', locals: {
+        items: @usefulItemsList
+      }
+    %>
+  <% end %>
 <% end %>

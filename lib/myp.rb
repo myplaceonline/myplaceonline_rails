@@ -1725,7 +1725,9 @@ module Myp
       }
     }
     
-    search_results = UserIndex.query(query).order(visit_count: :desc).limit(10).load.to_a
+    search_results = UserIndex.query(query).order(visit_count: {order: :desc, missing: :_last}).limit(10).load.to_a
+    
+    search_results.delete_if{|x| x.class == Notepad}
     
     results = Myp.process_search_results(search_results)
     
