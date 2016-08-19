@@ -1684,7 +1684,7 @@ module Myp
         category = Myp.instance_to_category(search_result, false)
         if category.nil? && search_result.class != Share
           temp_cat_name = search_result.class.name.pluralize.underscore
-          if I18n.exists?("myplaceonline.categories." + temp_cat_name)
+          if I18n.exists?("myplaceonline.category." + temp_cat_name)
             category = Category.new(name: temp_cat_name)
           else
             Myp.warn("full_text_search found result but not category (perhaps use final_search_result?): #{search_result}")
