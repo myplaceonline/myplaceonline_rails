@@ -130,4 +130,9 @@ class User < ActiveRecord::Base
   def has_emergency_contacts?
     primary_identity.emergency_contacts.count > 0
   end
+
+  protected
+    def confirmation_required?
+      Rails.env.production?
+    end
 end

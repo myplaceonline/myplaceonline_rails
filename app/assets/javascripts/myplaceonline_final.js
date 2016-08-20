@@ -137,7 +137,11 @@ var myplaceonline = function(mymodule) {
       if (x.count) {
         html += " <span class='ui-li-count'>" + x.count + "</span>";
       }
-      html += myplaceonline.encodeEntities(x.title);
+      if (x.is_html) {
+        html += x.title;
+      } else {
+        html += myplaceonline.encodeEntities(x.title);
+      }
       if (x.link) {
         html += "</a>";
       }

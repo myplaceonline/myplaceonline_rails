@@ -38,6 +38,7 @@ myplaceonline.onPageLoad(function() {
         noresults: function(list, remote, section, search) {
           myplaceonline.jqmReplaceListSection(list, section, [{
             title: "<%= t("myplaceonline.everything.no_results") %><br/><form action='<%= api_newitem_path %>' style='display: inline;'><%= raw(select_html) %><input type='hidden' name='q' value='" + myplaceonline.encodeEntities(search) + "' /><br /><input type='submit' value='Go' /></form>",
+            is_html: true,
             filtertext: search,
             fake: true
           }]);

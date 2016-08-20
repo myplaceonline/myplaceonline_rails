@@ -1660,12 +1660,6 @@ module Myp
       search_results = search_results.compact
     end
     
-    search_results.sort! do |sr1, sr2|
-      x1 = sr1.respond_to?("visit_count") && !sr1.visit_count.nil? ? sr1.visit_count : 0
-      x2 = sr2.respond_to?("visit_count") && !sr2.visit_count.nil? ? sr2.visit_count : 0
-      x2 <=> x1
-    end
-    
     results = search_results.map do |search_result|
       result = nil
       additional_text = ""
@@ -1694,7 +1688,7 @@ module Myp
           result = ListItemRow.new(
             category.human_title_singular + ": " + search_result.display + additional_text,
             "/" + category.name + "/" + search_result.id.to_s,
-            nil,
+            Rails.env.development? ? search_result.visit_count : nil,
             nil,
             nil,
             original_search,
@@ -1727,11 +1721,30 @@ module Myp
     
     search_results = UserIndex.query(query).order(visit_count: {order: :desc, missing: :_last}).limit(10).load.to_a
     
-    search_results.delete_if{|x| x.class == Notepad}
+    permissions = Permission.where(user_id: user.id)
+    if permissions.length > 0
+      permissions_results = UserIndex.query({
+        terms: {
+          "_uid" => permissions.map{|p| p.subject_class.singularize + "#" + p.subject_id.to_s }.to_a
+        }
+      }).order(visit_count: {order: :desc, missing: :_last}).limit(10).load.to_a
+      
+      search_results = search_results + permissions_results
+      
+      search_results.sort! do |sr1, sr2|
+        x1 = sr1.respond_to?("visit_count") && !sr1.visit_count.nil? ? sr1.visit_count : 0
+        x2 = sr2.respond_to?("visit_count") && !sr2.visit_count.nil? ? sr2.visit_count : 0
+        x2 <=> x1
+      end
+      
+      Rails.logger.debug{"highly_visited permissions_results: #{permissions_results.inspect}"}
+    end
+    
+    search_results.delete_if{|x| x.class == Notepad || x.class == Myplet || x.class == Calendar || x.class == CalendarItem}
     
     results = Myp.process_search_results(search_results)
     
-    Rails.logger.debug{"full_text_search results: #{results.length}"}
+    Rails.logger.debug{"highly_visited results: #{results.length}"}
 
     results
   end
