@@ -38,9 +38,10 @@ class CalendarItemReminderPendingsController < MyplaceonlineController
   
   def short
     # Don't bother authorizing - we'll redirect and do the authorization there. This leaks
-    # calendar IDs but that shouldn't matter
+    # some object classes and IDs but that shouldn't matter
     obj = CalendarItemReminderPending.find(params[:id].to_i)
-    redirect_to calendar_calendar_item_calendar_item_reminder_path(obj.calendar.id, obj.calendar_item.id, obj.calendar_item_reminder.id)
+    #redirect_to calendar_calendar_item_calendar_item_reminder_path(obj.calendar.id, obj.calendar_item.id, obj.calendar_item_reminder.id)
+    redirect_to obj.calendar_item.link
   end
   
   protected
