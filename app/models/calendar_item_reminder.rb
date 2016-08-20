@@ -39,9 +39,8 @@ class CalendarItemReminder < ActiveRecord::Base
     Rails.logger.info("ensure_pending_all_users end")
   end
   
-  def self.ensure_pending(user)
-    
-    Rails.logger.debug("ensure_pending start #{user.inspect}")
+  def self.ensure_pending_process(user)
+    Rails.logger.debug("ensure_pending_process start #{user.id}")
 
     # Check if we need to create any future repeat events
     CalendarItem
@@ -235,6 +234,28 @@ class CalendarItemReminder < ActiveRecord::Base
         end
         
         Rails.logger.debug{"finshed checking reminder"}
+    end
+
+    Rails.logger.debug("ensure_pending_process end")
+  end
+  
+  def self.ensure_pending(user)
+    
+    Rails.logger.debug("ensure_pending start #{user.id}")
+
+    lock_id = 100 + user.id
+    got_lock = false
+    begin
+      got_lock = Myp.database_advisory_lock(lock_id)
+      if got_lock
+        ensure_pending_process(user)
+      else
+        Rails.logger.info("ensure_pending failed lock")
+      end
+    ensure
+      if got_lock
+        Myp.database_advisory_unlock(lock_id)
+      end
     end
 
     Rails.logger.debug("ensure_pending end")
