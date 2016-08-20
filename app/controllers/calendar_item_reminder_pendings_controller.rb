@@ -1,6 +1,6 @@
 class CalendarItemReminderPendingsController < MyplaceonlineController
   
-  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:complete, :snooze]
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:complete, :snooze, :short]
 
   def complete
     set_obj
@@ -34,6 +34,13 @@ class CalendarItemReminderPendingsController < MyplaceonlineController
     render json: {
       result: true
     }
+  end
+  
+  def short
+    # Don't bother authorizing - we'll redirect and do the authorization there. This leaks
+    # calendar IDs but that shouldn't matter
+    obj = CalendarItemReminderPending.find(params[:id].to_i)
+    redirect_to calendar_calendar_item_calendar_item_reminder_path(obj.calendar.id, obj.calendar_item.id, obj.calendar_item_reminder.id)
   end
   
   protected

@@ -208,6 +208,7 @@ Rails.application.routes.draw do
   resources :concerts
   post 'concerts/new'
 
+  match 'c/:id', :to => 'calendar_item_reminder_pendings#short', via: [:get], as: "calendar_item_reminder_short"
   resources :calendars do
     resources :calendar_items do
       resources :calendar_item_reminders

@@ -2350,6 +2350,7 @@ en:
       calendar_item_reminders: "Reminders"
     calendar_item_reminders:
       calendar_item: "Item"
+      text_message: "Reminder (%{time}): %{display}"
     quests:
       quest_title: "Name"
       files: "Files/Pictures"

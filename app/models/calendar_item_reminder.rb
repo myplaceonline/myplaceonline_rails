@@ -263,10 +263,48 @@ class CalendarItemReminder < ActiveRecord::Base
   
   def self.schedule_ensure_pending(user)
     UpdateCalendarJob.perform_later(user)
+    #UpdateCalendarJob.perform_now(user)
   end
+  
+  MAX_MESSAGE_LENGTH = 140
+  MAX_NUM_MESSAGES = 3
 
   def self.send_reminder_notifications(user, pending_item)
+    Rails.logger.debug("send_reminder_notifications start #{pending_item.id}")
     
+    begin
+      
+      link = Rails.application.routes.url_helpers.send(
+        "calendar_item_reminder_short_url",
+        pending_item.id,
+        Rails.configuration.default_url_options
+      )
+      
+      chars_available = (MAX_MESSAGE_LENGTH * MAX_NUM_MESSAGES) - link.length - 4 # 1 for a space before the link, and 3 for an ellipses
+      
+      message = I18n.t(
+        "myplaceonline.calendar_item_reminders.text_message",
+        time: Myp.display_datetime_short(pending_item.calendar_item.calendar_item_time, User.current_user),
+        display: pending_item.calendar_item.display
+      )
+      
+      Rails.logger.debug("send_reminder_notifications message #{message}, #{link}")
+      
+      if message.length > chars_available
+        message = message[0..chars_available - 1] + "..."
+      end
+      
+      message += " " + link
+      
+      user.send_sms(message)
+      
+      Rails.logger.debug("send_reminder_notifications final message #{message}")
+      
+    rescue Exception => e
+      Myp.warn("Could not process send_reminder_notifications #{user.id}, #{pending_item.id}: #{Myp.error_details(e)}")
+    end
+    
+    Rails.logger.debug("send_reminder_notifications end")
   end
   
   def threshold_in_seconds

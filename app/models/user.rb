@@ -130,6 +130,14 @@ class User < ActiveRecord::Base
   def has_emergency_contacts?
     primary_identity.emergency_contacts.count > 0
   end
+  
+  def send_sms(body)
+    self.primary_identity.identity_phones.each do |identity_phone|
+      if identity_phone.accepts_sms?
+        Myp.send_sms(to: identity_phone.number, body: body)
+      end
+    end
+  end
 
   protected
     def confirmation_required?
