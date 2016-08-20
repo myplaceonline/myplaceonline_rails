@@ -1710,14 +1710,10 @@ module Myp
     # http://stackoverflow.com/questions/37082797/elastic-search-edge-ngram-match-query-on-all-being-ignored
     
     query = {
-      filtered: {
-        filter: {
-          match: {
-            identity_id: user.primary_identity_id
-          }
-        }
+      terms: {
+        identity_id: [user.primary_identity_id]
       }
-    }
+     }
     
     search_results = UserIndex.query(query).order(visit_count: {order: :desc, missing: :_last}).limit(10).load.to_a
     
