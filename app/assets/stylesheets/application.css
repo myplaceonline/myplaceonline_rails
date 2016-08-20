@@ -159,3 +159,18 @@ div.ui-checkbox + label {
 .width100 {
   width: 100% !important;
 }
+
+.tablenopadding {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.tablenopadding > tbody > tr > td {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.tablenopadding > tbody > tr > td > p {
+  margin: 0 !important;
+  padding: 0 !important;
+}
