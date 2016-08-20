@@ -144,6 +144,9 @@ Rails.application.routes.draw do
   resources :money_balances do
     resources :money_balance_item_templates
     post 'money_balance_item_templates/new'
+
+    resources :money_balance_items
+    post 'money_balance_items/new'
   end
   post 'money_balances/new'
 

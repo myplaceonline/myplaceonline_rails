@@ -9,6 +9,10 @@ class MoneyBalanceItem < ActiveRecord::Base
   validates :item_time, presence: true
 
   attr_accessor :invert
+  
+  def display
+    independent_description
+  end
 
   def self.build(params = nil)
     result = self.dobuild(params)

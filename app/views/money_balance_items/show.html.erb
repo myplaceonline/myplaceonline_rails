@@ -1,0 +1,12 @@
+<%= render layout: "shared/model_show" do %>
+
+  <%= attribute_table_row_datetime(t("myplaceonline.money_balance_items.item_time"), @obj.item_time) %>
+  <%= attribute_table_row_currency(t("myplaceonline.money_balance_items.amount"), @obj.amount) %>
+  <%= attribute_table_row_currency(t("myplaceonline.money_balance_items.original_amount"), @obj.original_amount) %>
+  <%= attribute_table_row(t("myplaceonline.money_balance_items.money_balance_item_name"), @obj.money_balance_item_name) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), @obj.notes) %>
+
+  <% content_for :postfooterlinks do %>
+    <li><%= link_to t('myplaceonline.money_balance_items.money_balance'), money_balance_path(@obj.money_balance), "data-icon" => "back" %></li>
+  <% end %>
+<% end %>

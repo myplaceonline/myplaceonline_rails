@@ -2170,10 +2170,12 @@ en:
     money_balance_items:
       money_balance_item_name: "Description"
       amount: "Amount (Negative Owed to Contact)"
+      original_amount: "Original Amount (Negative Owed to Contact)"
       amount_simple: "Amount"
       item_time: "Date/Time"
       other_owes: "%{other} Owes"
       other_owes_percent: "%{other} Owes Percent"
+      money_balance: "Money Balance"
     permissions:
       user: "User"
       action: "Action"
