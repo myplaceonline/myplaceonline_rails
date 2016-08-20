@@ -1707,15 +1707,11 @@ module Myp
 
     Rails.logger.debug{"highly_visited"}
     
-    # http://stackoverflow.com/questions/37082797/elastic-search-edge-ngram-match-query-on-all-being-ignored
-    
-    query = {
+    search_results = UserIndex.query({
       terms: {
         identity_id: [user.primary_identity_id]
       }
-     }
-    
-    search_results = UserIndex.query(query).order(visit_count: {order: :desc, missing: :_last}).limit(10).load.to_a
+    }).order(visit_count: {order: :desc, missing: :_last}).limit(10).load.to_a
     
     permissions = Permission.where(user_id: user.id)
     if permissions.length > 0

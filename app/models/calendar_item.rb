@@ -169,7 +169,7 @@ class CalendarItem < ActiveRecord::Base
       
       calendar_item_reminder.save!
       
-      CalendarItemReminder.ensure_pending(identity.user)
+      CalendarItemReminder.schedule_ensure_pending(identity.user)
       
       calendar_item
     end

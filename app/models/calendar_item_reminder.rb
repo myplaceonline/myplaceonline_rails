@@ -38,9 +38,11 @@ class CalendarItemReminder < ActiveRecord::Base
     end
     Rails.logger.info("ensure_pending_all_users end")
   end
-
+  
   def self.ensure_pending(user)
     
+    Rails.logger.debug("ensure_pending start #{user.inspect}")
+
     # Check if we need to create any future repeat events
     CalendarItem
       .includes(:calendar_item_reminders)
@@ -185,6 +187,9 @@ class CalendarItemReminder < ActiveRecord::Base
               rescue ActiveRecord::InvalidForeignKey => ifk
                 Rails.logger.debug{"InvalidForeignKey while trying to create new pending item, probably benign. #{ifk.inspect}"}
               end
+              
+              # Send any notifications about the new reminder
+              send_reminder_notifications(user, new_pending)
 
               if !calendar_item_reminder.max_pending.nil?
                 pendings_result = CalendarItemReminderPending.find_by_sql(
@@ -231,6 +236,16 @@ class CalendarItemReminder < ActiveRecord::Base
         
         Rails.logger.debug{"finshed checking reminder"}
     end
+
+    Rails.logger.debug("ensure_pending end")
+  end
+  
+  def self.schedule_ensure_pending(user)
+    UpdateCalendarJob.perform_later(user)
+  end
+
+  def self.send_reminder_notifications(user, pending_item)
+    
   end
   
   def threshold_in_seconds
