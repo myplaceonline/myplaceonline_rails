@@ -1688,7 +1688,7 @@ module Myp
           result = ListItemRow.new(
             category.human_title_singular + ": " + search_result.display + additional_text,
             "/" + category.name + "/" + search_result.id.to_s,
-            Rails.env.development? ? search_result.visit_count : nil,
+            Rails.env.development? && search_result.respond_to?("visit_count") ? search_result.visit_count : nil,
             nil,
             nil,
             original_search,
@@ -1736,7 +1736,7 @@ module Myp
       Rails.logger.debug{"highly_visited permissions_results: #{permissions_results.inspect}"}
     end
     
-    search_results.delete_if{|x| x.class == Notepad || x.class == Myplet || x.class == Calendar || x.class == CalendarItem}
+    search_results.delete_if{|x| x.class == Notepad || x.class == Myplet || x.class == Calendar || x.class == CalendarItem || x.class == Status}
     
     results = Myp.process_search_results(search_results)
     
