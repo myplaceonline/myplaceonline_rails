@@ -15,8 +15,8 @@ class Password < ActiveRecord::Base
   
   validates :name, presence: true
   
-  attr_accessor :is_defunct
-  boolean_time_transfer :is_defunct, :defunct
+  attr_accessor :is_archived
+  boolean_time_transfer :is_archived, :archived
   
   def set_encrypt_for_secrets
     password_secrets.each do |secret|
@@ -45,8 +45,8 @@ class Password < ActiveRecord::Base
     elsif !email.blank?
       result += " (" + email + ")"
     end
-    if !defunct.nil?
-      result += " (" + I18n.t("myplaceonline.general.defunct") + ")"
+    if !archived.nil?
+      result += " (" + I18n.t("myplaceonline.general.archived") + ")"
     end
     result
   end

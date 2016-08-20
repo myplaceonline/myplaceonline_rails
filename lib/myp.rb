@@ -1673,8 +1673,8 @@ module Myp
         search_result = search_result.final_search_result
       end
       Rails.logger.debug{"search_result: #{search_result}"}
-      has_defunct = search_result.respond_to?("defunct")
-      if !has_defunct || (has_defunct && !search_result.defunct)
+      might_be_archived = search_result.respond_to?("archived")
+      if !might_be_archived || (might_be_archived && search_result.archived.nil?)
         category = Myp.instance_to_category(search_result, false)
         if category.nil? && search_result.class != Share
           temp_cat_name = search_result.class.name.pluralize.underscore

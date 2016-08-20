@@ -6,8 +6,8 @@ class CreditCard < ActiveRecord::Base
   
   CARD_TYPES = [["myplaceonline.credit_cards.visa", 0], ["myplaceonline.credit_cards.mastercard", 1], ["myplaceonline.credit_cards.amex", 2]]
 
-  attr_accessor :is_defunct
-  boolean_time_transfer :is_defunct, :defunct
+  attr_accessor :is_archived
+  boolean_time_transfer :is_archived, :archived
   
   before_validation :process_cc_name
   
@@ -30,8 +30,8 @@ class CreditCard < ActiveRecord::Base
     if !card_type.nil?
       result += " (" + Myp.get_select_name(card_type, CreditCard::CARD_TYPES) + ")"
     end
-    if !defunct.nil?
-      result += " (" + I18n.t("myplaceonline.general.defunct") + ")"
+    if !archived.nil?
+      result += " (" + I18n.t("myplaceonline.general.archived") + ")"
     end
     if show_default_cashback
       default_cashbacks = credit_card_cashbacks.to_a.keep_if{|wrapper| wrapper.cashback.default_cashback}

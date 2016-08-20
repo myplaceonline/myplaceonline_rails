@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :dental_insurance do
     insurance_name "MyString"
 insurance_company nil
-defunct false
+archived false
 periodic_payment nil
 notes "MyText"
 group_company nil

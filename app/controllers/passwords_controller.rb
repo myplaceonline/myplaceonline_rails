@@ -7,9 +7,9 @@ class PasswordsController < MyplaceonlineController
   skip_authorization_check :only => [:index, :new, :create, :import, :importodf]
   
   def index
-    @defunct = params[:defunct]
-    if !@defunct.blank?
-      @defunct = @defunct.to_bool
+    @archived = params[:archived]
+    if !@archived.blank?
+      @archived = @archived.to_bool
     end
     super
   end
@@ -189,7 +189,7 @@ class PasswordsController < MyplaceonlineController
       :account_number,
       :notes,
       :encrypt,
-      :is_defunct,
+      :is_archived,
       password_secrets_attributes: [
         :id,
         :_destroy,
@@ -200,7 +200,7 @@ class PasswordsController < MyplaceonlineController
   end
 
   def self.reject_if_blank(attributes)
-    attributes.dup.delete_if {|key, value| key.to_s == "encrypt" || key.to_s == "is_defunct" }.all? {|key, value| value.blank?}
+    attributes.dup.delete_if {|key, value| key.to_s == "encrypt" || key.to_s == "is_archived" }.all? {|key, value| value.blank?}
   end
   
   def share
@@ -304,8 +304,8 @@ class PasswordsController < MyplaceonlineController
     end
 
     def all_additional_sql(strict)
-      if (@defunct.blank? || !@defunct) && !strict
-        "and defunct is null"
+      if (@archived.blank? || !@archived) && !strict
+        "and archived is null"
       else
         nil
       end

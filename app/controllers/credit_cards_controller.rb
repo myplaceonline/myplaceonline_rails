@@ -2,9 +2,9 @@ class CreditCardsController < MyplaceonlineController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:listcashback, :total_credit]
 
   def index
-    @defunct = params[:defunct]
-    if !@defunct.blank?
-      @defunct = @defunct.to_bool
+    @archived = params[:archived]
+    if !@archived.blank?
+      @archived = @archived.to_bool
     end
     super
   end
@@ -44,7 +44,7 @@ class CreditCardsController < MyplaceonlineController
         :pin,
         :notes,
         :encrypt,
-        :is_defunct,
+        :is_archived,
         :card_type,
         :total_credit,
         :email_reminders,
@@ -63,8 +63,8 @@ class CreditCardsController < MyplaceonlineController
     end
 
     def all_additional_sql(strict)
-      if (@defunct.blank? || !@defunct) && !strict
-        "and defunct is null"
+      if (@archived.blank? || !@archived) && !strict
+        "and archived is null"
       else
         nil
       end

@@ -1,8 +1,8 @@
 class HealthInsurancesController < MyplaceonlineController
   def index
-    @defunct = params[:defunct]
-    if !@defunct.blank?
-      @defunct = @defunct.to_bool
+    @archived = params[:archived]
+    if !@archived.blank?
+      @archived = @archived.to_bool
     end
     super
   end
@@ -13,7 +13,7 @@ class HealthInsurancesController < MyplaceonlineController
       :_destroy,
       :insurance_name,
       :notes,
-      :is_defunct,
+      :is_archived,
       :account_number,
       :group_number,
       password_attributes: PasswordsController.param_names,
@@ -25,7 +25,7 @@ class HealthInsurancesController < MyplaceonlineController
   end
 
   def self.reject_if_blank(attributes)
-    result = attributes.dup.delete_if {|key, value| key.to_s == "is_defunct" }.all?{|key, value|
+    result = attributes.dup.delete_if {|key, value| key.to_s == "is_archived" }.all?{|key, value|
       if key == "password_attributes"
         PasswordsController.reject_if_blank(value)
       elsif key == "insurance_company_attributes" || key == "group_company_attributes"
@@ -53,8 +53,8 @@ class HealthInsurancesController < MyplaceonlineController
     end
 
     def all_additional_sql(strict)
-      if (@defunct.blank? || !@defunct) && !strict
-        "and defunct is null"
+      if (@archived.blank? || !@archived) && !strict
+        "and archived is null"
       else
         nil
       end

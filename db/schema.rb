@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160818050112) do
+ActiveRecord::Schema.define(version: 20160820145729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -214,7 +214,7 @@ ActiveRecord::Schema.define(version: 20160818050112) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "defunct"
+    t.datetime "archived"
     t.integer  "visit_count"
   end
 
@@ -863,7 +863,7 @@ ActiveRecord::Schema.define(version: 20160818050112) do
     t.integer  "security_code_encrypted_id"
     t.integer  "pin_encrypted_id"
     t.integer  "expires_encrypted_id"
-    t.datetime "defunct"
+    t.datetime "archived"
     t.integer  "card_type"
     t.decimal  "total_credit",                           precision: 10, scale: 2
     t.integer  "visit_count"
@@ -920,7 +920,7 @@ ActiveRecord::Schema.define(version: 20160818050112) do
   create_table "dental_insurances", force: :cascade do |t|
     t.string   "insurance_name",       limit: 255
     t.integer  "insurance_company_id"
-    t.boolean  "defunct"
+    t.boolean  "archived"
     t.integer  "periodic_payment_id"
     t.text     "notes"
     t.integer  "group_company_id"
@@ -1445,7 +1445,7 @@ ActiveRecord::Schema.define(version: 20160818050112) do
   create_table "health_insurances", force: :cascade do |t|
     t.string   "insurance_name",       limit: 255
     t.integer  "insurance_company_id"
-    t.datetime "defunct"
+    t.datetime "archived"
     t.integer  "periodic_payment_id"
     t.text     "notes"
     t.integer  "group_company_id"
@@ -2333,7 +2333,7 @@ ActiveRecord::Schema.define(version: 20160818050112) do
     t.datetime "updated_at"
     t.integer  "password_encrypted_id"
     t.string   "account_number",        limit: 255
-    t.datetime "defunct"
+    t.datetime "archived"
     t.string   "email",                 limit: 255
     t.integer  "visit_count"
   end

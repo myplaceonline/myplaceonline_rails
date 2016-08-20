@@ -1,8 +1,8 @@
 class BankAccountsController < MyplaceonlineController
   def index
-    @defunct = params[:defunct]
-    if !@defunct.blank?
-      @defunct = @defunct.to_bool
+    @archived = params[:archived]
+    if !@archived.blank?
+      @archived = @archived.to_bool
     end
     super
   end
@@ -19,7 +19,7 @@ class BankAccountsController < MyplaceonlineController
         :routing_number,
         :pin,
         :encrypt,
-        :is_defunct,
+        :is_archived,
         password_attributes: PasswordsController.param_names,
         company_attributes: CompaniesController.param_names,
         home_address_attributes: LocationsController.param_names
@@ -31,8 +31,8 @@ class BankAccountsController < MyplaceonlineController
     end
 
     def all_additional_sql(strict)
-      if (@defunct.blank? || !@defunct) && !strict
-        "and defunct is null"
+      if (@archived.blank? || !@archived) && !strict
+        "and archived is null"
       else
         nil
       end

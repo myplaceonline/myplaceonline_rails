@@ -6,16 +6,16 @@ class BankAccount < ActiveRecord::Base
 
   def display
     result = name
-    if !defunct.nil?
-      result += " (" + I18n.t("myplaceonline.general.defunct") + ")"
+    if !archived.nil?
+      result += " (" + I18n.t("myplaceonline.general.archived") + ")"
     end
     result
   end
   
   validates :name, presence: true
 
-  attr_accessor :is_defunct
-  boolean_time_transfer :is_defunct, :defunct
+  attr_accessor :is_archived
+  boolean_time_transfer :is_archived, :archived
 
   belongs_to :account_number_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
   belongs_to_encrypted :account_number
