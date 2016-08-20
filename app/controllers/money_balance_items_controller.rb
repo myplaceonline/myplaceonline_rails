@@ -6,6 +6,10 @@ class MoneyBalanceItemsController < MyplaceonlineController
   def form_path
     "money_balance_items/form"
   end
+  
+  def allow_add
+    false
+  end
 
   protected
     def sorts

@@ -98,6 +98,11 @@ class MyplaceonlineController < ApplicationController
   end
   
   def new
+    
+    if !allow_add
+      raise "Unauthorized"
+    end
+    
     deny_guest
     
     if !insecure
@@ -452,8 +457,12 @@ class MyplaceonlineController < ApplicationController
     nil
   end
   
-  def show_add
+  def allow_add
     true
+  end
+  
+  def show_add
+    allow_add
   end
   
   def show_index_footer
