@@ -366,6 +366,13 @@ class Identity < ActiveRecord::Base
     result = name
     result = Myp.appendstr(result, middle_name)
     result = Myp.appendstr(result, last_name)
+    if !nickname.blank?
+      if result.blank?
+        result = nickname
+      else
+        result = Myp.appendstrwrap(result, nickname)
+      end
+    end
     if result.blank? && !user.nil?
       result = user.email
     end

@@ -1,7 +1,9 @@
 <%= attribute_table_row(t("myplaceonline.contacts.name"), obj.contact_identity.name) %>
 <%= attribute_table_row(t("myplaceonline.contacts.middle_name"), obj.contact_identity.middle_name) %>
 <%= attribute_table_row(t("myplaceonline.contacts.last_name"), obj.contact_identity.last_name) %>
-<%= attribute_table_row(t("myplaceonline.contacts.full_name"), obj.contact_identity.full_name) %>
+<% if obj.contact_identity.full_name != obj.contact_identity.name %>
+  <%= attribute_table_row(t("myplaceonline.contacts.full_name"), obj.contact_identity.full_name) %>
+<% end %>
 <%= attribute_table_row(t("myplaceonline.contacts.nickname"), obj.contact_identity.nickname) %>
 <%= attribute_table_row(t("myplaceonline.contacts.birthday"), obj.contact_identity.birthday) %>
 <% if !obj.contact_identity.birthday.nil? %>

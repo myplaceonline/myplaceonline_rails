@@ -47,7 +47,7 @@ class Contact < ActiveRecord::Base
   end
   
   def custom_validation
-    if !contact_identity.nil? && contact_identity.name.blank?
+    if !contact_identity.nil? && contact_identity.name.blank? && contact_identity.last_name.blank? && contact_identity.nickname.blank?
       errors.add(:name, "not specified")
     end
   end
@@ -62,9 +62,6 @@ class Contact < ActiveRecord::Base
     if !contact_identity.nil?
       result = contact_identity.display
       whitespace = result =~ /\s+/
-      if !contact_identity.nickname.blank?
-        result = Myp.appendstrwrap(result, contact_identity.nickname)
-      end
       if whitespace.nil?
         # Seemingly no last name, so add some other identifier if available
         if contact_identity.identity_relationships.length > 0 && !contact_identity.identity_relationships[0].relationship_name.nil?
