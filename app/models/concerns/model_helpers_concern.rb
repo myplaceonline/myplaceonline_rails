@@ -4,7 +4,7 @@ module ModelHelpersConcern extend ActiveSupport::Concern
     
       def boolean_time_transfer(boolean_field_name, time_field_name)
         define_method("#{boolean_field_name}=") do |newvalue|
-          if newvalue == "1"
+          if newvalue == "1" || newvalue == true
             self.send("#{time_field_name}=", Time.now)
           else
             self.send("#{time_field_name}=", nil)

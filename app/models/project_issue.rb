@@ -1,8 +1,12 @@
 class ProjectIssue < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
+  include ModelHelpersConcern
 
   attr_accessor :top
+
+  attr_accessor :is_archived
+  boolean_time_transfer :is_archived, :archived
 
   validates :issue_name, presence: true
   
@@ -44,6 +48,7 @@ class ProjectIssue < ActiveRecord::Base
     project_issue_notifiers.each do |notifier|
       notifier.contact.send_email_with_conversation(self.project.display, subject, body_markdown)
     end
-    self.destroy!
+    self.is_archived = true
+    self.save!
   end
 end

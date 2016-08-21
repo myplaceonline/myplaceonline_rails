@@ -41,25 +41,27 @@
     <% @obj.project_issues.each do |issue| %>
       <%
       container_name = "issue_container" + issue.id.to_s
+      if issue.archived.nil?
       %>
-      <div id="<%= container_name %>" class="issue_container">
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tablenopadding">
-          <tr>
-            <td>
-              <%= myp_check_box_tag("issue" + issue.id.to_s, issue.issue_name, false, false, nil, "return myplaceonline.hideIfChecked(this, $(this).parents('#" + container_name + "').first(), delete_project_issue);") %>
-            </td>
-            <td width="45" align="right">
-              <%= link_to(t("myplaceonline.general.edit"), edit_project_project_issue_path(@obj, issue), data: { role: "button", icon: "edit", iconpos: "notext", inline: "true" }) %>
-            </td>
-          </tr>
-        </table>
-        <div style="padding-left: 40px">
-          <%= markdown_content(issue.notes) %>
-          <% if issue.project_issue_notifiers.length > 0 %>
-            <p><%= t("myplaceonline.project_issues.notifiers") + ": " + issue.project_issue_notifiers.map{|x| x.contact.display}.join(", ") %></p>
-          <% end %>
+        <div id="<%= container_name %>" class="issue_container">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tablenopadding">
+            <tr>
+              <td>
+                <%= myp_check_box_tag("issue" + issue.id.to_s, issue.issue_name, false, false, nil, "return myplaceonline.hideIfChecked(this, $(this).parents('#" + container_name + "').first(), delete_project_issue);") %>
+              </td>
+              <td width="45" align="right">
+                <%= link_to(t("myplaceonline.general.edit"), edit_project_project_issue_path(@obj, issue), data: { role: "button", icon: "edit", iconpos: "notext", inline: "true" }) %>
+              </td>
+            </tr>
+          </table>
+          <div style="padding-left: 40px">
+            <%= markdown_content(issue.notes) %>
+            <% if issue.project_issue_notifiers.length > 0 %>
+              <p><%= t("myplaceonline.project_issues.notifiers") + ": " + issue.project_issue_notifiers.map{|x| x.contact.display}.join(", ") %></p>
+            <% end %>
+          </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
   <% end %>
   
