@@ -22,12 +22,14 @@
       <%= t("myplaceonline.users.delete_category") %>
     <% end %>
   </li>
-  <li>
-    <%= link_to users_resetpoints_path do %>
-      <%= image_tag("FatCow_Icons16x16/award_star_delete.png", size: "16x16", class: "ui-li-icon") %>
-      <%= t("myplaceonline.users.resetpoints") %>
-    <% end %>
-  </li>
+  <% if current_user.admin? %>
+    <li>
+      <%= link_to users_resetpoints_path do %>
+        <%= image_tag("FatCow_Icons16x16/award_star_delete.png", size: "16x16", class: "ui-li-icon") %>
+        <%= t("myplaceonline.users.resetpoints") %>
+      <% end %>
+    </li>
+  <% end %>
   <li>
     <%= link_to users_homepage_path do %>
       <%= image_tag("famfamfam/house.png", size: "16x16", class: "ui-li-icon") %>
