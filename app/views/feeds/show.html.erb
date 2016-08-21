@@ -21,6 +21,7 @@
   <% end %>
 
   <% content_for :postfooterlinks do %>
+    <li><%= link_to t('myplaceonline.feeds.feed_items'), feed_feed_items_path(@obj), "data-icon" => "bars" %></li>
     <li><%= link_to t('myplaceonline.feeds.load'), feed_load_path(@obj), "data-icon" => "refresh" %></li>
   <% end %>
 

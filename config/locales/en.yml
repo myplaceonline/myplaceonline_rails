@@ -754,6 +754,7 @@ en:
       name: "Name"
       url: "Website"
       load: "Refresh Items"
+      feed_items: "Items"
     feed_items:
       feed_title: "Title"
       feed_link: "Link"
