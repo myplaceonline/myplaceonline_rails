@@ -24,7 +24,8 @@
     existingobjurl: "company_path",
     searchurl: "/companies.json?perpage=0",
     edit: edit,
-    autofocus: false
+    autofocus: false,
+    collapsed: obj.company.nil?
   }
 %>
 <%=
@@ -95,7 +96,8 @@
     existingobjurl: "location_path",
     searchurl: "/locations.json?perpage=0",
     edit: edit,
-    autofocus: false
+    autofocus: false,
+    collapsed: obj.internal_address.nil?
   }
 %>
 <%=
@@ -106,7 +108,7 @@
     childproperties: obj.job_salaries,
     deletebutton: t("myplaceonline.jobs.delete_salary"),
     addbutton: t("myplaceonline.jobs.add_salary"),
-    expanded: !edit || obj.job_salaries.length > 0,
+    expanded: obj.job_salaries.length > 0,
     formjson: [
       {
         type: 'date',
@@ -219,4 +221,59 @@
       deletebutton: "myplaceonline.job_reviews.delete_file"
     }
   %>
+<% end %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.jobs.myreferences"),
+    childpropertiesname: :job_myreferences,
+    childproperties: obj.job_myreferences,
+    deletebutton: t("myplaceonline.jobs.delete_myreference"),
+    addbutton: t("myplaceonline.jobs.add_myreference"),
+    expanded: obj.job_myreferences.length > 0,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: "myreference_attributes.contact_attributes",
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.myreferences.contact"),
+        objform: "contacts/form",
+        existingobjurl: "contact_path",
+        searchurl: "/contacts.json?perpage=0",
+        edit: true,
+        autofocus: true,
+        force_existing: true,
+        simpleform: true
+      },
+      {
+        type: 'select',
+        name: 'myreference_attributes.reference_type',
+        options: Myreference::REFERENCE_TYPES.map{|x,y| [I18n.t(x),y]}.as_json,
+        placeholder: t("myplaceonline.myreferences.reference_type")
+      },
+      {
+        type: 'textarea',
+        name: 'myreference_attributes.notes',
+        placeholder: t("myplaceonline.general.notes")
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%= child_fields.fields_for :myreference, childproperty.myreference do |myreference_fields| %>
+    <%=
+      render partial: 'myplaceonline/select_or_create', locals: {
+        f: myreference_fields,
+        name: :contact_attributes,
+        existingobj: childproperty.myreference.contact,
+        heading: t("myplaceonline.myreferences.contact"),
+        objform: "contacts/form",
+        existingobjurl: "contact_path",
+        searchurl: "/contacts.json?perpage=0",
+        edit: true,
+        autofocus: false
+      }
+    %>
+    <%= myp_select(myreference_fields, :reference_type, "myplaceonline.myreferences.reference_type", Myp.translate_options(Myreference::REFERENCE_TYPES), childproperty.myreference.reference_type) %>
+    <%= myp_text_area_markdown(myreference_fields, :notes, "myplaceonline.general.notes", childproperty.myreference.notes) %>
+  <% end %>
 <% end %>

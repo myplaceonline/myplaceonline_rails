@@ -60,3 +60,7 @@
       }
     %>
 <% end %>
+<% obj.job_myreferences.each do |x| %>
+  <%= table_row_heading(t("myplaceonline.jobs.myreference")) %>
+  <%= render partial: "myreferences/show", locals: { obj: x.myreference } %>
+<% end %>

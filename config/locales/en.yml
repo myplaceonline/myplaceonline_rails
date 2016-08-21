@@ -1407,6 +1407,10 @@ en:
       reviews: "Evaluations"
       add_review: "Add Evaluation"
       delete_review: "Delete Evaluation"
+      myreference: "Reference"
+      myreferences: "References"
+      add_myreference: "Add Reference"
+      delete_myreference: "Delete Reference"
     job_managers:
       start_date: "Start Date"
       end_date: "End Date"

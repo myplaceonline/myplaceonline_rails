@@ -32,4 +32,7 @@ class Job < ActiveRecord::Base
 
   has_many :job_reviews, -> { order('review_date DESC') }, :dependent => :destroy
   accepts_nested_attributes_for :job_reviews, allow_destroy: true, reject_if: :all_blank
+
+  has_many :job_myreferences, :dependent => :destroy
+  accepts_nested_attributes_for :job_myreferences, allow_destroy: true, reject_if: :all_blank
 end

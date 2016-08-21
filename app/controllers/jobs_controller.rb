@@ -53,7 +53,12 @@ class JobsController < MyplaceonlineController
           :company_score,
           :notes,
           contact_attributes: ContactsController.param_names,
-          job_reviews_attributes: FilesController.multi_param_names
+          job_review_files_attributes: FilesController.multi_param_names
+        ],
+        job_myreferences_attributes: [
+          :id,
+          :_destroy,
+          myreference_attributes: MyreferencesController.param_names
         ]
       )
     end
