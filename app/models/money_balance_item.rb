@@ -63,4 +63,46 @@ class MoneyBalanceItem < ActiveRecord::Base
   def final_search_result
     money_balance
   end
+
+  after_commit :on_after_update, on: :update
+  
+  def on_after_update
+    message = display
+    if !self.money_balance_item_name.blank?
+      message += "\n\n" + self.money_balance_item_name
+    end
+    if !self.notes.blank?
+      message += "\n\n" + self.notes
+    end
+    money_balance.send_email_to_all(
+      I18n.t(
+        "myplaceonline.money_balance_items.item_updated_subject"
+      ),
+      I18n.t(
+        "myplaceonline.money_balance_items.item_updated_body",
+        display: message
+      )
+    )
+  end
+
+  after_commit :on_after_destroy, on: :destroy
+  
+  def on_after_destroy
+    message = display
+    if !self.money_balance_item_name.blank?
+      message += "\n\n" + self.money_balance_item_name
+    end
+    if !self.notes.blank?
+      message += "\n\n" + self.notes
+    end
+    money_balance.send_email_to_all(
+      I18n.t(
+        "myplaceonline.money_balance_items.item_destroyed_subject"
+      ),
+      I18n.t(
+        "myplaceonline.money_balance_items.item_destroyed_body",
+        display: message
+      )
+    )
+  end
 end

@@ -7,6 +7,10 @@ class TimingEventsController < MyplaceonlineController
     "timing_events/form"
   end
 
+  def nested
+    true
+  end
+
   protected
     def insecure
       true
@@ -24,10 +28,6 @@ class TimingEventsController < MyplaceonlineController
     
     def has_category
       false
-    end
-    
-    def nested
-      true
     end
     
     def additional_items?

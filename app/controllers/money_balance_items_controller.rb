@@ -11,6 +11,10 @@ class MoneyBalanceItemsController < MyplaceonlineController
     false
   end
 
+  def nested
+    true
+  end
+
   protected
     def sorts
       ["money_balance_items.item_time DESC"]
@@ -28,10 +32,6 @@ class MoneyBalanceItemsController < MyplaceonlineController
     
     def has_category
       false
-    end
-    
-    def nested
-      true
     end
     
     def additional_items?

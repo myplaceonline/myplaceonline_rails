@@ -15,6 +15,10 @@ class CalendarItemsController < MyplaceonlineController
     Myp.display_datetime(obj.calendar_item_time, current_user)
   end
 
+  def nested
+    true
+  end
+
   protected
     def sorts
       ["calendar_items.calendar_item_time DESC"]
@@ -28,10 +32,6 @@ class CalendarItemsController < MyplaceonlineController
     
     def has_category
       false
-    end
-    
-    def nested
-      true
     end
     
     def additional_items?

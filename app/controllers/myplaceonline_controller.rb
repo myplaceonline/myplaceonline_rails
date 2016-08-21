@@ -513,6 +513,14 @@ class MyplaceonlineController < ApplicationController
     [Permission::ACTION_READ]
   end
   
+  def nested
+    false
+  end
+  
+  def show_share
+    !nested
+  end
+
   protected
   
     def deny_guest
@@ -660,10 +668,6 @@ class MyplaceonlineController < ApplicationController
     end
     
     def showmyplet
-    end
-    
-    def nested
-      false
     end
     
     def parent_model

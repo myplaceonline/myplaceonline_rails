@@ -431,8 +431,8 @@ class Identity < ActiveRecord::Base
     )
   end
 
-  def send_email(subject, body, cc = nil, bcc = nil)
-    Myp.send_email(user.email, subject, body, cc, bcc)
+  def send_email(subject, body, cc = nil, bcc = nil, body_plain = nil)
+    Myp.send_email(user.email, subject, body, cc, bcc, body_plain)
   end
   
   def final_search_result

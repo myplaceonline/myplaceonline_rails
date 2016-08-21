@@ -11,37 +11,4 @@
     autofocus: autofocus
   }
 %>
-<%=
-  render(layout: 'myplaceonline/childproperties', locals: {
-    f: f,
-    heading: t("myplaceonline.money_balances.money_balance_items"),
-    childpropertiesname: :money_balance_items,
-    childproperties: obj.money_balance_items,
-    deletebutton: t("myplaceonline.money_balances.delete"),
-    addbutton: t("myplaceonline.money_balances.add"),
-    expanded: true,
-    formjson: [
-      {
-        type: 'text',
-        name: 'money_balance_item_name',
-        placeholder: t("myplaceonline.money_balance_items.money_balance_item_name"),
-        autofocus: true
-      },
-      {
-        type: 'text',
-        name: 'amount',
-        placeholder: t("myplaceonline.money_balance_items.amount")
-      },
-      {
-        type: 'date',
-        name: 'item_time',
-        placeholder: t("myplaceonline.money_balance_items.item_time")
-      }
-    ]
-  }) do |child_fields, childproperty|
-%>
-  <%= myp_text_field(child_fields, :money_balance_item_name, "myplaceonline.money_balance_items.money_balance_item_name", childproperty.money_balance_item_name) %>
-  <%= myp_decimal_field(child_fields, :amount, "myplaceonline.money_balance_items.amount", childproperty.amount) %>
-  <%= myp_datetime_field(child_fields, :item_time, "myplaceonline.money_balance_items.item_time", childproperty.item_time) %>
-<% end %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>

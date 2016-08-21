@@ -6,17 +6,7 @@ class MoneyBalancesController < MyplaceonlineController
       :id,
       :_destroy,
       :notes,
-      contact_attributes: ContactsController.param_names,
-      money_balance_items_attributes: [
-        :id,
-        :_destroy,
-        :money_balance_item_name,
-        :amount,
-        :original_amount,
-        :item_time,
-        :invert,
-        :notes
-      ]
+      contact_attributes: ContactsController.param_names
     ]
   end
   

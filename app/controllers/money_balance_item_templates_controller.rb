@@ -51,6 +51,10 @@ class MoneyBalanceItemTemplatesController < MyplaceonlineController
     obj.amount > 0
   end
 
+  def nested
+    true
+  end
+
   protected
     def sorts
       ["money_balance_item_templates.amount ASC"]
@@ -68,10 +72,6 @@ class MoneyBalanceItemTemplatesController < MyplaceonlineController
     
     def has_category
       false
-    end
-    
-    def nested
-      true
     end
     
     def additional_items?

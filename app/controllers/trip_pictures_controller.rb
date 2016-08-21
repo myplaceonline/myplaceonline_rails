@@ -15,6 +15,10 @@ class TripPicturesController < MyplaceonlineController
     true
   end
 
+  def nested
+    true
+  end
+
   protected
     def insecure
       true
@@ -32,10 +36,6 @@ class TripPicturesController < MyplaceonlineController
     
     def has_category
       false
-    end
-    
-    def nested
-      true
     end
     
     def additional_items?

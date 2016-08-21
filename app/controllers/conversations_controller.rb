@@ -7,6 +7,10 @@ class ConversationsController < MyplaceonlineController
     "conversations/form"
   end
 
+  def nested
+    true
+  end
+
   protected
     def sorts
       ["conversations.conversation_date DESC"]
@@ -21,10 +25,6 @@ class ConversationsController < MyplaceonlineController
     
     def has_category
       false
-    end
-    
-    def nested
-      true
     end
     
     def additional_items?

@@ -95,10 +95,10 @@ class Contact < ActiveRecord::Base
     end
   end
   
-  def send_email(subject, body, cc = nil, bcc = nil)
+  def send_email(subject, body, cc = nil, bcc = nil, body_plain = nil)
     to = contact_identity.emails
     if to.length > 0
-      Myp.send_email(to, subject, body, cc, bcc)
+      Myp.send_email(to, subject, body, cc, bcc, body_plain)
     end
   end
   

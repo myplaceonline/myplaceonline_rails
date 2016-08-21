@@ -19,6 +19,10 @@ class CalendarItemRemindersController < MyplaceonlineController
     send("edit_" + path_name + "_path", obj.calendar_item.calendar, obj.calendar_item, obj)
   end
 
+  def nested
+    true
+  end
+    
   protected
     def sorts
       ["calendar_item_reminders.updated_at DESC"]
@@ -32,10 +36,6 @@ class CalendarItemRemindersController < MyplaceonlineController
     
     def has_category
       false
-    end
-    
-    def nested
-      true
     end
     
     def additional_items?

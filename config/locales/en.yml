@@ -2176,6 +2176,10 @@ en:
       other_owes: "%{other} Owes"
       other_owes_percent: "%{other} Owes Percent"
       money_balance: "Money Balance"
+      item_updated_subject: "Money Balance Item Edited"
+      item_updated_body: "Money Balance Item Edited: %{display}"
+      item_destroyed_subject: "Money Balance Item Deleted"
+      item_destroyed_body: "Money Balance Item Deleted: %{display}"
     permissions:
       user: "User"
       action: "Action"

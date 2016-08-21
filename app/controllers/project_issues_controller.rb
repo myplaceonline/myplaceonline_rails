@@ -38,6 +38,10 @@ class ProjectIssuesController < MyplaceonlineController
       :flash => { :notice => I18n.t("myplaceonline.project_issues.moved_top") }
   end
   
+  def nested
+    true
+  end
+
   protected
     def insecure
       true
@@ -62,10 +66,6 @@ class ProjectIssuesController < MyplaceonlineController
     
     def has_category
       false
-    end
-    
-    def nested
-      true
     end
     
     def additional_items?

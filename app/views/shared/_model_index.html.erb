@@ -123,7 +123,9 @@
             <% if content_for?(:allfooterlinks) %>
               <%= content_for(:allfooterlinks) %>
             <% else %>
-              <li><%= link_to t("myplaceonline.general.add") + " " + t("myplaceonline.category." + controller.category_name).singularize, controller.new_path, "data-icon" => "plus" %></li>
+              <% if controller.show_add %>
+              <li><%= link_to(t("myplaceonline.general.add") + " " + t("myplaceonline.category." + controller.category_name).singularize, controller.new_path, "data-icon" => "plus") %></li>
+              <% end %>
               <% if controller.index_destroy_all_link? %>
                 <li><%= link_to t("myplaceonline.general.delete_all"), controller.destroy_all_path, "data-icon" => "delete" %></li>
               <% end %>

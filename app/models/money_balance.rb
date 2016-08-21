@@ -41,4 +41,15 @@ class MoneyBalance < ActiveRecord::Base
       I18n.t("myplaceonline.money_balances.contact_owes", source: identity.display, contact: contact.display, amount: Myp.number_to_currency(balance))
     end
   end
+  
+  def send_email_to_all(subject, body_markdown)
+    if current_user_owns?
+      to = contact
+      cc = identity.user.email
+    else
+      to = identity
+      cc = contact_identity.emails
+    end
+    to.send_email(subject, Myp.markdown_to_html(body_markdown).html_safe, cc, nil, body_markdown)
+  end
 end

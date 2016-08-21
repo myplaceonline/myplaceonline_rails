@@ -7,6 +7,10 @@ class TripStoriesController < MyplaceonlineController
     "trip_stories/form"
   end
 
+  def nested
+    true
+  end
+
   protected
     def insecure
       true
@@ -26,10 +30,6 @@ class TripStoriesController < MyplaceonlineController
     
     def has_category
       false
-    end
-    
-    def nested
-      true
     end
     
     def additional_items?
