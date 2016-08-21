@@ -204,4 +204,16 @@ class Location < ActiveRecord::Base
     end
     result
   end
+  
+  def display_city
+    result = sub_region2
+    result = Myp.alternative_if_blank(result, name)
+    result = Myp.alternative_if_blank(result, address1)
+    result = Myp.alternative_if_blank(result, address2)
+    result = Myp.alternative_if_blank(result, address3)
+    result = Myp.alternative_if_blank(result, sub_region1_short_name)
+    result = Myp.alternative_if_blank(result, postal_code)
+    result = Myp.alternative_if_blank(result, region_name)
+    result
+  end
 end

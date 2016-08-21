@@ -20,7 +20,7 @@ class EmergencyContact < ActiveRecord::Base
     result
   end
   
-  def send_contact(is_new, obj, description)
+  def send_contact(is_new, obj, description, subject_append = nil)
     cat = Myp.instance_to_category(obj).human_title_singular
     e = email.dup
     email.email_contacts.each do |email_contact|
@@ -37,7 +37,7 @@ class EmergencyContact < ActiveRecord::Base
       is_new ? "myplaceonline.emergency_contacts.subject_new" : "myplaceonline.emergency_contacts.subject_edit",
       {
         contact: identity.display_short,
-        category: cat,
+        subject: cat + subject_append,
         verb: I18n.t(e_verb)
       }
     )

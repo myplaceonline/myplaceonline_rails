@@ -9,7 +9,7 @@ class Identity < ActiveRecord::Base
   has_one :contact, class_name: Contact, foreign_key: :contact_identity_id
   
   def name_from_email
-    user.email[0..user.email.index("@")-1]
+    user.nil? ? nil : user.email[0..user.email.index("@")-1]
   end
   
   def ensure_contact!

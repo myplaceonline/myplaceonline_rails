@@ -282,6 +282,10 @@ class Trip < ActiveRecord::Base
               map: location.map_url,
               verb: is_new ? I18n.t("myplaceonline.trips.emergency_contact_email_new") : I18n.t("myplaceonline.trips.emergency_contact_email_updated")
             }
+          ),
+          I18n.t(
+            "myplaceonline.trips.emergency_contact_subject_append",
+            city: location.display_city
           )
         )
       end

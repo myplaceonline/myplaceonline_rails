@@ -1440,6 +1440,7 @@ en:
       emergency_contact_email_updated: "updated"
       emergency_contact_email: "%{contact} %{verb} a trip to %{location} starting on %{start_date} until %{end_date}.\n\nMap: %{map}"
       click_pics: "Click the link at the top for the option to see pictures at full size."
+      emergency_contact_subject_append: " to %{city}"
     passports:
       region: "Country"
       passport_number: "Passport Number"
@@ -2384,8 +2385,8 @@ en:
       email: "Email"
       verb_created: "created"
       verb_planned: "planned"
-      subject_new: "Notice: %{contact} has %{verb} a new %{category}"
-      subject_edit: "Notice: %{contact} has updated an existing %{category}"
+      subject_new: "Notice: %{contact} has %{verb} a new %{subject}"
+      subject_edit: "Notice: %{contact} has updated an existing %{subject}"
       why_contacted: "You are receiving this because you are registered as an emergency contact."
     tv_shows:
       tv_show_name: "Show Name"

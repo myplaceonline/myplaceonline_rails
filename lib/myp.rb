@@ -1057,6 +1057,10 @@ module Myp
     Myp.appendstr(str, what, nil, " (", ")")
   end
   
+  def self.alternative_if_blank(str, what_to_set)
+    str.blank? ? what_to_set : str
+  end
+  
   def self.query_parameters_uri_part(request)
     request.query_parameters().map{|k,v| URI.encode(k) + "=" + URI.encode(v)}.join("&")
   end
