@@ -8,6 +8,10 @@ class Identity < ActiveRecord::Base
   
   has_one :contact, class_name: Contact, foreign_key: :contact_identity_id
   
+  def name_from_email
+    user.email[0..user.email.index("@")-1]
+  end
+  
   def ensure_contact!
     result = Contact.find_by(
       identity_id: id,
@@ -17,7 +21,7 @@ class Identity < ActiveRecord::Base
       ActiveRecord::Base.transaction do
         result = Contact.new
         if self.name.blank?
-          self.name = I18n.t("myplaceonline.contacts.me")
+          self.name = name_from_email
           self.save!
         end
         result.identity = self
@@ -29,7 +33,7 @@ class Identity < ActiveRecord::Base
   end
   
   def default_name?
-    name == I18n.t("myplaceonline.contacts.me")
+    name == name_from_email
   end
   
   belongs_to :user
