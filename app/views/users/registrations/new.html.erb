@@ -43,12 +43,16 @@
 
   <%= label_tag :agree_terms, raw(t("myplaceonline.users.agree_terms", :terms => link_to(t("myplaceonline.info.terms"), "/info/terms"))) %>
   <%= check_box_tag :agree_terms, 1, @agree_terms, data: { "role" => "flipswitch", "on-text" => t("myplaceonline.general.y"), "off-text" => t("myplaceonline.general.n") } %>
+  
+  <%= myp_hidden_field_tag(:tz, @tz) %>
 
   <div><%= f.submit t("myplaceonline.general.signup") %></div>
   
   <script type="text/javascript">
   myplaceonline.onPageLoad(function() {
     myplaceonline.maybeFocus(".autofocus");
+    var tz = jstz.determine();
+    $("#tz").val(tz.name());
   });
   </script>
 <% end %>

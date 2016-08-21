@@ -26,8 +26,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
   def new
     @agree_terms = params[:agree_terms]
+    @tz = params[:tz]
     if request.post?
       build_resource(sign_up_params)
+      if !@tz.blank?
+        resource.timezone = ActiveSupport::TimeZone[@tz]
+      end
+      
+      Rails.logger.info{"new resource: #{resource.inspect}"}
       
       if @agree_terms == "1"
         resource_saved = resource.save
