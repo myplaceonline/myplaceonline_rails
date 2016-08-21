@@ -1,7 +1,7 @@
 <%= render layout: "shared/model_show" do %>
 
   <%= attribute_table_row(t("myplaceonline.wisdoms.name"), @obj.name) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.wisdoms.wisdom"), @obj.wisdom) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), @obj.notes) %>
   <%=
     render partial: 'myplaceonline/pictures', locals: {
       pics: @obj.wisdom_files,

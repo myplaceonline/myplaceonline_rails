@@ -15,7 +15,7 @@ class WisdomsController < MyplaceonlineController
     def obj_params
       params.require(:wisdom).permit(
         :name,
-        :wisdom,
+        :notes,
         wisdom_files_attributes: FilesController.multi_param_names
       )
     end
