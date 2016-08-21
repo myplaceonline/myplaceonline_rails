@@ -26,7 +26,8 @@ class FeedItemsController < MyplaceonlineController
         :feed_link,
         :content,
         :publication_date,
-        :guid
+        :guid,
+        :is_read
       )
     end
     

@@ -763,6 +763,7 @@ en:
       publication_date: "Publication Date"
       guid: "Unique Identifier"
       feed: "Feed"
+      is_read: "Have Read?"
     locations:
       name: "Name"
       address1: "Address"
