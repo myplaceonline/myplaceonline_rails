@@ -1689,8 +1689,12 @@ module Myp
           end
         end
         if !category.nil?
+          final_display = category.human_title_singular + ": " + search_result.display + additional_text
+          if final_display.length > 100
+            final_display = final_display[0..97] + "..."
+          end
           result = ListItemRow.new(
-            category.human_title_singular + ": " + search_result.display + additional_text,
+            final_display,
             "/" + category.name + "/" + search_result.id.to_s,
             Rails.env.development? && search_result.respond_to?("visit_count") ? search_result.visit_count : nil,
             nil,

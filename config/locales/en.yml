@@ -181,6 +181,7 @@ en:
       email_personalizations: "Email Personalizations"
       identities: "Identities"
       trip_stories: "Trip Stories"
+      checklist_items: "Checklist Items"
     general:
       email: "E-mail"
       password: "Password"
