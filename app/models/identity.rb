@@ -442,4 +442,8 @@ class Identity < ActiveRecord::Base
   def final_search_result
     contact
   end
+  
+  def final_search_result_display?
+    false
+  end
 end

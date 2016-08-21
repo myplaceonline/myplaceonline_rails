@@ -1668,12 +1668,14 @@ module Myp
       result = nil
       additional_text = ""
       if search_result.respond_to?("final_search_result")
-        additional_text = " (" + I18n.t("myplaceonline.category." + search_result.class.name.pluralize.underscore).singularize
-        extra = search_result.display
-        if !extra.blank?
-          additional_text += ": " + extra
+        if !search_result.respond_to?("final_search_result_display?") || search_result.final_search_result_display?
+          additional_text = " (" + I18n.t("myplaceonline.category." + search_result.class.name.pluralize.underscore).singularize
+          extra = search_result.display
+          if !extra.blank?
+            additional_text += ": " + extra
+          end
+          additional_text += ")"
         end
-        additional_text += ")"
         search_result = search_result.final_search_result
       end
       Rails.logger.debug{"search_result: #{search_result}"}
