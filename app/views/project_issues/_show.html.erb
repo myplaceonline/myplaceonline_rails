@@ -6,6 +6,13 @@
   <%= attribute_table_row_reference(t("myplaceonline.project_issues.notifier"), "contact_path", wrapper.contact) %>
 <% end %>
 
+<%=
+  render partial: 'myplaceonline/pictures', locals: {
+    pics: @obj.project_issue_files,
+    placeholder: "myplaceonline.project_issues.file"
+  }
+%>
+
 <% content_for :postfooterlinks do %>
   <li><%= link_to t('myplaceonline.project_issues.project'), project_path(obj.project), "data-icon" => "back" %></li>
 <% end %>

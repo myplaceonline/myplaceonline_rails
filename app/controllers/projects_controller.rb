@@ -28,6 +28,10 @@ class ProjectsController < MyplaceonlineController
     )
   end
 
+  def may_upload
+    true
+  end
+
   protected
     def insecure
       true
@@ -48,7 +52,8 @@ class ProjectsController < MyplaceonlineController
           :_destroy,
           :issue_name,
           :notes,
-          :position
+          :position,
+          project_issue_files_attributes: FilesController.multi_param_names
         ]
       )
     end

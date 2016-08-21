@@ -51,4 +51,14 @@ class ProjectIssue < ActiveRecord::Base
     self.is_archived = true
     self.save!
   end
+
+  has_many :project_issue_files, :dependent => :destroy
+  accepts_nested_attributes_for :project_issue_files, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :project_issue_files, [{:name => :identity_file}]
+
+  before_validation :update_file_folders
+  
+  def update_file_folders
+    put_files_in_folder(project_issue_files, [I18n.t("myplaceonline.category.projects"), project.display])
+  end
 end

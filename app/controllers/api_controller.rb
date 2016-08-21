@@ -180,12 +180,29 @@ class ApiController < ApplicationController
     if !urlpath.blank?
       spliturl = urlpath.split('/')
       if spliturl.length >= 3
-        objclass = spliturl[1].singularize
-        objid = spliturl[2]
+
+        objclass_index = 1
+        
+        # This upload may come from the root element or from a child form submission
+        paramnode = nil
+        while paramnode.nil?
+          objclass = spliturl[objclass_index].singularize
+          paramnode = params[objclass]
+          
+          Rails.logger.debug{"checking objclass: #{objclass}, paramnode: #{paramnode}"}
+          
+          if paramnode.nil?
+            objclass_index += 2
+          end
+        end
+
+        objid = spliturl[objclass_index + 1]
         
         if !objid.index("?").nil?
           objid = objid[0..objid.index("?")-1]
         end
+        
+        Rails.logger.debug{"objclass: #{objclass}, objid: #{objid}"}
         
         if objid != "new"
           obj = Myp.find_existing_object(objclass, objid, false)
@@ -193,14 +210,13 @@ class ApiController < ApplicationController
 
           # Alrighty, we've got the object and the user is authorized, so
           # now we can start the real work
-          Rails.logger.debug{"obj: #{obj.inspect}"}
+          Rails.logger.debug{"obj existing: #{obj.inspect}"}
         else
           obj = nil
         end
         
         # We'll only have the file object, so just follow the path of params
         # for the object down to right above the file leaf node
-        paramnode = params[objclass]
         prevnode = obj
         prevkey = nil
         prevkey_full = nil

@@ -2512,6 +2512,11 @@ en:
       issue_completed_body_details: "\n\nDetails: %{details}"
       issue_archived: "Successfully archived and any subscribers notified"
       issue_archive_fail: "Failed to complete project issue due to invalid submission data"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"
     flights:
       flight_name: "Flight Name"
       flight_start_date: "Flight Start Date"

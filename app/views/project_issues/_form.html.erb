@@ -44,3 +44,16 @@
     }
   %>
 <% end %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :project_issue_files,
+    item_placeholder: "myplaceonline.project_issues.file",
+    heading: "myplaceonline.project_issues.files",
+    addbutton: "myplaceonline.project_issues.add_file",
+    addbutton_multi: "myplaceonline.project_issues.add_files",
+    deletebutton: "myplaceonline.project_issues.delete_file"
+  }
+%>

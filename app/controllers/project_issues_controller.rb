@@ -50,6 +50,10 @@ class ProjectIssuesController < MyplaceonlineController
     true
   end
 
+  def may_upload
+    true
+  end
+
   protected
     def insecure
       true
@@ -69,7 +73,8 @@ class ProjectIssuesController < MyplaceonlineController
           :id,
           :_destroy,
           contact_attributes: ContactsController.param_names
-        ]
+        ],
+        project_issue_files_attributes: FilesController.multi_param_names
       )
     end
     

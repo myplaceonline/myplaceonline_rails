@@ -343,6 +343,10 @@ class MyplaceonlineController < ApplicationController
     path_name.pluralize
   end
   
+  def paths_form_name
+    model.model_name.singular.to_s.downcase.pluralize
+  end
+  
   def second_path_name
     raise NotImplementedError
   end
