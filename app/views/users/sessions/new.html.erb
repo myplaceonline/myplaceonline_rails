@@ -1,27 +1,31 @@
 <% content_for :heading do -%><%= t('myplaceonline.general.login') %><% end -%>
 <h1><%= t("myplaceonline.general.login") %></h1>
 <%= flashes! %>
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div>
-    <%= f.label :email, class: "ui-hidden-accessible" %>
-    <%= f.email_field :email, class: "autofocus", placeholder: t("myplaceonline.general.email") %>
-  </div>
+<% if flash.nil? || flash.to_hash["alert"].nil? || flash.to_hash["alert"].index("You have to confirm").nil? %>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div>
+      <%= f.label :email, class: "ui-hidden-accessible" %>
+      <%= f.email_field :email, class: "autofocus", placeholder: t("myplaceonline.general.email") %>
+    </div>
 
-  <div>
-    <%= f.label :password, class: "ui-hidden-accessible" %>
-    <%= f.password_field :password, autocomplete: "mpassword", placeholder: t("myplaceonline.general.password") %>
-  </div>
+    <div>
+      <%= f.label :password, class: "ui-hidden-accessible" %>
+      <%= f.password_field :password, autocomplete: "mpassword", placeholder: t("myplaceonline.general.password") %>
+    </div>
 
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me, t("myplaceonline.general.remember") %></div>
-  <% end -%>
+    <% if devise_mapping.rememberable? -%>
+      <div><%= f.check_box :remember_me %> <%= f.label :remember_me, t("myplaceonline.general.remember") %></div>
+    <% end -%>
 
-  <div><%= f.submit t("myplaceonline.general.login") %></div>
-  <script type="text/javascript">
-  myplaceonline.onPageLoad(function() {
-    myplaceonline.maybeFocus(".autofocus");
-  });
-  </script>
+    <div><%= f.submit t("myplaceonline.general.login") %></div>
+    <script type="text/javascript">
+    myplaceonline.onPageLoad(function() {
+      myplaceonline.maybeFocus(".autofocus");
+    });
+    </script>
+  <% end %>
+
+  <%= render "users/shared/links" %>
+<% else %>
+  <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) %><br />
 <% end %>
-
-<%= render "users/shared/links" %>
