@@ -4,8 +4,9 @@
   <%= attribute_table_row_url(t("myplaceonline.feeds.url"), @obj.url) %>
 
   <% content_for :aftertable do %>
+  
     <ul data-role="listview" data-inset="true">
-      <% @obj.feed_items.each do |item| %>
+      <% @obj.feed_items.first(20).each do |item| %>
         <li>
           <%= link_to item.feed_link do %>
             <%= item.feed_title %>
