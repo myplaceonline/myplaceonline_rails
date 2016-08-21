@@ -11,6 +11,13 @@ class FeedItemsController < MyplaceonlineController
     true
   end
 
+  def mark_read
+    set_obj
+    @obj.is_read = true
+    @obj.save!
+    render json: { result: true }
+  end
+
   protected
     def insecure
       true

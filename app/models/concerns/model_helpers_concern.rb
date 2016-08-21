@@ -14,6 +14,10 @@ module ModelHelpersConcern extend ActiveSupport::Concern
         define_method("#{boolean_field_name}") do
           self.send(time_field_name).nil? ? "0" : "1"
         end
+        
+        define_method("#{boolean_field_name}?") do
+          self.send(time_field_name).nil? ? false : true
+        end
       end
       
       def bit_flags_transfer(field_prefix, field_values, storage_field_name)

@@ -3,18 +3,43 @@
 
 <% content_for :aftertable do %>
   
+  <script type="text/javascript">
+    function feed_item_mark_read(obj, id) {
+      var link = "<%= feed_feed_item_mark_read_url(obj.id, -1) %>";
+      link = link.replace(/-1/, id);
+      myplaceonline.showLoading();
+      $.ajax({
+        url: link,
+        method: "POST",
+        dataType: "json",
+        context: {
+          obj: obj
+        }
+      }).done(function(data, textStatus, jqXHR) {
+        if (data.result) {
+          myplaceonline.createSuccessNotification("<%= t("myplaceonline.feed_items.item_marked_read") %>");
+          $(this.obj).parents("li").first().find(".feed_item").first().addClass("bghighlight");
+        }
+      }).fail(function(jqXHR, textStatus, errorThrown) {
+        myplaceonline.criticalError("Error. jqXHR: " + jqXHR.readyState + "," + jqXHR.status + ", " + jqXHR.responseText + ", " + jqXHR.responseXML + ", status: " + textStatus, errorThrown);
+      }).complete(function(jqXHR, textStatus) {
+        myplaceonline.hideLoading();
+      });
+  }
+  </script>
+
   <ul data-role="listview" data-inset="true">
-      <% obj.feed_items.first(20).each do |item| %>
-        <li>
-          <%= link_to item.feed_link do %>
-            <%= item.feed_title %>
-            <span class="ui-li-count"><%= Myp.display_datetime_short(item.publication_date, current_user) %></span>
-          <% end %>
-          <%= link_to feed_feed_item_path(obj, item) do %>
-            <%= item.feed_title %>
-          <% end %>
-        </li>
-      <% end %>
+    <% obj.feed_items.first(20).each do |item| %>
+      <li>
+        <%= link_to(item.feed_link, class: "feed_item" + (item.is_read? ? " bghighlight" : "")) do %>
+          <%= item.display %>
+          <span class="ui-li-count"><%= Myp.display_datetime_short(item.publication_date, current_user) %></span>
+        <% end %>
+        <%= link_to(feed_feed_item_path(obj, item), data: { icon: "check" }, onclick: "feed_item_mark_read(this, " + item.id.to_s + "); return false;") do %>
+          <%= t("myplaceonline.feed_items.item_mark_read") %>
+        <% end %>
+      </li>
+    <% end %>
   </ul>
 <% end %>
 

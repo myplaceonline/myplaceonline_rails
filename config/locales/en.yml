@@ -764,6 +764,8 @@ en:
       guid: "Unique Identifier"
       feed: "Feed"
       is_read: "Have Read?"
+      item_marked_read: "Feed Item Successfully Marked Read"
+      item_mark_read: "Mark as Read"
     locations:
       name: "Name"
       address1: "Address"

@@ -90,7 +90,7 @@ div.ui-checkbox + label {
 }
 
 .bghighlight {
-  background-color: #ADFF2F;
+  background-color: #ADFF2F !important;
 }
 
 .markdowncell > p:first-child {
