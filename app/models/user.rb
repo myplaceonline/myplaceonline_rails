@@ -72,6 +72,8 @@ class User < ActiveRecord::Base
         user.primary_identity = @identity
         user.save!
         
+        user.primary_identity.ensure_contact!
+        
         # Create default myplets
         Myplet.default_myplets(@identity)
         
