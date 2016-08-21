@@ -182,6 +182,7 @@ en:
       identities: "Identities"
       trip_stories: "Trip Stories"
       checklist_items: "Checklist Items"
+      feed_items: "Feed Items"
     general:
       email: "E-mail"
       password: "Password"
@@ -752,6 +753,14 @@ en:
     feeds:
       name: "Name"
       url: "Website"
+      load: "Refresh Items"
+    feed_items:
+      feed_title: "Title"
+      feed_link: "Link"
+      content: "Content"
+      publication_date: "Publication Date"
+      guid: "Unique Identifier"
+      feed: "Feed"
     locations:
       name: "Name"
       address1: "Address"

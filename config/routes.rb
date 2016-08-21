@@ -460,7 +460,11 @@ Rails.application.routes.draw do
   resources :locations
   post 'locations/new'
 
-  resources :feeds
+  match 'feeds/:id/load', :to => 'feeds#load', via: [:get], as: "feed_load"
+  resources :feeds do
+    resources :feed_items
+    post 'feed_items/new'
+  end
   post 'feeds/new'
 
   resources :accomplishments

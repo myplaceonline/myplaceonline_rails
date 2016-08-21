@@ -13,6 +13,12 @@ class FeedsController < MyplaceonlineController
       value.blank?
     }
   end
+  
+  def load
+    set_obj
+    @obj.load_feed
+    redirect_to feed_path(@obj)
+  end
 
   protected
     def sorts
