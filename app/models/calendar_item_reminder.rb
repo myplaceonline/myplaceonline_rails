@@ -262,8 +262,11 @@ class CalendarItemReminder < ActiveRecord::Base
   end
   
   def self.schedule_ensure_pending(user)
-    UpdateCalendarJob.perform_later(user)
-    #UpdateCalendarJob.perform_now(user)
+    if Rails.env.production?
+      UpdateCalendarJob.perform_later(user)
+    else
+      UpdateCalendarJob.perform_now(user)
+    end
   end
   
   MAX_MESSAGE_LENGTH = 140
