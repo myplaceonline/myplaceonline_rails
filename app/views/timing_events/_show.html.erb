@@ -1,7 +1,7 @@
-  <%= attribute_table_row_datetime(t("myplaceonline.timing_events.timing_event_start"), obj.timing_event_start) %>
-  <%= attribute_table_row_datetime(t("myplaceonline.timing_events.timing_event_end"), obj.timing_event_end) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<%= attribute_table_row_datetime(t("myplaceonline.timing_events.timing_event_start"), obj.timing_event_start) %>
+<%= attribute_table_row_datetime(t("myplaceonline.timing_events.timing_event_end"), obj.timing_event_end) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 
-  <% content_for :postfooterlinks do %>
-    <li><%= link_to t('myplaceonline.timing_events.timing'), timing_path(obj.timing), "data-icon" => "back" %></li>
-  <% end %>
+<% content_for :postfooterlinks do %>
+  <li><%= link_to t('myplaceonline.timing_events.timing'), timing_path(obj.timing), "data-icon" => "back" %></li>
+<% end %>

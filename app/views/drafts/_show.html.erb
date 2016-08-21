@@ -1,6 +1,6 @@
-  <%= attribute_table_row(t("myplaceonline.drafts.draft_name"), obj.draft_name) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<%= attribute_table_row(t("myplaceonline.drafts.draft_name"), obj.draft_name) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
   
-  <% content_for :postfooterlinks do %>
-    <li><%= link_to t("myplaceonline.drafts.email"), new_email_path(email_source_class: obj.class.name, email_source_id: obj.id, email_source_body_field: :notes), "data-icon" => "action" %></li>
-  <% end %>
+<% content_for :postfooterlinks do %>
+  <li><%= link_to t("myplaceonline.drafts.email"), new_email_path(email_source_class: obj.class.name, email_source_id: obj.id, email_source_body_field: :notes), "data-icon" => "action" %></li>
+<% end %>

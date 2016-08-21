@@ -1,10 +1,10 @@
-  <%= attribute_table_row(t("myplaceonline.bets.bet_name"), obj.bet_name) %>
-  <%= attribute_table_row_currency(t("myplaceonline.bets.bet_amount"), obj.bet_amount) %>
-  <%= attribute_table_row(t("myplaceonline.bets.odds_ratio"), obj.odds_ratio) %>
-  <%= attribute_table_row_boolean(t("myplaceonline.bets.odds_direction_owner"), obj.odds_direction_owner) %>
-  <%= attribute_table_row_date(t("myplaceonline.bets.bet_start_date"), obj.bet_start_date) %>
-  <%= attribute_table_row_date(t("myplaceonline.bets.bet_end_date"), obj.bet_end_date) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.bets.notes"), obj.notes) %>
-  <% obj.bet_contacts.each do |wrapper| %>
-    <%= attribute_table_row_reference(t("myplaceonline.emails.contact"), "contact_path", wrapper.contact) %>
-  <% end %>
+<%= attribute_table_row(t("myplaceonline.bets.bet_name"), obj.bet_name) %>
+<%= attribute_table_row_currency(t("myplaceonline.bets.bet_amount"), obj.bet_amount) %>
+<%= attribute_table_row(t("myplaceonline.bets.odds_ratio"), obj.odds_ratio) %>
+<%= attribute_table_row_boolean(t("myplaceonline.bets.odds_direction_owner"), obj.odds_direction_owner) %>
+<%= attribute_table_row_date(t("myplaceonline.bets.bet_start_date"), obj.bet_start_date) %>
+<%= attribute_table_row_date(t("myplaceonline.bets.bet_end_date"), obj.bet_end_date) %>
+<%= attribute_table_row_markdown(t("myplaceonline.bets.notes"), obj.notes) %>
+<% obj.bet_contacts.each do |wrapper| %>
+  <%= attribute_table_row_reference(t("myplaceonline.emails.contact"), "contact_path", wrapper.contact) %>
+<% end %>

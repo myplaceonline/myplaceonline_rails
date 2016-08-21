@@ -1,6 +1,6 @@
-  <%= attribute_table_row(t("myplaceonline.tv_shows.tv_show_name"), obj.tv_show_name) %>
-  <%= attribute_table_row(t("myplaceonline.tv_shows.tv_genre"), obj.tv_genre) %>
-  <%= attribute_table_row_boolean(t("myplaceonline.tv_shows.watched"), !obj.watched.nil?) %>
-  <%= attribute_table_row(t("myplaceonline.tv_shows.watched"), obj.watched) %>
-  <%= attribute_table_row_url(t("myplaceonline.tv_shows.url"), obj.url) %>
-  <%= attribute_table_row_reference(t("myplaceonline.tv_shows.recommender"), "contact_path", obj.recommender) %>
+<%= attribute_table_row(t("myplaceonline.tv_shows.tv_show_name"), obj.tv_show_name) %>
+<%= attribute_table_row(t("myplaceonline.tv_shows.tv_genre"), obj.tv_genre) %>
+<%= attribute_table_row_boolean(t("myplaceonline.tv_shows.watched"), !obj.watched.nil?) %>
+<%= attribute_table_row(t("myplaceonline.tv_shows.watched"), obj.watched) %>
+<%= attribute_table_row_url(t("myplaceonline.tv_shows.url"), obj.url) %>
+<%= attribute_table_row_reference(t("myplaceonline.tv_shows.recommender"), "contact_path", obj.recommender) %>

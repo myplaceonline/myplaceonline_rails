@@ -1,11 +1,11 @@
-  <%= attribute_table_row(t("myplaceonline.calendar_item_reminders.threshold_amount"), obj.threshold_amount) %>
-  <%= attribute_table_row(t("myplaceonline.calendar_item_reminders.threshold_type"), obj.threshold_type) %>
-  <%= attribute_table_row(t("myplaceonline.calendar_item_reminders.repeat_amount"), obj.repeat_amount) %>
-  <%= attribute_table_row(t("myplaceonline.calendar_item_reminders.repeat_type"), obj.repeat_type) %>
-  <%= attribute_table_row(t("myplaceonline.calendar_item_reminders.expire_amount"), obj.expire_amount) %>
-  <%= attribute_table_row(t("myplaceonline.calendar_item_reminders.expire_type"), obj.expire_type) %>
-  <%= attribute_table_row(t("myplaceonline.calendar_item_reminders.max_pending"), obj.max_pending) %>
+<%= attribute_table_row(t("myplaceonline.calendar_item_reminders.threshold_amount"), obj.threshold_amount) %>
+<%= attribute_table_row(t("myplaceonline.calendar_item_reminders.threshold_type"), obj.threshold_type) %>
+<%= attribute_table_row(t("myplaceonline.calendar_item_reminders.repeat_amount"), obj.repeat_amount) %>
+<%= attribute_table_row(t("myplaceonline.calendar_item_reminders.repeat_type"), obj.repeat_type) %>
+<%= attribute_table_row(t("myplaceonline.calendar_item_reminders.expire_amount"), obj.expire_amount) %>
+<%= attribute_table_row(t("myplaceonline.calendar_item_reminders.expire_type"), obj.expire_type) %>
+<%= attribute_table_row(t("myplaceonline.calendar_item_reminders.max_pending"), obj.max_pending) %>
 
-  <% content_for :postfooterlinks do %>
-    <li><%= link_to(t("myplaceonline.calendar_item_reminders.calendar_item"), calendar_calendar_item_path(obj.calendar_item.calendar, obj.calendar_item), "data-icon" => "back") %></li>
-  <% end %>
+<% content_for :postfooterlinks do %>
+  <li><%= link_to(t("myplaceonline.calendar_item_reminders.calendar_item"), calendar_calendar_item_path(obj.calendar_item.calendar, obj.calendar_item), "data-icon" => "back") %></li>
+<% end %>

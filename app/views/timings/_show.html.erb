@@ -1,10 +1,10 @@
-  <%= attribute_table_row(t("myplaceonline.timings.timing_name"), obj.timing_name) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
-  <%= attribute_table_row(t("myplaceonline.timings.average_duration"), Myp.seconds_to_time_in_general_human_detailed_hms(obj.average_duration)) %>
-  <%= attribute_table_row(t("myplaceonline.timings.minimum_duration"), Myp.seconds_to_time_in_general_human_detailed_hms(obj.minimum_duration)) %>
-  <%= attribute_table_row(t("myplaceonline.timings.maximum_duration"), Myp.seconds_to_time_in_general_human_detailed_hms(obj.maximum_duration)) %>
+<%= attribute_table_row(t("myplaceonline.timings.timing_name"), obj.timing_name) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<%= attribute_table_row(t("myplaceonline.timings.average_duration"), Myp.seconds_to_time_in_general_human_detailed_hms(obj.average_duration)) %>
+<%= attribute_table_row(t("myplaceonline.timings.minimum_duration"), Myp.seconds_to_time_in_general_human_detailed_hms(obj.minimum_duration)) %>
+<%= attribute_table_row(t("myplaceonline.timings.maximum_duration"), Myp.seconds_to_time_in_general_human_detailed_hms(obj.maximum_duration)) %>
   
-  <% content_for :postfooterlinks do %>
-    <li><%= link_to t('myplaceonline.timings.timing_events'), timing_timing_events_path(obj), "data-icon" => "bars" %></li>
-    <li><%= link_to t('myplaceonline.timings.add_timing_event'), new_timing_timing_event_path(obj), "data-icon" => "plus" %></li>
-  <% end %>
+<% content_for :postfooterlinks do %>
+  <li><%= link_to t('myplaceonline.timings.timing_events'), timing_timing_events_path(obj), "data-icon" => "bars" %></li>
+  <li><%= link_to t('myplaceonline.timings.add_timing_event'), new_timing_timing_event_path(obj), "data-icon" => "plus" %></li>
+<% end %>

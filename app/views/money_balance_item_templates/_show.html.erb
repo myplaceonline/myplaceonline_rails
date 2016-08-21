@@ -1,8 +1,8 @@
-  <%= attribute_table_row(t("myplaceonline.money_balance_item_templates.money_balance_item_name"), obj.money_balance_item_name) %>
-  <%= attribute_table_row(t("myplaceonline.money_balance_item_templates.amount"), MoneyBalancesController.who_paid_title(obj.money_balance, controller.do_calculate_owner_paid(obj)) + " " + Myp.display_currency(obj.amount.abs)) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.money_balance_item_templates.notes"), obj.notes) %>
+<%= attribute_table_row(t("myplaceonline.money_balance_item_templates.money_balance_item_name"), obj.money_balance_item_name) %>
+<%= attribute_table_row(t("myplaceonline.money_balance_item_templates.amount"), MoneyBalancesController.who_paid_title(obj.money_balance, controller.do_calculate_owner_paid(obj)) + " " + Myp.display_currency(obj.amount.abs)) %>
+<%= attribute_table_row_markdown(t("myplaceonline.money_balance_item_templates.notes"), obj.notes) %>
 
-  <% content_for :postfooterlinks do %>
-    <li><%= link_to t('myplaceonline.money_balance_item_templates.money_balance'), money_balance_path(obj.money_balance), "data-icon" => "user" %></li>
-    <li><%= link_to t('myplaceonline.money_balance_item_templates.apply'), money_balances_add_path(obj.money_balance, owner_paid: controller.do_calculate_owner_paid(obj) ? "true" : "false", amount: obj.amount.abs, original_amount: obj.amount.abs, percent_default: 1.0, description: obj.money_balance_item_name), "data-icon" => "check" %></li>
-  <% end %>
+<% content_for :postfooterlinks do %>
+  <li><%= link_to t('myplaceonline.money_balance_item_templates.money_balance'), money_balance_path(obj.money_balance), "data-icon" => "user" %></li>
+  <li><%= link_to t('myplaceonline.money_balance_item_templates.apply'), money_balances_add_path(obj.money_balance, owner_paid: controller.do_calculate_owner_paid(obj) ? "true" : "false", amount: obj.amount.abs, original_amount: obj.amount.abs, percent_default: 1.0, description: obj.money_balance_item_name), "data-icon" => "check" %></li>
+<% end %>

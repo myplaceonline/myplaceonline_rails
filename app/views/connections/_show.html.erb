@@ -1,5 +1,5 @@
-  <% if obj.connection_status == Connection::STATUS_CONNECTED %>
-    <%= t("myplaceonline.connections.status_connected", name: obj.display) %>
-  <% else %>
-    <%= t("myplaceonline.connections.status_pending", name: obj.display) %>
-  <% end %>
+<% if obj.connection_status == Connection::STATUS_CONNECTED %>
+  <%= t("myplaceonline.connections.status_connected", name: obj.display) %>
+<% else %>
+  <%= t("myplaceonline.connections.status_pending", name: obj.display) %>
+<% end %>

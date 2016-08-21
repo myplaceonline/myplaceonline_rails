@@ -1,5 +1,5 @@
-  <% i = 0 %>
-  <% @all_items.each do |item| %>
-    <%= myp_check_box_tag "item" + i.to_s, item.display, false, false, nil, "return myplaceonline.hideIfChecked(this);" %>
-    <% i = i + 1 %>
-  <% end %>
+<% i = 0 %>
+<% @all_items.each do |item| %>
+  <%= myp_check_box_tag "item" + i.to_s, item.display, false, false, nil, "return myplaceonline.hideIfChecked(this);" %>
+  <% i = i + 1 %>
+<% end %>

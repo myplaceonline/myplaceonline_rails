@@ -1,10 +1,10 @@
-  <%= attribute_table_row(t("myplaceonline.memberships.name"), obj.name) %>
-  <%= attribute_table_row(t("myplaceonline.memberships.membership_identifier"), obj.membership_identifier) %>
-  <%= attribute_table_row(t("myplaceonline.memberships.start_date"), Myp.display_date(obj.start_date, current_user)) %>
-  <%= attribute_table_row(t("myplaceonline.memberships.end_date"), Myp.display_date(obj.end_date, current_user)) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.memberships.notes"), obj.notes) %>
-  <%= attribute_table_row_reference(t("myplaceonline.memberships.periodic_payment"), "periodic_payment_path", obj.periodic_payment) %>
-  <%=
+<%= attribute_table_row(t("myplaceonline.memberships.name"), obj.name) %>
+<%= attribute_table_row(t("myplaceonline.memberships.membership_identifier"), obj.membership_identifier) %>
+<%= attribute_table_row(t("myplaceonline.memberships.start_date"), Myp.display_date(obj.start_date, current_user)) %>
+<%= attribute_table_row(t("myplaceonline.memberships.end_date"), Myp.display_date(obj.end_date, current_user)) %>
+<%= attribute_table_row_markdown(t("myplaceonline.memberships.notes"), obj.notes) %>
+<%= attribute_table_row_reference(t("myplaceonline.memberships.periodic_payment"), "periodic_payment_path", obj.periodic_payment) %>
+<%=
     render partial: 'myplaceonline/pictures', locals: {
       pics: obj.membership_files,
       placeholder: "myplaceonline.memberships.file"

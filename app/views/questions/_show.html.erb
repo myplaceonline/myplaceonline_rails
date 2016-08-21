@@ -1,15 +1,15 @@
-  <%= attribute_table_row(t("myplaceonline.questions.name"), obj.name) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.questions.notes"), obj.notes) %>
+<%= attribute_table_row(t("myplaceonline.questions.name"), obj.name) %>
+<%= attribute_table_row_markdown(t("myplaceonline.questions.notes"), obj.notes) %>
   
-  <% obj.all_hypotheses.each do |hypothesis| %>
-    <%= table_row_heading(t("myplaceonline.hypothesis.hypothesis")) %>
-    <%= attribute_table_row(t("myplaceonline.hypothesis.name"), hypothesis.name) %>
-    <%= attribute_table_row_markdown(t("myplaceonline.hypothesis.notes"), hypothesis.notes) %>
-    <% hypothesis.hypothesis_experiments.each do |hypothesis_experiment| %>
+<% obj.all_hypotheses.each do |hypothesis| %>
+  <%= table_row_heading(t("myplaceonline.hypothesis.hypothesis")) %>
+  <%= attribute_table_row(t("myplaceonline.hypothesis.name"), hypothesis.name) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.hypothesis.notes"), hypothesis.notes) %>
+  <% hypothesis.hypothesis_experiments.each do |hypothesis_experiment| %>
       <%= table_row_heading(t("myplaceonline.hypothesis_experiments.experiment")) %>
       <%= attribute_table_row(t("myplaceonline.hypothesis_experiments.name"), hypothesis_experiment.name) %>
       <%= attribute_table_row_markdown(t("myplaceonline.hypothesis_experiments.notes"), hypothesis_experiment.notes) %>
       <%= attribute_table_row_date(t("myplaceonline.hypothesis_experiments.started"), hypothesis_experiment.started) %>
       <%= attribute_table_row_date(t("myplaceonline.hypothesis_experiments.ended"), hypothesis_experiment.ended) %>
-    <% end %>
   <% end %>
+<% end %>

@@ -1,13 +1,13 @@
-  <%= attribute_table_row(t("myplaceonline.books.book_name"), obj.book_name) %>
-  <%= attribute_table_row(t("myplaceonline.books.author"), obj.author) %>
-  <%= attribute_table_row_boolean(t("myplaceonline.books.is_read"), !obj.when_read.nil?) %>
-  <%= attribute_table_row_date(t("myplaceonline.books.when_read"), obj.when_read) %>
-  <%= attribute_table_row(t("myplaceonline.books.isbn"), obj.isbn) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.books.notes"), obj.notes) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.books.review"), obj.review) %>
-  <%= attribute_table_row_reference(t("myplaceonline.books.recommender"), "contact_path", obj.recommender) %>
-  <% obj.book_quotes.each do |x| %>
-    <%= table_row_heading(t("myplaceonline.books.book_quote")) %>
-    <%= attribute_table_row_markdown(t("myplaceonline.book_quotes.book_quote"), x.book_quote) %>
-    <%= attribute_table_row(t("myplaceonline.book_quotes.pages"), x.pages) %>
-  <% end %>
+<%= attribute_table_row(t("myplaceonline.books.book_name"), obj.book_name) %>
+<%= attribute_table_row(t("myplaceonline.books.author"), obj.author) %>
+<%= attribute_table_row_boolean(t("myplaceonline.books.is_read"), !obj.when_read.nil?) %>
+<%= attribute_table_row_date(t("myplaceonline.books.when_read"), obj.when_read) %>
+<%= attribute_table_row(t("myplaceonline.books.isbn"), obj.isbn) %>
+<%= attribute_table_row_markdown(t("myplaceonline.books.notes"), obj.notes) %>
+<%= attribute_table_row_markdown(t("myplaceonline.books.review"), obj.review) %>
+<%= attribute_table_row_reference(t("myplaceonline.books.recommender"), "contact_path", obj.recommender) %>
+<% obj.book_quotes.each do |x| %>
+  <%= table_row_heading(t("myplaceonline.books.book_quote")) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.book_quotes.book_quote"), x.book_quote) %>
+  <%= attribute_table_row(t("myplaceonline.book_quotes.pages"), x.pages) %>
+<% end %>

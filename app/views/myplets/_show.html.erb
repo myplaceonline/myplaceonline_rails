@@ -1,7 +1,7 @@
-  <%= attribute_table_row(t("myplaceonline.myplets.title"), Myp.evaluate_if_probably_i18n(obj.title)) %>
-  <%# attribute_table_row(t("myplaceonline.myplets.category_name"), obj.category_name) %>
-  <%# attribute_table_row(t("myplaceonline.myplets.category_id"), obj.category_id) %>
-  <%# attribute_table_row_select(t("myplaceonline.myplets.border_type"), obj.border_type, Myplet::BORDER_TYPES) %>
-  <% content_for :aftertable do %>
-    <p><%= link_to t("myplaceonline.navigation.gohome"), root_path, :class => 'ui-btn ui-btn-icon-left ui-icon-home ui-btn-inline' %></p>
-  <% end %>
+<%= attribute_table_row(t("myplaceonline.myplets.title"), Myp.evaluate_if_probably_i18n(obj.title)) %>
+<%# attribute_table_row(t("myplaceonline.myplets.category_name"), obj.category_name) %>
+<%# attribute_table_row(t("myplaceonline.myplets.category_id"), obj.category_id) %>
+<%# attribute_table_row_select(t("myplaceonline.myplets.border_type"), obj.border_type, Myplet::BORDER_TYPES) %>
+<% content_for :aftertable do %>
+  <p><%= link_to t("myplaceonline.navigation.gohome"), root_path, :class => 'ui-btn ui-btn-icon-left ui-icon-home ui-btn-inline' %></p>
+<% end %>

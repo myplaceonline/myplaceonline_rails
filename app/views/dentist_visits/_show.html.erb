@@ -1,7 +1,7 @@
-  <%= attribute_table_row_date(t("myplaceonline.dentist_visits.visit_date"), obj.visit_date) %>
-  <%= attribute_table_row(t("myplaceonline.dentist_visits.cavities"), obj.cavities) %>
-  <%= attribute_table_row_currency(t("myplaceonline.dentist_visits.paid"), obj.paid) %>
-  <%= attribute_table_row_boolean(t("myplaceonline.dentist_visits.cleaning"), obj.cleaning) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.dentist_visits.notes"), obj.notes) %>
-  <%= attribute_table_row_reference(t("myplaceonline.dentist_visits.dentist"), "doctor_path", obj.dentist) %>
-  <%= attribute_table_row_reference(t("myplaceonline.dentist_visits.dental_insurance"), "dental_insurance_path", obj.dental_insurance) %>
+<%= attribute_table_row_date(t("myplaceonline.dentist_visits.visit_date"), obj.visit_date) %>
+<%= attribute_table_row(t("myplaceonline.dentist_visits.cavities"), obj.cavities) %>
+<%= attribute_table_row_currency(t("myplaceonline.dentist_visits.paid"), obj.paid) %>
+<%= attribute_table_row_boolean(t("myplaceonline.dentist_visits.cleaning"), obj.cleaning) %>
+<%= attribute_table_row_markdown(t("myplaceonline.dentist_visits.notes"), obj.notes) %>
+<%= attribute_table_row_reference(t("myplaceonline.dentist_visits.dentist"), "doctor_path", obj.dentist) %>
+<%= attribute_table_row_reference(t("myplaceonline.dentist_visits.dental_insurance"), "dental_insurance_path", obj.dental_insurance) %>

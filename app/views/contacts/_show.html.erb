@@ -1,63 +1,63 @@
-  <%= attribute_table_row(t("myplaceonline.contacts.name"), obj.contact_identity.name) %>
-  <%= attribute_table_row(t("myplaceonline.contacts.middle_name"), obj.contact_identity.middle_name) %>
-  <%= attribute_table_row(t("myplaceonline.contacts.last_name"), obj.contact_identity.last_name) %>
-  <%= attribute_table_row(t("myplaceonline.contacts.full_name"), obj.contact_identity.full_name) %>
-  <%= attribute_table_row(t("myplaceonline.contacts.nickname"), obj.contact_identity.nickname) %>
-  <%= attribute_table_row(t("myplaceonline.contacts.birthday"), obj.contact_identity.birthday) %>
-  <% if !obj.contact_identity.birthday.nil? %>
-    <%= attribute_table_row(t("myplaceonline.contacts.age"), Myp.time_difference_in_general_from_now(obj.contact_identity.birthday)) %>
-    <%= attribute_table_row(t("myplaceonline.contacts.next_birthday"), Myp.time_difference_in_general_human_detailed_from_now(obj.contact_identity.next_birthday)) %>
-  <% end %>
-  <%= attribute_table_row_select(t("myplaceonline.contacts.contact_type"), obj.contact_type, Contact::CONTACT_TYPES) %>
-  <%= attribute_table_row_select(t("myplaceonline.contacts.sex_type"), obj.contact_identity.sex_type, Contact::SEX_TYPES) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.contacts.notes"), obj.contact_identity.notes) %>
-  <%= attribute_table_row_reference(t("myplaceonline.contacts.company"), "company_path", obj.contact_identity.company) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.contacts.likes"), obj.contact_identity.likes) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.contacts.gift_ideas"), obj.contact_identity.gift_ideas) %>
-  <%= attribute_table_row(t("myplaceonline.contacts.ktn"), obj.contact_identity.ktn) %>
-  <%= attribute_table_row(t("myplaceonline.contacts.new_years_resolution"), obj.contact_identity.new_years_resolution) %>
-  <% obj.contact_identity.identity_emails.each do |email| %>
-    <%= attribute_table_row_email(t("myplaceonline.identities.email"), email.email) %>
-  <% end %>
-  <% obj.contact_identity.identity_phones.each do |phone| %>
-    <% if Myp.has_phone?(request) %>
+<%= attribute_table_row(t("myplaceonline.contacts.name"), obj.contact_identity.name) %>
+<%= attribute_table_row(t("myplaceonline.contacts.middle_name"), obj.contact_identity.middle_name) %>
+<%= attribute_table_row(t("myplaceonline.contacts.last_name"), obj.contact_identity.last_name) %>
+<%= attribute_table_row(t("myplaceonline.contacts.full_name"), obj.contact_identity.full_name) %>
+<%= attribute_table_row(t("myplaceonline.contacts.nickname"), obj.contact_identity.nickname) %>
+<%= attribute_table_row(t("myplaceonline.contacts.birthday"), obj.contact_identity.birthday) %>
+<% if !obj.contact_identity.birthday.nil? %>
+  <%= attribute_table_row(t("myplaceonline.contacts.age"), Myp.time_difference_in_general_from_now(obj.contact_identity.birthday)) %>
+  <%= attribute_table_row(t("myplaceonline.contacts.next_birthday"), Myp.time_difference_in_general_human_detailed_from_now(obj.contact_identity.next_birthday)) %>
+<% end %>
+<%= attribute_table_row_select(t("myplaceonline.contacts.contact_type"), obj.contact_type, Contact::CONTACT_TYPES) %>
+<%= attribute_table_row_select(t("myplaceonline.contacts.sex_type"), obj.contact_identity.sex_type, Contact::SEX_TYPES) %>
+<%= attribute_table_row_markdown(t("myplaceonline.contacts.notes"), obj.contact_identity.notes) %>
+<%= attribute_table_row_reference(t("myplaceonline.contacts.company"), "company_path", obj.contact_identity.company) %>
+<%= attribute_table_row_markdown(t("myplaceonline.contacts.likes"), obj.contact_identity.likes) %>
+<%= attribute_table_row_markdown(t("myplaceonline.contacts.gift_ideas"), obj.contact_identity.gift_ideas) %>
+<%= attribute_table_row(t("myplaceonline.contacts.ktn"), obj.contact_identity.ktn) %>
+<%= attribute_table_row(t("myplaceonline.contacts.new_years_resolution"), obj.contact_identity.new_years_resolution) %>
+<% obj.contact_identity.identity_emails.each do |email| %>
+  <%= attribute_table_row_email(t("myplaceonline.identities.email"), email.email) %>
+<% end %>
+<% obj.contact_identity.identity_phones.each do |phone| %>
+  <% if Myp.has_phone?(request) %>
       <%= attribute_table_row_url(t("myplaceonline.identities.phone"), "tel:#{phone.number}", false, phone.number) %>
-    <% else %>
+  <% else %>
       <%= attribute_table_row(t("myplaceonline.identities.phone"), phone.number) %>
-    <% end %>
-    <%= attribute_table_row_select(t("myplaceonline.identity_phones.phone_type"), phone.phone_type, IdentityPhone::PHONE_TYPES) %>
   <% end %>
-  <% obj.all_conversations.take(5).each do |conversation| %>
-    <%= attribute_table_row_markdown(t("myplaceonline.contacts.conversation") + " (" + Myp.display_date(conversation.conversation_date, current_user) + ")", conversation.conversation) %>
-  <% end %>
-  <% obj.contact_identity.identity_locations.each do |identity_location| %>
-    <%= attribute_table_row_reference(t("myplaceonline.identities.location"), "location_path", identity_location.location) %>
-  <% end %>
-  <% obj.contact_identity.identity_relationships.each do |identity_relationship| %>
-    <% if !identity_relationship.relationship_type.nil? %>
+  <%= attribute_table_row_select(t("myplaceonline.identity_phones.phone_type"), phone.phone_type, IdentityPhone::PHONE_TYPES) %>
+<% end %>
+<% obj.all_conversations.take(5).each do |conversation| %>
+  <%= attribute_table_row_markdown(t("myplaceonline.contacts.conversation") + " (" + Myp.display_date(conversation.conversation_date, current_user) + ")", conversation.conversation) %>
+<% end %>
+<% obj.contact_identity.identity_locations.each do |identity_location| %>
+  <%= attribute_table_row_reference(t("myplaceonline.identities.location"), "location_path", identity_location.location) %>
+<% end %>
+<% obj.contact_identity.identity_relationships.each do |identity_relationship| %>
+  <% if !identity_relationship.relationship_type.nil? %>
       <%= attribute_table_row_reference(Myp.get_select_name(identity_relationship.relationship_type, IdentityRelationship::RELATIONSHIPS), "contact_path", identity_relationship.contact) %>
-    <% else %>
+  <% else %>
       <%= attribute_table_row_reference(t("myplaceonline.identities.relationship"), "contact_path", identity_relationship.contact) %>
-    <% end %>
   <% end %>
-  <% obj.contact_identity.identity_drivers_licenses.each do |identity_drivers_license| %>
-    <%= table_row_heading(t("myplaceonline.identities.drivers_license")) %>
-    <%= attribute_table_row(t("myplaceonline.identities.license_number"), identity_drivers_license.identifier) %>
-    <%= attribute_table_row_date(t("myplaceonline.identities.license_expires"), identity_drivers_license.expires) %>
-    <%= attribute_table_row(t("myplaceonline.general.region"), identity_drivers_license.region) %>
-    <%= attribute_table_row(t("myplaceonline.general.sub_region1"), identity_drivers_license.sub_region1) %>
-    <%= attribute_table_row_image(t("myplaceonline.identities.license_picture"), identity_drivers_license.identity_file) %>
-  <% end %>
-  <%=
+<% end %>
+<% obj.contact_identity.identity_drivers_licenses.each do |identity_drivers_license| %>
+  <%= table_row_heading(t("myplaceonline.identities.drivers_license")) %>
+  <%= attribute_table_row(t("myplaceonline.identities.license_number"), identity_drivers_license.identifier) %>
+  <%= attribute_table_row_date(t("myplaceonline.identities.license_expires"), identity_drivers_license.expires) %>
+  <%= attribute_table_row(t("myplaceonline.general.region"), identity_drivers_license.region) %>
+  <%= attribute_table_row(t("myplaceonline.general.sub_region1"), identity_drivers_license.sub_region1) %>
+  <%= attribute_table_row_image(t("myplaceonline.identities.license_picture"), identity_drivers_license.identity_file) %>
+<% end %>
+<%=
     render partial: 'myplaceonline/pictures', locals: {
       pics: obj.contact_identity.identity_pictures,
       placeholder: "myplaceonline.contacts.picture"
     }
   %>
-  <%= attribute_table_row_boolean(t("myplaceonline.contacts.hide"), obj.hide) %>
+<%= attribute_table_row_boolean(t("myplaceonline.contacts.hide"), obj.hide) %>
 
-  <% content_for :postfooterlinks do %>
-    <li><%= link_to t("myplaceonline.contacts.conversations"), contact_conversations_path(obj), "data-icon" => "phone" %></li>
-    <li><%= link_to t("myplaceonline.contacts.add_conversation"), new_contact_conversation_path(obj), "data-icon" => "comment" %></li>
-    <li><%= link_to t("myplaceonline.contacts.groups"), contact_groups_path(obj), "data-icon" => "user" %></li>
-  <% end %>
+<% content_for :postfooterlinks do %>
+  <li><%= link_to t("myplaceonline.contacts.conversations"), contact_conversations_path(obj), "data-icon" => "phone" %></li>
+  <li><%= link_to t("myplaceonline.contacts.add_conversation"), new_contact_conversation_path(obj), "data-icon" => "comment" %></li>
+  <li><%= link_to t("myplaceonline.contacts.groups"), contact_groups_path(obj), "data-icon" => "user" %></li>
+<% end %>

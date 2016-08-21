@@ -1,9 +1,9 @@
-  <%= attribute_table_row(t("myplaceonline.feeds.name"), obj.name) %>
-  <%= attribute_table_row_url(t("myplaceonline.feeds.url"), obj.url) %>
+<%= attribute_table_row(t("myplaceonline.feeds.name"), obj.name) %>
+<%= attribute_table_row_url(t("myplaceonline.feeds.url"), obj.url) %>
 
-  <% content_for :aftertable do %>
+<% content_for :aftertable do %>
   
-    <ul data-role="listview" data-inset="true">
+  <ul data-role="listview" data-inset="true">
       <% obj.feed_items.first(20).each do |item| %>
         <li>
           <%= link_to item.feed_link do %>
@@ -15,10 +15,10 @@
           <% end %>
         </li>
       <% end %>
-    </ul>
-  <% end %>
+  </ul>
+<% end %>
 
-  <% content_for :postfooterlinks do %>
-    <li><%= link_to t('myplaceonline.feeds.feed_items'), feed_feed_items_path(obj), "data-icon" => "bars" %></li>
-    <li><%= link_to t('myplaceonline.feeds.load'), feed_load_path(obj), "data-icon" => "refresh" %></li>
-  <% end %>
+<% content_for :postfooterlinks do %>
+  <li><%= link_to t('myplaceonline.feeds.feed_items'), feed_feed_items_path(obj), "data-icon" => "bars" %></li>
+  <li><%= link_to t('myplaceonline.feeds.load'), feed_load_path(obj), "data-icon" => "refresh" %></li>
+<% end %>

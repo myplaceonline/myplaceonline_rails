@@ -1,18 +1,18 @@
 <% if !@myplet %>
 <% else %>
-  <%=
+<%=
     render partial: 'myplaceonline/list', locals: {
       items: @usefulCategoryList
     }
   %>
-  <% if @usefulItemsList.length > 0 %>
-    <% if @usefulCategoryList.length > 0 %>
+<% if @usefulItemsList.length > 0 %>
+  <% if @usefulCategoryList.length > 0 %>
       <hr />
-    <% end %>
-    <%=
+  <% end %>
+  <%=
       render partial: 'myplaceonline/list', locals: {
         items: @usefulItemsList
       }
     %>
-  <% end %>
+<% end %>
 <% end %>

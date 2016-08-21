@@ -1,11 +1,11 @@
-  <%= attribute_table_row(t("myplaceonline.project_issues.issue_name"), obj.issue_name) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
-  <%= attribute_table_row_boolean(t("myplaceonline.general.archived"), !obj.archived.nil?) %>
+<%= attribute_table_row(t("myplaceonline.project_issues.issue_name"), obj.issue_name) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<%= attribute_table_row_boolean(t("myplaceonline.general.archived"), !obj.archived.nil?) %>
 
-  <% obj.project_issue_notifiers.each do |wrapper| %>
-    <%= attribute_table_row_reference(t("myplaceonline.project_issues.notifier"), "contact_path", wrapper.contact) %>
-  <% end %>
+<% obj.project_issue_notifiers.each do |wrapper| %>
+  <%= attribute_table_row_reference(t("myplaceonline.project_issues.notifier"), "contact_path", wrapper.contact) %>
+<% end %>
 
-  <% content_for :postfooterlinks do %>
-    <li><%= link_to t('myplaceonline.project_issues.project'), project_path(obj.project), "data-icon" => "back" %></li>
-  <% end %>
+<% content_for :postfooterlinks do %>
+  <li><%= link_to t('myplaceonline.project_issues.project'), project_path(obj.project), "data-icon" => "back" %></li>
+<% end %>

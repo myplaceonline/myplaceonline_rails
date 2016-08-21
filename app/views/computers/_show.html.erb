@@ -1,24 +1,24 @@
-  <%= attribute_table_row(t("myplaceonline.computers.computer_model"), obj.computer_model) %>
-  <%= attribute_table_row_reference(t("myplaceonline.computers.manufacturer"), "company_path", obj.manufacturer) %>
-  <%= attribute_table_row_date(t("myplaceonline.computers.purchased"), obj.purchased) %>
-  <%= attribute_table_row_currency(t("myplaceonline.computers.price"), obj.price) %>
-  <%= attribute_table_row(t("myplaceonline.computers.serial_number"), obj.serial_number) %>
-  <%= attribute_table_row(t("myplaceonline.computers.hostname"), obj.hostname) %>
-  <%= attribute_table_row(t("myplaceonline.computers.max_resolution_width"), obj.max_resolution_width) %>
-  <%= attribute_table_row(t("myplaceonline.computers.max_resolution_height"), obj.max_resolution_height) %>
-  <%= attribute_table_row(t("myplaceonline.computers.ram"), obj.ram) %>
-  <%= attribute_table_row(t("myplaceonline.computers.num_cpus"), obj.num_cpus) %>
-  <%= attribute_table_row(t("myplaceonline.computers.num_cores_per_cpu"), obj.num_cores_per_cpu) %>
-  <%= attribute_table_row_boolean(t("myplaceonline.computers.hyperthreaded"), obj.hyperthreaded) %>
-  <%= attribute_table_row(t("myplaceonline.computers.max_cpu_speed"), obj.max_cpu_speed) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.computers.notes"), obj.notes) %>
-  <%= attribute_table_row_reference(t("myplaceonline.computers.administrator"), "password_path", obj.administrator) %>
-  <%= attribute_table_row_reference(t("myplaceonline.computers.main_user"), "password_path", obj.main_user) %>
-  <%= attribute_table_row_dimensions(t("myplaceonline.computers.width"), obj.width, obj.dimensions_type) %>
-  <%= attribute_table_row_dimensions(t("myplaceonline.computers.height"), obj.height, obj.dimensions_type) %>
-  <%= attribute_table_row_dimensions(t("myplaceonline.computers.depth"), obj.depth, obj.dimensions_type) %>
-  <%= attribute_table_row_weight(t("myplaceonline.computers.weight"), obj.weight, obj.weight_type) %>
-  <% obj.computer_ssh_keys.each do |wrapper| %>
-    <%= attribute_table_row_reference(t("myplaceonline.computers.ssh_key"), "ssh_key_path", wrapper.ssh_key) %>
-    <%= attribute_table_row(t("myplaceonline.computers.ssh_key_username"), wrapper.username) %>
-  <% end %>
+<%= attribute_table_row(t("myplaceonline.computers.computer_model"), obj.computer_model) %>
+<%= attribute_table_row_reference(t("myplaceonline.computers.manufacturer"), "company_path", obj.manufacturer) %>
+<%= attribute_table_row_date(t("myplaceonline.computers.purchased"), obj.purchased) %>
+<%= attribute_table_row_currency(t("myplaceonline.computers.price"), obj.price) %>
+<%= attribute_table_row(t("myplaceonline.computers.serial_number"), obj.serial_number) %>
+<%= attribute_table_row(t("myplaceonline.computers.hostname"), obj.hostname) %>
+<%= attribute_table_row(t("myplaceonline.computers.max_resolution_width"), obj.max_resolution_width) %>
+<%= attribute_table_row(t("myplaceonline.computers.max_resolution_height"), obj.max_resolution_height) %>
+<%= attribute_table_row(t("myplaceonline.computers.ram"), obj.ram) %>
+<%= attribute_table_row(t("myplaceonline.computers.num_cpus"), obj.num_cpus) %>
+<%= attribute_table_row(t("myplaceonline.computers.num_cores_per_cpu"), obj.num_cores_per_cpu) %>
+<%= attribute_table_row_boolean(t("myplaceonline.computers.hyperthreaded"), obj.hyperthreaded) %>
+<%= attribute_table_row(t("myplaceonline.computers.max_cpu_speed"), obj.max_cpu_speed) %>
+<%= attribute_table_row_markdown(t("myplaceonline.computers.notes"), obj.notes) %>
+<%= attribute_table_row_reference(t("myplaceonline.computers.administrator"), "password_path", obj.administrator) %>
+<%= attribute_table_row_reference(t("myplaceonline.computers.main_user"), "password_path", obj.main_user) %>
+<%= attribute_table_row_dimensions(t("myplaceonline.computers.width"), obj.width, obj.dimensions_type) %>
+<%= attribute_table_row_dimensions(t("myplaceonline.computers.height"), obj.height, obj.dimensions_type) %>
+<%= attribute_table_row_dimensions(t("myplaceonline.computers.depth"), obj.depth, obj.dimensions_type) %>
+<%= attribute_table_row_weight(t("myplaceonline.computers.weight"), obj.weight, obj.weight_type) %>
+<% obj.computer_ssh_keys.each do |wrapper| %>
+  <%= attribute_table_row_reference(t("myplaceonline.computers.ssh_key"), "ssh_key_path", wrapper.ssh_key) %>
+  <%= attribute_table_row(t("myplaceonline.computers.ssh_key_username"), wrapper.username) %>
+<% end %>
