@@ -1,4 +1,12 @@
 class BooksController < MyplaceonlineController
+  def index
+    @read = params[:read]
+    if !@read.blank?
+      @read = @read.to_bool
+    end
+    super
+  end
+
   protected
     def insecure
       true
@@ -24,5 +32,13 @@ class BooksController < MyplaceonlineController
           :pages
         ]
       )
+    end
+
+    def all_additional_sql(strict)
+      if (!@read.nil? && !@read) && !strict
+        "and when_read is null"
+      else
+        nil
+      end
     end
 end

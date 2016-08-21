@@ -1654,6 +1654,8 @@ en:
       book_quotes: "Book Quotes"
       add_book_quote: "Add Book Quote"
       delete_book_quote: "Delete Book Quote"
+      unread_books: "Unread Books"
+      all_books: "All Books"
     book_quotes:
       book_quote: "Quote"
       pages: "Page(s)"
@@ -1698,6 +1700,7 @@ en:
       type_ultrasound: "Ultrasound"
       type_dermatologist: "Dermatologist"
       type_cosmetologist: "Cosmetologist"
+      type_physical_therapy: "Physical Therapist"
     dental_insurances:
       insurance_name: "Name"
       notes: "Notes"

@@ -7,7 +7,8 @@ class Doctor < ActiveRecord::Base
     ["myplaceonline.doctors.type_dentist", 1],
     ["myplaceonline.doctors.type_ultrasound", 2],
     ["myplaceonline.doctors.type_dermatologist", 3],
-    ["myplaceonline.doctors.type_cosmetologist", 4]
+    ["myplaceonline.doctors.type_cosmetologist", 4],
+    ["myplaceonline.doctors.type_physical_therapy", 5]
   ]
 
   validates :contact, presence: true
