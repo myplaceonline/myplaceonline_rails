@@ -3,6 +3,10 @@
 
 <%= flashes! %>
 
+<% if !current_user.timezone.blank? %>
+  <p><%= t("myplaceonline.users.current_time", datetime: ActiveSupport::TimeZone[current_user.timezone].now, tz: current_user.timezone) %></p>
+<% end %>
+
 <%= form_for current_user, url: users_changetimezone_path, method: "post" do |f| %>
   <p>
     <%= label_tag :timezone, t("myplaceonline.users.timezone_settings"), class: "ui-hidden-accessible" %>

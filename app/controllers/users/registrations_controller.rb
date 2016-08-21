@@ -30,7 +30,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if request.post?
       build_resource(sign_up_params)
       if !@tz.blank?
-        resource.timezone = ActiveSupport::TimeZone[@tz]
+        t = ActiveSupport::TimeZone[@tz]
+        if !t.nil?
+          resource.timezone = t.name
+        else
+          # Default to Pacific Time
+          #resource.timezone = "America/Los_Angeles"
+        end
       end
       
       Rails.logger.info{"new resource: #{resource.inspect}"}
@@ -39,6 +45,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
         resource_saved = resource.save
         yield resource if block_given?
         if resource_saved
+          
+          flash.clear
           
           Myp.remember_password(session, params[:user][:password])
           

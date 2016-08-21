@@ -586,6 +586,7 @@ en:
       offlinedescription: "You may export a snapshot of your data to browser local storage which you may then access offline."
       offlinecreate: "Create Snapshot"
       changetimezone: "Change Time Zone"
+      current_time: "Current Date/Time: %{datetime} in %{tz}"
       timezone_settings: "Time Zone"
       timezone_settings_saved: "Time zone settings saved."
       appearance: "Appearance"
