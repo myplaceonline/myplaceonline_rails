@@ -19,7 +19,8 @@
     existingobjurl: "password_path",
     searchurl: "/passwords.json?perpage=0",
     edit: edit,
-    autofocus: false
+    autofocus: false,
+    collapsed: obj.password.nil?
   }
 %>
 <%=
@@ -32,7 +33,8 @@
     existingobjurl: "location_path",
     searchurl: "/locations.json?perpage=0",
     edit: edit,
-    autofocus: false
+    autofocus: false,
+    collapsed: obj.address.nil?
   }
 %>
 <%=
