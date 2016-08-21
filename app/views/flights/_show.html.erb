@@ -1,0 +1,16 @@
+  <%= attribute_table_row(t("myplaceonline.flights.flight_name"), obj.flight_name) %>
+  <%= attribute_table_row(t("myplaceonline.flights.confirmation_number"), obj.confirmation_number) %>
+  <%= attribute_table_row_date(t("myplaceonline.flights.flight_start_date"), obj.flight_start_date) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+  <% obj.flight_legs.each do |flight_leg| %>
+    <%= table_row_heading(t("myplaceonline.flight_legs.flight_leg")) %>
+    <%= attribute_table_row(t("myplaceonline.flight_legs.flight_number"), flight_leg.flight_number) %>
+    <%= attribute_table_row_reference(t("myplaceonline.flight_legs.flight_company"), "company_path", flight_leg.flight_company) %>
+    <%= attribute_table_row_datetime(t("myplaceonline.flight_legs.depart_time"), flight_leg.depart_time) %>
+    <%= attribute_table_row(t("myplaceonline.flight_legs.depart_airport_code"), flight_leg.depart_airport_code) %>
+    <%= attribute_table_row_reference(t("myplaceonline.flight_legs.depart_location"), "location_path", flight_leg.depart_location) %>
+    <%= attribute_table_row_datetime(t("myplaceonline.flight_legs.arrive_time"), flight_leg.arrive_time) %>
+    <%= attribute_table_row(t("myplaceonline.flight_legs.arrival_airport_code"), flight_leg.arrival_airport_code) %>
+    <%= attribute_table_row_reference(t("myplaceonline.flight_legs.arrival_location"), "location_path", flight_leg.arrival_location) %>
+    <%= attribute_table_row(t("myplaceonline.flight_legs.seat_number"), flight_leg.seat_number) %>
+  <% end %>

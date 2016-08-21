@@ -1,7 +1,0 @@
-<%= render layout: "shared/model_show" do %>
-
-  <%= attribute_table_row(t("myplaceonline.promises.name"), @obj.name) %>
-  <%= attribute_table_row(t("myplaceonline.promises.due"), Myp.display_date(@obj.due, current_user)) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.promises.promise"), @obj.promise) %>
-  
-<% end %>

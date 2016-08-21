@@ -1,9 +1,0 @@
-<%= render layout: "shared/model_show" do %>
-
-  <%= attribute_table_row(t("myplaceonline.promotions.promotion_name"), @obj.promotion_name) %>
-  <%= attribute_table_row_date(t("myplaceonline.promotions.started"), @obj.started) %>
-  <%= attribute_table_row_date(t("myplaceonline.promotions.expires"), @obj.expires) %>
-  <%= attribute_table_row_currency(t("myplaceonline.promotions.promotion_amount"), @obj.promotion_amount) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.promotions.notes"), @obj.notes) %>
-  
-<% end %>

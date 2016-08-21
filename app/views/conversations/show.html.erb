@@ -1,8 +1,0 @@
-<%= render layout: "shared/model_show" do %>
-  <%= attribute_table_row_datetime(t("myplaceonline.contacts.conversation_date"), @obj.conversation_date) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.contacts.conversation"), @obj.conversation) %>
-
-  <% content_for :postfooterlinks do %>
-    <li><%= link_to t('myplaceonline.contacts.contact'), contact_path(@obj.contact), "data-icon" => "user" %></li>
-  <% end %>
-<% end %>

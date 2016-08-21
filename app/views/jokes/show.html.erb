@@ -1,7 +1,0 @@
-<%= render layout: "shared/model_show" do %>
-
-  <%= attribute_table_row(t("myplaceonline.jokes.name"), @obj.name) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.jokes.joke"), @obj.joke) %>
-  <%= attribute_table_row_url(t("myplaceonline.jokes.source"), @obj.source, true) %>
-  
-<% end %>

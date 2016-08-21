@@ -1,0 +1,11 @@
+  <%= attribute_table_row_datetime(t("myplaceonline.acne_measurements.measurement_datetime"), obj.measurement_datetime) %>
+  <%= attribute_table_row(t("myplaceonline.acne_measurements.new_pimples"), obj.new_pimples) %>
+  <%= attribute_table_row(t("myplaceonline.acne_measurements.worrying_pimples"), obj.worrying_pimples) %>
+  <%= attribute_table_row(t("myplaceonline.acne_measurements.total_pimples"), obj.total_pimples) %>
+  <%= attribute_table_row(t("myplaceonline.acne_measurements.acne_location"), obj.acne_location) %>
+  <%=
+    render partial: 'myplaceonline/pictures', locals: {
+      pics: obj.acne_measurement_pictures,
+      placeholder: "myplaceonline.acne_measurements.picture"
+    }
+  %>

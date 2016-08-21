@@ -1,9 +1,0 @@
-<%= render layout: "shared/model_show" do %>
-
-  <% i = 0 %>
-  <% @all_items.each do |checklist_item| %>
-    <%= myp_check_box_tag "item" + i.to_s, checklist_item.checklist_item_name, false, false, nil, "return myplaceonline.hideIfChecked(this);" %>
-    <% i = i + 1 %>
-  <% end %>
-
-<% end %>

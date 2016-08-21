@@ -1,0 +1,38 @@
+  <%
+  decrypted_password = obj.password
+  %>
+
+  <%= attribute_table_row(t("myplaceonline.passwords.name"), obj.name) %>
+  <%= attribute_table_row_highlight(t("myplaceonline.passwords.password"), decrypted_password) %>
+  <%= attribute_table_row(t("myplaceonline.passwords.user"), obj.user) %>
+  <%= attribute_table_row(t("myplaceonline.passwords.email"), obj.email) %>
+  <%= attribute_table_row(t("myplaceonline.passwords.url"), url_or_blank(obj.get_url, nil, decrypted_password, nil, true, true), obj.get_url, "focusable") %>
+  <%= attribute_table_row(t("myplaceonline.passwords.account_number"), obj.account_number) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.passwords.notes"), obj.notes) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.general.archived"), !obj.archived.nil?) %>
+
+  <% obj.password_secrets.each do |secret| %>
+  
+    <%= attribute_table_row(secret.question, secret.answer) %>
+
+  <% end %>
+  
+  <%= attribute_table_row_boolean(t("myplaceonline.passwords.isencrypted"), obj.password_encrypted?) %>
+  
+  <script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    if (window.ffclipboard) {
+      var link = $('.focusable a');
+      link.keypress(function(e) {
+        if (e.which == 13) {
+          window.ffclipboard.setText(<%= raw(decrypted_password.to_json) %>);
+        }
+      });
+      link.focus();
+    }
+  });
+  </script>
+
+  <% content_for :postfooterlinks do %>
+    <li><%= link_to t("myplaceonline.general.share"), passwords_share_path(obj), "data-icon" => "action" %></li>
+  <% end %>

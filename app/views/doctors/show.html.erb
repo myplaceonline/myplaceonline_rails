@@ -1,6 +1,0 @@
-<%= render layout: "shared/model_show" do %>
-
-  <%= attribute_table_row_reference(t("myplaceonline.doctors.doctor"), "contact_path", @obj.contact) %>
-  <%= attribute_table_row_select(t("myplaceonline.doctors.doctor_type"), @obj.doctor_type, Doctor::DOCTOR_TYPES) %>
-
-<% end %>

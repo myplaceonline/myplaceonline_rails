@@ -1,9 +1,0 @@
-<%= render layout: "shared/model_show" do %>
-
-  <%= attribute_table_row_datetime(t("myplaceonline.sun_exposures.exposure_start"), @obj.exposure_start) %>
-  <%= attribute_table_row_datetime(t("myplaceonline.sun_exposures.exposure_end"), @obj.exposure_end) %>
-  <%= attribute_table_row(t("myplaceonline.sun_exposures.uncovered_body_parts"), @obj.uncovered_body_parts) %>
-  <%= attribute_table_row(t("myplaceonline.sun_exposures.sunscreened_body_parts"), @obj.sunscreened_body_parts) %>
-  <%= attribute_table_row(t("myplaceonline.sun_exposures.sunscreen_type"), @obj.sunscreen_type) %>
-  
-<% end %>

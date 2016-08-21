@@ -1,8 +1,0 @@
-<%= render layout: "shared/model_show" do %>
-
-  <%= attribute_table_row(t("myplaceonline.calculation_forms.name"), @obj.name) %>
-  <%= attribute_table_row(t("myplaceonline.calculation_forms.equation"), @obj.equation) %>
-  
-<% end %>
-
-<p><%= link_to t("myplaceonline.calculation_forms.add_calculation"), new_calculation_path(form: @obj.id), :class => 'ui-btn ui-btn-icon-left ui-icon-action ui-btn-inline' %></p>

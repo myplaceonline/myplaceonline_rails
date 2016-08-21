@@ -1,0 +1,4 @@
+  <%= attribute_table_row(t("myplaceonline.diary_entries.diary_title"), obj.diary_title) %>
+  <%= attribute_table_row_datetime(t("myplaceonline.diary_entries.diary_time"), obj.diary_time) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.diary_entries.entry"), obj.entry) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.general.is_encrypted"), obj.entry_encrypted?) %>

@@ -8,4 +8,6 @@
   </div>
 <% end %>
 
-<%= render partial: form_name, locals: { f: f, obj: @obj, edit: edit, autofocus: autofocus } %>
+<div class="form_container">
+  <%= render partial: form_name, locals: { f: f, obj: @obj, edit: edit, autofocus: autofocus } %>
+</div>

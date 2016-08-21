@@ -1,0 +1,3 @@
+  <%= attribute_table_row_reference(t("myplaceonline.cafes.location"), "location_path", obj.location) %>
+  <%= attribute_table_row_select t("myplaceonline.cafes.rating"), obj.rating, Myp::RATINGS %>
+  <%= attribute_table_row_markdown(t("myplaceonline.cafes.notes"), obj.notes) %>

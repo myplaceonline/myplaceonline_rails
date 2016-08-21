@@ -1,9 +1,0 @@
-<%= render layout: "shared/model_show" do %>
-
-  <% if @obj.connection_status == Connection::STATUS_CONNECTED %>
-    <%= t("myplaceonline.connections.status_connected", name: @obj.display) %>
-  <% else %>
-    <%= t("myplaceonline.connections.status_pending", name: @obj.display) %>
-  <% end %>
-  
-<% end %>

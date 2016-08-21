@@ -1,7 +1,0 @@
-<%= render layout: "shared/model_show" do %>
-
-  <%= attribute_table_row(t("myplaceonline.credit_scores.score_date"), Myp.display_date(@obj.score_date, current_user)) %>
-  <%= attribute_table_row(t("myplaceonline.credit_scores.score"), @obj.score) %>
-  <%= attribute_table_row_url(t("myplaceonline.credit_scores.source"), @obj.source, true) %>
-  
-<% end %>

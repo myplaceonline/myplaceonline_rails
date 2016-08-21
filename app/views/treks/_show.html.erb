@@ -1,0 +1,9 @@
+  <%= attribute_table_row_reference(t("myplaceonline.treks.location"), "location_path", obj.location) %>
+  <%= attribute_table_row_select t("myplaceonline.treks.rating"), obj.rating, Myp::RATINGS %>
+  <%= attribute_table_row_markdown(t("myplaceonline.treks.notes"), obj.notes) %>
+  <%=
+    render partial: 'myplaceonline/pictures', locals: {
+      pics: obj.trek_pictures,
+      placeholder: "myplaceonline.treks.picture"
+    }
+  %>

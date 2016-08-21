@@ -1,0 +1,10 @@
+  <%= attribute_table_row(t("myplaceonline.receipts.receipt_name"), obj.receipt_name) %>
+  <%= attribute_table_row_datetime(t("myplaceonline.receipts.receipt_time"), obj.receipt_time) %>
+  <%= attribute_table_row_currency(t("myplaceonline.receipts.amount"), obj.amount) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.receipts.notes"), obj.notes) %>
+  <%=
+    render partial: 'myplaceonline/files', locals: {
+      files: obj.receipt_files,
+      placeholder: "myplaceonline.receipts.file"
+    }
+  %>

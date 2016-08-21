@@ -1,0 +1,24 @@
+  <%= attribute_table_row(t("myplaceonline.feeds.name"), obj.name) %>
+  <%= attribute_table_row_url(t("myplaceonline.feeds.url"), obj.url) %>
+
+  <% content_for :aftertable do %>
+  
+    <ul data-role="listview" data-inset="true">
+      <% obj.feed_items.first(20).each do |item| %>
+        <li>
+          <%= link_to item.feed_link do %>
+            <%= item.feed_title %>
+            <span class="ui-li-count"><%= Myp.display_datetime_short(item.publication_date, current_user) %></span>
+          <% end %>
+          <%= link_to feed_feed_item_path(obj, item) do %>
+            <%= item.feed_title %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <% content_for :postfooterlinks do %>
+    <li><%= link_to t('myplaceonline.feeds.feed_items'), feed_feed_items_path(obj), "data-icon" => "bars" %></li>
+    <li><%= link_to t('myplaceonline.feeds.load'), feed_load_path(obj), "data-icon" => "refresh" %></li>
+  <% end %>

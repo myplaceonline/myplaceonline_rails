@@ -1,0 +1,62 @@
+  <%= attribute_table_row(t("myplaceonline.jobs.job_title"), obj.job_title) %>
+  <%= attribute_table_row(t("myplaceonline.jobs.email"), obj.email) %>
+  <%= attribute_table_row(t("myplaceonline.jobs.employee_identifier"), obj.employee_identifier) %>
+  <%= attribute_table_row(t("myplaceonline.jobs.department_name"), obj.department_name) %>
+  <%= attribute_table_row(t("myplaceonline.jobs.department_identifier"), obj.department_identifier) %>
+  <%= attribute_table_row(t("myplaceonline.jobs.division_name"), obj.division_name) %>
+  <%= attribute_table_row(t("myplaceonline.jobs.division_identifier"), obj.division_identifier) %>
+  <%= attribute_table_row_date(t("myplaceonline.jobs.started"), obj.started) %>
+  <%= attribute_table_row_date(t("myplaceonline.jobs.ended"), obj.ended) %>
+  <% if !obj.started.nil? %>
+    <% if !obj.ended.nil? %>
+      <%= attribute_table_row(t("myplaceonline.jobs.duration"), Myp.time_difference_in_general_from_date(obj.started, obj.ended)) %>
+    <% else %>
+      <%= attribute_table_row(t("myplaceonline.jobs.duration"), Myp.time_difference_in_general_from_now(obj.started)) %>
+    <% end %>
+  <% end %>
+  <%= attribute_table_row(t("myplaceonline.jobs.days_vacation"), obj.days_vacation) %>
+  <%= attribute_table_row(t("myplaceonline.jobs.days_holiday"), obj.days_holiday) %>
+  <% if !obj.days_vacation.nil? && !obj.days_holiday.nil? %>
+    <%= attribute_table_row(t("myplaceonline.jobs.total_time_off"), obj.days_vacation + obj.days_holiday) %>
+  <% end %>
+  <%= attribute_table_row(t("myplaceonline.jobs.business_unit"), obj.business_unit) %>
+  <%= attribute_table_row(t("myplaceonline.jobs.internal_mail_id"), obj.internal_mail_id) %>
+  <%= attribute_table_row(t("myplaceonline.jobs.internal_mail_server"), obj.internal_mail_server) %>
+  <%= attribute_table_row(t("myplaceonline.jobs.personnel_code"), obj.personnel_code) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.jobs.notes"), obj.notes) %>
+  <%= attribute_table_row_reference(t("myplaceonline.jobs.company"), "company_path", obj.company) %>
+  <% obj.job_managers.each do |wrapper| %>
+    <%= table_row_heading(t("myplaceonline.jobs.manager")) %>
+    <%= attribute_table_row_reference(t("myplaceonline.jobs.manager"), "contact_path", wrapper.contact) %>
+    <%= attribute_table_row_date(t("myplaceonline.job_managers.start_date"), wrapper.start_date) %>
+    <%= attribute_table_row_date(t("myplaceonline.job_managers.end_date"), wrapper.end_date) %>
+    <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), wrapper.notes) %>
+  <% end %>
+  <%= attribute_table_row_reference(t("myplaceonline.jobs.internal_address"), "location_path", obj.internal_address) %>
+  <% obj.job_salaries.each do |js| %>
+    <%= table_row_heading(t("myplaceonline.jobs.job_salaries")) %>
+    <%= attribute_table_row_date(t("myplaceonline.job_salaries.started"), js.started) %>
+    <%= attribute_table_row_date(t("myplaceonline.job_salaries.ended"), js.ended) %>
+    <%= attribute_table_row_currency(t("myplaceonline.job_salaries.salary"), js.salary) %>
+    <%= attribute_table_row_select(t("myplaceonline.job_salaries.salary_period"), js.salary_period, Myp::PERIODS) %>
+    <% if !js.salary_period.nil? %>
+      <% if js.salary_period == 0 %>
+        <%= attribute_table_row_currency(t("myplaceonline.job_salaries.salary_yearly"), js.salary * 12) %>
+      <% end %>
+    <% end %>
+    <%= attribute_table_row_markdown(t("myplaceonline.job_salaries.notes"), js.notes) %>
+    <%= attribute_table_row(t("myplaceonline.job_salaries.new_title"), js.new_title) %>
+  <% end %>
+  <% obj.job_reviews.each do |x| %>
+    <%= table_row_heading(t("myplaceonline.jobs.review")) %>
+    <%= attribute_table_row_date(t("myplaceonline.job_reviews.review_date"), x.review_date) %>
+    <%= attribute_table_row(t("myplaceonline.job_reviews.company_score"), x.company_score) %>
+    <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), x.notes) %>
+    <%= attribute_table_row_reference(t("myplaceonline.job_reviews.contact"), "contact_path", x.contact) %>
+    <%=
+      render partial: 'myplaceonline/pictures', locals: {
+        pics: x.job_review_files,
+        placeholder: "myplaceonline.job_reviews.file"
+      }
+    %>
+  <% end %>

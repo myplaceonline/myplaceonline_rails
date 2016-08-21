@@ -1,0 +1,13 @@
+  <%= attribute_table_row(t("myplaceonline.passports.region"), obj.region) %>
+  <%= attribute_table_row(t("myplaceonline.passports.name"), obj.name) %>
+  <%= attribute_table_row(t("myplaceonline.passports.passport_number"), obj.passport_number) %>
+  <%= attribute_table_row_date(t("myplaceonline.passports.expires"), obj.expires) %>
+  <%= attribute_table_row_date(t("myplaceonline.passports.issued"), obj.issued) %>
+  <%= attribute_table_row(t("myplaceonline.passports.issuing_authority"), obj.issuing_authority) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+  <%=
+    render partial: 'myplaceonline/pictures', locals: {
+      pics: obj.passport_pictures,
+      placeholder: "myplaceonline.passports.picture"
+    }
+  %>

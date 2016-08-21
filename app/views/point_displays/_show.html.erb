@@ -1,0 +1,7 @@
+<% if !@myplet %>
+<% else %>
+  <div class="horizontal_center">
+    <%# Use explicit style to avoid CSS jitter %>
+    <span style="font-size: 2em; font-weight: bold;"><%= t("myplaceonline.general.points") %>: <%= Myp.number_with_delimiter(@totalPoints) %><%= Myp.images_for_points(@totalPoints) %></span>
+  </div>
+<% end %>

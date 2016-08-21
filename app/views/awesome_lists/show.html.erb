@@ -1,9 +1,0 @@
-<%= render layout: "shared/model_show" do %>
-
-  <%= attribute_table_row_reference(t("myplaceonline.awesome_lists.location"), "location_path", @obj.location) %>
-  <% @obj.awesome_list_items.each do |item| %>
-    <%= attribute_table_row(t("myplaceonline.awesome_lists.item"), item.item_name) %>
-  <% end %>
-  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), @obj.notes) %>
-  
-<% end %>

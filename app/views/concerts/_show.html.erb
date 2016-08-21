@@ -1,0 +1,13 @@
+  <%= attribute_table_row(t("myplaceonline.concerts.concert_title"), obj.concert_title) %>
+  <%= attribute_table_row_date(t("myplaceonline.concerts.concert_date"), obj.concert_date) %>
+  <%= attribute_table_row_reference(t("myplaceonline.concerts.location"), "location_path", obj.location) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.concerts.notes"), obj.notes) %>
+  <% obj.concert_musical_groups.each do |wrapper| %>
+    <%= attribute_table_row_reference(t("myplaceonline.concerts.musical_group"), "musical_group_path", wrapper.musical_group) %>
+  <% end %>
+  <%=
+    render partial: 'myplaceonline/pictures', locals: {
+      pics: obj.concert_pictures,
+      placeholder: "myplaceonline.concerts.picture"
+    }
+  %>

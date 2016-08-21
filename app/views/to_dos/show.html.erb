@@ -1,7 +1,0 @@
-<%= render layout: "shared/model_show" do %>
-
-  <%= attribute_table_row(t("myplaceonline.to_dos.short_description"), @obj.short_description) %>
-  <%= attribute_table_row_datetime(t("myplaceonline.to_dos.due_time"), @obj.due_time) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.to_dos.notes"), @obj.notes) %>
-  
-<% end %>

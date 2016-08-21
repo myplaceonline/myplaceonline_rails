@@ -1,0 +1,6 @@
+  <%= attribute_table_row(t("myplaceonline.movies.name"), obj.name) %>
+  <%= attribute_table_row(t("myplaceonline.movies.genre"), obj.genre) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.movies.watched"), !obj.watched.nil?) %>
+  <%= attribute_table_row(t("myplaceonline.movies.watched"), obj.watched) %>
+  <%= attribute_table_row_url(t("myplaceonline.movies.url"), obj.url) %>
+  <%= attribute_table_row_reference(t("myplaceonline.movies.recommender"), "contact_path", obj.recommender) %>

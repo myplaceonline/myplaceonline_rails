@@ -1,8 +1,0 @@
-<%= render layout: "shared/model_show" do %>
-
-  <%= attribute_table_row(t("myplaceonline.blood_pressures.systolic_pressure"), @obj.systolic_pressure) %>
-  <%= attribute_table_row(t("myplaceonline.blood_pressures.diastolic_pressure"), @obj.diastolic_pressure) %>
-  <%= attribute_table_row_date(t("myplaceonline.blood_pressures.measurement_date"), @obj.measurement_date) %>
-  <%= attribute_table_row(t("myplaceonline.blood_pressures.measurement_source"), @obj.measurement_source) %>
-  
-<% end %>

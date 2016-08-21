@@ -1,0 +1,4 @@
+  <%= attribute_table_row(t("myplaceonline.lists.name"), obj.name) %>
+  <% obj.list_items.each do |item| %>
+    <%= attribute_table_row(t("myplaceonline.lists.item"), item.name) %>
+  <% end %>

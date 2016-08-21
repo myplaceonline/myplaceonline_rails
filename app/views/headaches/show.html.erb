@@ -1,8 +1,0 @@
-<%= render layout: "shared/model_show" do %>
-
-  <%= attribute_table_row_datetime(t("myplaceonline.headaches.started"), @obj.started) %>
-  <%= attribute_table_row_datetime(t("myplaceonline.headaches.ended"), @obj.ended) %>
-  <%= attribute_table_row_select(t("myplaceonline.headaches.intensity"), @obj.intensity, Myp::INTENSITIES) %>
-  <%= attribute_table_row(t("myplaceonline.headaches.headache_location"), @obj.headache_location) %>
-  
-<% end %>
