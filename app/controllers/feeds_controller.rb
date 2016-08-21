@@ -16,7 +16,12 @@ class FeedsController < MyplaceonlineController
   
   def load
     set_obj
-    @obj.load_feed
+    new_items = @obj.load_feed
+    if new_items > 0
+      flash[:notice] = I18n.t("myplaceonline.feeds.new_items", count: new_items)
+    else
+      flash[:notice] = I18n.t("myplaceonline.feeds.no_new_items")
+    end
     redirect_to feed_path(@obj)
   end
 

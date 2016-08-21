@@ -13,6 +13,7 @@ class Feed < ActiveRecord::Base
   
   def load_feed
     rss = SimpleRSS.parse(open(url))
+    new_items = 0
     all_feed_items = feed_items.to_a
     rss.items.each do |item|
       existing_item = all_feed_items.index do |existing_item|
@@ -27,7 +28,9 @@ class Feed < ActiveRecord::Base
           publication_date: item.pubDate,
           guid: item.guid
         })
+        new_items += 1
       end
     end
+    new_items
   end
 end

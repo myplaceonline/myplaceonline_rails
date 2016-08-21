@@ -756,6 +756,8 @@ en:
       url: "Website"
       load: "Refresh Items"
       feed_items: "Items"
+      new_items: "%{count} new items"
+      no_new_items: "No new items"
     feed_items:
       feed_title: "Title"
       feed_link: "Link"
