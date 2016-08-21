@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160821153248) do
+ActiveRecord::Schema.define(version: 20160821202409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2243,6 +2243,19 @@ ActiveRecord::Schema.define(version: 20160821153248) do
 
   add_index "myplets", ["identity_id"], name: "index_myplets_on_identity_id", using: :btree
 
+  create_table "myreferences", force: :cascade do |t|
+    t.integer  "contact_id"
+    t.text     "notes"
+    t.integer  "reference_type"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "myreferences", ["contact_id"], name: "index_myreferences_on_contact_id", using: :btree
+  add_index "myreferences", ["identity_id"], name: "index_myreferences_on_identity_id", using: :btree
+
   create_table "notepads", force: :cascade do |t|
     t.string   "title",        limit: 255
     t.text     "notepad_data"
@@ -3719,6 +3732,8 @@ ActiveRecord::Schema.define(version: 20160821153248) do
   add_foreign_key "money_balance_items", "money_balances"
   add_foreign_key "money_balances", "contacts"
   add_foreign_key "money_balances", "identities"
+  add_foreign_key "myreferences", "contacts"
+  add_foreign_key "myreferences", "identities"
   add_foreign_key "password_secret_shares", "identities"
   add_foreign_key "password_secret_shares", "password_secrets"
   add_foreign_key "password_secret_shares", "password_shares"

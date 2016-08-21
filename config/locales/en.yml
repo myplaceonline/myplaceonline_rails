@@ -183,6 +183,7 @@ en:
       trip_stories: "Trip Stories"
       checklist_items: "Checklist Items"
       feed_items: "Feed Items"
+      myreferences: "References"
     general:
       email: "E-mail"
       password: "Password"
@@ -2569,3 +2570,9 @@ en:
       status_connected: "Status: You are connected with %{name}."
       no_connections: "No connections. First you must connect with, or invite, the person:"
       add_connection: "Add Connection"
+    myreferences:
+      contact: "Contact"
+      reference_type: "Type"
+      type_personal: "Personal"
+      type_professional: "Professional"
+      type_educational: "Educational"
