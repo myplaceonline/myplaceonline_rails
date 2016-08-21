@@ -1,6 +1,6 @@
 <%
   decrypted_password = obj.password
-  %>
+%>
 
 <%= attribute_table_row(t("myplaceonline.passwords.name"), obj.name) %>
 <%= attribute_table_row_highlight(t("myplaceonline.passwords.password"), decrypted_password) %>
@@ -29,7 +29,7 @@
         }
       });
       link.focus();
-    }
+  }
   });
 </script>
 

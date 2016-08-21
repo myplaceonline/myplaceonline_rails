@@ -3,8 +3,8 @@
 <%= attribute_table_row_boolean(t("myplaceonline.restaurants.visited"), obj.visited) %>
 <%= attribute_table_row_markdown(t("myplaceonline.restaurants.notes"), obj.notes) %>
 <%=
-    render partial: 'myplaceonline/pictures', locals: {
+  render partial: 'myplaceonline/pictures', locals: {
       pics: obj.restaurant_pictures,
       placeholder: "myplaceonline.restaurants.picture"
-    }
-  %>
+  }
+%>

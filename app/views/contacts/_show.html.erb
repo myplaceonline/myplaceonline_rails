@@ -49,11 +49,11 @@
   <%= attribute_table_row_image(t("myplaceonline.identities.license_picture"), identity_drivers_license.identity_file) %>
 <% end %>
 <%=
-    render partial: 'myplaceonline/pictures', locals: {
+  render partial: 'myplaceonline/pictures', locals: {
       pics: obj.contact_identity.identity_pictures,
       placeholder: "myplaceonline.contacts.picture"
-    }
-  %>
+  }
+%>
 <%= attribute_table_row_boolean(t("myplaceonline.contacts.hide"), obj.hide) %>
 
 <% content_for :postfooterlinks do %>

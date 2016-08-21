@@ -109,11 +109,11 @@
   <%= attribute_table_row_reference(t("myplaceonline.vehicle_insurances.periodic_payment"), "periodic_payment_path", insurance.periodic_payment) %>
 <% end %>
 <%=
-    render partial: 'myplaceonline/pictures', locals: {
+  render partial: 'myplaceonline/pictures', locals: {
       pics: obj.vehicle_pictures,
       placeholder: "myplaceonline.vehicles.picture"
-    }
-  %>
+  }
+%>
 <% obj.vehicle_warranties.each do |wrapper| %>
   <%= table_row_heading(t("myplaceonline.warranties.warranty")) %>
   <%= attribute_table_row_reference(t("myplaceonline.warrnties.warranty_name"), "warranty_path", wrapper.warranty) %>

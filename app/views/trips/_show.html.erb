@@ -5,13 +5,13 @@
 <%= attribute_table_row_boolean(t("myplaceonline.trips.work"), obj.work) %>
 <%= attribute_table_row_date_diff(t("myplaceonline.trips.duration"), obj.started, obj.ended) %>
 <%=
-    render partial: 'myplaceonline/pictures', locals: {
-      pics: obj.trip_pictures,
-      placeholder: "myplaceonline.trips.picture",
-      limitobj: obj,
-      limitwithlink: "trip_trip_pictures_path"
-    }
-  %>
+  render partial: 'myplaceonline/pictures', locals: {
+    pics: obj.trip_pictures,
+    placeholder: "myplaceonline.trips.picture",
+    limitobj: obj,
+    limitwithlink: "trip_trip_pictures_path"
+  }
+%>
 <%= attribute_table_row_reference(t("myplaceonline.trips.hotel"), "hotel_path", obj.hotel) %>
 <% obj.trip_stories.each do |wrapper| %>
   <%= attribute_table_row_reference(t("myplaceonline.trips.story"), "story_path", wrapper.story) %>

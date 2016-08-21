@@ -1,8 +1,8 @@
 <%= attribute_table_row(t("myplaceonline.problem_reports.report_name"), obj.report_name) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <%=
-    render partial: 'myplaceonline/pictures', locals: {
+  render partial: 'myplaceonline/pictures', locals: {
       pics: obj.problem_report_files,
       placeholder: "myplaceonline.problem_reports.file"
-    }
-  %>
+  }
+%>
