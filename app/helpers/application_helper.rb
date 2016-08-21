@@ -804,7 +804,7 @@ module ApplicationHelper
     ).html_safe
   end
 
-  def myp_text_area_markdown(form, name, placeholder, value, autofocus = false, input_classes = nil)
+  def myp_text_area_markdown(form, name, placeholder, value, autofocus = false, input_classes = nil, collapsed: true)
     if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
@@ -813,8 +813,13 @@ module ApplicationHelper
       markdown_data: value,
       hidden_field_name: name
     })
-    form.label(name, placeholder, class: "form_field_label") + result + "<br />".html_safe
-    #myp_text_area(form, name, I18n.t(placeholder) + " (" + I18n.t("myplaceonline.general.supports_markdown") + ")", value, autofocus, input_classes)
+
+    if collapsed.nil? || !value.blank?
+      final_html = form.label(name, placeholder, class: "form_field_label") + result + "<br />".html_safe
+    else
+      final_html = "<div data-role=\"collapsible\" data-collapsed=\"#{collapsed}\"><h4>#{placeholder}</h4>".html_safe + form.label(name, placeholder, class: "form_field_label ui-hidden-accessible") + result + "</div>".html_safe
+    end
+    final_html
   end
 
   def myp_check_box(form, name, placeholder, autofocus = false, input_classes = nil, title: nil)
