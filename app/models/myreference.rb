@@ -17,4 +17,12 @@ class Myreference < ActiveRecord::Base
   belongs_to :contact
   accepts_nested_attributes_for :contact, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
   allow_existing :contact
+  
+  def self.search_join
+    :contact
+  end
+  
+  def self.search_join_where
+    :contact_identity_id
+  end
 end

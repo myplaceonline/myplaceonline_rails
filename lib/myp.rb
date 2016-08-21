@@ -1654,8 +1654,12 @@ module Myp
       parent_category_class = Object.const_get(Myp.category_to_model_name(parent_category))
       
       search_results = search_results.map do |search_result|
-        new_search_result = parent_category_class.where(category.singularize + "_id" => search_result.id).first
-        if !new_search_result.blank?
+        if parent_category_class.respond_to?("search_join")
+          new_search_result = parent_category_class.joins(parent_category_class.search_join).where(parent_category_class.search_join.to_s.pluralize.to_sym => { parent_category_class.search_join_where => search_result.id } ).first
+        else
+          new_search_result = parent_category_class.where(category.singularize + "_id" => search_result.id).first
+        end
+        if !new_search_result.nil?
           new_search_result
         else
           nil
