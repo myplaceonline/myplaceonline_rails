@@ -24,13 +24,13 @@
       }).done(function(data, textStatus, jqXHR) {
         if (data.result) {
           myplaceonline.completeCheckboxHiding(this.obj);
-          myplaceonline.createSuccessNotification("Successfully deleted");
+          myplaceonline.createSuccessNotification("<%= t("myplaceonline.project_issues.issue_archived") %>");
         } else {
           myplaceonline.cancelCheckboxHiding(this.checkbox);
-          myplaceonline.createErrorNotification("Failed to complete project issue due to invalid submission data");
+          myplaceonline.createErrorNotification("<%= t("myplaceonline.project_issues.issue_archive_fail") %>");
         }
       }).fail(function(jqXHR, textStatus, errorThrown) {
-        myplaceonline.createErrorNotification("Could not execute " + link + ": " + textStatus);
+        myplaceonline.createErrorNotification("<%= t("myplaceonline.general.execute_link_fail") %> " + link + ": " + textStatus);
         myplaceonline.cancelCheckboxHiding(this.checkbox);
       }).complete(function(jqXHR, textStatus) {
         myplaceonline.hideLoading();

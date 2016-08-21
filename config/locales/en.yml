@@ -278,6 +278,7 @@ en:
       archived: "Archived"
       select_all: "Select All"
       deselect_all: "Deselect All"
+      execute_link_fail: "Could not execute"
     categories:
       no_results: "No Results. Create New "
     everything:
@@ -2491,6 +2492,8 @@ en:
       issue_completed_subject_full: "Project %{project_name} issue completed: %{issue_name}"
       issue_completed_body: "The following issue has been completed for the project %{project_name}:\n\n%{issue_name}"
       issue_completed_body_details: "\n\nDetails: %{details}"
+      issue_archived: "Successfully archived and any subscribers notified"
+      issue_archive_fail: "Failed to complete project issue due to invalid submission data"
     flights:
       flight_name: "Flight Name"
       flight_start_date: "Flight Start Date"
