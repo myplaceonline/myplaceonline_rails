@@ -5,27 +5,35 @@
   
   <script type="text/javascript">
     function feed_item_mark_read(obj, id) {
-      var link = "<%= feed_feed_item_mark_read_url(obj.id, -1) %>";
-      link = link.replace(/-1/, id);
-      myplaceonline.showLoading();
-      $.ajax({
-        url: link,
-        method: "POST",
-        dataType: "json",
-        context: {
-          obj: obj
-        }
-      }).done(function(data, textStatus, jqXHR) {
-        if (data.result) {
-          myplaceonline.createSuccessNotification("<%= t("myplaceonline.feed_items.item_marked_read") %>");
-          $(this.obj).parents("li").first().find(".feed_item").first().addClass("bghighlight");
-        }
-      }).fail(function(jqXHR, textStatus, errorThrown) {
-        myplaceonline.criticalError("Error. jqXHR: " + jqXHR.readyState + "," + jqXHR.status + ", " + jqXHR.responseText + ", " + jqXHR.responseXML + ", status: " + textStatus, errorThrown);
-      }).complete(function(jqXHR, textStatus) {
-        myplaceonline.hideLoading();
-      });
-  }
+      if (!$(obj).parents("li").first().find(".feed_item").first().hasClass("bghighlight")) {
+        var link = "<%= feed_feed_item_mark_read_url(obj.id, -1) %>";
+        link = link.replace(/-1/, id);
+        myplaceonline.showLoading();
+        $.ajax({
+          url: link,
+          method: "POST",
+          dataType: "json",
+          context: {
+            obj: obj
+          }
+        }).done(function(data, textStatus, jqXHR) {
+          if (data.result) {
+            myplaceonline.createSuccessNotification("<%= t("myplaceonline.feed_items.item_marked_read") %>");
+            var $obj = $(this.obj);
+            $obj.parents("li").first().find(".feed_item").first().addClass("bghighlight");
+            $obj.removeClass("ui-icon-check");
+            $obj.addClass("ui-icon-edit");
+          }
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+          myplaceonline.criticalError("Error. jqXHR: " + jqXHR.readyState + "," + jqXHR.status + ", " + jqXHR.responseText + ", " + jqXHR.responseXML + ", status: " + textStatus, errorThrown);
+        }).complete(function(jqXHR, textStatus) {
+          myplaceonline.hideLoading();
+        });
+        return false;
+      } else {
+        return true;
+      }
+    }
   </script>
 
   <ul data-role="listview" data-inset="true">
@@ -35,8 +43,14 @@
           <%= item.display %>
           <span class="ui-li-count"><%= Myp.display_datetime_short(item.publication_date, current_user) %></span>
         <% end %>
-        <%= link_to(feed_feed_item_path(obj, item), data: { icon: "check" }, onclick: "feed_item_mark_read(this, " + item.id.to_s + "); return false;") do %>
-          <%= t("myplaceonline.feed_items.item_mark_read") %>
+        <% if item.is_read? %>
+          <%= link_to(feed_feed_item_path(obj, item), data: { icon: "edit" }) do %>
+            <%= t("myplaceonline.general.edit") %>
+          <% end %>
+        <% else %>
+          <%= link_to(feed_feed_item_path(obj, item), data: { icon: "check" }, onclick: "return feed_item_mark_read(this, " + item.id.to_s + ");") do %>
+            <%= t("myplaceonline.feed_items.item_mark_read") %>
+          <% end %>
         <% end %>
       </li>
     <% end %>
