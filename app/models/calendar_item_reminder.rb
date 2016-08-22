@@ -277,7 +277,7 @@ class CalendarItemReminder < ActiveRecord::Base
     
     begin
       
-      link = Myp.root_url + "c" + pending_item.id.to_s
+      link = Myp.root_url + "/c/" + pending_item.id.to_s
       
       chars_available = (MAX_MESSAGE_LENGTH * MAX_NUM_MESSAGES) - link.length - 4 # 1 for a space before the link, and 3 for an ellipses
       
