@@ -1,0 +1,10 @@
+<%= render layout: "shared/model_index" do %>
+  <% content_for :abovelist do %>
+    <% if !@message.blank? %>
+      <p><%= @message %></p>
+    <% end %>
+  <% end %>
+  <% content_for :footerlinks do %>
+    <li><%= link_to t('myplaceonline.feeds.load_all'), feeds_load_all_path, "data-icon" => "refresh" %></li>
+  <% end %>
+<% end %>

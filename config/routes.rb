@@ -463,6 +463,7 @@ Rails.application.routes.draw do
   resources :locations
   post 'locations/new'
 
+  match 'feeds/load_all', :to => 'feeds#load_all', via: [:get], as: "feeds_load_all"
   match 'feeds/:id/load', :to => 'feeds#load', via: [:get], as: "feed_load"
   resources :feeds do
     match 'feed_items/:id/mark_read', :to => 'feed_items#mark_read', via: [:post], as: "feed_item_mark_read"

@@ -33,4 +33,14 @@ class Feed < ActiveRecord::Base
     end
     new_items
   end
+  
+  def number_unread
+    count = 0
+    feed_items.each do |item|
+      if !item.is_read?
+        count += 1
+      end
+    end
+    count.to_s
+  end
 end

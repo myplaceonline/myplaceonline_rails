@@ -3,6 +3,10 @@
   <%= flashes! %>
 <% end %>
 
+<% yielded = yield %>
+
+<%= content_for(:abovelist) %>
+
 <% if !controller.has_items %>
 
   <p><%= t("myplaceonline.general.count_no") + " " + t("myplaceonline.category." + controller.category_name) %>.
@@ -112,7 +116,7 @@
   <p><%= link_to t("myplaceonline.general.add") + " " + t("myplaceonline.category." + controller.category_name).singularize, controller.new_path, "class" => "ui-btn" %></p>
 <% end %>
 
-<%= yield %>
+<%= yielded %>
 
 <% if !@myplet %>
   <% content_for :footer do -%>

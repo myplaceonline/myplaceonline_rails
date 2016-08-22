@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160821230028) do
+ActiveRecord::Schema.define(version: 20160822003259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1271,6 +1271,17 @@ ActiveRecord::Schema.define(version: 20160821230028) do
 
   add_index "feed_items", ["feed_id"], name: "index_feed_items_on_feed_id", using: :btree
   add_index "feed_items", ["identity_id"], name: "index_feed_items_on_identity_id", using: :btree
+
+  create_table "feed_load_statuses", force: :cascade do |t|
+    t.integer  "items_total"
+    t.integer  "items_complete"
+    t.integer  "identity_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "items_error"
+  end
+
+  add_index "feed_load_statuses", ["identity_id"], name: "index_feed_load_statuses_on_identity_id", using: :btree
 
   create_table "feeds", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -3715,6 +3726,7 @@ ActiveRecord::Schema.define(version: 20160821230028) do
   add_foreign_key "favorite_product_links", "identities"
   add_foreign_key "feed_items", "feeds"
   add_foreign_key "feed_items", "identities"
+  add_foreign_key "feed_load_statuses", "identities"
   add_foreign_key "flight_legs", "companies", column: "flight_company_id"
   add_foreign_key "flight_legs", "flights"
   add_foreign_key "flight_legs", "identities"

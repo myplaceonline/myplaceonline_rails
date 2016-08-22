@@ -758,6 +758,10 @@ en:
       feed_items: "Items"
       new_items: "%{count} new items"
       no_new_items: "No new items"
+      load_all: "Refresh All"
+      loading_all: "It will take some time to reload everything. Refresh for a status."
+      loading_all_finished: "Loading finished. Feeds refreshed: %{complete}. Feed errors: %{errors}"
+      loading_all_inprogress: "Loading in progress. Feeds refreshed: %{complete} out of %{total}"
     feed_items:
       feed_title: "Title"
       feed_link: "Link"

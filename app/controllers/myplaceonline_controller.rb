@@ -363,10 +363,6 @@ class MyplaceonlineController < ApplicationController
     result
   end
   
-  def use_bubble?
-    false
-  end
-  
   def display_obj_bubble(obj)
     if use_bubble?
       btext = bubble_text(obj)
@@ -378,6 +374,10 @@ class MyplaceonlineController < ApplicationController
     else
       ""
     end
+  end
+  
+  def use_bubble?
+    false
   end
   
   def bubble_text(obj)
