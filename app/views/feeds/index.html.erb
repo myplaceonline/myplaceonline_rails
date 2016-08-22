@@ -1,7 +1,9 @@
 <%= render layout: "shared/model_index" do %>
   <% content_for :abovelist do %>
     <% if !@message.blank? %>
-      <p><%= @message %></p>
+      <div class="errors">
+        <ul><li><%= @message %></li></ul>
+      </div>
     <% end %>
   <% end %>
   <% content_for :footerlinks do %>

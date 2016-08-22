@@ -8,7 +8,7 @@ class FeedsController < MyplaceonlineController
         @message = I18n.t("myplaceonline.feeds.loading_all_finished", complete: status.items_complete, errors: status.items_error)
         status.destroy!
       else
-        @message = I18n.t("myplaceonline.feeds.loading_all_inprogress", complete: status.items_complete, total: status.items_total)
+        @message = I18n.t("myplaceonline.feeds.loading_all_inprogress", complete: status.items_progressed, total: status.items_total, percent: ((status.items_progressed.to_f / status.items_total.to_f) * 100.0).round(2))
       end
     end
     super
