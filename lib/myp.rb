@@ -1824,8 +1824,8 @@ module Myp
   
   def self.initialize_sms
     if !ENV["TWILIO_NUMBER"].blank?
-      Rails.logger.info{"Twilio credentials available, initializing..."}
       @@twilio_number = ENV["TWILIO_NUMBER"]
+      Rails.logger.info{"Twilio credentials available, initializing with #{@@twilio_number}"}
       @@twilio_client = Twilio::REST::Client.new(ENV["TWILIO_ACCOUNT"], ENV["TWILIO_AUTH"])
     else
       if Rails.env.production?

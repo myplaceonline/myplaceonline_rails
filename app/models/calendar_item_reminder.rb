@@ -295,9 +295,9 @@ class CalendarItemReminder < ActiveRecord::Base
       
       message += " " + link
       
-      user.send_sms(message)
-      
       Rails.logger.debug("send_reminder_notifications final message #{message}")
+      
+      user.send_sms(message)
       
     rescue Exception => e
       Myp.warn("Could not process send_reminder_notifications #{user.id}, #{pending_item.id}: #{Myp.error_details(e)}")

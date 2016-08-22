@@ -386,8 +386,8 @@ class ApiController < ApplicationController
     begin
       info = Myp.website_info(link)
       if !info.nil?
-        result[:title] = info[:title]
-        result[:link] = info[:link]
+        result[:title] = info[:title].force_encoding("utf-8")
+        result[:link] = info[:link].force_encoding("utf-8")
         result[:result] = true
       end
     rescue Exception => e
