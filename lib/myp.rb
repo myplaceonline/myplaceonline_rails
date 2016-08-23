@@ -1876,4 +1876,14 @@ module Myp
     target[last_piece] = value
     hash.delete(key)
   end
+  
+  class SuddenRedirectError < StandardError
+    def initialize(path)
+      @path = path
+    end
+    
+    def path
+      @path
+    end
+  end
 end

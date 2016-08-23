@@ -621,12 +621,16 @@ class MyplaceonlineController < ApplicationController
       if action.nil?
         action = action_name
       end
-      if nested
-        parent_id = parent_model_last.table_name.singularize.downcase + "_id"
-        @parent = Myp.find_existing_object(parent_model_last, p[parent_id], false)
-        @obj = model.where("id = ? and #{parent_id} = ?", p[:id].to_i, p[parent_id.to_sym].to_i).take!
-      else
-        @obj = model.find(p[:id].to_i)
+      begin
+        if nested
+          parent_id = parent_model_last.table_name.singularize.downcase + "_id"
+          @parent = Myp.find_existing_object(parent_model_last, p[parent_id], false)
+          @obj = model.where("id = ? and #{parent_id} = ?", p[:id].to_i, p[parent_id.to_sym].to_i).take!
+        else
+          @obj = model.find(p[:id].to_i)
+        end
+      rescue ActiveRecord::RecordNotFound => rnf
+        raise Myp::SuddenRedirectError.new(index_path)
       end
       authorize! action.to_sym, @obj
       

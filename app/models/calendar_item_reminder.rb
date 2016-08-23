@@ -276,8 +276,13 @@ class CalendarItemReminder < ActiveRecord::Base
     Rails.logger.debug("send_reminder_notifications start #{pending_item.id}")
     
     begin
-      
-      link = Myp.root_url + "/c/" + pending_item.id.to_s
+
+      begin
+        link = Myp.root_url + "/c/" + pending_item.id.to_s
+      rescue Exception => e1
+        # http://stackoverflow.com/a/35832218/5657303
+        link = "http://localhost:3000/c/" + pending_item.id.to_s
+      end
       
       chars_available = (MAX_MESSAGE_LENGTH * MAX_NUM_MESSAGES) - link.length - 4 # 1 for a space before the link, and 3 for an ellipses
       

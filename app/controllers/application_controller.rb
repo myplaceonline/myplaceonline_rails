@@ -57,6 +57,8 @@ class ApplicationController < ActionController::Base
       redirect_to Myp.reentry_url(request)
     elsif exception.is_a?(CanCan::AccessDenied)
       redirect_to root_url, :alert => exception.message
+    elsif exception.is_a?(Myp::SuddenRedirectError)
+      redirect_to exception.path
     else
       Myp.handle_exception(exception, session[:myp_email], request)
       respond_to do |type|
@@ -68,7 +70,7 @@ class ApplicationController < ActionController::Base
   end
   
   def around_request
-    Rails.logger.debug{"application_controller around_request entry"}
+    Rails.logger.debug{"application_controller around_request entry #{request.referer}"}
     overwrote = false
     overwrote2 = false
     begin
