@@ -184,6 +184,7 @@ en:
       checklist_items: "Checklist Items"
       feed_items: "Feed Items"
       myreferences: "References"
+      identity_emails: "Emails"
     general:
       email: "E-mail"
       password: "Password"
