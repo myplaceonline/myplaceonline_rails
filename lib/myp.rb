@@ -1513,17 +1513,21 @@ module Myp
     result
   end
   
-  def self.database_advisory_lock(key)
+  DB_LOCK_CALENDAR_ITEM_REMINDERS_ALL = 1
+  DB_LOCK_CALENDAR_ITEM_REMINDERS = 2
+  DB_LOCK_LOAD_RSS_FEEDS = 3
+  
+  def self.database_advisory_lock(key1, key2)
     if ActiveRecord::Base.connection.instance_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
-      ActiveRecord::Base.connection.select_value("select pg_try_advisory_lock(#{key})") == "t"
+      ActiveRecord::Base.connection.select_value("select pg_try_advisory_lock(#{key1}, #{key2})") == "t"
     else
       true
     end
   end
 
-  def self.database_advisory_unlock(key)
+  def self.database_advisory_unlock(key1, key2)
     if ActiveRecord::Base.connection.instance_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
-      ActiveRecord::Base.connection.execute("select pg_advisory_unlock(#{key})")
+      ActiveRecord::Base.connection.execute("select pg_advisory_unlock(#{key1}, #{key2})")
     else
       true
     end

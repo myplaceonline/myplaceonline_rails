@@ -18,7 +18,7 @@ class CalendarItemReminder < ActiveRecord::Base
     Rails.logger.info("CalendarItemReminder.ensure_pending_all_users start")
     got_lock = false
     begin
-      got_lock = Myp.database_advisory_lock(1)
+      got_lock = Myp.database_advisory_lock(Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS_ALL, 1)
       if got_lock
         User.all.each do |user|
           begin
@@ -33,7 +33,7 @@ class CalendarItemReminder < ActiveRecord::Base
       end
     ensure
       if got_lock
-        Myp.database_advisory_unlock(1)
+        Myp.database_advisory_unlock(Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS_ALL, 1)
       end
     end
     Rails.logger.info("ensure_pending_all_users end")
@@ -243,10 +243,9 @@ class CalendarItemReminder < ActiveRecord::Base
     
     Rails.logger.debug("ensure_pending start #{user.id}")
 
-    lock_id = 100 + user.id
     got_lock = false
     begin
-      got_lock = Myp.database_advisory_lock(lock_id)
+      got_lock = Myp.database_advisory_lock(Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS, user.id)
       if got_lock
         ensure_pending_process(user)
       else
@@ -254,7 +253,7 @@ class CalendarItemReminder < ActiveRecord::Base
       end
     ensure
       if got_lock
-        Myp.database_advisory_unlock(lock_id)
+        Myp.database_advisory_unlock(Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS, user.id)
       end
     end
 
