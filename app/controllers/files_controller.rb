@@ -6,6 +6,10 @@ class FilesController < MyplaceonlineController
     "file"
   end
 
+  def paths_form_name
+    path_name.pluralize
+  end
+
   def category_name
     "files"
   end
