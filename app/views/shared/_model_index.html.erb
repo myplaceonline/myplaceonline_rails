@@ -127,7 +127,7 @@
             <% if content_for?(:allfooterlinks) %>
               <%= content_for(:allfooterlinks) %>
             <% else %>
-              <% if controller.show_add %>
+              <% if controller.show_index_add %>
               <li><%= link_to(t("myplaceonline.general.add") + " " + t("myplaceonline.category." + controller.category_name).singularize, controller.new_path, "data-icon" => "plus") %></li>
               <% end %>
               <% if controller.index_destroy_all_link? %>

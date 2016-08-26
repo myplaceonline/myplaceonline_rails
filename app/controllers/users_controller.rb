@@ -8,7 +8,7 @@ class UsersController < MyplaceonlineController
     false
   end
   
-  def show_add
+  def allow_add
     false
   end
   

@@ -469,6 +469,10 @@ class MyplaceonlineController < ApplicationController
     allow_add
   end
   
+  def show_index_add
+    allow_add
+  end
+  
   def show_index_footer
     true
   end
