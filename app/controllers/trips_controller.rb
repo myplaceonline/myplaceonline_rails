@@ -40,6 +40,10 @@ class TripsController < MyplaceonlineController
   def search_parent_category
     category_name.singularize
   end
+  
+  def show_share
+    false
+  end
 
   protected
     def sorts
