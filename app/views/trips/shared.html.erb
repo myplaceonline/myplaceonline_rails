@@ -31,3 +31,13 @@
   <p><%= url_or_blank(file_download_path(@obj.identity_file, token: params[:token]), t("myplaceonline.trips.download_zip") + " (" + bytes_number(@obj.identity_file.file_file_size) + ")", nil, "ui-btn ui-btn-inline", true) %></p>
 <% end %>
 </div>
+
+<% if @obj.current_user_owns? %>
+  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="navbar">
+      <ul>
+        <li><%= link_to t("myplaceonline.general.share"), trip_share_path(@obj), "data-icon" => "action" %></li>
+      </ul>
+    </div>
+  </div>
+<% end %>
