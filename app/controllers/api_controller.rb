@@ -186,6 +186,10 @@ class ApiController < ApplicationController
         # This upload may come from the root element or from a child form submission
         paramnode = nil
         while paramnode.nil?
+          if spliturl[objclass_index].nil?
+            objclass_index -= 2
+            break
+          end
           objclass = spliturl[objclass_index].singularize
           paramnode = params[objclass]
           
