@@ -69,6 +69,9 @@ var myplaceonline = function(mymodule) {
   });
 
   $(document).on('ajax:error', 'form', function(xhr, status, error) {
+    if (status && status.statusText == "timeout") {
+      alert("The request timed out. Please check your internet connection and try again.");
+    }
     myplaceonline.criticalError("Error submitting form: status: " + myplaceonline.getJSON(status) + ", error: " + myplaceonline.getJSON(error));
   });
 
