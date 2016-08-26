@@ -28,7 +28,7 @@
         @additional_items.each do |obj|
         %>
           <li>
-            <%= link_to controller.display_obj(obj), send("#{controller.path_name}_path", obj) %>
+            <%= link_to((controller.display_obj(obj) + controller.display_obj_bubble(obj)).html_safe, send("#{controller.path_name}_path", obj)) %>
           </li>
         <% end %>
       </ul>
