@@ -18,9 +18,11 @@
         <%= image_tag("play_store.png", alt: t("myplaceonline.general.play_store")) %>
       <% end %>
     </p>
-  <% end %>
 
-  <%= raw(Myp.welcome_features) %>
+    <%# No screenshots for phonegap since they saw those when they installed the app %>
+    <%= raw(Myp.welcome_features) %>
+
+  <% end %>
 
 <% else %>
 
