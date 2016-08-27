@@ -706,9 +706,13 @@ var myplaceonline = function(mymodule) {
 
   function form_add_item_set_html(insertBefore, html, toFocus) {
     $(html).insertBefore(insertBefore);
-    myplaceonline.prepareNewContent($(insertBefore).parent());
-    if (toFocus) {
-      myplaceonline.maybeFocus("#" + toFocus);
+    if (myplaceonline.prepareNewContent) {
+      myplaceonline.prepareNewContent($(insertBefore).parent());
+      if (toFocus) {
+        myplaceonline.maybeFocus("#" + toFocus);
+      }
+    } else {
+      alert("You are on an old version of the myplaceonline app, please update.");
     }
   }
 
