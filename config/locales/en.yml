@@ -360,6 +360,7 @@ en:
       title: "Information"
       apk: "Android Beta APK"
       apk: "Android Test Application APK"
+      phonegap: "Phonegap Build"
       about: "About Myplaceonline"
       contact: "Contact"
       credits: "Credits"

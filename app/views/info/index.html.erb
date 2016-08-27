@@ -56,6 +56,12 @@
     <% end %>
   </li>
   <li>
+    <%= link_to("https://build.phonegap.com/apps/1133885/share", :data => { :ajax => false }) do %>
+      <%= image_tag("FatCow_Icons16x16/apple_corp.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.info.phonegap") %>
+    <% end %>
+  </li>
+  <li>
     <%= link_to(help_path) do %>
       <%= image_tag("famfamfam/help.png", size: "16x16", class: "ui-li-icon") %>
       <%= t("myplaceonline.info.help") %>
