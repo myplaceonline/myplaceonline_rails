@@ -1805,6 +1805,8 @@ en:
       feeling_shocked: "Shocked"
       feeling_nothing: "Nothing"
       feeling_stupid: "Stupid"
+      feeling_accomplished: "Accomplished"
+      feeling_stressed: "Stressed"
       some_evidence: "some evidence"
       first_status: "There's %{evidence} that writing three good things that happened every day improves happiness."
     points:
