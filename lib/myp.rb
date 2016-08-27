@@ -1318,7 +1318,11 @@ module Myp
   
   def self.is_initial_phonegap_request(params, session)
     phonegap = params[:phonegap]
-    !phonegap.nil? && phonegap == "true"
+    result = !phonegap.nil? && phonegap == "true"
+    if result
+      session[:phonegap] = true
+    end
+    result
   end
   
   def self.has_phone?(request)
