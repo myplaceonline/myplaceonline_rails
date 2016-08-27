@@ -73,6 +73,7 @@
       <div data-role="header">
         <% header_title_cached = header_title %>
         <% if Myp.is_initial_phonegap_request(params, session) %>
+          <%# No button on the initial homepage request %>
         <% elsif Myp.is_phonegap_request(params, session) %>
           <a href="/" data-icon="carat-l" data-rel="back"><%= t("myplaceonline.general.back") %></a>
         <% else %>
