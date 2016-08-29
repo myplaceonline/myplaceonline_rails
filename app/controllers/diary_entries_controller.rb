@@ -1,9 +1,5 @@
 class DiaryEntriesController < MyplaceonlineController
   protected
-    def insecure
-      true
-    end
-
     def sorts
       ["diary_entries.diary_time DESC"]
     end
