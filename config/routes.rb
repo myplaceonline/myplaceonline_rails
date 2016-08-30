@@ -181,6 +181,8 @@ Rails.application.routes.draw do
   resources :stocks
   post 'stocks/new'
 
+  match 'events/:id/shared', :to => 'events#shared', via: [:get], as: "event_shared"
+  match 'events/:id/share', :to => 'events#share', via: [:get, :post], as: "event_share"
   resources :events
   post 'events/new'
 

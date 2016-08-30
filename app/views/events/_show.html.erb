@@ -19,3 +19,8 @@
 <% obj.event_contacts.each do |wrapper| %>
   <%= attribute_table_row_reference(t("myplaceonline.events.contact"), "contact_path", wrapper.contact) %>
 <% end %>
+
+<% content_for :postfooterlinks do %>
+  <li><%= link_to t("myplaceonline.general.share"), event_share_path(obj), "data-icon" => "action" %></li>
+  <li><%= link_to t("myplaceonline.events.show_shared"), event_shared_path(obj), "data-icon" => "search" %></li>
+<% end %>

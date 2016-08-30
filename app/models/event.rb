@@ -1,8 +1,11 @@
 class Event < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
+  include ActionView::Helpers
+  include ActionDispatch::Routing
+  include Rails.application.routes.url_helpers
 
-  DEFAULT_EVENT_THRESHOLD_SECONDS = 15.days
+  DEFAULT_EVENT_THRESHOLD_SECONDS = 1.days
 
   validates :event_name, presence: true
   
@@ -15,6 +18,14 @@ class Event < ActiveRecord::Base
 
   def display
     event_name
+  end
+  
+  def additional_display
+    if !self.event_time.nil?
+      " @ " + Myp.display_date_short(self.event_time, User.current_user) + " " + Myp.display_time(self.event_time, User.current_user, :simple_time)
+    else
+      ""
+    end
   end
   
   before_validation :update_pic_folders
@@ -77,5 +88,106 @@ class Event < ActiveRecord::Base
       self.class,
       model_id: self.id
     )
+  end
+
+  def self.has_shared_page?
+    true
+  end
+  
+  def self.share_async?(permission_share)
+    true
+  end
+  
+  def self.execute_share(permission_share)
+    begin
+      User.current_user = permission_share.identity.user
+      obj = Myp.find_existing_object!(permission_share.subject_class, permission_share.subject_id)
+      obj.event_pictures.map{|x| x.identity_file}.each do |identity_file|
+        psc = PermissionShareChild.new
+        psc.identity = obj.identity
+        psc.share = permission_share.share
+        psc.subject_class = IdentityFile.name
+        psc.subject_id = identity_file.id
+        psc.permission_share = permission_share
+        psc.save!
+      end
+      permission_share.send_email(obj)
+    ensure
+      User.current_user = nil
+    end
+  end
+  
+  def add_email_html(target_email, target_contact, permission_share)
+    result = ""
+    
+    if !self.event_time.nil?
+      result += "\n<p>#{I18n.t("myplaceonline.events.event_time")}: #{Myp.display_datetime(self.event_time, User.current_user)}</p>"
+    end
+    
+    if !self.event_end_time.nil?
+      result += "\n<p>#{I18n.t("myplaceonline.events.event_end_time")}: #{Myp.display_datetime(self.event_end_time, User.current_user)}</p>"
+    end
+    
+    if !self.location.nil?
+      result += "\n<p>#{I18n.t("myplaceonline.events.location")}: #{self.location.address_one_line}<br />#{I18n.t("myplaceonline.events.map")}: #{ActionController::Base.helpers.link_to(self.location.map_url, self.location.map_url)}</p>"
+    end
+
+    if !self.notes.blank?
+      result += "\n#{Myp.markdown_to_html(self.notes)}"
+    end
+    
+    event_pictures.each do |x|
+      result += "\n<hr />\n  <p>"
+      result += ActionController::Base.helpers.image_tag(
+        file_thumbnail_name_url(
+          x.identity_file, x.identity_file.urlname, token: permission_share.share.token
+        )
+      )
+      result += "</p>"
+      if !x.identity_file.notes.blank?
+        result += "\n#{Myp.markdown_to_html(x.identity_file.notes)}"
+      end
+    end
+    
+    result
+  end
+
+  def add_email_plain(target_email, target_contact, permission_share)
+    result = ""
+
+    if !self.event_time.nil?
+      result += "#{I18n.t("myplaceonline.events.event_time")}: #{Myp.display_datetime(self.event_time, User.current_user)}\n\n"
+    end
+    
+    if !self.event_end_time.nil?
+      result += "#{I18n.t("myplaceonline.events.event_end_time")}: #{Myp.display_datetime(self.event_end_time, User.current_user)}\n\n"
+    end
+    
+    if !self.location.nil?
+      result += "#{I18n.t("myplaceonline.events.location")}: #{self.location.address_one_line}\n#{I18n.t("myplaceonline.events.map")}: #{self.location.map_url}\n\n"
+    end
+
+    if !self.notes.blank?
+      result += "#{self.notes}\n\n"
+    end
+    
+    if event_pictures.count > 0
+      result += "#{I18n.t("myplaceonline.events.pictures")}:\n=========\n"
+      event_pictures.each do |x|
+        result += "* " + file_thumbnail_name_url(
+          x.identity_file, x.identity_file.urlname, token: permission_share.share.token
+        ) + "\n"
+        if !x.identity_file.notes.blank?
+          result += "   #{x.identity_file.notes}\n"
+        end
+      end
+    end
+
+    result
+  end
+
+  protected
+  def default_url_options
+    Rails.configuration.default_url_options
   end
 end

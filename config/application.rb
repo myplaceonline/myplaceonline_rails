@@ -115,6 +115,7 @@ module Myplaceonline
     Time::DATE_FORMATS[:short_datetime] = "%b %d %l:%M%p"
     # http://dev.jtsage.com/jQM-DateBox/api/timeOutput/
     Time::DATE_FORMATS[:timebox] = Myplaceonline::JQM_DATEBOX_TIMEBOX_FORMAT
+    Time::DATE_FORMATS[:simple_time] = "%I:%M %p"
     
     # http://www.iso.org/iso/iso8601
     Date::DATE_FORMATS[:iso8601] = "%Y-%m-%d"

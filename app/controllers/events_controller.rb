@@ -11,6 +11,27 @@ class EventsController < MyplaceonlineController
     Myp.display_date_short_year(obj.event_time, User.current_user)
   end
 
+  def shared
+    @obj = model.find_by(id: params[:id])
+    authorize! :show, @obj
+  end
+  
+  def share
+    set_obj
+    
+    redirect_to(
+      permissions_share_token_path(
+        subject_class: @obj.class.name,
+        subject_id: @obj.id,
+        child_selections: @obj.event_pictures.map{|x| x.id}.join(",")
+      )
+    )
+  end
+
+  def show_share
+    false
+  end
+
   protected
     def sorts
       ["events.event_time DESC"]

@@ -67,6 +67,9 @@ class PermissionsController < MyplaceonlineController
       @check_obj = @share.get_obj
       authorize! :show, @check_obj
       check_obj_display = @check_obj.display
+      if @check_obj.respond_to?("additional_display")
+        check_obj_display += @check_obj.additional_display
+      end
       @share.email.set_subject(Myp.object_type_human(@check_obj) + ": " + check_obj_display)
       
       # We don't set a body because the body will usually have a link

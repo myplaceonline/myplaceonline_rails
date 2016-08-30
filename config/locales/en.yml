@@ -2104,6 +2104,7 @@ en:
       event_end_time: "End Date/Time"
       notes: "Notes"
       location: "Location"
+      map: "Map"
       upcoming: "Event: %{name} %{delta}"
       pictures: "Pictures"
       picture: "Picture"
@@ -2118,6 +2119,7 @@ en:
       add_file: "Add File/Picture"
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
+      show_shared: "Display"
     stocks:
       company: "Company"
       password: "Password"
