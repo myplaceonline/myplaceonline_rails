@@ -203,6 +203,39 @@ class Event < ActiveRecord::Base
 
     result
   end
+  
+  def self.handle_new_reminder?
+    true
+  end
+  
+  def handle_new_reminder
+    
+    permission_share = PermissionShare.where(
+      identity_id: self.identity_id,
+      subject_class: Event.name,
+      subject_id: self.id
+    ).first
+    
+    if !permission_share.nil?
+      body_markdown = I18n.t(
+        "myplaceonline.events.rsvp_reminder_body_markdown",
+        name: self.display,
+        link: Rails.application.routes.url_helpers.send("event_shared_url", self.id, Rails.configuration.default_url_options) + "?token=" + permission_share.share.token
+      )
+
+      event_rsvps.each do |event_rsvp|
+        Myp.send_email(
+          event_rsvp.email,
+          I18n.t("myplaceonline.events.rsvp_reminder_title", name: self.display),
+          Myp.markdown_to_html(body_markdown).html_safe,
+          nil,
+          nil,
+          body_markdown,
+          User.current_user.email
+        )
+      end
+    end
+  end
 
   protected
   def default_url_options

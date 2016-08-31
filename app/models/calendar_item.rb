@@ -34,8 +34,16 @@ class CalendarItem < ActiveRecord::Base
     end
   end
   
+  def find_model_class
+    Object.const_get(model_class)
+  end
+  
   def find_model_object
-    Object.const_get(model_class).find(model_id.to_i)
+    if !model_id.nil?
+      find_model_class.find(model_id.to_i)
+    else
+      nil
+    end
   end
   
   def largest_reminder_threshold_seconds

@@ -189,6 +189,14 @@ class CalendarItemReminder < ActiveRecord::Base
               
               # Send any notifications about the new reminder
               send_reminder_notifications(user, new_pending)
+              
+              item_class = calendar_item_reminder.calendar_item.find_model_class
+              if item_class.respond_to?("handle_new_reminder?")
+                item_obj = calendar_item_reminder.calendar_item.find_model_object
+                if !item_obj.nil?
+                  item_obj.handle_new_reminder
+                end
+              end
 
               if !calendar_item_reminder.max_pending.nil?
                 pendings_result = CalendarItemReminderPending.find_by_sql(
