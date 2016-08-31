@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160828000013) do
+ActiveRecord::Schema.define(version: 20160831042307) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1200,6 +1200,18 @@ ActiveRecord::Schema.define(version: 20160828000013) do
   add_index "event_pictures", ["event_id"], name: "index_event_pictures_on_event_id", using: :btree
   add_index "event_pictures", ["identity_file_id"], name: "index_event_pictures_on_identity_file_id", using: :btree
   add_index "event_pictures", ["identity_id"], name: "index_event_pictures_on_identity_id", using: :btree
+
+  create_table "event_rsvps", force: :cascade do |t|
+    t.integer  "event_id"
+    t.integer  "identity_id"
+    t.integer  "rsvp_type"
+    t.string   "email"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "event_rsvps", ["event_id"], name: "index_event_rsvps_on_event_id", using: :btree
+  add_index "event_rsvps", ["identity_id"], name: "index_event_rsvps_on_identity_id", using: :btree
 
   create_table "events", force: :cascade do |t|
     t.string   "event_name",     limit: 255
@@ -3722,6 +3734,8 @@ ActiveRecord::Schema.define(version: 20160828000013) do
   add_foreign_key "event_pictures", "events"
   add_foreign_key "event_pictures", "identities"
   add_foreign_key "event_pictures", "identity_files"
+  add_foreign_key "event_rsvps", "events"
+  add_foreign_key "event_rsvps", "identities"
   add_foreign_key "favorite_product_links", "favorite_products"
   add_foreign_key "favorite_product_links", "identities"
   add_foreign_key "feed_items", "feeds"

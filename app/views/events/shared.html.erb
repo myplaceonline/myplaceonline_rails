@@ -12,7 +12,28 @@
 <% end %>
 
 <% if !params[:email_token].nil? %>
-  <hr /><p><%= t("myplaceonline.events.email_intro") %></p><p><%= link_to(I18n.t("myplaceonline.events.rsvp_yes"), event_rsvp_path(@obj, token: params[:token], type: Event::RSVP_YES, email_token: params[:email_token])) %>&nbsp;|&nbsp;<%= link_to(I18n.t("myplaceonline.events.rsvp_maybe"), event_rsvp_path(@obj, token: params[:token], type: Event::RSVP_MAYBE, email_token: params[:email_token])) %>&nbsp;|&nbsp;<%= link_to(I18n.t("myplaceonline.events.rsvp_no"), event_rsvp_path(@obj, token: params[:token], type: Event::RSVP_NO, email_token: params[:email_token])) %></p><hr />
+  <hr />
+  <p><%= t("myplaceonline.events.email_intro") %></p>
+  <p>
+    <% if !@rsvp.nil? && @rsvp.rsvp_type == Event::RSVP_YES %>
+      <b><%= t("myplaceonline.events.rsvp_yes") %></b>
+    <% else %>
+      <%= link_to(t("myplaceonline.events.rsvp_yes"), event_rsvp_path(@obj, token: params[:token], type: Event::RSVP_YES, email_token: params[:email_token])) %>
+    <% end %>
+    &nbsp;|&nbsp;
+    <% if !@rsvp.nil? && @rsvp.rsvp_type == Event::RSVP_MAYBE %>
+      <b><%= t("myplaceonline.events.rsvp_maybe") %></b>
+    <% else %>
+      <%= link_to(t("myplaceonline.events.rsvp_maybe"), event_rsvp_path(@obj, token: params[:token], type: Event::RSVP_MAYBE, email_token: params[:email_token])) %>
+    <% end %>
+    &nbsp;|&nbsp;
+    <% if !@rsvp.nil? && @rsvp.rsvp_type == Event::RSVP_NO %>
+      <b><%= t("myplaceonline.events.rsvp_no") %></b>
+    <% else %>
+      <%= link_to(t("myplaceonline.events.rsvp_no"), event_rsvp_path(@obj, token: params[:token], type: Event::RSVP_NO, email_token: params[:email_token])) %>
+    <% end %>
+  </p>
+  <hr />
 <% end %>
 
 <% if !@obj.notes.blank? %>
