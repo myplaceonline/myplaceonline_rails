@@ -6,6 +6,10 @@ class Event < ActiveRecord::Base
   include Rails.application.routes.url_helpers
 
   DEFAULT_EVENT_THRESHOLD_SECONDS = 1.days
+  
+  RSVP_YES = 1
+  RSVP_MAYBE = 2
+  RSVP_NO = 3
 
   validates :event_name, presence: true
   
@@ -131,6 +135,10 @@ class Event < ActiveRecord::Base
     if !self.location.nil?
       result += "\n<p>#{I18n.t("myplaceonline.events.location")}: #{ActionController::Base.helpers.link_to(self.location.address_one_line, self.location.map_url)}</p>"
     end
+    
+    rsvp_link = permission_share.link(suffix_path: "rsvp")
+
+    result += "\n<hr /><p>#{I18n.t("myplaceonline.events.email_intro")}</p><p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_yes"), rsvp_link + "&type=#{Event::RSVP_YES}&email=#{target_email}")}&nbsp;|&nbsp;#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_maybe"), rsvp_link + "&type=#{Event::RSVP_MAYBE}&email=#{target_email}")}&nbsp;|&nbsp;#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_no"), rsvp_link + "&type=#{Event::RSVP_NO}&email=#{target_email}")}</p><hr />"
 
     if !self.notes.blank?
       result += "\n#{Myp.markdown_to_html(self.notes)}"
@@ -166,6 +174,10 @@ class Event < ActiveRecord::Base
     if !self.location.nil?
       result += "#{I18n.t("myplaceonline.events.location")}: #{self.location.address_one_line}\n#{I18n.t("myplaceonline.events.map")}: #{self.location.map_url}\n\n"
     end
+    
+    rsvp_link = permission_share.link(suffix_path: "rsvp")
+
+    result += "=========\n\n#{I18n.t("myplaceonline.events.email_intro")}\n\n#{I18n.t("myplaceonline.events.rsvp_yes")}: #{rsvp_link + "&type=#{Event::RSVP_YES}&email=#{target_email}"}\n\n#{I18n.t("myplaceonline.events.rsvp_maybe")}: #{rsvp_link + "&type=#{Event::RSVP_MAYBE}&email=#{target_email}"}\n\n#{I18n.t("myplaceonline.events.rsvp_no")}: #{rsvp_link + "&type=#{Event::RSVP_NO}&email=#{target_email}"}\n\n=========\n\n"
 
     if !self.notes.blank?
       result += "#{self.notes}\n\n"

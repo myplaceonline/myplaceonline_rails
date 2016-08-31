@@ -28,6 +28,27 @@ class EventsController < MyplaceonlineController
     )
   end
 
+  def rsvp
+    @obj = model.find_by(id: params[:id])
+    authorize! :show, @obj
+    
+    if params[:type] == Event::RSVP_YES.to_s
+      flash = "myplaceonline.events.rsvp_success_reminder"
+      flash_type = "myplaceonline.events.rsvp_yes"
+    elsif params[:type] == Event::RSVP_MAYBE.to_s
+      flash = "myplaceonline.events.rsvp_success_reminder"
+      flash_type = "myplaceonline.events.rsvp_maybe"
+    else
+      flash = "myplaceonline.events.rsvp_success"
+      flash_type = "myplaceonline.events.rsvp_no"
+    end
+    
+    redirect_to(
+      event_shared_path(token: params[:token], email: params[:email]),
+      :flash => { :notice => I18n.t(flash, type: I18n.t(flash_type)) }
+    )
+  end
+  
   def show_share
     false
   end

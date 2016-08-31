@@ -183,6 +183,7 @@ Rails.application.routes.draw do
 
   match 'events/:id/shared', :to => 'events#shared', via: [:get], as: "event_shared"
   match 'events/:id/share', :to => 'events#share', via: [:get, :post], as: "event_share"
+  match 'events/:id/rsvp', :to => 'events#rsvp', via: [:get, :post], as: "event_rsvp"
   resources :events
   post 'events/new'
 

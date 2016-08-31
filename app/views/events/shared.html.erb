@@ -1,4 +1,5 @@
 <% content_for :heading do -%><%= page_heading(@obj, controller) %><% end -%>
+<%= flashes! %>
 <h1><%= @obj.display %></h1>
 <% if !@obj.event_time.nil? %>
   <p><%= t("myplaceonline.events.event_time") %>: <%= Myp.display_datetime(@obj.event_time, current_user) %></p>
@@ -9,6 +10,9 @@
 <% if !@obj.location.nil? %>
   <p><%= t("myplaceonline.events.location") %>: <%= link_to(@obj.location.address_one_line, @obj.location.map_url) %></p>
 <% end %>
+
+<hr /><p><%= t("myplaceonline.events.email_intro") %></p><p><%= link_to(I18n.t("myplaceonline.events.rsvp_yes"), event_rsvp_path(@obj, token: params[:token], type: Event::RSVP_YES, email: params[:email])) %>&nbsp;|&nbsp;<%= link_to(I18n.t("myplaceonline.events.rsvp_maybe"), event_rsvp_path(@obj, token: params[:token], type: Event::RSVP_MAYBE, email: params[:email])) %>&nbsp;|&nbsp;<%= link_to(I18n.t("myplaceonline.events.rsvp_no"), event_rsvp_path(@obj, token: params[:token], type: Event::RSVP_NO, email: params[:email])) %></p><hr />
+
 <% if !@obj.notes.blank? %>
   <p><%= markdown_content(@obj.notes) %></p>
 <% end %>

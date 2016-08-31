@@ -2120,6 +2120,12 @@ en:
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
       show_shared: "Display"
+      email_intro: "Are you going? If you click 'Yes' or 'Maybe', you'll get a reminder the day before."
+      rsvp_yes: "Yes"
+      rsvp_maybe: "Maybe"
+      rsvp_no: "No"
+      rsvp_success: "You're a %{type}."
+      rsvp_success_reminder: "You're a %{type}. You'll get a reminder the day before."
     stocks:
       company: "Company"
       password: "Password"

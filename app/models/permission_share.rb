@@ -19,13 +19,17 @@ class PermissionShare < ActiveRecord::Base
   
   belongs_to :share
   
-  def link
+  def link(suffix_path: nil)
     mainlink = "/" + subject_class.underscore.pluralize + "/" + subject_id.to_s
     clazz = Object.const_get(subject_class)
-    if clazz.respond_to?("has_shared_page?") && clazz.has_shared_page?
+    if !suffix_path.nil?
+      mainlink += "/" + suffix_path
+    elsif clazz.respond_to?("has_shared_page?") && clazz.has_shared_page?
       mainlink += "/shared"
     end
-    Myp.root_url + mainlink + "?token=" + share.token
+    result = Myp.root_url + mainlink
+    result += "?token=" + share.token
+    result
   end
   
   def get_obj
