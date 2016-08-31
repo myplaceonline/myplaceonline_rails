@@ -129,7 +129,7 @@ class Event < ActiveRecord::Base
     end
     
     if !self.location.nil?
-      result += "\n<p>#{I18n.t("myplaceonline.events.location")}: #{self.location.address_one_line}<br />#{I18n.t("myplaceonline.events.map")}: #{ActionController::Base.helpers.link_to(self.location.map_url, self.location.map_url)}</p>"
+      result += "\n<p>#{I18n.t("myplaceonline.events.location")}: #{ActionController::Base.helpers.link_to(self.location.address_one_line, self.location.map_url)}</p>"
     end
 
     if !self.notes.blank?
