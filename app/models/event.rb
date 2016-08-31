@@ -137,8 +137,10 @@ class Event < ActiveRecord::Base
     end
     
     rsvp_link = permission_share.link(suffix_path: "rsvp")
+    
+    email_token = EmailToken.find_or_create_by_email(target_email)
 
-    result += "\n<hr /><p>#{I18n.t("myplaceonline.events.email_intro")}</p><p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_yes"), rsvp_link + "&type=#{Event::RSVP_YES}&email=#{target_email}")}&nbsp;|&nbsp;#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_maybe"), rsvp_link + "&type=#{Event::RSVP_MAYBE}&email=#{target_email}")}&nbsp;|&nbsp;#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_no"), rsvp_link + "&type=#{Event::RSVP_NO}&email=#{target_email}")}</p><hr />"
+    result += "\n<hr /><p>#{I18n.t("myplaceonline.events.email_intro")}</p><p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_yes"), rsvp_link + "&type=#{Event::RSVP_YES}&email_token=#{email_token}")}&nbsp;|&nbsp;#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_maybe"), rsvp_link + "&type=#{Event::RSVP_MAYBE}&email_token=#{email_token}")}&nbsp;|&nbsp;#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_no"), rsvp_link + "&type=#{Event::RSVP_NO}&email_token=#{email_token}")}</p><hr />"
 
     if !self.notes.blank?
       result += "\n#{Myp.markdown_to_html(self.notes)}"
@@ -177,7 +179,9 @@ class Event < ActiveRecord::Base
     
     rsvp_link = permission_share.link(suffix_path: "rsvp")
 
-    result += "=========\n\n#{I18n.t("myplaceonline.events.email_intro")}\n\n#{I18n.t("myplaceonline.events.rsvp_yes")}: #{rsvp_link + "&type=#{Event::RSVP_YES}&email=#{target_email}"}\n\n#{I18n.t("myplaceonline.events.rsvp_maybe")}: #{rsvp_link + "&type=#{Event::RSVP_MAYBE}&email=#{target_email}"}\n\n#{I18n.t("myplaceonline.events.rsvp_no")}: #{rsvp_link + "&type=#{Event::RSVP_NO}&email=#{target_email}"}\n\n=========\n\n"
+    email_token = EmailToken.find_or_create_by_email(target_email)
+
+    result += "=========\n\n#{I18n.t("myplaceonline.events.email_intro")}\n\n#{I18n.t("myplaceonline.events.rsvp_yes")}: #{rsvp_link + "&type=#{Event::RSVP_YES}&email_token=#{email_token}"}\n\n#{I18n.t("myplaceonline.events.rsvp_maybe")}: #{rsvp_link + "&type=#{Event::RSVP_MAYBE}&email_token=#{email_token}"}\n\n#{I18n.t("myplaceonline.events.rsvp_no")}: #{rsvp_link + "&type=#{Event::RSVP_NO}&email_token=#{email_token}"}\n\n=========\n\n"
 
     if !self.notes.blank?
       result += "#{self.notes}\n\n"

@@ -9,7 +9,7 @@ class UnsubscribeController < ApplicationController
     
     @content = ""
     
-    token = EmailToken.where(email: email, token: token).first
+    token = EmailToken.where(token: token).first
     
     if !token.nil?
       flash.clear

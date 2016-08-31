@@ -108,14 +108,7 @@ class Email < ActiveRecord::Base
       
       Rails.logger.info{"Email check: #{target}"}
 
-      et = EmailToken.where(email: target).first
-      if et.nil?
-        et = EmailToken.new
-        et.token = SecureRandom.hex(10)
-        et.email = target
-        et.identity = identity
-        et.save!
-      end
+      et = EmailToken.find_or_create_token_by_email(target, identity: identity)
       
       unsubscribe_all_link = unsubscribe_url(email: target, token: et.token)
       unsubscribe_category_link = unsubscribe_url(email: target, category: email_category, token: et.token)

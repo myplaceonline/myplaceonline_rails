@@ -11,7 +11,9 @@
   <p><%= t("myplaceonline.events.location") %>: <%= link_to(@obj.location.address_one_line, @obj.location.map_url) %></p>
 <% end %>
 
-<hr /><p><%= t("myplaceonline.events.email_intro") %></p><p><%= link_to(I18n.t("myplaceonline.events.rsvp_yes"), event_rsvp_path(@obj, token: params[:token], type: Event::RSVP_YES, email: params[:email])) %>&nbsp;|&nbsp;<%= link_to(I18n.t("myplaceonline.events.rsvp_maybe"), event_rsvp_path(@obj, token: params[:token], type: Event::RSVP_MAYBE, email: params[:email])) %>&nbsp;|&nbsp;<%= link_to(I18n.t("myplaceonline.events.rsvp_no"), event_rsvp_path(@obj, token: params[:token], type: Event::RSVP_NO, email: params[:email])) %></p><hr />
+<% if !params[:email_token].nil? %>
+  <hr /><p><%= t("myplaceonline.events.email_intro") %></p><p><%= link_to(I18n.t("myplaceonline.events.rsvp_yes"), event_rsvp_path(@obj, token: params[:token], type: Event::RSVP_YES, email_token: params[:email_token])) %>&nbsp;|&nbsp;<%= link_to(I18n.t("myplaceonline.events.rsvp_maybe"), event_rsvp_path(@obj, token: params[:token], type: Event::RSVP_MAYBE, email_token: params[:email_token])) %>&nbsp;|&nbsp;<%= link_to(I18n.t("myplaceonline.events.rsvp_no"), event_rsvp_path(@obj, token: params[:token], type: Event::RSVP_NO, email_token: params[:email_token])) %></p><hr />
+<% end %>
 
 <% if !@obj.notes.blank? %>
   <p><%= markdown_content(@obj.notes) %></p>
