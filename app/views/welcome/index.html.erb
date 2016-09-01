@@ -13,11 +13,19 @@
   </p>
 
   <% if !Myp.is_phonegap_request(params, session) %>
-    <p style="text-align: center">
-      <%= link_to("https://play.google.com/store/apps/details?id=com.myplaceonline") do %>
-        <%= image_tag("play_store.png", alt: t("myplaceonline.general.play_store")) %>
-      <% end %>
-    </p>
+    <div class="ui-grid-a">
+      <div class="ui-block-a">
+        <div style="text-align: right">
+          <%= link_to("https://play.google.com/store/apps/details?id=com.myplaceonline") do %><%= image_tag("play_store.png", width: 129, height: 45, alt: t("myplaceonline.general.play_store"), style: "padding-top: 3px;") %><% end %>
+          &nbsp;
+        </div>
+      </div>
+      <div class="ui-block-b">
+        <div>
+          <%= link_to("https://itunes.apple.com/us/app/myplaceonline/id1148233790") do %><%= image_tag("Download_on_the_App_Store_Badge_US-UK_135x40.svg", width: 146, height: 51, alt: t("myplaceonline.general.apple_store")) %><% end %>
+        </div>
+      </div>
+    </div>
 
     <%# No screenshots for phonegap since they saw those when they installed the app %>
     <%= raw(Myp.welcome_features) %>

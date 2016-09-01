@@ -266,6 +266,7 @@ en:
       filter: "Filter"
       top_items: "Top Used Items"
       play_store: "Android App on Google Play Store"
+      apple_store: "Download on the App Store"
       notes: "Notes"
       not_auhorized: "Not Authorized"
       close: "Close"
