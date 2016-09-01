@@ -3,13 +3,18 @@
 
 <%= form_for(resource, as: resource_name, url: edit_user_password_path, html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
+  <div style="display:none">
+    <!-- fake fields are a workaround for chrome autofill getting the wrong fields -->
+    <input type="text" name="fakeusernameremembered"/>
+    <input type="password" name="fakepasswordremembered"/>
+  </div>
   <%= f.hidden_field :reset_password_token %>
 
   <div><%= f.label :password, "New password", class: "ui-hidden-accessible" %>
-    <%= f.password_field :password, class: "autofocus", autocomplete: "off", placeholder: "New Password" %></div>
+    <%= f.password_field :password, class: "autofocus", autocomplete: "new-password", placeholder: "New Password" %></div>
 
   <div><%= f.label :password_confirmation, "Confirm new password", class: "ui-hidden-accessible" %>
-    <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Confirm new password" %></div>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm new password" %></div>
 
   <div><%= f.submit "Change my password" %></div>
 <script type="text/javascript">
