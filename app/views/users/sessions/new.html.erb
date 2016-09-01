@@ -3,6 +3,11 @@
 <%= flashes! %>
 <% if flash.nil? || flash.to_hash["alert"].nil? || flash.to_hash["alert"].index("You have to confirm").nil? %>
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div style="display:none">
+      <!-- fake fields are a workaround for chrome autofill getting the wrong fields -->
+      <input type="text" name="fakeusernameremembered"/>
+      <input type="password" name="fakepasswordremembered"/>
+    </div>
     <div>
       <%= f.label :email, class: "ui-hidden-accessible" %>
       <%= f.email_field :email, class: "autofocus", placeholder: t("myplaceonline.general.email") %>
@@ -10,7 +15,7 @@
 
     <div>
       <%= f.label :password, class: "ui-hidden-accessible" %>
-      <%= f.password_field :password, autocomplete: "mpassword", placeholder: t("myplaceonline.general.password") %>
+      <%= f.password_field :password, autocomplete: "new-password", placeholder: t("myplaceonline.general.password") %>
     </div>
 
     <% if devise_mapping.rememberable? -%>
