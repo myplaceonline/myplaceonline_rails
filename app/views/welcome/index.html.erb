@@ -14,7 +14,7 @@
 
   <% if !Myp.is_phonegap_request(params, session) %>
     <div class="ui-grid-a">
-      <div class="ui-block-a">
+      <div class="ui-block-a" style="padding-right: 7px;">
         <div style="text-align: right">
           <%= link_to("https://play.google.com/store/apps/details?id=com.myplaceonline") do %><%= image_tag("play_store.png", width: 129, height: 45, alt: t("myplaceonline.general.play_store"), style: "padding-top: 3px;") %><% end %>
           &nbsp;
