@@ -30,6 +30,9 @@ class InfoController < ApplicationController
   
   def contact
     @obj = SiteContact.new
+    if !params[:subject].blank?
+      @obj.subject = params[:subject]
+    end
     if request.post?
       @obj = SiteContact.new(
         params.require(:site_contact).permit(

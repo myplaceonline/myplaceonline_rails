@@ -17,7 +17,7 @@
   <%= myp_text_field(f, :name, t("myplaceonline.contact.name"), @obj.name, true) %>
   <%= myp_text_field(f, :email, t("myplaceonline.contact.email"), @obj.email) %>
   <%= myp_text_field(f, :subject, t("myplaceonline.contact.subject"), @obj.subject) %>
-  <%= myp_text_area_markdown(f, :body, t("myplaceonline.contact.body"), @obj.body) %>
+  <%= myp_text_area_markdown(f, :body, t("myplaceonline.contact.body"), @obj.body, collapsed: false) %>
   <%= f.submit(t("myplaceonline.contact.send")) %>
 
   <script type="text/javascript">
