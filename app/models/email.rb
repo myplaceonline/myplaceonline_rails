@@ -130,6 +130,10 @@ class Email < ActiveRecord::Base
           final_content += target_obj.add_email_html(target, contact, permission_share)
         end
         
+        if !target_obj.nil? && target_obj.respond_to?("replace_email_html")
+          final_content = target_obj.replace_email_html(final_content, target, contact, permission_share)
+        end
+        
         final_content += "\n<p>\n--<br />\n"
         if user_display_short != user_email
           final_content += "#{user_display_short}<br />\n"
@@ -155,6 +159,13 @@ class Email < ActiveRecord::Base
           more_plain = target_obj.add_email_plain(target, contact, permission_share)
           if !more_plain.blank?
             final_content_plain += more_plain + "\n"
+          end
+        end
+        
+        if !target_obj.nil? && target_obj.respond_to?("replace_email_plain")
+          more_plain = target_obj.replace_email_plain(final_content_plain, target, contact, permission_share)
+          if !more_plain.blank?
+            final_content_plain = more_plain + "\n"
           end
         end
         

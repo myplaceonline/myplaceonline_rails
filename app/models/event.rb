@@ -123,8 +123,11 @@ class Event < ActiveRecord::Base
     end
   end
   
-  def add_email_html(target_email, target_contact, permission_share)
-    result = ""
+  def replace_email_html(result, target_email, target_contact, permission_share)
+    
+    email_token = EmailToken.find_or_create_by_email(target_email)
+
+    result = "<p>#{I18n.t("myplaceonline.category.events").singularize}: " + ActionController::Base.helpers.link_to(self.display, Rails.application.routes.url_helpers.send("event_shared_url", self.id, Rails.configuration.default_url_options) + "?token=" + permission_share.share.token + "&email_token=" + email_token) + "</p>"
     
     if !self.event_time.nil?
       result += "\n<p>#{I18n.t("myplaceonline.events.event_time")}: #{Myp.display_datetime(self.event_time, User.current_user)}</p>"
@@ -140,8 +143,6 @@ class Event < ActiveRecord::Base
     
     rsvp_link = permission_share.link(suffix_path: "rsvp")
     
-    email_token = EmailToken.find_or_create_by_email(target_email)
-
     result += "\n<hr /><p>#{I18n.t("myplaceonline.events.email_intro")}</p><p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_yes"), rsvp_link + "&type=#{Event::RSVP_YES}&email_token=#{email_token}")}&nbsp;|&nbsp;#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_maybe"), rsvp_link + "&type=#{Event::RSVP_MAYBE}&email_token=#{email_token}")}&nbsp;|&nbsp;#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_no"), rsvp_link + "&type=#{Event::RSVP_NO}&email_token=#{email_token}")}</p><hr />"
 
     if !self.notes.blank?
@@ -164,8 +165,11 @@ class Event < ActiveRecord::Base
     result
   end
 
-  def add_email_plain(target_email, target_contact, permission_share)
-    result = ""
+  def replace_email_plain(result, target_email, target_contact, permission_share)
+
+    email_token = EmailToken.find_or_create_by_email(target_email)
+
+    result = "#{I18n.t("myplaceonline.category.events").singularize}: " + Rails.application.routes.url_helpers.send("event_shared_url", self.id, Rails.configuration.default_url_options) + "?token=" + permission_share.share.token + "&email_token=" + email_token + "\n\n"
 
     if !self.event_time.nil?
       result += "#{I18n.t("myplaceonline.events.event_time")}: #{Myp.display_datetime(self.event_time, User.current_user)}\n\n"
@@ -180,8 +184,6 @@ class Event < ActiveRecord::Base
     end
     
     rsvp_link = permission_share.link(suffix_path: "rsvp")
-
-    email_token = EmailToken.find_or_create_by_email(target_email)
 
     result += "=========\n\n#{I18n.t("myplaceonline.events.email_intro")}\n\n#{I18n.t("myplaceonline.events.rsvp_yes")}: #{rsvp_link + "&type=#{Event::RSVP_YES}&email_token=#{email_token}"}\n\n#{I18n.t("myplaceonline.events.rsvp_maybe")}: #{rsvp_link + "&type=#{Event::RSVP_MAYBE}&email_token=#{email_token}"}\n\n#{I18n.t("myplaceonline.events.rsvp_no")}: #{rsvp_link + "&type=#{Event::RSVP_NO}&email_token=#{email_token}"}\n\n=========\n\n"
 
@@ -214,25 +216,26 @@ class Event < ActiveRecord::Base
       identity_id: self.identity_id,
       subject_class: Event.name,
       subject_id: self.id
-    ).first
+    ).last
     
     if !permission_share.nil?
-      body_markdown = I18n.t(
-        "myplaceonline.events.rsvp_reminder_body_markdown",
-        name: self.display,
-        link: Rails.application.routes.url_helpers.send("event_shared_url", self.id, Rails.configuration.default_url_options) + "?token=" + permission_share.share.token
-      )
-
+      
       event_rsvps.each do |event_rsvp|
-        Myp.send_email(
-          event_rsvp.email,
-          I18n.t("myplaceonline.events.rsvp_reminder_title", name: self.display),
-          Myp.markdown_to_html(body_markdown).html_safe,
-          nil,
-          nil,
-          body_markdown,
-          User.current_user.email
-        )
+        
+        if event_rsvp.rsvp_type != Event::RSVP_NO
+          html = replace_email_html("", event_rsvp.email, nil, permission_share)
+          plain = replace_email_plain("", event_rsvp.email, nil, permission_share)
+        
+          Myp.send_email(
+            event_rsvp.email,
+            I18n.t("myplaceonline.events.rsvp_reminder_title", name: self.display),
+            html.html_safe,
+            nil,
+            nil,
+            plain,
+            User.current_user.email
+          )
+        end
       end
     end
   end
