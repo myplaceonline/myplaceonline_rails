@@ -1,4 +1,14 @@
 <%= render layout: "shared/model_index" do %>
+  <%=
+    render partial: 'myplaceonline/filter_select', locals: {
+      filters: [
+        {
+          :name => :archived,
+          :display => "myplaceonline.general.archived"
+        }
+      ]
+    }
+  %>
   <% content_for :footerlinks do %>
     <li><%= link_to t('myplaceonline.periodic_payments.monthly_total'), periodic_payments_monthly_total_path, "data-icon" => "clock" %></li>
   <% end %>

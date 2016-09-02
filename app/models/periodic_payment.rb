@@ -1,6 +1,7 @@
 class PeriodicPayment < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
+  include ModelHelpersConcern
 
   DEFAULT_PERIODIC_PAYMENT_BEFORE_THRESHOLD_SECONDS = 3.days
   DEFAULT_PERIODIC_PAYMENT_AFTER_THRESHOLD_SECONDS = 3.days
@@ -11,6 +12,9 @@ class PeriodicPayment < ActiveRecord::Base
   accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
   allow_existing :password
   
+  attr_accessor :is_archived
+  boolean_time_transfer :is_archived, :archived
+
   def display
     result = periodic_payment_name
     if !payment_amount.nil?
@@ -27,6 +31,9 @@ class PeriodicPayment < ActiveRecord::Base
       if !ended.nil? && Date.today > ended
         result += " (Ended " + Myp.display_date_short(ended, User.current_user) + ")"
       end
+    end
+    if !archived.nil?
+      result += " (" + I18n.t("myplaceonline.general.archived") + ")"
     end
     result
   end
@@ -69,7 +76,7 @@ class PeriodicPayment < ActiveRecord::Base
   def on_after_save
     ActiveRecord::Base.transaction do
       on_after_destroy
-      if !suppress_reminder && !next_payment.nil?
+      if !suppress_reminder && !next_payment.nil? && !self.is_archived?
         User.current_user.primary_identity.calendars.each do |calendar|
           CalendarItem.create_calendar_item(
             User.current_user.primary_identity,
