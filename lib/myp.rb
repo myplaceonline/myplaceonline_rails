@@ -717,7 +717,10 @@ module Myp
     end
   end
   
-  def self.warn(message)
+  def self.warn(message, exception = nil)
+    if !exception.nil?
+      message += "\n" + Myp.error_details(exception)
+    end
     Rails.logger.warn{message}
     Myp.send_support_email_safe("Warning", message)
   end

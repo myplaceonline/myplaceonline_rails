@@ -16,8 +16,4 @@ class DiaryEntriesController < MyplaceonlineController
         :encrypt
       )
     end
-
-    def sensitive
-      true
-    end
 end

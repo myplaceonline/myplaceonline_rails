@@ -185,6 +185,7 @@ en:
       feed_items: "Feed Items"
       myreferences: "References"
       identity_emails: "Emails"
+      dreams: "Dreams"
     general:
       email: "E-mail"
       password: "Password"
@@ -2612,3 +2613,7 @@ en:
       type_personal: "Personal"
       type_professional: "Professional"
       type_educational: "Educational"
+    dreams:
+      dream_name: "Dream Name"
+      dream_time: "Dream Time"
+      dream: "Dream"

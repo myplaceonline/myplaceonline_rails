@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160902231302) do
+ActiveRecord::Schema.define(version: 20160903175710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1050,6 +1050,22 @@ ActiveRecord::Schema.define(version: 20160902231302) do
   end
 
   add_index "drafts", ["identity_id"], name: "index_drafts_on_identity_id", using: :btree
+
+  create_table "dreams", force: :cascade do |t|
+    t.string   "dream_name"
+    t.datetime "dream_time"
+    t.text     "dream"
+    t.integer  "dream_encrypted_id"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "dream_encrypted_id_id"
+  end
+
+  add_index "dreams", ["dream_encrypted_id"], name: "index_dreams_on_dream_encrypted_id", using: :btree
+  add_index "dreams", ["dream_encrypted_id_id"], name: "index_dreams_on_dream_encrypted_id_id", using: :btree
+  add_index "dreams", ["identity_id"], name: "index_dreams_on_identity_id", using: :btree
 
   create_table "drinks", force: :cascade do |t|
     t.integer  "identity_id"
@@ -3716,6 +3732,8 @@ ActiveRecord::Schema.define(version: 20160902231302) do
   add_foreign_key "dessert_locations", "locations"
   add_foreign_key "diary_entries", "encrypted_values", column: "entry_encrypted_id"
   add_foreign_key "drafts", "identities"
+  add_foreign_key "dreams", "encrypted_values", column: "dream_encrypted_id"
+  add_foreign_key "dreams", "identities"
   add_foreign_key "email_contacts", "contacts"
   add_foreign_key "email_contacts", "emails"
   add_foreign_key "email_contacts", "identities"

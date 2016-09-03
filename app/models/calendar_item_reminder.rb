@@ -194,7 +194,11 @@ class CalendarItemReminder < ActiveRecord::Base
               if item_class.respond_to?("handle_new_reminder?")
                 item_obj = calendar_item_reminder.calendar_item.find_model_object
                 if !item_obj.nil?
-                  item_obj.handle_new_reminder
+                  begin
+                    item_obj.handle_new_reminder
+                  rescue Exception => e
+                    Myp.warn("Error handling new reminder", e)
+                  end
                 end
               end
 

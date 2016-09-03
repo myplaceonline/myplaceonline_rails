@@ -69,7 +69,7 @@ class UserIndex < Chewy::Index
           field :identity_id, type: "integer", include_in_all: false
           
           if has_visit_count
-            field :visit_count, type: "short", include_in_all: false
+            field :visit_count, type: "integer", include_in_all: false
           end
         end
         

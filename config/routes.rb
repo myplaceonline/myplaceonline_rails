@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :dreams
+  post 'dreams/new'
+
   resources :myreferences
   post 'myreferences/new'
 
