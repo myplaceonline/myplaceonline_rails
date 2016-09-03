@@ -7,7 +7,6 @@
 %>
 
 <% if !items.nil? && items.length > 0 %>
-
   <%= content_tag("ul", id: ulid, data: {role: "listview", inset: "true", filter: filter, "filter-placeholder" => filter_placeholder, "split-icon" => splitIcon}) do %>
     <% items.each do |item| %>
       <%
