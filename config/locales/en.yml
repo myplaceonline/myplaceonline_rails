@@ -523,7 +523,7 @@ en:
     search:
       title: "Search"
       placeholder: "Search"
-      search_categories: "Search"
+      search_categories: "Search Categories and Items"
     api:
       title: "API"
       randomString: "Generate a random string of characters between 1 and 512 characters (?length, default %{default_length}), from the set of characters: %{chars}"
