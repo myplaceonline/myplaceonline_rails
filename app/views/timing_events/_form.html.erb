@@ -1,3 +1,7 @@
-<%= myp_datetime_field(f, :timing_event_start, "myplaceonline.timing_events.timing_event_start", obj.timing_event_start) %>
-<%= myp_datetime_field(f, :timing_event_end, "myplaceonline.timing_events.timing_event_end", obj.timing_event_end) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
+<div>
+  <%= myp_datetime_field(f, :timing_event_start, "myplaceonline.timing_events.timing_event_start", obj.timing_event_start, false, "start") %>
+  <button onclick="$(this).parents('div').first().find('.start').datebox('setTheDate', new Date()); return false;"><%= t("myplaceonline.timing_events.timing_event_start_now") %></button>
+  <%= myp_datetime_field(f, :timing_event_end, "myplaceonline.timing_events.timing_event_end", obj.timing_event_end, false, "end") %>
+  <button onclick="$(this).parents('div').first().find('.end').datebox('setTheDate', new Date()); return false;"><%= t("myplaceonline.timing_events.timing_event_end_now") %></button>
+  <%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
+</div>
