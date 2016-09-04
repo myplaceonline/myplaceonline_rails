@@ -439,6 +439,7 @@ en:
         ]]>
       diagnostic_details:
         identity: "Identity identifier"
+      checkboxes: "Checkbox Tests"
     help:
       title: "Help"
       features: "Features"

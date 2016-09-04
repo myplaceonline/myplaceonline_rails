@@ -7,6 +7,7 @@ class InfoController < ApplicationController
   def diagnostics; end
   def faq; end
   def serverinfo; end
+  def checkboxes; end
 
   def sleep_time
     if !current_user.nil? && current_user.admin?

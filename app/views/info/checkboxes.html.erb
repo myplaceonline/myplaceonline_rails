@@ -1,0 +1,34 @@
+<% content_for :heading do -%><%= t('myplaceonline.info.checkboxes') %><% end -%>
+
+<h1><%= t('myplaceonline.info.checkboxes') %></h1>
+
+<hr />
+
+<label><input type="checkbox" name="checkbox1">Checkbox1</label>
+
+<hr />
+
+<input type="checkbox" name="checkbox2" id="checkbox2" class="custom">
+<label for="checkbox2">Checkbox2</label>
+
+<hr />
+
+<input type="checkbox" name="checkbox3" id="checkbox3" class="custom" data-mini="true">
+<label for="checkbox3">Checkbox3</label>
+
+<hr />
+
+<div class="ui-field-contain">
+  <fieldset data-role="controlgroup">
+    <legend>With Fieldset</legend>
+    <input type="checkbox" name="checkbox4" id="checkbox4" class="custom">
+    <label for="checkbox4">Checkbox4</label>
+  </fieldset>
+</div>
+
+<hr />
+
+<div class="ui-checkbox">
+  <label for="my-checkbox" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Checkbox5</label>
+  <input type="checkbox" id="checkbox5" name="checkbox5" data-corners="false" data-enhanced="true"></input>
+</div>
