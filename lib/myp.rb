@@ -1897,4 +1897,12 @@ module Myp
       @path
     end
   end
+  
+  def self.ellipses_if_needed(str, maxlength)
+    if !str.blank? && str.length > (maxlength - 3)
+      str[0..maxlength - 1] + "..."
+    else
+      str
+    end
+  end
 end

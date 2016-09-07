@@ -11,7 +11,7 @@ class MoneyBalanceItem < ActiveRecord::Base
   attr_accessor :invert
   
   def display
-    independent_description
+    Myp.appendstrwrap(independent_description, Myp.ellipses_if_needed(self.money_balance_item_name, 16))
   end
 
   def self.build(params = nil)
