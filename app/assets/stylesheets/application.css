@@ -174,3 +174,7 @@ div.ui-checkbox + label {
   margin: 0 !important;
   padding: 0 !important;
 }
+
+img.fit {
+  max-width: 100%;
+}

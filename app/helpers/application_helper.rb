@@ -210,15 +210,15 @@ module ApplicationHelper
       # may have been updated
       if has_thumbnail(identity_file)
         if useParams
-          content = image_tag(file_thumbnail_name_path(identity_file, identity_file.urlname, :h => identity_file.thumbnail_hash, token: params[:token]), alt: identity_file.display, title: identity_file.display)
+          content = image_tag(file_thumbnail_name_path(identity_file, identity_file.urlname, :h => identity_file.thumbnail_hash, token: params[:token]), alt: identity_file.display, title: identity_file.display, class: "fit")
         else
-          content = image_tag(file_thumbnail_name_path(identity_file, identity_file.urlname, :h => identity_file.thumbnail_hash), alt: identity_file.display, title: identity_file.display)
+          content = image_tag(file_thumbnail_name_path(identity_file, identity_file.urlname, :h => identity_file.thumbnail_hash), alt: identity_file.display, title: identity_file.display, class: "fit")
         end
       else
         if useParams
-          content = image_tag(file_view_name_path(identity_file, identity_file.urlname, token: params[:token]), alt: identity_file.display, title: identity_file.display)
+          content = image_tag(file_view_name_path(identity_file, identity_file.urlname, token: params[:token]), alt: identity_file.display, title: identity_file.display, class: "fit")
         else
-          content = image_tag(file_view_name_path(identity_file, identity_file.urlname), alt: identity_file.display, title: identity_file.display)
+          content = image_tag(file_view_name_path(identity_file, identity_file.urlname), alt: identity_file.display, title: identity_file.display, class: "fit")
         end
       end
       if link_to_original

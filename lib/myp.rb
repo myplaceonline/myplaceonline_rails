@@ -531,10 +531,10 @@ module Myp
   
   def self.welcome_features
     self.parse_yaml_to_html("myplaceonline.welcome.features") % {
-      :screenshot1 => ActionController::Base.helpers.image_tag("screenshot1.png"),
-      :screenshot2 => ActionController::Base.helpers.image_tag("screenshot6.png"),
-      :screenshot3 => ActionController::Base.helpers.image_tag("screenshot7.png"),
-      :screenshot4 => ActionController::Base.helpers.image_tag("screenshot8.png"),
+      :screenshot1 => ActionController::Base.helpers.image_tag("screenshot1.png", class: "fit"),
+      :screenshot2 => ActionController::Base.helpers.image_tag("screenshot6.png", class: "fit"),
+      :screenshot3 => ActionController::Base.helpers.image_tag("screenshot7.png", class: "fit"),
+      :screenshot4 => ActionController::Base.helpers.image_tag("screenshot8.png", class: "fit"),
       :feature_details => self.parse_yaml_to_html("myplaceonline.welcome.feature_details")
     }
   end

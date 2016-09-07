@@ -83,7 +83,7 @@
         else
           button_type = 3
         end
-        if !current_user.top_left_icon.nil?
+        if !current_user.nil? && !current_user.top_left_icon.nil?
           if current_user.top_left_icon == 0
             button_type = 3
           elsif current_user.top_left_icon == 1

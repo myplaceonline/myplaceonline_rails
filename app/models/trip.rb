@@ -191,14 +191,16 @@ class Trip < ActiveRecord::Base
               ActionController::Base.helpers.image_tag(
                 file_thumbnail_name_url(
                   trip_picture.identity_file, trip_picture.identity_file.urlname, token: permission_share.share.token
-                )
+                ),
+                class: "fit"
               )
             end
         else
           result += ActionController::Base.helpers.image_tag(
             file_thumbnail_name_url(
               trip_picture.identity_file, trip_picture.identity_file.urlname, token: permission_share.share.token
-            )
+            ),
+            class: "fit"
           )
         end
         result += "</p>"

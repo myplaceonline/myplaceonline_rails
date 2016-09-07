@@ -154,7 +154,8 @@ class Event < ActiveRecord::Base
       result += ActionController::Base.helpers.image_tag(
         file_thumbnail_name_url(
           x.identity_file, x.identity_file.urlname, token: permission_share.share.token
-        )
+        ),
+        class: "fit"
       )
       result += "</p>"
       if !x.identity_file.notes.blank?
