@@ -41,4 +41,17 @@ class MoneyBalanceItemsController < MyplaceonlineController
     def parent_model
       MoneyBalance
     end
+
+    def find_explicit_items
+      if !Permission.where(
+          "user_id = ? and subject_class = ? and subject_id = ? and (action & #{Permission::ACTION_MANAGE} != 0 or action & #{Permission::ACTION_READ} != 0)",
+          current_user.id,
+          MoneyBalance.name.underscore.pluralize,
+          @parent.id
+        ).first.nil?
+        MoneyBalanceItem.where(money_balance_id: @parent.id).to_a.map{|x| x.id}
+      else
+        nil
+      end
+    end
 end

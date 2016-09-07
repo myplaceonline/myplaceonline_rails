@@ -105,4 +105,8 @@ class MoneyBalanceItem < ActiveRecord::Base
       )
     )
   end
+  
+  def permission_check_target
+    self.money_balance
+  end
 end

@@ -24,6 +24,12 @@ class Ability
       result = false
       if !subject.nil?
         
+        if subject.respond_to?("permission_check_target")
+          subject = subject.permission_check_target
+          subject_class = subject.class
+          Rails.logger.debug{"Changing subject to: subject_class: #{subject_class.inspect}, subject: #{subject.inspect}"}
+        end
+        
         # If token is a query parameter, then check the share table
         if !request.nil? && !request.query_parameters.nil?
           token = request.query_parameters["token"]

@@ -33,6 +33,8 @@ class MyplaceonlineController < ApplicationController
       @perpage = params[:perpage].to_i
     end
     
+    set_parent
+    
     @count_all = all(strict: true).count
     
     cached_all = all
@@ -52,8 +54,6 @@ class MyplaceonlineController < ApplicationController
 
     index_pre_respond()
 
-    set_parent
-    
     # Save off any query parameters which might be used by AJAX callbacks to
     # index.json.erb (for example, for a full item search)
     @query_params_part = Myp.query_parameters_uri_part(request)
@@ -583,17 +583,21 @@ class MyplaceonlineController < ApplicationController
     def additional_items_max_items
       5
     end
+    
+    def find_explicit_items
+      Permission.where(
+        "user_id = ? and subject_class = ? and (action & #{Permission::ACTION_MANAGE} != 0 or action & #{Permission::ACTION_READ} != 0)",
+        current_user.id,
+        category_name
+      ).to_a.map{|p| p.subject_id}
+    end
 
     # strict: true allows getting all items (usually for a total count)
     def all(strict: false)
       initial_or = ""
-      can_read_others = Permission.where(
-        "user_id = ? and subject_class = ? and (action & #{Permission::ACTION_MANAGE} != 0 or action & #{Permission::ACTION_READ} != 0)",
-        current_user.id,
-        category_name
-      ).to_a.map{|p| p.subject_id}.join(",")
+      can_read_others = find_explicit_items
       if !can_read_others.blank?
-        initial_or = " or #{model.table_name}.id in (#{can_read_others})"
+        initial_or = " or #{model.table_name}.id in (#{can_read_others.join(",")})"
       end
       additional = all_additional_sql(strict)
       if additional.nil?

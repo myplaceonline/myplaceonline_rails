@@ -44,11 +44,11 @@ class MoneyBalance < ActiveRecord::Base
   
   def send_email_to_all(subject, body_markdown)
     if current_user_owns?
-      to = contact
-      cc = identity.user.email
+      to = self.contact
+      cc = self.identity.user.email
     else
-      to = identity
-      cc = contact_identity.emails
+      to = self.identity
+      cc = self.contact.contact_identity.emails
     end
     to.send_email(subject, Myp.markdown_to_html(body_markdown).html_safe, cc, nil, body_markdown)
   end
