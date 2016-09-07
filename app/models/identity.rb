@@ -161,6 +161,7 @@ class Identity < ActiveRecord::Base
   has_many :connections, :dependent => :destroy
   has_many :myreferences, :dependent => :destroy
   has_many :dreams, :dependent => :destroy
+  has_many :messages, :dependent => :destroy
   
   has_many :myplets, -> { order('y_coordinate') }, :dependent => :destroy
   accepts_nested_attributes_for :myplets, allow_destroy: true, reject_if: :all_blank
@@ -337,6 +338,7 @@ class Identity < ActiveRecord::Base
       :connections => connections.to_a.map{|x| x.as_json},
       :myreferences => myreferences.to_a.map{|x| x.as_json},
       :dreams => dreams.to_a.sort{ |a,b| a.dream_name.downcase <=> b.dream_name.downcase }.map{|x| x.as_json},
+      :messages => messages.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

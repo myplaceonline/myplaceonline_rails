@@ -1,0 +1,86 @@
+<%= myp_text_area_markdown(f, :body, "myplaceonline.messages.body", obj.body, autofocus, collapsed: false) %>
+<%= myp_text_field(f, :subject, "myplaceonline.messages.subject", obj.subject) %>
+<%= myp_text_field(f, :message_category, "myplaceonline.messages.message_category", obj.message_category, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
+<%= myp_check_box(f, :send_emails, "myplaceonline.messages.send_emails") %>
+<%= myp_check_box(f, :send_texts, "myplaceonline.messages.send_texts") %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.messages.contacts"),
+    childpropertiesname: :message_contacts,
+    childproperties: obj.message_contacts,
+    deletebutton: t("myplaceonline.messages.delete_contact"),
+    addbutton: t("myplaceonline.messages.add_contact"),
+    expanded: true,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :contact_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.messages.contact"),
+        objform: "contacts/form",
+        existingobjurl: "contact_path",
+        searchurl: "/contacts.json?perpage=0",
+        edit: true,
+        autofocus: true,
+        force_existing: true,
+        simpleform: true
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :contact_attributes,
+      existingobj: childproperty.contact,
+      heading: t("myplaceonline.messages.contact"),
+      objform: "contacts/form",
+      existingobjurl: "contact_path",
+      searchurl: "/contacts.json?perpage=0",
+      edit: true,
+      autofocus: false
+    }
+  %>
+<% end %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.messages.groups"),
+    childpropertiesname: :message_groups,
+    childproperties: obj.message_groups,
+    deletebutton: t("myplaceonline.messages.delete_group"),
+    addbutton: t("myplaceonline.messages.add_group"),
+    expanded: true,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :group_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.messages.group"),
+        objform: "groups/form",
+        existingobjurl: "group_path",
+        searchurl: "/groups.json?perpage=0",
+        edit: true,
+        autofocus: true,
+        force_existing: true
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :group_attributes,
+      existingobj: childproperty.group,
+      heading: t("myplaceonline.messages.group"),
+      objform: "groups/form",
+      existingobjurl: "group_path",
+      searchurl: "/groups.json?perpage=0",
+      edit: true,
+      autofocus: false
+    }
+  %>
+<% end %>
+<%= myp_check_box(f, :draft, "myplaceonline.messages.draft") %>
+<%= myp_check_box(f, :copy_self, "myplaceonline.messages.copy_self") %>

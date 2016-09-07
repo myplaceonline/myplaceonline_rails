@@ -1,0 +1,114 @@
+<% content_for :heading do -%><%= t('myplaceonline.flights.send_info') %><% end -%>
+<h1><%= t('myplaceonline.flights.send_info') %></h1>
+<%= flashes! %>
+<% if @message.errors.any? %>
+  <div class="errors">
+    <ul>
+    <% @message.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for @message, url: flight_send_info_path(@obj) do |f| %>
+  <%= myp_check_box_tag("send_last_leg", t("myplaceonline.flights.send_last_leg"), true) %>
+  <hr />
+  <%= myp_check_box(f, :send_emails, "myplaceonline.messages.send_emails") %>
+  <%= myp_check_box(f, :send_texts, "myplaceonline.messages.send_texts") %>
+  <%=
+    render layout: 'myplaceonline/childproperties', locals: {
+      f: f,
+      heading: t("myplaceonline.messages.contacts"),
+      childpropertiesname: :message_contacts,
+      childproperties: @message.message_contacts,
+      deletebutton: t("myplaceonline.messages.delete_contact"),
+      addbutton: t("myplaceonline.messages.add_contact"),
+      expanded: true,
+      formjson: [
+        {
+          type: :renderpartial,
+          name: :contact_attributes,
+          partial: 'myplaceonline/select_or_create',
+          heading: t("myplaceonline.messages.contact"),
+          objform: "contacts/form",
+          existingobjurl: "contact_path",
+          searchurl: "/contacts.json?perpage=0",
+          edit: true,
+          autofocus: true,
+          force_existing: true,
+          simpleform: true
+        }
+      ]
+    } do |child_fields, childproperty|
+  %>
+    <%=
+      render partial: 'myplaceonline/select_or_create', locals: {
+        f: child_fields,
+        name: :contact_attributes,
+        existingobj: childproperty.contact,
+        heading: t("myplaceonline.messages.contact"),
+        objform: "contacts/form",
+        existingobjurl: "contact_path",
+        searchurl: "/contacts.json?perpage=0",
+        edit: true,
+        autofocus: false
+      }
+    %>
+  <% end %>
+  <%=
+    render layout: 'myplaceonline/childproperties', locals: {
+      f: f,
+      heading: t("myplaceonline.messages.groups"),
+      childpropertiesname: :message_groups,
+      childproperties: @message.message_groups,
+      deletebutton: t("myplaceonline.messages.delete_group"),
+      addbutton: t("myplaceonline.messages.add_group"),
+      expanded: true,
+      formjson: [
+        {
+          type: :renderpartial,
+          name: :group_attributes,
+          partial: 'myplaceonline/select_or_create',
+          heading: t("myplaceonline.messages.group"),
+          objform: "groups/form",
+          existingobjurl: "group_path",
+          searchurl: "/groups.json?perpage=0",
+          edit: true,
+          autofocus: true,
+          force_existing: true
+        }
+      ]
+    } do |child_fields, childproperty|
+  %>
+    <%=
+      render partial: 'myplaceonline/select_or_create', locals: {
+        f: child_fields,
+        name: :group_attributes,
+        existingobj: childproperty.group,
+        heading: t("myplaceonline.messages.group"),
+        objform: "groups/form",
+        existingobjurl: "group_path",
+        searchurl: "/groups.json?perpage=0",
+        edit: true,
+        autofocus: false
+      }
+    %>
+  <% end %>
+  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="navbar">
+      <ul>
+        <li>
+          <%= f.submit(t("myplaceonline.flights.send_info"), "data-icon" => "action", "data-iconpos" => "top") %>
+        </li>
+        <li><%= link_to t("myplaceonline.general.cancel"), controller.obj_path, "data-icon" => "back" %></li>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+</script>

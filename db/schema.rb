@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160903193822) do
+ActiveRecord::Schema.define(version: 20160907210639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2158,6 +2158,47 @@ ActiveRecord::Schema.define(version: 20160903193822) do
   add_index "memberships", ["identity_id"], name: "index_memberships_on_identity_id", using: :btree
   add_index "memberships", ["periodic_payment_id"], name: "index_memberships_on_periodic_payment_id", using: :btree
 
+  create_table "message_contacts", force: :cascade do |t|
+    t.integer  "message_id"
+    t.integer  "contact_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "message_contacts", ["contact_id"], name: "index_message_contacts_on_contact_id", using: :btree
+  add_index "message_contacts", ["identity_id"], name: "index_message_contacts_on_identity_id", using: :btree
+  add_index "message_contacts", ["message_id"], name: "index_message_contacts_on_message_id", using: :btree
+
+  create_table "message_groups", force: :cascade do |t|
+    t.integer  "message_id"
+    t.integer  "group_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "message_groups", ["group_id"], name: "index_message_groups_on_group_id", using: :btree
+  add_index "message_groups", ["identity_id"], name: "index_message_groups_on_identity_id", using: :btree
+  add_index "message_groups", ["message_id"], name: "index_message_groups_on_message_id", using: :btree
+
+  create_table "messages", force: :cascade do |t|
+    t.text     "body"
+    t.boolean  "copy_self"
+    t.string   "message_category"
+    t.boolean  "draft"
+    t.boolean  "personalize"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.boolean  "send_emails"
+    t.boolean  "send_texts"
+    t.string   "subject"
+  end
+
+  add_index "messages", ["identity_id"], name: "index_messages_on_identity_id", using: :btree
+
   create_table "money_balance_item_templates", force: :cascade do |t|
     t.decimal  "amount",                  precision: 10, scale: 2
     t.decimal  "original_amount",         precision: 10, scale: 2
@@ -3800,6 +3841,13 @@ ActiveRecord::Schema.define(version: 20160903193822) do
   add_foreign_key "membership_files", "identities"
   add_foreign_key "membership_files", "identity_files"
   add_foreign_key "membership_files", "memberships"
+  add_foreign_key "message_contacts", "contacts"
+  add_foreign_key "message_contacts", "identities"
+  add_foreign_key "message_contacts", "messages"
+  add_foreign_key "message_groups", "groups"
+  add_foreign_key "message_groups", "identities"
+  add_foreign_key "message_groups", "messages"
+  add_foreign_key "messages", "identities"
   add_foreign_key "money_balance_item_templates", "identities"
   add_foreign_key "money_balance_item_templates", "money_balances"
   add_foreign_key "money_balance_items", "identities"

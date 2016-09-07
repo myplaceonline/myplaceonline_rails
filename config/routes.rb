@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :messages
+  post 'messages/new'
+
   resources :dreams
   post 'dreams/new'
 
@@ -20,6 +23,7 @@ Rails.application.routes.draw do
   resources :text_messages
   post 'text_messages/new'
 
+  match 'flights/:id/send_info', :to => 'flights#send_info', via: [:get, :post], as: "flight_send_info"
   resources :flights
   post 'flights/new'
 

@@ -9,4 +9,13 @@ class Flight < ActiveRecord::Base
   def display
     Myp.appendstrwrap(flight_name, Myp.display_date_short_year(flight_start_date, User.current_user))
   end
+  
+  def last_flight_leg
+    legs = self.flight_legs
+    if !legs.nil? && legs.length > 0
+      legs[legs.length - 1]
+    else
+      nil
+    end
+  end
 end
