@@ -141,9 +141,11 @@ class Event < ActiveRecord::Base
       result += "\n<p>#{I18n.t("myplaceonline.events.location")}: #{ActionController::Base.helpers.link_to(self.location.address_one_line, self.location.map_url)}</p>"
     end
     
-    rsvp_link = permission_share.link(suffix_path: "rsvp")
-    
-    result += "\n<hr /><p>#{I18n.t("myplaceonline.events.email_intro")}</p><p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_yes"), rsvp_link + "&type=#{Event::RSVP_YES}&email_token=#{email_token}")}&nbsp;|&nbsp;#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_maybe"), rsvp_link + "&type=#{Event::RSVP_MAYBE}&email_token=#{email_token}")}&nbsp;|&nbsp;#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_no"), rsvp_link + "&type=#{Event::RSVP_NO}&email_token=#{email_token}")}</p><hr />"
+    if !self.completed?
+      rsvp_link = permission_share.link(suffix_path: "rsvp")
+      
+      result += "\n<hr /><p>#{I18n.t("myplaceonline.events.email_intro")}</p><p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_yes"), rsvp_link + "&type=#{Event::RSVP_YES}&email_token=#{email_token}")}&nbsp;|&nbsp;#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_maybe"), rsvp_link + "&type=#{Event::RSVP_MAYBE}&email_token=#{email_token}")}&nbsp;|&nbsp;#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_no"), rsvp_link + "&type=#{Event::RSVP_NO}&email_token=#{email_token}")}</p><hr />"
+    end
 
     if !self.notes.blank?
       result += "\n#{Myp.markdown_to_html(self.notes)}"
@@ -183,10 +185,12 @@ class Event < ActiveRecord::Base
     if !self.location.nil?
       result += "#{I18n.t("myplaceonline.events.location")}: #{self.location.address_one_line}\n#{I18n.t("myplaceonline.events.map")}: #{self.location.map_url}\n\n"
     end
-    
-    rsvp_link = permission_share.link(suffix_path: "rsvp")
 
-    result += "=========\n\n#{I18n.t("myplaceonline.events.email_intro")}\n\n#{I18n.t("myplaceonline.events.rsvp_yes")}: #{rsvp_link + "&type=#{Event::RSVP_YES}&email_token=#{email_token}"}\n\n#{I18n.t("myplaceonline.events.rsvp_maybe")}: #{rsvp_link + "&type=#{Event::RSVP_MAYBE}&email_token=#{email_token}"}\n\n#{I18n.t("myplaceonline.events.rsvp_no")}: #{rsvp_link + "&type=#{Event::RSVP_NO}&email_token=#{email_token}"}\n\n=========\n\n"
+    if !self.completed?
+      rsvp_link = permission_share.link(suffix_path: "rsvp")
+
+      result += "=========\n\n#{I18n.t("myplaceonline.events.email_intro")}\n\n#{I18n.t("myplaceonline.events.rsvp_yes")}: #{rsvp_link + "&type=#{Event::RSVP_YES}&email_token=#{email_token}"}\n\n#{I18n.t("myplaceonline.events.rsvp_maybe")}: #{rsvp_link + "&type=#{Event::RSVP_MAYBE}&email_token=#{email_token}"}\n\n#{I18n.t("myplaceonline.events.rsvp_no")}: #{rsvp_link + "&type=#{Event::RSVP_NO}&email_token=#{email_token}"}\n\n=========\n\n"
+    end
 
     if !self.notes.blank?
       result += "#{self.notes}\n\n"
@@ -211,8 +215,11 @@ class Event < ActiveRecord::Base
     true
   end
   
+  def completed?
+    !self.event_time.nil? && self.event_time < DateTime.now
+  end
+  
   def handle_new_reminder
-    
     permission_share = PermissionShare.where(
       identity_id: self.identity_id,
       subject_class: Event.name,
@@ -220,16 +227,22 @@ class Event < ActiveRecord::Base
     ).last
     
     if !permission_share.nil?
-      
       event_rsvps.each do |event_rsvp|
-        
-        if event_rsvp.rsvp_type != Event::RSVP_NO
+        # If the person RSVPed Yes or Maybe and this is a reminder for an upcoming
+        # event, then send the reminder email. If the event already occurred,
+        # then this reminder is probably popping because the event was edited to
+        # add pictures or notes, so in that case, we email everyone (so that they
+        # can get any pictures from the event)
+        if event_rsvp.rsvp_type != Event::RSVP_NO || self.completed?
           html = replace_email_html("", event_rsvp.email, nil, permission_share)
           plain = replace_email_plain("", event_rsvp.email, nil, permission_share)
         
           Myp.send_email(
             event_rsvp.email,
-            I18n.t("myplaceonline.events.rsvp_reminder_title", name: self.display),
+            I18n.t(
+                   (self.completed? ? "myplaceonline.events.rsvp_update_title" : "myplaceonline.events.rsvp_reminder_title"),
+                   name: self.display
+                  ),
             html.html_safe,
             nil,
             nil,

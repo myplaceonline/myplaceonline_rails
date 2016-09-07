@@ -2135,6 +2135,7 @@ en:
       rsvp_success_reminder: "You're a %{type}. You'll get a reminder the day before."
       rsvp_reminder_title: "Event Reminder: %{name}"
       rsvp_reminder_body_markdown: "Event Reminder: %{name}. Details: %{link}"
+      rsvp_update_title: "Event Update: %{name}"
     stocks:
       company: "Company"
       password: "Password"
