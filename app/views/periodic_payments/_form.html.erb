@@ -15,7 +15,8 @@
     existingobjurl: "password_path",
     searchurl: "/passwords.json?perpage=0",
     edit: edit,
-    autofocus: false
+    autofocus: false,
+    collapsed: obj.password.nil?
   }
 %>
 <%= myp_check_box(f, :is_archived, "myplaceonline.general.archived") %>
