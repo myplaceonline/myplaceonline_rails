@@ -635,6 +635,9 @@ en:
       items_per_page: "Items Per Page"
       show_timestamps: "Show Created/Updated Timestamps"
       diagnostics: "Diagnostics"
+      top_left_icon: "Top Left Button"
+      top_left_icon_home: "Always Home Button"
+      top_left_icon_back: "Always Back Button"
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"

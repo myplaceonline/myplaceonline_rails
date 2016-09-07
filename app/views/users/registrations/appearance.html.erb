@@ -10,6 +10,7 @@
     <%= check_box_tag :always_autofocus, 1, @always_autofocus, data: { "role" => "flipswitch" } %>
     <%= label_tag :show_timestamps, t("myplaceonline.users.show_timestamps") %>
     <%= check_box_tag :show_timestamps, 1, @show_timestamps, data: { "role" => "flipswitch" } %>
+    <%= myp_select_tag(:top_left_icon, "myplaceonline.users.top_left_icon", Myp.translate_options(User::TOP_LEFT_ICONS), @top_left_icon) %>
   </fieldset>
   <div><%= submit_tag t("myplaceonline.general.save") %></div>
 <% end %>

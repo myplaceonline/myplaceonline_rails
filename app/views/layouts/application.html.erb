@@ -72,11 +72,30 @@
       </script>
       <div data-role="header">
         <% header_title_cached = header_title %>
-        <% if Myp.is_initial_phonegap_request(params, session) %>
+        <%
+        button_type = 0
+        if Myp.is_initial_phonegap_request(params, session)
+          button_type = 1
+        elsif Myp.is_ios
+          button_type = 2
+        elsif Myp.is_phonegap_request(params, session)
+          button_type = 2
+        else
+          button_type = 3
+        end
+        if !current_user.top_left_icon.nil?
+          if current_user.top_left_icon == 0
+            button_type = 3
+          elsif current_user.top_left_icon == 1
+            button_type = 2
+          end
+        end
+        %>
+        <% if button_type == 1 %>
           <%# No button on the initial homepage request %>
-        <% elsif Myp.is_phonegap_request(params, session) %>
+        <% elsif button_type == 2 %>
           <a href="/" data-icon="carat-l" data-rel="back"><%= t("myplaceonline.general.back") %></a>
-        <% else %>
+        <% elsif button_type == 3 %>
           <a href="/" data-icon="home" data-iconpos="notext" title="<%= t("myplaceonline.menu.home") %>"><%= t("myplaceonline.menu.home") %></a>
         <% end %>
         <h1><%= link_to(header_link, id: "mainbutton", title: header_title_cached) do image_tag(header_icon, alt: header_title_cached) end %>&nbsp;<%= yield(:heading).presence || t('myplaceonline.siteTitle') %></h1>

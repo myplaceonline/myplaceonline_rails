@@ -9,6 +9,11 @@ class User < ActiveRecord::Base
   GUEST_ID = -1
   GUEST_EMAIL = "guest@myplaceonline.com"
 
+  TOP_LEFT_ICONS = [
+    ["myplaceonline.users.top_left_icon_home", 0],
+    ["myplaceonline.users.top_left_icon_back", 1]
+  ]
+  
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

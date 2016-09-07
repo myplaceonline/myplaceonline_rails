@@ -998,6 +998,10 @@ module Myp
     result
   end
   
+  def self.is_ios
+    false
+  end
+  
   def self.use_html5_date_inputs()
     false
   end
