@@ -1,3 +1,5 @@
+require "awesome_print"
+
 class InfoController < ApplicationController
   skip_before_filter :do_authenticate_user
   skip_authorization_check
@@ -7,6 +9,11 @@ class InfoController < ApplicationController
   def diagnostics; end
   def faq; end
   def serverinfo; end
+    
+  def clientinfo
+    @browser = ap(MyplaceonlineExecutionContext.browser, html: true)
+  end
+  
   def checkboxes; end
 
   def sleep_time

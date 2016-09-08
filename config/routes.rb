@@ -560,6 +560,7 @@ Rails.application.routes.draw do
 
   get 'info/diagnostics/checkboxes', :to => 'info#checkboxes'
   get 'info/diagnostics/serverinfo', :to => 'info#serverinfo'
+  get 'info/diagnostics/clientinfo', :to => 'info#clientinfo'
   get 'info/index'
   match 'info/contact', via: [:get, :post]
   get 'info/credits'

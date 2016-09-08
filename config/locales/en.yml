@@ -372,6 +372,7 @@ en:
       credits_description: "Thank you to the following projects:"
       diagnostics: "Diagnostics"
       serverinfo: "Server Information"
+      clientinfo: "Client Information"
       privacy: "Privacy Policy"
       terms: "Terms of Service"
       faq: "Frequently Asked Questions"

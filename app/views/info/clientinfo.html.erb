@@ -1,0 +1,11 @@
+<% content_for :heading do -%><%= t('myplaceonline.info.clientinfo') %><% end -%>
+
+<h1><%= t('myplaceonline.info.clientinfo') %></h1>
+
+<p>Browser object:</p>
+<ul>
+  <li>iOS: <%= MyplaceonlineExecutionContext.browser.platform.ios? %></li>
+</ul>
+
+<% if !current_user.nil? && current_user.admin? %>
+<% end %>

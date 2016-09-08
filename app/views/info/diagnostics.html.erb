@@ -10,6 +10,11 @@
       <%= t("myplaceonline.info.serverinfo") %>
     <% end %>
   </li>
+  <li>
+    <%= link_to(info_diagnostics_clientinfo_path) do %>
+      <%= t("myplaceonline.info.clientinfo") %>
+    <% end %>
+  </li>
   <% if !current_user.nil? && current_user.admin? %>
     <li><%= link_to("Raise Server Exception", info_raise_server_exception_path) %></li>
     <li><%= link_to("Long Request (5s)", info_sleep_time_path(duration: 5)) %></li>
