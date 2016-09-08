@@ -9,6 +9,11 @@
   <%= devise_error_messages! %>
   <%= flashes! %>
 
+  <div style="display:none">
+    <!-- fake fields are a workaround for chrome autofill getting the wrong fields -->
+    <input type="text" name="fakeusernameremembered"/>
+    <input type="password" name="fakepasswordremembered"/>
+  </div>
   <% if Myp.requires_invite_code %>
     <div>
       <%= f.label :invite_code, class: "ui-hidden-accessible" %>

@@ -113,18 +113,32 @@ class Event < ActiveRecord::Base
       ExecutionContext.push
       User.current_user = permission_share.identity.user
       obj = Myp.find_existing_object!(permission_share.subject_class, permission_share.subject_id)
-      obj.event_pictures.map{|x| x.identity_file}.each do |identity_file|
-        psc = PermissionShareChild.new
-        psc.identity = obj.identity
-        psc.share = permission_share.share
-        psc.subject_class = IdentityFile.name
-        psc.subject_id = identity_file.id
-        psc.permission_share = permission_share
-        psc.save!
-      end
+      obj.set_pictures_shareable(permission_share)
       permission_share.send_email(obj)
     ensure
       ExecutionContext.pop
+    end
+  end
+  
+  def set_pictures_shareable(permission_share)
+    # Pictures may have been added since the last share, so first we destroy any previous
+    # picture shares and then reshare everything
+    
+    PermissionShareChild.destroy_all(
+      identity_id: self.identity_id,
+      share_id: permission_share.share_id,
+      permission_share_id: permission_share.id,
+      subject_class: IdentityFile.name
+    )
+    
+    self.event_pictures.map{|x| x.identity_file}.each do |identity_file|
+      psc = PermissionShareChild.new
+      psc.identity_id = self.identity_id
+      psc.share_id = permission_share.share_id
+      psc.subject_class = IdentityFile.name
+      psc.subject_id = identity_file.id
+      psc.permission_share_id = permission_share.id
+      psc.save!
     end
   end
   
@@ -232,6 +246,9 @@ class Event < ActiveRecord::Base
     ).last
     
     if !permission_share.nil?
+      
+      self.set_pictures_shareable(permission_share)
+      
       event_rsvps.each do |event_rsvp|
         # If the person RSVPed Yes or Maybe and this is a reminder for an upcoming
         # event, then send the reminder email. If the event already occurred,
