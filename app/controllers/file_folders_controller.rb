@@ -3,6 +3,10 @@ class FileFoldersController < MyplaceonlineController
     "file_folder"
   end
 
+  def paths_form_name
+    path_name.pluralize
+  end
+
   def category_name
     "file_folders"
   end
