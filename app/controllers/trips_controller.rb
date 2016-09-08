@@ -68,6 +68,11 @@ class TripsController < MyplaceonlineController
           :id,
           :_destroy,
           story_attributes: StoriesController.param_names
+        ],
+        trip_flights_attributes: [
+          :id,
+          :_destroy,
+          flight_attributes: FlightsController.param_names
         ]
       )
     end

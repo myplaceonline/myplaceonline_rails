@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160908030704) do
+ActiveRecord::Schema.define(version: 20160908203821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3320,6 +3320,18 @@ ActiveRecord::Schema.define(version: 20160908030704) do
   add_index "treks", ["identity_id"], name: "index_treks_on_identity_id", using: :btree
   add_index "treks", ["location_id"], name: "index_treks_on_location_id", using: :btree
 
+  create_table "trip_flights", force: :cascade do |t|
+    t.integer  "trip_id"
+    t.integer  "flight_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "trip_flights", ["flight_id"], name: "index_trip_flights_on_flight_id", using: :btree
+  add_index "trip_flights", ["identity_id"], name: "index_trip_flights_on_identity_id", using: :btree
+  add_index "trip_flights", ["trip_id"], name: "index_trip_flights_on_trip_id", using: :btree
+
   create_table "trip_pictures", force: :cascade do |t|
     t.integer  "identity_id"
     t.integer  "trip_id"
@@ -3956,6 +3968,9 @@ ActiveRecord::Schema.define(version: 20160908030704) do
   add_foreign_key "trek_pictures", "treks"
   add_foreign_key "treks", "identities"
   add_foreign_key "treks", "locations"
+  add_foreign_key "trip_flights", "flights"
+  add_foreign_key "trip_flights", "identities"
+  add_foreign_key "trip_flights", "trips"
   add_foreign_key "trip_stories", "identities"
   add_foreign_key "trip_stories", "stories"
   add_foreign_key "trip_stories", "trips"

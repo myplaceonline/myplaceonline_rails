@@ -35,6 +35,36 @@ class FlightsController < MyplaceonlineController
       end
     end
   end
+  
+  def self.param_names
+    [
+      :id,
+      :flight_name,
+      :flight_start_date,
+      :confirmation_number,
+      :notes,
+      flight_legs_attributes: [
+        :id,
+        :_destroy,
+        :flight_number,
+        :depart_airport_code,
+        :depart_time,
+        :arrival_airport_code,
+        :arrive_time,
+        :seat_number,
+        :position,
+        flight_company_attributes: CompaniesController.param_names,
+        depart_location_attributes: LocationsController.param_names,
+        arrival_location_attributes: LocationsController.param_names
+      ]
+    ]
+  end
+
+  def self.reject_if_blank(attributes)
+    attributes.dup.all?{|key, value|
+      value.blank?
+    }
+  end
 
   protected
     def insecure
@@ -46,25 +76,6 @@ class FlightsController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:flight).permit(
-        :flight_name,
-        :flight_start_date,
-        :confirmation_number,
-        :notes,
-        flight_legs_attributes: [
-          :id,
-          :_destroy,
-          :flight_number,
-          :depart_airport_code,
-          :depart_time,
-          :arrival_airport_code,
-          :arrive_time,
-          :seat_number,
-          :position,
-          flight_company_attributes: CompaniesController.param_names,
-          depart_location_attributes: LocationsController.param_names,
-          arrival_location_attributes: LocationsController.param_names
-        ]
-      )
+      params.require(:flight).permit(FlightsController.param_names)
     end
 end

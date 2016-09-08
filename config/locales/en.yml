@@ -1478,6 +1478,10 @@ en:
       emergency_contact_email: "%{contact} %{verb} a trip to %{location} starting on %{start_date} until %{end_date}.\n\nMap: %{map}"
       click_pics: "Click the link at the top for the option to see pictures at full size."
       emergency_contact_subject_append: " to %{city}"
+      flight: "Flight"
+      flights: "Flights"
+      add_flight: "Add Flight"
+      delete_flight: "Delete Flight"
     passports:
       region: "Country"
       passport_number: "Passport Number"
