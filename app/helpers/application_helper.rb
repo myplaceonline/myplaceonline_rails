@@ -323,10 +323,8 @@ module ApplicationHelper
     if !ref.nil?
       url = send(pathfunc, ref)
       result = attribute_table_row(name, url_or_blank(url, ref.display), url)
-      if Thread.current[:show_nest_level].nil? && Thread.current[:nest_count] < 10
-        begin
-          Thread.current[:show_nest_level] = 1
-          Thread.current[:nest_count] = Thread.current[:nest_count] + 1
+      begin
+        if ExecutionContext.push_marker(:nest_count) <= 1
           render_result = renderActionInOtherController(
               Object.const_get(controllerName.nil? ? ref.class.name.pluralize + "Controller" : controllerName),
               :show,
@@ -336,9 +334,9 @@ module ApplicationHelper
               }
             ).html_safe
           result += render_result
-        ensure
-          Thread.current[:show_nest_level] = nil
         end
+      ensure
+        ExecutionContext.pop_marker(:nest_count)
       end
       result
     else

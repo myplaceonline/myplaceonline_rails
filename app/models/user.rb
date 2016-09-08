@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
     # If user.id is nil, then it's an anonymous user
     if !user.id.nil? && primary_identity.nil?
 
-      User.current_user = user
+      ExecutionContext.root_or_push[:user] = user
       
       # No primary identity, so we create a default one. We can also do
       # any first-time initialization of the user here
@@ -99,11 +99,11 @@ class User < ActiveRecord::Base
   end
   
   def self.current_user
-    Thread.current[:current_user]
+    MyplaceonlineExecutionContext.user
   end
 
   def self.current_user=(usr)
-    Thread.current[:current_user] = usr
+    MyplaceonlineExecutionContext.user = usr
   end
   
   def time_now

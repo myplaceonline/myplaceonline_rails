@@ -66,11 +66,11 @@ class Permission < ActiveRecord::Base
   end
 
   def self.current_target
-    Thread.current[:current_target]
+    MyplaceonlineExecutionContext.permission_target
   end
 
   def self.current_target=(target)
-    Thread.current[:current_target] = target
+    MyplaceonlineExecutionContext.permission_target = target
   end
   
   def self.current_target_identity

@@ -71,46 +71,33 @@ class ApplicationController < ActionController::Base
   
   def around_request
     Rails.logger.debug{"application_controller around_request entry #{request.referer}"}
-    overwrote = false
-    overwrote2 = false
     begin
+      ExecutionContext.push
       # only do this once per request
-      if User.current_user.nil?
-        overwrote = true
+      if MyplaceonlineExecutionContext.user.nil?
         request_accessor = instance_variable_get(:@_request)
-        Rails.logger.debug{"Setting User.current_user = #{current_user.inspect}"}
-        User.current_user = current_user
-        Thread.current[:current_session] = request_accessor.session
+        Rails.logger.debug{"Setting User.current_user: #{current_user.inspect}"}
+        MyplaceonlineExecutionContext.user = current_user
+        MyplaceonlineExecutionContext.session = request_accessor.session
         if !current_user.nil?
           request_accessor.session[:myp_email] = current_user.email
         end
-        Thread.current[:request] = request_accessor
-      end
-      if Thread.current[:nest_count].nil?
-        overwrote2 = true
-        Thread.current[:nest_count] = 0
+        MyplaceonlineExecutionContext.request = request_accessor
       end
       
       yield
     ensure
-      if overwrote
-        User.current_user = nil
-        Thread.current[:current_session] = nil
-        Thread.current[:request] = nil
-      end
-      if overwrote2
-        Thread.current[:nest_count] = nil
-      end
+      ExecutionContext.pop
       Rails.logger.debug{"application_controller around_request exit"}
     end
   end
   
   def self.current_session
-    Thread.current[:current_session]
+    MyplaceonlineExecutionContext.session
   end
   
   def self.current_request
-    Thread.current[:request]
+    MyplaceonlineExecutionContext.request
   end
   
   def set_time_zone

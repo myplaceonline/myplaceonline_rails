@@ -28,19 +28,14 @@ module Myplaceonline
       @app = app
     end
     
-    def reset
-      Ability.context_identity = nil
-      User.current_user = nil
-    end
-
     def call(env)
       begin
         Rails.logger.debug{"MyplaceonlineRequestStrategy entry"}
-        reset
+        ExecutionContext.push
         @app.call(env)
       ensure
+        ExecutionContext.clear
         Rails.logger.debug{"MyplaceonlineRequestStrategy exit"}
-        reset
       end
     end
   end

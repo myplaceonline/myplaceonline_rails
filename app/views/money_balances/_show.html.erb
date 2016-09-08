@@ -1,7 +1,3 @@
-<% if obj.current_user_owns? %>
-  <%= attribute_table_row_reference(t("myplaceonline.money_balances.contact"), "contact_path", obj.contact) %>
-<% end %>
-<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <% balance = obj.calculate_balance %>
 <% if balance == 0 %>
   <%= attribute_table_row_currency(t("myplaceonline.money_balances.balance"), 0) %>
@@ -22,6 +18,10 @@
         )
     %>
 <% end %>
+<% if obj.current_user_owns? %>
+  <%= attribute_table_row_reference(t("myplaceonline.money_balances.contact"), "contact_path", obj.contact) %>
+<% end %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 
 <% content_for :postfooterlinks do %>
   <li><%= link_to t('myplaceonline.money_balances.money_balance_items'), money_balance_money_balance_items_path(obj), "data-icon" => "bars" %></li>

@@ -66,6 +66,7 @@ class Playlist < ActiveRecord::Base
           zipdata = IO.binread(tfile.path)
           
           begin
+            ExecutionContext.push
             User.current_user = obj.identity.user
             
             ActiveRecord::Base.transaction do
@@ -110,7 +111,7 @@ class Playlist < ActiveRecord::Base
               permission_share.send_email
             end
           ensure
-            User.current_user = nil
+            ExecutionContext.pop
           end
         end
       end

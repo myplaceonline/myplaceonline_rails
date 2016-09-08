@@ -14,21 +14,27 @@ user.confirmed_at = Time.now
 user.user_type = 1
 user.save(:validate => false)
 
-User.current_user = user
-  
-identity = Identity.new
-identity.id = 0
-identity.user = user
-identity.save!
-    
-user.primary_identity = identity
-user.save!
-    
-Myplet.default_myplets(identity)
+begin
+  ExecutionContext.push
+  User.current_user = user
 
-if ENV["SKIP_LARGE_IMPORTS"].nil?
-  Myp.import_museums
-  Myp.import_zip_codes
+  identity = Identity.new
+  identity.id = 0
+  identity.user = user
+  identity.save!
+      
+  user.primary_identity = identity
+  user.save!
+      
+  Myplet.default_myplets(identity)
+
+  if ENV["SKIP_LARGE_IMPORTS"].nil?
+    Myp.import_museums
+    Myp.import_zip_codes
+  end
+
+ensure
+  ExecutionContext.clear
 end
 
 # Modifications to this file go into mypdump.rake

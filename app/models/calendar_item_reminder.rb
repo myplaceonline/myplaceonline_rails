@@ -22,10 +22,11 @@ class CalendarItemReminder < ActiveRecord::Base
       if got_lock
         User.all.each do |user|
           begin
+            ExecutionContext.push
             User.current_user = user
             self.ensure_pending(user)
           ensure
-            User.current_user = nil
+            ExecutionContext.clear
           end
         end
       else

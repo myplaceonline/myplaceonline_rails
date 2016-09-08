@@ -89,6 +89,7 @@ class Trip < ActiveRecord::Base
       end
     end
     begin
+      ExecutionContext.push
       User.current_user = obj.identity.user
       
       ActiveRecord::Base.transaction do
@@ -171,7 +172,7 @@ class Trip < ActiveRecord::Base
         permission_share.send_email(obj)
       end
     ensure
-      User.current_user = nil
+      ExecutionContext.pop
     end
   end
   

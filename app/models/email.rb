@@ -205,6 +205,7 @@ class Email < ActiveRecord::Base
           async = User.current_user.nil?
           begin
             if async
+              ExecutionContext.push
               User.current_user = self.identity.user
             end
             # If we sent an email, add a conversation
@@ -216,7 +217,7 @@ class Email < ActiveRecord::Base
             ).save!
           ensure
             if async
-              User.current_user = nil
+              ExecutionContext.pop
             end
           end
         end

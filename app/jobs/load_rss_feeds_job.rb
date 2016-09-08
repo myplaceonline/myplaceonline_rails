@@ -8,6 +8,7 @@ class LoadRssFeedsJob < ApplicationJob
 
     got_lock = false
     begin
+      ExecutionContext.push
       got_lock = Myp.database_advisory_lock(Myp::DB_LOCK_LOAD_RSS_FEEDS, user.id)
       if got_lock
         User.current_user = user
@@ -39,7 +40,7 @@ class LoadRssFeedsJob < ApplicationJob
         Rails.logger.info("ensure_pending failed lock")
       end
     ensure
-      User.current_user = nil
+      ExecutionContext.clear
       if got_lock
         Myp.database_advisory_unlock(Myp::DB_LOCK_LOAD_RSS_FEEDS, user.id)
       end

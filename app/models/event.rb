@@ -106,6 +106,7 @@ class Event < ActiveRecord::Base
   
   def self.execute_share(permission_share)
     begin
+      ExecutionContext.push
       User.current_user = permission_share.identity.user
       obj = Myp.find_existing_object!(permission_share.subject_class, permission_share.subject_id)
       obj.event_pictures.map{|x| x.identity_file}.each do |identity_file|
@@ -119,7 +120,7 @@ class Event < ActiveRecord::Base
       end
       permission_share.send_email(obj)
     ensure
-      User.current_user = nil
+      ExecutionContext.pop
     end
   end
   

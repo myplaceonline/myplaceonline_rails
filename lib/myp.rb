@@ -999,7 +999,7 @@ module Myp
   end
   
   def self.is_ios
-    false
+    MyplaceonlineExecutionContext.browser.nil? ? false : MyplaceonlineExecutionContext.browser.platform.ios?
   end
   
   def self.use_html5_date_inputs()
@@ -1544,35 +1544,6 @@ module Myp
     end
   end
 
-  def self.push_marker(name)
-    markers = Thread.current[:markers]
-    if markers.nil?
-      markers = Hash.new
-      Thread.current[:markers] = markers
-    end
-    if markers[name].nil?
-      markers[name] = 0
-    end
-    markers[name] = markers[name] + 1
-    markers[name]
-  end
-
-  def self.pop_marker(name)
-    result = 0
-    markers = Thread.current[:markers]
-    if !markers.nil?
-      markers[name] = markers[name] - 1
-      result = markers[name]
-      if result == 0
-        markers.delete(name)
-      end
-      if markers.length == 0
-        Thread.current[:markers] = nil
-      end
-    end
-    result
-  end
-  
   def self.combine_conditionally(a1, condition, &a2)
     if condition
       a1 + a2.call
