@@ -40,9 +40,13 @@ module MyplaceonlineActiveRecordIdentityConcern
     
     def put_files_in_folder(files, folders)
       files.each do |file|
-        if file.identity_file.folder.nil?
-          file.identity_file.folder = IdentityFileFolder.find_or_create(folders)
-        end
+        put_file_in_folder(file, folders)
+      end
+    end
+    
+    def put_file_in_folder(file, folders)
+      if file.identity_file.folder.nil?
+        file.identity_file.folder = IdentityFileFolder.find_or_create(folders)
       end
     end
     

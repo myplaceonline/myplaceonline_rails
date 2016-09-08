@@ -11,4 +11,10 @@ class TripPicture < ActiveRecord::Base
   def display
     identity_file.display
   end
+
+  before_validation :update_pic_folders
+  
+  def update_pic_folders
+    put_file_in_folder(self, trip.picture_folders)
+  end
 end

@@ -29,6 +29,10 @@ class Trip < ActiveRecord::Base
   before_validation :update_pic_folders
   
   def update_pic_folders
+    put_files_in_folder(trip_pictures, picture_folders)
+  end
+  
+  def picture_folders
     folders = Array.new
     folders.push(I18n.t("myplaceonline.category.trips"))
     if !self.location.nil? && !self.location.region_name.blank?
@@ -45,7 +49,7 @@ class Trip < ActiveRecord::Base
         folders.push(self.location.display_general_region)
       end
     end
-    put_files_in_folder(trip_pictures, folders)
+    folders
   end
   
   def display
