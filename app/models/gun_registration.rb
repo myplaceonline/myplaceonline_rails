@@ -31,18 +31,20 @@ class GunRegistration < ActiveRecord::Base
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
-    ActiveRecord::Base.transaction do
-      CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
-      User.current_user.primary_identity.calendars.each do |calendar|
-        CalendarItem.create_calendar_item(
-          User.current_user.primary_identity,
-          calendar,
-          self.class,
-          expires,
-          (calendar.gun_registration_expiration_threshold_seconds || DEFAULT_GUN_REGISTRATION_EXPIRATION_THRESHOLD_SECONDS),
-          Calendar::DEFAULT_REMINDER_TYPE,
-          model_id: id
-        )
+    if MyplaceonlineExecutionContext.handle_updates?
+      ActiveRecord::Base.transaction do
+        CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
+        User.current_user.primary_identity.calendars.each do |calendar|
+          CalendarItem.create_calendar_item(
+            User.current_user.primary_identity,
+            calendar,
+            self.class,
+            expires,
+            (calendar.gun_registration_expiration_threshold_seconds || DEFAULT_GUN_REGISTRATION_EXPIRATION_THRESHOLD_SECONDS),
+            Calendar::DEFAULT_REMINDER_TYPE,
+            model_id: id
+          )
+        end
       end
     end
   end

@@ -9,7 +9,7 @@ class UpdateCalendarJob < ApplicationJob
       User.current_user = user
       CalendarItemReminder.ensure_pending(user)
     ensure
-      ExecutionContext.clear
+      ExecutionContext.pop
     end
     Rails.logger.debug{"Finished UpdateCalendarJob"}
   end

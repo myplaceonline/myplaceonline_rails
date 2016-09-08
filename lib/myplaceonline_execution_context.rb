@@ -12,9 +12,9 @@ class MyplaceonlineExecutionContext
   def self.user; self[:user]; end
   def self.user=(x); self[:user] = x; end
   
-  def self.handle_updates?; self[:handle_updates] == true; end
-  def self.enable_handling_updates; self[:handle_updates] = true; end
-  def self.disable_handling_updates; ExecutionContext.current.delete(:handle_updates); end
+  def self.handle_updates?; self[:skip_handling_updates].nil?; end
+  def self.enable_handling_updates; ExecutionContext.current.delete(:skip_handling_updates); end
+  def self.disable_handling_updates; self[:skip_handling_updates] = true; end
 
   def self.request; self[:request]; end
   def self.request=(x); self[:request] = x; end

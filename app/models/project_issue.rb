@@ -26,11 +26,13 @@ class ProjectIssue < ActiveRecord::Base
   after_commit :on_after_create, on: [:create]
   
   def on_after_create
-    if position.nil?
-      if self.top == "1"
-        self.project.set_positions(top_id: self.id)
-      else
-        self.project.set_positions
+    if MyplaceonlineExecutionContext.handle_updates?
+      if position.nil?
+        if self.top == "1"
+          self.project.set_positions(top_id: self.id)
+        else
+          self.project.set_positions
+        end
       end
     end
   end

@@ -40,7 +40,7 @@ class LoadRssFeedsJob < ApplicationJob
         Rails.logger.info("ensure_pending failed lock")
       end
     ensure
-      ExecutionContext.clear
+      ExecutionContext.pop
       if got_lock
         Myp.database_advisory_unlock(Myp::DB_LOCK_LOAD_RSS_FEEDS, user.id)
       end

@@ -1,5 +1,7 @@
 class ExecutionContext
   
+  DEBUG_STACKING = false
+  
   def initialize
     @map = Hash.new
   end
@@ -11,10 +13,16 @@ class ExecutionContext
       Thread.current[:execution_contexts] = execution_contexts
     end
     execution_contexts.push(execution_context)
+    if ExecutionContext::DEBUG_STACKING
+      Rails.logger.debug{"Pushed context:\n#{Myp.current_stack}"}
+    end
     execution_context
   end
   
   def self.pop
+    if ExecutionContext::DEBUG_STACKING
+      Rails.logger.debug{"Popping context:\n#{Myp.current_stack}"}
+    end
     execution_contexts = Thread.current[:execution_contexts]
     if !execution_contexts.nil?
       result = execution_contexts.pop
@@ -29,6 +37,18 @@ class ExecutionContext
   
   def self.clear
     Thread.current[:execution_contexts] = nil
+    if ExecutionContext::DEBUG_STACKING
+      Rails.logger.debug{"Cleared contexts:\n#{Myp.current_stack}"}
+    end
+  end
+  
+  def self.count
+    execution_contexts = Thread.current[:execution_contexts]
+    if execution_contexts.nil?
+      0
+    else
+      execution_contexts.count
+    end
   end
   
   def self.current
@@ -60,14 +80,6 @@ class ExecutionContext
     self.current[name] = val
   end
 
-  def [](name)
-    @map[name]
-  end
-
-  def []=(name, val)
-    @map[name] = val
-  end
-  
   def self.root
     execution_contexts = Thread.current[:execution_contexts]
     if !execution_contexts.nil?
@@ -106,5 +118,17 @@ class ExecutionContext
     x = x - 1
     self.root[final_name] = x
     x
+  end
+
+  def [](name)
+    @map[name]
+  end
+
+  def []=(name, val)
+    @map[name] = val
+  end
+  
+  def delete(name)
+    @map.delete(name)
   end
 end

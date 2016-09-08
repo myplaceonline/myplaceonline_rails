@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
   end
   
   def around_request
-    Rails.logger.debug{"application_controller around_request entry #{request.referer}"}
+    Rails.logger.debug{"application_controller around_request entry. Referer: #{request.referer}"}
     begin
       ExecutionContext.push
       # only do this once per request
@@ -87,8 +87,8 @@ class ApplicationController < ActionController::Base
       
       yield
     ensure
-      ExecutionContext.pop
       Rails.logger.debug{"application_controller around_request exit"}
+      ExecutionContext.pop
     end
   end
   

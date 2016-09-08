@@ -746,6 +746,14 @@ module Myp
     error.inspect + "\n\t" + error.backtrace.join("\n\t")
   end
   
+  def self.current_stack
+    begin
+      raise "Benign"
+    rescue Exception => e
+      e.backtrace.join("\n\t")
+    end
+  end
+  
   def self.log_error(logger, error)
     logger.error(self.error_details(error))
   end
@@ -1193,7 +1201,7 @@ module Myp
     if !email.nil?
       body += "\nUser: " + email + "\n"
     end
-    if !User.current_user.nil?
+    if ExecutionContext.count > 0 && !User.current_user.nil?
       body += "\nUser: " + User.current_user.email + "\n"
     end
     body += "Stack:\n" + stack + "\n"

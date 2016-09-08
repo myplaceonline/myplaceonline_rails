@@ -64,26 +64,28 @@ class Status < ActiveRecord::Base
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
-    last_status = Status.last_status(
-      User.current_user.primary_identity
-    )
+    if MyplaceonlineExecutionContext.handle_updates?
+      last_status = Status.last_status(
+        User.current_user.primary_identity
+      )
 
-    if !last_status.nil?
-      ActiveRecord::Base.transaction do
-        CalendarItem.destroy_calendar_items(
-          User.current_user.primary_identity,
-          Status
-        )
-
-        User.current_user.primary_identity.calendars.each do |calendar|
-          CalendarItem.create_calendar_item(
+      if !last_status.nil?
+        ActiveRecord::Base.transaction do
+          CalendarItem.destroy_calendar_items(
             User.current_user.primary_identity,
-            calendar,
-            Status,
-            last_status.status_time + (calendar.status_threshold_seconds || DEFAULT_STATUS_THRESHOLD_SECONDS).seconds,
-            15.minutes.seconds.to_i,
-            Myp::REPEAT_TYPE_SECONDS
+            Status
           )
+
+          User.current_user.primary_identity.calendars.each do |calendar|
+            CalendarItem.create_calendar_item(
+              User.current_user.primary_identity,
+              calendar,
+              Status,
+              last_status.status_time + (calendar.status_threshold_seconds || DEFAULT_STATUS_THRESHOLD_SECONDS).seconds,
+              15.minutes.seconds.to_i,
+              Myp::REPEAT_TYPE_SECONDS
+            )
+          end
         end
       end
     end

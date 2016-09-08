@@ -67,22 +67,24 @@ class MoneyBalanceItem < ActiveRecord::Base
   after_commit :on_after_update, on: :update
   
   def on_after_update
-    message = display
-    if !self.money_balance_item_name.blank?
-      message += "\n\n" + self.money_balance_item_name
-    end
-    if !self.notes.blank?
-      message += "\n\n" + self.notes
-    end
-    money_balance.send_email_to_all(
-      I18n.t(
-        "myplaceonline.money_balance_items.item_updated_subject"
-      ),
-      I18n.t(
-        "myplaceonline.money_balance_items.item_updated_body",
-        display: message
+    if MyplaceonlineExecutionContext.handle_updates?
+      message = display
+      if !self.money_balance_item_name.blank?
+        message += "\n\n" + self.money_balance_item_name
+      end
+      if !self.notes.blank?
+        message += "\n\n" + self.notes
+      end
+      money_balance.send_email_to_all(
+        I18n.t(
+          "myplaceonline.money_balance_items.item_updated_subject"
+        ),
+        I18n.t(
+          "myplaceonline.money_balance_items.item_updated_body",
+          display: message
+        )
       )
-    )
+    end
   end
 
   after_commit :on_after_destroy, on: :destroy

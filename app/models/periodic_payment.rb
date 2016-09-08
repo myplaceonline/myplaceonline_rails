@@ -74,21 +74,23 @@ class PeriodicPayment < ActiveRecord::Base
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
-    ActiveRecord::Base.transaction do
-      on_after_destroy
-      if !suppress_reminder && !next_payment.nil? && !self.is_archived?
-        User.current_user.primary_identity.calendars.each do |calendar|
-          CalendarItem.create_calendar_item(
-            User.current_user.primary_identity,
-            calendar,
-            self.class,
-            next_payment,
-            (calendar.periodic_payment_before_threshold_seconds || DEFAULT_PERIODIC_PAYMENT_BEFORE_THRESHOLD_SECONDS),
-            Calendar::DEFAULT_REMINDER_TYPE,
-            model_id: id,
-            repeat_amount: 1,
-            repeat_type: Myp.period_to_repeat_type(date_period)
-          )
+    if MyplaceonlineExecutionContext.handle_updates?
+      ActiveRecord::Base.transaction do
+        on_after_destroy
+        if !suppress_reminder && !next_payment.nil? && !self.is_archived?
+          User.current_user.primary_identity.calendars.each do |calendar|
+            CalendarItem.create_calendar_item(
+              User.current_user.primary_identity,
+              calendar,
+              self.class,
+              next_payment,
+              (calendar.periodic_payment_before_threshold_seconds || DEFAULT_PERIODIC_PAYMENT_BEFORE_THRESHOLD_SECONDS),
+              Calendar::DEFAULT_REMINDER_TYPE,
+              model_id: id,
+              repeat_amount: 1,
+              repeat_type: Myp.period_to_repeat_type(date_period)
+            )
+          end
         end
       end
     end

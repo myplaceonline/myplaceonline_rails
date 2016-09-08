@@ -59,31 +59,35 @@ class Event < ActiveRecord::Base
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
-    on_after_destroy
-    if !event_time.nil?
-      ActiveRecord::Base.transaction do
-        User.current_user.primary_identity.calendars.each do |calendar|
-          CalendarItem.create_calendar_item(
-            User.current_user.primary_identity,
-            calendar,
-            self.class,
-            event_time,
-            (calendar.event_threshold_seconds || DEFAULT_EVENT_THRESHOLD_SECONDS),
-            Calendar::DEFAULT_REMINDER_TYPE,
-            model_id: id,
-          )
+    Rails.logger.debug{"Event on_after_save"}
+    if MyplaceonlineExecutionContext.handle_updates?
+      Rails.logger.debug{"Processing event updates"}
+      on_after_destroy
+      if !event_time.nil?
+        ActiveRecord::Base.transaction do
+          User.current_user.primary_identity.calendars.each do |calendar|
+            CalendarItem.create_calendar_item(
+              User.current_user.primary_identity,
+              calendar,
+              self.class,
+              event_time,
+              (calendar.event_threshold_seconds || DEFAULT_EVENT_THRESHOLD_SECONDS),
+              Calendar::DEFAULT_REMINDER_TYPE,
+              model_id: id,
+            )
+          end
         end
       end
+      Repeat.create_calendar_reminders(
+        self,
+        "event_threshold_seconds",
+        DEFAULT_EVENT_THRESHOLD_SECONDS,
+        Calendar::DEFAULT_REMINDER_TYPE,
+        destroy: false,
+        expire_amount: 1.days.seconds.to_i,
+        expire_type: Calendar::DEFAULT_REMINDER_TYPE
+      )
     end
-    Repeat.create_calendar_reminders(
-      self,
-      "event_threshold_seconds",
-      DEFAULT_EVENT_THRESHOLD_SECONDS,
-      Calendar::DEFAULT_REMINDER_TYPE,
-      destroy: false,
-      expire_amount: 1.days.seconds.to_i,
-      expire_type: Calendar::DEFAULT_REMINDER_TYPE
-    )
   end
   
   after_commit :on_after_destroy, on: :destroy

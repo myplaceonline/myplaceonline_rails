@@ -158,36 +158,38 @@ class Contact < ActiveRecord::Base
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
-    ActiveRecord::Base.transaction do
-      # Always destroy first because if the contact was updated to not
-      # be of the type to have a conversation reminder, then we need to
-      # delete any persistent reminders
-      on_after_destroy
-      if !contact_type.nil?
-        User.current_user.primary_identity.calendars.each do |calendar|
-          contact_threshold = Contact.contact_type_threshold(calendar)[contact_type]
-          if !contact_threshold.nil?
-            last = last_conversation_date
-            if last.nil?
-              CalendarItem.create_persistent_calendar_item(
-                User.current_user.primary_identity,
-                calendar,
-                Contact,
-                model_id: id,
-                context_info: Conversation::CALENDAR_ITEM_CONTEXT_CONVERSATION
-              )
-            else
-              next_conversation = last + contact_threshold.seconds
-              CalendarItem.create_calendar_item(
-                User.current_user.primary_identity,
-                calendar,
-                Contact,
-                next_conversation,
-                Calendar::DEFAULT_REMINDER_AMOUNT,
-                Calendar::DEFAULT_REMINDER_TYPE,
-                model_id: id,
-                context_info: Conversation::CALENDAR_ITEM_CONTEXT_CONVERSATION
-              )
+    if MyplaceonlineExecutionContext.handle_updates?
+      ActiveRecord::Base.transaction do
+        # Always destroy first because if the contact was updated to not
+        # be of the type to have a conversation reminder, then we need to
+        # delete any persistent reminders
+        on_after_destroy
+        if !contact_type.nil?
+          User.current_user.primary_identity.calendars.each do |calendar|
+            contact_threshold = Contact.contact_type_threshold(calendar)[contact_type]
+            if !contact_threshold.nil?
+              last = last_conversation_date
+              if last.nil?
+                CalendarItem.create_persistent_calendar_item(
+                  User.current_user.primary_identity,
+                  calendar,
+                  Contact,
+                  model_id: id,
+                  context_info: Conversation::CALENDAR_ITEM_CONTEXT_CONVERSATION
+                )
+              else
+                next_conversation = last + contact_threshold.seconds
+                CalendarItem.create_calendar_item(
+                  User.current_user.primary_identity,
+                  calendar,
+                  Contact,
+                  next_conversation,
+                  Calendar::DEFAULT_REMINDER_AMOUNT,
+                  Calendar::DEFAULT_REMINDER_TYPE,
+                  model_id: id,
+                  context_info: Conversation::CALENDAR_ITEM_CONTEXT_CONVERSATION
+                )
+              end
             end
           end
         end

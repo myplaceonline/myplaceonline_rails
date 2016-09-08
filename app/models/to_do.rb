@@ -21,19 +21,21 @@ class ToDo < ActiveRecord::Base
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
-    if !due_time.nil?
-      ActiveRecord::Base.transaction do
-        CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
-        User.current_user.primary_identity.calendars.each do |calendar|
-          CalendarItem.create_calendar_item(
-            User.current_user.primary_identity,
-            calendar,
-            self.class,
-            due_time,
-            (calendar.todo_threshold_seconds || DEFAULT_TODO_THRESHOLD_SECONDS),
-            Calendar::DEFAULT_REMINDER_TYPE,
-            model_id: id
-          )
+    if MyplaceonlineExecutionContext.handle_updates?
+      if !due_time.nil?
+        ActiveRecord::Base.transaction do
+          CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
+          User.current_user.primary_identity.calendars.each do |calendar|
+            CalendarItem.create_calendar_item(
+              User.current_user.primary_identity,
+              calendar,
+              self.class,
+              due_time,
+              (calendar.todo_threshold_seconds || DEFAULT_TODO_THRESHOLD_SECONDS),
+              Calendar::DEFAULT_REMINDER_TYPE,
+              model_id: id
+            )
+          end
         end
       end
     end

@@ -416,22 +416,24 @@ class Identity < ActiveRecord::Base
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
-    if !birthday.nil?
-      ActiveRecord::Base.transaction do
-        User.current_user.primary_identity.calendars.each do |calendar|
-          on_after_destroy
-          CalendarItem.create_calendar_item(
-            User.current_user.primary_identity,
-            calendar,
-            self.class,
-            next_birthday,
-            (calendar.birthday_threshold_seconds || DEFAULT_BIRTHDAY_THRESHOLD_SECONDS),
-            Calendar::DEFAULT_REMINDER_TYPE,
-            model_id: id,
-            repeat_amount: 1,
-            repeat_type: Myp::REPEAT_TYPE_YEARS,
-            context_info: Identity::CALENDAR_ITEM_CONTEXT_BIRTHDAY
-          )
+    if MyplaceonlineExecutionContext.handle_updates?
+      if !birthday.nil?
+        ActiveRecord::Base.transaction do
+          User.current_user.primary_identity.calendars.each do |calendar|
+            on_after_destroy
+            CalendarItem.create_calendar_item(
+              User.current_user.primary_identity,
+              calendar,
+              self.class,
+              next_birthday,
+              (calendar.birthday_threshold_seconds || DEFAULT_BIRTHDAY_THRESHOLD_SECONDS),
+              Calendar::DEFAULT_REMINDER_TYPE,
+              model_id: id,
+              repeat_amount: 1,
+              repeat_type: Myp::REPEAT_TYPE_YEARS,
+              context_info: Identity::CALENDAR_ITEM_CONTEXT_BIRTHDAY
+            )
+          end
         end
       end
     end

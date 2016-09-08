@@ -30,12 +30,14 @@ class WebsiteDomainRegistration < ActiveRecord::Base
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
-    Repeat.create_calendar_reminders(
-      self,
-      "website_domain_registration_threshold_seconds",
-      DEFAULT_WEBSITE_DOMAIN_REGISTRATION_THRESHOLD_SECONDS,
-      Calendar::DEFAULT_REMINDER_TYPE
-    )
+    if MyplaceonlineExecutionContext.handle_updates?
+      Repeat.create_calendar_reminders(
+        self,
+        "website_domain_registration_threshold_seconds",
+        DEFAULT_WEBSITE_DOMAIN_REGISTRATION_THRESHOLD_SECONDS,
+        Calendar::DEFAULT_REMINDER_TYPE
+      )
+    end
   end
   
   after_commit :on_after_destroy, on: :destroy

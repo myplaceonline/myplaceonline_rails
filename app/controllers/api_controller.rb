@@ -177,139 +177,148 @@ class ApiController < ApplicationController
     
     Rails.logger.debug{"newfile urlpath: #{urlpath}"}
     
-    if !urlpath.blank?
-      spliturl = urlpath.split('/')
-      if spliturl.length >= 3
+    begin
+      # Adding a picture will save the parent item, but the user will usually
+      # explicitly save the item after editing an item and adding one or more
+      # pictures, so we don't want to handle updates on every save
+      MyplaceonlineExecutionContext.disable_handling_updates
+      if !urlpath.blank?
+        spliturl = urlpath.split('/')
+        if spliturl.length >= 3
 
-        objclass_index = 1
-        
-        # This upload may come from the root element or from a child form submission
-        paramnode = nil
-        while paramnode.nil?
-          if spliturl[objclass_index].nil?
-            objclass_index -= 2
-            break
-          end
-          objclass = spliturl[objclass_index].singularize
-          paramnode = params[objclass]
+          objclass_index = 1
           
-          Rails.logger.debug{"checking objclass: #{objclass}, paramnode: #{paramnode}"}
-          
-          if paramnode.nil?
-            objclass_index += 2
-          end
-        end
-
-        objid = spliturl[objclass_index + 1]
-        
-        if !objid.index("?").nil?
-          objid = objid[0..objid.index("?")-1]
-        end
-        
-        Rails.logger.debug{"objclass: #{objclass}, objid: #{objid}"}
-        
-        if objid != "new"
-          obj = Myp.find_existing_object(objclass, objid, false)
-          authorize! :edit, obj
-
-          # Alrighty, we've got the object and the user is authorized, so
-          # now we can start the real work
-          Rails.logger.debug{"obj existing: #{obj.inspect}"}
-        else
-          obj = nil
-        end
-        
-        # We'll only have the file object, so just follow the path of params
-        # for the object down to right above the file leaf node
-        prevnode = obj
-        prevkey = nil
-        prevkey_full = nil
-
-        Rails.logger.debug{"initial node: #{paramnode}"}
-        
-        keepgoing = !paramnode.nil?
-        iterations = 0
-        while keepgoing && iterations < 500 do
-          pair = paramnode.to_a[0]
-          key = pair[0]
-          val = paramnode = pair[1]
-          iterations = iterations + 1
-          
-          Rails.logger.debug{"key: #{key}, val: #{val}"}
-          
-          if key.end_with?("_attributes")
-            key = key[0..key.index("_attributes")-1]
-          end
-          
-          # Regex checking for only digits
-          if !!(key =~ /\A[-+]?[0-9]+\z/)
-            ikey = key.to_i
+          # This upload may come from the root element or from a child form submission
+          paramnode = nil
+          while paramnode.nil?
+            if spliturl[objclass_index].nil?
+              objclass_index -= 2
+              break
+            end
+            objclass = spliturl[objclass_index].singularize
+            paramnode = params[objclass]
             
-            # If the next child is identity_file_attributes, then we know
-            # we're done
-            if val.has_key?("identity_file_attributes")
+            Rails.logger.debug{"checking objclass: #{objclass}, paramnode: #{paramnode}"}
+            
+            if paramnode.nil?
+              objclass_index += 2
+            end
+          end
+
+          objid = spliturl[objclass_index + 1]
+          
+          if !objid.index("?").nil?
+            objid = objid[0..objid.index("?")-1]
+          end
+          
+          Rails.logger.debug{"objclass: #{objclass}, objid: #{objid}"}
+          
+          if objid != "new"
+            obj = Myp.find_existing_object(objclass, objid, false)
+            authorize! :edit, obj
+
+            # Alrighty, we've got the object and the user is authorized, so
+            # now we can start the real work
+            Rails.logger.debug{"obj existing: #{obj.inspect}"}
+          else
+            obj = nil
+          end
+          
+          # We'll only have the file object, so just follow the path of params
+          # for the object down to right above the file leaf node
+          prevnode = obj
+          prevkey = nil
+          prevkey_full = nil
+
+          Rails.logger.debug{"initial node: #{paramnode}"}
+          
+          keepgoing = !paramnode.nil?
+          iterations = 0
+          while keepgoing && iterations < 500 do
+            pair = paramnode.to_a[0]
+            key = pair[0]
+            val = paramnode = pair[1]
+            iterations = iterations + 1
+            
+            Rails.logger.debug{"key: #{key}, val: #{val}"}
+            
+            if key.end_with?("_attributes")
+              key = key[0..key.index("_attributes")-1]
+            end
+            
+            # Regex checking for only digits
+            if !!(key =~ /\A[-+]?[0-9]+\z/)
+              ikey = key.to_i
               
-              if prevkey_full.end_with?("_attributes")
+              # If the next child is identity_file_attributes, then we know
+              # we're done
+              if val.has_key?("identity_file_attributes")
                 
-                Rails.logger.debug{"prevkey: #{prevkey}"}
-                
-                if !obj.nil?
-                  prevkeyclass = Object.const_get(prevkey.singularize.to_s.camelize)
-
-                  newfilewrapper = prevkeyclass.new(val)
+                if prevkey_full.end_with?("_attributes")
                   
-                  prevnode.send(prevkey) << newfilewrapper
+                  Rails.logger.debug{"prevkey: #{prevkey}"}
+                  
+                  if !obj.nil?
+                    prevkeyclass = Object.const_get(prevkey.singularize.to_s.camelize)
 
-                  Rails.logger.debug{"saving: #{prevnode.inspect}"}
+                    newfilewrapper = prevkeyclass.new(val)
+                    
+                    prevnode.send(prevkey) << newfilewrapper
 
-                  prevnode.save!
+                    Rails.logger.debug{"saving: #{prevnode.inspect}"}
 
-                  newfile = newfilewrapper.identity_file
+                    prevnode.save!
+
+                    newfile = newfilewrapper.identity_file
+                  else
+                    newfile = IdentityFile.create(val["identity_file_attributes"])
+                  end
+
+                  Rails.logger.debug{"newfile: #{newfile.inspect}"}
                 else
-                  newfile = IdentityFile.create(val["identity_file_attributes"])
+                  raise "todo"
                 end
 
-                Rails.logger.debug{"newfile: #{newfile.inspect}"}
+                result = create_newfile_result(newfile, params)
+                
+                keepgoing = false
+
+                Rails.logger.debug{"breaking loop"}
               else
-                raise "todo"
+                # Otherwise just index in
+                prevnode = obj
+                prevkey = key
+                prevkey_full = pair[0]
+                if !obj.nil?
+                  obj = obj[ikey]
+                  Rails.logger.debug{"nested indexed node: #{obj.inspect}"}
+                end
               end
-
-              result = create_newfile_result(newfile, params)
-              
-              keepgoing = false
-
-              Rails.logger.debug{"breaking loop"}
             else
-              # Otherwise just index in
               prevnode = obj
               prevkey = key
               prevkey_full = pair[0]
+              
               if !obj.nil?
-                obj = obj[ikey]
-                Rails.logger.debug{"nested indexed node: #{obj.inspect}"}
+                obj = obj.send(key)
+                Rails.logger.debug{"nested node: #{obj.inspect}"}
               end
             end
-          else
-            prevnode = obj
-            prevkey = key
-            prevkey_full = pair[0]
-            
-            if !obj.nil?
-              obj = obj.send(key)
-              Rails.logger.debug{"nested node: #{obj.inspect}"}
-            end
           end
-        end
-        if !result[:result]
-          # Just a simple add of a file
-          if !params[:identity_file].nil?
-            newfile = IdentityFile.create(params.require(:identity_file).permit(FilesController.param_names))
-            Rails.logger.debug{"newfile final: #{newfile.inspect}"}
-            result = create_newfile_result(newfile, params, singular: true)
+          if !result[:result]
+            # Just a simple add of a file
+            if !params[:identity_file].nil?
+              newfile = IdentityFile.create(params.require(:identity_file).permit(FilesController.param_names))
+              Rails.logger.debug{"newfile final: #{newfile.inspect}"}
+              result = create_newfile_result(newfile, params, singular: true)
+            end
           end
         end
       end
+    ensure
+      MyplaceonlineExecutionContext.enable_handling_updates
     end
+    
     render json: result
   end
   

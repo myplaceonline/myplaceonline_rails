@@ -47,26 +47,28 @@ class DentistVisit < ActiveRecord::Base
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
-    last_dentist_visit = DentistVisit.last_cleaning(
-      User.current_user.primary_identity,
-    )
+    if MyplaceonlineExecutionContext.handle_updates?
+      last_dentist_visit = DentistVisit.last_cleaning(
+        User.current_user.primary_identity,
+      )
 
-    if !last_dentist_visit.nil?
-      ActiveRecord::Base.transaction do
-        CalendarItem.destroy_calendar_items(
-          User.current_user.primary_identity,
-          DentistVisit
-        )
-
-        User.current_user.primary_identity.calendars.each do |calendar|
-          CalendarItem.create_calendar_item(
+      if !last_dentist_visit.nil?
+        ActiveRecord::Base.transaction do
+          CalendarItem.destroy_calendar_items(
             User.current_user.primary_identity,
-            calendar,
-            DentistVisit,
-            last_dentist_visit.visit_date + (calendar.dentist_visit_threshold_seconds || DEFAULT_DENTIST_VISIT_THRESHOLD_SECONDS).seconds,
-            Calendar::DEFAULT_REMINDER_AMOUNT,
-            Calendar::DEFAULT_REMINDER_TYPE
+            DentistVisit
           )
+
+          User.current_user.primary_identity.calendars.each do |calendar|
+            CalendarItem.create_calendar_item(
+              User.current_user.primary_identity,
+              calendar,
+              DentistVisit,
+              last_dentist_visit.visit_date + (calendar.dentist_visit_threshold_seconds || DEFAULT_DENTIST_VISIT_THRESHOLD_SECONDS).seconds,
+              Calendar::DEFAULT_REMINDER_AMOUNT,
+              Calendar::DEFAULT_REMINDER_TYPE
+            )
+          end
         end
       end
     end

@@ -21,21 +21,23 @@ class VehicleService < ActiveRecord::Base
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
-    if !date_serviced.nil?
-      CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
-    elsif !date_due.nil?
-      ActiveRecord::Base.transaction do
+    if MyplaceonlineExecutionContext.handle_updates?
+      if !date_serviced.nil?
         CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
-        User.current_user.primary_identity.calendars.each do |calendar|
-          CalendarItem.create_calendar_item(
-            User.current_user.primary_identity,
-            calendar,
-            self.class,
-            date_due,
-            (calendar.vehicle_service_threshold_seconds || DEFAULT_VEHICLE_SERVICE_THRESHOLD_SECONDS),
-            Calendar::DEFAULT_REMINDER_TYPE,
-            model_id: id
-          )
+      elsif !date_due.nil?
+        ActiveRecord::Base.transaction do
+          CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
+          User.current_user.primary_identity.calendars.each do |calendar|
+            CalendarItem.create_calendar_item(
+              User.current_user.primary_identity,
+              calendar,
+              self.class,
+              date_due,
+              (calendar.vehicle_service_threshold_seconds || DEFAULT_VEHICLE_SERVICE_THRESHOLD_SECONDS),
+              Calendar::DEFAULT_REMINDER_TYPE,
+              model_id: id
+            )
+          end
         end
       end
     end

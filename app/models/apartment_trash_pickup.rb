@@ -33,12 +33,14 @@ class ApartmentTrashPickup < ActiveRecord::Base
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
-    Repeat.create_calendar_reminders(
-      self,
-      "trash_pickup_threshold_seconds",
-      DEFAULT_TRASH_PICKUP_THRESHOLD_SECONDS,
-      Calendar::DEFAULT_REMINDER_TYPE
-    )
+    if MyplaceonlineExecutionContext.handle_updates?
+      Repeat.create_calendar_reminders(
+        self,
+        "trash_pickup_threshold_seconds",
+        DEFAULT_TRASH_PICKUP_THRESHOLD_SECONDS,
+        Calendar::DEFAULT_REMINDER_TYPE
+      )
+    end
   end
   
   after_commit :on_after_destroy, on: :destroy

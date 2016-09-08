@@ -26,7 +26,7 @@ class CalendarItemReminder < ActiveRecord::Base
             User.current_user = user
             self.ensure_pending(user)
           ensure
-            ExecutionContext.clear
+            ExecutionContext.pop
           end
         end
       else

@@ -31,26 +31,28 @@ class Exercise < ActiveRecord::Base
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
-    last_exercise = Exercise.last_exercise(
-      User.current_user.primary_identity,
-    )
+    if MyplaceonlineExecutionContext.handle_updates?
+      last_exercise = Exercise.last_exercise(
+        User.current_user.primary_identity,
+      )
 
-    if !last_exercise.nil?
-      ActiveRecord::Base.transaction do
-        CalendarItem.destroy_calendar_items(
-          User.current_user.primary_identity,
-          Exercise
-        )
-
-        User.current_user.primary_identity.calendars.each do |calendar|
-          CalendarItem.create_calendar_item(
+      if !last_exercise.nil?
+        ActiveRecord::Base.transaction do
+          CalendarItem.destroy_calendar_items(
             User.current_user.primary_identity,
-            calendar,
-            Exercise,
-            last_exercise.exercise_start + (calendar.exercise_threshold_seconds || DEFAULT_EXERCISE_THRESHOLD_SECONDS).seconds,
-            1.hours,
-            Calendar::DEFAULT_REMINDER_TYPE
+            Exercise
           )
+
+          User.current_user.primary_identity.calendars.each do |calendar|
+            CalendarItem.create_calendar_item(
+              User.current_user.primary_identity,
+              calendar,
+              Exercise,
+              last_exercise.exercise_start + (calendar.exercise_threshold_seconds || DEFAULT_EXERCISE_THRESHOLD_SECONDS).seconds,
+              1.hours,
+              Calendar::DEFAULT_REMINDER_TYPE
+            )
+          end
         end
       end
     end

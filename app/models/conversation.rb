@@ -21,7 +21,9 @@ class Conversation < ActiveRecord::Base
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
-    contact.on_after_save
+    if MyplaceonlineExecutionContext.handle_updates?
+      contact.on_after_save
+    end
   end
   
   after_commit :on_after_destroy, on: :destroy

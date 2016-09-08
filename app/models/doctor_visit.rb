@@ -47,26 +47,28 @@ class DoctorVisit < ActiveRecord::Base
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
-    last_physical = DoctorVisit.last_physical(
-      User.current_user.primary_identity,
-    )
+    if MyplaceonlineExecutionContext.handle_updates?
+      last_physical = DoctorVisit.last_physical(
+        User.current_user.primary_identity,
+      )
 
-    if !last_physical.nil?
-      ActiveRecord::Base.transaction do
-        CalendarItem.destroy_calendar_items(
-          User.current_user.primary_identity,
-          DoctorVisit
-        )
-
-        User.current_user.primary_identity.calendars.each do |calendar|
-          CalendarItem.create_calendar_item(
+      if !last_physical.nil?
+        ActiveRecord::Base.transaction do
+          CalendarItem.destroy_calendar_items(
             User.current_user.primary_identity,
-            calendar,
-            DoctorVisit,
-            last_physical.visit_date + (calendar.doctor_visit_threshold_seconds || DEFAULT_DOCTOR_VISIT_THRESHOLD_SECONDS).seconds,
-            Calendar::DEFAULT_REMINDER_AMOUNT,
-            Calendar::DEFAULT_REMINDER_TYPE
+            DoctorVisit
           )
+
+          User.current_user.primary_identity.calendars.each do |calendar|
+            CalendarItem.create_calendar_item(
+              User.current_user.primary_identity,
+              calendar,
+              DoctorVisit,
+              last_physical.visit_date + (calendar.doctor_visit_threshold_seconds || DEFAULT_DOCTOR_VISIT_THRESHOLD_SECONDS).seconds,
+              Calendar::DEFAULT_REMINDER_AMOUNT,
+              Calendar::DEFAULT_REMINDER_TYPE
+            )
+          end
         end
       end
     end

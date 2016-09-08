@@ -270,36 +270,38 @@ class Trip < ActiveRecord::Base
   end
   
   def send_to_emergency_contacts(is_new)
-    if notify_emergency_contacts
-      identity.emergency_contacts.each do |emergency_contact|
-        Rails.logger.debug{"Emergency contact #{emergency_contact.inspect}"}
-        emergency_contact.send_contact(
-          is_new,
-          self,
-          I18n.t("myplaceonline.trips.emergency_contact_email",
-            {
-              contact: identity.display_short,
-              location: location.display(use_full_region_name: true),
-              start_date: Myp.display_date_short_year(started, User.current_user),
-              end_date: ended.nil? ? I18n.t("myplaceonline.general.unknown") : Myp.display_date_short_year(ended, User.current_user),
-              map: location.map_url,
-              verb: is_new ? I18n.t("myplaceonline.trips.emergency_contact_email_new") : I18n.t("myplaceonline.trips.emergency_contact_email_updated")
-            }
-          ),
-          I18n.t(
-            "myplaceonline.trips.emergency_contact_subject_append",
-            city: location.display_city
+    if MyplaceonlineExecutionContext.handle_updates?
+      if notify_emergency_contacts
+        identity.emergency_contacts.each do |emergency_contact|
+          Rails.logger.debug{"Emergency contact #{emergency_contact.inspect}"}
+          emergency_contact.send_contact(
+            is_new,
+            self,
+            I18n.t("myplaceonline.trips.emergency_contact_email",
+              {
+                contact: identity.display_short,
+                location: location.display(use_full_region_name: true),
+                start_date: Myp.display_date_short_year(started, User.current_user),
+                end_date: ended.nil? ? I18n.t("myplaceonline.general.unknown") : Myp.display_date_short_year(ended, User.current_user),
+                map: location.map_url,
+                verb: is_new ? I18n.t("myplaceonline.trips.emergency_contact_email_new") : I18n.t("myplaceonline.trips.emergency_contact_email_updated")
+              }
+            ),
+            I18n.t(
+              "myplaceonline.trips.emergency_contact_subject_append",
+              city: location.display_city
+            )
           )
-        )
-      end
-      
-      # Always reset this on a create because otherwise if a save is done
-      # on the Trip outside the normal form method (where we could take care
-      # to set it to false), like adding a picture, then we'll notify
-      # emergency contacts of each change
-      if is_new
-        self.notify_emergency_contacts = false
-        self.save!
+        end
+        
+        # Always reset this on a create because otherwise if a save is done
+        # on the Trip outside the normal form method (where we could take care
+        # to set it to false), like adding a picture, then we'll notify
+        # emergency contacts of each change
+        if is_new
+          self.notify_emergency_contacts = false
+          self.save!
+        end
       end
     end
   end
