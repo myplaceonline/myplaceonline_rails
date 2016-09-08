@@ -11,7 +11,7 @@
   <p><%= t("myplaceonline.events.location") %>: <%= link_to(@obj.location.address_one_line, @obj.location.map_url) %></p>
 <% end %>
 
-<% if !params[:email_token].nil? %>
+<% if !@obj.completed? && !params[:email_token].nil? %>
   <hr />
   <p><%= t("myplaceonline.events.email_intro") %></p>
   <p>
