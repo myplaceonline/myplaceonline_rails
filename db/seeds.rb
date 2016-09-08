@@ -141,6 +141,7 @@ user.save(:validate => false)
 
 begin
   ExecutionContext.push
+  User.current_user = user
 
   identity = Identity.new
   identity.id = 0
