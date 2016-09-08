@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
   
+  resources :media_dumps do
+    get 'media_dump_files/destroy_all'
+    resources :media_dump_files
+    post 'media_dump_files/new'
+  end
+  post 'media_dumps/new'
+
   resources :messages
   post 'messages/new'
 

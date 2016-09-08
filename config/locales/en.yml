@@ -187,6 +187,8 @@ en:
       identity_emails: "Emails"
       dreams: "Dreams"
       messages: "Messages"
+      media_dumps: "Media Dumps"
+      media_dump_files: "Media Dump Files"
     general:
       email: "E-mail"
       password: "Password"
@@ -2661,3 +2663,10 @@ en:
       send_emails: "Send Email"
       send_texts: "Send Text Message"
       subject_required_for_email: "A subject is required when you've chosen to send emails"
+    media_dumps:
+      media_dump: "Media Dump"
+      media_dump_name: "Name"
+      files: "Files"
+      file: "File"
+      add_file: "Add File"
+      delete_file: "Delete File"

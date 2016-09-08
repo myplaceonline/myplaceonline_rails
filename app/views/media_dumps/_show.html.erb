@@ -1,0 +1,15 @@
+<%= attribute_table_row(t("myplaceonline.media_dumps.media_dump_name"), obj.media_dump_name) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<%=
+  render partial: 'myplaceonline/pictures', locals: {
+    pics: obj.media_dump_files,
+    placeholder: "myplaceonline.media_dumps.file",
+    limitobj: obj,
+    limitwithlink: "media_dump_media_dump_files_path"
+  }
+%>
+  
+<% content_for :postfooterlinks do %>
+  <li><%= link_to t("myplaceonline.media_dumps.files"), media_dump_media_dump_files_path(obj), "data-icon" => "grid" %></li>
+  <li><%= link_to t("myplaceonline.media_dumps.add_file"), new_media_dump_media_dump_file_path(obj), "data-icon" => "plus" %></li>
+<% end %>

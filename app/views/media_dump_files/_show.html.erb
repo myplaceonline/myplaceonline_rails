@@ -1,0 +1,5 @@
+<%= attribute_table_row_reference(t("myplaceonline.media_dumps.file"), "file_path", obj.identity_file, controllerName: FilesController.name) %>
+
+<% content_for :postfooterlinks do %>
+  <li><%= link_to t("myplaceonline.media_dumps.media_dump"), media_dump_path(obj.media_dump), "data-icon" => "back" %></li>
+<% end %>

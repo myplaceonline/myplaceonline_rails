@@ -1,0 +1,2 @@
+module MediaDumpsHelper
+end

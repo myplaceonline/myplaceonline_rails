@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160908012644) do
+ActiveRecord::Schema.define(version: 20160908023529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2050,6 +2050,30 @@ ActiveRecord::Schema.define(version: 20160908012644) do
   add_index "meals", ["identity_id"], name: "index_meals_on_identity_id", using: :btree
   add_index "meals", ["location_id"], name: "index_meals_on_location_id", using: :btree
 
+  create_table "media_dump_files", force: :cascade do |t|
+    t.integer  "media_dump_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "media_dump_files", ["identity_file_id"], name: "index_media_dump_files_on_identity_file_id", using: :btree
+  add_index "media_dump_files", ["identity_id"], name: "index_media_dump_files_on_identity_id", using: :btree
+  add_index "media_dump_files", ["media_dump_id"], name: "index_media_dump_files_on_media_dump_id", using: :btree
+
+  create_table "media_dumps", force: :cascade do |t|
+    t.string   "media_dump_name"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "media_dumps", ["identity_id"], name: "index_media_dumps_on_identity_id", using: :btree
+
   create_table "medical_condition_instances", force: :cascade do |t|
     t.datetime "condition_start"
     t.datetime "condition_end"
@@ -3835,6 +3859,10 @@ ActiveRecord::Schema.define(version: 20160908012644) do
   add_foreign_key "locations", "websites"
   add_foreign_key "meadows", "identities"
   add_foreign_key "meadows", "locations"
+  add_foreign_key "media_dump_files", "identities"
+  add_foreign_key "media_dump_files", "identity_files"
+  add_foreign_key "media_dump_files", "media_dumps"
+  add_foreign_key "media_dumps", "identities"
   add_foreign_key "medical_condition_treatments", "doctors"
   add_foreign_key "medical_condition_treatments", "identities"
   add_foreign_key "medical_condition_treatments", "locations"
