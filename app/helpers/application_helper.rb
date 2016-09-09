@@ -819,15 +819,21 @@ module ApplicationHelper
     end
     final_html
   end
-
+  
+  # Rails creates two input elements for a checkbox which means we can't use
+  # the trick to wrap a checkbox with a label as per:
+  # https://www.w3.org/TR/html401/interact/forms.html#h-17.9.1
+  # Instead we use the explicitly enhanced form as per ("Providing pre-rendered markup"):
+  # http://api.jquerymobile.com/checkboxradio/
   def myp_check_box(form, name, placeholder, autofocus = false, input_classes = nil, title: nil)
     if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
     content_tag(
-      :p,
-      form.check_box(name, class: myp_field_classes(autofocus, input_classes)) +
-      form.label(name, placeholder, title: title)
+      :div,
+      form.label(name, placeholder, title: title, class: "ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off") +
+      form.check_box(name, class: myp_field_classes(autofocus, input_classes), data: { enhanced: "true" }),
+      class: "ui-checkbox"
     ).html_safe
   end
   
@@ -836,9 +842,10 @@ module ApplicationHelper
       placeholder = I18n.t(placeholder)
     end
     content_tag(
-      :p,
-      check_box_tag(name, true, checked, class: myp_field_classes(autofocus, input_classes), :onclick=> onclick) +
-      label_tag(name, placeholder)
+      :div,
+      label_tag(name, placeholder, class: "ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off") +
+      check_box_tag(name, true, checked, class: myp_field_classes(autofocus, input_classes), data: { enhanced: "true" }, onclick: onclick),
+      class: "ui-checkbox"
     ).html_safe
   end
   

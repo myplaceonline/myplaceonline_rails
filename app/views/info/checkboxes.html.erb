@@ -32,3 +32,13 @@
   <label for="my-checkbox" class="ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Checkbox5</label>
   <input type="checkbox" id="checkbox5" name="checkbox5" data-corners="false" data-enhanced="true"></input>
 </div>
+
+<hr />
+
+<%= myp_check_box_tag("checkbox6", "checkbox6", false) %>
+
+<hr />
+
+<%= form_for User.new do |f| %>
+  <%= myp_check_box(f, :invite_code, "checkbox7") %>
+<% end %>
