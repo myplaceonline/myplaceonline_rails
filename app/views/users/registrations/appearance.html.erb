@@ -6,11 +6,20 @@
 <%= form_tag do %>
   <fieldset>
     <%= myp_select_tag(:page_transition, "myplaceonline.users.page_transition", Myp.translate_options(Myp::PAGE_TRANSITIONS), @page_transition) %>
+    
     <%= label_tag :always_autofocus, t("myplaceonline.users.always_autofocus") %>
     <%= check_box_tag :always_autofocus, 1, @always_autofocus, data: { "role" => "flipswitch" } %>
+    
     <%= label_tag :show_timestamps, t("myplaceonline.users.show_timestamps") %>
     <%= check_box_tag :show_timestamps, 1, @show_timestamps, data: { "role" => "flipswitch" } %>
+    
     <%= myp_select_tag(:top_left_icon, "myplaceonline.users.top_left_icon", Myp.translate_options(User::TOP_LEFT_ICONS), @top_left_icon) %>
+
+    <%= myp_text_field_tag(:recently_visited_categories, I18n.t("myplaceonline.users.recently_visited_categories", max: MyplaceonlineQuickCategoryDisplaysController::ABSOLUTE_MAXIMUM), @recently_visited_categories) %>
+
+    <%= myp_text_field_tag(:most_visited_categories, I18n.t("myplaceonline.users.most_visited_categories", max: MyplaceonlineQuickCategoryDisplaysController::ABSOLUTE_MAXIMUM), @most_visited_categories) %>
+
+    <%= myp_text_field_tag(:most_visited_items, I18n.t("myplaceonline.users.most_visited_items", max: MyplaceonlineQuickCategoryDisplaysController::ABSOLUTE_MAXIMUM), @most_visited_items) %>
   </fieldset>
   <div><%= submit_tag t("myplaceonline.general.save") %></div>
 <% end %>

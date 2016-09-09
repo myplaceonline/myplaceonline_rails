@@ -641,6 +641,9 @@ en:
       top_left_icon: "Top Left Button"
       top_left_icon_home: "Always Home Button"
       top_left_icon_back: "Always Back Button"
+      recently_visited_categories: "Recently Visited Categories on Homepage (Max %{max})"
+      most_visited_categories: "Most Visited Categories on Homepage (Max %{max})"
+      most_visited_items: "Most Visited Items on Homepage (Max %{max})"
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"

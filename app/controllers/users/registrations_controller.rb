@@ -239,15 +239,51 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @always_autofocus = current_user.always_autofocus
     @show_timestamps = current_user.show_timestamps
     @top_left_icon = current_user.top_left_icon
+    @recently_visited_categories = current_user.recently_visited_categories
+    @most_visited_categories = current_user.most_visited_categories
+    @most_visited_items = current_user.most_visited_items
     if request.post?
       @page_transition = params[:page_transition]
       @always_autofocus = params[:always_autofocus]
       @show_timestamps = params[:show_timestamps]
       @top_left_icon = params[:top_left_icon]
+      @recently_visited_categories = params[:recently_visited_categories]
+      if !@recently_visited_categories.blank?
+        @recently_visited_categories = @recently_visited_categories.to_i
+        if @recently_visited_categories > MyplaceonlineQuickCategoryDisplaysController::ABSOLUTE_MAXIMUM
+          @recently_visited_categories = MyplaceonlineQuickCategoryDisplaysController::ABSOLUTE_MAXIMUM
+        end
+        if @recently_visited_categories < 0
+          @recently_visited_categories = nil
+        end
+      end
+      @most_visited_categories = params[:most_visited_categories]
+      if !@most_visited_categories.blank?
+        @most_visited_categories = @most_visited_categories.to_i
+        if @most_visited_categories > MyplaceonlineQuickCategoryDisplaysController::ABSOLUTE_MAXIMUM
+          @most_visited_categories = MyplaceonlineQuickCategoryDisplaysController::ABSOLUTE_MAXIMUM
+        end
+        if @most_visited_categories < 0
+          @most_visited_categories = nil
+        end
+      end
+      @most_visited_items = params[:most_visited_items]
+      if !@most_visited_items.blank?
+        @most_visited_items = @most_visited_items.to_i
+        if @most_visited_items > MyplaceonlineQuickCategoryDisplaysController::ABSOLUTE_MAXIMUM
+          @most_visited_items = MyplaceonlineQuickCategoryDisplaysController::ABSOLUTE_MAXIMUM
+        end
+        if @most_visited_items < 0
+          @most_visited_items = nil
+        end
+      end
       current_user.page_transition = @page_transition
       current_user.always_autofocus = @always_autofocus
       current_user.show_timestamps = @show_timestamps
       current_user.top_left_icon = @top_left_icon
+      current_user.recently_visited_categories = @recently_visited_categories
+      current_user.most_visited_categories = @most_visited_categories
+      current_user.most_visited_items = @most_visited_items
       current_user.save!
       redirect_to edit_user_registration_path,
         :flash => { :notice => I18n.t("myplaceonline.users.appearance_saved") }
