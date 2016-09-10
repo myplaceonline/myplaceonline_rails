@@ -29,11 +29,11 @@ class MyplaceonlineExecutionContext
   def self.permission_target=(x); self[:permission_target] = x; end
 
   def self.browser
-    result = self[:permission_target]
+    result = self[:browser]
     if result.nil?
       if !self.request.nil? && !self.request.user_agent.blank?
         result = Browser.new(self.request.user_agent, accept_language: self.request.env["HTTP_ACCEPT_LANGUAGE"])
-        self[:permission_target] = result
+        self[:browser] = result
       end
     end
     result
