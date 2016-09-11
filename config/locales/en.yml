@@ -2649,6 +2649,7 @@ en:
       no_results: "No users found."
       no_results_invite_start: "Invite"
       no_results_invite_end: "to Myplaceonline"
+      request: "Request"
     myreferences:
       contact: "Contact"
       reference_type: "Type"

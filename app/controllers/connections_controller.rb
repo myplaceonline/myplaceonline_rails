@@ -78,6 +78,10 @@ class ConnectionsController < MyplaceonlineController
     end
   end
   
+  def new_save_text
+    I18n.t("myplaceonline.connections.request") + " " + I18n.t("myplaceonline.category." + category_name).singularize
+  end
+
   protected
     def insecure
       true
