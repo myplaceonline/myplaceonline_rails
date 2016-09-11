@@ -1,5 +1,6 @@
 <% if obj.connection_status == Connection::STATUS_CONNECTED %>
-  <%= t("myplaceonline.connections.status_connected", name: obj.display) %>
+  <%= attribute_table_row_span(t("myplaceonline.connections.status_connected", name: obj.display)) %>
+  <%= attribute_table_row_reference(t("myplaceonline.connections.contact"), "contact_path", obj.contact) %>
 <% else %>
-  <%= t("myplaceonline.connections.status_pending", name: obj.display) %>
+  <%= attribute_table_row_span(t("myplaceonline.connections.status_pending", name: obj.display)) %>
 <% end %>

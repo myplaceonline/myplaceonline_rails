@@ -38,4 +38,34 @@ class MyplaceonlineExecutionContext
     end
     result
   end
+  
+  def self.do_permission_target(target, &block)
+    ExecutionContext.push
+    begin
+      self.permission_target = target
+      block.call
+    ensure
+      ExecutionContext.pop
+    end
+  end
+
+  def self.do_user(user, &block)
+    ExecutionContext.push
+    begin
+      self.user = user
+      block.call
+    ensure
+      ExecutionContext.pop
+    end
+  end
+
+  def self.do_identity(identity, &block)
+    ExecutionContext.push
+    begin
+      self.user = identity.user
+      block.call
+    ensure
+      ExecutionContext.pop
+    end
+  end
 end

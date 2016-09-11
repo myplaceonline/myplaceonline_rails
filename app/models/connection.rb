@@ -11,6 +11,10 @@ class Connection < ActiveRecord::Base
 
   validates :user, presence: true
 
+  belongs_to :contact, dependent: :destroy
+  accepts_nested_attributes_for :contact, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
+  allow_existing :contact
+
   def display
     user.display
   end
@@ -56,5 +60,14 @@ class Connection < ActiveRecord::Base
   
   def on_after_destroy
     Connection.destroy_all(user_id: self.identity.user.id, identity_id: self.user.primary_identity_id)
+  end
+
+  def self.create_contact(email)
+    Contact.new(
+      contact_identity: Identity.new(
+        name: Identity.email_to_name(email),
+        identity_emails: [ IdentityEmail.new(email: email) ]
+      )
+    )
   end
 end

@@ -8,8 +8,12 @@ class Identity < ActiveRecord::Base
   
   has_one :contact, class_name: Contact, foreign_key: :contact_identity_id
   
+  def self.email_to_name(email)
+    email[0..email.index("@")-1]
+  end
+  
   def name_from_email
-    user.nil? ? nil : user.email[0..user.email.index("@")-1]
+    user.nil? ? nil : self.email_to_name(user.email)
   end
   
   def ensure_contact!
@@ -418,7 +422,7 @@ class Identity < ActiveRecord::Base
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
-    if MyplaceonlineExecutionContext.handle_updates?
+    if ExecutionContext.count > 0 && MyplaceonlineExecutionContext.handle_updates?
       if !birthday.nil?
         ActiveRecord::Base.transaction do
           User.current_user.primary_identity.calendars.each do |calendar|

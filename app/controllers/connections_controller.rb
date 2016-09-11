@@ -20,25 +20,34 @@ class ConnectionsController < MyplaceonlineController
       @objs.delete_if{|x| x.display.index(search).nil? }
     end
   end
-
+  
   def accept
     Myp.ensure_encryption_key(session)
-    @obj = model.where(id: params[:id].to_i, connection_request_token: params[:token]).first
+    
+    @obj = Connection.where(
+      id: params[:id].to_i,
+      connection_request_token: params[:token]
+    ).first
+    
     if !@obj.nil?
       if @obj.user.id == User.current_user.id
-        begin
-          Permission.current_target = @obj.identity
-          @obj.connection_status = Connection::STATUS_CONNECTED
-          @obj.save!
-        ensure
-          Permission.current_target = nil
-        end
         
-        # Create our own connection
-        my_connection = Connection.new
-        my_connection.connection_status = Connection::STATUS_CONNECTED
-        my_connection.user = @obj.identity.user
-        my_connection.save!
+        ActiveRecord::Base.transaction do
+          # Update the connection object of the requesting user
+          # to set the status to connected
+          MyplaceonlineExecutionContext.do_permission_target(@obj.identity) do
+            @obj.connection_status = Connection::STATUS_CONNECTED
+            @obj.contact = Connection.create_contact(User.current_user.email)
+            @obj.save!
+          end
+          
+          # Create our own connection
+          my_connection = Connection.new
+          my_connection.connection_status = Connection::STATUS_CONNECTED
+          my_connection.user = @obj.identity.user
+          my_connection.contact = Connection.create_contact(@obj.identity.user.email)
+          my_connection.save!
+        end
         
         body_markdown = I18n.t(
           "myplaceonline.connections.connection_accepted_body",
