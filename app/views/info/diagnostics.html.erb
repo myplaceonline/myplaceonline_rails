@@ -24,12 +24,6 @@
     <li><%= link_to("Long Request (65s)", info_sleep_time_path(duration: 65)) %></li>
   <% end %>
   <li>
-    <%= link_to("https://build.phonegap.com/apps/1678617/download/android/", :data => { :ajax => false }) do %>
-      <%= image_tag("android16x16.png", size: "16x16", class: "ui-li-icon") %>
-      <%= t("myplaceonline.info.apk") %>
-    <% end %>
-  </li>
-  <li>
     <%= link_to(info_diagnostics_checkboxes_path) do %>
       <%= t("myplaceonline.info.checkboxes") %>
     <% end %>
