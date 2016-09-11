@@ -4,6 +4,9 @@ class MyplaceonlineController < ApplicationController
   
   DEFAULT_SKIP_AUTHORIZATION_CHECK = [:index, :new, :create, :destroy_all]
   
+  CHECK_PASSWORD_REQUIRED = 1
+  CHECK_PASSWORD_OPTIONAL = 2
+  
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK
 
   respond_to :html, :json
@@ -12,7 +15,7 @@ class MyplaceonlineController < ApplicationController
     deny_guest
     
     if sensitive
-      Myp.ensure_encryption_key(session)
+      check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
     end
     
     if has_category && params[:myplet].nil?
@@ -82,7 +85,7 @@ class MyplaceonlineController < ApplicationController
 
   def show
     if sensitive
-      Myp.ensure_encryption_key(session)
+      check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
     end
     @nested_show = params[:nested_show]
     before_show
@@ -106,7 +109,7 @@ class MyplaceonlineController < ApplicationController
     deny_guest
     
     if !insecure
-      Myp.ensure_encryption_key(session)
+      check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
     end
     @obj = Myp.new_model(model, params)
     set_parent
@@ -122,8 +125,8 @@ class MyplaceonlineController < ApplicationController
 
   def edit
     deny_guest
-    
-    Myp.ensure_encryption_key(session)
+
+    check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
     @url = obj_path(@obj)
     edit_prerespond
     respond_with(@obj)
@@ -134,7 +137,7 @@ class MyplaceonlineController < ApplicationController
     
     Rails.logger.debug{"create"}
     if !insecure
-      Myp.ensure_encryption_key(session)
+      check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
     end
     ActiveRecord::Base.transaction do
       begin
@@ -301,7 +304,7 @@ class MyplaceonlineController < ApplicationController
   def destroy
     deny_guest
     
-    Myp.ensure_encryption_key(session)
+    check_password
     ActiveRecord::Base.transaction do
       @obj.destroy
       if has_category
@@ -313,7 +316,7 @@ class MyplaceonlineController < ApplicationController
   end
 
   def destroy_all
-    Myp.ensure_encryption_key(session)
+    check_password
     deny_guest
     ActiveRecord::Base.transaction do
       all.each do |obj|
@@ -528,6 +531,20 @@ class MyplaceonlineController < ApplicationController
   def show_share
     !nested
   end
+  
+  def check_password(level: MyplaceonlineController::CHECK_PASSWORD_REQUIRED)
+    MyplaceonlineController.check_password(current_user, session, level: level)
+  end
+
+  def self.check_password(user, session, level: MyplaceonlineController::CHECK_PASSWORD_REQUIRED)
+    requires_check = true
+    if level == MyplaceonlineController::CHECK_PASSWORD_OPTIONAL && user.minimize_password_checks
+      requires_check = false
+    end
+    if requires_check
+      Myp.ensure_encryption_key(session)
+    end
+  end
 
   protected
   
@@ -677,7 +694,7 @@ class MyplaceonlineController < ApplicationController
     end
     
     def update_security
-      Myp.ensure_encryption_key(session)
+      check_password
     end
     
     def indexmyplet

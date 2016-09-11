@@ -132,7 +132,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   
   def resetpoints
-    Myp.ensure_encryption_key(session)
+    check_password
+
     if request.post?
       Myp.reset_points(current_user)
       redirect_to edit_user_registration_path,
@@ -146,7 +147,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def deletecategory
-    Myp.ensure_encryption_key(session)
+    check_password
+
     passwords = I18n.t("myplaceonline.category.passwords")
     
     @categories = Myp.get_category_list
@@ -186,7 +188,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def security
-    Myp.ensure_encryption_key(session)
+    check_password
     @encrypt_by_default = current_user.encrypt_by_default
     @minimize_password_checks = current_user.minimize_password_checks
     if request.post?
@@ -203,7 +205,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   
   def categories
-    Myp.ensure_encryption_key(session)
+    check_password
     @explicit_categories = current_user.explicit_categories
     @experimental_categories = current_user.experimental_categories
     @items_per_page = current_user.items_per_page
@@ -223,7 +225,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   
   def sounds
-    Myp.ensure_encryption_key(session)
+    check_password
+
     @enable_sounds = current_user.enable_sounds
     if request.post?
       @enable_sounds = params[:enable_sounds]
@@ -237,7 +240,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   
   def appearance
-    Myp.ensure_encryption_key(session)
+    check_password
     @page_transition = current_user.page_transition
     @always_autofocus = current_user.always_autofocus
     @show_timestamps = current_user.show_timestamps
@@ -296,7 +299,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   
   def homepage
-    Myp.ensure_encryption_key(session)
+    check_password
     @obj = User.current_user.primary_identity
     if request.patch?
       @obj.assign_attributes(
@@ -325,7 +328,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   
   def clipboard
-    Myp.ensure_encryption_key(session)
+    check_password
     @clipboard_integration = current_user.clipboard_integration
     @clipboard_transform_numbers = current_user.clipboard_transform_numbers
     if request.post?
@@ -342,7 +345,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   
   def diagnostics
-    Myp.ensure_encryption_key(session)
+    check_password
     @always_enable_debug = current_user.always_enable_debug
     if request.post?
       @always_enable_debug = params[:always_enable_debug]
@@ -356,7 +359,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   
   def changetimezone
-    Myp.ensure_encryption_key(session)
+    check_password
     if request.post?
       current_user.timezone = params[:user][:timezone]
       current_user.save!
@@ -368,7 +371,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   
   def export
-    Myp.ensure_encryption_key(session)
+    check_password
     @encrypt = current_user.encrypt_by_default
     if !params[:encrypt].nil?
       @encrypt = params[:encrypt] == "1" || params[:encrypt] == "true"
@@ -411,7 +414,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def offline
-    Myp.ensure_encryption_key(session)
+    check_password
     @encrypt = false
     if request.post?
       @data = exported_json(@encrypt, false)
@@ -495,7 +498,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       result = result.to_json
     end
     if encrypt
-      password = Myp.ensure_encryption_key(session)
+      password = check_password
 
       result = encrypt_for_pgp(password, result)
 
@@ -589,5 +592,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
     cipher.decrypt
     cipher.pkcs5_keyivgen(password, input_salt, 1, md)
     c.update(data) + c.final
+  end
+
+  def check_password(level: MyplaceonlineController::CHECK_PASSWORD_REQUIRED)
+    MyplaceonlineController.check_password(current_user, session, level: level)
   end
 end

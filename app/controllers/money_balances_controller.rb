@@ -25,7 +25,8 @@ class MoneyBalancesController < MyplaceonlineController
   end
   
   def add
-    Myp.ensure_encryption_key(session)
+    check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
+
     set_obj
     # X paid a bill and Y either owes 100%, 50%, or some other percent
     owner_paid_str = params[:owner_paid].blank? ? "true" : params[:owner_paid]

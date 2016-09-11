@@ -22,7 +22,7 @@ class ConnectionsController < MyplaceonlineController
   end
   
   def accept
-    Myp.ensure_encryption_key(session)
+    check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
     
     @obj = Connection.where(
       id: params[:id].to_i,

@@ -67,7 +67,7 @@ class AdministrationController < ApplicationController
   end
 
   def check_admin
-    Myp.ensure_encryption_key(session)
+    check_password
     if current_user.nil? || !current_user.admin?
       raise CanCan::AccessDenied.new("Not authorized")
     end

@@ -44,7 +44,8 @@ class FilesController < MyplaceonlineController
   
   def move
     set_obj
-    Myp.ensure_encryption_key(session)
+    
+    check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
     
     @folders = Hash[IdentityFileFolder.where(
       identity_id: current_user.primary_identity.id

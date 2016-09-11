@@ -6,12 +6,8 @@
 <%= form_tag do %>
   <fieldset>
     <div data-role="fieldcontain">
-      <%= label_tag :encrypt_by_default, t("myplaceonline.users.encrypt_by_default") %>
-      <%= check_box_tag :encrypt_by_default, 1, @encrypt_by_default, data: { "role" => "flipswitch" } %>
-      
-      <p>
-      <%= myp_check_box_tag(:minimize_password_checks, "myplaceonline.users.minimize_password_checks", @minimize_password_checks) %>
-      </p>
+      <p><%= myp_check_box_tag(:encrypt_by_default, "myplaceonline.users.encrypt_by_default", @encrypt_by_default) %></p>
+      <p><%= myp_check_box_tag(:minimize_password_checks, "myplaceonline.users.minimize_password_checks", @minimize_password_checks) %></p>
     </div>
     <p><%= t("myplaceonline.users.encrypt_warning") %></p>
   </fieldset>

@@ -22,7 +22,8 @@ class PasswordsController < MyplaceonlineController
   end
   
   def importodf
-    Myp.ensure_encryption_key(session)
+    check_password
+
     @password = ""
     if request.post?
       if params.has_key?(:file)
@@ -59,7 +60,7 @@ class PasswordsController < MyplaceonlineController
   end
   
   def importodf1
-    Myp.ensure_encryption_key(session)
+    check_password
     ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
     if !ifile.nil?
       authorize! :manage, ifile
@@ -69,7 +70,7 @@ class PasswordsController < MyplaceonlineController
   end
   
   def importodf2
-    Myp.ensure_encryption_key(session)
+    check_password
     ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
     if !ifile.nil?
       authorize! :manage, ifile
@@ -85,7 +86,7 @@ class PasswordsController < MyplaceonlineController
   end
   
   def importodf3
-    Myp.ensure_encryption_key(session)
+    check_password
     ifile = IdentityFile.find_by(identity: current_user.primary_identity, id: params[:id])
     if !ifile.nil?
       authorize! :manage, ifile
