@@ -532,10 +532,6 @@ class MyplaceonlineController < ApplicationController
     !nested
   end
   
-  def check_password(level: MyplaceonlineController::CHECK_PASSWORD_REQUIRED)
-    MyplaceonlineController.check_password(current_user, session, level: level)
-  end
-
   def self.check_password(user, session, level: MyplaceonlineController::CHECK_PASSWORD_REQUIRED)
     requires_check = true
     if level == MyplaceonlineController::CHECK_PASSWORD_OPTIONAL && user.minimize_password_checks

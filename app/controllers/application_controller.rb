@@ -110,6 +110,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def check_password(level: MyplaceonlineController::CHECK_PASSWORD_REQUIRED)
+    MyplaceonlineController.check_password(current_user, session, level: level)
+  end
+
   private
     # https://github.com/CanCanCommunity/cancancan/wiki/Accessing-request-data
     def current_ability

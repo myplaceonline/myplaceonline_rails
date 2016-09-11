@@ -7,6 +7,7 @@ new_item_collapsible_id = random_name + "_new_item"
 always_search ||= false
 only_new ||= false
 simpleform ||= nil
+noresultsfunc ||= "null"
 existingitems ||= nil
 if !(defined?(create_new))
   create_new = true
@@ -82,7 +83,12 @@ end
                 $(this).addClass('ui-btn-active');
               });
               myplaceonline.remoteDataListInitialize($("#<%= random_name %>_searchable"), [
-                {title: "<%= t("myplaceonline.general.existing") + " " + heading %>", url: "<%= raw(Myp.append_query_parameter(searchurl, "select_or_create", "true")) %>", static_list: true}
+                {
+                  title: "<%= t("myplaceonline.general.existing") + " " + heading %>",
+                  url: "<%= raw(Myp.append_query_parameter(searchurl, "select_or_create", "true")) %>",
+                  static_list: true,
+                  noresults: <%= noresultsfunc %>
+                }
               ], function(ul) {
                 ul.find("li a:not(.splitlink)").each(function(index) {
                   $(this).attr("onclick", "<%= raw(Myp.select_listitem('#' + fieldid)) %>");

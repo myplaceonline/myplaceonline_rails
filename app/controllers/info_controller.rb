@@ -65,4 +65,50 @@ Body:
       end
     end
   end
+  
+  def invite
+    check_password
+    @obj = Invite.new
+    @obj.email = params[:email]
+    if request.post?
+      @obj = Invite.new(
+        params.require(:invite).permit(
+          :email,
+          :invite_body
+        )
+      )
+      @obj.user = User.current_user
+      if Invite.find_by_sql(%{
+        SELECT invites.*
+        FROM invites
+        WHERE lower(invites.email) = #{ActiveRecord::Base.sanitize(@obj.email.downcase)} AND user_id = #{@obj.user.id}
+      }).count == 0
+        if @obj.save
+          body_markdown = I18n.t(
+            "myplaceonline.info.invite_body_markdown",
+            name: User.current_user.display,
+            link: Rails.application.routes.url_helpers.send("root_url", Rails.configuration.default_url_options),
+            additional_body: @obj.invite_body
+          )
+          
+          Myp.send_email(
+            @obj.email,
+            I18n.t("myplaceonline.info.invite_subject", name: User.current_user.display),
+            Myp.markdown_to_html(body_markdown).html_safe,
+            nil,
+            nil,
+            body_markdown,
+            User.current_user.email
+          )
+
+          redirect_to "/",
+            :flash => { :notice =>
+                        I18n.t("myplaceonline.info.invite_sent")
+                      }
+        end
+      else
+        flash[:error] = t("myplaceonline.info.invite_duplicate")
+      end
+    end
+  end
 end

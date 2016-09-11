@@ -62,10 +62,13 @@ class Connection < ActiveRecord::Base
     Connection.destroy_all(user_id: self.identity.user.id, identity_id: self.user.primary_identity_id)
   end
 
-  def self.create_contact(email)
+  def self.create_contact(email, name: nil)
+    if name.blank?
+      name = Identity.email_to_name(email)
+    end
     Contact.new(
       contact_identity: Identity.new(
-        name: Identity.email_to_name(email),
+        name: name,
         identity_emails: [ IdentityEmail.new(email: email) ]
       )
     )

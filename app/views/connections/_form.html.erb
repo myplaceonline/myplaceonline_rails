@@ -1,3 +1,19 @@
+<script type="text/javascript">
+function find_connection_no_results(list, remote, section, search) {
+  var html = null;
+  if (search.indexOf('@') == -1) {
+    html = "<%= t("myplaceonline.connections.invalid_search") %>";
+  } else {
+    html = "<%= t("myplaceonline.connections.no_results") %><br/><button onclick='myplaceonline.navigate(\"<%= info_invite_path %>?email=" + encodeURIComponent(search) + "\"); return false;'><%= t("myplaceonline.connections.no_results_invite_start") %> " + myplaceonline.encodeEntities(search) + " <%= t("myplaceonline.connections.no_results_invite_end") %></button>";
+  }
+  myplaceonline.jqmReplaceListSection(list, section, [{
+    title: html,
+    is_html: true,
+    filtertext: search,
+    fake: true
+  }]);
+}
+</script>
 <%=
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,
@@ -12,6 +28,7 @@
     always_search: true,
     allow_new: false,
     force_existing: true,
-    create_new: false
+    create_new: false,
+    noresultsfunc: "find_connection_no_results"
   }
 %>

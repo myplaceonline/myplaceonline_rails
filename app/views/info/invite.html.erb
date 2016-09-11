@@ -1,0 +1,25 @@
+<% content_for :heading do -%><%= t('myplaceonline.info.invite') %><% end -%>
+
+<%= flashes! %>
+<% if @obj.errors.any? %>
+  <div class="errors">
+    <ul>
+    <% @obj.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<p><%= t("myplaceonline.info.invite_intro") %></p>
+<%= form_for @obj, :url => info_invite_path do |f| %>
+  <%= myp_text_field(f, :email, t("myplaceonline.contact.email"), @obj.email, true) %>
+  <%= myp_text_area_markdown(f, :invite_body, t("myplaceonline.info.invite_form_body"), @obj.invite_body, collapsed: true) %>
+  <%= f.submit(t("myplaceonline.info.invite_form_send")) %>
+
+  <script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+  </script>
+<% end %>

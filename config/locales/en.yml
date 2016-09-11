@@ -443,6 +443,14 @@ en:
       diagnostic_details:
         identity: "Identity identifier"
       checkboxes: "Checkbox Tests"
+      invite_form_body: "Personalized Message"
+      invite_form_send: "Send Invite"
+      invite: "Invite"
+      invite_subject: "You've been invited to try Myplaceonline by %{name}"
+      invite_body_markdown: "%{name} has invited you to try Myplaceonline, a free virtual life assistant:\n\n[%{link}](%{link})\n\nThe invite code to join is letmein. %{additional_body}"
+      invite_sent: "Your invite has been sent."
+      invite_intro: "This will send an email invite to this person. You may enter a personalized message."
+      invite_duplicate: "You may only invite an email address once."
     help:
       title: "Help"
       features: "Features"
@@ -2637,6 +2645,10 @@ en:
       no_connections: "No connections. First you must connect with, or invite, the person:"
       add_connection: "Add Connection"
       contact: "Contact"
+      invalid_search: "Please enter an email address."
+      no_results: "No users found."
+      no_results_invite_start: "Invite"
+      no_results_invite_end: "to Myplaceonline"
     myreferences:
       contact: "Contact"
       reference_type: "Type"

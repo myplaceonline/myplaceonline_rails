@@ -563,6 +563,7 @@ Rails.application.routes.draw do
   get 'info/diagnostics/clientinfo', :to => 'info#clientinfo'
   get 'info/index'
   match 'info/contact', via: [:get, :post]
+  match 'info/invite', via: [:get, :post]
   get 'info/credits'
   get 'info/diagnostics'
   get 'info/sleep_time'

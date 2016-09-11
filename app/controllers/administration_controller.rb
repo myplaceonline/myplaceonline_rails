@@ -72,8 +72,4 @@ class AdministrationController < ApplicationController
       raise CanCan::AccessDenied.new("Not authorized")
     end
   end
-
-  def check_password(level: MyplaceonlineController::CHECK_PASSWORD_REQUIRED)
-    MyplaceonlineController.check_password(current_user, session, level: level)
-  end
 end

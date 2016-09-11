@@ -37,7 +37,7 @@ class ConnectionsController < MyplaceonlineController
           # to set the status to connected
           MyplaceonlineExecutionContext.do_permission_target(@obj.identity) do
             @obj.connection_status = Connection::STATUS_CONNECTED
-            @obj.contact = Connection.create_contact(User.current_user.email)
+            @obj.contact = Connection.create_contact(User.current_user.email, name: User.current_user.display)
             @obj.save!
           end
           
@@ -45,7 +45,8 @@ class ConnectionsController < MyplaceonlineController
           my_connection = Connection.new
           my_connection.connection_status = Connection::STATUS_CONNECTED
           my_connection.user = @obj.identity.user
-          my_connection.contact = Connection.create_contact(@obj.identity.user.email)
+          my_connection.contact = Connection.create_contact(@obj.identity.user.email, name: @obj.identity.user.display)
+          Rails.logger.debug{"Creating contact #{my_connection.contact.contact_identity.inspect}"}
           my_connection.save!
         end
         
