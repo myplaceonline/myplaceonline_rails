@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160911164312) do
+ActiveRecord::Schema.define(version: 20160911175720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -819,7 +819,7 @@ ActiveRecord::Schema.define(version: 20160911164312) do
     t.datetime "updated_at"
     t.integer  "contact_type"
     t.integer  "visit_count"
-    t.boolean  "hide"
+    t.datetime "archived"
   end
 
   add_index "contacts", ["contact_identity_id"], name: "index_contacts_on_contact_identity_id", using: :btree

@@ -4,15 +4,13 @@ class ContactsController < MyplaceonlineController
   end
   
   def index
+    @archived = params[:archived]
+    if !@archived.blank?
+      @archived = @archived.to_bool
+    end
     @contact_type = params[:contact_type]
-    @hidden = params[:hidden]
     if !@contact_type.blank?
       @contact_type = @contact_type.to_i
-    end
-    if !@hidden.nil?
-      @hidden = @hidden.to_bool
-    else
-      @hidden = false
     end
     super
   end
@@ -22,7 +20,7 @@ class ContactsController < MyplaceonlineController
       :id,
       :_destroy,
       :contact_type,
-      :hide,
+      :is_archived,
       conversations_attributes: [
         :id,
         :conversation,
@@ -99,7 +97,7 @@ class ContactsController < MyplaceonlineController
   end
 
   def self.reject_if_blank(attributes)
-    attributes.dup.delete_if {|key, value| key.to_s == "hide" }.all?{|key, value|
+    attributes.dup.delete_if {|key, value| key.to_s == "is_archived" }.all?{|key, value|
       if key == "contact_identity_attributes"
         value.all?{|key2, value2|
           if key2 == "company_attributes"
@@ -168,10 +166,10 @@ class ContactsController < MyplaceonlineController
       if strict
         nil
       else
-        if @hidden
-          result = ""
+        if (@archived.blank? || !@archived) && !strict
+          result = "and archived is null"
         else
-          result = " and (hide is null or hide = false)"
+          result = ""
         end
         if !@contact_type.blank?
           result = Myp.appendstr(result, " and contact_type = " + @contact_type.to_s)

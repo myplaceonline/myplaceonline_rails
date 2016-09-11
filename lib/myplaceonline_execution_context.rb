@@ -68,4 +68,14 @@ class MyplaceonlineExecutionContext
       ExecutionContext.pop
     end
   end
+
+  def self.do_context(context, &block)
+    ExecutionContext.push
+    begin
+      self.user = context.identity.user
+      block.call
+    ensure
+      ExecutionContext.pop
+    end
+  end
 end

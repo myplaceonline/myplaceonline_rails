@@ -1,5 +1,6 @@
 class Contact < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
+  include ModelHelpersConcern
 
   CONTACT_TYPES = [
     ["myplaceonline.contacts.best_friend", 0],
@@ -34,6 +35,9 @@ class Contact < ActiveRecord::Base
   has_many :conversations, :dependent => :destroy
   accepts_nested_attributes_for :conversations, allow_destroy: true, reject_if: :all_blank
   
+  attr_accessor :is_archived
+  boolean_time_transfer :is_archived, :archived
+
   before_destroy :check_if_user_contact, prepend: true
   
   def check_if_user_contact
@@ -158,7 +162,8 @@ class Contact < ActiveRecord::Base
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
-    if MyplaceonlineExecutionContext.handle_updates?
+    # No execution contexts on a migration
+    if ExecutionContext.count > 0 && MyplaceonlineExecutionContext.handle_updates?
       ActiveRecord::Base.transaction do
         # Always destroy first because if the contact was updated to not
         # be of the type to have a conversation reminder, then we need to
