@@ -13,7 +13,7 @@ class Identity < ActiveRecord::Base
   end
   
   def name_from_email
-    user.nil? ? nil : self.email_to_name(user.email)
+    user.nil? ? nil : Identity.email_to_name(user.email)
   end
   
   def ensure_contact!
