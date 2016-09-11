@@ -14,6 +14,10 @@ class PasswordsController < MyplaceonlineController
     super
   end
 
+  def show_share
+    false
+  end
+  
   def import
   end
   
