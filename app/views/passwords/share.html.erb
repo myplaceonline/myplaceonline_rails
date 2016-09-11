@@ -14,20 +14,9 @@
 <p><%= t("myplaceonline.passwords.share_description") %></p>
 <%= form_for @password_share, :url => passwords_share_path(@obj) do |f| %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: 'myplaceonline/find_connection', locals: {
       f: f,
-      name: :user,
-      heading: t("myplaceonline.permissions.user"),
-      objform: "users/form",
-      existingobj: @password_share.user,
-      existingobjurl: "user_path",
-      searchurl: "/users/allusers.json",
-      edit: true,
-      autofocus: true,
-      always_search: true,
-      allow_new: false,
-      force_existing: true,
-      create_new: false
+      existingobj: @password_share.user
     }
   %>
   <div data-role="footer" data-position="fixed" data-tap-toggle="false">

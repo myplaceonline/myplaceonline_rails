@@ -564,7 +564,7 @@ en:
       shared_sucess: "An e-mail has been sent with the shared password"
       share_details: "%{user} shared a password with you. It will expire in %{time}. Click the following link to accept this:"
       share_subject: "%{user} shared a password with you"
-      transfer_success: "Password successfully transferred"
+      transfer_success: "Password successfully transferred. Note that if the other user updates their password, you will not see those changes and they'll have to re-share the new password, and vice versa if you update this password."
       generate_options: "Password Options"
       generate_special: "Special Characters (_, -, !)"
     users:
