@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160911175720) do
+ActiveRecord::Schema.define(version: 20160911191741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3445,6 +3445,7 @@ ActiveRecord::Schema.define(version: 20160911175720) do
     t.integer  "recently_visited_categories"
     t.integer  "most_visited_categories"
     t.integer  "most_visited_items"
+    t.boolean  "minimize_password_checks"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

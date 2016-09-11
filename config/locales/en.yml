@@ -644,6 +644,7 @@ en:
       recently_visited_categories: "Recently Visited Categories on Homepage (Max %{max})"
       most_visited_categories: "Most Visited Categories on Homepage (Max %{max})"
       most_visited_items: "Most Visited Items on Homepage (Max %{max})"
+      minimize_password_checks: "Minimize Password Checks"
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"
