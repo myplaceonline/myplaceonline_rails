@@ -29,13 +29,18 @@ module Myplaceonline
     end
     
     def call(env)
+      start_time = Time.now
       begin
-        Rails.logger.debug{"MyplaceonlineRequestStrategy entry"}
+        #Rails.logger.debug{"MyplaceonlineRequestStrategy entry"}
         ExecutionContext.push
-        @app.call(env)
+        result = @app.call(env)
+        result
       ensure
         ExecutionContext.clear
-        Rails.logger.debug{"MyplaceonlineRequestStrategy exit"}
+        #Rails.logger.debug{"MyplaceonlineRequestStrategy exit"}
+        end_time = Time.now
+        diff = (end_time - start_time) * 1000.0
+        Rails.logger.debug{"Myplaceonline response time in milliseconds = #{diff}"}
       end
     end
   end
