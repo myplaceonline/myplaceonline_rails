@@ -4,12 +4,9 @@
 <%= flashes! %>
 
 <%= form_tag do %>
-  <fieldset>
-    <div data-role="fieldcontain">
-      <p><%= myp_check_box_tag(:encrypt_by_default, "myplaceonline.users.encrypt_by_default", @encrypt_by_default) %></p>
-      <p><%= myp_check_box_tag(:minimize_password_checks, "myplaceonline.users.minimize_password_checks", @minimize_password_checks) %></p>
-    </div>
-    <p><%= t("myplaceonline.users.encrypt_warning") %></p>
-  </fieldset>
+  <p><%= t("myplaceonline.users.encrypt_warning") %></p>
+  <p><%= myp_check_box_tag(:encrypt_by_default, "myplaceonline.users.encrypt_by_default", @encrypt_by_default) %></p>
+  <hr />
+  <p><%= myp_check_box_tag(:minimize_password_checks, "myplaceonline.users.minimize_password_checks", @minimize_password_checks) %></p>
   <div><%= submit_tag t("myplaceonline.general.save") %></div>
 <% end %>
