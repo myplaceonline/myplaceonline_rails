@@ -12,40 +12,11 @@
 <% end %>
 
 <%= form_for @permission, :url => permissions_share_path do |f| %>
-  <%
-  connections = Connection.where(
-    identity_id: User.current_user.primary_identity_id,
-    connection_status: Connection::STATUS_CONNECTED
-  )
-  if connections.length > 0
-  %>
-    <%=
-      render partial: 'myplaceonline/select_or_create', locals: {
-        f: f,
-        name: :user,
-        heading: t("myplaceonline.permissions.connection"),
-        objform: "users/form",
-        existingobj: @permission.user,
-        existingobjurl: "user_path",
-        searchurl: "/connections/allconnections.json",
-        edit: true,
-        autofocus: true,
-        allow_new: false,
-        force_existing: true,
-        create_new: false,
-        existingitems: connections.map{|x| Myp::ListItemRow.new(x.user.display, user_path(x.user)) }
-      }
-    %>
-  <%
-  else
-  %>
-    <div data-role="collapsible" data-collapsed="false">
-      <h4><%= t("myplaceonline.category.connections") %></h4>
-        <%= t("myplaceonline.connections.no_connections") %>
-        <%= link_to(t("myplaceonline.connections.add_connection"), connections_new_path, class: "ui-btn") %>
-    </div>
-  <%
-  end
+  <%=
+    render partial: 'myplaceonline/find_connection', locals: {
+      f: f,
+      existingobj: @permission.user
+    }
   %>
   <%= myp_text_field_tag(:subject, "myplaceonline.permissions.subject", @subject) %>
   <%= myp_text_area_tag(:body, "myplaceonline.permissions.body", @body) %>
