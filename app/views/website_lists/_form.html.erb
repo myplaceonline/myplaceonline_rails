@@ -1,2 +1,46 @@
 <%= myp_text_field(f, :website_list_name, "myplaceonline.website_lists.website_list_name", obj.website_list_name, autofocus) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes, collapsed: false) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.website_lists.items"),
+    childpropertiesname: :website_list_items,
+    childproperties: obj.website_list_items,
+    deletebutton: t("myplaceonline.website_lists.delete_item"),
+    addbutton: t("myplaceonline.website_lists.add_item"),
+    expanded: true,
+    position_field: :position,
+    itemname: t("myplaceonline.website_lists.item"),
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :website_attributes,
+        partial: 'myplaceonline/select_or_create',
+        heading: t("myplaceonline.website_lists.item"),
+        objform: "websites/form",
+        existingobjurl: "website_path",
+        searchurl: "/websites.json?perpage=0",
+        edit: false,
+        autofocus: true
+      },
+      {
+        type: "position",
+        name: "position"
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%=
+    render partial: 'myplaceonline/select_or_create', locals: {
+      f: child_fields,
+      name: :website_attributes,
+      existingobj: childproperty.website,
+      heading: t("myplaceonline.website_lists.website"),
+      objform: "websites/form",
+      existingobjurl: "website_path",
+      searchurl: "/websites.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
+<% end %>

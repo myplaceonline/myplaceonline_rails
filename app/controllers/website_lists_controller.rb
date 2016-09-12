@@ -15,7 +15,13 @@ class WebsiteListsController < MyplaceonlineController
     def obj_params
       params.require(:website_list).permit(
         :website_list_name,
-        :notes
+        :notes,
+        website_list_items_attributes: [
+          :id,
+          :_destroy,
+          :position,
+          website_attributes: WebsitesController.param_names
+        ]
       )
     end
 end

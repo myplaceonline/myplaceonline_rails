@@ -1,2 +1,5 @@
 <%= attribute_table_row(t("myplaceonline.website_lists.website_list_name"), obj.website_list_name) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<% obj.website_list_items.each do |x| %>
+  <%= attribute_table_row_reference(t("myplaceonline.website_lists.item"), "website_path", x.website) %>
+<% end %>

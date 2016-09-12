@@ -2698,3 +2698,8 @@ en:
       delete_file: "Delete File"
     website_lists:
       website_list_name: "Name"
+      item: "Website"
+      items: "Websites"
+      add_item: "Add Website"
+      delete_item: "Delete Website"
+      website: "Website"
