@@ -4,6 +4,7 @@
   <%= attribute_table_row_reference(t("myplaceonline.website_lists.item"), "website_path", x.website) %>
 <% end %>
 <%= attribute_table_row_boolean(t("myplaceonline.website_lists.disable_autoload"), obj.disable_autoload) %>
+<%= attribute_table_row(t("myplaceonline.website_lists.iframe_height"), obj.iframe_height) %>
 
 <% content_for :postfooterlinks do %>
   <li><%= link_to t("myplaceonline.website_lists.roll"), website_list_roll_path(obj), "data-icon" => "bars" %></li>

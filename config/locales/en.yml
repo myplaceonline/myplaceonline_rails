@@ -2707,3 +2707,4 @@ en:
       roll_nomore_previous: "No more previous websites"
       roll_nomore_next: "No more websites"
       disable_autoload: "Disable Autoload"
+      iframe_height: "Frame Height"

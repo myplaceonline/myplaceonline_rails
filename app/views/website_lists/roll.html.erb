@@ -6,7 +6,7 @@
     <a href="<%= @selected %>" data-role="button" id="link" target="_blank"><%= @selected %></a>
     <a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" onclick="if ($('#website')[0].selectedIndex == $('#website')[0].options.length - 1) myplaceonline.createSuccessNotification('<%= t("myplaceonline.website_lists.roll_nomore_next") %>'); else $('#website')[0].selectedIndex = $('#website')[0].selectedIndex + 1;"><%= t("myplaceonline.general.next") %></a>
   </div>
-  <iframe id="iframe" style="width: 100%; height: 500px;" src="<%= @selected %>"></iframe>
+  <iframe id="iframe" style="width: 100%; height: <%= @frame_height %>px;" src="<%= @selected %>"></iframe>
 </div>
 
 <div data-role="footer" data-position="fixed" data-tap-toggle="false">
