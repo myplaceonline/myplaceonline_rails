@@ -39,7 +39,10 @@ class Users::SessionsController < Devise::SessionsController
     
     if params.has_key?(:redirect)
       @redirect = URI.parse(params[:redirect]).to_s
-      
+    end
+    
+    if !session[:password].blank? && current_user.valid_password?(session[:password])
+      return redirect_to @redirect.nil? ? "/" : @redirect
     end
     
     if request.post?
