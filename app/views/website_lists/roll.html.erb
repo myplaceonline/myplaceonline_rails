@@ -1,0 +1,18 @@
+<% content_for :heading do -%><%= page_heading(@obj, controller) %><% end -%>
+<div class="horizontal_center">
+  <p><%= select_tag(:website, options_for_select(@options, @selected), include_blank: true, onchange: "$('#link').attr('href', $('#website').val()); $('#link').html($('#website').val()); $('#iframe').attr('src', $('#website').val());") %></p>
+  <div data-role="controlgroup" data-type="horizontal">
+    <a href="#" data-role="button" data-icon="arrow-l" data-iconpos="left" onclick="if ($('#website')[0].selectedIndex == 0) myplaceonline.createSuccessNotification('<%= t("myplaceonline.website_lists.roll_nomore_previous") %>'); else $('#website')[0].selectedIndex = $('#website')[0].selectedIndex - 1;"><%= t("myplaceonline.general.previous") %></a>
+    <a href="<%= @selected %>" data-role="button" id="link" target="_blank"><%= @selected %></a>
+    <a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" onclick="if ($('#website')[0].selectedIndex == $('#website')[0].options.length - 1) myplaceonline.createSuccessNotification('<%= t("myplaceonline.website_lists.roll_nomore_next") %>'); else $('#website')[0].selectedIndex = $('#website')[0].selectedIndex + 1;"><%= t("myplaceonline.general.next") %></a>
+  </div>
+  <iframe id="iframe" style="width: 100%; height: 500px;" src="<%= @selected %>"></iframe>
+</div>
+
+<div data-role="footer" data-position="fixed" data-tap-toggle="false">
+  <div data-role="navbar">
+    <ul>
+      <li><%= link_to t("myplaceonline.general.back"), controller.obj_path, "data-icon" => "back" %></li>
+    </ul>
+  </div>
+</div>

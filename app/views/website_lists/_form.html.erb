@@ -21,7 +21,7 @@
         existingobjurl: "website_path",
         searchurl: "/websites.json?perpage=0",
         edit: false,
-        autofocus: true
+        autofocus: false
       },
       {
         type: "position",
@@ -44,3 +44,4 @@
     }
   %>
 <% end %>
+<%= myp_check_box(f, :disable_autoload, "myplaceonline.website_lists.disable_autoload") %>

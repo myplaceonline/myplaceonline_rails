@@ -2703,3 +2703,7 @@ en:
       add_item: "Add Website"
       delete_item: "Delete Website"
       website: "Website"
+      roll: "Roll"
+      roll_nomore_previous: "No more previous websites"
+      roll_nomore_next: "No more websites"
+      disable_autoload: "Disable Autoload"

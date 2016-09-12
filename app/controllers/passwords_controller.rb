@@ -172,7 +172,7 @@ class PasswordsController < MyplaceonlineController
           end
           redirect_to passwords_path, :flash => { :notice => I18n.t("myplaceonline.passwords.imported_count", :count => imported_count) }
         else
-          flash[:error] = t("myplaceonline.passwords.service_name_col_required")
+            flash[:error] = t("myplaceonline.passwords.service_name_col_required")
           render :importodf2
         end
       else
