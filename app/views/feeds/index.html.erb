@@ -6,6 +6,13 @@
       </div>
     <% end %>
   <% end %>
+  <%=
+    render partial: 'myplaceonline/sort_items', locals: {
+      filters: [
+        [t("myplaceonline.general.visit_count"), "visit_count"]
+      ]
+    }
+  %>
   <% content_for :footerlinks do %>
     <li><%= link_to t('myplaceonline.feeds.load_all'), feeds_load_all_path, "data-icon" => "refresh" %></li>
   <% end %>

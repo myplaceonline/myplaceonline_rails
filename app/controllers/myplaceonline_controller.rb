@@ -18,6 +18,12 @@ class MyplaceonlineController < ApplicationController
       check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
     end
     
+    @selected_sort = params[:selected_sort]
+    @selected_sort_direction = params[:selected_sort_direction]
+    if @selected_sort_direction.blank? || (@selected_sort_direction != "asc" && @selected_sort_direction != "desc")
+      @selected_sort_direction = "asc"
+    end
+    
     if has_category && params[:myplet].nil?
       Myp.visit(current_user, category_name)
     end

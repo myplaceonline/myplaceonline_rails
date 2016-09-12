@@ -77,7 +77,11 @@ class FeedsController < MyplaceonlineController
   
   protected
     def sorts
-      ["lower(feeds.name) ASC"]
+      if @selected_sort == "visit_count"
+        ["visit_count #{@selected_sort_direction} nulls last"]
+      else
+        ["lower(feeds.name) #{@selected_sort_direction}"]
+      end
     end
 
     def obj_params
