@@ -167,6 +167,7 @@ class Identity < ActiveRecord::Base
   has_many :dreams, :dependent => :destroy
   has_many :messages, :dependent => :destroy
   has_many :media_dumps, :dependent => :destroy
+  has_many :website_lists, :dependent => :destroy
   
   has_many :myplets, -> { order('y_coordinate') }, :dependent => :destroy
   accepts_nested_attributes_for :myplets, allow_destroy: true, reject_if: :all_blank
@@ -345,6 +346,7 @@ class Identity < ActiveRecord::Base
       :dreams => dreams.to_a.sort{ |a,b| a.dream_name.downcase <=> b.dream_name.downcase }.map{|x| x.as_json},
       :messages => messages.to_a.map{|x| x.as_json},
       :media_dumps => media_dumps.to_a.sort{ |a,b| a.media_dump_name.downcase <=> b.media_dump_name.downcase }.map{|x| x.as_json},
+      :website_lists => website_lists.to_a.sort{ |a,b| a.website_list_name.downcase <=> b.website_list_name.downcase }.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

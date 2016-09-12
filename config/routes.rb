@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :website_lists
+  post 'website_lists/new'
+
   resources :media_dumps do
     get 'media_dump_files/destroy_all'
     resources :media_dump_files

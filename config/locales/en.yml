@@ -189,6 +189,7 @@ en:
       messages: "Messages"
       media_dumps: "Media Dumps"
       media_dump_files: "Media Dump Files"
+      website_lists: "Website Lists"
     general:
       email: "E-mail"
       password: "Password"
@@ -2695,3 +2696,5 @@ en:
       file: "File"
       add_file: "Add File"
       delete_file: "Delete File"
+    website_lists:
+      website_list_name: "Name"

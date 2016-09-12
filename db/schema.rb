@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912003031) do
+ActiveRecord::Schema.define(version: 20160912005434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3716,6 +3716,17 @@ ActiveRecord::Schema.define(version: 20160912003031) do
   add_index "website_domains", ["identity_id"], name: "index_website_domains_on_identity_id", using: :btree
   add_index "website_domains", ["website_id"], name: "index_website_domains_on_website_id", using: :btree
 
+  create_table "website_lists", force: :cascade do |t|
+    t.string   "website_list_name"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.integer  "identity_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "website_lists", ["identity_id"], name: "index_website_lists_on_identity_id", using: :btree
+
   create_table "website_passwords", force: :cascade do |t|
     t.integer  "website_id"
     t.integer  "password_id"
@@ -4026,6 +4037,7 @@ ActiveRecord::Schema.define(version: 20160912003031) do
   add_foreign_key "website_domains", "identities"
   add_foreign_key "website_domains", "memberships", column: "domain_host_id"
   add_foreign_key "website_domains", "websites"
+  add_foreign_key "website_lists", "identities"
   add_foreign_key "website_passwords", "identities"
   add_foreign_key "website_passwords", "passwords"
   add_foreign_key "website_passwords", "websites"
