@@ -292,6 +292,8 @@ en:
       ascending: "Ascending"
       descending: "Descending"
       visit_count: "Visit Count"
+      created_at: "Creation Date"
+      updated_at: "Last Updated Date"
     categories:
       no_results: "No Results. Create New "
     everything:

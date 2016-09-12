@@ -1,7 +1,7 @@
 <% if @count_all > 0 %>
   <div class="horizontal_center" data-role="collapsible">
     <h4><%= t("myplaceonline.general.sort") %></h4>
-    <p><%= select_tag(:selected_sort, options_for_select(filters, @selected_sort), include_blank: true, onchange: "myplaceonline.refreshWithParam('selected_sort', $('#selected_sort').val());") %></p>
+    <p><%= select_tag(:selected_sort, options_for_select(options, @selected_sort), include_blank: true, onchange: "myplaceonline.refreshWithParam('selected_sort', $('#selected_sort').val());") %></p>
     <p><%= select_tag(:selected_sort_direction, options_for_select([[t("myplaceonline.general.ascending"), "asc"], [t("myplaceonline.general.descending"), "desc"]], @selected_sort_direction), include_blank: true, onchange: "myplaceonline.refreshWithParam('selected_sort_direction', $('#selected_sort_direction').val());") %></p>
   </div>
 <% end %>

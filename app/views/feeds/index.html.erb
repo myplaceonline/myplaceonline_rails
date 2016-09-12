@@ -8,9 +8,7 @@
   <% end %>
   <%=
     render partial: 'myplaceonline/sort_items', locals: {
-      filters: [
-        [t("myplaceonline.general.visit_count"), "visit_count"]
-      ]
+      options: controller.index_sorts
     }
   %>
   <% content_for :footerlinks do %>

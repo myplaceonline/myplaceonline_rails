@@ -120,6 +120,11 @@
 <%= yielded %>
 
 <% if !@myplet %>
+  <%#
+    render partial: 'myplaceonline/sort_items', locals: {
+      options: controller.index_sorts
+    }
+  %>
   <% content_for :footer do -%>
     <% if controller.show_index_footer %>
       <div data-role="footer" data-position="fixed" data-tap-toggle="false">

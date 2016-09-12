@@ -547,6 +547,26 @@ class MyplaceonlineController < ApplicationController
       Myp.ensure_encryption_key(session)
     end
   end
+  
+  def index_sorts
+    [
+      [I18n.t("myplaceonline.general.visit_count"), "visit_count"],
+      [I18n.t("myplaceonline.general.created_at"), "created_at"],
+      [I18n.t("myplaceonline.general.updated_at"), "updated_at"]
+    ]
+  end
+
+  def sorts_helper
+    if @selected_sort == "visit_count" || @selected_sort == "created_at" || @selected_sort == "updated_at"
+      ["#{@selected_sort} #{@selected_sort_direction} nulls last"]
+    else
+      if block_given?
+        yield
+      else
+        ["updated_at #{@selected_sort_direction}"]
+      end
+    end
+  end
 
   protected
   

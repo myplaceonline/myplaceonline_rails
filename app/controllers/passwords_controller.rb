@@ -281,7 +281,7 @@ class PasswordsController < MyplaceonlineController
     end
 
     def sorts
-      ["lower(passwords.name) ASC", "lower(passwords.user) ASC"]
+      sorts_helper {["lower(passwords.name) ASC", "lower(passwords.user) ASC"]}
     end
 
     def obj_params
