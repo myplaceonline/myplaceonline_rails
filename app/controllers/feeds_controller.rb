@@ -64,6 +64,17 @@ class FeedsController < MyplaceonlineController
     obj.number_unread.to_s
   end
     
+  def data_split_icon
+    "refresh"
+  end
+  
+  def split_link(obj)
+    ActionController::Base.helpers.link_to(
+      I18n.t("myplaceonline.feeds.load"),
+      feed_load_path(obj)
+    )
+  end
+  
   protected
     def sorts
       ["lower(feeds.name) ASC"]
