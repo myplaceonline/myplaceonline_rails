@@ -5,14 +5,9 @@ class WebsiteListsController < MyplaceonlineController
   
   def roll
     set_obj
-    @options = @obj.website_list_items.to_a.map{|x| [x.website.display, x.website.url]}
-    @selected = @obj.disable_autoload ? nil : @obj.website_list_items[0].website.url
-    @frame_height = @obj.iframe_height
-    if @frame_height.blank? || @frame_height < 10 || @frame_height > 2000
-      @frame_height = 500
-    end
+    initialize_roll
   end
-
+  
   protected
     def insecure
       true
@@ -35,5 +30,19 @@ class WebsiteListsController < MyplaceonlineController
           website_attributes: WebsitesController.param_names
         ]
       )
+    end
+    
+    def initialize_roll
+      @options = @obj.website_list_items.to_a.map{|x| [x.website.display, x.website.url]}
+      @selected = @obj.disable_autoload ? nil : @obj.website_list_items[0].website.url
+      @frame_height = @obj.iframe_height
+      if @frame_height.blank? || @frame_height < 10 || @frame_height > 2000
+        @frame_height = 500
+      end
+    end
+    
+    def showmyplet
+      initialize_roll
+      @selected = nil
     end
 end

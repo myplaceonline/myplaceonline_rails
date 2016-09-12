@@ -1,4 +1,7 @@
-<% content_for :heading do -%><%= page_heading(@obj, controller) %><% end -%>
+<% if !@myplet %>
+  <% content_for :heading do -%><%= page_heading(@obj, controller) %><% end -%>
+<% end %>
+
 <div class="horizontal_center">
   <p><%= select_tag(:website, options_for_select(@options, @selected), include_blank: true, onchange: "$('#link').attr('href', $('#website').val()); $('#link').html($('#website').val()); $('#iframe').attr('src', $('#website').val());") %></p>
   <div data-role="controlgroup" data-type="horizontal">
@@ -9,10 +12,12 @@
   <iframe id="iframe" style="width: 100%; height: <%= @frame_height %>px;" src="<%= @selected %>"></iframe>
 </div>
 
-<div data-role="footer" data-position="fixed" data-tap-toggle="false">
-  <div data-role="navbar">
-    <ul>
-      <li><%= link_to t("myplaceonline.general.back"), controller.obj_path, "data-icon" => "back" %></li>
-    </ul>
+<% if !@myplet %>
+  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="navbar">
+      <ul>
+        <li><%= link_to t("myplaceonline.general.back"), controller.obj_path, "data-icon" => "back" %></li>
+      </ul>
+    </div>
   </div>
-</div>
+<% end %>
