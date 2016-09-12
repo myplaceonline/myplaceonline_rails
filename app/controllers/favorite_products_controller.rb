@@ -1,4 +1,8 @@
 class FavoriteProductsController < MyplaceonlineController
+  def may_upload
+    true
+  end
+
   protected
     def insecure
       true
@@ -12,7 +16,8 @@ class FavoriteProductsController < MyplaceonlineController
       params.require(:favorite_product).permit(
         :product_name,
         :notes,
-        favorite_product_links_attributes: [:id, :_destroy, :link]
+        favorite_product_links_attributes: [:id, :_destroy, :link],
+        favorite_product_files_attributes: FilesController.multi_param_names
       )
     end
 end

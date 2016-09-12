@@ -3,3 +3,9 @@
 <% obj.favorite_product_links.each do |link| %>
   <%= attribute_table_row_url(t("myplaceonline.favorite_products.link"), link.link, false, nil, nil, nil, true, true) %>
 <% end %>
+<%=
+  render partial: 'myplaceonline/pictures', locals: {
+    pics: @obj.favorite_product_files,
+    placeholder: "myplaceonline.favorite_products.file"
+  }
+%>

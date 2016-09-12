@@ -1710,6 +1710,11 @@ en:
       link: "Link"
       add_link: "Add Link"
       delete_link: "Delete Link"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"
     therapists:
       therapist: "Therapist"
     health_insurances:

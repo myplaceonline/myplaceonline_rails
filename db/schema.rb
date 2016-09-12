@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160911230316) do
+ActiveRecord::Schema.define(version: 20160912003031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1263,6 +1263,19 @@ ActiveRecord::Schema.define(version: 20160911230316) do
   end
 
   add_index "exercises", ["identity_id"], name: "index_exercises_on_identity_id", using: :btree
+
+  create_table "favorite_product_files", force: :cascade do |t|
+    t.integer  "favorite_product_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "favorite_product_files", ["favorite_product_id"], name: "index_favorite_product_files_on_favorite_product_id", using: :btree
+  add_index "favorite_product_files", ["identity_file_id"], name: "index_favorite_product_files_on_identity_file_id", using: :btree
+  add_index "favorite_product_files", ["identity_id"], name: "index_favorite_product_files_on_identity_id", using: :btree
 
   create_table "favorite_product_links", force: :cascade do |t|
     t.integer  "favorite_product_id"
@@ -3850,6 +3863,9 @@ ActiveRecord::Schema.define(version: 20160911230316) do
   add_foreign_key "event_pictures", "identity_files"
   add_foreign_key "event_rsvps", "events"
   add_foreign_key "event_rsvps", "identities"
+  add_foreign_key "favorite_product_files", "favorite_products"
+  add_foreign_key "favorite_product_files", "identities"
+  add_foreign_key "favorite_product_files", "identity_files"
   add_foreign_key "favorite_product_links", "favorite_products"
   add_foreign_key "favorite_product_links", "identities"
   add_foreign_key "feed_items", "feeds"

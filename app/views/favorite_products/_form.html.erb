@@ -21,3 +21,16 @@
 %>
   <%= myp_text_field(child_fields, :link, "myplaceonline.favorite_products.link", childproperty.link) %>
 <% end %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :favorite_product_files,
+    item_placeholder: "myplaceonline.favorite_products.file",
+    heading: "myplaceonline.favorite_products.files",
+    addbutton: "myplaceonline.favorite_products.add_file",
+    addbutton_multi: "myplaceonline.favorite_products.add_files",
+    deletebutton: "myplaceonline.favorite_products.delete_file"
+  }
+%>

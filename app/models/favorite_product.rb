@@ -1,5 +1,6 @@
 class FavoriteProduct < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
+  include AllowExistingConcern
 
   validates :product_name, presence: true
   
@@ -8,5 +9,15 @@ class FavoriteProduct < ActiveRecord::Base
 
   def display
     product_name
+  end
+
+  has_many :favorite_product_files, :dependent => :destroy
+  accepts_nested_attributes_for :favorite_product_files, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :favorite_product_files, [{:name => :identity_file}]
+
+  before_validation :update_file_folders
+  
+  def update_file_folders
+    put_files_in_folder(favorite_product_files, [I18n.t("myplaceonline.category.favorite_products"), display])
   end
 end
