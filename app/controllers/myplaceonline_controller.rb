@@ -132,7 +132,7 @@ class MyplaceonlineController < ApplicationController
   def edit
     deny_guest
 
-    check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
+    check_password
     @url = obj_path(@obj)
     edit_prerespond
     respond_with(@obj)

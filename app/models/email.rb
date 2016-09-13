@@ -299,9 +299,19 @@ class Email < ActiveRecord::Base
       groups = obj.send(groups_property).map{|prop| prop.group}
     end
     
-    category = Myp.instance_to_category(obj).human_title
+    total_count = 0
+    if !contacts.nil?
+      total_count += contacts.length
+    end
+    if !groups.nil?
+      total_count += groups.length
+    end
+    
+    if total_count > 0
+      category = Myp.instance_to_category(obj).human_title
 
-    self.send_emails_to_contacts_and_groups(category, subject, body_markdown, contacts, groups)
+      self.send_emails_to_contacts_and_groups(category, subject, body_markdown, contacts, groups)
+    end
   end
   
   def self.send_emails_to_contacts_and_groups(category, subject, body_markdown, contacts, groups)
