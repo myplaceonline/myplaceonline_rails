@@ -25,7 +25,7 @@ class MoneyBalancesController < MyplaceonlineController
   end
   
   def add
-    check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
+    check_password
 
     set_obj
     # X paid a bill and Y either owes 100%, 50%, or some other percent
