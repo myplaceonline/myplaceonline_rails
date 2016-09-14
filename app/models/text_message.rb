@@ -73,7 +73,7 @@ class TextMessage < ActiveRecord::Base
       Myp.send_sms(to: target, body: body)
 
       if !contact.nil?
-        async = User.current_user.nil?
+        async = ExecutionContext.count == 0
         begin
           if async
             ExecutionContext.push

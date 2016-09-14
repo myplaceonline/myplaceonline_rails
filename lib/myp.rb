@@ -1230,7 +1230,7 @@ module Myp
   def self.send_support_email_safe(subject, body, body_plain = nil)
     begin
       from = I18n.t("myplaceonline.siteEmail")
-      if !User.current_user.nil?
+      if ExecutionContext.count > 0 && !User.current_user.nil?
         from = User.current_user.email
       end
       UserMailer.send_support_email(from, subject, body, body_plain).deliver_now

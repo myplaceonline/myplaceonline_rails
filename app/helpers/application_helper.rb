@@ -106,7 +106,7 @@ module ApplicationHelper
     result = ""
     if !clipboard_text.blank?
       result = clipboard_text.to_s
-      if !User.current_user.nil? && User.current_user.clipboard_transform_numbers
+      if ExecutionContext.count > 0 && !User.current_user.nil? && User.current_user.clipboard_transform_numbers
         # Haven't been able to find out where, but in some cases, trying to
         # use the firefox clipboard SDK to copy values that look
         # like credit cards to the clipboard are actually suppressed.

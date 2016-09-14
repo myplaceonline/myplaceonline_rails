@@ -75,7 +75,7 @@ class Email < ActiveRecord::Base
   end
   
   def process_single_target(target, contact = nil, content = nil, content_plain = nil, target_obj = nil, permission_share = nil)
-    Rails.logger.debug{"Email process_single_target target: #{target}"}
+    Rails.logger.info{"Email process_single_target target: #{target}"}
     if EmailUnsubscription.where(
         "email = ? and (category is null or category = ?) and (identity_id is null or identity_id = ?)",
         target,
@@ -202,7 +202,7 @@ class Email < ActiveRecord::Base
         )
         
         if !contact.nil?
-          async = User.current_user.nil?
+          async = ExecutionContext.count == 0
           begin
             if async
               ExecutionContext.push
@@ -259,7 +259,7 @@ class Email < ActiveRecord::Base
   
   def set_subject(new_subject)
     if self.subject.blank?
-      if !User.current_user.nil?
+      if ExecutionContext.count > 0 && !User.current_user.nil?
         self.subject = "#{User.current_user.primary_identity.display_short} #{I18n.t("myplaceonline.emails.subject_shared")}: #{new_subject}"
       else
         self.subject = new_subject
@@ -280,7 +280,9 @@ class Email < ActiveRecord::Base
   end
   
   def process
-    if send_immediately
+    send_immediately_result = send_immediately
+    Rails.logger.info{"Email processing async: #{!send_immediately_result}, email: #{self.inspect}"}
+    if send_immediately_result
       AsyncEmailJob.perform_now(self)
     else
       AsyncEmailJob.perform_later(self)
