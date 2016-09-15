@@ -4,4 +4,10 @@
   <%= table_row_heading(t("myplaceonline.exercise_regimens.exercise_regimen_exercise")) %>
   <%= attribute_table_row(t("myplaceonline.exercise_regimen_exercises.exercise_regimen_exercise_name"), x.exercise_regimen_exercise_name) %>
   <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), x.notes) %>
+  <%=
+    render partial: 'myplaceonline/pictures', locals: {
+      pics: x.exercise_regimen_exercise_files,
+      placeholder: "myplaceonline.exercise_regimen_exercises.file"
+    }
+  %>
 <% end %>

@@ -21,7 +21,8 @@ class ExerciseRegimensController < MyplaceonlineController
           :_destroy,
           :exercise_regimen_exercise_name,
           :position,
-          :notes
+          :notes,
+          exercise_regimen_exercise_files_attributes: FilesController.multi_param_names
         ]
       )
     end

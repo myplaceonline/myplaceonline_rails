@@ -2724,3 +2724,8 @@ en:
       exercise_regimen_delete_exercise: "Delete Exercise"
     exercise_regimen_exercises:
       exercise_regimen_exercise_name: "Name"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"

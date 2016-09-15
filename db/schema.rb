@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160915040508) do
+ActiveRecord::Schema.define(version: 20160915043328) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1247,6 +1247,19 @@ ActiveRecord::Schema.define(version: 20160915040508) do
   add_index "events", ["identity_id"], name: "index_events_on_identity_id", using: :btree
   add_index "events", ["location_id"], name: "index_events_on_location_id", using: :btree
   add_index "events", ["repeat_id"], name: "index_events_on_repeat_id", using: :btree
+
+  create_table "exercise_regimen_exercise_files", force: :cascade do |t|
+    t.integer  "exercise_regimen_exercise_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "exercise_regimen_exercise_files", ["exercise_regimen_exercise_id"], name: "eref_on_erei", using: :btree
+  add_index "exercise_regimen_exercise_files", ["identity_file_id"], name: "index_exercise_regimen_exercise_files_on_identity_file_id", using: :btree
+  add_index "exercise_regimen_exercise_files", ["identity_id"], name: "index_exercise_regimen_exercise_files_on_identity_id", using: :btree
 
   create_table "exercise_regimen_exercises", force: :cascade do |t|
     t.string   "exercise_regimen_exercise_name"
@@ -3913,6 +3926,9 @@ ActiveRecord::Schema.define(version: 20160915040508) do
   add_foreign_key "event_pictures", "identity_files"
   add_foreign_key "event_rsvps", "events"
   add_foreign_key "event_rsvps", "identities"
+  add_foreign_key "exercise_regimen_exercise_files", "exercise_regimen_exercises"
+  add_foreign_key "exercise_regimen_exercise_files", "identities"
+  add_foreign_key "exercise_regimen_exercise_files", "identity_files"
   add_foreign_key "exercise_regimen_exercises", "exercise_regimens"
   add_foreign_key "exercise_regimen_exercises", "identities"
   add_foreign_key "exercise_regimens", "identities"

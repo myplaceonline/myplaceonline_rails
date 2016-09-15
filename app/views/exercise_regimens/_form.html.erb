@@ -32,4 +32,17 @@
 %>
   <%= myp_text_field(child_fields, :exercise_regimen_exercise_name, "myplaceonline.exercise_regimen_exercises.exercise_regimen_exercise_name", childproperty.exercise_regimen_exercise_name) %>
   <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.general.notes", childproperty.notes, collapsed: false) %>
+  <%=
+    render partial: "myplaceonline/pictures_form", locals: {
+      f: child_fields,
+      obj: childproperty,
+      position_field: :position,
+      pictures_field: :exercise_regimen_exercise_files,
+      item_placeholder: "myplaceonline.exercise_regimen_exercises.file",
+      heading: "myplaceonline.exercise_regimen_exercises.files",
+      addbutton: "myplaceonline.exercise_regimen_exercises.add_file",
+      addbutton_multi: "myplaceonline.exercise_regimen_exercises.add_files",
+      deletebutton: "myplaceonline.exercise_regimen_exercises.delete_file"
+    }
+  %>
 <% end %>
