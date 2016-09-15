@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160915004730) do
+ActiveRecord::Schema.define(version: 20160915040508) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1247,6 +1247,19 @@ ActiveRecord::Schema.define(version: 20160915004730) do
   add_index "events", ["identity_id"], name: "index_events_on_identity_id", using: :btree
   add_index "events", ["location_id"], name: "index_events_on_location_id", using: :btree
   add_index "events", ["repeat_id"], name: "index_events_on_repeat_id", using: :btree
+
+  create_table "exercise_regimen_exercises", force: :cascade do |t|
+    t.string   "exercise_regimen_exercise_name"
+    t.text     "notes"
+    t.integer  "position"
+    t.integer  "exercise_regimen_id"
+    t.integer  "identity_id"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "exercise_regimen_exercises", ["exercise_regimen_id"], name: "index_exercise_regimen_exercises_on_exercise_regimen_id", using: :btree
+  add_index "exercise_regimen_exercises", ["identity_id"], name: "index_exercise_regimen_exercises_on_identity_id", using: :btree
 
   create_table "exercise_regimens", force: :cascade do |t|
     t.string   "exercise_regimen_name"
@@ -3900,6 +3913,8 @@ ActiveRecord::Schema.define(version: 20160915004730) do
   add_foreign_key "event_pictures", "identity_files"
   add_foreign_key "event_rsvps", "events"
   add_foreign_key "event_rsvps", "identities"
+  add_foreign_key "exercise_regimen_exercises", "exercise_regimens"
+  add_foreign_key "exercise_regimen_exercises", "identities"
   add_foreign_key "exercise_regimens", "identities"
   add_foreign_key "favorite_product_files", "favorite_products"
   add_foreign_key "favorite_product_files", "identities"

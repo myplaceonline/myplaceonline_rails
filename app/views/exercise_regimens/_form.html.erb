@@ -1,2 +1,35 @@
 <%= myp_text_field(f, :exercise_regimen_name, "myplaceonline.exercise_regimens.exercise_regimen_name", obj.exercise_regimen_name, autofocus) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes, collapsed: false) %>
+<%=
+  render layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.exercise_regimens.exercise_regimen_exercise"),
+    childpropertiesname: :exercise_regimen_exercises,
+    childproperties: obj.exercise_regimen_exercises,
+    deletebutton: t("myplaceonline.exercise_regimens.exercise_regimen_delete_exercise"),
+    addbutton: t("myplaceonline.exercise_regimens.exercise_regimen_add_exercise"),
+    expanded: true,
+    position_field: :position,
+    itemname: t("myplaceonline.exercise_regimens.exercise_regimen_exercise"),
+    formjson: [
+      {
+        type: 'text',
+        name: 'exercise_regimen_exercise_name',
+        placeholder: t("myplaceonline.exercise_regimen_exercises.exercise_regimen_exercise_name"),
+        autofocus: true
+      },
+      {
+        type: 'textarea',
+        name: 'notes',
+        placeholder: t("myplaceonline.general.notes")
+      },
+      {
+        type: "position",
+        name: "position"
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%= myp_text_field(child_fields, :exercise_regimen_exercise_name, "myplaceonline.exercise_regimen_exercises.exercise_regimen_exercise_name", childproperty.exercise_regimen_exercise_name) %>
+  <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.general.notes", childproperty.notes, collapsed: false) %>
+<% end %>

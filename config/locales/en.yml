@@ -2718,3 +2718,9 @@ en:
       iframe_height: "Frame Height"
     exercise_regimens:
       exercise_regimen_name: "Name"
+      exercise_regimen_exercise: "Exercise"
+      exercise_regimen_exercises: "Exercises"
+      exercise_regimen_add_exercise: "Add Exercise"
+      exercise_regimen_delete_exercise: "Delete Exercise"
+    exercise_regimen_exercises:
+      exercise_regimen_exercise_name: "Name"

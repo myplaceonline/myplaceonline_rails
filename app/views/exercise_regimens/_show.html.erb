@@ -1,2 +1,7 @@
 <%= attribute_table_row(t("myplaceonline.exercise_regimens.exercise_regimen_name"), obj.exercise_regimen_name) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<% obj.exercise_regimen_exercises.each do |x| %>
+  <%= table_row_heading(t("myplaceonline.exercise_regimens.exercise_regimen_exercise")) %>
+  <%= attribute_table_row(t("myplaceonline.exercise_regimen_exercises.exercise_regimen_exercise_name"), x.exercise_regimen_exercise_name) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), x.notes) %>
+<% end %>

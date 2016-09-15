@@ -15,7 +15,14 @@ class ExerciseRegimensController < MyplaceonlineController
     def obj_params
       params.require(:exercise_regimen).permit(
         :exercise_regimen_name,
-        :notes
+        :notes,
+        exercise_regimen_exercises_attributes: [
+          :id,
+          :_destroy,
+          :exercise_regimen_exercise_name,
+          :position,
+          :notes
+        ]
       )
     end
 end
