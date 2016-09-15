@@ -1,0 +1,2 @@
+module ExerciseRegimensHelper
+end

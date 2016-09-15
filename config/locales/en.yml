@@ -190,6 +190,7 @@ en:
       media_dumps: "Media Dumps"
       media_dump_files: "Media Dump Files"
       website_lists: "Website Lists"
+      exercise_regimens: "Exercise Regimens"
     general:
       email: "E-mail"
       password: "Password"
@@ -2715,3 +2716,5 @@ en:
       roll_nomore_next: "No more websites"
       disable_autoload: "Disable Autoload"
       iframe_height: "Frame Height"
+    exercise_regimens:
+      exercise_regimen_name: "Name"

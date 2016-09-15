@@ -21,4 +21,5 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   
   inflect.irregular 'foot', 'feet'
   inflect.irregular 'cafe', 'cafes'
+  inflect.irregular 'regimen', 'regimens'
 end

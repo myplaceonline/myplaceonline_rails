@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :exercise_regimens
+  post 'exercise_regimens/new'
+  
   resources :website_lists
   post 'website_lists/new'
   match 'website_lists/:id/roll', :to => 'website_lists#roll', via: [:get], as: "website_list_roll"
