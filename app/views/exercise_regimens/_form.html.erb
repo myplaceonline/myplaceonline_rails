@@ -1,9 +1,9 @@
 <%= myp_text_field(f, :exercise_regimen_name, "myplaceonline.exercise_regimens.exercise_regimen_name", obj.exercise_regimen_name, autofocus) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes, collapsed: false) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,
-    heading: t("myplaceonline.exercise_regimens.exercise_regimen_exercise"),
+    heading: t("myplaceonline.exercise_regimens.exercise_regimen_exercises"),
     childpropertiesname: :exercise_regimen_exercises,
     childproperties: obj.exercise_regimen_exercises,
     deletebutton: t("myplaceonline.exercise_regimens.exercise_regimen_delete_exercise"),

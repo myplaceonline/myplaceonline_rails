@@ -138,7 +138,13 @@ class Email < ActiveRecord::Base
         if user_display_short != user_email
           final_content += "#{user_display_short}<br />\n"
         end
-        final_content += "<a href=\"mailto:#{user_email}\">#{user_email}</a>"
+        
+        # Noticed some weird behavior in some responses from some people with the mailto
+        # link being evaluated in their client as <javascript:_e(%7B%7D,'cvml','${EMAIL}');>
+        # Since there's no need to have a mailto link anyway, remove it
+        #final_content += "<a href=\"mailto:#{user_email}\">#{user_email}</a>"
+        final_content += "#{user_email}"
+        
         if identity.phone_numbers.count > 0
           final_content += identity.identity_phones.to_a.map{|p| "\n<br />#{p.context_info}: <a href=\"tel:#{p.number}\">#{p.number}</a>"}.join("")
         end
