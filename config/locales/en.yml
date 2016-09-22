@@ -1346,6 +1346,7 @@ en:
       concentration_maximum: "Concentration Maximum"
     liquid_concentrations:
       mgperdl: "mg/dL"
+      ratio: "Ratio Units"
     checklists:
       checklist_name: "Name"
       add: "Add Item"

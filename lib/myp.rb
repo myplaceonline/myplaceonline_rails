@@ -56,7 +56,8 @@ module Myp
   ]
   
   LIQUID_CONCENTRATIONS = [
-    ["myplaceonline.liquid_concentrations.mgperdl", 1]
+    ["myplaceonline.liquid_concentrations.mgperdl", 1],
+    ["myplaceonline.liquid_concentrations.ratio", 2],
   ]
   
   TEMPERATURES = [
