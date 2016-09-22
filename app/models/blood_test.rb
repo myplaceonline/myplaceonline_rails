@@ -6,7 +6,7 @@ class BloodTest < ActiveRecord::Base
   validates :test_time, presence: true
   
   def display
-    Myp.display_datetime_short(test_time, User.current_user)
+    Myp.display_datetime_short_year(test_time, User.current_user)
   end
   
   has_many :blood_test_results, :dependent => :destroy

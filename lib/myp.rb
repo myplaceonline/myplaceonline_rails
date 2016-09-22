@@ -803,6 +803,10 @@ module Myp
     self.display_time(time, current_user, :short_datetime)
   end
   
+  def self.display_datetime_short_year(time, current_user)
+    self.display_time(time, current_user, :short_datetime_year)
+  end
+  
   def self.display_time(time, current_user, format = :default)
     if !time.nil?
       if !current_user.nil? && !current_user.timezone.blank?
