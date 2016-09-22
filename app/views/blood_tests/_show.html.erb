@@ -8,3 +8,9 @@
   <%= attribute_table_row_liquid_concentration(t("myplaceonline.blood_concentrations.concentration_minimum"), wrapper.blood_concentration.concentration_minimum, wrapper.blood_concentration.concentration_type, false) %>
   <%= attribute_table_row_liquid_concentration(t("myplaceonline.blood_concentrations.concentration_maximum"), wrapper.blood_concentration.concentration_maximum, wrapper.blood_concentration.concentration_type, false) %>
 <% end %>
+<%=
+  render partial: 'myplaceonline/pictures', locals: {
+    pics: @obj.blood_test_files,
+    placeholder: "myplaceonline.blood_tests.file"
+  }
+%>

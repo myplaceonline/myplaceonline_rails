@@ -45,3 +45,16 @@
   <%= myp_text_field(child_fields, :concentration, "myplaceonline.blood_tests.concentration", childproperty.concentration) %>
 <% end %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.blood_tests.notes", obj.notes) %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :blood_test_files,
+    item_placeholder: "myplaceonline.blood_tests.file",
+    heading: "myplaceonline.blood_tests.files",
+    addbutton: "myplaceonline.blood_tests.add_file",
+    addbutton_multi: "myplaceonline.blood_tests.add_files",
+    deletebutton: "myplaceonline.blood_tests.delete_file"
+  }
+%>

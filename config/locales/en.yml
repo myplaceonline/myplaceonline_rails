@@ -1334,6 +1334,11 @@ en:
       add: "Add Result"
       delete: "Delete Result"
       concentration: "Concentration"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"
     blood_concentrations:
       concentration_name: "Name"
       concentration_type: "Concentration Type"

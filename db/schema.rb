@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160915043328) do
+ActiveRecord::Schema.define(version: 20160922033746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -304,6 +304,19 @@ ActiveRecord::Schema.define(version: 20160915043328) do
   end
 
   add_index "blood_pressures", ["identity_id"], name: "index_blood_pressures_on_identity_id", using: :btree
+
+  create_table "blood_test_files", force: :cascade do |t|
+    t.integer  "blood_test_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "blood_test_files", ["blood_test_id"], name: "index_blood_test_files_on_blood_test_id", using: :btree
+  add_index "blood_test_files", ["identity_file_id"], name: "index_blood_test_files_on_identity_file_id", using: :btree
+  add_index "blood_test_files", ["identity_id"], name: "index_blood_test_files_on_identity_id", using: :btree
 
   create_table "blood_test_results", force: :cascade do |t|
     t.integer  "blood_test_id"
@@ -3866,6 +3879,9 @@ ActiveRecord::Schema.define(version: 20160915043328) do
   add_foreign_key "bet_contacts", "contacts"
   add_foreign_key "bet_contacts", "identities"
   add_foreign_key "bets", "identities"
+  add_foreign_key "blood_test_files", "blood_tests"
+  add_foreign_key "blood_test_files", "identities"
+  add_foreign_key "blood_test_files", "identity_files"
   add_foreign_key "book_quotes", "books"
   add_foreign_key "book_quotes", "identities"
   add_foreign_key "book_stores", "identities"
