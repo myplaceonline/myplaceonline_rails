@@ -2,10 +2,10 @@ class BloodTest < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
-  validates :fast_started, presence: true
+  validates :test_time, presence: true
   
   def display
-    Myp.display_datetime_short(fast_started, User.current_user)
+    Myp.display_datetime_short(test_time, User.current_user)
   end
   
   has_many :blood_test_results, :dependent => :destroy
