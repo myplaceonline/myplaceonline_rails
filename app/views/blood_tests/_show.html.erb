@@ -14,3 +14,5 @@
     placeholder: "myplaceonline.blood_tests.file"
   }
 %>
+<%= attribute_table_row_reference(t("myplaceonline.blood_tests.location"), "location_path", obj.location) %>
+<%= attribute_table_row_reference(t("myplaceonline.blood_tests.doctor"), "doctor_path", obj.doctor) %>

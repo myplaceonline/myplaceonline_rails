@@ -58,3 +58,31 @@
     deletebutton: "myplaceonline.blood_tests.delete_file"
   }
 %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :location,
+    existingobj: obj.location,
+    heading: t("myplaceonline.blood_tests.location"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    collapsed: true
+  }
+%>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :doctor,
+    existingobj: obj.doctor,
+    heading: t("myplaceonline.blood_tests.doctor"),
+    objform: "doctors/form",
+    existingobjurl: "doctor_path",
+    searchurl: "/doctors.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    collapsed: true
+  }
+%>

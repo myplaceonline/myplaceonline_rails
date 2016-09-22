@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160922033746) do
+ActiveRecord::Schema.define(version: 20160922035538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -339,9 +339,13 @@ ActiveRecord::Schema.define(version: 20160922033746) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.integer  "doctor_id"
+    t.integer  "location_id"
   end
 
+  add_index "blood_tests", ["doctor_id"], name: "index_blood_tests_on_doctor_id", using: :btree
   add_index "blood_tests", ["identity_id"], name: "index_blood_tests_on_identity_id", using: :btree
+  add_index "blood_tests", ["location_id"], name: "index_blood_tests_on_location_id", using: :btree
 
   create_table "book_quotes", force: :cascade do |t|
     t.integer  "book_id"
@@ -3882,6 +3886,8 @@ ActiveRecord::Schema.define(version: 20160922033746) do
   add_foreign_key "blood_test_files", "blood_tests"
   add_foreign_key "blood_test_files", "identities"
   add_foreign_key "blood_test_files", "identity_files"
+  add_foreign_key "blood_tests", "doctors"
+  add_foreign_key "blood_tests", "locations"
   add_foreign_key "book_quotes", "books"
   add_foreign_key "book_quotes", "identities"
   add_foreign_key "book_stores", "identities"

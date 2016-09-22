@@ -14,6 +14,8 @@ class BloodTestsController < MyplaceonlineController
         :test_time,
         :notes,
         blood_test_files_attributes: FilesController.multi_param_names,
+        location_attributes: LocationsController.param_names,
+        doctor_attributes: DoctorsController.param_names,
         blood_test_results_attributes: [
           :id,
           :_destroy,

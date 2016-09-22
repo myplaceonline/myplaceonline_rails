@@ -17,6 +17,14 @@ class BloodTest < ActiveRecord::Base
   accepts_nested_attributes_for :blood_test_files, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :blood_test_files, [{:name => :identity_file}]
 
+  belongs_to :location
+  accepts_nested_attributes_for :location, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
+  allow_existing :location
+
+  belongs_to :doctor
+  accepts_nested_attributes_for :doctor, reject_if: proc { |attributes| DoctorsController.reject_if_blank(attributes) }
+  allow_existing :doctor
+
   before_validation :update_file_folders
   
   def update_file_folders

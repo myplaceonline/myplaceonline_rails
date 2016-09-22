@@ -1339,6 +1339,8 @@ en:
       add_file: "Add File/Picture"
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
+      location: "Location"
+      doctor: "Doctor"
     blood_concentrations:
       concentration_name: "Name"
       concentration_type: "Concentration Type"
