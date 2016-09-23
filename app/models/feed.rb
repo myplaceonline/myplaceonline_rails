@@ -1,3 +1,6 @@
+require 'open-uri'
+require 'open_uri_redirections'
+
 class Feed < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
 
@@ -12,7 +15,7 @@ class Feed < ActiveRecord::Base
   end
   
   def load_feed
-    rss = SimpleRSS.parse(open(url))
+    rss = SimpleRSS.parse(open(url, :allow_redirections => :safe))
     new_items = 0
     all_feed_items = feed_items.to_a
     rss.items.each do |item|
