@@ -2,7 +2,7 @@
 <%= attribute_table_row_url(t("myplaceonline.feed_items.feed_link"), obj.feed_link) %>
 <%= attribute_table_row_datetime(t("myplaceonline.feed_items.publication_date"), obj.publication_date) %>
 <%= attribute_table_row(t("myplaceonline.feed_items.guid"), obj.guid) %>
-<%= attribute_table_row(t("myplaceonline.feed_items.content"), obj.content.html_safe) %>
+<%= attribute_table_row(t("myplaceonline.feed_items.content"), obj.content.nil? ? nil : obj.content.html_safe) %>
 <%= attribute_table_row_boolean(t("myplaceonline.feed_items.is_read"), !obj.read.nil?) %>
 
 <% content_for :postfooterlinks do %>

@@ -40,8 +40,8 @@
     <% obj.feed_items.first(20).each do |item| %>
       <li>
         <%= link_to(item.feed_link, class: "feed_item" + (item.is_read? ? " bghighlight" : "")) do %>
-          <%= item.display %>
-          <span class="ui-li-count"><%= Myp.display_datetime_short(item.publication_date, current_user) %></span>
+          <%= controller.display_obj(item).html_safe %>
+          <span class="ui-li-count"><%= Myp.display_datetime_short_year(item.publication_date, current_user) %></span>
         <% end %>
         <% if item.is_read? %>
           <%= link_to(feed_feed_item_path(obj, item), data: { icon: "edit" }) do %>

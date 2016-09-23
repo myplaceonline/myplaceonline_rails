@@ -392,6 +392,10 @@ class MyplaceonlineController < ApplicationController
   def bubble_text(obj)
     ""
   end
+  
+  def item_classes(obj)
+    nil
+  end
     
   def model
     Object.const_get(self.class.name.gsub(/Controller$/, "").singularize)

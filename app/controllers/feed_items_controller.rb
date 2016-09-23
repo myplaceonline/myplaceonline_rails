@@ -18,6 +18,10 @@ class FeedItemsController < MyplaceonlineController
     render json: { result: true }
   end
 
+  def item_classes(obj)
+    "feed_item" + (obj.is_read? ? " bghighlight" : "")
+  end
+
   protected
     def insecure
       true
