@@ -80,19 +80,17 @@
     </ul>
   </div>
 
-  <% if @offset + @perpage < @count %>
-    <%= link_to(t('myplaceonline.general.next') + " " + @perpage.to_s, send("#{controller.paths_name}_path", :offset => @offset + @perpage), :class => "ui-btn") %>
-  <% end %>
-
-  <% if @offset > 0 %>
-    <%= link_to(t('myplaceonline.general.previous') + " " + @perpage.to_s, send("#{controller.paths_name}_path", :offset => @offset - @perpage), :class => "ui-btn") %>
-  <% end %>
-
-  <% if @count > @perpage %>
-    <div class="horizontal_center small">
-      <%= @count %> <%= t("myplaceonline.category." + controller.category_name) %>, <%= @perpage %> <%= t("myplaceonline.general.perpage") %> (<%= link_to(t("myplaceonline.general.all"), send("#{controller.paths_name}_path") + @query_params_part_all) %>)
-    </div>
-  <% end %>
+  <%=
+    render partial: 'shared/offset_navigation', locals: {
+      offset: @offset,
+      perpage: @perpage,
+      count: @count,
+      query_params_part_all: @query_params_part_all,
+      items_next_page_link: @items_next_page_link,
+      items_previous_page_link: @items_previous_page_link,
+      items_all_link: @items_all_link
+    }
+  %>
 
   <script type="text/javascript">
     myplaceonline.onPageLoad(function() {

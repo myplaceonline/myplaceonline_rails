@@ -36,16 +36,27 @@
     }
   </script>
 
+  <%
+  offset = controller.items_offset
+  perpage = controller.items_per_page
+  count = obj.feed_items.count
+  perpage = controller.update_items_per_page(perpage, count)
+  Rails.logger.debug{"feed offset: #{offset}, perpage: #{perpage}"}
+  items_next_page_link = feed_path(obj, offset: offset + perpage)
+  items_previous_page_link = feed_path(obj, offset: offset - perpage)
+  items_all_link = feed_path
+  query_params_part_all = controller.items_query_params_part_all
+  %>
   <ul data-role="listview" data-inset="true">
-    <% obj.feed_items.first(20).each do |item| %>
+    <% obj.feed_items.offset(offset).limit(perpage).each do |item| %>
       <li>
         <%= link_to(item.feed_link, class: "feed_item" + (item.is_read? ? " bghighlight" : "")) do %>
           <%= controller.display_obj(item).html_safe %>
           <span class="ui-li-count"><%= Myp.display_datetime_short_year(item.publication_date, current_user) %></span>
         <% end %>
         <% if item.is_read? %>
-          <%= link_to(feed_feed_item_path(obj, item), data: { icon: "edit" }) do %>
-            <%= t("myplaceonline.general.edit") %>
+          <%= link_to(feed_feed_item_path(obj, item), data: { icon: "eye" }) do %>
+            <%= t("myplaceonline.general.show") %>
           <% end %>
         <% else %>
           <%= link_to(feed_feed_item_path(obj, item), data: { icon: "check" }, onclick: "return feed_item_mark_read(this, " + item.id.to_s + ");") do %>
@@ -55,6 +66,17 @@
       </li>
     <% end %>
   </ul>
+  <%=
+    render partial: 'shared/offset_navigation', locals: {
+      offset: offset,
+      perpage: perpage,
+      count: count,
+      query_params_part_all: query_params_part_all,
+      items_next_page_link: items_next_page_link,
+      items_previous_page_link: items_previous_page_link,
+      items_all_link: items_all_link
+    }
+  %>
 <% end %>
 
 <% content_for :postfooterlinks do %>

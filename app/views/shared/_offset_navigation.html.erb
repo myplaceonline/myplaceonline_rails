@@ -1,0 +1,15 @@
+<%# assumes myplaceonline_controller context; offset, perpage, count, query_params_part_all, items_next_page_link, items_previous_page_link, items_all_link %>
+
+<% if offset + perpage < count %>
+  <%= link_to(t('myplaceonline.general.next') + " " + perpage.to_s, items_next_page_link, :class => "ui-btn") %>
+<% end %>
+
+<% if offset > 0 %>
+  <%= link_to(t('myplaceonline.general.previous') + " " + perpage.to_s, items_previous_page_link, :class => "ui-btn") %>
+<% end %>
+
+<% if count > perpage %>
+  <div class="horizontal_center small">
+    <%= count %> <%= t("myplaceonline.category." + controller.category_name) %>, <%= perpage %> <%= t("myplaceonline.general.perpage") %> (<%= link_to(t("myplaceonline.general.all"), items_all_link + query_params_part_all) %>)
+  </div>
+<% end %>

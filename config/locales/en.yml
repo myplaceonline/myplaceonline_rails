@@ -205,6 +205,7 @@ en:
       login: "Log In"
       signup: "Sign Up"
       edit: "Edit"
+      show: "Show"
       delete: "Delete"
       delete_all: "Delete All"
       all_deleted: "All items deleted successfully"

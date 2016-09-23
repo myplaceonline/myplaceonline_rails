@@ -1081,8 +1081,8 @@ module Myp
     str.blank? ? what_to_set : str
   end
   
-  def self.query_parameters_uri_part(request)
-    request.query_parameters().map{|k,v| URI.encode(k) + "=" + URI.encode(v)}.join("&")
+  def self.query_parameters_uri_part(request, excludes = [])
+    request.query_parameters().dup.delete_if{|k,v| !excludes.index(k.to_sym).nil? }.map{|k,v| URI.encode(k) + "=" + URI.encode(v)}.join("&")
   end
 
   PAGE_TRANSITIONS = [

@@ -28,19 +28,9 @@ class MyplaceonlineController < ApplicationController
       Myp.visit(current_user, category_name)
     end
     
-    @offset = params[:offset].nil? ? get_default_offset : params[:offset].to_i
-    if @offset < 0
-      @offset = 0
-    end
+    @offset = items_offset
 
-    if params[:perpage].nil?
-      @perpage = 20
-      if !current_user.items_per_page.nil?
-        @perpage = current_user.items_per_page.to_i
-      end
-    else
-      @perpage = params[:perpage].to_i
-    end
+    @perpage = items_per_page
     
     set_parent
     
@@ -48,9 +38,11 @@ class MyplaceonlineController < ApplicationController
     
     cached_all = all
     @count = cached_all.count
-    if @perpage <= 0
-      @perpage = @count
-    end
+    @perpage = update_items_per_page(@perpage, @count)
+    
+    @items_next_page_link = items_next_page(@offset + @perpage)
+    @items_previous_page_link = items_previous_page(@offset - @perpage)
+    @items_all_link = items_all_link
 
     @objs = cached_all.offset(@offset).limit(@perpage).order(sorts)
     
@@ -63,15 +55,7 @@ class MyplaceonlineController < ApplicationController
 
     index_pre_respond()
 
-    # Save off any query parameters which might be used by AJAX callbacks to
-    # index.json.erb (for example, for a full item search)
-    @query_params_part = Myp.query_parameters_uri_part(request)
-    @query_params_part_all = ""
-    if @query_params_part.blank?
-      @query_params_part_all = "?perpage=0"
-    else
-      @query_params_part_all = "?" + @query_params_part + "&perpage=0"
-    end
+    @query_params_part_all = items_query_params_part_all
     
     @myplet = params[:myplet]
     if !@myplet
@@ -80,6 +64,58 @@ class MyplaceonlineController < ApplicationController
       indexmyplet
       render action: "index", layout: "myplet"
     end
+  end
+
+  def items_offset
+    result = params[:offset].nil? ? get_default_offset : params[:offset].to_i
+    if result < 0
+      result = 0
+    end
+    result
+  end
+  
+  def items_per_page
+    if params[:perpage].nil?
+      result = 20
+      if !current_user.items_per_page.nil?
+        result = current_user.items_per_page.to_i
+      end
+    else
+      result = params[:perpage].to_i
+    end
+    result
+  end
+  
+  def update_items_per_page(perpage, count)
+    if perpage <= 0
+      perpage = count
+    end
+    perpage
+  end
+  
+  def items_query_params_part_all
+    # Save off any query parameters which might be used by AJAX callbacks to
+    # index.json.erb (for example, for a full item search)
+    part = Myp.query_parameters_uri_part(request, [:offset])
+    result = ""
+    if part.blank?
+      result = "?perpage=0"
+    else
+      result = "?" + part + "&perpage=0"
+    end
+    result
+  end
+  
+  def items_next_page(offset)
+    send("#{paths_name}_path", :offset => offset)
+  end
+  
+  def items_previous_page(offset)
+    send("#{paths_name}_path", :offset => offset)
+  end
+  
+  def items_all_link
+    send("#{paths_name}_path")
   end
   
   def set_parent
