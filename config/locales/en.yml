@@ -794,6 +794,7 @@ en:
       unread_count: "Unread Count"
       all_marked_read: "All items marked read"
       mark_all_read: "Mark All Read"
+      item_link: "Item Link"
     feed_items:
       feed_title: "Title"
       feed_link: "Link"

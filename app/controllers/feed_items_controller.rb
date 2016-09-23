@@ -22,6 +22,17 @@ class FeedItemsController < MyplaceonlineController
     "feed_item" + (obj.is_read? ? " bghighlight" : "")
   end
 
+  def data_split_icon
+    "action"
+  end
+  
+  def split_link(obj)
+    ActionController::Base.helpers.link_to(
+      I18n.t("myplaceonline.feeds.item_link"),
+      obj.feed_link
+    )
+  end
+  
   protected
     def insecure
       true
