@@ -1082,7 +1082,7 @@ module Myp
   end
   
   def self.query_parameters_uri_part(request, excludes = [])
-    request.query_parameters().dup.delete_if{|k,v| !excludes.index(k.to_sym).nil? }.map{|k,v| URI.encode(k) + "=" + URI.encode(v)}.join("&")
+    request.query_parameters().dup.delete_if{|k,v| !excludes.index(k.to_sym).nil? || (!v.is_a?(String) && !v.is_a?(Symbol)) }.map{|k,v| URI.encode(k) + "=" + URI.encode(v)}.join("&")
   end
 
   PAGE_TRANSITIONS = [
