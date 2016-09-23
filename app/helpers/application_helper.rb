@@ -2,22 +2,32 @@ require 'htmlentities'
 
 module ApplicationHelper
   def flashes!(obj = nil)
-    if flash.empty? && (obj.nil? || (!obj.nil? && obj.errors.empty?))
-      return ""
-    end
+
+    flash_params = params[:flash]
+
+    Rails.logger.debug{"flashes: #{flash.inspect}, obj: #{obj.inspect}, flash_params: #{flash_params.inspect}"}
     
-    messages = flash.map { |name, msg| content_tag(:li, msg) }.join
-    if !obj.nil? && obj.errors.any?
-      messages += obj.errors.full_messages.each.map{ |msg| content_tag(:li, msg) }.join
+    if flash.empty? && (obj.nil? || (!obj.nil? && obj.errors.empty?)) && flash_params.nil?
+      ""
+    else
+      messages = flash.map { |name, msg| content_tag(:li, msg) }.join
+      if !obj.nil? && obj.errors.any?
+        messages += obj.errors.full_messages.each.map{ |msg| content_tag(:li, msg) }.join
+      end
+      if !flash_params.nil? && flash_params.has_key?("notice")
+        messages += content_tag(:li, flash_params["notice"])
+      end
+
+      html = <<-HTML
+      <div class="errors">
+        <ul>#{messages}</ul>
+      </div>
+      HTML
+
+      Rails.logger.debug{"final flashes: #{html}"}
+    
+      html.html_safe
     end
-
-    html = <<-HTML
-    <div class="errors">
-      <ul>#{messages}</ul>
-    </div>
-    HTML
-
-    html.html_safe
   end
   
   def page_heading(obj, controller)

@@ -56,6 +56,20 @@ class FeedsController < MyplaceonlineController
           :flash => { :notice => I18n.t("myplaceonline.feeds.loading_all") }
   end
 
+  def mark_all_read
+    set_obj
+    FeedItem.where(
+      identity_id: current_user.primary_identity_id,
+      feed_id: @obj.id
+    ).update_all(
+      read: Time.now
+    )
+    redirect_to feed_path(
+      @obj,
+      :flash => { :notice => I18n.t("myplaceonline.feeds.all_marked_read") }
+    )
+  end
+  
   def use_bubble?
     true
   end

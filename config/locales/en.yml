@@ -792,6 +792,8 @@ en:
       loading_all_finished: "Loading finished. Feeds refreshed: %{complete}. Feeds failed: %{errors}"
       loading_all_inprogress: "Loading in progress. Feeds refreshed: %{complete} out of %{total} (%{percent}%)"
       unread_count: "Unread Count"
+      all_marked_read: "All items marked read"
+      mark_all_read: "Mark All Read"
     feed_items:
       feed_title: "Title"
       feed_link: "Link"
