@@ -4,6 +4,6 @@ class BloodTestsControllerTest < ActionController::TestCase
   include MyplaceonlineControllerTest
   
   def test_attributes
-    { fast_started: Time.now }
+    { test_time: Time.now }
   end
 end
