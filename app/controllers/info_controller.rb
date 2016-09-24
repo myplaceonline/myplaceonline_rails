@@ -9,6 +9,7 @@ class InfoController < ApplicationController
   def diagnostics; end
   def faq; end
   def serverinfo; end
+  def jqm; end
     
   def clientinfo
     @browser = ap(MyplaceonlineExecutionContext.browser, html: true)

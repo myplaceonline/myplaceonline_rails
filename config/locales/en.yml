@@ -296,6 +296,7 @@ en:
       visit_count: "Visit Count"
       created_at: "Creation Date"
       updated_at: "Last Updated Date"
+      more: "More"
     categories:
       no_results: "No Results. Create New "
     everything:
@@ -460,6 +461,8 @@ en:
       invite_sent: "Your invite has been sent."
       invite_intro: "This will send an email invite to this person. You may enter a personalized message."
       invite_duplicate: "You may only invite an email address once."
+      jqm:
+        title: "JQueryMobile"
     help:
       title: "Help"
       features: "Features"
