@@ -89,6 +89,36 @@ class FeedsController < MyplaceonlineController
     )
   end
   
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t('myplaceonline.feeds.load_all'),
+        link: feeds_load_all_path,
+        icon: "refresh"
+      }
+    ]
+  end
+  
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t('myplaceonline.feeds.feed_items'),
+        link: feed_feed_items_path(@obj),
+        icon: "bars"
+      },
+      {
+        title: I18n.t('myplaceonline.feeds.load'),
+        link: feed_load_path(@obj),
+        icon: "refresh"
+      },
+      {
+        title: I18n.t('myplaceonline.feeds.mark_all_read'),
+        link: feed_mark_all_read_path(@obj),
+        icon: "check"
+      }
+    ]
+  end
+  
   protected
     def sorts
       sorts_helper {["lower(feeds.name) #{@selected_sort_direction}"]}

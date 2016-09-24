@@ -14,7 +14,3 @@
   <%= attribute_table_row_reference(t("myplaceonline.flight_legs.arrival_location"), "location_path", flight_leg.arrival_location) %>
   <%= attribute_table_row(t("myplaceonline.flight_legs.seat_number"), flight_leg.seat_number) %>
 <% end %>
-
-<% content_for :postfooterlinks do %>
-  <li><%= link_to t("myplaceonline.flights.send_info"), flight_send_info_path(obj), "data-icon" => "action" %></li>
-<% end %>

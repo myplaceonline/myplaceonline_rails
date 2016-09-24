@@ -55,6 +55,41 @@ class MoneyBalanceItemTemplatesController < MyplaceonlineController
     true
   end
 
+  def footer_items_index
+    [
+      {
+        title: I18n.t("myplaceonline.money_balance_item_templates.add_i_paid"),
+        link: new_money_balance_money_balance_item_template_path(owner_paid: @parent.current_user_owns? ? "true" : "false"),
+        icon: "eye"
+      },
+      {
+        title: I18n.t("myplaceonline.money_balance_item_templates.add_other_paid", { other: self.other_display }),
+        link: new_money_balance_money_balance_item_template_path(owner_paid: @parent.current_user_owns? ? "false" : "true"),
+        icon: "user"
+      },
+      {
+        title: I18n.t('myplaceonline.money_balance_item_templates.money_balance'),
+        link: money_balance_path(@parent),
+        icon: "back"
+      }
+    ]
+  end
+
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t('myplaceonline.money_balance_item_templates.money_balance'),
+        link: money_balance_path(@obj.money_balance),
+        icon: "user"
+      },
+      {
+        title: I18n.t('myplaceonline.money_balance_item_templates.apply'),
+        link: money_balances_add_path(@obj.money_balance, owner_paid: self.do_calculate_owner_paid(@obj) ? "true" : "false", amount: @obj.amount.abs, original_amount: @obj.amount.abs, percent_default: 1.0, description: @obj.money_balance_item_name),
+        icon: "check"
+      }
+    ]
+  end
+  
   protected
     def sorts
       ["money_balance_item_templates.amount ASC"]

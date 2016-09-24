@@ -30,6 +30,21 @@ class CreditCardsController < MyplaceonlineController
     end
   end
 
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t('myplaceonline.credit_cards.list_cashbacks'),
+        link: credit_cards_listcashback_path,
+        icon: "bullets"
+      },
+      {
+        title: I18n.t('myplaceonline.credit_cards.total_credit'),
+        link: credit_cards_total_credit_path,
+        icon: "info"
+      }
+    ]
+  end
+  
   protected
     def sorts
       ["lower(credit_cards.name) ASC"]

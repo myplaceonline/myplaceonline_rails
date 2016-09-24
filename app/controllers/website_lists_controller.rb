@@ -7,6 +7,16 @@ class WebsiteListsController < MyplaceonlineController
     set_obj
     initialize_roll
   end
+
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t("myplaceonline.website_lists.roll"),
+        link: website_list_roll_path(@obj),
+        icon: "bars"
+      }
+    ]
+  end
   
   protected
     def insecure

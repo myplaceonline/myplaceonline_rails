@@ -45,6 +45,36 @@ class TripsController < MyplaceonlineController
     false
   end
 
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t("myplaceonline.general.share"),
+        link: trip_share_path(@obj),
+        icon: "action"
+      },
+      {
+        title: I18n.t("myplaceonline.trips.show_shared"),
+        link: trip_shared_path(@obj),
+        icon: "search"
+      },
+      {
+        title: I18n.t("myplaceonline.trips.pictures"),
+        link: trip_trip_pictures_path(@obj),
+        icon: "grid"
+      },
+      {
+        title: I18n.t("myplaceonline.trips.add_picture"),
+        link: new_trip_trip_picture_path(@obj),
+        icon: "plus"
+      },
+      {
+        title: I18n.t("myplaceonline.trips.add_story"),
+        link: new_trip_trip_story_path(@obj),
+        icon: "plus"
+      }
+    ]
+  end
+  
   protected
     def sorts
       ["trips.started DESC"]

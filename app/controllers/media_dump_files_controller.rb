@@ -19,6 +19,26 @@ class MediaDumpFilesController < MyplaceonlineController
     true
   end
 
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t("myplaceonline.media_dumps.media_dump"),
+        link: media_dump_path(@parent),
+        icon: "back"
+      }
+    ]
+  end
+  
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t("myplaceonline.media_dumps.media_dump"),
+        link: media_dump_path(@obj.media_dump),
+        icon: "back"
+      }
+    ]
+  end
+  
   protected
     def insecure
       true

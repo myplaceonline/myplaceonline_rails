@@ -11,6 +11,26 @@ class TimingEventsController < MyplaceonlineController
     true
   end
 
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t('myplaceonline.timing_events.timing'),
+        link: timing_path(@parent),
+        icon: "back"
+      }
+    ]
+  end
+  
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t('myplaceonline.timing_events.timing'),
+        link: timing_path(@obj.timing),
+        icon: "back"
+      }
+    ]
+  end
+  
   protected
     def insecure
       true

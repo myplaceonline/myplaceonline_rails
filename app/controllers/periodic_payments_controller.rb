@@ -52,6 +52,16 @@ class PeriodicPaymentsController < MyplaceonlineController
     }
   end
 
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t('myplaceonline.periodic_payments.monthly_total'),
+        link: periodic_payments_monthly_total_path,
+        icon: "clock"
+      }
+    ]
+  end
+  
   protected
     def sorts
       ["lower(periodic_payments.periodic_payment_name) ASC"]

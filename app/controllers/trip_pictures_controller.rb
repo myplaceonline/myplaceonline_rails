@@ -19,6 +19,26 @@ class TripPicturesController < MyplaceonlineController
     true
   end
 
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t("myplaceonline.trip_pictures.trip"),
+        link: trip_path(@parent),
+        icon: "back"
+      }
+    ]
+  end
+  
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t("myplaceonline.trip_pictures.trip"),
+        link: trip_path(@obj.trip),
+        icon: "back"
+      }
+    ]
+  end
+  
   protected
     def insecure
       true

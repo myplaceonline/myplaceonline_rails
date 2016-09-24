@@ -14,14 +14,7 @@
         <li>
           <%= f.submit(t("myplaceonline.general.save") + " " + t("myplaceonline.category." + controller.category_name).singularize, "data-icon" => "check", "data-iconpos" => "top", "style" => "background-color: green") %>
         </li>
-        <% if content_for?(:footerlinks) %>
-          <%= content_for(:footerlinks) %>
-        <% end %>
-        <% if true %>
-          <li><%= link_to t("myplaceonline.general.cancel"), controller.obj_path, "data-icon" => "back" %></li>
-          <!--<li><%= link_to t("myplaceonline.general.back_to_all") + " " + t("myplaceonline.category." + controller.category_name), controller.index_path, "data-icon" => "back" %></li>-->
-          <!--<li><%= link_to t("myplaceonline.general.back_to_list"), controller.index_path, "data-icon" => "back" %></li>-->
-        <% end %>
+        <li><%= link_to t("myplaceonline.general.cancel"), controller.obj_path, "data-icon" => "back" %></li>
       </ul>
     </div>
   </div>

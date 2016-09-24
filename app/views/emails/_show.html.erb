@@ -9,7 +9,3 @@
 <% obj.email_groups.each do |wrapper| %>
   <%= attribute_table_row_reference(t("myplaceonline.emails.group"), "group_path", wrapper.group) %>
 <% end %>
-  
-<% content_for :postfooterlinks do %>
-  <li><%= link_to(t("myplaceonline.emails.duplicate"), new_email_path(duplicate: obj.id), "data-icon" => "plus") %></li>
-<% end %>

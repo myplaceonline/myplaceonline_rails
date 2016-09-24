@@ -49,13 +49,3 @@
         </div>
   <% end %>
 <% end %>
-
-<% content_for :prefooterlinks do %>
-  <li><%= link_to t('myplaceonline.files.add_file'), new_file_path(folder: obj.id), "data-icon" => "plus" %></li>
-<% end %>
-
-<% if !obj.parent_folder.nil? %>
-  <% content_for :postfooterlinks do %>
-      <li><%= link_to t('myplaceonline.file_folders.parent_folder'), file_folder_path(obj.parent_folder), "data-icon" => "back" %></li>
-  <% end %>
-<% end %>

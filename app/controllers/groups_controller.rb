@@ -59,6 +59,21 @@ class GroupsController < MyplaceonlineController
     ]
   end
 
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t('myplaceonline.groups.email_list'),
+        link: groups_email_list_path(@obj),
+        icon: "bars"
+      },
+      {
+        title: I18n.t('myplaceonline.groups.missing'),
+        link: groups_missing_list_path(@obj),
+        icon: "search"
+      }
+    ]
+  end
+  
   protected
     def insecure
       true

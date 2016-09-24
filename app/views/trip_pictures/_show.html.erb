@@ -1,5 +1,1 @@
 <%= attribute_table_row_reference(t("myplaceonline.trip_pictures.picture"), "file_path", obj.identity_file, controllerName: FilesController.name) %>
-
-<% content_for :postfooterlinks do %>
-  <li><%= link_to t("myplaceonline.trip_pictures.trip"), trip_path(obj.trip), "data-icon" => "back" %></li>
-<% end %>

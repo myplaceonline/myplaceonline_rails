@@ -22,10 +22,3 @@
   <%= attribute_table_row_reference(t("myplaceonline.money_balances.contact"), "contact_path", obj.contact) %>
 <% end %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
-
-<% content_for :postfooterlinks do %>
-  <li><%= link_to t('myplaceonline.money_balances.money_balance_items'), money_balance_money_balance_items_path(obj), "data-icon" => "bars" %></li>
-  <li><%= link_to t('myplaceonline.money_balances.templates'), money_balance_money_balance_item_templates_path(obj), "data-icon" => "recycle" %></li>
-  <li><%= link_to t('myplaceonline.money_balances.i_paid'), money_balances_add_path(obj, owner_paid: obj.current_user_owns? ? "true" : "false"), "data-icon" => "eye" %></li>
-  <li><%= link_to t('myplaceonline.money_balances.other_paid', { other: controller.other_display }), money_balances_add_path(obj, owner_paid: obj.current_user_owns? ? "false" : "true"), "data-icon" => "user" %></li>
-<% end %>

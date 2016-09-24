@@ -3,6 +3,21 @@ class TimingsController < MyplaceonlineController
     false
   end
   
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t('myplaceonline.timings.timing_events'),
+        link: timing_timing_events_path(@obj),
+        icon: "bars"
+      },
+      {
+        title: I18n.t('myplaceonline.timings.add_timing_event'),
+        link: new_timing_timing_event_path(@obj),
+        icon: "plus"
+      }
+    ]
+  end
+  
   protected
     def insecure
       true

@@ -15,6 +15,26 @@ class MoneyBalanceItemsController < MyplaceonlineController
     true
   end
 
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t('myplaceonline.money_balance_items.money_balance'),
+        link: money_balance_path(@parent),
+        icon: "back"
+      }
+    ]
+  end
+  
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t('myplaceonline.money_balance_items.money_balance'),
+        link: money_balance_path(@obj.money_balance),
+        icon: "back"
+      }
+    ]
+  end
+  
   protected
     def sorts
       ["money_balance_items.item_time DESC"]

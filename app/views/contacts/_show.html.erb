@@ -57,9 +57,3 @@
   }
 %>
 <%= attribute_table_row_boolean(t("myplaceonline.general.archived"), !obj.archived.nil?) %>
-
-<% content_for :postfooterlinks do %>
-  <li><%= link_to t("myplaceonline.contacts.conversations"), contact_conversations_path(obj), "data-icon" => "phone" %></li>
-  <li><%= link_to t("myplaceonline.contacts.add_conversation"), new_contact_conversation_path(obj), "data-icon" => "comment" %></li>
-  <li><%= link_to t("myplaceonline.contacts.groups"), contact_groups_path(obj), "data-icon" => "user" %></li>
-<% end %>

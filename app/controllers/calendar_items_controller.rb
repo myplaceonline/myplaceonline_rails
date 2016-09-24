@@ -19,6 +19,31 @@ class CalendarItemsController < MyplaceonlineController
     true
   end
 
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t('myplaceonline.calendar_items.calendar'),
+        link: calendar_path(@parent),
+        icon: "back"
+      }
+    ]
+  end
+  
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t('myplaceonline.calendar_items.calendar'),
+        link: calendar_path(@obj.calendar),
+        icon: "back"
+      },
+      {
+        title: I18n.t('myplaceonline.calendar_items.calendar_item_reminders'),
+        link: calendar_calendar_item_calendar_item_reminders_path(@obj.calendar, @obj),
+        icon: "grid"
+      }
+    ]
+  end
+  
   protected
     def sorts
       ["calendar_items.calendar_item_time DESC"]

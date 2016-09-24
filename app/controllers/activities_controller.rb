@@ -1,4 +1,14 @@
 class ActivitiesController < MyplaceonlineController
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t('myplaceonline.random.activity'),
+        link: random_activity_path(:filter_activities => "1"),
+        icon: "search"
+      }
+    ]
+  end
+  
   protected
     def insecure
       true

@@ -1,14 +1,19 @@
 <%# items: list %>
 
 <%
-maxitems = 4
+maxitems = 6
+
+# Keep it even so there aren't any blank blocks
+if items.length > maxitems && (maxitems % 2) == 0
+  maxitems = maxitems - 1
+end
 %>
 
 <% if items.length > maxitems %>
   <div data-role="popup" data-history="false" id="popupMoreMenu_<%= request.uuid %>">
     <ul data-role="listview">
       <% items.drop(maxitems).each do |item| %>
-        <li><%= link_to(item[:title], item[:link], class: "ui-btn ui-btn-icon-left ui-icon-" + item[:icon]) %></li>
+        <li><%= link_to(item[:title], item[:link], method: item[:method], data: item[:data], class: "ui-btn ui-btn-icon-left ui-icon-" + item[:icon]) %></li>
       <% end %>
     </ul>
   </div>
@@ -18,10 +23,10 @@ maxitems = 4
   <div data-role="navbar">
     <ul>
       <% items.first(maxitems).each do |item| %>
-        <li><%= link_to(item[:title], item[:link], "data-icon" => item[:icon]) %></li>
+        <li><%= link_to(item[:title], item[:link], method: item[:method], data: item[:data], "data-icon" => item[:icon]) %></li>
       <% end %>
       <% if items.length > maxitems %>
-        <li><%= link_to(t("myplaceonline.general.more"), "#popupMoreMenu_" + request.uuid, "data-icon" => "grid", "data-rel" => "popup") %></li>
+        <li><%= link_to(t("myplaceonline.general.more"), "#popupMoreMenu_" + request.uuid.to_s, "data-icon" => "grid", "data-rel" => "popup") %></li>
       <% end %>
     </ul>
   </div>

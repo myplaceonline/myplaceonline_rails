@@ -14,12 +14,7 @@
         <li>
           <%= f.submit(controller.new_save_text, "data-icon" => "check", "data-iconpos" => "top", "style" => "background-color: green") %>
         </li>
-        <% if content_for?(:footerlinks) %>
-          <%= content_for(:footerlinks) %>
-        <% end %>
-        <% if true %>
-          <li><%= link_to t("myplaceonline.general.cancel"), controller.index_path, "data-icon" => "back" %></li>
-        <% end %>
+        <li><%= link_to t("myplaceonline.general.cancel"), controller.index_path, "data-icon" => "back" %></li>
       </ul>
     </div>
   </div>

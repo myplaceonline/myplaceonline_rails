@@ -62,8 +62,3 @@
       <% end %>
   <% end %>
 <% end %>
-  
-<% content_for :postfooterlinks do %>
-  <li><%= link_to t('myplaceonline.projects.project_issues'), project_project_issues_path(obj), "data-icon" => "bars" %></li>
-  <li><%= link_to t('myplaceonline.projects.project_issue_add'), new_project_project_issue_path(obj), "data-icon" => "plus" %></li>
-<% end %>

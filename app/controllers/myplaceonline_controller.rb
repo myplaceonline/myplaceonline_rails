@@ -608,6 +608,61 @@ class MyplaceonlineController < ApplicationController
     end
   end
 
+  def footer_items_index
+    result = []
+    if self.show_index_add
+      result << {
+        title: I18n.t("myplaceonline.general.add") + " " + t("myplaceonline.category." + self.category_name).singularize,
+        link: self.new_path,
+        icon: "plus"
+      }
+    end
+    if self.index_destroy_all_link?
+      result << {
+        title: I18n.t("myplaceonline.general.delete_all"),
+        link: self.destroy_all_path,
+        icon: "delete"
+      }
+    end
+    result
+  end
+  
+  def footer_items_show
+    result = []
+    result << {
+      title: I18n.t('myplaceonline.general.edit'),
+      link: self.edit_obj_path,
+      icon: "edit"
+    }
+    result << {
+      title: I18n.t('myplaceonline.general.delete'),
+      link: self.obj_path,
+      icon: "delete",
+      method: :delete,
+      data: { confirm: 'Are you sure?' }
+    }
+    result << {
+      title: I18n.t("myplaceonline.general.back_to_list"),
+      link: self.back_to_all_path,
+      icon: "back"
+    }
+    if self.show_add
+      result << {
+        title: self.add_another_name,
+        link: self.new_path(@obj),
+        icon: "plus"
+      }
+    end
+    if self.show_share
+      result << {
+        title: I18n.t('myplaceonline.permission_shares.share'),
+        link: permissions_share_path + "?" + Permission.permission_params(self.category_name, @obj.id, self.share_permissions).to_query,
+        icon: "action"
+      }
+    end
+    result
+  end
+  
   protected
   
     def deny_guest

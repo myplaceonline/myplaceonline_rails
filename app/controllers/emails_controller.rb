@@ -84,6 +84,16 @@ class EmailsController < MyplaceonlineController
     I18n.t("myplaceonline.emails.send") + " " + I18n.t("myplaceonline.category." + category_name).singularize + "(s)"
   end
 
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t("myplaceonline.emails.duplicate"),
+        link: new_email_path(duplicate: @obj.id),
+        icon: "plus"
+      }
+    ]
+  end
+  
   protected
     def sorts
       ["emails.updated_at DESC"]

@@ -47,6 +47,16 @@ class TextMessagesController < MyplaceonlineController
     I18n.t("myplaceonline.text_messages.send") + " " + I18n.t("myplaceonline.category." + category_name).singularize + "(s)"
   end
 
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t("myplaceonline.text_messages.duplicate"),
+        link: new_text_message_path(duplicate: @obj.id),
+        icon: "plus"
+      }
+    ]
+  end
+  
   protected
     def sorts
       ["text_messages.updated_at DESC"]

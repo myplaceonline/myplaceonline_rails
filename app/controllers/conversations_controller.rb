@@ -11,6 +11,26 @@ class ConversationsController < MyplaceonlineController
     true
   end
 
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t('myplaceonline.contacts.contact'),
+        link: contact_path(@parent),
+        icon: "user"
+      }
+    ]
+  end
+  
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t('myplaceonline.contacts.contact'),
+        link: contact_path(@obj.contact),
+        icon: "user"
+      }
+    ]
+  end
+  
   protected
     def sorts
       ["conversations.conversation_date DESC"]

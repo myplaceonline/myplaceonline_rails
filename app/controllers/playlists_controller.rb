@@ -11,6 +11,25 @@ class PlaylistsController < MyplaceonlineController
     authorize! :show, @obj
   end
 
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t("myplaceonline.general.share"),
+        link: permissions_share_token_path(subject_class: @obj.class.name, subject_id: @obj.id),
+        icon: "action"
+      },
+      {
+        title: I18n.t("myplaceonline.playlists.show_shared"),
+        link: playlist_shared_path(@obj),
+        icon: "search"
+      }
+    ]
+  end
+  
+  def show_share
+    false
+  end
+
   protected
     def sorts
       ["lower(playlists.playlist_name) ASC"]

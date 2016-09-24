@@ -1,7 +1,2 @@
 <%= attribute_table_row_datetime(t("myplaceonline.calendar_items.calendar_item_time"), obj.calendar_item_time) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
-
-<% content_for :postfooterlinks do %>
-  <li><%= link_to t('myplaceonline.calendar_items.calendar'), calendar_path(obj.calendar), "data-icon" => "back" %></li>
-  <li><%= link_to t('myplaceonline.calendar_items.calendar_item_reminders'), calendar_calendar_item_calendar_item_reminders_path(obj.calendar, obj), "data-icon" => "grid" %></li>
-<% end %>

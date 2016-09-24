@@ -41,6 +41,16 @@ class RestaurantsController < MyplaceonlineController
     category_name.singularize
   end
 
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t('myplaceonline.random.restaurant'),
+        link: random_activity_path(:filter_restaurants => "1"),
+        icon: "search"
+      }
+    ]
+  end
+  
   protected
     def insecure
       true

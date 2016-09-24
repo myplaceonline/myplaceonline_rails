@@ -1,6 +1,2 @@
 <%= attribute_table_row(t("myplaceonline.calculation_forms.name"), obj.name) %>
 <%= attribute_table_row(t("myplaceonline.calculation_forms.equation"), obj.equation) %>
-  
-<% content_for :postfooterlinks do %>
-<li><%= link_to t("myplaceonline.calculation_forms.add_calculation"), new_calculation_path(obj.id), "data-icon" => "bars" %></li>
-<% end %>

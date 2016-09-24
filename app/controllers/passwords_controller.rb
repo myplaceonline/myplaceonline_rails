@@ -279,6 +279,26 @@ class PasswordsController < MyplaceonlineController
     MyplaceonlineController.check_password(current_user, session, level: MyplaceonlineController::CHECK_PASSWORD_REQUIRED)
   end
 
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t('myplaceonline.general.import'),
+        link: passwords_import_path,
+        icon: "bars"
+      }
+    ]
+  end
+  
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t("myplaceonline.general.share"),
+        link: passwords_share_path(@obj),
+        icon: "action"
+      }
+    ]
+  end
+  
   protected
     def sensitive
       true

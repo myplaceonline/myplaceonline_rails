@@ -1,9 +1,0 @@
-<%= render layout: "shared/model_index" do %>
-  <% content_for :footerlinks do %>
-    <% if @read.nil? %>
-      <li><%= link_to(t("myplaceonline.books.unread_books"), books_path(read: "false"), "data-icon" => "bars") %></li>
-    <% else %>
-      <li><%= link_to(t("myplaceonline.books.all_books"), books_path, "data-icon" => "bars") %></li>
-    <% end %>
-  <% end %>
-<% end %>

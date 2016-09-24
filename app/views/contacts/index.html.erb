@@ -4,7 +4,4 @@
     <%= myp_select_tag(:contact_type, "myplaceonline.contacts.contact_type", Myp.translate_options(Contact::CONTACT_TYPES), @contact_type, false, nil, false, "myplaceonline.refreshWithParam('contact_type', $('#contact_type').val())") %>
     <%= myp_check_box_tag(:archived, "myplaceonline.general.archived", @archived, false, nil, "myplaceonline.refreshWithParam('archived', this.checked)") %>
   </div>
-  <% content_for :footerlinks do %>
-    <li><%= link_to t('myplaceonline.contacts.me'), contact_path(current_user.primary_identity.ensure_contact!), "data-icon" => "user" %></li>
-  <% end %>
 <% end %>

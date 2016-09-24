@@ -179,6 +179,51 @@ class FilesController < MyplaceonlineController
     ]
   end
 
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t('myplaceonline.file_folders.add'),
+        link: new_file_folder_path,
+        icon: "plus"
+      }
+    ]
+  end
+  
+  def footer_items_show
+    result = super + [
+      {
+        title: I18n.t("myplaceonline.files.rotateclock90"),
+        link: file_rotate_path(@obj, degrees: 90),
+        icon: "forward"
+      },
+      {
+        title: I18n.t("myplaceonline.files.rotatecounterclock90"),
+        link: file_rotate_path(@obj, degrees: -90),
+        icon: "back"
+      },
+      {
+        title: I18n.t("myplaceonline.files.rotate180"),
+        link: file_rotate_path(@obj, degrees: 180),
+        icon: "gear"
+      },
+      {
+        title: I18n.t("myplaceonline.files.move"),
+        link: file_move_path(@obj),
+        icon: "arrow-r"
+      }
+    ]
+    
+    if !@obj.folder.nil?
+      result << {
+        title: I18n.t('myplaceonline.files.folder'),
+        link: file_folder_path(@obj.folder),
+        icon: "back"
+      }
+    end
+    
+    result
+  end
+  
   protected
 
     def all_additional_sql(strict)

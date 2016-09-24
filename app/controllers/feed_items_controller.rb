@@ -33,6 +33,26 @@ class FeedItemsController < MyplaceonlineController
     )
   end
   
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t('myplaceonline.feed_items.feed'),
+        link: feed_path(@parent),
+        icon: "back"
+      }
+    ]
+  end
+  
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t('myplaceonline.feed_items.feed'),
+        link: feed_path(@obj.feed),
+        icon: "back"
+      }
+    ]
+  end
+  
   protected
     def insecure
       true

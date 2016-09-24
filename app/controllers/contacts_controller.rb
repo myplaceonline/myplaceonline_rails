@@ -150,6 +150,36 @@ class ContactsController < MyplaceonlineController
     end
   end
   
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t('myplaceonline.contacts.me'),
+        link: contact_path(current_user.primary_identity.ensure_contact!),
+        icon: "user"
+      }
+    ]
+  end
+  
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t("myplaceonline.contacts.conversations"),
+        link: contact_conversations_path(@obj),
+        icon: "phone"
+      },
+      {
+        title: I18n.t("myplaceonline.contacts.add_conversation"),
+        link: new_contact_conversation_path(@obj),
+        icon: "comment"
+      },
+      {
+        title: I18n.t("myplaceonline.contacts.groups"),
+        link: contact_groups_path(@obj),
+        icon: "user"
+      }
+    ]
+  end
+  
   protected
 
     def sorts

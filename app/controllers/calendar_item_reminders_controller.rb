@@ -23,6 +23,26 @@ class CalendarItemRemindersController < MyplaceonlineController
     true
   end
     
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t("myplaceonline.calendar_item_reminders.calendar_item"),
+        link: calendar_calendar_item_path(@parent.calendar, @parent),
+        icon: "back"
+      }
+    ]
+  end
+  
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t("myplaceonline.calendar_item_reminders.calendar_item"),
+        link: calendar_calendar_item_path(@obj.calendar_item.calendar, @obj.calendar_item),
+        icon: "back"
+      }
+    ]
+  end
+  
   protected
     def sorts
       ["calendar_item_reminders.updated_at DESC"]

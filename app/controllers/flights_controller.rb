@@ -66,6 +66,16 @@ class FlightsController < MyplaceonlineController
     }
   end
 
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t("myplaceonline.flights.send_info"),
+        link: flight_send_info_path(@obj),
+        icon: "action"
+      }
+    ]
+  end
+  
   protected
     def insecure
       true

@@ -81,6 +81,21 @@ class EventsController < MyplaceonlineController
     false
   end
 
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t("myplaceonline.general.share"),
+        link: event_share_path(@obj),
+        icon: "action"
+      },
+      {
+        title: I18n.t("myplaceonline.events.show_shared"),
+        link: event_shared_path(@obj),
+        icon: "search"
+      }
+    ]
+  end
+  
   protected
     def sorts
       ["events.event_time DESC"]
