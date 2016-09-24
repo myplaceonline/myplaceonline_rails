@@ -1,12 +1,4 @@
 GIT
-  remote: git://github.com/myplaceonline/ckeditor.git
-  revision: d90bc7c7bc1982a7707a7a5c5d950cc46b1806a2
-  specs:
-    ckeditor (4.2.0)
-      cocaine
-      orm_adapter (~> 0.5.0)
-
-GIT
   remote: git://github.com/myplaceonline/roo.git
   revision: 20d77db0ef37b8d11ab679452e01bba90d2612a5
   specs:
@@ -68,6 +60,9 @@ GEM
     chewy (0.8.4)
       activesupport (>= 3.2)
       elasticsearch (>= 1.0.0)
+    ckeditor (4.2.0)
+      cocaine
+      orm_adapter (~> 0.5.0)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.8)
@@ -273,7 +268,7 @@ DEPENDENCIES
   carmen
   carmen-rails
   chewy
-  ckeditor!
+  ckeditor
   coffee-rails (~> 4.0.0)
   curb
   daemons
