@@ -6,12 +6,10 @@
 <%= form_tag do %>
   <fieldset>
     <%= myp_select_tag(:page_transition, "myplaceonline.users.page_transition", Myp.translate_options(Myp::PAGE_TRANSITIONS), @page_transition) %>
+
+    <%= myp_check_box_tag(:always_autofocus, t("myplaceonline.users.always_autofocus"), @always_autofocus) %>
     
-    <%= label_tag :always_autofocus, t("myplaceonline.users.always_autofocus") %>
-    <%= check_box_tag :always_autofocus, 1, @always_autofocus, data: { "role" => "flipswitch" } %>
-    
-    <%= label_tag :show_timestamps, t("myplaceonline.users.show_timestamps") %>
-    <%= check_box_tag :show_timestamps, 1, @show_timestamps, data: { "role" => "flipswitch" } %>
+    <%= myp_check_box_tag(:show_timestamps, t("myplaceonline.users.show_timestamps"), @show_timestamps) %>
     
     <%= myp_select_tag(:top_left_icon, "myplaceonline.users.top_left_icon", Myp.translate_options(User::TOP_LEFT_ICONS), @top_left_icon) %>
 

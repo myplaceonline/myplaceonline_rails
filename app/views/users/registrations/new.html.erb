@@ -46,8 +46,21 @@
     <%= f.password_field :password_confirmation, autocomplete: "mpassword2", placeholder: t("myplaceonline.general.password2") %>
   </div>
 
-  <%= label_tag :agree_terms, raw(t("myplaceonline.users.agree_terms", :terms => link_to(t("myplaceonline.info.terms"), "/info/terms"))) %>
-  <%= check_box_tag :agree_terms, 1, @agree_terms, data: { "role" => "flipswitch", "on-text" => t("myplaceonline.general.y"), "off-text" => t("myplaceonline.general.n") } %>
+  <div class="ui-grid-a">
+    <div class="ui-block-a">
+      <div class="ui-bar">
+        <%= myp_check_box_tag(:agree_terms, t("myplaceonline.users.agree_terms"), @agree_terms) %>
+      </div>
+    </div>
+    <div class="ui-block-b">
+      <div class="ui-bar">
+        <a href="<%= info_terms_path %>" data-role="button" target="_blank">
+          <%= image_tag("FatCow_Icons16x16/auction_hammer_gavel.png", size: "16x16", class: "ui-li-icon") %>
+          <%= t("myplaceonline.info.terms_short") %>
+        </a>
+      </div>
+    </div>
+  </div>
   
   <%= myp_hidden_field_tag(:tz, @tz) %>
 

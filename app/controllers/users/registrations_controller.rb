@@ -41,7 +41,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       
       Rails.logger.info{"new resource: #{resource.inspect}"}
       
-      if @agree_terms == "1"
+      if @agree_terms == "true"
         resource_saved = resource.save
         yield resource if block_given?
         if resource_saved
@@ -373,8 +373,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def export
     check_password
     @encrypt = current_user.encrypt_by_default
+    Rails.logger.debug{"setting default encrypt to #{@encrypt}"}
     if !params[:encrypt].nil?
       @encrypt = params[:encrypt] == "1" || params[:encrypt] == "true"
+      Rails.logger.debug{"submitted encrypt setting of #{@encrypt}"}
     end
     filename = "myplaceonline_export_" + DateTime.now.strftime("%Y%m%d-%H%M%S%z") + ".json"
     if @encrypt

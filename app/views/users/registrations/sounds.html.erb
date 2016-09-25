@@ -6,8 +6,7 @@
 <%= form_tag do %>
   <fieldset>
     <div data-role="fieldcontain">
-      <%= label_tag :enable_sounds, t("myplaceonline.users.enable_sounds") %>
-      <%= check_box_tag :enable_sounds, 1, @enable_sounds, data: { "role" => "flipswitch" } %>
+      <%= myp_check_box_tag(:enable_sounds, t("myplaceonline.users.enable_sounds"), @enable_sounds) %>
     </div>
   </fieldset>
   <div><%= submit_tag t("myplaceonline.general.save") %></div>

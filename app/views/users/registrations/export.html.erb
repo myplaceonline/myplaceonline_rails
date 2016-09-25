@@ -7,8 +7,7 @@
 
 <%= form_tag do %>
   <p>
-    <%= check_box_tag :encrypt, 1, @encrypt %>
-    <%= label_tag :encrypt, t("myplaceonline.general.encrypt") %>
+    <%= myp_check_box_tag(:encrypt, t("myplaceonline.general.encrypt"), @encrypt) %>
   </p>
   <div><%= submit_tag t("myplaceonline.users.export") %></div>
 <% end %>

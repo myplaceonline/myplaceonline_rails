@@ -384,6 +384,7 @@ en:
       clientinfo: "Client Information"
       privacy: "Privacy Policy"
       terms: "Terms of Service"
+      terms_short: "Terms"
       faq: "Frequently Asked Questions"
       help: "Help"
       faq_content: !xml |
@@ -647,7 +648,7 @@ en:
       not_confirmed: "Not Confirmed"
       type_normal: "Normal"
       type_admin: "Administrator"
-      agree_terms: "Do you agree to the %{terms}?"
+      agree_terms: "Do you agree to the terms?"
       must_agree_terms: "You must agree to the %{terms} to sign up."
       homepage: "Homepage"
       homepage_saved: "Homepage settings saved"

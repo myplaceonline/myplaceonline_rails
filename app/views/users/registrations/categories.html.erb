@@ -7,12 +7,10 @@
   <fieldset>
     <div data-role="fieldcontain">
       <p>
-        <%= label_tag :explicit_categories, t("myplaceonline.users.explicit_categories") %>
-        <%= check_box_tag :explicit_categories, 1, @explicit_categories, data: { "role" => "flipswitch" } %>
+        <%= myp_check_box_tag(:explicit_categories, t("myplaceonline.users.explicit_categories"), @explicit_categories) %>
       </p>
       <p>
-        <%= label_tag :experimental_categories, t("myplaceonline.users.experimental_categories") %>
-        <%= check_box_tag :experimental_categories, 1, @experimental_categories, data: { "role" => "flipswitch" } %>
+        <%= myp_check_box_tag(:experimental_categories, t("myplaceonline.users.experimental_categories"), @experimental_categories) %>
       </p>
       <%= myp_text_field_tag(:items_per_page, t("myplaceonline.users.items_per_page"), @items_per_page) %>
     </div>
