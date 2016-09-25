@@ -14,6 +14,7 @@ class PeriodicPaymentsController < MyplaceonlineController
     @weekly_food = 0
     @tax_percentage = 30
     @weekly_misc = 0
+    @weekly_transportation = 0
     all.each do |x|
       if !x.payment_amount.nil?
         if Myp.includes_today?(x.started, x.ended)
@@ -31,8 +32,9 @@ class PeriodicPaymentsController < MyplaceonlineController
       @weekly_food = params[:weekly_food].to_i
       @tax_percentage = params[:tax_percentage].to_i
       @weekly_misc = params[:weekly_misc].to_i
+      @weekly_transportation = params[:weekly_transportation].to_i
     end
-    @total += (@weekly_food * 4) + (@weekly_misc * 4)
+    @total += (@weekly_food * 4) + (@weekly_misc * 4) + (@weekly_transportation * 4)
     @yearly_total = @total * 12
     
     # after_tax = salary * (1 - tax)

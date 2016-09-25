@@ -1433,6 +1433,7 @@ en:
       tax_percentage: "Tax Percentage"
       yearly_salary_needed_pretax: "Salary Needed (Pre-tax)"
       weekly_misc: "Weekly Miscellaneous Expenses"
+      weekly_transportation: "Weekly Transportation Expenses"
     jobs:
       job_title: "Job Title"
       started: "Started"

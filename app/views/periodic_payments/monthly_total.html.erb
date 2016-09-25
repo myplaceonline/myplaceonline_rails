@@ -14,8 +14,9 @@
   <p><%= t("myplaceonline.periodic_payments.recalculate_info") %></p>
 
   <%= myp_text_field_tag(:weekly_food, t("myplaceonline.periodic_payments.weekly_food_expenses"), @weekly_food) %>
-  <%= myp_text_field_tag(:tax_percentage, t("myplaceonline.periodic_payments.tax_percentage"), @tax_percentage) %>
+  <%= myp_text_field_tag(:weekly_transportation, t("myplaceonline.periodic_payments.weekly_transportation"), @weekly_transportation) %>
   <%= myp_text_field_tag(:weekly_misc, t("myplaceonline.periodic_payments.weekly_misc"), @weekly_misc) %>
+  <%= myp_text_field_tag(:tax_percentage, t("myplaceonline.periodic_payments.tax_percentage"), @tax_percentage) %>
 
   <%=
     render(partial: "shared/footer", locals: {
