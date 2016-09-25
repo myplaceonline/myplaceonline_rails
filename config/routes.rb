@@ -352,7 +352,7 @@ Rails.application.routes.draw do
   resources :jobs
   post 'jobs/new'
 
-  get 'periodic_payments/monthly_total'
+  match 'periodic_payments/monthly_total', :to => 'periodic_payments#monthly_total', via: [:get, :post], as: "periodic_payments_monthly_total"
   resources :periodic_payments
   post 'periodic_payments/new'
 

@@ -11,6 +11,9 @@ class PeriodicPaymentsController < MyplaceonlineController
 
   def monthly_total
     @total = 0
+    @weekly_food = 0
+    @tax_percentage = 30
+    @weekly_misc = 0
     all.each do |x|
       if !x.payment_amount.nil?
         if Myp.includes_today?(x.started, x.ended)
@@ -24,6 +27,21 @@ class PeriodicPaymentsController < MyplaceonlineController
         end
       end
     end
+    if !params[:weekly_food].nil?
+      @weekly_food = params[:weekly_food].to_i
+      @tax_percentage = params[:tax_percentage].to_i
+      @weekly_misc = params[:weekly_misc].to_i
+    end
+    @total += (@weekly_food * 4) + (@weekly_misc * 4)
+    @yearly_total = @total * 12
+    
+    # after_tax = salary * (1 - tax)
+    #
+    # after_tax in this case is the same as @yearly_total,
+    # and we want to solve for salary (which in this case is @yearly_salary_needed_pretax)
+    # so we just solve for salary
+    
+    @yearly_salary_needed_pretax = @yearly_total / (1.0 - (@tax_percentage / 100.0))
   end
 
   def self.param_names

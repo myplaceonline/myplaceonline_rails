@@ -1,3 +1,34 @@
 <% content_for :heading do -%><%= t('myplaceonline.periodic_payments.monthly_total') %><% end -%>
 <h1><%= t('myplaceonline.periodic_payments.monthly_total') %></h1>
-<p><%= Myp.number_to_currency(@total) + " " + Myp.get_select_name(0, Myp::PERIODS) %></p>
+
+<%= flashes! %>
+
+<p><b><%= t('myplaceonline.periodic_payments.monthly_total') %>:</b> <%= Myp.number_to_currency(@total) %></p>
+<p><b><%= t('myplaceonline.periodic_payments.yearly_total') %>:</b> <%= Myp.number_to_currency(@yearly_total) %></p>
+<p><b><%= t('myplaceonline.periodic_payments.yearly_salary_needed_pretax') %>:</b> <%= Myp.number_to_currency(@yearly_salary_needed_pretax) %></p>
+
+<%= form_tag periodic_payments_monthly_total_path, method: :get do %>
+
+  <hr />
+  
+  <p><%= t("myplaceonline.periodic_payments.recalculate_info") %></p>
+
+  <%= myp_text_field_tag(:weekly_food, t("myplaceonline.periodic_payments.weekly_food_expenses"), @weekly_food) %>
+  <%= myp_text_field_tag(:tax_percentage, t("myplaceonline.periodic_payments.tax_percentage"), @tax_percentage) %>
+  <%= myp_text_field_tag(:weekly_misc, t("myplaceonline.periodic_payments.weekly_misc"), @weekly_misc) %>
+
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.general.submit"), "data-icon" => "action", "data-iconpos" => "top", "style" => "background-color: green")
+        },
+        {
+          title: I18n.t("myplaceonline.general.cancel"),
+          link: controller.index_path,
+          icon: "back"
+        }
+      ]
+    })
+  %>
+<% end %>
