@@ -1722,6 +1722,10 @@ en:
       delete_book_quote: "Delete Book Quote"
       unread_books: "Unread Books"
       all_books: "All Books"
+      lent_to: "Lent To"
+      lent_date: "Lent Date"
+      borrowed_from: "Borrowed From"
+      borrowed_date: "Borrowed Date"
     book_quotes:
       book_quote: "Quote"
       pages: "Page(s)"

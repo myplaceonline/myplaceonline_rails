@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160922035538) do
+ActiveRecord::Schema.define(version: 20160925082027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -372,9 +372,9 @@ ActiveRecord::Schema.define(version: 20160922035538) do
   add_index "book_stores", ["location_id"], name: "index_book_stores_on_location_id", using: :btree
 
   create_table "books", force: :cascade do |t|
-    t.string   "book_name",      limit: 255
-    t.string   "isbn",           limit: 255
-    t.string   "author",         limit: 255
+    t.string   "book_name",        limit: 255
+    t.string   "isbn",             limit: 255
+    t.string   "author",           limit: 255
     t.datetime "when_read"
     t.integer  "identity_id"
     t.text     "notes"
@@ -383,9 +383,15 @@ ActiveRecord::Schema.define(version: 20160922035538) do
     t.integer  "visit_count"
     t.integer  "recommender_id"
     t.text     "review"
+    t.integer  "lent_to_id"
+    t.date     "lent_date"
+    t.integer  "borrowed_from_id"
+    t.date     "borrowed_date"
   end
 
+  add_index "books", ["borrowed_from_id"], name: "index_books_on_borrowed_from_id", using: :btree
   add_index "books", ["identity_id"], name: "index_books_on_identity_id", using: :btree
+  add_index "books", ["lent_to_id"], name: "index_books_on_lent_to_id", using: :btree
   add_index "books", ["recommender_id"], name: "index_books_on_recommender_id", using: :btree
 
   create_table "business_card_files", force: :cascade do |t|
@@ -3892,6 +3898,8 @@ ActiveRecord::Schema.define(version: 20160922035538) do
   add_foreign_key "book_quotes", "identities"
   add_foreign_key "book_stores", "identities"
   add_foreign_key "book_stores", "locations"
+  add_foreign_key "books", "contacts", column: "borrowed_from_id"
+  add_foreign_key "books", "contacts", column: "lent_to_id"
   add_foreign_key "business_card_files", "business_cards"
   add_foreign_key "business_card_files", "identities"
   add_foreign_key "business_card_files", "identity_files"

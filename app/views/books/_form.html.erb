@@ -20,6 +20,38 @@
   }
 %>
 <%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :lent_to,
+    existingobj: obj.lent_to,
+    heading: t("myplaceonline.books.lent_to"),
+    objform: "contacts/form",
+    existingobjurl: "contact_path",
+    searchurl: "/contacts.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    collapsed: true,
+    force_existing: true
+  }
+%>
+<%= myp_date_field(f, :lent_date, "myplaceonline.books.lent_date", obj.lent_date) %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :borrowed_from,
+    existingobj: obj.borrowed_from,
+    heading: t("myplaceonline.books.borrowed_from"),
+    objform: "contacts/form",
+    existingobjurl: "contact_path",
+    searchurl: "/contacts.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    collapsed: true,
+    force_existing: true
+  }
+%>
+<%= myp_date_field(f, :borrowed_date, "myplaceonline.books.borrowed_date", obj.borrowed_date) %>
+<%=
   render(layout: 'myplaceonline/childproperties', locals: {
     f: f,
     heading: t("myplaceonline.books.book_quotes"),
