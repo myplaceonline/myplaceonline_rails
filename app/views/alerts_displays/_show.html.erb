@@ -1,18 +1,24 @@
 <% if !@myplet %>
 <% else %>
-<% if !@trip.nil? %>
-  <p><%= link_to(t("myplaceonline.trips.trip"), url_for(@trip)) %>: <%= @trip.display %></p>
-  <% if !@trip.location.map_url.blank? %>
-      <p><%= t("myplaceonline.trips.location") %>: <%= link_to(@trip.location.display, @trip.location.map_url) %></p>
-  <% else %>
-      <p><%= t("myplaceonline.trips.location") %>: <%= @trip.location.display_really_simple %></p>
-  <% end %>
-  <% if !@trip.hotel.nil? %>
+  <% if !@trip.nil? %>
+    <p><%= link_to(t("myplaceonline.trips.trip"), url_for(@trip)) %>: <%= @trip.display %></p>
+    <% if !@trip.location.map_url.blank? %>
+        <p><%= t("myplaceonline.trips.location") %>: <%= link_to(@trip.location.display, @trip.location.map_url) %></p>
+    <% else %>
+        <p><%= t("myplaceonline.trips.location") %>: <%= @trip.location.display_really_simple %></p>
+    <% end %>
+    <% if !@trip.hotel.nil? %>
+      <%
+      hotel_display = @trip.hotel.display
+      if !@trip.hotel.room_number.blank?
+        hotel_display = I18n.t("myplaceonline.hotels.room_number") + " " + @trip.hotel.room_number.to_s + " @ " + hotel_display
+      end
+      %>
       <% if !@trip.hotel.location.map_url.blank? %>
-        <p><%= t("myplaceonline.trips.hotel") %>: <%= link_to(@trip.hotel.display, @trip.hotel.location.map_url) %></p>
+        <p><%= t("myplaceonline.trips.hotel") %>: <%= link_to(hotel_display, @trip.hotel.location.map_url) %></p>
       <% else %>
-        <p><%= t("myplaceonline.trips.hotel") %>: <%= @trip.hotel.display %></p>
+        <p><%= t("myplaceonline.trips.hotel") %>: <%= hotel_display %></p>
       <% end %>
+    <% end %>
   <% end %>
-<% end %>
 <% end %>
