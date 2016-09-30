@@ -860,4 +860,12 @@ class MyplaceonlineController < ApplicationController
     def get_default_offset
       0
     end
+    
+    def param_bool(name)
+      result = params[name]
+      if !result.blank?
+        result = result.to_bool
+      end
+      result
+    end
 end

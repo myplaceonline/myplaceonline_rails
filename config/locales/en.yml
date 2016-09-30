@@ -1726,6 +1726,9 @@ en:
       lent_date: "Lent Date"
       borrowed_from: "Borrowed From"
       borrowed_date: "Borrowed Date"
+      lent_books: "Lent Books"
+      borrowed_books: "Borrowed Books"
+      all_books_back: "Back to All Books"
     book_quotes:
       book_quote: "Quote"
       pages: "Page(s)"
