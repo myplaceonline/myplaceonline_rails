@@ -191,6 +191,7 @@ en:
       media_dump_files: "Media Dump Files"
       website_lists: "Website Lists"
       exercise_regimens: "Exercise Regimens"
+      favorite_locations: "Favorite Locations"
     general:
       email: "E-mail"
       password: "Password"
@@ -2759,3 +2760,5 @@ en:
       add_file: "Add File/Picture"
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
+    favorite_locations:
+      location: "Location"

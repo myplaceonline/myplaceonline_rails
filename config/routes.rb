@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  resources :favorite_locations
+  post 'favorite_locations/new'
+  
   resources :exercise_regimens
   post 'exercise_regimens/new'
   
