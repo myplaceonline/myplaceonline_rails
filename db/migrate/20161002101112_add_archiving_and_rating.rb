@@ -14,10 +14,10 @@ class AddArchivingAndRating < ActiveRecord::Migration
         end
       end
       if has_visit_count && !has_archived
-        add_column klass.table_name.to_sym, :archived, :datetime
+        #add_column klass.table_name.to_sym, :archived, :datetime
       end
       if has_visit_count && !has_rating
-        add_column klass.table_name.to_sym, :rating, :integer
+        #add_column klass.table_name.to_sym, :rating, :integer
       end
     end
   end
