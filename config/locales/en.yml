@@ -192,6 +192,7 @@ en:
       website_lists: "Website Lists"
       exercise_regimens: "Exercise Regimens"
       favorite_locations: "Favorite Locations"
+      life_highlights: "Life Highlights"
     general:
       email: "E-mail"
       password: "Password"
@@ -2786,3 +2787,6 @@ en:
       delete_file: "Delete File/Picture"
     favorite_locations:
       location: "Location"
+    life_highlights:
+      life_highlight_time: "Time"
+      life_highlight_name: "Short Description"

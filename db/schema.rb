@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161002160513) do
+ActiveRecord::Schema.define(version: 20161002162050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2228,6 +2228,20 @@ ActiveRecord::Schema.define(version: 20161002160513) do
   end
 
   add_index "life_goals", ["identity_id"], name: "index_life_goals_on_identity_id", using: :btree
+
+  create_table "life_highlights", force: :cascade do |t|
+    t.datetime "life_highlight_time"
+    t.string   "life_highlight_name"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "life_highlights", ["identity_id"], name: "index_life_highlights_on_identity_id", using: :btree
 
   create_table "life_insurances", force: :cascade do |t|
     t.string   "insurance_name",      limit: 255
@@ -4507,6 +4521,7 @@ ActiveRecord::Schema.define(version: 20161002160513) do
   add_foreign_key "job_reviews", "contacts"
   add_foreign_key "job_reviews", "identities"
   add_foreign_key "job_reviews", "jobs"
+  add_foreign_key "life_highlights", "identities"
   add_foreign_key "location_pictures", "identities"
   add_foreign_key "location_pictures", "identity_files"
   add_foreign_key "location_pictures", "locations"

@@ -802,7 +802,7 @@ class MyplaceonlineController < ApplicationController
       result = nil
       if !strict
         if @archived.blank? || !@archived
-          result = "and archived is null"
+          result = "and #{model.table_name}.archived is null"
         end
       end
       result
