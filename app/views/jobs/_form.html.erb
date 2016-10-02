@@ -159,7 +159,7 @@
     childproperties: obj.job_reviews,
     deletebutton: t("myplaceonline.jobs.delete_review"),
     addbutton: t("myplaceonline.jobs.add_review"),
-    expanded: obj.job_reviews.length > 0,
+    expanded: obj.job_reviews.length > 0 && obj.job_reviews.length < 2,
     formjson: [
       {
         type: 'date',

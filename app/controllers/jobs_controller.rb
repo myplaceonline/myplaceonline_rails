@@ -3,9 +3,17 @@ class JobsController < MyplaceonlineController
     true
   end
 
+  def use_bubble?
+    true
+  end
+  
+  def bubble_text(obj)
+    Myp.display_date_month_year(obj.started, User.current_user)
+  end
+    
   protected
     def sorts
-      ["lower(jobs.job_title) ASC"]
+      ["jobs.started DESC"]
     end
 
     def obj_params
