@@ -27,6 +27,15 @@ class DessertLocationsController < MyplaceonlineController
     ]
   end
   
+  def index_filters
+    super + [
+      {
+        :name => :not_visited,
+        :display => "myplaceonline.restaurants.not_visited"
+      }
+    ]
+  end
+  
   protected
     def insecure
       true

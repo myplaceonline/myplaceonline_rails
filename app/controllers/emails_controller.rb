@@ -94,6 +94,15 @@ class EmailsController < MyplaceonlineController
     ]
   end
   
+  def index_filters
+    super + [
+      {
+        :name => :draft,
+        :display => "myplaceonline.emails.draft"
+      }
+    ]
+  end
+  
   protected
     def sorts
       ["emails.updated_at DESC"]

@@ -60,6 +60,15 @@ class MessagesController < MyplaceonlineController
     ]
   end
   
+  def index_filters
+    super + [
+      {
+        :name => :draft,
+        :display => "myplaceonline.messages.draft"
+      }
+    ]
+  end
+  
   protected
     def sorts
       ["messages.updated_at DESC"]

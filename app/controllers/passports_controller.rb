@@ -11,6 +11,15 @@ class PassportsController < MyplaceonlineController
     super
   end
 
+  def index_filters
+    super + [
+      {
+        :name => :expired,
+        :display => "myplaceonline.passports.expired"
+      }
+    ]
+  end
+
   protected
     def all_additional_sql(strict)
       if (@expired.blank? || !@expired) && !strict

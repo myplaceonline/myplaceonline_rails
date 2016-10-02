@@ -14,6 +14,15 @@ class MeadowsController < MyplaceonlineController
   def search_parent_category
     category_name.singularize
   end
+  
+  def index_filters
+    super + [
+      {
+        :name => :not_visited,
+        :display => "myplaceonline.meadows.not_visited"
+      }
+    ]
+  end
 
   protected
     def insecure

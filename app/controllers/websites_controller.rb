@@ -52,6 +52,15 @@ class WebsitesController < MyplaceonlineController
     }
   end
 
+  def index_filters
+    super + [
+      {
+        :name => :to_visit,
+        :display => "myplaceonline.websites.to_visit"
+      }
+    ] + @categories.dup.delete_if{|category| category.blank?}.map{|category| { name: "category_" + Myp.string_to_variable_name(category), display: category } }
+  end
+  
   protected
     def insecure
       true
