@@ -1361,6 +1361,15 @@ en:
     liquid_concentrations:
       mgperdl: "mg/dL"
       ratio: "Ratio Units"
+      mmoll: "mmol/L"
+      gdl: "g/dL"
+      iul: "IU/L"
+      uiul: "uIU/mL"
+      ugdl: "ug/dL"
+      percent: "%"
+      ngdl: "ng/dL"
+      ngml: "ng/mL"
+      pgml: "pg/mL"
     checklists:
       checklist_name: "Name"
       add: "Add Item"

@@ -56,8 +56,17 @@ module Myp
   ]
   
   LIQUID_CONCENTRATIONS = [
+    ["myplaceonline.liquid_concentrations.gdl", 4],
+    ["myplaceonline.liquid_concentrations.iul", 5],
     ["myplaceonline.liquid_concentrations.mgperdl", 1],
+    ["myplaceonline.liquid_concentrations.mmoll", 3],
+    ["myplaceonline.liquid_concentrations.ngdl", 9],
+    ["myplaceonline.liquid_concentrations.ngml", 10],
+    ["myplaceonline.liquid_concentrations.percent", 8],
+    ["myplaceonline.liquid_concentrations.pgml", 11],
     ["myplaceonline.liquid_concentrations.ratio", 2],
+    ["myplaceonline.liquid_concentrations.ugdl", 7],
+    ["myplaceonline.liquid_concentrations.uiul", 6],
   ]
   
   TEMPERATURES = [
