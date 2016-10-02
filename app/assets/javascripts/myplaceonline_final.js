@@ -1115,6 +1115,17 @@ var myplaceonline = function(mymodule) {
     metaTag.attr("content", token);
   }
   
+  function checkSendDebug(message, errorObj, stackTrace, dontAlert) {
+    var result = true;
+    if (errorObj && errorObj.stack) {
+      var check = errorObj.stack.toLowerCase();
+      if (errorObj.stack.indexOf('ckeditor') != -1) {
+        result = false;
+      }
+    }
+    return result;
+  }
+  
   // Public API
   mymodule.hookListviewSearch = hookListviewSearch;
   mymodule.hookListviewEnter = hookListviewEnter;
@@ -1146,6 +1157,7 @@ var myplaceonline = function(mymodule) {
   mymodule.form_set_positions = form_set_positions;
   mymodule.cancelCheckboxHiding = cancelCheckboxHiding;
   mymodule.completeCheckboxHiding = completeCheckboxHiding;
+  mymodule.checkSendDebug = checkSendDebug;
 
   return mymodule;
 

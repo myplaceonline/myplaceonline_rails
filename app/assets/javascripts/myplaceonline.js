@@ -128,6 +128,7 @@ var myplaceonline = function(mymodule) {
 
   function sendDebug(message, dontAlert, errorObj) {
     var stackTrace = null;
+    var dosend = true;
     if (Error) {
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack
       stackTrace = new Error().stack;
@@ -136,28 +137,33 @@ var myplaceonline = function(mymodule) {
         stackTrace += "\n\nOriginal stack:\n" + errorObj.stack;
       }
     }
-    // URL is absolute because the call might come from phonegap
-    $.ajax({
-      type: "POST",
-      url: baseurl + "api/debug",
-      dataType: "json",
-      contentType: "application/json",
-      async: true,
-      data: JSON.stringify({
-        message: message,
-        messages: debugMessages,
-        //html: getAllHTML(),
-        stack: stackTrace
-      })
-    }).done(function(data) {
-      if (!dontAlert) {
-        alert("We've received your data.");
-      }
-    }).fail(function(data) {
-      if (!dontAlert) {
-        alert("Error contacting our server.");
-      }
-    });
+    if (myplaceonline.checkSendDebug) {
+      dosend = myplaceonline.checkSendDebug(message, errorObj, stackTrace, dontAlert);
+    }
+    if (dosend) {
+      // URL is absolute because the call might come from phonegap
+      $.ajax({
+        type: "POST",
+        url: baseurl + "api/debug",
+        dataType: "json",
+        contentType: "application/json",
+        async: true,
+        data: JSON.stringify({
+          message: message,
+          messages: debugMessages,
+          //html: getAllHTML(),
+          stack: stackTrace
+        })
+      }).done(function(data) {
+        if (!dontAlert) {
+          alert("We've received your data.");
+        }
+      }).fail(function(data) {
+        if (!dontAlert) {
+          alert("Error contacting our server.");
+        }
+      });
+    }
   }
 
   function getJSON(obj, max) {
