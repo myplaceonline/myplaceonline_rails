@@ -291,6 +291,11 @@ Rails.application.routes.draw do
       { instance: true, link: "share" },
       { instance: true, link: "shared" }
     ],
+    podcasts: [
+      { instance: false, link: "load_all" },
+      { instance: true, link: "load" },
+      { instance: true, link: "mark_all_read" }
+    ],
     projects: [
       { instance: true, link: "delete_by_index" },
       {

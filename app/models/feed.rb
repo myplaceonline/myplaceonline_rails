@@ -46,4 +46,40 @@ class Feed < ActiveRecord::Base
     end
     count.to_s
   end
+  
+  def self.load_all(all_count)
+    status = FeedLoadStatus.where(identity_id: User.current_user.primary_identity_id).first
+    if status.nil?
+      FeedLoadStatus.create(
+        identity_id: User.current_user.primary_identity_id,
+        items_complete: 0,
+        items_total: all_count,
+        items_error: 0
+      )
+      LoadRssFeedsJob.perform_later(User.current_user)
+    end
+  end
+  
+  def self.status_message
+    result = nil
+    status = FeedLoadStatus.where(identity_id: User.current_user.primary_identity_id).first
+    if !status.nil?
+      if status.finished?
+        result = I18n.t("myplaceonline.feeds.loading_all_finished", complete: status.items_complete, errors: status.items_error)
+        status.destroy!
+      else
+        result = I18n.t("myplaceonline.feeds.loading_all_inprogress", complete: status.items_progressed, total: status.items_total, percent: ((status.items_progressed.to_f / status.items_total.to_f) * 100.0).round(2))
+      end
+    end
+    result
+  end
+  
+  def mark_all_read
+    FeedItem.where(
+      identity_id: User.current_user.primary_identity_id,
+      feed_id: self.id
+    ).update_all(
+      read: Time.now
+    )
+  end
 end
