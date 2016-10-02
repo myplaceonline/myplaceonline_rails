@@ -121,6 +121,14 @@ class User < ActiveRecord::Base
     end
     result
   end
+  
+  def in_time_zone(x)
+    result = x
+    if !timezone.blank?
+      result = x.in_time_zone(self.timezone)
+    end
+    result
+  end
 
   after_commit :on_after_create, on: [:create]
   

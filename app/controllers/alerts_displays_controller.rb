@@ -15,11 +15,13 @@ class AlertsDisplaysController < MyplaceonlineController
         started IS NOT NULL AND
         ended IS NOT NULL AND
         ? >= started AND
-        ? <= ended
+        ? <= ended AND
+        (explicitly_completed IS NULL OR explicitly_completed = ?)
       },
       User.current_user.primary_identity.id,
       now,
-      now
+      now,
+      false
     ).order("started desc").first
     if !@trip.nil?
       @nocontent = false

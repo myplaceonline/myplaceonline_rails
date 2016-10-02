@@ -340,6 +340,9 @@ Rails.application.routes.draw do
   resources :passports
   post 'passports/new'
 
+  match 'trips/:id/shared', :to => 'trips#shared', via: [:get], as: "trip_shared"
+  match 'trips/:id/share', :to => 'trips#share', via: [:get, :post], as: "trip_share"
+  match 'trips/:id/complete', :to => 'trips#complete', via: [:get, :post], as: "trip_complete"
   resources :trips do
     get 'trip_pictures/destroy_all'
     resources :trip_pictures
@@ -348,8 +351,6 @@ Rails.application.routes.draw do
     resources :trip_stories
     post 'trip_stories/new'
   end
-  match 'trips/:id/shared', :to => 'trips#shared', via: [:get], as: "trip_shared"
-  match 'trips/:id/share', :to => 'trips#share', via: [:get, :post], as: "trip_share"
   post 'trips/new'
 
   resources :jobs

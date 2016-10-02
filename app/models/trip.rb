@@ -314,6 +314,26 @@ class Trip < ActiveRecord::Base
     end
   end
   
+  def notify_emergency_contacts_complete
+    identity.emergency_contacts.each do |emergency_contact|
+      Rails.logger.debug{"Emergency contact #{emergency_contact.inspect}"}
+      emergency_contact.send_contact(
+        false,
+        self,
+        I18n.t("myplaceonline.trips.emergency_contact_email_trip_completed",
+          {
+            contact: identity.display_short,
+            location: location.display(use_full_region_name: true)
+          }
+        ),
+        I18n.t(
+          "myplaceonline.trips.emergency_contact_email_trip_completed_subject_append",
+          city: location.display_city
+        )
+      )
+    end
+  end
+  
   def self.build(params = nil)
     result = self.dobuild(params)
     if User.current_user.has_emergency_contacts?
@@ -326,6 +346,14 @@ class Trip < ActiveRecord::Base
     "myplaceonline.emergency_contacts.verb_planned"
   end
 
+  def active?
+    now = User.current_user.time_now
+    Rails.logger.debug{"trip active? now: #{now}, started: #{self.started}, ended: #{self.ended}"}
+    result = !self.started.nil? && !self.ended.nil? && now >= User.current_user.in_time_zone(self.started) && now <= User.current_user.in_time_zone(self.ended)
+    Rails.logger.debug{"trip active?: #{result}"}
+    result
+  end
+  
   protected
   def default_url_options
     Rails.configuration.default_url_options

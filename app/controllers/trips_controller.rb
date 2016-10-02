@@ -46,7 +46,7 @@ class TripsController < MyplaceonlineController
   end
 
   def footer_items_show
-    super + [
+    result = super + [
       {
         title: I18n.t("myplaceonline.general.share"),
         link: trip_share_path(@obj),
@@ -73,6 +73,31 @@ class TripsController < MyplaceonlineController
         icon: "plus"
       }
     ]
+    if @obj.active? && !@obj.explicitly_completed
+      result << {
+        title: I18n.t("myplaceonline.trips.complete"),
+        link: trip_complete_path(@obj),
+        icon: "check"
+      }
+    end
+    result
+  end
+  
+  def complete
+    set_obj
+    if current_user.has_emergency_contacts?
+      @notify_emergency_contacts = true
+    end
+    if request.post?
+      @notify_emergency_contacts = param_bool(:notify_emergency_contacts)
+      @obj.explicitly_completed = true
+      @obj.save!
+      if @notify_emergency_contacts
+        @obj.notify_emergency_contacts_complete
+      end
+      redirect_to trip_path(@obj),
+        :flash => { :notice => I18n.t("myplaceonline.trips.trip_completed") }
+    end
   end
   
   protected
