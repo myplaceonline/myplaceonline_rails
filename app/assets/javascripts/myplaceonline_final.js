@@ -25,6 +25,7 @@ var myplaceonline = function(mymodule) {
   var queuedRequests = [];
   var queuedRequestThread = null;
   var notepadResetTimeout = null;
+  var debugsSent = 0;
   
   $.noty.defaults.timeout = 3000;
   $.noty.defaults.layout = 'topCenter';
@@ -1121,6 +1122,13 @@ var myplaceonline = function(mymodule) {
       var check = errorObj.stack.toLowerCase();
       if (errorObj.stack.indexOf('ckeditor') != -1 || message.indexOf('ckeditor') != -1) {
         result = false;
+      }
+    }
+    if (result) {
+      if (debugsSent > 5) {
+        result = false;
+      } else {
+        debugsSent++;
       }
     }
     return result;
