@@ -293,7 +293,7 @@ class PasswordsController < MyplaceonlineController
     super + [
       {
         title: I18n.t("myplaceonline.general.share"),
-        link: passwords_share_path(@obj),
+        link: password_share_password_path(@obj),
         icon: "action"
       }
     ]

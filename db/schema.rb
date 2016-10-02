@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161002050000) do
+ActiveRecord::Schema.define(version: 20161002101112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "accomplishments", ["identity_id"], name: "index_accomplishments_on_identity_id", using: :btree
@@ -49,6 +51,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "acne_measurements", ["identity_id"], name: "index_acne_measurements_on_identity_id", using: :btree
@@ -60,6 +64,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "updated_at"
     t.integer  "visit_count"
     t.text     "notes"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "activities", ["identity_id"], name: "index_activities_on_identity_id", using: :btree
@@ -104,6 +110,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "annuities", ["identity_id"], name: "index_annuities_on_identity_id", using: :btree
@@ -171,6 +179,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "landlord_id"
     t.text     "notes"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "apartments", ["identity_id"], name: "index_apartments_on_identity_id", using: :btree
@@ -195,6 +205,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "awesome_lists", ["identity_id"], name: "index_awesome_lists_on_identity_id", using: :btree
@@ -216,6 +228,7 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "visit_count"
+    t.integer  "rating"
   end
 
   add_index "bank_accounts", ["account_number_encrypted_id"], name: "index_bank_accounts_on_account_number_encrypted_id", using: :btree
@@ -246,6 +259,7 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "archived"
   end
 
   add_index "bars", ["identity_id"], name: "index_bars_on_identity_id", using: :btree
@@ -275,6 +289,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "bets", ["identity_id"], name: "index_bets_on_identity_id", using: :btree
@@ -288,6 +304,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "blood_concentrations", ["identity_id"], name: "index_blood_concentrations_on_identity_id", using: :btree
@@ -301,6 +319,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "blood_pressures", ["identity_id"], name: "index_blood_pressures_on_identity_id", using: :btree
@@ -341,6 +361,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "visit_count"
     t.integer  "doctor_id"
     t.integer  "location_id"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "blood_tests", ["doctor_id"], name: "index_blood_tests_on_doctor_id", using: :btree
@@ -366,6 +388,7 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "archived"
   end
 
   add_index "book_stores", ["identity_id"], name: "index_book_stores_on_identity_id", using: :btree
@@ -387,6 +410,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.date     "lent_date"
     t.integer  "borrowed_from_id"
     t.date     "borrowed_date"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "books", ["borrowed_from_id"], name: "index_books_on_borrowed_from_id", using: :btree
@@ -414,6 +439,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "business_cards", ["contact_id"], name: "index_business_cards_on_contact_id", using: :btree
@@ -427,6 +454,7 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "archived"
   end
 
   add_index "cafes", ["identity_id"], name: "index_cafes_on_identity_id", using: :btree
@@ -454,6 +482,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.text     "equation"
     t.boolean  "is_duplicate"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "calculation_forms", ["identity_id"], name: "index_calculation_forms_on_identity_id", using: :btree
@@ -493,6 +523,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "updated_at"
     t.integer  "original_calculation_form_id"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "calculations", ["calculation_form_id"], name: "index_calculations_on_calculation_form_id", using: :btree
@@ -579,6 +611,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "general_threshold"
     t.integer  "happy_things_threshold"
     t.integer  "website_domain_registration_threshold"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "calendars", ["identity_id"], name: "index_calendars_on_identity_id", using: :btree
@@ -606,6 +640,7 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.boolean  "cell_phone_reception"
     t.boolean  "cell_phone_data"
     t.integer  "membership_id"
+    t.datetime "archived"
   end
 
   add_index "camp_locations", ["identity_id"], name: "index_camp_locations_on_identity_id", using: :btree
@@ -666,6 +701,7 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "archived"
   end
 
   add_index "charities", ["identity_id"], name: "index_charities_on_identity_id", using: :btree
@@ -702,6 +738,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "checklists", ["identity_id"], name: "index_checklists_on_identity_id", using: :btree
@@ -714,6 +752,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.string   "name",        limit: 255
     t.text     "notes"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "companies", ["identity_id"], name: "index_companies_on_identity_id", using: :btree
@@ -775,6 +815,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.decimal  "weight",                            precision: 10, scale: 2
     t.integer  "visit_count"
     t.string   "hostname"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "computers", ["administrator_id"], name: "index_computers_on_administrator_id", using: :btree
@@ -815,6 +857,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "concerts", ["identity_id"], name: "index_concerts_on_identity_id", using: :btree
@@ -829,6 +873,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "updated_at",               null: false
     t.string   "connection_request_token"
     t.integer  "contact_id"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "connections", ["contact_id"], name: "index_connections_on_contact_id", using: :btree
@@ -843,6 +889,7 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "contact_type"
     t.integer  "visit_count"
     t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "contacts", ["contact_identity_id"], name: "index_contacts_on_contact_identity_id", using: :btree
@@ -893,6 +940,7 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.decimal  "total_credit",                           precision: 10, scale: 2
     t.integer  "visit_count"
     t.boolean  "email_reminders"
+    t.integer  "rating"
   end
 
   add_index "credit_cards", ["address_id"], name: "index_credit_cards_on_address_id", using: :btree
@@ -911,6 +959,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "credit_scores", ["identity_id"], name: "index_credit_scores_on_identity_id", using: :btree
@@ -921,6 +971,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "date_locations", ["identity_id"], name: "index_date_locations_on_identity_id", using: :btree
@@ -957,6 +1009,7 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "updated_at"
     t.integer  "doctor_id"
     t.integer  "visit_count"
+    t.integer  "rating"
   end
 
   add_index "dental_insurances", ["doctor_id"], name: "index_dental_insurances_on_doctor_id", using: :btree
@@ -978,6 +1031,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "dentist_visits", ["dental_insurance_id"], name: "index_dentist_visits_on_dental_insurance_id", using: :btree
@@ -991,6 +1046,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "website_id"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "desired_locations", ["identity_id"], name: "index_desired_locations_on_identity_id", using: :btree
@@ -1004,6 +1061,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "desired_products", ["identity_id"], name: "index_desired_products_on_identity_id", using: :btree
@@ -1017,6 +1076,7 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "archived"
   end
 
   add_index "dessert_locations", ["identity_id"], name: "index_dessert_locations_on_identity_id", using: :btree
@@ -1031,6 +1091,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.string   "diary_title",        limit: 255
     t.integer  "visit_count"
     t.integer  "entry_encrypted_id"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "diary_entries", ["entry_encrypted_id"], name: "index_diary_entries_on_entry_encrypted_id", using: :btree
@@ -1047,6 +1109,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "doctor_visits", ["doctor_id"], name: "index_doctor_visits_on_doctor_id", using: :btree
@@ -1060,6 +1124,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "updated_at"
     t.integer  "doctor_type"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "doctors", ["contact_id"], name: "index_doctors_on_contact_id", using: :btree
@@ -1072,6 +1138,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "drafts", ["identity_id"], name: "index_drafts_on_identity_id", using: :btree
@@ -1086,6 +1154,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.integer  "dream_encrypted_id_id"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "dreams", ["dream_encrypted_id"], name: "index_dreams_on_dream_encrypted_id", using: :btree
@@ -1101,6 +1171,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
@@ -1191,6 +1263,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.boolean  "use_bcc"
     t.boolean  "draft"
     t.boolean  "personalize"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "emails", ["identity_id"], name: "index_emails_on_identity_id", using: :btree
@@ -1201,6 +1275,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "emergency_contacts", ["email_id"], name: "index_emergency_contacts_on_email_id", using: :btree
@@ -1265,6 +1341,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "updated_at"
     t.datetime "event_end_time"
     t.integer  "location_id"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "events", ["identity_id"], name: "index_events_on_identity_id", using: :btree
@@ -1304,6 +1382,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "exercise_regimens", ["identity_id"], name: "index_exercise_regimens_on_identity_id", using: :btree
@@ -1320,6 +1400,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "pushups"
     t.integer  "cardio_time"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "exercises", ["identity_id"], name: "index_exercises_on_identity_id", using: :btree
@@ -1330,6 +1412,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "favorite_locations", ["identity_id"], name: "index_favorite_locations_on_identity_id", using: :btree
@@ -1366,6 +1450,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "favorite_products", ["identity_id"], name: "index_favorite_products_on_identity_id", using: :btree
@@ -1404,6 +1490,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "feeds", ["identity_id"], name: "index_feeds_on_identity_id", using: :btree
@@ -1447,6 +1535,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "flights", ["identity_id"], name: "index_flights_on_identity_id", using: :btree
@@ -1474,6 +1564,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "weight_type"
     t.decimal  "weight",                  precision: 10, scale: 2
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "foods", ["identity_id"], name: "index_foods_on_identity_id", using: :btree
@@ -1488,6 +1580,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "gas_stations", ["identity_id"], name: "index_gas_stations_on_identity_id", using: :btree
@@ -1524,6 +1618,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "groups", ["identity_id"], name: "index_groups_on_identity_id", using: :btree
@@ -1555,6 +1651,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "guns", ["identity_id"], name: "index_guns_on_identity_id", using: :btree
@@ -1566,6 +1664,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "happy_things", ["identity_id"], name: "index_happy_things_on_identity_id", using: :btree
@@ -1579,6 +1679,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "headaches", ["identity_id"], name: "index_headaches_on_identity_id", using: :btree
@@ -1598,6 +1700,7 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "updated_at"
     t.integer  "doctor_id"
     t.integer  "visit_count"
+    t.integer  "rating"
   end
 
   add_index "health_insurances", ["doctor_id"], name: "index_health_insurances_on_doctor_id", using: :btree
@@ -1615,6 +1718,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "heart_rates", ["identity_id"], name: "index_heart_rates_on_identity_id", using: :btree
@@ -1628,6 +1733,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "heights", ["identity_id"], name: "index_heights_on_identity_id", using: :btree
@@ -1639,6 +1746,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "hobbies", ["identity_id"], name: "index_hobbies_on_identity_id", using: :btree
@@ -1653,6 +1762,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "room_number"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "hotels", ["identity_id"], name: "index_hotels_on_identity_id", using: :btree
@@ -1692,6 +1803,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "ideas", ["identity_id"], name: "index_ideas_on_identity_id", using: :btree
@@ -1754,6 +1867,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "identity_file_folders", ["identity_id"], name: "index_identity_file_folders_on_identity_id", using: :btree
@@ -1777,6 +1892,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.boolean  "thumbnail_skip"
     t.string   "thumbnail_hash"
     t.string   "file_hash"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "identity_files", ["encrypted_password_id"], name: "index_identity_files_on_encrypted_password_id", using: :btree
@@ -1840,6 +1957,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "invite_codes", ["identity_id"], name: "index_invite_codes_on_identity_id", using: :btree
@@ -1949,6 +2068,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.string   "division_identifier",   limit: 255
     t.string   "personnel_code",        limit: 255
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "jobs", ["company_id"], name: "index_jobs_on_company_id", using: :btree
@@ -1964,6 +2085,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "jokes", ["identity_id"], name: "index_jokes_on_identity_id", using: :btree
@@ -1978,6 +2101,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "life_goals", ["identity_id"], name: "index_life_goals_on_identity_id", using: :btree
@@ -1994,6 +2119,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "life_insurances", ["company_id"], name: "index_life_insurances_on_company_id", using: :btree
@@ -2017,6 +2144,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "lists", ["identity_id"], name: "index_lists_on_identity_id", using: :btree
@@ -2074,6 +2203,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.decimal  "longitude",               precision: 12, scale: 8
     t.integer  "visit_count"
     t.integer  "website_id"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "locations", ["identity_id"], name: "index_locations_on_identity_id", using: :btree
@@ -2088,6 +2219,7 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.boolean  "visited"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "archived"
   end
 
   add_index "meadows", ["identity_id"], name: "index_meadows_on_identity_id", using: :btree
@@ -2141,6 +2273,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "meals", ["identity_id"], name: "index_meals_on_identity_id", using: :btree
@@ -2166,6 +2300,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "media_dumps", ["identity_id"], name: "index_media_dumps_on_identity_id", using: :btree
@@ -2207,6 +2343,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "medical_conditions", ["identity_id"], name: "index_medical_conditions_on_identity_id", using: :btree
@@ -2231,6 +2369,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "medicine_usages", ["identity_id"], name: "index_medicine_usages_on_identity_id", using: :btree
@@ -2245,6 +2385,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "medicines", ["identity_id"], name: "index_medicines_on_identity_id", using: :btree
@@ -2273,6 +2415,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "periodic_payment_id"
     t.integer  "visit_count"
     t.string   "membership_identifier", limit: 255
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "memberships", ["identity_id"], name: "index_memberships_on_identity_id", using: :btree
@@ -2315,6 +2459,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.boolean  "send_emails"
     t.boolean  "send_texts"
     t.string   "subject"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "messages", ["identity_id"], name: "index_messages_on_identity_id", using: :btree
@@ -2329,6 +2475,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "money_balance_id"
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "money_balance_item_templates", ["identity_id"], name: "index_money_balance_item_templates_on_identity_id", using: :btree
@@ -2356,6 +2504,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "money_balances", ["contact_id"], name: "index_money_balances_on_contact_id", using: :btree
@@ -2368,6 +2518,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "movie_theaters", ["identity_id"], name: "index_movie_theaters_on_identity_id", using: :btree
@@ -2383,6 +2535,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "visit_count"
     t.integer  "recommender_id"
     t.string   "genre"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "movies", ["identity_id"], name: "index_movies_on_identity_id", using: :btree
@@ -2399,6 +2553,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "museum_source", limit: 255
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "museums", ["identity_id"], name: "index_museums_on_identity_id", using: :btree
@@ -2417,6 +2573,7 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "updated_at"
     t.string   "musical_genre",      limit: 255
     t.integer  "visit_count"
+    t.datetime "archived"
   end
 
   add_index "musical_groups", ["identity_id"], name: "index_musical_groups_on_identity_id", using: :btree
@@ -2427,6 +2584,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "myplaceonline_quick_category_displays", ["identity_id"], name: "index_myplaceonline_quick_category_displays_on_identity_id", using: :btree
@@ -2437,6 +2596,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "myplaceonline_searches", ["identity_id"], name: "index_myplaceonline_searches_on_identity_id", using: :btree
@@ -2464,6 +2625,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "myreferences", ["contact_id"], name: "index_myreferences_on_contact_id", using: :btree
@@ -2477,6 +2640,7 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "updated_at"
     t.integer  "visit_count"
     t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "notepads", ["identity_id"], name: "index_notepads_on_identity_id", using: :btree
@@ -2491,6 +2655,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "pains", ["identity_id"], name: "index_pains_on_identity_id", using: :btree
@@ -2519,6 +2685,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.string   "name",              limit: 255
     t.integer  "visit_count"
     t.text     "notes"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "passports", ["identity_id"], name: "index_passports_on_identity_id", using: :btree
@@ -2577,6 +2745,7 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "archived"
     t.string   "email",                 limit: 255
     t.integer  "visit_count"
+    t.integer  "rating"
   end
 
   add_index "passwords", ["identity_id"], name: "index_passwords_on_identity_id", using: :btree
@@ -2596,6 +2765,7 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.boolean  "suppress_reminder"
     t.integer  "password_id"
     t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "periodic_payments", ["identity_id"], name: "index_periodic_payments_on_identity_id", using: :btree
@@ -2642,6 +2812,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "user_id"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "permissions", ["identity_id"], name: "index_permissions_on_identity_id", using: :btree
@@ -2690,6 +2862,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "weight_type"
     t.decimal  "weight",                               precision: 10, scale: 2
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "phones", ["identity_id"], name: "index_phones_on_identity_id", using: :btree
@@ -2716,6 +2890,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "identity_file_id"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "playlists", ["identity_file_id"], name: "index_playlists_on_identity_file_id", using: :btree
@@ -2727,6 +2903,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "podcasts", ["feed_id"], name: "index_podcasts_on_feed_id", using: :btree
@@ -2739,6 +2917,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "poems", ["identity_id"], name: "index_poems_on_identity_id", using: :btree
@@ -2749,6 +2929,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "point_displays", ["identity_id"], name: "index_point_displays_on_identity_id", using: :btree
@@ -2773,6 +2955,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "problem_reports", ["identity_id"], name: "index_problem_reports_on_identity_id", using: :btree
@@ -2825,6 +3009,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "projects", ["identity_id"], name: "index_projects_on_identity_id", using: :btree
@@ -2837,6 +3023,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "promises", ["identity_id"], name: "index_promises_on_identity_id", using: :btree
@@ -2851,6 +3039,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "promotions", ["identity_id"], name: "index_promotions_on_identity_id", using: :btree
@@ -2875,6 +3065,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "questions", ["identity_id"], name: "index_questions_on_identity_id", using: :btree
@@ -2886,6 +3078,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "quests", ["identity_id"], name: "index_quests_on_identity_id", using: :btree
@@ -2911,6 +3105,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "receipts", ["identity_id"], name: "index_receipts_on_identity_id", using: :btree
@@ -2935,6 +3131,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "updated_at"
     t.integer  "visit_count"
     t.string   "recipe_category"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "recipes", ["identity_id"], name: "index_recipes_on_identity_id", using: :btree
@@ -3033,6 +3231,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.decimal  "slideouts_extra_width",             precision: 10, scale: 2
     t.decimal  "floor_length",                      precision: 10, scale: 2
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "recreational_vehicles", ["identity_id"], name: "index_recreational_vehicles_on_identity_id", using: :btree
@@ -3071,6 +3271,7 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "updated_at"
     t.integer  "visit_count"
     t.boolean  "visited"
+    t.datetime "archived"
   end
 
   add_index "restaurants", ["identity_id"], name: "index_restaurants_on_identity_id", using: :btree
@@ -3089,6 +3290,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "updated_at"
     t.integer  "program_type"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "reward_programs", ["identity_id"], name: "index_reward_programs_on_identity_id", using: :btree
@@ -3123,6 +3326,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "shopping_lists", ["identity_id"], name: "index_shopping_lists_on_identity_id", using: :btree
@@ -3144,6 +3349,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "skin_treatments", ["identity_id"], name: "index_skin_treatments_on_identity_id", using: :btree
@@ -3155,6 +3362,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "sleep_measurements", ["identity_id"], name: "index_sleep_measurements_on_identity_id", using: :btree
@@ -3189,6 +3398,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "visit_count"
     t.integer  "identity_file_id"
     t.integer  "musical_group_id"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "songs", ["identity_file_id"], name: "index_songs_on_identity_file_id", using: :btree
@@ -3205,6 +3416,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.integer  "ssh_private_key_encrypted_id"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "ssh_keys", ["identity_id"], name: "index_ssh_keys_on_identity_id", using: :btree
@@ -3222,6 +3435,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.string   "status1",           limit: 255
     t.string   "status2",           limit: 255
     t.string   "status3",           limit: 255
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "statuses", ["identity_id"], name: "index_statuses_on_identity_id", using: :btree
@@ -3236,6 +3451,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "stocks", ["company_id"], name: "index_stocks_on_company_id", using: :btree
@@ -3250,6 +3467,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "stories", ["identity_id"], name: "index_stories_on_identity_id", using: :btree
@@ -3276,6 +3495,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "sun_exposures", ["identity_id"], name: "index_sun_exposures_on_identity_id", using: :btree
@@ -3289,6 +3510,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "temperatures", ["identity_id"], name: "index_temperatures_on_identity_id", using: :btree
@@ -3337,6 +3560,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "text_messages", ["identity_id"], name: "index_text_messages_on_identity_id", using: :btree
@@ -3349,6 +3574,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "updated_at"
     t.integer  "contact_id"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "therapists", ["contact_id"], name: "index_therapists_on_contact_id", using: :btree
@@ -3363,6 +3590,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "visit_count"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "timing_events", ["identity_id"], name: "index_timing_events_on_identity_id", using: :btree
@@ -3375,6 +3604,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "timings", ["identity_id"], name: "index_timings_on_identity_id", using: :btree
@@ -3387,6 +3618,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "updated_at"
     t.integer  "visit_count"
     t.datetime "due_time"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "to_dos", ["identity_id"], name: "index_to_dos_on_identity_id", using: :btree
@@ -3411,6 +3644,7 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "archived"
   end
 
   add_index "treks", ["identity_id"], name: "index_treks_on_identity_id", using: :btree
@@ -3467,6 +3701,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_file_id"
     t.boolean  "notify_emergency_contacts"
     t.boolean  "explicitly_completed"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "trips", ["hotel_id"], name: "index_trips_on_hotel_id", using: :btree
@@ -3485,6 +3721,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "tv_shows", ["identity_id"], name: "index_tv_shows_on_identity_id", using: :btree
@@ -3678,6 +3916,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.decimal  "price",                                precision: 10, scale: 2
     t.decimal  "msrp",                                 precision: 10, scale: 2
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "vehicles", ["identity_id"], name: "index_vehicles_on_identity_id", using: :btree
@@ -3703,6 +3943,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "vitamins", ["identity_id"], name: "index_vitamins_on_identity_id", using: :btree
@@ -3714,6 +3956,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "volunteering_activities", ["identity_id"], name: "index_volunteering_activities_on_identity_id", using: :btree
@@ -3728,6 +3972,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "warranties", ["identity_id"], name: "index_warranties_on_identity_id", using: :btree
@@ -3740,6 +3986,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "web_comics", ["feed_id"], name: "index_web_comics_on_feed_id", using: :btree
@@ -3782,6 +4030,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "identity_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "website_domains", ["domain_host_id"], name: "index_website_domains_on_domain_host_id", using: :btree
@@ -3810,6 +4060,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "updated_at",        null: false
     t.boolean  "disable_autoload"
     t.integer  "iframe_height"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "website_lists", ["identity_id"], name: "index_website_lists_on_identity_id", using: :btree
@@ -3837,6 +4089,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.integer  "recommender_id"
     t.text     "notes"
     t.string   "website_category"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "websites", ["identity_id"], name: "index_websites_on_identity_id", using: :btree
@@ -3851,6 +4105,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "weights", ["identity_id"], name: "index_weights_on_identity_id", using: :btree
@@ -3875,6 +4131,8 @@ ActiveRecord::Schema.define(version: 20161002050000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
   end
 
   add_index "wisdoms", ["identity_id"], name: "index_wisdoms_on_identity_id", using: :btree

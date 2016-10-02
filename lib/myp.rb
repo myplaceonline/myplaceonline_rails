@@ -1893,4 +1893,14 @@ module Myp
       str
     end
   end
+
+  def self.process_models(&block)
+    Dir[Rails.root.join("app/models/*.rb").to_s].each do |filename|
+      klass = File.basename(filename, ".rb").camelize.constantize
+      next unless klass.ancestors.include?(ActiveRecord::Base)
+      if klass.include?(MyplaceonlineActiveRecordIdentityConcern) && ActiveRecord::Base.connection.table_exists?(klass.table_name)
+        block.call(klass)
+      end
+    end
+  end
 end

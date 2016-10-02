@@ -22,7 +22,7 @@ class ProjectIssuesController < MyplaceonlineController
   def split_link(obj)
     ActionController::Base.helpers.link_to(
       I18n.t("myplaceonline.project_issues.move_top"),
-      project_project_issues_movetop_path(obj.project, obj)
+      project_project_issue_movetop_path(obj.project, obj)
     )
   end
   

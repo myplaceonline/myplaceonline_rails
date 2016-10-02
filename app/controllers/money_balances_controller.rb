@@ -191,12 +191,12 @@ class MoneyBalancesController < MyplaceonlineController
     [
       {
         title: I18n.t('myplaceonline.money_balances.i_paid'),
-        link: money_balances_add_path(@obj, owner_paid: @obj.current_user_owns? ? "true" : "false"),
+        link: money_balance_add_path(@obj, owner_paid: @obj.current_user_owns? ? "true" : "false"),
         icon: "eye"
       },
       {
         title: I18n.t('myplaceonline.money_balances.other_paid', { other: self.other_display }),
-        link: money_balances_add_path(@obj, owner_paid: @obj.current_user_owns? ? "false" : "true"),
+        link: money_balance_add_path(@obj, owner_paid: @obj.current_user_owns? ? "false" : "true"),
         icon: "user"
       },
       {
