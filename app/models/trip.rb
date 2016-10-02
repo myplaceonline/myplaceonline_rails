@@ -348,9 +348,13 @@ class Trip < ActiveRecord::Base
 
   def active?
     now = User.current_user.time_now
+
     Rails.logger.debug{"trip active? now: #{now}, started: #{self.started}, ended: #{self.ended}"}
-    result = !self.started.nil? && !self.ended.nil? && now >= User.current_user.in_time_zone(self.started) && now <= User.current_user.in_time_zone(self.ended)
+
+    result = !self.started.nil? && !self.ended.nil? && now >= User.current_user.in_time_zone(self.started) && now <= User.current_user.in_time_zone(self.ended, end_of_day: true)
+
     Rails.logger.debug{"trip active?: #{result}"}
+
     result
   end
   

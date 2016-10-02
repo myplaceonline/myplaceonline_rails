@@ -122,10 +122,13 @@ class User < ActiveRecord::Base
     result
   end
   
-  def in_time_zone(x)
+  def in_time_zone(x, end_of_day: false)
     result = x
     if !timezone.blank?
-      result = x.in_time_zone(self.timezone)
+      result = result.in_time_zone(self.timezone)
+    end
+    if end_of_day && x.is_a?(Date)
+      result = result.to_datetime + 1.day - 1.second
     end
     result
   end
