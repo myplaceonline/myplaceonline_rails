@@ -29,9 +29,6 @@ class DentalInsurance < ActiveRecord::Base
   accepts_nested_attributes_for :doctor, reject_if: proc { |attributes| DoctorsController.reject_if_blank(attributes) }
   allow_existing :doctor
   
-  attr_accessor :is_archived
-  boolean_time_transfer :is_archived, :archived
-
   after_commit :on_after_create, on: :create
   
   def on_after_create

@@ -123,6 +123,11 @@
       options: controller.index_sorts
     }
   %>
+  <%=
+    render partial: 'myplaceonline/filter_select', locals: {
+      filters: controller.index_filters
+    }
+  %>
   <% content_for :footer do -%>
     <% if controller.show_index_footer %>
       <%=

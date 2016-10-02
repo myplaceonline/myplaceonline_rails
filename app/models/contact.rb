@@ -35,9 +35,6 @@ class Contact < ActiveRecord::Base
   has_many :conversations, :dependent => :destroy
   accepts_nested_attributes_for :conversations, allow_destroy: true, reject_if: :all_blank
   
-  attr_accessor :is_archived
-  boolean_time_transfer :is_archived, :archived
-
   before_destroy :check_if_user_contact, prepend: true
   
   def check_if_user_contact

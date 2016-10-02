@@ -1,12 +1,4 @@
 class DentalInsurancesController < MyplaceonlineController
-  def index
-    @archived = params[:archived]
-    if !@archived.blank?
-      @archived = @archived.to_bool
-    end
-    super
-  end
-
   def self.param_names
     [
       :id,
@@ -50,13 +42,5 @@ class DentalInsurancesController < MyplaceonlineController
       params.require(:dental_insurance).permit(
         DentalInsurancesController.param_names
       )
-    end
-
-    def all_additional_sql(strict)
-      if (@archived.blank? || !@archived) && !strict
-        "and archived is null"
-      else
-        nil
-      end
     end
 end

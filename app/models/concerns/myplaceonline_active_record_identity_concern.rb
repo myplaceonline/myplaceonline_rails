@@ -2,6 +2,7 @@
 module MyplaceonlineActiveRecordIdentityConcern
   extend ActiveSupport::Concern
   include MyplaceonlineActiveRecordBaseConcern
+  include ModelHelpersConcern
 
   included do
     # Owner/creator
@@ -10,6 +11,9 @@ module MyplaceonlineActiveRecordIdentityConcern
     before_create :identity_record_before_save
     before_update :identity_record_before_save
     before_save :identity_record_before_save
+
+    attr_accessor :is_archived
+    boolean_time_transfer :is_archived, :archived
 
     def identity_record_before_save
       if self.respond_to?("identity=")

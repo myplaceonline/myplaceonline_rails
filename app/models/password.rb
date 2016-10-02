@@ -15,9 +15,6 @@ class Password < ActiveRecord::Base
   
   validates :name, presence: true
   
-  attr_accessor :is_archived
-  boolean_time_transfer :is_archived, :archived
-  
   def set_encrypt_for_secrets
     password_secrets.each do |secret|
       secret.encrypt = encrypt

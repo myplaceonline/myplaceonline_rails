@@ -18,6 +18,8 @@ class MyplaceonlineController < ApplicationController
       check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
     end
     
+    @archived = param_bool(:archived)
+
     @selected_sort = params[:selected_sort]
     @selected_sort_direction = params[:selected_sort_direction]
     if @selected_sort_direction.blank? || (@selected_sort_direction != "asc" && @selected_sort_direction != "desc")
@@ -457,6 +459,22 @@ class MyplaceonlineController < ApplicationController
     end
   end
   
+  def archive_obj_path(obj = @obj)
+    if nested
+      send(path_name + "_archive_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+    else
+      send(path_name + "_archive_path", obj)
+    end
+  end
+  
+  def unarchive_obj_path(obj = @obj)
+    if nested
+      send(path_name + "_unarchive_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+    else
+      send(path_name + "_unarchive_path", obj)
+    end
+  end
+  
   def show_path(obj)
     if nested
       send("#{path_name}_path", obj.send(parent_model.table_name.singularize.downcase), obj)
@@ -660,7 +678,46 @@ class MyplaceonlineController < ApplicationController
         icon: "action"
       }
     end
+    if @obj.is_archived?
+      result << {
+        title: I18n.t("myplaceonline.general.unarchive"),
+        link: self.unarchive_obj_path,
+        icon: "plus"
+      }
+    else
+      result << {
+        title: I18n.t("myplaceonline.general.archive"),
+        link: self.archive_obj_path,
+        icon: "minus"
+      }
+    end
     result
+  end
+  
+  def archive
+    set_obj
+    # Some models have after_saves that do things like recalculate
+    # calendar items, but we can just surgically update this field
+    # and skip that
+    @obj.update_column(:archived, Time.now)
+    redirect_to index_path,
+      :flash => { :notice => I18n.t("myplaceonline.general.archived") }
+  end
+  
+  def unarchive
+    set_obj
+    @obj.update_column(:archived, nil)
+    redirect_to index_path,
+      :flash => { :notice => I18n.t("myplaceonline.general.unarchived") }
+  end
+  
+  def index_filters
+    [
+      {
+        :name => :archived,
+        :display => "myplaceonline.general.archived"
+      }
+    ]
   end
   
   protected
@@ -695,7 +752,13 @@ class MyplaceonlineController < ApplicationController
     end
     
     def all_additional_sql(strict)
-      nil
+      result = nil
+      if !strict
+        if @archived.blank? || !@archived
+          result = "and archived is null"
+        end
+      end
+      result
     end
     
     def all_joins

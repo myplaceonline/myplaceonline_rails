@@ -6,9 +6,6 @@ class CreditCard < ActiveRecord::Base
   
   CARD_TYPES = [["myplaceonline.credit_cards.visa", 0], ["myplaceonline.credit_cards.mastercard", 1], ["myplaceonline.credit_cards.amex", 2]]
 
-  attr_accessor :is_archived
-  boolean_time_transfer :is_archived, :archived
-  
   before_validation :process_cc_name
   
   # We do this on save rather than in display because if we access self.name

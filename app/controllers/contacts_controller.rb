@@ -4,10 +4,6 @@ class ContactsController < MyplaceonlineController
   end
   
   def index
-    @archived = params[:archived]
-    if !@archived.blank?
-      @archived = @archived.to_bool
-    end
     @contact_type = params[:contact_type]
     if !@contact_type.blank?
       @contact_type = @contact_type.to_i
@@ -193,19 +189,14 @@ class ContactsController < MyplaceonlineController
     end
 
     def all_additional_sql(strict)
-      if strict
-        nil
-      else
-        if (@archived.blank? || !@archived) && !strict
-          result = "and archived is null"
-        else
-          result = ""
-        end
+      result = super(strict)
+      if !strict
         if !@contact_type.blank?
           result = Myp.appendstr(result, " and contact_type = " + @contact_type.to_s)
         end
         result
       end
+      result
     end
 
     # Join because we're sorting by identity name

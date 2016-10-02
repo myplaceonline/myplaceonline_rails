@@ -1,14 +1,6 @@
 class CreditCardsController < MyplaceonlineController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:listcashback, :total_credit]
 
-  def index
-    @archived = params[:archived]
-    if !@archived.blank?
-      @archived = @archived.to_bool
-    end
-    super
-  end
-
   def listcashback
     @cashbacks = CreditCardCashback.where(identity_id: current_user.primary_identity.id).sort{ |x, y| y.cashback.cashback_percentage <=> x.cashback.cashback_percentage }.keep_if{|c| c.expiration_includes_today?}
   end
@@ -75,13 +67,5 @@ class CreditCardsController < MyplaceonlineController
     
     def sensitive
       true
-    end
-
-    def all_additional_sql(strict)
-      if (@archived.blank? || !@archived) && !strict
-        "and archived is null"
-      else
-        nil
-      end
     end
 end

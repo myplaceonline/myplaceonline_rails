@@ -5,9 +5,6 @@ class ProjectIssue < ActiveRecord::Base
 
   attr_accessor :top
 
-  attr_accessor :is_archived
-  boolean_time_transfer :is_archived, :archived
-
   validates :issue_name, presence: true
   
   belongs_to :project

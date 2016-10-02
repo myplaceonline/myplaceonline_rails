@@ -1,12 +1,4 @@
 class ProjectIssuesController < MyplaceonlineController
-  def index
-    @archived = params[:archived]
-    if !@archived.blank?
-      @archived = @archived.to_bool
-    end
-    super
-  end
-
   def path_name
     "project_project_issue"
   end
@@ -108,13 +100,5 @@ class ProjectIssuesController < MyplaceonlineController
 
     def parent_model
       Project
-    end
-
-    def all_additional_sql(strict)
-      if (@archived.blank? || !@archived) && !strict
-        "and archived is null"
-      else
-        nil
-      end
     end
 end

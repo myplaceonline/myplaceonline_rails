@@ -14,9 +14,6 @@ class BankAccount < ActiveRecord::Base
   
   validates :name, presence: true
 
-  attr_accessor :is_archived
-  boolean_time_transfer :is_archived, :archived
-
   belongs_to :account_number_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
   belongs_to_encrypted :account_number
   before_validation :account_number_finalize

@@ -1,14 +1,6 @@
 class PeriodicPaymentsController < MyplaceonlineController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:monthly_total]
 
-  def index
-    @archived = params[:archived]
-    if !@archived.blank?
-      @archived = @archived.to_bool
-    end
-    super
-  end
-
   def monthly_total
     @total = 0
     @weekly_food = 0
@@ -91,13 +83,5 @@ class PeriodicPaymentsController < MyplaceonlineController
       params.require(:periodic_payment).permit(
         PeriodicPaymentsController.param_names
       )
-    end
-
-    def all_additional_sql(strict)
-      if (@archived.blank? || !@archived) && !strict
-        "and archived is null"
-      else
-        nil
-      end
     end
 end

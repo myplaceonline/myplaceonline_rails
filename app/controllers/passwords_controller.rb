@@ -6,14 +6,6 @@ class PasswordsController < MyplaceonlineController
   
   skip_authorization_check :only => [:index, :new, :create, :import, :importodf]
   
-  def index
-    @archived = params[:archived]
-    if !@archived.blank?
-      @archived = @archived.to_bool
-    end
-    super
-  end
-
   def show_share
     false
   end
@@ -329,14 +321,6 @@ class PasswordsController < MyplaceonlineController
         secret.question = s.cell(i, colindices[question_col]).to_s
         secret.answer = s.cell(i, colindices[answer_col]).to_s
         secret.encrypt = encrypt
-      end
-    end
-
-    def all_additional_sql(strict)
-      if (@archived.blank? || !@archived) && !strict
-        "and archived is null"
-      else
-        nil
       end
     end
 end

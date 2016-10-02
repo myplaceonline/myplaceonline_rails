@@ -1,12 +1,4 @@
 class BankAccountsController < MyplaceonlineController
-  def index
-    @archived = params[:archived]
-    if !@archived.blank?
-      @archived = @archived.to_bool
-    end
-    super
-  end
-
   protected
     def sorts
       ["lower(bank_accounts.name) ASC"]
@@ -28,13 +20,5 @@ class BankAccountsController < MyplaceonlineController
 
     def sensitive
       true
-    end
-
-    def all_additional_sql(strict)
-      if (@archived.blank? || !@archived) && !strict
-        "and archived is null"
-      else
-        nil
-      end
     end
 end

@@ -4,35 +4,39 @@ def process_resources(name, context)
   resources_as = name.to_s
   resources_path = name.to_s
   resources_controller = name.to_s
+  
+  if context.nil?
+    context = []
+  end
+  
+  context << { instance: true, link: "archive" }
+  context << { instance: true, link: "unarchive" }
+  context << { instance: true, link: "favorite" }
 
-  if !context.nil?
-    context.each do |context_addition|
-      if !context_addition[:instance].nil?
-        if context_addition[:instance]
-          match "#{resources_path}/:id/#{context_addition[:link]}", :to => "#{resources_controller}##{context_addition[:link]}", via: [:get, :post, :patch], as: "#{resources_as.to_s.singularize}_#{context_addition[:link]}"
-        else
-          match "#{resources_path}/#{context_addition[:link]}", :to => "#{resources_controller}##{context_addition[:link]}", via: [:get, :post], as: "#{resources_as}_#{context_addition[:link]}"
-        end
-      elsif !context_addition[:resourcesinfo].nil?
-        if !context_addition[:as].nil?
-          resources_as = context_addition[:as]
-        end
-        if !context_addition[:path].nil?
-          resources_path = context_addition[:path]
-        end
-        if !context_addition[:controller].nil?
-          resources_controller = context_addition[:controller]
-        end
+  context.each do |context_addition|
+    if !context_addition[:instance].nil?
+      if context_addition[:instance]
+        match "#{resources_path}/:id/#{context_addition[:link]}", :to => "#{resources_controller}##{context_addition[:link]}", via: [:get, :post, :patch], as: "#{resources_as.to_s.singularize}_#{context_addition[:link]}"
+      else
+        match "#{resources_path}/#{context_addition[:link]}", :to => "#{resources_controller}##{context_addition[:link]}", via: [:get, :post], as: "#{resources_as}_#{context_addition[:link]}"
+      end
+    elsif !context_addition[:resourcesinfo].nil?
+      if !context_addition[:as].nil?
+        resources_as = context_addition[:as]
+      end
+      if !context_addition[:path].nil?
+        resources_path = context_addition[:path]
+      end
+      if !context_addition[:controller].nil?
+        resources_controller = context_addition[:controller]
       end
     end
   end
   
   resources name.to_sym, :as => resources_as, :path => resources_path, :controller => resources_controller do
-    if !context.nil?
-      context.each do |context_addition|
-        if !context_addition[:subresources].nil?
-          process_resources(context_addition[:name], context_addition[:subitems])
-        end
+    context.each do |context_addition|
+      if !context_addition[:subresources].nil?
+        process_resources(context_addition[:name], context_addition[:subitems])
       end
     end
   end
