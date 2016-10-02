@@ -132,7 +132,8 @@ Category.create!([
   {id: 133, name: "exercise_regimens", link: "exercise_regimens", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/walk.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 65, name: "books", link: "books", position: 0, parent_id: 2, additional_filtertext: "comics", icon: "FatCow_Icons16x16/book.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 166, name: "favorite_locations", link: "favorite_locations", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/earth_night.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 167, name: "life_highlights", link: "life_highlights", position: 0, parent_id: 3, additional_filtertext: nil, icon: "famfamfam/newspaper.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
+  {id: 167, name: "life_highlights", link: "life_highlights", position: 0, parent_id: 3, additional_filtertext: nil, icon: "famfamfam/newspaper.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 168, name: "educations", link: "educations", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/education.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
 ])
 
 user = User.new

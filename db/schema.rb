@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161002162050) do
+ActiveRecord::Schema.define(version: 20161002163737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1255,6 +1255,25 @@ ActiveRecord::Schema.define(version: 20161002162050) do
 
   add_index "due_items", ["calendar_id"], name: "index_due_items_on_calendar_id", using: :btree
   add_index "due_items", ["identity_id"], name: "index_due_items_on_identity_id", using: :btree
+
+  create_table "educations", force: :cascade do |t|
+    t.string   "education_name"
+    t.date     "education_start"
+    t.date     "education_end"
+    t.decimal  "gpa",             precision: 10, scale: 2
+    t.integer  "location_id"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.string   "degree_name"
+    t.integer  "identity_id"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+  end
+
+  add_index "educations", ["identity_id"], name: "index_educations_on_identity_id", using: :btree
+  add_index "educations", ["location_id"], name: "index_educations_on_location_id", using: :btree
 
   create_table "email_contacts", force: :cascade do |t|
     t.integer  "email_id"
@@ -4456,6 +4475,8 @@ ActiveRecord::Schema.define(version: 20161002162050) do
   add_foreign_key "drafts", "identities"
   add_foreign_key "dreams", "encrypted_values", column: "dream_encrypted_id"
   add_foreign_key "dreams", "identities"
+  add_foreign_key "educations", "identities"
+  add_foreign_key "educations", "locations"
   add_foreign_key "email_contacts", "contacts"
   add_foreign_key "email_contacts", "emails"
   add_foreign_key "email_contacts", "identities"

@@ -1,0 +1,20 @@
+<%= myp_text_field(f, :education_name, "myplaceonline.educations.education_name", obj.education_name, autofocus) %>
+<%= myp_date_field(f, :education_start, "myplaceonline.educations.education_start", obj.education_start) %>
+<%= myp_date_field(f, :education_end, "myplaceonline.educations.education_end", obj.education_end) %>
+<%= myp_text_field(f, :degree_name, "myplaceonline.educations.degree_name", obj.degree_name) %>
+<%= myp_decimal_field(f, :gpa, "myplaceonline.educations.gpa", obj.gpa) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :location,
+    existingobj: obj.location,
+    heading: t("myplaceonline.educations.location"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    collapsed: obj.location.nil?
+  }
+%>

@@ -193,6 +193,7 @@ en:
       exercise_regimens: "Exercise Regimens"
       favorite_locations: "Favorite Locations"
       life_highlights: "Life Highlights"
+      educations: "Educations"
     general:
       email: "E-mail"
       password: "Password"
@@ -2790,3 +2791,10 @@ en:
     life_highlights:
       life_highlight_time: "Time"
       life_highlight_name: "Short Description"
+    educations:
+      education_name: "Name"
+      education_start: "Start"
+      education_end: "End"
+      degree_name: "Degree Name"
+      gpa: "Score or Grade Point Average (GPA)"
+      location: "Location"

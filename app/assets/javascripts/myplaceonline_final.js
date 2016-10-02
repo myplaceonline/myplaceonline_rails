@@ -1119,7 +1119,7 @@ var myplaceonline = function(mymodule) {
     var result = true;
     if (errorObj && errorObj.stack) {
       var check = errorObj.stack.toLowerCase();
-      if (errorObj.stack.indexOf('ckeditor') != -1) {
+      if (errorObj.stack.indexOf('ckeditor') != -1 || message.indexOf('ckeditor') != -1) {
         result = false;
       }
     }

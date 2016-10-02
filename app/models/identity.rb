@@ -171,6 +171,7 @@ class Identity < ActiveRecord::Base
   has_many :exercise_regimens, :dependent => :destroy
   has_many :favorite_locations, :dependent => :destroy
   has_many :life_highlights, :dependent => :destroy
+  has_many :educations, :dependent => :destroy
   
   has_many :myplets, -> { order('y_coordinate') }, :dependent => :destroy
   accepts_nested_attributes_for :myplets, allow_destroy: true, reject_if: :all_blank
@@ -353,6 +354,7 @@ class Identity < ActiveRecord::Base
       :exercise_regimens => exercise_regimens.to_a.sort{ |a,b| a.exercise_regimen_name.downcase <=> b.exercise_regimen_name.downcase }.map{|x| x.as_json},
       :favorite_locations => favorite_locations.to_a.map{|x| x.as_json},
       :life_highlights => life_highlights.to_a.map{|x| x.as_json},
+      :educations => educations.to_a.sort{ |a,b| a.education_name.downcase <=> b.education_name.downcase }.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end
