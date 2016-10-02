@@ -1516,6 +1516,8 @@ en:
       review_date: "Evaluation Date"
       company_score: "Company Score"
       contact: "Evaluator"
+      notes: "Evaluation"
+      self_evaluation: "Self-Evaluation"
       files: "Files/Pictures"
       file: "File/Picture"
       add_file: "Add File/Picture"

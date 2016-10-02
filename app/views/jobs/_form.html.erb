@@ -174,7 +174,12 @@
       {
         type: 'textarea',
         name: 'notes',
-        placeholder: t("myplaceonline.general.notes")
+        placeholder: t("myplaceonline.job_reviews.notes")
+      },
+      {
+        type: 'textarea',
+        name: 'self_evaluation',
+        placeholder: t("myplaceonline.job_reviews.self_evaluation")
       },
       {
         type: :renderpartial,
@@ -194,7 +199,8 @@
 %>
   <%= myp_date_field(child_fields, :review_date, "myplaceonline.job_reviews.review_date", childproperty.review_date) %>
   <%= myp_text_field(child_fields, :company_score, "myplaceonline.job_reviews.company_score", childproperty.company_score) %>
-  <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.general.notes", childproperty.notes) %>
+  <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.job_reviews.notes", childproperty.notes) %>
+  <%= myp_text_area_markdown(child_fields, :self_evaluation, "myplaceonline.job_reviews.self_evaluation", childproperty.self_evaluation) %>
   <%=
     render partial: 'myplaceonline/select_or_create', locals: {
       f: child_fields,

@@ -52,6 +52,7 @@ class JobsController < MyplaceonlineController
           :review_date,
           :company_score,
           :notes,
+          :self_evaluation,
           contact_attributes: ContactsController.param_names,
           job_review_files_attributes: FilesController.multi_param_names
         ],

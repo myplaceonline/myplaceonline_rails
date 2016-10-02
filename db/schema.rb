@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161002170507) do
+ActiveRecord::Schema.define(version: 20161002170936) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2183,10 +2183,11 @@ ActiveRecord::Schema.define(version: 20161002170507) do
     t.string   "company_score"
     t.integer  "contact_id"
     t.text     "notes"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.text     "self_evaluation"
   end
 
   add_index "job_reviews", ["contact_id"], name: "index_job_reviews_on_contact_id", using: :btree
