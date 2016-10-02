@@ -55,6 +55,10 @@ class MyplaceonlineController < ApplicationController
       @additional_items = additional_items
     end
 
+    if favorite_items? && @count > 1
+      @favorite_items = favorite_items
+    end
+
     index_pre_respond()
 
     @query_params_part_all = items_query_params_part_all
@@ -475,6 +479,22 @@ class MyplaceonlineController < ApplicationController
     end
   end
   
+  def favorite_obj_path(obj = @obj)
+    if nested
+      send(path_name + "_favorite_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+    else
+      send(path_name + "_favorite_path", obj)
+    end
+  end
+  
+  def unfavorite_obj_path(obj = @obj)
+    if nested
+      send(path_name + "_unfavorite_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+    else
+      send(path_name + "_unfavorite_path", obj)
+    end
+  end
+  
   def show_path(obj)
     if nested
       send("#{path_name}_path", obj.send(parent_model.table_name.singularize.downcase), obj)
@@ -691,6 +711,19 @@ class MyplaceonlineController < ApplicationController
         icon: "minus"
       }
     end
+    if @obj.rating.nil? || @obj.rating < Myp::MAX_RATING
+      result << {
+        title: I18n.t("myplaceonline.general.favorite"),
+        link: self.favorite_obj_path,
+        icon: "star"
+      }
+    else
+      result << {
+        title: I18n.t("myplaceonline.general.unfavorite"),
+        link: self.unfavorite_obj_path,
+        icon: "back"
+      }
+    end
     result
   end
   
@@ -709,6 +742,20 @@ class MyplaceonlineController < ApplicationController
     @obj.update_column(:archived, nil)
     redirect_to index_path,
       :flash => { :notice => I18n.t("myplaceonline.general.unarchived") }
+  end
+  
+  def favorite
+    set_obj
+    @obj.update_column(:rating, Myp::MAX_RATING)
+    redirect_to obj_path,
+      :flash => { :notice => I18n.t("myplaceonline.general.favorited") }
+  end
+  
+  def unfavorite
+    set_obj
+    @obj.update_column(:rating, nil)
+    redirect_to obj_path,
+      :flash => { :notice => I18n.t("myplaceonline.general.unfavorited") }
   end
   
   def index_filters
@@ -773,12 +820,20 @@ class MyplaceonlineController < ApplicationController
       model.new.respond_to?("visit_count")
     end
   
+    def favorite_items?
+      additional_items?
+    end
+  
     def additional_items_min_visit_count
       2
     end
     
     def additional_items_max_items
       5
+    end
+    
+    def favorite_items_max_items
+      additional_items_max_items
     end
     
     def find_explicit_items
@@ -820,6 +875,18 @@ class MyplaceonlineController < ApplicationController
         current_user.primary_identity,
         additional_items_min_visit_count
       ).limit(additional_items_max_items).order(model.table_name + ".visit_count DESC")
+    end
+
+    def favorite_items(strict: false)
+      additional = all_additional_sql(strict)
+      if additional.nil?
+        additional = ""
+      end
+      model.includes(all_includes).joins(all_joins).where(
+        model.table_name + ".identity_id = ? and " + model.table_name + ".rating = ? " + additional,
+        current_user.primary_identity,
+        Myp::MAX_RATING
+      ).limit(favorite_items_max_items).order(model.table_name + ".visit_count DESC")
     end
 
     def set_obj(action = nil, p: params)

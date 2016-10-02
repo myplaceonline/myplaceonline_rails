@@ -82,13 +82,15 @@ module Myp
     ["myplaceonline.periods.six_months", 2]
   ]
   
+  MAX_RATING = 5
+  
   RATINGS = [
     ["myplaceonline.ratings.zero", 0],
     ["myplaceonline.ratings.one", 1],
     ["myplaceonline.ratings.two", 2],
     ["myplaceonline.ratings.three", 3],
     ["myplaceonline.ratings.four", 4],
-    ["myplaceonline.ratings.five", 5]
+    ["myplaceonline.ratings.five", Myp::MAX_RATING]
   ]  
   
   NOISE_LEVELS = [
