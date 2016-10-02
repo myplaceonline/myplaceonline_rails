@@ -40,9 +40,9 @@
   <%= attribute_table_row_currency(t("myplaceonline.job_salaries.salary"), js.salary) %>
   <%= attribute_table_row_select(t("myplaceonline.job_salaries.salary_period"), js.salary_period, Myp::PERIODS) %>
   <% if !js.salary_period.nil? %>
-      <% if js.salary_period == 0 %>
-        <%= attribute_table_row_currency(t("myplaceonline.job_salaries.salary_yearly"), js.salary * 12) %>
-      <% end %>
+    <% if js.salary_period == 0 %>
+      <%= attribute_table_row_currency(t("myplaceonline.job_salaries.salary_yearly"), js.salary * 12) %>
+    <% end %>
   <% end %>
   <%= attribute_table_row_markdown(t("myplaceonline.job_salaries.notes"), js.notes) %>
   <%= attribute_table_row(t("myplaceonline.job_salaries.new_title"), js.new_title) %>
@@ -55,11 +55,11 @@
   <%= attribute_table_row_markdown(t("myplaceonline.job_reviews.self_evaluation"), x.self_evaluation) %>
   <%= attribute_table_row_reference(t("myplaceonline.job_reviews.contact"), "contact_path", x.contact) %>
   <%=
-      render partial: 'myplaceonline/pictures', locals: {
-        pics: x.job_review_files,
-        placeholder: "myplaceonline.job_reviews.file"
-      }
-    %>
+    render partial: 'myplaceonline/pictures', locals: {
+      pics: x.job_review_files,
+      placeholder: "myplaceonline.job_reviews.file"
+    }
+  %>
 <% end %>
 <% obj.job_myreferences.each do |x| %>
   <%= table_row_heading(t("myplaceonline.jobs.myreference")) %>

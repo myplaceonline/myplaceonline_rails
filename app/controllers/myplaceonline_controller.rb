@@ -698,31 +698,35 @@ class MyplaceonlineController < ApplicationController
         icon: "action"
       }
     end
-    if @obj.is_archived?
-      result << {
-        title: I18n.t("myplaceonline.general.unarchive"),
-        link: self.unarchive_obj_path,
-        icon: "plus"
-      }
-    else
-      result << {
-        title: I18n.t("myplaceonline.general.archive"),
-        link: self.archive_obj_path,
-        icon: "minus"
-      }
+    if @obj.respond_to?("is_archived?")
+      if @obj.is_archived?
+        result << {
+          title: I18n.t("myplaceonline.general.unarchive"),
+          link: self.unarchive_obj_path,
+          icon: "plus"
+        }
+      else
+        result << {
+          title: I18n.t("myplaceonline.general.archive"),
+          link: self.archive_obj_path,
+          icon: "minus"
+        }
+      end
     end
-    if @obj.rating.nil? || @obj.rating < Myp::MAX_RATING
-      result << {
-        title: I18n.t("myplaceonline.general.favorite"),
-        link: self.favorite_obj_path,
-        icon: "star"
-      }
-    else
-      result << {
-        title: I18n.t("myplaceonline.general.unfavorite"),
-        link: self.unfavorite_obj_path,
-        icon: "back"
-      }
+    if @obj.respond_to?("rating")
+      if @obj.rating.nil? || @obj.rating < Myp::MAX_RATING
+        result << {
+          title: I18n.t("myplaceonline.general.favorite"),
+          link: self.favorite_obj_path,
+          icon: "star"
+        }
+      else
+        result << {
+          title: I18n.t("myplaceonline.general.unfavorite"),
+          link: self.unfavorite_obj_path,
+          icon: "back"
+        }
+      end
     end
     result
   end

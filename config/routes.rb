@@ -350,8 +350,6 @@ Rails.application.routes.draw do
     end
   end
   
-  process_resources(:users, additions[:users])
-  
   if Myp.is_web_server? || Rails.env.test?
     devise_scope :user do
       match 'users/reenter', :to => 'users/sessions#reenter', via: [:get, :post]
@@ -384,6 +382,8 @@ Rails.application.routes.draw do
     }
   end
 
+  process_resources(:users, additions[:users])
+  
   mount Ckeditor::Engine => '/ckeditor'
   
   Rails.logger.debug{"Finished loading routes"}

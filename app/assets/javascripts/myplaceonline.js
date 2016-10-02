@@ -391,7 +391,8 @@ var myplaceonline = function(mymodule) {
     consoleLog("mobileinit.myp");
     
     $.mobile.hoverDelay = 100;
-    $.mobile.defaultPageTransition = "slide";
+    //$.mobile.defaultPageTransition = "slide";
+    $.mobile.defaultPageTransition = "none";
     $.ajaxSetup({
       timeout: 60000
     });
