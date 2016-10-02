@@ -34,17 +34,6 @@ class BloodTestsController < MyplaceonlineController
         @graphdata += "," + x["concentration"]
       end
     end
-    
-#     blood_test_results = BloodTestResult.includes(:blood_concentration, :blood_test).where(identity_id: User.current_user.primary_identity_id)
-#     @results_by_concentration = {}
-#     blood_test_results.each do |blood_test_result|
-#       result_by_concentration = @results_by_concentration[blood_test_result.blood_concentration.concentration_type]
-#       if result_by_concentration.nil?
-#         result_by_concentration = []
-#       end
-#       result_by_concentration << [blood_test_result.blood_test.test_time, blood_test_result.concentration]
-#       @results_by_concentration[blood_test_result.blood_concentration.concentration_type] = result_by_concentration
-#     end
   end
   
   def may_upload

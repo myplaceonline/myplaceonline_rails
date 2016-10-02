@@ -1,5 +1,5 @@
 <%= myp_text_field(f, :quest_title, "myplaceonline.quests.quest_title", obj.quest_title, autofocus) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes, collapsed: false) %>
 <%=
   render partial: "myplaceonline/pictures_form", locals: {
     f: f,
