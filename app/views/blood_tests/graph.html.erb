@@ -1,0 +1,40 @@
+<% content_for :heading do -%><%= t('myplaceonline.blood_tests.graph') %><% end -%>
+<h1><%= t('myplaceonline.blood_tests.graph') %></h1>
+
+<%= flashes! %>
+
+<%= form_tag blood_tests_graph_path, method: :get do %>
+
+  <%= myp_select_tag(:concentration, "myplaceonline.blood_tests.concentration_name", @concentrations, @concentration) %>
+  
+  <% if !@graphdata.blank? %>
+    <div id="graphdiv" style="width: 100%"></div>
+    <script type="text/javascript">
+      myplaceonline.onPageLoad(function() {
+        myplaceonline.maybeFocus(".autofocus");
+        var g = new Dygraph(
+          document.getElementById("graphdiv"),
+
+          // CSV or path to a CSV file.
+          <%= @graphdata.to_json.html_safe %>
+
+        );
+      });
+    </script>
+  <% end %>
+  
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.general.submit"), "data-icon" => "action", "data-iconpos" => "top", "style" => "background-color: green")
+        },
+        {
+          title: I18n.t("myplaceonline.general.cancel"),
+          link: controller.index_path,
+          icon: "back"
+        }
+      ]
+    })
+  %>
+<% end %>

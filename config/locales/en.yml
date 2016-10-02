@@ -1353,6 +1353,8 @@ en:
       delete_file: "Delete File/Picture"
       location: "Location"
       doctor: "Doctor"
+      graph: "Graph"
+      concentration_name: "Concentration"
     blood_concentrations:
       concentration_name: "Name"
       concentration_type: "Concentration Type"

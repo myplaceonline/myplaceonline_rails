@@ -166,6 +166,9 @@ Rails.application.routes.draw do
   match 'files/:id/download/:imagename', :to => 'files#download', via: [:get], as: "file_download_name"
 
   additions = {
+    blood_tests: [
+      { instance: false, link: "graph" }
+    ],
     calendar_item_reminder_pendings: [
       { instance: true, link: "complete" },
       { instance: true, link: "snooze" }
