@@ -277,3 +277,16 @@
     <%= myp_text_area_markdown(myreference_fields, :notes, "myplaceonline.general.notes", childproperty.myreference.notes) %>
   <% end %>
 <% end %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :job_files,
+    item_placeholder: "myplaceonline.jobs.file",
+    heading: "myplaceonline.jobs.files",
+    addbutton: "myplaceonline.jobs.add_file",
+    addbutton_multi: "myplaceonline.jobs.add_files",
+    deletebutton: "myplaceonline.jobs.delete_file"
+  }
+%>

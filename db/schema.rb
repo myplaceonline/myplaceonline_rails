@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161002170033) do
+ActiveRecord::Schema.define(version: 20161002170507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2116,6 +2116,19 @@ ActiveRecord::Schema.define(version: 20161002170033) do
   end
 
   add_index "invites", ["user_id"], name: "index_invites_on_user_id", using: :btree
+
+  create_table "job_files", force: :cascade do |t|
+    t.integer  "job_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "job_files", ["identity_file_id"], name: "index_job_files_on_identity_file_id", using: :btree
+  add_index "job_files", ["identity_id"], name: "index_job_files_on_identity_id", using: :btree
+  add_index "job_files", ["job_id"], name: "index_job_files_on_job_id", using: :btree
 
   create_table "job_managers", force: :cascade do |t|
     t.integer  "job_id"
@@ -4546,6 +4559,9 @@ ActiveRecord::Schema.define(version: 20161002170033) do
   add_foreign_key "identities", "identities"
   add_foreign_key "invite_codes", "identities"
   add_foreign_key "invites", "users"
+  add_foreign_key "job_files", "identities"
+  add_foreign_key "job_files", "identity_files"
+  add_foreign_key "job_files", "jobs"
   add_foreign_key "job_managers", "contacts"
   add_foreign_key "job_managers", "identities"
   add_foreign_key "job_managers", "jobs"

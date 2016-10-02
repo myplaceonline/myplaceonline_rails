@@ -64,3 +64,9 @@
   <%= table_row_heading(t("myplaceonline.jobs.myreference")) %>
   <%= render partial: "myreferences/show", locals: { obj: x.myreference } %>
 <% end %>
+<%=
+  render partial: 'myplaceonline/pictures', locals: {
+    pics: @obj.job_files,
+    placeholder: "myplaceonline.jobs.file"
+  }
+%>

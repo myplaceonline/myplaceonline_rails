@@ -59,7 +59,8 @@ class JobsController < MyplaceonlineController
           :id,
           :_destroy,
           myreference_attributes: MyreferencesController.param_names
-        ]
+        ],
+        job_files_attributes: FilesController.multi_param_names
       )
     end
 end

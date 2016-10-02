@@ -1496,6 +1496,11 @@ en:
       myreferences: "References"
       add_myreference: "Add Reference"
       delete_myreference: "Delete Reference"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"
     job_managers:
       start_date: "Start Date"
       end_date: "End Date"

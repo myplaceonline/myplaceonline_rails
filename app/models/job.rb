@@ -35,4 +35,14 @@ class Job < ActiveRecord::Base
 
   has_many :job_myreferences, :dependent => :destroy
   accepts_nested_attributes_for :job_myreferences, allow_destroy: true, reject_if: :all_blank
+
+  has_many :job_files, :dependent => :destroy
+  accepts_nested_attributes_for :job_files, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :job_files, [{:name => :identity_file}]
+
+  before_validation :update_file_folders
+  
+  def update_file_folders
+    put_files_in_folder(job_files, [I18n.t("myplaceonline.category.jobs"), display])
+  end
 end
