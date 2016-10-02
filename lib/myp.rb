@@ -62,6 +62,7 @@ module Myp
     ["myplaceonline.liquid_concentrations.mmoll", 3],
     ["myplaceonline.liquid_concentrations.ngdl", 9],
     ["myplaceonline.liquid_concentrations.ngml", 10],
+    ["myplaceonline.liquid_concentrations.number", 12],
     ["myplaceonline.liquid_concentrations.percent", 8],
     ["myplaceonline.liquid_concentrations.pgml", 11],
     ["myplaceonline.liquid_concentrations.ratio", 2],

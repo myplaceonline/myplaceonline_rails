@@ -1370,6 +1370,7 @@ en:
       ngdl: "ng/dL"
       ngml: "ng/mL"
       pgml: "pg/mL"
+      number: "Number"
     checklists:
       checklist_name: "Name"
       add: "Add Item"
