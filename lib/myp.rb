@@ -115,48 +115,48 @@ module Myp
     ["myplaceonline.period_types.nth_sunday", 9]
   ]
 
-  REPEAT_TYPE_SECONDS = 1
-  REPEAT_TYPE_MINUTES = 2
-  REPEAT_TYPE_HOURS = 4
-  REPEAT_TYPE_DAYS = 8
-  REPEAT_TYPE_WEEKS = 16
-  REPEAT_TYPE_MONTHS = 32
-  REPEAT_TYPE_YEARS = 64
-  REPEAT_TYPE_NTH_MONDAY = 128
-  REPEAT_TYPE_NTH_TUESDAY = 256
-  REPEAT_TYPE_NTH_WEDNESDAY = 512
-  REPEAT_TYPE_NTH_THURSDAY = 1024
-  REPEAT_TYPE_NTH_FRIDAY = 2048
-  REPEAT_TYPE_NTH_SATURDAY = 4096
-  REPEAT_TYPE_NTH_SUNDAY = 8192
-  REPEAT_TYPE_6MONTHS = 16384
+  TIME_DURATION_SECONDS = 1
+  TIME_DURATION_MINUTES = 2
+  TIME_DURATION_HOURS = 4
+  TIME_DURATION_DAYS = 8
+  TIME_DURATION_WEEKS = 16
+  TIME_DURATION_MONTHS = 32
+  TIME_DURATION_YEARS = 64
+  TIME_DURATION_NTH_MONDAY = 128
+  TIME_DURATION_NTH_TUESDAY = 256
+  TIME_DURATION_NTH_WEDNESDAY = 512
+  TIME_DURATION_NTH_THURSDAY = 1024
+  TIME_DURATION_NTH_FRIDAY = 2048
+  TIME_DURATION_NTH_SATURDAY = 4096
+  TIME_DURATION_NTH_SUNDAY = 8192
+  TIME_DURATION_6MONTHS = 16384
   
   def self.period_type_to_repeat_type(period_type)
     case period_type
     when nil
       nil
     when 0
-      Myp::REPEAT_TYPE_DAYS
+      Myp::TIME_DURATION_DAYS
     when 1
-      Myp::REPEAT_TYPE_WEEKS
+      Myp::TIME_DURATION_WEEKS
     when 2
-      Myp::REPEAT_TYPE_MONTHS
+      Myp::TIME_DURATION_MONTHS
     when 10
-      Myp::REPEAT_TYPE_YEARS
+      Myp::TIME_DURATION_YEARS
     when 3
-      Myp::REPEAT_TYPE_NTH_MONDAY
+      Myp::TIME_DURATION_NTH_MONDAY
     when 4
-      Myp::REPEAT_TYPE_NTH_TUESDAY
+      Myp::TIME_DURATION_NTH_TUESDAY
     when 5
-      Myp::REPEAT_TYPE_NTH_WEDNESDAY
+      Myp::TIME_DURATION_NTH_WEDNESDAY
     when 6
-      Myp::REPEAT_TYPE_NTH_THURSDAY
+      Myp::TIME_DURATION_NTH_THURSDAY
     when 7
-      Myp::REPEAT_TYPE_NTH_FRIDAY
+      Myp::TIME_DURATION_NTH_FRIDAY
     when 8
-      Myp::REPEAT_TYPE_NTH_SATURDAY
+      Myp::TIME_DURATION_NTH_SATURDAY
     when 9
-      Myp::REPEAT_TYPE_NTH_SUNDAY
+      Myp::TIME_DURATION_NTH_SUNDAY
     else
       raise "TODO"
     end
@@ -166,27 +166,27 @@ module Myp
     case repeat_type
     when nil
       nil
-    when Myp::REPEAT_TYPE_DAYS
+    when Myp::TIME_DURATION_DAYS
       0
-    when Myp::REPEAT_TYPE_WEEKS
+    when Myp::TIME_DURATION_WEEKS
       1
-    when Myp::REPEAT_TYPE_MONTHS
+    when Myp::TIME_DURATION_MONTHS
       2
-    when Myp::REPEAT_TYPE_YEARS
+    when Myp::TIME_DURATION_YEARS
       10
-    when Myp::REPEAT_TYPE_NTH_MONDAY
+    when Myp::TIME_DURATION_NTH_MONDAY
       3
-    when Myp::REPEAT_TYPE_NTH_TUESDAY
+    when Myp::TIME_DURATION_NTH_TUESDAY
       4
-    when Myp::REPEAT_TYPE_NTH_WEDNESDAY
+    when Myp::TIME_DURATION_NTH_WEDNESDAY
       5
-    when Myp::REPEAT_TYPE_NTH_THURSDAY
+    when Myp::TIME_DURATION_NTH_THURSDAY
       6
-    when Myp::REPEAT_TYPE_NTH_FRIDAY
+    when Myp::TIME_DURATION_NTH_FRIDAY
       7
-    when Myp::REPEAT_TYPE_NTH_SATURDAY
+    when Myp::TIME_DURATION_NTH_SATURDAY
       8
-    when Myp::REPEAT_TYPE_NTH_SUNDAY
+    when Myp::TIME_DURATION_NTH_SUNDAY
       9
     else
       raise "TODO"
@@ -197,19 +197,19 @@ module Myp
     case repeat_type
     when nil
       nil
-    when Myp::REPEAT_TYPE_NTH_SUNDAY
+    when Myp::TIME_DURATION_NTH_SUNDAY
       0
-    when Myp::REPEAT_TYPE_NTH_MONDAY
+    when Myp::TIME_DURATION_NTH_MONDAY
       1
-    when Myp::REPEAT_TYPE_NTH_TUESDAY
+    when Myp::TIME_DURATION_NTH_TUESDAY
       2
-    when Myp::REPEAT_TYPE_NTH_WEDNESDAY
+    when Myp::TIME_DURATION_NTH_WEDNESDAY
       3
-    when Myp::REPEAT_TYPE_NTH_THURSDAY
+    when Myp::TIME_DURATION_NTH_THURSDAY
       4
-    when Myp::REPEAT_TYPE_NTH_FRIDAY
+    when Myp::TIME_DURATION_NTH_FRIDAY
       5
-    when Myp::REPEAT_TYPE_NTH_SATURDAY
+    when Myp::TIME_DURATION_NTH_SATURDAY
       6
     else
       raise "TODO"
@@ -242,11 +242,11 @@ module Myp
     when nil
       nil
     when 0
-      Myp::REPEAT_TYPE_MONTHS
+      Myp::TIME_DURATION_MONTHS
     when 1
-      Myp::REPEAT_TYPE_YEARS
+      Myp::TIME_DURATION_YEARS
     when 2
-      Myp::REPEAT_TYPE_6MONTHS
+      Myp::TIME_DURATION_6MONTHS
     else
       raise "TODO"
     end
@@ -256,11 +256,11 @@ module Myp
     case repeat_type
     when nil
       nil
-    when Myp::REPEAT_TYPE_MONTHS
+    when Myp::TIME_DURATION_MONTHS
       0
-    when Myp::REPEAT_TYPE_YEARS
+    when Myp::TIME_DURATION_YEARS
       1
-    when Myp::REPEAT_TYPE_6MONTHS
+    when Myp::TIME_DURATION_6MONTHS
       2
     else
       raise "TODO"

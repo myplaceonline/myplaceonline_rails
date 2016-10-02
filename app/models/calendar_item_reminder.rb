@@ -80,25 +80,25 @@ class CalendarItemReminder < ActiveRecord::Base
           Rails.logger.debug{"loop processing #{timesource.inspect}"}
           
           new_time = case calendar_item.repeat_type
-            when Myp::REPEAT_TYPE_SECONDS
+            when Myp::TIME_DURATION_SECONDS
               timesource + calendar_item.repeat_amount.seconds
-            when Myp::REPEAT_TYPE_MINUTES
+            when Myp::TIME_DURATION_MINUTES
               timesource + calendar_item.repeat_amount.minutes
-            when Myp::REPEAT_TYPE_HOURS
+            when Myp::TIME_DURATION_HOURS
               timesource + calendar_item.repeat_amount.hours
-            when Myp::REPEAT_TYPE_DAYS
+            when Myp::TIME_DURATION_DAYS
               timesource + calendar_item.repeat_amount.days
-            when Myp::REPEAT_TYPE_WEEKS
+            when Myp::TIME_DURATION_WEEKS
               timesource + calendar_item.repeat_amount.weeks
-            when Myp::REPEAT_TYPE_MONTHS
+            when Myp::TIME_DURATION_MONTHS
               timesource + calendar_item.repeat_amount.months
-            when Myp::REPEAT_TYPE_YEARS
+            when Myp::TIME_DURATION_YEARS
               timesource + calendar_item.repeat_amount.years
-            when Myp::REPEAT_TYPE_6MONTHS
+            when Myp::TIME_DURATION_6MONTHS
               timesource + (calendar_item.repeat_amount * 6).months
-            when Myp::REPEAT_TYPE_YEARS
+            when Myp::TIME_DURATION_YEARS
               timesource + calendar_item.repeat_amount.years
-            when Myp::REPEAT_TYPE_NTH_MONDAY, Myp::REPEAT_TYPE_NTH_TUESDAY, Myp::REPEAT_TYPE_NTH_WEDNESDAY, Myp::REPEAT_TYPE_NTH_THURSDAY, Myp::REPEAT_TYPE_NTH_FRIDAY, Myp::REPEAT_TYPE_NTH_SATURDAY, Myp::REPEAT_TYPE_NTH_SUNDAY
+            when Myp::TIME_DURATION_NTH_MONDAY, Myp::TIME_DURATION_NTH_TUESDAY, Myp::TIME_DURATION_NTH_WEDNESDAY, Myp::TIME_DURATION_NTH_THURSDAY, Myp::TIME_DURATION_NTH_FRIDAY, Myp::TIME_DURATION_NTH_SATURDAY, Myp::TIME_DURATION_NTH_SUNDAY
               wday = Myp.repeat_type_nth_to_wday(calendar_item.repeat_type)
               x = Myp.find_nth_weekday(timesource.year, timesource.month, wday, calendar_item.repeat_amount)
               if x.nil? || x <= timesource
@@ -244,6 +244,12 @@ class CalendarItemReminder < ActiveRecord::Base
           calendar_item_reminder.calendar_item_reminder_pendings.each do |calendar_item_reminder_pending|
             calendar_item_reminder_pending.destroy!
           end
+          
+          # The model might want a callback on expiration
+          calendar_item_object = calendar_item_reminder.calendar_item.find_model_object
+          if !calendar_item_object.nil? && calendar_item_object.respond_to?("handle_expired_reminder")
+            calendar_item_object.handle_expired_reminder
+          end
         end
         
         Rails.logger.debug{"finshed checking reminder"}
@@ -324,9 +330,11 @@ class CalendarItemReminder < ActiveRecord::Base
   end
   
   def threshold_in_seconds
-    if threshold_type.nil? || threshold_amount.nil?
+    if threshold_amount.nil?
       0
-    elsif threshold_type == Myp::REPEAT_TYPE_SECONDS
+    elsif threshold_type.nil? # assume seconds
+      threshold_amount
+    elsif threshold_type == Myp::TIME_DURATION_SECONDS
       threshold_amount
     else
       raise "TODO"
@@ -334,9 +342,11 @@ class CalendarItemReminder < ActiveRecord::Base
   end
   
   def expires_in_seconds
-    if expire_amount.nil? || expire_type.nil?
+    if expire_amount.nil?
       0
-    elsif expire_type == Myp::REPEAT_TYPE_SECONDS
+    elsif expire_type.nil? # assume seconds
+      expire_amount
+    elsif expire_type == Myp::TIME_DURATION_SECONDS
       expire_amount
     else
       raise "TODO"

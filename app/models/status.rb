@@ -62,38 +62,47 @@ class Status < ActiveRecord::Base
   
   def on_after_save
     if MyplaceonlineExecutionContext.handle_updates?
-      last_status = Status.last_status(
-        User.current_user.primary_identity
-      )
+      reset_calendar_reminder
+    end
+  end
+  
+  def reset_calendar_reminder
+    last_status = Status.last_status(
+      User.current_user.primary_identity
+    )
 
-      if !last_status.nil?
-        ActiveRecord::Base.transaction do
-          CalendarItem.destroy_calendar_items(
-            User.current_user.primary_identity,
-            Status
-          )
+    if !last_status.nil?
+      ActiveRecord::Base.transaction do
+        CalendarItem.destroy_calendar_items(
+          User.current_user.primary_identity,
+          Status
+        )
+        
+        User.current_user.primary_identity.calendars.each do |calendar|
+          # Schedule the next status for the next day, minus the threshold from the end of the day (by default, right before bed)
+          new_time = Myp.date_max(
+            User.current_user.in_time_zone(last_status.status_time),
+            User.current_user.time_now
+          ) + 1.day
+          new_time = User.current_user.in_time_zone(new_time.to_date, end_of_day: true) + 1.second
+          new_time -= (calendar.status_threshold_seconds || DEFAULT_STATUS_THRESHOLD_SECONDS).seconds
           
-          User.current_user.primary_identity.calendars.each do |calendar|
-            # Schedule the next status for the next day, minus the threshold from the end of the day (by default, right before bed)
-            new_time = Myp.date_max(
-              User.current_user.in_time_zone(last_status.status_time),
-              User.current_user.time_now
-            ) + 1.day
-            new_time = User.current_user.in_time_zone(new_time.to_date, end_of_day: true) + 1.second
-            new_time -= (calendar.status_threshold_seconds || DEFAULT_STATUS_THRESHOLD_SECONDS).seconds
-            
-            CalendarItem.create_calendar_item(
-              identity: User.current_user.primary_identity,
-              calendar: calendar,
-              model: Status,
-              calendar_item_time: new_time,
-              reminder_threshold_amount: 0,
-              reminder_threshold_type: Myp::REPEAT_TYPE_SECONDS
-            )
-          end
+          CalendarItem.create_calendar_item(
+            identity: User.current_user.primary_identity,
+            calendar: calendar,
+            model: Status,
+            calendar_item_time: new_time,
+            reminder_threshold_amount: 0,
+            reminder_threshold_type: Myp::TIME_DURATION_SECONDS,
+            expire_amount: 1.day.seconds
+          )
         end
       end
     end
+  end
+  
+  def handle_expired_reminder
+    reset_calendar_reminder
   end
   
   after_commit :on_after_destroy, on: :destroy

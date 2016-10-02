@@ -446,7 +446,7 @@ class Identity < ActiveRecord::Base
               reminder_threshold_type: Calendar::DEFAULT_REMINDER_TYPE,
               model_id: id,
               repeat_amount: 1,
-              repeat_type: Myp::REPEAT_TYPE_YEARS,
+              repeat_type: Myp::TIME_DURATION_YEARS,
               context_info: Identity::CALENDAR_ITEM_CONTEXT_BIRTHDAY
             )
           end

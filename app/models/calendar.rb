@@ -2,7 +2,7 @@ class Calendar < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
   include TimespanConcern
   
-  DEFAULT_REMINDER_TYPE = Myp::REPEAT_TYPE_SECONDS
+  DEFAULT_REMINDER_TYPE = Myp::TIME_DURATION_SECONDS
   DEFAULT_REMINDER_AMOUNT = 2.days
   
   has_many :calendar_items, :dependent => :destroy
@@ -135,7 +135,7 @@ class Calendar < ActiveRecord::Base
   
   def self.amount_to_seconds(amount, amount_type)
     case amount_type
-    when Myp::REPEAT_TYPE_SECONDS
+    when Myp::TIME_DURATION_SECONDS
       amount
     else
       raise "TODO"

@@ -34,7 +34,7 @@ class HappyThing < ActiveRecord::Base
             Calendar::DEFAULT_REMINDER_TYPE,
             model_id: id,
             repeat_amount: (calendar.happy_things_threshold_seconds || DEFAULT_HAPPY_THINGS_THRESHOLD).seconds,
-            repeat_type: Myp::REPEAT_TYPE_SECONDS,
+            repeat_type: Myp::TIME_DURATION_SECONDS,
             max_pending: 1
           )
         end
