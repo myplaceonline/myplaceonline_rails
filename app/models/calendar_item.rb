@@ -137,12 +137,12 @@ class CalendarItem < ActiveRecord::Base
   #              and the next week comes around, then the previous reminders
   #              are deleted.
   def self.create_calendar_item(
-    identity,
-    calendar,
-    model,
-    calendar_item_time,
-    reminder_threshold_amount,
-    reminder_threshold_type,
+    identity:,
+    calendar:,
+    model:,
+    calendar_item_time:,
+    reminder_threshold_amount:,
+    reminder_threshold_type:,
     model_id: nil,
     expire_amount: nil,
     expire_type: nil,

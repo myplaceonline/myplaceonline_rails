@@ -1,7 +1,7 @@
 class Status < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
 
-  DEFAULT_STATUS_THRESHOLD_SECONDS = 16.hours
+  DEFAULT_STATUS_THRESHOLD_SECONDS = 4.hours
 
   FEELINGS = [
     ["myplaceonline.statuses.feeling_accomplished", 24],
@@ -54,10 +54,7 @@ class Status < ActiveRecord::Base
     if calendar_item.calendar_item_time.nil?
       I18n.t("myplaceonline.statuses.no_statuses")
     else
-      I18n.t(
-        "myplaceonline.statuses.no_recent_status",
-        delta: Myp.time_delta(calendar_item.calendar_item_time)
-      )
+      I18n.t("myplaceonline.statuses.no_recent_status")
     end
   end
   
@@ -75,15 +72,23 @@ class Status < ActiveRecord::Base
             User.current_user.primary_identity,
             Status
           )
-
+          
           User.current_user.primary_identity.calendars.each do |calendar|
+            # Schedule the next status for the next day, minus the threshold from the end of the day (by default, right before bed)
+            new_time = Myp.date_max(
+              User.current_user.in_time_zone(last_status.status_time),
+              User.current_user.time_now
+            ) + 1.day
+            new_time = User.current_user.in_time_zone(new_time.to_date, end_of_day: true) + 1.second
+            new_time -= (calendar.status_threshold_seconds || DEFAULT_STATUS_THRESHOLD_SECONDS).seconds
+            
             CalendarItem.create_calendar_item(
-              User.current_user.primary_identity,
-              calendar,
-              Status,
-              last_status.status_time + (calendar.status_threshold_seconds || DEFAULT_STATUS_THRESHOLD_SECONDS).seconds,
-              15.minutes.seconds.to_i,
-              Myp::REPEAT_TYPE_SECONDS
+              identity: User.current_user.primary_identity,
+              calendar: calendar,
+              model: Status,
+              calendar_item_time: new_time,
+              reminder_threshold_amount: 0,
+              reminder_threshold_type: Myp::REPEAT_TYPE_SECONDS
             )
           end
         end

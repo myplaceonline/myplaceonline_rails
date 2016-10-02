@@ -61,12 +61,12 @@ class DoctorVisit < ActiveRecord::Base
 
           User.current_user.primary_identity.calendars.each do |calendar|
             CalendarItem.create_calendar_item(
-              User.current_user.primary_identity,
-              calendar,
-              DoctorVisit,
-              last_physical.visit_date + (calendar.doctor_visit_threshold_seconds || DEFAULT_DOCTOR_VISIT_THRESHOLD_SECONDS).seconds,
-              Calendar::DEFAULT_REMINDER_AMOUNT,
-              Calendar::DEFAULT_REMINDER_TYPE
+              identity: User.current_user.primary_identity,
+              calendar: calendar,
+              model: DoctorVisit,
+              calendar_item_time: last_physical.visit_date + (calendar.doctor_visit_threshold_seconds || DEFAULT_DOCTOR_VISIT_THRESHOLD_SECONDS).seconds,
+              reminder_threshold_amount: Calendar::DEFAULT_REMINDER_AMOUNT,
+              reminder_threshold_type: Calendar::DEFAULT_REMINDER_TYPE
             )
           end
         end

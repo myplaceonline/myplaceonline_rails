@@ -1868,7 +1868,7 @@ en:
     statuses:
       status_time: "Time"
       three_good_things: "Notes"
-      no_recent_status: "Three Good Things Last Entered %{delta}"
+      no_recent_status: "Enter Three Good Things Today"
       no_statuses: "Enter Three Good Things Today"
       status1: "First Good Thing"
       status2: "Second Good Thing"

@@ -36,12 +36,12 @@ class IdentityDriversLicense < ActiveRecord::Base
           CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
           User.current_user.primary_identity.calendars.each do |calendar|
             CalendarItem.create_calendar_item(
-              User.current_user.primary_identity,
-              calendar,
-              self.class,
-              expires,
-              (calendar.drivers_license_expiration_threshold_seconds || DEFAULT_DRIVERS_LICENSE_EXPIRATION_THRESHOLD_SECONDS),
-              Calendar::DEFAULT_REMINDER_TYPE,
+              identity: User.current_user.primary_identity,
+              calendar: calendar,
+              model: self.class,
+              calendar_item_time: expires,
+              reminder_threshold_amount: (calendar.drivers_license_expiration_threshold_seconds || DEFAULT_DRIVERS_LICENSE_EXPIRATION_THRESHOLD_SECONDS),
+              reminder_threshold_type: Calendar::DEFAULT_REMINDER_TYPE,
               model_id: id
             )
           end

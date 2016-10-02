@@ -67,12 +67,12 @@ class Event < ActiveRecord::Base
         ActiveRecord::Base.transaction do
           User.current_user.primary_identity.calendars.each do |calendar|
             CalendarItem.create_calendar_item(
-              User.current_user.primary_identity,
-              calendar,
-              self.class,
-              event_time,
-              (calendar.event_threshold_seconds || DEFAULT_EVENT_THRESHOLD_SECONDS),
-              Calendar::DEFAULT_REMINDER_TYPE,
+              identity: User.current_user.primary_identity,
+              calendar: calendar,
+              model: self.class,
+              calendar_item_time: event_time,
+              reminder_threshold_amount: (calendar.event_threshold_seconds || DEFAULT_EVENT_THRESHOLD_SECONDS),
+              reminder_threshold_type: Calendar::DEFAULT_REMINDER_TYPE,
               model_id: id,
             )
           end

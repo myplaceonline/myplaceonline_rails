@@ -1915,4 +1915,8 @@ module Myp
       end
     end
   end
+  
+  def self.date_max(x, y)
+    x > y ? x : y
+  end
 end

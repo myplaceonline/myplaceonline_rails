@@ -438,12 +438,12 @@ class Identity < ActiveRecord::Base
           User.current_user.primary_identity.calendars.each do |calendar|
             on_after_destroy
             CalendarItem.create_calendar_item(
-              User.current_user.primary_identity,
-              calendar,
-              self.class,
-              next_birthday,
-              (calendar.birthday_threshold_seconds || DEFAULT_BIRTHDAY_THRESHOLD_SECONDS),
-              Calendar::DEFAULT_REMINDER_TYPE,
+              identity: User.current_user.primary_identity,
+              calendar: calendar,
+              model: self.class,
+              calendar_item_time: next_birthday,
+              reminder_threshold_amount: (calendar.birthday_threshold_seconds || DEFAULT_BIRTHDAY_THRESHOLD_SECONDS),
+              reminder_threshold_type: Calendar::DEFAULT_REMINDER_TYPE,
               model_id: id,
               repeat_amount: 1,
               repeat_type: Myp::REPEAT_TYPE_YEARS,

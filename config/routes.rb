@@ -72,7 +72,7 @@ end
 
 Rails.application.routes.draw do
   
-  puts{"Started loading routes"}
+  Rails.logger.debug{"Started loading routes"}
   
   root "welcome#index"
 
@@ -386,6 +386,6 @@ Rails.application.routes.draw do
   
   mount Ckeditor::Engine => '/ckeditor'
   
-  puts{"Finished loading routes"}
+  Rails.logger.debug{"Finished loading routes"}
   
 end

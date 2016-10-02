@@ -80,12 +80,12 @@ class PeriodicPayment < ActiveRecord::Base
         if !suppress_reminder && !next_payment.nil? && !self.is_archived?
           User.current_user.primary_identity.calendars.each do |calendar|
             CalendarItem.create_calendar_item(
-              User.current_user.primary_identity,
-              calendar,
-              self.class,
-              next_payment,
-              (calendar.periodic_payment_before_threshold_seconds || DEFAULT_PERIODIC_PAYMENT_BEFORE_THRESHOLD_SECONDS),
-              Calendar::DEFAULT_REMINDER_TYPE,
+              identity: User.current_user.primary_identity,
+              calendar: calendar,
+              model: self.class,
+              calendar_item_time: next_payment,
+              reminder_threshold_amount: (calendar.periodic_payment_before_threshold_seconds || DEFAULT_PERIODIC_PAYMENT_BEFORE_THRESHOLD_SECONDS),
+              reminder_threshold_type: Calendar::DEFAULT_REMINDER_TYPE,
               model_id: id,
               repeat_amount: 1,
               repeat_type: Myp.period_to_repeat_type(date_period)

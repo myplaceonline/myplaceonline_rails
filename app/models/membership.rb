@@ -36,12 +36,12 @@ class Membership < ActiveRecord::Base
         if !end_date.nil?
           User.current_user.primary_identity.calendars.each do |calendar|
             CalendarItem.create_calendar_item(
-              User.current_user.primary_identity,
-              calendar,
-              self.class,
-              end_date,
-              (calendar.general_threshold_seconds || Calendar::DEFAULT_REMINDER_AMOUNT),
-              Calendar::DEFAULT_REMINDER_TYPE,
+              identity: User.current_user.primary_identity,
+              calendar: calendar,
+              model: self.class,
+              calendar_item_time: end_date,
+              reminder_threshold_amount: (calendar.general_threshold_seconds || Calendar::DEFAULT_REMINDER_AMOUNT),
+              reminder_threshold_type: Calendar::DEFAULT_REMINDER_TYPE,
               model_id: id
             )
           end

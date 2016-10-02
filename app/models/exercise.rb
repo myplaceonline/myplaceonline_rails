@@ -45,12 +45,12 @@ class Exercise < ActiveRecord::Base
 
           User.current_user.primary_identity.calendars.each do |calendar|
             CalendarItem.create_calendar_item(
-              User.current_user.primary_identity,
-              calendar,
-              Exercise,
-              last_exercise.exercise_start + (calendar.exercise_threshold_seconds || DEFAULT_EXERCISE_THRESHOLD_SECONDS).seconds,
-              1.hours,
-              Calendar::DEFAULT_REMINDER_TYPE
+              identity: User.current_user.primary_identity,
+              calendar: calendar,
+              model: Exercise,
+              calendar_item_time: last_exercise.exercise_start + (calendar.exercise_threshold_seconds || DEFAULT_EXERCISE_THRESHOLD_SECONDS).seconds,
+              reminder_threshold_amount: 1.hours,
+              reminder_threshold_type: Calendar::DEFAULT_REMINDER_TYPE
             )
           end
         end

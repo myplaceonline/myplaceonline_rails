@@ -182,12 +182,12 @@ class Contact < ActiveRecord::Base
               else
                 next_conversation = last + contact_threshold.seconds
                 CalendarItem.create_calendar_item(
-                  User.current_user.primary_identity,
-                  calendar,
-                  Contact,
-                  next_conversation,
-                  Calendar::DEFAULT_REMINDER_AMOUNT,
-                  Calendar::DEFAULT_REMINDER_TYPE,
+                  identity: User.current_user.primary_identity,
+                  calendar: calendar,
+                  model: Contact,
+                  calendar_item_time: next_conversation,
+                  reminder_threshold_amount: Calendar::DEFAULT_REMINDER_AMOUNT,
+                  reminder_threshold_type: Calendar::DEFAULT_REMINDER_TYPE,
                   model_id: id,
                   context_info: Conversation::CALENDAR_ITEM_CONTEXT_CONVERSATION
                 )
