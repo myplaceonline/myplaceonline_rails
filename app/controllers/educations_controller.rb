@@ -28,7 +28,8 @@ class EducationsController < MyplaceonlineController
         :degree_name,
         :gpa,
         :notes,
-        location_attributes: LocationsController.param_names
+        location_attributes: LocationsController.param_names,
+        education_files_attributes: FilesController.multi_param_names
       )
     end
 end

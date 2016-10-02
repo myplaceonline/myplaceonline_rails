@@ -2798,3 +2798,8 @@ en:
       degree_name: "Degree Name"
       gpa: "Score or Grade Point Average (GPA)"
       location: "Location"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"

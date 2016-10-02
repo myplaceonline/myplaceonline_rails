@@ -18,3 +18,16 @@
     collapsed: obj.location.nil?
   }
 %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :education_files,
+    item_placeholder: "myplaceonline.educations.file",
+    heading: "myplaceonline.educations.files",
+    addbutton: "myplaceonline.educations.add_file",
+    addbutton_multi: "myplaceonline.educations.add_files",
+    deletebutton: "myplaceonline.educations.delete_file"
+  }
+%>
