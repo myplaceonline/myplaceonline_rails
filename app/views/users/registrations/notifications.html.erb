@@ -1,0 +1,16 @@
+<% content_for :heading do -%><%= t("myplaceonline.users.notifications") %><% end -%>
+<h1><%= t("myplaceonline.users.notifications") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag do %>
+  <%= myp_text_field_tag(:mobile, I18n.t("myplaceonline.users.notifications_mobile"), @mobile, true) %>
+
+  <div><%= submit_tag t("myplaceonline.general.save") %></div>
+<% end %>
+
+<script type="text/javascript">
+myplaceonline.onPageLoad(function() {
+  myplaceonline.maybeFocus(".autofocus");
+});
+</script>

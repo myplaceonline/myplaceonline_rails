@@ -1,10 +1,10 @@
 <% if !@myplet %>
 <% else %>
-<% if @calendar_item_reminder_pendings.length > 0 %>
-  
-  <% popupid = "due" + request.uuid.to_s + "_" + obj.id.to_s %>
+  <% if @calendar_item_reminder_pendings.length > 0 %>
+    
+    <% popupid = "due" + request.uuid.to_s + "_" + obj.id.to_s %>
 
-  <script type="text/javascript">
+    <script type="text/javascript">
       function due_item_popup(source, title, complete_link, snooze_link) {
         var p = $("#<%= popupid %>");
         p.popup("open");
@@ -55,9 +55,9 @@
         completeButton.focus();
         return false;
       }
-  </script>
+    </script>
 
-  <ul data-role="listview" data-inset="true" data-split-icon="gear">
+    <ul data-role="listview" data-inset="true" data-split-icon="gear">
       <% @calendar_item_reminder_pendings.each do |calendar_item_reminder_pending| %>
         <li>
           <% if calendar_item_reminder_pending.calendar_item.calendar_item_time.nil? %>
@@ -68,10 +68,10 @@
           <a href="#" onclick="return due_item_popup(this, '<%= calendar_item_reminder_pending.calendar_item.display.gsub("'", "") %>', '<%= calendar_item_reminder_pending_complete_path(calendar_item_reminder_pending) %>', '<%= calendar_item_reminder_pending_snooze_path(calendar_item_reminder_pending) %>');"><%= calendar_item_reminder_pending.calendar_item.display %></a>
         </li>
       <% end %>
-  </ul>
-    
-  <%# min-width for the done and snooze buttons to not show ellipses %>
-  <div data-role="popup" id="<%= popupid %>" class="ui-content" data-history="false" style="min-width: 350px;">
+    </ul>
+      
+    <%# min-width for the done and snooze buttons to not show ellipses %>
+    <div data-role="popup" id="<%= popupid %>" class="ui-content" data-history="false" style="min-width: 350px;">
       <a href="#" data-rel="back" data-role="button" data-icon="delete" data-iconpos="notext" class="ui-btn-right"><%= t("myplaceonline.general.close") %></a>
       <h3 id="<%= popupid %>_title">Title</h3>
       <a id="<%= popupid %>_complete" href="#" data-role="button" data-icon="check"><%= t("myplaceonline.due_items.complete") %></a>
@@ -82,7 +82,22 @@
         </div>
         <a id="<%= popupid %>_snooze" href="#" data-role="button" data-icon="clock"><%= t("myplaceonline.due_items.snooze") %></a>
       </div>
-  </div>
+    </div>
+    
+    <% if !current_user.suppresses(User::SUPPRESSION_MOBILE) && @mobile_number.blank? %>
+      <hr />
+      <p style="margin-top: 15px; margin-bottom: 0;"><%= t("myplaceonline.calendars.notifications_mobile_info") %></p>
+      <%= form_tag(users_notifications_path, method: :get) do %>
+        <div class="ui-grid-a ui-responsive">
+          <div class="ui-block-a">
+            <%= myp_text_field_tag(:mobile, nil, @mobile_number, false, "ui-mini horizontalpad10px", wrapper_classes: "horizontalpad10px", force_label_hidden: true) %>
+          </div>
+          <div class="ui-block-b">
+            <%= submit_tag(t("myplaceonline.calendars.save_mobile"), "data-icon" => "check", "data-mini" => "true", "class" => "ui-btn") %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
 
-<% end %>
+  <% end %>
 <% end %>

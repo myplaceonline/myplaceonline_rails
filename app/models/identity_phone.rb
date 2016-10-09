@@ -1,11 +1,16 @@
 class IdentityPhone < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
+  
+  PHONE_TYPE_CELL = 0
+  PHONE_TYPE_HOME = 1
+  PHONE_TYPE_TEMPORARY = 2
+  PHONE_TYPE_WORK = 3
 
   PHONE_TYPES = [
-    ["myplaceonline.identity_phones.cell", 0],
-    ["myplaceonline.identity_phones.home", 1],
-    ["myplaceonline.identity_phones.work", 3],
-    ["myplaceonline.identity_phones.temporary", 2]
+    ["myplaceonline.identity_phones.cell", PHONE_TYPE_CELL],
+    ["myplaceonline.identity_phones.home", PHONE_TYPE_HOME],
+    ["myplaceonline.identity_phones.work", PHONE_TYPE_WORK],
+    ["myplaceonline.identity_phones.temporary", PHONE_TYPE_TEMPORARY]
   ]
   
   belongs_to :parent_identity, class_name: Identity

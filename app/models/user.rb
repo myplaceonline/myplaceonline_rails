@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
     ["myplaceonline.users.top_left_icon_back", 1]
   ]
   
+  SUPPRESSION_MOBILE = 1
+  
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -155,6 +157,10 @@ class User < ActiveRecord::Base
         Myp.send_sms(to: identity_phone.number, body: body)
       end
     end
+  end
+  
+  def suppresses(which)
+    !self.suppressions.nil? && (self.suppressions & which) != 0
   end
 
   protected

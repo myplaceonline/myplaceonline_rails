@@ -608,6 +608,7 @@ en:
       sendreset: "Send reset password instructions"
       settings: "Settings"
       changepassword: "Change Password"
+      notifications: "Notifications"
       delete: "Delete Account"
       deletedetails: "Are you sure you want to permanently delete your account?"
       changeemail: "Change Email"
@@ -676,6 +677,8 @@ en:
       most_visited_categories: "Most Visited Categories on Homepage (Max %{max})"
       most_visited_items: "Most Visited Items on Homepage (Max %{max})"
       minimize_password_checks: "Minimize Password Checks"
+      notifications_mobile: "Mobile Phone Number for Notifications"
+      notifications_saved: "Notification Settings Saved"
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"
@@ -2185,6 +2188,8 @@ en:
       vehicle_service_threshold: "Vehicle Service"
       happy_things_threshold: "Happy Things Period"
       website_domain_registration_threshold: "Website Domain Registration"
+      notifications_mobile_info: "Enter your mobile phone number for text reminders:"
+      save_mobile: "Save Mobile Number"
     movie_theaters:
       location: "Location"
     gas_stations:

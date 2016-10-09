@@ -19,7 +19,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   prepend_before_filter :authenticate_scope!, only: [
     :edit, :update, :destroy, :changepassword, :changeemail, :resetpoints,
     :advanced, :deletecategory, :security, :export, :appearance, :clipboard,
-    :homepage, :diagnostics
+    :homepage, :diagnostics, :notifications
   ]
   
   before_filter :configure_permitted_parameters
@@ -295,6 +295,38 @@ class Users::RegistrationsController < Devise::RegistrationsController
         :flash => { :notice => I18n.t("myplaceonline.users.appearance_saved") }
     else
       render :appearance
+    end
+  end
+  
+  def notifications
+    check_password
+    @mobile = current_user.primary_identity.first_mobile_number
+    if !@mobile.nil?
+      @mobile = @mobile.number
+    end
+    @original_mobile = @mobile
+    if !params[:commit].blank? || !params[:mobile].blank?
+      @mobile = params[:mobile]
+      if !@mobile.blank?
+        if @original_mobile.blank?
+          current_user.primary_identity.identity_phones << IdentityPhone.new(
+            number: @mobile,
+            phone_type: IdentityPhone::PHONE_TYPE_CELL,
+            parent_identity: current_user.primary_identity
+          )
+        else
+          identity_phone = current_user.primary_identity.identity_phones[current_user.primary_identity.identity_phones.index{|x| x.number == @original_mobile}]
+          identity_phone.number = @mobile
+        end
+      else
+        identity_phone = current_user.primary_identity.identity_phones[current_user.primary_identity.identity_phones.index{|x| x.number == @original_mobile}]
+        current_user.primary_identity.identity_phones.delete(identity_phone)
+      end
+      current_user.primary_identity.save!
+      redirect_to users_notifications_path,
+        :flash => { :notice => I18n.t("myplaceonline.users.notifications_saved") }
+    else
+      render :notifications
     end
   end
   

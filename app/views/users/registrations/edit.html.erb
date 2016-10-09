@@ -27,6 +27,12 @@
     <% end %>
   </li>
   <li>
+    <%= link_to users_notifications_path do %>
+      <%= image_tag("FatCow_Icons16x16/phone.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.users.notifications") %>
+    <% end %>
+  </li>
+  <li>
     <%= link_to users_appearance_path do %>
       <%= image_tag("FatCow_Icons16x16/image_edit.png", size: "16x16", class: "ui-li-icon") %>
       <%= t("myplaceonline.users.appearance") %>

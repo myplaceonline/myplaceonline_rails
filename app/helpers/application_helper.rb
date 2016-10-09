@@ -557,8 +557,8 @@ module ApplicationHelper
   end
   
   # We only want to show the label if `value` is blank.
-  def myp_label_classes(value)
-    is_blank(value, false) ? "ui-hidden-accessible" : "form_field_label"
+  def myp_label_classes(value, force_hidden: false)
+    force_hidden || is_blank(value, false) ? "ui-hidden-accessible" : "form_field_label"
   end
   
   def myp_field_classes(autofocus, input_classes)
@@ -671,14 +671,15 @@ module ApplicationHelper
     myp_number_field(form, name, placeholder, value, autofocus, input_classes)
   end
   
-  def myp_text_field_tag(name, placeholder, value, autofocus = false, input_classes = nil)
+  def myp_text_field_tag(name, placeholder, value, autofocus = false, input_classes = nil, wrapper_classes: nil, force_label_hidden: false)
     if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)
     end
     content_tag(
       :p,
-      label_tag(name, placeholder, class: myp_label_classes(value)) +
-      text_field_tag(name, value, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes))
+      label_tag(name, placeholder, class: myp_label_classes(value, force_hidden: force_label_hidden)) +
+      text_field_tag(name, value, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes)),
+      class: wrapper_classes
     ).html_safe
   end
   

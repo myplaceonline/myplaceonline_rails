@@ -178,3 +178,8 @@ div.ui-checkbox + label {
 img.fit {
   max-width: 100%;
 }
+
+.horizontalpad10px {
+  padding-left: 10px;
+  padding-right: 10px;
+}

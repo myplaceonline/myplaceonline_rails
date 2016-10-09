@@ -3,6 +3,13 @@ class CalendarsController < MyplaceonlineController
     @calendar_item_reminder_pendings = CalendarItemReminderPending.pending_items(current_user, @obj)
     if @calendar_item_reminder_pendings.length == 0
       @nocontent = true
+    else
+      if !current_user.suppresses(User::SUPPRESSION_MOBILE)
+        @mobile_number = current_user.primary_identity.first_mobile_number
+        if !@mobile_number.nil?
+          @mobile_number = @mobile_number.number
+        end
+      end
     end
   end
   

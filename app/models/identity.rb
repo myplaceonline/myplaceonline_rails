@@ -190,6 +190,14 @@ class Identity < ActiveRecord::Base
     identity_phones.to_a.map{|ip| ip.number }
   end
   
+  def first_mobile_number
+    result = identity_phones.index{|x| x.accepts_sms? }
+    if !result.nil?
+      result = identity_phones[result]
+    end
+    result
+  end
+  
   has_many :identity_locations, :foreign_key => 'parent_identity_id', :dependent => :destroy
   accepts_nested_attributes_for :identity_locations, allow_destroy: true, reject_if: :all_blank
   
@@ -476,5 +484,9 @@ class Identity < ActiveRecord::Base
   
   def final_search_result_display?
     false
+  end
+
+  def has_mobile?
+    identity_phones.any?{|identity_phone| identity_phone.accepts_sms?}
   end
 end
