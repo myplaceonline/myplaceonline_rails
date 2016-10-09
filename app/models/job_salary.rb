@@ -14,4 +14,40 @@ class JobSalary < ActiveRecord::Base
     end
     result
   end
+  
+  def yearly_salary
+    result = nil
+    if !self.salary_period.nil?
+      if self.salary_period == 0
+        result = self.salary * 12
+      else
+        raise "TODO"
+      end
+    end
+    result
+  end
+  
+  def yearly_hourly
+    result = nil
+    if !self.salary_period.nil?
+      if self.salary_period == 0
+        # Average number of weeks in a month
+        anwm = 52.0 / 12.0
+        
+        # Average days worked per week
+        adwpw = 5.0
+        
+        # Average number of hours per day
+        anhpd = 8.0
+        
+        # Average number of hours per month
+        anhpm = anhpd * adwpw * anwm
+        
+        result = self.salary / anhpm
+      else
+        raise "TODO"
+      end
+    end
+    result
+  end
 end

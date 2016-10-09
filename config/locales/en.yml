@@ -1514,6 +1514,7 @@ en:
       salary: "Salary"
       salary_period: "Salary Period"
       salary_yearly: "Yearly Salary (Pre-Tax)"
+      salary_hourly: "Hourly Salary (Pre-Tax)"
       new_title: "New Title"
     job_reviews:
       review_date: "Evaluation Date"
