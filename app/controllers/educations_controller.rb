@@ -1,4 +1,9 @@
 class EducationsController < MyplaceonlineController
+  def index
+    @graduated = param_bool(:graduated)
+    super
+  end
+  
   def may_upload
     true
   end
@@ -11,6 +16,16 @@ class EducationsController < MyplaceonlineController
     Myp.display_date_month_year(obj.education_end, User.current_user)
   end
     
+  def index_filters
+    super +
+    [
+      {
+        :name => :graduated,
+        :display => "myplaceonline.educations.graduated"
+      }
+    ]
+  end
+  
   protected
     def insecure
       true
@@ -34,5 +49,16 @@ class EducationsController < MyplaceonlineController
         location_attributes: LocationsController.param_names,
         education_files_attributes: FilesController.multi_param_names
       )
+    end
+
+    def all_additional_sql(strict)
+      result = super(strict)
+      if !strict && @graduated
+        if result.nil?
+          result = ""
+        end
+        result += " and #{model.table_name}.graduated is not null"
+      end
+      result
     end
 end
