@@ -36,7 +36,7 @@ class MoneyBalanceItemTemplatesController < MyplaceonlineController
   def split_link(obj)
     ActionController::Base.helpers.link_to(
       I18n.t("myplaceonline.money_balance_item_templates.apply"),
-      money_balances_add_path(
+      money_balance_add_path(
                               obj.money_balance,
                               owner_paid: do_calculate_owner_paid(obj) ? "true" : "false",
                               amount: obj.amount.abs,
@@ -84,7 +84,7 @@ class MoneyBalanceItemTemplatesController < MyplaceonlineController
       },
       {
         title: I18n.t('myplaceonline.money_balance_item_templates.apply'),
-        link: money_balances_add_path(@obj.money_balance, owner_paid: self.do_calculate_owner_paid(@obj) ? "true" : "false", amount: @obj.amount.abs, original_amount: @obj.amount.abs, percent_default: 1.0, description: @obj.money_balance_item_name),
+        link: money_balance_add_path(@obj.money_balance, owner_paid: self.do_calculate_owner_paid(@obj) ? "true" : "false", amount: @obj.amount.abs, original_amount: @obj.amount.abs, percent_default: 1.0, description: @obj.money_balance_item_name),
         icon: "check"
       }
     ]
