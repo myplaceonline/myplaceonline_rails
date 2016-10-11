@@ -26,6 +26,7 @@ class EducationsController < MyplaceonlineController
         :education_start,
         :education_end,
         :degree_name,
+        :degree_type,
         :gpa,
         :notes,
         location_attributes: LocationsController.param_names,

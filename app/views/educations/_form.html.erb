@@ -1,6 +1,7 @@
 <%= myp_text_field(f, :education_name, "myplaceonline.educations.education_name", obj.education_name, autofocus) %>
 <%= myp_date_field(f, :education_start, "myplaceonline.educations.education_start", obj.education_start) %>
 <%= myp_date_field(f, :education_end, "myplaceonline.educations.education_end", obj.education_end) %>
+<%= myp_select(f, :degree_type, "myplaceonline.educations.degree_type", Myp.translate_options(Education::EDUCATION_TYPES), obj.degree_type) %>
 <%= myp_text_field(f, :degree_name, "myplaceonline.educations.degree_name", obj.degree_name) %>
 <%= myp_decimal_field(f, :gpa, "myplaceonline.educations.gpa", obj.gpa) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
