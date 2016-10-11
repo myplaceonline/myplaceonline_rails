@@ -157,7 +157,7 @@ class CalendarItemReminder < ActiveRecord::Base
       .where(identity: user.primary_identity)
       .each do |calendar_item_reminder|
 
-        Rails.logger.debug{"checking reminder=#{calendar_item_reminder.inspect}. Item: #{calendar_item_reminder.calendar_item.display}"}
+        Rails.logger.debug{"checking reminder=#{calendar_item_reminder.inspect}. Item: #{calendar_item_reminder.calendar_item.display}, Calendar Item: #{calendar_item_reminder.calendar_item.inspect}"}
         
         if calendar_item_reminder.calendar_item_reminder_pendings.count == 0
           if !calendar_item_reminder.calendar_item.calendar_item_time.nil?
@@ -246,9 +246,21 @@ class CalendarItemReminder < ActiveRecord::Base
           end
           
           # The model might want a callback on expiration
-          calendar_item_object = calendar_item_reminder.calendar_item.find_model_object
-          if !calendar_item_object.nil? && calendar_item_object.respond_to?("handle_expired_reminder")
-            calendar_item_object.handle_expired_reminder
+          if calendar_item_reminder.calendar_item.model_id.nil?
+            calendar_item_class = calendar_item_reminder.calendar_item.find_model_class
+            if calendar_item_class.respond_to?("handle_expired_reminder")
+              Rails.logger.debug{"calling handle_expired_reminder on class"}
+              calendar_item_class.handle_expired_reminder
+            end
+          else
+            calendar_item_object = calendar_item_reminder.calendar_item.find_model_object
+            
+            Rails.logger.debug{"checking calendar_item_object = #{calendar_item_object.inspect}"}
+
+            if !calendar_item_object.nil? && calendar_item_object.respond_to?("handle_expired_reminder")
+              Rails.logger.debug{"calling handle_expired_reminder on object"}
+              calendar_item_object.handle_expired_reminder
+            end
           end
         end
         

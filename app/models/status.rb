@@ -62,11 +62,11 @@ class Status < ActiveRecord::Base
   
   def on_after_save
     if MyplaceonlineExecutionContext.handle_updates?
-      reset_calendar_reminder
+      Status.reset_calendar_reminder
     end
   end
   
-  def reset_calendar_reminder
+  def self.reset_calendar_reminder
     last_status = Status.last_status(
       User.current_user.primary_identity
     )
@@ -101,8 +101,8 @@ class Status < ActiveRecord::Base
     end
   end
   
-  def handle_expired_reminder
-    reset_calendar_reminder
+  def self.handle_expired_reminder
+    Status.reset_calendar_reminder
   end
   
   after_commit :on_after_destroy, on: :destroy
