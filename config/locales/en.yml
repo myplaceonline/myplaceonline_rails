@@ -2853,3 +2853,5 @@ en:
       education_type_abbreviation_doctor_jd: "J.D."
       education_type_abbreviation_doctor_medicine: "M.D."
       education_type_abbreviation_doctor_education: "Ed.D."
+      graduated: "Graduated?"
+      student_id: "Student Identifier"

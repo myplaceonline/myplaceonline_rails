@@ -30,6 +30,9 @@ class Education < ActiveRecord::Base
   accepts_nested_attributes_for :location, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
   allow_existing :location
   
+  attr_accessor :is_graduated
+  boolean_time_transfer :is_graduated, :graduated
+  
   def display
     Myp.appendstrwrap(Myp.appendstrwrap(education_name, degree_name), Education.education_type_abbreviation(self.degree_type))
   end

@@ -4,6 +4,8 @@
 <%= attribute_table_row_select(t("myplaceonline.educations.degree_type"), obj.degree_type, Education::EDUCATION_TYPES) %>
 <%= attribute_table_row(t("myplaceonline.educations.degree_name"), obj.degree_name) %>
 <%= attribute_table_row(t("myplaceonline.educations.gpa"), obj.gpa) %>
+<%= attribute_table_row(t("myplaceonline.educations.student_id"), obj.student_id) %>
+<%= attribute_table_row_boolean(t("myplaceonline.educations.graduated"), obj.is_graduated?) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <%= attribute_table_row_reference(t("myplaceonline.educations.location"), "location_path", obj.location) %>
 <%=

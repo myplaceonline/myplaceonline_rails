@@ -12,9 +12,6 @@ class PeriodicPayment < ActiveRecord::Base
   accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
   allow_existing :password
   
-  attr_accessor :is_archived
-  boolean_time_transfer :is_archived, :archived
-
   def display
     result = periodic_payment_name
     if !payment_amount.nil?
