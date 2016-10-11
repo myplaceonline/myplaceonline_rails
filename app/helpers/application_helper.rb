@@ -1027,4 +1027,57 @@ module ApplicationHelper
   def identity_files_include_pics?(identity_files)
     identity_files.any?{|identity_file| file_image?(identity_file) }
   end
+  
+  def collapsible(heading:, collapsed: false, &block)
+    content_tag(
+      :div,
+      content_tag(
+        :h3,
+        heading
+      ) + block.call,
+      data: { role: "collapsible", collapsed: collapsed.to_s }
+    ).html_safe
+  end
+
+  def table_row_span(&block)
+    content_tag(
+      :tr,
+      content_tag(
+        :td,
+        block.call,
+        colspan: 3,
+      ),
+      class: "tablerowspan"
+    ).html_safe
+  end
+
+  def attribute_table(&block)
+    content_tag(
+      :table,
+      content_tag(
+        :thead,
+        content_tag(
+          :tr,
+          content_tag(
+            :th,
+            nil
+          ) + content_tag(
+            :th,
+            nil
+          ) + content_tag(
+            :th,
+            nil
+          )
+        )
+      ) + content_tag(
+        :tbody,
+        block.call
+      ),
+      class: "ui-responsive tablestripes normalwidth firstcolumnbold noheadertable fontweightnormal",
+      data: {
+        role: "table",
+        mode: "reflow"
+      }
+    ).html_safe
+  end
 end

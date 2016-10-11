@@ -183,3 +183,7 @@ img.fit {
   padding-left: 10px;
   padding-right: 10px;
 }
+
+.fontweightnormal {
+  font-weight: normal;
+}

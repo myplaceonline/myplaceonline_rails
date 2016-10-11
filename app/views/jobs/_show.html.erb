@@ -45,22 +45,32 @@
   <%= attribute_table_row(t("myplaceonline.job_salaries.new_title"), js.new_title) %>
 <% end %>
 <% obj.job_reviews.each do |x| %>
-  <%= table_row_heading(t("myplaceonline.jobs.review")) %>
-  <%= attribute_table_row_date(t("myplaceonline.job_reviews.review_date"), x.review_date) %>
-  <%= attribute_table_row(t("myplaceonline.job_reviews.company_score"), x.company_score) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.job_reviews.notes"), x.notes) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.job_reviews.self_evaluation"), x.self_evaluation) %>
-  <%= attribute_table_row_reference(t("myplaceonline.job_reviews.contact"), "contact_path", x.contact) %>
-  <%=
-    render partial: 'myplaceonline/pictures', locals: {
-      pics: x.job_review_files,
-      placeholder: "myplaceonline.job_reviews.file"
-    }
-  %>
+  <%= table_row_span do %>
+    <% collapsible(heading: Myp.appendstrwrap(t("myplaceonline.jobs.review"), Myp.display_date(x.review_date, current_user)), collapsed: true) do %>
+      <% attribute_table do %>
+        <%
+          attribute_table_row_date(t("myplaceonline.job_reviews.review_date"), x.review_date) +
+          attribute_table_row(t("myplaceonline.job_reviews.company_score"), x.company_score) +
+          attribute_table_row_markdown(t("myplaceonline.job_reviews.notes"), x.notes) +
+          attribute_table_row_markdown(t("myplaceonline.job_reviews.self_evaluation"), x.self_evaluation) +
+          attribute_table_row_reference(t("myplaceonline.job_reviews.contact"), "contact_path", x.contact) + 
+          render(partial: 'myplaceonline/pictures', locals: {
+            pics: x.job_review_files,
+            placeholder: "myplaceonline.job_reviews.file"
+          })
+        %>
+      <% end %>
+    <% end %>
+  <% end %>
 <% end %>
 <% obj.job_myreferences.each do |x| %>
-  <%= table_row_heading(t("myplaceonline.jobs.myreference")) %>
-  <%= render partial: "myreferences/show", locals: { obj: x.myreference } %>
+  <%= table_row_span do %>
+    <% collapsible(heading: Myp.appendstrwrap(t("myplaceonline.jobs.myreference"), x.myreference.contact.display), collapsed: true) do %>
+      <% attribute_table do %>
+        <% render(partial: "myreferences/show", locals: { obj: x.myreference }) %>
+      <% end %>
+    <% end %>
+  <% end %>
 <% end %>
 <%=
   render partial: 'myplaceonline/pictures', locals: {
