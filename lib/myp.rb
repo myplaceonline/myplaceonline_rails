@@ -1782,6 +1782,10 @@ module Myp
     str.gsub(/[^a-zA-Z]/, "")
   end
   
+  def self.is_xml?(str)
+    !str.blank? && !str.first(100).index("<?xml").nil?
+  end
+  
   def self.website_info(link)
     if !link.blank?
       original_link = link
@@ -1821,10 +1825,19 @@ module Myp
         end
       end
       
-      {
-        title: c.body_str[/.*<(title|TITLE)>([^>]*)<\/(title|TITLE)>/,2],
-        link: link
-      }
+      # If it's XML, we assume it's RSS
+      if Myp.is_xml?(c.body_str)
+        f = Feed.load_feed_from_string(c.body_str)
+        {
+          title: f.channel.title,
+          link: link
+        }
+      else
+        {
+          title: c.body_str[/.*<(title|TITLE)>([^>]*)<\/(title|TITLE)>/,2],
+          link: link
+        }
+      end
     else
       nil
     end

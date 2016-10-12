@@ -82,4 +82,8 @@ class Feed < ActiveRecord::Base
       read: Time.now
     )
   end
+  
+  def self.load_feed_from_string(str)
+    SimpleRSS.parse(str.gsub("<rss:", "<").gsub("</rss:", "</"))
+  end
 end

@@ -30,7 +30,8 @@
       method: "GET",
       dataType: "json",
       context: {
-        wrapper: wrapper
+        wrapper: wrapper,
+        link: link
       }
     }).done(function(data, textStatus, jqXHR) {
       if (data.result) {
@@ -39,10 +40,10 @@
         this.wrapper.find(".website_link").first().val(data.link);
         title.focus();
       } else {
-        myplaceonline.createErrorNotification("Could not process " + data.link + ": " + data.error);
+        myplaceonline.createErrorNotification(data.error + " (" + this.link + ")");
       }
     }).fail(function(jqXHR, textStatus, errorThrown) {
-      myplaceonline.createErrorNotification("Could not execute " + remoteUrl + ": " + textStatus);
+      myplaceonline.createErrorNotification(textStatus + " (" + this.link + ")");
     }).complete(function(jqXHR, textStatus) {
       myplaceonline.hideLoading();
     });

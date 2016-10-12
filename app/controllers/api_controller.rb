@@ -399,11 +399,17 @@ class ApiController < ApplicationController
     begin
       info = Myp.website_info(link)
       if !info.nil?
+        if info[:title].blank?
+          raise "Could not find title in link"
+        end
         result[:title] = info[:title].force_encoding("utf-8")
         result[:link] = info[:link].force_encoding("utf-8")
         result[:result] = true
+      else
+        raise "Website returned no content"
       end
     rescue Exception => e
+      Myp.warn("website_title error with #{link}", e)
       result[:error] = e.to_s
     end
     render json: result
