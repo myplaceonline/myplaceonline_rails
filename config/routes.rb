@@ -1,3 +1,5 @@
+puts "Routes.rb executing"
+
 def process_resources(name, context)
   #Rails.logger.debug{"process_resources name: #{name}, context: #{context.inspect}"}
 
