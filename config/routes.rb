@@ -1,8 +1,8 @@
-puts "Routes.rb executing"
+# Most of the models follow a certain pattern, so a big chunk of the code here
+# is iterating through all models and creating `resources` and related items for each one
+# based on a pattern.
 
 def process_resources(name, context)
-  puts{"process_resources name: #{name}, context: #{context.inspect}"}
-
   resources_as = name.to_s
   resources_path = name.to_s
   resources_controller = name.to_s
@@ -72,11 +72,7 @@ def routes_get_post(items)
   end
 end
 
-puts "Routes.rb drawing"
-
 Rails.application.routes.draw do
-  
-  puts "Routes.rb inside draw"
   
   Rails.logger.debug{"Started loading routes"}
   
@@ -348,16 +344,13 @@ Rails.application.routes.draw do
 
   overriden = []
 
-  puts "Routes.rb processing models"
   Myp.process_models(check_database: false) do |klass|
     klass_table_name = klass.table_name
-    puts "Routes.rb processing klass_table_name"
     #Rails.logger.debug{"routes top level name: #{klass_table_name}"}
     if overriden.index(klass_table_name.to_sym).nil?
       process_resources(klass_table_name, additions[klass_table_name.to_sym])
     end
   end
-  puts "Routes.rb finished processing models"
   
   if Myp.is_web_server? || Rails.env.test?
     devise_scope :user do
@@ -397,6 +390,4 @@ Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
   
   Rails.logger.debug{"Finished loading routes"}
-  
-  puts "Routes.rb finished draw"
 end
