@@ -72,7 +72,11 @@ def routes_get_post(items)
   end
 end
 
+puts "Routes.rb drawing"
+
 Rails.application.routes.draw do
+  
+  puts "Routes.rb inside draw"
   
   Rails.logger.debug{"Started loading routes"}
   
@@ -391,4 +395,5 @@ Rails.application.routes.draw do
   
   Rails.logger.debug{"Finished loading routes"}
   
+  puts "Routes.rb finished draw"
 end
