@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161011050519) do
+ActiveRecord::Schema.define(version: 20161012004756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1273,7 +1273,7 @@ ActiveRecord::Schema.define(version: 20161011050519) do
     t.string   "education_name"
     t.date     "education_start"
     t.date     "education_end"
-    t.decimal  "gpa",             precision: 10, scale: 2
+    t.decimal  "gpa",             precision: 9, scale: 3
     t.integer  "location_id"
     t.text     "notes"
     t.integer  "visit_count"
@@ -1281,8 +1281,8 @@ ActiveRecord::Schema.define(version: 20161011050519) do
     t.integer  "rating"
     t.string   "degree_name"
     t.integer  "identity_id"
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.integer  "degree_type"
     t.datetime "graduated"
     t.string   "student_id"
