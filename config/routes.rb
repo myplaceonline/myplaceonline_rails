@@ -1,7 +1,7 @@
 puts "Routes.rb executing"
 
 def process_resources(name, context)
-  #Rails.logger.debug{"process_resources name: #{name}, context: #{context.inspect}"}
+  puts{"process_resources name: #{name}, context: #{context.inspect}"}
 
   resources_as = name.to_s
   resources_path = name.to_s
