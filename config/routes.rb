@@ -348,13 +348,16 @@ Rails.application.routes.draw do
 
   overriden = []
 
+  puts "Routes.rb processing models"
   Myp.process_models do |klass|
     klass_table_name = klass.table_name
+    puts "Routes.rb processing klass_table_name"
     #Rails.logger.debug{"routes top level name: #{klass_table_name}"}
     if overriden.index(klass_table_name.to_sym).nil?
       process_resources(klass_table_name, additions[klass_table_name.to_sym])
     end
   end
+  puts "Routes.rb finished processing models"
   
   if Myp.is_web_server? || Rails.env.test?
     devise_scope :user do
