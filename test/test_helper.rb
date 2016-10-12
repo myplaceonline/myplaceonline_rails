@@ -9,7 +9,13 @@ class ActiveSupport::TestCase
   puts "Models: #{Rails.root.join('app/models/*.rb').to_s}"
   
   Dir[Rails.root.join("app/models/*.rb").to_s].each do |filename|
-    puts "Filename: #{filename}"
+    klass = File.basename(filename, ".rb").camelize.constantize
+    puts "Klass: #{klass.inspect}"
+    next unless klass.ancestors.include?(ActiveRecord::Base)
+    puts "Klass: #{klass.inspect}; #{klass.include?(MyplaceonlineActiveRecordIdentityConcern)}"
+    if klass.include?(MyplaceonlineActiveRecordIdentityConcern) && ActiveRecord::Base.connection.table_exists?(klass.table_name)
+      puts "Matches IF"
+    end
   end
   
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
