@@ -1906,11 +1906,11 @@ module Myp
     end
   end
 
-  def self.process_models(&block)
+  def self.process_models(check_database: true, &block)
     Rails.application.eager_load!
     ActiveRecord::Base.descendants.each do |klass|
       next unless klass.ancestors.include?(ActiveRecord::Base)
-      if klass.include?(MyplaceonlineActiveRecordIdentityConcern) && ActiveRecord::Base.connection.table_exists?(klass.table_name)
+      if klass.include?(MyplaceonlineActiveRecordIdentityConcern) && (!check_database || ActiveRecord::Base.connection.table_exists?(klass.table_name))
         block.call(klass)
       end
     end
