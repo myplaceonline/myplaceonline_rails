@@ -6,6 +6,12 @@ class ActiveSupport::TestCase
   
   puts "Myplaceonline tests started with #{Myp.categories.length} categories"
   
+  puts "Models: #{Rails.root.join('app/models/*.rb').to_s}"
+  
+  Dir[Rails.root.join("app/models/*.rb").to_s].each do |filename|
+    puts "Filename: #{filename}"
+  end
+  
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
 
