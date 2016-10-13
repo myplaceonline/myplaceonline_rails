@@ -101,7 +101,7 @@ class PermissionsController < MyplaceonlineController
       
       save_result = @share.save
       if save_result
-        redirect_to(permission_shares_personalize_path(@share))
+        redirect_to(permission_share_personalize_path(@share))
       end
     end
   end
