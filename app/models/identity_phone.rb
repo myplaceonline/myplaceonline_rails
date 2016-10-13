@@ -33,4 +33,8 @@ class IdentityPhone < ActiveRecord::Base
   def accepts_sms?
     phone_type.nil? || phone_type == 0
   end
+
+  def final_search_result
+    parent_identity.contact
+  end
 end
