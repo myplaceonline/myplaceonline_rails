@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161012004756) do
+ActiveRecord::Schema.define(version: 20161013034842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1290,6 +1290,19 @@ ActiveRecord::Schema.define(version: 20161012004756) do
 
   add_index "educations", ["identity_id"], name: "index_educations_on_identity_id", using: :btree
   add_index "educations", ["location_id"], name: "index_educations_on_location_id", using: :btree
+
+  create_table "email_accounts", force: :cascade do |t|
+    t.integer  "password_id"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "email_accounts", ["identity_id"], name: "index_email_accounts_on_identity_id", using: :btree
+  add_index "email_accounts", ["password_id"], name: "index_email_accounts_on_password_id", using: :btree
 
   create_table "email_contacts", force: :cascade do |t|
     t.integer  "email_id"
@@ -4511,6 +4524,8 @@ ActiveRecord::Schema.define(version: 20161012004756) do
   add_foreign_key "education_files", "identity_files"
   add_foreign_key "educations", "identities"
   add_foreign_key "educations", "locations"
+  add_foreign_key "email_accounts", "identities"
+  add_foreign_key "email_accounts", "passwords"
   add_foreign_key "email_contacts", "contacts"
   add_foreign_key "email_contacts", "emails"
   add_foreign_key "email_contacts", "identities"

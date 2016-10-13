@@ -195,6 +195,7 @@ en:
       life_highlights: "Life Highlights"
       educations: "Educations"
       identity_phones: "Phone"
+      email_accounts: "Email Accounts"
     general:
       email: "E-mail"
       password: "Password"
@@ -2856,3 +2857,5 @@ en:
       education_type_abbreviation_doctor_education: "Ed.D."
       graduated: "Graduated?"
       student_id: "Student Identifier"
+    email_accounts:
+      password: "Password"
