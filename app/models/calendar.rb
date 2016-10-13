@@ -145,4 +145,8 @@ class Calendar < ActiveRecord::Base
   def self.max(*items)
     items.max
   end
+  
+  def show_highly_visited?
+    false
+  end
 end

@@ -37,4 +37,8 @@ class IdentityPhone < ActiveRecord::Base
   def final_search_result
     parent_identity.contact
   end
+  
+  def show_highly_visited?
+    false
+  end
 end

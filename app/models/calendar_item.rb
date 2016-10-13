@@ -186,4 +186,8 @@ class CalendarItem < ActiveRecord::Base
   def final_search_result
     calendar
   end
+  
+  def show_highly_visited?
+    false
+  end
 end

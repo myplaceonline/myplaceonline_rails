@@ -1757,7 +1757,7 @@ module Myp
       Rails.logger.debug{"highly_visited permissions_results: #{permissions_results.inspect}"}
     end
     
-    search_results.delete_if{|x| x.class == Notepad || x.class == Myplet || x.class == Calendar || x.class == CalendarItem || x.class == Status}
+    search_results.delete_if{|x| x.respond_to?("show_highly_visited?") && !x.show_highly_visited? }
     
     results = Myp.process_search_results(search_results)
     

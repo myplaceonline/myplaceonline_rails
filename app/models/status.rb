@@ -124,4 +124,8 @@ class Status < ActiveRecord::Base
       end
     end
   end
+  
+  def show_highly_visited?
+    false
+  end
 end
