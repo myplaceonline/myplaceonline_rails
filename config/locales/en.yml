@@ -599,7 +599,11 @@ en:
       share_subject: "%{user} shared a password with you"
       transfer_success: "Password successfully transferred. Note that if the other user updates their password, you will not see those changes and they'll have to re-share the new password, and vice versa if you update this password."
       generate_options: "Password Options"
+      generate_lowercase: "Lowercase Characters (a-z)"
+      generate_uppercase: "Uppercase Characters (A-Z)"
+      generate_numbers: "Numbers (0-9)"
       generate_special: "Special Characters (_, -, !)"
+      generate_special_additional: "Additional Special Characters"
     users:
       invite: "Invite Code"
       invite_invalid: "invalid"

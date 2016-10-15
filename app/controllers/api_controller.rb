@@ -29,15 +29,64 @@ class ApiController < ApplicationController
         length = Myp::DEFAULT_PASSWORD_LENGTH
       end
     end
+    
+    numbers = true
     special = true
+    special_additional = true
+    lowercase = true
+    uppercase = true
+    
     if !params[:special].blank?
       special = params[:special].to_bool
     end
-    possibilities = special ? Myp::POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL : Myp::POSSIBILITIES_ALPHANUMERIC
+    if !params[:special_additional].blank?
+      special_additional = params[:special_additional].to_bool
+    end
+    if !params[:numbers].blank?
+      numbers = params[:numbers].to_bool
+    end
+    if !params[:lowercase].blank?
+      lowercase = params[:lowercase].to_bool
+    end
+    if !params[:uppercase].blank?
+      uppercase = params[:uppercase].to_bool
+    end
+    
+    possibilities = []
+    if lowercase
+      possibilities += Myp::POSSIBILITIES_LOWERCASE
+    end
+    if uppercase
+      possibilities += Myp::POSSIBILITIES_UPPERCASE
+    end
+    if numbers
+      possibilities += Myp::POSSIBILITIES_NUMERIC
+    end
+    if special
+      possibilities += Myp::POSSIBILITIES_SPECIAL
+    end
+    if special_additional
+      possibilities += Myp::POSSIBILITIES_SPECIAL_ADDITIONAL
+    end
+    
     result = (0...length).map { possibilities[SecureRandom.random_number(possibilities.length)] }.join
+    
+    if lowercase
+      result[SecureRandom.random_number(result.length)] = Myp::POSSIBILITIES_LOWERCASE[SecureRandom.random_number(Myp::POSSIBILITIES_LOWERCASE.length)]
+    end
+    if uppercase
+      result[SecureRandom.random_number(result.length)] = Myp::POSSIBILITIES_UPPERCASE[SecureRandom.random_number(Myp::POSSIBILITIES_UPPERCASE.length)]
+    end
     if special
       result[SecureRandom.random_number(result.length)] = Myp::POSSIBILITIES_SPECIAL[SecureRandom.random_number(Myp::POSSIBILITIES_SPECIAL.length)]
     end
+    if special_additional
+      result[SecureRandom.random_number(result.length)] = Myp::POSSIBILITIES_SPECIAL_ADDITIONAL[SecureRandom.random_number(Myp::POSSIBILITIES_SPECIAL_ADDITIONAL.length)]
+    end
+    if numbers
+      result[SecureRandom.random_number(result.length)] = Myp::POSSIBILITIES_NUMERIC[SecureRandom.random_number(Myp::POSSIBILITIES_NUMERIC.length)]
+    end
+    
     render json: {
       :randomString => result
     }

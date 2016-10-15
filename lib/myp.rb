@@ -14,9 +14,11 @@ module Myp
   # We want at least 128 bits of randomness, so
   # min(POSSIBILITIES_*.length)^DEFAULT_PASSWORD_LENGTH should be >= 2^128
   DEFAULT_PASSWORD_LENGTH = 22
-  POSSIBILITIES_ALPHANUMERIC = [('0'..'9'), ('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
+  POSSIBILITIES_NUMERIC = [('0'..'9')].map { |i| i.to_a }.flatten
+  POSSIBILITIES_LOWERCASE = [('a'..'z')].map { |i| i.to_a }.flatten
+  POSSIBILITIES_UPPERCASE = [('A'..'Z')].map { |i| i.to_a }.flatten
   POSSIBILITIES_SPECIAL = ['_', '-', '!']
-  POSSIBILITIES_ALPHANUMERIC_PLUS_SPECIAL = [('0'..'9'), ('a'..'z'), ('A'..'Z'), POSSIBILITIES_SPECIAL].map { |i| i.to_a }.flatten
+  POSSIBILITIES_SPECIAL_ADDITIONAL = ['@', '$', '#', '%', '^', '&', '*', '(', ')', '[', ']', '+', '<', '>', '?', '/', ':', ';', ',', '=', '|', '{', '}', '~']
   
   DEFAULT_DECIMAL_STEP = "0.01"
   

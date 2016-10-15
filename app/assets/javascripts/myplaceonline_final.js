@@ -442,7 +442,7 @@ var myplaceonline = function(mymodule) {
     });
   }
 
-  function getRemoteString(destination, length, specialChars) {
+  function getRemoteString(destination, length, options) {
     myplaceonline.showLoading();
     var url = "/api/randomString";
     if (length) {
@@ -452,9 +452,11 @@ var myplaceonline = function(mymodule) {
         url += "length=" + encodeURIComponent(length);
       }
     }
-    if (typeof specialChars != 'undefined') {
-      url += url.indexOf('?') == -1 ? "?" : "&";
-      url += "special=" + encodeURIComponent(specialChars);
+    if (options && options.length) {
+      options.each(function(i, el) {
+        url += url.indexOf('?') == -1 ? "?" : "&";
+        url += el.id + "=" + el.checked;
+      });
     }
     $.ajax({
       url: url,
