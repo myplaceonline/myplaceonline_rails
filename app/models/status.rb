@@ -97,10 +97,7 @@ class Status < ActiveRecord::Base
             calendar_item_time: new_time,
             reminder_threshold_amount: 0,
             reminder_threshold_type: Myp::TIME_DURATION_SECONDS,
-            expire_amount: 1.day.seconds - 5.minutes.seconds # We subtract 5 minutes so that when it expires,
-                                                             # and we create a new reminder for the same day,
-                                                             # then the reminder will pop on the next reminder
-                                                             # check iteration
+            expire_amount: 1.day.seconds
           )
         end
       end
