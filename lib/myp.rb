@@ -813,6 +813,10 @@ module Myp
     self.display_time(time, current_user, :month_year)
   end
   
+  def self.display_date_month_year_simple(time, current_user)
+    self.display_time(time, current_user, :month_year_simple)
+  end
+  
   def self.display_datetime_short(time, current_user)
     self.display_time(time, current_user, :short_datetime)
   end

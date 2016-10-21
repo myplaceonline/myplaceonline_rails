@@ -11,7 +11,7 @@ class Apartment < ActiveRecord::Base
   accepts_nested_attributes_for :landlord, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
   allow_existing :landlord, Contact
 
-  has_many :apartment_leases, :dependent => :destroy
+  has_many :apartment_leases, -> { order('start_date DESC') }, :dependent => :destroy
   accepts_nested_attributes_for :apartment_leases, allow_destroy: true, reject_if: :all_blank
 
   has_many :apartment_trash_pickups, :dependent => :destroy
@@ -41,5 +41,13 @@ class Apartment < ActiveRecord::Base
     result = self.dobuild(params)
     result.apartment_leases << ApartmentLease.new
     result
+  end
+  
+  def latest_lease
+    if apartment_leases.length > 0
+      apartment_leases.first
+    else
+      nil
+    end
   end
 end
