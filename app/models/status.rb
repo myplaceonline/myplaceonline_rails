@@ -66,7 +66,7 @@ class Status < ActiveRecord::Base
     end
   end
   
-  def self.reset_calendar_reminder
+  def self.reset_calendar_reminder(after_expiration: false)
     last_status = Status.last_status(
       User.current_user.primary_identity
     )
@@ -83,7 +83,10 @@ class Status < ActiveRecord::Base
           new_time = Myp.date_max(
             User.current_user.in_time_zone(last_status.status_time),
             User.current_user.time_now
-          ) + 1.day
+          )
+          if !after_expiration
+            new_time += 1.day
+          end
           new_time = User.current_user.in_time_zone(new_time.to_date, end_of_day: true) + 1.second
           new_time -= (calendar.status_threshold_seconds || DEFAULT_STATUS_THRESHOLD_SECONDS).seconds
           
@@ -94,7 +97,10 @@ class Status < ActiveRecord::Base
             calendar_item_time: new_time,
             reminder_threshold_amount: 0,
             reminder_threshold_type: Myp::TIME_DURATION_SECONDS,
-            expire_amount: 1.day.seconds
+            expire_amount: 1.day.seconds - 5.minutes.seconds # We subtract 5 minutes so that when it expires,
+                                                             # and we create a new reminder for the same day,
+                                                             # then the reminder will pop on the next reminder
+                                                             # check iteration
           )
         end
       end
@@ -102,7 +108,7 @@ class Status < ActiveRecord::Base
   end
   
   def self.handle_expired_reminder
-    Status.reset_calendar_reminder
+    Status.reset_calendar_reminder(after_expiration: true)
   end
   
   after_commit :on_after_destroy, on: :destroy
