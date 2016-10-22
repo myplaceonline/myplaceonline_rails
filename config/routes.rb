@@ -217,6 +217,7 @@ Rails.application.routes.draw do
     ],
     feeds: [
       { instance: false, link: "load_all" },
+      { instance: false, link: "random" },
       { instance: true, link: "load" },
       { instance: true, link: "mark_all_read" },
       {

@@ -1,5 +1,5 @@
 class FeedsController < MyplaceonlineController
-  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:load_all]
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:load_all, :random]
   
   def index
     @message = Feed.status_message
@@ -39,6 +39,11 @@ class FeedsController < MyplaceonlineController
           :flash => { :notice => I18n.t("myplaceonline.feeds.loading_all") }
   end
 
+  def random
+    x = all.to_a.delete_if{|x| x.number_unread == 0}
+    redirect_to feed_path(x[SecureRandom.random_number(x.length)])
+  end
+
   def mark_all_read
     set_obj
     @obj.mark_all_read
@@ -73,6 +78,11 @@ class FeedsController < MyplaceonlineController
         title: I18n.t('myplaceonline.feeds.load_all'),
         link: feeds_load_all_path,
         icon: "refresh"
+      },
+      {
+        title: I18n.t('myplaceonline.feeds.random_feed'),
+        link: feeds_random_path,
+        icon: "gear"
       }
     ]
   end

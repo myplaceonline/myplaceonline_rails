@@ -8,57 +8,34 @@ class RandomController < MyplaceonlineController
     identity = current_user.primary_identity
     candidates = Array.new
     any_filters = false
+    @all_filters = [
+      :activities,
+      :books,
+      :feeds,
+      :ideas,
+      :life_goals,
+      :movies,
+      :restaurants,
+      :websites,
+    ]
     params.each do |key, value|
       if key.start_with?("filter_")
         any_filters = true
-        filter_name = key[7..-1]
-        if filter_name == "activities"
-          @filter_activities = true
-        elsif filter_name == "books"
-          @filter_books = true
-        elsif filter_name == "ideas"
-          @filter_ideas = true
-        elsif filter_name == "movies"
-          @filter_movies = true
-        elsif filter_name == "websites"
-          @filter_websites = true
-        elsif filter_name == "life_goals"
-          @filter_life_goals = true
-        elsif filter_name == "restaurants"
-          @filter_restaurants = true
-        end
+        instance_variable_set("@" + key, true)
       end
     end
     if !any_filters
-      @filter_activities = true
-      @filter_books = true
-      @filter_ideas = true
-      @filter_movies = true
-      @filter_websites = true
-      @filter_life_goals = true
-      @filter_restaurants = true
+      @all_filters.each do |filter|
+        instance_variable_set("@filter_" + filter.to_s, true)
+      end
     end
-    if @filter_activities
-      candidates = candidates + identity.activities.to_a
+    
+    @all_filters.each do |filter|
+      if instance_variable_get("@filter_" + filter.to_s)
+        candidates = candidates + identity.send(filter.to_s).to_a
+      end
     end
-    if @filter_books
-      candidates = candidates + identity.books.to_a
-    end
-    if @filter_ideas
-      candidates = candidates + identity.ideas.to_a
-    end
-    if @filter_movies
-      candidates = candidates + identity.movies.to_a
-    end
-    if @filter_websites
-      candidates = candidates + identity.websites.to_a
-    end
-    if @filter_life_goals
-      candidates = candidates + identity.life_goals.to_a
-    end
-    if @filter_restaurants
-      candidates = candidates + identity.restaurants.to_a
-    end
+    
     if candidates.length > 0
       @result = candidates[rand(candidates.length)]
       category_name = @result.class.name.pluralize.underscore

@@ -15,13 +15,9 @@
 <%= form_tag random_activity_path do |f| %>
   <div class="horizontal_center" data-role="collapsible" data-collapsed="true">
     <h4><%= t("myplaceonline.general.filter") %></h4>
-    <%= myp_check_box_tag(:filter_activities, "myplaceonline.category.activities", @filter_activities) %>
-    <%= myp_check_box_tag(:filter_books, "myplaceonline.category.books", @filter_books) %>
-    <%= myp_check_box_tag(:filter_ideas, "myplaceonline.category.ideas", @filter_ideas) %>
-    <%= myp_check_box_tag(:filter_movies, "myplaceonline.category.movies", @filter_movies) %>
-    <%= myp_check_box_tag(:filter_websites, "myplaceonline.category.websites", @filter_websites) %>
-    <%= myp_check_box_tag(:filter_life_goals, "myplaceonline.category.life_goals", @filter_life_goals) %>
-    <%= myp_check_box_tag(:filter_restaurants, "myplaceonline.category.restaurants", @filter_restaurants) %>
+    <% @all_filters.each do |filter| %>
+      <%= myp_check_box_tag(("filter_" + filter.to_s).to_sym, "myplaceonline.category." + filter.to_s, instance_variable_get("@filter_" + filter.to_s)) %>
+    <% end %>
   </div>
   <%= submit_tag t("myplaceonline.random.new_activity") %>
 <% end %>

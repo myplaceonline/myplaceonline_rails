@@ -820,6 +820,7 @@ en:
       all_marked_read: "All items marked read"
       mark_all_read: "Mark All Read"
       item_link: "Item Link"
+      random_feed: "Random Feed"
     feed_items:
       feed_title: "Title"
       feed_link: "Link"
