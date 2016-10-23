@@ -103,6 +103,11 @@ class FeedsController < MyplaceonlineController
         title: I18n.t('myplaceonline.feeds.mark_all_read'),
         link: feed_mark_all_read_path(@obj),
         icon: "check"
+      },
+      {
+        title: I18n.t('myplaceonline.feeds.random_feed'),
+        link: feeds_random_path,
+        icon: "gear"
       }
     ]
   end
