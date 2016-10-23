@@ -265,6 +265,21 @@
         placeholder: t("myplaceonline.myreferences.reference_type")
       },
       {
+        type: 'text',
+        name: 'myreference_attributes.reference_relationship',
+        placeholder: t("myplaceonline.myreferences.reference_relationship")
+      },
+      {
+        type: 'text',
+        name: 'myreference_attributes.years_experience',
+        placeholder: t("myplaceonline.myreferences.years_experience")
+      },
+      {
+        type: 'checkbox',
+        name: 'myreference_attributes.can_contact',
+        placeholder: t("myplaceonline.myreferences.can_contact")
+      },
+      {
         type: 'textarea',
         name: 'myreference_attributes.notes',
         placeholder: t("myplaceonline.general.notes")
@@ -287,6 +302,9 @@
       }
     %>
     <%= myp_select(myreference_fields, :reference_type, "myplaceonline.myreferences.reference_type", Myp.translate_options(Myreference::REFERENCE_TYPES), childproperty.myreference.reference_type) %>
+    <%= myp_text_field(myreference_fields, :reference_relationship, "myplaceonline.myreferences.reference_relationship", childproperty.myreference.reference_relationship) %>
+    <%= myp_decimal_field(myreference_fields, :years_experience, "myplaceonline.myreferences.years_experience", childproperty.myreference.years_experience) %>
+    <%= myp_check_box(myreference_fields, :can_contact, "myplaceonline.myreferences.can_contact") %>
     <%= myp_text_area_markdown(myreference_fields, :notes, "myplaceonline.general.notes", childproperty.myreference.notes) %>
   <% end %>
 <% end %>

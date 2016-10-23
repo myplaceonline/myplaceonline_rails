@@ -1,3 +1,6 @@
 <%= attribute_table_row_reference(t("myplaceonline.myreferences.contact"), "contact_path", obj.contact) %>
 <%= attribute_table_row_select(t("myplaceonline.myreferences.reference_type"), obj.reference_type, Myreference::REFERENCE_TYPES) %>
+<%= attribute_table_row(t("myplaceonline.myreferences.reference_relationship"), obj.reference_relationship) %>
+<%= attribute_table_row(t("myplaceonline.myreferences.years_experience"), obj.years_experience) %>
+<%= attribute_table_row_boolean(t("myplaceonline.myreferences.can_contact"), obj.can_contact) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>

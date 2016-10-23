@@ -2750,6 +2750,9 @@ en:
       type_personal: "Personal"
       type_professional: "Professional"
       type_educational: "Educational"
+      reference_relationship: "Relationhip"
+      years_experience: "Years Known"
+      can_contact: "Can Contact?"
     dreams:
       dream_name: "Dream Name"
       dream_time: "Dream Time"

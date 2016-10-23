@@ -5,6 +5,9 @@ class MyreferencesController < MyplaceonlineController
       :_destroy,
       :reference_type,
       :notes,
+      :reference_relationship,
+      :years_experience,
+      :can_contact,
       contact_attributes: ContactsController.param_names
     ]
   end
