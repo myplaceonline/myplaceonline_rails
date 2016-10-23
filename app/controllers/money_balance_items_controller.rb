@@ -35,6 +35,10 @@ class MoneyBalanceItemsController < MyplaceonlineController
     ]
   end
   
+  def display_obj(obj)
+    obj.display_initials
+  end
+  
   protected
     def sorts
       ["money_balance_items.item_time DESC"]

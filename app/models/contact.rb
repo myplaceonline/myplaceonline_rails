@@ -79,6 +79,14 @@ class Contact < ActiveRecord::Base
     end
   end
   
+  def display_initials
+    if !contact_identity.nil?
+      contact_identity.display_initials
+    else
+      I18n.t("myplaceonline.general.unknown")
+    end
+  end
+  
   def self.build(params = nil)
     result = self.dobuild(params)
     result.contact_identity = Myp.new_model(Identity)

@@ -409,6 +409,16 @@ class Identity < ActiveRecord::Base
     result
   end
   
+  def display_initials
+    result = name[0]
+    if !last_name.blank?
+      result += last_name[0]
+    elsif !middle_name.blank?
+      result += middle_name[0]
+    end
+    result
+  end
+  
   def display_short
     result = nickname
     if result.blank? && !default_name?

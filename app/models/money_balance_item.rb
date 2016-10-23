@@ -14,6 +14,10 @@ class MoneyBalanceItem < ActiveRecord::Base
     Myp.appendstrwrap(independent_description, Myp.ellipses_if_needed(self.money_balance_item_name, 16))
   end
 
+  def display_initials
+    Myp.appendstrwrap(independent_description(true, initials: true), Myp.ellipses_if_needed(self.money_balance_item_name, 16))
+  end
+
   def self.build(params = nil)
     result = self.dobuild(params)
     # initialize result here
@@ -39,20 +43,20 @@ class MoneyBalanceItem < ActiveRecord::Base
     end
   end
   
-  def independent_description(withtime = true)
+  def independent_description(withtime = true, initials: false)
     name = withtime ? "myplaceonline.money_balances.paid" : "myplaceonline.money_balances.paid_notime"
     if amount < 0
       I18n.t(name, {
-          x: money_balance.contact.display,
-          y: money_balance.identity.display,
+          x: initials ? money_balance.contact.display_initials : money_balance.contact.display,
+          y: initials ? money_balance.identity.display_initials : money_balance.identity.display,
           amount: Myp.number_to_currency(amount.abs),
           time: item_time
         }
       )
     else
       I18n.t(name, {
-          x: money_balance.identity.display,
-          y: money_balance.contact.display,
+          x: initials ? money_balance.identity.display_initials : money_balance.identity.display,
+          y: initials ? money_balance.contact.display_initials : money_balance.contact.display,
           amount: Myp.number_to_currency(amount),
           time: item_time
         }
