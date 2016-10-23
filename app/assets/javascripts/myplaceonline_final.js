@@ -251,11 +251,17 @@ var myplaceonline = function(mymodule) {
   function hookListviewEnter(listInput, listIdentifier) {
     listInput.keyup(function(e) {
       if (e.which == 13) {
-        var searchList = $(listIdentifier + " li:not(.ui-screen-hidden)").filter(":not(.ui-li-divider)");
-        if (searchList.size() > 0) {
-          e.preventDefault();
-          var child = searchList.filter(":first");
-          myplaceonline.navigate(child.children("a").attr("href"));
+        // If there's no input and we're on the homepage, then don't navigate, because
+        // most likely the user was pressing enter on something else in the browser UI
+        // and we really shouldn't even be handling it
+        var url = window.location.pathname + window.location.search;
+        if (this.value.length > 0 || url != "/") {
+          var searchList = $(listIdentifier + " li:not(.ui-screen-hidden)").filter(":not(.ui-li-divider)");
+          if (searchList.size() > 0) {
+            e.preventDefault();
+            var child = searchList.filter(":first");
+            myplaceonline.navigate(child.children("a").attr("href"));
+          }
         }
       }
       return true;

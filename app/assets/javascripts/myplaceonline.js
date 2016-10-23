@@ -1165,6 +1165,7 @@ var myplaceonline = function(mymodule) {
   mymodule.nextUniqueId = nextUniqueId;
   mymodule.encodeEntities = encodeEntities;
   mymodule.prepareNewContent = prepareNewContent;
+  mymodule.getCurrentRelativePathAndQuery = getCurrentRelativePathAndQuery;
 
   mymodule.isFocusAllowed = function() {
     return allowFocusPlaceholder;
