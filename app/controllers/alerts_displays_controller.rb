@@ -24,6 +24,7 @@ class AlertsDisplaysController < MyplaceonlineController
       false
     ).order("started desc").first
     if !@trip.nil?
+      @next_trip_flight = @trip.next_trip_flight
       @nocontent = false
     end
   end

@@ -2431,6 +2431,7 @@ en:
       room_number: "Room"
     alerts_displays:
       suppress_hotel: "Suppress Hotel Alerts"
+      next_flight: "Next Flight"
     permission_shares:
       url: "Link"
       share: "Share"

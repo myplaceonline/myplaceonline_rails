@@ -20,5 +20,8 @@
         <p><%= t("myplaceonline.trips.hotel") %>: <%= hotel_display %></p>
       <% end %>
     <% end %>
+    <% if !@next_trip_flight.nil? %>
+      <p><%= t("myplaceonline.alerts_displays.next_flight") %>: <%= link_to(@next_trip_flight.flight.display_with_first_leg, flight_path(@next_trip_flight.flight)) %></p>
+    <% end %>
   <% end %>
 <% end %>

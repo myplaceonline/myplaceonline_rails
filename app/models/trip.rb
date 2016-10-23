@@ -358,6 +358,18 @@ class Trip < ActiveRecord::Base
     result
   end
   
+  def next_trip_flight
+    result = nil
+    a = trip_flights.to_a
+    a.sort_by!{|x| x.flight.flight_start_date }
+    now = User.current_user.date_now
+    i = a.index{|x| x.flight.flight_start_date >= now}
+    if !i.nil?
+      result = a[i]
+    end
+    result
+  end
+  
   protected
   def default_url_options
     Rails.configuration.default_url_options
