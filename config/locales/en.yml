@@ -945,6 +945,7 @@ en:
       all_cashbacks: "All Cashbacks"
       total_credit: "Total Credit"
       email_reminders: "E-mail Payment Reminders"
+      start_date: "Start Date"
     bank_accounts:
       name: "Name"
       account_number: "Account Number"
