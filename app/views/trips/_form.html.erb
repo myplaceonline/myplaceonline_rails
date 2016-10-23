@@ -1,4 +1,5 @@
-<%= myp_date_field(f, :started, "myplaceonline.trips.started", obj.started, edit ? false : autofocus) %>
+<%= myp_text_field(f, :trip_name, "myplaceonline.trips.trip_name", obj.trip_name, autofocus) %>
+<%= myp_date_field(f, :started, "myplaceonline.trips.started", obj.started) %>
 <%=
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,

@@ -1569,6 +1569,7 @@ en:
       delete_flight: "Delete Flight"
       complete: "Complete Trip"
       trip_completed: "The trip has been marked completed."
+      trip_name: "Trip Name"
     passports:
       region: "Country"
       passport_number: "Passport Number"

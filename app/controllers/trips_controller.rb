@@ -115,6 +115,7 @@ class TripsController < MyplaceonlineController
         :ended,
         :notes,
         :work,
+        :trip_name,
         :notify_emergency_contacts,
         location_attributes: LocationsController.param_names,
         trip_pictures_attributes: FilesController.multi_param_names + [:position],
