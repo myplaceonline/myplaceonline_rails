@@ -2641,6 +2641,7 @@ en:
       project_issues: "Issues"
       project_issue_add: "Add Issue"
       project_issue_delete: "Delete Issue"
+      default_to_top: "Default Items to the Top?"
     project_issues:
       issue_name: "Issue"
       project: "Project"

@@ -33,18 +33,18 @@ class ProjectsController < MyplaceonlineController
   end
 
   def footer_items_show
-    super + [
-      {
-        title: I18n.t('myplaceonline.projects.project_issues'),
-        link: project_project_issues_path(@obj),
-        icon: "bars"
-      },
+    [
       {
         title: I18n.t('myplaceonline.projects.project_issue_add'),
         link: new_project_project_issue_path(@obj),
         icon: "plus"
+      },
+      {
+        title: I18n.t('myplaceonline.projects.project_issues'),
+        link: project_project_issues_path(@obj),
+        icon: "bars"
       }
-    ]
+    ] + super
   end
   
   protected
@@ -62,6 +62,7 @@ class ProjectsController < MyplaceonlineController
         :notes,
         :start_date,
         :end_date,
+        :default_to_top,
         project_issues_attributes: [
           :id,
           :_destroy,

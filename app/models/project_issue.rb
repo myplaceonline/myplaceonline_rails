@@ -60,4 +60,13 @@ class ProjectIssue < ActiveRecord::Base
   def update_file_folders
     put_files_in_folder(project_issue_files, [I18n.t("myplaceonline.category.projects"), project.display])
   end
+
+  def self.build(params = nil)
+    result = self.dobuild(params)
+    if !params.nil?
+      project = Myp.find_existing_object(Project.name, params["project_id"])
+      result.top = project.default_to_top
+    end
+    result
+  end
 end
