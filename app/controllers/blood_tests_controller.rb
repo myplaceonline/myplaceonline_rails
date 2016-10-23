@@ -52,7 +52,7 @@ class BloodTestsController < MyplaceonlineController
   
   protected
     def sorts
-      ["blood_tests.fast_started DESC"]
+      ["blood_tests.test_time DESC"]
     end
 
     def obj_params

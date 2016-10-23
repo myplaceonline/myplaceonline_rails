@@ -1925,6 +1925,18 @@ module Myp
     end
   end
 
+  def self.models_count(check_database: true)
+    count = 0
+    Rails.application.eager_load!
+    ActiveRecord::Base.descendants.each do |klass|
+      next unless klass.ancestors.include?(ActiveRecord::Base)
+      if klass.include?(MyplaceonlineActiveRecordIdentityConcern) && (!check_database || ActiveRecord::Base.connection.table_exists?(klass.table_name))
+        count += 1
+      end
+    end
+    count
+  end
+
   def self.process_models(check_database: true, &block)
     Rails.application.eager_load!
     ActiveRecord::Base.descendants.each do |klass|

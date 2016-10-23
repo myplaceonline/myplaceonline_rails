@@ -345,14 +345,28 @@ Rails.application.routes.draw do
 
   overriden = []
 
+  Rails.logger.debug{"Started processing all models"}
+
+  models_count = Myp.models_count.to_f
+  
+  count = 0
+  processed = {}
+  
   Myp.process_models(check_database: false) do |klass|
     klass_table_name = klass.table_name
-    #Rails.logger.debug{"routes top level name: #{klass_table_name}"}
     if overriden.index(klass_table_name.to_sym).nil?
+      count += 1
+      p = (count.to_f / models_count) * 100.0
+      if p > 1 && p.to_i % 10.0 == 0 && processed[p.to_i].nil?
+        processed[p.to_i] = true
+        Rails.logger.debug{"Processing models completed #{p.to_i}%"}
+      end
       process_resources(klass_table_name, additions[klass_table_name.to_sym])
     end
   end
   
+  Rails.logger.debug{"Ended processing all models"}
+
   if Myp.is_web_server? || Rails.env.test?
     devise_scope :user do
       match 'users/reenter', :to => 'users/sessions#reenter', via: [:get, :post]
