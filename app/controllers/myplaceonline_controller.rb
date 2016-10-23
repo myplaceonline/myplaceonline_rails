@@ -133,7 +133,7 @@ class MyplaceonlineController < ApplicationController
 
   def show
     if sensitive
-      check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
+      check_password
     end
     @nested_show = params[:nested_show]
     before_show
@@ -158,6 +158,9 @@ class MyplaceonlineController < ApplicationController
     
     if !insecure
       check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
+    end
+    if sensitive
+      check_password
     end
     @obj = Myp.new_model(model, params)
     set_parent
@@ -186,6 +189,9 @@ class MyplaceonlineController < ApplicationController
     Rails.logger.debug{"create"}
     if !insecure
       check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
+    end
+    if sensitive
+      check_password
     end
     ActiveRecord::Base.transaction do
       begin
@@ -270,6 +276,10 @@ class MyplaceonlineController < ApplicationController
   def update
     deny_guest
     
+    if sensitive
+      check_password
+    end
+
     if do_update
       return after_create_or_update
     else
