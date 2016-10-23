@@ -34,6 +34,7 @@ class JobsController < MyplaceonlineController
         :department_identifier,
         :division_identifier,
         :personnel_code,
+        :hours_per_week,
         company_attributes: CompaniesController.param_names,
         internal_address_attributes: LocationsController.param_names,
         job_salaries_attributes: [
@@ -44,7 +45,8 @@ class JobsController < MyplaceonlineController
           :notes,
           :salary,
           :salary_period,
-          :new_title
+          :new_title,
+          :hours_per_week
         ],
         job_managers_attributes: [
           :id,

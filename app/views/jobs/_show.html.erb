@@ -14,6 +14,7 @@
       <%= attribute_table_row(t("myplaceonline.jobs.duration"), Myp.time_difference_in_general_from_now(obj.started)) %>
   <% end %>
 <% end %>
+<%= attribute_table_row(t("myplaceonline.jobs.hours_per_week"), obj.hours_per_week) %>
 <%= attribute_table_row(t("myplaceonline.jobs.days_vacation"), obj.days_vacation) %>
 <%= attribute_table_row(t("myplaceonline.jobs.days_holiday"), obj.days_holiday) %>
 <% if !obj.days_vacation.nil? && !obj.days_holiday.nil? %>
@@ -41,6 +42,7 @@
   <%= attribute_table_row_select(t("myplaceonline.job_salaries.salary_period"), js.salary_period, Myp::PERIODS) %>
   <%= attribute_table_row_currency(t("myplaceonline.job_salaries.salary_yearly"), js.yearly_salary) %>
   <%= attribute_table_row_currency(t("myplaceonline.job_salaries.salary_hourly"), js.yearly_hourly) %>
+  <%= attribute_table_row(t("myplaceonline.jobs.hours_per_week"), js.hours_per_week) %>
   <%= attribute_table_row_markdown(t("myplaceonline.job_salaries.notes"), js.notes) %>
   <%= attribute_table_row(t("myplaceonline.job_salaries.new_title"), js.new_title) %>
 <% end %>

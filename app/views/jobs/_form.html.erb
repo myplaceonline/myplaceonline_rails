@@ -7,6 +7,7 @@
 <%= myp_text_field(f, :division_identifier, "myplaceonline.jobs.division_identifier", obj.division_identifier) %>
 <%= myp_date_field(f, :started, "myplaceonline.jobs.started", obj.started) %>
 <%= myp_date_field(f, :ended, "myplaceonline.jobs.ended", obj.ended) %>
+<%= myp_decimal_field(f, :hours_per_week, "myplaceonline.jobs.hours_per_week", obj.hours_per_week) %>
 <%= myp_integer_field(f, :days_vacation, "myplaceonline.jobs.days_vacation", obj.days_vacation) %>
 <%= myp_integer_field(f, :days_holiday, "myplaceonline.jobs.days_holiday", obj.days_holiday) %>
 <%= myp_text_field(f, :business_unit, "myplaceonline.jobs.business_unit", obj.business_unit) %>
@@ -132,6 +133,11 @@
         placeholder: t("myplaceonline.job_salaries.salary_period")
       },
       {
+        type: 'text',
+        name: 'hours_per_week',
+        placeholder: t("myplaceonline.jobs.hours_per_week")
+      },
+      {
         type: 'textarea',
         name: 'notes',
         placeholder: t("myplaceonline.job_salaries.notes")
@@ -148,6 +154,7 @@
   <%= myp_date_field(child_fields, :ended, "myplaceonline.job_salaries.ended", childproperty.ended) %>
   <%= myp_decimal_field(child_fields, :salary, "myplaceonline.job_salaries.salary", childproperty.salary) %>
   <%= myp_select(child_fields, :salary_period, "myplaceonline.job_salaries.salary_period", Myp.translate_options(Myp::PERIODS), childproperty.salary_period) %>
+  <%= myp_decimal_field(child_fields, :hours_per_week, "myplaceonline.jobs.hours_per_week", childproperty.hours_per_week) %>
   <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.job_salaries.notes", childproperty.notes) %>
   <%= myp_text_field(child_fields, :new_title, "myplaceonline.job_salaries.new_title", childproperty.new_title) %>
 <% end %>

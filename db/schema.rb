@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161023203150) do
+ActiveRecord::Schema.define(version: 20161023210732) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2216,13 +2216,14 @@ ActiveRecord::Schema.define(version: 20161023203150) do
     t.date     "started"
     t.date     "ended"
     t.text     "notes"
-    t.decimal  "salary",        precision: 10, scale: 2
+    t.decimal  "salary",         precision: 10, scale: 2
     t.integer  "salary_period"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "new_title"
     t.datetime "archived"
     t.integer  "rating"
+    t.decimal  "hours_per_week", precision: 10, scale: 2
   end
 
   add_index "job_salaries", ["identity_id"], name: "index_job_salaries_on_identity_id", using: :btree
@@ -2254,6 +2255,7 @@ ActiveRecord::Schema.define(version: 20161023203150) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.decimal  "hours_per_week",                    precision: 10, scale: 2
   end
 
   add_index "jobs", ["company_id"], name: "index_jobs_on_company_id", using: :btree

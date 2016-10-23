@@ -277,7 +277,7 @@ module Myp
     end
   end
   
-  puts "myplaceonline: myp.rb static initialization"
+  puts "myplaceonline: myp.rb static initialization started"
   
   def self.initialize_categories
     if Myp.database_exists?
@@ -1950,4 +1950,6 @@ module Myp
   def self.date_max(x, y)
     x > y ? x : y
   end
+
+  puts "myplaceonline: myp.rb static initialization ended"
 end
