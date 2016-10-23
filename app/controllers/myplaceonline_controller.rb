@@ -672,13 +672,21 @@ class MyplaceonlineController < ApplicationController
       link: self.edit_obj_path,
       icon: "edit"
     }
-    result << {
-      title: I18n.t('myplaceonline.general.delete'),
-      link: self.obj_path,
-      icon: "delete",
-      method: :delete,
-      data: { confirm: 'Are you sure?' }
-    }
+    if @obj.respond_to?("is_archived?")
+      if @obj.is_archived?
+        result << {
+          title: I18n.t("myplaceonline.general.unarchive"),
+          link: self.unarchive_obj_path,
+          icon: "plus"
+        }
+      else
+        result << {
+          title: I18n.t("myplaceonline.general.archive"),
+          link: self.archive_obj_path,
+          icon: "minus"
+        }
+      end
+    end
     result << {
       title: I18n.t("myplaceonline.general.back_to_list"),
       link: self.back_to_all_path,
@@ -698,21 +706,6 @@ class MyplaceonlineController < ApplicationController
         icon: "action"
       }
     end
-    if @obj.respond_to?("is_archived?")
-      if @obj.is_archived?
-        result << {
-          title: I18n.t("myplaceonline.general.unarchive"),
-          link: self.unarchive_obj_path,
-          icon: "plus"
-        }
-      else
-        result << {
-          title: I18n.t("myplaceonline.general.archive"),
-          link: self.archive_obj_path,
-          icon: "minus"
-        }
-      end
-    end
     if @obj.respond_to?("rating")
       if @obj.rating.nil? || @obj.rating < Myp::MAX_RATING
         result << {
@@ -728,6 +721,13 @@ class MyplaceonlineController < ApplicationController
         }
       end
     end
+    result << {
+      title: I18n.t('myplaceonline.general.delete'),
+      link: self.obj_path,
+      icon: "delete",
+      method: :delete,
+      data: { confirm: 'Are you sure?' }
+    }
     result
   end
   
