@@ -913,6 +913,7 @@ en:
       add_file: "Add File/Picture"
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
+      password: "Password"
     credit_scores:
       score_date: "Score Date"
       score: "Score"

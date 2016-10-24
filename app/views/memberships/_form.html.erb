@@ -30,3 +30,17 @@
     deletebutton: "myplaceonline.memberships.delete_file"
   }
 %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :password,
+    existingobj: obj.password,
+    heading: t("myplaceonline.memberships.password"),
+    objform: "passwords/form",
+    existingobjurl: "password_path",
+    searchurl: "/passwords.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    collapsed: obj.password.nil?
+  }
+%>

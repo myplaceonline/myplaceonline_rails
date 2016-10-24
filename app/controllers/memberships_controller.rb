@@ -3,6 +3,8 @@ class MembershipsController < MyplaceonlineController
     result = attributes.dup.all?{|key, value|
       if key == "periodic_payment_attributes"
         PeriodicPaymentsController.reject_if_blank(value)
+      elsif key == "password_attributes"
+        PasswordsController.reject_if_blank(value)
       else
         value.blank?
       end
@@ -20,7 +22,8 @@ class MembershipsController < MyplaceonlineController
       :notes,
       :membership_identifier,
       periodic_payment_attributes: PeriodicPaymentsController.param_names,
-      membership_files_attributes: FilesController.multi_param_names
+      membership_files_attributes: FilesController.multi_param_names,
+      password_attributes: PasswordsController.param_names
     ]
   end
 

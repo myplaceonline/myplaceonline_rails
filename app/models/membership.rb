@@ -8,6 +8,10 @@ class Membership < ActiveRecord::Base
   accepts_nested_attributes_for :periodic_payment, reject_if: proc { |attributes| PeriodicPaymentsController.reject_if_blank(attributes) }
   allow_existing :periodic_payment
   
+  belongs_to :password
+  accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
+  allow_existing :password
+
   def display
     name
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161023215859) do
+ActiveRecord::Schema.define(version: 20161024005502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2642,9 +2642,11 @@ ActiveRecord::Schema.define(version: 20161023215859) do
     t.string   "membership_identifier", limit: 255
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "password_id"
   end
 
   add_index "memberships", ["identity_id"], name: "index_memberships_on_identity_id", using: :btree
+  add_index "memberships", ["password_id"], name: "index_memberships_on_password_id", using: :btree
   add_index "memberships", ["periodic_payment_id"], name: "index_memberships_on_periodic_payment_id", using: :btree
 
   create_table "message_contacts", force: :cascade do |t|
@@ -4620,6 +4622,7 @@ ActiveRecord::Schema.define(version: 20161023215859) do
   add_foreign_key "membership_files", "identities"
   add_foreign_key "membership_files", "identity_files"
   add_foreign_key "membership_files", "memberships"
+  add_foreign_key "memberships", "passwords"
   add_foreign_key "message_contacts", "contacts"
   add_foreign_key "message_contacts", "identities"
   add_foreign_key "message_contacts", "messages"
