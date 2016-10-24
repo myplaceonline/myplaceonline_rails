@@ -1397,6 +1397,10 @@ module Myp
     model.where(identity: identity).count
   end
   
+  def self.model_instances(model, identity, orders: nil)
+    model.where(identity: identity).order(orders)
+  end
+  
   def self.time_delta(target)
     now = User.current_user.time_now
     delta = Myp.time_difference_in_general_human(TimeDifference.between(now, target).in_general)

@@ -1517,6 +1517,10 @@ en:
       hours_per_week: "Hours per Week"
       accomplishments: "Accomplishments"
       add_accomplishment: "Add Accomplishment"
+      resume: "Resume"
+    resume:
+      jobs: "Jobs"
+      education: "Education"
     job_managers:
       start_date: "Start Date"
       end_date: "End Date"

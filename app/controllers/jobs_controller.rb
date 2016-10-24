@@ -1,4 +1,15 @@
 class JobsController < MyplaceonlineController
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:resume]
+  
+  def resume
+    @jobs = all.order(sorts).to_a.delete_if{|x| x.started.nil?}
+    @educations = Myp.model_instances(
+      Education,
+      current_user.primary_identity,
+      orders: ["educations.education_end DESC"]
+    ).to_a.delete_if{|x| x.education_end.nil?}
+  end
+
   def may_upload
     true
   end
@@ -26,6 +37,16 @@ class JobsController < MyplaceonlineController
     ]
   end
 
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t('myplaceonline.jobs.resume'),
+        link: jobs_resume_path,
+        icon: "info"
+      }
+    ]
+  end
+  
   protected
     def sorts
       ["jobs.started DESC"]

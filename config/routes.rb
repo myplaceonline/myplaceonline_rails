@@ -257,6 +257,7 @@ Rails.application.routes.draw do
       { instance: true, link: "download" }
     ],
     jobs: [
+      { instance: false, link: "resume" },
       {
         subresources: true,
         name: :job_accomplishments

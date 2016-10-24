@@ -41,4 +41,8 @@ class IdentityPhone < ActiveRecord::Base
   def show_highly_visited?
     false
   end
+  
+  def display
+    Myp.appendstrwrap(self.number, Myp.get_select_name(self.phone_type, PHONE_TYPES))
+  end
 end

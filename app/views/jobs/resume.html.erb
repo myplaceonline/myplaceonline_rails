@@ -1,0 +1,58 @@
+<% content_for :heading do -%><%= t('myplaceonline.jobs.resume') %><% end -%>
+<h1><%= current_user.primary_identity.display %></h1>
+<h2><%= t("myplaceonline.resume.jobs") %></h2>
+<% @jobs.each do |job| %>
+  <h3><%= job.display %></h3>
+  <% if !job.started.nil? %>
+    <p><%= t("myplaceonline.jobs.started") %>: <%= Myp.display_date(job.started, current_user) %></p>
+  <% end %>
+  <% if !job.ended.nil? %>
+    <p><%= t("myplaceonline.jobs.ended") %>: <%= Myp.display_date(job.ended, current_user) %></p>
+  <% end %>
+  <% if !job.ended.nil? %>
+    <p><%= t("myplaceonline.jobs.ended") %>: <%= Myp.display_date(job.ended, current_user) %></p>
+  <% end %>
+  <% if job.job_myreferences.length > 0 %>
+    <h4><%= t("myplaceonline.jobs.myreferences") %></h4>
+    <% job.job_myreferences.each do |job_reference| %>
+      <% if job_reference.myreference.can_contact %>
+        <h5><%= job_reference.myreference.display %></h5>
+        <% if !job_reference.myreference.reference_relationship.blank? %>
+          <p><%= t("myplaceonline.myreferences.reference_relationship") %>: <%= job_reference.myreference.reference_relationship %></p>
+        <% end %>
+        <% if !job_reference.myreference.years_experience.blank? %>
+          <p><%= t("myplaceonline.myreferences.years_experience") %>: <%= job_reference.myreference.years_experience %></p>
+        <% end %>
+        <% job_reference.myreference.contact.contact_identity.identity_emails.each do |email| %>
+          <% if !email.secondary %>
+            <p><%= t("myplaceonline.identities.email") %>: <%= email.email %></p>
+          <% end %>
+        <% end %>
+        <% job_reference.myreference.contact.contact_identity.identity_phones.each do |phone| %>
+          <p><%= t("myplaceonline.identities.phone") %>: <%= phone.display %></p>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <hr />
+<% end %>
+<h2><%= t("myplaceonline.resume.education") %></h2>
+<% @educations.each do |education| %>
+  <h3><%= education.display %></h3>
+  <% if !education.education_start.nil? %>
+    <p><%= t("myplaceonline.educations.education_start") %>: <%= Myp.display_date(education.education_start, current_user) %></p>
+  <% end %>
+  <% if !education.education_end.nil? %>
+    <p><%= t("myplaceonline.educations.education_end") %>: <%= Myp.display_date(education.education_end, current_user) %></p>
+  <% end %>
+  <% if !education.degree_type.nil? %>
+    <p><%= t("myplaceonline.educations.degree_type") %>: <%= Myp.get_select_name(education.degree_type, Education::EDUCATION_TYPES) %></p>
+  <% end %>
+  <% if !education.degree_name.nil? %>
+    <p><%= t("myplaceonline.educations.degree_name") %>: <%= education.degree_name %></p>
+  <% end %>
+  <% if !education.gpa.nil? %>
+    <p><%= t("myplaceonline.educations.gpa") %>: <%= education.gpa %></p>
+  <% end %>
+  <hr />
+<% end %>
