@@ -1,13 +1,19 @@
-<%= attribute_table_row(t("myplaceonline.exercise_regimens.exercise_regimen_name"), obj.exercise_regimen_name) %>
-<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
-<% obj.exercise_regimen_exercises.each do |x| %>
-  <%= table_row_heading(t("myplaceonline.exercise_regimens.exercise_regimen_exercise")) %>
-  <%= attribute_table_row(t("myplaceonline.exercise_regimen_exercises.exercise_regimen_exercise_name"), x.exercise_regimen_exercise_name) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), x.notes) %>
-  <%=
-    render partial: 'myplaceonline/pictures', locals: {
-      pics: x.exercise_regimen_exercise_files,
-      placeholder: "myplaceonline.exercise_regimen_exercises.file"
-    }
-  %>
+<%# attribute_table_row(t("myplaceonline.exercise_regimens.exercise_regimen_name"), obj.exercise_regimen_name) %>
+<%# attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+
+<% content_for :aftertable do %>
+  <% obj.exercise_regimen_exercises.each do |x| %>
+    <%
+    container_name = x.class.name + "_container" + x.id.to_s
+    %>
+    <div id="<%= container_name %>">
+      <%= myp_check_box_tag(x.class.name + x.id.to_s, x.exercise_regimen_exercise_name, false, false, nil, "return myplaceonline.hideIfChecked(this, $(this).parents('#" + container_name + "').first());") %>
+      <div style="padding-left: 40px">
+        <%= markdown_content(x.notes) %>
+        <% x.exercise_regimen_exercise_files.each do |pic| %>
+          <p><%= image_content(pic.identity_file, true) %></p>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 <% end %>
