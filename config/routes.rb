@@ -354,7 +354,9 @@ Rails.application.routes.draw do
 
   Rails.logger.debug{"Started processing all models"}
 
-  models_count = Myp.models_count.to_f
+  if Rails.env.development?
+    models_count = Myp.models_count.to_f
+  end
   
   count = 0
   processed = {}
@@ -362,11 +364,13 @@ Rails.application.routes.draw do
   Myp.process_models(check_database: false) do |klass|
     klass_table_name = klass.table_name
     if overriden.index(klass_table_name.to_sym).nil?
-      count += 1
-      p = (count.to_f / models_count) * 100.0
-      if p > 1 && p.to_i % 10.0 == 0 && processed[p.to_i].nil?
-        processed[p.to_i] = true
-        Rails.logger.debug{"Processing models completed #{p.to_i}%"}
+      if Rails.env.development?
+        count += 1
+        p = (count.to_f / models_count) * 100.0
+        if p > 1 && p.to_i % 10.0 == 0 && processed[p.to_i].nil?
+          processed[p.to_i] = true
+          Rails.logger.debug{"Processing models completed #{p.to_i}%"}
+        end
       end
       process_resources(klass_table_name, additions[klass_table_name.to_sym])
     end
