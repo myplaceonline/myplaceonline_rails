@@ -1521,6 +1521,7 @@ en:
     resume:
       jobs: "Jobs"
       education: "Education"
+      major_accomplishments: "Major Accomplishments"
     job_managers:
       start_date: "Start Date"
       end_date: "End Date"
@@ -2885,3 +2886,4 @@ en:
       accomplishment: "Accomplishment"
       accomplishment_time: "Date/Time"
       job: "Job"
+      major: "Major Accomplishment?"

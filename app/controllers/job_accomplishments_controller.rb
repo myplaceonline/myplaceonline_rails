@@ -44,7 +44,8 @@ class JobAccomplishmentsController < MyplaceonlineController
       params.require(:job_accomplishment).permit(
         :accomplishment_title,
         :accomplishment,
-        :accomplishment_time
+        :accomplishment_time,
+        :major
       )
     end
     

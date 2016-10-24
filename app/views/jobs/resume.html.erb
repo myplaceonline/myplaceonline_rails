@@ -34,6 +34,15 @@
       <% end %>
     <% end %>
   <% end %>
+  <% if job.job_accomplishments.length > 0 %>
+    <h4><%= t("myplaceonline.resume.major_accomplishments") %></h4>
+    <% job.job_accomplishments.each do |job_accomplishment| %>
+      <% if job_accomplishment.major %>
+        <h5><%= job_accomplishment.accomplishment_title %></h5>
+        <p><%= Myp.display_date(job_accomplishment.accomplishment_time, current_user) %></p>
+      <% end %>
+    <% end %>
+  <% end %>
   <hr />
 <% end %>
 <h2><%= t("myplaceonline.resume.education") %></h2>
