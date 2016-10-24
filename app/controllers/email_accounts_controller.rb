@@ -5,6 +5,14 @@ class EmailAccountsController < MyplaceonlineController
     ]
   end
 
+  def search_index_name
+    Password.table_name
+  end
+
+  def search_parent_category
+    category_name.singularize
+  end
+
   protected
     def sorts
       ["email_accounts.updated_at DESC"]
@@ -16,7 +24,7 @@ class EmailAccountsController < MyplaceonlineController
       )
     end
 
-    def insecure
+    def sensitive
       true
     end
 end
