@@ -40,6 +40,9 @@ class Job < ActiveRecord::Base
   accepts_nested_attributes_for :job_files, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :job_files, [{:name => :identity_file}]
 
+  has_many :job_accomplishments, -> { order('accomplishment_time DESC') }, :dependent => :destroy
+  accepts_nested_attributes_for :job_accomplishments, allow_destroy: true, reject_if: :all_blank
+
   before_validation :update_file_folders
   
   def update_file_folders

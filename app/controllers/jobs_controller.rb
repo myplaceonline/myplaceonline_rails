@@ -11,6 +11,21 @@ class JobsController < MyplaceonlineController
     Myp.display_date_month_year(obj.started, User.current_user)
   end
     
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t('myplaceonline.jobs.add_accomplishment'),
+        link: new_job_job_accomplishment_path(@obj),
+        icon: "plus"
+      },
+      {
+        title: I18n.t('myplaceonline.jobs.accomplishments'),
+        link: job_job_accomplishments_path(@obj),
+        icon: "bars"
+      },
+    ]
+  end
+
   protected
     def sorts
       ["jobs.started DESC"]

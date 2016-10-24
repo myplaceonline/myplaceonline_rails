@@ -196,6 +196,7 @@ en:
       educations: "Educations"
       identity_phones: "Phone"
       email_accounts: "Email Accounts"
+      job_accomplishments: "Job Accomplishments"
     general:
       email: "E-mail"
       password: "Password"
@@ -1514,6 +1515,8 @@ en:
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
       hours_per_week: "Hours per Week"
+      accomplishments: "Accomplishments"
+      add_accomplishment: "Add Accomplishment"
     job_managers:
       start_date: "Start Date"
       end_date: "End Date"
@@ -2873,3 +2876,8 @@ en:
       student_id: "Student Identifier"
     email_accounts:
       password: "Password"
+    job_accomplishments:
+      accomplishment_title: "Summary"
+      accomplishment: "Accomplishment"
+      accomplishment_time: "Date/Time"
+      job: "Job"

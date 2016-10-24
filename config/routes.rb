@@ -256,6 +256,12 @@ Rails.application.routes.draw do
       { instance: true, link: "thumbnail" },
       { instance: true, link: "download" }
     ],
+    jobs: [
+      {
+        subresources: true,
+        name: :job_accomplishments
+      }
+    ],
     media_dumps: [
       {
         subresources: true,
