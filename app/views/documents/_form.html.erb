@@ -1,5 +1,6 @@
 <%= myp_text_field(f, :document_name, "myplaceonline.documents.document_name", obj.document_name, autofocus) %>
 <%= myp_text_field(f, :document_category, "myplaceonline.documents.document_category", obj.document_category, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
+<%= myp_check_box(f, :important, "myplaceonline.documents.important") %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
 <%=
   render partial: "myplaceonline/pictures_form", locals: {

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161028153842) do
+ActiveRecord::Schema.define(version: 20161028160139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1215,6 +1215,7 @@ ActiveRecord::Schema.define(version: 20161028153842) do
     t.integer  "identity_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.boolean  "important"
   end
 
   add_index "documents", ["identity_id"], name: "index_documents_on_identity_id", using: :btree

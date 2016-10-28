@@ -1,5 +1,6 @@
 <%= attribute_table_row(t("myplaceonline.documents.document_name"), obj.document_name) %>
 <%= attribute_table_row(t("myplaceonline.documents.document_category"), obj.document_category) %>
+<%= attribute_table_row_boolean(t("myplaceonline.documents.important"), obj.important) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <%=
   render partial: 'myplaceonline/pictures', locals: {

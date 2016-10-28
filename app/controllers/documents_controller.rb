@@ -17,6 +17,7 @@ class DocumentsController < MyplaceonlineController
         :document_name,
         :document_category,
         :notes,
+        :important,
         document_files_attributes: FilesController.multi_param_names
       )
     end
