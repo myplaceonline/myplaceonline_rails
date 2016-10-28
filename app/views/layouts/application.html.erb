@@ -76,7 +76,7 @@
         button_type = 0
         if Myp.is_initial_phonegap_request(params, session)
           button_type = 1
-        elsif Myp.is_ios
+        elsif Myp.is_phonegap_request(params, session) && Myp.is_ios
           button_type = 2
         elsif Myp.is_phonegap_request(params, session)
           button_type = 3
