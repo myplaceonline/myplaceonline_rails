@@ -60,4 +60,8 @@ class MoneyBalance < ActiveRecord::Base
   def action_link_title
     I18n.t("myplaceonline.money_balances.i_paid")
   end
+  
+  def action_link_icon
+    "eye"
+  end
 end

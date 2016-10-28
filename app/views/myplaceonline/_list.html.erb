@@ -15,7 +15,7 @@
         filtertext = item.filtertext
       end
       %>
-      <%= content_tag("li", data: {filtertext: filtertext}) do %>
+      <%= content_tag("li", data: {filtertext: filtertext, icon: item.splitLinkButton}) do %>
         <%= link_to(item.link) do %>
           <% if !item.icon.blank? %>
             <%= tag("img", src: item.icon, alt: item.title, title: item.title, height: 16, weight: 16, class: "ui-li-icon") %>

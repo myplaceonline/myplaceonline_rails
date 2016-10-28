@@ -476,7 +476,7 @@ module Myp
   end
 
   class ListItemRow
-    def initialize(title, link, count = nil, id = nil, parent_id = nil, filtertext = nil, icon = nil, splitLink = nil, splitLinkTitle = nil)
+    def initialize(title, link, count = nil, id = nil, parent_id = nil, filtertext = nil, icon = nil, splitLink = nil, splitLinkTitle = nil, splitLinkButton = nil)
       @title = title
       @link = link
       @count = count
@@ -486,6 +486,7 @@ module Myp
       @icon = ActionController::Base.helpers.asset_path(icon, type: :image)
       @splitLink = splitLink
       @splitLinkTitle = splitLinkTitle
+      @splitLinkButton = splitLinkButton
     end
     
     def title
@@ -522,6 +523,10 @@ module Myp
     
     def splitLinkTitle
       @splitLinkTitle
+    end
+    
+    def splitLinkButton
+      @splitLinkButton
     end
   end
 
@@ -1722,9 +1727,15 @@ module Myp
           end
           split_button_link = nil
           split_button_title = nil
+          split_button_icon = nil
           if search_result.respond_to?("action_link")
             split_button_link = search_result.action_link
-            split_button_title = search_result.action_link_title
+            if search_result.respond_to?("action_link_title")
+              split_button_title = search_result.action_link_title
+            end
+            if search_result.respond_to?("action_link_icon")
+              split_button_icon = search_result.action_link_icon
+            end
           end
           result = ListItemRow.new(
             final_display,
@@ -1735,7 +1746,8 @@ module Myp
             original_search,
             category.icon,
             split_button_link,
-            split_button_title
+            split_button_title,
+            split_button_icon
           )
         end
       end
