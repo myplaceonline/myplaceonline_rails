@@ -1,5 +1,5 @@
 <% content_for :heading do -%><%= page_heading(@obj, controller) %><% end -%>
-<%= flashes! %>
+<%= flashes!(@obj) %>
 <h1><%= @obj.display %></h1>
 <% if !@obj.event_time.nil? %>
   <p><%= t("myplaceonline.events.event_time") %>: <%= Myp.display_datetime(@obj.event_time, current_user) %></p>

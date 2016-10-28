@@ -1,15 +1,6 @@
 <% content_for :heading do -%><%= t('myplaceonline.trips.complete') %><% end -%>
 <h1><%= t('myplaceonline.trips.complete') %></h1>
-<%= flashes! %>
-<% if @obj.errors.any? %>
-  <div class="errors">
-    <ul>
-    <% @obj.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= flashes!(@obj) %>
 
 <%= form_tag do %>
   <% if current_user.has_emergency_contacts? %>

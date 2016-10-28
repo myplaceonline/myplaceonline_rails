@@ -1,15 +1,6 @@
 <% content_for :heading do -%><%= t('myplaceonline.emails.personalize') %><% end -%>
 <h1><%= t('myplaceonline.emails.personalize') %></h1>
-<%= flashes! %>
-<% if @obj.errors.any? %>
-  <div class="errors">
-    <ul>
-    <% @obj.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= flashes!(@obj) %>
 
 <p><%= t("myplaceonline.emails.personalize_description") %></p>
 <hr />

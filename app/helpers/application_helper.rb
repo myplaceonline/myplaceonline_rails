@@ -10,12 +10,18 @@ module ApplicationHelper
     if flash.empty? && (obj.nil? || (!obj.nil? && obj.errors.empty?)) && flash_params.nil?
       ""
     else
-      messages = flash.map { |name, msg| content_tag(:li, msg) }.join
+      messages = flash.map { |name, msg| content_tag(:li, msg.html_safe) }.join
       if !obj.nil? && obj.errors.any?
-        messages += obj.errors.full_messages.each.map{ |msg| content_tag(:li, msg) }.join
+        obj.errors.each do |attribute, error|
+          if attribute.to_sym == :noname
+            messages += content_tag(:li, error.html_safe)
+          else
+            messages += content_tag(:li, (I18n.t("myplaceonline." + obj.class.table_name + "." + attribute.to_s) + " " + error).html_safe)
+          end
+        end
       end
       if !flash_params.nil? && flash_params.has_key?("notice")
-        messages += content_tag(:li, flash_params["notice"])
+        messages += content_tag(:li, flash_params["notice"].html_safe)
       end
 
       html = <<-HTML
@@ -24,9 +30,11 @@ module ApplicationHelper
       </div>
       HTML
 
+      html = html.html_safe
+      
       Rails.logger.debug{"final flashes: #{html}"}
     
-      html.html_safe
+      html
     end
   end
   

@@ -317,6 +317,7 @@ en:
       created_at: "Creation Date"
       updated_at: "Last Updated Date"
       more: "More"
+      dup_item: "There's already an item with that %{dup_field}: %{link}"
     categories:
       no_results: "No Results. Create New "
     everything:

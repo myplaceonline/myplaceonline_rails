@@ -1,16 +1,7 @@
 <% content_for :heading do -%><%= t("myplaceonline.administration.send_email.title") %><% end -%>
 <h1><%= t("myplaceonline.administration.send_email.title") %></h1>
 
-<%= flashes! %>
-<% if @admin_email.errors.any? %>
-  <div class="errors">
-    <ul>
-    <% @admin_email.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= flashes!(@admin_email) %>
 
 <%= form_for @admin_email, :url => administration_send_email_path do |f| %>
   <%= f.fields_for :email, @admin_email.email do |child_fields| %>

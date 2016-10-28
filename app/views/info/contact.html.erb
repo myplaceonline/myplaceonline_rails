@@ -2,16 +2,7 @@
 
 <p><b><%= t("myplaceonline.email") %></b>: <%= mail_to(t("myplaceonline.siteEmail")) %></p>
 <hr />
-<%= flashes! %>
-<% if @obj.errors.any? %>
-  <div class="errors">
-    <ul>
-    <% @obj.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= flashes!(@obj) %>
 
 <%= form_for @obj, :url => info_contact_path do |f| %>
   <%= myp_text_field(f, :name, t("myplaceonline.contact.name"), @obj.name, true) %>

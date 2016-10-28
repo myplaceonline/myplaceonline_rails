@@ -126,4 +126,8 @@ class FeedsController < MyplaceonlineController
     def insecure
       true
     end
+
+    def check_duplicate_fields
+      [:url]
+    end
 end

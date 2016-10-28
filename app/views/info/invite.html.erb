@@ -1,15 +1,6 @@
 <% content_for :heading do -%><%= t('myplaceonline.info.invite') %><% end -%>
 
-<%= flashes! %>
-<% if @obj.errors.any? %>
-  <div class="errors">
-    <ul>
-    <% @obj.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= flashes!(@obj) %>
 
 <p><%= t("myplaceonline.info.invite_intro") %></p>
 <%= form_for @obj, :url => info_invite_path do |f| %>

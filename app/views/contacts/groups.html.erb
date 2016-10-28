@@ -2,7 +2,7 @@
 
 <h1><%= @obj.display %></h1>
 
-<%= flashes! %>
+<%= flashes!(@obj) %>
 
 <%= form_tag contact_groups_path(@obj), method: :post do %>
   <% @groups.each do |group| %>

@@ -1,15 +1,6 @@
 <% content_for :heading do -%><%= t('myplaceonline.permissions.share') %><% end -%>
 <h1><%= t('myplaceonline.permissions.share') %></h1>
-<%= flashes! %>
-<% if @permission.errors.any? %>
-  <div class="errors">
-    <ul>
-    <% @permission.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= flashes!(@permission) %>
 
 <%= form_for @permission, :url => permissions_share_path do |f| %>
   <%=

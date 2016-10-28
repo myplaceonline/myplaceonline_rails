@@ -1,15 +1,6 @@
 <% content_for :heading do -%><%= t('myplaceonline.trips.share') %><% end -%>
 <h1><%= t('myplaceonline.trips.share') %></h1>
-<%= flashes! %>
-<% if @obj.errors.any? %>
-  <div class="errors">
-    <ul>
-    <% @obj.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= flashes!(@obj) %>
 
 <p><%= t("myplaceonline.trips.share_description") %></p>
 <hr />

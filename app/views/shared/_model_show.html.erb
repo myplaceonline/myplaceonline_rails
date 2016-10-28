@@ -7,7 +7,7 @@
     <h1><%= controller.display_obj(@obj) %></h1>
 
     <% if !@myplet %>
-      <%= flashes! %>
+      <%= flashes!(@obj) %>
     <% end %>
   <% else %>
     <tr>

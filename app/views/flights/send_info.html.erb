@@ -1,15 +1,6 @@
 <% content_for :heading do -%><%= t('myplaceonline.flights.send_info') %><% end -%>
 <h1><%= t('myplaceonline.flights.send_info') %></h1>
-<%= flashes! %>
-<% if @message.errors.any? %>
-  <div class="errors">
-    <ul>
-    <% @message.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= flashes!(@message) %>
 
 <%= form_for @message, url: flight_send_info_path(@obj) do |f| %>
   <%= myp_check_box_tag("send_last_leg", t("myplaceonline.flights.send_last_leg"), true) %>

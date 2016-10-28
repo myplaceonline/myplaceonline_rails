@@ -1,16 +1,7 @@
 <% content_for :heading do -%><%= t("myplaceonline.administration.send_text_message.title") %><% end -%>
 <h1><%= t("myplaceonline.administration.send_text_message.title") %></h1>
 
-<%= flashes! %>
-<% if @admin_text_message.errors.any? %>
-  <div class="errors">
-    <ul>
-    <% @admin_text_message.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= flashes!(@admin_text_message) %>
 
 <%= form_for @admin_text_message, :url => administration_send_text_message_path do |f| %>
   <%= f.fields_for :text_message, @admin_text_message.text_message do |child_fields| %>
