@@ -305,6 +305,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       @mobile = @mobile.number
     end
     @original_mobile = @mobile
+    changes_made = false
     if !params[:commit].blank? || !params[:mobile].blank?
       @mobile = params[:mobile]
       if !@mobile.blank?
@@ -318,13 +319,23 @@ class Users::RegistrationsController < Devise::RegistrationsController
           identity_phone = current_user.primary_identity.identity_phones[current_user.primary_identity.identity_phones.index{|x| x.number == @original_mobile}]
           identity_phone.number = @mobile
         end
+        changes_made = true
       else
-        identity_phone = current_user.primary_identity.identity_phones[current_user.primary_identity.identity_phones.index{|x| x.number == @original_mobile}]
-        current_user.primary_identity.identity_phones.delete(identity_phone)
+        if !@original_mobile.blank?
+          identity_phone = current_user.primary_identity.identity_phones[current_user.primary_identity.identity_phones.index{|x| x.number == @original_mobile}]
+          current_user.primary_identity.identity_phones.delete(identity_phone)
+          changes_made = true
+        end
       end
       current_user.primary_identity.save!
-      redirect_to users_notifications_path,
-        :flash => { :notice => I18n.t("myplaceonline.users.notifications_saved") }
+      if changes_made
+        redirect_to(
+          users_notifications_path,
+          :flash => { :notice => I18n.t("myplaceonline.users.notifications_saved") }
+        )
+      else
+        redirect_to(users_notifications_path)
+      end
     else
       render :notifications
     end
