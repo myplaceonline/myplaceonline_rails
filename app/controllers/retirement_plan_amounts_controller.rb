@@ -35,8 +35,13 @@ class RetirementPlanAmountsController < MyplaceonlineController
     [
       :input_date,
       :amount,
-      :notes
+      :notes,
+      retirement_plan_amount_files_attributes: FilesController.multi_param_names
     ]
+  end
+
+  def may_upload
+    true
   end
 
   protected

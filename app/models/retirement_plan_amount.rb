@@ -1,5 +1,6 @@
 class RetirementPlanAmount < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
+  include AllowExistingConcern
 
   belongs_to :retirement_plan
   validates :input_date, presence: true
@@ -13,5 +14,15 @@ class RetirementPlanAmount < ActiveRecord::Base
     result = self.dobuild(params)
     result.input_date = User.current_user.date_now
     result
+  end
+
+  has_many :retirement_plan_amount_files, :dependent => :destroy
+  accepts_nested_attributes_for :retirement_plan_amount_files, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :retirement_plan_amount_files, [{:name => :identity_file}]
+
+  before_validation :update_file_folders
+  
+  def update_file_folders
+    put_files_in_folder(retirement_plan_amount_files, [I18n.t("myplaceonline.category.retirement_plans"), retirement_plan.display])
   end
 end

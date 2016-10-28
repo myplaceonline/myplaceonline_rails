@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161028183042) do
+ActiveRecord::Schema.define(version: 20161028185030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3632,6 +3632,19 @@ ActiveRecord::Schema.define(version: 20161028183042) do
   add_index "restaurants", ["identity_id"], name: "index_restaurants_on_identity_id", using: :btree
   add_index "restaurants", ["location_id"], name: "index_restaurants_on_location_id", using: :btree
 
+  create_table "retirement_plan_amount_files", force: :cascade do |t|
+    t.integer  "retirement_plan_amount_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "retirement_plan_amount_files", ["identity_file_id"], name: "index_retirement_plan_amount_files_on_identity_file_id", using: :btree
+  add_index "retirement_plan_amount_files", ["identity_id"], name: "index_retirement_plan_amount_files_on_identity_id", using: :btree
+  add_index "retirement_plan_amount_files", ["retirement_plan_amount_id"], name: "index_retirement_plan_amount_files_on_retirement_plan_amount_id", using: :btree
+
   create_table "retirement_plan_amounts", force: :cascade do |t|
     t.integer  "retirement_plan_id"
     t.date     "input_date"
@@ -4821,6 +4834,9 @@ ActiveRecord::Schema.define(version: 20161028183042) do
   add_foreign_key "restaurant_pictures", "identities"
   add_foreign_key "restaurant_pictures", "identity_files"
   add_foreign_key "restaurant_pictures", "restaurants"
+  add_foreign_key "retirement_plan_amount_files", "identities"
+  add_foreign_key "retirement_plan_amount_files", "identity_files"
+  add_foreign_key "retirement_plan_amount_files", "retirement_plan_amounts"
   add_foreign_key "retirement_plan_amounts", "identities"
   add_foreign_key "retirement_plan_amounts", "retirement_plans"
   add_foreign_key "retirement_plans", "companies"

@@ -1,3 +1,9 @@
 <%= attribute_table_row_date(t("myplaceonline.retirement_plan_amounts.input_date"), obj.input_date) %>
 <%= attribute_table_row_currency(t("myplaceonline.retirement_plan_amounts.amount"), obj.amount) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<%=
+  render partial: 'myplaceonline/pictures', locals: {
+    pics: obj.retirement_plan_amount_files,
+    placeholder: "myplaceonline.retirement_plan_amounts.file"
+  }
+%>
