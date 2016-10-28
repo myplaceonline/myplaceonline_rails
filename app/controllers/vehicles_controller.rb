@@ -3,6 +3,21 @@ class VehiclesController < MyplaceonlineController
     true
   end
 
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t("myplaceonline.vehicles.add_vehicle_service"),
+        link: new_vehicle_vehicle_service_path(@obj),
+        icon: "plus"
+      },
+      {
+        title: I18n.t("myplaceonline.vehicles.vehicle_services"),
+        link: vehicle_vehicle_services_path(@obj),
+        icon: "bars"
+      },
+    ]
+  end
+  
   protected
     def sorts
       ["lower(vehicles.name) ASC"]
@@ -71,17 +86,7 @@ class VehiclesController < MyplaceonlineController
           :_destroy,
           loan_attributes: Loan.params
         ],
-        vehicle_services_attributes: [
-          :id,
-          :short_description,
-          :date_due,
-          :date_serviced,
-          :miles,
-          :service_location,
-          :cost,
-          :notes,
-          :_destroy
-        ],
+        vehicle_services_attributes: VehicleServicesController.param_names,
         vehicle_insurances_attributes: [
           :id,
           :insurance_name,

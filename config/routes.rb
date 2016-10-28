@@ -345,6 +345,12 @@ Rails.application.routes.draw do
         name: :trip_stories
       }
     ],
+    vehicles: [
+      {
+        subresources: true,
+        name: :vehicle_services
+      }
+    ],
     website_lists: [
       { instance: true, link: "roll" }
     ]
@@ -369,7 +375,7 @@ Rails.application.routes.draw do
         p = (count.to_f / models_count) * 100.0
         if p > 1 && p.to_i % 10.0 == 0 && processed[p.to_i].nil?
           processed[p.to_i] = true
-          Rails.logger.debug{"Processing models completed #{p.to_i}%"}
+          Rails.logger.debug{"routes.rb: Processing models: #{p.to_i}%"}
         end
       end
       process_resources(klass_table_name, additions[klass_table_name.to_sym])

@@ -1,0 +1,7 @@
+<%= attribute_table_row(t("myplaceonline.vehicle_service.short_description"), obj.short_description) %>
+<%= attribute_table_row(t("myplaceonline.vehicle_service.date_serviced"), Myp.display_date(obj.date_serviced, current_user)) %>
+<%= attribute_table_row(t("myplaceonline.vehicle_service.date_due"), Myp.display_date(obj.date_due, current_user)) %>
+<%= attribute_table_row(t("myplaceonline.vehicle_service.service_location"), obj.service_location) %>
+<%= attribute_table_row(t("myplaceonline.vehicle_service.cost"), obj.cost) %>
+<%= attribute_table_row(t("myplaceonline.vehicle_service.miles"), obj.miles) %>
+<%= attribute_table_row_markdown(t("myplaceonline.vehicle_service.notes"), obj.notes) %>

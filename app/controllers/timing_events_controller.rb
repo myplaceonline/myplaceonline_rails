@@ -12,23 +12,23 @@ class TimingEventsController < MyplaceonlineController
   end
 
   def footer_items_index
-    super + [
+    [
       {
-        title: I18n.t('myplaceonline.timing_events.timing'),
+        title: I18n.t("myplaceonline.timing_events.timing"),
         link: timing_path(@parent),
         icon: "back"
       }
-    ]
+    ] + super
   end
   
   def footer_items_show
-    super + [
+    [
       {
-        title: I18n.t('myplaceonline.timing_events.timing'),
+        title: I18n.t("myplaceonline.timing_events.timing"),
         link: timing_path(@obj.timing),
         icon: "back"
       }
-    ]
+    ] + super
   end
   
   protected
@@ -42,7 +42,9 @@ class TimingEventsController < MyplaceonlineController
 
     def obj_params
       params.require(:timing_event).permit(
-        :timing_event_start, :timing_event_end, :notes
+        :timing_event_start,
+        :timing_event_end,
+        :notes
       )
     end
     

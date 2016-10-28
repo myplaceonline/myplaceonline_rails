@@ -198,6 +198,7 @@ en:
       email_accounts: "Email Accounts"
       job_accomplishments: "Job Accomplishments"
       documents: "Documents"
+      vehicle_services: "Vehicle Services"
     general:
       email: "E-mail"
       password: "Password"
@@ -1075,6 +1076,8 @@ en:
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
       owned_for: "Owned For"
+      add_vehicle_service: "Add Vehicle Service"
+      vehicle_services: "Vehicle Services"
     vehicle_insurances:
       insurance_name: "Name"
       insurances: "Insurances"
@@ -1116,6 +1119,7 @@ en:
       cost: "Cost"
       miles: "Miles"
       notes: "Notes"
+      vehicle: "Vehicle"
     questions:
       name: "Question"
       notes: "Notes"

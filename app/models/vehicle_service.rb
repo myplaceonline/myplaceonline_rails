@@ -48,4 +48,10 @@ class VehicleService < ActiveRecord::Base
   def on_after_destroy
     CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: self.id)
   end
+
+  def self.build(params = nil)
+    result = self.dobuild(params)
+    result.date_serviced = User.current_user.date_now
+    result
+  end
 end

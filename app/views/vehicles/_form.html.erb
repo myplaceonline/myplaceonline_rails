@@ -62,63 +62,6 @@
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,
-    heading: t("myplaceonline.vehicle_service.services"),
-    childpropertiesname: :vehicle_services,
-    childproperties: obj.vehicle_services,
-    deletebutton: t("myplaceonline.vehicle_service.delete"),
-    addbutton: t("myplaceonline.vehicle_service.add"),
-    expanded: obj.vehicle_services.length > 0,
-    formjson: [
-      {
-        type: 'text',
-        name: 'short_description',
-        placeholder: t("myplaceonline.vehicle_service.short_description"),
-        autofocus: true
-      },
-      {
-        type: 'date',
-        name: 'date_due',
-        placeholder: t("myplaceonline.vehicle_service.date_due")
-      },
-      {
-        type: 'date',
-        name: 'date_serviced',
-        placeholder: t("myplaceonline.vehicle_service.date_serviced")
-      },
-      {
-        type: 'text',
-        name: 'service_location',
-        placeholder: t("myplaceonline.vehicle_service.service_location")
-      },
-      {
-        type: 'text',
-        name: 'cost',
-        placeholder: t("myplaceonline.vehicle_service.cost")
-      },
-      {
-        type: 'text',
-        name: 'miles',
-        placeholder: t("myplaceonline.vehicle_service.miles")
-      },
-      {
-        type: 'textarea',
-        name: 'notes',
-        placeholder: t("myplaceonline.vehicle_service.notes")
-      }
-    ]
-  } do |child_fields, childproperty|
-%>
-  <%= myp_text_field(child_fields, :short_description, "myplaceonline.vehicle_service.short_description", childproperty.short_description) %>
-  <%= myp_date_field(child_fields, :date_due, "myplaceonline.vehicle_service.date_due", childproperty.date_due) %>
-  <%= myp_date_field(child_fields, :date_serviced, "myplaceonline.vehicle_service.date_serviced", childproperty.date_serviced) %>
-  <%= myp_text_field(child_fields, :service_location, "myplaceonline.vehicle_service.service_location", childproperty.service_location) %>
-  <%= myp_text_field(child_fields, :cost, "myplaceonline.vehicle_service.cost", childproperty.cost) %>
-  <%= myp_text_field(child_fields, :miles, "myplaceonline.vehicle_service.miles", childproperty.miles) %>
-  <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.vehicle_service.notes", childproperty.notes) %>
-<% end %>
-<%=
-  render layout: 'myplaceonline/childproperties', locals: {
-    f: f,
     heading: t("myplaceonline.vehicle_insurances.insurances"),
     childpropertiesname: :vehicle_insurances,
     childproperties: obj.vehicle_insurances,
