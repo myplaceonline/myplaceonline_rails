@@ -1,4 +1,4 @@
-<%# arguments: { f: "form", obj: "object", pictures_field: "symbol", position_field: "symbol", itemname: "string", item_placeholder: "string", heading: "string", addbutton: "string", addbutton_multi: "string", deletebutton: "string" } %>
+<%# arguments: { f: "form", obj: "object", pictures_field: "symbol", position_field: "symbol", itemname: "string", item_placeholder: "string", heading: "string", addbutton: "string", addbutton_multi: "string", deletebutton: "string", expanded: "boolean" } %>
 <%
   if !defined?(useprogress)
     useprogress = true
@@ -13,6 +13,7 @@
   addbutton ||= "myplaceonline.pictures.add_picture"
   addbutton_multi ||= "myplaceonline.pictures.add_pictures"
   deletebutton ||= "myplaceonline.pictures.delete_picture"
+  expanded ||= false
   
   fileitem = {
     type: "file",
@@ -62,7 +63,7 @@
     childproperties: obj.send(pictures_field.to_s),
     deletebutton: t(deletebutton),
     addbutton: allowmultiple ? t(addbutton_multi) : t(addbutton),
-    expanded: obj.send(pictures_field.to_s).length > 0,
+    expanded: obj.send(pictures_field.to_s).length > 0 || expanded,
     position_field: position_field,
     itemname: itemname,
     formjson: formjson

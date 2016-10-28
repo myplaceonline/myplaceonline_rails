@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161024025431) do
+ActiveRecord::Schema.define(version: 20161028153842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1191,6 +1191,33 @@ ActiveRecord::Schema.define(version: 20161024025431) do
 
   add_index "doctors", ["contact_id"], name: "index_doctors_on_contact_id", using: :btree
   add_index "doctors", ["identity_id"], name: "index_doctors_on_identity_id", using: :btree
+
+  create_table "document_files", force: :cascade do |t|
+    t.integer  "document_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "document_files", ["document_id"], name: "index_document_files_on_document_id", using: :btree
+  add_index "document_files", ["identity_file_id"], name: "index_document_files_on_identity_file_id", using: :btree
+  add_index "document_files", ["identity_id"], name: "index_document_files_on_identity_id", using: :btree
+
+  create_table "documents", force: :cascade do |t|
+    t.string   "document_name"
+    t.text     "notes"
+    t.string   "document_category"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "documents", ["identity_id"], name: "index_documents_on_identity_id", using: :btree
 
   create_table "drafts", force: :cascade do |t|
     t.string   "draft_name"
@@ -4541,6 +4568,10 @@ ActiveRecord::Schema.define(version: 20161024025431) do
   add_foreign_key "dessert_locations", "identities"
   add_foreign_key "dessert_locations", "locations"
   add_foreign_key "diary_entries", "encrypted_values", column: "entry_encrypted_id"
+  add_foreign_key "document_files", "documents"
+  add_foreign_key "document_files", "identities"
+  add_foreign_key "document_files", "identity_files"
+  add_foreign_key "documents", "identities"
   add_foreign_key "drafts", "identities"
   add_foreign_key "dreams", "encrypted_values", column: "dream_encrypted_id"
   add_foreign_key "dreams", "identities"

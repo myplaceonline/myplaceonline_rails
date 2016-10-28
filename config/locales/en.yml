@@ -197,6 +197,7 @@ en:
       identity_phones: "Phone"
       email_accounts: "Email Accounts"
       job_accomplishments: "Job Accomplishments"
+      documents: "Documents"
     general:
       email: "E-mail"
       password: "Password"
@@ -2887,3 +2888,11 @@ en:
       accomplishment_time: "Date/Time"
       job: "Job"
       major: "Major Accomplishment?"
+    documents:
+      document_name: "Name"
+      document_category: "Category"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"
