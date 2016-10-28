@@ -74,6 +74,16 @@ class RecreationalVehiclesController < MyplaceonlineController
         link: recreational_vehicle_recreational_vehicle_measurements_path(@obj),
         icon: "bars"
       },
+      {
+        title: I18n.t("myplaceonline.recreational_vehicles.add_recreational_vehicle_service"),
+        link: new_recreational_vehicle_recreational_vehicle_service_path(@obj),
+        icon: "plus"
+      },
+      {
+        title: I18n.t("myplaceonline.recreational_vehicles.recreational_vehicle_services"),
+        link: recreational_vehicle_recreational_vehicle_services_path(@obj),
+        icon: "bars"
+      },
     ]
   end
 

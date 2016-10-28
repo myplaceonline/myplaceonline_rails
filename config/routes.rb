@@ -324,6 +324,10 @@ Rails.application.routes.draw do
       {
         subresources: true,
         name: :recreational_vehicle_measurements
+      },
+      {
+        subresources: true,
+        name: :recreational_vehicle_services
       }
     ],
     restaurants: [

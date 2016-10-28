@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161028165127) do
+ActiveRecord::Schema.define(version: 20161028172144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3511,6 +3511,38 @@ ActiveRecord::Schema.define(version: 20161028165127) do
   add_index "recreational_vehicle_pictures", ["identity_id"], name: "index_recreational_vehicle_pictures_on_identity_id", using: :btree
   add_index "recreational_vehicle_pictures", ["recreational_vehicle_id"], name: "index_recreational_vehicle_pictures_on_recreational_vehicle_id", using: :btree
 
+  create_table "recreational_vehicle_service_files", force: :cascade do |t|
+    t.integer  "recreational_vehicle_service_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  add_index "recreational_vehicle_service_files", ["identity_file_id"], name: "index_recreational_vehicle_service_files_on_identity_file_id", using: :btree
+  add_index "recreational_vehicle_service_files", ["identity_id"], name: "index_recreational_vehicle_service_files_on_identity_id", using: :btree
+  add_index "recreational_vehicle_service_files", ["recreational_vehicle_service_id"], name: "index_rvservicefiles_rvserviceid", using: :btree
+
+  create_table "recreational_vehicle_services", force: :cascade do |t|
+    t.integer  "recreational_vehicle_id"
+    t.text     "notes"
+    t.string   "short_description"
+    t.date     "date_due"
+    t.date     "date_serviced"
+    t.string   "service_location"
+    t.decimal  "cost",                    precision: 10, scale: 2
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+  end
+
+  add_index "recreational_vehicle_services", ["identity_id"], name: "index_recreational_vehicle_services_on_identity_id", using: :btree
+  add_index "recreational_vehicle_services", ["recreational_vehicle_id"], name: "index_recreational_vehicle_services_on_recreational_vehicle_id", using: :btree
+
   create_table "recreational_vehicles", force: :cascade do |t|
     t.string   "rv_name",               limit: 255
     t.string   "vin",                   limit: 255
@@ -4745,6 +4777,11 @@ ActiveRecord::Schema.define(version: 20161028165127) do
   add_foreign_key "recipe_pictures", "identities"
   add_foreign_key "recipe_pictures", "identity_files"
   add_foreign_key "recipe_pictures", "recipes"
+  add_foreign_key "recreational_vehicle_service_files", "identities"
+  add_foreign_key "recreational_vehicle_service_files", "identity_files"
+  add_foreign_key "recreational_vehicle_service_files", "recreational_vehicle_services"
+  add_foreign_key "recreational_vehicle_services", "identities"
+  add_foreign_key "recreational_vehicle_services", "recreational_vehicles"
   add_foreign_key "restaurant_pictures", "identities"
   add_foreign_key "restaurant_pictures", "identity_files"
   add_foreign_key "restaurant_pictures", "restaurants"
