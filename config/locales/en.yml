@@ -1954,6 +1954,7 @@ en:
     notepads:
       title: "Title"
       notepad_data: "Notepad"
+      initial_help_text: "This notepad saves as you type. It may be used as a quick way to open myplaceonline and save some notes."
     myplets:
       settings: "Settings"
       title: "Title"

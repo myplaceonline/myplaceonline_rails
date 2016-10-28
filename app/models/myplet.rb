@@ -73,7 +73,8 @@ class Myplet < ActiveRecord::Base
     }))
 
     x = Notepad.new({
-      title: I18n.t("myplaceonline.myplets.titles.notepad")
+      title: I18n.t("myplaceonline.myplets.titles.notepad"),
+      notepad_data: I18n.t("myplaceonline.notepads.initial_help_text")
     })
     x.save!
     result.push(Myplet.new({
