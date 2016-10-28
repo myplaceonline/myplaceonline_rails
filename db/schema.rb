@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161028172144) do
+ActiveRecord::Schema.define(version: 20161028181353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3632,6 +3632,27 @@ ActiveRecord::Schema.define(version: 20161028172144) do
   add_index "restaurants", ["identity_id"], name: "index_restaurants_on_identity_id", using: :btree
   add_index "restaurants", ["location_id"], name: "index_restaurants_on_location_id", using: :btree
 
+  create_table "retirement_plans", force: :cascade do |t|
+    t.string   "retirement_plan_name"
+    t.integer  "retirement_plan_type"
+    t.integer  "company_id"
+    t.integer  "periodic_payment_id"
+    t.date     "started"
+    t.text     "notes"
+    t.integer  "password_id"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "retirement_plans", ["company_id"], name: "index_retirement_plans_on_company_id", using: :btree
+  add_index "retirement_plans", ["identity_id"], name: "index_retirement_plans_on_identity_id", using: :btree
+  add_index "retirement_plans", ["password_id"], name: "index_retirement_plans_on_password_id", using: :btree
+  add_index "retirement_plans", ["periodic_payment_id"], name: "index_retirement_plans_on_periodic_payment_id", using: :btree
+
   create_table "reward_programs", force: :cascade do |t|
     t.string   "reward_program_name",   limit: 255
     t.date     "started"
@@ -4785,6 +4806,10 @@ ActiveRecord::Schema.define(version: 20161028172144) do
   add_foreign_key "restaurant_pictures", "identities"
   add_foreign_key "restaurant_pictures", "identity_files"
   add_foreign_key "restaurant_pictures", "restaurants"
+  add_foreign_key "retirement_plans", "companies"
+  add_foreign_key "retirement_plans", "identities"
+  add_foreign_key "retirement_plans", "passwords"
+  add_foreign_key "retirement_plans", "periodic_payments"
   add_foreign_key "ssh_keys", "encrypted_values", column: "ssh_private_key_encrypted_id"
   add_foreign_key "ssh_keys", "identities"
   add_foreign_key "ssh_keys", "passwords"

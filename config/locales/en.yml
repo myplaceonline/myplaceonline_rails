@@ -201,6 +201,7 @@ en:
       vehicle_services: "Vehicle Services"
       recreational_vehicle_measurements: "RV Measurements"
       recreational_vehicle_services: "RV Services"
+      retirement_plans: "Retirement Plans"
     general:
       email: "E-mail"
       password: "Password"
@@ -2928,3 +2929,13 @@ en:
       cost: "Cost"
       notes: "Notes"
       recreational_vehicle: "RV"
+    retirement_plans:
+      retirement_plan_name: "Name"
+      started: "Started"
+      notes: "Notes"
+      retirement_plan_type: "Type"
+      company: "Company"
+      periodic_payment: "Periodic Payment"
+      password: "Password"
+      type_401k: "401(k)"
+      type_social_security: "Social Security"
