@@ -52,4 +52,12 @@ class MoneyBalance < ActiveRecord::Base
     end
     to.send_email(subject, Myp.markdown_to_html(body_markdown).html_safe, cc, nil, body_markdown)
   end
+  
+  def action_link
+    Rails.application.routes.url_helpers.send("money_balance_add_path", self, owner_paid: self.current_user_owns? ? "true" : "false")
+  end
+  
+  def action_link_title
+    I18n.t("myplaceonline.money_balances.i_paid")
+  end
 end

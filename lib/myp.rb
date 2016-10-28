@@ -1720,6 +1720,12 @@ module Myp
           if final_display.length > 100
             final_display = final_display[0..97] + "..."
           end
+          split_button_link = nil
+          split_button_title = nil
+          if search_result.respond_to?("action_link")
+            split_button_link = search_result.action_link
+            split_button_title = search_result.action_link_title
+          end
           result = ListItemRow.new(
             final_display,
             "/" + category.name + "/" + search_result.id.to_s,
@@ -1727,7 +1733,9 @@ module Myp
             nil,
             nil,
             original_search,
-            category.icon
+            category.icon,
+            split_button_link,
+            split_button_title
           )
         end
       end
