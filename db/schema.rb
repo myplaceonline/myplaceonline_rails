@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161028181353) do
+ActiveRecord::Schema.define(version: 20161028183042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3632,6 +3632,21 @@ ActiveRecord::Schema.define(version: 20161028181353) do
   add_index "restaurants", ["identity_id"], name: "index_restaurants_on_identity_id", using: :btree
   add_index "restaurants", ["location_id"], name: "index_restaurants_on_location_id", using: :btree
 
+  create_table "retirement_plan_amounts", force: :cascade do |t|
+    t.integer  "retirement_plan_id"
+    t.date     "input_date"
+    t.decimal  "amount",             precision: 10, scale: 2
+    t.integer  "identity_id"
+    t.text     "notes"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+  end
+
+  add_index "retirement_plan_amounts", ["identity_id"], name: "index_retirement_plan_amounts_on_identity_id", using: :btree
+  add_index "retirement_plan_amounts", ["retirement_plan_id"], name: "index_retirement_plan_amounts_on_retirement_plan_id", using: :btree
+
   create_table "retirement_plans", force: :cascade do |t|
     t.string   "retirement_plan_name"
     t.integer  "retirement_plan_type"
@@ -4806,6 +4821,8 @@ ActiveRecord::Schema.define(version: 20161028181353) do
   add_foreign_key "restaurant_pictures", "identities"
   add_foreign_key "restaurant_pictures", "identity_files"
   add_foreign_key "restaurant_pictures", "restaurants"
+  add_foreign_key "retirement_plan_amounts", "identities"
+  add_foreign_key "retirement_plan_amounts", "retirement_plans"
   add_foreign_key "retirement_plans", "companies"
   add_foreign_key "retirement_plans", "identities"
   add_foreign_key "retirement_plans", "passwords"

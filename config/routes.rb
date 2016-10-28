@@ -333,6 +333,12 @@ Rails.application.routes.draw do
     restaurants: [
       { instance: false, link: "random" }
     ],
+    retirement_plans: [
+      {
+        subresources: true,
+        name: :retirement_plan_amounts
+      }
+    ],
     timings: [
       {
         subresources: true,

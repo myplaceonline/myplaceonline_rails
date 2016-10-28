@@ -202,6 +202,7 @@ en:
       recreational_vehicle_measurements: "RV Measurements"
       recreational_vehicle_services: "RV Services"
       retirement_plans: "Retirement Plans"
+      retirement_plan_amounts: "Retirement Plan Amounts"
     general:
       email: "E-mail"
       password: "Password"
@@ -2939,3 +2940,9 @@ en:
       password: "Password"
       type_401k: "401(k)"
       type_social_security: "Social Security"
+      add_retirement_plan_amount: "Add Amount"
+      retirement_plan_amounts: "Amounts"
+    retirement_plan_amounts:
+      retirement_plan: "Retirement Plan"
+      input_date: "Date"
+      amount: "Amount"

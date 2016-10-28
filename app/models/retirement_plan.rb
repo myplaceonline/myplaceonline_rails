@@ -24,4 +24,7 @@ class RetirementPlan < ActiveRecord::Base
   belongs_to :password
   accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
   allow_existing :password
+
+  has_many :retirement_plan_amounts, :dependent => :destroy
+  accepts_nested_attributes_for :retirement_plan_amounts, allow_destroy: true, reject_if: :all_blank
 end

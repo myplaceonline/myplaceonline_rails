@@ -14,7 +14,7 @@ class VehicleServicesController < MyplaceonlineController
   def footer_items_index
     [
       {
-        title: I18n.t('myplaceonline.vehicle_service.vehicle'),
+        title: I18n.t("myplaceonline.vehicle_service.vehicle"),
         link: vehicle_path(@parent),
         icon: "back"
       }
@@ -24,7 +24,7 @@ class VehicleServicesController < MyplaceonlineController
   def footer_items_show
     [
       {
-        title: I18n.t('myplaceonline.vehicle_service.vehicle'),
+        title: I18n.t("myplaceonline.vehicle_service.vehicle"),
         link: vehicle_path(@obj.vehicle),
         icon: "back"
       }
