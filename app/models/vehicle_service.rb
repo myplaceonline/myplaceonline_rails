@@ -1,5 +1,6 @@
 class VehicleService < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
+  include AllowExistingConcern
 
   DEFAULT_VEHICLE_SERVICE_THRESHOLD_SECONDS = 15.days
 
@@ -53,5 +54,15 @@ class VehicleService < ActiveRecord::Base
     result = self.dobuild(params)
     result.date_serviced = User.current_user.date_now
     result
+  end
+
+  has_many :vehicle_service_files, :dependent => :destroy
+  accepts_nested_attributes_for :vehicle_service_files, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :vehicle_service_files, [{:name => :identity_file}]
+
+  before_validation :update_file_folders
+  
+  def update_file_folders
+    put_files_in_folder(vehicle_service_files, [I18n.t("myplaceonline.category.vehicles"), vehicle.display, display])
   end
 end

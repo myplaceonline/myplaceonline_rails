@@ -5,3 +5,16 @@
 <%= myp_text_field(f, :cost, "myplaceonline.vehicle_service.cost", obj.cost) %>
 <%= myp_text_field(f, :miles, "myplaceonline.vehicle_service.miles", obj.miles) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.vehicle_service.notes", obj.notes) %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :vehicle_service_files,
+    item_placeholder: "myplaceonline.vehicle_services.file",
+    heading: "myplaceonline.vehicle_services.files",
+    addbutton: "myplaceonline.vehicle_services.add_file",
+    addbutton_multi: "myplaceonline.vehicle_services.add_files",
+    deletebutton: "myplaceonline.vehicle_services.delete_file"
+  }
+%>

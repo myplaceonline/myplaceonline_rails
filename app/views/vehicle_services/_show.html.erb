@@ -5,3 +5,9 @@
 <%= attribute_table_row(t("myplaceonline.vehicle_service.cost"), obj.cost) %>
 <%= attribute_table_row(t("myplaceonline.vehicle_service.miles"), obj.miles) %>
 <%= attribute_table_row_markdown(t("myplaceonline.vehicle_service.notes"), obj.notes) %>
+<%=
+  render partial: 'myplaceonline/pictures', locals: {
+    pics: @obj.vehicle_service_files,
+    placeholder: "myplaceonline.vehicle_services.file"
+  }
+%>

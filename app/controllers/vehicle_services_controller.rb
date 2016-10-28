@@ -41,7 +41,8 @@ class VehicleServicesController < MyplaceonlineController
       :service_location,
       :cost,
       :notes,
-      :_destroy
+      :_destroy,
+      vehicle_service_files_attributes: FilesController.multi_param_names
     ]
   end
 
@@ -51,6 +52,10 @@ class VehicleServicesController < MyplaceonlineController
 
   def bubble_text(obj)
     Myp.display_date(obj.date_serviced, current_user)
+  end
+
+  def may_upload
+    true
   end
 
   protected
