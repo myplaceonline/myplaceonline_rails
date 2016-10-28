@@ -320,6 +320,12 @@ Rails.application.routes.draw do
         ]
       }
     ],
+    recreational_vehicles: [
+      {
+        subresources: true,
+        name: :recreational_vehicle_measurements
+      }
+    ],
     restaurants: [
       { instance: false, link: "random" }
     ],

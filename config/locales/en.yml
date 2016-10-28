@@ -199,6 +199,7 @@ en:
       job_accomplishments: "Job Accomplishments"
       documents: "Documents"
       vehicle_services: "Vehicle Services"
+      recreational_vehicle_measurements: "RV Measurements"
     general:
       email: "E-mail"
       password: "Password"
@@ -1230,6 +1231,8 @@ en:
       delete_picture: "Delete Picture"
       owned_for: "Owned For"
       floor_length: "Floor Length"
+      recreational_vehicle_measurements: "RV Measurements"
+      add_recreational_vehicle_measurement: "Add RV Measurement"
     recreational_vehicle_measurements:
       heading: "Measurements"
       add: "Add Measurement"
@@ -1240,6 +1243,7 @@ en:
       height: "Height"
       depth: "Depth"
       notes: "Notes"
+      recreational_vehicle: "RV"
     cashback:
       heading: "Cashback"
       cashback_percentage: "Percentage"

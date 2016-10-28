@@ -54,22 +54,27 @@ class RecreationalVehiclesController < MyplaceonlineController
         :_destroy,
         company_attributes: CompaniesController.param_names,
         periodic_payment_attributes: PeriodicPaymentsController.param_names
-      ],
-      recreational_vehicle_measurements_attributes: [
-        :id,
-        :_destroy,
-        :measurement_name,
-        :measurement_type,
-        :width,
-        :height,
-        :depth,
-        :notes
       ]
     ]
   end
   
   def self.reject_if_blank(attributes)
     attributes.dup.delete_if {|key, value| key.to_s == "dimensions_type" || key.to_s == "weight_type" || key.to_s == "liquid_capacity_type" || key.to_s == "volume_type" || key.to_s == "location_purchased_attributes" }.all? {|key, value| value.blank?}
+  end
+
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t("myplaceonline.recreational_vehicles.add_recreational_vehicle_measurement"),
+        link: new_recreational_vehicle_recreational_vehicle_measurement_path(@obj),
+        icon: "plus"
+      },
+      {
+        title: I18n.t("myplaceonline.recreational_vehicles.recreational_vehicle_measurements"),
+        link: recreational_vehicle_recreational_vehicle_measurements_path(@obj),
+        icon: "bars"
+      },
+    ]
   end
 
   protected

@@ -1,0 +1,6 @@
+<%= myp_text_field(f, :measurement_name, "myplaceonline.recreational_vehicle_measurements.measurement_name", obj.measurement_name, autofocus) %>
+<%= myp_select(f, :measurement_type, "myplaceonline.recreational_vehicle_measurements.measurement_type", Myp.translate_options(Myp::DIMENSIONS), obj.measurement_type) %>
+<%= myp_text_field(f, :width, "myplaceonline.recreational_vehicle_measurements.width", obj.width) %>
+<%= myp_text_field(f, :height, "myplaceonline.recreational_vehicle_measurements.height", obj.height) %>
+<%= myp_text_field(f, :depth, "myplaceonline.recreational_vehicle_measurements.depth", obj.depth) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.recreational_vehicle_measurements.notes", obj.notes) %>
