@@ -7,7 +7,7 @@
   <%= f.fields_for :email, @admin_email.email do |child_fields| %>
     <%= myp_text_field(child_fields, :email_category, "myplaceonline.administration.send_email.category", @admin_email.email.email_category) %>
     <%= myp_text_field(child_fields, :subject, "myplaceonline.administration.send_email.subject", @admin_email.email.subject, true) %>
-    <%= myp_text_area_markdown(child_fields, :body, "myplaceonline.administration.send_email.body", @admin_email.email.body) %>
+    <%= myp_text_area_markdown(child_fields, :body, "myplaceonline.administration.send_email.body", @admin_email.email.body, collapsed: false) %>
   <% end %>
   <%= myp_text_area(f, :send_only_to, "myplaceonline.administration.send_email.only_send_to", @admin_email.send_only_to) %>
   <%= myp_text_area(f, :exclude_emails, "myplaceonline.administration.send_email.exclude_emails", @admin_email.exclude_emails) %>
