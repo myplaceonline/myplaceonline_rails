@@ -2959,3 +2959,4 @@ en:
       expires: "Expires"
       quantity: "Quantity"
       storage_location: "Storage Location"
+      expiring: "Perishable Food %{name} expires %{delta}"
