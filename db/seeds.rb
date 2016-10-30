@@ -136,7 +136,8 @@ Category.create!([
   {id: 136, name: "educations", link: "educations", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/education.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 137, name: "email_accounts", link: "email_accounts", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/email_accounts.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 170, name: "documents", link: "documents", position: 0, parent_id: 1, additional_filtertext: "important", icon: "FatCow_Icons16x16/document_black.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 171, name: "retirement_plans", link: "retirement_plans", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/financial_functions.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
+  {id: 171, name: "retirement_plans", link: "retirement_plans", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/financial_functions.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 172, name: "perishable_foods", link: "perishable_foods", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/spam.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
 ])
 
 user = User.new

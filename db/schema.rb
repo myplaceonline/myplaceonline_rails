@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161029010710) do
+ActiveRecord::Schema.define(version: 20161030193831) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3060,6 +3060,24 @@ ActiveRecord::Schema.define(version: 20161029010710) do
   add_index "periodic_payments", ["identity_id"], name: "index_periodic_payments_on_identity_id", using: :btree
   add_index "periodic_payments", ["password_id"], name: "index_periodic_payments_on_password_id", using: :btree
 
+  create_table "perishable_foods", force: :cascade do |t|
+    t.integer  "food_id"
+    t.date     "purchased"
+    t.date     "expires"
+    t.string   "storage_location"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "quantity"
+    t.integer  "identity_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "perishable_foods", ["food_id"], name: "index_perishable_foods_on_food_id", using: :btree
+  add_index "perishable_foods", ["identity_id"], name: "index_perishable_foods_on_identity_id", using: :btree
+
   create_table "permission_share_children", force: :cascade do |t|
     t.string   "subject_class"
     t.integer  "subject_id"
@@ -4788,6 +4806,8 @@ ActiveRecord::Schema.define(version: 20161029010710) do
   add_foreign_key "password_shares", "passwords"
   add_foreign_key "password_shares", "users"
   add_foreign_key "periodic_payments", "passwords"
+  add_foreign_key "perishable_foods", "foods"
+  add_foreign_key "perishable_foods", "identities"
   add_foreign_key "permission_share_children", "identities"
   add_foreign_key "permission_share_children", "permission_shares"
   add_foreign_key "permission_share_children", "shares"

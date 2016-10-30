@@ -1,0 +1,6 @@
+<%= attribute_table_row_reference(t("myplaceonline.foods.food"), "food_path", obj.food) %>
+<%= attribute_table_row_date(t("myplaceonline.perishable_foods.expires"), obj.expires) %>
+<%= attribute_table_row_date(t("myplaceonline.perishable_foods.purchased"), obj.purchased) %>
+<%= attribute_table_row(t("myplaceonline.perishable_foods.storage_location"), obj.storage_location) %>
+<%= attribute_table_row(t("myplaceonline.perishable_foods.quantity"), obj.quantity) %>
+<%= attribute_table_row_markdown(t("myplaceonline.meals.notes"), obj.notes) %>

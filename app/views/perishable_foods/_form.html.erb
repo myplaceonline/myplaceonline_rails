@@ -1,0 +1,18 @@
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :food_attributes,
+    existingobj: obj.food,
+    heading: t("myplaceonline.foods.food"),
+    objform: "foods/form",
+    existingobjurl: "food_path",
+    searchurl: "/foods.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%= myp_date_field(f, :expires, "myplaceonline.perishable_foods.expires", obj.expires) %>
+<%= myp_date_field(f, :purchased, "myplaceonline.perishable_foods.purchased", obj.purchased) %>
+<%= myp_text_field(f, :storage_location, "myplaceonline.perishable_foods.storage_location", obj.storage_location, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
+<%= myp_integer_field(f, :quantity, "myplaceonline.perishable_foods.quantity", obj.quantity) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>

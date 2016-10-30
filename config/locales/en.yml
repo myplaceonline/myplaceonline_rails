@@ -203,6 +203,7 @@ en:
       recreational_vehicle_services: "RV Services"
       retirement_plans: "Retirement Plans"
       retirement_plan_amounts: "Retirement Plan Amounts"
+      perishable_foods: "Perishable Foods"
     general:
       email: "E-mail"
       password: "Password"
@@ -2953,3 +2954,8 @@ en:
       add_file: "Add File/Picture"
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
+    perishable_foods:
+      purchased: "Purchased"
+      expires: "Expires"
+      quantity: "Quantity"
+      storage_location: "Storage Location"
