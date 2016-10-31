@@ -691,7 +691,7 @@ class MyplaceonlineController < ApplicationController
       link: self.edit_obj_path,
       icon: "edit"
     }
-    if @obj.respond_to?("is_archived?")
+    if @obj.respond_to?("is_archived?") && (!nested || !parent_model.is_a?(Array))
       if @obj.is_archived?
         result << {
           title: I18n.t("myplaceonline.general.unarchive"),
@@ -725,7 +725,7 @@ class MyplaceonlineController < ApplicationController
         icon: "action"
       }
     end
-    if @obj.respond_to?("rating")
+    if @obj.respond_to?("rating") && (!nested || !parent_model.is_a?(Array))
       if @obj.rating.nil? || @obj.rating < Myp::MAX_RATING
         result << {
           title: I18n.t("myplaceonline.general.favorite"),

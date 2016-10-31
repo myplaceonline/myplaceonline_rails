@@ -1,2 +1,11 @@
 <%= attribute_table_row_datetime(t("myplaceonline.calendar_items.calendar_item_time"), obj.calendar_item_time) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<% if current_user.always_enable_debug %>
+  <%= attribute_table_row("persistent", obj.persistent) %>
+  <%= attribute_table_row("repeat_amount", obj.repeat_amount) %>
+  <%= attribute_table_row("repeat_type", obj.repeat_type) %>
+  <%= attribute_table_row("model_class", obj.model_class) %>
+  <%= attribute_table_row("model_id", obj.model_id) %>
+  <%= attribute_table_row("context_info", obj.context_info) %>
+  <%= attribute_table_row("is_repeat", obj.is_repeat) %>
+<% end %>
