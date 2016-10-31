@@ -44,6 +44,50 @@ class CalendarItemReminderPendingsController < MyplaceonlineController
     redirect_to obj.calendar_item.link
   end
   
+  def path_name
+    "calendar_calendar_item_calendar_item_reminder_calendar_item_reminder_pending"
+  end
+
+  def form_path
+    "calendar_item_reminder_pendings/form"
+  end
+  
+  def show_path(obj)
+    send("#{path_name}_path", obj.calendar_item.calendar, obj.calendar_item, obj.calendar_item_reminder, obj)
+  end
+
+  def obj_path(obj = @obj)
+    send(path_name + "_path", obj.calendar_item.calendar, obj.calendar_item, obj.calendar_item_reminder, obj)
+  end
+  
+  def edit_obj_path(obj = @obj)
+    send("edit_" + path_name + "_path", obj.calendar_item.calendar, obj.calendar_item, obj.calendar_item_reminder, obj)
+  end
+
+  def nested
+    true
+  end
+    
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t("myplaceonline.calendar_item_reminder_pendings.calendar_item_reminder"),
+        link: calendar_calendar_item_calendar_item_reminder_path(@parent.calendar_item.calendar, @parent.calendar_item, @parent),
+        icon: "back"
+      }
+    ]
+  end
+  
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t("myplaceonline.calendar_item_reminder_pendings.calendar_item_reminder"),
+        link: calendar_calendar_item_calendar_item_reminder_path(@obj.calendar, @obj.calendar_item, @obj.calendar_item_reminder),
+        icon: "back"
+      }
+    ]
+  end
+  
   protected
     def sorts
       ["calendar_item_reminder_pendings.created_at"]
@@ -57,5 +101,13 @@ class CalendarItemReminderPendingsController < MyplaceonlineController
 
     def has_category
       false
+    end
+    
+    def additional_items?
+      false
+    end
+
+    def parent_model
+      [Calendar, CalendarItem, CalendarItemReminder]
     end
 end

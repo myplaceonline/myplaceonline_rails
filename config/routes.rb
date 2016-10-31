@@ -183,7 +183,13 @@ Rails.application.routes.draw do
         subitems: [
           {
             subresources: true,
-            name: :calendar_item_reminders
+            name: :calendar_item_reminders,
+            subitems: [
+              {
+                subresources: true,
+                name: :calendar_item_reminder_pendings
+              }
+            ]
           }
         ]
       }

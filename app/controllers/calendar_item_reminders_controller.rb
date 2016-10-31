@@ -39,6 +39,11 @@ class CalendarItemRemindersController < MyplaceonlineController
         title: I18n.t("myplaceonline.calendar_item_reminders.calendar_item"),
         link: calendar_calendar_item_path(@obj.calendar_item.calendar, @obj.calendar_item),
         icon: "back"
+      },
+      {
+        title: I18n.t("myplaceonline.calendar_item_reminders.calendar_item_reminder_pendings"),
+        link: calendar_calendar_item_calendar_item_reminder_calendar_item_reminder_pendings_path(@obj.calendar_item.calendar, @obj.calendar_item, @obj),
+        icon: "grid"
       }
     ]
   end

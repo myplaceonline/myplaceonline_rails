@@ -205,6 +205,7 @@ en:
       retirement_plan_amounts: "Retirement Plan Amounts"
       perishable_foods: "Perishable Foods"
       job_reviews: "Job Reviews"
+      calendar_item_reminder_pendings: "Pending Reminders"
     general:
       email: "E-mail"
       password: "Password"
@@ -2548,6 +2549,9 @@ en:
     calendar_item_reminders:
       calendar_item: "Item"
       text_message: "Reminder (%{time}): %{display}"
+      calendar_item_reminder_pendings: "Pending Items"
+    calendar_item_reminder_pendings:
+      calendar_item_reminder: "Item"
     quests:
       quest_title: "Name"
       files: "Files/Pictures"
