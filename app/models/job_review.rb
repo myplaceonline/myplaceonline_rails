@@ -19,4 +19,8 @@ class JobReview < ActiveRecord::Base
   def update_file_folders
     put_files_in_folder(job_review_files, [I18n.t("myplaceonline.jobs.reviews"), self.job.display])
   end
+
+  def final_search_result
+    job
+  end
 end

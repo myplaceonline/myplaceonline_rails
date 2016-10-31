@@ -1696,15 +1696,15 @@ module Myp
     
     results = search_results.map do |search_result|
       result = nil
-      additional_text = ""
+      prefix_text = ""
       if search_result.respond_to?("final_search_result")
         if !search_result.respond_to?("final_search_result_display?") || search_result.final_search_result_display?
-          additional_text = " (" + I18n.t("myplaceonline.category." + search_result.class.name.pluralize.underscore).singularize
+          prefix_text = I18n.t("myplaceonline.category." + search_result.class.name.pluralize.underscore).singularize
           extra = search_result.display
           if !extra.blank?
-            additional_text += ": " + extra
+            prefix_text += " (" + extra + ")"
           end
-          additional_text += ")"
+          prefix_text += ": "
         end
         search_result = search_result.final_search_result
       end
@@ -1721,7 +1721,7 @@ module Myp
           end
         end
         if !category.nil?
-          final_display = category.human_title_singular + ": " + search_result.display + additional_text
+          final_display = prefix_text + category.human_title_singular + ": " + search_result.display
           if final_display.length > 100
             final_display = final_display[0..97] + "..."
           end
