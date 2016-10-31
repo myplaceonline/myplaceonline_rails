@@ -285,7 +285,7 @@ var myplaceonline = function(mymodule) {
       q: value
     };
     // Try to abort any previous AJAX calls
-    var pending_requests = list.data("pending_ajax_requests");
+    var pending_requests = list.data("pending_ajax_requests" + remote.uniqueid);
     if (pending_requests) {
       for (var i = 0; i < pending_requests.length; i++) {
         var pending_request = pending_requests[i];
@@ -296,7 +296,7 @@ var myplaceonline = function(mymodule) {
           myplaceonline.consoleLog("remoteDataLoad caught error aborting AJAX request " + e);
         }
       }
-      list.data("pending_ajax_requests", []);
+      list.data("pending_ajax_requests" + remote.uniqueid, []);
     }
     
     var jqxhr = $.ajax({
@@ -306,7 +306,7 @@ var myplaceonline = function(mymodule) {
       data: requestData
     }).done(function(data, textStatus, jqXHR) {
       myplaceonline.consoleLog("remoteDataLoad done for " + this.q + "; " + this.remote.title + ", " + this.remote.filterCount + ", " + this.filterCount);
-      var pending_requests = this.list.data("pending_ajax_requests");
+      var pending_requests = this.list.data("pending_ajax_requests" + this.remote.uniqueid);
       if (pending_requests) {
         var new_pending_requests = [];
         var found = false;
@@ -321,7 +321,7 @@ var myplaceonline = function(mymodule) {
           }
         }
         if (found) {
-          this.list.data("pending_ajax_requests", new_pending_requests);
+          this.list.data("pending_ajax_requests" + this.remote.uniqueid, new_pending_requests);
         }
       }
       if (this.remote.static_list || this.filterCount == this.remote.filterCount) {
@@ -347,12 +347,12 @@ var myplaceonline = function(mymodule) {
     });
     
     // Remember this AJAX request in case we want to abort it
-    pending_requests = list.data("pending_ajax_requests");
+    pending_requests = list.data("pending_ajax_requests" + remote.uniqueid);
     if (!pending_requests) {
       pending_requests = [];
     }
     pending_requests.push(jqxhr);
-    list.data("pending_ajax_requests", pending_requests);
+    list.data("pending_ajax_requests" + remote.uniqueid, pending_requests);
   }
   
   function remoteDataListReset(list, skipListReset) {
@@ -374,6 +374,9 @@ var myplaceonline = function(mymodule) {
   // http://demos.jquerymobile.com/1.4.5/filterable/
   function remoteDataListInitialize(list, remotes, afterload, noresults) {
     
+    for (var i = 0; i < remotes.length; i++) {
+      remotes[i].uniqueid = i;
+    }
     list.data("remotes", remotes);
     list.data("afterload", afterload);
     
