@@ -12,4 +12,12 @@ class FeedItem < ActiveRecord::Base
   def display
     feed_title
   end
+  
+  def display_icon
+    Myp.categories["feeds"].icon
+  end
+  
+  def ideal_path
+    "/feeds/#{feed.id}/feed_items/#{self.id}"
+  end
 end

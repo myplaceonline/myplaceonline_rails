@@ -6,7 +6,7 @@ class AdminSendEmailJob < ApplicationJob
     
     admin_email = args[0]
 
-    Rails.logger.debug{"Email: #{admin_email.inspect}; #{admin_email.email.inspect}"}
+    Rails.logger.info{"Email: #{admin_email.inspect}; #{admin_email.email.inspect}"}
     
     send_only_to = nil
     if !admin_email.send_only_to.blank?

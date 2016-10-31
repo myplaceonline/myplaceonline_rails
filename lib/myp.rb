@@ -1737,14 +1737,22 @@ module Myp
               split_button_icon = search_result.action_link_icon
             end
           end
+          final_icon = category.icon
+          if search_result.respond_to?("display_icon")
+            final_icon = search_result.display_icon
+          end
+          final_path = "/" + category.name + "/" + search_result.id.to_s
+          if search_result.respond_to?("ideal_path")
+            final_path = search_result.ideal_path
+          end
           result = ListItemRow.new(
             final_display,
-            "/" + category.name + "/" + search_result.id.to_s,
+            final_path,
             Rails.env.development? && search_result.respond_to?("visit_count") ? search_result.visit_count : nil,
             nil,
             nil,
             original_search,
-            category.icon,
+            final_icon,
             split_button_link,
             split_button_title,
             split_button_icon
