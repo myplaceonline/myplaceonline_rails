@@ -94,7 +94,7 @@ class Status < ActiveRecord::Base
   end
   
   def self.create_first_status
-    Status.reset_calendar_reminder
+    Status.reset_calendar_reminder(after_expiration: true)
   end
   
   def show_highly_visited?
