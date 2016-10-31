@@ -284,13 +284,46 @@ var myplaceonline = function(mymodule) {
     var requestData = {
       q: value
     };
-    $.ajax({
+    // Try to abort any previous AJAX calls
+    var pending_requests = list.data("pending_ajax_requests");
+    if (pending_requests) {
+      for (var i = 0; i < pending_requests.length; i++) {
+        var pending_request = pending_requests[i];
+        try {
+          myplaceonline.consoleLog("remoteDataLoad trying to abort AJAX request");
+          pending_request.abort();
+        } catch (e) {
+          myplaceonline.consoleLog("remoteDataLoad caught error aborting AJAX request " + e);
+        }
+      }
+      list.data("pending_ajax_requests", []);
+    }
+    
+    var jqxhr = $.ajax({
       url: remote.url,
       dataType: "json",
       context: {list: list, remote: remote, filterCount: remote.filterCount, q: value},
       data: requestData
     }).done(function(data, textStatus, jqXHR) {
-      myplaceonline.consoleLog("remoteDataLoad done " + this.remote.title + ", " + this.remote.filterCount + ", " + this.filterCount);
+      myplaceonline.consoleLog("remoteDataLoad done for " + this.q + "; " + this.remote.title + ", " + this.remote.filterCount + ", " + this.filterCount);
+      var pending_requests = this.list.data("pending_ajax_requests");
+      if (pending_requests) {
+        var new_pending_requests = [];
+        var found = false;
+        for (var i = 0; i < pending_requests.length; i++) {
+          var pending_request = pending_requests[i];  
+          if (jqXHR == pending_request) {
+            found = true;
+            myplaceonline.consoleLog("remoteDataLoad found AJAX object, removing");
+            break;
+          } else {
+            new_pending_requests.push(pending_request);
+          }
+        }
+        if (found) {
+          this.list.data("pending_ajax_requests", new_pending_requests);
+        }
+      }
       if (this.remote.static_list || this.filterCount == this.remote.filterCount) {
         
         myplaceonline.consoleLog("remoteDataLoad filterCount is the latest, result length = " + data.length);
@@ -304,12 +337,22 @@ var myplaceonline = function(mymodule) {
       }
       myplaceonline.consoleLog("remoteDataLoad finished done");
     }).fail(function(jqXHR, textStatus, errorThrown) {
-      this.remote.failed = true;
-      var errorMessage = "Error performing search. Please try again and check your internet connection.";
-      myplaceonline.createErrorNotification(errorMessage);
-      jqmReplaceListSection(this.list, this.remote.title, [{ title: errorMessage }]);
-      myplaceonline.criticalError(errorMessage + " to remote " + this.remote.title + ", query " + this.q + ", jqXHR: " + jqXHR.readyState + "," + jqXHR.status + ", " + jqXHR.responseText + ", " + jqXHR.responseXML + ", status: " + textStatus, errorThrown);
+      if (textStatus != "abort") {
+        this.remote.failed = true;
+        var errorMessage = "Error performing search. Please try again and check your internet connection.";
+        myplaceonline.createErrorNotification(errorMessage);
+        jqmReplaceListSection(this.list, this.remote.title, [{ title: errorMessage }]);
+        myplaceonline.criticalError(errorMessage + " to remote " + this.remote.title + ", query " + this.q + ", jqXHR: " + jqXHR.readyState + ", " + jqXHR.status + ", " + jqXHR.responseText + ", " + jqXHR.responseXML + ", status: " + textStatus, errorThrown);
+      }
     });
+    
+    // Remember this AJAX request in case we want to abort it
+    pending_requests = list.data("pending_ajax_requests");
+    if (!pending_requests) {
+      pending_requests = [];
+    }
+    pending_requests.push(jqxhr);
+    list.data("pending_ajax_requests", pending_requests);
   }
   
   function remoteDataListReset(list, skipListReset) {
@@ -353,6 +396,14 @@ var myplaceonline = function(mymodule) {
         $ul.data("originalItems", $ul.html());
       }
       
+      var $input = $(data.input);
+      var value = $input.val();
+      if (!value) {
+        value = "";
+      }
+      
+      var previousSearch = $ul.data("previousSearch");
+
       var i;
       var remotesList = $ul.data("remotes");
       for (i = 0; i < remotesList.length; i++) {
@@ -366,14 +417,6 @@ var myplaceonline = function(mymodule) {
         myplaceonline.consoleLog("remoteDataList search " + value + " (previous: " + previousSearch + "), remote " + remote.title + ", count " + filterCount);
       }
         
-      var $input = $(data.input);
-      var value = $input.val();
-      if (!value) {
-        value = "";
-      }
-      
-      var previousSearch = $ul.data("previousSearch");
-      
       $ul.data("previousSearch", value);
       
       if (previousSearch == value) {

@@ -15,4 +15,8 @@ class JobAccomplishment < ActiveRecord::Base
     result.accomplishment_time = User.current_user.time_now
     result
   end
+
+  def final_search_result
+    job
+  end
 end

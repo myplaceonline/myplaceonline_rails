@@ -60,7 +60,7 @@ var myplaceonline = function(mymodule) {
   function consoleLog(msg) {
     if (debug) {
       if (window.console) {
-        window.console.log(msg);
+        window.console.log(new Date() + ": " + msg);
       }
       var t = new Date().toTimeString();
       var i = t.indexOf(' ');
