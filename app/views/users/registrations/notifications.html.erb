@@ -6,6 +6,10 @@
 <%= form_tag do %>
   <%= myp_text_field_tag(:mobile, I18n.t("myplaceonline.users.notifications_mobile"), @mobile, true) %>
 
+  <% if @mobile.blank? %>
+    <%= myp_check_box_tag(:notifications_mobile_suppress_reminder, t("myplaceonline.users.notifications_mobile_suppress_reminder"), @notifications_mobile_suppress_reminder) %>
+  <% end %>
+
   <div><%= submit_tag t("myplaceonline.general.save") %></div>
 <% end %>
 

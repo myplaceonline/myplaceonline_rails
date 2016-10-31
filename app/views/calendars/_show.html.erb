@@ -86,7 +86,7 @@
     
     <% if !current_user.suppresses(User::SUPPRESSION_MOBILE) && @mobile_number.blank? %>
       <hr />
-      <p style="margin-top: 15px; margin-bottom: 0;"><%= t("myplaceonline.calendars.notifications_mobile_info") %></p>
+      <p style="margin-top: 15px; margin-bottom: 0;"><%= raw(t("myplaceonline.calendars.notifications_mobile_info", hide_link: link_to(t("myplaceonline.calendars.notifications_mobile_info_hide"), users_notifications_path(notifications_mobile_suppress_reminder: "true", commit: "true")))) %></p>
       <%= form_tag(users_notifications_path, method: :get) do %>
         <div class="ui-grid-a ui-responsive">
           <div class="ui-block-a">

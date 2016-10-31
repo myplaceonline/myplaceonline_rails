@@ -305,9 +305,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
       @mobile = @mobile.number
     end
     @original_mobile = @mobile
-    changes_made = false
-    if !params[:commit].blank? || !params[:mobile].blank?
+    suppressions = current_user.suppressions
+    if current_user.suppresses(User::SUPPRESSION_MOBILE)
+      @notifications_mobile_suppress_reminder = true
+    end
+    if !params[:commit].blank?
       @mobile = params[:mobile]
+      @notifications_mobile_suppress_reminder = params[:notifications_mobile_suppress_reminder]
+      if @notifications_mobile_suppress_reminder
+        suppressions |= User::SUPPRESSION_MOBILE
+      else
+        suppressions &= ~User::SUPPRESSION_MOBILE
+      end
+      current_user.suppressions = suppressions
       if !@mobile.blank?
         if @original_mobile.blank?
           current_user.primary_identity.identity_phones << IdentityPhone.new(
@@ -319,23 +329,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
           identity_phone = current_user.primary_identity.identity_phones[current_user.primary_identity.identity_phones.index{|x| x.number == @original_mobile}]
           identity_phone.number = @mobile
         end
-        changes_made = true
       else
         if !@original_mobile.blank?
           identity_phone = current_user.primary_identity.identity_phones[current_user.primary_identity.identity_phones.index{|x| x.number == @original_mobile}]
           current_user.primary_identity.identity_phones.delete(identity_phone)
-          changes_made = true
         end
       end
       current_user.primary_identity.save!
-      if changes_made
-        redirect_to(
-          users_notifications_path,
-          :flash => { :notice => I18n.t("myplaceonline.users.notifications_saved") }
-        )
-      else
-        redirect_to(users_notifications_path)
-      end
+      current_user.save!
+      redirect_to(
+        users_notifications_path,
+        :flash => { :notice => I18n.t("myplaceonline.users.notifications_saved") }
+      )
     else
       render :notifications
     end
