@@ -84,7 +84,7 @@ class User < ActiveRecord::Base
         # Create default myplets
         Myplet.default_myplets(@identity)
         
-        Status.new.on_after_destroy
+        Status.create_first_status
       end
     end
   end
