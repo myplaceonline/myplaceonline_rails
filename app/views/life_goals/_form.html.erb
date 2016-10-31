@@ -1,4 +1,4 @@
 <%= myp_text_field(f, :life_goal_name, "myplaceonline.life_goals.life_goal_name", obj.life_goal_name, autofocus) %>
 <%= myp_date_field(f, :goal_started, "myplaceonline.life_goals.goal_started", obj.goal_started) %>
 <%= myp_date_field(f, :goal_ended, "myplaceonline.life_goals.goal_ended", obj.goal_ended) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.life_goals.notes", obj.notes) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.life_goals.notes", obj.notes, collapsed: false) %>

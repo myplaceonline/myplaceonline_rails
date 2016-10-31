@@ -8,7 +8,7 @@
   <% @obj.email_personalizations.each do |email_personalization| %>
     <%= f.fields_for :email_personalizations, email_personalization do |personalization_fields| %>
       <%= myp_check_box(personalization_fields, :do_send, email_personalization.contact.display + " (" + email_personalization.target + ")") %>
-      <%= myp_text_area_markdown(personalization_fields, :additional_text, t("myplaceonline.email_personalizations.additional_text"), email_personalization.additional_text) %>
+      <%= myp_text_area_markdown(personalization_fields, :additional_text, t("myplaceonline.email_personalizations.additional_text"), email_personalization.additional_text, collapsed: false) %>
       <%= myp_hidden_field(personalization_fields, :target, email_personalization.target) %>
       <hr />
     <% end %>

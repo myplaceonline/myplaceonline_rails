@@ -1,5 +1,5 @@
 <%= myp_text_field(f, :issue_name, "myplaceonline.project_issues.issue_name", obj.issue_name, autofocus) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes, collapsed: false) %>
 <% if !edit %>
   <%= myp_check_box(f, :top, "myplaceonline.project_issues.move_top") %>
 <% end %>

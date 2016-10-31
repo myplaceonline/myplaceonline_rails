@@ -6,7 +6,7 @@
 <%= form_for @admin_text_message, :url => administration_send_text_message_path do |f| %>
   <%= f.fields_for :text_message, @admin_text_message.text_message do |child_fields| %>
     <%= myp_text_field(child_fields, :message_category, "myplaceonline.administration.send_text_message.category", @admin_text_message.text_message.message_category) %>
-    <%= myp_text_area_markdown(child_fields, :body, "myplaceonline.administration.send_text_message.body", @admin_text_message.text_message.body) %>
+    <%= myp_text_area_markdown(child_fields, :body, "myplaceonline.administration.send_text_message.body", @admin_text_message.text_message.body, collapsed: false) %>
   <% end %>
   <%= myp_text_area(f, :send_only_to, "myplaceonline.administration.send_text_message.only_send_to", @admin_text_message.send_only_to) %>
   <%= myp_text_area(f, :exclude_numbers, "myplaceonline.administration.send_text_message.exclude_numbers", @admin_text_message.exclude_numbers) %>

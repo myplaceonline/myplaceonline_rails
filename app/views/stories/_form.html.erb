@@ -1,6 +1,6 @@
 <%= myp_text_field(f, :story_name, "myplaceonline.stories.story_name", obj.story_name, autofocus) %>
 <%= myp_datetime_field(f, :story_time, "myplaceonline.stories.story_time", obj.story_time) %>
-<%= myp_text_area_markdown(f, :story, "myplaceonline.stories.story", obj.story) %>
+<%= myp_text_area_markdown(f, :story, "myplaceonline.stories.story", obj.story, collapsed: false) %>
 <%=
   render partial: "myplaceonline/pictures_form", locals: {
     f: f,

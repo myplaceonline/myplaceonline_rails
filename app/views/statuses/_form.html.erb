@@ -3,7 +3,7 @@
 <%= myp_text_field(f, :status1, "myplaceonline.statuses.status1", obj.status1, autofocus) %>
 <%= myp_text_field(f, :status2, "myplaceonline.statuses.status2", obj.status2) %>
 <%= myp_text_field(f, :status3, "myplaceonline.statuses.status3", obj.status3) %>
-<%= myp_text_area_markdown(f, :three_good_things, "myplaceonline.statuses.three_good_things", obj.three_good_things) %>
+<%= myp_text_area_markdown(f, :three_good_things, "myplaceonline.statuses.three_good_things", obj.three_good_things, collapsed: false) %>
 <%= myp_select(f, :feeling, "myplaceonline.statuses.feeling", Myp.translate_options(Status::FEELINGS), obj.feeling) %>
 <div data-role="collapsible" data-collapsed="true">
   <h4><%= t("myplaceonline.statuses.need_help") %></h4>

@@ -1,5 +1,5 @@
 <%= myp_text_field(f, :name, "myplaceonline.questions.name", obj.name, autofocus) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.questions.notes", obj.notes) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.questions.notes", obj.notes, collapsed: false) %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,
