@@ -74,7 +74,9 @@ class CalendarItem < ActiveRecord::Base
     calendar,
     model,
     model_id: nil,
-    context_info: nil
+    context_info: nil,
+    expire_amount: nil,
+    expire_type: nil
   )
     ActiveRecord::Base.transaction do
       calendar_item = CalendarItem.new(
@@ -90,7 +92,9 @@ class CalendarItem < ActiveRecord::Base
       
       calendar_item_reminder = CalendarItemReminder.new(
         identity: identity,
-        calendar_item: calendar_item
+        calendar_item: calendar_item,
+        expire_amount: expire_amount,
+        expire_type: expire_type
       )
       
       calendar_item_reminder.save!
@@ -108,9 +112,21 @@ class CalendarItem < ActiveRecord::Base
     end
   end
   
-  def self.ensure_persistent_calendar_item(identity, calendar, model)
+  def self.ensure_persistent_calendar_item(
+    identity,
+    calendar,
+    model,
+    expire_amount: nil,
+    expire_type: nil
+  )
     if !self.has_persistent_calendar_item(identity, calendar, model)
-      self.create_persistent_calendar_item(identity, calendar, model)
+      self.create_persistent_calendar_item(
+        identity,
+        calendar,
+        model,
+        expire_amount: expire_amount,
+        expire_type: expire_type
+      )
     end
   end
   

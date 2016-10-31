@@ -122,7 +122,8 @@ class Status < ActiveRecord::Base
         CalendarItem.ensure_persistent_calendar_item(
           User.current_user.primary_identity,
           calendar,
-          Status
+          Status,
+          expire_amount: 1.day.seconds
         )
       end
     end
