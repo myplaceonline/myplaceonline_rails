@@ -856,7 +856,7 @@ class MyplaceonlineController < ApplicationController
     end
     
     def favorite_items_max_items
-      20
+      100
     end
     
     def find_explicit_items
