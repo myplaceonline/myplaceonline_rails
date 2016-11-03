@@ -35,7 +35,18 @@ class Food < ActiveRecord::Base
           :weight,
           :weight_type
         ]
-      ]
+      ],
+      food_files_attributes: FilesController.multi_param_names
     ]
+  end
+
+  has_many :food_files, :dependent => :destroy
+  accepts_nested_attributes_for :food_files, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :food_files, [{:name => :identity_file}]
+
+  before_validation :update_file_folders
+  
+  def update_file_folders
+    put_files_in_folder(food_files, [I18n.t("myplaceonline.category.foods"), display])
   end
 end

@@ -1282,6 +1282,11 @@ en:
       servings: "Servings"
       weight_type: "Weight Type"
       weight: "Weight"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"
     drinks:
       heading: "Drinks"
       drink: "Drink"

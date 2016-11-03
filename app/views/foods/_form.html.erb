@@ -44,3 +44,16 @@
     %>
   <% end %>
 <% end %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :food_files,
+    item_placeholder: "myplaceonline.foods.file",
+    heading: "myplaceonline.foods.files",
+    addbutton: "myplaceonline.foods.add_file",
+    addbutton_multi: "myplaceonline.foods.add_files",
+    deletebutton: "myplaceonline.foods.delete_file"
+  }
+%>

@@ -1,4 +1,8 @@
 class FoodsController < MyplaceonlineController
+  def may_upload
+    true
+  end
+
   protected
     def sorts
       ["lower(foods.food_name) ASC"]

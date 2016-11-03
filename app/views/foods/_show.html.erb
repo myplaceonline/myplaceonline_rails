@@ -11,3 +11,9 @@
   <%= attribute_table_row_food_weight(t("myplaceonline.foods.weight"), wrapper.food.weight, wrapper.food.weight_type) %>
   <%= attribute_table_row_markdown(t("myplaceonline.foods.notes"), wrapper.food.notes) %>
 <% end %>
+<%=
+  render partial: 'myplaceonline/pictures', locals: {
+    pics: obj.food_files,
+    placeholder: "myplaceonline.foods.file"
+  }
+%>
