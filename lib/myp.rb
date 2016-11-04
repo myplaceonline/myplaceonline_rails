@@ -28,7 +28,11 @@ module Myp
   
   FOOD_WEIGHTS = [
     ["myplaceonline.general.pounds", 0],
-    ["myplaceonline.general.cups", 1]
+    ["myplaceonline.general.cups", 1],
+    ["myplaceonline.general.ounces", 2],
+    ["myplaceonline.general.fluid_ounces", 3],
+    ["myplaceonline.general.milliliters", 4],
+    ["myplaceonline.general.grams", 5]
   ]
   
   DIMENSIONS = [["myplaceonline.general.inches", 0]]
@@ -985,8 +989,12 @@ module Myp
     end
   end
 
-  def self.translate_options(options)
-    options.map{|o| [I18n.t(o[0]), o[1]]}
+  def self.translate_options(options, sort: false)
+    result = options.map{|o| [I18n.t(o[0]), o[1]]}
+    if sort
+      result = result.sort_by{|x| x[0]}
+    end
+    result
   end
   
   def self.includes_today?(start_date, end_date)
