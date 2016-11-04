@@ -206,6 +206,7 @@ en:
       perishable_foods: "Perishable Foods"
       job_reviews: "Job Reviews"
       calendar_item_reminder_pendings: "Pending Reminders"
+      items: "Items"
     general:
       email: "E-mail"
       password: "Password"
@@ -2975,3 +2976,13 @@ en:
       quantity: "Quantity"
       storage_location: "Storage Location"
       expiring: "Perishable Food %{name} expires %{delta}"
+    items:
+      item_name: "Name"
+      item_location: "Location"
+      cost: "Cost"
+      acquired: "Date Acquired"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161103021713) do
+ActiveRecord::Schema.define(version: 20161104043524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2174,6 +2174,35 @@ ActiveRecord::Schema.define(version: 20161103021713) do
   end
 
   add_index "invites", ["user_id"], name: "index_invites_on_user_id", using: :btree
+
+  create_table "item_files", force: :cascade do |t|
+    t.integer  "item_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "item_files", ["identity_file_id"], name: "index_item_files_on_identity_file_id", using: :btree
+  add_index "item_files", ["identity_id"], name: "index_item_files_on_identity_id", using: :btree
+  add_index "item_files", ["item_id"], name: "index_item_files_on_item_id", using: :btree
+
+  create_table "items", force: :cascade do |t|
+    t.string   "item_name"
+    t.text     "notes"
+    t.string   "item_location"
+    t.decimal  "cost",          precision: 10, scale: 2
+    t.date     "acquired"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  add_index "items", ["identity_id"], name: "index_items_on_identity_id", using: :btree
 
   create_table "job_accomplishments", force: :cascade do |t|
     t.integer  "job_id"
@@ -4764,6 +4793,10 @@ ActiveRecord::Schema.define(version: 20161103021713) do
   add_foreign_key "identities", "identities"
   add_foreign_key "invite_codes", "identities"
   add_foreign_key "invites", "users"
+  add_foreign_key "item_files", "identities"
+  add_foreign_key "item_files", "identity_files"
+  add_foreign_key "item_files", "items"
+  add_foreign_key "items", "identities"
   add_foreign_key "job_accomplishments", "identities"
   add_foreign_key "job_accomplishments", "jobs"
   add_foreign_key "job_files", "identities"

@@ -1,0 +1,11 @@
+<%= attribute_table_row(t("myplaceonline.items.item_name"), obj.item_name) %>
+<%= attribute_table_row_date(t("myplaceonline.items.acquired"), obj.acquired) %>
+<%= attribute_table_row(t("myplaceonline.items.item_location"), obj.item_location) %>
+<%= attribute_table_row_currency(t("myplaceonline.items.cost"), obj.cost) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<%=
+  render partial: 'myplaceonline/pictures', locals: {
+    pics: obj.item_files,
+    placeholder: "myplaceonline.items.file"
+  }
+%>

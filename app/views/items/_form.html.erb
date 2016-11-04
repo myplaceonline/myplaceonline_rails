@@ -1,0 +1,18 @@
+<%= myp_text_field(f, :item_name, "myplaceonline.items.item_name", obj.item_name, autofocus) %>
+<%= myp_date_field(f, :acquired, "myplaceonline.items.acquired", obj.acquired) %>
+<%= myp_decimal_field(f, :cost, "myplaceonline.items.cost", obj.cost) %>
+<%= myp_text_field(f, :item_location, "myplaceonline.items.item_location", obj.item_location, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes, collapsed: false) %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :item_files,
+    item_placeholder: "myplaceonline.items.file",
+    heading: "myplaceonline.items.files",
+    addbutton: "myplaceonline.items.add_file",
+    addbutton_multi: "myplaceonline.items.add_files",
+    deletebutton: "myplaceonline.items.delete_file"
+  }
+%>
