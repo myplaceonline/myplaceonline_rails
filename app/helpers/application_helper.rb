@@ -386,9 +386,17 @@ module ApplicationHelper
     attribute_table_row(name, Myp.get_select_name(val, select_values))
   end
   
-  def attribute_table_row_weight(name, val, weight_type)
-    if !val.nil?
-      attribute_table_row(name, ActionController::Base.helpers.pluralize(val, Myp.get_select_name(weight_type, Myp::WEIGHTS).singularize))
+  def attribute_table_row_weight(name, val, weight_type, weight_types: Myp::WEIGHTS)
+    if !val.nil? && !weight_type.nil?
+      select_name = Myp.get_select_name(weight_type, weight_types)
+      paren_index = select_name.index(" (")
+      suffix = ""
+      if !paren_index.nil?
+        suffix = select_name[paren_index..-1]
+        select_name = select_name[0..paren_index-1]
+      end
+      row_value = ActionController::Base.helpers.pluralize(val, select_name.singularize) + suffix
+      attribute_table_row(name, row_value)
     else
       nil
     end
