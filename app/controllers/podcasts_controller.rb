@@ -82,6 +82,14 @@ class PodcastsController < MyplaceonlineController
     )
   end
 
+  def search_index_name
+    Feed.table_name
+  end
+
+  def search_parent_category
+    category_name.singularize
+  end
+
   protected
     def sorts
       ["podcasts.updated_at DESC"]
@@ -91,5 +99,17 @@ class PodcastsController < MyplaceonlineController
       params.require(:podcast).permit(
         feed_attributes: FeedsController.param_names
       )
+    end
+
+    def sorts
+      ["feeds.name ASC"]
+    end
+    
+    def all_joins
+      "INNER JOIN feeds ON feeds.id = podcasts.feed_id"
+    end
+
+    def all_includes
+      :feed
     end
 end
