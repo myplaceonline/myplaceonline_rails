@@ -18,7 +18,7 @@ class RetirementPlan < ActiveRecord::Base
   allow_existing :company
 
   belongs_to :periodic_payment
-  accepts_nested_attributes_for :periodic_payment, reject_if: :all_blank
+  accepts_nested_attributes_for :periodic_payment, reject_if: proc { |attributes| PeriodicPaymentsController.reject_if_blank(attributes) }
   allow_existing :periodic_payment
   
   belongs_to :password
