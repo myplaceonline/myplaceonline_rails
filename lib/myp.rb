@@ -1444,8 +1444,8 @@ module Myp
     ).chomp('/')
   end
 
-  def self.param_bool(params, name)
-    result = false
+  def self.param_bool(params, name, default_value: false)
+    result = default_value
     v = params[name]
     if !v.blank?
       result = v.to_s.to_bool
@@ -1608,7 +1608,7 @@ module Myp
     end
   end
   
-  def self.full_text_search(user, search, category: nil, parent_category: nil)
+  def self.full_text_search(user, search, category: nil, parent_category: nil, display_category_prefix: true, display_category_icon: true)
 
     if search.nil?
       search = ""
@@ -1670,7 +1670,13 @@ module Myp
       # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html
       search_results = UserIndex.query(query).order(visit_count: {order: :desc, missing: :_last}).limit(10).load.to_a
       
-      results = Myp.process_search_results(search_results, parent_category, original_search)
+      results = Myp.process_search_results(
+        search_results,
+        parent_category,
+        original_search,
+        display_category_prefix: display_category_prefix,
+        display_category_icon: display_category_icon
+      )
       
     else
       results = []
@@ -1681,7 +1687,7 @@ module Myp
     results
   end
   
-  def self.process_search_results(search_results, parent_category = nil, original_search = nil)
+  def self.process_search_results(search_results, parent_category = nil, original_search = nil, display_category_prefix: true, display_category_icon: true)
     # If category isn't blank and it searched a subitem, then we need
     # to map those back to the original category item
     if !parent_category.blank?
@@ -1707,12 +1713,16 @@ module Myp
       prefix_text = ""
       if search_result.respond_to?("final_search_result")
         if !search_result.respond_to?("final_search_result_display?") || search_result.final_search_result_display?
-          prefix_text = I18n.t("myplaceonline.category." + search_result.class.name.pluralize.underscore).singularize
+          if display_category_prefix
+            prefix_text = I18n.t("myplaceonline.category." + search_result.class.name.pluralize.underscore).singularize
+          end
           extra = search_result.display
-          if !extra.blank?
+          if !extra.blank? && display_category_prefix
             prefix_text += " (" + extra + ")"
           end
-          prefix_text += ": "
+          if display_category_prefix
+            prefix_text += ": "
+          end
         end
         search_result = search_result.final_search_result
       end
@@ -1729,7 +1739,11 @@ module Myp
           end
         end
         if !category.nil?
-          final_display = prefix_text + category.human_title_singular + ": " + search_result.display
+          if display_category_prefix
+            final_display = prefix_text + category.human_title_singular + ": " + search_result.display
+          else
+            final_display = prefix_text + search_result.display
+          end
           if final_display.length > 100
             final_display = final_display[0..97] + "..."
           end
@@ -1760,7 +1774,7 @@ module Myp
             nil,
             nil,
             original_search,
-            final_icon,
+            display_category_icon ? final_icon : nil,
             split_button_link,
             split_button_title,
             split_button_icon

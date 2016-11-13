@@ -15,7 +15,16 @@ class ApiController < ApplicationController
   end
   
   def search
-    response = Myp.full_text_search(current_user, params[:q], category: params[:category], parent_category: params[:parent_category])
+    display_category_prefix = Myp.param_bool(params, :display_category_prefix, default_value: true)
+    display_category_icon = Myp.param_bool(params, :display_category_icon, default_value: true)
+    response = Myp.full_text_search(
+      current_user,
+      params[:q],
+      category: params[:category],
+      parent_category: params[:parent_category],
+      display_category_prefix: display_category_prefix,
+      display_category_icon: display_category_icon
+    )
     respond_to do |format|
       format.json { render json: response }
     end
