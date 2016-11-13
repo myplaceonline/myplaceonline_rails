@@ -1,4 +1,12 @@
 class PerishableFoodsController < MyplaceonlineController
+  def search_index_name
+    Food.table_name
+  end
+
+  def search_parent_category
+    category_name.singularize
+  end
+
   protected
     def insecure
       true
@@ -17,5 +25,17 @@ class PerishableFoodsController < MyplaceonlineController
         :quantity,
         food_attributes: Food.params
       )
+    end
+
+    def sorts
+      ["foods.food_name ASC"]
+    end
+    
+    def all_joins
+      "INNER JOIN foods ON foods.id = perishable_foods.food_id"
+    end
+
+    def all_includes
+      :food
     end
 end
