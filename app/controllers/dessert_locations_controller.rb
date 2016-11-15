@@ -41,10 +41,6 @@ class DessertLocationsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["dessert_locations.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:dessert_location).permit(
         :notes,
@@ -60,5 +56,17 @@ class DessertLocationsController < MyplaceonlineController
       else
         nil
       end
+    end
+
+    def sorts
+      [Location.sorts]
+    end
+    
+    def all_joins
+      "INNER JOIN locations ON locations.id = dessert_locations.location_id"
+    end
+
+    def all_includes
+      :location
     end
 end

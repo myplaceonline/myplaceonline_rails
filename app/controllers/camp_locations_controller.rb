@@ -32,17 +32,7 @@ class CampLocationsController < MyplaceonlineController
     end
 
     def sorts
-      [%{
-       CASE
-        WHEN locations.name IS NOT NULL THEN locations.name
-        WHEN locations.address1 IS NOT NULL THEN locations.address1
-        WHEN locations.address2 IS NOT NULL THEN locations.address2
-        WHEN locations.address3 IS NOT NULL THEN locations.address3
-        WHEN locations.sub_region2 IS NOT NULL THEN locations.sub_region2
-        WHEN locations.sub_region1 IS NOT NULL THEN locations.sub_region1
-        ELSE locations.region
-       END ASC
-      }]
+      [Location.sorts]
     end
     
     def all_joins
