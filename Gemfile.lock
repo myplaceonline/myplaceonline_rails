@@ -147,6 +147,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
     mimemagic (0.3.2)
+    mini_portile2 (2.1.0)
     minitest (5.9.1)
     multi_json (1.12.1)
     multipart-post (2.0.0)
@@ -163,6 +164,7 @@ GEM
     paperclip_database (2.3.1)
       paperclip (>= 2.3.0)
     pg (0.19.0)
+    pkg-config (1.1.7)
     public_suffix (2.0.4)
     rack (1.6.5)
     rack-test (0.6.3)
@@ -290,12 +292,14 @@ DEPENDENCIES
   letter_opener
   log4r
   magnific-popup-rails
+  mini_portile2
   nokogiri
   noty-rails
   open_uri_redirections
   paperclip
   paperclip_database
   pg
+  pkg-config
   rails (~> 4.2)
   rake (~> 10.4.2)
   redcarpet
