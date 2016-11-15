@@ -51,6 +51,7 @@ class ContactsController < MyplaceonlineController
         identity_locations_attributes: [
           :id,
           :_destroy,
+          :secondary,
           location_attributes: LocationsController.param_names(include_website: include_website)
         ],
         identity_drivers_licenses_attributes: [

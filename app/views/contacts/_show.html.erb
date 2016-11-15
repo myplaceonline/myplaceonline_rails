@@ -34,6 +34,7 @@
 <% end %>
 <% obj.contact_identity.identity_locations.each do |identity_location| %>
   <%= attribute_table_row_reference(t("myplaceonline.identities.location"), "location_path", identity_location.location) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.identities.location_secondary"), identity_location.secondary) %>
 <% end %>
 <% obj.contact_identity.identity_relationships.each do |identity_relationship| %>
   <% if !identity_relationship.relationship_type.nil? %>

@@ -207,7 +207,19 @@ class Identity < ActiveRecord::Base
   accepts_nested_attributes_for :identity_locations, allow_destroy: true, reject_if: :all_blank
   
   def primary_location
-    identity_locations.first
+    result = nil
+    if identity_locations.length == 1
+      result = identity_locations.first
+    else
+      non_secondaries = identity_locations.to_a.dup.delete_if{|x| x.secondary}
+      if non_secondaries.length == 1
+        result = non_secondaries.first
+      end
+    end
+    if !result.nil?
+      result = result.location
+    end
+    result
   end
   
   has_many :identity_drivers_licenses, :foreign_key => 'parent_identity_id', :dependent => :destroy

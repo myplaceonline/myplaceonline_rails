@@ -712,6 +712,7 @@ en:
       delete_email: "Delete E-mail"
       email: "E-mail"
       email_secondary: "Secondary"
+      location_secondary: "Secondary"
       locations: "Addresses"
       add_location: "Add Address"
       delete_location: "Delete Address"

@@ -120,6 +120,11 @@
             searchurl: "/locations.json?perpage=0",
             edit: false,
             autofocus: true
+          },
+          {
+            type: :checkbox,
+            name: :secondary,
+            placeholder: t("myplaceonline.identities.location_secondary")
           }
         ]
       }) do |child_fields, childproperty|
@@ -137,6 +142,7 @@
           autofocus: false
         }
       %>
+      <%= myp_check_box(child_fields, :secondary, "myplaceonline.identities.location_secondary") %>
     <% end %>
     
     <%=
