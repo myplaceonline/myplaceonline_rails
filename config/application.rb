@@ -23,7 +23,7 @@ module Myplaceonline
 
   DEFAULT_ROOT_EMAIL = "root@myplaceonline.com"
   
-  class MyplaceonlineRequestStrategy
+  class ExecutionContextRequestStrategy
     def initialize(app)
       @app = app
     end
@@ -31,23 +31,20 @@ module Myplaceonline
     def call(env)
       start_time = Time.now
       begin
-        #Rails.logger.debug{"MyplaceonlineRequestStrategy entry"}
         ExecutionContext.push
         result = @app.call(env)
         result
       ensure
         ExecutionContext.clear
-        #Rails.logger.debug{"MyplaceonlineRequestStrategy exit"}
         end_time = Time.now
         diff = (end_time - start_time) * 1000.0
-        Rails.logger.debug{"Myplaceonline response time in milliseconds = #{diff}"}
+        Rails.logger.info{"HTTP response time in milliseconds = #{sprintf('%0.02f', diff)}"}
       end
     end
   end
-
   
   class Application < Rails::Application
-    config.middleware.insert_after(Rails::Rack::Logger, MyplaceonlineRequestStrategy)
+    config.middleware.insert_after(Rails::Rack::Logger, ExecutionContextRequestStrategy)
     
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

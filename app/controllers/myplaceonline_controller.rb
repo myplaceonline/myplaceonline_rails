@@ -916,17 +916,25 @@ class MyplaceonlineController < ApplicationController
       if action.nil?
         action = action_name
       end
+      
+      # First lookup, then authorize
       begin
         if nested
           parent_id = parent_model_last.table_name.singularize.downcase + "_id"
-          @parent = Myp.find_existing_object(parent_model_last, p[parent_id], false)
-          @obj = model.where("id = ? and #{parent_id} = ?", p[:id].to_i, p[parent_id.to_sym].to_i).take!
-        else
+          Rails.logger.debug{"set_obj parent_id: #{parent_id}, param: #{p[parent_id]}"}
+          if !p[parent_id].nil?
+            @parent = Myp.find_existing_object(parent_model_last, p[parent_id], false)
+            Rails.logger.debug{"set_obj parent: #{@parent.inspect}"}
+            @obj = model.where("id = ? and #{parent_id} = ?", p[:id].to_i, p[parent_id.to_sym].to_i).take!
+          end
+        end
+        if @obj.nil?
           @obj = model.find(p[:id].to_i)
         end
       rescue ActiveRecord::RecordNotFound => rnf
         raise Myp::SuddenRedirectError.new(index_path)
       end
+      
       authorize! action.to_sym, @obj
       
       # If this succeeds, then set the identity context for nested authorization checks
