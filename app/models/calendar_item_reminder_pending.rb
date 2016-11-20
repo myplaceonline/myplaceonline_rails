@@ -13,7 +13,17 @@ class CalendarItemReminderPending < ActiveRecord::Base
         calendar: calendar
       )
       .order("created_at DESC").to_a
-    items.sort!{|x, y| x.calendar_item.calendar_item_time <=> y.calendar_item.calendar_item_time }
+    items.sort! do |x, y|
+      if x.calendar_item.calendar_item_time.nil? && y.calendar_item.calendar_item_time.nil?
+        0
+      elsif y.calendar_item.calendar_item_time.nil?
+        -1
+      elsif x.calendar_item.calendar_item_time.nil?
+        1
+      else 
+        x.calendar_item.calendar_item_time <=> y.calendar_item.calendar_item_time
+      end
+    end
     items
   end
 end
