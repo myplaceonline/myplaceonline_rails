@@ -120,6 +120,10 @@ class ExecutionContext
     x
   end
 
+  def self.available?
+    self.count > 0
+  end
+
   def [](name)
     @map[name]
   end

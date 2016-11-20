@@ -1228,45 +1228,48 @@ module Myp
       !key.start_with?("REMOTE_") && 
       !key.start_with?("WEB_") && 
       !key.start_with?("ORIGINAL_")) || key.start_with?("HTTP_COOKIE")
-    }.to_a.map{|kv| "#{kv[0]}=#{kv[1]}"}.join(",\n  ")
+    }.to_a.map{|kv| "#{kv[0]}=#{kv[1]}"}.join(",\n    ")
   end
   
   def self.handle_exception(exception, email = nil, request = nil)
     stack = Myp.error_details(exception)
     body = ""
     if !email.nil?
-      body += "\nUser: " + email + "\n"
+      body += "User: " + email + "\n\n"
+    elsif ExecutionContext.available? && !User.current_user.nil?
+      body += "User: " + User.current_user.email + "\n\n"
     end
-    if ExecutionContext.count > 0 && !User.current_user.nil?
-      body += "\nUser: " + User.current_user.email + "\n"
-    end
-    body += "Stack:\n" + stack + "\n"
+    body += "Stack:\n\n  " + stack + "\n"
     if !request.nil?
-      body += "Request: { " +
-          "fullpath: #{request.fullpath.inspect}, " +
-          "ip: #{request.ip.inspect}, " +
-          "method: #{request.method.inspect}, " +
-          "original_fullpath: #{request.original_fullpath.inspect}, " +
-          "original_url: #{request.original_url.inspect}, " +
-          "query_parameters: #{request.query_parameters.inspect}, " +
-          "remote_ip: #{request.remote_ip.inspect}, " +
-          "request_method: #{request.request_method.inspect}, " +
-          "uuid: #{request.uuid.inspect}" +
-          " }\n"
+      body += "\n  Request: {" +
+          "\n    fullpath: #{request.fullpath.inspect}, " +
+          "\n    ip: #{request.ip.inspect}, " +
+          "\n    method: #{request.method.inspect}, " +
+          "\n    original_fullpath: #{request.original_fullpath.inspect}, " +
+          "\n    original_url: #{request.original_url.inspect}, " +
+          "\n    query_parameters: #{request.query_parameters.inspect}, " +
+          "\n    remote_ip: #{request.remote_ip.inspect}, " +
+          "\n    request_method: #{request.request_method.inspect}, " +
+          "\n    uuid: #{request.uuid.inspect}" +
+          "\n  }\n"
       headers = request.headers
       if !headers.nil?
-        body += "Headers: {\n  #{self.process_headers(request)}\n}\n"
+        body += "\n  Headers: {\n    #{self.process_headers(request)}\n  }\n"
       end
     end
-    body += "\nServer: #{ENV["NODENAME"]}"
-    puts "handle_exception: " + body
-    Myp.send_support_email_safe("User Exception", body)
+    if !ENV["NODENAME"].blank?
+      body += "\nServer: #{ENV["NODENAME"]}"
+    end
+    Rails.logger.warn{"handle_exception: " + body}
+    Myp.send_support_email_safe("User Exception", body, email: email)
   end
   
-  def self.send_support_email_safe(subject, body, body_plain = nil)
+  def self.send_support_email_safe(subject, body, body_plain = nil, email: nil)
     begin
       from = I18n.t("myplaceonline.siteEmail")
-      if ExecutionContext.count > 0 && !User.current_user.nil?
+      if !email.blank?
+        from = email
+      elsif ExecutionContext.available? && !User.current_user.nil?
         from = User.current_user.email
       end
       UserMailer.send_support_email(from, subject, body, body_plain).deliver_now
