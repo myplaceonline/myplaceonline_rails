@@ -5,12 +5,14 @@ class IdentityPhone < ActiveRecord::Base
   PHONE_TYPE_HOME = 1
   PHONE_TYPE_TEMPORARY = 2
   PHONE_TYPE_WORK = 3
+  PHONE_TYPE_ARCHIVED = 4
 
   PHONE_TYPES = [
     ["myplaceonline.identity_phones.cell", PHONE_TYPE_CELL],
     ["myplaceonline.identity_phones.home", PHONE_TYPE_HOME],
     ["myplaceonline.identity_phones.work", PHONE_TYPE_WORK],
-    ["myplaceonline.identity_phones.temporary", PHONE_TYPE_TEMPORARY]
+    ["myplaceonline.identity_phones.temporary", PHONE_TYPE_TEMPORARY],
+    ["myplaceonline.identity_phones.archived", PHONE_TYPE_ARCHIVED]
   ]
   
   belongs_to :parent_identity, class_name: Identity
@@ -25,6 +27,8 @@ class IdentityPhone < ActiveRecord::Base
       I18n.t("myplaceonline.identity_phones.temporary")
     when 3
       I18n.t("myplaceonline.identity_phones.work")
+    when 4
+      I18n.t("myplaceonline.identity_phones.archived")
     else
       I18n.t("myplaceonline.identity_phones.phone")
     end

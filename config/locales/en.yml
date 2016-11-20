@@ -1727,6 +1727,7 @@ en:
       work: "Work"
       temporary: "Temporary"
       phone: "Phone"
+      archived: "Archived"
     diary_entries:
       diary_time: "Time"
       entry: "Entry"
