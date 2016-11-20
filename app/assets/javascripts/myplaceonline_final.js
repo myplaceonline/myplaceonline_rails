@@ -1173,8 +1173,13 @@ var myplaceonline = function(mymodule) {
   function checkSendDebug(message, errorObj, stackTrace, dontAlert) {
     var result = true;
     if (errorObj && errorObj.stack) {
-      var check = errorObj.stack.toLowerCase();
-      if (errorObj.stack.indexOf('ckeditor') != -1 || message.indexOf('ckeditor') != -1) {
+      var errorObjStack = errorObj.stack.toLowerCase();
+      if (stackTrace) {
+        stackTrace = stackTrace.toLowerCase();
+      } else {
+        stackTrace = "";
+      }
+      if (errorObjStack.indexOf('ckeditor') != -1 || message.indexOf('ckeditor') != -1 || stackTrace.indexOf('ckeditor') != -1) {
         result = false;
       }
     }
