@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161116013158) do
+ActiveRecord::Schema.define(version: 20161121000942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -326,6 +326,7 @@ ActiveRecord::Schema.define(version: 20161116013158) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.text     "notes"
   end
 
   add_index "blood_concentrations", ["identity_id"], name: "index_blood_concentrations_on_identity_id", using: :btree

@@ -14,7 +14,8 @@ class BloodConcentration < ActiveRecord::Base
       :concentration_name,
       :concentration_type,
       :concentration_minimum,
-      :concentration_maximum
+      :concentration_maximum,
+      :notes
     ]
   end
 end
