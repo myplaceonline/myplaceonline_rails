@@ -66,6 +66,10 @@ var myplaceonline = function(mymodule) {
       if (myplaceonline.runPendingPageLoads) {
         myplaceonline.runPendingPageLoads();
       }
+    } else {
+      if (myplaceonline.isDebug) {
+        myplaceonline.consoleDir(status);
+      }
     }
   });
 

@@ -262,6 +262,9 @@ var myplaceonline = function(mymodule) {
   function criticalError(msg, errorObj) {
     msg = "Browser Error. Please copy and report the following details to " + contact_email + ": " + msg;
     consoleLog(msg);
+    if (debug && errorObj && errorObj.stack) {
+      consoleLog(errorObj.stack);
+    }
     jserrors++;
     if (jserrors <= maxjserrors) {
       sendDebug(msg, true, errorObj);
@@ -406,20 +409,23 @@ var myplaceonline = function(mymodule) {
     
     $(document).bind("pagecontainershow.mypshow", function( e, ui ) {
       
-      resetPendingPageLoads();
-      
       var activePage = getActivePage();
       
+      consoleLog("pagecontainershow.mypshow activePage: " + (activePage ? $(activePage).data("url") : "null"));
+      
+      resetPendingPageLoads();
+      
       /*
-      if (activePage) {
-        consoleLog("pagecontainershow: " + activePage.id + "," + $(activePage).attr('data-uniqueid'));
-        if (ui.prevPage && ui.prevPage.length > 0) {
-          // Don't keep the previous page cached
-          $(ui.prevPage[0]).remove();
+        var activePage = getActivePage();
+        if (activePage) {
+          consoleLog("pagecontainershow: " + activePage.id + "," + $(activePage).attr('data-uniqueid'));
+          if (ui.prevPage && ui.prevPage.length > 0) {
+            // Don't keep the previous page cached
+            $(ui.prevPage[0]).remove();
+          }
+        } else {
+          consoleLog("pagecontainershow no active page");
         }
-      } else {
-        consoleLog("pagecontainershow no active page");
-      }
       */
 
       // If there is a hash
@@ -743,8 +749,15 @@ var myplaceonline = function(mymodule) {
   // func may optionally take event and ui parameters:
   // http://api.jquerymobile.com/pagecontainer/#event-show
   function onPageLoad(func) {
-    $(document).one("pagecontainershow", $.mobile.pageContainer, func);
-    pendingPageLoads.push(func);
+    var wrappedFunc = function() {
+      try {
+        func();
+      } catch (e) {
+        criticalError(e);
+      }
+    };
+    $(document).one("pagecontainershow", $.mobile.pageContainer, wrappedFunc);
+    pendingPageLoads.push(wrappedFunc);
   }
   
   function resetPendingPageLoads() {
@@ -752,12 +765,14 @@ var myplaceonline = function(mymodule) {
   }
 
   function runPendingPageLoads() {
+    myplaceonline.consoleLog("runPendingPageLoads count: " + pendingPageLoads.length);
     var i;
     for (i = 0; i < pendingPageLoads.length; i++) {
       var pendingPageLoad = pendingPageLoads[i];
       $(document).off("pagecontainershow", $.mobile.pageContainer, pendingPageLoad);
       pendingPageLoad();
     }
+    myplaceonline.consoleLog("runPendingPageLoads resetPendingPageLoads");
     resetPendingPageLoads();
   }
   
@@ -1177,6 +1192,10 @@ var myplaceonline = function(mymodule) {
   
   mymodule.setDebug = function(newvalue) {
     debug = newvalue;
+  };
+  
+  mymodule.isDebug = function() {
+    return debug;
   };
   
   mymodule.setInPhonegap = function(newvalue) {
