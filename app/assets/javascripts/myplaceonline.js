@@ -76,7 +76,7 @@ var myplaceonline = function(mymodule) {
       if (window.console && window.console.dir) {
         window.console.dir(obj);
       }
-      consoleLog(getJSON(obj));
+      consoleLog("consoleDir JSON: " + getJSON(obj));
     }
   }
 
@@ -184,12 +184,15 @@ var myplaceonline = function(mymodule) {
           return value;
         });
         cache = null;
-        if (result.length > max) {
+        if (!result) {
+          result = obj.toString();
+        }
+        if (result && result.length > max) {
           result = result.substring(0, max) + "...";
         }
         return result;
       } catch (e) {
-        return "null (error " + e + ", " + obj + ")";
+        return "null (error " + e + ", object: " + obj + ")";
       }
     } else {
       return "null";
@@ -325,7 +328,7 @@ var myplaceonline = function(mymodule) {
         }
       }
     } catch (e) {
-      criticalError(e);
+      criticalError("Error processing msg", e);
     }
 
     var errorMsg = details + "\nurl: " + url + "\nline #: " + line;
@@ -341,7 +344,7 @@ var myplaceonline = function(mymodule) {
       try {
         holderrors += "\n\nFull JSON: " + getJSON(jsondetails, 1000000);
       } catch (e) {
-        criticalError(e);
+        criticalError("Error calling getJSON", e);
       }
     }
     
@@ -749,13 +752,22 @@ var myplaceonline = function(mymodule) {
   // func may optionally take event and ui parameters:
   // http://api.jquerymobile.com/pagecontainer/#event-show
   function onPageLoad(func) {
-    var wrappedFunc = function() {
+    var wrappedFunc = function(event, ui) {
       try {
-        func();
+        myplaceonline.consoleLog("Running onPageLoad function");
+        if (debug) {
+          myplaceonline.consoleDir(func);
+        }
+        func(event, ui);
       } catch (e) {
-        criticalError(e);
+        criticalError("Error processing onPageLoad", e);
       }
+      myplaceonline.consoleLog("Finished onPageLoad function");
     };
+    if (debug) {
+      myplaceonline.consoleLog("Binding onPageLoad func");
+    }
+    myplaceonline.consoleDir(func);
     $(document).one("pagecontainershow", $.mobile.pageContainer, wrappedFunc);
     pendingPageLoads.push(wrappedFunc);
   }

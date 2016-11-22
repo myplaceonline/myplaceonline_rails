@@ -45,24 +45,29 @@ var myplaceonline = function(mymodule) {
   });
 
   $(document).on('ajax:complete', 'form', function(xhr, status) {
+    
     myplaceonline.hideLoading();
+    
     var contentType = status.getResponseHeader("Content-Type");
+    
     myplaceonline.consoleLog("ajax:complete " + contentType);
+    
     // We expect a "successful" submission will return text/javascript
     // which will do something like navigate to the success page
     // (see MyplaceonlineController.may_upload). If it's text/html,
     // then there was probably some error, so we need to display it.
     if (myplaceonline.startsWith(contentType, "text/html")) {
       myplaceonline.showLoading();
+      
       var html = $(status.responseText);
       var content = html.find(".ui-content");
-      
-      //myplaceonline.consoleLog("ajax:complete content " + content.html());
-      
       $(".ui-content").replaceWith(content);
+      
       myplaceonline.ensureStyledPage();
       myplaceonline.hideLoading();
       myplaceonline.scrollTop();
+      
+      // Since this was an error, we need to re-run any onPageLoad functions
       if (myplaceonline.runPendingPageLoads) {
         myplaceonline.runPendingPageLoads();
       }
@@ -800,7 +805,7 @@ var myplaceonline = function(mymodule) {
       var search = itemwrapper[0].nextElementSibling;
       while (search) {
         if ($(search).hasClass("itemwrapper")) {
-          itemwrapper.remove();
+          itemwrapper.detach();
           $(search).after(itemwrapper);
           itemwrapper.trigger('create');
           break;
@@ -811,7 +816,7 @@ var myplaceonline = function(mymodule) {
       var search = itemwrapper[0].previousElementSibling;
       while (search) {
         if ($(search).hasClass("itemwrapper")) {
-          itemwrapper.remove();
+          itemwrapper.detach();
           $(search).before(itemwrapper);
           itemwrapper.trigger('create');
           break;
@@ -828,7 +833,7 @@ var myplaceonline = function(mymodule) {
         search = search.nextElementSibling;
       }
       if (finalWrapper) {
-        itemwrapper.remove();
+        itemwrapper.detach();
         $(finalWrapper).after(itemwrapper);
         itemwrapper.trigger('create');
       }
@@ -842,7 +847,7 @@ var myplaceonline = function(mymodule) {
         search = search.previousElementSibling;
       }
       if (finalWrapper) {
-        itemwrapper.remove();
+        itemwrapper.detach();
         $(finalWrapper).before(itemwrapper);
         itemwrapper.trigger('create');
       }
