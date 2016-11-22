@@ -31,7 +31,7 @@ class MediaDumpsController < MyplaceonlineController
       params.require(:media_dump).permit(
         :media_dump_name,
         :notes,
-        media_dump_files_attributes: FilesController.multi_param_names + [:position]
+        media_dump_files_attributes: FilesController.multi_param_names
       )
     end
 end
