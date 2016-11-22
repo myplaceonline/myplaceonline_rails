@@ -11,7 +11,7 @@ class FavoriteProduct < ActiveRecord::Base
     product_name
   end
 
-  has_many :favorite_product_files, :dependent => :destroy
+  has_many :favorite_product_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
   accepts_nested_attributes_for :favorite_product_files, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :favorite_product_files, [{:name => :identity_file}]
 

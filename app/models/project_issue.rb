@@ -51,7 +51,7 @@ class ProjectIssue < ActiveRecord::Base
     self.save!
   end
 
-  has_many :project_issue_files, :dependent => :destroy
+  has_many :project_issue_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
   accepts_nested_attributes_for :project_issue_files, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :project_issue_files, [{:name => :identity_file}]
 

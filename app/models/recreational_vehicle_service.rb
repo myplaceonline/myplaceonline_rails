@@ -15,7 +15,7 @@ class RecreationalVehicleService < ActiveRecord::Base
     result
   end
 
-  has_many :recreational_vehicle_service_files, :dependent => :destroy
+  has_many :recreational_vehicle_service_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
   accepts_nested_attributes_for :recreational_vehicle_service_files, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :recreational_vehicle_service_files, [{:name => :identity_file}]
 

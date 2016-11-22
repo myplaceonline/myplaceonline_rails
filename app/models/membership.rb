@@ -60,7 +60,7 @@ class Membership < ActiveRecord::Base
     CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: self.id)
   end
 
-  has_many :membership_files, :dependent => :destroy
+  has_many :membership_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
   accepts_nested_attributes_for :membership_files, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :membership_files, [{:name => :identity_file}]
 

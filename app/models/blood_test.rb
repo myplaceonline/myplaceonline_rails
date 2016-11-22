@@ -13,7 +13,7 @@ class BloodTest < ActiveRecord::Base
   accepts_nested_attributes_for :blood_test_results, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :blood_test_results, [{:name => :blood_concentration}]
 
-  has_many :blood_test_files, :dependent => :destroy
+  has_many :blood_test_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
   accepts_nested_attributes_for :blood_test_files, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :blood_test_files, [{:name => :identity_file}]
 

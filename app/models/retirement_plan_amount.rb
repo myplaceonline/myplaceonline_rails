@@ -16,7 +16,7 @@ class RetirementPlanAmount < ActiveRecord::Base
     result
   end
 
-  has_many :retirement_plan_amount_files, :dependent => :destroy
+  has_many :retirement_plan_amount_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
   accepts_nested_attributes_for :retirement_plan_amount_files, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :retirement_plan_amount_files, [{:name => :identity_file}]
 

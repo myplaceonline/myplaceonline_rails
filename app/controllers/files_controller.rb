@@ -175,6 +175,7 @@ class FilesController < MyplaceonlineController
     [
       :id,
       :_destroy,
+      :position,
       identity_file_attributes: FilesController.param_names
     ]
   end

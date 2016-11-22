@@ -11,7 +11,7 @@ class Receipt < ActiveRecord::Base
     put_files_in_folder(receipt_files, [I18n.t("myplaceonline.category.receipts"), display])
   end
 
-  has_many :receipt_files, :dependent => :destroy
+  has_many :receipt_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
   accepts_nested_attributes_for :receipt_files, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :receipt_files, [{:name => :identity_file}]
 

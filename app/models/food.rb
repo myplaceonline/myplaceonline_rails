@@ -40,7 +40,7 @@ class Food < ActiveRecord::Base
     ]
   end
 
-  has_many :food_files, :dependent => :destroy
+  has_many :food_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
   accepts_nested_attributes_for :food_files, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :food_files, [{:name => :identity_file}]
 

@@ -10,7 +10,7 @@ class JobReview < ActiveRecord::Base
   accepts_nested_attributes_for :contact, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
   allow_existing :contact
 
-  has_many :job_review_files, :dependent => :destroy
+  has_many :job_review_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
   accepts_nested_attributes_for :job_review_files, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :job_review_files, [{:name => :identity_file}]
 

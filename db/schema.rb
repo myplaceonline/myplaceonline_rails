@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161121000942) do
+ActiveRecord::Schema.define(version: 20161122024205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3182,6 +3182,7 @@ ActiveRecord::Schema.define(version: 20161121000942) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "position"
   end
 
   add_index "phone_files", ["identity_file_id"], name: "index_phone_files_on_identity_file_id", using: :btree
@@ -3461,6 +3462,7 @@ ActiveRecord::Schema.define(version: 20161121000942) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "position"
   end
 
   add_index "receipt_files", ["identity_file_id"], name: "index_receipt_files_on_identity_file_id", using: :btree

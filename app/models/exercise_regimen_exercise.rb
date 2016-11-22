@@ -4,7 +4,7 @@ class ExerciseRegimenExercise < ActiveRecord::Base
 
   belongs_to :exercise_regimen
 
-  has_many :exercise_regimen_exercise_files, :dependent => :destroy
+  has_many :exercise_regimen_exercise_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
   accepts_nested_attributes_for :exercise_regimen_exercise_files, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :exercise_regimen_exercise_files, [{:name => :identity_file}]
 

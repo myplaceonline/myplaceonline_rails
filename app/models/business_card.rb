@@ -12,7 +12,7 @@ class BusinessCard < ActiveRecord::Base
   accepts_nested_attributes_for :contact, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
   allow_existing :contact
 
-  has_many :business_card_files, :dependent => :destroy
+  has_many :business_card_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
   accepts_nested_attributes_for :business_card_files, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :business_card_files, [{:name => :identity_file}]
 

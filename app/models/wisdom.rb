@@ -8,7 +8,7 @@ class Wisdom < ActiveRecord::Base
     name
   end
 
-  has_many :wisdom_files, :dependent => :destroy
+  has_many :wisdom_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
   accepts_nested_attributes_for :wisdom_files, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :wisdom_files, [{:name => :identity_file}]
 

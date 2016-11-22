@@ -29,7 +29,7 @@ class Phone < ActiveRecord::Base
 
   before_validation :update_phone_files
   
-  has_many :phone_files, :dependent => :destroy
+  has_many :phone_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
   accepts_nested_attributes_for :phone_files, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :phone_files, [{:name => :identity_file}]
 

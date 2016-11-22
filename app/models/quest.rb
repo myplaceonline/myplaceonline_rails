@@ -8,7 +8,7 @@ class Quest < ActiveRecord::Base
     quest_title
   end
 
-  has_many :quest_files, :dependent => :destroy
+  has_many :quest_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
   accepts_nested_attributes_for :quest_files, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :quest_files, [{:name => :identity_file}]
 

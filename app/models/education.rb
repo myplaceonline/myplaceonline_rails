@@ -37,7 +37,7 @@ class Education < ActiveRecord::Base
     Myp.appendstrwrap(Myp.appendstrwrap(education_name, degree_name), Education.education_type_abbreviation(self.degree_type))
   end
 
-  has_many :education_files, :dependent => :destroy
+  has_many :education_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
   accepts_nested_attributes_for :education_files, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :education_files, [{:name => :identity_file}]
 
