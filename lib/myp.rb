@@ -1617,6 +1617,8 @@ module Myp
       search = ""
     end
     
+    start_time = Time.now
+    
     original_search = search
     
     search = search.strip.downcase
@@ -1686,6 +1688,10 @@ module Myp
     end
     
     Rails.logger.debug{"full_text_search results: #{results.length}"}
+
+    end_time = Time.now
+    diff = (end_time - start_time) * 1000.0
+    Rails.logger.info{"ElasticSearch (full_text_search) response time in milliseconds = #{sprintf('%0.02f', diff)}"}
 
     results
   end
@@ -1795,6 +1801,8 @@ module Myp
 
     Rails.logger.debug{"highly_visited"}
     
+    start_time = Time.now
+
     search_results = UserIndex.query({
       terms: {
         identity_id: [user.primary_identity_id]
@@ -1825,6 +1833,10 @@ module Myp
     results = Myp.process_search_results(search_results)
     
     Rails.logger.debug{"highly_visited results: #{results.length}"}
+
+    end_time = Time.now
+    diff = (end_time - start_time) * 1000.0
+    Rails.logger.info{"ElasticSearch (highly_visited) response time in milliseconds = #{sprintf('%0.02f', diff)}"}
 
     results
   end
