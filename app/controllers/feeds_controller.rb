@@ -29,8 +29,10 @@ class FeedsController < MyplaceonlineController
     else
       message = I18n.t("myplaceonline.feeds.no_new_items")
     end
-    redirect_to obj_path(@obj,
-          :flash => { :notice => message })
+    redirect_to(
+      obj_path,
+      :flash => { :notice => message }
+    )
   end
   
   def load_all
@@ -90,6 +92,11 @@ class FeedsController < MyplaceonlineController
   def footer_items_show
     [
       {
+        title: I18n.t('myplaceonline.feeds.feed_items'),
+        link: feed_feed_items_path(@obj),
+        icon: "bars"
+      },
+      {
         title: I18n.t('myplaceonline.feeds.mark_all_read'),
         link: feed_mark_all_read_path(@obj),
         icon: "check"
@@ -98,19 +105,13 @@ class FeedsController < MyplaceonlineController
         title: I18n.t('myplaceonline.feeds.random_feed'),
         link: feeds_random_path,
         icon: "gear"
-      }
-    ] + super + [
-      {
-        title: I18n.t('myplaceonline.feeds.feed_items'),
-        link: feed_feed_items_path(@obj),
-        icon: "bars"
       },
       {
         title: I18n.t('myplaceonline.feeds.load'),
         link: feed_load_path(@obj),
         icon: "refresh"
       }
-    ]
+    ] + super
   end
   
   protected
