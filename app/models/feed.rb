@@ -18,33 +18,48 @@ class Feed < ActiveRecord::Base
     rss = SimpleRSS.parse(open(url, :allow_redirections => :safe))
     new_items = 0
     all_feed_items = feed_items.to_a
-    rss.items.each do |item|
-      existing_item = all_feed_items.index do |existing_item|
-        existing_item.guid == item.guid || existing_item.feed_link == item.feed_link
+    ActiveRecord::Base.transaction do
+      rss.items.each do |item|
+        existing_item = all_feed_items.index do |existing_item|
+          existing_item.guid == item.guid || existing_item.feed_link == item.feed_link
+        end
+        if existing_item.nil?
+          FeedItem.create({
+            feed_id: self.id,
+            feed_link: item.link,
+            feed_title: item.title,
+            content: item.content_encoded,
+            publication_date: item.pubDate,
+            guid: item.guid
+          })
+          new_items += 1
+        end
       end
-      if existing_item.nil?
-        FeedItem.create({
-          feed_id: self.id,
-          feed_link: item.link,
-          feed_title: item.title,
-          content: item.content_encoded,
-          publication_date: item.pubDate,
-          guid: item.guid
-        })
-        new_items += 1
+      if new_items > 0
+        ActiveRecord::Base.connection.update_sql(
+          "update feeds set total_items = total_items + #{new_items}, unread_items = unread_items + #{new_items} where id = #{self.id}"
+        )
       end
     end
     new_items
   end
   
-  def number_unread
-    count = 0
+  def reset_counts
+    total_items = 0
+    unread_items = 0
     feed_items.each do |item|
+      total_items += 1
       if !item.is_read?
-        count += 1
+        unread_items += 1
       end
     end
-    count.to_s
+    ActiveRecord::Base.connection.update_sql(
+      "update feeds set total_items = #{total_items}, unread_items = #{unread_items} where id = #{self.id}"
+    )
+  end
+  
+  def number_unread
+    self.unread_items
   end
   
   def self.load_all(all_count)
@@ -75,12 +90,15 @@ class Feed < ActiveRecord::Base
   end
   
   def mark_all_read
-    FeedItem.where(
-      identity_id: User.current_user.primary_identity_id,
-      feed_id: self.id
-    ).update_all(
-      read: Time.now
-    )
+    ActiveRecord::Base.transaction do
+      FeedItem.where(
+        identity_id: User.current_user.primary_identity_id,
+        feed_id: self.id
+      ).update_all(
+        read: Time.now
+      )
+      self.update_column(:unread_items, 0)
+    end
   end
   
   def self.load_feed_from_string(str)

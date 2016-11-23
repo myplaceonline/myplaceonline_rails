@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161122024205) do
+ActiveRecord::Schema.define(version: 20161123055415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1646,14 +1646,16 @@ ActiveRecord::Schema.define(version: 20161122024205) do
   add_index "feed_load_statuses", ["identity_id"], name: "index_feed_load_statuses_on_identity_id", using: :btree
 
   create_table "feeds", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.string   "url",         limit: 255
+    t.string   "name",         limit: 255
+    t.string   "url",          limit: 255
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "total_items"
+    t.integer  "unread_items"
   end
 
   add_index "feeds", ["identity_id"], name: "index_feeds_on_identity_id", using: :btree

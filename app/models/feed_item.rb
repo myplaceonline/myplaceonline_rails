@@ -20,4 +20,10 @@ class FeedItem < ActiveRecord::Base
   def ideal_path
     "/feeds/#{feed.id}/feed_items/#{self.id}"
   end
+
+  after_commit :on_after_update, on: [:update]
+  
+  def on_after_update
+    self.feed.reset_counts
+  end
 end
