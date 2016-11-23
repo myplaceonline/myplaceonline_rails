@@ -897,7 +897,11 @@ class MyplaceonlineController < ApplicationController
         model.table_name + ".identity_id = ? and " + model.table_name + ".visit_count >= ? " + additional,
         current_user.primary_identity,
         additional_items_min_visit_count
-      ).limit(additional_items_max_items).order(model.table_name + ".visit_count DESC")
+      ).limit(additional_items_max_items).order(additional_items_sort)
+    end
+
+    def additional_items_sort
+      model.table_name + ".visit_count DESC"
     end
 
     def favorite_items(strict: false)
@@ -909,7 +913,11 @@ class MyplaceonlineController < ApplicationController
         model.table_name + ".identity_id = ? and " + model.table_name + ".rating = ? " + additional,
         current_user.primary_identity,
         Myp::MAX_RATING
-      ).limit(favorite_items_max_items).order(model.table_name + ".visit_count DESC")
+      ).limit(favorite_items_max_items).order(favorite_items_sort)
+    end
+    
+    def favorite_items_sort
+      model.table_name + ".visit_count DESC"
     end
 
     def set_obj(action = nil, p: params)

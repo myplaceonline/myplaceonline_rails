@@ -92,14 +92,14 @@ class FeedsController < MyplaceonlineController
   def footer_items_show
     [
       {
-        title: I18n.t('myplaceonline.feeds.feed_items'),
-        link: feed_feed_items_path(@obj),
-        icon: "bars"
-      },
-      {
         title: I18n.t('myplaceonline.feeds.mark_all_read'),
         link: feed_mark_all_read_path(@obj),
         icon: "check"
+      },
+      {
+        title: I18n.t('myplaceonline.feeds.feed_items'),
+        link: feed_feed_items_path(@obj),
+        icon: "bars"
       },
       {
         title: I18n.t('myplaceonline.feeds.random_feed'),
@@ -131,5 +131,9 @@ class FeedsController < MyplaceonlineController
 
     def check_duplicate_fields
       [:url]
+    end
+
+    def favorite_items_sort
+      [model.table_name + ".unread_items DESC", model.table_name + ".visit_count DESC"]
     end
 end
