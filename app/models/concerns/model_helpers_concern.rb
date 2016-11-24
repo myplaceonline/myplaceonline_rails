@@ -46,6 +46,5 @@ module ModelHelpersConcern extend ActiveSupport::Concern
           end
         end
       end
-
   end
 end

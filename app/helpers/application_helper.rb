@@ -12,12 +12,25 @@ module ApplicationHelper
     else
       messages = flash.map { |name, msg| content_tag(:li, msg.html_safe) }.join
       if !obj.nil? && obj.errors.any?
+        Rails.logger.debug{"object flashes: #{obj.errors.inspect}"}
         obj.errors.each do |attribute, error|
-          if attribute.to_sym == :noname
-            messages += content_tag(:li, error.html_safe)
-          else
-            messages += content_tag(:li, (I18n.t("myplaceonline." + obj.class.table_name + "." + attribute.to_s) + " " + error).html_safe)
+          # If the first letter of the error is uppercase, then assume it was an overriden message
+          attr = attribute.to_s
+          package = obj.class.table_name
+          ri = attr.rindex(".")
+          if !ri.nil?
+            package = attr[0..ri-1].pluralize
+            i = package.index(".")
+            if !i.nil?
+              package = package[i+1..-1]
+            end
+            attr = attr[ri+1..-1]
           end
+          li_html = I18n.t("myplaceonline." + package + "." + attr) + ": " + error
+          messages += content_tag(
+            :li,
+            li_html.html_safe
+          )
         end
       end
       if !flash_params.nil? && flash_params.has_key?("notice")

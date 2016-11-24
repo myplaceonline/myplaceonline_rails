@@ -6,8 +6,9 @@ class Feed < ActiveRecord::Base
 
   validates :name, presence: true
   validates :url, presence: true
+  myplaceonline_validates_uniqueness_of :url
   
-  has_many :feed_items, -> { order('publication_date DESC') }, :dependent => :destroy
+  has_many :feed_items, -> { order("publication_date DESC") }, :dependent => :destroy
   accepts_nested_attributes_for :feed_items, allow_destroy: true, reject_if: :all_blank
   
   def unread_feed_items

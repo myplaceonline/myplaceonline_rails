@@ -216,15 +216,6 @@ class MyplaceonlineController < ApplicationController
           raise Myp::CannotFindNestedAttribute, rnf.message + " (code needs attribute setter override?)"
         end
 
-        dup = check_duplicate(@obj)
-        if !dup.nil?
-          @obj.errors.add(:noname, I18n.t(
-            "myplaceonline.general.dup_item",
-            dup_field: I18n.t("myplaceonline." + paths_name + "." + dup[:field].to_s),
-            link: ActionController::Base.helpers.link_to(dup[:obj].display, obj_path(dup[:obj]))
-          ))
-          return render :new
-        end
         if do_check_double_post
           return after_create_or_update
         end
@@ -1036,31 +1027,5 @@ class MyplaceonlineController < ApplicationController
         result = result.to_bool
       end
       result
-    end
-    
-    def check_duplicate(obj)
-      result = nil
-      i = 0
-      fields_to_check = check_duplicate_fields
-      while i < fields_to_check.length
-        field_to_check = fields_to_check[i]
-        query_result = model.where(
-          :identity_id => current_user.primary_identity_id,
-          field_to_check => obj.send(field_to_check)
-        ).first
-        if !query_result.nil?
-          result = {
-            field: field_to_check,
-            obj: query_result
-          }
-          break
-        end
-        i += 1
-      end
-      result
-    end
-    
-    def check_duplicate_fields
-      []
     end
 end
