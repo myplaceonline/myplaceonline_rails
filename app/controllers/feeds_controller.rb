@@ -97,14 +97,14 @@ class FeedsController < MyplaceonlineController
         icon: "check"
       },
       {
-        title: I18n.t('myplaceonline.feeds.feed_items'),
-        link: feed_feed_items_path(@obj),
-        icon: "bars"
-      },
-      {
         title: I18n.t('myplaceonline.feeds.random_feed'),
         link: feeds_random_path,
         icon: "gear"
+      },
+      {
+        title: I18n.t('myplaceonline.feeds.feed_items'),
+        link: feed_feed_items_path(@obj),
+        icon: "bars"
       },
       {
         title: I18n.t('myplaceonline.feeds.load'),

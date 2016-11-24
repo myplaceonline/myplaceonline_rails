@@ -37,9 +37,11 @@
   </script>
 
   <%
+  items = obj.unread_feed_items
   offset = controller.items_offset
   perpage = controller.items_per_page
-  count = obj.feed_items.count
+  count = items.count
+  total_count = obj.feed_items.count
   perpage = controller.update_items_per_page(perpage, count)
   Rails.logger.debug{"feed offset: #{offset}, perpage: #{perpage}"}
   items_next_page_link = feed_path(obj, offset: offset + perpage)
@@ -48,7 +50,7 @@
   query_params_part_all = controller.items_query_params_part_all
   %>
   <ul data-role="listview" data-inset="true">
-    <% obj.feed_items.offset(offset).limit(perpage).each do |item| %>
+    <% items.offset(offset).limit(perpage).each do |item| %>
       <li>
         <%= link_to(item.feed_link, class: "feed_item" + (item.is_read? ? " bghighlight" : "")) do %>
           <%= controller.display_obj(item).html_safe %>
@@ -77,4 +79,20 @@
       items_all_link: items_all_link
     }
   %>
+  <% if total_count > count %>
+    <p>
+    <%=
+      raw(
+        t(
+          "myplaceonline.feeds.items_hidden",
+          count: total_count - count,
+          items_link: link_to(
+            I18n.t("myplaceonline.feeds.feed_items"),
+            feed_feed_items_path(obj)
+          )
+        )
+      )
+    %>
+    </p>
+  <% end %>
 <% end %>

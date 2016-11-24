@@ -164,6 +164,7 @@ var myplaceonline = function(mymodule) {
         }
       });
     }
+    return dosend;
   }
 
   function getJSON(obj, max) {
@@ -270,18 +271,22 @@ var myplaceonline = function(mymodule) {
     }
     jserrors++;
     if (jserrors <= maxjserrors) {
-      sendDebug(msg, true, errorObj);
-      // Originally we alerted a certain number of JS errors, but it seems the
-      // common case is that the user does a JQM navigate which does some
-      // unexpected DOM manipulation. TODO: create some sort of UI element
-      // that shows that their browser session might be in a weird state,
-      // show the list of warnings, and recommend to consider refreshing.
-      
-      if (debug) {
-        alert(msg);
+      if (sendDebug(msg, true, errorObj)) {
+        // Originally we alerted a certain number of JS errors, but it seems the
+        // common case is that the user does a JQM navigate which does some
+        // unexpected DOM manipulation, so we suppress the alert and we don't
+        // take any preventative action like refreshing the page.
+        
+        // refreshPage();
+
+        if (debug) {
+          alert(msg);
+        }
+        
+        // TODO: create some sort of UI element
+        // that shows that their browser session might be in a weird state,
+        // show the list of warnings, and recommend to consider refreshing.
       }
-      
-      // refreshPage();
     }
   }
 

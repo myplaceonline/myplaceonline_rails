@@ -9,6 +9,10 @@ class Feed < ActiveRecord::Base
   
   has_many :feed_items, -> { order('publication_date DESC') }, :dependent => :destroy
   accepts_nested_attributes_for :feed_items, allow_destroy: true, reject_if: :all_blank
+  
+  def unread_feed_items
+    feed_items.where("read is null")
+  end
 
   def display
     name
