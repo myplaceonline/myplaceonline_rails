@@ -1,3 +1,4 @@
+require 'rest-client'
 require 'open-uri'
 require 'open_uri_redirections'
 
@@ -20,7 +21,8 @@ class Feed < ActiveRecord::Base
   end
   
   def load_feed
-    rss = SimpleRSS.parse(open(url, :allow_redirections => :safe))
+    response = Myp.http_get(url: url)
+    rss = SimpleRSS.parse(response[:body])
     new_items = 0
     all_feed_items = feed_items.to_a
     ActiveRecord::Base.transaction do

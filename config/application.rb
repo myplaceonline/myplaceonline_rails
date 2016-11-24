@@ -36,9 +36,7 @@ module Myplaceonline
         result
       ensure
         ExecutionContext.clear
-        end_time = Time.now
-        diff = (end_time - start_time) * 1000.0
-        Rails.logger.info{"HTTP (#{env["REQUEST_URI"]}) response time in milliseconds = #{sprintf('%0.02f', diff)}"}
+        Myp.log_response_time(context: "HTTP (#{env["REQUEST_URI"]})", start_time: start_time)
       end
     end
   end

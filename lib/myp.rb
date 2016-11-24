@@ -2,6 +2,7 @@ require 'i18n'
 require 'fileutils'
 require 'github/markup'
 require 'twilio-ruby'
+require 'rest-client'
 
 module Myp
   # See https://github.com/digitalbazaar/forge/issues/207
@@ -1689,9 +1690,7 @@ module Myp
     
     Rails.logger.debug{"full_text_search results: #{results.length}"}
 
-    end_time = Time.now
-    diff = (end_time - start_time) * 1000.0
-    Rails.logger.info{"ElasticSearch (full_text_search) response time in milliseconds = #{sprintf('%0.02f', diff)}"}
+    Myp.log_response_time(context: "ElasticSearch (full_text_search)", start_time: start_time)
 
     results
   end
@@ -1834,9 +1833,7 @@ module Myp
     
     Rails.logger.debug{"highly_visited results: #{results.length}"}
 
-    end_time = Time.now
-    diff = (end_time - start_time) * 1000.0
-    Rails.logger.info{"ElasticSearch (highly_visited) response time in milliseconds = #{sprintf('%0.02f', diff)}"}
+    Myp.log_response_time(context: "ElasticSearch (highly_visited)", start_time: start_time)
 
     results
   end
@@ -1861,58 +1858,99 @@ module Myp
     !str.blank? && !str.first(100).index("<?xml").nil?
   end
   
+  def self.raw_http_get(url: url)
+    RestClient::Request.execute(
+      method: :get,
+      url: url,
+      read_timeout: 15,
+      open_timeout: 15,
+      max_redirects: 5,
+      headers: {
+        "User-Agent" => "myplaceonline.com V1.0 (https://myplaceonline.com/)"
+      }
+    )
+  end
+  
+  # Returns:
+  #  {
+  #    body: string; HTTP body
+  #    raw_response: object; underlying response from client library
+  #  }
+  def self.http_get(url:, try_https: false)
+
+    start_time = Time.now
+
+    # If there is no TLD and it's not localhost, assume .com
+    if url.index(".").nil? && url.index("localhost").nil?
+      url += ".com/"
+    end
+    
+    # If no protocol, assume HTTP(S)
+    if url.index("://").nil?
+      if try_https
+        addedhttps = true
+        url = "https://" + url
+      else
+        url = "http://" + url
+      end
+    end
+    
+    # If it's only HTTP, and try_https is true, then try switching to HTTPS
+    if try_https && url.downcase.start_with?("http") && !url.downcase.start_with?("https")
+      addedhttps = true
+      url = "https://" + url[7..-1]
+    end
+
+    begin
+      response = Myp.raw_http_get(url: url)
+    rescue => e
+      if addedhttps
+        Rails.logger.info{"Re-trying vanilla HTTP due to #{e.to_s}"}
+        url = "http" + url[5..-1]
+        response = Myp.raw_http_get(url: url)
+      else
+        raise e
+      end
+    end
+    
+    final_url = url
+    if response.history.length > 0
+      final_url = response.history.last.request.url
+    end
+    
+    if url == final_url
+      context = url
+    else
+      context = url + " -> " + final_url
+    end
+    
+    Myp.log_response_time(context: "Remote GET (#{context})", start_time: start_time)
+
+    {
+      body: response.body,
+      raw_response: response,
+      final_url: url
+    }
+  end
+  
   def self.website_info(link)
     if !link.blank?
-      original_link = link
-      if !link.downcase.start_with?("http")
-        addedhttps = true
-        link = "https://" + link
-      end
-      if link.index(".").nil? && link.index("localhost").nil?
-        link = link + ".com/"
-      end
-      
-      Rails.logger.debug{"link: #{link}"}
-      
-      timeout = 5 # seconds
-
-      begin
-        c = Curl::Easy.new(link)
-        c.ssl_verify_peer = false
-        c.follow_location = true
-        c.timeout = timeout
-        c.perform
-        
-        Rails.logger.debug{"returned: #{c.body_str}"}
-      rescue => e
-        Rails.logger.debug{"caught #{e.to_s}"}
-        if addedhttps && e.to_s.index("Invalid HTTP format").nil?
-          link = "http://" + original_link
-          Rails.logger.debug{"re-request link: #{link}"}
-          c = Curl::Easy.new(link)
-          c.ssl_verify_peer = false
-          c.follow_location = true
-          c.timeout = timeout
-          c.perform
-          Rails.logger.debug{"returned: #{c.body_str}"}
-        else
-          raise e
-        end
-      end
+      response = Myp.http_get(url: link, try_https: true)
       
       # If it's XML, we assume it's RSS
-      if Myp.is_xml?(c.body_str)
-        f = Feed.load_feed_from_string(c.body_str)
-        {
-          title: f.channel.title,
-          link: link
-        }
+      if Myp.is_xml?(response[:body])
+        f = Feed.load_feed_from_string(response[:body])
+        title = f.channel.title
       else
-        {
-          title: c.body_str[/.*<(title|TITLE)>([^>]*)<\/(title|TITLE)>/,2],
-          link: link
-        }
+        title = response[:body][/.*<(title|TITLE)>([^>]*)<\/(title|TITLE)>/,2]
       end
+      
+      title = title.gsub("\n", " ")
+      
+      {
+        title: title,
+        link: response[:final_url]
+      }
     else
       nil
     end
@@ -2018,6 +2056,12 @@ module Myp
   
   def self.date_max(x, y)
     x > y ? x : y
+  end
+  
+  def self.log_response_time(context:, start_time:)
+    end_time = Time.now
+    diff = (end_time - start_time) * 1000.0
+    Rails.logger.info{"#{context} response time in milliseconds = #{sprintf('%0.02f', diff)}"}
   end
 
   puts "myplaceonline: myp.rb static initialization ended"
