@@ -1858,7 +1858,7 @@ module Myp
     !str.blank? && !str.first(100).index("<?xml").nil?
   end
   
-  def self.raw_http_get(url: url)
+  def self.raw_http_get(url:)
     RestClient::Request.execute(
       method: :get,
       url: url,

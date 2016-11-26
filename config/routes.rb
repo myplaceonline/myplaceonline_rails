@@ -222,6 +222,7 @@ Rails.application.routes.draw do
       { instance: true, link: "rsvp" }
     ],
     feeds: [
+      { instance: false, link: "all_items" },
       { instance: false, link: "load_all" },
       { instance: false, link: "random" },
       { instance: true, link: "load" },

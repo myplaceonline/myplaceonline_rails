@@ -1,9 +1,14 @@
 class FeedsController < MyplaceonlineController
-  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:load_all, :random]
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:load_all, :random, :all_items]
   
   def index
     @message = Feed.status_message
     super
+  end
+  
+  def all_items
+    @items = FeedItem.includes(:feed).where("identity_id = #{User.current_user.primary_identity_id} and read is null").order("publication_date DESC")
+    render :all_items
   end
 
   def self.param_names
@@ -77,14 +82,19 @@ class FeedsController < MyplaceonlineController
   def footer_items_index
     super + [
       {
-        title: I18n.t('myplaceonline.feeds.load_all'),
+        title: I18n.t("myplaceonline.feeds.load_all"),
         link: feeds_load_all_path,
         icon: "refresh"
       },
       {
-        title: I18n.t('myplaceonline.feeds.random_feed'),
+        title: I18n.t("myplaceonline.feeds.random_feed"),
         link: feeds_random_path,
         icon: "gear"
+      },
+      {
+        title: I18n.t("myplaceonline.feeds.all_items"),
+        link: feeds_all_items_path,
+        icon: "bars"
       }
     ]
   end
@@ -92,22 +102,22 @@ class FeedsController < MyplaceonlineController
   def footer_items_show
     [
       {
-        title: I18n.t('myplaceonline.feeds.random_feed'),
+        title: I18n.t("myplaceonline.feeds.random_feed"),
         link: feeds_random_path,
         icon: "gear"
       },
       {
-        title: I18n.t('myplaceonline.feeds.mark_all_read'),
+        title: I18n.t("myplaceonline.feeds.mark_all_read"),
         link: feed_mark_all_read_path(@obj),
         icon: "check"
       },
       {
-        title: I18n.t('myplaceonline.feeds.feed_items'),
+        title: I18n.t("myplaceonline.feeds.feed_items"),
         link: feed_feed_items_path(@obj),
         icon: "bars"
       },
       {
-        title: I18n.t('myplaceonline.feeds.load'),
+        title: I18n.t("myplaceonline.feeds.load"),
         link: feed_load_path(@obj),
         icon: "refresh"
       }

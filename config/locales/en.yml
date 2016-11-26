@@ -840,6 +840,7 @@ en:
       item_link: "Item Link"
       random_feed: "Random Feed"
       items_hidden: "Note: %{count} read items have been hidden. Click the %{items_link} button for all items."
+      all_items: "All Items"
     feed_items:
       feed_title: "Title"
       feed_link: "Link"
