@@ -21,8 +21,8 @@ class FeedItem < ActiveRecord::Base
     "/feeds/#{feed.id}/feed_items/#{self.id}"
   end
 
-  after_commit :on_after_update, on: [:update]
-  
+  after_commit :on_after_update, on: [:update, :destroy]
+
   def on_after_update
     self.feed.reset_counts
   end

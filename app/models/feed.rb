@@ -27,19 +27,59 @@ class Feed < ActiveRecord::Base
     all_feed_items = feed_items.to_a
     ActiveRecord::Base.transaction do
       rss.items.each do |item|
-        existing_item = all_feed_items.index do |existing_item|
-          existing_item.guid == item.guid || existing_item.feed_link == item.feed_link
+        #Rails.logger.debug{"Processing #{item.inspect}"}
+        
+        feed_link = item.link
+        if feed_link.blank?
+          feed_link = item.feed_link
         end
+          
+        date = item.pubDate
+        if date.blank?
+          date = item.published
+        end
+        if date.blank?
+          date = item.dc_date
+        end
+        if date.blank?
+          date = item.updated
+        end
+        if date.blank?
+          date = item.modified
+        end
+        if date.blank?
+          date = item.expirationDate
+        end
+        
+        guid = item.guid
+        if guid.blank?
+          guid = item.id
+        end
+
+        existing_item = all_feed_items.index do |existing_item|
+          (!existing_item.guid.blank? && existing_item.guid == guid) ||
+              (!existing_item.feed_link.blank? && existing_item.feed_link == feed_link)
+        end
+        
+        #if !existing_item.nil?
+        #  existing_item = all_feed_items[existing_item]
+        #end
+        
+        #Rails.logger.debug{"existing_item: #{existing_item.inspect}"}
+        
         if existing_item.nil?
           FeedItem.create({
             feed_id: self.id,
-            feed_link: item.link,
+            feed_link: feed_link,
             feed_title: item.title,
             content: item.content_encoded,
-            publication_date: item.pubDate,
-            guid: item.guid
+            publication_date: date,
+            guid: guid
           })
           new_items += 1
+        #elsif existing_item.publication_date.blank? && !date.blank?
+          #Rails.logger.debug{"Updating publication date to #{date}"}
+          #existing_item.update_column(:publication_date, date)
         end
       end
       if new_items > 0
