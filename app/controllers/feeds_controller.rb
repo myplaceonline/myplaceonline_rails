@@ -140,6 +140,10 @@ class FeedsController < MyplaceonlineController
     end
 
     def favorite_items_sort
-      [model.table_name + ".unread_items DESC", model.table_name + ".visit_count DESC"]
+      [model.table_name + ".unread_items ASC", model.table_name + ".visit_count DESC"]
+    end
+    
+    def favorite_items(strict: false)
+      super(strict: strict).where("unread_items > 0")
     end
 end
