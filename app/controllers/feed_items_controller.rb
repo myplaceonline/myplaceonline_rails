@@ -29,7 +29,7 @@ class FeedItemsController < MyplaceonlineController
   def split_link(obj)
     ActionController::Base.helpers.link_to(
       I18n.t("myplaceonline.feeds.item_link"),
-      obj.feed_link
+      obj.full_feed_link
     )
   end
   

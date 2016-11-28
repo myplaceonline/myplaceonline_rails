@@ -52,7 +52,7 @@
   <ul data-role="listview" data-inset="true">
     <% items.offset(offset).limit(perpage).each do |item| %>
       <li>
-        <%= link_to(item.feed_link, class: "feed_item" + (item.is_read? ? " bghighlight" : "")) do %>
+        <%= link_to(item.full_feed_link, class: "feed_item" + (item.is_read? ? " bghighlight" : "")) do %>
           <%= controller.display_obj(item).html_safe %>
           <span class="ui-li-count"><%= Myp.display_datetime_short_year(item.publication_date, current_user) %></span>
         <% end %>

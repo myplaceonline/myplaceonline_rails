@@ -26,4 +26,13 @@ class FeedItem < ActiveRecord::Base
   def on_after_update
     self.feed.reset_counts
   end
+  
+  def full_feed_link
+    result = feed_link
+    if !result.blank? && result[0] == '/'
+      uri = URI.parse(feed.url)
+      result = URI.join(uri.scheme + "://" + uri.host, result).to_s
+    end
+    result
+  end
 end
