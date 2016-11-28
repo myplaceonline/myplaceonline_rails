@@ -3,13 +3,21 @@ class VaccinesController < MyplaceonlineController
     true
   end
 
+  def use_bubble?
+    true
+  end
+  
+  def bubble_text(obj)
+    Myp.display_date_month_year(obj.vaccine_date, User.current_user)
+  end
+    
   protected
     def insecure
       true
     end
 
     def sorts
-      ["lower(vaccines.vaccine_name) ASC"]
+      ["vaccines.vaccine_date DESC NULLS LAST", "lower(vaccines.vaccine_name) ASC"]
     end
 
     def obj_params
