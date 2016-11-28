@@ -4,7 +4,7 @@
   <h3><%= t("myplaceonline.heights.input_by_feet_inches") %></h3>
   <p><input type="number" class="input_feet" placeholder="<%= t("myplaceonline.heights.feet") %>" /></p>
   <p><input type="number" class="input_inches" placeholder="<%= t("myplaceonline.heights.inches") %>" /></p>
-  <p><a href="#" class="ui-btn" onclick="$('#height_height_amount').val('' + (((parseInt($('.input_feet').val()) || 0) * 12) + (parseInt($('.input_inches').val()) || 0))); return false;"><%= t("myplaceonline.heights.calculate") %></a></p>
+  <p><a href="#" class="ui-btn" onclick="$('#height_height_amount').val('' + (((parseInt($('.input_feet').val()) || 0) * 12) + (parseInt($('.input_inches').val()) || 0))); $('#height_amount_type').val('<%= Myp::DIMENSIONS[0][1] %>'); $('#height_amount_type').selectmenu('refresh'); return false;"><%= t("myplaceonline.heights.calculate") %></a></p>
 </div>
 <%= myp_date_field(f, :measurement_date, "myplaceonline.heights.measurement_date", obj.measurement_date) %>
-<%= myp_text_field(f, :measurement_source, "myplaceonline.heights.measurement_source", obj.measurement_source) %>
+<%= myp_text_field(f, :measurement_source, "myplaceonline.heights.measurement_source", obj.measurement_source, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
