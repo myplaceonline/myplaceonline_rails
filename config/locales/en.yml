@@ -2374,6 +2374,7 @@ en:
       original_amount_description: "Total: %{original_amount}"
       templates: "Templates"
       credit_card: "Credit Card"
+      money_item_display: "%{x} paid %{amount} for %{description} @ %{time}"
     money_balance_items:
       money_balance_item_name: "Description"
       amount: "Amount (Negative Owed to Contact)"

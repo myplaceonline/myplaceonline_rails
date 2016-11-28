@@ -15,7 +15,13 @@ class MoneyBalanceItem < ActiveRecord::Base
   end
 
   def display_initials
-    Myp.appendstrwrap(independent_description(true, initials: true), Myp.ellipses_if_needed(self.money_balance_item_name, 16))
+    I18n.t("myplaceonline.money_balances.money_item_display", {
+        x: amount < 0 ? money_balance.contact.display_initials : money_balance.identity.display_initials,
+        amount: Myp.number_to_currency(amount.abs),
+        time: Myp.display_time(item_time, User.current_user, :super_short_datetime_year),
+        description: Myp.ellipses_if_needed(self.money_balance_item_name, 16)
+      }
+    )
   end
 
   def self.build(params = nil)
