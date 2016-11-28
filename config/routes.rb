@@ -303,7 +303,8 @@ Rails.application.routes.draw do
     ],
     perishable_foods: [
       { instance: true, link: "consume_one" },
-      { instance: true, link: "consume_all" }
+      { instance: true, link: "consume_all" },
+      { instance: true, link: "move" },
     ],
     permission_shares: [
       { instance: true, link: "personalize" }

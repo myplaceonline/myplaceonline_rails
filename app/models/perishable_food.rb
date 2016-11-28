@@ -11,7 +11,7 @@ class PerishableFood < ActiveRecord::Base
   allow_existing :food
   
   def display
-    food.display
+    Myp.appendstrwrap(food.display, Myp.ellipses_if_needed(self.storage_location, 10))
   end
 
   def self.calendar_item_display(calendar_item)

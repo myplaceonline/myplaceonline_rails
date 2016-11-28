@@ -696,12 +696,33 @@ module ApplicationHelper
     ).html_safe
   end
   
+  def myp_number_field_tag(name, placeholder, value, autofocus = false, input_classes = nil, step = nil, options = {})
+    if Myp.is_probably_i18n(placeholder)
+      placeholder = I18n.t(placeholder)
+    end
+    baseoptions = {
+      placeholder: placeholder,
+      class: myp_field_classes(autofocus, input_classes),
+      value: value,
+      step: step
+    }
+    content_tag(
+      :p,
+      label_tag(name, placeholder, class: myp_label_classes(value)) +
+      form.send(Myp.use_html5_inputs ? "number_field_tag" : "text_field_tag", name, baseoptions.merge(options))
+    ).html_safe
+  end
+  
   def myp_decimal_field(form, name, placeholder, value, autofocus = false, input_classes = nil, step = Myp::DEFAULT_DECIMAL_STEP, options = {})
     myp_number_field(form, name, placeholder, value, autofocus, input_classes, step, options)
   end
   
   def myp_integer_field(form, name, placeholder, value, autofocus = false, input_classes = nil)
     myp_number_field(form, name, placeholder, value, autofocus, input_classes)
+  end
+  
+  def myp_integer_field_tag(form, name, placeholder, value, autofocus = false, input_classes = nil)
+    myp_number_field_tag(form, name, placeholder, value, autofocus, input_classes)
   end
   
   def myp_text_field_tag(name, placeholder, value, autofocus = false, input_classes = nil, wrapper_classes: nil, force_label_hidden: false)

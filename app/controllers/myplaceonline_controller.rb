@@ -1028,4 +1028,22 @@ class MyplaceonlineController < ApplicationController
       end
       result
     end
+    
+    def param_int(name, default: -1)
+      result = params[name]
+      if !result.blank?
+        result = result.to_i
+      else
+        result = default
+      end
+      result
+    end
+    
+    def param_string(name, default: nil)
+      result = params[name]
+      if result.blank?
+        result = default
+      end
+      result
+    end
 end
