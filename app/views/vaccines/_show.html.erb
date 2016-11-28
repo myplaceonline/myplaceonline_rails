@@ -1,0 +1,9 @@
+<%= attribute_table_row(t("myplaceonline.vaccines.vaccine_name"), obj.vaccine_name) %>
+<%= attribute_table_row_date(t("myplaceonline.vaccines.vaccine_date"), obj.vaccine_date) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<%=
+  render partial: 'myplaceonline/pictures', locals: {
+    pics: obj.vaccine_files,
+    placeholder: "myplaceonline.vaccines.file"
+  }
+%>

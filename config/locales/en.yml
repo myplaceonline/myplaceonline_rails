@@ -207,6 +207,7 @@ en:
       job_reviews: "Job Reviews"
       calendar_item_reminder_pendings: "Pending Reminders"
       items: "Items"
+      vaccines: "Vaccines"
     general:
       email: "E-mail"
       password: "Password"
@@ -2994,6 +2995,14 @@ en:
       item_location: "Location"
       cost: "Cost"
       acquired: "Date Acquired"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"
+    vaccines:
+      vaccine_name: "Vaccine Name"
+      vaccine_date: "Date"
       files: "Files/Pictures"
       file: "File/Picture"
       add_file: "Add File/Picture"

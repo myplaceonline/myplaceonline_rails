@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161126173422) do
+ActiveRecord::Schema.define(version: 20161128042229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4278,6 +4278,33 @@ ActiveRecord::Schema.define(version: 20161126173422) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
+  create_table "vaccine_files", force: :cascade do |t|
+    t.integer  "vaccine_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "vaccine_files", ["identity_file_id"], name: "index_vaccine_files_on_identity_file_id", using: :btree
+  add_index "vaccine_files", ["identity_id"], name: "index_vaccine_files_on_identity_id", using: :btree
+  add_index "vaccine_files", ["vaccine_id"], name: "index_vaccine_files_on_vaccine_id", using: :btree
+
+  create_table "vaccines", force: :cascade do |t|
+    t.string   "vaccine_name"
+    t.date     "vaccine_date"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "vaccines", ["identity_id"], name: "index_vaccines_on_identity_id", using: :btree
+
   create_table "vehicle_insurances", force: :cascade do |t|
     t.string   "insurance_name",      limit: 255
     t.integer  "company_id"
@@ -4951,6 +4978,10 @@ ActiveRecord::Schema.define(version: 20161126173422) do
   add_foreign_key "trips", "identity_files"
   add_foreign_key "tv_shows", "contacts", column: "recommender_id"
   add_foreign_key "tv_shows", "identities"
+  add_foreign_key "vaccine_files", "identities"
+  add_foreign_key "vaccine_files", "identity_files"
+  add_foreign_key "vaccine_files", "vaccines"
+  add_foreign_key "vaccines", "identities"
   add_foreign_key "vehicle_service_files", "identities"
   add_foreign_key "vehicle_service_files", "identity_files"
   add_foreign_key "vehicle_service_files", "vehicle_services"
