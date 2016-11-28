@@ -2980,6 +2980,10 @@ en:
       quantity: "Quantity"
       storage_location: "Storage Location"
       expiring: "Perishable Food %{name} expires %{delta}"
+      consume_one: "Consume One"
+      one_consumed: "One %{name} item has been consumed."
+      consume_all: "Consume All"
+      all_consumed: "All %{name} items have been consumed."
     items:
       item_name: "Name"
       item_location: "Location"

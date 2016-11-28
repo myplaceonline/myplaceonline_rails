@@ -301,6 +301,10 @@ Rails.application.routes.draw do
     periodic_payments: [
       { instance: false, link: "monthly_total" }
     ],
+    perishable_foods: [
+      { instance: true, link: "consume_one" },
+      { instance: true, link: "consume_all" }
+    ],
     permission_shares: [
       { instance: true, link: "personalize" }
     ],

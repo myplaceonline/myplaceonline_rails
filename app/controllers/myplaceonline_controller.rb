@@ -741,35 +741,35 @@ class MyplaceonlineController < ApplicationController
     result
   end
   
-  def archive
+  def archive(notice: I18n.t("myplaceonline.general.archived"))
     set_obj
     # Some models have after_saves that do things like recalculate
     # calendar items, but we can just surgically update this field
     # and skip that
     @obj.update_column(:archived, Time.now)
     redirect_to index_path,
-      :flash => { :notice => I18n.t("myplaceonline.general.archived") }
+      :flash => { :notice => notice }
   end
   
-  def unarchive
+  def unarchive(notice: I18n.t("myplaceonline.general.unarchived"))
     set_obj
     @obj.update_column(:archived, nil)
     redirect_to index_path,
-      :flash => { :notice => I18n.t("myplaceonline.general.unarchived") }
+      :flash => { :notice => notice }
   end
   
-  def favorite
+  def favorite(notice: I18n.t("myplaceonline.general.favorited"))
     set_obj
     @obj.update_column(:rating, Myp::MAX_RATING)
     redirect_to obj_path,
-      :flash => { :notice => I18n.t("myplaceonline.general.favorited") }
+      :flash => { :notice => notice }
   end
   
-  def unfavorite
+  def unfavorite(notice: I18n.t("myplaceonline.general.unfavorited"))
     set_obj
     @obj.update_column(:rating, nil)
     redirect_to obj_path,
-      :flash => { :notice => I18n.t("myplaceonline.general.unfavorited") }
+      :flash => { :notice => notice }
   end
   
   def index_filters
