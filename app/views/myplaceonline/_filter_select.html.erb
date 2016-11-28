@@ -1,4 +1,4 @@
-<% if @count_all > 0 %>
+<% if @count_all > 0 && (@filtered_count == -1 || @filtered_count > 0) %>
   <div class="horizontal_center" data-role="collapsible">
     <h4><%= t("myplaceonline.general.filter") %></h4>
     <% filters.each do |filter| %>

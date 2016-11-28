@@ -37,9 +37,18 @@ class MyplaceonlineController < ApplicationController
     set_parent
     
     @count_all = all(strict: true).count
-    
     cached_all = all
     @count = cached_all.count
+    
+    # Special case: If the request is for a vanilla index page (no filters), then check if there are any items that are
+    # filtered. If not, then don't bother even showing the filter section. This is to avoid the most common case of 0
+    # archived items
+    @filtered_count = -1
+    filters = index_filters
+    if filters.length == 1 && filters[0][:name] == :archived && request.query_parameters.length == 0 && @count_all == @count
+      @filtered_count = 0
+    end
+    
     @perpage = update_items_per_page(@perpage, @count)
     
     @items_next_page_link = items_next_page(@offset + @perpage)
