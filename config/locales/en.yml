@@ -1163,6 +1163,7 @@ en:
       measure_date: "Date"
       source: "Source"
       bmi: "BMI"
+      bsa: "BSA"
     test:
       title: "Test"
       name: "Test"

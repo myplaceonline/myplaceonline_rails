@@ -20,6 +20,10 @@ class Height < ActiveRecord::Base
     if !bmi.nil?
       result = Myp.appendstrwrap(result, I18n.t("myplaceonline.weights.bmi") + " #{sprintf("%0.02f", bmi)}")
     end
+    bsa = Weight.calculate_bsa(weight: nil, height: self)
+    if !bsa.nil?
+      result = Myp.appendstrwrap(result, I18n.t("myplaceonline.weights.bsa") + " #{sprintf("%0.02f", bsa)}")
+    end
     result
   end
   
@@ -27,6 +31,15 @@ class Height < ActiveRecord::Base
     case self.amount_type
     when 0
       self.height_amount
+    else
+      raise "TODO"
+    end
+  end
+    
+  def in_cm
+    case self.amount_type
+    when 0
+      self.height_amount * 2.54
     else
       raise "TODO"
     end
@@ -42,6 +55,17 @@ class Height < ActiveRecord::Base
   def self.build(params = nil)
     result = self.dobuild(params)
     result.measurement_date = User.current_user.date_now
+    result
+  end
+
+  def self.near_weight(weight:)
+    result = Height.where(
+      "identity_id = 1 and measurement_date <= ?",
+      weight.measure_date
+    ).order("measurement_date DESC NULLS LAST").limit(1).first
+    if result.nil?
+      result = Height.where("identity_id = 1").order("measurement_date DESC NULLS LAST").limit(1).first
+    end
     result
   end
 end
