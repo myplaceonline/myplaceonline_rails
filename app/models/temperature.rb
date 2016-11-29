@@ -11,4 +11,11 @@ class Temperature < ActiveRecord::Base
     result += " (" + Myp.display_date(measured, User.current_user) + ")"
     result
   end
+  
+  def self.build(params = nil)
+    result = self.dobuild(params)
+    result.temperature_type = 0
+    result.measured = User.current_user.time_now
+    result
+  end
 end
