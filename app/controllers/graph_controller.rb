@@ -18,16 +18,9 @@ class GraphController < MyplaceonlineController
       source = params["series_" + series_number.to_s + "_source"]
       value_name = params["series_" + series_number.to_s + "_values"]
       xvalue_name = params["series_" + series_number.to_s + "_xvalues"]
-      found_source = categories.find{|k,v| I18n.t("myplaceonline.category." + v.name) == source}
-      if !found_source.nil?
-        source_category = found_source[1]
+      Rails.logger.debug{"graph display source: #{source}, value_name: #{value_name}, xvalue_name: #{xvalue_name}"}
+      if !source.blank?
         category_class = Object.const_get(source.singularize.gsub(" ", ""))
-        if category_class.attribute_names.find{|x| x == value_name}.nil?
-          value_name = nil
-        end
-        if category_class.attribute_names.find{|x| x == xvalue_name}.nil?
-          xvalue_name = nil
-        end
         if xvalue_name.blank?
           xvalue_name = "updated_at"
         end
