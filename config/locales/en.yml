@@ -1162,6 +1162,7 @@ en:
       amount_type: "Units"
       measure_date: "Date"
       source: "Source"
+      bmi: "BMI"
     test:
       title: "Test"
       name: "Test"

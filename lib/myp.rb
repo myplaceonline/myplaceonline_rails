@@ -2061,7 +2061,7 @@ module Myp
   def self.log_response_time(context:, start_time:)
     end_time = Time.now
     diff = (end_time - start_time) * 1000.0
-    Rails.logger.info{"#{context} response time in milliseconds = #{sprintf('%0.02f', diff)}"}
+    Rails.logger.info{"#{context} response time in milliseconds = #{sprintf("%0.02f", diff)}"}
   end
 
   puts "myplaceonline: myp.rb static initialization ended"
