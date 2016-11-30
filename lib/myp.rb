@@ -1273,7 +1273,12 @@ module Myp
       elsif ExecutionContext.available? && !User.current_user.nil?
         from = User.current_user.email
       end
+      
+      # Protect email servers from DoS
+      sleep(5.0)
+      
       UserMailer.send_support_email(from, subject, body, body_plain).deliver_now
+      
     rescue Exception => e
       puts "Could not send email. Subject: " + subject + ", Body: " + body + ", Email Problem: " + Myp.error_details(e)
     end

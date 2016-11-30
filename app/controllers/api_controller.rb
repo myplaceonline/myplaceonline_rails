@@ -151,12 +151,9 @@ class ApiController < ApplicationController
   
   def debug
     
-    body_markdown = "Message: " + params[:message] + "\n\n" + "Stack: " + params[:stack]
+    body_markdown = "Message: " + params[:message].to_s + "\n\n" + "Stack: " + params[:stack].to_s
     
     Myp.send_support_email_safe("Browser Error", Myp.markdown_to_html(body_markdown.gsub("\n", "<br />\n")).html_safe, body_markdown)
-    
-    # So that a script kiddie doesn't DoS our email server
-    sleep(1.0)
     
     render json: {
       :result => true
