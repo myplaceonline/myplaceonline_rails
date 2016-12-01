@@ -77,3 +77,16 @@
   <%= myp_text_area_markdown(child_fields, :book_quote, "myplaceonline.book_quotes.book_quote", childproperty.book_quote) %>
   <%= myp_text_field(child_fields, :pages, "myplaceonline.book_quotes.pages", childproperty.pages) %>
 <% end %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :book_files,
+    item_placeholder: "myplaceonline.books.file",
+    heading: "myplaceonline.books.files",
+    addbutton: "myplaceonline.books.add_file",
+    addbutton_multi: "myplaceonline.books.add_files",
+    deletebutton: "myplaceonline.books.delete_file"
+  }
+%>

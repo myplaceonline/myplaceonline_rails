@@ -1822,6 +1822,12 @@ en:
       lent_books: "Lent Books"
       borrowed_books: "Borrowed Books"
       all_books_back: "Back to All Books"
+      quests:
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"
     book_quotes:
       book_quote: "Quote"
       pages: "Page(s)"

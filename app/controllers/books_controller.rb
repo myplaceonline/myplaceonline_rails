@@ -26,6 +26,10 @@ class BooksController < MyplaceonlineController
     ]
   end
   
+  def may_upload
+    true
+  end
+
   protected
     def insecure
       true
@@ -48,6 +52,7 @@ class BooksController < MyplaceonlineController
         recommender_attributes: ContactsController.param_names,
         lent_to_attributes: ContactsController.param_names,
         borrowed_from_attributes: ContactsController.param_names,
+        book_files_attributes: FilesController.multi_param_names,
         book_quotes_attributes: [
           :id,
           :_destroy,

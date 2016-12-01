@@ -22,6 +22,16 @@ class Book < ActiveRecord::Base
   has_many :book_quotes, -> { order("pages ASC, updated_at DESC") }, :dependent => :destroy
   accepts_nested_attributes_for :book_quotes, allow_destroy: true, reject_if: :all_blank
   
+  has_many :book_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
+  accepts_nested_attributes_for :book_files, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :book_files, [{:name => :identity_file}]
+
+  before_validation :update_file_folders
+
+  def update_file_folders
+    put_files_in_folder(book_files, [I18n.t("myplaceonline.category.books"), display])
+  end
+
   def display
     Myp.appendstrwrap(book_name, author)
   end
