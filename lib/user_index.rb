@@ -8,7 +8,7 @@ class UserIndex < Chewy::Index
       }
     },
     analyzer: {
-      default_index: {
+      default: {
         type: "custom",
         tokenizer: "standard",
         filter: [

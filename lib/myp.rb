@@ -1637,14 +1637,14 @@ module Myp
       
       if category.blank?
         query = {
-          filtered: {
-            query: {
+          bool: {
+            must: {
               match: {
                 _all: search
               }
             },
             filter: {
-              match: {
+              term: {
                 identity_id: user.primary_identity_id
               }
             }
@@ -1652,25 +1652,21 @@ module Myp
         }
       else
         query = {
-          filtered: {
-            query: {
-              bool: {
-                must: [
-                  {
-                    match: {
-                      _all: search
-                    }
-                  },
-                  {
-                    match: {
-                      _type: category.singularize
-                    }
-                  }
-                ]
+          bool: {
+            must: [
+              {
+                match: {
+                  _all: search
+                }
+              },
+              {
+                match: {
+                  _type: category.singularize
+                }
               }
-            },
+            ],
             filter: {
-              match: {
+              term: {
                 identity_id: user.primary_identity_id
               }
             }
