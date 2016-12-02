@@ -15,7 +15,7 @@
         <li>
           <%= submit_tag(t("myplaceonline.general.save"), "data-icon" => "check", "data-iconpos" => "top", "style" => "background-color: green") %>
         </li>
-        <li><%= link_to t("myplaceonline.general.cancel"), controller.obj_path, "data-icon" => "back" %></li>
+        <li><%= link_to t("myplaceonline.groups.contact"), controller.obj_path, "data-icon" => "back" %></li>
         <li><%= link_to t("myplaceonline.general.select_all"), "#", "data-icon" => "check", onclick: "$(':checkbox').each(function() {$(this).prop('checked', true).checkboxradio('refresh');}); return false;" %></li>
         <li><%= link_to t("myplaceonline.general.deselect_all"), "#", "data-icon" => "delete", onclick: "$(':checkbox').each(function() {$(this).prop('checked', false).checkboxradio('refresh');}); return false;" %></li>
       </ul>

@@ -2084,6 +2084,7 @@ en:
       add_group_reference: "Add Group Reference"
       delete_group_reference: "Delete Group Reference"
       missing: "Missing"
+      contact: "Contact"
     terms: !xml |
       <![CDATA[
       

@@ -164,9 +164,9 @@ Rails.application.routes.draw do
   get 'info/diagnostics/jqm', :to => 'info#jqm'
   get 'badges/42', :to => 'badges#n42'
 
-  match 'files/:id/view/:imagename', :to => 'files#view', via: [:get], as: "file_view_name"
-  match 'files/:id/thumbnail/:imagename', :to => 'files#thumbnail', via: [:get], as: "file_thumbnail_name"
-  match 'files/:id/download/:imagename', :to => 'files#download', via: [:get], as: "file_download_name"
+  match 'files/:id/view/*imagename', :to => 'files#view', via: [:get], as: "file_view_name"
+  match 'files/:id/thumbnail/*imagename', :to => 'files#thumbnail', via: [:get], as: "file_thumbnail_name"
+  match 'files/:id/download/*imagename', :to => 'files#download', via: [:get], as: "file_download_name"
 
   additions = {
     blood_tests: [
