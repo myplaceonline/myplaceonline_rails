@@ -9,29 +9,12 @@ class DessertLocationsController < MyplaceonlineController
     category_name.singularize
   end
 
-  def index
-    @not_visited = params[:not_visited]
-    if !@not_visited.blank?
-      @not_visited = @not_visited.to_bool
-    end
-    super
-  end
-
   def footer_items_index
     super + [
       {
-        title: I18n.t('myplaceonline.random.restaurant'),
+        title: I18n.t("myplaceonline.random.restaurant"),
         link: random_activity_path(:filter_restaurants => "1"),
         icon: "search"
-      }
-    ]
-  end
-  
-  def index_filters
-    super + [
-      {
-        :name => :not_visited,
-        :display => "myplaceonline.restaurants.not_visited"
       }
     ]
   end
@@ -50,14 +33,6 @@ class DessertLocationsController < MyplaceonlineController
       )
     end
 
-    def all_additional_sql(strict)
-      if @not_visited && !strict
-        "and (visited is null or visited = false)"
-      else
-        nil
-      end
-    end
-
     def sorts
       [Location.sorts]
     end
@@ -68,5 +43,11 @@ class DessertLocationsController < MyplaceonlineController
 
     def all_includes
       :location
+    end
+
+    def simple_index_filters
+      [
+        { name: :not_visited, column: :visited, inverted: true }
+      ]
     end
 end

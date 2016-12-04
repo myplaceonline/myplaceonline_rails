@@ -21,4 +21,13 @@ class GasStationsController < MyplaceonlineController
         location_attributes: LocationsController.param_names
       )
     end
+
+    def simple_index_filters
+      [
+        { name: :gas },
+        { name: :diesel },
+        { name: :propane_replacement },
+        { name: :propane_fillup },
+      ]
+    end
 end

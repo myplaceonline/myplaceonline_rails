@@ -36,6 +36,10 @@ class MyplaceonlineController < ApplicationController
     
     set_parent
     
+    simple_index_filters.each do |simple_index_filter|
+      instance_variable_set("@#{simple_index_filter[:name].to_s}", param_bool(simple_index_filter[:name]))
+    end
+    
     @count_all = all(strict: true).count
     cached_all = all
     @count = cached_all.count
@@ -782,12 +786,19 @@ class MyplaceonlineController < ApplicationController
   end
   
   def index_filters
-    [
+    result = [
       {
         :name => :archived,
         :display => "myplaceonline.general.archived"
       }
     ]
+    simple_index_filters.each do |simple_index_filter|
+      result << {
+        :name => simple_index_filter[:name],
+        :display => "myplaceonline.#{category_name}.#{simple_index_filter[:name].to_s}"
+      }
+    end
+    result
   end
   
   protected
@@ -825,7 +836,29 @@ class MyplaceonlineController < ApplicationController
       result = nil
       if !strict
         if @archived.blank? || !@archived
-          result = "and #{model.table_name}.archived is null"
+          result = Myp.appendstr(result, "#{model.table_name}.archived is null", nil, " and (", ")")
+        end
+        simple_index_filters.each do |simple_index_filter|
+          if !simple_index_filter[:column]
+            colname = simple_index_filter[:name].to_s
+          else
+            colname = simple_index_filter[:column].to_s
+          end
+          
+          if instance_variable_get("@#{simple_index_filter[:name].to_s}")
+            if !simple_index_filter[:inverted]
+              sql = "#{model.table_name}.#{colname} = true"
+            else
+              sql = "#{model.table_name}.#{colname} is null or #{model.table_name}.#{colname} = false"
+            end
+            result = Myp.appendstr(
+              result,
+              sql,
+              nil,
+              " and (",
+              ")"
+            )
+          end
         end
       end
       result
@@ -882,6 +915,7 @@ class MyplaceonlineController < ApplicationController
         parent_id = parent_model_last.table_name.singularize.downcase + "_id"
         additional += " AND #{model.table_name}.#{parent_id} = #{ActionController::Base.helpers.sanitize(params[parent_id.to_sym])}"
       end
+      Rails.logger.debug{"all query strict: #{strict}, additional: #{additional}"}
       model.includes(all_includes).joins(all_joins).where(
         "(#{model.table_name}.identity_id = ? #{initial_or}) #{additional}",
         current_user.primary_identity.id
@@ -1054,5 +1088,9 @@ class MyplaceonlineController < ApplicationController
         result = default
       end
       result
+    end
+
+    def simple_index_filters
+      []
     end
 end
