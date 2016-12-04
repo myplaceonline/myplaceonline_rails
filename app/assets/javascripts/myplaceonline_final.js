@@ -1048,23 +1048,40 @@ var myplaceonline = function(mymodule) {
   }
 
   function removeParam(url, paramName) {
-    var x = url.indexOf("?" + paramName);
-    if (x == -1) {
-      x = url.indexOf("&" + paramName);
-      if (x != -1) {
+    var searching = true;
+    while (searching) {
+      var x = url.indexOf("?" + paramName);
+      if (x == -1) {
+        x = url.indexOf("&" + paramName);
+        if (x != -1) {
+          var y = url.indexOf('&', x + 1);
+          if (y == -1) {
+            url = url.substring(0, x);
+          } else {
+            var remaining = url.substring(y);
+            url = url.substring(0, x);
+            if (url.indexOf('?') == -1) {
+              url += "?" + remaining.substring(1);
+            } else {
+              url += remaining;
+            }
+          }
+        } else {
+          searching = false;
+        }
+      } else {
         var y = url.indexOf('&', x + 1);
         if (y == -1) {
           url = url.substring(0, x);
         } else {
-          url = url.substring(0, y);
+          var remaining = url.substring(y);
+          url = url.substring(0, x);
+          if (url.indexOf('?') == -1) {
+            url += "?" + remaining.substring(1);
+          } else {
+            url += remaining;
+          }
         }
-      }
-    } else {
-      var y = url.indexOf('&', x + 1);
-      if (y == -1) {
-        url = url.substring(0, x);
-      } else {
-        url = url.substring(0, y);
       }
     }
     return url;
