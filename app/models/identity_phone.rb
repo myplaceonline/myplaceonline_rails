@@ -49,4 +49,8 @@ class IdentityPhone < ActiveRecord::Base
   def display
     Myp.appendstrwrap(self.number, Myp.get_select_name(self.phone_type, PHONE_TYPES))
   end
+  
+  def worth_to_display?
+    self.phone_type != PHONE_TYPE_TEMPORARY && self.phone_type != PHONE_TYPE_ARCHIVED
+  end
 end

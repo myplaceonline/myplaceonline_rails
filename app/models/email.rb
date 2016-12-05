@@ -146,7 +146,7 @@ class Email < ActiveRecord::Base
         final_content += "#{user_email}"
         
         if identity.phone_numbers.count > 0
-          final_content += identity.identity_phones.to_a.map{|p| "\n<br />#{p.context_info}: <a href=\"tel:#{p.number}\">#{p.number}</a>"}.join("")
+          final_content += identity.identity_phones.to_a.delete_if{|x| !x.worth_to_display?}.map{|p| "\n<br />#{p.context_info}: <a href=\"tel:#{p.number}\">#{p.number}</a>"}.join("")
         end
         final_content += "\n</p>\n\n"
 
@@ -181,7 +181,7 @@ class Email < ActiveRecord::Base
         end
         final_content_plain += "#{user_email}\n"
         if identity.phone_numbers.count > 0
-          final_content_plain += identity.identity_phones.to_a.map{|p| "#{p.context_info}: #{p.number}\n"}.join("")
+          final_content_plain += identity.identity_phones.to_a.delete_if{|x| !x.worth_to_display?}.map{|p| "#{p.context_info}: #{p.number}\n"}.join("")
         end
 
         final_content_plain += "\n==\n\n"
