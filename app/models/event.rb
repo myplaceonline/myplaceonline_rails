@@ -160,7 +160,9 @@ class Event < ActiveRecord::Base
       result += "\n<p>#{I18n.t("myplaceonline.events.location")}: #{ActionController::Base.helpers.link_to(self.location.address_one_line, self.location.map_url)}</p>"
     end
     
-    if !self.completed?
+    # We might be sharing out an email with pictures after the event, so if the event is completed, don't bother to add
+    # an RSVP section. Also, if it's not completed, but the event is within a day, don't bother to give an RSVP either
+    if !self.completed? && !Myp.within_a_day?(time: self.event_time)
       rsvp_link = permission_share.link(suffix_path: "rsvp")
       
       result += "\n<hr /><p>#{I18n.t("myplaceonline.events.email_intro")}</p><p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_yes"), rsvp_link + "&type=#{Event::RSVP_YES}&email_token=#{email_token}")}&nbsp;|&nbsp;#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_maybe"), rsvp_link + "&type=#{Event::RSVP_MAYBE}&email_token=#{email_token}")}&nbsp;|&nbsp;#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.events.rsvp_no"), rsvp_link + "&type=#{Event::RSVP_NO}&email_token=#{email_token}")}</p><hr />"
@@ -205,7 +207,7 @@ class Event < ActiveRecord::Base
       result += "#{I18n.t("myplaceonline.events.location")}: #{self.location.address_one_line}\n#{I18n.t("myplaceonline.events.map")}: #{self.location.map_url}\n\n"
     end
 
-    if !self.completed?
+    if !self.completed? && !Myp.within_a_day?(time: self.event_time)
       rsvp_link = permission_share.link(suffix_path: "rsvp")
 
       result += "=========\n\n#{I18n.t("myplaceonline.events.email_intro")}\n\n#{I18n.t("myplaceonline.events.rsvp_yes")}: #{rsvp_link + "&type=#{Event::RSVP_YES}&email_token=#{email_token}"}\n\n#{I18n.t("myplaceonline.events.rsvp_maybe")}: #{rsvp_link + "&type=#{Event::RSVP_MAYBE}&email_token=#{email_token}"}\n\n#{I18n.t("myplaceonline.events.rsvp_no")}: #{rsvp_link + "&type=#{Event::RSVP_NO}&email_token=#{email_token}"}\n\n=========\n\n"

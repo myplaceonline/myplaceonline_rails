@@ -2,16 +2,16 @@
 <%= flashes!(@obj) %>
 <h1><%= @obj.display %></h1>
 <% if !@obj.event_time.nil? %>
-  <p><%= t("myplaceonline.events.event_time") %>: <%= Myp.display_datetime(@obj.event_time, current_user) %></p>
+  <p><%= t("myplaceonline.events.event_time") %>: <%= Myp.display_datetime(@obj.event_time, @obj.owning_user) %></p>
 <% end %>
 <% if !@obj.event_end_time.nil? %>
-  <p><%= t("myplaceonline.events.event_end_time") %>: <%= Myp.display_datetime(@obj.event_end_time, current_user) %></p>
+  <p><%= t("myplaceonline.events.event_end_time") %>: <%= Myp.display_datetime(@obj.event_end_time, @obj.owning_user) %></p>
 <% end %>
 <% if !@obj.location.nil? %>
   <p><%= t("myplaceonline.events.location") %>: <%= link_to(@obj.location.address_one_line, @obj.location.map_url) %></p>
 <% end %>
 
-<% if !@obj.completed? && !params[:email_token].nil? %>
+<% if !@obj.completed? && !params[:email_token].nil? && !Myp.within_a_day?(time: @obj.event_time, user: @obj.owning_user) %>
   <hr />
   <p><%= t("myplaceonline.events.email_intro") %></p>
   <p>

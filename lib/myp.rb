@@ -2064,6 +2064,11 @@ module Myp
     diff = (end_time - start_time) * 1000.0
     Rails.logger.info{"#{context} response time in milliseconds = #{sprintf("%0.02f", diff)}"}
   end
+  
+  def self.within_a_day?(time:, user: User.current_user)
+    diff = time - user.time_now
+    diff > 0 && diff <= 1.days
+  end
 
   puts "myplaceonline: myp.rb static initialization ended"
 end

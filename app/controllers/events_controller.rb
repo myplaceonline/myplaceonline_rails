@@ -82,7 +82,7 @@ class EventsController < MyplaceonlineController
   end
 
   def footer_items_show
-    super + [
+    [
       {
         title: I18n.t("myplaceonline.general.share"),
         link: event_share_path(@obj),
@@ -93,7 +93,7 @@ class EventsController < MyplaceonlineController
         link: event_shared_path(@obj),
         icon: "search"
       }
-    ]
+    ] + super
   end
   
   protected

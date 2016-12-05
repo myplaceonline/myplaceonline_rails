@@ -55,6 +55,10 @@ module MyplaceonlineActiveRecordIdentityConcern
     def current_user_owns?
       identity == User.current_user.primary_identity
     end
+    
+    def owning_user
+      identity.user
+    end
   end
   
   module ClassMethods
