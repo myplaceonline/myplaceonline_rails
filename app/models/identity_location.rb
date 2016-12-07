@@ -2,6 +2,8 @@ class IdentityLocation < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
+  validates :location, presence: true
+
   belongs_to :parent_identity, class_name: Identity
 
   belongs_to :location

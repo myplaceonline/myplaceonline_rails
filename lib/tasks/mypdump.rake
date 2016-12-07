@@ -2,7 +2,7 @@ namespace :myp do
   desc "Myplaceonline rake tasks"
   
   task :dump => :environment do
-    SeedDump.dump(Category, exclude: [:created_at, :updated_at], file: "db/seeds.rb")
+    SeedDump.dump(Category.all.order("id"), exclude: [:created_at, :updated_at], file: "db/seeds.rb")
     open("db/seeds.rb", "a") { |f|
       f.puts %{
 user = User.new

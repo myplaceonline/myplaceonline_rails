@@ -4,6 +4,8 @@ class MediaDumpFile < ActiveRecord::Base
 
   belongs_to :media_dump
   
+  validates :identity_file, presence: true
+
   belongs_to :identity_file
   accepts_nested_attributes_for :identity_file, reject_if: :all_blank
   allow_existing :identity_file
@@ -15,6 +17,8 @@ class MediaDumpFile < ActiveRecord::Base
   before_validation :update_pic_folders
   
   def update_pic_folders
-    put_file_in_folder(self, [I18n.t("myplaceonline.category.media_dumps"), media_dump.display])
+    if !media_dump.nil?
+      put_file_in_folder(self, [I18n.t("myplaceonline.category.media_dumps"), media_dump.display])
+    end
   end
 end

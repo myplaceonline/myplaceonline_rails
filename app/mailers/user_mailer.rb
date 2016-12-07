@@ -2,6 +2,7 @@ class UserMailer < ActionMailer::Base
   default from: Myplaceonline::DEFAULT_SUPPORT_EMAIL
   
   def send_support_email(from, subject, content, content_plain = nil)
+    @time = Time.now.in_time_zone(Rails.application.config.time_zone).to_s(:full)
     @from = from
     @content = content
     if !content_plain.nil?

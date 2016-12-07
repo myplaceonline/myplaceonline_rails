@@ -14,5 +14,7 @@
           items: @usefulItemsList
         }
     %>
+  <% elsif !@usefulItemsError.nil? %>
+    <hr /><p><%= t("myplaceonline.myplaceonline_quick_category_displays.useful_items_error") %></p>
   <% end %>
 <% end %>

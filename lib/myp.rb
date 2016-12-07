@@ -1275,7 +1275,7 @@ module Myp
       end
       
       # Protect email servers from DoS
-      sleep(5.0)
+      sleep(1.0)
       
       UserMailer.send_support_email(from, subject, body, body_plain).deliver_now
       
@@ -1972,6 +1972,7 @@ module Myp
     end
   end
   
+  # https://github.com/twilio/twilio-ruby
   def self.send_sms(to: nil, body: nil, from: @@twilio_number)
     if !@@twilio_client.nil?
       Rails.logger.info{"Sending twilio SMS to: #{to}, body: #{body}"}

@@ -1993,6 +1993,8 @@ en:
         myplaceonline_quick_category_display: "Recently or Frequently Used"
         calendar: "Due"
         notepad: "Notepad"
+    myplaceonline_quick_category_displays:
+      useful_items_error: "Error retrieving frequently used items. We have been notified. You can try refreshing."
     concerts:
       concert_date: "Date"
       concert_title: "Description"
