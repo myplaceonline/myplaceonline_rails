@@ -197,7 +197,7 @@ class Identity < ActiveRecord::Base
   end
   
   def first_mobile_number
-    result = identity_phones.index{|x| x.accepts_sms? }
+    result = identity_phones.to_a.index{|x| x.accepts_sms? }
     if !result.nil?
       result = identity_phones[result]
     end

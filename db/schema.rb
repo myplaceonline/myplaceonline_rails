@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -25,9 +24,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_accomplishments_on_identity_id", using: :btree
   end
-
-  add_index "accomplishments", ["identity_id"], name: "index_accomplishments_on_identity_id", using: :btree
 
   create_table "acne_measurement_pictures", force: :cascade do |t|
     t.integer  "acne_measurement_id"
@@ -37,11 +35,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["acne_measurement_id"], name: "index_acne_measurement_pictures_on_acne_measurement_id", using: :btree
+    t.index ["identity_file_id"], name: "index_acne_measurement_pictures_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_acne_measurement_pictures_on_identity_id", using: :btree
   end
-
-  add_index "acne_measurement_pictures", ["acne_measurement_id"], name: "index_acne_measurement_pictures_on_acne_measurement_id", using: :btree
-  add_index "acne_measurement_pictures", ["identity_file_id"], name: "index_acne_measurement_pictures_on_identity_file_id", using: :btree
-  add_index "acne_measurement_pictures", ["identity_id"], name: "index_acne_measurement_pictures_on_identity_id", using: :btree
 
   create_table "acne_measurements", force: :cascade do |t|
     t.datetime "measurement_datetime"
@@ -55,9 +52,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_acne_measurements_on_identity_id", using: :btree
   end
-
-  add_index "acne_measurements", ["identity_id"], name: "index_acne_measurements_on_identity_id", using: :btree
 
   create_table "activities", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -68,9 +64,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.text     "notes"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_activities_on_identity_id", using: :btree
   end
-
-  add_index "activities", ["identity_id"], name: "index_activities_on_identity_id", using: :btree
 
   create_table "admin_emails", force: :cascade do |t|
     t.integer  "email_id"
@@ -81,10 +76,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",     null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["email_id"], name: "index_admin_emails_on_email_id", using: :btree
+    t.index ["identity_id"], name: "index_admin_emails_on_identity_id", using: :btree
   end
-
-  add_index "admin_emails", ["email_id"], name: "index_admin_emails_on_email_id", using: :btree
-  add_index "admin_emails", ["identity_id"], name: "index_admin_emails_on_identity_id", using: :btree
 
   create_table "admin_text_messages", force: :cascade do |t|
     t.integer  "text_message_id"
@@ -95,10 +89,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",      null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_admin_text_messages_on_identity_id", using: :btree
+    t.index ["text_message_id"], name: "index_admin_text_messages_on_text_message_id", using: :btree
   end
-
-  add_index "admin_text_messages", ["identity_id"], name: "index_admin_text_messages_on_identity_id", using: :btree
-  add_index "admin_text_messages", ["text_message_id"], name: "index_admin_text_messages_on_text_message_id", using: :btree
 
   create_table "alerts_displays", force: :cascade do |t|
     t.integer  "identity_id"
@@ -107,9 +100,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.boolean  "suppress_hotel"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_alerts_displays_on_identity_id", using: :btree
   end
-
-  add_index "alerts_displays", ["identity_id"], name: "index_alerts_displays_on_identity_id", using: :btree
 
   create_table "annuities", force: :cascade do |t|
     t.string   "annuity_name"
@@ -120,9 +112,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",   null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_annuities_on_identity_id", using: :btree
   end
-
-  add_index "annuities", ["identity_id"], name: "index_annuities_on_identity_id", using: :btree
 
   create_table "apartment_lease_files", force: :cascade do |t|
     t.integer  "apartment_lease_id"
@@ -133,11 +124,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",         null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["apartment_lease_id"], name: "index_apartment_lease_files_on_apartment_lease_id", using: :btree
+    t.index ["identity_file_id"], name: "index_apartment_lease_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_apartment_lease_files_on_identity_id", using: :btree
   end
-
-  add_index "apartment_lease_files", ["apartment_lease_id"], name: "index_apartment_lease_files_on_apartment_lease_id", using: :btree
-  add_index "apartment_lease_files", ["identity_file_id"], name: "index_apartment_lease_files_on_identity_file_id", using: :btree
-  add_index "apartment_lease_files", ["identity_id"], name: "index_apartment_lease_files_on_identity_id", using: :btree
 
   create_table "apartment_leases", force: :cascade do |t|
     t.date     "start_date"
@@ -152,10 +142,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["apartment_id"], name: "index_apartment_leases_on_apartment_id", using: :btree
+    t.index ["identity_id"], name: "index_apartment_leases_on_identity_id", using: :btree
   end
-
-  add_index "apartment_leases", ["apartment_id"], name: "index_apartment_leases_on_apartment_id", using: :btree
-  add_index "apartment_leases", ["identity_id"], name: "index_apartment_leases_on_identity_id", using: :btree
 
   create_table "apartment_pictures", force: :cascade do |t|
     t.integer  "apartment_id"
@@ -165,11 +154,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["apartment_id"], name: "index_apartment_pictures_on_apartment_id", using: :btree
+    t.index ["identity_file_id"], name: "index_apartment_pictures_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_apartment_pictures_on_identity_id", using: :btree
   end
-
-  add_index "apartment_pictures", ["apartment_id"], name: "index_apartment_pictures_on_apartment_id", using: :btree
-  add_index "apartment_pictures", ["identity_file_id"], name: "index_apartment_pictures_on_identity_file_id", using: :btree
-  add_index "apartment_pictures", ["identity_id"], name: "index_apartment_pictures_on_identity_id", using: :btree
 
   create_table "apartment_trash_pickups", force: :cascade do |t|
     t.integer  "trash_type"
@@ -181,11 +169,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "repeat_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["apartment_id"], name: "index_apartment_trash_pickups_on_apartment_id", using: :btree
+    t.index ["identity_id"], name: "index_apartment_trash_pickups_on_identity_id", using: :btree
+    t.index ["repeat_id"], name: "index_apartment_trash_pickups_on_repeat_id", using: :btree
   end
-
-  add_index "apartment_trash_pickups", ["apartment_id"], name: "index_apartment_trash_pickups_on_apartment_id", using: :btree
-  add_index "apartment_trash_pickups", ["identity_id"], name: "index_apartment_trash_pickups_on_identity_id", using: :btree
-  add_index "apartment_trash_pickups", ["repeat_id"], name: "index_apartment_trash_pickups_on_repeat_id", using: :btree
 
   create_table "apartments", force: :cascade do |t|
     t.integer  "location_id"
@@ -197,11 +184,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_apartments_on_identity_id", using: :btree
+    t.index ["landlord_id"], name: "index_apartments_on_landlord_id", using: :btree
+    t.index ["location_id"], name: "index_apartments_on_location_id", using: :btree
   end
-
-  add_index "apartments", ["identity_id"], name: "index_apartments_on_identity_id", using: :btree
-  add_index "apartments", ["landlord_id"], name: "index_apartments_on_landlord_id", using: :btree
-  add_index "apartments", ["location_id"], name: "index_apartments_on_location_id", using: :btree
 
   create_table "awesome_list_items", force: :cascade do |t|
     t.string   "item_name"
@@ -209,10 +195,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.index ["awesome_list_id"], name: "index_awesome_list_items_on_awesome_list_id", using: :btree
+    t.index ["identity_id"], name: "index_awesome_list_items_on_identity_id", using: :btree
   end
-
-  add_index "awesome_list_items", ["awesome_list_id"], name: "index_awesome_list_items_on_awesome_list_id", using: :btree
-  add_index "awesome_list_items", ["identity_id"], name: "index_awesome_list_items_on_identity_id", using: :btree
 
   create_table "awesome_lists", force: :cascade do |t|
     t.integer  "location_id"
@@ -223,10 +208,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_awesome_lists_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_awesome_lists_on_location_id", using: :btree
   end
-
-  add_index "awesome_lists", ["identity_id"], name: "index_awesome_lists_on_identity_id", using: :btree
-  add_index "awesome_lists", ["location_id"], name: "index_awesome_lists_on_location_id", using: :btree
 
   create_table "bank_accounts", force: :cascade do |t|
     t.string   "name",                        limit: 255
@@ -245,15 +229,14 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "archived"
     t.integer  "visit_count"
     t.integer  "rating"
+    t.index ["account_number_encrypted_id"], name: "index_bank_accounts_on_account_number_encrypted_id", using: :btree
+    t.index ["company_id"], name: "index_bank_accounts_on_company_id", using: :btree
+    t.index ["home_address_id"], name: "index_bank_accounts_on_home_address_id", using: :btree
+    t.index ["identity_id"], name: "index_bank_accounts_on_identity_id", using: :btree
+    t.index ["password_id"], name: "index_bank_accounts_on_password_id", using: :btree
+    t.index ["pin_encrypted_id"], name: "index_bank_accounts_on_pin_encrypted_id", using: :btree
+    t.index ["routing_number_encrypted_id"], name: "index_bank_accounts_on_routing_number_encrypted_id", using: :btree
   end
-
-  add_index "bank_accounts", ["account_number_encrypted_id"], name: "index_bank_accounts_on_account_number_encrypted_id", using: :btree
-  add_index "bank_accounts", ["company_id"], name: "index_bank_accounts_on_company_id", using: :btree
-  add_index "bank_accounts", ["home_address_id"], name: "index_bank_accounts_on_home_address_id", using: :btree
-  add_index "bank_accounts", ["identity_id"], name: "index_bank_accounts_on_identity_id", using: :btree
-  add_index "bank_accounts", ["password_id"], name: "index_bank_accounts_on_password_id", using: :btree
-  add_index "bank_accounts", ["pin_encrypted_id"], name: "index_bank_accounts_on_pin_encrypted_id", using: :btree
-  add_index "bank_accounts", ["routing_number_encrypted_id"], name: "index_bank_accounts_on_routing_number_encrypted_id", using: :btree
 
   create_table "bar_pictures", force: :cascade do |t|
     t.integer  "bar_id"
@@ -263,11 +246,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["bar_id"], name: "index_bar_pictures_on_bar_id", using: :btree
+    t.index ["identity_file_id"], name: "index_bar_pictures_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_bar_pictures_on_identity_id", using: :btree
   end
-
-  add_index "bar_pictures", ["bar_id"], name: "index_bar_pictures_on_bar_id", using: :btree
-  add_index "bar_pictures", ["identity_file_id"], name: "index_bar_pictures_on_identity_file_id", using: :btree
-  add_index "bar_pictures", ["identity_id"], name: "index_bar_pictures_on_identity_id", using: :btree
 
   create_table "bars", force: :cascade do |t|
     t.integer  "location_id"
@@ -278,10 +260,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.datetime "archived"
+    t.index ["identity_id"], name: "index_bars_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_bars_on_location_id", using: :btree
   end
-
-  add_index "bars", ["identity_id"], name: "index_bars_on_identity_id", using: :btree
-  add_index "bars", ["location_id"], name: "index_bars_on_location_id", using: :btree
 
   create_table "bet_contacts", force: :cascade do |t|
     t.integer  "bet_id"
@@ -291,11 +272,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["bet_id"], name: "index_bet_contacts_on_bet_id", using: :btree
+    t.index ["contact_id"], name: "index_bet_contacts_on_contact_id", using: :btree
+    t.index ["identity_id"], name: "index_bet_contacts_on_identity_id", using: :btree
   end
-
-  add_index "bet_contacts", ["bet_id"], name: "index_bet_contacts_on_bet_id", using: :btree
-  add_index "bet_contacts", ["contact_id"], name: "index_bet_contacts_on_contact_id", using: :btree
-  add_index "bet_contacts", ["identity_id"], name: "index_bet_contacts_on_identity_id", using: :btree
 
   create_table "bets", force: :cascade do |t|
     t.string   "bet_name"
@@ -311,9 +291,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",                                    null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_bets_on_identity_id", using: :btree
   end
-
-  add_index "bets", ["identity_id"], name: "index_bets_on_identity_id", using: :btree
 
   create_table "blood_concentrations", force: :cascade do |t|
     t.string   "concentration_name",    limit: 255
@@ -327,9 +306,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "archived"
     t.integer  "rating"
     t.text     "notes"
+    t.index ["identity_id"], name: "index_blood_concentrations_on_identity_id", using: :btree
   end
-
-  add_index "blood_concentrations", ["identity_id"], name: "index_blood_concentrations_on_identity_id", using: :btree
 
   create_table "blood_pressures", force: :cascade do |t|
     t.integer  "systolic_pressure"
@@ -342,9 +320,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_blood_pressures_on_identity_id", using: :btree
   end
-
-  add_index "blood_pressures", ["identity_id"], name: "index_blood_pressures_on_identity_id", using: :btree
 
   create_table "blood_test_files", force: :cascade do |t|
     t.integer  "blood_test_id"
@@ -355,11 +332,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["blood_test_id"], name: "index_blood_test_files_on_blood_test_id", using: :btree
+    t.index ["identity_file_id"], name: "index_blood_test_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_blood_test_files_on_identity_id", using: :btree
   end
-
-  add_index "blood_test_files", ["blood_test_id"], name: "index_blood_test_files_on_blood_test_id", using: :btree
-  add_index "blood_test_files", ["identity_file_id"], name: "index_blood_test_files_on_identity_file_id", using: :btree
-  add_index "blood_test_files", ["identity_id"], name: "index_blood_test_files_on_identity_id", using: :btree
 
   create_table "blood_test_results", force: :cascade do |t|
     t.integer  "blood_test_id"
@@ -370,11 +346,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["blood_concentration_id"], name: "index_blood_test_results_on_blood_concentration_id", using: :btree
+    t.index ["blood_test_id"], name: "index_blood_test_results_on_blood_test_id", using: :btree
+    t.index ["identity_id"], name: "index_blood_test_results_on_identity_id", using: :btree
   end
-
-  add_index "blood_test_results", ["blood_concentration_id"], name: "index_blood_test_results_on_blood_concentration_id", using: :btree
-  add_index "blood_test_results", ["blood_test_id"], name: "index_blood_test_results_on_blood_test_id", using: :btree
-  add_index "blood_test_results", ["identity_id"], name: "index_blood_test_results_on_identity_id", using: :btree
 
   create_table "blood_tests", force: :cascade do |t|
     t.datetime "fast_started"
@@ -388,11 +363,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "location_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["doctor_id"], name: "index_blood_tests_on_doctor_id", using: :btree
+    t.index ["identity_id"], name: "index_blood_tests_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_blood_tests_on_location_id", using: :btree
   end
-
-  add_index "blood_tests", ["doctor_id"], name: "index_blood_tests_on_doctor_id", using: :btree
-  add_index "blood_tests", ["identity_id"], name: "index_blood_tests_on_identity_id", using: :btree
-  add_index "blood_tests", ["location_id"], name: "index_blood_tests_on_location_id", using: :btree
 
   create_table "book_files", force: :cascade do |t|
     t.integer  "book_id"
@@ -401,11 +375,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "position"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.index ["book_id"], name: "index_book_files_on_book_id", using: :btree
+    t.index ["identity_file_id"], name: "index_book_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_book_files_on_identity_id", using: :btree
   end
-
-  add_index "book_files", ["book_id"], name: "index_book_files_on_book_id", using: :btree
-  add_index "book_files", ["identity_file_id"], name: "index_book_files_on_identity_file_id", using: :btree
-  add_index "book_files", ["identity_id"], name: "index_book_files_on_identity_id", using: :btree
 
   create_table "book_quotes", force: :cascade do |t|
     t.integer  "book_id"
@@ -416,10 +389,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["book_id"], name: "index_book_quotes_on_book_id", using: :btree
+    t.index ["identity_id"], name: "index_book_quotes_on_identity_id", using: :btree
   end
-
-  add_index "book_quotes", ["book_id"], name: "index_book_quotes_on_book_id", using: :btree
-  add_index "book_quotes", ["identity_id"], name: "index_book_quotes_on_identity_id", using: :btree
 
   create_table "book_stores", force: :cascade do |t|
     t.integer  "location_id"
@@ -429,10 +401,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.datetime "archived"
+    t.index ["identity_id"], name: "index_book_stores_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_book_stores_on_location_id", using: :btree
   end
-
-  add_index "book_stores", ["identity_id"], name: "index_book_stores_on_identity_id", using: :btree
-  add_index "book_stores", ["location_id"], name: "index_book_stores_on_location_id", using: :btree
 
   create_table "books", force: :cascade do |t|
     t.string   "book_name",        limit: 255
@@ -452,12 +423,11 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.date     "borrowed_date"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["borrowed_from_id"], name: "index_books_on_borrowed_from_id", using: :btree
+    t.index ["identity_id"], name: "index_books_on_identity_id", using: :btree
+    t.index ["lent_to_id"], name: "index_books_on_lent_to_id", using: :btree
+    t.index ["recommender_id"], name: "index_books_on_recommender_id", using: :btree
   end
-
-  add_index "books", ["borrowed_from_id"], name: "index_books_on_borrowed_from_id", using: :btree
-  add_index "books", ["identity_id"], name: "index_books_on_identity_id", using: :btree
-  add_index "books", ["lent_to_id"], name: "index_books_on_lent_to_id", using: :btree
-  add_index "books", ["recommender_id"], name: "index_books_on_recommender_id", using: :btree
 
   create_table "business_card_files", force: :cascade do |t|
     t.integer  "business_card_id"
@@ -468,11 +438,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["business_card_id"], name: "index_business_card_files_on_business_card_id", using: :btree
+    t.index ["identity_file_id"], name: "index_business_card_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_business_card_files_on_identity_id", using: :btree
   end
-
-  add_index "business_card_files", ["business_card_id"], name: "index_business_card_files_on_business_card_id", using: :btree
-  add_index "business_card_files", ["identity_file_id"], name: "index_business_card_files_on_identity_file_id", using: :btree
-  add_index "business_card_files", ["identity_id"], name: "index_business_card_files_on_identity_id", using: :btree
 
   create_table "business_cards", force: :cascade do |t|
     t.integer  "contact_id"
@@ -483,10 +452,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["contact_id"], name: "index_business_cards_on_contact_id", using: :btree
+    t.index ["identity_id"], name: "index_business_cards_on_identity_id", using: :btree
   end
-
-  add_index "business_cards", ["contact_id"], name: "index_business_cards_on_contact_id", using: :btree
-  add_index "business_cards", ["identity_id"], name: "index_business_cards_on_identity_id", using: :btree
 
   create_table "cafes", force: :cascade do |t|
     t.integer  "location_id"
@@ -497,10 +465,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.datetime "archived"
+    t.index ["identity_id"], name: "index_cafes_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_cafes_on_location_id", using: :btree
   end
-
-  add_index "cafes", ["identity_id"], name: "index_cafes_on_identity_id", using: :btree
-  add_index "cafes", ["location_id"], name: "index_cafes_on_location_id", using: :btree
 
   create_table "calculation_elements", force: :cascade do |t|
     t.integer  "left_operand_id"
@@ -511,11 +478,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_calculation_elements_on_identity_id", using: :btree
+    t.index ["left_operand_id"], name: "index_calculation_elements_on_left_operand_id", using: :btree
+    t.index ["right_operand_id"], name: "index_calculation_elements_on_right_operand_id", using: :btree
   end
-
-  add_index "calculation_elements", ["identity_id"], name: "index_calculation_elements_on_identity_id", using: :btree
-  add_index "calculation_elements", ["left_operand_id"], name: "index_calculation_elements_on_left_operand_id", using: :btree
-  add_index "calculation_elements", ["right_operand_id"], name: "index_calculation_elements_on_right_operand_id", using: :btree
 
   create_table "calculation_forms", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -528,10 +494,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_calculation_forms_on_identity_id", using: :btree
+    t.index ["root_element_id"], name: "index_calculation_forms_on_root_element_id", using: :btree
   end
-
-  add_index "calculation_forms", ["identity_id"], name: "index_calculation_forms_on_identity_id", using: :btree
-  add_index "calculation_forms", ["root_element_id"], name: "index_calculation_forms_on_root_element_id", using: :btree
 
   create_table "calculation_inputs", force: :cascade do |t|
     t.string   "input_name",          limit: 255
@@ -543,10 +508,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["calculation_form_id"], name: "index_calculation_inputs_on_calculation_form_id", using: :btree
+    t.index ["identity_id"], name: "index_calculation_inputs_on_identity_id", using: :btree
   end
-
-  add_index "calculation_inputs", ["calculation_form_id"], name: "index_calculation_inputs_on_calculation_form_id", using: :btree
-  add_index "calculation_inputs", ["identity_id"], name: "index_calculation_inputs_on_identity_id", using: :btree
 
   create_table "calculation_operands", force: :cascade do |t|
     t.string   "constant_value",         limit: 255
@@ -557,10 +521,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["calculation_element_id"], name: "index_calculation_operands_on_calculation_element_id", using: :btree
+    t.index ["identity_id"], name: "index_calculation_operands_on_identity_id", using: :btree
   end
-
-  add_index "calculation_operands", ["calculation_element_id"], name: "index_calculation_operands_on_calculation_element_id", using: :btree
-  add_index "calculation_operands", ["identity_id"], name: "index_calculation_operands_on_identity_id", using: :btree
 
   create_table "calculations", force: :cascade do |t|
     t.string   "name",                         limit: 255
@@ -573,10 +536,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["calculation_form_id"], name: "index_calculations_on_calculation_form_id", using: :btree
+    t.index ["identity_id"], name: "index_calculations_on_identity_id", using: :btree
   end
-
-  add_index "calculations", ["calculation_form_id"], name: "index_calculations_on_calculation_form_id", using: :btree
-  add_index "calculations", ["identity_id"], name: "index_calculations_on_identity_id", using: :btree
 
   create_table "calendar_item_reminder_pendings", force: :cascade do |t|
     t.integer  "calendar_item_reminder_id"
@@ -587,12 +549,11 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "calendar_item_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["calendar_id"], name: "index_calendar_item_reminder_pendings_on_calendar_id", using: :btree
+    t.index ["calendar_item_id"], name: "index_calendar_item_reminder_pendings_on_calendar_item_id", using: :btree
+    t.index ["calendar_item_reminder_id"], name: "index_calendar_item_reminder_pendings_on_cir_id", using: :btree
+    t.index ["identity_id"], name: "index_calendar_item_reminder_pendings_on_identity_id", using: :btree
   end
-
-  add_index "calendar_item_reminder_pendings", ["calendar_id"], name: "index_calendar_item_reminder_pendings_on_calendar_id", using: :btree
-  add_index "calendar_item_reminder_pendings", ["calendar_item_id"], name: "index_calendar_item_reminder_pendings_on_calendar_item_id", using: :btree
-  add_index "calendar_item_reminder_pendings", ["calendar_item_reminder_id"], name: "index_calendar_item_reminder_pendings_on_cir_id", using: :btree
-  add_index "calendar_item_reminder_pendings", ["identity_id"], name: "index_calendar_item_reminder_pendings_on_identity_id", using: :btree
 
   create_table "calendar_item_reminders", force: :cascade do |t|
     t.integer  "threshold_amount"
@@ -608,10 +569,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "max_pending"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["calendar_item_id"], name: "index_calendar_item_reminders_on_calendar_item_id", using: :btree
+    t.index ["identity_id"], name: "index_calendar_item_reminders_on_identity_id", using: :btree
   end
-
-  add_index "calendar_item_reminders", ["calendar_item_id"], name: "index_calendar_item_reminders_on_calendar_item_id", using: :btree
-  add_index "calendar_item_reminders", ["identity_id"], name: "index_calendar_item_reminders_on_identity_id", using: :btree
 
   create_table "calendar_items", force: :cascade do |t|
     t.integer  "calendar_id"
@@ -629,10 +589,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.boolean  "is_repeat"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["calendar_id"], name: "index_calendar_items_on_calendar_id", using: :btree
+    t.index ["identity_id"], name: "index_calendar_items_on_identity_id", using: :btree
   end
-
-  add_index "calendar_items", ["calendar_id"], name: "index_calendar_items_on_calendar_id", using: :btree
-  add_index "calendar_items", ["identity_id"], name: "index_calendar_items_on_identity_id", using: :btree
 
   create_table "calendars", force: :cascade do |t|
     t.boolean  "trash"
@@ -667,9 +626,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "website_domain_registration_threshold"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_calendars_on_identity_id", using: :btree
   end
-
-  add_index "calendars", ["identity_id"], name: "index_calendars_on_identity_id", using: :btree
 
   create_table "camp_locations", force: :cascade do |t|
     t.integer  "location_id"
@@ -695,11 +653,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.boolean  "cell_phone_data"
     t.integer  "membership_id"
     t.datetime "archived"
+    t.index ["identity_id"], name: "index_camp_locations_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_camp_locations_on_location_id", using: :btree
+    t.index ["membership_id"], name: "index_camp_locations_on_membership_id", using: :btree
   end
-
-  add_index "camp_locations", ["identity_id"], name: "index_camp_locations_on_identity_id", using: :btree
-  add_index "camp_locations", ["location_id"], name: "index_camp_locations_on_location_id", using: :btree
-  add_index "camp_locations", ["membership_id"], name: "index_camp_locations_on_membership_id", using: :btree
 
   create_table "cashbacks", force: :cascade do |t|
     t.integer  "identity_id"
@@ -714,9 +671,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.boolean  "default_cashback"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_cashbacks_on_identity_id", using: :btree
   end
-
-  add_index "cashbacks", ["identity_id"], name: "index_cashbacks_on_identity_id", using: :btree
 
   create_table "categories", force: :cascade do |t|
     t.string   "name",                  limit: 255
@@ -731,10 +687,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "user_type_mask"
     t.boolean  "experimental"
     t.boolean  "simple"
+    t.index ["name"], name: "index_categories_on_name", unique: true, using: :btree
+    t.index ["parent_id"], name: "index_categories_on_parent_id", using: :btree
   end
-
-  add_index "categories", ["name"], name: "index_categories_on_name", unique: true, using: :btree
-  add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
 
   create_table "category_points_amounts", force: :cascade do |t|
     t.integer  "identity_id"
@@ -746,10 +701,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "last_visit"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["category_id"], name: "index_category_points_amounts_on_category_id", using: :btree
+    t.index ["identity_id"], name: "index_category_points_amounts_on_identity_id", using: :btree
   end
-
-  add_index "category_points_amounts", ["category_id"], name: "index_category_points_amounts_on_category_id", using: :btree
-  add_index "category_points_amounts", ["identity_id"], name: "index_category_points_amounts_on_identity_id", using: :btree
 
   create_table "charities", force: :cascade do |t|
     t.integer  "location_id"
@@ -760,10 +714,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.datetime "archived"
+    t.index ["identity_id"], name: "index_charities_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_charities_on_location_id", using: :btree
   end
-
-  add_index "charities", ["identity_id"], name: "index_charities_on_identity_id", using: :btree
-  add_index "charities", ["location_id"], name: "index_charities_on_location_id", using: :btree
 
   create_table "checklist_items", force: :cascade do |t|
     t.string   "checklist_item_name", limit: 255
@@ -774,10 +727,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["checklist_id"], name: "index_checklist_items_on_checklist_id", using: :btree
+    t.index ["identity_id"], name: "index_checklist_items_on_identity_id", using: :btree
   end
-
-  add_index "checklist_items", ["checklist_id"], name: "index_checklist_items_on_checklist_id", using: :btree
-  add_index "checklist_items", ["identity_id"], name: "index_checklist_items_on_identity_id", using: :btree
 
   create_table "checklist_references", force: :cascade do |t|
     t.integer  "checklist_parent_id"
@@ -788,11 +740,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["checklist_id"], name: "index_checklist_references_on_checklist_id", using: :btree
+    t.index ["checklist_parent_id"], name: "index_checklist_references_on_checklist_parent_id", using: :btree
+    t.index ["identity_id"], name: "index_checklist_references_on_identity_id", using: :btree
   end
-
-  add_index "checklist_references", ["checklist_id"], name: "index_checklist_references_on_checklist_id", using: :btree
-  add_index "checklist_references", ["checklist_parent_id"], name: "index_checklist_references_on_checklist_parent_id", using: :btree
-  add_index "checklist_references", ["identity_id"], name: "index_checklist_references_on_identity_id", using: :btree
 
   create_table "checklists", force: :cascade do |t|
     t.string   "checklist_name", limit: 255
@@ -802,9 +753,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_checklists_on_identity_id", using: :btree
   end
-
-  add_index "checklists", ["identity_id"], name: "index_checklists_on_identity_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.integer  "identity_id"
@@ -816,10 +766,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_companies_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_companies_on_location_id", using: :btree
   end
-
-  add_index "companies", ["identity_id"], name: "index_companies_on_identity_id", using: :btree
-  add_index "companies", ["location_id"], name: "index_companies_on_location_id", using: :btree
 
   create_table "complete_due_items", force: :cascade do |t|
     t.integer  "identity_id"
@@ -834,10 +783,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "calendar_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["calendar_id"], name: "index_complete_due_items_on_calendar_id", using: :btree
+    t.index ["identity_id"], name: "index_complete_due_items_on_identity_id", using: :btree
   end
-
-  add_index "complete_due_items", ["calendar_id"], name: "index_complete_due_items_on_calendar_id", using: :btree
-  add_index "complete_due_items", ["identity_id"], name: "index_complete_due_items_on_identity_id", using: :btree
 
   create_table "computer_ssh_keys", force: :cascade do |t|
     t.integer  "computer_id"
@@ -848,11 +796,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.string   "username"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["computer_id"], name: "index_computer_ssh_keys_on_computer_id", using: :btree
+    t.index ["identity_id"], name: "index_computer_ssh_keys_on_identity_id", using: :btree
+    t.index ["ssh_key_id"], name: "index_computer_ssh_keys_on_ssh_key_id", using: :btree
   end
-
-  add_index "computer_ssh_keys", ["computer_id"], name: "index_computer_ssh_keys_on_computer_id", using: :btree
-  add_index "computer_ssh_keys", ["identity_id"], name: "index_computer_ssh_keys_on_identity_id", using: :btree
-  add_index "computer_ssh_keys", ["ssh_key_id"], name: "index_computer_ssh_keys_on_ssh_key_id", using: :btree
 
   create_table "computers", force: :cascade do |t|
     t.date     "purchased"
@@ -883,12 +830,11 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.string   "hostname"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["administrator_id"], name: "index_computers_on_administrator_id", using: :btree
+    t.index ["identity_id"], name: "index_computers_on_identity_id", using: :btree
+    t.index ["main_user_id"], name: "index_computers_on_main_user_id", using: :btree
+    t.index ["manufacturer_id"], name: "index_computers_on_manufacturer_id", using: :btree
   end
-
-  add_index "computers", ["administrator_id"], name: "index_computers_on_administrator_id", using: :btree
-  add_index "computers", ["identity_id"], name: "index_computers_on_identity_id", using: :btree
-  add_index "computers", ["main_user_id"], name: "index_computers_on_main_user_id", using: :btree
-  add_index "computers", ["manufacturer_id"], name: "index_computers_on_manufacturer_id", using: :btree
 
   create_table "concert_musical_groups", force: :cascade do |t|
     t.integer  "identity_id"
@@ -898,11 +844,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["concert_id"], name: "index_concert_musical_groups_on_concert_id", using: :btree
+    t.index ["identity_id"], name: "index_concert_musical_groups_on_identity_id", using: :btree
+    t.index ["musical_group_id"], name: "index_concert_musical_groups_on_musical_group_id", using: :btree
   end
-
-  add_index "concert_musical_groups", ["concert_id"], name: "index_concert_musical_groups_on_concert_id", using: :btree
-  add_index "concert_musical_groups", ["identity_id"], name: "index_concert_musical_groups_on_identity_id", using: :btree
-  add_index "concert_musical_groups", ["musical_group_id"], name: "index_concert_musical_groups_on_musical_group_id", using: :btree
 
   create_table "concert_pictures", force: :cascade do |t|
     t.integer  "concert_id"
@@ -912,11 +857,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["concert_id"], name: "index_concert_pictures_on_concert_id", using: :btree
+    t.index ["identity_file_id"], name: "index_concert_pictures_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_concert_pictures_on_identity_id", using: :btree
   end
-
-  add_index "concert_pictures", ["concert_id"], name: "index_concert_pictures_on_concert_id", using: :btree
-  add_index "concert_pictures", ["identity_file_id"], name: "index_concert_pictures_on_identity_file_id", using: :btree
-  add_index "concert_pictures", ["identity_id"], name: "index_concert_pictures_on_identity_id", using: :btree
 
   create_table "concerts", force: :cascade do |t|
     t.string   "concert_date",  limit: 255
@@ -929,10 +873,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_concerts_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_concerts_on_location_id", using: :btree
   end
-
-  add_index "concerts", ["identity_id"], name: "index_concerts_on_identity_id", using: :btree
-  add_index "concerts", ["location_id"], name: "index_concerts_on_location_id", using: :btree
 
   create_table "connections", force: :cascade do |t|
     t.integer  "user_id"
@@ -945,11 +888,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "contact_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["contact_id"], name: "index_connections_on_contact_id", using: :btree
+    t.index ["identity_id"], name: "index_connections_on_identity_id", using: :btree
+    t.index ["user_id"], name: "index_connections_on_user_id", using: :btree
   end
-
-  add_index "connections", ["contact_id"], name: "index_connections_on_contact_id", using: :btree
-  add_index "connections", ["identity_id"], name: "index_connections_on_identity_id", using: :btree
-  add_index "connections", ["user_id"], name: "index_connections_on_user_id", using: :btree
 
   create_table "contacts", force: :cascade do |t|
     t.integer  "contact_identity_id"
@@ -960,10 +902,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["contact_identity_id"], name: "index_contacts_on_contact_identity_id", using: :btree
+    t.index ["identity_id"], name: "index_contacts_on_identity_id", using: :btree
   end
-
-  add_index "contacts", ["contact_identity_id"], name: "index_contacts_on_contact_identity_id", using: :btree
-  add_index "contacts", ["identity_id"], name: "index_contacts_on_identity_id", using: :btree
 
   create_table "conversations", force: :cascade do |t|
     t.integer  "contact_id"
@@ -974,10 +915,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["contact_id"], name: "index_conversations_on_contact_id", using: :btree
+    t.index ["identity_id"], name: "index_conversations_on_identity_id", using: :btree
   end
-
-  add_index "conversations", ["contact_id"], name: "index_conversations_on_contact_id", using: :btree
-  add_index "conversations", ["identity_id"], name: "index_conversations_on_identity_id", using: :btree
 
   create_table "credit_card_cashbacks", force: :cascade do |t|
     t.integer  "identity_id"
@@ -987,11 +927,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["cashback_id"], name: "index_credit_card_cashbacks_on_cashback_id", using: :btree
+    t.index ["credit_card_id"], name: "index_credit_card_cashbacks_on_credit_card_id", using: :btree
+    t.index ["identity_id"], name: "index_credit_card_cashbacks_on_identity_id", using: :btree
   end
-
-  add_index "credit_card_cashbacks", ["cashback_id"], name: "index_credit_card_cashbacks_on_cashback_id", using: :btree
-  add_index "credit_card_cashbacks", ["credit_card_id"], name: "index_credit_card_cashbacks_on_credit_card_id", using: :btree
-  add_index "credit_card_cashbacks", ["identity_id"], name: "index_credit_card_cashbacks_on_identity_id", using: :btree
 
   create_table "credit_cards", force: :cascade do |t|
     t.string   "name",                       limit: 255
@@ -1016,15 +955,14 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.boolean  "email_reminders"
     t.integer  "rating"
     t.date     "start_date"
+    t.index ["address_id"], name: "index_credit_cards_on_address_id", using: :btree
+    t.index ["expires_encrypted_id"], name: "index_credit_cards_on_expires_encrypted_id", using: :btree
+    t.index ["identity_id"], name: "index_credit_cards_on_identity_id", using: :btree
+    t.index ["number_encrypted_id"], name: "index_credit_cards_on_number_encrypted_id", using: :btree
+    t.index ["password_id"], name: "index_credit_cards_on_password_id", using: :btree
+    t.index ["pin_encrypted_id"], name: "index_credit_cards_on_pin_encrypted_id", using: :btree
+    t.index ["security_code_encrypted_id"], name: "index_credit_cards_on_security_code_encrypted_id", using: :btree
   end
-
-  add_index "credit_cards", ["address_id"], name: "index_credit_cards_on_address_id", using: :btree
-  add_index "credit_cards", ["expires_encrypted_id"], name: "index_credit_cards_on_expires_encrypted_id", using: :btree
-  add_index "credit_cards", ["identity_id"], name: "index_credit_cards_on_identity_id", using: :btree
-  add_index "credit_cards", ["number_encrypted_id"], name: "index_credit_cards_on_number_encrypted_id", using: :btree
-  add_index "credit_cards", ["password_id"], name: "index_credit_cards_on_password_id", using: :btree
-  add_index "credit_cards", ["pin_encrypted_id"], name: "index_credit_cards_on_pin_encrypted_id", using: :btree
-  add_index "credit_cards", ["security_code_encrypted_id"], name: "index_credit_cards_on_security_code_encrypted_id", using: :btree
 
   create_table "credit_scores", force: :cascade do |t|
     t.date     "score_date"
@@ -1036,9 +974,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_credit_scores_on_identity_id", using: :btree
   end
-
-  add_index "credit_scores", ["identity_id"], name: "index_credit_scores_on_identity_id", using: :btree
 
   create_table "date_locations", force: :cascade do |t|
     t.integer  "location_id"
@@ -1048,10 +985,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_date_locations_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_date_locations_on_location_id", using: :btree
   end
-
-  add_index "date_locations", ["identity_id"], name: "index_date_locations_on_identity_id", using: :btree
-  add_index "date_locations", ["location_id"], name: "index_date_locations_on_location_id", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -1065,9 +1001,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.string   "queue"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
   end
-
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "dental_insurances", force: :cascade do |t|
     t.string   "insurance_name",       limit: 255
@@ -1085,14 +1020,13 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "doctor_id"
     t.integer  "visit_count"
     t.integer  "rating"
+    t.index ["doctor_id"], name: "index_dental_insurances_on_doctor_id", using: :btree
+    t.index ["group_company_id"], name: "index_dental_insurances_on_group_company_id", using: :btree
+    t.index ["identity_id"], name: "index_dental_insurances_on_identity_id", using: :btree
+    t.index ["insurance_company_id"], name: "index_dental_insurances_on_insurance_company_id", using: :btree
+    t.index ["password_id"], name: "index_dental_insurances_on_password_id", using: :btree
+    t.index ["periodic_payment_id"], name: "index_dental_insurances_on_periodic_payment_id", using: :btree
   end
-
-  add_index "dental_insurances", ["doctor_id"], name: "index_dental_insurances_on_doctor_id", using: :btree
-  add_index "dental_insurances", ["group_company_id"], name: "index_dental_insurances_on_group_company_id", using: :btree
-  add_index "dental_insurances", ["identity_id"], name: "index_dental_insurances_on_identity_id", using: :btree
-  add_index "dental_insurances", ["insurance_company_id"], name: "index_dental_insurances_on_insurance_company_id", using: :btree
-  add_index "dental_insurances", ["password_id"], name: "index_dental_insurances_on_password_id", using: :btree
-  add_index "dental_insurances", ["periodic_payment_id"], name: "index_dental_insurances_on_periodic_payment_id", using: :btree
 
   create_table "dentist_visits", force: :cascade do |t|
     t.date     "visit_date"
@@ -1108,11 +1042,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["dental_insurance_id"], name: "index_dentist_visits_on_dental_insurance_id", using: :btree
+    t.index ["dentist_id"], name: "index_dentist_visits_on_dentist_id", using: :btree
+    t.index ["identity_id"], name: "index_dentist_visits_on_identity_id", using: :btree
   end
-
-  add_index "dentist_visits", ["dental_insurance_id"], name: "index_dentist_visits_on_dental_insurance_id", using: :btree
-  add_index "dentist_visits", ["dentist_id"], name: "index_dentist_visits_on_dentist_id", using: :btree
-  add_index "dentist_visits", ["identity_id"], name: "index_dentist_visits_on_identity_id", using: :btree
 
   create_table "desired_locations", force: :cascade do |t|
     t.integer  "location_id"
@@ -1123,11 +1056,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "website_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_desired_locations_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_desired_locations_on_location_id", using: :btree
+    t.index ["website_id"], name: "index_desired_locations_on_website_id", using: :btree
   end
-
-  add_index "desired_locations", ["identity_id"], name: "index_desired_locations_on_identity_id", using: :btree
-  add_index "desired_locations", ["location_id"], name: "index_desired_locations_on_location_id", using: :btree
-  add_index "desired_locations", ["website_id"], name: "index_desired_locations_on_website_id", using: :btree
 
   create_table "desired_products", force: :cascade do |t|
     t.string   "product_name", limit: 255
@@ -1138,9 +1070,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_desired_products_on_identity_id", using: :btree
   end
-
-  add_index "desired_products", ["identity_id"], name: "index_desired_products_on_identity_id", using: :btree
 
   create_table "dessert_locations", force: :cascade do |t|
     t.integer  "location_id"
@@ -1152,10 +1083,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.datetime "archived"
+    t.index ["identity_id"], name: "index_dessert_locations_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_dessert_locations_on_location_id", using: :btree
   end
-
-  add_index "dessert_locations", ["identity_id"], name: "index_dessert_locations_on_identity_id", using: :btree
-  add_index "dessert_locations", ["location_id"], name: "index_dessert_locations_on_location_id", using: :btree
 
   create_table "diary_entries", force: :cascade do |t|
     t.datetime "diary_time"
@@ -1168,10 +1098,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "entry_encrypted_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["entry_encrypted_id"], name: "index_diary_entries_on_entry_encrypted_id", using: :btree
+    t.index ["identity_id"], name: "index_diary_entries_on_identity_id", using: :btree
   end
-
-  add_index "diary_entries", ["entry_encrypted_id"], name: "index_diary_entries_on_entry_encrypted_id", using: :btree
-  add_index "diary_entries", ["identity_id"], name: "index_diary_entries_on_identity_id", using: :btree
 
   create_table "doctor_visits", force: :cascade do |t|
     t.date     "visit_date"
@@ -1186,11 +1115,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["doctor_id"], name: "index_doctor_visits_on_doctor_id", using: :btree
+    t.index ["health_insurance_id"], name: "index_doctor_visits_on_health_insurance_id", using: :btree
+    t.index ["identity_id"], name: "index_doctor_visits_on_identity_id", using: :btree
   end
-
-  add_index "doctor_visits", ["doctor_id"], name: "index_doctor_visits_on_doctor_id", using: :btree
-  add_index "doctor_visits", ["health_insurance_id"], name: "index_doctor_visits_on_health_insurance_id", using: :btree
-  add_index "doctor_visits", ["identity_id"], name: "index_doctor_visits_on_identity_id", using: :btree
 
   create_table "doctors", force: :cascade do |t|
     t.integer  "contact_id"
@@ -1201,10 +1129,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["contact_id"], name: "index_doctors_on_contact_id", using: :btree
+    t.index ["identity_id"], name: "index_doctors_on_identity_id", using: :btree
   end
-
-  add_index "doctors", ["contact_id"], name: "index_doctors_on_contact_id", using: :btree
-  add_index "doctors", ["identity_id"], name: "index_doctors_on_identity_id", using: :btree
 
   create_table "document_files", force: :cascade do |t|
     t.integer  "document_id"
@@ -1213,11 +1140,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "position"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.index ["document_id"], name: "index_document_files_on_document_id", using: :btree
+    t.index ["identity_file_id"], name: "index_document_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_document_files_on_identity_id", using: :btree
   end
-
-  add_index "document_files", ["document_id"], name: "index_document_files_on_document_id", using: :btree
-  add_index "document_files", ["identity_file_id"], name: "index_document_files_on_identity_file_id", using: :btree
-  add_index "document_files", ["identity_id"], name: "index_document_files_on_identity_id", using: :btree
 
   create_table "documents", force: :cascade do |t|
     t.string   "document_name"
@@ -1230,9 +1156,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.boolean  "important"
+    t.index ["identity_id"], name: "index_documents_on_identity_id", using: :btree
   end
-
-  add_index "documents", ["identity_id"], name: "index_documents_on_identity_id", using: :btree
 
   create_table "drafts", force: :cascade do |t|
     t.string   "draft_name"
@@ -1243,9 +1168,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_drafts_on_identity_id", using: :btree
   end
-
-  add_index "drafts", ["identity_id"], name: "index_drafts_on_identity_id", using: :btree
 
   create_table "dreams", force: :cascade do |t|
     t.string   "dream_name"
@@ -1259,11 +1183,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "dream_encrypted_id_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["dream_encrypted_id"], name: "index_dreams_on_dream_encrypted_id", using: :btree
+    t.index ["dream_encrypted_id_id"], name: "index_dreams_on_dream_encrypted_id_id", using: :btree
+    t.index ["identity_id"], name: "index_dreams_on_identity_id", using: :btree
   end
-
-  add_index "dreams", ["dream_encrypted_id"], name: "index_dreams_on_dream_encrypted_id", using: :btree
-  add_index "dreams", ["dream_encrypted_id_id"], name: "index_dreams_on_dream_encrypted_id_id", using: :btree
-  add_index "dreams", ["identity_id"], name: "index_dreams_on_identity_id", using: :btree
 
   create_table "drinks", force: :cascade do |t|
     t.integer  "identity_id"
@@ -1276,9 +1199,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
   end
-
-  add_index "drinks", ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
 
   create_table "due_items", force: :cascade do |t|
     t.string   "display",           limit: 255
@@ -1294,10 +1216,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "calendar_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["calendar_id"], name: "index_due_items_on_calendar_id", using: :btree
+    t.index ["identity_id"], name: "index_due_items_on_identity_id", using: :btree
   end
-
-  add_index "due_items", ["calendar_id"], name: "index_due_items_on_calendar_id", using: :btree
-  add_index "due_items", ["identity_id"], name: "index_due_items_on_identity_id", using: :btree
 
   create_table "education_files", force: :cascade do |t|
     t.integer  "education_id"
@@ -1306,11 +1227,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "position"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.index ["education_id"], name: "index_education_files_on_education_id", using: :btree
+    t.index ["identity_file_id"], name: "index_education_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_education_files_on_identity_id", using: :btree
   end
-
-  add_index "education_files", ["education_id"], name: "index_education_files_on_education_id", using: :btree
-  add_index "education_files", ["identity_file_id"], name: "index_education_files_on_identity_file_id", using: :btree
-  add_index "education_files", ["identity_id"], name: "index_education_files_on_identity_id", using: :btree
 
   create_table "educations", force: :cascade do |t|
     t.string   "education_name"
@@ -1329,10 +1249,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "degree_type"
     t.datetime "graduated"
     t.string   "student_id"
+    t.index ["identity_id"], name: "index_educations_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_educations_on_location_id", using: :btree
   end
-
-  add_index "educations", ["identity_id"], name: "index_educations_on_identity_id", using: :btree
-  add_index "educations", ["location_id"], name: "index_educations_on_location_id", using: :btree
 
   create_table "email_accounts", force: :cascade do |t|
     t.integer  "password_id"
@@ -1342,10 +1261,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["identity_id"], name: "index_email_accounts_on_identity_id", using: :btree
+    t.index ["password_id"], name: "index_email_accounts_on_password_id", using: :btree
   end
-
-  add_index "email_accounts", ["identity_id"], name: "index_email_accounts_on_identity_id", using: :btree
-  add_index "email_accounts", ["password_id"], name: "index_email_accounts_on_password_id", using: :btree
 
   create_table "email_contacts", force: :cascade do |t|
     t.integer  "email_id"
@@ -1355,11 +1273,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["contact_id"], name: "index_email_contacts_on_contact_id", using: :btree
+    t.index ["email_id"], name: "index_email_contacts_on_email_id", using: :btree
+    t.index ["identity_id"], name: "index_email_contacts_on_identity_id", using: :btree
   end
-
-  add_index "email_contacts", ["contact_id"], name: "index_email_contacts_on_contact_id", using: :btree
-  add_index "email_contacts", ["email_id"], name: "index_email_contacts_on_email_id", using: :btree
-  add_index "email_contacts", ["identity_id"], name: "index_email_contacts_on_identity_id", using: :btree
 
   create_table "email_groups", force: :cascade do |t|
     t.integer  "email_id"
@@ -1369,11 +1286,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["email_id"], name: "index_email_groups_on_email_id", using: :btree
+    t.index ["group_id"], name: "index_email_groups_on_group_id", using: :btree
+    t.index ["identity_id"], name: "index_email_groups_on_identity_id", using: :btree
   end
-
-  add_index "email_groups", ["email_id"], name: "index_email_groups_on_email_id", using: :btree
-  add_index "email_groups", ["group_id"], name: "index_email_groups_on_group_id", using: :btree
-  add_index "email_groups", ["identity_id"], name: "index_email_groups_on_identity_id", using: :btree
 
   create_table "email_personalizations", force: :cascade do |t|
     t.string   "target"
@@ -1385,10 +1301,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",      null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["email_id"], name: "index_email_personalizations_on_email_id", using: :btree
+    t.index ["identity_id"], name: "index_email_personalizations_on_identity_id", using: :btree
   end
-
-  add_index "email_personalizations", ["email_id"], name: "index_email_personalizations_on_email_id", using: :btree
-  add_index "email_personalizations", ["identity_id"], name: "index_email_personalizations_on_identity_id", using: :btree
 
   create_table "email_tokens", force: :cascade do |t|
     t.string   "email"
@@ -1396,9 +1311,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "identity_id"
+    t.index ["identity_id"], name: "index_email_tokens_on_identity_id", using: :btree
   end
-
-  add_index "email_tokens", ["identity_id"], name: "index_email_tokens_on_identity_id", using: :btree
 
   create_table "email_unsubscriptions", force: :cascade do |t|
     t.string   "email"
@@ -1406,9 +1320,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "identity_id"
+    t.index ["identity_id"], name: "index_email_unsubscriptions_on_identity_id", using: :btree
   end
-
-  add_index "email_unsubscriptions", ["identity_id"], name: "index_email_unsubscriptions_on_identity_id", using: :btree
 
   create_table "emails", force: :cascade do |t|
     t.string   "subject"
@@ -1424,9 +1337,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.boolean  "personalize"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_emails_on_identity_id", using: :btree
   end
-
-  add_index "emails", ["identity_id"], name: "index_emails_on_identity_id", using: :btree
 
   create_table "emergency_contacts", force: :cascade do |t|
     t.integer  "email_id"
@@ -1436,10 +1348,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["email_id"], name: "index_emergency_contacts_on_email_id", using: :btree
+    t.index ["identity_id"], name: "index_emergency_contacts_on_identity_id", using: :btree
   end
-
-  add_index "emergency_contacts", ["email_id"], name: "index_emergency_contacts_on_email_id", using: :btree
-  add_index "emergency_contacts", ["identity_id"], name: "index_emergency_contacts_on_identity_id", using: :btree
 
   create_table "encrypted_values", force: :cascade do |t|
     t.binary   "val"
@@ -1448,9 +1359,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "encryption_type"
+    t.index ["user_id"], name: "index_encrypted_values_on_user_id", using: :btree
   end
-
-  add_index "encrypted_values", ["user_id"], name: "index_encrypted_values_on_user_id", using: :btree
 
   create_table "event_contacts", force: :cascade do |t|
     t.integer  "event_id"
@@ -1460,11 +1370,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["contact_id"], name: "index_event_contacts_on_contact_id", using: :btree
+    t.index ["event_id"], name: "index_event_contacts_on_event_id", using: :btree
+    t.index ["identity_id"], name: "index_event_contacts_on_identity_id", using: :btree
   end
-
-  add_index "event_contacts", ["contact_id"], name: "index_event_contacts_on_contact_id", using: :btree
-  add_index "event_contacts", ["event_id"], name: "index_event_contacts_on_event_id", using: :btree
-  add_index "event_contacts", ["identity_id"], name: "index_event_contacts_on_identity_id", using: :btree
 
   create_table "event_pictures", force: :cascade do |t|
     t.integer  "event_id"
@@ -1475,11 +1384,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "position"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["event_id"], name: "index_event_pictures_on_event_id", using: :btree
+    t.index ["identity_file_id"], name: "index_event_pictures_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_event_pictures_on_identity_id", using: :btree
   end
-
-  add_index "event_pictures", ["event_id"], name: "index_event_pictures_on_event_id", using: :btree
-  add_index "event_pictures", ["identity_file_id"], name: "index_event_pictures_on_identity_file_id", using: :btree
-  add_index "event_pictures", ["identity_id"], name: "index_event_pictures_on_identity_id", using: :btree
 
   create_table "event_rsvps", force: :cascade do |t|
     t.integer  "event_id"
@@ -1490,10 +1398,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["event_id"], name: "index_event_rsvps_on_event_id", using: :btree
+    t.index ["identity_id"], name: "index_event_rsvps_on_identity_id", using: :btree
   end
-
-  add_index "event_rsvps", ["event_id"], name: "index_event_rsvps_on_event_id", using: :btree
-  add_index "event_rsvps", ["identity_id"], name: "index_event_rsvps_on_identity_id", using: :btree
 
   create_table "events", force: :cascade do |t|
     t.string   "event_name",     limit: 255
@@ -1508,11 +1415,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "location_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_events_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_events_on_location_id", using: :btree
+    t.index ["repeat_id"], name: "index_events_on_repeat_id", using: :btree
   end
-
-  add_index "events", ["identity_id"], name: "index_events_on_identity_id", using: :btree
-  add_index "events", ["location_id"], name: "index_events_on_location_id", using: :btree
-  add_index "events", ["repeat_id"], name: "index_events_on_repeat_id", using: :btree
 
   create_table "exercise_regimen_exercise_files", force: :cascade do |t|
     t.integer  "exercise_regimen_exercise_id"
@@ -1523,11 +1429,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",                   null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["exercise_regimen_exercise_id"], name: "eref_on_erei", using: :btree
+    t.index ["identity_file_id"], name: "index_exercise_regimen_exercise_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_exercise_regimen_exercise_files_on_identity_id", using: :btree
   end
-
-  add_index "exercise_regimen_exercise_files", ["exercise_regimen_exercise_id"], name: "eref_on_erei", using: :btree
-  add_index "exercise_regimen_exercise_files", ["identity_file_id"], name: "index_exercise_regimen_exercise_files_on_identity_file_id", using: :btree
-  add_index "exercise_regimen_exercise_files", ["identity_id"], name: "index_exercise_regimen_exercise_files_on_identity_id", using: :btree
 
   create_table "exercise_regimen_exercises", force: :cascade do |t|
     t.string   "exercise_regimen_exercise_name"
@@ -1539,10 +1444,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",                     null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["exercise_regimen_id"], name: "index_exercise_regimen_exercises_on_exercise_regimen_id", using: :btree
+    t.index ["identity_id"], name: "index_exercise_regimen_exercises_on_identity_id", using: :btree
   end
-
-  add_index "exercise_regimen_exercises", ["exercise_regimen_id"], name: "index_exercise_regimen_exercises_on_exercise_regimen_id", using: :btree
-  add_index "exercise_regimen_exercises", ["identity_id"], name: "index_exercise_regimen_exercises_on_identity_id", using: :btree
 
   create_table "exercise_regimens", force: :cascade do |t|
     t.string   "exercise_regimen_name"
@@ -1553,9 +1457,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",            null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_exercise_regimens_on_identity_id", using: :btree
   end
-
-  add_index "exercise_regimens", ["identity_id"], name: "index_exercise_regimens_on_identity_id", using: :btree
 
   create_table "exercises", force: :cascade do |t|
     t.datetime "exercise_start"
@@ -1571,9 +1474,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_exercises_on_identity_id", using: :btree
   end
-
-  add_index "exercises", ["identity_id"], name: "index_exercises_on_identity_id", using: :btree
 
   create_table "favorite_locations", force: :cascade do |t|
     t.integer  "location_id"
@@ -1583,10 +1485,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_favorite_locations_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_favorite_locations_on_location_id", using: :btree
   end
-
-  add_index "favorite_locations", ["identity_id"], name: "index_favorite_locations_on_identity_id", using: :btree
-  add_index "favorite_locations", ["location_id"], name: "index_favorite_locations_on_location_id", using: :btree
 
   create_table "favorite_product_files", force: :cascade do |t|
     t.integer  "favorite_product_id"
@@ -1597,11 +1498,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",          null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["favorite_product_id"], name: "index_favorite_product_files_on_favorite_product_id", using: :btree
+    t.index ["identity_file_id"], name: "index_favorite_product_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_favorite_product_files_on_identity_id", using: :btree
   end
-
-  add_index "favorite_product_files", ["favorite_product_id"], name: "index_favorite_product_files_on_favorite_product_id", using: :btree
-  add_index "favorite_product_files", ["identity_file_id"], name: "index_favorite_product_files_on_identity_file_id", using: :btree
-  add_index "favorite_product_files", ["identity_id"], name: "index_favorite_product_files_on_identity_id", using: :btree
 
   create_table "favorite_product_links", force: :cascade do |t|
     t.integer  "favorite_product_id"
@@ -1611,10 +1511,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",                       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["favorite_product_id"], name: "index_favorite_product_links_on_favorite_product_id", using: :btree
+    t.index ["identity_id"], name: "index_favorite_product_links_on_identity_id", using: :btree
   end
-
-  add_index "favorite_product_links", ["favorite_product_id"], name: "index_favorite_product_links_on_favorite_product_id", using: :btree
-  add_index "favorite_product_links", ["identity_id"], name: "index_favorite_product_links_on_identity_id", using: :btree
 
   create_table "favorite_products", force: :cascade do |t|
     t.string   "product_name", limit: 255
@@ -1625,9 +1524,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_favorite_products_on_identity_id", using: :btree
   end
-
-  add_index "favorite_products", ["identity_id"], name: "index_favorite_products_on_identity_id", using: :btree
 
   create_table "feed_items", force: :cascade do |t|
     t.string   "feed_title"
@@ -1642,10 +1540,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "read"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["feed_id"], name: "index_feed_items_on_feed_id", using: :btree
+    t.index ["identity_id"], name: "index_feed_items_on_identity_id", using: :btree
   end
-
-  add_index "feed_items", ["feed_id"], name: "index_feed_items_on_feed_id", using: :btree
-  add_index "feed_items", ["identity_id"], name: "index_feed_items_on_identity_id", using: :btree
 
   create_table "feed_load_statuses", force: :cascade do |t|
     t.integer  "items_total"
@@ -1654,9 +1551,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.integer  "items_error"
+    t.index ["identity_id"], name: "index_feed_load_statuses_on_identity_id", using: :btree
   end
-
-  add_index "feed_load_statuses", ["identity_id"], name: "index_feed_load_statuses_on_identity_id", using: :btree
 
   create_table "feeds", force: :cascade do |t|
     t.string   "name",         limit: 255
@@ -1669,9 +1565,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "rating"
     t.integer  "total_items"
     t.integer  "unread_items"
+    t.index ["identity_id"], name: "index_feeds_on_identity_id", using: :btree
   end
-
-  add_index "feeds", ["identity_id"], name: "index_feeds_on_identity_id", using: :btree
 
   create_table "files", force: :cascade do |t|
     t.integer "identity_file_id"
@@ -1697,13 +1592,12 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",           null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["arrival_location_id"], name: "index_flight_legs_on_arrival_location_id", using: :btree
+    t.index ["depart_location_id"], name: "index_flight_legs_on_depart_location_id", using: :btree
+    t.index ["flight_company_id"], name: "index_flight_legs_on_flight_company_id", using: :btree
+    t.index ["flight_id"], name: "index_flight_legs_on_flight_id", using: :btree
+    t.index ["identity_id"], name: "index_flight_legs_on_identity_id", using: :btree
   end
-
-  add_index "flight_legs", ["arrival_location_id"], name: "index_flight_legs_on_arrival_location_id", using: :btree
-  add_index "flight_legs", ["depart_location_id"], name: "index_flight_legs_on_depart_location_id", using: :btree
-  add_index "flight_legs", ["flight_company_id"], name: "index_flight_legs_on_flight_company_id", using: :btree
-  add_index "flight_legs", ["flight_id"], name: "index_flight_legs_on_flight_id", using: :btree
-  add_index "flight_legs", ["identity_id"], name: "index_flight_legs_on_identity_id", using: :btree
 
   create_table "flights", force: :cascade do |t|
     t.string   "flight_name"
@@ -1716,9 +1610,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",          null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_flights_on_identity_id", using: :btree
   end
-
-  add_index "flights", ["identity_id"], name: "index_flights_on_identity_id", using: :btree
 
   create_table "food_files", force: :cascade do |t|
     t.integer  "food_id"
@@ -1727,11 +1620,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "position"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.index ["food_id"], name: "index_food_files_on_food_id", using: :btree
+    t.index ["identity_file_id"], name: "index_food_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_food_files_on_identity_id", using: :btree
   end
-
-  add_index "food_files", ["food_id"], name: "index_food_files_on_food_id", using: :btree
-  add_index "food_files", ["identity_file_id"], name: "index_food_files_on_identity_file_id", using: :btree
-  add_index "food_files", ["identity_id"], name: "index_food_files_on_identity_id", using: :btree
 
   create_table "food_ingredients", force: :cascade do |t|
     t.integer  "identity_id"
@@ -1741,11 +1633,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["food_id"], name: "index_food_ingredients_on_food_id", using: :btree
+    t.index ["identity_id"], name: "index_food_ingredients_on_identity_id", using: :btree
+    t.index ["parent_food_id"], name: "index_food_ingredients_on_parent_food_id", using: :btree
   end
-
-  add_index "food_ingredients", ["food_id"], name: "index_food_ingredients_on_food_id", using: :btree
-  add_index "food_ingredients", ["identity_id"], name: "index_food_ingredients_on_identity_id", using: :btree
-  add_index "food_ingredients", ["parent_food_id"], name: "index_food_ingredients_on_parent_food_id", using: :btree
 
   create_table "foods", force: :cascade do |t|
     t.integer  "identity_id"
@@ -1760,9 +1651,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_foods_on_identity_id", using: :btree
   end
-
-  add_index "foods", ["identity_id"], name: "index_foods_on_identity_id", using: :btree
 
   create_table "gas_stations", force: :cascade do |t|
     t.integer  "location_id"
@@ -1776,10 +1666,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_gas_stations_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_gas_stations_on_location_id", using: :btree
   end
-
-  add_index "gas_stations", ["identity_id"], name: "index_gas_stations_on_identity_id", using: :btree
-  add_index "gas_stations", ["location_id"], name: "index_gas_stations_on_location_id", using: :btree
 
   create_table "group_contacts", force: :cascade do |t|
     t.integer  "identity_id"
@@ -1789,11 +1678,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["contact_id"], name: "index_group_contacts_on_contact_id", using: :btree
+    t.index ["group_id"], name: "index_group_contacts_on_group_id", using: :btree
+    t.index ["identity_id"], name: "index_group_contacts_on_identity_id", using: :btree
   end
-
-  add_index "group_contacts", ["contact_id"], name: "index_group_contacts_on_contact_id", using: :btree
-  add_index "group_contacts", ["group_id"], name: "index_group_contacts_on_group_id", using: :btree
-  add_index "group_contacts", ["identity_id"], name: "index_group_contacts_on_identity_id", using: :btree
 
   create_table "group_references", force: :cascade do |t|
     t.integer  "identity_id"
@@ -1803,11 +1691,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",      null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["group_id"], name: "index_group_references_on_group_id", using: :btree
+    t.index ["identity_id"], name: "index_group_references_on_identity_id", using: :btree
+    t.index ["parent_group_id"], name: "index_group_references_on_parent_group_id", using: :btree
   end
-
-  add_index "group_references", ["group_id"], name: "index_group_references_on_group_id", using: :btree
-  add_index "group_references", ["identity_id"], name: "index_group_references_on_identity_id", using: :btree
-  add_index "group_references", ["parent_group_id"], name: "index_group_references_on_parent_group_id", using: :btree
 
   create_table "groups", force: :cascade do |t|
     t.string   "group_name",  limit: 255
@@ -1818,9 +1705,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_groups_on_identity_id", using: :btree
   end
-
-  add_index "groups", ["identity_id"], name: "index_groups_on_identity_id", using: :btree
 
   create_table "gun_registrations", force: :cascade do |t|
     t.integer  "location_id"
@@ -1832,11 +1718,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["gun_id"], name: "index_gun_registrations_on_gun_id", using: :btree
+    t.index ["identity_id"], name: "index_gun_registrations_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_gun_registrations_on_location_id", using: :btree
   end
-
-  add_index "gun_registrations", ["gun_id"], name: "index_gun_registrations_on_gun_id", using: :btree
-  add_index "gun_registrations", ["identity_id"], name: "index_gun_registrations_on_identity_id", using: :btree
-  add_index "gun_registrations", ["location_id"], name: "index_gun_registrations_on_location_id", using: :btree
 
   create_table "guns", force: :cascade do |t|
     t.string   "gun_name",          limit: 255
@@ -1853,9 +1738,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_guns_on_identity_id", using: :btree
   end
-
-  add_index "guns", ["identity_id"], name: "index_guns_on_identity_id", using: :btree
 
   create_table "happy_things", force: :cascade do |t|
     t.string   "happy_thing_name"
@@ -1866,9 +1750,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_happy_things_on_identity_id", using: :btree
   end
-
-  add_index "happy_things", ["identity_id"], name: "index_happy_things_on_identity_id", using: :btree
 
   create_table "headaches", force: :cascade do |t|
     t.datetime "started"
@@ -1881,9 +1764,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_headaches_on_identity_id", using: :btree
   end
-
-  add_index "headaches", ["identity_id"], name: "index_headaches_on_identity_id", using: :btree
 
   create_table "health_insurances", force: :cascade do |t|
     t.string   "insurance_name",       limit: 255
@@ -1901,14 +1783,13 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "doctor_id"
     t.integer  "visit_count"
     t.integer  "rating"
+    t.index ["doctor_id"], name: "index_health_insurances_on_doctor_id", using: :btree
+    t.index ["group_company_id"], name: "index_health_insurances_on_group_company_id", using: :btree
+    t.index ["identity_id"], name: "index_health_insurances_on_identity_id", using: :btree
+    t.index ["insurance_company_id"], name: "index_health_insurances_on_insurance_company_id", using: :btree
+    t.index ["password_id"], name: "index_health_insurances_on_password_id", using: :btree
+    t.index ["periodic_payment_id"], name: "index_health_insurances_on_periodic_payment_id", using: :btree
   end
-
-  add_index "health_insurances", ["doctor_id"], name: "index_health_insurances_on_doctor_id", using: :btree
-  add_index "health_insurances", ["group_company_id"], name: "index_health_insurances_on_group_company_id", using: :btree
-  add_index "health_insurances", ["identity_id"], name: "index_health_insurances_on_identity_id", using: :btree
-  add_index "health_insurances", ["insurance_company_id"], name: "index_health_insurances_on_insurance_company_id", using: :btree
-  add_index "health_insurances", ["password_id"], name: "index_health_insurances_on_password_id", using: :btree
-  add_index "health_insurances", ["periodic_payment_id"], name: "index_health_insurances_on_periodic_payment_id", using: :btree
 
   create_table "heart_rates", force: :cascade do |t|
     t.integer  "beats"
@@ -1920,9 +1801,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_heart_rates_on_identity_id", using: :btree
   end
-
-  add_index "heart_rates", ["identity_id"], name: "index_heart_rates_on_identity_id", using: :btree
 
   create_table "heights", force: :cascade do |t|
     t.decimal  "height_amount",                  precision: 10, scale: 2
@@ -1935,9 +1815,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_heights_on_identity_id", using: :btree
   end
-
-  add_index "heights", ["identity_id"], name: "index_heights_on_identity_id", using: :btree
 
   create_table "hobbies", force: :cascade do |t|
     t.string   "hobby_name",  limit: 255
@@ -1948,9 +1827,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_hobbies_on_identity_id", using: :btree
   end
-
-  add_index "hobbies", ["identity_id"], name: "index_hobbies_on_identity_id", using: :btree
 
   create_table "hotels", force: :cascade do |t|
     t.integer  "location_id"
@@ -1964,10 +1842,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "room_number"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_hotels_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_hotels_on_location_id", using: :btree
   end
-
-  add_index "hotels", ["identity_id"], name: "index_hotels_on_identity_id", using: :btree
-  add_index "hotels", ["location_id"], name: "index_hotels_on_location_id", using: :btree
 
   create_table "hypotheses", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -1979,10 +1856,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "position"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_hypotheses_on_identity_id", using: :btree
+    t.index ["question_id"], name: "index_hypotheses_on_question_id", using: :btree
   end
-
-  add_index "hypotheses", ["identity_id"], name: "index_hypotheses_on_identity_id", using: :btree
-  add_index "hypotheses", ["question_id"], name: "index_hypotheses_on_question_id", using: :btree
 
   create_table "hypothesis_experiments", force: :cascade do |t|
     t.string   "name",          limit: 255
@@ -1995,10 +1871,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["hypothesis_id"], name: "index_hypothesis_experiments_on_hypothesis_id", using: :btree
+    t.index ["identity_id"], name: "index_hypothesis_experiments_on_identity_id", using: :btree
   end
-
-  add_index "hypothesis_experiments", ["hypothesis_id"], name: "index_hypothesis_experiments_on_hypothesis_id", using: :btree
-  add_index "hypothesis_experiments", ["identity_id"], name: "index_hypothesis_experiments_on_identity_id", using: :btree
 
   create_table "ideas", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -2009,9 +1884,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_ideas_on_identity_id", using: :btree
   end
-
-  add_index "ideas", ["identity_id"], name: "index_ideas_on_identity_id", using: :btree
 
   create_table "identities", force: :cascade do |t|
     t.integer  "user_id"
@@ -2034,11 +1908,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["company_id"], name: "index_identities_on_company_id", using: :btree
+    t.index ["identity_id"], name: "index_identities_on_identity_id", using: :btree
+    t.index ["user_id"], name: "index_identities_on_user_id", using: :btree
   end
-
-  add_index "identities", ["company_id"], name: "index_identities_on_company_id", using: :btree
-  add_index "identities", ["identity_id"], name: "index_identities_on_identity_id", using: :btree
-  add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
 
   create_table "identity_drivers_licenses", force: :cascade do |t|
     t.string   "identifier",         limit: 255
@@ -2052,9 +1925,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["parent_identity_id"], name: "index_identity_drivers_licenses_on_parent_identity_id", using: :btree
   end
-
-  add_index "identity_drivers_licenses", ["parent_identity_id"], name: "index_identity_drivers_licenses_on_parent_identity_id", using: :btree
 
   create_table "identity_emails", force: :cascade do |t|
     t.string   "email",              limit: 255
@@ -2065,10 +1937,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.boolean  "secondary"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_identity_emails_on_identity_id", using: :btree
+    t.index ["parent_identity_id"], name: "index_identity_emails_on_parent_identity_id", using: :btree
   end
-
-  add_index "identity_emails", ["identity_id"], name: "index_identity_emails_on_identity_id", using: :btree
-  add_index "identity_emails", ["parent_identity_id"], name: "index_identity_emails_on_parent_identity_id", using: :btree
 
   create_table "identity_file_folders", force: :cascade do |t|
     t.string   "folder_name",      limit: 255
@@ -2079,10 +1950,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_identity_file_folders_on_identity_id", using: :btree
+    t.index ["parent_folder_id"], name: "index_identity_file_folders_on_parent_folder_id", using: :btree
   end
-
-  add_index "identity_file_folders", ["identity_id"], name: "index_identity_file_folders_on_identity_id", using: :btree
-  add_index "identity_file_folders", ["parent_folder_id"], name: "index_identity_file_folders_on_parent_folder_id", using: :btree
 
   create_table "identity_files", force: :cascade do |t|
     t.integer  "identity_id"
@@ -2104,11 +1974,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.string   "file_hash"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["encrypted_password_id"], name: "index_identity_files_on_encrypted_password_id", using: :btree
+    t.index ["folder_id"], name: "index_identity_files_on_folder_id", using: :btree
+    t.index ["identity_id"], name: "index_identity_files_on_identity_id", using: :btree
   end
-
-  add_index "identity_files", ["encrypted_password_id"], name: "index_identity_files_on_encrypted_password_id", using: :btree
-  add_index "identity_files", ["folder_id"], name: "index_identity_files_on_folder_id", using: :btree
-  add_index "identity_files", ["identity_id"], name: "index_identity_files_on_identity_id", using: :btree
 
   create_table "identity_locations", force: :cascade do |t|
     t.integer  "location_id"
@@ -2119,11 +1988,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "archived"
     t.integer  "rating"
     t.boolean  "secondary"
+    t.index ["identity_id"], name: "index_identity_locations_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_identity_locations_on_location_id", using: :btree
+    t.index ["parent_identity_id"], name: "index_identity_locations_on_parent_identity_id", using: :btree
   end
-
-  add_index "identity_locations", ["identity_id"], name: "index_identity_locations_on_identity_id", using: :btree
-  add_index "identity_locations", ["location_id"], name: "index_identity_locations_on_location_id", using: :btree
-  add_index "identity_locations", ["parent_identity_id"], name: "index_identity_locations_on_parent_identity_id", using: :btree
 
   create_table "identity_phones", force: :cascade do |t|
     t.string   "number",             limit: 255
@@ -2134,10 +2002,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "phone_type"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_identity_phones_on_identity_id", using: :btree
+    t.index ["parent_identity_id"], name: "index_identity_phones_on_parent_identity_id", using: :btree
   end
-
-  add_index "identity_phones", ["identity_id"], name: "index_identity_phones_on_identity_id", using: :btree
-  add_index "identity_phones", ["parent_identity_id"], name: "index_identity_phones_on_parent_identity_id", using: :btree
 
   create_table "identity_pictures", force: :cascade do |t|
     t.integer  "parent_identity_id"
@@ -2147,11 +2014,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_file_id"], name: "index_identity_pictures_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_identity_pictures_on_identity_id", using: :btree
+    t.index ["parent_identity_id"], name: "index_identity_pictures_on_parent_identity_id", using: :btree
   end
-
-  add_index "identity_pictures", ["identity_file_id"], name: "index_identity_pictures_on_identity_file_id", using: :btree
-  add_index "identity_pictures", ["identity_id"], name: "index_identity_pictures_on_identity_id", using: :btree
-  add_index "identity_pictures", ["parent_identity_id"], name: "index_identity_pictures_on_parent_identity_id", using: :btree
 
   create_table "identity_relationships", force: :cascade do |t|
     t.integer  "contact_id"
@@ -2162,11 +2028,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["contact_id"], name: "index_identity_relationships_on_contact_id", using: :btree
+    t.index ["identity_id"], name: "index_identity_relationships_on_identity_id", using: :btree
+    t.index ["parent_identity_id"], name: "index_identity_relationships_on_parent_identity_id", using: :btree
   end
-
-  add_index "identity_relationships", ["contact_id"], name: "index_identity_relationships_on_contact_id", using: :btree
-  add_index "identity_relationships", ["identity_id"], name: "index_identity_relationships_on_identity_id", using: :btree
-  add_index "identity_relationships", ["parent_identity_id"], name: "index_identity_relationships_on_parent_identity_id", using: :btree
 
   create_table "invite_codes", force: :cascade do |t|
     t.string   "code"
@@ -2178,9 +2043,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",   null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_invite_codes_on_identity_id", using: :btree
   end
-
-  add_index "invite_codes", ["identity_id"], name: "index_invite_codes_on_identity_id", using: :btree
 
   create_table "invites", force: :cascade do |t|
     t.string   "email"
@@ -2188,9 +2052,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["user_id"], name: "index_invites_on_user_id", using: :btree
   end
-
-  add_index "invites", ["user_id"], name: "index_invites_on_user_id", using: :btree
 
   create_table "item_files", force: :cascade do |t|
     t.integer  "item_id"
@@ -2199,11 +2062,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "position"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.index ["identity_file_id"], name: "index_item_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_item_files_on_identity_id", using: :btree
+    t.index ["item_id"], name: "index_item_files_on_item_id", using: :btree
   end
-
-  add_index "item_files", ["identity_file_id"], name: "index_item_files_on_identity_file_id", using: :btree
-  add_index "item_files", ["identity_id"], name: "index_item_files_on_identity_id", using: :btree
-  add_index "item_files", ["item_id"], name: "index_item_files_on_item_id", using: :btree
 
   create_table "items", force: :cascade do |t|
     t.string   "item_name"
@@ -2217,9 +2079,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
+    t.index ["identity_id"], name: "index_items_on_identity_id", using: :btree
   end
-
-  add_index "items", ["identity_id"], name: "index_items_on_identity_id", using: :btree
 
   create_table "job_accomplishments", force: :cascade do |t|
     t.integer  "job_id"
@@ -2231,10 +2092,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.boolean  "major"
+    t.index ["identity_id"], name: "index_job_accomplishments_on_identity_id", using: :btree
+    t.index ["job_id"], name: "index_job_accomplishments_on_job_id", using: :btree
   end
-
-  add_index "job_accomplishments", ["identity_id"], name: "index_job_accomplishments_on_identity_id", using: :btree
-  add_index "job_accomplishments", ["job_id"], name: "index_job_accomplishments_on_job_id", using: :btree
 
   create_table "job_files", force: :cascade do |t|
     t.integer  "job_id"
@@ -2243,11 +2103,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "position"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.index ["identity_file_id"], name: "index_job_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_job_files_on_identity_id", using: :btree
+    t.index ["job_id"], name: "index_job_files_on_job_id", using: :btree
   end
-
-  add_index "job_files", ["identity_file_id"], name: "index_job_files_on_identity_file_id", using: :btree
-  add_index "job_files", ["identity_id"], name: "index_job_files_on_identity_id", using: :btree
-  add_index "job_files", ["job_id"], name: "index_job_files_on_job_id", using: :btree
 
   create_table "job_managers", force: :cascade do |t|
     t.integer  "job_id"
@@ -2260,11 +2119,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["contact_id"], name: "index_job_managers_on_contact_id", using: :btree
+    t.index ["identity_id"], name: "index_job_managers_on_identity_id", using: :btree
+    t.index ["job_id"], name: "index_job_managers_on_job_id", using: :btree
   end
-
-  add_index "job_managers", ["contact_id"], name: "index_job_managers_on_contact_id", using: :btree
-  add_index "job_managers", ["identity_id"], name: "index_job_managers_on_identity_id", using: :btree
-  add_index "job_managers", ["job_id"], name: "index_job_managers_on_job_id", using: :btree
 
   create_table "job_myreferences", force: :cascade do |t|
     t.integer  "job_id"
@@ -2274,11 +2132,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",     null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_job_myreferences_on_identity_id", using: :btree
+    t.index ["job_id"], name: "index_job_myreferences_on_job_id", using: :btree
+    t.index ["myreference_id"], name: "index_job_myreferences_on_myreference_id", using: :btree
   end
-
-  add_index "job_myreferences", ["identity_id"], name: "index_job_myreferences_on_identity_id", using: :btree
-  add_index "job_myreferences", ["job_id"], name: "index_job_myreferences_on_job_id", using: :btree
-  add_index "job_myreferences", ["myreference_id"], name: "index_job_myreferences_on_myreference_id", using: :btree
 
   create_table "job_review_files", force: :cascade do |t|
     t.integer  "job_review_id"
@@ -2289,11 +2146,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_file_id"], name: "index_job_review_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_job_review_files_on_identity_id", using: :btree
+    t.index ["job_review_id"], name: "index_job_review_files_on_job_review_id", using: :btree
   end
-
-  add_index "job_review_files", ["identity_file_id"], name: "index_job_review_files_on_identity_file_id", using: :btree
-  add_index "job_review_files", ["identity_id"], name: "index_job_review_files_on_identity_id", using: :btree
-  add_index "job_review_files", ["job_review_id"], name: "index_job_review_files_on_job_review_id", using: :btree
 
   create_table "job_reviews", force: :cascade do |t|
     t.integer  "job_id"
@@ -2307,11 +2163,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "archived"
     t.integer  "rating"
     t.text     "self_evaluation"
+    t.index ["contact_id"], name: "index_job_reviews_on_contact_id", using: :btree
+    t.index ["identity_id"], name: "index_job_reviews_on_identity_id", using: :btree
+    t.index ["job_id"], name: "index_job_reviews_on_job_id", using: :btree
   end
-
-  add_index "job_reviews", ["contact_id"], name: "index_job_reviews_on_contact_id", using: :btree
-  add_index "job_reviews", ["identity_id"], name: "index_job_reviews_on_identity_id", using: :btree
-  add_index "job_reviews", ["job_id"], name: "index_job_reviews_on_job_id", using: :btree
 
   create_table "job_salaries", force: :cascade do |t|
     t.integer  "identity_id"
@@ -2327,10 +2182,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "archived"
     t.integer  "rating"
     t.decimal  "hours_per_week", precision: 10, scale: 2
+    t.index ["identity_id"], name: "index_job_salaries_on_identity_id", using: :btree
+    t.index ["job_id"], name: "index_job_salaries_on_job_id", using: :btree
   end
-
-  add_index "job_salaries", ["identity_id"], name: "index_job_salaries_on_identity_id", using: :btree
-  add_index "job_salaries", ["job_id"], name: "index_job_salaries_on_job_id", using: :btree
 
   create_table "jobs", force: :cascade do |t|
     t.string   "job_title",             limit: 255
@@ -2359,12 +2213,11 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "archived"
     t.integer  "rating"
     t.decimal  "hours_per_week",                    precision: 10, scale: 2
+    t.index ["company_id"], name: "index_jobs_on_company_id", using: :btree
+    t.index ["identity_id"], name: "index_jobs_on_identity_id", using: :btree
+    t.index ["internal_address_id"], name: "index_jobs_on_internal_address_id", using: :btree
+    t.index ["manager_contact_id"], name: "index_jobs_on_manager_contact_id", using: :btree
   end
-
-  add_index "jobs", ["company_id"], name: "index_jobs_on_company_id", using: :btree
-  add_index "jobs", ["identity_id"], name: "index_jobs_on_identity_id", using: :btree
-  add_index "jobs", ["internal_address_id"], name: "index_jobs_on_internal_address_id", using: :btree
-  add_index "jobs", ["manager_contact_id"], name: "index_jobs_on_manager_contact_id", using: :btree
 
   create_table "jokes", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -2376,9 +2229,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_jokes_on_identity_id", using: :btree
   end
-
-  add_index "jokes", ["identity_id"], name: "index_jokes_on_identity_id", using: :btree
 
   create_table "life_goals", force: :cascade do |t|
     t.string   "life_goal_name", limit: 255
@@ -2392,9 +2244,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_life_goals_on_identity_id", using: :btree
   end
-
-  add_index "life_goals", ["identity_id"], name: "index_life_goals_on_identity_id", using: :btree
 
   create_table "life_highlights", force: :cascade do |t|
     t.datetime "life_highlight_time"
@@ -2406,9 +2257,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.index ["identity_id"], name: "index_life_highlights_on_identity_id", using: :btree
   end
-
-  add_index "life_highlights", ["identity_id"], name: "index_life_highlights_on_identity_id", using: :btree
 
   create_table "life_insurances", force: :cascade do |t|
     t.string   "insurance_name",      limit: 255
@@ -2424,11 +2274,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["company_id"], name: "index_life_insurances_on_company_id", using: :btree
+    t.index ["identity_id"], name: "index_life_insurances_on_identity_id", using: :btree
+    t.index ["periodic_payment_id"], name: "index_life_insurances_on_periodic_payment_id", using: :btree
   end
-
-  add_index "life_insurances", ["company_id"], name: "index_life_insurances_on_company_id", using: :btree
-  add_index "life_insurances", ["identity_id"], name: "index_life_insurances_on_identity_id", using: :btree
-  add_index "life_insurances", ["periodic_payment_id"], name: "index_life_insurances_on_periodic_payment_id", using: :btree
 
   create_table "list_items", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -2438,10 +2287,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_list_items_on_identity_id", using: :btree
+    t.index ["list_id"], name: "index_list_items_on_list_id", using: :btree
   end
-
-  add_index "list_items", ["identity_id"], name: "index_list_items_on_identity_id", using: :btree
-  add_index "list_items", ["list_id"], name: "index_list_items_on_list_id", using: :btree
 
   create_table "lists", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -2451,9 +2299,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_lists_on_identity_id", using: :btree
   end
-
-  add_index "lists", ["identity_id"], name: "index_lists_on_identity_id", using: :btree
 
   create_table "loans", force: :cascade do |t|
     t.string   "lender",          limit: 255
@@ -2466,9 +2313,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_loans_on_identity_id", using: :btree
   end
-
-  add_index "loans", ["identity_id"], name: "index_loans_on_identity_id", using: :btree
 
   create_table "location_phones", force: :cascade do |t|
     t.string   "number",      limit: 255
@@ -2478,10 +2324,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_location_phones_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_location_phones_on_location_id", using: :btree
   end
-
-  add_index "location_phones", ["identity_id"], name: "index_location_phones_on_identity_id", using: :btree
-  add_index "location_phones", ["location_id"], name: "index_location_phones_on_location_id", using: :btree
 
   create_table "location_pictures", force: :cascade do |t|
     t.integer  "location_id"
@@ -2491,11 +2336,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_file_id"], name: "index_location_pictures_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_location_pictures_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_location_pictures_on_location_id", using: :btree
   end
-
-  add_index "location_pictures", ["identity_file_id"], name: "index_location_pictures_on_identity_file_id", using: :btree
-  add_index "location_pictures", ["identity_id"], name: "index_location_pictures_on_identity_id", using: :btree
-  add_index "location_pictures", ["location_id"], name: "index_location_pictures_on_location_id", using: :btree
 
   create_table "locations", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -2516,10 +2360,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "website_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_locations_on_identity_id", using: :btree
+    t.index ["website_id"], name: "index_locations_on_website_id", using: :btree
   end
-
-  add_index "locations", ["identity_id"], name: "index_locations_on_identity_id", using: :btree
-  add_index "locations", ["website_id"], name: "index_locations_on_website_id", using: :btree
 
   create_table "meadows", force: :cascade do |t|
     t.integer  "location_id"
@@ -2531,10 +2374,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.datetime "archived"
+    t.index ["identity_id"], name: "index_meadows_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_meadows_on_location_id", using: :btree
   end
-
-  add_index "meadows", ["identity_id"], name: "index_meadows_on_identity_id", using: :btree
-  add_index "meadows", ["location_id"], name: "index_meadows_on_location_id", using: :btree
 
   create_table "meal_drinks", force: :cascade do |t|
     t.integer  "identity_id"
@@ -2545,11 +2387,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.decimal  "drink_servings", precision: 10, scale: 2
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["drink_id"], name: "index_meal_drinks_on_drink_id", using: :btree
+    t.index ["identity_id"], name: "index_meal_drinks_on_identity_id", using: :btree
+    t.index ["meal_id"], name: "index_meal_drinks_on_meal_id", using: :btree
   end
-
-  add_index "meal_drinks", ["drink_id"], name: "index_meal_drinks_on_drink_id", using: :btree
-  add_index "meal_drinks", ["identity_id"], name: "index_meal_drinks_on_identity_id", using: :btree
-  add_index "meal_drinks", ["meal_id"], name: "index_meal_drinks_on_meal_id", using: :btree
 
   create_table "meal_foods", force: :cascade do |t|
     t.integer  "identity_id"
@@ -2560,11 +2401,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.decimal  "food_servings", precision: 10, scale: 2
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["food_id"], name: "index_meal_foods_on_food_id", using: :btree
+    t.index ["identity_id"], name: "index_meal_foods_on_identity_id", using: :btree
+    t.index ["meal_id"], name: "index_meal_foods_on_meal_id", using: :btree
   end
-
-  add_index "meal_foods", ["food_id"], name: "index_meal_foods_on_food_id", using: :btree
-  add_index "meal_foods", ["identity_id"], name: "index_meal_foods_on_identity_id", using: :btree
-  add_index "meal_foods", ["meal_id"], name: "index_meal_foods_on_meal_id", using: :btree
 
   create_table "meal_vitamins", force: :cascade do |t|
     t.integer  "identity_id"
@@ -2574,11 +2414,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_meal_vitamins_on_identity_id", using: :btree
+    t.index ["meal_id"], name: "index_meal_vitamins_on_meal_id", using: :btree
+    t.index ["vitamin_id"], name: "index_meal_vitamins_on_vitamin_id", using: :btree
   end
-
-  add_index "meal_vitamins", ["identity_id"], name: "index_meal_vitamins_on_identity_id", using: :btree
-  add_index "meal_vitamins", ["meal_id"], name: "index_meal_vitamins_on_meal_id", using: :btree
-  add_index "meal_vitamins", ["vitamin_id"], name: "index_meal_vitamins_on_vitamin_id", using: :btree
 
   create_table "meals", force: :cascade do |t|
     t.datetime "meal_time"
@@ -2592,10 +2431,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_meals_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_meals_on_location_id", using: :btree
   end
-
-  add_index "meals", ["identity_id"], name: "index_meals_on_identity_id", using: :btree
-  add_index "meals", ["location_id"], name: "index_meals_on_location_id", using: :btree
 
   create_table "media_dump_files", force: :cascade do |t|
     t.integer  "media_dump_id"
@@ -2606,11 +2444,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_file_id"], name: "index_media_dump_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_media_dump_files_on_identity_id", using: :btree
+    t.index ["media_dump_id"], name: "index_media_dump_files_on_media_dump_id", using: :btree
   end
-
-  add_index "media_dump_files", ["identity_file_id"], name: "index_media_dump_files_on_identity_file_id", using: :btree
-  add_index "media_dump_files", ["identity_id"], name: "index_media_dump_files_on_identity_id", using: :btree
-  add_index "media_dump_files", ["media_dump_id"], name: "index_media_dump_files_on_media_dump_id", using: :btree
 
   create_table "media_dumps", force: :cascade do |t|
     t.string   "media_dump_name"
@@ -2621,9 +2458,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",      null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_media_dumps_on_identity_id", using: :btree
   end
-
-  add_index "media_dumps", ["identity_id"], name: "index_media_dumps_on_identity_id", using: :btree
 
   create_table "medical_condition_instances", force: :cascade do |t|
     t.datetime "condition_start"
@@ -2635,10 +2471,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_medical_condition_instances_on_identity_id", using: :btree
+    t.index ["medical_condition_id"], name: "index_medical_condition_instances_on_medical_condition_id", using: :btree
   end
-
-  add_index "medical_condition_instances", ["identity_id"], name: "index_medical_condition_instances_on_identity_id", using: :btree
-  add_index "medical_condition_instances", ["medical_condition_id"], name: "index_medical_condition_instances_on_medical_condition_id", using: :btree
 
   create_table "medical_condition_treatments", force: :cascade do |t|
     t.integer  "identity_id"
@@ -2652,12 +2487,11 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "location_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["doctor_id"], name: "index_medical_condition_treatments_on_doctor_id", using: :btree
+    t.index ["identity_id"], name: "index_medical_condition_treatments_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_medical_condition_treatments_on_location_id", using: :btree
+    t.index ["medical_condition_id"], name: "index_medical_condition_treatments_on_medical_condition_id", using: :btree
   end
-
-  add_index "medical_condition_treatments", ["doctor_id"], name: "index_medical_condition_treatments_on_doctor_id", using: :btree
-  add_index "medical_condition_treatments", ["identity_id"], name: "index_medical_condition_treatments_on_identity_id", using: :btree
-  add_index "medical_condition_treatments", ["location_id"], name: "index_medical_condition_treatments_on_location_id", using: :btree
-  add_index "medical_condition_treatments", ["medical_condition_id"], name: "index_medical_condition_treatments_on_medical_condition_id", using: :btree
 
   create_table "medical_conditions", force: :cascade do |t|
     t.string   "medical_condition_name", limit: 255
@@ -2668,9 +2502,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_medical_conditions_on_identity_id", using: :btree
   end
-
-  add_index "medical_conditions", ["identity_id"], name: "index_medical_conditions_on_identity_id", using: :btree
 
   create_table "medicine_usage_medicines", force: :cascade do |t|
     t.integer  "identity_id"
@@ -2680,11 +2513,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_medicine_usage_medicines_on_identity_id", using: :btree
+    t.index ["medicine_id"], name: "index_medicine_usage_medicines_on_medicine_id", using: :btree
+    t.index ["medicine_usage_id"], name: "index_medicine_usage_medicines_on_medicine_usage_id", using: :btree
   end
-
-  add_index "medicine_usage_medicines", ["identity_id"], name: "index_medicine_usage_medicines_on_identity_id", using: :btree
-  add_index "medicine_usage_medicines", ["medicine_id"], name: "index_medicine_usage_medicines_on_medicine_id", using: :btree
-  add_index "medicine_usage_medicines", ["medicine_usage_id"], name: "index_medicine_usage_medicines_on_medicine_usage_id", using: :btree
 
   create_table "medicine_usages", force: :cascade do |t|
     t.datetime "usage_time"
@@ -2696,10 +2528,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_medicine_usages_on_identity_id", using: :btree
+    t.index ["medicine_id"], name: "index_medicine_usages_on_medicine_id", using: :btree
   end
-
-  add_index "medicine_usages", ["identity_id"], name: "index_medicine_usages_on_identity_id", using: :btree
-  add_index "medicine_usages", ["medicine_id"], name: "index_medicine_usages_on_medicine_id", using: :btree
 
   create_table "medicines", force: :cascade do |t|
     t.string   "medicine_name", limit: 255
@@ -2712,9 +2543,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_medicines_on_identity_id", using: :btree
   end
-
-  add_index "medicines", ["identity_id"], name: "index_medicines_on_identity_id", using: :btree
 
   create_table "membership_files", force: :cascade do |t|
     t.integer  "membership_id"
@@ -2725,11 +2555,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_file_id"], name: "index_membership_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_membership_files_on_identity_id", using: :btree
+    t.index ["membership_id"], name: "index_membership_files_on_membership_id", using: :btree
   end
-
-  add_index "membership_files", ["identity_file_id"], name: "index_membership_files_on_identity_file_id", using: :btree
-  add_index "membership_files", ["identity_id"], name: "index_membership_files_on_identity_id", using: :btree
-  add_index "membership_files", ["membership_id"], name: "index_membership_files_on_membership_id", using: :btree
 
   create_table "memberships", force: :cascade do |t|
     t.string   "name",                  limit: 255
@@ -2745,11 +2574,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "archived"
     t.integer  "rating"
     t.integer  "password_id"
+    t.index ["identity_id"], name: "index_memberships_on_identity_id", using: :btree
+    t.index ["password_id"], name: "index_memberships_on_password_id", using: :btree
+    t.index ["periodic_payment_id"], name: "index_memberships_on_periodic_payment_id", using: :btree
   end
-
-  add_index "memberships", ["identity_id"], name: "index_memberships_on_identity_id", using: :btree
-  add_index "memberships", ["password_id"], name: "index_memberships_on_password_id", using: :btree
-  add_index "memberships", ["periodic_payment_id"], name: "index_memberships_on_periodic_payment_id", using: :btree
 
   create_table "message_contacts", force: :cascade do |t|
     t.integer  "message_id"
@@ -2759,11 +2587,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["contact_id"], name: "index_message_contacts_on_contact_id", using: :btree
+    t.index ["identity_id"], name: "index_message_contacts_on_identity_id", using: :btree
+    t.index ["message_id"], name: "index_message_contacts_on_message_id", using: :btree
   end
-
-  add_index "message_contacts", ["contact_id"], name: "index_message_contacts_on_contact_id", using: :btree
-  add_index "message_contacts", ["identity_id"], name: "index_message_contacts_on_identity_id", using: :btree
-  add_index "message_contacts", ["message_id"], name: "index_message_contacts_on_message_id", using: :btree
 
   create_table "message_groups", force: :cascade do |t|
     t.integer  "message_id"
@@ -2773,11 +2600,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["group_id"], name: "index_message_groups_on_group_id", using: :btree
+    t.index ["identity_id"], name: "index_message_groups_on_identity_id", using: :btree
+    t.index ["message_id"], name: "index_message_groups_on_message_id", using: :btree
   end
-
-  add_index "message_groups", ["group_id"], name: "index_message_groups_on_group_id", using: :btree
-  add_index "message_groups", ["identity_id"], name: "index_message_groups_on_identity_id", using: :btree
-  add_index "message_groups", ["message_id"], name: "index_message_groups_on_message_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
     t.text     "body"
@@ -2794,9 +2620,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.string   "subject"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_messages_on_identity_id", using: :btree
   end
-
-  add_index "messages", ["identity_id"], name: "index_messages_on_identity_id", using: :btree
 
   create_table "money_balance_item_templates", force: :cascade do |t|
     t.decimal  "amount",                  precision: 10, scale: 2
@@ -2810,10 +2635,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",                                       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_money_balance_item_templates_on_identity_id", using: :btree
+    t.index ["money_balance_id"], name: "index_money_balance_item_templates_on_money_balance_id", using: :btree
   end
-
-  add_index "money_balance_item_templates", ["identity_id"], name: "index_money_balance_item_templates_on_identity_id", using: :btree
-  add_index "money_balance_item_templates", ["money_balance_id"], name: "index_money_balance_item_templates_on_money_balance_id", using: :btree
 
   create_table "money_balance_items", force: :cascade do |t|
     t.integer  "money_balance_id"
@@ -2827,10 +2651,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.decimal  "original_amount",         precision: 10, scale: 2
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_money_balance_items_on_identity_id", using: :btree
+    t.index ["money_balance_id"], name: "index_money_balance_items_on_money_balance_id", using: :btree
   end
-
-  add_index "money_balance_items", ["identity_id"], name: "index_money_balance_items_on_identity_id", using: :btree
-  add_index "money_balance_items", ["money_balance_id"], name: "index_money_balance_items_on_money_balance_id", using: :btree
 
   create_table "money_balances", force: :cascade do |t|
     t.integer  "contact_id"
@@ -2841,10 +2664,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["contact_id"], name: "index_money_balances_on_contact_id", using: :btree
+    t.index ["identity_id"], name: "index_money_balances_on_identity_id", using: :btree
   end
-
-  add_index "money_balances", ["contact_id"], name: "index_money_balances_on_contact_id", using: :btree
-  add_index "money_balances", ["identity_id"], name: "index_money_balances_on_identity_id", using: :btree
 
   create_table "movie_theaters", force: :cascade do |t|
     t.string   "theater_name", limit: 255
@@ -2855,10 +2677,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_movie_theaters_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_movie_theaters_on_location_id", using: :btree
   end
-
-  add_index "movie_theaters", ["identity_id"], name: "index_movie_theaters_on_identity_id", using: :btree
-  add_index "movie_theaters", ["location_id"], name: "index_movie_theaters_on_location_id", using: :btree
 
   create_table "movies", force: :cascade do |t|
     t.string   "name",           limit: 255
@@ -2872,10 +2693,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.string   "genre"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_movies_on_identity_id", using: :btree
+    t.index ["recommender_id"], name: "index_movies_on_recommender_id", using: :btree
   end
-
-  add_index "movies", ["identity_id"], name: "index_movies_on_identity_id", using: :btree
-  add_index "movies", ["recommender_id"], name: "index_movies_on_recommender_id", using: :btree
 
   create_table "museums", force: :cascade do |t|
     t.integer  "location_id"
@@ -2890,11 +2710,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.string   "museum_source", limit: 255
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_museums_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_museums_on_location_id", using: :btree
+    t.index ["website_id"], name: "index_museums_on_website_id", using: :btree
   end
-
-  add_index "museums", ["identity_id"], name: "index_museums_on_identity_id", using: :btree
-  add_index "museums", ["location_id"], name: "index_museums_on_location_id", using: :btree
-  add_index "museums", ["website_id"], name: "index_museums_on_website_id", using: :btree
 
   create_table "musical_groups", force: :cascade do |t|
     t.string   "musical_group_name", limit: 255
@@ -2909,9 +2728,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.string   "musical_genre",      limit: 255
     t.integer  "visit_count"
     t.datetime "archived"
+    t.index ["identity_id"], name: "index_musical_groups_on_identity_id", using: :btree
   end
-
-  add_index "musical_groups", ["identity_id"], name: "index_musical_groups_on_identity_id", using: :btree
 
   create_table "myplaceonline_quick_category_displays", force: :cascade do |t|
     t.boolean  "trash"
@@ -2921,9 +2739,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_myplaceonline_quick_category_displays_on_identity_id", using: :btree
   end
-
-  add_index "myplaceonline_quick_category_displays", ["identity_id"], name: "index_myplaceonline_quick_category_displays_on_identity_id", using: :btree
 
   create_table "myplaceonline_searches", force: :cascade do |t|
     t.integer  "identity_id"
@@ -2933,9 +2750,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_myplaceonline_searches_on_identity_id", using: :btree
   end
-
-  add_index "myplaceonline_searches", ["identity_id"], name: "index_myplaceonline_searches_on_identity_id", using: :btree
 
   create_table "myplets", force: :cascade do |t|
     t.integer  "x_coordinate"
@@ -2950,9 +2766,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_myplets_on_identity_id", using: :btree
   end
-
-  add_index "myplets", ["identity_id"], name: "index_myplets_on_identity_id", using: :btree
 
   create_table "myreferences", force: :cascade do |t|
     t.integer  "contact_id"
@@ -2967,10 +2782,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.string   "reference_relationship"
     t.decimal  "years_experience",       precision: 10, scale: 2
     t.boolean  "can_contact"
+    t.index ["contact_id"], name: "index_myreferences_on_contact_id", using: :btree
+    t.index ["identity_id"], name: "index_myreferences_on_identity_id", using: :btree
   end
-
-  add_index "myreferences", ["contact_id"], name: "index_myreferences_on_contact_id", using: :btree
-  add_index "myreferences", ["identity_id"], name: "index_myreferences_on_identity_id", using: :btree
 
   create_table "notepads", force: :cascade do |t|
     t.string   "title",        limit: 255
@@ -2981,9 +2795,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_notepads_on_identity_id", using: :btree
   end
-
-  add_index "notepads", ["identity_id"], name: "index_notepads_on_identity_id", using: :btree
 
   create_table "pains", force: :cascade do |t|
     t.string   "pain_location",   limit: 255
@@ -2997,9 +2810,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_pains_on_identity_id", using: :btree
   end
-
-  add_index "pains", ["identity_id"], name: "index_pains_on_identity_id", using: :btree
 
   create_table "passport_pictures", force: :cascade do |t|
     t.integer  "passport_id"
@@ -3009,11 +2821,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_file_id"], name: "index_passport_pictures_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_passport_pictures_on_identity_id", using: :btree
+    t.index ["passport_id"], name: "index_passport_pictures_on_passport_id", using: :btree
   end
-
-  add_index "passport_pictures", ["identity_file_id"], name: "index_passport_pictures_on_identity_file_id", using: :btree
-  add_index "passport_pictures", ["identity_id"], name: "index_passport_pictures_on_identity_id", using: :btree
-  add_index "passport_pictures", ["passport_id"], name: "index_passport_pictures_on_passport_id", using: :btree
 
   create_table "passports", force: :cascade do |t|
     t.string   "region",            limit: 255
@@ -3029,9 +2840,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.text     "notes"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_passports_on_identity_id", using: :btree
   end
-
-  add_index "passports", ["identity_id"], name: "index_passports_on_identity_id", using: :btree
 
   create_table "password_secret_shares", force: :cascade do |t|
     t.integer  "password_secret_id"
@@ -3042,11 +2852,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",         null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_password_secret_shares_on_identity_id", using: :btree
+    t.index ["password_secret_id"], name: "index_password_secret_shares_on_password_secret_id", using: :btree
+    t.index ["password_share_id"], name: "index_password_secret_shares_on_password_share_id", using: :btree
   end
-
-  add_index "password_secret_shares", ["identity_id"], name: "index_password_secret_shares_on_identity_id", using: :btree
-  add_index "password_secret_shares", ["password_secret_id"], name: "index_password_secret_shares_on_password_secret_id", using: :btree
-  add_index "password_secret_shares", ["password_share_id"], name: "index_password_secret_shares_on_password_share_id", using: :btree
 
   create_table "password_secrets", force: :cascade do |t|
     t.string   "question",            limit: 255
@@ -3058,11 +2867,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["answer_encrypted_id"], name: "index_password_secrets_on_answer_encrypted_id", using: :btree
+    t.index ["identity_id"], name: "index_password_secrets_on_identity_id", using: :btree
+    t.index ["password_id"], name: "index_password_secrets_on_password_id", using: :btree
   end
-
-  add_index "password_secrets", ["answer_encrypted_id"], name: "index_password_secrets_on_answer_encrypted_id", using: :btree
-  add_index "password_secrets", ["identity_id"], name: "index_password_secrets_on_identity_id", using: :btree
-  add_index "password_secrets", ["password_id"], name: "index_password_secrets_on_password_id", using: :btree
 
   create_table "password_shares", force: :cascade do |t|
     t.integer  "password_id"
@@ -3073,11 +2881,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",           null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_password_shares_on_identity_id", using: :btree
+    t.index ["password_id"], name: "index_password_shares_on_password_id", using: :btree
+    t.index ["user_id"], name: "index_password_shares_on_user_id", using: :btree
   end
-
-  add_index "password_shares", ["identity_id"], name: "index_password_shares_on_identity_id", using: :btree
-  add_index "password_shares", ["password_id"], name: "index_password_shares_on_password_id", using: :btree
-  add_index "password_shares", ["user_id"], name: "index_password_shares_on_user_id", using: :btree
 
   create_table "passwords", force: :cascade do |t|
     t.string   "name",                  limit: 255
@@ -3094,10 +2901,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.string   "email",                 limit: 255
     t.integer  "visit_count"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_passwords_on_identity_id", using: :btree
+    t.index ["password_encrypted_id"], name: "index_passwords_on_password_encrypted_id", using: :btree
   end
-
-  add_index "passwords", ["identity_id"], name: "index_passwords_on_identity_id", using: :btree
-  add_index "passwords", ["password_encrypted_id"], name: "index_passwords_on_password_encrypted_id", using: :btree
 
   create_table "periodic_payments", force: :cascade do |t|
     t.string   "periodic_payment_name", limit: 255
@@ -3114,10 +2920,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "password_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_periodic_payments_on_identity_id", using: :btree
+    t.index ["password_id"], name: "index_periodic_payments_on_password_id", using: :btree
   end
-
-  add_index "periodic_payments", ["identity_id"], name: "index_periodic_payments_on_identity_id", using: :btree
-  add_index "periodic_payments", ["password_id"], name: "index_periodic_payments_on_password_id", using: :btree
 
   create_table "perishable_foods", force: :cascade do |t|
     t.integer  "food_id"
@@ -3132,10 +2937,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.index ["food_id"], name: "index_perishable_foods_on_food_id", using: :btree
+    t.index ["identity_id"], name: "index_perishable_foods_on_identity_id", using: :btree
   end
-
-  add_index "perishable_foods", ["food_id"], name: "index_perishable_foods_on_food_id", using: :btree
-  add_index "perishable_foods", ["identity_id"], name: "index_perishable_foods_on_identity_id", using: :btree
 
   create_table "permission_share_children", force: :cascade do |t|
     t.string   "subject_class"
@@ -3147,11 +2951,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",          null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_permission_share_children_on_identity_id", using: :btree
+    t.index ["permission_share_id"], name: "index_permission_share_children_on_permission_share_id", using: :btree
+    t.index ["share_id"], name: "index_permission_share_children_on_share_id", using: :btree
   end
-
-  add_index "permission_share_children", ["identity_id"], name: "index_permission_share_children_on_identity_id", using: :btree
-  add_index "permission_share_children", ["permission_share_id"], name: "index_permission_share_children_on_permission_share_id", using: :btree
-  add_index "permission_share_children", ["share_id"], name: "index_permission_share_children_on_share_id", using: :btree
 
   create_table "permission_shares", force: :cascade do |t|
     t.string   "subject_class"
@@ -3167,11 +2970,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.string   "child_selections"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["email_id"], name: "index_permission_shares_on_email_id", using: :btree
+    t.index ["identity_id"], name: "index_permission_shares_on_identity_id", using: :btree
+    t.index ["share_id"], name: "index_permission_shares_on_share_id", using: :btree
   end
-
-  add_index "permission_shares", ["email_id"], name: "index_permission_shares_on_email_id", using: :btree
-  add_index "permission_shares", ["identity_id"], name: "index_permission_shares_on_identity_id", using: :btree
-  add_index "permission_shares", ["share_id"], name: "index_permission_shares_on_share_id", using: :btree
 
   create_table "permissions", force: :cascade do |t|
     t.integer  "action"
@@ -3184,10 +2986,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "user_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_permissions_on_identity_id", using: :btree
+    t.index ["user_id"], name: "index_permissions_on_user_id", using: :btree
   end
-
-  add_index "permissions", ["identity_id"], name: "index_permissions_on_identity_id", using: :btree
-  add_index "permissions", ["user_id"], name: "index_permissions_on_user_id", using: :btree
 
   create_table "phone_files", force: :cascade do |t|
     t.integer  "phone_id"
@@ -3198,11 +2999,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "archived"
     t.integer  "rating"
     t.integer  "position"
+    t.index ["identity_file_id"], name: "index_phone_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_phone_files_on_identity_id", using: :btree
+    t.index ["phone_id"], name: "index_phone_files_on_phone_id", using: :btree
   end
-
-  add_index "phone_files", ["identity_file_id"], name: "index_phone_files_on_identity_file_id", using: :btree
-  add_index "phone_files", ["identity_id"], name: "index_phone_files_on_identity_id", using: :btree
-  add_index "phone_files", ["phone_id"], name: "index_phone_files_on_phone_id", using: :btree
 
   create_table "phones", force: :cascade do |t|
     t.string   "phone_model_name",         limit: 255
@@ -3237,11 +3037,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_phones_on_identity_id", using: :btree
+    t.index ["manufacturer_id"], name: "index_phones_on_manufacturer_id", using: :btree
+    t.index ["password_id"], name: "index_phones_on_password_id", using: :btree
   end
-
-  add_index "phones", ["identity_id"], name: "index_phones_on_identity_id", using: :btree
-  add_index "phones", ["manufacturer_id"], name: "index_phones_on_manufacturer_id", using: :btree
-  add_index "phones", ["password_id"], name: "index_phones_on_password_id", using: :btree
 
   create_table "playlist_songs", force: :cascade do |t|
     t.integer  "playlist_id"
@@ -3252,11 +3051,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "position"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_playlist_songs_on_identity_id", using: :btree
+    t.index ["playlist_id"], name: "index_playlist_songs_on_playlist_id", using: :btree
+    t.index ["song_id"], name: "index_playlist_songs_on_song_id", using: :btree
   end
-
-  add_index "playlist_songs", ["identity_id"], name: "index_playlist_songs_on_identity_id", using: :btree
-  add_index "playlist_songs", ["playlist_id"], name: "index_playlist_songs_on_playlist_id", using: :btree
-  add_index "playlist_songs", ["song_id"], name: "index_playlist_songs_on_song_id", using: :btree
 
   create_table "playlists", force: :cascade do |t|
     t.string   "playlist_name",    limit: 255
@@ -3267,10 +3065,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_file_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_file_id"], name: "index_playlists_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_playlists_on_identity_id", using: :btree
   end
-
-  add_index "playlists", ["identity_file_id"], name: "index_playlists_on_identity_file_id", using: :btree
-  add_index "playlists", ["identity_id"], name: "index_playlists_on_identity_id", using: :btree
 
   create_table "podcasts", force: :cascade do |t|
     t.integer  "feed_id"
@@ -3280,10 +3077,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["feed_id"], name: "index_podcasts_on_feed_id", using: :btree
+    t.index ["identity_id"], name: "index_podcasts_on_identity_id", using: :btree
   end
-
-  add_index "podcasts", ["feed_id"], name: "index_podcasts_on_feed_id", using: :btree
-  add_index "podcasts", ["identity_id"], name: "index_podcasts_on_identity_id", using: :btree
 
   create_table "poems", force: :cascade do |t|
     t.string   "poem_name",   limit: 255
@@ -3294,9 +3090,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_poems_on_identity_id", using: :btree
   end
-
-  add_index "poems", ["identity_id"], name: "index_poems_on_identity_id", using: :btree
 
   create_table "point_displays", force: :cascade do |t|
     t.boolean  "trash"
@@ -3306,9 +3101,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_point_displays_on_identity_id", using: :btree
   end
-
-  add_index "point_displays", ["identity_id"], name: "index_point_displays_on_identity_id", using: :btree
 
   create_table "problem_report_files", force: :cascade do |t|
     t.integer  "problem_report_id"
@@ -3319,11 +3113,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",        null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_file_id"], name: "index_problem_report_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_problem_report_files_on_identity_id", using: :btree
+    t.index ["problem_report_id"], name: "index_problem_report_files_on_problem_report_id", using: :btree
   end
-
-  add_index "problem_report_files", ["identity_file_id"], name: "index_problem_report_files_on_identity_file_id", using: :btree
-  add_index "problem_report_files", ["identity_id"], name: "index_problem_report_files_on_identity_id", using: :btree
-  add_index "problem_report_files", ["problem_report_id"], name: "index_problem_report_files_on_problem_report_id", using: :btree
 
   create_table "problem_reports", force: :cascade do |t|
     t.string   "report_name"
@@ -3334,9 +3127,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_problem_reports_on_identity_id", using: :btree
   end
-
-  add_index "problem_reports", ["identity_id"], name: "index_problem_reports_on_identity_id", using: :btree
 
   create_table "project_issue_files", force: :cascade do |t|
     t.integer  "project_issue_id"
@@ -3347,11 +3139,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_file_id"], name: "index_project_issue_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_project_issue_files_on_identity_id", using: :btree
+    t.index ["project_issue_id"], name: "index_project_issue_files_on_project_issue_id", using: :btree
   end
-
-  add_index "project_issue_files", ["identity_file_id"], name: "index_project_issue_files_on_identity_file_id", using: :btree
-  add_index "project_issue_files", ["identity_id"], name: "index_project_issue_files_on_identity_id", using: :btree
-  add_index "project_issue_files", ["project_issue_id"], name: "index_project_issue_files_on_project_issue_id", using: :btree
 
   create_table "project_issue_notifiers", force: :cascade do |t|
     t.integer  "contact_id"
@@ -3361,11 +3152,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["contact_id"], name: "index_project_issue_notifiers_on_contact_id", using: :btree
+    t.index ["identity_id"], name: "index_project_issue_notifiers_on_identity_id", using: :btree
+    t.index ["project_issue_id"], name: "index_project_issue_notifiers_on_project_issue_id", using: :btree
   end
-
-  add_index "project_issue_notifiers", ["contact_id"], name: "index_project_issue_notifiers_on_contact_id", using: :btree
-  add_index "project_issue_notifiers", ["identity_id"], name: "index_project_issue_notifiers_on_identity_id", using: :btree
-  add_index "project_issue_notifiers", ["project_issue_id"], name: "index_project_issue_notifiers_on_project_issue_id", using: :btree
 
   create_table "project_issues", force: :cascade do |t|
     t.integer  "project_id"
@@ -3377,10 +3167,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_project_issues_on_identity_id", using: :btree
+    t.index ["project_id"], name: "index_project_issues_on_project_id", using: :btree
   end
-
-  add_index "project_issues", ["identity_id"], name: "index_project_issues_on_identity_id", using: :btree
-  add_index "project_issues", ["project_id"], name: "index_project_issues_on_project_id", using: :btree
 
   create_table "projects", force: :cascade do |t|
     t.string   "project_name"
@@ -3394,9 +3183,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "archived"
     t.integer  "rating"
     t.boolean  "default_to_top"
+    t.index ["identity_id"], name: "index_projects_on_identity_id", using: :btree
   end
-
-  add_index "projects", ["identity_id"], name: "index_projects_on_identity_id", using: :btree
 
   create_table "promises", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -3408,9 +3196,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_promises_on_identity_id", using: :btree
   end
-
-  add_index "promises", ["identity_id"], name: "index_promises_on_identity_id", using: :btree
 
   create_table "promotions", force: :cascade do |t|
     t.string   "promotion_name",   limit: 255
@@ -3424,9 +3211,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_promotions_on_identity_id", using: :btree
   end
-
-  add_index "promotions", ["identity_id"], name: "index_promotions_on_identity_id", using: :btree
 
   create_table "quest_files", force: :cascade do |t|
     t.integer  "quest_id"
@@ -3437,11 +3223,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_file_id"], name: "index_quest_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_quest_files_on_identity_id", using: :btree
+    t.index ["quest_id"], name: "index_quest_files_on_quest_id", using: :btree
   end
-
-  add_index "quest_files", ["identity_file_id"], name: "index_quest_files_on_identity_file_id", using: :btree
-  add_index "quest_files", ["identity_id"], name: "index_quest_files_on_identity_id", using: :btree
-  add_index "quest_files", ["quest_id"], name: "index_quest_files_on_quest_id", using: :btree
 
   create_table "questions", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -3452,9 +3237,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_questions_on_identity_id", using: :btree
   end
-
-  add_index "questions", ["identity_id"], name: "index_questions_on_identity_id", using: :btree
 
   create_table "quests", force: :cascade do |t|
     t.string   "quest_title"
@@ -3465,9 +3249,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_quests_on_identity_id", using: :btree
   end
-
-  add_index "quests", ["identity_id"], name: "index_quests_on_identity_id", using: :btree
 
   create_table "receipt_files", force: :cascade do |t|
     t.integer  "receipt_id"
@@ -3478,11 +3261,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "archived"
     t.integer  "rating"
     t.integer  "position"
+    t.index ["identity_file_id"], name: "index_receipt_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_receipt_files_on_identity_id", using: :btree
+    t.index ["receipt_id"], name: "index_receipt_files_on_receipt_id", using: :btree
   end
-
-  add_index "receipt_files", ["identity_file_id"], name: "index_receipt_files_on_identity_file_id", using: :btree
-  add_index "receipt_files", ["identity_id"], name: "index_receipt_files_on_identity_id", using: :btree
-  add_index "receipt_files", ["receipt_id"], name: "index_receipt_files_on_receipt_id", using: :btree
 
   create_table "receipts", force: :cascade do |t|
     t.string   "receipt_name"
@@ -3495,9 +3277,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",                            null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_receipts_on_identity_id", using: :btree
   end
-
-  add_index "receipts", ["identity_id"], name: "index_receipts_on_identity_id", using: :btree
 
   create_table "recipe_pictures", force: :cascade do |t|
     t.integer  "recipe_id"
@@ -3507,11 +3288,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_file_id"], name: "index_recipe_pictures_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_recipe_pictures_on_identity_id", using: :btree
+    t.index ["recipe_id"], name: "index_recipe_pictures_on_recipe_id", using: :btree
   end
-
-  add_index "recipe_pictures", ["identity_file_id"], name: "index_recipe_pictures_on_identity_file_id", using: :btree
-  add_index "recipe_pictures", ["identity_id"], name: "index_recipe_pictures_on_identity_id", using: :btree
-  add_index "recipe_pictures", ["recipe_id"], name: "index_recipe_pictures_on_recipe_id", using: :btree
 
   create_table "recipes", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -3523,9 +3303,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.string   "recipe_category"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_recipes_on_identity_id", using: :btree
   end
-
-  add_index "recipes", ["identity_id"], name: "index_recipes_on_identity_id", using: :btree
 
   create_table "recreational_vehicle_insurances", force: :cascade do |t|
     t.string   "insurance_name",          limit: 255
@@ -3539,11 +3318,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["company_id"], name: "index_recreational_vehicle_insurances_on_company_id", using: :btree
+    t.index ["identity_id"], name: "index_recreational_vehicle_insurances_on_identity_id", using: :btree
+    t.index ["periodic_payment_id"], name: "index_recreational_vehicle_insurances_on_periodic_payment_id", using: :btree
   end
-
-  add_index "recreational_vehicle_insurances", ["company_id"], name: "index_recreational_vehicle_insurances_on_company_id", using: :btree
-  add_index "recreational_vehicle_insurances", ["identity_id"], name: "index_recreational_vehicle_insurances_on_identity_id", using: :btree
-  add_index "recreational_vehicle_insurances", ["periodic_payment_id"], name: "index_recreational_vehicle_insurances_on_periodic_payment_id", using: :btree
 
   create_table "recreational_vehicle_loans", force: :cascade do |t|
     t.integer  "recreational_vehicle_id"
@@ -3553,11 +3331,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_recreational_vehicle_loans_on_identity_id", using: :btree
+    t.index ["loan_id"], name: "index_recreational_vehicle_loans_on_loan_id", using: :btree
+    t.index ["recreational_vehicle_id"], name: "index_recreational_vehicle_loans_on_recreational_vehicle_id", using: :btree
   end
-
-  add_index "recreational_vehicle_loans", ["identity_id"], name: "index_recreational_vehicle_loans_on_identity_id", using: :btree
-  add_index "recreational_vehicle_loans", ["loan_id"], name: "index_recreational_vehicle_loans_on_loan_id", using: :btree
-  add_index "recreational_vehicle_loans", ["recreational_vehicle_id"], name: "index_recreational_vehicle_loans_on_recreational_vehicle_id", using: :btree
 
   create_table "recreational_vehicle_measurements", force: :cascade do |t|
     t.string   "measurement_name",        limit: 255
@@ -3572,9 +3349,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_recreational_vehicle_measurements_on_identity_id", using: :btree
   end
-
-  add_index "recreational_vehicle_measurements", ["identity_id"], name: "index_recreational_vehicle_measurements_on_identity_id", using: :btree
 
   create_table "recreational_vehicle_pictures", force: :cascade do |t|
     t.integer  "recreational_vehicle_id"
@@ -3584,11 +3360,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_file_id"], name: "index_recreational_vehicle_pictures_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_recreational_vehicle_pictures_on_identity_id", using: :btree
+    t.index ["recreational_vehicle_id"], name: "index_recreational_vehicle_pictures_on_recreational_vehicle_id", using: :btree
   end
-
-  add_index "recreational_vehicle_pictures", ["identity_file_id"], name: "index_recreational_vehicle_pictures_on_identity_file_id", using: :btree
-  add_index "recreational_vehicle_pictures", ["identity_id"], name: "index_recreational_vehicle_pictures_on_identity_id", using: :btree
-  add_index "recreational_vehicle_pictures", ["recreational_vehicle_id"], name: "index_recreational_vehicle_pictures_on_recreational_vehicle_id", using: :btree
 
   create_table "recreational_vehicle_service_files", force: :cascade do |t|
     t.integer  "recreational_vehicle_service_id"
@@ -3597,11 +3372,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "position"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.index ["identity_file_id"], name: "index_recreational_vehicle_service_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_recreational_vehicle_service_files_on_identity_id", using: :btree
+    t.index ["recreational_vehicle_service_id"], name: "index_rvservicefiles_rvserviceid", using: :btree
   end
-
-  add_index "recreational_vehicle_service_files", ["identity_file_id"], name: "index_recreational_vehicle_service_files_on_identity_file_id", using: :btree
-  add_index "recreational_vehicle_service_files", ["identity_id"], name: "index_recreational_vehicle_service_files_on_identity_id", using: :btree
-  add_index "recreational_vehicle_service_files", ["recreational_vehicle_service_id"], name: "index_rvservicefiles_rvserviceid", using: :btree
 
   create_table "recreational_vehicle_services", force: :cascade do |t|
     t.integer  "recreational_vehicle_id"
@@ -3617,10 +3391,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
+    t.index ["identity_id"], name: "index_recreational_vehicle_services_on_identity_id", using: :btree
+    t.index ["recreational_vehicle_id"], name: "index_recreational_vehicle_services_on_recreational_vehicle_id", using: :btree
   end
-
-  add_index "recreational_vehicle_services", ["identity_id"], name: "index_recreational_vehicle_services_on_identity_id", using: :btree
-  add_index "recreational_vehicle_services", ["recreational_vehicle_id"], name: "index_recreational_vehicle_services_on_recreational_vehicle_id", using: :btree
 
   create_table "recreational_vehicles", force: :cascade do |t|
     t.string   "rv_name",               limit: 255
@@ -3663,11 +3436,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_recreational_vehicles_on_identity_id", using: :btree
+    t.index ["location_purchased_id"], name: "index_recreational_vehicles_on_location_purchased_id", using: :btree
+    t.index ["vehicle_id"], name: "index_recreational_vehicles_on_vehicle_id", using: :btree
   end
-
-  add_index "recreational_vehicles", ["identity_id"], name: "index_recreational_vehicles_on_identity_id", using: :btree
-  add_index "recreational_vehicles", ["location_purchased_id"], name: "index_recreational_vehicles_on_location_purchased_id", using: :btree
-  add_index "recreational_vehicles", ["vehicle_id"], name: "index_recreational_vehicles_on_vehicle_id", using: :btree
 
   create_table "repeats", force: :cascade do |t|
     t.date     "start_date"
@@ -3678,9 +3450,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_repeats_on_identity_id", using: :btree
   end
-
-  add_index "repeats", ["identity_id"], name: "index_repeats_on_identity_id", using: :btree
 
   create_table "restaurant_pictures", force: :cascade do |t|
     t.integer  "restaurant_id"
@@ -3690,11 +3461,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_file_id"], name: "index_restaurant_pictures_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_restaurant_pictures_on_identity_id", using: :btree
+    t.index ["restaurant_id"], name: "index_restaurant_pictures_on_restaurant_id", using: :btree
   end
-
-  add_index "restaurant_pictures", ["identity_file_id"], name: "index_restaurant_pictures_on_identity_file_id", using: :btree
-  add_index "restaurant_pictures", ["identity_id"], name: "index_restaurant_pictures_on_identity_id", using: :btree
-  add_index "restaurant_pictures", ["restaurant_id"], name: "index_restaurant_pictures_on_restaurant_id", using: :btree
 
   create_table "restaurants", force: :cascade do |t|
     t.integer  "location_id"
@@ -3706,10 +3476,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.boolean  "visited"
     t.datetime "archived"
+    t.index ["identity_id"], name: "index_restaurants_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_restaurants_on_location_id", using: :btree
   end
-
-  add_index "restaurants", ["identity_id"], name: "index_restaurants_on_identity_id", using: :btree
-  add_index "restaurants", ["location_id"], name: "index_restaurants_on_location_id", using: :btree
 
   create_table "retirement_plan_amount_files", force: :cascade do |t|
     t.integer  "retirement_plan_amount_id"
@@ -3718,11 +3487,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "position"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.index ["identity_file_id"], name: "index_retirement_plan_amount_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_retirement_plan_amount_files_on_identity_id", using: :btree
+    t.index ["retirement_plan_amount_id"], name: "index_retirement_plan_amount_files_on_retirement_plan_amount_id", using: :btree
   end
-
-  add_index "retirement_plan_amount_files", ["identity_file_id"], name: "index_retirement_plan_amount_files_on_identity_file_id", using: :btree
-  add_index "retirement_plan_amount_files", ["identity_id"], name: "index_retirement_plan_amount_files_on_identity_id", using: :btree
-  add_index "retirement_plan_amount_files", ["retirement_plan_amount_id"], name: "index_retirement_plan_amount_files_on_retirement_plan_amount_id", using: :btree
 
   create_table "retirement_plan_amounts", force: :cascade do |t|
     t.integer  "retirement_plan_id"
@@ -3734,10 +3502,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "rating"
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
+    t.index ["identity_id"], name: "index_retirement_plan_amounts_on_identity_id", using: :btree
+    t.index ["retirement_plan_id"], name: "index_retirement_plan_amounts_on_retirement_plan_id", using: :btree
   end
-
-  add_index "retirement_plan_amounts", ["identity_id"], name: "index_retirement_plan_amounts_on_identity_id", using: :btree
-  add_index "retirement_plan_amounts", ["retirement_plan_id"], name: "index_retirement_plan_amounts_on_retirement_plan_id", using: :btree
 
   create_table "retirement_plans", force: :cascade do |t|
     t.string   "retirement_plan_name"
@@ -3753,12 +3520,11 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.index ["company_id"], name: "index_retirement_plans_on_company_id", using: :btree
+    t.index ["identity_id"], name: "index_retirement_plans_on_identity_id", using: :btree
+    t.index ["password_id"], name: "index_retirement_plans_on_password_id", using: :btree
+    t.index ["periodic_payment_id"], name: "index_retirement_plans_on_periodic_payment_id", using: :btree
   end
-
-  add_index "retirement_plans", ["company_id"], name: "index_retirement_plans_on_company_id", using: :btree
-  add_index "retirement_plans", ["identity_id"], name: "index_retirement_plans_on_identity_id", using: :btree
-  add_index "retirement_plans", ["password_id"], name: "index_retirement_plans_on_password_id", using: :btree
-  add_index "retirement_plans", ["periodic_payment_id"], name: "index_retirement_plans_on_periodic_payment_id", using: :btree
 
   create_table "reward_programs", force: :cascade do |t|
     t.string   "reward_program_name",   limit: 255
@@ -3775,10 +3541,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_reward_programs_on_identity_id", using: :btree
+    t.index ["password_id"], name: "index_reward_programs_on_password_id", using: :btree
   end
-
-  add_index "reward_programs", ["identity_id"], name: "index_reward_programs_on_identity_id", using: :btree
-  add_index "reward_programs", ["password_id"], name: "index_reward_programs_on_password_id", using: :btree
 
   create_table "shares", force: :cascade do |t|
     t.string   "token",         limit: 255
@@ -3789,9 +3554,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "max_use_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_shares_on_identity_id", using: :btree
   end
-
-  add_index "shares", ["identity_id"], name: "index_shares_on_identity_id", using: :btree
 
   create_table "shopping_list_items", force: :cascade do |t|
     t.integer  "identity_id"
@@ -3802,10 +3566,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_shopping_list_items_on_identity_id", using: :btree
+    t.index ["shopping_list_id"], name: "index_shopping_list_items_on_shopping_list_id", using: :btree
   end
-
-  add_index "shopping_list_items", ["identity_id"], name: "index_shopping_list_items_on_identity_id", using: :btree
-  add_index "shopping_list_items", ["shopping_list_id"], name: "index_shopping_list_items_on_shopping_list_id", using: :btree
 
   create_table "shopping_lists", force: :cascade do |t|
     t.string   "shopping_list_name", limit: 255
@@ -3815,9 +3578,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_shopping_lists_on_identity_id", using: :btree
   end
-
-  add_index "shopping_lists", ["identity_id"], name: "index_shopping_lists_on_identity_id", using: :btree
 
   create_table "site_contacts", force: :cascade do |t|
     t.string   "name"
@@ -3838,9 +3600,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_skin_treatments_on_identity_id", using: :btree
   end
-
-  add_index "skin_treatments", ["identity_id"], name: "index_skin_treatments_on_identity_id", using: :btree
 
   create_table "sleep_measurements", force: :cascade do |t|
     t.datetime "sleep_start_time"
@@ -3851,9 +3612,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_sleep_measurements_on_identity_id", using: :btree
   end
-
-  add_index "sleep_measurements", ["identity_id"], name: "index_sleep_measurements_on_identity_id", using: :btree
 
   create_table "snoozed_due_items", force: :cascade do |t|
     t.integer  "identity_id"
@@ -3868,10 +3628,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "calendar_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["calendar_id"], name: "index_snoozed_due_items_on_calendar_id", using: :btree
+    t.index ["identity_id"], name: "index_snoozed_due_items_on_identity_id", using: :btree
   end
-
-  add_index "snoozed_due_items", ["calendar_id"], name: "index_snoozed_due_items_on_calendar_id", using: :btree
-  add_index "snoozed_due_items", ["identity_id"], name: "index_snoozed_due_items_on_identity_id", using: :btree
 
   create_table "songs", force: :cascade do |t|
     t.string   "song_name",        limit: 255
@@ -3889,11 +3648,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "musical_group_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_file_id"], name: "index_songs_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_songs_on_identity_id", using: :btree
+    t.index ["musical_group_id"], name: "index_songs_on_musical_group_id", using: :btree
   end
-
-  add_index "songs", ["identity_file_id"], name: "index_songs_on_identity_file_id", using: :btree
-  add_index "songs", ["identity_id"], name: "index_songs_on_identity_id", using: :btree
-  add_index "songs", ["musical_group_id"], name: "index_songs_on_musical_group_id", using: :btree
 
   create_table "ssh_keys", force: :cascade do |t|
     t.string   "ssh_key_name"
@@ -3907,11 +3665,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "ssh_private_key_encrypted_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_ssh_keys_on_identity_id", using: :btree
+    t.index ["password_id"], name: "index_ssh_keys_on_password_id", using: :btree
+    t.index ["ssh_private_key_encrypted_id"], name: "index_ssh_keys_on_ssh_private_key_encrypted_id", using: :btree
   end
-
-  add_index "ssh_keys", ["identity_id"], name: "index_ssh_keys_on_identity_id", using: :btree
-  add_index "ssh_keys", ["password_id"], name: "index_ssh_keys_on_password_id", using: :btree
-  add_index "ssh_keys", ["ssh_private_key_encrypted_id"], name: "index_ssh_keys_on_ssh_private_key_encrypted_id", using: :btree
 
   create_table "statuses", force: :cascade do |t|
     t.datetime "status_time"
@@ -3926,9 +3683,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.string   "status3",           limit: 255
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_statuses_on_identity_id", using: :btree
   end
-
-  add_index "statuses", ["identity_id"], name: "index_statuses_on_identity_id", using: :btree
 
   create_table "stocks", force: :cascade do |t|
     t.integer  "company_id"
@@ -3942,11 +3698,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["company_id"], name: "index_stocks_on_company_id", using: :btree
+    t.index ["identity_id"], name: "index_stocks_on_identity_id", using: :btree
+    t.index ["password_id"], name: "index_stocks_on_password_id", using: :btree
   end
-
-  add_index "stocks", ["company_id"], name: "index_stocks_on_company_id", using: :btree
-  add_index "stocks", ["identity_id"], name: "index_stocks_on_identity_id", using: :btree
-  add_index "stocks", ["password_id"], name: "index_stocks_on_password_id", using: :btree
 
   create_table "stories", force: :cascade do |t|
     t.string   "story_name"
@@ -3958,9 +3713,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_stories_on_identity_id", using: :btree
   end
-
-  add_index "stories", ["identity_id"], name: "index_stories_on_identity_id", using: :btree
 
   create_table "story_pictures", force: :cascade do |t|
     t.integer  "story_id"
@@ -3970,11 +3724,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_file_id"], name: "index_story_pictures_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_story_pictures_on_identity_id", using: :btree
+    t.index ["story_id"], name: "index_story_pictures_on_story_id", using: :btree
   end
-
-  add_index "story_pictures", ["identity_file_id"], name: "index_story_pictures_on_identity_file_id", using: :btree
-  add_index "story_pictures", ["identity_id"], name: "index_story_pictures_on_identity_id", using: :btree
-  add_index "story_pictures", ["story_id"], name: "index_story_pictures_on_story_id", using: :btree
 
   create_table "sun_exposures", force: :cascade do |t|
     t.datetime "exposure_start"
@@ -3988,9 +3741,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_sun_exposures_on_identity_id", using: :btree
   end
-
-  add_index "sun_exposures", ["identity_id"], name: "index_sun_exposures_on_identity_id", using: :btree
 
   create_table "temperatures", force: :cascade do |t|
     t.datetime "measured"
@@ -4003,9 +3755,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_temperatures_on_identity_id", using: :btree
   end
-
-  add_index "temperatures", ["identity_id"], name: "index_temperatures_on_identity_id", using: :btree
 
   create_table "text_message_contacts", force: :cascade do |t|
     t.integer  "text_message_id"
@@ -4015,11 +3766,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",      null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["contact_id"], name: "index_text_message_contacts_on_contact_id", using: :btree
+    t.index ["identity_id"], name: "index_text_message_contacts_on_identity_id", using: :btree
+    t.index ["text_message_id"], name: "index_text_message_contacts_on_text_message_id", using: :btree
   end
-
-  add_index "text_message_contacts", ["contact_id"], name: "index_text_message_contacts_on_contact_id", using: :btree
-  add_index "text_message_contacts", ["identity_id"], name: "index_text_message_contacts_on_identity_id", using: :btree
-  add_index "text_message_contacts", ["text_message_id"], name: "index_text_message_contacts_on_text_message_id", using: :btree
 
   create_table "text_message_groups", force: :cascade do |t|
     t.integer  "text_message_id"
@@ -4029,11 +3779,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",      null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["group_id"], name: "index_text_message_groups_on_group_id", using: :btree
+    t.index ["identity_id"], name: "index_text_message_groups_on_identity_id", using: :btree
+    t.index ["text_message_id"], name: "index_text_message_groups_on_text_message_id", using: :btree
   end
-
-  add_index "text_message_groups", ["group_id"], name: "index_text_message_groups_on_group_id", using: :btree
-  add_index "text_message_groups", ["identity_id"], name: "index_text_message_groups_on_identity_id", using: :btree
-  add_index "text_message_groups", ["text_message_id"], name: "index_text_message_groups_on_text_message_id", using: :btree
 
   create_table "text_message_unsubscriptions", force: :cascade do |t|
     t.string   "phone_number"
@@ -4041,9 +3790,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.index ["identity_id"], name: "index_text_message_unsubscriptions_on_identity_id", using: :btree
   end
-
-  add_index "text_message_unsubscriptions", ["identity_id"], name: "index_text_message_unsubscriptions_on_identity_id", using: :btree
 
   create_table "text_messages", force: :cascade do |t|
     t.text     "body"
@@ -4057,9 +3805,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_text_messages_on_identity_id", using: :btree
   end
-
-  add_index "text_messages", ["identity_id"], name: "index_text_messages_on_identity_id", using: :btree
 
   create_table "therapists", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -4071,10 +3818,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["contact_id"], name: "index_therapists_on_contact_id", using: :btree
+    t.index ["identity_id"], name: "index_therapists_on_identity_id", using: :btree
   end
-
-  add_index "therapists", ["contact_id"], name: "index_therapists_on_contact_id", using: :btree
-  add_index "therapists", ["identity_id"], name: "index_therapists_on_identity_id", using: :btree
 
   create_table "timing_events", force: :cascade do |t|
     t.integer  "timing_id"
@@ -4087,10 +3833,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",         null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_timing_events_on_identity_id", using: :btree
+    t.index ["timing_id"], name: "index_timing_events_on_timing_id", using: :btree
   end
-
-  add_index "timing_events", ["identity_id"], name: "index_timing_events_on_identity_id", using: :btree
-  add_index "timing_events", ["timing_id"], name: "index_timing_events_on_timing_id", using: :btree
 
   create_table "timings", force: :cascade do |t|
     t.string   "timing_name"
@@ -4101,9 +3846,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_timings_on_identity_id", using: :btree
   end
-
-  add_index "timings", ["identity_id"], name: "index_timings_on_identity_id", using: :btree
 
   create_table "to_dos", force: :cascade do |t|
     t.string   "short_description", limit: 255
@@ -4115,9 +3859,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "due_time"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_to_dos_on_identity_id", using: :btree
   end
-
-  add_index "to_dos", ["identity_id"], name: "index_to_dos_on_identity_id", using: :btree
 
   create_table "trek_pictures", force: :cascade do |t|
     t.integer  "trek_id"
@@ -4127,11 +3870,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_file_id"], name: "index_trek_pictures_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_trek_pictures_on_identity_id", using: :btree
+    t.index ["trek_id"], name: "index_trek_pictures_on_trek_id", using: :btree
   end
-
-  add_index "trek_pictures", ["identity_file_id"], name: "index_trek_pictures_on_identity_file_id", using: :btree
-  add_index "trek_pictures", ["identity_id"], name: "index_trek_pictures_on_identity_id", using: :btree
-  add_index "trek_pictures", ["trek_id"], name: "index_trek_pictures_on_trek_id", using: :btree
 
   create_table "treks", force: :cascade do |t|
     t.integer  "location_id"
@@ -4142,10 +3884,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.datetime "archived"
+    t.index ["identity_id"], name: "index_treks_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_treks_on_location_id", using: :btree
   end
-
-  add_index "treks", ["identity_id"], name: "index_treks_on_identity_id", using: :btree
-  add_index "treks", ["location_id"], name: "index_treks_on_location_id", using: :btree
 
   create_table "trip_flights", force: :cascade do |t|
     t.integer  "trip_id"
@@ -4155,11 +3896,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["flight_id"], name: "index_trip_flights_on_flight_id", using: :btree
+    t.index ["identity_id"], name: "index_trip_flights_on_identity_id", using: :btree
+    t.index ["trip_id"], name: "index_trip_flights_on_trip_id", using: :btree
   end
-
-  add_index "trip_flights", ["flight_id"], name: "index_trip_flights_on_flight_id", using: :btree
-  add_index "trip_flights", ["identity_id"], name: "index_trip_flights_on_identity_id", using: :btree
-  add_index "trip_flights", ["trip_id"], name: "index_trip_flights_on_trip_id", using: :btree
 
   create_table "trip_pictures", force: :cascade do |t|
     t.integer  "identity_id"
@@ -4170,11 +3910,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "position"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_file_id"], name: "index_trip_pictures_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_trip_pictures_on_identity_id", using: :btree
+    t.index ["trip_id"], name: "index_trip_pictures_on_trip_id", using: :btree
   end
-
-  add_index "trip_pictures", ["identity_file_id"], name: "index_trip_pictures_on_identity_file_id", using: :btree
-  add_index "trip_pictures", ["identity_id"], name: "index_trip_pictures_on_identity_id", using: :btree
-  add_index "trip_pictures", ["trip_id"], name: "index_trip_pictures_on_trip_id", using: :btree
 
   create_table "trip_stories", force: :cascade do |t|
     t.integer  "trip_id"
@@ -4184,11 +3923,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_trip_stories_on_identity_id", using: :btree
+    t.index ["story_id"], name: "index_trip_stories_on_story_id", using: :btree
+    t.index ["trip_id"], name: "index_trip_stories_on_trip_id", using: :btree
   end
-
-  add_index "trip_stories", ["identity_id"], name: "index_trip_stories_on_identity_id", using: :btree
-  add_index "trip_stories", ["story_id"], name: "index_trip_stories_on_story_id", using: :btree
-  add_index "trip_stories", ["trip_id"], name: "index_trip_stories_on_trip_id", using: :btree
 
   create_table "trips", force: :cascade do |t|
     t.integer  "location_id"
@@ -4207,12 +3945,11 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "archived"
     t.integer  "rating"
     t.string   "trip_name"
+    t.index ["hotel_id"], name: "index_trips_on_hotel_id", using: :btree
+    t.index ["identity_file_id"], name: "index_trips_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_trips_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_trips_on_location_id", using: :btree
   end
-
-  add_index "trips", ["hotel_id"], name: "index_trips_on_hotel_id", using: :btree
-  add_index "trips", ["identity_file_id"], name: "index_trips_on_identity_file_id", using: :btree
-  add_index "trips", ["identity_id"], name: "index_trips_on_identity_id", using: :btree
-  add_index "trips", ["location_id"], name: "index_trips_on_location_id", using: :btree
 
   create_table "tv_shows", force: :cascade do |t|
     t.string   "tv_show_name"
@@ -4227,10 +3964,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",     null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_tv_shows_on_identity_id", using: :btree
+    t.index ["recommender_id"], name: "index_tv_shows_on_recommender_id", using: :btree
   end
-
-  add_index "tv_shows", ["identity_id"], name: "index_tv_shows_on_identity_id", using: :btree
-  add_index "tv_shows", ["recommender_id"], name: "index_tv_shows_on_recommender_id", using: :btree
 
   create_table "us_zip_codes", force: :cascade do |t|
     t.string   "zip_code"
@@ -4284,12 +4020,11 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "most_visited_items"
     t.boolean  "minimize_password_checks"
     t.integer  "suppressions"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
   end
-
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
   create_table "vaccine_files", force: :cascade do |t|
     t.integer  "vaccine_id"
@@ -4298,11 +4033,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "position"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.index ["identity_file_id"], name: "index_vaccine_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_vaccine_files_on_identity_id", using: :btree
+    t.index ["vaccine_id"], name: "index_vaccine_files_on_vaccine_id", using: :btree
   end
-
-  add_index "vaccine_files", ["identity_file_id"], name: "index_vaccine_files_on_identity_file_id", using: :btree
-  add_index "vaccine_files", ["identity_id"], name: "index_vaccine_files_on_identity_id", using: :btree
-  add_index "vaccine_files", ["vaccine_id"], name: "index_vaccine_files_on_vaccine_id", using: :btree
 
   create_table "vaccines", force: :cascade do |t|
     t.string   "vaccine_name"
@@ -4314,9 +4048,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.index ["identity_id"], name: "index_vaccines_on_identity_id", using: :btree
   end
-
-  add_index "vaccines", ["identity_id"], name: "index_vaccines_on_identity_id", using: :btree
 
   create_table "vehicle_insurances", force: :cascade do |t|
     t.string   "insurance_name",      limit: 255
@@ -4330,12 +4063,11 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["company_id"], name: "index_vehicle_insurances_on_company_id", using: :btree
+    t.index ["identity_id"], name: "index_vehicle_insurances_on_identity_id", using: :btree
+    t.index ["periodic_payment_id"], name: "index_vehicle_insurances_on_periodic_payment_id", using: :btree
+    t.index ["vehicle_id"], name: "index_vehicle_insurances_on_vehicle_id", using: :btree
   end
-
-  add_index "vehicle_insurances", ["company_id"], name: "index_vehicle_insurances_on_company_id", using: :btree
-  add_index "vehicle_insurances", ["identity_id"], name: "index_vehicle_insurances_on_identity_id", using: :btree
-  add_index "vehicle_insurances", ["periodic_payment_id"], name: "index_vehicle_insurances_on_periodic_payment_id", using: :btree
-  add_index "vehicle_insurances", ["vehicle_id"], name: "index_vehicle_insurances_on_vehicle_id", using: :btree
 
   create_table "vehicle_loans", force: :cascade do |t|
     t.integer  "vehicle_id"
@@ -4345,10 +4077,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_vehicle_loans_on_identity_id", using: :btree
+    t.index ["vehicle_id"], name: "index_vehicle_loans_on_vehicle_id", using: :btree
   end
-
-  add_index "vehicle_loans", ["identity_id"], name: "index_vehicle_loans_on_identity_id", using: :btree
-  add_index "vehicle_loans", ["vehicle_id"], name: "index_vehicle_loans_on_vehicle_id", using: :btree
 
   create_table "vehicle_pictures", force: :cascade do |t|
     t.integer  "vehicle_id"
@@ -4358,11 +4089,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_file_id"], name: "index_vehicle_pictures_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_vehicle_pictures_on_identity_id", using: :btree
+    t.index ["vehicle_id"], name: "index_vehicle_pictures_on_vehicle_id", using: :btree
   end
-
-  add_index "vehicle_pictures", ["identity_file_id"], name: "index_vehicle_pictures_on_identity_file_id", using: :btree
-  add_index "vehicle_pictures", ["identity_id"], name: "index_vehicle_pictures_on_identity_id", using: :btree
-  add_index "vehicle_pictures", ["vehicle_id"], name: "index_vehicle_pictures_on_vehicle_id", using: :btree
 
   create_table "vehicle_service_files", force: :cascade do |t|
     t.integer  "vehicle_service_id"
@@ -4371,11 +4101,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "position"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.index ["identity_file_id"], name: "index_vehicle_service_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_vehicle_service_files_on_identity_id", using: :btree
+    t.index ["vehicle_service_id"], name: "index_vehicle_service_files_on_vehicle_service_id", using: :btree
   end
-
-  add_index "vehicle_service_files", ["identity_file_id"], name: "index_vehicle_service_files_on_identity_file_id", using: :btree
-  add_index "vehicle_service_files", ["identity_id"], name: "index_vehicle_service_files_on_identity_id", using: :btree
-  add_index "vehicle_service_files", ["vehicle_service_id"], name: "index_vehicle_service_files_on_vehicle_service_id", using: :btree
 
   create_table "vehicle_services", force: :cascade do |t|
     t.integer  "vehicle_id"
@@ -4391,10 +4120,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "identity_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_vehicle_services_on_identity_id", using: :btree
+    t.index ["vehicle_id"], name: "index_vehicle_services_on_vehicle_id", using: :btree
   end
-
-  add_index "vehicle_services", ["identity_id"], name: "index_vehicle_services_on_identity_id", using: :btree
-  add_index "vehicle_services", ["vehicle_id"], name: "index_vehicle_services_on_vehicle_id", using: :btree
 
   create_table "vehicle_warranties", force: :cascade do |t|
     t.integer  "identity_id"
@@ -4404,11 +4132,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_vehicle_warranties_on_identity_id", using: :btree
+    t.index ["vehicle_id"], name: "index_vehicle_warranties_on_vehicle_id", using: :btree
+    t.index ["warranty_id"], name: "index_vehicle_warranties_on_warranty_id", using: :btree
   end
-
-  add_index "vehicle_warranties", ["identity_id"], name: "index_vehicle_warranties_on_identity_id", using: :btree
-  add_index "vehicle_warranties", ["vehicle_id"], name: "index_vehicle_warranties_on_vehicle_id", using: :btree
-  add_index "vehicle_warranties", ["warranty_id"], name: "index_vehicle_warranties_on_warranty_id", using: :btree
 
   create_table "vehicles", force: :cascade do |t|
     t.string   "name",                     limit: 255
@@ -4473,9 +4200,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_vehicles_on_identity_id", using: :btree
   end
-
-  add_index "vehicles", ["identity_id"], name: "index_vehicles_on_identity_id", using: :btree
 
   create_table "vitamin_ingredients", force: :cascade do |t|
     t.integer  "identity_id"
@@ -4485,11 +4211,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_vitamin_ingredients_on_identity_id", using: :btree
+    t.index ["parent_vitamin_id"], name: "index_vitamin_ingredients_on_parent_vitamin_id", using: :btree
+    t.index ["vitamin_id"], name: "index_vitamin_ingredients_on_vitamin_id", using: :btree
   end
-
-  add_index "vitamin_ingredients", ["identity_id"], name: "index_vitamin_ingredients_on_identity_id", using: :btree
-  add_index "vitamin_ingredients", ["parent_vitamin_id"], name: "index_vitamin_ingredients_on_parent_vitamin_id", using: :btree
-  add_index "vitamin_ingredients", ["vitamin_id"], name: "index_vitamin_ingredients_on_vitamin_id", using: :btree
 
   create_table "vitamins", force: :cascade do |t|
     t.integer  "identity_id"
@@ -4502,9 +4227,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_vitamins_on_identity_id", using: :btree
   end
-
-  add_index "vitamins", ["identity_id"], name: "index_vitamins_on_identity_id", using: :btree
 
   create_table "volunteering_activities", force: :cascade do |t|
     t.string   "volunteering_activity_name"
@@ -4515,9 +4239,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",                 null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_volunteering_activities_on_identity_id", using: :btree
   end
-
-  add_index "volunteering_activities", ["identity_id"], name: "index_volunteering_activities_on_identity_id", using: :btree
 
   create_table "warranties", force: :cascade do |t|
     t.string   "warranty_name",      limit: 255
@@ -4531,9 +4254,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_warranties_on_identity_id", using: :btree
   end
-
-  add_index "warranties", ["identity_id"], name: "index_warranties_on_identity_id", using: :btree
 
   create_table "web_comics", force: :cascade do |t|
     t.string   "web_comic_name"
@@ -4545,11 +4267,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",     null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["feed_id"], name: "index_web_comics_on_feed_id", using: :btree
+    t.index ["identity_id"], name: "index_web_comics_on_identity_id", using: :btree
+    t.index ["website_id"], name: "index_web_comics_on_website_id", using: :btree
   end
-
-  add_index "web_comics", ["feed_id"], name: "index_web_comics_on_feed_id", using: :btree
-  add_index "web_comics", ["identity_id"], name: "index_web_comics_on_identity_id", using: :btree
-  add_index "web_comics", ["website_id"], name: "index_web_comics_on_website_id", using: :btree
 
   create_table "website_domain_registrations", force: :cascade do |t|
     t.integer  "website_domain_id"
@@ -4560,12 +4281,11 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",          null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_website_domain_registrations_on_identity_id", using: :btree
+    t.index ["periodic_payment_id"], name: "index_website_domain_registrations_on_periodic_payment_id", using: :btree
+    t.index ["repeat_id"], name: "index_website_domain_registrations_on_repeat_id", using: :btree
+    t.index ["website_domain_id"], name: "index_website_domain_registrations_on_website_domain_id", using: :btree
   end
-
-  add_index "website_domain_registrations", ["identity_id"], name: "index_website_domain_registrations_on_identity_id", using: :btree
-  add_index "website_domain_registrations", ["periodic_payment_id"], name: "index_website_domain_registrations_on_periodic_payment_id", using: :btree
-  add_index "website_domain_registrations", ["repeat_id"], name: "index_website_domain_registrations_on_repeat_id", using: :btree
-  add_index "website_domain_registrations", ["website_domain_id"], name: "index_website_domain_registrations_on_website_domain_id", using: :btree
 
   create_table "website_domain_ssh_keys", force: :cascade do |t|
     t.integer  "website_domain_id"
@@ -4576,11 +4296,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",        null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_website_domain_ssh_keys_on_identity_id", using: :btree
+    t.index ["ssh_key_id"], name: "index_website_domain_ssh_keys_on_ssh_key_id", using: :btree
+    t.index ["website_domain_id"], name: "index_website_domain_ssh_keys_on_website_domain_id", using: :btree
   end
-
-  add_index "website_domain_ssh_keys", ["identity_id"], name: "index_website_domain_ssh_keys_on_identity_id", using: :btree
-  add_index "website_domain_ssh_keys", ["ssh_key_id"], name: "index_website_domain_ssh_keys_on_ssh_key_id", using: :btree
-  add_index "website_domain_ssh_keys", ["website_domain_id"], name: "index_website_domain_ssh_keys_on_website_domain_id", using: :btree
 
   create_table "website_domains", force: :cascade do |t|
     t.string   "domain_name"
@@ -4593,11 +4312,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",     null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["domain_host_id"], name: "index_website_domains_on_domain_host_id", using: :btree
+    t.index ["identity_id"], name: "index_website_domains_on_identity_id", using: :btree
+    t.index ["website_id"], name: "index_website_domains_on_website_id", using: :btree
   end
-
-  add_index "website_domains", ["domain_host_id"], name: "index_website_domains_on_domain_host_id", using: :btree
-  add_index "website_domains", ["identity_id"], name: "index_website_domains_on_identity_id", using: :btree
-  add_index "website_domains", ["website_id"], name: "index_website_domains_on_website_id", using: :btree
 
   create_table "website_list_items", force: :cascade do |t|
     t.integer  "website_list_id"
@@ -4608,11 +4326,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",      null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_website_list_items_on_identity_id", using: :btree
+    t.index ["website_id"], name: "index_website_list_items_on_website_id", using: :btree
+    t.index ["website_list_id"], name: "index_website_list_items_on_website_list_id", using: :btree
   end
-
-  add_index "website_list_items", ["identity_id"], name: "index_website_list_items_on_identity_id", using: :btree
-  add_index "website_list_items", ["website_id"], name: "index_website_list_items_on_website_id", using: :btree
-  add_index "website_list_items", ["website_list_id"], name: "index_website_list_items_on_website_list_id", using: :btree
 
   create_table "website_lists", force: :cascade do |t|
     t.string   "website_list_name"
@@ -4625,9 +4342,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "iframe_height"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_website_lists_on_identity_id", using: :btree
   end
-
-  add_index "website_lists", ["identity_id"], name: "index_website_lists_on_identity_id", using: :btree
 
   create_table "website_passwords", force: :cascade do |t|
     t.integer  "website_id"
@@ -4637,11 +4353,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_website_passwords_on_identity_id", using: :btree
+    t.index ["password_id"], name: "index_website_passwords_on_password_id", using: :btree
+    t.index ["website_id"], name: "index_website_passwords_on_website_id", using: :btree
   end
-
-  add_index "website_passwords", ["identity_id"], name: "index_website_passwords_on_identity_id", using: :btree
-  add_index "website_passwords", ["password_id"], name: "index_website_passwords_on_password_id", using: :btree
-  add_index "website_passwords", ["website_id"], name: "index_website_passwords_on_website_id", using: :btree
 
   create_table "websites", force: :cascade do |t|
     t.string   "title",            limit: 255
@@ -4656,10 +4371,9 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.string   "website_category"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_websites_on_identity_id", using: :btree
+    t.index ["recommender_id"], name: "index_websites_on_recommender_id", using: :btree
   end
-
-  add_index "websites", ["identity_id"], name: "index_websites_on_identity_id", using: :btree
-  add_index "websites", ["recommender_id"], name: "index_websites_on_recommender_id", using: :btree
 
   create_table "weights", force: :cascade do |t|
     t.decimal  "amount",                   precision: 10, scale: 2
@@ -4672,9 +4386,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_weights_on_identity_id", using: :btree
   end
-
-  add_index "weights", ["identity_id"], name: "index_weights_on_identity_id", using: :btree
 
   create_table "wisdom_files", force: :cascade do |t|
     t.integer  "wisdom_id"
@@ -4685,11 +4398,10 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_file_id"], name: "index_wisdom_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_wisdom_files_on_identity_id", using: :btree
+    t.index ["wisdom_id"], name: "index_wisdom_files_on_wisdom_id", using: :btree
   end
-
-  add_index "wisdom_files", ["identity_file_id"], name: "index_wisdom_files_on_identity_file_id", using: :btree
-  add_index "wisdom_files", ["identity_id"], name: "index_wisdom_files_on_identity_id", using: :btree
-  add_index "wisdom_files", ["wisdom_id"], name: "index_wisdom_files_on_wisdom_id", using: :btree
 
   create_table "wisdoms", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -4700,9 +4412,8 @@ ActiveRecord::Schema.define(version: 20161206053629) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.index ["identity_id"], name: "index_wisdoms_on_identity_id", using: :btree
   end
-
-  add_index "wisdoms", ["identity_id"], name: "index_wisdoms_on_identity_id", using: :btree
 
   add_foreign_key "accomplishments", "identities", name: "accomplishments_identity_id_fk"
   add_foreign_key "acne_measurement_pictures", "acne_measurements", name: "acne_measurement_pictures_acne_measurement_id_fk"

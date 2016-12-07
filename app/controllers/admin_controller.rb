@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
 
-  skip_before_filter :do_authenticate_user
+  skip_before_action :do_authenticate_user
   skip_authorization_check
 
   before_action :check_admin_key

@@ -6,15 +6,15 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   # By default, all pages require authentication unless the controller has
-  #   skip_before_filter :do_authenticate_user
+  #   skip_before_action :do_authenticate_user
   #before_action :authenticate_user!
   before_action :do_authenticate_user
   
-  around_filter :around_request
+  around_action :around_request
   
   #after_filter do puts "Response: " + response.body end
   
-  before_filter :set_time_zone
+  before_action :set_time_zone
   
   check_authorization
   

@@ -83,7 +83,7 @@ class Feed < ActiveRecord::Base
         end
       end
       if new_items > 0
-        ActiveRecord::Base.connection.update_sql(
+        ActiveRecord::Base.connection.update(
           "update feeds set total_items = total_items + #{new_items}, unread_items = unread_items + #{new_items} where id = #{self.id}"
         )
       end
@@ -100,7 +100,7 @@ class Feed < ActiveRecord::Base
         unread_items += 1
       end
     end
-    ActiveRecord::Base.connection.update_sql(
+    ActiveRecord::Base.connection.update(
       "update feeds set total_items = #{total_items}, unread_items = #{unread_items} where id = #{self.id}"
     )
   end

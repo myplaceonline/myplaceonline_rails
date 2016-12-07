@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 require 'rails/all'
 
@@ -93,8 +93,6 @@ module Myplaceonline
     FileUtils.mkdir_p(config.tmpdir)
     FileUtils.mkdir_p(config.filetmpdir)
 
-    config.active_record.raise_in_transactional_callbacks = true
-    
     config.active_job.queue_adapter = :delayed_job
     
     # http://ruby-doc.org/core-2.2.0/Time.html#method-i-strftime

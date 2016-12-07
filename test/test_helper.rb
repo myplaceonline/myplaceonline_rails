@@ -62,7 +62,7 @@ module MyplaceonlineControllerTest
     attrs = test_attributes
     if attrs.length > 0
       assert_difference(model.name + '.count') do
-        post :create, model.model_name.singular.downcase => attrs.merge({ identity_id: @user.primary_identity_id })
+        post :create, params: { model.model_name.singular.downcase => attrs.merge({ identity_id: @user.primary_identity_id }) }
       end
 
       assert_redirected_to send(model.model_name.singular.downcase + "_path", assigns(:obj))
@@ -70,19 +70,19 @@ module MyplaceonlineControllerTest
   end
 
   test "should show" do
-    get :show, id: send(model.table_name, model.model_name.singular.downcase)
+    get :show, params: { id: send(model.table_name, model.model_name.singular.downcase) }
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: send(model.table_name, model.model_name.singular.downcase)
+    get :edit, params: { id: send(model.table_name, model.model_name.singular.downcase) }
     assert_response :success
   end
 
   test "should update" do
     attrs = test_attributes
     if attrs.length > 0
-      patch :update, id: send(model.table_name, model.model_name.singular.downcase), model.model_name.singular.downcase => test_attributes
+      patch :update, params: { id: send(model.table_name, model.model_name.singular.downcase), model.model_name.singular.downcase => test_attributes }
       assert_redirected_to send(model.model_name.singular.downcase + "_path", assigns(:obj))
     end
   end
@@ -92,7 +92,7 @@ module MyplaceonlineControllerTest
     # so need to figure that out
     if do_test_delete
       assert_difference(model.name + '.count', -1) do
-        delete :destroy, id: send(model.table_name, model.model_name.singular.downcase)
+        delete :destroy, params: { id: send(model.table_name, model.model_name.singular.downcase) }
       end
 
       assert_redirected_to send(model.table_name + "_path")

@@ -1,7 +1,7 @@
 require "awesome_print"
 
 class InfoController < ApplicationController
-  skip_before_filter :do_authenticate_user
+  skip_before_action :do_authenticate_user
   skip_authorization_check
   
   def index; end

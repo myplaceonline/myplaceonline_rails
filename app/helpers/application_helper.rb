@@ -1054,12 +1054,13 @@ module ApplicationHelper
     c.params = params
     # TODO before_actions are not called (process_action is protected and
     # calling it through a public wrapper doesn't work)
-    c.dispatch(action, request)
-    if c.response.response_code == 302
+    r = controller.make_response!(request)
+    c.dispatch(action, request, r)
+    if r.response_code == 302
       # Assume password required redirect
       raise Myp::DecryptionKeyUnavailableError
     end
-    c.response.body
+    r.body
   end
   
   def extract_id(html)

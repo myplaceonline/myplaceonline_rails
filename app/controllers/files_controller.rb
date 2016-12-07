@@ -1,6 +1,6 @@
 class FilesController < MyplaceonlineController
   #skip_authorization_check :only => [:download, :view, :thumbnail]
-  #skip_before_filter :do_authenticate_user, :only => [:download, :view, :thumbnail]
+  #skip_before_action :do_authenticate_user, :only => [:download, :view, :thumbnail]
 
   def path_name
     "file"

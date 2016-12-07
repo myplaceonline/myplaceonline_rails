@@ -16,13 +16,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
   # before_filter :configure_sign_up_params, only: [:create]
   # before_filter :configure_account_update_params, only: [:update]
-  prepend_before_filter :authenticate_scope!, only: [
+  prepend_before_action :authenticate_scope!, only: [
     :edit, :update, :destroy, :changepassword, :changeemail, :resetpoints,
     :advanced, :deletecategory, :security, :export, :appearance, :clipboard,
     :homepage, :diagnostics, :notifications
   ]
   
-  before_filter :configure_permitted_parameters
+  before_action :configure_permitted_parameters
   
   def new
     @agree_terms = params[:agree_terms]

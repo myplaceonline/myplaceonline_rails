@@ -276,7 +276,7 @@ module Myp
   
   def self.database_exists?
     begin
-      ActiveRecord::Base.connection.table_exists?(Category.table_name)
+      ActiveRecord::Base.connection.data_source_exists?(Category.table_name)
     rescue ActiveRecord::NoDatabaseError
       false
     end
@@ -488,7 +488,11 @@ module Myp
       @id = id
       @parent_id = parent_id
       @filtertext = filtertext
-      @icon = ActionController::Base.helpers.asset_path(icon, type: :image)
+      if !icon.nil?
+        @icon = ActionController::Base.helpers.asset_path(icon, type: :image)
+      else
+        @icon = nil
+      end
       @splitLink = splitLink
       @splitLinkTitle = splitLinkTitle
       @splitLinkButton = splitLinkButton
@@ -700,7 +704,7 @@ module Myp
       # will fire commit hooks which for Identity will re-do calendar
       # entries
       #user.primary_identity.save
-      ActiveRecord::Base.connection.update_sql("update identities set points = #{user.primary_identity.points} where id = #{user.primary_identity.id}")
+      ActiveRecord::Base.connection.update("update identities set points = #{user.primary_identity.points} where id = #{user.primary_identity.id}")
       
       category = Myp.categories(user)[categoryName]
       if category.nil?
@@ -2039,7 +2043,7 @@ module Myp
     Rails.application.eager_load!
     ActiveRecord::Base.descendants.each do |klass|
       next unless klass.ancestors.include?(ActiveRecord::Base)
-      if klass.include?(MyplaceonlineActiveRecordIdentityConcern) && (!check_database || ActiveRecord::Base.connection.table_exists?(klass.table_name))
+      if klass.include?(MyplaceonlineActiveRecordIdentityConcern) && (!check_database || ActiveRecord::Base.connection.data_source_exists?(klass.table_name))
         count += 1
       end
     end
@@ -2050,7 +2054,7 @@ module Myp
     Rails.application.eager_load!
     ActiveRecord::Base.descendants.each do |klass|
       next unless klass.ancestors.include?(ActiveRecord::Base)
-      if klass.include?(MyplaceonlineActiveRecordIdentityConcern) && (!check_database || ActiveRecord::Base.connection.table_exists?(klass.table_name))
+      if klass.include?(MyplaceonlineActiveRecordIdentityConcern) && (!check_database || ActiveRecord::Base.connection.data_source_exists?(klass.table_name))
         block.call(klass)
       end
     end
