@@ -7,6 +7,7 @@ require 'log4r/yamlconfigurator'
 require 'log4r/outputter/datefileoutputter'
 require 'fileutils'
 require './lib/execution_context'
+require './lib/myplaceonline_execution_context'
 include Log4r
 
 # Require the gems listed in Gemfile, including any gems
