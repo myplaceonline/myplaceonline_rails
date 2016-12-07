@@ -6,8 +6,6 @@ require 'log4r'
 require 'log4r/yamlconfigurator'
 require 'log4r/outputter/datefileoutputter'
 require 'fileutils'
-require './lib/execution_context'
-require './lib/myplaceonline_execution_context'
 include Log4r
 
 # Require the gems listed in Gemfile, including any gems
@@ -83,7 +81,7 @@ module Myplaceonline
       I18n.reload!
     end
 
-    config.autoload_paths += %W(#{config.root}/lib)
+    config.eager_load_paths += %W(#{config.root}/lib)
 
     #config.tmpdir = ENV["TMPDIR"].blank? ? Dir.tmpdir : ENV["TMPDIR"]
     config.tmpdir = Rails.root.join("tmp", "myp").to_s
