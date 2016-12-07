@@ -81,7 +81,9 @@ module Myplaceonline
       I18n.reload!
     end
 
-    config.eager_load_paths += %W(#{config.root}/lib)
+    # https://github.com/rails/rails/issues/13142
+    # http://stackoverflow.com/a/40019108/5657303
+    #config.eager_load_paths += %W(#{config.root}/lib)
 
     #config.tmpdir = ENV["TMPDIR"].blank? ? Dir.tmpdir : ENV["TMPDIR"]
     config.tmpdir = Rails.root.join("tmp", "myp").to_s
