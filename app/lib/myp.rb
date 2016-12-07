@@ -2040,10 +2040,8 @@ module Myp
 
   def self.models_count(check_database: true)
     count = 0
-    Rails.application.eager_load!
-    ActiveRecord::Base.descendants.each do |klass|
-      next unless klass.ancestors.include?(ActiveRecord::Base)
-      if klass.include?(MyplaceonlineActiveRecordIdentityConcern) && (!check_database || ActiveRecord::Base.connection.data_source_exists?(klass.table_name))
+    Dir.new(Rails.root.join("app", "models").to_s).each do |model_path|
+      if model_path.end_with?(".rb")
         count += 1
       end
     end
@@ -2056,6 +2054,14 @@ module Myp
       next unless klass.ancestors.include?(ActiveRecord::Base)
       if klass.include?(MyplaceonlineActiveRecordIdentityConcern) && (!check_database || ActiveRecord::Base.connection.data_source_exists?(klass.table_name))
         block.call(klass)
+      end
+    end
+  end
+  
+  def self.process_model_names(&block)
+    Dir.new(Rails.root.join("app", "models").to_s).each do |model_path|
+      if model_path.end_with?(".rb")
+        block.call(model_path[0..model_path.length-4])
       end
     end
   end

@@ -384,7 +384,7 @@ Rails.application.routes.draw do
     ]
   }
 
-  overriden = []
+  overriden = [:users]
 
   Rails.logger.debug{"Started processing all models"}
 
@@ -395,9 +395,9 @@ Rails.application.routes.draw do
   count = 0
   processed = {}
   
-  Myp.process_models(check_database: false) do |klass|
-    klass_table_name = klass.table_name
-    if overriden.index(klass_table_name.to_sym).nil?
+  Myp.process_model_names do |model_name|
+    table_name = model_name.pluralize
+    if overriden.index(table_name.to_sym).nil?
       if Rails.env.development?
         count += 1
         p = (count.to_f / models_count) * 100.0
@@ -406,7 +406,7 @@ Rails.application.routes.draw do
           Rails.logger.debug{"routes.rb: Processing models: #{p.to_i}%"}
         end
       end
-      process_resources(klass_table_name, additions[klass_table_name.to_sym])
+      process_resources(table_name, additions[table_name.to_sym])
     end
   end
   
