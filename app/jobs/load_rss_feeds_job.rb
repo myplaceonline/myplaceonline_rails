@@ -2,7 +2,7 @@ class LoadRssFeedsJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
-    Rails.logger.debug{"Started LoadRssFeedsJob"}
+    Rails.logger.info{"Started LoadRssFeedsJob"}
 
     user = args[0]
     
@@ -40,6 +40,6 @@ class LoadRssFeedsJob < ApplicationJob
       Myp.warn("LoadRssFeedsJob could not lock (#{Myp::DB_LOCK_LOAD_RSS_FEEDS}, #{user.id})")
     end
 
-    Rails.logger.debug{"Finished LoadRssFeedsJob"}
+    Rails.logger.info{"Finished LoadRssFeedsJob"}
   end
 end
