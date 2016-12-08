@@ -124,6 +124,15 @@ class ExecutionContext
     self.count > 0
   end
 
+  def self.stack(&block)
+    ExecutionContext.push
+    begin
+      block.call
+    ensure
+      ExecutionContext.pop
+    end
+  end
+
   def [](name)
     @map[name]
   end

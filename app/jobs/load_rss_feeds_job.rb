@@ -5,12 +5,9 @@ class LoadRssFeedsJob < ApplicationJob
     Rails.logger.debug{"Started LoadRssFeedsJob"}
 
     user = args[0]
-
-    got_lock = false
-    begin
-      ExecutionContext.push
-      got_lock = Myp.database_advisory_lock(Myp::DB_LOCK_LOAD_RSS_FEEDS, user.id)
-      if got_lock
+    
+    executed = Myp.try_with_database_advisory_lock(Myp::DB_LOCK_LOAD_RSS_FEEDS, user.id) do
+      ExecutionContext.stack do
         User.current_user = user
         
         status = FeedLoadStatus.where(identity_id: user.primary_identity_id).first
@@ -36,15 +33,13 @@ class LoadRssFeedsJob < ApplicationJob
             status.save!
           end
         end
-      else
-        Rails.logger.info("ensure_pending failed lock")
-      end
-    ensure
-      ExecutionContext.pop
-      if got_lock
-        Myp.database_advisory_unlock(Myp::DB_LOCK_LOAD_RSS_FEEDS, user.id)
       end
     end
+    
+    if !executed
+      Myp.warn("LoadRssFeedsJob could not lock (#{Myp::DB_LOCK_LOAD_RSS_FEEDS}, #{user.id})")
+    end
+
     Rails.logger.debug{"Finished LoadRssFeedsJob"}
   end
 end

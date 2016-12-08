@@ -1589,20 +1589,28 @@ module Myp
   DB_LOCK_CALENDAR_ITEM_REMINDERS = 2
   DB_LOCK_LOAD_RSS_FEEDS = 3
   
-  def self.database_advisory_lock(key1, key2)
-    if ActiveRecord::Base.connection.instance_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
-      ActiveRecord::Base.connection.select_value("select pg_try_advisory_lock(#{key1}, #{key2})") == "t"
-    else
-      true
-    end
-  end
+  def self.try_with_database_advisory_lock(key1, key2, &block)
+    lock_successful = true
+      
+    ActiveRecord::Base.transaction do
+      
+      if ActiveRecord::Base.connection.instance_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
+        lock_successful = ActiveRecord::Base.connection.select_value("select pg_try_advisory_xact_lock(#{key1}, #{key2})")
+        Rails.logger.debug{"try_with_database_advisory_lock locked (#{key1}, #{key2}), result: #{lock_successful}"}
+      else
+        raise "Not implemented"
+      end
 
-  def self.database_advisory_unlock(key1, key2)
-    if ActiveRecord::Base.connection.instance_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
-      ActiveRecord::Base.connection.execute("select pg_advisory_unlock(#{key1}, #{key2})")
-    else
-      true
+      if lock_successful
+        block.call
+      end
+      
+      # No unlock necessary because of the "xact" above
     end
+    
+    Rails.logger.debug{"try_with_database_advisory_lock unlocked (#{key1}, #{key2}), result: #{lock_successful}"}
+
+    lock_successful
   end
 
   def self.combine_conditionally(a1, condition, &a2)

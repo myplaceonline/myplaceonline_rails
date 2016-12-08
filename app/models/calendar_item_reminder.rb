@@ -16,27 +16,23 @@ class CalendarItemReminder < ActiveRecord::Base
   
   def self.ensure_pending_all_users()
     Rails.logger.info("CalendarItemReminder.ensure_pending_all_users start")
-    got_lock = false
-    begin
-      got_lock = Myp.database_advisory_lock(Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS_ALL, 1)
-      if got_lock
-        User.all.each do |user|
-          begin
-            ExecutionContext.push
-            User.current_user = user
-            self.ensure_pending(user)
-          ensure
-            ExecutionContext.pop
-          end
+
+    executed = Myp.try_with_database_advisory_lock(Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS_ALL, 1) do
+      User.all.each do |user|
+        begin
+          ExecutionContext.push
+          User.current_user = user
+          self.ensure_pending(user)
+        ensure
+          ExecutionContext.pop
         end
-      else
-        Rails.logger.info("ensure_pending_all_users failed lock")
-      end
-    ensure
-      if got_lock
-        Myp.database_advisory_unlock(Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS_ALL, 1)
       end
     end
+    
+    if !executed
+      Rails.logger.info("ensure_pending_all_users could not lock (#{Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS_ALL}, 1)")
+    end
+
     Rails.logger.info("ensure_pending_all_users end")
   end
   
@@ -274,18 +270,12 @@ class CalendarItemReminder < ActiveRecord::Base
     
     Rails.logger.debug("ensure_pending start #{user.id}")
 
-    got_lock = false
-    begin
-      got_lock = Myp.database_advisory_lock(Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS, user.id)
-      if got_lock
-        ensure_pending_process(user)
-      else
-        Rails.logger.info("ensure_pending failed lock")
-      end
-    ensure
-      if got_lock
-        Myp.database_advisory_unlock(Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS, user.id)
-      end
+    executed = Myp.try_with_database_advisory_lock(Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS, user.id) do
+      ensure_pending_process(user)
+    end
+
+    if !executed
+      Myp.warn("ensure_pending could not lock (#{Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS}, #{user.id})")
     end
 
     Rails.logger.debug("ensure_pending end")
