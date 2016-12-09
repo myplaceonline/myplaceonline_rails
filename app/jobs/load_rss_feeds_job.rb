@@ -35,10 +35,9 @@ class LoadRssFeedsJob < ApplicationJob
             begin
               Chewy.strategy(:urgent) do
                 new_items = temp_feed.load_feed
+                Rails.logger.info{"Loaded items: #{new_items}"}
               end
               
-              Rails.logger.info{"Loaded items: #{new_items}"}
-            
               status.items_complete += 1
             rescue Exception => e
               Rails.logger.info{"Error loading feed: #{Myp.error_details(e)}"}
