@@ -62,7 +62,7 @@ class Status < ActiveRecord::Base
     end
   end
   
-  def self.reset_calendar_reminder(after_expiration: false)
+  def self.reset_calendar_reminder(after_expiration: false, initial: false)
     
     CalendarItem.destroy_calendar_items(
       User.current_user.primary_identity,
@@ -76,7 +76,13 @@ class Status < ActiveRecord::Base
       end
       new_time = User.current_user.in_time_zone(new_time.to_date, end_of_day: true) + 1.second
       new_time -= (calendar.status_threshold_seconds || DEFAULT_STATUS_THRESHOLD_SECONDS).seconds
+      if initial
+        # We make the reminder for yesterday so that it shows up on the first page load
+        new_time -= 1.days
+      end
       
+      Rails.logger.debug{"Creating status reminder for #{new_time}"}
+
       CalendarItem.create_calendar_item(
         identity: User.current_user.primary_identity,
         calendar: calendar,
@@ -94,7 +100,9 @@ class Status < ActiveRecord::Base
   end
   
   def self.create_first_status
-    Status.reset_calendar_reminder(after_expiration: true)
+    Rails.logger.debug{"Creating initial status"}
+    Status.reset_calendar_reminder(after_expiration: true, initial: true)
+    CalendarItemReminder.ensure_pending(User.current_user)
   end
   
   def show_highly_visited?

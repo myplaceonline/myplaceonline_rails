@@ -8,7 +8,7 @@ class Calendar < ActiveRecord::Base
   has_many :calendar_items, :dependent => :destroy
   
   def display
-    I18n.t("myplaceonline.calendars.calendar")
+    I18n.t("myplaceonline.calendars.calendar") + " #{self.id}"
   end
 
   timespan_field :general_threshold

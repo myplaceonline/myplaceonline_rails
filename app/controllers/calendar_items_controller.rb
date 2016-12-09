@@ -20,17 +20,17 @@ class CalendarItemsController < MyplaceonlineController
   end
 
   def footer_items_index
-    super + [
+    [
       {
         title: I18n.t('myplaceonline.calendar_items.calendar'),
         link: calendar_path(@parent),
         icon: "back"
       }
-    ]
+    ] + super
   end
   
   def footer_items_show
-    super + [
+    [
       {
         title: I18n.t('myplaceonline.calendar_items.calendar'),
         link: calendar_path(@obj.calendar),
@@ -41,7 +41,7 @@ class CalendarItemsController < MyplaceonlineController
         link: calendar_calendar_item_calendar_item_reminders_path(@obj.calendar, @obj),
         icon: "grid"
       }
-    ]
+    ] + super
   end
   
   protected
@@ -69,6 +69,6 @@ class CalendarItemsController < MyplaceonlineController
     
     def get_default_offset
       t = User.current_user.time_now + 1.weeks
-      all.order(sorts).index{|calendar_item| calendar_item.calendar_item_time.nil? ? -1 : t >= calendar_item.calendar_item_time }
+      all.order(sorts).to_a.index{|calendar_item| calendar_item.calendar_item_time.nil? ? -1 : t >= calendar_item.calendar_item_time }
     end
 end

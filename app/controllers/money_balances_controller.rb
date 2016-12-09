@@ -115,7 +115,7 @@ class MoneyBalancesController < MyplaceonlineController
   end
 
   def do_update_before_save
-    i = @obj.money_balance_items.index{|mbi| mbi.new_record?}
+    i = @obj.money_balance_items.to_a.index{|mbi| mbi.new_record?}
     if !i.nil?
       @new_item = @obj.money_balance_items[i]
     end

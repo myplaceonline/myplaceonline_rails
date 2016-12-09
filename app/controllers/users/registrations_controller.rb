@@ -56,12 +56,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
             #set_flash_message :notice, :signed_up if is_flashing_format?
             sign_up(resource_name, resource)
             #respond_with resource, location: after_sign_up_path_for(resource)
-            redirect_to after_sign_up_path_for(resource)
+            redirect_to after_sign_up_path_for(resource),
+              :flash => { :notice => I18n.t("myplaceonline.users.welcome") }
           else
             set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_flashing_format?
             expire_data_after_sign_in!
             #respond_with resource, location: after_inactive_sign_up_path_for(resource)
-            redirect_to after_inactive_sign_up_path_for(resource)
+            redirect_to after_inactive_sign_up_path_for(resource),
+              :flash => { :notice => I18n.t("myplaceonline.users.welcome") }
           end
         else
           clean_up_passwords resource
@@ -326,19 +328,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
             parent_identity: current_user.primary_identity
           )
         else
-          identity_phone = current_user.primary_identity.identity_phones[current_user.primary_identity.identity_phones.index{|x| x.number == @original_mobile}]
+          identity_phone = current_user.primary_identity.identity_phones[current_user.primary_identity.identity_phones.to_a.index{|x| x.number == @original_mobile}]
           identity_phone.number = @mobile
         end
       else
         if !@original_mobile.blank?
-          identity_phone = current_user.primary_identity.identity_phones[current_user.primary_identity.identity_phones.index{|x| x.number == @original_mobile}]
+          identity_phone = current_user.primary_identity.identity_phones[current_user.primary_identity.identity_phones.to_a.index{|x| x.number == @original_mobile}]
           current_user.primary_identity.identity_phones.delete(identity_phone)
         end
       end
       current_user.primary_identity.save!
       current_user.save!
       redirect_to(
-        users_notifications_path,
+        params[:from_homepage].blank? ? users_notifications_path : root_path,
         :flash => { :notice => I18n.t("myplaceonline.users.notifications_saved") }
       )
     else

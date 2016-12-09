@@ -39,13 +39,13 @@ class CalendarsController < MyplaceonlineController
   end
   
   def footer_items_show
-    super + [
+    [
       {
         title: I18n.t('myplaceonline.calendars.calendar_items'),
         link: calendar_calendar_items_path(@obj),
         icon: "bars"
       }
-    ]
+    ] + super
   end
   
   protected

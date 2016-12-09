@@ -1747,7 +1747,7 @@ module Myp
         end
         search_result = search_result.final_search_result
       end
-      Rails.logger.debug{"search_result: #{search_result}"}
+      Rails.logger.debug{"search_result: #{search_result.inspect}"}
       might_be_archived = search_result.respond_to?("archived")
       if !might_be_archived || (might_be_archived && search_result.archived.nil?)
         category = Myp.instance_to_category(search_result, false)
@@ -1809,7 +1809,7 @@ module Myp
     results
   end
   
-  def self.highly_visited(user, limit: 10)
+  def self.highly_visited(user, limit: 10, min_visit_count: 5)
 
     Rails.logger.debug{"highly_visited"}
     
@@ -1841,11 +1841,15 @@ module Myp
     end
     
     search_results.delete_if{|x| x.respond_to?("show_highly_visited?") && !x.show_highly_visited? }
-    
+
+    Rails.logger.debug{"highly_visited before processing: #{search_results.inspect}"}
+
     results = Myp.process_search_results(search_results)
     
-    Rails.logger.debug{"highly_visited results: #{results.length}"}
+    Rails.logger.debug{"highly_visited results: #{results.inspect}"}
 
+    results.delete_if{|x| !x.respond_to?("visit_count") || (x.respond_to?("visit_count") && (x.visit_count.nil? || x.visit_count <= min_visit_count)) }
+    
     Myp.log_response_time(context: "ElasticSearch (highly_visited)", start_time: start_time)
 
     results

@@ -192,7 +192,7 @@ class Trip < ActiveRecord::Base
     # that Gmail classifies the email as a promotion
     link_images = false
     trip_pictures.each do |trip_picture|
-      if !permission_share.permission_share_children.index{|psc| psc.subject_id == trip_picture.identity_file.id}.nil?
+      if !permission_share.permission_share_children.to_a.index{|psc| psc.subject_id == trip_picture.identity_file.id}.nil?
         result += "\n<hr />\n  <p>"
         if link_images
           result += ActionController::Base.helpers.link_to file_view_name_url(
@@ -243,7 +243,7 @@ class Trip < ActiveRecord::Base
     if trip_pictures.count > 0
       result += "Pictures:\n=========\n"
       trip_pictures.each do |trip_picture|
-        if !permission_share.permission_share_children.index{|psc| psc.subject_id == trip_picture.identity_file.id}.nil?
+        if !permission_share.permission_share_children.to_a.index{|psc| psc.subject_id == trip_picture.identity_file.id}.nil?
           result += "* " + file_thumbnail_name_url(
             trip_picture.identity_file, trip_picture.identity_file.urlname, token: permission_share.share.token
           ) + "\n"

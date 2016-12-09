@@ -26,4 +26,8 @@ class CalendarItemReminderPending < ActiveRecord::Base
     end
     items
   end
+
+  def display
+    I18n.t("myplaceonline.calendar_item_reminder_pendings.display")
+  end
 end

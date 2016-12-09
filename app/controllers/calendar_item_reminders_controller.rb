@@ -24,17 +24,17 @@ class CalendarItemRemindersController < MyplaceonlineController
   end
     
   def footer_items_index
-    super + [
+    [
       {
         title: I18n.t("myplaceonline.calendar_item_reminders.calendar_item"),
         link: calendar_calendar_item_path(@parent.calendar, @parent),
         icon: "back"
       }
-    ]
+    ] + super
   end
   
   def footer_items_show
-    super + [
+    [
       {
         title: I18n.t("myplaceonline.calendar_item_reminders.calendar_item"),
         link: calendar_calendar_item_path(@obj.calendar_item.calendar, @obj.calendar_item),
@@ -45,7 +45,7 @@ class CalendarItemRemindersController < MyplaceonlineController
         link: calendar_calendar_item_calendar_item_reminder_calendar_item_reminder_pendings_path(@obj.calendar_item.calendar, @obj.calendar_item, @obj),
         icon: "grid"
       }
-    ]
+    ] + super
   end
   
   protected

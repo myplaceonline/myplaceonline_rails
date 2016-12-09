@@ -61,9 +61,13 @@ class User < ActiveRecord::Base
 
   # User loaded from database
   after_initialize do |user|
+    Rails.logger.debug{"User after_initialize #{user.id}"}
+
     # If user.id is nil, then it's an anonymous user
     if !user.id.nil? && primary_identity.nil?
 
+      Rails.logger.debug{"Creating identity"}
+      
       ExecutionContext.root_or_push[:user] = user
       
       # No primary identity, so we create a default one. We can also do
@@ -79,10 +83,16 @@ class User < ActiveRecord::Base
         user.primary_identity = @identity
         user.save!
         
+        Rails.logger.debug{"Creating contact"}
+        
         user.primary_identity.ensure_contact!
+        
+        Rails.logger.debug{"Creating myplets"}
         
         # Create default myplets
         Myplet.default_myplets(@identity)
+        
+        Rails.logger.debug{"Creating first status reminder"}
         
         Status.create_first_status
       end
