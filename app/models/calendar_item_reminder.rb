@@ -275,7 +275,7 @@ class CalendarItemReminder < ActiveRecord::Base
     end
 
     if !executed
-      Myp.warn("ensure_pending could not lock (#{Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS}, #{user.id})")
+      Rails.logger.info("ensure_pending could not lock (#{Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS}, #{user.id})")
     end
 
     Rails.logger.debug("ensure_pending end")

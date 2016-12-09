@@ -1842,15 +1842,18 @@ module Myp
     
     search_results.delete_if{|x| x.respond_to?("show_highly_visited?") && !x.show_highly_visited? }
 
+    search_results.delete_if{|x| !x.respond_to?("visit_count") || (x.respond_to?("visit_count") && (x.visit_count.nil? || x.visit_count <= min_visit_count)) }
+    
     Rails.logger.debug{"highly_visited before processing: #{search_results.inspect}"}
 
+    # This returns a list of list item row objects
     results = Myp.process_search_results(search_results)
     
     Rails.logger.debug{"highly_visited results: #{results.inspect}"}
 
-    results.delete_if{|x| !x.respond_to?("visit_count") || (x.respond_to?("visit_count") && (x.visit_count.nil? || x.visit_count <= min_visit_count)) }
-    
     Myp.log_response_time(context: "ElasticSearch (highly_visited)", start_time: start_time)
+
+    Rails.logger.debug{"highly_visited final results: #{results.inspect}"}
 
     results
   end
