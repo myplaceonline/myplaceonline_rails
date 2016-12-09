@@ -111,7 +111,15 @@ class Feed < ActiveRecord::Base
   
   def self.load_all(all_count)
     status = FeedLoadStatus.where(identity_id: User.current_user.primary_identity_id).first
-    if status.nil?
+    do_reload = status.nil?
+    if !do_reload
+      # If the status is more than 30 minutes old, there was probably an error
+      if Time.now - 30.minutes >= status.updated_at
+        do_reload = true
+        Myp.warn("Found old feed load status for identity #{User.current_user.primary_identity_id}")
+      end
+    end
+    if do_reload
       FeedLoadStatus.create(
         identity_id: User.current_user.primary_identity_id,
         items_complete: 0,
