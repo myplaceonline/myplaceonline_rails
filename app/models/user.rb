@@ -61,12 +61,10 @@ class User < ActiveRecord::Base
 
   # User loaded from database
   after_initialize do |user|
-    Rails.logger.debug{"User after_initialize #{user.id}"}
-
     # If user.id is nil, then it's an anonymous user
     if !user.id.nil? && primary_identity.nil?
 
-      Rails.logger.debug{"Creating identity"}
+      Rails.logger.debug{"Creating identity for #{user.id}"}
       
       ExecutionContext.root_or_push[:user] = user
       

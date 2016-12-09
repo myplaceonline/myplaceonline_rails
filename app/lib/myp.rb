@@ -1596,19 +1596,21 @@ module Myp
       
       if ActiveRecord::Base.connection.instance_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
         lock_successful = ActiveRecord::Base.connection.select_value("select pg_try_advisory_xact_lock(#{key1}, #{key2})")
-        Rails.logger.info{"try_with_database_advisory_lock locked (#{key1}, #{key2}), result: #{lock_successful}"}
+        Rails.logger.debug{"try_with_database_advisory_lock locked (#{key1}, #{key2}), result: #{lock_successful}"}
       else
         raise "Not implemented"
       end
 
       if lock_successful
         block.call
+      else
+        Rails.logger.info{"try_with_database_advisory_lock failed to lock (#{key1}, #{key2})"}
       end
       
       # No unlock necessary because of the "xact" above
     end
     
-    Rails.logger.info{"try_with_database_advisory_lock unlocked (#{key1}, #{key2}), result: #{lock_successful}"}
+    Rails.logger.debug{"try_with_database_advisory_lock unlocked (#{key1}, #{key2}), result: #{lock_successful}"}
 
     lock_successful
   end
