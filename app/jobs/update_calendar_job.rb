@@ -2,15 +2,14 @@ class UpdateCalendarJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
-    Rails.logger.debug{"Started UpdateCalendarJob"}
-    user = args[0]
-    begin
-      ExecutionContext.push
-      User.current_user = user
-      CalendarItemReminder.ensure_pending(user)
-    ensure
-      ExecutionContext.pop
+    Chewy.strategy(:atomic) do
+      Rails.logger.debug{"Started UpdateCalendarJob"}
+      user = args[0]
+      ExecutionContext.stack do
+        User.current_user = user
+        CalendarItemReminder.ensure_pending(user)
+      end
+      Rails.logger.debug{"Finished UpdateCalendarJob"}
     end
-    Rails.logger.debug{"Finished UpdateCalendarJob"}
   end
 end
