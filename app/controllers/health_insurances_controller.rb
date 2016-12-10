@@ -43,4 +43,8 @@ class HealthInsurancesController < MyplaceonlineController
         HealthInsurancesController.param_names
       )
     end
+
+    def sensitive
+      true
+    end
 end

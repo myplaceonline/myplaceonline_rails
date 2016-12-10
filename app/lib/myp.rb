@@ -1758,7 +1758,7 @@ module Myp
           if I18n.exists?("myplaceonline.category." + temp_cat_name)
             category = Category.new(name: temp_cat_name)
           else
-            Myp.warn("full_text_search found result but not category (perhaps use final_search_result?): #{search_result}")
+            Myp.warn("full_text_search found result but not category (perhaps use final_search_result?): #{search_result}; search: #{original_search}, user: #{User.current_user.primary_identity_id}")
           end
         end
         if !category.nil?
