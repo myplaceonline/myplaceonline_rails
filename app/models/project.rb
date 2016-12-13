@@ -25,4 +25,16 @@ class Project < ActiveRecord::Base
       end
     end
   end
+  
+  def action_link
+    Rails.application.routes.url_helpers.send("new_project_project_issue_path", self)
+  end
+  
+  def action_link_title
+    I18n.t("myplaceonline.projects.project_issue_add")
+  end
+  
+  def action_link_icon
+    "plus"
+  end
 end

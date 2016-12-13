@@ -35,12 +35,12 @@ class ProjectsController < MyplaceonlineController
   def footer_items_show
     [
       {
-        title: I18n.t('myplaceonline.projects.project_issue_add'),
+        title: I18n.t("myplaceonline.projects.project_issue_add"),
         link: new_project_project_issue_path(@obj),
         icon: "plus"
       },
       {
-        title: I18n.t('myplaceonline.projects.project_issues'),
+        title: I18n.t("myplaceonline.projects.project_issues"),
         link: project_project_issues_path(@obj),
         icon: "bars"
       }
