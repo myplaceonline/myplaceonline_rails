@@ -6,10 +6,6 @@ class PasswordsController < MyplaceonlineController
   
   skip_authorization_check :only => [:index, :new, :create, :import, :importodf]
   
-  def show_share
-    false
-  end
-  
   def import
   end
   
@@ -200,7 +196,11 @@ class PasswordsController < MyplaceonlineController
     attributes.dup.delete_if {|key, value| key.to_s == "encrypt" || key.to_s == "is_archived" }.all? {|key, value| value.blank?}
   end
   
-  def share
+  def show_share
+    false
+  end
+  
+  def password_share
     set_obj
     
     if request.patch? || request.post?
@@ -237,7 +237,7 @@ class PasswordsController < MyplaceonlineController
           user_id: @password_share.user.id
         )
         
-        url = Rails.application.routes.url_helpers.send("password_shares_transfer_url", @password_share.id, Rails.configuration.default_url_options)
+        url = Rails.application.routes.url_helpers.send("password_share_transfer_url", @password_share.id, Rails.configuration.default_url_options)
         
         share_details = I18n.t(
           "myplaceonline.passwords.share_details",
@@ -263,7 +263,7 @@ class PasswordsController < MyplaceonlineController
                     }
       end
     else
-      render :share
+      render :password_share
     end
   end
 
@@ -274,7 +274,7 @@ class PasswordsController < MyplaceonlineController
   def footer_items_index
     super + [
       {
-        title: I18n.t('myplaceonline.general.import'),
+        title: I18n.t("myplaceonline.general.import"),
         link: passwords_import_path,
         icon: "bars"
       }
@@ -285,7 +285,7 @@ class PasswordsController < MyplaceonlineController
     super + [
       {
         title: I18n.t("myplaceonline.general.share"),
-        link: password_share_password_path(@obj),
+        link: password_password_share_path(@obj),
         icon: "action"
       }
     ]

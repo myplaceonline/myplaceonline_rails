@@ -295,7 +295,7 @@ Rails.application.routes.draw do
       { instance: true, link: "transfer" }
     ],
     passwords: [
-      { instance: true, link: "share_password" },
+      { instance: true, link: "password_share" },
       { instance: false, link: "import" },
     ],
     periodic_payments: [

@@ -76,7 +76,7 @@ class ApplicationController < ActionController::Base
       # only do this once per request
       if MyplaceonlineExecutionContext.user.nil?
         request_accessor = instance_variable_get(:@_request)
-        Rails.logger.debug{"Setting User.current_user: #{current_user.inspect}"}
+        Rails.logger.debug{"Setting User.current_user: #{current_user.nil? ? "nil" : current_user.id}"}
         MyplaceonlineExecutionContext.user = current_user
         MyplaceonlineExecutionContext.session = request_accessor.session
         if !current_user.nil?
