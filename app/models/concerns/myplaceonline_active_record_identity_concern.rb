@@ -20,7 +20,10 @@ module MyplaceonlineActiveRecordIdentityConcern
           identity_target = Permission.current_target_identity
           if !self.identity_id.nil?
             if self.identity_id != identity_target.id
-              raise "Unauthorized"
+              # TODO could there be a privilege escalation here by always using action: show?
+              if !Ability.authorize(identity: identity_target, subject: self, action: :show)
+                raise "Unauthorized"
+              end
             end
           elsif identity_target.nil?
             if self.id == 0

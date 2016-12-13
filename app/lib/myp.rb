@@ -1180,7 +1180,7 @@ module Myp
     end
   end
   
-  def self.set_existing_object(targetobj, targetname, model, id)
+  def self.set_existing_object(targetobj, targetname, model, id, action: :edit)
     if model.nil?
       model = Object.const_get(targetname.to_s.camelize)
     end
@@ -1189,6 +1189,12 @@ module Myp
         id: id,
         identity: Permission.current_target_identity
       )
+      if obj.nil?
+        authorization_object = model.find(id)
+        if Ability.authorize(identity: Permission.current_target_identity, subject: authorization_object, action: action)
+          obj = authorization_object
+        end
+      end
     else
       obj = model.find(id)
     end

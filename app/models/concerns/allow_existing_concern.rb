@@ -17,7 +17,7 @@ module AllowExistingConcern extend ActiveSupport::Concern
             # particular object and not creating a new one.
             attributes.keep_if {|innerkey, innervalue| innerkey == "id" }
             
-            Myp.set_existing_object(self, name, model, attributes['id'].to_i)
+            Myp.set_existing_object(self, name, model, attributes['id'].to_i, action: :show)
           end
           super(attributes)
         end
