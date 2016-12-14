@@ -21,6 +21,8 @@ module Myp
   POSSIBILITIES_SPECIAL = ['_', '-', '!']
   POSSIBILITIES_SPECIAL_ADDITIONAL = ['@', '$', '#', '%', '^', '&', '*', '(', ')', '[', ']', '+', '<', '>', '?', '/', ':', ';', ',', '=', '|', '{', '}', '~']
   
+  COOKIE_EXPIRATION = 1.year
+  
   DEFAULT_DECIMAL_STEP = "0.01"
   
   WEIGHTS = [
