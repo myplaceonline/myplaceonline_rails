@@ -3,7 +3,7 @@ class AdminController < ApplicationController
   skip_before_action :do_authenticate_user
   skip_authorization_check
 
-  before_action :check_admin_key
+  before_action :check_authorization
   
   def test
     render json: {
@@ -18,7 +18,8 @@ class AdminController < ApplicationController
     }
   end
   
-  def check_admin_key
+  def check_authorization
+    Rails.logger.info{"AdminController check_authorization IP: #{request.remote_ip}"}
     if Rails.env.production?
       if ENV["SECRET_KEY_BASE"] != params[:password]
         raise CanCan::AccessDenied.new("Not authorized")
