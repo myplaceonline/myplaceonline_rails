@@ -20,7 +20,9 @@ class AdminController < ApplicationController
   
   def check_authorization
     Rails.logger.info{"AdminController check_authorization IP: #{request.remote_ip}"}
-    if Rails.env.production? && Myp.trusted_client_ips.index(request.remote_ip).nil?
+    if ExecutionContext.available? && !User.current_user.nil? && User.current_user.admin?
+      # Logged in admin, so we're good
+    elsif Rails.env.production? && Myp.trusted_client_ips.index(request.remote_ip).nil?
       raise CanCan::AccessDenied.new("Not authorized")
     end
   end

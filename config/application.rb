@@ -55,7 +55,7 @@ module Myplaceonline
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     
-    puts "Starting @ #{Time.now.to_s} from #{Dir.pwd.to_s} by #{ENV['USER']}"
+    puts "Starting PID #{Process.pid} @ #{Time.now.to_s} from #{Dir.pwd.to_s} by #{ENV['USER']}"
     
     begin
       log4r_config = YAML.load_file(File.join(File.dirname(__FILE__), "log4r.yml"))
