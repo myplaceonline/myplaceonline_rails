@@ -55,13 +55,19 @@ module Myplaceonline
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     
-    puts "Starting PID #{Process.pid} @ #{Time.now.to_s} from #{Dir.pwd.to_s} by #{ENV['USER']}"
+    if ENV['USER'].blank?
+      username = "nouser"
+    else
+      username = ENV['USER']
+    end
+    
+    puts "Starting PID #{Process.pid} @ #{Time.now.to_s} from #{Dir.pwd.to_s} by #{username}"
     
     begin
       log4r_config = YAML.load_file(File.join(File.dirname(__FILE__), "log4r.yml"))
       log4r_config['log4r_config']['outputters'].each do |outputter|
         if outputter['filename']
-          outputter['filename'] = outputter['filename'].gsub("%u", ENV['USER'])
+          outputter['filename'] = outputter['filename'].gsub("%u", username)
           if Rails.env.production?
             # may need to know for perms, etc
             puts "Changing configuration of log4r outputter to " + File.absolute_path(Dir.new(outputter["dirname"])) + "/" + outputter['filename']
