@@ -1614,7 +1614,7 @@ module Myp
   def self.try_with_database_advisory_lock(key1, key2, &block)
     lock_successful = true
       
-    ActiveRecord::Base.transaction do
+    ActiveRecord::Base.transaction(requires_new: true) do
       
       if ActiveRecord::Base.connection.instance_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
         lock_successful = ActiveRecord::Base.connection.select_value("select pg_try_advisory_xact_lock(#{key1}, #{key2})")
