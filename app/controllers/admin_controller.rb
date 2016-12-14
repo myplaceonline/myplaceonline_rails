@@ -20,10 +20,8 @@ class AdminController < ApplicationController
   
   def check_authorization
     Rails.logger.info{"AdminController check_authorization IP: #{request.remote_ip}"}
-    if Rails.env.production?
-      if ENV["SECRET_KEY_BASE"] != params[:password]
-        raise CanCan::AccessDenied.new("Not authorized")
-      end
+    if Rails.env.production? && Myp.trusted_client_ips.index(request.remote_ip).nil?
+      raise CanCan::AccessDenied.new("Not authorized")
     end
   end
   

@@ -284,7 +284,7 @@ module Myp
     end
   end
   
-  puts "myplaceonline: myp.rb static initialization started"
+  Rails.logger.info{"myplaceonline: myp.rb static initialization started"}
   
   def self.initialize_categories
     if Myp.database_exists?
@@ -312,7 +312,7 @@ module Myp
           @@all_categories_without_explicit_without_experimental.delete(existing_category.name.to_sym)
         end
       end
-      puts "myplaceonline: #{@@all_categories.count} categories cached"
+      Rails.logger.info{"Categories cached: #{@@all_categories.count}"}
       #puts "myplaceonline: Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
     end
   end
@@ -320,9 +320,20 @@ module Myp
   initialize_categories
   
   if !ENV["FTS_TARGET"].blank?
-    puts "Configuring full text search with #{ENV["FTS_TARGET"]}"
+    Rails.logger.info{"Configuring full text search with #{ENV["FTS_TARGET"]}"}
     Chewy.root_strategy = :active_job
     Chewy.settings = {host: ENV["FTS_TARGET"]}
+  end
+  
+  if !ENV["TRUSTED_CLIENTS"].blank?
+    @@trusted_client_ips = ENV["TRUSTED_CLIENTS"].split(";").map{|trusted_client| Socket.getaddrinfo(trusted_client, nil)[0][2] }
+  else
+    @@trusted_client_ips = []
+  end
+  Rails.logger.info{"Trusted client IPs: #{@@trusted_client_ips}"}
+  
+  def self.trusted_client_ips
+    @@trusted_client_ips
   end
 
   def self.categories(user = nil)
@@ -2106,5 +2117,5 @@ module Myp
     diff > 0 && diff <= 1.days
   end
 
-  puts "myplaceonline: myp.rb static initialization ended"
+  Rails.logger.info{"myplaceonline: myp.rb static initialization ended"}
 end
