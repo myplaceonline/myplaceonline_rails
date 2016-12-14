@@ -286,6 +286,8 @@ module Myp
   
   Rails.logger.info{"myplaceonline: myp.rb static initialization started"}
   
+  Rails.logger.info{"Process pid: #{Process.pid}, ppid: #{Process.ppid}, uid: #{Process.uid}, gid: #{Process.gid}, argv: #{ARGV}"}
+  
   def self.initialize_categories
     if Myp.database_exists?
       
@@ -326,11 +328,12 @@ module Myp
   end
   
   if !ENV["TRUSTED_CLIENTS"].blank?
-    @@trusted_client_ips = ENV["TRUSTED_CLIENTS"].split(";").map{|trusted_client| Socket.getaddrinfo(trusted_client, nil)[0][2] }
+    @@trusted_client_ips = ENV["TRUSTED_CLIENTS"].split(";").map{|trusted_client| Socket.getaddrinfo(trusted_client, nil, :INET)[0][2] }
+    Rails.logger.info{"Trusted client IPs: #{@@trusted_client_ips} from #{ENV["TRUSTED_CLIENTS"].split(";")}"}
   else
     @@trusted_client_ips = []
+    Rails.logger.info{"No trusted client IPs"}
   end
-  Rails.logger.info{"Trusted client IPs: #{@@trusted_client_ips}"}
   
   def self.trusted_client_ips
     @@trusted_client_ips
