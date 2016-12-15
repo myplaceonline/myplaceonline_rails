@@ -1251,6 +1251,18 @@ var myplaceonline = function(mymodule) {
   mymodule.cancelCheckboxHiding = cancelCheckboxHiding;
   mymodule.completeCheckboxHiding = completeCheckboxHiding;
   mymodule.checkSendDebug = checkSendDebug;
+  
+  myplaceonline.onPageLoad(function() {
+    if (ZeroClipboard) {
+      ZeroClipboard.on("error", function(e) {
+        myplaceonline.consoleLog("ZeroClipboard error");
+        if (Error) {
+          myplaceonline.consoleLog(new Error().stack);
+        }
+        myplaceonline.consoleDir(e);
+      });
+    }
+  });
 
   return mymodule;
 
