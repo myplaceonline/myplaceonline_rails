@@ -128,6 +128,7 @@ Rails.application.routes.draw do
     test/test1
     test/test2
     test/throw
+    test/hello_world
     users/allusers
     help/features
     help/highlights

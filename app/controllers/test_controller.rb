@@ -8,4 +8,10 @@ class TestController < ApplicationController
   def throw
     raise "Random Exception"
   end
+  
+  def hello_world
+    render json: {
+      :test => "Hello World"
+    }
+  end
 end

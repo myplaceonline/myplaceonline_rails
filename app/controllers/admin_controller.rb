@@ -5,12 +5,6 @@ class AdminController < ApplicationController
 
   before_action :check_authorization
   
-  def test
-    render json: {
-      :test => "Hello World"
-    }
-  end
-  
   def ensure_pending_all_users
     CalendarItemReminder.ensure_pending_all_users
     render json: {
