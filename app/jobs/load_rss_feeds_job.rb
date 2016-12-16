@@ -8,7 +8,7 @@ class LoadRssFeedsJob < ApplicationJob
       
       Rails.logger.info{"Started LoadRssFeedsJob user: #{user.id}"}
 
-      executed = Myp.try_with_database_advisory_lock(Myp::DB_LOCK_LOAD_RSS_FEEDS, user.id) do
+      executed = Myp.try_with_database_advisory_lock(Myp::DB_LOCK_LOAD_RSS_FEEDS, user.id, requires_new_transaction: true) do
         ExecutionContext.stack do
           User.current_user = user
           
@@ -17,7 +17,10 @@ class LoadRssFeedsJob < ApplicationJob
           if !status.nil?
             status.items_complete = 0
             status.items_error = 0
-            status.save!
+            
+            ActiveRecord::Base.transaction(requires_new: true) do
+              status.save!
+            end
             
             count = 0
             feeds = Feed.where(identity_id: user.primary_identity_id)
@@ -42,7 +45,9 @@ class LoadRssFeedsJob < ApplicationJob
                 status.items_error += 1
               end
               
-              status.save!
+              ActiveRecord::Base.transaction(requires_new: true) do
+                status.save!
+              end
             end
           end
         end

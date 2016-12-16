@@ -1611,10 +1611,10 @@ module Myp
   DB_LOCK_CALENDAR_ITEM_REMINDERS = 2
   DB_LOCK_LOAD_RSS_FEEDS = 3
   
-  def self.try_with_database_advisory_lock(key1, key2, &block)
+  def self.try_with_database_advisory_lock(key1, key2, requires_new_transaction: false, &block)
     lock_successful = true
       
-    ActiveRecord::Base.transaction(requires_new: true) do
+    ActiveRecord::Base.transaction(requires_new: requires_new_transaction) do
       
       if ActiveRecord::Base.connection.instance_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
         lock_successful = ActiveRecord::Base.connection.select_value("select pg_try_advisory_xact_lock(#{key1}, #{key2})")
