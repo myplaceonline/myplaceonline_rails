@@ -23,26 +23,41 @@ module Myplaceonline
 
   DEFAULT_ROOT_EMAIL = "root@myplaceonline.com"
   
-  class ExecutionContextRequestStrategy
+  class MyplaceonlineRack
     def initialize(app)
       @app = app
     end
     
     def call(env)
-      start_time = Time.now
-      begin
-        ExecutionContext.push
-        result = @app.call(env)
-        result
-      ensure
+      
+      # We could load up the user from warden, but that would mean we'd do a SQL request on all requests including
+      # images, etc. Instead, we just grab the user ID from warden's cookie
+      # user = env["warden"].user
+      warden_user_key = env["rack.session"]["warden.user.user.key"]
+      user_id = warden_user_key.nil? ? -1 : warden_user_key[0][0]
+      
+      # Debug
+      #awesome_print(env)
+      
+      Myp.log_response_time(
+        name: "MyplaceonlineRack.call",
+        uri: env["REQUEST_URI"],
+        request_id: env["action_dispatch.request_id"],
+        user_id: user_id
+      ) do
+        
+        # Clear the contexts just in case somehow it wasn't cleared from the last request
         ExecutionContext.clear
-        Myp.log_response_time(context: "HTTP (#{env["REQUEST_URI"]})", start_time: start_time)
+        
+        ExecutionContext.stack do
+          @app.call(env)
+        end
       end
     end
   end
   
   class Application < Rails::Application
-    config.middleware.insert_after(Rails::Rack::Logger, ExecutionContextRequestStrategy)
+    config.middleware.use(MyplaceonlineRack)
     
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

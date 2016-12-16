@@ -1611,25 +1611,30 @@ module Myp
   DB_LOCK_CALENDAR_ITEM_REMINDERS = 2
   DB_LOCK_LOAD_RSS_FEEDS = 3
   
-  def self.try_with_database_advisory_lock(key1, key2, requires_new_transaction: false, &block)
+  def self.try_with_database_advisory_lock(key1, key2, &block)
     lock_successful = true
-      
-    ActiveRecord::Base.transaction(requires_new: requires_new_transaction) do
-      
-      if ActiveRecord::Base.connection.instance_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
-        lock_successful = ActiveRecord::Base.connection.select_value("select pg_try_advisory_xact_lock(#{key1}, #{key2})")
-        Rails.logger.debug{"try_with_database_advisory_lock locked (#{key1}, #{key2}), result: #{lock_successful}"}
-      else
-        raise "Not implemented"
-      end
+    
+    Rails.logger.debug{"try_with_database_advisory_lock enter (#{key1}, #{key2})"}
 
-      if lock_successful
-        block.call
-      else
-        Rails.logger.info{"try_with_database_advisory_lock failed to lock (#{key1}, #{key2})"}
-      end
+    if ActiveRecord::Base.connection.instance_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
       
-      # No unlock necessary because of the "xact" above
+      # pg_try_advisory_xact_lock is safer (in case this process dies before the ensure), but it enforces the block
+      # to be in a transaction, which isn't always benign
+      
+      lock_successful = ActiveRecord::Base.connection.select_value("select pg_try_advisory_lock(#{key1}, #{key2})")
+      Rails.logger.debug{"try_with_database_advisory_lock locked (#{key1}, #{key2}), result: #{lock_successful}"}
+    else
+      raise "Not implemented"
+    end
+
+    if lock_successful
+      begin
+        block.call
+      ensure
+        ActiveRecord::Base.connection.select_value("select pg_advisory_unlock(#{key1}, #{key2})")
+      end
+    else
+      Rails.logger.info{"try_with_database_advisory_lock failed to lock (#{key1}, #{key2})"}
     end
     
     Rails.logger.debug{"try_with_database_advisory_lock unlocked (#{key1}, #{key2}), result: #{lock_successful}"}
@@ -1654,82 +1659,81 @@ module Myp
   end
   
   def self.full_text_search(user, search, category: nil, parent_category: nil, display_category_prefix: true, display_category_icon: true)
-
-    if search.nil?
-      search = ""
-    end
-    
-    start_time = Time.now
-    
-    original_search = search
-    
-    search = search.strip.downcase
-    
-    Rails.logger.debug{"full_text_search: '#{search}'"}
-    
-    if !search.blank?
+    Myp.log_response_time(
+      name: "Myp.full_text_search"
+    ) do
+      if search.nil?
+        search = ""
+      end
       
-      # http://stackoverflow.com/questions/37082797/elastic-search-edge-ngram-match-query-on-all-being-ignored
+      original_search = search
       
-      if category.blank?
-        query = {
-          bool: {
-            must: {
-              match: {
-                _all: search
-              }
-            },
-            filter: {
-              term: {
-                identity_id: user.primary_identity_id
-              }
-            }
-          }
-        }
-      else
-        query = {
-          bool: {
-            must: [
-              {
+      search = search.strip.downcase
+      
+      Rails.logger.debug{"full_text_search: '#{search}'"}
+      
+      if !search.blank?
+        
+        # http://stackoverflow.com/questions/37082797/elastic-search-edge-ngram-match-query-on-all-being-ignored
+        
+        if category.blank?
+          query = {
+            bool: {
+              must: {
                 match: {
                   _all: search
                 }
               },
-              {
-                match: {
-                  _type: category.singularize
+              filter: {
+                term: {
+                  identity_id: user.primary_identity_id
                 }
-              }
-            ],
-            filter: {
-              term: {
-                identity_id: user.primary_identity_id
               }
             }
           }
-        }
+        else
+          query = {
+            bool: {
+              must: [
+                {
+                  match: {
+                    _all: search
+                  }
+                },
+                {
+                  match: {
+                    _type: category.singularize
+                  }
+                }
+              ],
+              filter: {
+                term: {
+                  identity_id: user.primary_identity_id
+                }
+              }
+            }
+          }
+        end
+        
+        # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html
+        search_results = UserIndex.query(query).order(visit_count: {order: :desc, missing: :_last}).limit(10).load.to_a
+        
+        results = Myp.process_search_results(
+          search_results,
+          parent_category,
+          original_search,
+          display_category_prefix: display_category_prefix,
+          display_category_icon: display_category_icon
+        )
+        
+      else
+        results = []
       end
       
-      # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html
-      search_results = UserIndex.query(query).order(visit_count: {order: :desc, missing: :_last}).limit(10).load.to_a
-      
-      results = Myp.process_search_results(
-        search_results,
-        parent_category,
-        original_search,
-        display_category_prefix: display_category_prefix,
-        display_category_icon: display_category_icon
-      )
-      
-    else
-      results = []
+      Rails.logger.debug{"full_text_search results: #{results.length}"}
+
+      results
     end
-    
-    Rails.logger.debug{"full_text_search results: #{results.length}"}
-
-    Myp.log_response_time(context: "ElasticSearch (full_text_search)", start_time: start_time)
-
-    results
   end
   
   def self.process_search_results(search_results, parent_category = nil, original_search = nil, display_category_prefix: true, display_category_icon: true)
@@ -1834,52 +1838,51 @@ module Myp
   end
   
   def self.highly_visited(user, limit: 10, min_visit_count: 5)
-
-    Rails.logger.debug{"highly_visited"}
-    
-    start_time = Time.now
-
-    search_results = UserIndex.query({
-      terms: {
-        identity_id: [user.primary_identity_id]
-      }
-    }).order(visit_count: {order: :desc, missing: :_last}).limit(limit).load.to_a
-    
-    permissions = Permission.where(user_id: user.id)
-    if permissions.length > 0
-      permissions_results = UserIndex.query({
+    Myp.log_response_time(
+      name: "Myp.highly_visited"
+    ) do
+      Rails.logger.debug{"highly_visited"}
+      
+      search_results = UserIndex.query({
         terms: {
-          "_uid" => permissions.map{|p| p.subject_class.singularize + "#" + p.subject_id.to_s }.to_a
+          identity_id: [user.primary_identity_id]
         }
       }).order(visit_count: {order: :desc, missing: :_last}).limit(limit).load.to_a
       
-      search_results = search_results + permissions_results
-      
-      search_results.sort! do |sr1, sr2|
-        x1 = sr1.respond_to?("visit_count") && !sr1.visit_count.nil? ? sr1.visit_count : 0
-        x2 = sr2.respond_to?("visit_count") && !sr2.visit_count.nil? ? sr2.visit_count : 0
-        x2 <=> x1
+      permissions = Permission.where(user_id: user.id)
+      if permissions.length > 0
+        permissions_results = UserIndex.query({
+          terms: {
+            "_uid" => permissions.map{|p| p.subject_class.singularize + "#" + p.subject_id.to_s }.to_a
+          }
+        }).order(visit_count: {order: :desc, missing: :_last}).limit(limit).load.to_a
+        
+        search_results = search_results + permissions_results
+        
+        search_results.sort! do |sr1, sr2|
+          x1 = sr1.respond_to?("visit_count") && !sr1.visit_count.nil? ? sr1.visit_count : 0
+          x2 = sr2.respond_to?("visit_count") && !sr2.visit_count.nil? ? sr2.visit_count : 0
+          x2 <=> x1
+        end
+        
+        Rails.logger.debug{"highly_visited permissions_results: #{permissions_results.inspect}"}
       end
       
-      Rails.logger.debug{"highly_visited permissions_results: #{permissions_results.inspect}"}
+      search_results.delete_if{|x| x.respond_to?("show_highly_visited?") && !x.show_highly_visited? }
+
+      search_results.delete_if{|x| !x.respond_to?("visit_count") || (x.respond_to?("visit_count") && (x.visit_count.nil? || x.visit_count <= min_visit_count)) }
+      
+      Rails.logger.debug{"highly_visited before processing: #{search_results.inspect}"}
+
+      # This returns a list of list item row objects
+      results = Myp.process_search_results(search_results)
+      
+      Rails.logger.debug{"highly_visited results: #{results.inspect}"}
+
+      Rails.logger.debug{"highly_visited final results: #{results.inspect}"}
+
+      results
     end
-    
-    search_results.delete_if{|x| x.respond_to?("show_highly_visited?") && !x.show_highly_visited? }
-
-    search_results.delete_if{|x| !x.respond_to?("visit_count") || (x.respond_to?("visit_count") && (x.visit_count.nil? || x.visit_count <= min_visit_count)) }
-    
-    Rails.logger.debug{"highly_visited before processing: #{search_results.inspect}"}
-
-    # This returns a list of list item row objects
-    results = Myp.process_search_results(search_results)
-    
-    Rails.logger.debug{"highly_visited results: #{results.inspect}"}
-
-    Myp.log_response_time(context: "ElasticSearch (highly_visited)", start_time: start_time)
-
-    Rails.logger.debug{"highly_visited final results: #{results.inspect}"}
-
-    results
   end
 
   def self.full_text_search?
@@ -1921,60 +1924,60 @@ module Myp
   #    raw_response: object; underlying response from client library
   #  }
   def self.http_get(url:, try_https: false)
-
-    start_time = Time.now
-
-    # If there is no TLD and it's not localhost, assume .com
-    if url.index(".").nil? && url.index("localhost").nil?
-      url += ".com/"
-    end
-    
-    # If no protocol, assume HTTP(S)
-    if url.index("://").nil?
-      if try_https
+    Myp.log_response_time(
+      name: "Myp.http_get",
+      url: url
+    ) do
+      # If there is no TLD and it's not localhost, assume .com
+      if url.index(".").nil? && url.index("localhost").nil?
+        url += ".com/"
+      end
+      
+      # If no protocol, assume HTTP(S)
+      if url.index("://").nil?
+        if try_https
+          addedhttps = true
+          url = "https://" + url
+        else
+          url = "http://" + url
+        end
+      end
+      
+      # If it's only HTTP, and try_https is true, then try switching to HTTPS
+      if try_https && url.downcase.start_with?("http") && !url.downcase.start_with?("https")
         addedhttps = true
-        url = "https://" + url
-      else
-        url = "http://" + url
+        url = "https://" + url[7..-1]
       end
-    end
-    
-    # If it's only HTTP, and try_https is true, then try switching to HTTPS
-    if try_https && url.downcase.start_with?("http") && !url.downcase.start_with?("https")
-      addedhttps = true
-      url = "https://" + url[7..-1]
-    end
 
-    begin
-      response = Myp.raw_http_get(url: url)
-    rescue => e
-      if addedhttps
-        Rails.logger.info{"Re-trying vanilla HTTP due to #{e.to_s}"}
-        url = "http" + url[5..-1]
+      begin
         response = Myp.raw_http_get(url: url)
-      else
-        raise e
+      rescue => e
+        if addedhttps
+          Rails.logger.info{"Re-trying vanilla HTTP due to #{e.to_s}"}
+          url = "http" + url[5..-1]
+          response = Myp.raw_http_get(url: url)
+        else
+          raise e
+        end
       end
+      
+      final_url = url
+      if response.history.length > 0
+        final_url = response.history.last.request.url
+      end
+      
+      if url == final_url
+        context = url
+      else
+        context = url + " -> " + final_url
+      end
+      
+      {
+        body: response.body,
+        raw_response: response,
+        final_url: url
+      }
     end
-    
-    final_url = url
-    if response.history.length > 0
-      final_url = response.history.last.request.url
-    end
-    
-    if url == final_url
-      context = url
-    else
-      context = url + " -> " + final_url
-    end
-    
-    Myp.log_response_time(context: "Remote GET (#{context})", start_time: start_time)
-
-    {
-      body: response.body,
-      raw_response: response,
-      final_url: url
-    }
   end
   
   def self.website_info(link)
@@ -2109,10 +2112,20 @@ module Myp
     x > y ? x : y
   end
   
-  def self.log_response_time(context:, start_time:)
-    end_time = Time.now
-    diff = (end_time - start_time) * 1000.0
-    Rails.logger.info{"#{context} response time in milliseconds = #{sprintf("%0.02f", diff)}"}
+  def self.log_response_time(name:, **options, &block)
+    start_time = Time.now
+    begin
+      block.call
+    ensure
+      end_time = Time.now
+      diff = (end_time - start_time) * 1000.0
+      
+      if !options.nil? && options.length > 0
+        Rails.logger.info{"#{name} response time in milliseconds = #{sprintf("%0.02f", diff)} context: #{options}"}
+      else
+        Rails.logger.info{"#{name} response time in milliseconds = #{sprintf("%0.02f", diff)}"}
+      end
+    end
   end
   
   def self.within_a_day?(time:, user: User.current_user)
