@@ -17,6 +17,10 @@ Rails.application.configure do
   config.action_controller.perform_caching = true
 
   config.public_file_server.enabled = true
+  
+  config.public_file_server.headers = {
+    "Cache-Control" => "public, max-age=31536000" # http://stackoverflow.com/a/25201898/5657303
+  }
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
