@@ -670,13 +670,7 @@ module Myp
   
   def self.password_changed(user, old_password, new_password)
     if !old_password.eql?(new_password)
-      ActiveRecord::Base.transaction do
-        EncryptedValue.where(user: user).each do |encrypted_value|
-          decrypted = self.decrypt(encrypted_value, old_password)
-          self.encrypt_value(user, decrypted, new_password, encrypted_value)
-          encrypted_value.save!
-        end
-      end
+      ApplicationJob.perform(UpdateUserPasswordJob, user, old_password, new_password)
     end
   end
   

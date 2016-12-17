@@ -127,7 +127,7 @@ class Feed < ActiveRecord::Base
         items_total: all_count,
         items_error: 0
       )
-      LoadRssFeedsJob.perform_later(User.current_user)
+      ApplicationJob.perform(LoadRssFeedsJob, User.current_user)
     end
   end
   

@@ -1,0 +1,33 @@
+<% content_for :heading do -%><%= t("myplaceonline.admin.send_email.title") %><% end -%>
+<h1><%= t("myplaceonline.admin.send_email.title") %></h1>
+
+<%= flashes!(@admin_email) %>
+
+<%= form_for @admin_email, :url => admin_send_email_path do |f| %>
+  <%= f.fields_for :email, @admin_email.email do |child_fields| %>
+    <%= myp_text_field(child_fields, :email_category, "myplaceonline.admin.send_email.category", @admin_email.email.email_category) %>
+    <%= myp_text_field(child_fields, :subject, "myplaceonline.admin.send_email.subject", @admin_email.email.subject, true) %>
+    <%= myp_text_area_markdown(child_fields, :body, "myplaceonline.admin.send_email.body", @admin_email.email.body, collapsed: false) %>
+  <% end %>
+  <%= myp_text_area(f, :send_only_to, "myplaceonline.admin.send_email.only_send_to", @admin_email.send_only_to) %>
+  <%= myp_text_area(f, :exclude_emails, "myplaceonline.admin.send_email.exclude_emails", @admin_email.exclude_emails) %>
+  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+    <div data-role="navbar">
+      <ul>
+        <li>
+          <%= f.submit(t("myplaceonline.admin.send_email.title"), "data-icon" => "action", "data-iconpos" => "top") %>
+        </li>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
+<hr />
+
+<p><%= link_to(t("myplaceonline.admin.users"), users_path) %></p>
+
+<script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+</script>

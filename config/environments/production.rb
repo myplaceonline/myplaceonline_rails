@@ -18,6 +18,7 @@ Rails.application.configure do
 
   config.public_file_server.enabled = true
   
+  # This doesn't seem to work when tested - didn't bother investigating but just accomplished this in nginx
   config.public_file_server.headers = {
     "Cache-Control" => "public, max-age=31536000" # http://stackoverflow.com/a/25201898/5657303
   }

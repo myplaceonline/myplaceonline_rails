@@ -65,9 +65,9 @@
   </li>
   <% if !current_user.nil? && current_user.admin? %>
     <li>
-      <%= link_to(administration_path) do %>
+      <%= link_to(admin_path) do %>
         <%= image_tag("famfamfam/wrench.png", size: "16x16", class: "ui-li-icon") %>
-        <%= t("myplaceonline.administration.title") %>
+        <%= t("myplaceonline.admin.title") %>
       <% end %>
     </li>
   <% end %>

@@ -2654,9 +2654,10 @@ en:
       favor_order_other: "your favor"
       unspecified_end_date: "Unspecified"
       no_conditions: "No extra conditions"
-    administration:
+    admin:
       title: "Administration"
       users: "User List"
+      create_test_job: "Perform Test Job"
       send_email:
         title: "Send Email to Users"
         subject: "Subject"

@@ -79,7 +79,7 @@ Rails.application.routes.draw do
   root "welcome#index"
 
   routes_index(%w(
-    administration
+    admin
     api
     finance
     health
@@ -114,6 +114,7 @@ Rails.application.routes.draw do
     admin/test
     admin/ensure_pending_all_users
     admin/create_test_job
+    admin/gc
     search/show
     info/credits
     info/diagnostics
@@ -124,7 +125,6 @@ Rails.application.routes.draw do
     info/about
     info/privacy
     info/terms
-    administration/gc
     test/test1
     test/test2
     test/throw
@@ -148,8 +148,8 @@ Rails.application.routes.draw do
     random/activity
     info/contact
     info/invite
-    administration/send_email
-    administration/send_text_message
+    admin/send_email
+    admin/send_text_message
   ))
 
   match 'c/:id', :to => 'calendar_item_reminder_pendings#short', via: [:get], as: "calendar_item_reminder_short"

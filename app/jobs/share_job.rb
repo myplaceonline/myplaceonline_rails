@@ -5,8 +5,6 @@ require 'tempfile'
 require 'fileutils'
 
 class ShareJob < ApplicationJob
-  queue_as :default
-
   def perform(*args)
     Chewy.strategy(:atomic) do
       Rails.logger.debug{"Started ShareJob"}

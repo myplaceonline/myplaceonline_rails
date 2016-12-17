@@ -1,6 +1,4 @@
 class AdminSendEmailJob < ApplicationJob
-  queue_as :default
-
   def perform(*args)
     Chewy.strategy(:atomic) do
       Rails.logger.info{"Started AdminSendEmailJob"}

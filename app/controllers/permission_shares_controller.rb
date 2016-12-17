@@ -25,7 +25,7 @@ class PermissionSharesController < MyplaceonlineController
   
     def after_save
       if @obj.async?
-        ShareJob.perform_later(@obj)
+        ApplicationJob.perform(ShareJob, @obj)
 
         redirect_to @obj.simple_path,
           :flash => { :notice =>

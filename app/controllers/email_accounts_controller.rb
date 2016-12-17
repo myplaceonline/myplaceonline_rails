@@ -27,4 +27,16 @@ class EmailAccountsController < MyplaceonlineController
     def sensitive
       true
     end
+
+    def sorts
+      sorts_helper{["lower(passwords.name) ASC"]}
+    end
+    
+    def all_joins
+      "INNER JOIN passwords ON passwords.id = email_accounts.password_id"
+    end
+
+    def all_includes
+      :password
+    end
 end

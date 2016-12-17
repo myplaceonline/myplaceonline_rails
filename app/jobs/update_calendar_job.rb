@@ -1,6 +1,4 @@
 class UpdateCalendarJob < ApplicationJob
-  queue_as :default
-
   def perform(*args)
     Chewy.strategy(:atomic) do
       Rails.logger.debug{"Started UpdateCalendarJob"}

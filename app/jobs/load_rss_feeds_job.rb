@@ -1,6 +1,4 @@
 class LoadRssFeedsJob < ApplicationJob
-  queue_as :default
-
   def perform(*args)
     # Use the urgent strategy because the atomic strategy would keep the feed objcts in memory which might blow RAM
     Chewy.strategy(:urgent) do
