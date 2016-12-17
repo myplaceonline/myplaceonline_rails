@@ -11,7 +11,6 @@ class BankAccountsController < MyplaceonlineController
         :routing_number,
         :pin,
         :encrypt,
-        :is_archived,
         password_attributes: PasswordsController.param_names,
         company_attributes: CompaniesController.param_names,
         home_address_attributes: LocationsController.param_names

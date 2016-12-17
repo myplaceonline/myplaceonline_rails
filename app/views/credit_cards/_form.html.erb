@@ -9,7 +9,6 @@
 <%= myp_decimal_field(f, :total_credit, "myplaceonline.credit_cards.total_credit", obj.total_credit) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.credit_cards.notes", obj.notes) %>
 <%= myp_check_box(f, :email_reminders, "myplaceonline.credit_cards.email_reminders") %>
-<%= myp_check_box(f, :is_archived, "myplaceonline.general.archived") %>
 <%=
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,

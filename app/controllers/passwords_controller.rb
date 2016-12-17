@@ -182,7 +182,6 @@ class PasswordsController < MyplaceonlineController
       :account_number,
       :notes,
       :encrypt,
-      :is_archived,
       password_secrets_attributes: [
         :id,
         :_destroy,
@@ -193,7 +192,7 @@ class PasswordsController < MyplaceonlineController
   end
 
   def self.reject_if_blank(attributes)
-    attributes.dup.delete_if {|key, value| key.to_s == "encrypt" || key.to_s == "is_archived" }.all? {|key, value| value.blank?}
+    attributes.dup.delete_if {|key, value| key.to_s == "encrypt" }.all? {|key, value| value.blank?}
   end
   
   def show_share

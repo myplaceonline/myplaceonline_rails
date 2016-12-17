@@ -3,7 +3,6 @@
 <% if !edit %>
   <%= myp_check_box(f, :top, "myplaceonline.project_issues.move_top") %>
 <% end %>
-<%= myp_check_box(f, :is_archived, "myplaceonline.general.archived") %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,

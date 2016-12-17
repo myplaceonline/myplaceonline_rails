@@ -1866,6 +1866,11 @@ en:
       group_number: "Group Number"
       password: "Password"
       doctor: "Primary Care Physician"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"
     random:
       activity: "Random Activity"
       new_activity: "Generate"
@@ -1889,6 +1894,11 @@ en:
       group_number: "Group Number"
       password: "Password"
       doctor: "Primary Dentist"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"
     hobbies:
       hobby_name: "Name"
       notes: "Notes"

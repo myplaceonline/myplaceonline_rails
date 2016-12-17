@@ -16,7 +16,6 @@ class ContactsController < MyplaceonlineController
       :id,
       :_destroy,
       :contact_type,
-      :is_archived,
       conversations_attributes: [
         :id,
         :conversation,
@@ -94,7 +93,7 @@ class ContactsController < MyplaceonlineController
   end
 
   def self.reject_if_blank(attributes)
-    attributes.dup.delete_if {|key, value| key.to_s == "is_archived" }.all?{|key, value|
+    attributes.dup.all?{|key, value|
       if key == "contact_identity_attributes"
         value.all?{|key2, value2|
           if key2 == "company_attributes"

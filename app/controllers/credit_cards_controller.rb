@@ -51,7 +51,6 @@ class CreditCardsController < MyplaceonlineController
         :pin,
         :notes,
         :encrypt,
-        :is_archived,
         :card_type,
         :total_credit,
         :email_reminders,

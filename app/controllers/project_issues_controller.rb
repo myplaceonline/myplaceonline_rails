@@ -80,7 +80,6 @@ class ProjectIssuesController < MyplaceonlineController
         :issue_name,
         :notes,
         :top,
-        :is_archived,
         project_issue_notifiers_attributes: [
           :id,
           :_destroy,

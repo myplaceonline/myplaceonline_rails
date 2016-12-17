@@ -2,7 +2,6 @@
 <%= myp_text_field(f, :account_number, "myplaceonline.health_insurances.account_number", obj.account_number) %>
 <%= myp_text_field(f, :group_number, "myplaceonline.health_insurances.group_number", obj.group_number) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.life_insurances.notes", obj.notes) %>
-<%= myp_check_box(f, :is_archived, "myplaceonline.general.archived") %>
 <%=
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,
@@ -13,7 +12,8 @@
     existingobjurl: "company_path",
     searchurl: "/companies.json?perpage=0",
     edit: edit,
-    autofocus: false
+    autofocus: false,
+    collapsed: obj.insurance_company.nil?
   }
 %>
 <%=
@@ -26,7 +26,8 @@
     existingobjurl: "company_path",
     searchurl: "/companies.json?perpage=0",
     edit: edit,
-    autofocus: false
+    autofocus: false,
+    collapsed: obj.group_company.nil?
   }
 %>
 <%=
@@ -39,7 +40,8 @@
     existingobjurl: "periodic_payment_path",
     searchurl: "/periodic_payments.json?perpage=0",
     edit: edit,
-    autofocus: false
+    autofocus: false,
+    collapsed: obj.periodic_payment.nil?
   }
 %>
 <%=
@@ -52,7 +54,8 @@
     existingobjurl: "password_path",
     searchurl: "/passwords.json?perpage=0",
     edit: edit,
-    autofocus: false
+    autofocus: false,
+    collapsed: obj.password.nil?
   }
 %>
 <%=
@@ -65,6 +68,20 @@
     existingobjurl: "doctor_path",
     searchurl: "/doctors.json?perpage=0",
     edit: edit,
-    autofocus: false
+    autofocus: false,
+    collapsed: obj.doctor.nil?
+  }
+%>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :health_insurance_files,
+    item_placeholder: "myplaceonline.health_insurances.file",
+    heading: "myplaceonline.health_insurances.files",
+    addbutton: "myplaceonline.health_insurances.add_file",
+    addbutton_multi: "myplaceonline.health_insurances.add_files",
+    deletebutton: "myplaceonline.health_insurances.delete_file"
   }
 %>

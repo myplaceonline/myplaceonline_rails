@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161209215341) do
+ActiveRecord::Schema.define(version: 20161217204415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1004,6 +1004,18 @@ ActiveRecord::Schema.define(version: 20161209215341) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
   end
 
+  create_table "dental_insurance_files", force: :cascade do |t|
+    t.integer  "dental_insurance_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.index ["dental_insurance_id"], name: "index_dental_insurance_files_on_dental_insurance_id", using: :btree
+    t.index ["identity_file_id"], name: "index_dental_insurance_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_dental_insurance_files_on_identity_id", using: :btree
+  end
+
   create_table "dental_insurances", force: :cascade do |t|
     t.string   "insurance_name",       limit: 255
     t.integer  "insurance_company_id"
@@ -1765,6 +1777,18 @@ ActiveRecord::Schema.define(version: 20161209215341) do
     t.datetime "archived"
     t.integer  "rating"
     t.index ["identity_id"], name: "index_headaches_on_identity_id", using: :btree
+  end
+
+  create_table "health_insurance_files", force: :cascade do |t|
+    t.integer  "health_insurance_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.index ["health_insurance_id"], name: "index_health_insurance_files_on_health_insurance_id", using: :btree
+    t.index ["identity_file_id"], name: "index_health_insurance_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_health_insurance_files_on_identity_id", using: :btree
   end
 
   create_table "health_insurances", force: :cascade do |t|
@@ -4566,6 +4590,9 @@ ActiveRecord::Schema.define(version: 20161209215341) do
   add_foreign_key "credit_scores", "identities", name: "credit_scores_identity_id_fk"
   add_foreign_key "date_locations", "identities", name: "date_locations_identity_id_fk"
   add_foreign_key "date_locations", "locations", name: "date_locations_location_id_fk"
+  add_foreign_key "dental_insurance_files", "dental_insurances"
+  add_foreign_key "dental_insurance_files", "identities"
+  add_foreign_key "dental_insurance_files", "identity_files"
   add_foreign_key "dental_insurances", "companies", column: "group_company_id", name: "dental_insurances_group_company_id_fk"
   add_foreign_key "dental_insurances", "companies", column: "insurance_company_id", name: "dental_insurances_insurance_company_id_fk"
   add_foreign_key "dental_insurances", "doctors", name: "dental_insurances_doctor_id_fk"
@@ -4677,6 +4704,9 @@ ActiveRecord::Schema.define(version: 20161209215341) do
   add_foreign_key "guns", "identities", name: "guns_identity_id_fk"
   add_foreign_key "happy_things", "identities"
   add_foreign_key "headaches", "identities", name: "headaches_identity_id_fk"
+  add_foreign_key "health_insurance_files", "health_insurances"
+  add_foreign_key "health_insurance_files", "identities"
+  add_foreign_key "health_insurance_files", "identity_files"
   add_foreign_key "health_insurances", "companies", column: "group_company_id", name: "health_insurances_group_company_id_fk"
   add_foreign_key "health_insurances", "companies", column: "insurance_company_id", name: "health_insurances_insurance_company_id_fk"
   add_foreign_key "health_insurances", "doctors", name: "health_insurances_doctor_id_fk"

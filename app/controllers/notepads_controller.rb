@@ -11,8 +11,7 @@ class NotepadsController < MyplaceonlineController
     def obj_params
       params.require(:notepad).permit(
         :title,
-        :notepad_data,
-        :is_archived
+        :notepad_data
       )
     end
     
