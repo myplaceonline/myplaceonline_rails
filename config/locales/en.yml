@@ -740,6 +740,11 @@ en:
       url: "Website"
       recommender: "Recommender"
       genre: "Genre"
+      review: "Review"
+      lent_to: "Lent To"
+      lent_date: "Lent Date"
+      borrowed_from: "Borrowed From"
+      borrowed_date: "Borrowed Date"
     wisdoms:
       name: "Wisdom Name"
       wisdom: "Wisdom"

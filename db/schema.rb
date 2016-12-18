@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161217204415) do
+ActiveRecord::Schema.define(version: 20161218003448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2706,9 +2706,9 @@ ActiveRecord::Schema.define(version: 20161217204415) do
   end
 
   create_table "movies", force: :cascade do |t|
-    t.string   "name",           limit: 255
+    t.string   "name",             limit: 255
     t.datetime "watched"
-    t.string   "url",            limit: 255
+    t.string   "url",              limit: 255
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -2717,7 +2717,14 @@ ActiveRecord::Schema.define(version: 20161217204415) do
     t.string   "genre"
     t.datetime "archived"
     t.integer  "rating"
+    t.text     "review"
+    t.integer  "lent_to_id"
+    t.date     "lent_date"
+    t.integer  "borrowed_from_id"
+    t.date     "borrowed_date"
+    t.index ["borrowed_from_id"], name: "index_movies_on_borrowed_from_id", using: :btree
     t.index ["identity_id"], name: "index_movies_on_identity_id", using: :btree
+    t.index ["lent_to_id"], name: "index_movies_on_lent_to_id", using: :btree
     t.index ["recommender_id"], name: "index_movies_on_recommender_id", using: :btree
   end
 
@@ -4843,6 +4850,8 @@ ActiveRecord::Schema.define(version: 20161217204415) do
   add_foreign_key "money_balances", "identities"
   add_foreign_key "movie_theaters", "identities", name: "movie_theaters_identity_id_fk"
   add_foreign_key "movie_theaters", "locations", name: "movie_theaters_location_id_fk"
+  add_foreign_key "movies", "contacts", column: "borrowed_from_id"
+  add_foreign_key "movies", "contacts", column: "lent_to_id"
   add_foreign_key "movies", "contacts", column: "recommender_id", name: "movies_recommender_id_fk"
   add_foreign_key "movies", "identities", name: "movies_identity_id_fk"
   add_foreign_key "museums", "identities", name: "museums_identity_id_fk"

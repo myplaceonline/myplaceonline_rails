@@ -3,4 +3,9 @@
 <%= attribute_table_row_boolean(t("myplaceonline.movies.watched"), !obj.watched.nil?) %>
 <%= attribute_table_row(t("myplaceonline.movies.watched"), obj.watched) %>
 <%= attribute_table_row_url(t("myplaceonline.movies.url"), obj.url) %>
+<%= attribute_table_row_markdown(t("myplaceonline.movies.review"), obj.review) %>
 <%= attribute_table_row_reference(t("myplaceonline.movies.recommender"), "contact_path", obj.recommender) %>
+<%= attribute_table_row_reference(t("myplaceonline.movies.lent_to"), "contact_path", obj.lent_to) %>
+<%= attribute_table_row_date(t("myplaceonline.movies.lent_date"), obj.lent_date) %>
+<%= attribute_table_row_reference(t("myplaceonline.movies.borrowed_from"), "contact_path", obj.borrowed_from) %>
+<%= attribute_table_row_date(t("myplaceonline.movies.borrowed_date"), obj.borrowed_date) %>

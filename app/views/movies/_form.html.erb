@@ -2,6 +2,7 @@
 <%= myp_text_field(f, :genre, "myplaceonline.movies.genre", obj.genre, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
 <%= myp_text_field(f, :url, "myplaceonline.movies.url", obj.url) %>
 <%= myp_check_box(f, :is_watched, "myplaceonline.movies.watched") %>
+<%= myp_text_area_markdown(f, :review, "myplaceonline.movies.review", obj.review) %>
 <%=
   render partial: 'myplaceonline/select_or_create', locals: {
     f: f,
@@ -17,3 +18,35 @@
     force_existing: true
   }
 %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :lent_to,
+    existingobj: obj.lent_to,
+    heading: t("myplaceonline.movies.lent_to"),
+    objform: "contacts/form",
+    existingobjurl: "contact_path",
+    searchurl: "/contacts.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    collapsed: true,
+    force_existing: true
+  }
+%>
+<%= myp_date_field(f, :lent_date, "myplaceonline.movies.lent_date", obj.lent_date) %>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :borrowed_from,
+    existingobj: obj.borrowed_from,
+    heading: t("myplaceonline.movies.borrowed_from"),
+    objform: "contacts/form",
+    existingobjurl: "contact_path",
+    searchurl: "/contacts.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    collapsed: true,
+    force_existing: true
+  }
+%>
+<%= myp_date_field(f, :borrowed_date, "myplaceonline.movies.borrowed_date", obj.borrowed_date) %>

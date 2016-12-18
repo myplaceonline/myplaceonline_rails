@@ -11,6 +11,14 @@ class Movie < ActiveRecord::Base
   accepts_nested_attributes_for :recommender, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
   allow_existing :recommender, Contact
 
+  belongs_to :lent_to, class_name: Contact, :autosave => true
+  accepts_nested_attributes_for :lent_to, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
+  allow_existing :lent_to, Contact
+  
+  belongs_to :borrowed_from, class_name: Contact, :autosave => true
+  accepts_nested_attributes_for :borrowed_from, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
+  allow_existing :borrowed_from, Contact
+
   def display
     name
   end

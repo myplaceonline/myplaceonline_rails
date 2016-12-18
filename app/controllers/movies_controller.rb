@@ -14,7 +14,12 @@ class MoviesController < MyplaceonlineController
         :url,
         :is_watched,
         :genre,
-        recommender_attributes: ContactsController.param_names
+        :review,
+        :lent_date,
+        :borrowed_date,
+        recommender_attributes: ContactsController.param_names,
+        lent_to_attributes: ContactsController.param_names,
+        borrowed_from_attributes: ContactsController.param_names,
       )
     end
 end
