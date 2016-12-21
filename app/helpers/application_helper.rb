@@ -152,20 +152,38 @@ module ApplicationHelper
     result
   end
   
-  def data_row(name:, content:, **options)
+  def data_row(heading:, content:, **options)
     options[:contentclass] ||= nil
     options[:format] ||= :html
-    options[:clipboard_text] ||= nil
     options[:htmlencode_content] ||= true
     options[:background_highlight] ||= false
     options[:skip_blank_content] ||= true
+    options[:markdown] ||= false
+    options[:boolean_hide_false] ||= true
+    options[:boolean] ||= false
     
     if content.blank? && options[:skip_blank_content]
       return nil
     end
     
+    if options[:boolean]
+      if !content && options[:boolean_hide_false]
+        return nil
+      else
+        content = content ? I18n.t("myplaceonline.general.y") : I18n.t("myplaceonline.general.n")
+      end
+    end
+    
+    options[:clipboard_text] ||= content
+
     case options[:format]
     when :html
+      if options[:markdown]
+        options[:clipboard_text] = content
+        content = Myp.markdown_to_html(content)
+        options[:htmlencode_content] = false
+        options[:contentclass] = "markdowncell #{options[:contentclass]}"
+      end
       if !options[:clipboard_text].blank?
         link_options = Hash.new
         link_options[:href] = "#"
@@ -188,12 +206,12 @@ module ApplicationHelper
       end
       
       if options[:background_highlight]
-        options[:contentclass] = "#{options[:contentclass]} bghighlight"
+        options[:contentclass] = "bghighlight #{options[:contentclass]}"
       end
       
       html = <<-HTML
         <tr>
-          <td>#{name}</td>
+          <td>#{CGI::escapeHTML(heading)}</td>
           <td class="#{options[:contentclass]}">#{content}</td>
           <td style="padding: 0.2em; vertical-align: top;">#{options[:secondary_content]}</td>
         </tr>

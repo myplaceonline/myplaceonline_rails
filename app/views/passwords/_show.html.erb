@@ -2,28 +2,25 @@
   decrypted_password = obj.password
 %>
 
-<%= attribute_table_row(t("myplaceonline.passwords.name"), obj.name) %>
+<%= data_row(heading: t("myplaceonline.passwords.name"), content: obj.name) %>
 <%=
   data_row(
-    name: t("myplaceonline.passwords.password"),
+    heading: t("myplaceonline.passwords.password"),
     content: decrypted_password,
-    clipboard_text: decrypted_password,
     background_highlight: true
   )
 %>
-<%= attribute_table_row(t("myplaceonline.passwords.user"), obj.user) %>
-<%= attribute_table_row(t("myplaceonline.passwords.email"), obj.email) %>
+<%= data_row(heading: t("myplaceonline.passwords.user"), content: obj.user) %>
+<%= data_row(heading: t("myplaceonline.passwords.email"), content: obj.email) %>
 <%= attribute_table_row(t("myplaceonline.passwords.url"), url_or_blank(obj.get_url, nil, decrypted_password, nil, true, true), obj.get_url, "focusable") %>
-<%= attribute_table_row(t("myplaceonline.passwords.account_number"), obj.account_number) %>
-<%= attribute_table_row_markdown(t("myplaceonline.passwords.notes"), obj.notes) %>
+<%= data_row(heading: t("myplaceonline.passwords.account_number"), content: obj.account_number) %>
+<%= data_row(heading: t("myplaceonline.passwords.notes"), content: obj.notes, markdown: true) %>
 
 <% obj.password_secrets.each do |secret| %>
-  
-  <%= attribute_table_row(secret.question, secret.answer) %>
-
+  <%= data_row(heading: secret.question, content: secret.answer) %>
 <% end %>
   
-<%= attribute_table_row_boolean(t("myplaceonline.passwords.isencrypted"), obj.password_encrypted?) %>
+<%= data_row(heading: t("myplaceonline.passwords.isencrypted"), content: obj.password_encrypted?, boolean: true) %>
   
 <script type="text/javascript">
   myplaceonline.onPageLoad(function() {
@@ -35,6 +32,6 @@
         }
       });
       link.focus();
-  }
+    }
   });
 </script>
