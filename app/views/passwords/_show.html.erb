@@ -3,7 +3,14 @@
 %>
 
 <%= attribute_table_row(t("myplaceonline.passwords.name"), obj.name) %>
-<%= attribute_table_row_highlight(t("myplaceonline.passwords.password"), decrypted_password) %>
+<%=
+  data_row(
+    name: t("myplaceonline.passwords.password"),
+    content: decrypted_password,
+    clipboard_text: decrypted_password,
+    background_highlight: true
+  )
+%>
 <%= attribute_table_row(t("myplaceonline.passwords.user"), obj.user) %>
 <%= attribute_table_row(t("myplaceonline.passwords.email"), obj.email) %>
 <%= attribute_table_row(t("myplaceonline.passwords.url"), url_or_blank(obj.get_url, nil, decrypted_password, nil, true, true), obj.get_url, "focusable") %>

@@ -105,7 +105,7 @@ module ApplicationHelper
       options[:href] = "#"
       options[:class] = "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable"
       options[:title] = t("myplaceonline.general.clipboard")
-      options["data-clipboard-text"] = HTMLEntities.new.encode(clipboard_text_str(clipboard_text))
+      options["data-clipboard-text"] = clipboard_text_str(clipboard_text)
       
       content_tag(
         :a,
@@ -133,7 +133,7 @@ module ApplicationHelper
     )
   end
   
-  def clipboard_text_str(clipboard_text)
+  def clipboard_text_str(clipboard_text, encode_entities: true)
     result = ""
     if !clipboard_text.blank?
       result = clipboard_text.to_s
@@ -146,7 +146,63 @@ module ApplicationHelper
         end
       end
     end
+    if encode_entities
+      result = CGI::escapeHTML(result)
+    end
     result
+  end
+  
+  def data_row(name:, content:, **options)
+    options[:contentclass] ||= nil
+    options[:format] ||= :html
+    options[:clipboard_text] ||= nil
+    options[:htmlencode_content] ||= true
+    options[:background_highlight] ||= false
+    options[:skip_blank_content] ||= true
+    
+    if content.blank? && options[:skip_blank_content]
+      return nil
+    end
+    
+    case options[:format]
+    when :html
+      if !options[:clipboard_text].blank?
+        link_options = Hash.new
+        link_options[:href] = "#"
+        link_options[:class] = "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable"
+        link_options[:title] = t("myplaceonline.general.clipboard")
+        link_options["data-clipboard-text"] = clipboard_text_str(options[:clipboard_text])
+        
+        options[:secondary_content] = content_tag(
+          :a,
+          t("myplaceonline.general.clipboard"),
+          link_options,
+          escape = false
+        )
+      else
+        options[:secondary_content] = "&nbsp;"
+      end
+      
+      if options[:htmlencode_content]
+        content = CGI::escapeHTML(content)
+      end
+      
+      if options[:background_highlight]
+        options[:contentclass] = "#{options[:contentclass]} bghighlight"
+      end
+      
+      html = <<-HTML
+        <tr>
+          <td>#{name}</td>
+          <td class="#{options[:contentclass]}">#{content}</td>
+          <td style="padding: 0.2em; vertical-align: top;">#{options[:secondary_content]}</td>
+        </tr>
+      HTML
+      
+      html.html_safe
+    else
+      raise "Unknown format #{options[:format]}"
+    end
   end
   
   def attribute_table_row_content(name, contentclass, content, lastcolumn = "&nbsp;")
@@ -572,7 +628,7 @@ module ApplicationHelper
       end
       if !clipboard.nil?
         options[:class] += " clipboardable"
-        options["data-clipboard-text"] = HTMLEntities.new.encode(clipboard_text_str(clipboard))
+        options["data-clipboard-text"] = clipboard_text_str(clipboard)
         options["data-clipboard-clickthrough"] = "yes"
       end
       if !linkclasses.blank?
