@@ -153,14 +153,19 @@ module ApplicationHelper
   end
   
   def data_row(heading:, content:, **options)
-    options[:contentclass] ||= nil
+    options[:content_classes] ||= nil
     options[:format] ||= :html
-    options[:htmlencode_content] ||= true
     options[:background_highlight] ||= false
     options[:skip_blank_content] ||= true
     options[:markdown] ||= false
     options[:boolean_hide_false] ||= true
     options[:boolean] ||= false
+    options[:url] ||= false
+    options[:url_external] ||= false
+    options[:url_external_target_blank] ||= false
+    options[:url_linkclasses] ||= nil
+    options[:url_clipboard] ||= nil
+    options[:url_innercontent] ||= nil
     
     if content.blank? && options[:skip_blank_content]
       return nil
@@ -175,14 +180,50 @@ module ApplicationHelper
     end
     
     options[:clipboard_text] ||= content
+    
+    if options[:url]
+      if options[:url_innercontent].blank?
+        options[:url_innercontent] = content
+      end
 
+      url_options = Hash.new
+      url_options[:href] = content
+      url_options[:class] = ""
+      
+      # If it's probably external
+      if options[:url_external] || (!content.start_with?("/") || content.start_with?("//"))
+        if options[:url_external_target_blank]
+          url_options[:target] = "_blank"
+        end
+        url_options["data-ajax"] = "false"
+      end
+      if !options[:url_clipboard].blank?
+        url_options[:class] = "clipboardable #{url_options[:class]}"
+        url_options["data-clipboard-text"] = clipboard_text_str(options[:url_clipboard])
+        url_options["data-clipboard-clickthrough"] = "yes"
+      end
+      if !options[:url_linkclasses].blank?
+        url_options[:class] = "#{options[:url_linkclasses]} #{url_options[:class]}"
+      end
+      
+      content = content_tag(
+        :a,
+        CGI::escapeHTML(options[:url_innercontent]),
+        url_options,
+        escape = false
+      )
+      options[:htmlencode_content] ||= false
+    else
+      options[:htmlencode_content] ||= true
+    end
+      
     case options[:format]
     when :html
       if options[:markdown]
         options[:clipboard_text] = content
         content = Myp.markdown_to_html(content)
         options[:htmlencode_content] = false
-        options[:contentclass] = "markdowncell #{options[:contentclass]}"
+        options[:content_classes] = "markdowncell #{options[:content_classes]}"
       end
       if !options[:clipboard_text].blank?
         link_options = Hash.new
@@ -206,13 +247,13 @@ module ApplicationHelper
       end
       
       if options[:background_highlight]
-        options[:contentclass] = "bghighlight #{options[:contentclass]}"
+        options[:content_classes] = "bghighlight #{options[:content_classes]}"
       end
       
       html = <<-HTML
         <tr>
           <td>#{CGI::escapeHTML(heading)}</td>
-          <td class="#{options[:contentclass]}">#{content}</td>
+          <td class="#{options[:content_classes]}">#{content}</td>
           <td style="padding: 0.2em; vertical-align: top;">#{options[:secondary_content]}</td>
         </tr>
       HTML

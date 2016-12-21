@@ -12,7 +12,25 @@
 %>
 <%= data_row(heading: t("myplaceonline.passwords.user"), content: obj.user) %>
 <%= data_row(heading: t("myplaceonline.passwords.email"), content: obj.email) %>
-<%= attribute_table_row(t("myplaceonline.passwords.url"), url_or_blank(obj.get_url, nil, decrypted_password, nil, true, true), obj.get_url, "focusable") %>
+<%=
+  data_row(
+    heading: t("myplaceonline.passwords.url"),
+    content: obj.get_url,
+    url: true,
+    content_classes: "focusable",
+    url_clipboard: decrypted_password,
+    url_external: true,
+    url_external_target_blank: true
+  )
+%>
+<%=
+  data_row(
+    heading: t("myplaceonline.passwords.url"),
+    content: nil,
+    clipboard_text: obj.get_url,
+    content_classes: "focusable"
+  )
+%>
 <%= data_row(heading: t("myplaceonline.passwords.account_number"), content: obj.account_number) %>
 <%= data_row(heading: t("myplaceonline.passwords.notes"), content: obj.notes, markdown: true) %>
 
