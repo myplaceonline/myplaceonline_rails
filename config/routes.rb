@@ -385,7 +385,7 @@ Rails.application.routes.draw do
     ]
   }
 
-  overriden = [:users]
+  overriden = [:users, :event_rsvps]
 
   Rails.logger.debug{"Started processing all models"}
 
