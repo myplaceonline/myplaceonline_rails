@@ -216,14 +216,17 @@ class MyplaceonlineController < ApplicationController
         
         begin
           p = obj_params
-          Rails.logger.debug{"Permitted parameters: #{p.inspect}"}
+          Rails.logger.debug{"create: permitted parameters: #{p.inspect}"}
           
           # If there's an ID, then we're actually updating instead of creating
           if p[:id].blank?
+            Rails.logger.debug{"create: id blank"}
             @obj = model.new(p)
           else
-            set_obj(p: p)
+            set_obj(p: p, override_existing: true)
+            Rails.logger.debug{"create: @obj before assign: #{Myp.debug_print(@obj)}"}
             @obj.assign_attributes(p)
+            Rails.logger.debug{"create: updated @obj: #{Myp.debug_print(@obj)}"}
           end
         rescue ActiveRecord::RecordNotFound => rnf
           raise Myp::CannotFindNestedAttribute, rnf.message + " (code needs attribute setter override?)"
@@ -954,7 +957,8 @@ class MyplaceonlineController < ApplicationController
       model.table_name + ".visit_count DESC"
     end
 
-    def set_obj(action = nil, p: params)
+    def set_obj(action = nil, p: params, override_existing: false)
+      Rails.logger.debug{"set_obj action: #{action}, p: #{p}"}
       if action.nil?
         action = action_name
       end
@@ -970,8 +974,10 @@ class MyplaceonlineController < ApplicationController
             @obj = model.where("id = ? and #{parent_id} = ?", p[:id].to_i, p[parent_id.to_sym].to_i).take!
           end
         end
-        if @obj.nil?
+        if @obj.nil? || override_existing
           @obj = model.find(p[:id].to_i)
+          
+          Rails.logger.debug{"set_obj setting @obj: #{@obj}"}
         end
       rescue ActiveRecord::RecordNotFound => rnf
         raise Myp::SuddenRedirectError.new(index_path)

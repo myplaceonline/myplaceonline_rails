@@ -2126,6 +2126,10 @@ module Myp
     diff = time - user.time_now
     diff > 0 && diff <= 1.days
   end
+  
+  def self.debug_print(obj)
+    obj.ai
+  end
 
   Rails.logger.info{"myplaceonline: myp.rb static initialization ended"}
 end
