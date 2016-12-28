@@ -44,7 +44,7 @@ def process_resources(name, context)
     end
   end
   
-  post "#{name}/new"
+  post "#{resources_as}/new"
 end
 
 def routes_index(items)
