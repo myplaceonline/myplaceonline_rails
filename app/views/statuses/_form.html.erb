@@ -7,5 +7,5 @@
 <%= myp_select(f, :feeling, "myplaceonline.statuses.feeling", Myp.translate_options(Status::FEELINGS), obj.feeling) %>
 <div data-role="collapsible" data-collapsed="true">
   <h4><%= t("myplaceonline.statuses.need_help") %></h4>
-  <p><%= raw(Myp::STATUS_IDEAS) %></p>
+  <p><%= raw(Myp.parse_yaml_to_html("myplaceonline.statuses.status_ideas")) %></p>
 </div>

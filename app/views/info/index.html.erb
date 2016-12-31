@@ -1,4 +1,4 @@
-<% content_for :heading do -%><%= t('myplaceonline.info.title') %><% end -%>
+<% content_for :heading do -%><%= t("myplaceonline.info.title") %><% end -%>
 
 <ul data-role="listview" data-inset="true">
   <li>
@@ -11,6 +11,24 @@
     <%= link_to(info_contact_path) do %>
       <%= image_tag("famfamfam/email.png", size: "16x16", class: "ui-li-icon") %>
       <%= t("myplaceonline.info.contact") %>
+    <% end %>
+  </li>
+  <li>
+    <%= link_to(info_privacy_path) do %>
+      <%= image_tag("FatCow_Icons16x16/private.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.info.privacy") %>
+    <% end %>
+  </li>
+  <li>
+    <%= link_to(info_terms_path) do %>
+      <%= image_tag("FatCow_Icons16x16/auction_hammer_gavel.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.info.terms") %>
+    <% end %>
+  </li>
+  <li>
+    <%= link_to(info_mission_statement_path) do %>
+      <%= image_tag("FatCow_Icons16x16/orbit.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.info.mission_statement.title") %>
     <% end %>
   </li>
   <li>
@@ -35,18 +53,6 @@
     <%= link_to(info_credits_path) do %>
       <%= image_tag("famfamfam/heart.png", size: "16x16", class: "ui-li-icon") %>
       <%= t("myplaceonline.info.credits") %>
-    <% end %>
-  </li>
-  <li>
-    <%= link_to(info_privacy_path) do %>
-      <%= image_tag("FatCow_Icons16x16/private.png", size: "16x16", class: "ui-li-icon") %>
-      <%= t("myplaceonline.info.privacy") %>
-    <% end %>
-  </li>
-  <li>
-    <%= link_to(info_terms_path) do %>
-      <%= image_tag("FatCow_Icons16x16/auction_hammer_gavel.png", size: "16x16", class: "ui-li-icon") %>
-      <%= t("myplaceonline.info.terms") %>
     <% end %>
   </li>
   <!--

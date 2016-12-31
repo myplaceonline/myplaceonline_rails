@@ -125,6 +125,7 @@ Rails.application.routes.draw do
     info/about
     info/privacy
     info/terms
+    info/mission_statement
     test/test1
     test/test2
     test/throw

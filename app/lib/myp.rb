@@ -584,11 +584,6 @@ module Myp
     }
   end
   
-  CONTENT_FAQ = self.parse_yaml_to_html("myplaceonline.info.faq_content")
-  CONTENT_TIPS = self.parse_yaml_to_html("myplaceonline.info.tips_content")
-  STATUS_IDEAS = self.parse_yaml_to_html("myplaceonline.statuses.status_ideas")
-  EMAIL_VARIABLES = self.parse_yaml_to_html("myplaceonline.emails.variables_details")
-  
   def self.is_web_server?
     defined?(Rails::Server) || defined?(::PhusionPassenger)
   end

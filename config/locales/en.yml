@@ -494,6 +494,15 @@ en:
       invite_duplicate: "You may only invite an email address once."
       jqm:
         title: "JQueryMobile"
+      mission_statement:
+        title: "Mission Statement"
+        content: !xml |
+          <![CDATA[
+          # Mission Statement
+          
+          Fight entropy.
+          
+          ]]>
     help:
       title: "Help"
       features: "Features"
