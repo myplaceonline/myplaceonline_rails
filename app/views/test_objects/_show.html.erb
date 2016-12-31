@@ -1,0 +1,8 @@
+<%= attribute_table_row(t("myplaceonline.test_objects.test_object_name"), obj.test_object_name) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<%=
+  render partial: 'myplaceonline/pictures', locals: {
+    pics: obj.test_object_files,
+    placeholder: "myplaceonline.test_objects.file"
+  }
+%>

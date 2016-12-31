@@ -208,6 +208,7 @@ en:
       calendar_item_reminder_pendings: "Pending Reminders"
       items: "Items"
       vaccines: "Vaccines"
+      test_objects: "Test Objects"
     general:
       email: "E-mail"
       password: "Password"
@@ -3042,6 +3043,13 @@ en:
     vaccines:
       vaccine_name: "Vaccine Name"
       vaccine_date: "Date"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"
+    test_objects:
+      test_object_name: "Name"
       files: "Files/Pictures"
       file: "File/Picture"
       add_file: "Add File/Picture"

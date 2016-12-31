@@ -66,10 +66,10 @@ Category.create!([
   {id: 65, name: "books", link: "books", position: 0, parent_id: 2, additional_filtertext: "comics", icon: "FatCow_Icons16x16/book.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 66, name: "favorite_products", link: "favorite_products", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/star.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 67, name: "therapists", link: "therapists", position: 0, parent_id: 3, additional_filtertext: nil, icon: "FatCow_Icons16x16/account_functions.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 68, name: "health_insurances", link: "health_insurances", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/support.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 68, name: "health_insurances", link: "health_insurances", position: 0, parent_id: 29, additional_filtertext: "medical", icon: "FatCow_Icons16x16/support.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 69, name: "random", link: "random", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/dice.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 70, name: "doctors", link: "doctors", position: 0, parent_id: 29, additional_filtertext: "dentists", icon: "FatCow_Icons16x16/user_medical.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 71, name: "dental_insurances", link: "dental_insurances", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/tooth.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 71, name: "dental_insurances", link: "dental_insurances", position: 0, parent_id: 29, additional_filtertext: "health medical", icon: "FatCow_Icons16x16/tooth.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 72, name: "hobbies", link: "hobbies", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/paper_airplane.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 73, name: "poems", link: "poems", position: 0, parent_id: 3, additional_filtertext: nil, icon: "FatCow_Icons16x16/quill.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 74, name: "musical_groups", link: "musical_groups", position: 0, parent_id: 2, additional_filtertext: "musicians artists singers", icon: "FatCow_Icons16x16/theater.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
@@ -140,7 +140,8 @@ Category.create!([
   {id: 140, name: "perishable_foods", link: "perishable_foods", position: 0, parent_id: 1, additional_filtertext: "canned", icon: "FatCow_Icons16x16/spam.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 141, name: "foods", link: "foods", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/chinese_noodles.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 142, name: "items", link: "items", position: 0, parent_id: 1, additional_filtertext: "property things", icon: "FatCow_Icons16x16/rubber_duck.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 175, name: "vaccines", link: "vaccines", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/injection.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
+  {id: 143, name: "vaccines", link: "vaccines", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/injection.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 144, name: "test_objects", link: "test_objects", position: 0, parent_id: 107, additional_filtertext: nil, icon: "FatCow_Icons16x16/trojan_horse.png", explicit: nil, user_type_mask: nil, experimental: true, simple: nil}
 ])
 
 user = User.new
