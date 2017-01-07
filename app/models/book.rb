@@ -4,6 +4,7 @@ class Book < ActiveRecord::Base
   include AllowExistingConcern
   
   validates :book_name, presence: true
+  myplaceonline_validates_uniqueness_of :book_name
   
   boolean_time_transfer :is_read, :when_read
   
