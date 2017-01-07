@@ -1818,7 +1818,9 @@ en:
       n42: "Although you may have found the meaning of life, we recommend you continue as if you hadn't."
     books:
       book_name: "Name"
+      book_category: "Category"
       isbn: "ISBN"
+      acquired: "Acquired"
       author: "Author"
       is_read: "Have Read?"
       notes: "Notes"

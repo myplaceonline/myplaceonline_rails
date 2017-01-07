@@ -1,7 +1,9 @@
 <%= myp_text_field(f, :book_name, "myplaceonline.books.book_name", obj.book_name, autofocus) %>
 <%= myp_text_field(f, :author, "myplaceonline.books.author", obj.author) %>
-<%= myp_check_box(f, :is_read, "myplaceonline.books.is_read") %>
 <%= myp_text_field(f, :isbn, "myplaceonline.books.isbn", obj.isbn) %>
+<%= myp_text_field(f, :book_category, "myplaceonline.books.book_category", obj.book_category, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
+<%= myp_check_box(f, :is_read, "myplaceonline.books.is_read") %>
+<%= myp_date_field(f, :acquired, "myplaceonline.books.acquired", obj.acquired) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.books.notes", obj.notes) %>
 <%= myp_text_area_markdown(f, :review, "myplaceonline.books.review", obj.review) %>
 <%=

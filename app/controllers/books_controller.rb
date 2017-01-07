@@ -49,6 +49,8 @@ class BooksController < MyplaceonlineController
         :review,
         :lent_date,
         :borrowed_date,
+        :book_category,
+        :acquired,
         recommender_attributes: ContactsController.param_names,
         lent_to_attributes: ContactsController.param_names,
         borrowed_from_attributes: ContactsController.param_names,

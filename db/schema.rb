@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170103172154) do
+ActiveRecord::Schema.define(version: 20170107222314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -423,6 +423,8 @@ ActiveRecord::Schema.define(version: 20170103172154) do
     t.date     "borrowed_date"
     t.datetime "archived"
     t.integer  "rating"
+    t.string   "book_category"
+    t.date     "acquired"
     t.index ["borrowed_from_id"], name: "index_books_on_borrowed_from_id", using: :btree
     t.index ["identity_id"], name: "index_books_on_identity_id", using: :btree
     t.index ["lent_to_id"], name: "index_books_on_lent_to_id", using: :btree
