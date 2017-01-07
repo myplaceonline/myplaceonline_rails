@@ -1255,11 +1255,19 @@ var myplaceonline = function(mymodule) {
   myplaceonline.onPageLoad(function() {
     if (ZeroClipboard) {
       ZeroClipboard.on("error", function(e) {
-        myplaceonline.consoleLog("ZeroClipboard error");
-        if (Error) {
-          myplaceonline.consoleLog(new Error().stack);
+        myplaceonline.consoleLog("ZeroClipboard error: " + e);
+        //if (Error) {
+        //  myplaceonline.consoleLog("Handler stack:");
+        //  myplaceonline.consoleLog(new Error().stack);
+        //}
+        if (e && e.stack) {
+         myplaceonline.consoleLog("Error stack:");
+         myplaceonline.consoleLog(e.stack);
         }
+        myplaceonline.consoleLog("Console dir of error object:");
         myplaceonline.consoleDir(e);
+        myplaceonline.consoleLog("ZC state:");
+        myplaceonline.consoleLog(JSON.stringify(ZeroClipboard.state(), null, 2));
       });
     }
   });
