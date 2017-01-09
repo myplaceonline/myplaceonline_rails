@@ -811,6 +811,92 @@ module ApplicationHelper
     ).html_safe
   end
   
+  def input_field(name:, **options)
+    options[:wrapper_tag] ||= :p
+    options[:include_label] ||= true
+    options[:placeholder] ||= ""
+    options[:value] ||= ""
+    options[:form] ||= nil
+    options[:type] ||= :text
+    options[:flexible] ||= false
+    options[:field_attributes] ||= {}
+    options[:autofocus] ||= false
+    options[:field_classes] ||= ""
+    
+    case options[:type]
+    when :number
+      if !Myp.use_html5_inputs || options[:flexible]
+        options[:type] = :text
+      end
+    end
+
+    if Myp.is_probably_i18n(options[:placeholder])
+      options[:placeholder] = I18n.t(options[:placeholder])
+    end
+    
+    result = nil
+    
+    if options[:include_label]
+      # We only want to show the label if value is blank.
+      label_classes = options[:value].blank? ? "ui-hidden-accessible" : "form_field_label"
+      
+      if options[:form].nil?
+        result = Myp.appendstr(
+          result,
+          label_tag(name, options[:placeholder], class: label_classes)
+        )
+      else
+        result = Myp.appendstr(
+          result,
+          options[:form].label(name, options[:placeholder], class: label_classes)
+        )
+      end
+    end
+    
+    field_attributes = options[:field_attributes]
+    if options[:form].nil?
+      field_attributes[:value] = options[:value]
+    end
+    field_attributes[:placeholder] = options[:placeholder]
+    if options[:autofocus]
+      field_attributes[:class] = Myp.appendstr(field_attributes[:class], "autofocus")
+    end
+    if !options[:field_classes].nil?
+      field_attributes[:class] = Myp.appendstr(field_attributes[:class], options[:field_classes])
+    end
+    
+    if options[:type] != :text && !options[:step].nil?
+      field_attributes[:step] = options[:step]
+    end
+
+    if !options[:form].nil?
+      result = Myp.appendstr(
+        result,
+        options[:form].send(
+          options[:type].to_s + "_field",
+          name,
+          field_attributes
+        )
+      )
+    else
+      result = Myp.appendstr(
+        result,
+        send(
+          options[:type].to_s + "_field_tag",
+          name,
+          options[:value],
+          field_attributes
+        )
+      )
+    end
+    
+    if !options[:wrapper_tag].nil?
+      result = content_tag(options[:wrapper_tag], result.html_safe)
+    end
+    
+    result.html_safe
+  end
+  
   def myp_number_field_tag(name, placeholder, value, autofocus = false, input_classes = nil, step = nil, options = {})
     if Myp.is_probably_i18n(placeholder)
       placeholder = I18n.t(placeholder)

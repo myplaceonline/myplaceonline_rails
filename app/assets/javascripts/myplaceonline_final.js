@@ -1154,8 +1154,12 @@ var myplaceonline = function(mymodule) {
     }
   }
   
-  function onChangeCascade(myobj, transformValueFunc, parentSelector, childSelector, intermediateSelector, intermediateTransform, finalTransform) {
+  function onChangeCascade(myobj, transformValueFunc, parentSelector, childSelector, intermediateSelector, intermediateTransform, finalTransform, initialTransformValueFunc) {
     var currentValue = $(myobj).val();
+    if (initialTransformValueFunc) {
+      currentValue = initialTransformValueFunc(currentValue);
+      $(myobj).val(currentValue);
+    }
     if (transformValueFunc) {
       currentValue = transformValueFunc(currentValue);
     }
@@ -1173,6 +1177,8 @@ var myplaceonline = function(mymodule) {
     }
     
     searchResult.val(currentValue.toFixed(2));
+    
+    return true;
   }
   
   function toFloatSafe(someVal) {
@@ -1185,6 +1191,10 @@ var myplaceonline = function(mymodule) {
   
   function transformMultiply(x, y) {
     return x * y;
+  }
+  
+  function transformTrim(str) {
+    return $.trim(str);
   }
   
   function setCsrfToken(token) {
@@ -1251,6 +1261,7 @@ var myplaceonline = function(mymodule) {
   mymodule.cancelCheckboxHiding = cancelCheckboxHiding;
   mymodule.completeCheckboxHiding = completeCheckboxHiding;
   mymodule.checkSendDebug = checkSendDebug;
+  mymodule.transformTrim = transformTrim;
   
   myplaceonline.onPageLoad(function() {
     if (ZeroClipboard) {

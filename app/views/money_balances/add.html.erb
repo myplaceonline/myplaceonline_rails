@@ -7,7 +7,18 @@
   <%= f.fields_for :money_balance_items, childproperty do |child_fields| %>
     <div class="owe_container">
       <%
-      amount_field = myp_decimal_field(child_fields, :original_amount, "myplaceonline.money_balance_items.amount_simple", @original_amount, true, nil, step = Myp::DEFAULT_DECIMAL_STEP, { onkeyup: "myplaceonline.onChangeCascade(this, myplaceonline.toFloatSafe, '.owe_container', '.other_owes', '.other_owes_percent:checked', myplaceonline.transformMultiply, transformWithCashback)" })
+      amount_field = input_field(
+        form: child_fields,
+        type: :number,
+        name: :original_amount,
+        value: @original_amount,
+        placeholder: I18n.t("myplaceonline.money_balance_items.amount_simple"),
+        autofocus: true,
+        field_classes: "money_balance_original_amount",
+        step: Myp::DEFAULT_DECIMAL_STEP,
+        flexible: true,
+        field_attributes: { onkeyup: "return myplaceonline.onChangeCascade($('.money_balance_original_amount').first(), myplaceonline.toFloatSafe, '.owe_container', '.other_owes', '.other_owes_percent:checked', myplaceonline.transformMultiply, transformWithCashback, transformInitialValueCurrencyProcess)" }
+      )
       amount_field_id = extract_id(amount_field)
       %>
       <%
@@ -24,6 +35,12 @@
             currentValue -= currentValue * (cashback_percent / 100);
           }
           return currentValue;
+        }
+        
+        function transformInitialValueCurrencyProcess(str) {
+          str = $.trim(str);
+          str = str.replace(new RegExp(/\$/, "g"), "");
+          return str;
         }
         </script>
       <%
