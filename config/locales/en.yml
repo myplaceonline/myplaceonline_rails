@@ -678,6 +678,7 @@ en:
       diagnostics_settings_saved: "Diagnostics Settings Saved"
       diagnostics_settings: "Diagnostics Settings"
       always_enable_debug: "Always Enable Debugging Mode"
+      show_server_name: "Show web server name"
       starting_download: "Starting Download. This can take some time..."
       categories: "Categories"
       explicit_categories: "Show Explicit Categories"

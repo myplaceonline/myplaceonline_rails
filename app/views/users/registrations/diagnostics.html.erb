@@ -5,5 +5,6 @@
 
 <%= form_tag do %>
   <%= myp_check_box_tag(:always_enable_debug, t("myplaceonline.users.always_enable_debug"), @always_enable_debug) %>
+  <%= myp_check_box_tag(:show_server_name, t("myplaceonline.users.show_server_name"), @show_server_name) %>
   <div><%= submit_tag t("myplaceonline.general.save") %></div>
 <% end %>

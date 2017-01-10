@@ -397,9 +397,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def diagnostics
     check_password
     @always_enable_debug = current_user.always_enable_debug
+    @show_server_name = current_user.show_server_name
     if request.post?
       @always_enable_debug = params[:always_enable_debug]
+      @show_server_name = params[:show_server_name]
       current_user.always_enable_debug = @always_enable_debug
+      current_user.show_server_name = @show_server_name
       current_user.save!
       redirect_to edit_user_registration_path,
         :flash => { :notice => I18n.t("myplaceonline.users.diagnostics_settings_saved") }
