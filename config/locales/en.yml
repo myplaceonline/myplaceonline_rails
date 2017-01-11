@@ -241,8 +241,8 @@ en:
       clipboard: "Copy to Clipboard"
       encrypt: "Encrypt"
       is_encrypted: "Is Encrypted?"
-      metadescription: "myplaceonline: joy and meaning maximizer"
-      metakeywords: "myplaceonline, joy, meaning, order"
+      metadescription: "myplaceonline: your online helper"
+      metakeywords: "myplaceonline, joy, meaning, order, online, helper, assistant"
       submit: "Submit"
       created: "Created"
       last_updated: "Last Updated"
@@ -352,7 +352,7 @@ en:
       home: "Home"
       feedback: "Quick Feedback"
     welcome:
-      intro_html: "myplaceonline is a joy and meaning maximizer. We'll never sell your private data. The code is %{opensourcelink} if you want to review it or run it on your computer."
+      intro_html: "myplaceonline is your online helper. We'll never sell your private data. The code is %{opensourcelink} if you want to review it or run it on your computer."
       opensourcelink: "open source"
       motto: "organize, <strong>harmonize</strong>, <em>maximize</em>."
       due: "Due"
@@ -489,7 +489,7 @@ en:
       invite_form_send: "Send Invite"
       invite: "Invite"
       invite_subject: "You've been invited to try Myplaceonline by %{name}"
-      invite_body_markdown: "%{name} has invited you to try Myplaceonline, a free virtual life assistant:\n\n[%{link}](%{link})\n\nThe invite code to join is letmein. %{additional_body}"
+      invite_body_markdown: "%{name} has invited you to try Myplaceonline, your free online helper:\n\n[%{link}](%{link})\n\n%{additional_body}"
       invite_sent: "Your invite has been sent."
       invite_intro: "This will send an email invite to this person. You may enter a personalized message."
       invite_duplicate: "You may only invite an email address once."
@@ -2123,7 +2123,7 @@ en:
         
         <h2>The gist</h2>
 
-        We (the folks at myplaceonline) run a virtual life assistant website called myplaceonline.com and would love for you to use it. myplaceonline.com's basic service is free, and we offer paid upgrades for advanced features.
+        We (the folks at myplaceonline) run an online helper website called myplaceonline.com and would love for you to use it. myplaceonline.com's basic service is free, and we offer paid upgrades for advanced features.
 
         (Note, this page is based on [Wordpress.com's](https://en.wordpress.com/tos/) Creative Commons Sharealike terms of service)
         
