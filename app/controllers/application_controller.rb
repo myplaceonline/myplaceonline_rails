@@ -85,6 +85,12 @@ class ApplicationController < ActionController::Base
         MyplaceonlineExecutionContext.request = request_accessor
       end
       
+      if !ENV["NODENAME"].blank?
+        cookies["SERVERID"] = {
+          value: ENV["NODENAME"].gsub(/\..*$/, "")
+        }
+      end
+      
       yield
     ensure
       Rails.logger.debug{"application_controller around_request exit"}
