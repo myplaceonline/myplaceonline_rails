@@ -6,8 +6,8 @@
     <%
     container_name = x.class.name + "_container" + x.id.to_s
     %>
-    <div id="<%= container_name %>">
-      <%= myp_check_box_tag(x.class.name + x.id.to_s, x.exercise_regimen_exercise_name, false, false, nil, "return myplaceonline.hideIfChecked(this, $(this).parents('#" + container_name + "').first());") %>
+    <div id="<%= container_name %>" class="exercise_container">
+      <%= myp_check_box_tag(x.class.name + x.id.to_s, x.exercise_regimen_exercise_name, false, false, nil, "return myplaceonline.hideIfChecked(this, $(this).parents('#" + container_name + "').first(), function(objectToHide) { myplaceonline.completeCheckboxHiding(objectToHide); selectSecondVisibleCheckbox('exercise_container'); });") %>
       <div style="padding-left: 40px">
         <%= markdown_content(x.notes) %>
         <% x.exercise_regimen_exercise_files.each do |pic| %>
@@ -17,3 +17,21 @@
     </div>
   <% end %>
 <% end %>
+
+<script>
+function selectFirstVisibleCheckbox(containerClass) {
+  $("." + containerClass + ":visible").first().find("input[type=checkbox]").first().focus();
+}
+
+function selectSecondVisibleCheckbox(containerClass) {
+  var secondObject = $("." + containerClass + ":visible")[1];
+  if (secondObject) {
+    $(secondObject).find("input[type=checkbox]").first().focus();
+  }
+}
+
+myplaceonline.onPageLoad(function() {
+  // Focus on the first checkbox so that the user can click space to check
+  selectFirstVisibleCheckbox("exercise_container");
+});
+</script>
