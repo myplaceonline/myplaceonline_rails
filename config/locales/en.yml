@@ -985,6 +985,11 @@ en:
       total_credit: "Total Credit"
       email_reminders: "E-mail Payment Reminders"
       start_date: "Start Date"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"
     bank_accounts:
       name: "Name"
       account_number: "Account Number"

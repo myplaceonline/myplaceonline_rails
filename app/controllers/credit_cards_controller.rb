@@ -37,6 +37,10 @@ class CreditCardsController < MyplaceonlineController
     ]
   end
   
+  def may_upload
+    true
+  end
+
   protected
     def sorts
       ["lower(credit_cards.name) ASC"]
@@ -57,6 +61,7 @@ class CreditCardsController < MyplaceonlineController
         :start_date,
         password_attributes: PasswordsController.param_names,
         address_attributes: LocationsController.param_names,
+        credit_card_files_attributes: FilesController.multi_param_names,
         credit_card_cashbacks_attributes: [
           :id,
           :_destroy,

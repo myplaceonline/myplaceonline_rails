@@ -104,4 +104,14 @@ class CreditCard < ActiveRecord::Base
   
   has_many :credit_card_cashbacks, :dependent => :destroy
   accepts_nested_attributes_for :credit_card_cashbacks, allow_destroy: true, reject_if: :all_blank
+
+  has_many :credit_card_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
+  accepts_nested_attributes_for :credit_card_files, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :credit_card_files, [{:name => :identity_file}]
+
+  before_validation :update_file_folders
+
+  def update_file_folders
+    put_files_in_folder(credit_card_files, [I18n.t("myplaceonline.category.credit_cards"), display])
+  end
 end

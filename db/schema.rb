@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170110225834) do
+ActiveRecord::Schema.define(version: 20170113050528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -932,6 +932,18 @@ ActiveRecord::Schema.define(version: 20170110225834) do
     t.index ["cashback_id"], name: "index_credit_card_cashbacks_on_cashback_id", using: :btree
     t.index ["credit_card_id"], name: "index_credit_card_cashbacks_on_credit_card_id", using: :btree
     t.index ["identity_id"], name: "index_credit_card_cashbacks_on_identity_id", using: :btree
+  end
+
+  create_table "credit_card_files", force: :cascade do |t|
+    t.integer  "credit_card_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["credit_card_id"], name: "index_credit_card_files_on_credit_card_id", using: :btree
+    t.index ["identity_file_id"], name: "index_credit_card_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_credit_card_files_on_identity_id", using: :btree
   end
 
   create_table "credit_cards", force: :cascade do |t|
@@ -4614,6 +4626,9 @@ ActiveRecord::Schema.define(version: 20170110225834) do
   add_foreign_key "credit_card_cashbacks", "cashbacks", name: "credit_card_cashbacks_cashback_id_fk"
   add_foreign_key "credit_card_cashbacks", "credit_cards", name: "credit_card_cashbacks_credit_card_id_fk"
   add_foreign_key "credit_card_cashbacks", "identities", name: "credit_card_cashbacks_identity_id_fk"
+  add_foreign_key "credit_card_files", "credit_cards"
+  add_foreign_key "credit_card_files", "identities"
+  add_foreign_key "credit_card_files", "identity_files"
   add_foreign_key "credit_cards", "encrypted_values", column: "expires_encrypted_id", name: "credit_cards_expires_encrypted_id_fk"
   add_foreign_key "credit_cards", "encrypted_values", column: "number_encrypted_id", name: "credit_cards_number_encrypted_id_fk"
   add_foreign_key "credit_cards", "encrypted_values", column: "pin_encrypted_id", name: "credit_cards_pin_encrypted_id_fk"

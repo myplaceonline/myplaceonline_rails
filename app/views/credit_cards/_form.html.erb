@@ -98,3 +98,16 @@
     <%= myp_text_area_markdown(inner_child_fields, :notes, "myplaceonline.cashback.notes", childproperty.cashback.notes) %>
   <% end %>
 <% end %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :credit_card_files,
+    item_placeholder: "myplaceonline.credit_cards.file",
+    heading: "myplaceonline.credit_cards.files",
+    addbutton: "myplaceonline.credit_cards.add_file",
+    addbutton_multi: "myplaceonline.credit_cards.add_files",
+    deletebutton: "myplaceonline.credit_cards.delete_file"
+  }
+%>

@@ -21,3 +21,9 @@
   <%= attribute_table_row(t("myplaceonline.cashback.yearly_maximum"), wrapper.cashback.yearly_maximum) %>
   <%= attribute_table_row_markdown(t("myplaceonline.cashback.notes"), wrapper.cashback.notes) %>
 <% end %>
+<%=
+  render partial: 'myplaceonline/pictures', locals: {
+    pics: obj.credit_card_files,
+    placeholder: "myplaceonline.credit_cards.file"
+  }
+%>
