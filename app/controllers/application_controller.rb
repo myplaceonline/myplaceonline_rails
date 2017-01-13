@@ -86,6 +86,9 @@ class ApplicationController < ActionController::Base
       end
       
       if !ENV["NODENAME"].blank?
+        # Always set the SERVERID cookie so that if we explicitly target a server
+        # with a query parameter, the new server sticks in spite of any previous
+        # SERVERID cookies.
         cookies["SERVERID"] = {
           value: ENV["NODENAME"].gsub(/\..*$/, "")
         }
