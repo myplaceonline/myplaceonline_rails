@@ -186,6 +186,8 @@ module ApplicationHelper
         options[:transform] = method(:display_date)
       elsif content.is_a?(Fixnum) || content.is_a?(BigDecimal)
         options[:transform] = method(:display_string)
+      elsif content.is_a?(ActiveSupport::TimeWithZone)
+        options[:transform] = method(:display_datetime)
       end
     elsif options[:transform].is_a?(Symbol)
       options[:transform] = method(options[:transform])
@@ -861,7 +863,7 @@ module ApplicationHelper
     when Myp::FIELD_DATE, Myp::FIELD_DATETIME, Myp::FIELD_TIME
       options = {
         datebox_mode: options[:type],
-        date_format: options[:datebox_mode] == Myp::FIELD_DATETIME || options[:datebox_mode] == Myp::FIELD_TIME ? Myplaceonline::DEFAULT_TIME_FORMAT : Myplaceonline::DEFAULT_DATE_FORMAT
+        date_format: options[:type] == Myp::FIELD_DATETIME || options[:type] == Myp::FIELD_TIME ? Myplaceonline::DEFAULT_TIME_FORMAT : Myplaceonline::DEFAULT_DATE_FORMAT
       }.merge(options)
 
       # Tried the date, datetime, and datetime_local tags, but they have various quirks, so override

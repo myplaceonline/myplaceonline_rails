@@ -1479,6 +1479,10 @@ en:
       treatment: "Treatment"
       add_treatment: "Add Treatment"
       delete_treatment: "Delete Treatment"
+      evaluations: "Evaluations"
+      evaluation: "Evaluation"
+      add_evaluation: "Add Evaluation"
+      delete_evaluation: "Delete Evaluation"
     medical_condition_instances:
       condition_start: "Start"
       condition_end: "End"
@@ -3080,3 +3084,5 @@ en:
       quote_text: "Quote"
       quote_date: "Date"
       source: "Source"
+    medical_condition_evaluations:
+      evaluation_datetime: "Date"

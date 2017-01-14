@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170114054658) do
+ActiveRecord::Schema.define(version: 20170114065654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2500,6 +2500,20 @@ ActiveRecord::Schema.define(version: 20170114054658) do
     t.index ["identity_id"], name: "index_media_dumps_on_identity_id", using: :btree
   end
 
+  create_table "medical_condition_evaluations", force: :cascade do |t|
+    t.integer  "medical_condition_id"
+    t.text     "notes"
+    t.datetime "evaluation_datetime"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.index ["identity_id"], name: "index_medical_condition_evaluations_on_identity_id", using: :btree
+    t.index ["medical_condition_id"], name: "index_medical_condition_evaluations_on_medical_condition_id", using: :btree
+  end
+
   create_table "medical_condition_instances", force: :cascade do |t|
     t.datetime "condition_start"
     t.datetime "condition_end"
@@ -4902,6 +4916,8 @@ ActiveRecord::Schema.define(version: 20170114054658) do
   add_foreign_key "media_dump_files", "identity_files"
   add_foreign_key "media_dump_files", "media_dumps"
   add_foreign_key "media_dumps", "identities"
+  add_foreign_key "medical_condition_evaluations", "identities"
+  add_foreign_key "medical_condition_evaluations", "medical_conditions"
   add_foreign_key "medical_condition_instances", "identities", name: "medical_condition_instances_identity_id_fk"
   add_foreign_key "medical_condition_instances", "medical_conditions", name: "medical_condition_instances_medical_condition_id_fk"
   add_foreign_key "medical_condition_treatments", "doctors"

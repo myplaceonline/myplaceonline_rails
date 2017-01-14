@@ -1,0 +1,19 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATETIME,
+    name: :evaluation_datetime,
+    value: obj.evaluation_datetime,
+    placeholder: "myplaceonline.medical_condition_evaluations.evaluation_datetime",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes"
+  )
+%>

@@ -23,7 +23,8 @@ class MedicalConditionsController < MyplaceonlineController
           :notes,
           doctor_attributes: DoctorsController.param_names,
           location_attributes: LocationsController.param_names
-        ]
+        ],
+        medical_condition_evaluations_attributes: MedicalConditionEvaluation.params
       )
     end
 end

@@ -605,8 +605,7 @@ var myplaceonline = function(mymodule) {
       if (item.name) {
         itemNamePieces = item.name.split('.');
       } else {
-        itemNamePieces = new Array(1);
-        itemNamePieces[0] = item.name;
+        itemNamePieces = new Array();
       }
       
       var id = idPrefix;

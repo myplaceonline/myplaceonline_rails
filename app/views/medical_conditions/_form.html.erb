@@ -1,5 +1,5 @@
 <%= myp_text_field(f, :medical_condition_name, "myplaceonline.medical_conditions.medical_condition_name", obj.medical_condition_name, autofocus) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.medical_conditions.notes", obj.notes, collapsed: false) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.medical_conditions.notes", obj.notes) %>
 <%=
   render layout: 'myplaceonline/childproperties', locals: {
     f: f,
@@ -8,7 +8,7 @@
     childproperties: obj.medical_condition_instances,
     deletebutton: t("myplaceonline.medical_conditions.delete"),
     addbutton: t("myplaceonline.medical_conditions.add"),
-    expanded: true,
+    expanded: obj.medical_condition_instances.count > 0,
     itemname: t("myplaceonline.medical_conditions.instance"),
     formjson: [
       {
@@ -41,7 +41,7 @@
     childproperties: obj.medical_condition_treatments,
     deletebutton: t("myplaceonline.medical_conditions.delete_treatment"),
     addbutton: t("myplaceonline.medical_conditions.add_treatment"),
-    expanded: true,
+    expanded: obj.medical_condition_treatments.count > 0,
     itemname: t("myplaceonline.medical_conditions.treatment"),
     formjson: [
       {
@@ -118,4 +118,28 @@
       autofocus: false
     }
   %>
+<% end %>
+<%=
+  render(layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.medical_conditions.evaluations"),
+    childpropertiesname: :medical_condition_evaluations,
+    childproperties: obj.medical_condition_evaluations,
+    deletebutton: t("myplaceonline.medical_conditions.delete_evaluation"),
+    addbutton: t("myplaceonline.medical_conditions.add_evaluation"),
+    expanded: @obj.medical_condition_evaluations.length > 0,
+    formjson: [
+      {
+        type: :renderpartial,
+        partial: "myplaceonline/select_or_create",
+        heading: t("myplaceonline.medical_conditions.evaluation"),
+        objform: "medical_condition_evaluations/form",
+        only_new: true,
+        edit: false,
+        autofocus: true
+      }
+    ]
+  }) do |child_fields, childproperty|
+%>
+  <%= render partial: "medical_condition_evaluations/form", locals: { obj: childproperty || MedicalConditionEvaluation.build, edit: true, autofocus: false, f: child_fields } %>
 <% end %>
