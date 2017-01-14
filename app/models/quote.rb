@@ -7,4 +7,14 @@ class Quote < ActiveRecord::Base
   def display
     Myp.ellipses_if_needed(self.quote_text, 16)
   end
+
+  def self.params
+    [
+      :id,
+      :_destroy,
+      :quote_text,
+      :quote_date,
+      :source
+    ]
+  end
 end

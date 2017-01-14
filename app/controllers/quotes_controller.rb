@@ -9,10 +9,6 @@ class QuotesController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:quote).permit(
-        :quote_text,
-        :quote_date,
-        :source
-      )
+      params.require(:quote).permit(Quote.params)
     end
 end

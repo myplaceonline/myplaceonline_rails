@@ -14,7 +14,7 @@
 <%= attribute_table_row_date(t("myplaceonline.books.borrowed_date"), obj.borrowed_date) %>
 <% obj.book_quotes.each do |x| %>
   <%= table_row_heading(t("myplaceonline.books.book_quote")) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.book_quotes.book_quote"), x.book_quote) %>
+  <%= render partial: "quotes/show", locals: { obj: x.quote } %>
   <%= attribute_table_row(t("myplaceonline.book_quotes.pages"), x.pages) %>
 <% end %>
 <%=

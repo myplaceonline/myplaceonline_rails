@@ -1,11 +1,16 @@
 class BookQuote < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
+  include AllowExistingConcern
 
   belongs_to :book
 
-  validates :book_quote, presence: true
-  
   def display
-    book_quote
+    quote.display
   end
+
+  validates :quote, presence: true
+  
+  belongs_to :quote
+  accepts_nested_attributes_for :quote, allow_destroy: true, reject_if: :all_blank
+  allow_existing :quote
 end

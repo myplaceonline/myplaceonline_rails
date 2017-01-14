@@ -2130,8 +2130,9 @@ module Myp
   end
   
   def self.debug_print(obj)
+    # use awesome print
     obj.ai
   end
-
+  
   Rails.logger.info{"myplaceonline: myp.rb static initialization ended"}
 end

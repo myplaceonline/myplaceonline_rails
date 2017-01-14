@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170114015443) do
+ActiveRecord::Schema.define(version: 20170114022506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -389,8 +389,10 @@ ActiveRecord::Schema.define(version: 20170114015443) do
     t.datetime "updated_at",  null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "quote_id"
     t.index ["book_id"], name: "index_book_quotes_on_book_id", using: :btree
     t.index ["identity_id"], name: "index_book_quotes_on_identity_id", using: :btree
+    t.index ["quote_id"], name: "index_book_quotes_on_quote_id", using: :btree
   end
 
   create_table "book_stores", force: :cascade do |t|
@@ -4588,6 +4590,7 @@ ActiveRecord::Schema.define(version: 20170114015443) do
   add_foreign_key "book_files", "identity_files"
   add_foreign_key "book_quotes", "books"
   add_foreign_key "book_quotes", "identities"
+  add_foreign_key "book_quotes", "quotes"
   add_foreign_key "book_stores", "identities"
   add_foreign_key "book_stores", "locations"
   add_foreign_key "books", "contacts", column: "borrowed_from_id"

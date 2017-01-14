@@ -58,8 +58,8 @@ class BooksController < MyplaceonlineController
         book_quotes_attributes: [
           :id,
           :_destroy,
-          :book_quote,
-          :pages
+          :pages,
+          quote_attributes: Quote.params
         ]
       )
     end

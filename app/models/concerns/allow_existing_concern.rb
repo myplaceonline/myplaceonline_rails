@@ -11,14 +11,31 @@ module AllowExistingConcern extend ActiveSupport::Concern
       # http://stackoverflow.com/a/12064875/4135310
       def allow_existing(name, model = nil)
         define_method("#{name.to_s}_attributes=") do |attributes|
+
+          Rails.logger.debug{"allow_existing name: #{name}, attributes: #{attributes}"}
+          
           if !attributes['id'].blank?
             
             # Remove all other attributes since we're searching for a
-            # particular object and not creating a new one.
+            # particular object and not creating a new one. But keep around
+            # the other attributes so that we can make updates if necessary
+            original_attributes = attributes.dup
             attributes.keep_if {|innerkey, innervalue| innerkey == "id" }
             
-            Myp.set_existing_object(self, name, model, attributes['id'].to_i, action: :show)
+            Rails.logger.debug{"allow_existing final attributes: #{attributes}"}
+          
+            existing_obj = Myp.set_existing_object(self, name, model, attributes['id'].to_i, action: :show)
+
+            Rails.logger.debug{"allow_existing existing_obj: #{Myp.debug_print(existing_obj)}"}
+            
+            # If there are some other values set other than the ID, then use all attributes
+            if original_attributes.any?{|key, value| key != "id" && !value.blank? }
+              attributes = original_attributes
+              
+              Rails.logger.debug{"allow_existing using all attributes"}
+            end
           end
+          
           super(attributes)
         end
       end
