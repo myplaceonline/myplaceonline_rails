@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170113050528) do
+ActiveRecord::Schema.define(version: 20170113212129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3789,6 +3789,34 @@ ActiveRecord::Schema.define(version: 20170113050528) do
     t.index ["identity_id"], name: "index_sun_exposures_on_identity_id", using: :btree
   end
 
+  create_table "tax_document_files", force: :cascade do |t|
+    t.integer  "tax_document_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["identity_file_id"], name: "index_tax_document_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_tax_document_files_on_identity_id", using: :btree
+    t.index ["tax_document_id"], name: "index_tax_document_files_on_tax_document_id", using: :btree
+  end
+
+  create_table "tax_documents", force: :cascade do |t|
+    t.string   "tax_document_form_name"
+    t.string   "tax_document_description"
+    t.text     "notes"
+    t.date     "received_date"
+    t.integer  "fiscal_year"
+    t.decimal  "amount",                   precision: 10, scale: 2
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.index ["identity_id"], name: "index_tax_documents_on_identity_id", using: :btree
+  end
+
   create_table "temperatures", force: :cascade do |t|
     t.datetime "measured"
     t.decimal  "measured_temperature",             precision: 10, scale: 2
@@ -5036,6 +5064,10 @@ ActiveRecord::Schema.define(version: 20170113050528) do
   add_foreign_key "story_pictures", "identity_files"
   add_foreign_key "story_pictures", "stories"
   add_foreign_key "sun_exposures", "identities", name: "sun_exposures_identity_id_fk"
+  add_foreign_key "tax_document_files", "identities"
+  add_foreign_key "tax_document_files", "identity_files"
+  add_foreign_key "tax_document_files", "tax_documents"
+  add_foreign_key "tax_documents", "identities"
   add_foreign_key "temperatures", "identities", name: "temperatures_identity_id_fk"
   add_foreign_key "test_object_files", "identities"
   add_foreign_key "test_object_files", "identity_files"

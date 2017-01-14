@@ -1,0 +1,68 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :tax_document_form_name,
+    value: obj.tax_document_form_name,
+    placeholder: "myplaceonline.tax_documents.tax_document_form_name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :tax_document_description,
+    value: obj.tax_document_description,
+    placeholder: "myplaceonline.tax_documents.tax_document_description"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATE,
+    name: :received_date,
+    value: obj.received_date,
+    placeholder: "myplaceonline.tax_documents.received_date"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_NUMBER,
+    name: :fiscal_year,
+    value: obj.fiscal_year,
+    placeholder: "myplaceonline.tax_documents.fiscal_year"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_NUMBER,
+    name: :amount,
+    value: obj.amount,
+    placeholder: "myplaceonline.tax_documents.amount"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes"
+  )
+%>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :tax_document_files,
+    item_placeholder: "myplaceonline.tax_documents.file",
+    heading: "myplaceonline.tax_documents.files",
+    addbutton: "myplaceonline.tax_documents.add_file",
+    addbutton_multi: "myplaceonline.tax_documents.add_files",
+    deletebutton: "myplaceonline.tax_documents.delete_file"
+  }
+%>

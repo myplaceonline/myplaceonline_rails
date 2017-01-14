@@ -12,6 +12,13 @@ module Myp
   @@all_categories_without_explicit_with_experimental = Hash.new.with_indifferent_access
   @@all_categories_without_experimental_with_explicit = Hash.new.with_indifferent_access
 
+  FIELD_TEXT = :text
+  FIELD_TEXT_AREA = :text_area
+  FIELD_DATE = :date
+  FIELD_DATETIME = :datetime
+  FIELD_TIME = :time
+  FIELD_NUMBER = :number
+  
   # We want at least 128 bits of randomness, so
   # min(POSSIBILITIES_*.length)^DEFAULT_PASSWORD_LENGTH should be >= 2^128
   DEFAULT_PASSWORD_LENGTH = 22

@@ -209,6 +209,7 @@ en:
       items: "Items"
       vaccines: "Vaccines"
       test_objects: "Test Objects"
+      tax_documents: "Tax Documents"
     general:
       email: "E-mail"
       password: "Password"
@@ -3058,6 +3059,17 @@ en:
       delete_file: "Delete File/Picture"
     test_objects:
       test_object_name: "Name"
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"
+    tax_documents:
+      tax_document_form_name: "Form Name"
+      tax_document_description: "Short Description"
+      received_date: "Received"
+      fiscal_year: "Fiscal Year"
+      amount: "Amount"
       files: "Files/Pictures"
       file: "File/Picture"
       add_file: "Add File/Picture"

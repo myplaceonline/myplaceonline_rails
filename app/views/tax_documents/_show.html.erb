@@ -1,0 +1,12 @@
+<%= data_row(heading: t("myplaceonline.tax_documents.tax_document_form_name"), content: obj.tax_document_form_name) %>
+<%= data_row(heading: t("myplaceonline.tax_documents.tax_document_description"), content: obj.tax_document_description) %>
+<%= data_row(heading: t("myplaceonline.tax_documents.received_date"), content: obj.received_date) %>
+<%= data_row(heading: t("myplaceonline.tax_documents.fiscal_year"), content: obj.fiscal_year) %>
+<%= data_row(heading: t("myplaceonline.tax_documents.amount"), content: obj.amount) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.tax_document_files,
+    placeholder: "myplaceonline.tax_documents.file"
+  }
+%>

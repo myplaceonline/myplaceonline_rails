@@ -1,6 +1,7 @@
 require 'htmlentities'
 
 module ApplicationHelper
+  
   def flashes!(obj = nil)
 
     flash_params = params[:flash]
@@ -152,6 +153,18 @@ module ApplicationHelper
     result
   end
   
+  def display_string(content:, format:)
+    content.to_s
+  end
+  
+  def display_date(content:, format:)
+    Myp.display_date(content, current_user)
+  end
+  
+  def display_datetime(content:, format:)
+    Myp.display_datetime(content, current_user)
+  end
+  
   def data_row(heading:, content:, **options)
     options[:content_classes] ||= nil
     options[:format] ||= :html
@@ -166,6 +179,21 @@ module ApplicationHelper
     options[:url_linkclasses] ||= nil
     options[:url_clipboard] ||= nil
     options[:url_innercontent] ||= nil
+    
+    # ->(content:, format: ){ content.to_s }
+    if options[:transform].nil?
+      if content.is_a?(Date)
+        options[:transform] = method(:display_date)
+      elsif content.is_a?(Fixnum) || content.is_a?(BigDecimal)
+        options[:transform] = method(:display_string)
+      end
+    elsif options[:transform].is_a?(Symbol)
+      options[:transform] = method(options[:transform])
+    end
+    
+    if !options[:transform].nil?
+      content = options[:transform].call(content: content, format: options[:format])
+    end
     
     if content.blank? && options[:skip_blank_content]
       return nil
@@ -817,17 +845,30 @@ module ApplicationHelper
     options[:placeholder] ||= ""
     options[:value] ||= ""
     options[:form] ||= nil
-    options[:type] ||= :text
+    options[:type] ||= Myp::FIELD_TEXT
     options[:flexible] ||= false
     options[:field_attributes] ||= {}
     options[:autofocus] ||= false
     options[:field_classes] ||= ""
+    options[:datebox_mode] ||= nil
     
     case options[:type]
-    when :number
+    when Myp::FIELD_NUMBER
       if !Myp.use_html5_inputs || options[:flexible]
         options[:type] = :text
       end
+    when Myp::FIELD_DATE, Myp::FIELD_DATETIME, Myp::FIELD_TIME
+      options[:datebox_mode] ||= options[:type]
+      options[:date_format] ||= options[:datebox_mode] == Myp::FIELD_DATETIME || options[:datebox_mode] == Myp::FIELD_TIME ? Myplaceonline::DEFAULT_TIME_FORMAT : Myplaceonline::DEFAULT_DATE_FORMAT
+
+      # Tried the date, datetime, and datetime_local tags, but they have various quirks, so override
+      options[:type] = Myp::FIELD_TEXT
+    when Myp::FIELD_TEXT_AREA
+      options[:collapsible] ||= true
+      options[:collapsed] ||= options[:value].blank?
+      
+      # The collapsible header is effectively the label
+      options[:include_label] = false
     end
 
     if Myp.is_probably_i18n(options[:placeholder])
@@ -869,27 +910,99 @@ module ApplicationHelper
       field_attributes[:step] = options[:step]
     end
 
-    if !options[:form].nil?
+    if options[:datebox_mode].nil?
+      if options[:type] == Myp::FIELD_TEXT_AREA
+        result = Myp.appendstr(
+          result,
+          render(partial: "myplaceonline/rte", locals: {
+            f: options[:form],
+            markdown_data: options[:value],
+            hidden_field_name: name
+          })
+        )
+        
+        if options[:collapsible]
+          result = "<div data-role=\"collapsible\" data-collapsed=\"#{options[:collapsed]}\"><h4>#{options[:placeholder]}</h4>".html_safe + result.html_safe + "</div>".html_safe
+        end
+      else
+        if !options[:form].nil?
+          result = Myp.appendstr(
+            result,
+            options[:form].send(
+              options[:type].to_s + "_field",
+              name,
+              field_attributes
+            )
+          )
+        else
+          result = Myp.appendstr(
+            result,
+            send(
+              options[:type].to_s + "_field_tag",
+              name,
+              options[:value],
+              field_attributes
+            )
+          )
+        end
+      end
+    else
+      # http://dev.jtsage.com/jQM-DateBox/api/
+      # http://dev.jtsage.com/jQM-DateBox/doc/3-0-first-datebox/
+      # Options should match app/assets/javascripts/myplaceonline_final.js formAddItem
+      # https://github.com/jtsage/jquery-mobile-datebox/issues/363
+      # https://github.com/jtsage/jquery-mobile-datebox/issues/295
+      
+      hidden_time = nil
+      random_name = ""
+      close_callback = "false"
+      mode = "calbox"
+      
+      case options[:datebox_mode]
+      when Myp::FIELD_DATETIME
+        random_name = SecureRandom.hex(10)
+        hidden_time = hidden_field_tag(
+          random_name,
+          options[:value].blank? ? "" : options[:value].to_s(:timebox),
+          "data-role" => "datebox",
+          "data-datebox-mode" => "timebox",
+          "data-datebox-override-date-format" => Myplaceonline::JQM_DATEBOX_TIMEBOX_FORMAT,
+          "data-datebox-use-focus" => "true",
+          "data-datebox-use-modal" => "false",
+          "data-datebox-use-button" => "false",
+          "data-datebox-popup-position" => "window",
+          "data-datebox-close-callback" => "dateboxTimeboxClosed"
+        )
+        datebox_type = "calbox"
+        close_callback = "dateboxCalendarClosed"
+      when Myp::FIELD_TIME
+        mode = "timebox"
+      end
+      
+      field_attributes["data-role"] = "datebox"
+      field_attributes["data-datebox-mode"] = mode
+      field_attributes["data-datebox-override-date-format"] = options[:date_format]
+      field_attributes["data-datebox-use-focus"] = "true"
+      field_attributes["data-datebox-use-clear-button"] = "true"
+      field_attributes["data-datebox-use-modal"] = "false"
+      field_attributes["data-datebox-cal-use-pickers"] = "true"
+      field_attributes["data-datebox-cal-year-pick-min"] = "-100"
+      field_attributes["data-datebox-cal-year-pick-max"] = "10"
+      field_attributes["data-datebox-cal-no-header"] = "true"
+      field_attributes["data-datebox-close-callback"] = close_callback
+      field_attributes["data-datetime-id"] = random_name
+      
+      # datebox or calbox
       result = Myp.appendstr(
         result,
         options[:form].send(
           options[:type].to_s + "_field",
           name,
           field_attributes
-        )
-      )
-    else
-      result = Myp.appendstr(
-        result,
-        send(
-          options[:type].to_s + "_field_tag",
-          name,
-          options[:value],
-          field_attributes
-        )
+        ) + hidden_time
       )
     end
-    
+
     if !options[:wrapper_tag].nil?
       result = content_tag(options[:wrapper_tag], result.html_safe)
     end
