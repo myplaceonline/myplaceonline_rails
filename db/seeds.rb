@@ -142,7 +142,8 @@ Category.create!([
   {id: 142, name: "items", link: "items", position: 0, parent_id: 1, additional_filtertext: "property things", icon: "FatCow_Icons16x16/rubber_duck.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 143, name: "vaccines", link: "vaccines", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/injection.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 144, name: "test_objects", link: "test_objects", position: 0, parent_id: 107, additional_filtertext: nil, icon: "FatCow_Icons16x16/trojan_horse.png", explicit: nil, user_type_mask: nil, experimental: true, simple: nil},
-  {id: 145, name: "tax_documents", link: "tax_documents", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/table_money.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
+  {id: 145, name: "tax_documents", link: "tax_documents", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/table_money.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 146, name: "quotes", link: "quotes", position: 0, parent_id: 3, additional_filtertext: nil, icon: "FatCow_Icons16x16/document_quote.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
 ])
 
 user = User.new

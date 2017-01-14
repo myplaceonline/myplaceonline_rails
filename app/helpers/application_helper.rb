@@ -840,17 +840,19 @@ module ApplicationHelper
   end
   
   def input_field(name:, **options)
-    options[:wrapper_tag] ||= :p
-    options[:include_label] ||= true
-    options[:placeholder] ||= ""
-    options[:value] ||= ""
-    options[:form] ||= nil
-    options[:type] ||= Myp::FIELD_TEXT
-    options[:flexible] ||= false
-    options[:field_attributes] ||= {}
-    options[:autofocus] ||= false
-    options[:field_classes] ||= ""
-    options[:datebox_mode] ||= nil
+    options = {
+      wrapper_tag: :p,
+      include_label: true,
+      placeholder: "",
+      value: "",
+      form: nil,
+      type: Myp::FIELD_TEXT,
+      flexible: false,
+      field_attributes: {},
+      autofocus: false,
+      field_classes: "",
+      datebox_mode: nil
+    }.merge(options)
     
     case options[:type]
     when Myp::FIELD_NUMBER
@@ -858,14 +860,18 @@ module ApplicationHelper
         options[:type] = :text
       end
     when Myp::FIELD_DATE, Myp::FIELD_DATETIME, Myp::FIELD_TIME
-      options[:datebox_mode] ||= options[:type]
-      options[:date_format] ||= options[:datebox_mode] == Myp::FIELD_DATETIME || options[:datebox_mode] == Myp::FIELD_TIME ? Myplaceonline::DEFAULT_TIME_FORMAT : Myplaceonline::DEFAULT_DATE_FORMAT
+      options = {
+        datebox_mode: options[:type],
+        date_format: options[:datebox_mode] == Myp::FIELD_DATETIME || options[:datebox_mode] == Myp::FIELD_TIME ? Myplaceonline::DEFAULT_TIME_FORMAT : Myplaceonline::DEFAULT_DATE_FORMAT
+      }.merge(options)
 
       # Tried the date, datetime, and datetime_local tags, but they have various quirks, so override
       options[:type] = Myp::FIELD_TEXT
     when Myp::FIELD_TEXT_AREA
-      options[:collapsible] ||= true
-      options[:collapsed] ||= options[:value].blank?
+      options = {
+        collapsible: true,
+        collapsed: options[:value].blank?
+      }.merge(options)
       
       # The collapsible header is effectively the label
       options[:include_label] = false

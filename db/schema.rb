@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170113212129) do
+ActiveRecord::Schema.define(version: 20170114002854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3297,6 +3297,18 @@ ActiveRecord::Schema.define(version: 20170113212129) do
     t.index ["identity_id"], name: "index_quests_on_identity_id", using: :btree
   end
 
+  create_table "quotes", force: :cascade do |t|
+    t.text     "quote_text"
+    t.date     "quote_date"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["identity_id"], name: "index_quotes_on_identity_id", using: :btree
+  end
+
   create_table "receipt_files", force: :cascade do |t|
     t.integer  "receipt_id"
     t.integer  "identity_file_id"
@@ -4997,6 +5009,7 @@ ActiveRecord::Schema.define(version: 20170113212129) do
   add_foreign_key "quest_files", "quests"
   add_foreign_key "questions", "identities", name: "questions_identity_id_fk"
   add_foreign_key "quests", "identities"
+  add_foreign_key "quotes", "identities"
   add_foreign_key "receipt_files", "identities"
   add_foreign_key "receipt_files", "identity_files"
   add_foreign_key "receipt_files", "receipts"

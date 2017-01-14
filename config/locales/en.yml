@@ -210,6 +210,7 @@ en:
       vaccines: "Vaccines"
       test_objects: "Test Objects"
       tax_documents: "Tax Documents"
+      quotes: "Quotes"
     general:
       email: "E-mail"
       password: "Password"
@@ -3075,3 +3076,6 @@ en:
       add_file: "Add File/Picture"
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
+    quotes:
+      quote_text: "Quote"
+      quote_date: "Date"

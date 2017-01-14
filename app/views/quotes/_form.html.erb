@@ -1,0 +1,19 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :quote_text,
+    value: obj.quote_text,
+    placeholder: "myplaceonline.quotes.quote_text",
+    collapsed: false
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATE,
+    name: :quote_date,
+    value: obj.quote_date,
+    placeholder: "myplaceonline.quotes.quote_date"
+  )
+%>
