@@ -211,6 +211,7 @@ en:
       test_objects: "Test Objects"
       tax_documents: "Tax Documents"
       quotes: "Quotes"
+      medical_condition_evaluations: "Medical Condition Evaluations"
     general:
       email: "E-mail"
       password: "Password"
@@ -3086,3 +3087,9 @@ en:
       source: "Source"
     medical_condition_evaluations:
       evaluation_datetime: "Date"
+    identity_files:
+      files: "Files/Pictures"
+      file: "File/Picture"
+      add_file: "Add File/Picture"
+      add_files: "Add File(s)/Picture(s)"
+      delete_file: "Delete File/Picture"

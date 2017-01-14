@@ -1,5 +1,6 @@
 class MedicalConditionEvaluation < ActiveRecord::Base
   include MyplaceonlineActiveRecordIdentityConcern
+  include AllowExistingConcern
 
   belongs_to :medical_condition
   
@@ -14,7 +15,18 @@ class MedicalConditionEvaluation < ActiveRecord::Base
       :id,
       :_destroy,
       :evaluation_datetime,
-      :notes
+      :notes,
+      medical_condition_evaluation_files_attributes: FilesController.multi_param_names
     ]
+  end
+
+  has_many :medical_condition_evaluation_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
+  accepts_nested_attributes_for :medical_condition_evaluation_files, allow_destroy: true, reject_if: :all_blank
+  allow_existing_children :medical_condition_evaluation_files, [{:name => :identity_file}]
+
+  before_validation :update_file_folders
+
+  def update_file_folders
+    put_files_in_folder(medical_condition_evaluation_files, [I18n.t("myplaceonline.category.medical_condition_evaluations"), display])
   end
 end
