@@ -6,6 +6,9 @@ if !hidden_field_name.nil?
   rte_hidden_field = f.hidden_field(hidden_field_name)
   rte_hidden_field_id = extract_id(rte_hidden_field)
 end
+if !defined?(autofocus)
+  autofocus = false
+end
 %>
 <%= rte_container %>
 <% if !hidden_field_name.nil? %>
@@ -16,6 +19,7 @@ myplaceonline.onPageLoad(function() {
   CKEDITOR.replace(
     '<%= rte_container_id %>',
     {
+      startupFocus: <%= autofocus %>,
       on: {
         instanceReady: function(ev) {
           var initial_data = <%= raw((markdown_data.nil? ? "" : markdown_data).to_json) %>;

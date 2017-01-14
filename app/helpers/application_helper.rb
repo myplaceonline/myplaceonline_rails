@@ -922,7 +922,8 @@ module ApplicationHelper
           render(partial: "myplaceonline/rte", locals: {
             f: options[:form],
             markdown_data: options[:value],
-            hidden_field_name: name
+            hidden_field_name: name,
+            autofocus: options[:autofocus]
           })
         )
         

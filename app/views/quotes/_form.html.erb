@@ -5,7 +5,8 @@
     name: :quote_text,
     value: obj.quote_text,
     placeholder: "myplaceonline.quotes.quote_text",
-    collapsed: false
+    collapsed: false,
+    autofocus: autofocus
   )
 %>
 <%=
@@ -15,5 +16,14 @@
     name: :quote_date,
     value: obj.quote_date,
     placeholder: "myplaceonline.quotes.quote_date"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :source,
+    value: obj.source,
+    placeholder: "myplaceonline.quotes.source"
   )
 %>
