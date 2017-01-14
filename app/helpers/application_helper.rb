@@ -850,8 +850,7 @@ module ApplicationHelper
       flexible: false,
       field_attributes: {},
       autofocus: false,
-      field_classes: "",
-      datebox_mode: nil
+      field_classes: ""
     }.merge(options)
     
     case options[:type]
