@@ -38,6 +38,9 @@ class Vehicle < ActiveRecord::Base
   accepts_nested_attributes_for :vehicle_warranties, allow_destroy: true, reject_if: :all_blank
   allow_existing_children :vehicle_warranties, [{:name => :warranty}]
 
+  has_many :vehicle_registrations, -> { order('registration_date DESC') }, :dependent => :destroy
+  accepts_nested_attributes_for :vehicle_registrations, allow_destroy: true, reject_if: :all_blank
+
   def display
     Myp.appendstrwrap(name, license_plate)
   end

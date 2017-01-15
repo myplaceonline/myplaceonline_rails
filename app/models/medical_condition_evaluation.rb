@@ -27,6 +27,6 @@ class MedicalConditionEvaluation < ActiveRecord::Base
   before_validation :update_file_folders
 
   def update_file_folders
-    put_files_in_folder(medical_condition_evaluation_files, [I18n.t("myplaceonline.category.medical_condition_evaluations"), display])
+    put_files_in_folder(medical_condition_evaluation_files, [I18n.t("myplaceonline.category.medical_condition_evaluations"), medical_condition.display, display])
   end
 end

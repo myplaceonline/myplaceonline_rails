@@ -113,3 +113,7 @@
   <%= attribute_table_row(t("myplaceonline.warranties.warranty_condition"), wrapper.warranty.warranty_condition) %>
   <%= attribute_table_row_markdown(t("myplaceonline.warranties.notes"), wrapper.warranty.notes) %>
 <% end %>
+<% obj.vehicle_registrations.each do |x| %>
+  <%= table_row_heading(t("myplaceonline.vehicles.registration")) %>
+  <%= render partial: "vehicle_registrations/show", locals: { obj: x } %>
+<% end %>

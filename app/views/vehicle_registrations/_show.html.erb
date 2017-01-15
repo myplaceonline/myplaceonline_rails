@@ -1,0 +1,8 @@
+<%= data_row(heading: t("myplaceonline.vehicle_registrations.registration_date"), content: obj.registration_date) %>
+<%= data_row(heading: t("myplaceonline.vehicle_registrations.registration_source"), content: obj.registration_source) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.vehicle_registration_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>

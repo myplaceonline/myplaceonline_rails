@@ -102,6 +102,7 @@ class VehiclesController < MyplaceonlineController
           :_destroy,
           warranty_attributes: Warranty.params
         ],
+        vehicle_registrations_attributes: VehicleRegistration.params
       )
     end
 end

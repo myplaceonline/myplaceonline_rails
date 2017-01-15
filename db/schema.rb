@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170114084046) do
+ActiveRecord::Schema.define(version: 20170115191031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4232,6 +4232,33 @@ ActiveRecord::Schema.define(version: 20170114084046) do
     t.index ["vehicle_id"], name: "index_vehicle_pictures_on_vehicle_id", using: :btree
   end
 
+  create_table "vehicle_registration_files", force: :cascade do |t|
+    t.integer  "vehicle_registration_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["identity_file_id"], name: "index_vehicle_registration_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_vehicle_registration_files_on_identity_id", using: :btree
+    t.index ["vehicle_registration_id"], name: "index_vehicle_registration_files_on_vehicle_registration_id", using: :btree
+  end
+
+  create_table "vehicle_registrations", force: :cascade do |t|
+    t.integer  "vehicle_id"
+    t.string   "registration_source"
+    t.date     "registration_date"
+    t.decimal  "amount",              precision: 10, scale: 2
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+    t.index ["identity_id"], name: "index_vehicle_registrations_on_identity_id", using: :btree
+    t.index ["vehicle_id"], name: "index_vehicle_registrations_on_vehicle_id", using: :btree
+  end
+
   create_table "vehicle_service_files", force: :cascade do |t|
     t.integer  "vehicle_service_id"
     t.integer  "identity_file_id"
@@ -5169,6 +5196,11 @@ ActiveRecord::Schema.define(version: 20170114084046) do
   add_foreign_key "vehicle_pictures", "identities", name: "vehicle_pictures_identity_id_fk"
   add_foreign_key "vehicle_pictures", "identity_files", name: "vehicle_pictures_identity_file_id_fk"
   add_foreign_key "vehicle_pictures", "vehicles", name: "vehicle_pictures_vehicle_id_fk"
+  add_foreign_key "vehicle_registration_files", "identities"
+  add_foreign_key "vehicle_registration_files", "identity_files"
+  add_foreign_key "vehicle_registration_files", "vehicle_registrations"
+  add_foreign_key "vehicle_registrations", "identities"
+  add_foreign_key "vehicle_registrations", "vehicles"
   add_foreign_key "vehicle_service_files", "identities"
   add_foreign_key "vehicle_service_files", "identity_files"
   add_foreign_key "vehicle_service_files", "vehicle_services"

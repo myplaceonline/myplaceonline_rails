@@ -1,0 +1,32 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATE,
+    name: :registration_date,
+    value: obj.registration_date,
+    placeholder: "myplaceonline.vehicle_registrations.registration_date",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :registration_source,
+    value: obj.registration_source,
+    placeholder: "myplaceonline.vehicle_registrations.registration_source"
+  )
+%>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :vehicle_registration_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>

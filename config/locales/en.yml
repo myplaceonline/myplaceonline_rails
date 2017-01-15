@@ -212,6 +212,7 @@ en:
       tax_documents: "Tax Documents"
       quotes: "Quotes"
       medical_condition_evaluations: "Medical Condition Evaluations"
+      vehicle_registrations: "Vehicle Registrations"
     general:
       email: "E-mail"
       password: "Password"
@@ -1121,6 +1122,10 @@ en:
       owned_for: "Owned For"
       add_vehicle_service: "Add Vehicle Service"
       vehicle_services: "Vehicle Services"
+      registrations: "Registrations"
+      registration: "Registration"
+      add_registration: "Add Registration"
+      delete_registration: "Delete Registration"
     vehicle_insurances:
       insurance_name: "Name"
       insurances: "Insurances"
@@ -3093,3 +3098,6 @@ en:
       add_file: "Add File/Picture"
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
+    vehicle_registrations:
+      registration_date: "Date"
+      registration_source: "Source"

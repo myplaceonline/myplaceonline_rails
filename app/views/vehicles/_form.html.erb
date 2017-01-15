@@ -243,3 +243,27 @@
     }
   %>
 <% end %>
+<%=
+  render(layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.vehicles.registrations"),
+    childpropertiesname: :vehicle_registrations,
+    childproperties: obj.vehicle_registrations,
+    deletebutton: t("myplaceonline.vehicles.delete_registration"),
+    addbutton: t("myplaceonline.vehicles.add_registration"),
+    expanded: @obj.vehicle_registrations.length > 0,
+    formjson: [
+      {
+        type: :renderpartial,
+        partial: "myplaceonline/select_or_create",
+        heading: t("myplaceonline.vehicles.registration"),
+        objform: "vehicle_registrations/form",
+        only_new: true,
+        edit: false,
+        autofocus: true
+      }
+    ]
+  }) do |child_fields, childproperty|
+%>
+  <%= render partial: "vehicle_registrations/form", locals: { obj: childproperty || VehicleRegistration.build, edit: true, autofocus: false, f: child_fields } %>
+<% end %>
