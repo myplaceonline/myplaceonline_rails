@@ -1,0 +1,3 @@
+<%= data_row(heading: t("myplaceonline.prescription_refills.refill_date"), content: obj.refill_date) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%= attribute_table_row_reference(t("myplaceonline.prescription_refills.location"), "location_path", obj.location) %>

@@ -51,6 +51,30 @@
   }
 %>
 <%=
+  render(layout: 'myplaceonline/childproperties', locals: {
+    f: f,
+    heading: t("myplaceonline.prescriptions.refills"),
+    childpropertiesname: :prescription_refills,
+    childproperties: obj.prescription_refills,
+    deletebutton: t("myplaceonline.prescriptions.delete_refill"),
+    addbutton: t("myplaceonline.prescriptions.add_refill"),
+    expanded: @obj.prescription_refills.length > 0,
+    formjson: [
+      {
+        type: :renderpartial,
+        partial: "myplaceonline/select_or_create",
+        heading: t("myplaceonline.prescriptions.refill"),
+        objform: "prescription_refills/form",
+        only_new: true,
+        edit: false,
+        autofocus: true
+      }
+    ]
+  }) do |child_fields, childproperty|
+%>
+  <%= render partial: "prescription_refills/form", locals: { obj: childproperty || PrescriptionRefill.build, edit: true, autofocus: false, f: child_fields } %>
+<% end %>
+<%=
   render partial: "myplaceonline/pictures_form", locals: {
     f: f,
     obj: obj,

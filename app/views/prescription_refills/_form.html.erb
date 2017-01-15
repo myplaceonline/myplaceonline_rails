@@ -1,0 +1,32 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATE,
+    name: :refill_date,
+    value: obj.refill_date,
+    placeholder: "myplaceonline.prescription_refills.refill_date",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes"
+  )
+%>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :location,
+    existingobj: obj.location,
+    heading: t("myplaceonline.prescription_refills.location"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    autofocus: true
+  }
+%>

@@ -8,6 +8,9 @@ class Prescription < ActiveRecord::Base
   accepts_nested_attributes_for :doctor, reject_if: proc { |attributes| DoctorsController.reject_if_blank(attributes) }
   allow_existing :doctor
   
+  has_many :prescription_refills, -> { order('refill_date DESC') }, :dependent => :destroy
+  accepts_nested_attributes_for :prescription_refills, allow_destroy: true, reject_if: :all_blank
+
   def display
     prescription_name
   end

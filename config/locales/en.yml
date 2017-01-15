@@ -214,6 +214,7 @@ en:
       medical_condition_evaluations: "Medical Condition Evaluations"
       vehicle_registrations: "Vehicle Registrations"
       prescriptions: "Prescriptions"
+      prescription_refills: "Prescription Refills"
     general:
       email: "E-mail"
       password: "Password"
@@ -3107,3 +3108,10 @@ en:
       prescription_date: "Date"
       doctor: "Doctor"
       refill_maximum: "Maximum Number of Refills"
+      refill: "Refill"
+      refills: "Refills"
+      add_refill: "Add Refill"
+      delete_refill: "Delete Refill"
+    prescription_refills:
+      refill_date: "Date"
+      location: "Location"

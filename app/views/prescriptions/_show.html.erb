@@ -3,6 +3,10 @@
 <%= data_row(heading: t("myplaceonline.prescriptions.refill_maximum"), content: obj.refill_maximum) %>
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
 <%= attribute_table_row_reference(t("myplaceonline.prescriptions.doctor"), "doctor_path", obj.doctor) %>
+<% obj.prescription_refills.each do |x| %>
+  <%= table_row_heading(t("myplaceonline.prescriptions.refill")) %>
+  <%= render partial: "prescription_refills/show", locals: { obj: x } %>
+<% end %>
 <%=
   render partial: "myplaceonline/pictures", locals: {
     pics: obj.prescription_files,

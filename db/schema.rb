@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170115212522) do
+ActiveRecord::Schema.define(version: 20170115213302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3188,6 +3188,22 @@ ActiveRecord::Schema.define(version: 20170115212522) do
     t.index ["prescription_id"], name: "index_prescription_files_on_prescription_id", using: :btree
   end
 
+  create_table "prescription_refills", force: :cascade do |t|
+    t.integer  "prescription_id"
+    t.date     "refill_date"
+    t.integer  "location_id"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["identity_id"], name: "index_prescription_refills_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_prescription_refills_on_location_id", using: :btree
+    t.index ["prescription_id"], name: "index_prescription_refills_on_prescription_id", using: :btree
+  end
+
   create_table "prescriptions", force: :cascade do |t|
     t.string   "prescription_name"
     t.date     "prescription_date"
@@ -5081,6 +5097,9 @@ ActiveRecord::Schema.define(version: 20170115212522) do
   add_foreign_key "prescription_files", "identities"
   add_foreign_key "prescription_files", "identity_files"
   add_foreign_key "prescription_files", "prescriptions"
+  add_foreign_key "prescription_refills", "identities"
+  add_foreign_key "prescription_refills", "locations"
+  add_foreign_key "prescription_refills", "prescriptions"
   add_foreign_key "prescriptions", "contacts", column: "doctor_id"
   add_foreign_key "prescriptions", "identities"
   add_foreign_key "problem_report_files", "identities"
