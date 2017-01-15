@@ -1,15 +1,33 @@
-<%= myp_text_field(f, :name, "myplaceonline.wisdoms.name", obj.name, autofocus) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes, collapsed: false) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :name,
+    value: obj.name,
+    placeholder: "myplaceonline.wisdoms.name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: false
+  )
+%>
 <%=
   render partial: "myplaceonline/pictures_form", locals: {
     f: f,
     obj: obj,
     position_field: :position,
     pictures_field: :wisdom_files,
-    item_placeholder: "myplaceonline.wisdoms.file",
-    heading: "myplaceonline.wisdoms.files",
-    addbutton: "myplaceonline.wisdoms.add_file",
-    addbutton_multi: "myplaceonline.wisdoms.add_files",
-    deletebutton: "myplaceonline.wisdoms.delete_file"
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
   }
 %>

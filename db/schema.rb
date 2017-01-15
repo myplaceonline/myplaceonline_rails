@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170115191031) do
+ActiveRecord::Schema.define(version: 20170115212522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3176,6 +3176,34 @@ ActiveRecord::Schema.define(version: 20170115191031) do
     t.index ["identity_id"], name: "index_point_displays_on_identity_id", using: :btree
   end
 
+  create_table "prescription_files", force: :cascade do |t|
+    t.integer  "prescription_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["identity_file_id"], name: "index_prescription_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_prescription_files_on_identity_id", using: :btree
+    t.index ["prescription_id"], name: "index_prescription_files_on_prescription_id", using: :btree
+  end
+
+  create_table "prescriptions", force: :cascade do |t|
+    t.string   "prescription_name"
+    t.date     "prescription_date"
+    t.text     "notes"
+    t.integer  "doctor_id"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "refill_maximum"
+    t.index ["doctor_id"], name: "index_prescriptions_on_doctor_id", using: :btree
+    t.index ["identity_id"], name: "index_prescriptions_on_identity_id", using: :btree
+  end
+
   create_table "problem_report_files", force: :cascade do |t|
     t.integer  "problem_report_id"
     t.integer  "identity_file_id"
@@ -5050,6 +5078,11 @@ ActiveRecord::Schema.define(version: 20170115191031) do
   add_foreign_key "podcasts", "identities"
   add_foreign_key "poems", "identities", name: "poems_identity_id_fk"
   add_foreign_key "point_displays", "identities", name: "point_displays_identity_id_fk"
+  add_foreign_key "prescription_files", "identities"
+  add_foreign_key "prescription_files", "identity_files"
+  add_foreign_key "prescription_files", "prescriptions"
+  add_foreign_key "prescriptions", "contacts", column: "doctor_id"
+  add_foreign_key "prescriptions", "identities"
   add_foreign_key "problem_report_files", "identities"
   add_foreign_key "problem_report_files", "identity_files"
   add_foreign_key "problem_report_files", "problem_reports"

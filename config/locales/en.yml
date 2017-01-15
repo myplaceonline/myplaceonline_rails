@@ -213,6 +213,7 @@ en:
       quotes: "Quotes"
       medical_condition_evaluations: "Medical Condition Evaluations"
       vehicle_registrations: "Vehicle Registrations"
+      prescriptions: "Prescriptions"
     general:
       email: "E-mail"
       password: "Password"
@@ -3101,3 +3102,8 @@ en:
     vehicle_registrations:
       registration_date: "Date"
       registration_source: "Source"
+    prescriptions:
+      prescription_name: "Name"
+      prescription_date: "Date"
+      doctor: "Doctor"
+      refill_maximum: "Maximum Number of Refills"
