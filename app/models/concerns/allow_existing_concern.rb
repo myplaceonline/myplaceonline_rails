@@ -9,18 +9,22 @@ module AllowExistingConcern extend ActiveSupport::Concern
       #
       # For more on why we must do this, see
       # http://stackoverflow.com/a/12064875/4135310
-      def allow_existing(name, model = nil)
+      def allow_existing(name, model = nil, reject_if: nil)
         define_method("#{name.to_s}_attributes=") do |attributes|
 
           Rails.logger.debug{"allow_existing name: #{name}, attributes: #{attributes}"}
           
           if !attributes['id'].blank?
             
-            # Remove all other attributes since we're searching for a
-            # particular object and not creating a new one. But keep around
-            # the other attributes so that we can make updates if necessary
-            original_attributes = attributes.dup
-            attributes.keep_if {|innerkey, innervalue| innerkey == "id" }
+            original_attributes_count = attributes.count
+            
+            if original_attributes_count > 1
+              # Remove all other attributes since we're searching for a
+              # particular object and not creating a new one. But keep around
+              # the other attributes so that we can make updates if necessary
+              original_attributes = attributes.dup
+              attributes.keep_if {|innerkey, innervalue| innerkey == "id" }
+            end
             
             Rails.logger.debug{"allow_existing final attributes: #{attributes}"}
           
@@ -28,11 +32,27 @@ module AllowExistingConcern extend ActiveSupport::Concern
 
             Rails.logger.debug{"allow_existing existing_obj: #{Myp.debug_print(existing_obj)}"}
             
-            # If there are some other values set other than the ID, then use all attributes
-            if original_attributes.any?{|key, value| key != "id" && !value.blank? }
-              attributes = original_attributes
+            if original_attributes_count > 1
+              # If there are some other values set other than the ID, then perhaps update the existing object
+              check_attributes = original_attributes.dup
+              check_attributes.delete_if {|innerkey, innervalue| innerkey == "id" }
               
-              Rails.logger.debug{"allow_existing using all attributes"}
+              if reject_if.nil?
+                # Too dangerous, skip for now
+                #if check_attributes.any?{|key, value| !value.blank? }
+                  #Rails.logger.debug{"allow_existing using all attributes"}
+                  #attributes = original_attributes
+                #else
+                  Rails.logger.debug{"allow_existing skipping"}
+                #end
+              else
+                if reject_if.call(check_attributes)
+                  Rails.logger.debug{"allow_existing after custom reject_if, using all attributes"}
+                  attributes = original_attributes
+                else
+                  Rails.logger.debug{"allow_existing reject_if false, skipping"}
+                end
+              end
             end
           end
           
