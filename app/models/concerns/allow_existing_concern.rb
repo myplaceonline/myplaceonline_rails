@@ -46,7 +46,7 @@ module AllowExistingConcern extend ActiveSupport::Concern
                   Rails.logger.debug{"allow_existing skipping"}
                 #end
               else
-                if reject_if.call(check_attributes)
+                if !reject_if.call(check_attributes)
                   Rails.logger.debug{"allow_existing after custom reject_if, using all attributes"}
                   attributes = original_attributes
                 else

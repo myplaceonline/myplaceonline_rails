@@ -1,0 +1,64 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :donation_name,
+    value: obj.donation_name,
+    placeholder: "myplaceonline.donations.donation_name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATE,
+    name: :donation_date,
+    value: obj.donation_date,
+    placeholder: "myplaceonline.donations.donation_date"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :amount,
+    value: obj.amount,
+    placeholder: "myplaceonline.donations.amount"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: false
+  )
+%>
+<%=
+  render partial: 'myplaceonline/select_or_create', locals: {
+    f: f,
+    name: :location,
+    existingobj: obj.location,
+    heading: t("myplaceonline.donations.location"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :donation_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>

@@ -856,7 +856,13 @@ module ApplicationHelper
     }.merge(options)
     
     case options[:type]
-    when Myp::FIELD_NUMBER
+    when Myp::FIELD_NUMBER, Myp::FIELD_DECIMAL
+      if options[:type] == Myp::FIELD_DECIMAL
+        options = {
+          step: Myp::DEFAULT_DECIMAL_STEP
+        }.merge(options)
+        options[:type] = :text
+      end
       if !Myp.use_html5_inputs || options[:flexible]
         options[:type] = :text
       end

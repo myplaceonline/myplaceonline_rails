@@ -215,6 +215,7 @@ en:
       vehicle_registrations: "Vehicle Registrations"
       prescriptions: "Prescriptions"
       prescription_refills: "Prescription Refills"
+      donations: "Donations"
     general:
       email: "E-mail"
       password: "Password"
@@ -3115,3 +3116,8 @@ en:
     prescription_refills:
       refill_date: "Date"
       location: "Location"
+    donations:
+      donation_name: "Name"
+      donation_date: "Date"
+      location: "Location"
+      amount: "Amount"

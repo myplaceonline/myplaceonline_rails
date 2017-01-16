@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170115213302) do
+ActiveRecord::Schema.define(version: 20170116085933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1184,6 +1184,34 @@ ActiveRecord::Schema.define(version: 20170115213302) do
     t.datetime "updated_at",        null: false
     t.boolean  "important"
     t.index ["identity_id"], name: "index_documents_on_identity_id", using: :btree
+  end
+
+  create_table "donation_files", force: :cascade do |t|
+    t.integer  "donation_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["donation_id"], name: "index_donation_files_on_donation_id", using: :btree
+    t.index ["identity_file_id"], name: "index_donation_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_donation_files_on_identity_id", using: :btree
+  end
+
+  create_table "donations", force: :cascade do |t|
+    t.string   "donation_name"
+    t.date     "donation_date"
+    t.decimal  "amount",        precision: 10, scale: 2
+    t.integer  "location_id"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.index ["identity_id"], name: "index_donations_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_donations_on_location_id", using: :btree
   end
 
   create_table "drafts", force: :cascade do |t|
@@ -4808,6 +4836,11 @@ ActiveRecord::Schema.define(version: 20170115213302) do
   add_foreign_key "document_files", "identities"
   add_foreign_key "document_files", "identity_files"
   add_foreign_key "documents", "identities"
+  add_foreign_key "donation_files", "donations"
+  add_foreign_key "donation_files", "identities"
+  add_foreign_key "donation_files", "identity_files"
+  add_foreign_key "donations", "identities"
+  add_foreign_key "donations", "locations"
   add_foreign_key "drafts", "identities"
   add_foreign_key "dreams", "encrypted_values", column: "dream_encrypted_id"
   add_foreign_key "dreams", "identities"

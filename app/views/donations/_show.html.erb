@@ -1,0 +1,11 @@
+<%= data_row(heading: t("myplaceonline.donations.donation_name"), content: obj.donation_name) %>
+<%= data_row(heading: t("myplaceonline.donations.donation_date"), content: obj.donation_date) %>
+<%= data_row(heading: t("myplaceonline.donations.amount"), content: obj.amount) %>
+<%= attribute_table_row_reference(t("myplaceonline.donations.location"), "location_path", obj.location) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.donation_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>
