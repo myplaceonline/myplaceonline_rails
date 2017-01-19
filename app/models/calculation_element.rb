@@ -1,15 +1,11 @@
-class CalculationElement < ActiveRecord::Base
+class CalculationElement < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
-  belongs_to :left_operand, class_name: CalculationOperand, autosave: true
   validates_associated :left_operand
-  validates_presence_of :left_operand
-  accepts_nested_attributes_for :left_operand
+  child_property(name: :left_operand, model: CalculationOperand, required: true)
   
-  belongs_to :right_operand, class_name: CalculationOperand, autosave: true
   validates_associated :right_operand
-  validates_presence_of :right_operand
-  accepts_nested_attributes_for :right_operand
+  child_property(name: :right_operand, model: CalculationOperand, required: true)
   
   # t.integer  "operator"
   

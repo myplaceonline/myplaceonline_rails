@@ -1,4 +1,4 @@
-class Exercise < ActiveRecord::Base
+class Exercise < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   DEFAULT_EXERCISE_THRESHOLD_SECONDS = 3.days
@@ -37,7 +37,7 @@ class Exercise < ActiveRecord::Base
       )
 
       if !last_exercise.nil?
-        ActiveRecord::Base.transaction do
+        ApplicationRecord.transaction do
           CalendarItem.destroy_calendar_items(
             User.current_user.primary_identity,
             Exercise

@@ -1,4 +1,4 @@
-class Myreference < ActiveRecord::Base
+class Myreference < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -8,15 +8,11 @@ class Myreference < ActiveRecord::Base
     ["myplaceonline.myreferences.type_educational", 2]
   ]
 
-  validates :contact, presence: true
-  
   def display
     contact.display
   end
   
-  belongs_to :contact
-  accepts_nested_attributes_for :contact, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
-  allow_existing :contact
+  child_property(name: :contact, required: true)
   
   def self.search_join
     :contact
@@ -24,5 +20,9 @@ class Myreference < ActiveRecord::Base
   
   def self.search_join_where
     :contact_identity_id
+  end
+
+  def self.skip_check_attributes
+    ["can_contact"]
   end
 end

@@ -1,4 +1,4 @@
-class DentistVisit < ActiveRecord::Base
+class DentistVisit < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   include ModelHelpersConcern
@@ -11,13 +11,9 @@ class DentistVisit < ActiveRecord::Base
     Myp.display_date_short_year(visit_date, User.current_user)
   end
   
-  belongs_to :dental_insurance
-  accepts_nested_attributes_for :dental_insurance, reject_if: proc { |attributes| DentalInsurancesController.reject_if_blank(attributes) }
-  allow_existing :dental_insurance
+  child_property(name: :dental_insurance)
   
-  belongs_to :dentist, class_name: Doctor
-  accepts_nested_attributes_for :dentist, reject_if: proc { |attributes| DoctorsController.reject_if_blank(attributes) }
-  allow_existing :dentist, Doctor
+  child_property(name: :dentist, model: Doctor)
   
   def self.build(params = nil)
     result = self.dobuild(params)
@@ -53,7 +49,7 @@ class DentistVisit < ActiveRecord::Base
       )
 
       if !last_dentist_visit.nil?
-        ActiveRecord::Base.transaction do
+        ApplicationRecord.transaction do
           CalendarItem.destroy_calendar_items(
             User.current_user.primary_identity,
             DentistVisit
@@ -90,5 +86,9 @@ class DentistVisit < ActiveRecord::Base
     else
       on_after_save
     end
+  end
+
+  def self.skip_check_attributes
+    ["cleaning"]
   end
 end

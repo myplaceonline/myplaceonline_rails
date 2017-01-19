@@ -1,4 +1,4 @@
-class FeedItem < ActiveRecord::Base
+class FeedItem < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include ModelHelpersConcern
 
@@ -34,5 +34,9 @@ class FeedItem < ActiveRecord::Base
       result = URI.join(uri.scheme + "://" + uri.host, result).to_s
     end
     result
+  end
+
+  def self.skip_check_attributes
+    ["is_read"]
   end
 end

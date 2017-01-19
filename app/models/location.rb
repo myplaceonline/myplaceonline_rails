@@ -1,16 +1,13 @@
 # `region` is country, `sub_region1` is state, and `sub_region2` is city.
-class Location < ActiveRecord::Base
+class Location < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   
   validate :at_least_one
   
-  has_many :location_phones, :dependent => :destroy
-  accepts_nested_attributes_for :location_phones, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :location_phones)
   
-  belongs_to :website
-  accepts_nested_attributes_for :website, reject_if: proc { |attributes| WebsitesController.reject_if_blank(attributes) }
-  allow_existing :website
+  child_property(name: :website)
   
   def at_least_one
     if [name, address1, address2, address3, region, sub_region1, sub_region2].reject(&:blank?).size == 0
@@ -34,15 +31,13 @@ class Location < ActiveRecord::Base
     end
   end
   
-  before_validation :update_pic_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
-  def update_pic_folders
+  def update_file_folders
     put_files_in_folder(location_pictures, [I18n.t("myplaceonline.category.locations"), display])
   end
 
-  has_many :location_pictures, :dependent => :destroy
-  accepts_nested_attributes_for :location_pictures, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :location_pictures, [{:name => :identity_file}]
+  child_properties(name: :location_pictures)
 
   def display(use_full_region_name: false)
     result = Myp.appendstr(nil, name, ", ")
@@ -229,5 +224,9 @@ class Location < ActiveRecord::Base
         ELSE locations.region
        END ASC
     }
+  end
+
+  def self.skip_check_attributes
+    ["region"]
   end
 end

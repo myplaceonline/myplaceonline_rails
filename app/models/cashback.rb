@@ -1,4 +1,4 @@
-class Cashback < ActiveRecord::Base
+class Cashback < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :cashback_percentage, presence: true

@@ -1,4 +1,4 @@
-class Identity < ActiveRecord::Base
+class Identity < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -22,7 +22,7 @@ class Identity < ActiveRecord::Base
       contact_identity_id: id
     )
     if result.nil?
-      ActiveRecord::Base.transaction do
+      ApplicationRecord.transaction do
         result = Contact.new
         if self.name.blank?
           self.name = name_from_email
@@ -184,14 +184,11 @@ class Identity < ActiveRecord::Base
   has_many :prescriptions, :dependent => :destroy
   has_many :donations, :dependent => :destroy
   
-  has_many :myplets, -> { order('y_coordinate') }, :dependent => :destroy
-  accepts_nested_attributes_for :myplets, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :myplets, sort: "y_coordinate")
 
-  has_many :identity_phones, :foreign_key => 'parent_identity_id', :dependent => :destroy
-  accepts_nested_attributes_for :identity_phones, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :identity_phones, foreign_key: "parent_identity_id")
   
-  has_many :identity_emails, :foreign_key => 'parent_identity_id', :dependent => :destroy
-  accepts_nested_attributes_for :identity_emails, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :identity_emails, foreign_key: "parent_identity_id")
   
   def emails
     identity_emails.to_a.delete_if{|ie| ie.secondary }.map{|ie| ie.email }
@@ -209,8 +206,7 @@ class Identity < ActiveRecord::Base
     result
   end
   
-  has_many :identity_locations, :foreign_key => 'parent_identity_id', :dependent => :destroy
-  accepts_nested_attributes_for :identity_locations, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :identity_locations, foreign_key: "parent_identity_id")
   
   def primary_location
     result = nil
@@ -228,18 +224,13 @@ class Identity < ActiveRecord::Base
     result
   end
   
-  has_many :identity_drivers_licenses, :foreign_key => 'parent_identity_id', :dependent => :destroy
-  accepts_nested_attributes_for :identity_drivers_licenses, allow_destroy: true, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
+  child_properties(name: :identity_drivers_licenses, foreign_key: "parent_identity_id")
   
-  has_many :identity_relationships, :foreign_key => 'parent_identity_id', :dependent => :destroy
-  accepts_nested_attributes_for :identity_relationships, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :identity_relationships, foreign_key: "parent_identity_id")
   
-  has_many :identity_pictures, :foreign_key => 'parent_identity_id', :dependent => :destroy
-  accepts_nested_attributes_for :identity_pictures, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :identity_pictures, foreign_key: "parent_identity_id")
   
-  belongs_to :company
-  accepts_nested_attributes_for :company, reject_if: proc { |attributes| CompaniesController.reject_if_blank(attributes) }
-  allow_existing :company
+  child_property(name: :company)
   
   validate do
     if !name.blank? && self.last_name.blank?
@@ -486,7 +477,7 @@ class Identity < ActiveRecord::Base
   def on_after_save
     if ExecutionContext.count > 0 && MyplaceonlineExecutionContext.handle_updates?
       if !birthday.nil?
-        ActiveRecord::Base.transaction do
+        ApplicationRecord.transaction do
           User.current_user.primary_identity.calendars.each do |calendar|
             on_after_destroy
             CalendarItem.create_calendar_item(

@@ -3,7 +3,7 @@ require "base64"
 # TODO
 # https://github.com/willbryant/columns_on_demand
 # https://github.com/jorgemanrubia/lazy_columns
-class IdentityFile < ActiveRecord::Base
+class IdentityFile < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   
@@ -12,7 +12,7 @@ class IdentityFile < ActiveRecord::Base
   before_create :do_before_create
   before_update :do_before_update
 
-  belongs_to :encrypted_password, class_name: EncryptedValue, dependent: :destroy
+  belongs_to :encrypted_password, class_name: EncryptedValue
 
   has_attached_file :file, :storage => :database
   do_not_validate_attachment_file_type :file
@@ -24,9 +24,7 @@ class IdentityFile < ActiveRecord::Base
   #  end
   #end
   
-  belongs_to :folder, class_name: IdentityFileFolder
-  accepts_nested_attributes_for :folder
-  allow_existing :folder, IdentityFileFolder
+  child_property(name: :folder, model: IdentityFileFolder)
 
   has_many :identity_file_shares
 
@@ -60,8 +58,9 @@ class IdentityFile < ActiveRecord::Base
   end
   
   def do_before_update
-    Rails.logger.debug{"IdentityFile do_before_update"}
-    if self.file_file_size_changed?
+    file_sized_changed = self.file_file_size_changed?
+    Rails.logger.debug{"IdentityFile do_before_update; file_sized_changed: #{file_sized_changed}"}
+    if file_sized_changed
       # Make sure any thumbnail is cleared (if it's a picture)
       clear_thumbnail
     end

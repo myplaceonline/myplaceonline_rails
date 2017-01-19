@@ -1,2 +1,2 @@
-class UsZipCode < ActiveRecord::Base
+class UsZipCode < ApplicationRecord
 end

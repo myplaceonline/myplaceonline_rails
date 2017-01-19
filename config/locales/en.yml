@@ -268,6 +268,7 @@ en:
       back_to_all: "Back to all"
       create_instructions: "Click the Add button below"
       new: "New"
+      replace_with_new: "Replace with New"
       existing: "Existing"
       supports_markdown: "supports Markdown syntax"
       non_blank: "can't be blank"
@@ -2321,7 +2322,7 @@ en:
       next_instance: "Next Instance"
     events:
       event_name: "Name"
-      event_time: "Date/Time"
+      event_time: "Start Date/Time"
       event_end_time: "End Date/Time"
       notes: "Notes"
       location: "Location"

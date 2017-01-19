@@ -1,4 +1,4 @@
-class CreditCard < ActiveRecord::Base
+class CreditCard < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   include EncryptedConcern
@@ -87,13 +87,9 @@ class CreditCard < ActiveRecord::Base
   belongs_to_encrypted :pin
   before_validation :pin_finalize
 
-  belongs_to :password
-  accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
-  allow_existing :password
+  child_property(name: :password)
   
-  belongs_to :address, class_name: Location
-  accepts_nested_attributes_for :address, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
-  allow_existing :address, Location
+  child_property(name: :address, model: Location)
 
   def as_json(options={})
     if number_encrypted?
@@ -102,16 +98,17 @@ class CreditCard < ActiveRecord::Base
     super.as_json(options)
   end
   
-  has_many :credit_card_cashbacks, :dependent => :destroy
-  accepts_nested_attributes_for :credit_card_cashbacks, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :credit_card_cashbacks)
 
-  has_many :credit_card_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :credit_card_files, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :credit_card_files, [{:name => :identity_file}]
+  child_properties(name: :credit_card_files, sort: "position ASC, updated_at ASC")
 
-  before_validation :update_file_folders
+  after_commit :update_file_folders, on: [:create, :update]
 
   def update_file_folders
     put_files_in_folder(credit_card_files, [I18n.t("myplaceonline.category.credit_cards"), display])
+  end
+
+  def self.skip_check_attributes
+    ["encrypt", "email_reminders"]
   end
 end

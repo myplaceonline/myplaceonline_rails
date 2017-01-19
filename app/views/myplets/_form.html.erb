@@ -5,6 +5,6 @@
 
 <% if !@category_obj.nil? %>
   <%= f.fields_for @obj.category_name.singularize, @category_obj do |sub_fields| %>
-    <%= render partial: @obj.category_name + "/form", locals: { obj: @category_obj, edit: true, autofocus: false, f: sub_fields, myplet_form: true } %>
+    <%= render partial: @obj.category_name + "/form", locals: { obj: @category_obj, edit: edit, autofocus: false, f: sub_fields, myplet_form: true } %>
   <% end %>
 <% end %>

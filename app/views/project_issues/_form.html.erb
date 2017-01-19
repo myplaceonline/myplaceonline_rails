@@ -4,7 +4,7 @@
   <%= myp_check_box(f, :top, "myplaceonline.project_issues.move_top") %>
 <% end %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.project_issues.notifiers"),
     childpropertiesname: :project_issue_notifiers,
@@ -16,12 +16,12 @@
       {
         type: :renderpartial,
         name: :contact_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.project_issues.notifier"),
         objform: "contacts/form",
         existingobjurl: "contact_path",
         searchurl: "/contacts.json?perpage=0",
-        edit: true,
+        edit: edit,
         autofocus: true,
         force_existing: true,
         simpleform: true
@@ -30,7 +30,7 @@
   } do |child_fields, childproperty|
 %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :contact_attributes,
       existingobj: childproperty.contact,
@@ -38,7 +38,7 @@
       objform: "contacts/form",
       existingobjurl: "contact_path",
       searchurl: "/contacts.json?perpage=0",
-      edit: true,
+      edit: edit,
       autofocus: false
     }
   %>

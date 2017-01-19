@@ -5,7 +5,7 @@ class WebsitesController < MyplaceonlineController
       @to_visit = @to_visit.to_bool
     end
     
-    @categories = ActiveRecord::Base.connection.execute("select distinct website_category from websites where website_category is not null and identity_id = #{current_user.primary_identity.id} order by website_category").map{|row| row["website_category"] }
+    @categories = ApplicationRecord.connection.execute("select distinct website_category from websites where website_category is not null and identity_id = #{current_user.primary_identity.id} order by website_category").map{|row| row["website_category"] }
     
     @categories.each do |category|
       
@@ -40,18 +40,6 @@ class WebsitesController < MyplaceonlineController
     ]
   end
   
-  def self.reject_if_blank(attributes)
-    attributes.dup.delete_if {|key, value| key.to_s == "to_visit" }.all?{|key, value|
-      if key == "password_attributes"
-        PasswordsController.reject_if_blank(value)
-      elsif key == "recommender_attributes"
-        ContactsController.reject_if_blank(value)
-      else
-        value.blank?
-      end
-    }
-  end
-
   def index_filters
     super + [
       {
@@ -87,7 +75,7 @@ class WebsitesController < MyplaceonlineController
         @categories.each do |category|
           instance_name = "category_" + Myp.string_to_variable_name(category)
           if instance_variable_get("@" + instance_name)
-            result = Myp.appendstr(result, "website_category = " + ActiveRecord::Base.sanitize(category), " ", leftwrap = " and ")
+            result = Myp.appendstr(result, "website_category = " + ApplicationRecord.sanitize(category), " ", leftwrap = " and ")
           end
         end
       end

@@ -1,4 +1,4 @@
-class Headache < ActiveRecord::Base
+class Headache < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :started, presence: true

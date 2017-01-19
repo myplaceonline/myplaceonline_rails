@@ -4,7 +4,7 @@
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.vitamins.notes", obj.notes) %>
 <% if params["allowinnervitamins"] || @topedit %>
   <%=
-    render layout: 'myplaceonline/childproperties', locals: {
+    render layout: "myplaceonline/childproperties", locals: {
       f: f,
       heading: t("myplaceonline.vitamins.ingredients"),
       childpropertiesname: :vitamin_ingredients,
@@ -16,7 +16,7 @@
         {
           type: :renderpartial,
           name: :vitamin_attributes,
-          partial: 'myplaceonline/select_or_create',
+          partial: "myplaceonline/select_or_create",
           heading: t("myplaceonline.vitamins.vitamin"),
           objform: "vitamins/form",
           existingobjurl: "vitamin_path",
@@ -28,7 +28,7 @@
     } do |child_fields, childproperty|
   %>
     <%=
-      render partial: 'myplaceonline/select_or_create', locals: {
+      render partial: "myplaceonline/select_or_create", locals: {
         f: child_fields,
         name: :vitamin_attributes,
         existingobj: childproperty.vitamin,

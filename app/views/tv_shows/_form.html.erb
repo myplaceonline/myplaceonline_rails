@@ -3,7 +3,7 @@
 <%= myp_text_field(f, :url, "myplaceonline.tv_shows.url", obj.url) %>
 <%= myp_check_box(f, :is_watched, "myplaceonline.tv_shows.watched") %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :recommender,
     existingobj: obj.recommender,
@@ -13,7 +13,6 @@
     searchurl: "/contacts.json?perpage=0",
     edit: edit,
     autofocus: false,
-    collapsed: true,
     force_existing: true
   }
 %>

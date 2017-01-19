@@ -1,6 +1,6 @@
 <%= myp_text_field(f, :checklist_name, "myplaceonline.checklists.checklist_name", obj.checklist_name, autofocus) %>
 <%=
-  render(layout: 'myplaceonline/childproperties', locals: {
+  render(layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.checklists.items"),
     childpropertiesname: :checklist_items,
@@ -27,7 +27,7 @@
   <%= myp_text_field(child_fields, :checklist_item_name, "myplaceonline.checklist_items.checklist_item_name", childproperty.checklist_item_name) %>
 <% end %>
 <%=
-  render(layout: 'myplaceonline/childproperties', locals: {
+  render(layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.checklists.checklist_references"),
     childpropertiesname: :checklist_references,
@@ -39,12 +39,12 @@
       {
         type: :renderpartial,
         name: :checklist_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.checklists.checklist"),
         objform: "checklists/form",
         existingobjurl: "checklist_path",
         searchurl: "/checklists.json?perpage=0",
-        edit: true,
+        edit: edit,
         autofocus: true
       },
       {
@@ -56,7 +56,7 @@
   }) do |child_fields, childproperty|
 %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :checklist_attributes,
       existingobj: childproperty.checklist,
@@ -64,7 +64,7 @@
       objform: "checklists/form",
       existingobjurl: "checklist_path",
       searchurl: "/checklists.json?perpage=0",
-      edit: true,
+      edit: edit,
       autofocus: false
     }
   %>

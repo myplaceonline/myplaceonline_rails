@@ -1,4 +1,4 @@
-class Pain < ActiveRecord::Base
+class Pain < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :pain_start_time, presence: true

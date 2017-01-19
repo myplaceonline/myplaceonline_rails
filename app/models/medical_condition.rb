@@ -1,4 +1,4 @@
-class MedicalCondition < ActiveRecord::Base
+class MedicalCondition < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :medical_condition_name, presence: true
@@ -7,12 +7,9 @@ class MedicalCondition < ActiveRecord::Base
     medical_condition_name
   end
   
-  has_many :medical_condition_instances, -> { order('condition_start DESC') }, :dependent => :destroy
-  accepts_nested_attributes_for :medical_condition_instances, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :medical_condition_instances, sort: "condition_start DESC")
 
-  has_many :medical_condition_treatments, -> { order('treatment_date DESC') }, :dependent => :destroy
-  accepts_nested_attributes_for :medical_condition_treatments, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :medical_condition_treatments, sort: "treatment_date DESC")
 
-  has_many :medical_condition_evaluations, -> { order('evaluation_datetime DESC') }, :dependent => :destroy
-  accepts_nested_attributes_for :medical_condition_evaluations, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :medical_condition_evaluations, sort: "evaluation_datetime DESC")
 end

@@ -1,4 +1,4 @@
-class Company < ActiveRecord::Base
+class Company < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -8,9 +8,7 @@ class Company < ActiveRecord::Base
     name
   end
 
-  belongs_to :location
-  accepts_nested_attributes_for :location, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
-  allow_existing :location
+  child_property(name: :location)
 
   def as_json(options={})
     super.as_json(options).merge({

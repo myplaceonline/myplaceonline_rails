@@ -169,16 +169,6 @@ class MoneyBalancesController < MyplaceonlineController
     end
   end
 
-  def self.reject_if_blank(attributes)
-    attributes.all?{|key, value|
-      if key == "contact_attributes"
-        ContactsController.reject_if_blank(value)
-      else
-        value.blank?
-      end
-    }
-  end
-  
   def show_add
     false
   end

@@ -1,4 +1,4 @@
-class DoctorVisit < ActiveRecord::Base
+class DoctorVisit < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   include ModelHelpersConcern
@@ -11,13 +11,9 @@ class DoctorVisit < ActiveRecord::Base
     Myp.display_datetime_short(visit_date, User.current_user)
   end
   
-  belongs_to :health_insurance
-  accepts_nested_attributes_for :health_insurance, reject_if: proc { |attributes| HealthInsurancesController.reject_if_blank(attributes) }
-  allow_existing :health_insurance
+  child_property(name: :health_insurance)
   
-  belongs_to :doctor
-  accepts_nested_attributes_for :doctor, reject_if: proc { |attributes| DoctorsController.reject_if_blank(attributes) }
-  allow_existing :doctor
+  child_property(name: :doctor)
   
   def self.build(params = nil)
     result = self.dobuild(params)
@@ -53,7 +49,7 @@ class DoctorVisit < ActiveRecord::Base
       )
 
       if !last_physical.nil?
-        ActiveRecord::Base.transaction do
+        ApplicationRecord.transaction do
           CalendarItem.destroy_calendar_items(
             User.current_user.primary_identity,
             DoctorVisit
@@ -90,5 +86,9 @@ class DoctorVisit < ActiveRecord::Base
     else
       on_after_save
     end
+  end
+
+  def self.skip_check_attributes
+    ["physical"]
   end
 end

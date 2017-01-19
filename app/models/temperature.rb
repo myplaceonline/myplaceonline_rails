@@ -1,4 +1,4 @@
-class Temperature < ActiveRecord::Base
+class Temperature < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :measured, presence: true

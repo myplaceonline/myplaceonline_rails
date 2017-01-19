@@ -1,4 +1,4 @@
-class GunRegistration < ActiveRecord::Base
+class GunRegistration < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -7,9 +7,7 @@ class GunRegistration < ActiveRecord::Base
   belongs_to :gun
   validates :expires, presence: true
   
-  belongs_to :location
-  accepts_nested_attributes_for :location, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
-  allow_existing :location
+  child_property(name: :location)
 
   def display
     Myp.display_date(expires, User.current_user)
@@ -32,7 +30,7 @@ class GunRegistration < ActiveRecord::Base
   
   def on_after_save
     if MyplaceonlineExecutionContext.handle_updates?
-      ActiveRecord::Base.transaction do
+      ApplicationRecord.transaction do
         CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
         User.current_user.primary_identity.calendars.each do |calendar|
           CalendarItem.create_calendar_item(

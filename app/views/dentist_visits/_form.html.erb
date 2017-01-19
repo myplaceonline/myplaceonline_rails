@@ -4,7 +4,7 @@
 <%= myp_check_box(f, :cleaning, "myplaceonline.dentist_visits.cleaning") %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.dentist_visits.notes", obj.notes) %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :dentist,
     existingobj: obj.dentist,
@@ -17,7 +17,7 @@
   }
 %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :dental_insurance,
     existingobj: obj.dental_insurance,

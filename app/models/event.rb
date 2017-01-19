@@ -1,4 +1,4 @@
-class Event < ActiveRecord::Base
+class Event < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   include ActionView::Helpers
@@ -13,12 +13,9 @@ class Event < ActiveRecord::Base
 
   validates :event_name, presence: true
   
-  belongs_to :repeat
-  accepts_nested_attributes_for :repeat, allow_destroy: true, reject_if: :all_blank
+  child_property(name: :repeat)
 
-  belongs_to :location
-  accepts_nested_attributes_for :location, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
-  allow_existing :location
+  child_property(name: :location)
 
   def display
     event_name
@@ -32,18 +29,15 @@ class Event < ActiveRecord::Base
     end
   end
   
-  before_validation :update_pic_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
-  def update_pic_folders
+  def update_file_folders
     put_files_in_folder(event_pictures, [I18n.t("myplaceonline.category.events"), display])
   end
 
-  has_many :event_pictures, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :event_pictures, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :event_pictures, [{:name => :identity_file}]
+  child_properties(name: :event_pictures, sort: "position ASC, updated_at ASC")
 
-  has_many :event_contacts, :dependent => :destroy
-  accepts_nested_attributes_for :event_contacts, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :event_contacts)
 
   has_many :event_rsvps, :dependent => :destroy
 
@@ -64,7 +58,7 @@ class Event < ActiveRecord::Base
       Rails.logger.debug{"Processing event updates"}
       on_after_destroy
       if !event_time.nil?
-        ActiveRecord::Base.transaction do
+        ApplicationRecord.transaction do
           User.current_user.primary_identity.calendars.each do |calendar|
             CalendarItem.create_calendar_item(
               identity: User.current_user.primary_identity,

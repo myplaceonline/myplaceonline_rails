@@ -1,10 +1,8 @@
-class PlaylistSong < ActiveRecord::Base
+class PlaylistSong < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :playlist
 
-  belongs_to :song
-  accepts_nested_attributes_for :song, reject_if: :all_blank
-  allow_existing :song
+  child_property(name: :song)
 end

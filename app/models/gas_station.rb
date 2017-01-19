@@ -1,11 +1,8 @@
-class GasStation < ActiveRecord::Base
+class GasStation < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
-  belongs_to :location, :autosave => true
-  validates_presence_of :location
-  accepts_nested_attributes_for :location, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
-  allow_existing :location
+  child_property(name: :location, required: true)
 
   def display
     location.display
@@ -15,5 +12,9 @@ class GasStation < ActiveRecord::Base
     result = self.dobuild(params)
     result.gas = true
     result
+  end
+
+  def self.skip_check_attributes
+    ["gas", "diesel", "propane_fillup", "propane_replacement"]
   end
 end

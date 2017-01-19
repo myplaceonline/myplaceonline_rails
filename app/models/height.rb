@@ -1,4 +1,4 @@
-class Height < ActiveRecord::Base
+class Height < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :height_amount, presence: true

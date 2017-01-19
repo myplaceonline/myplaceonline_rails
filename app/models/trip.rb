@@ -1,38 +1,27 @@
-class Trip < ActiveRecord::Base
+class Trip < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   include ActionView::Helpers
   include ActionDispatch::Routing
   include Rails.application.routes.url_helpers
 
-  validates :location, presence: true
   validates :started, presence: true
 
-  belongs_to :location
-  accepts_nested_attributes_for :location, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
-  allow_existing :location
+  child_property(name: :location, required: true)
   
-  belongs_to :hotel
-  accepts_nested_attributes_for :hotel, reject_if: proc { |attributes| HotelsController.reject_if_blank(attributes) }
-  allow_existing :hotel
+  child_property(name: :hotel)
 
-  has_many :trip_pictures, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :trip_pictures, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :trip_pictures, [{:name => :identity_file}]
+  child_properties(name: :trip_pictures, sort: "position ASC, updated_at ASC")
   
-  has_many :trip_stories, :dependent => :destroy
-  accepts_nested_attributes_for :trip_stories, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :trip_stories, [{:name => :story}]
+  child_properties(name: :trip_stories)
   
-  has_many :trip_flights, :dependent => :destroy
-  accepts_nested_attributes_for :trip_flights, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :trip_flights, [{:name => :flight}]
-
+  child_properties(name: :trip_flights)
+  
   belongs_to :identity_file
 
-  before_validation :update_pic_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
-  def update_pic_folders
+  def update_file_folders
     put_files_in_folder(trip_pictures, picture_folders)
   end
   
@@ -101,7 +90,7 @@ class Trip < ActiveRecord::Base
       ExecutionContext.push
       User.current_user = obj.identity.user
       
-      ActiveRecord::Base.transaction do
+      ApplicationRecord.transaction do
         if do_zip
           Myp.mktmpdir do |dir|
             
@@ -369,6 +358,10 @@ class Trip < ActiveRecord::Base
       result = a[i]
     end
     result
+  end
+
+  def self.skip_check_attributes
+    ["work", "notify_emergency_contacts"]
   end
   
   protected

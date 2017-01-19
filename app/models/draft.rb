@@ -1,4 +1,4 @@
-class Draft < ActiveRecord::Base
+class Draft < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :draft_name, presence: true

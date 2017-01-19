@@ -1,4 +1,4 @@
-class Category < ActiveRecord::Base
+class Category < ApplicationRecord
   include MyplaceonlineActiveRecordBaseConcern
 
   belongs_to :parent, class_name: Category

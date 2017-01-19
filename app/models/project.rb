@@ -1,17 +1,16 @@
-class Project < ActiveRecord::Base
+class Project < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :project_name, presence: true
   
-  has_many :project_issues, -> { order('position ASC') }, :dependent => :destroy
-  accepts_nested_attributes_for :project_issues, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :project_issues, sort: "position ASC")
 
   def display
     project_name
   end
   
   def set_positions(top_id: nil)
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       i = top_id.nil? ? 1 : 2
       project_issues.each do |issue|
         if !top_id.nil? && issue.id == top_id
@@ -36,5 +35,9 @@ class Project < ActiveRecord::Base
   
   def action_link_icon
     "plus"
+  end
+
+  def self.skip_check_attributes
+    ["default_to_top"]
   end
 end

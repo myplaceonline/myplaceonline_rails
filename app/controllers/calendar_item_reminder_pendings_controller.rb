@@ -4,7 +4,7 @@ class CalendarItemReminderPendingsController < MyplaceonlineController
 
   def complete
     set_obj
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       @obj.calendar_item_reminder.destroy!
     end
     render json: {
@@ -16,7 +16,7 @@ class CalendarItemReminderPendingsController < MyplaceonlineController
     set_obj
     duration = Myp.process_duration_timespan_short(params["duration"])
     if !duration.nil?
-      ActiveRecord::Base.transaction do
+      ApplicationRecord.transaction do
         new_calendar_item = @obj.calendar_item.clone
         new_calendar_item.calendar_item_time = User.current_user.time_now + duration
         new_calendar_item.calendar = @obj.calendar_item.calendar

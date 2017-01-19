@@ -1,4 +1,4 @@
-class MyplaceonlineSearch < ActiveRecord::Base
+class MyplaceonlineSearch < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
 end

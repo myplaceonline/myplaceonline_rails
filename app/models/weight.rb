@@ -1,4 +1,4 @@
-class Weight < ActiveRecord::Base
+class Weight < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :amount, presence: true

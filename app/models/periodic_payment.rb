@@ -1,4 +1,4 @@
-class PeriodicPayment < ActiveRecord::Base
+class PeriodicPayment < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   include ModelHelpersConcern
@@ -8,9 +8,7 @@ class PeriodicPayment < ActiveRecord::Base
 
   validates :periodic_payment_name, presence: true
   
-  belongs_to :password
-  accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
-  allow_existing :password
+  child_property(name: :password)
   
   def display
     result = periodic_payment_name
@@ -72,7 +70,7 @@ class PeriodicPayment < ActiveRecord::Base
   
   def on_after_save
     if MyplaceonlineExecutionContext.handle_updates?
-      ActiveRecord::Base.transaction do
+      ApplicationRecord.transaction do
         on_after_destroy
         if !suppress_reminder && !next_payment.nil? && !self.is_archived?
           User.current_user.primary_identity.calendars.each do |calendar|
@@ -101,5 +99,9 @@ class PeriodicPayment < ActiveRecord::Base
       self.class,
       model_id: id
     )
+  end
+
+  def self.skip_check_attributes
+    ["suppress_reminder"]
   end
 end

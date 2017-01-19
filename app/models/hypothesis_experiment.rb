@@ -1,4 +1,4 @@
-class HypothesisExperiment < ActiveRecord::Base
+class HypothesisExperiment < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   belongs_to :hypothesis

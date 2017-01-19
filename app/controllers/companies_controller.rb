@@ -10,16 +10,6 @@ class CompaniesController < MyplaceonlineController
     ]
   end
 
-  def self.reject_if_blank(attributes)
-    attributes.all?{|key, value|
-      if key == "location_attributes"
-        LocationsController.reject_if_blank(value)
-      else
-        value.blank?
-      end
-    }
-  end
-
   protected
     def sorts
       ["lower(companies.name) ASC"]

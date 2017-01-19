@@ -1,24 +1,24 @@
-class Restaurant < ActiveRecord::Base
+class Restaurant < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :location, presence: true
 
-  belongs_to :location
-  accepts_nested_attributes_for :location, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
-  allow_existing :location
+  child_property(name: :location)
   
   def display
     location.display
   end
 
-  before_validation :update_pic_folders
+  after_commit :update_file_folders, on: [:create, :update]
     
-  def update_pic_folders
+  def update_file_folders
     put_files_in_folder(restaurant_pictures, [I18n.t("myplaceonline.category.restaurants"), display])
   end
 
-  has_many :restaurant_pictures, :dependent => :destroy
-  accepts_nested_attributes_for :restaurant_pictures, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :restaurant_pictures, [{:name => :identity_file}]
+  child_properties(name: :restaurant_pictures)
+
+  def self.skip_check_attributes
+    ["visited"]
+  end
 end

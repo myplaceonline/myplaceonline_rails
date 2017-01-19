@@ -2,7 +2,7 @@ class BloodTestsController < MyplaceonlineController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:graph]
 
   def graph
-    @concentrations = ActiveRecord::Base.connection.execute(%{
+    @concentrations = ApplicationRecord.connection.execute(%{
       SELECT DISTINCT bc.concentration_name, bc.id
       FROM blood_test_results btr
         INNER JOIN blood_concentrations bc
@@ -15,7 +15,7 @@ class BloodTestsController < MyplaceonlineController
     
     if !@concentration.blank?
       first = true
-      @concentration_values = ActiveRecord::Base.connection.execute(%{
+      @concentration_values = ApplicationRecord.connection.execute(%{
         SELECT bt.test_time, btr.concentration, bc.concentration_name
         FROM blood_test_results btr
           INNER JOIN blood_concentrations bc

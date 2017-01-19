@@ -1,4 +1,4 @@
-class DiaryEntry < ActiveRecord::Base
+class DiaryEntry < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include EncryptedConcern
 
@@ -34,5 +34,9 @@ class DiaryEntry < ActiveRecord::Base
       options[:except] ||= %w(entry)
     end
     super.as_json(options)
+  end
+
+  def self.skip_check_attributes
+    ["encrypt"]
   end
 end

@@ -1,14 +1,12 @@
-class TextMessage < ActiveRecord::Base
+class TextMessage < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :body, presence: true
   validates :message_category, presence: true
 
-  has_many :text_message_contacts, :dependent => :destroy
-  accepts_nested_attributes_for :text_message_contacts, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :text_message_contacts)
 
-  has_many :text_message_groups, :dependent => :destroy
-  accepts_nested_attributes_for :text_message_groups, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :text_message_groups)
 
   def display
     body
@@ -120,5 +118,9 @@ class TextMessage < ActiveRecord::Base
     else
       AsyncTextMessageJob.perform_later(self)
     end
+  end
+
+  def self.skip_check_attributes
+    ["draft", "copy_self"]
   end
 end

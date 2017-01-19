@@ -1,5 +1,5 @@
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :company,
     existingobj: obj.company,
@@ -8,13 +8,14 @@
     existingobjurl: "company_path",
     searchurl: "/companies.json?perpage=0",
     edit: edit,
-    autofocus: false
+    autofocus: false,
+    expanded_if_nil: true
   }
 %>
 <%= myp_integer_field(f, :num_shares, "myplaceonline.stocks.num_shares", obj.num_shares) %>
 <%= myp_date_field(f, :vest_date, "myplaceonline.stocks.vest_date", obj.vest_date) %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :password,
     existingobj: obj.password,

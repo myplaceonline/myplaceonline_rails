@@ -1,4 +1,4 @@
-class ShoppingList < ActiveRecord::Base
+class ShoppingList < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -8,8 +8,7 @@ class ShoppingList < ActiveRecord::Base
     shopping_list_name
   end
 
-  has_many :shopping_list_items, :dependent => :destroy
-  accepts_nested_attributes_for :shopping_list_items, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :shopping_list_items)
 
   def all_shopping_list_items
     ShoppingListItem.where(

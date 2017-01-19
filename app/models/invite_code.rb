@@ -1,4 +1,4 @@
-class InviteCode < ActiveRecord::Base
+class InviteCode < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :code, presence: true

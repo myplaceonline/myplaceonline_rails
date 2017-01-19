@@ -76,8 +76,8 @@ class Ability
             SELECT permission_shares.*
             FROM permission_shares
               INNER JOIN shares on permission_shares.share_id = shares.id
-            WHERE shares.token = #{ActiveRecord::Base.sanitize(token)}
-              AND permission_shares.subject_class = #{ActiveRecord::Base.sanitize(subject.class.name)}
+            WHERE shares.token = #{ApplicationRecord.sanitize(token)}
+              AND permission_shares.subject_class = #{ApplicationRecord.sanitize(subject.class.name)}
               AND permission_shares.subject_id = #{subject.id}
               AND (shares.max_use_count IS NULL OR shares.use_count + 1 <= shares.max_use_count)
           }).first
@@ -95,8 +95,8 @@ class Ability
               SELECT permission_share_children.*
               FROM permission_share_children
                 INNER JOIN shares on permission_share_children.share_id = shares.id
-              WHERE shares.token = #{ActiveRecord::Base.sanitize(token)}
-                AND permission_share_children.subject_class = #{ActiveRecord::Base.sanitize(subject.class.name)}
+              WHERE shares.token = #{ApplicationRecord.sanitize(token)}
+                AND permission_share_children.subject_class = #{ApplicationRecord.sanitize(subject.class.name)}
                 AND permission_share_children.subject_id = #{subject.id}
                 AND (shares.max_use_count IS NULL OR shares.use_count + 1 <= shares.max_use_count)
             }).first

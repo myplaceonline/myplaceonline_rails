@@ -1,4 +1,4 @@
-class RewardProgram < ActiveRecord::Base
+class RewardProgram < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -8,9 +8,7 @@ class RewardProgram < ActiveRecord::Base
     ["myplaceonline.reward_programs.type_car", 2]
   ]
   
-  belongs_to :password
-  accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
-  allow_existing :password
+  child_property(name: :password)
   
   validates :reward_program_name, presence: true
 

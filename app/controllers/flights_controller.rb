@@ -60,12 +60,6 @@ class FlightsController < MyplaceonlineController
     ]
   end
 
-  def self.reject_if_blank(attributes)
-    attributes.dup.all?{|key, value|
-      value.blank?
-    }
-  end
-
   def footer_items_show
     super + [
       {

@@ -15,7 +15,7 @@ function find_connection_no_results(list, remote, section, search) {
 }
 </script>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :user,
     heading: t("myplaceonline.connections.user"),
@@ -23,12 +23,13 @@ function find_connection_no_results(list, remote, section, search) {
     existingobj: obj.user,
     existingobjurl: "user_path",
     searchurl: "/users/allusers.json",
-    edit: true,
+    edit: edit,
     autofocus: true,
     always_search: true,
     allow_new: false,
     force_existing: true,
     create_new: false,
-    noresultsfunc: "find_connection_no_results"
+    noresultsfunc: "find_connection_no_results",
+    expanded_if_nil: true
   }
 %>

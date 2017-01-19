@@ -1,4 +1,4 @@
-class HeartRate < ActiveRecord::Base
+class HeartRate < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :beats, presence: true

@@ -1,4 +1,4 @@
-class Notepad < ActiveRecord::Base
+class Notepad < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include ModelHelpersConcern
 

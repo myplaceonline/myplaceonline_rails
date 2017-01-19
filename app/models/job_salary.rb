@@ -1,4 +1,4 @@
-class JobSalary < ActiveRecord::Base
+class JobSalary < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   belongs_to :job

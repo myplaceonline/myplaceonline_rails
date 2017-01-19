@@ -1,4 +1,4 @@
-class BloodPressure < ActiveRecord::Base
+class BloodPressure < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :systolic_pressure, presence: true

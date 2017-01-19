@@ -19,7 +19,7 @@ class PasswordsController < MyplaceonlineController
           file = params[:file]
           @password = params[:password]
           
-          ActiveRecord::Base.transaction do
+          ApplicationRecord.transaction do
             identity_file = IdentityFile.new()
             identity_file.identity = current_user.primary_identity
             identity_file.file = file
@@ -110,7 +110,7 @@ class PasswordsController < MyplaceonlineController
       
       if !colindices[:password_column].nil?
         if !colindices[:service_name_column].nil?
-          ActiveRecord::Base.transaction do
+          ApplicationRecord.transaction do
             points = 0
             for i in (s.first_row + 1)..last_row
               password = Password.new
@@ -191,10 +191,6 @@ class PasswordsController < MyplaceonlineController
     ]
   end
 
-  def self.reject_if_blank(attributes)
-    attributes.dup.delete_if {|key, value| key.to_s == "encrypt" }.all? {|key, value| value.blank?}
-  end
-  
   def show_share
     false
   end
@@ -225,7 +221,7 @@ class PasswordsController < MyplaceonlineController
     @password_share.identity = @obj.identity
 
     if request.patch? || request.post?
-      ActiveRecord::Base.transaction do
+      ApplicationRecord.transaction do
         @password_share.save!
         
         Permission.create(

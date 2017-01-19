@@ -1,4 +1,4 @@
-class Drink < ActiveRecord::Base
+class Drink < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :drink_name, presence: true

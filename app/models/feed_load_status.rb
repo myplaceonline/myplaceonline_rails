@@ -1,4 +1,4 @@
-class FeedLoadStatus < ActiveRecord::Base
+class FeedLoadStatus < ApplicationRecord
   belongs_to :identity
   
   def finished?

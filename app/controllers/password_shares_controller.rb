@@ -3,7 +3,7 @@ class PasswordSharesController < MyplaceonlineController
   def transfer
     set_obj
     
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       new_password = @obj.password.dup
       new_password.identity = User.current_user.primary_identity
       if new_password.password_encrypted?

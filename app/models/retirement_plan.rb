@@ -1,4 +1,4 @@
-class RetirementPlan < ActiveRecord::Base
+class RetirementPlan < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   
@@ -13,18 +13,11 @@ class RetirementPlan < ActiveRecord::Base
     retirement_plan_name
   end
   
-  belongs_to :company
-  accepts_nested_attributes_for :company, reject_if: proc { |attributes| CompaniesController.reject_if_blank(attributes) }
-  allow_existing :company
+  child_property(name: :company)
 
-  belongs_to :periodic_payment
-  accepts_nested_attributes_for :periodic_payment, reject_if: proc { |attributes| PeriodicPaymentsController.reject_if_blank(attributes) }
-  allow_existing :periodic_payment
+  child_property(name: :periodic_payment)
   
-  belongs_to :password
-  accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
-  allow_existing :password
+  child_property(name: :password)
 
-  has_many :retirement_plan_amounts, :dependent => :destroy
-  accepts_nested_attributes_for :retirement_plan_amounts, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :retirement_plan_amounts)
 end

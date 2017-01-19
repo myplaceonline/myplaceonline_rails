@@ -1,4 +1,4 @@
-class Status < ActiveRecord::Base
+class Status < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   DEFAULT_STATUS_THRESHOLD_SECONDS = 4.hours

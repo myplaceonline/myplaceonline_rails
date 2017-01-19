@@ -1,4 +1,4 @@
-class Accomplishment < ActiveRecord::Base
+class Accomplishment < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :name, presence: true

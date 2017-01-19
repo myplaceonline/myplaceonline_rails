@@ -1,4 +1,4 @@
-class ApartmentTrashPickup < ActiveRecord::Base
+class ApartmentTrashPickup < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   DEFAULT_TRASH_PICKUP_THRESHOLD_SECONDS = 2.days
@@ -10,9 +10,7 @@ class ApartmentTrashPickup < ActiveRecord::Base
   
   belongs_to :apartment
   
-  belongs_to :repeat
-  accepts_nested_attributes_for :repeat, allow_destroy: true, reject_if: :all_blank
-  validates_presence_of :repeat
+  child_property(name: :repeat, required: true)
 
   validates :trash_type, presence: true
 

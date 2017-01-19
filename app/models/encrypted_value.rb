@@ -1,6 +1,6 @@
 require "base64"
 
-class EncryptedValue < ActiveRecord::Base
+class EncryptedValue < ApplicationRecord
   include MyplaceonlineActiveRecordBaseConcern
 
   belongs_to :user

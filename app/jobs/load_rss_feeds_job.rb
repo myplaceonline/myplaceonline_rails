@@ -16,7 +16,7 @@ class LoadRssFeedsJob < ApplicationJob
             status.items_complete = 0
             status.items_error = 0
             
-            ActiveRecord::Base.transaction(requires_new: true) do
+            ApplicationRecord.transaction(requires_new: true) do
               status.save!
             end
             
@@ -43,7 +43,7 @@ class LoadRssFeedsJob < ApplicationJob
                 status.items_error += 1
               end
               
-              ActiveRecord::Base.transaction(requires_new: true) do
+              ApplicationRecord.transaction(requires_new: true) do
                 status.save!
               end
             end

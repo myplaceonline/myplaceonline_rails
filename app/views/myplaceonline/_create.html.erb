@@ -2,7 +2,6 @@
 existingobj ||= Myp.new_model(objform[0..(objform.index('/')-1)].singularize.camelize.constantize)
 collapsed = collapsed.nil? ? false : collapsed
 random_name = "createitem_" + SecureRandom.hex(10)
-first = true
 heading ||= ""
 %>
 <% if !heading.blank? %>
@@ -14,8 +13,7 @@ heading ||= ""
     <%= f.fields_for name, existingobj do |sub_fields| %>
       <%= render partial: objform + ".html", locals: { f: sub_fields, obj: existingobj, autofocus: autofocus, edit: true } %>
       <%
-      if first && autofocus
-        first = false
+      if autofocus
       %>
         <script type="text/javascript">
           myplaceonline.onPageLoad(function() {

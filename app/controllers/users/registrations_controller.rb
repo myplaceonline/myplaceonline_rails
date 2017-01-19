@@ -113,7 +113,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     current_password = params[:user][:current_password]
     new_password = params[:user][:password]
     
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       resource_updated = update_resource(resource, account_update_params)
       yield resource if block_given?
       if resource_updated
@@ -167,7 +167,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         foundcat = @categories.find{|c| c == @category}
         if !foundcat.nil?
           cl = Object.const_get(@category.singularize)
-          ActiveRecord::Base.transaction do
+          ApplicationRecord.transaction do
             destroyed = cl.destroy_all(identity: current_user.primary_identity)
             count = destroyed.length
             if count > 0 && foundcat[0] != "foods" && foundcat[0] != "drinks"

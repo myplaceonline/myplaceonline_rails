@@ -32,7 +32,7 @@ class ConnectionsController < MyplaceonlineController
     if !@obj.nil?
       if @obj.user.id == User.current_user.id
         
-        ActiveRecord::Base.transaction do
+        ApplicationRecord.transaction do
           # Update the connection object of the requesting user
           # to set the status to connected
           MyplaceonlineExecutionContext.do_permission_target(@obj.identity) do

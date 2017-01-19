@@ -1,17 +1,4 @@
 class MembershipsController < MyplaceonlineController
-  def self.reject_if_blank(attributes)
-    result = attributes.dup.all?{|key, value|
-      if key == "periodic_payment_attributes"
-        PeriodicPaymentsController.reject_if_blank(value)
-      elsif key == "password_attributes"
-        PasswordsController.reject_if_blank(value)
-      else
-        value.blank?
-      end
-    }
-    result
-  end
-
   def self.param_names
     [
       :id,

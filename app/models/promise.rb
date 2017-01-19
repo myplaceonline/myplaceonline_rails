@@ -1,4 +1,4 @@
-class Promise < ActiveRecord::Base
+class Promise < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :name, presence: true

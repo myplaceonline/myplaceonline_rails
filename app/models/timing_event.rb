@@ -1,4 +1,4 @@
-class TimingEvent < ActiveRecord::Base
+class TimingEvent < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 

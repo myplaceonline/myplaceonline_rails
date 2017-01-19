@@ -1,4 +1,4 @@
-class Contact < ActiveRecord::Base
+class Contact < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include ModelHelpersConcern
 
@@ -27,13 +27,11 @@ class Contact < ActiveRecord::Base
   DEFAULT_CONTACT_BEST_FAMILY_THRESHOLD_SECONDS = 20.days
   DEFAULT_CONTACT_GOOD_FAMILY_THRESHOLD_SECONDS = 45.days
 
-  belongs_to :contact_identity, class_name: Identity, :dependent => :destroy
-  accepts_nested_attributes_for :contact_identity
+  child_property(name: :contact_identity, model: Identity)
   
   validate :custom_validation
   
-  has_many :conversations, :dependent => :destroy
-  accepts_nested_attributes_for :conversations, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :conversations)
   
   before_destroy :check_if_user_contact, prepend: true
   
@@ -93,9 +91,9 @@ class Contact < ActiveRecord::Base
     result
   end
   
-  before_validation :update_pic_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
-  def update_pic_folders
+  def update_file_folders
     if !contact_identity.nil?
       put_files_in_folder(contact_identity.identity_pictures, [I18n.t("myplaceonline.category.contacts"), display])
     end
@@ -129,7 +127,7 @@ class Contact < ActiveRecord::Base
   end
   
   def last_conversation_date
-    result = ActiveRecord::Base.connection.select_one(%{
+    result = ApplicationRecord.connection.select_one(%{
       select max(conversation_date)
       from conversations
       where identity_id = #{identity.id}
@@ -169,7 +167,7 @@ class Contact < ActiveRecord::Base
   def on_after_save
     # No execution contexts on a migration
     if ExecutionContext.count > 0 && MyplaceonlineExecutionContext.handle_updates?
-      ActiveRecord::Base.transaction do
+      ApplicationRecord.transaction do
         # Always destroy first because if the contact was updated to not
         # be of the type to have a conversation reminder, then we need to
         # delete any persistent reminders

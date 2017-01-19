@@ -1,4 +1,4 @@
-class IdentityDriversLicense < ActiveRecord::Base
+class IdentityDriversLicense < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   DEFAULT_DRIVERS_LICENSE_EXPIRATION_THRESHOLD_SECONDS = 60.days
@@ -7,8 +7,7 @@ class IdentityDriversLicense < ActiveRecord::Base
   
   validates :identifier, presence: true
 
-  belongs_to :identity_file, :dependent => :destroy
-  accepts_nested_attributes_for :identity_file, allow_destroy: true, reject_if: :all_blank
+  child_property(name: :identity_file)
 
   def display
     identifier
@@ -32,7 +31,7 @@ class IdentityDriversLicense < ActiveRecord::Base
   def on_after_save
     if MyplaceonlineExecutionContext.handle_updates?
       if !expires.nil?
-        ActiveRecord::Base.transaction do
+        ApplicationRecord.transaction do
           CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
           User.current_user.primary_identity.calendars.each do |calendar|
             CalendarItem.create_calendar_item(

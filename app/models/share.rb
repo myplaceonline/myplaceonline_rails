@@ -1,4 +1,4 @@
-class Share < ActiveRecord::Base
+class Share < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :token, presence: true

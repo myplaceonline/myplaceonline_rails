@@ -47,7 +47,7 @@ class EmailsController < MyplaceonlineController
         final_redirect
       else
         Myp.clear_points_flash(session)
-        redirect_to(emails_personalize_path(@obj))
+        redirect_to(email_personalize_path(@obj))
       end
     else
       super

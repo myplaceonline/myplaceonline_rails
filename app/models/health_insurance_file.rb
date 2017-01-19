@@ -1,10 +1,8 @@
-class HealthInsuranceFile < ActiveRecord::Base
+class HealthInsuranceFile < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :health_insurance
 
-  belongs_to :identity_file
-  accepts_nested_attributes_for :identity_file, reject_if: :all_blank
-  allow_existing :identity_file
+  child_property(name: :identity_file, required: true)
 end

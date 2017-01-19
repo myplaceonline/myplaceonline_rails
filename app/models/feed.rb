@@ -2,15 +2,14 @@ require 'rest-client'
 require 'open-uri'
 require 'open_uri_redirections'
 
-class Feed < ActiveRecord::Base
+class Feed < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :name, presence: true
   validates :url, presence: true
   myplaceonline_validates_uniqueness_of :url
   
-  has_many :feed_items, -> { order("publication_date DESC") }, :dependent => :destroy
-  accepts_nested_attributes_for :feed_items, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :feed_items, sort: "publication_date DESC")
   
   def unread_feed_items
     feed_items.where("read is null")
@@ -25,7 +24,7 @@ class Feed < ActiveRecord::Base
     rss = SimpleRSS.parse(response[:body])
     new_items = 0
     all_feed_items = feed_items.to_a
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       rss.items.each do |item|
         #Rails.logger.debug{"Processing #{item.inspect}"}
         
@@ -83,7 +82,7 @@ class Feed < ActiveRecord::Base
         end
       end
       if new_items > 0
-        ActiveRecord::Base.connection.update(
+        ApplicationRecord.connection.update(
           "update feeds set total_items = total_items + #{new_items}, unread_items = unread_items + #{new_items} where id = #{self.id}"
         )
       end
@@ -100,7 +99,7 @@ class Feed < ActiveRecord::Base
         unread_items += 1
       end
     end
-    ActiveRecord::Base.connection.update(
+    ApplicationRecord.connection.update(
       "update feeds set total_items = #{total_items}, unread_items = #{unread_items} where id = #{self.id}"
     )
   end
@@ -146,7 +145,7 @@ class Feed < ActiveRecord::Base
   end
   
   def mark_all_read
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       FeedItem.where(
         identity_id: User.current_user.primary_identity_id,
         feed_id: self.id

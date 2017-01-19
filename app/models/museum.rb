@@ -1,4 +1,4 @@
-class Museum < ActiveRecord::Base
+class Museum < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -14,15 +14,9 @@ class Museum < ActiveRecord::Base
     ["myplaceonline.museum_types.zaw", 8],
   ]
   
-  validates :location, presence: true
-
-  belongs_to :location
-  accepts_nested_attributes_for :location, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
-  allow_existing :location
+  child_property(name: :location, required: true)
   
-  belongs_to :website
-  accepts_nested_attributes_for :website, reject_if: proc { |attributes| WebsitesController.reject_if_blank(attributes) }
-  allow_existing :website
+  child_property(name: :website)
   
   def display
     location.display

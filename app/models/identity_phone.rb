@@ -1,4 +1,4 @@
-class IdentityPhone < ActiveRecord::Base
+class IdentityPhone < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   
   PHONE_TYPE_CELL = 0

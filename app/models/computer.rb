@@ -1,4 +1,4 @@
-class Computer < ActiveRecord::Base
+class Computer < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -13,18 +13,15 @@ class Computer < ActiveRecord::Base
     result
   end
   
-  belongs_to :manufacturer, class_name: Company
-  accepts_nested_attributes_for :manufacturer, reject_if: proc { |attributes| CompaniesController.reject_if_blank(attributes) }
-  allow_existing :manufacturer, Company
+  child_property(name: :manufacturer, model: Company)
 
-  belongs_to :administrator, class_name: Password
-  accepts_nested_attributes_for :administrator, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
-  allow_existing :administrator, Password
+  child_property(name: :administrator, model: Password)
   
-  belongs_to :main_user, class_name: Password
-  accepts_nested_attributes_for :main_user, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
-  allow_existing :main_user, Password
+  child_property(name: :main_user, model: Password)
 
-  has_many :computer_ssh_keys, :dependent => :destroy
-  accepts_nested_attributes_for :computer_ssh_keys, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :computer_ssh_keys)
+
+  def self.skip_check_attributes
+    ["hyperthreaded"]
+  end
 end

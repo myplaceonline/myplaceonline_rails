@@ -1,4 +1,4 @@
-class MedicalConditionInstance < ActiveRecord::Base
+class MedicalConditionInstance < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   belongs_to :medical_condition

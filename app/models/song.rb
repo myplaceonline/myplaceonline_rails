@@ -1,15 +1,12 @@
-class Song < ActiveRecord::Base
+class Song < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :song_name, presence: true
   
-  belongs_to :identity_file
-  accepts_nested_attributes_for :identity_file, reject_if: :all_blank
+  child_property(name: :identity_file)
 
-  belongs_to :musical_group
-  accepts_nested_attributes_for :musical_group, reject_if: :all_blank
-  allow_existing :musical_group
+  child_property(name: :musical_group)
 
   def display
     if musical_group.nil?
@@ -29,5 +26,9 @@ class Song < ActiveRecord::Base
         identity_file.folder = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.songs"), musical_group.display])
       end
     end
+  end
+
+  def self.skip_check_attributes
+    ["secret", "awesome"]
   end
 end

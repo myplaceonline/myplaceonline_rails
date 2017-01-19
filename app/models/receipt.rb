@@ -1,19 +1,17 @@
-class Receipt < ActiveRecord::Base
+class Receipt < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :receipt_name, presence: true
   validates :receipt_time, presence: true
   
-  before_validation :update_file_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
   def update_file_folders
     put_files_in_folder(receipt_files, [I18n.t("myplaceonline.category.receipts"), display])
   end
 
-  has_many :receipt_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :receipt_files, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :receipt_files, [{:name => :identity_file}]
+  child_properties(name: :receipt_files, sort: "position ASC, updated_at ASC")
 
   def display
     Myp.appendstrwrap(receipt_name, Myp.display_datetime_short(receipt_time, User.current_user))

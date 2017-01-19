@@ -1,7 +1,7 @@
 <%= myp_text_field(f, :name, "myplaceonline.questions.name", obj.name, autofocus) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.questions.notes", obj.notes, collapsed: false) %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.questions.hypotheses"),
     childpropertiesname: :hypotheses,
@@ -33,7 +33,7 @@
   <%= myp_text_field(child_fields, :name, "myplaceonline.hypothesis.name", childproperty.name) %>
   <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.hypothesis.notes", childproperty.notes) %>
   <%=
-    render layout: 'myplaceonline/childproperties', locals: {
+    render layout: "myplaceonline/childproperties", locals: {
       f: child_fields,
       heading: t("myplaceonline.hypothesis.experiments"),
       childpropertiesname: :hypothesis_experiments,

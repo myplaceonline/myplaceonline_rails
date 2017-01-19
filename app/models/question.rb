@@ -1,10 +1,9 @@
-class Question < ActiveRecord::Base
+class Question < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :name, presence: true
   
-  has_many :hypotheses, :dependent => :destroy
-  accepts_nested_attributes_for :hypotheses, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :hypotheses)
   
   def display
     name

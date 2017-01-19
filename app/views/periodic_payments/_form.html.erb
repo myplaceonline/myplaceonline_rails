@@ -6,7 +6,7 @@
 <%= myp_check_box f, :suppress_reminder, "myplaceonline.periodic_payments.suppress_reminder" %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.periodic_payments.notes", obj.notes) %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :password,
     existingobj: obj.password,
@@ -15,7 +15,6 @@
     existingobjurl: "password_path",
     searchurl: "/passwords.json?perpage=0",
     edit: edit,
-    autofocus: false,
-    collapsed: obj.password.nil?
+    autofocus: false
   }
 %>

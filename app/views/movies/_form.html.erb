@@ -4,7 +4,7 @@
 <%= myp_check_box(f, :is_watched, "myplaceonline.movies.watched") %>
 <%= myp_text_area_markdown(f, :review, "myplaceonline.movies.review", obj.review) %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :recommender,
     existingobj: obj.recommender,
@@ -14,12 +14,11 @@
     searchurl: "/contacts.json?perpage=0",
     edit: edit,
     autofocus: false,
-    collapsed: true,
     force_existing: true
   }
 %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :lent_to,
     existingobj: obj.lent_to,
@@ -29,13 +28,12 @@
     searchurl: "/contacts.json?perpage=0",
     edit: edit,
     autofocus: false,
-    collapsed: true,
     force_existing: true
   }
 %>
 <%= myp_date_field(f, :lent_date, "myplaceonline.movies.lent_date", obj.lent_date) %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :borrowed_from,
     existingobj: obj.borrowed_from,
@@ -45,7 +43,6 @@
     searchurl: "/contacts.json?perpage=0",
     edit: edit,
     autofocus: false,
-    collapsed: true,
     force_existing: true
   }
 %>

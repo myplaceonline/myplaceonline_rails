@@ -1,4 +1,4 @@
-class CalendarItem < ActiveRecord::Base
+class CalendarItem < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   
   belongs_to :calendar
@@ -78,7 +78,7 @@ class CalendarItem < ActiveRecord::Base
     expire_amount: nil,
     expire_type: nil
   )
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       calendar_item = CalendarItem.new(
         identity: identity,
         calendar: calendar,
@@ -167,7 +167,7 @@ class CalendarItem < ActiveRecord::Base
     context_info: nil,
     max_pending: nil
   )
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       calendar_item = CalendarItem.new(
         identity: identity,
         calendar: calendar,

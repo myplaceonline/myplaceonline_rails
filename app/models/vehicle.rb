@@ -1,4 +1,4 @@
-class Vehicle < ActiveRecord::Base
+class Vehicle < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -10,36 +10,25 @@ class Vehicle < ActiveRecord::Base
   
   validates :name, presence: true
 
-  has_many :vehicle_loans, :dependent => :destroy
-  accepts_nested_attributes_for :vehicle_loans, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :vehicle_loans)
 
-  has_many :vehicle_services, :dependent => :destroy
-  accepts_nested_attributes_for :vehicle_services, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :vehicle_services)
   
-  has_many :vehicle_insurances, :dependent => :destroy
-  accepts_nested_attributes_for :vehicle_insurances, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :vehicle_insurances, [{:name => :company}, {:name => :periodic_payment}]
+  child_properties(name: :vehicle_insurances)
   
-  belongs_to :recreational_vehicle, :autosave => true
-  accepts_nested_attributes_for :recreational_vehicle, reject_if: proc { |attributes| RecreationalVehiclesController.reject_if_blank(attributes) }
-  allow_existing :recreational_vehicle
+  child_property(name: :recreational_vehicle)
 
-  has_many :vehicle_pictures, :dependent => :destroy
-  accepts_nested_attributes_for :vehicle_pictures, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :vehicle_pictures, [{:name => :identity_file}]
+  child_properties(name: :vehicle_pictures)
 
-  before_validation :update_pic_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
-  def update_pic_folders
+  def update_file_folders
     put_files_in_folder(vehicle_pictures, [I18n.t("myplaceonline.category.vehicles"), name])
   end
   
-  has_many :vehicle_warranties, :dependent => :destroy
-  accepts_nested_attributes_for :vehicle_warranties, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :vehicle_warranties, [{:name => :warranty}]
+  child_properties(name: :vehicle_warranties)
 
-  has_many :vehicle_registrations, -> { order('registration_date DESC') }, :dependent => :destroy
-  accepts_nested_attributes_for :vehicle_registrations, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :vehicle_registrations, sort: "registration_date DESC")
 
   def display
     Myp.appendstrwrap(name, license_plate)

@@ -1,4 +1,4 @@
-class Passport < ActiveRecord::Base
+class Passport < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -9,13 +9,11 @@ class Passport < ActiveRecord::Base
     region + " (" + passport_number + ")"
   end
   
-  has_many :passport_pictures, :dependent => :destroy
-  accepts_nested_attributes_for :passport_pictures, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :passport_pictures, [{:name => :identity_file}]
+  child_properties(name: :passport_pictures)
 
-  before_validation :update_pic_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
-  def update_pic_folders
+  def update_file_folders
     put_files_in_folder(passport_pictures, [I18n.t("myplaceonline.category.passports"), display])
   end
 

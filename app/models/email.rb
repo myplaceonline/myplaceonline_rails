@@ -1,4 +1,4 @@
-class Email < ActiveRecord::Base
+class Email < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include ActionView::Helpers
   include ActionDispatch::Routing
@@ -8,14 +8,11 @@ class Email < ActiveRecord::Base
   #validates :body, presence: true
   validates :email_category, presence: true
 
-  has_many :email_contacts, :dependent => :destroy
-  accepts_nested_attributes_for :email_contacts, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :email_contacts)
 
-  has_many :email_groups, :dependent => :destroy
-  accepts_nested_attributes_for :email_groups, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :email_groups)
 
-  has_many :email_personalizations, :dependent => :destroy
-  accepts_nested_attributes_for :email_personalizations, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :email_personalizations)
 
   def display
     subject
@@ -351,6 +348,10 @@ class Email < ActiveRecord::Base
     else
       nil
     end
+  end
+
+  def self.skip_check_attributes
+    ["personalize", "draft", "use_bcc", "copy_self"]
   end
   
   protected

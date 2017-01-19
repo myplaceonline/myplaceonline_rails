@@ -3,6 +3,7 @@ module MyplaceonlineActiveRecordIdentityConcern
   extend ActiveSupport::Concern
   include MyplaceonlineActiveRecordBaseConcern
   include ModelHelpersConcern
+  include AllowExistingConcern
 
   included do
     # Owner/creator
@@ -52,6 +53,7 @@ module MyplaceonlineActiveRecordIdentityConcern
     def put_file_in_folder(file, folders)
       if file.identity_file.folder.nil?
         file.identity_file.folder = IdentityFileFolder.find_or_create(folders)
+        file.identity_file.save!
       end
     end
     
@@ -64,30 +66,30 @@ module MyplaceonlineActiveRecordIdentityConcern
     end
   end
   
-  module ClassMethods
-    protected
-      def myplaceonline_validates_uniqueness_of(field)
-        validates field, uniqueness: {
-          scope: :identity_id,
-          message: ->(object, data) {
-            
-            Rails.logger.debug{"Found duplicate with field: #{field}, attribute: #{data[:attribute]}, value: #{data[:value]}"}
-            
-            existing_object = self.where(
-              field => data[:value],
-              :identity_id => User.current_user.primary_identity_id
-            ).take!
-            
-            I18n.t(
-              "myplaceonline.general.dup_item",
-              dup_field: I18n.t("myplaceonline." + data[:model].pluralize.downcase + "." + field.to_s),
-              link: ActionController::Base.helpers.link_to(
-                      existing_object.display,
-                      Rails.application.routes.url_helpers.send("#{self.name.downcase}_path", existing_object)
-                    )
-            )
-          }
+  class_methods do
+    
+    def myplaceonline_validates_uniqueness_of(field)
+      validates field, uniqueness: {
+        scope: :identity_id,
+        message: ->(object, data) {
+          
+          Rails.logger.debug{"Found duplicate with field: #{field}, attribute: #{data[:attribute]}, value: #{data[:value]}"}
+          
+          existing_object = self.where(
+            field => data[:value],
+            :identity_id => User.current_user.primary_identity_id
+          ).take!
+          
+          I18n.t(
+            "myplaceonline.general.dup_item",
+            dup_field: I18n.t("myplaceonline." + data[:model].pluralize.downcase + "." + field.to_s),
+            link: ActionController::Base.helpers.link_to(
+                    existing_object.display,
+                    Rails.application.routes.url_helpers.send("#{self.name.downcase}_path", existing_object)
+                  )
+          )
         }
-      end
+      }
+    end
   end
 end

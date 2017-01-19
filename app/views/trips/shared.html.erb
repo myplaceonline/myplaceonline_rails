@@ -28,7 +28,7 @@
   <hr />
 <% end %>
 <% if !@obj.identity_file.nil? && @obj.current_user_owns? %>
-  <p><%= url_or_blank(file_download_path(@obj.identity_file, token: params[:token]), t("myplaceonline.trips.download_zip") + " (" + bytes_number(@obj.identity_file.file_file_size) + ")", nil, "ui-btn ui-btn-inline", true) %></p>
+  <p><%= url_or_blank(file_download_path(@obj.identity_file, t: @obj.identity_file.updated_at.to_i, token: params[:token]), t("myplaceonline.trips.download_zip") + " (" + bytes_number(@obj.identity_file.file_file_size) + ")", nil, "ui-btn ui-btn-inline", true) %></p>
 <% end %>
 </div>
 

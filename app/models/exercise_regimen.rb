@@ -1,11 +1,10 @@
-class ExerciseRegimen < ActiveRecord::Base
+class ExerciseRegimen < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :exercise_regimen_name, presence: true
   
-  has_many :exercise_regimen_exercises, -> { order('position ASC') }, :dependent => :destroy
-  accepts_nested_attributes_for :exercise_regimen_exercises, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :exercise_regimen_exercises, sort: "position ASC")
 
   def display
     exercise_regimen_name

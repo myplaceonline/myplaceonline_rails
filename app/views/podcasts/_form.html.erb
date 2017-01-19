@@ -1,5 +1,5 @@
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :feed,
     existingobj: obj.feed,
@@ -8,6 +8,7 @@
     existingobjurl: "feed_path",
     searchurl: "/feeds.json?perpage=0",
     edit: edit,
-    autofocus: true
+    autofocus: true,
+    expanded_if_nil: true
   }
 %>

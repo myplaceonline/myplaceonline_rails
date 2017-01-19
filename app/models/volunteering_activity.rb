@@ -1,4 +1,4 @@
-class VolunteeringActivity < ActiveRecord::Base
+class VolunteeringActivity < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :volunteering_activity_name, presence: true

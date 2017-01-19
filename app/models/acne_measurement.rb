@@ -1,14 +1,13 @@
-class AcneMeasurement < ActiveRecord::Base
+class AcneMeasurement < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :measurement_datetime, presence: true
   
-  has_many :acne_measurement_pictures, :dependent => :destroy
-  accepts_nested_attributes_for :acne_measurement_pictures, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :acne_measurement_pictures)
 
-  before_validation :update_pic_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
-  def update_pic_folders
+  def update_file_folders
     put_files_in_folder(acne_measurement_pictures, [I18n.t("myplaceonline.category.acne_measurements"), display])
   end
 

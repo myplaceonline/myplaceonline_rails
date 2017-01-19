@@ -13,8 +13,6 @@ class MyplaceonlineExecutionContext
   def self.user=(x); self[:user] = x; end
   
   def self.handle_updates?; self[:skip_handling_updates].nil?; end
-  def self.enable_handling_updates; ExecutionContext.current.delete(:skip_handling_updates); end
-  def self.disable_handling_updates; self[:skip_handling_updates] = true; end
 
   def self.request; self[:request]; end
   def self.request=(x); self[:request] = x; end
@@ -76,6 +74,15 @@ class MyplaceonlineExecutionContext
       block.call
     ensure
       ExecutionContext.pop
+    end
+  end
+
+  def self.disable_handling_updates(&block)
+    begin
+      self[:skip_handling_updates] = true
+      block.call
+    ensure
+      ExecutionContext.current.delete(:skip_handling_updates)
     end
   end
 end

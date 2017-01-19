@@ -1,4 +1,4 @@
-class BusinessCard < ActiveRecord::Base
+class BusinessCard < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -8,15 +8,11 @@ class BusinessCard < ActiveRecord::Base
     contact.display
   end
   
-  belongs_to :contact
-  accepts_nested_attributes_for :contact, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
-  allow_existing :contact
+  child_property(name: :contact)
 
-  has_many :business_card_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :business_card_files, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :business_card_files, [{:name => :identity_file}]
+  child_properties(name: :business_card_files, sort: "position ASC, updated_at ASC")
 
-  before_validation :update_file_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
   def update_file_folders
     put_files_in_folder(business_card_files, [I18n.t("myplaceonline.category.business_cards"), display])

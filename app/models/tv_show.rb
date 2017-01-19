@@ -1,4 +1,4 @@
-class TvShow < ActiveRecord::Base
+class TvShow < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include ModelHelpersConcern
   include AllowExistingConcern
@@ -7,11 +7,13 @@ class TvShow < ActiveRecord::Base
   attr_accessor :is_watched
   boolean_time_transfer :is_watched, :watched
   
-  belongs_to :recommender, class_name: Contact, :autosave => true
-  accepts_nested_attributes_for :recommender, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
-  allow_existing :recommender, Contact
+  child_property(name: :recommender, model: Contact)
 
   def display
     tv_show_name
+  end
+
+  def self.skip_check_attributes
+    ["is_watched"]
   end
 end

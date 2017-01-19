@@ -4,7 +4,8 @@
       partial: @params[:partial],
       formats: :html,
       locals: params.merge({
-        f: f
+        f: f,
+        partial_render: true
       })
     )
   end

@@ -1,21 +1,14 @@
-class Apartment < ActiveRecord::Base
+class Apartment < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
-  belongs_to :location, :autosave => true
-  validates_presence_of :location
-  accepts_nested_attributes_for :location, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
-  allow_existing :location
+  child_property(name: :location, required: true)
+  
+  child_property(name: :landlord, model: Contact)
 
-  belongs_to :landlord, class_name: Contact, :autosave => true
-  accepts_nested_attributes_for :landlord, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
-  allow_existing :landlord, Contact
+  child_properties(name: :apartment_leases, sort: "start_date DESC")
 
-  has_many :apartment_leases, -> { order('start_date DESC') }, :dependent => :destroy
-  accepts_nested_attributes_for :apartment_leases, allow_destroy: true, reject_if: :all_blank
-
-  has_many :apartment_trash_pickups, :dependent => :destroy
-  accepts_nested_attributes_for :apartment_trash_pickups, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :apartment_trash_pickups)
 
   def as_json(options={})
     super.as_json(options).merge({
@@ -24,12 +17,11 @@ class Apartment < ActiveRecord::Base
     })
   end
   
-  has_many :apartment_pictures, :dependent => :destroy
-  accepts_nested_attributes_for :apartment_pictures, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :apartment_pictures)
 
-  before_validation :update_pic_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
-  def update_pic_folders
+  def update_file_folders
     put_files_in_folder(apartment_pictures, [I18n.t("myplaceonline.category.apartments"), display])
   end
 

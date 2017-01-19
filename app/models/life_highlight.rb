@@ -1,4 +1,4 @@
-class LifeHighlight < ActiveRecord::Base
+class LifeHighlight < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 

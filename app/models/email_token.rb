@@ -1,4 +1,4 @@
-class EmailToken < ActiveRecord::Base
+class EmailToken < ApplicationRecord
   belongs_to :identity
   
   def self.find_or_create_token_by_email(email, identity: nil)

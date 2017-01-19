@@ -1,16 +1,13 @@
-class Concert < ActiveRecord::Base
+class Concert < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :concert_date, presence: true
   validates :concert_title, presence: true
 
-  belongs_to :location
-  accepts_nested_attributes_for :location, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
-  allow_existing :location
+  child_property(name: :location)
   
-  has_many :concert_musical_groups, :dependent => :destroy
-  accepts_nested_attributes_for :concert_musical_groups, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :concert_musical_groups)
 
   def display
     concert_title + " (" + Myp.display_date_short_year(concert_date, User.current_user) + ")"
@@ -22,13 +19,11 @@ class Concert < ActiveRecord::Base
     result
   end
 
-  before_validation :update_pic_folders
+  after_commit :update_file_folders, on: [:create, :update]
     
-  def update_pic_folders
+  def update_file_folders
     put_files_in_folder(concert_pictures, [I18n.t("myplaceonline.category.concerts"), display])
   end
 
-  has_many :concert_pictures, :dependent => :destroy
-  accepts_nested_attributes_for :concert_pictures, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :concert_pictures, [{:name => :identity_file}]
+  child_properties(name: :concert_pictures)
 end

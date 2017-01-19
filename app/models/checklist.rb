@@ -1,4 +1,4 @@
-class Checklist < ActiveRecord::Base
+class Checklist < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -8,8 +8,7 @@ class Checklist < ActiveRecord::Base
     checklist_name
   end
 
-  has_many :checklist_items, :dependent => :destroy
-  accepts_nested_attributes_for :checklist_items, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :checklist_items)
 
   def all_checklist_items
     ChecklistItem.where(
@@ -17,9 +16,7 @@ class Checklist < ActiveRecord::Base
     ).order(["checklist_items.position ASC"])
   end
 
-  has_many :checklist_references, :foreign_key => 'checklist_parent_id'
-  accepts_nested_attributes_for :checklist_references, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :checklist_references, [{:name => :checklist}]
+  child_properties(name: :checklist_references, foreign_key: "checklist_parent_id")
 
   def pre_checklist_references
     checklist_references.to_a.delete_if{|cr| !cr.pre_checklist }

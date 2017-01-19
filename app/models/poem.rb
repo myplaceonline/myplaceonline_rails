@@ -1,4 +1,4 @@
-class Poem < ActiveRecord::Base
+class Poem < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :poem_name, presence: true

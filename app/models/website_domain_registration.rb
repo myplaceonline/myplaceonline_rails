@@ -1,4 +1,4 @@
-class WebsiteDomainRegistration < ActiveRecord::Base
+class WebsiteDomainRegistration < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -6,13 +6,9 @@ class WebsiteDomainRegistration < ActiveRecord::Base
 
   belongs_to :website_domain
   
-  belongs_to :repeat
-  accepts_nested_attributes_for :repeat, allow_destroy: true, reject_if: :all_blank
-  validates_presence_of :repeat
+  child_property(name: :repeat)
 
-  belongs_to :periodic_payment
-  accepts_nested_attributes_for :periodic_payment, reject_if: proc { |attributes| PeriodicPaymentsController.reject_if_blank(attributes) }
-  allow_existing :periodic_payment
+  child_property(name: :periodic_payment)
 
   def self.calendar_item_display(calendar_item)
     website_domain_registration = calendar_item.find_model_object

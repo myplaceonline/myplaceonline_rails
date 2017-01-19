@@ -1,6 +1,6 @@
 <%= myp_text_field(f, :domain_name, "myplaceonline.website_domains.domain_name", obj.domain_name, autofocus) %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :website,
     existingobj: obj.website,
@@ -9,11 +9,12 @@
     existingobjurl: "website_path",
     searchurl: "/websites.json?perpage=0",
     edit: edit,
-    autofocus: false
+    autofocus: false,
+    expanded_if_nil: true
   }
 %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :domain_host,
     existingobj: obj.domain_host,
@@ -22,12 +23,11 @@
     existingobjurl: "membership_path",
     searchurl: "/memberships.json?perpage=0",
     edit: edit,
-    autofocus: false,
-    collapsed: obj.domain_host.nil? ? true : false
+    autofocus: false
   }
 %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.website_domains.ssh_keys"),
     childpropertiesname: :website_domain_ssh_keys,
@@ -39,7 +39,7 @@
       {
         type: :renderpartial,
         name: :ssh_key_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.website_domains.ssh_key"),
         objform: "ssh_keys/form",
         existingobjurl: "ssh_key_path",
@@ -56,7 +56,7 @@
   } do |child_fields, childproperty|
 %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :ssh_key_attributes,
       existingobj: childproperty.ssh_key,
@@ -71,7 +71,7 @@
   <%= myp_text_field(child_fields, :username, "myplaceonline.website_domains.ssh_key_username", childproperty.username) %>
 <% end %>
 <%=
-  render(layout: 'myplaceonline/childproperties', locals: {
+  render(layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.website_domains.website_domain_registrations"),
     childpropertiesname: :website_domain_registrations,
@@ -90,7 +90,7 @@
       {
         type: :renderpartial,
         name: :periodic_payment_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.website_domains.website_domain_registrations_periodic_payment"),
         objform: "periodic_payments/form",
         existingobjurl: "periodic_payment_path",
@@ -111,7 +111,7 @@
     }
   %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :periodic_payment_attributes,
       existingobj: childproperty.periodic_payment,

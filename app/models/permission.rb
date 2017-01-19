@@ -1,4 +1,4 @@
-class Permission < ActiveRecord::Base
+class Permission < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   include ModelHelpersConcern
@@ -17,7 +17,6 @@ class Permission < ActiveRecord::Base
     ["myplaceonline.permissions.action_destroy", ACTION_DESTROY]
   ]
   
-  validates :user, presence: true
   validates :action, presence: true
   validates :subject_class, presence: true
   
@@ -35,9 +34,7 @@ class Permission < ActiveRecord::Base
     result
   end
   
-  belongs_to :user
-  accepts_nested_attributes_for :user, reject_if: :all_blank
-  allow_existing :user
+  child_property(name: :user, required: true)
 
   validate do
     if !subject_id.nil? && Myp.find_existing_object(Myp.category_to_model_name(subject_class), subject_id).nil?

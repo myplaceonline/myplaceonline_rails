@@ -1,4 +1,4 @@
-class LifeInsurance < ActiveRecord::Base
+class LifeInsurance < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   
@@ -18,11 +18,7 @@ class LifeInsurance < ActiveRecord::Base
     result
   end
   
-  belongs_to :company
-  accepts_nested_attributes_for :company, reject_if: proc { |attributes| CompaniesController.reject_if_blank(attributes) }
-  allow_existing :company
+  child_property(name: :company)
 
-  belongs_to :periodic_payment
-  accepts_nested_attributes_for :periodic_payment, reject_if: proc { |attributes| PeriodicPaymentsController.reject_if_blank(attributes) }
-  allow_existing :periodic_payment
+  child_property(name: :periodic_payment)
 end

@@ -1,15 +1,10 @@
-class AwesomeList < ActiveRecord::Base
+class AwesomeList < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
-  validates :location, presence: true
-
-  belongs_to :location
-  accepts_nested_attributes_for :location, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
-  allow_existing :location
+  child_property(name: :location, required: true)
   
-  has_many :awesome_list_items, :dependent => :destroy
-  accepts_nested_attributes_for :awesome_list_items, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :awesome_list_items)
   
   def display
     location.display

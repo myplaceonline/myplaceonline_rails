@@ -1,4 +1,4 @@
-class CalendarItemReminder < ActiveRecord::Base
+class CalendarItemReminder < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   DEFAULT_SNOOZE_TEXT = "1, 00:00:00"

@@ -21,7 +21,7 @@ class ProjectIssuesController < MyplaceonlineController
   def movetop
     set_obj
     original_position = @obj.position
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       i = 2
       @parent.project_issues.each do |issue|
         if issue.id == @obj.id

@@ -1,15 +1,12 @@
-class Group < ActiveRecord::Base
+class Group < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :group_name, presence: true
   
-  has_many :group_contacts, :dependent => :destroy
-  accepts_nested_attributes_for :group_contacts, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :group_contacts)
 
-  has_many :group_references, :foreign_key => 'parent_group_id'
-  accepts_nested_attributes_for :group_references, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :group_references, [{:name => :group}]
+  child_properties(name: :group_references, foreign_key: "parent_group_id")
 
   def display
     group_name

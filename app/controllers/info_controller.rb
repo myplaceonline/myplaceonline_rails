@@ -82,7 +82,7 @@ Body:
       if Invite.find_by_sql(%{
         SELECT invites.*
         FROM invites
-        WHERE lower(invites.email) = #{ActiveRecord::Base.sanitize(@obj.email.downcase)} AND user_id = #{@obj.user.id}
+        WHERE lower(invites.email) = #{ApplicationRecord.sanitize(@obj.email.downcase)} AND user_id = #{@obj.user.id}
       }).count == 0
         if @obj.save
           body_markdown = I18n.t(

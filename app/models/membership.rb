@@ -1,16 +1,12 @@
-class Membership < ActiveRecord::Base
+class Membership < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :name, presence: true
   
-  belongs_to :periodic_payment
-  accepts_nested_attributes_for :periodic_payment, reject_if: proc { |attributes| PeriodicPaymentsController.reject_if_blank(attributes) }
-  allow_existing :periodic_payment
+  child_property(name: :periodic_payment)
   
-  belongs_to :password
-  accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
-  allow_existing :password
+  child_property(name: :password)
 
   def display
     name
@@ -35,7 +31,7 @@ class Membership < ActiveRecord::Base
   
   def on_after_save
     if MyplaceonlineExecutionContext.handle_updates?
-      ActiveRecord::Base.transaction do
+      ApplicationRecord.transaction do
         CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
         if !end_date.nil?
           User.current_user.primary_identity.calendars.each do |calendar|
@@ -60,11 +56,9 @@ class Membership < ActiveRecord::Base
     CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: self.id)
   end
 
-  has_many :membership_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :membership_files, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :membership_files, [{:name => :identity_file}]
+  child_properties(name: :membership_files, sort: "position ASC, updated_at ASC")
 
-  before_validation :update_file_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
   def update_file_folders
     put_files_in_folder(membership_files, [I18n.t("myplaceonline.category.memberships"), display])

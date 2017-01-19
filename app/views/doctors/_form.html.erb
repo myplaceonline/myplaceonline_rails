@@ -1,5 +1,5 @@
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :contact,
     existingobj: obj.contact,
@@ -8,7 +8,8 @@
     existingobjurl: "contact_path",
     searchurl: "/contacts.json?perpage=0",
     edit: edit,
-    autofocus: autofocus
+    autofocus: autofocus,
+    expanded_if_nil: true
   }
 %>
 <%= myp_select(f, :doctor_type, "myplaceonline.doctors.doctor_type", Myp.translate_options(Doctor::DOCTOR_TYPES), obj.doctor_type) %>

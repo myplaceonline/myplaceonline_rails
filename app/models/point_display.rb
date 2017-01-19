@@ -1,4 +1,4 @@
-class PointDisplay < ActiveRecord::Base
+class PointDisplay < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
 end

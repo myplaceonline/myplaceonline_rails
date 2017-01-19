@@ -1,5 +1,5 @@
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :food_attributes,
     existingobj: obj.food,
@@ -8,7 +8,8 @@
     existingobjurl: "food_path",
     searchurl: "/foods.json?perpage=0",
     edit: edit,
-    autofocus: autofocus
+    autofocus: autofocus,
+    expanded_if_nil: true
   }
 %>
 <%= myp_date_field(f, :expires, "myplaceonline.perishable_foods.expires", obj.expires) %>

@@ -1,4 +1,4 @@
-class SleepMeasurement < ActiveRecord::Base
+class SleepMeasurement < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :sleep_start_time, presence: true

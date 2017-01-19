@@ -1,12 +1,10 @@
-class CalculationOperand < ActiveRecord::Base
+class CalculationOperand < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   # Recursive operand
-  belongs_to :calculation_element
-  accepts_nested_attributes_for :calculation_element, reject_if: :all_blank
+  child_property(name: :calculation_element)
   
-  belongs_to :calculation_input
-  accepts_nested_attributes_for :calculation_input, reject_if: :all_blank
+  child_property(name: :calculation_input)
   
   # constant_value:string
   

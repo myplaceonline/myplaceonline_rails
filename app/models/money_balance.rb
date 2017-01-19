@@ -1,10 +1,8 @@
 # A negative amount means the contact is owed
-class MoneyBalance < ActiveRecord::Base
+class MoneyBalance < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
-  validates :contact, presence: true
-  
   def display
     if current_user_owns?
       contact.display
@@ -13,15 +11,11 @@ class MoneyBalance < ActiveRecord::Base
     end
   end
   
-  belongs_to :contact
-  accepts_nested_attributes_for :contact, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
-  allow_existing :contact
+  child_property(name: :contact, required: true)
 
-  has_many :money_balance_items, -> { order('item_time DESC') }, :dependent => :destroy
-  accepts_nested_attributes_for :money_balance_items, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :money_balance_items, sort: "item_time DESC")
   
-  has_many :money_balance_item_templates, :dependent => :destroy
-  accepts_nested_attributes_for :money_balance_item_templates, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :money_balance_item_templates)
   
   def calculate_balance
     result = 0.0

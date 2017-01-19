@@ -1,6 +1,6 @@
 <%= myp_datetime_field(f, :usage_time, "myplaceonline.medicine_usages.usage_time", obj.usage_time) %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.medicines.heading"),
     childpropertiesname: :medicine_usage_medicines,
@@ -12,7 +12,7 @@
       {
         type: :renderpartial,
         name: :medicine_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.medicines.medicine"),
         objform: "medicines/form",
         existingobjurl: "medicine_path",
@@ -24,7 +24,7 @@
   } do |child_fields, childproperty|
 %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :medicine_attributes,
       existingobj: childproperty.medicine,

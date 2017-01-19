@@ -20,12 +20,6 @@ class FeedsController < MyplaceonlineController
     ]
   end
 
-  def self.reject_if_blank(attributes)
-    attributes.dup.all?{|key, value|
-      value.blank?
-    }
-  end
-  
   def load
     set_obj
     new_items = @obj.load_feed

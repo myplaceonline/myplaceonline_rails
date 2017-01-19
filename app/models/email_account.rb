@@ -1,11 +1,9 @@
-class EmailAccount < ActiveRecord::Base
+class EmailAccount < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   include ModelHelpersConcern
   
-  belongs_to :password
-  accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
-  allow_existing :password
+  child_property(name: :password)
 
   def display
     password.display

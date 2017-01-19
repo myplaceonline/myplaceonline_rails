@@ -74,5 +74,6 @@
     <%= myp_file_field(file_fields, :file, item_placeholder, childproperty.identity_file.file) %>
     <%= myp_text_field(file_fields, :file_file_name, "myplaceonline.files.file_file_name", childproperty.identity_file.file_file_name) %>
     <%= myp_text_area_markdown(file_fields, :notes, "myplaceonline.general.notes", childproperty.identity_file.notes) %>
+    <%= myp_hidden_field(file_fields, :_updatetype, AllowExistingConcern::UPDATE_TYPE_COMBINE.to_s) %>
   <% end %>
 <% end %>

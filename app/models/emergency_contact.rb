@@ -1,10 +1,7 @@
-class EmergencyContact < ActiveRecord::Base
+class EmergencyContact < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
-  validates :email, presence: true
-
-  belongs_to :email, :dependent => :destroy
-  accepts_nested_attributes_for :email, reject_if: :all_blank
+  child_property(name: :email, required: true)
 
   def display
     email.all_targets.values.to_a.map{|x| x.display }.join(", ")

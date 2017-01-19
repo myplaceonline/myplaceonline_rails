@@ -1,14 +1,12 @@
-class ExerciseRegimenExercise < ActiveRecord::Base
+class ExerciseRegimenExercise < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :exercise_regimen
 
-  has_many :exercise_regimen_exercise_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :exercise_regimen_exercise_files, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :exercise_regimen_exercise_files, [{:name => :identity_file}]
+  child_properties(name: :exercise_regimen_exercise_files, sort: "position ASC, updated_at ASC")
 
-  before_validation :update_file_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
   def update_file_folders
     put_files_in_folder(exercise_regimen_exercise_files, [I18n.t("myplaceonline.category.exercise_regimens"), exercise_regimen.display, display])

@@ -13,7 +13,7 @@
 <%= myp_subregion_field(f, :sub_region1, "myplaceonline.general.sub_region1", obj.region, obj.sub_region1) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.vehicles.notes", obj.notes) %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.loans.heading"),
     childpropertiesname: :vehicle_loans,
@@ -60,7 +60,7 @@
   <% end %>
 <% end %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.vehicle_insurances.insurances"),
     childpropertiesname: :vehicle_insurances,
@@ -88,7 +88,7 @@
       {
         type: :renderpartial,
         name: :company_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.vehicle_insurances.company"),
         objform: "companies/form",
         existingobjurl: "company_path",
@@ -99,7 +99,7 @@
       {
         type: :renderpartial,
         name: :periodic_payment_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.vehicle_insurances.periodic_payment"),
         objform: "periodic_payments/form",
         existingobjurl: "periodic_payment_path",
@@ -114,7 +114,7 @@
   <%= myp_date_field(child_fields, :started, "myplaceonline.vehicle_insurances.started", childproperty.started) %>
   <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.vehicle_insurances.notes", childproperty.notes) %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :company_attributes,
       existingobj: childproperty.company,
@@ -127,7 +127,7 @@
     }
   %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :periodic_payment_attributes,
       existingobj: childproperty.periodic_payment,
@@ -185,7 +185,7 @@
   <%= myp_decimal_field(f, :tailgate_weight, "myplaceonline.vehicles.tailgate_weight", obj.tailgate_weight) %>
 </div>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :recreational_vehicle,
     existingobj: obj.recreational_vehicle,
@@ -194,8 +194,7 @@
     existingobjurl: "recreational_vehicle_path",
     searchurl: "/recreational_vehicles.json?perpage=0",
     edit: edit,
-    autofocus: false,
-    collapsed: obj.recreational_vehicle.nil?
+    autofocus: false
   }
 %>
 <%=
@@ -206,7 +205,7 @@
   }
 %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.warranties.heading"),
     childpropertiesname: :vehicle_warranties,
@@ -218,7 +217,7 @@
       {
         type: :renderpartial,
         name: :warranty_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.warranties.warranty"),
         objform: "warranties/form",
         existingobjurl: "warranty_path",
@@ -230,7 +229,7 @@
   } do |child_fields, childproperty|
 %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :warranty_attributes,
       existingobj: childproperty.warranty,
@@ -244,7 +243,7 @@
   %>
 <% end %>
 <%=
-  render(layout: 'myplaceonline/childproperties', locals: {
+  render(layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.vehicles.registrations"),
     childpropertiesname: :vehicle_registrations,
@@ -265,5 +264,5 @@
     ]
   }) do |child_fields, childproperty|
 %>
-  <%= render partial: "vehicle_registrations/form", locals: { obj: childproperty || VehicleRegistration.build, edit: true, autofocus: false, f: child_fields } %>
+  <%= render partial: "vehicle_registrations/form", locals: { obj: childproperty || VehicleRegistration.build, edit: edit, autofocus: false, f: child_fields } %>
 <% end %>

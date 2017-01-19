@@ -13,12 +13,6 @@ class StoriesController < MyplaceonlineController
     ]
   end
 
-  def self.reject_if_blank(attributes)
-    attributes.dup.delete_if {|key, value| key.to_s == "story_time" }.all?{|key, value|
-      value.blank?
-    }
-  end
-
   protected
     def insecure
       true

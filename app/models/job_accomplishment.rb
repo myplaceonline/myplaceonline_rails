@@ -1,4 +1,4 @@
-class JobAccomplishment < ActiveRecord::Base
+class JobAccomplishment < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   belongs_to :job
@@ -18,5 +18,9 @@ class JobAccomplishment < ActiveRecord::Base
 
   def final_search_result
     job
+  end
+
+  def self.skip_check_attributes
+    ["major"]
   end
 end

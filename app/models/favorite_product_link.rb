@@ -1,4 +1,4 @@
-class FavoriteProductLink < ActiveRecord::Base
+class FavoriteProductLink < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   belongs_to :favorite_product

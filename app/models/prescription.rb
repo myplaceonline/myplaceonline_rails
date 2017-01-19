@@ -1,25 +1,20 @@
-class Prescription < ActiveRecord::Base
+class Prescription < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :prescription_name, presence: true
   
-  belongs_to :doctor
-  accepts_nested_attributes_for :doctor, reject_if: proc { |attributes| DoctorsController.reject_if_blank(attributes) }
-  allow_existing :doctor
+  child_property(name: :doctor)
   
-  has_many :prescription_refills, -> { order('refill_date DESC') }, :dependent => :destroy
-  accepts_nested_attributes_for :prescription_refills, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :prescription_refills, sort: "refill_date DESC")
 
   def display
     prescription_name
   end
 
-  has_many :prescription_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :prescription_files, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :prescription_files, [{:name => :identity_file}]
+  child_properties(name: :prescription_files, sort: "position ASC, updated_at ASC")
 
-  before_validation :update_file_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
   def update_file_folders
     put_files_in_folder(prescription_files, [I18n.t("myplaceonline.category.prescriptions"), display])

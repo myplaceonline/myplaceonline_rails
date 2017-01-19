@@ -1,4 +1,4 @@
-class AlertsDisplay < ActiveRecord::Base
+class AlertsDisplay < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   def display

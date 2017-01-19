@@ -1,4 +1,4 @@
-class Joke < ActiveRecord::Base
+class Joke < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :name, presence: true

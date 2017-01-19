@@ -1,4 +1,4 @@
-class ChecklistItem < ActiveRecord::Base
+class ChecklistItem < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   belongs_to :checklist

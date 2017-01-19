@@ -24,6 +24,7 @@ class ContactsController < MyplaceonlineController
       ],
       contact_identity_attributes: [
         :id,
+        :_updatetype,
         :name,
         :middle_name,
         :last_name,
@@ -90,22 +91,6 @@ class ContactsController < MyplaceonlineController
         company_attributes: CompaniesController.param_names(include_website: include_website)
       ]
     ]
-  end
-
-  def self.reject_if_blank(attributes)
-    attributes.dup.all?{|key, value|
-      if key == "contact_identity_attributes"
-        value.all?{|key2, value2|
-          if key2 == "company_attributes"
-            CompaniesController.reject_if_blank(value2)
-          else
-            value2.blank?
-          end
-        }
-      else
-        value.blank?
-      end
-    }
   end
 
   def search_index_name

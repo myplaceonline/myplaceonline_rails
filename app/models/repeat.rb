@@ -1,4 +1,4 @@
-class Repeat < ActiveRecord::Base
+class Repeat < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :start_date, presence: true
@@ -70,18 +70,18 @@ class Repeat < ActiveRecord::Base
       
       Rails.logger.debug{"Repeat create_calendar_reminders object #{obj.inspect}, repeat object #{repeat_obj.inspect}"}
       
-      ActiveRecord::Base.transaction do
+      ApplicationRecord.transaction do
         User.current_user.primary_identity.calendars.each do |calendar|
           if destroy
             obj.on_after_destroy
           end
           CalendarItem.create_calendar_item(
-            User.current_user.primary_identity,
-            calendar,
-            obj.class,
-            repeat_obj.next_instance,
-            (calendar.send(reminder_threshold_amount_name) || reminder_threshold_amount_default),
-            reminder_threshold_type,
+            identity: User.current_user.primary_identity,
+            calendar: calendar,
+            model: obj.class,
+            calendar_item_time: repeat_obj.next_instance,
+            reminder_threshold_amount: (calendar.send(reminder_threshold_amount_name) || reminder_threshold_amount_default),
+            reminder_threshold_type: reminder_threshold_type,
             model_id: obj.id,
             repeat_amount: repeat_obj.period,
             repeat_type: Myp.period_type_to_repeat_type(repeat_obj.period_type),

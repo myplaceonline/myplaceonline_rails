@@ -1,4 +1,4 @@
-class SnoozedDueItem < ActiveRecord::Base
+class SnoozedDueItem < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   belongs_to :calendar

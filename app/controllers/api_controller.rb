@@ -232,11 +232,11 @@ class ApiController < ApplicationController
     
     Rails.logger.debug{"newfile urlpath: #{urlpath}"}
     
-    begin
-      # Adding a picture will save the parent item, but the user will usually
-      # explicitly save the item after editing an item and adding one or more
-      # pictures, so we don't want to handle updates on every save
-      MyplaceonlineExecutionContext.disable_handling_updates
+    # Adding a picture will save the parent item, but the user will usually
+    # explicitly save the item after editing an item and adding one or more
+    # pictures, so we don't want to handle updates on every save because that might
+    # involve side effects like updating calendars
+    MyplaceonlineExecutionContext.disable_handling_updates do
       if !urlpath.blank?
         spliturl = urlpath.split('/')
         if spliturl.length >= 3
@@ -284,6 +284,7 @@ class ApiController < ApplicationController
           prevnode = obj
           prevkey = nil
           prevkey_full = nil
+          newfilewrapper = nil
 
           Rails.logger.debug{"initial node: #{paramnode}"}
           
@@ -334,7 +335,7 @@ class ApiController < ApplicationController
                   raise "todo"
                 end
 
-                result = create_newfile_result(newfile, params)
+                result = create_newfile_result(newfile, params, newfilewrapper: newfilewrapper)
                 
                 keepgoing = false
 
@@ -370,18 +371,16 @@ class ApiController < ApplicationController
           end
         end
       end
-    ensure
-      MyplaceonlineExecutionContext.enable_handling_updates
     end
     
     render json: result
   end
   
-  def create_newfile_result(newfile, params, singular: false)
+  def create_newfile_result(newfile, params, newfilewrapper: nil, singular: false)
     items = [
       {
         type: "raw",
-        value: "<p>" + MyplaceonlineController.helpers.image_tag(file_thumbnail_name_path(newfile, newfile.urlname, :h => newfile.thumbnail_hash), alt: newfile.display, title: newfile.display, class: "fit") + "</p>"
+        value: "<p>" + MyplaceonlineController.helpers.image_tag(file_thumbnail_name_path(newfile, newfile.urlname, t: newfile.updated_at.to_i), alt: newfile.display, title: newfile.display, class: "fit") + "</p>"
       },
       {
         type: "text",
@@ -399,6 +398,11 @@ class ApiController < ApplicationController
         type: "hidden",
         name: "identity_file_attributes.id",
         value: newfile.id.to_s
+      },
+      {
+        type: "hidden",
+        name: "identity_file_attributes._updatetype",
+        value: AllowExistingConcern::UPDATE_TYPE_COMBINE.to_s
       }
     ]
     
@@ -406,6 +410,14 @@ class ApiController < ApplicationController
       items.push({
         type: "position",
         name: params[:position_field]
+      })
+    end
+    
+    if !newfilewrapper.nil?
+      items.push({
+        type: "hidden",
+        name: "id",
+        value: newfilewrapper.id.to_s
       })
     end
 

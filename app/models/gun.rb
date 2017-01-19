@@ -1,10 +1,9 @@
-class Gun < ActiveRecord::Base
+class Gun < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :gun_name, presence: true
   
-  has_many :gun_registrations, :dependent => :destroy
-  accepts_nested_attributes_for :gun_registrations, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :gun_registrations)
 
   def display
     gun_name

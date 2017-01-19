@@ -11,7 +11,7 @@
 <%= myp_date_field(f, :purchased, "myplaceonline.recreational_vehicles.purchased", obj.purchased) %>
 <%= myp_date_field(f, :warranty_ends, "myplaceonline.recreational_vehicles.warranty_ends", obj.warranty_ends) %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :location_purchased,
     existingobj: obj.location_purchased,
@@ -20,12 +20,11 @@
     existingobjurl: "location_path",
     searchurl: "/locations.json?perpage=0",
     edit: edit,
-    autofocus: false,
-    collapsed: obj.location_purchased.nil?
+    autofocus: false
   }
 %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.recreational_vehicle_insurances.insurances"),
     childpropertiesname: :recreational_vehicle_insurances,
@@ -53,7 +52,7 @@
       {
         type: :renderpartial,
         name: :company_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.recreational_vehicle_insurances.company"),
         objform: "companies/form",
         existingobjurl: "company_path",
@@ -64,7 +63,7 @@
       {
         type: :renderpartial,
         name: :periodic_payment_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.recreational_vehicle_insurances.periodic_payment"),
         objform: "periodic_payments/form",
         existingobjurl: "periodic_payment_path",
@@ -79,7 +78,7 @@
   <%= myp_date_field(child_fields, :started, "myplaceonline.recreational_vehicle_insurances.started", childproperty.started) %>
   <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.recreational_vehicle_insurances.notes", childproperty.notes) %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :company_attributes,
       existingobj: childproperty.company,
@@ -92,7 +91,7 @@
     }
   %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :periodic_payment_attributes,
       existingobj: childproperty.periodic_payment,
@@ -129,7 +128,7 @@
   <%= myp_integer_field(f, :refrigerator, "myplaceonline.recreational_vehicles.refrigerator", obj.refrigerator) %>
 </div>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.loans.heading"),
     childpropertiesname: :recreational_vehicle_loans,

@@ -1,4 +1,4 @@
-class Hobby < ActiveRecord::Base
+class Hobby < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :hobby_name, presence: true

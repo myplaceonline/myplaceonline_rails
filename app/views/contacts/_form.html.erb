@@ -6,6 +6,7 @@
   end
   %>
 
+  <%= myp_hidden_field(identity_fields, :_updatetype, AllowExistingConcern::UPDATE_TYPE_COMBINE.to_s) %>
   <%= myp_text_field(identity_fields, :name, "myplaceonline.contacts.name", obj.contact_identity.name, autofocus) %>
   <%= myp_text_field(identity_fields, :middle_name, "myplaceonline.contacts.middle_name", obj.contact_identity.middle_name) %>
   <%= myp_text_field(identity_fields, :last_name, "myplaceonline.contacts.last_name", obj.contact_identity.last_name) %>
@@ -18,7 +19,7 @@
   <% end %>
   
   <%=
-    render(layout: 'myplaceonline/childproperties', locals: {
+    render(layout: "myplaceonline/childproperties", locals: {
       f: identity_fields,
       heading: t("myplaceonline.identities.emails"),
       childpropertiesname: :identity_emails,
@@ -41,7 +42,7 @@
   <% end %>
 
   <%=
-    render(layout: 'myplaceonline/childproperties', locals: {
+    render(layout: "myplaceonline/childproperties", locals: {
       f: identity_fields,
       heading: t("myplaceonline.identities.phones"),
       childpropertiesname: :identity_phones,
@@ -72,7 +73,7 @@
   <% if !simpleform %>
 
     <%=
-      render(layout: 'myplaceonline/childproperties', locals: {
+      render(layout: "myplaceonline/childproperties", locals: {
         f: f,
         heading: t("myplaceonline.contacts.conversations"),
         childpropertiesname: :conversations,
@@ -101,7 +102,7 @@
     <% end %>
 
     <%=
-      render(layout: 'myplaceonline/childproperties', locals: {
+      render(layout: "myplaceonline/childproperties", locals: {
         f: identity_fields,
         heading: t("myplaceonline.identities.locations"),
         childpropertiesname: :identity_locations,
@@ -113,7 +114,7 @@
           {
             type: :renderpartial,
             name: :location_attributes,
-            partial: 'myplaceonline/select_or_create',
+            partial: "myplaceonline/select_or_create",
             heading: t("myplaceonline.identities.location"),
             objform: "locations/form",
             existingobjurl: "location_path",
@@ -130,7 +131,7 @@
       }) do |child_fields, childproperty|
     %>
       <%=
-        render partial: 'myplaceonline/select_or_create', locals: {
+        render partial: "myplaceonline/select_or_create", locals: {
           f: child_fields,
           name: :location_attributes,
           existingobj: childproperty.location,
@@ -146,7 +147,7 @@
     <% end %>
     
     <%=
-      render(layout: 'myplaceonline/childproperties', locals: {
+      render(layout: "myplaceonline/childproperties", locals: {
         f: identity_fields,
         heading: t("myplaceonline.identities.relationships"),
         childpropertiesname: :identity_relationships,
@@ -158,12 +159,12 @@
           {
             type: :renderpartial,
             name: :contact_attributes,
-            partial: 'myplaceonline/select_or_create',
+            partial: "myplaceonline/select_or_create",
             heading: t("myplaceonline.contacts.contact"),
             objform: "contacts/form",
             existingobjurl: "contact_path",
             searchurl: "/contacts.json?perpage=0",
-            edit: true,
+            edit: edit,
             autofocus: true
           },
           {
@@ -176,7 +177,7 @@
       }) do |child_fields, childproperty|
     %>
       <%=
-        render partial: 'myplaceonline/select_or_create', locals: {
+        render partial: "myplaceonline/select_or_create", locals: {
           f: child_fields,
           name: :contact_attributes,
           existingobj: childproperty.contact,
@@ -184,7 +185,7 @@
           objform: "contacts/form",
           existingobjurl: "contact_path",
           searchurl: "/contacts.json?perpage=0",
-          edit: true,
+          edit: edit,
           autofocus: false
         }
       %>
@@ -198,9 +199,9 @@
         pictures_field: :identity_pictures
       }
     %>
-
+    
     <%=
-      render partial: 'myplaceonline/select_or_create', locals: {
+      render partial: "myplaceonline/select_or_create", locals: {
         f: identity_fields,
         name: :company,
         existingobj: obj.contact_identity.company,
@@ -209,8 +210,7 @@
         existingobjurl: "company_path",
         searchurl: "/companies.json?perpage=0",
         edit: edit,
-        autofocus: false,
-        collapsed: obj.contact_identity.company.nil?
+        autofocus: false
       }
     %>
 
@@ -223,7 +223,7 @@
       <%= myp_text_field(identity_fields, :ktn, "myplaceonline.contacts.ktn", obj.contact_identity.ktn) %>
       <%= myp_text_field(identity_fields, :new_years_resolution, "myplaceonline.contacts.new_years_resolution", obj.contact_identity.new_years_resolution) %>
       <%=
-        render(layout: 'myplaceonline/childproperties', locals: {
+        render(layout: "myplaceonline/childproperties", locals: {
           f: identity_fields,
           heading: t("myplaceonline.identities.drivers_licenses"),
           childpropertiesname: :identity_drivers_licenses,

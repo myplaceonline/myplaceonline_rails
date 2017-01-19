@@ -1,4 +1,4 @@
-class ShoppingListItem < ActiveRecord::Base
+class ShoppingListItem < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   belongs_to :shopping_list

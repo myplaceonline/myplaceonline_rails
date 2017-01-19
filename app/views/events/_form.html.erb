@@ -14,7 +14,7 @@
   }
 %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :location,
     existingobj: obj.location,
@@ -23,7 +23,6 @@
     existingobjurl: "location_path",
     searchurl: "/locations.json?perpage=0",
     edit: edit,
-    collapsed: obj.location.nil?,
     autofocus: false
   }
 %>
@@ -41,7 +40,7 @@
   }
 %>
 <%#
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.events.contacts"),
     childpropertiesname: :event_contacts,
@@ -53,7 +52,7 @@
       {
         type: :renderpartial,
         name: :contact_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.events.contact"),
         objform: "contacts/form",
         existingobjurl: "contact_path",
@@ -65,7 +64,7 @@
   } do |child_fields, childproperty|
 %>
   <%#
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :contact_attributes,
       existingobj: childproperty.contact,

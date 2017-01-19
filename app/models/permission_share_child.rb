@@ -1,4 +1,4 @@
-class PermissionShareChild < ActiveRecord::Base
+class PermissionShareChild < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :subject_class, presence: true

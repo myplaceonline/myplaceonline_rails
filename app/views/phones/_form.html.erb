@@ -1,6 +1,6 @@
 <%= myp_text_field(f, :phone_model_name, "myplaceonline.phones.phone_model_name", obj.phone_model_name, true) %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :manufacturer,
     existingobj: obj.manufacturer,
@@ -30,7 +30,7 @@
 <%= myp_decimal_field(f, :back_camera_megapixels, "myplaceonline.phones.back_camera_megapixels", obj.back_camera_megapixels) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.phones.notes", obj.notes) %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :password,
     existingobj: obj.password,

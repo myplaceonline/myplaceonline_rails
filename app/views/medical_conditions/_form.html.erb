@@ -1,7 +1,7 @@
 <%= myp_text_field(f, :medical_condition_name, "myplaceonline.medical_conditions.medical_condition_name", obj.medical_condition_name, autofocus) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.medical_conditions.notes", obj.notes) %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.medical_conditions.instances"),
     childpropertiesname: :medical_condition_instances,
@@ -34,7 +34,7 @@
   <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.medical_condition_instances.notes", childproperty.notes) %>
 <% end %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.medical_conditions.treatments"),
     childpropertiesname: :medical_condition_treatments,
@@ -63,12 +63,12 @@
       {
         type: :renderpartial,
         name: :doctor_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.medical_condition_treatments.doctor"),
         objform: "doctors/form",
         existingobjurl: "doctor_path",
         searchurl: "/doctors.json?perpage=0",
-        edit: true,
+        edit: edit,
         autofocus: false,
         force_existing: true,
         simpleform: true
@@ -76,12 +76,12 @@
       {
         type: :renderpartial,
         name: :location_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.medical_condition_treatments.location"),
         objform: "locations/form",
         existingobjurl: "location_path",
         searchurl: "/locations.json?perpage=0",
-        edit: true,
+        edit: edit,
         autofocus: false,
         force_existing: true,
         simpleform: true
@@ -93,7 +93,7 @@
   <%= myp_text_field(child_fields, :condition_end, "myplaceonline.medical_condition_treatments.treatment_description", childproperty.treatment_description) %>
   <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.general.notes", childproperty.notes) %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :doctor_attributes,
       existingobj: childproperty.doctor,
@@ -101,12 +101,12 @@
       objform: "doctors/form",
       existingobjurl: "doctor_path",
       searchurl: "/doctors.json?perpage=0",
-      edit: true,
+      edit: edit,
       autofocus: false
     }
   %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :location_attributes,
       existingobj: childproperty.location,
@@ -114,13 +114,13 @@
       objform: "locations/form",
       existingobjurl: "location_path",
       searchurl: "/locations.json?perpage=0",
-      edit: true,
+      edit: edit,
       autofocus: false
     }
   %>
 <% end %>
 <%=
-  render(layout: 'myplaceonline/childproperties', locals: {
+  render(layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.medical_conditions.evaluations"),
     childpropertiesname: :medical_condition_evaluations,
@@ -141,5 +141,5 @@
     ]
   }) do |child_fields, childproperty|
 %>
-  <%= render partial: "medical_condition_evaluations/form", locals: { obj: childproperty || MedicalConditionEvaluation.build, edit: true, autofocus: false, f: child_fields } %>
+  <%= render partial: "medical_condition_evaluations/form", locals: { obj: childproperty || MedicalConditionEvaluation.build, edit: edit, autofocus: false, f: child_fields } %>
 <% end %>

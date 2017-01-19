@@ -206,7 +206,7 @@ class MyplaceonlineController < ApplicationController
     if sensitive
       check_password
     end
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       begin
         if @parent.nil?
           Permission.current_target = @obj
@@ -330,7 +330,7 @@ class MyplaceonlineController < ApplicationController
   def do_update(check_double_post: false)
     update_security
     
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       begin
         if @parent.nil?
           Permission.current_target = @obj
@@ -379,7 +379,7 @@ class MyplaceonlineController < ApplicationController
     deny_guest
     
     check_password
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       @obj.destroy
       if has_category
         Myp.subtract_point(current_user, category_name, session)
@@ -392,7 +392,7 @@ class MyplaceonlineController < ApplicationController
   def destroy_all
     check_password
     deny_guest
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       all.each do |obj|
         authorize! :destroy, obj
         obj.destroy

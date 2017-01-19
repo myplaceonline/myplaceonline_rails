@@ -1,5 +1,5 @@
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :password,
     existingobj: obj.password,
@@ -8,6 +8,7 @@
     existingobjurl: "password_path",
     searchurl: "/passwords.json?perpage=0",
     edit: edit,
-    autofocus: true
+    autofocus: true,
+    expanded_if_nil: true
   }
 %>

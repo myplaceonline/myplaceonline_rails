@@ -12,16 +12,6 @@ class MyreferencesController < MyplaceonlineController
     ]
   end
 
-  def self.reject_if_blank(attributes)
-    attributes.all?{|key, value|
-      if key == "contact_attributes"
-        ContactsController.reject_if_blank(value)
-      else
-        value.blank?
-      end
-    }
-  end
-
   def search_index_name
     Identity.table_name
   end

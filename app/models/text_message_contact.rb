@@ -1,4 +1,4 @@
-class TextMessageContact < ActiveRecord::Base
+class TextMessageContact < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -6,7 +6,5 @@ class TextMessageContact < ActiveRecord::Base
 
   validates :contact, presence: true
 
-  belongs_to :contact
-  accepts_nested_attributes_for :contact, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
-  allow_existing :contact
+  child_property(name: :contact)
 end

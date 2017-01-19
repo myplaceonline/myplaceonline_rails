@@ -1,4 +1,4 @@
-class Promotion < ActiveRecord::Base
+class Promotion < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   DEFAULT_PROMOTION_THRESHOLD_SECONDS = 15.days
@@ -31,7 +31,7 @@ class Promotion < ActiveRecord::Base
   def on_after_save
     if MyplaceonlineExecutionContext.handle_updates?
       if !expires.nil?
-        ActiveRecord::Base.transaction do
+        ApplicationRecord.transaction do
           CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
           User.current_user.primary_identity.calendars.each do |calendar|
             CalendarItem.create_calendar_item(

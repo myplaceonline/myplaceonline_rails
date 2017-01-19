@@ -3,7 +3,7 @@
 <%= myp_text_field(f, :group_number, "myplaceonline.health_insurances.group_number", obj.group_number) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.life_insurances.notes", obj.notes) %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :insurance_company,
     existingobj: obj.insurance_company,
@@ -12,12 +12,11 @@
     existingobjurl: "company_path",
     searchurl: "/companies.json?perpage=0",
     edit: edit,
-    autofocus: false,
-    collapsed: obj.insurance_company.nil?
+    autofocus: false
   }
 %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :group_company,
     existingobj: obj.group_company,
@@ -26,12 +25,11 @@
     existingobjurl: "company_path",
     searchurl: "/companies.json?perpage=0",
     edit: edit,
-    autofocus: false,
-    collapsed: obj.group_company.nil?
+    autofocus: false
   }
 %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :periodic_payment,
     existingobj: obj.periodic_payment,
@@ -40,12 +38,11 @@
     existingobjurl: "periodic_payment_path",
     searchurl: "/periodic_payments.json?perpage=0",
     edit: edit,
-    autofocus: false,
-    collapsed: obj.periodic_payment.nil?
+    autofocus: false
   }
 %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :password,
     existingobj: obj.password,
@@ -54,12 +51,11 @@
     existingobjurl: "password_path",
     searchurl: "/passwords.json?perpage=0",
     edit: edit,
-    autofocus: false,
-    collapsed: obj.password.nil?
+    autofocus: false
   }
 %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :doctor,
     existingobj: obj.doctor,
@@ -68,8 +64,7 @@
     existingobjurl: "doctor_path",
     searchurl: "/doctors.json?perpage=0",
     edit: edit,
-    autofocus: false,
-    collapsed: obj.doctor.nil?
+    autofocus: false
   }
 %>
 <%=

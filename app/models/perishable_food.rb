@@ -1,14 +1,10 @@
-class PerishableFood < ActiveRecord::Base
+class PerishableFood < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   DEFAULT_PERISHABLE_FOODS_THRESHOLD_SECONDS = 30.days.seconds
 
-  validates :food, presence: true
-  
-  belongs_to :food
-  accepts_nested_attributes_for :food, allow_destroy: true, reject_if: :all_blank
-  allow_existing :food
+  child_property(name: :food, required: true)
   
   def display
     Myp.appendstrwrap(food.display, Myp.ellipses_if_needed(self.storage_location, 10))
@@ -28,7 +24,7 @@ class PerishableFood < ActiveRecord::Base
   def on_after_save
     if MyplaceonlineExecutionContext.handle_updates?
       if !self.expires.nil?
-        ActiveRecord::Base.transaction do
+        ApplicationRecord.transaction do
           CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
           
           if self.quantity.nil? || self.quantity > 0

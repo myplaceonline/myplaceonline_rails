@@ -1,5 +1,5 @@
 # x_coordinate:integer y_coordinate:integer title:string category_name:string category_id:integer border_type:integer collapsed:boolean
-class Myplet < ActiveRecord::Base
+class Myplet < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   BORDER_TYPES = [

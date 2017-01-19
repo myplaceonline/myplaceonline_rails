@@ -1,4 +1,4 @@
-class Vaccine < ActiveRecord::Base
+class Vaccine < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -8,11 +8,9 @@ class Vaccine < ActiveRecord::Base
     vaccine_name
   end
 
-  has_many :vaccine_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :vaccine_files, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :vaccine_files, [{:name => :identity_file}]
+  child_properties(name: :vaccine_files, sort: "position ASC, updated_at ASC")
 
-  before_validation :update_file_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
   def update_file_folders
     put_files_in_folder(vaccine_files, [I18n.t("myplaceonline.category.vaccines"), display])

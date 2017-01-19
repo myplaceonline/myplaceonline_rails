@@ -5,7 +5,7 @@
 
 <%= form_for @obj, url: users_homepage_path do |f| %>
   <%=
-    render(layout: 'myplaceonline/childproperties', locals: {
+    render(layout: "myplaceonline/childproperties", locals: {
       f: f,
       heading: t("myplaceonline.homepage.myplets"),
       childpropertiesname: :myplets,

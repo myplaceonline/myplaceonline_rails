@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   include MyplaceonlineActiveRecordBaseConcern
 
   USER_TYPES = [

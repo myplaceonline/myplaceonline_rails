@@ -1,6 +1,6 @@
 <%= myp_datetime_field(f, :meal_time, "myplaceonline.meals.meal_time", obj.meal_time) %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.foods.heading"),
     childpropertiesname: :meal_foods,
@@ -12,7 +12,7 @@
       {
         type: :renderpartial,
         name: :food_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.foods.food"),
         objform: "foods/form",
         existingobjurl: "food_path",
@@ -30,7 +30,7 @@
   } do |child_fields, childproperty|
 %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :food_attributes,
       existingobj: childproperty.food,
@@ -45,7 +45,7 @@
   <%= myp_text_field(child_fields, :food_servings, "myplaceonline.foods.servings", childproperty.food_servings) %>
 <% end %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.drinks.heading"),
     childpropertiesname: :meal_drinks,
@@ -57,7 +57,7 @@
       {
         type: :renderpartial,
         name: :drink_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.drinks.drink"),
         objform: "drinks/form",
         existingobjurl: "drink_path",
@@ -74,7 +74,7 @@
   } do |child_fields, childproperty|
 %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :drink_attributes,
       existingobj: childproperty.drink,
@@ -89,7 +89,7 @@
   <%= myp_text_field(child_fields, :drink_servings, "myplaceonline.drinks.servings", childproperty.drink_servings) %>
 <% end %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.vitamins.heading"),
     childpropertiesname: :meal_vitamins,
@@ -101,7 +101,7 @@
       {
         type: :renderpartial,
         name: :vitamin_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.vitamins.vitamin"),
         objform: "vitamins/form",
         existingobjurl: "vitamin_path",
@@ -114,7 +114,7 @@
   } do |child_fields, childproperty|
 %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :vitamin_attributes,
       existingobj: childproperty.vitamin,
@@ -131,7 +131,7 @@
 <%= myp_text_field(f, :calories, "myplaceonline.meals.calories", obj.calories) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.meals.notes", obj.notes) %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :location,
     existingobj: obj.location,
@@ -140,7 +140,6 @@
     existingobjurl: "location_path",
     searchurl: "/locations.json?perpage=0",
     edit: edit,
-    autofocus: false,
-    collapsed: obj.location.nil?
+    autofocus: false
   }
 %>

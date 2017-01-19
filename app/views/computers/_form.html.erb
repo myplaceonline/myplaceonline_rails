@@ -1,6 +1,6 @@
 <%= myp_text_field(f, :computer_model, "myplaceonline.computers.computer_model", obj.computer_model, true) %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :manufacturer,
     existingobj: obj.manufacturer,
@@ -25,7 +25,7 @@
 <%= myp_decimal_field(f, :max_cpu_speed, "myplaceonline.computers.max_cpu_speed", obj.max_cpu_speed) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.computers.notes", obj.notes) %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :administrator,
     existingobj: obj.administrator,
@@ -38,7 +38,7 @@
   }
 %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :main_user,
     existingobj: obj.main_user,
@@ -57,7 +57,7 @@
 <%= myp_select(f, :weight_type, "myplaceonline.computers.weight_type", Myp.translate_options(Myp::WEIGHTS), obj.weight_type) %>
 <%= myp_decimal_field(f, :weight, "myplaceonline.computers.weight", obj.weight) %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.computers.ssh_keys"),
     childpropertiesname: :computer_ssh_keys,
@@ -69,7 +69,7 @@
       {
         type: :renderpartial,
         name: :ssh_key_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.computers.ssh_key"),
         objform: "ssh_keys/form",
         existingobjurl: "ssh_key_path",
@@ -86,7 +86,7 @@
   } do |child_fields, childproperty|
 %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :ssh_key_attributes,
       existingobj: childproperty.ssh_key,

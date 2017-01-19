@@ -1,17 +1,15 @@
-class PermissionShare < ActiveRecord::Base
+class PermissionShare < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include ActionView::Helpers
   include ActionDispatch::Routing
   include Rails.application.routes.url_helpers
 
-  validates :email, presence: true
   validates :subject_class, presence: true
   validates :subject_id, presence: true
 
   has_many :permission_share_children, :dependent => :destroy
   
-  belongs_to :email
-  accepts_nested_attributes_for :email, reject_if: :all_blank
+  child_property(name: :email, required: true)
 
   def display
     subject_class + "/" + subject_id.to_s

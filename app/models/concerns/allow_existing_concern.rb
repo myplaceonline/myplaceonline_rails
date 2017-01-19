@@ -1,146 +1,166 @@
+# By default, Rails has some protection against form submissions loading arbitrary objects from the database into the
+# object tree (e.g. http://stackoverflow.com/a/12064875/4135310). This makes sense, because anyone could just craft
+# any ID they want to add as a child object. These methods allow a model to override this behavior by overriding the
+# *_attributes= methods. We process the attributes passed in, safely load up any existing objects from the database,
+# check the authorization for this user, and then modify the attributes map which we pass to super() so that Rails then
+# makes any changes to the loaded objects based on the form submission.
 module AllowExistingConcern extend ActiveSupport::Concern
-  module ClassMethods
-    protected
+  
+  UPDATE_TYPE_UNKNOWN = 0
+  UPDATE_TYPE_COMBINE = 1
+  
+  class_methods do
+    PREVIOUS_OBJECT_BLANK = 0
+    PREVIOUS_OBJECT_DIFFERENT = 1
+    PREVIOUS_OBJECT_SAME = 2
     
-      # `name` must be a symbol that matches the symbol used in the call to
-      # `accepts_nested_attributes_for`. The second parameter is the model
-      # to search for the existing object. It may be `nil`, in which case
-      # the model is assumed to be the same as `name`, capitalized.
-      #
-      # For more on why we must do this, see
-      # http://stackoverflow.com/a/12064875/4135310
-      def allow_existing(name, model = nil, reject_if: nil)
-        define_method("#{name.to_s}_attributes=") do |attributes|
+    def allow_existing(name:)
+      define_method("#{name.to_s}_attributes=") do |attributes|
 
-          Rails.logger.debug{"allow_existing name: #{name}, attributes: #{attributes}"}
-          
-          if !attributes['id'].blank?
-            
-            original_attributes_count = attributes.count
-            
-            if original_attributes_count > 1
-              # Remove all other attributes since we're searching for a
-              # particular object and not creating a new one. But keep around
-              # the other attributes so that we can make updates if necessary
-              original_attributes = attributes.dup
-              attributes.keep_if {|innerkey, innervalue| innerkey == "id" }
-            end
-            
-            Rails.logger.debug{"allow_existing final attributes: #{attributes}"}
-          
-            existing_obj = Myp.set_existing_object(self, name, model, attributes['id'].to_i, action: :show)
+        Rails.logger.debug{"allow_existing setting attributes for name: #{name}, attributes: #{attributes}, self: #{self.inspect}"}
+        
+        self.set_property_with_attributes(name: name, attributes: attributes)
 
-            Rails.logger.debug{"allow_existing existing_obj: #{Myp.debug_print(existing_obj)}"}
-            
-            if original_attributes_count > 1
-              # If there are some other values set other than the ID, then perhaps update the existing object
-              check_attributes = original_attributes.dup
-              check_attributes.delete_if {|innerkey, innervalue| innerkey == "id" }
+        Rails.logger.debug{"allow_existing final attributes: #{attributes}"}
+
+        super(attributes)
+      end
+    end
+    
+    def allow_existing_children(name)
+      define_method("#{name.to_s}_attributes=") do |attributes|
+        
+        Rails.logger.debug{"allow_existing_children setting attributes for name: #{name}, on self: #{self.inspect}, attributes: #{Myp.debug_print(attributes)}"}
+        
+        model = MyplaceonlineActiveRecordBaseConcern.get_attributes_model_mapping(klass: self.class, name: name)
+        
+        Rails.logger.debug{"allow_existing_children model: #{model}"}
+        
+        attrs_to_delete = []
+        
+        Rails.logger.debug{"allow_existing_children before processing:"}
+        self.send("#{name.to_s}").each do |updated_child|
+          Rails.logger.debug{"allow_existing_children initial child: #{Myp.debug_print(updated_child)}"}
+        end
+        
+        # Go through the existing collection of items to see if we should update any of them
+        self.send("#{name.to_s}").each do |x|
+          
+          Rails.logger.debug{"allow_existing_children for name #{name} on #{x.inspect}"}
+          
+          attributes.each do |key, value|
+            if value["_destroy"] != "1" && !value["id"].blank? && value["id"].to_i == x.id
+              Rails.logger.debug{"allow_existing_children found matching attributes: #{Myp.debug_print(value)}"}
               
-              if reject_if.nil?
-                # Too dangerous, skip for now
-                #if check_attributes.any?{|key, value| !value.blank? }
-                  #Rails.logger.debug{"allow_existing using all attributes"}
-                  #attributes = original_attributes
-                #else
-                  Rails.logger.debug{"allow_existing skipping"}
-                #end
-              else
-                if !reject_if.call(check_attributes)
-                  Rails.logger.debug{"allow_existing after custom reject_if, using all attributes"}
-                  attributes = original_attributes
-                else
-                  Rails.logger.debug{"allow_existing reject_if false, skipping"}
-                end
+              x.class.child_property_models.each do |child, model|
+                child_attributes = value["#{child}_attributes"]
+                x.set_property_with_attributes(name: child, attributes: child_attributes)
               end
+              
+              value.delete_if{|key, value| key == "id" || key.end_with?("attributes")}
+              
+              Rails.logger.debug{"allow_existing_children assigning remaining attributes: #{Myp.debug_print(value)}"}
+              
+              x.assign_attributes(value)
+              
+              # Delete this key from the attributes we pass to super because we've already updated this child,
+              # and we don't want super to munge this updates, only to add any new ones
+              attrs_to_delete << key
             end
           end
-          
-          super(attributes)
+        end
+
+        attributes.delete_if {|innerkey, innervalue| !attrs_to_delete.find_index{|atd| atd == innerkey}.nil? }
+        
+        Rails.logger.debug{"allow_existing_children final attributes #{attributes}"}
+        
+        Rails.logger.debug{"allow_existing_children before setting:"}
+        self.send("#{name.to_s}").each do |updated_child|
+          Rails.logger.debug{"allow_existing_children old child: #{Myp.debug_print(updated_child)}"}
+        end
+        
+        super(attributes)
+
+        Rails.logger.debug{"allow_existing_children after setting:"}
+        self.send("#{name.to_s}").each do |updated_child|
+          Rails.logger.debug{"allow_existing_children updated child: #{Myp.debug_print(updated_child)}"}
         end
       end
+    end
+  end
+  
+  included do
+    def set_property_with_attributes(name:, attributes:, update_type: AllowExistingConcern::UPDATE_TYPE_UNKNOWN)
+      model = self.class.child_property_models[name]
       
-      def allow_existing_children(name, children)
-        define_method("#{name.to_s}_attributes=") do |attributes|
-          
-          Rails.logger.debug{"allow_existing_children attributes #{attributes}"}
-          
-          attrs_to_delete = Array.new
-          
-          self.send("#{name.to_s}").each do |x|
-            
-            Rails.logger.debug{"allow_existing_children for name #{name} on #{children} on #{x.inspect}"}
-            
-            attributes.each do |key, value|
-              
-              Rails.logger.debug{"allow_existing_children   attribute #{key} = #{value}"}
-              
-              children.each do |child|
-                
-                child_name = child[:name].to_s
-                child_attributes = value["#{child_name}_attributes"]
-                
-                Rails.logger.debug{"allow_existing_children     child #{child_name} = #{child_attributes}"}
-                
-                if value["_destroy"] != "1" && !child_attributes.blank?
-                  
-                  idobj = child_attributes["id"]
-                  
-                  Rails.logger.debug{"allow_existing_children       idobj = #{idobj}"}
-                  
-                  if !idobj.blank?
-                    
-                    child_value = x.send(child_name)
-                    id = idobj.to_i
-                    
-                    Rails.logger.debug{"allow_existing_children         child_value = #{child_value.inspect} for #{id}"}
-                    
-                    if !child_value.nil? && child_value.id == id
-                      
-                      # Might need to apply properties to the intermediate object
-                      intermediateProps = value.dup.delete_if {|innerkey, innervalue| innerkey == "id" || !children.index{|item| innerkey == "#{item[:name]}_attributes"}.nil? }
-
-                      Rails.logger.debug{"allow_existing_children intermediate props to update #{intermediateProps}"}
-                      
-                      x.assign_attributes(intermediateProps)
-
-                      child_obj = Myp.set_existing_object(x, child_name, child[:model], id)
-                      
-                      Rails.logger.debug{"allow_existing_children           child_obj = #{child_obj.inspect}"}
-                      
-                      child_attributes.delete_if {|innerkey, innervalue| innerkey == "id" }
-                      
-                      # Calling super(attributes) re-loads this item we loaded
-                      # above with the set_existing_object call, and doesn't
-                      # update attributes (security feature), so we explicitly
-                      # update them here. However, we also have to delete
-                      # these attributes later so that the objects aren't
-                      # overwritten. We still have to call
-                      # `super(attributes)` because a new item may have been
-                      # added at the same time an existing item was updated.
-                      # We might leave some old entries in with no changes, but
-                      # that's fine since they're reloaded anyway
-                      
-                      child_obj.assign_attributes(child_attributes)
-                      attrs_to_delete.push(key)
-                    end
-                  end
-                end
-              end
-            end
-            
-            Rails.logger.debug{"allow_existing_children finished iteration"}
-            
+      Rails.logger.debug{"set_property_with_attributes name: #{name}, model: #{model}, attributes: #{attributes}, self: #{self.inspect}"}
+      
+      if !attributes.nil?
+        if !attributes["id"].blank?
+          if !attributes["_updatetype"].blank?
+            update_type = attributes["_updatetype"].to_i
+            attributes.delete_if {|innerkey, innervalue| innerkey == "_updatetype" }
           end
           
-          Rails.logger.debug{"allow_existing_children finished, now deleting #{attrs_to_delete}"}
+          previous_object_id = self.send(name.to_s + "_id")
+          if !previous_object_id.nil?
+            previous_object_id = previous_object_id.to_s
+          end
           
-          attributes.delete_if {|innerkey, innervalue| !attrs_to_delete.find_index{|atd| atd == innerkey}.nil? }
+          Rails.logger.debug{"set_property_with_attributes previous_object_id: #{previous_object_id}, update_type: #{update_type}"}
+          
+          previous_object = PREVIOUS_OBJECT_BLANK
+          if !previous_object_id.blank?
+            previous_object = PREVIOUS_OBJECT_DIFFERENT
+            if attributes["id"] == previous_object_id
+              previous_object = PREVIOUS_OBJECT_SAME
+            end
+          end
+          
+          # Let's first check whether the non-id attributes are set or not
+          check_attributes = attributes.dup
+          check_attributes.delete_if {|innerkey, innervalue| innerkey == "id" }
 
-          Rails.logger.debug{"allow_existing_children final attributes #{attributes}"}
+          non_id_attributes_set = false
+          if !model.attributes_blank?(attributes: check_attributes)
+            non_id_attributes_set = true
+          end
           
-          super(attributes)
+          Rails.logger.debug{"set_property_with_attributes object: #{attributes["id"]}, previous: #{previous_object_id}, previous_object: #{previous_object}, non_id_attributes_set: #{non_id_attributes_set}"}
+          
+          case update_type
+          when AllowExistingConcern::UPDATE_TYPE_UNKNOWN
+            # If non-id attributes are set, then we pretty much just discard whether or not the existing item is
+            # set and create a new item
+            if non_id_attributes_set
+              attributes.delete_if {|innerkey, innervalue| innerkey == "id" }
+              Rails.logger.debug{"set_property_with_attributes creating new obj with attributes #{Myp.debug_print(attributes)}"}
+              newobj = Myp.new_model(model)
+              newobj.assign_attributes(attributes)
+              Rails.logger.debug{"set_property_with_attributes creating new obj #{Myp.debug_print(newobj)}"}
+              self.send("#{name}=", newobj)
+              attributes.clear
+            else
+              attributes.keep_if {|innerkey, innervalue| innerkey == "id" }
+              # Let's go find the existing object, authorize it, and set the property on this object
+              existing_obj = Myp.set_existing_object(self, name, model, attributes["id"].to_i, action: :show)
+              Rails.logger.debug{"set_property_with_attributes existing_obj: #{Myp.debug_print(existing_obj)}"}
+            end
+          when AllowExistingConcern::UPDATE_TYPE_COMBINE
+            existing_obj = Myp.set_existing_object(self, name, model, attributes["id"].to_i, action: :show)
+
+            attributes.delete_if {|innerkey, innervalue| innerkey == "id" }
+            existing_obj.assign_attributes(attributes)
+            attributes.clear
+
+            Rails.logger.debug{"set_property_with_attributes combined existing_obj: #{Myp.debug_print(existing_obj)}"}
+          end
+          
+          Rails.logger.debug{"set_property_with_attributes final attributes: #{attributes}"}
+        else
+          attributes.delete_if {|innerkey, innervalue| innerkey == "_updatetype" }
         end
       end
+    end
   end
 end

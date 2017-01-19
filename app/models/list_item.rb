@@ -1,4 +1,4 @@
-class ListItem < ActiveRecord::Base
+class ListItem < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   belongs_to :list

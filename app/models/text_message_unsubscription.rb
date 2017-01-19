@@ -1,3 +1,3 @@
-class TextMessageUnsubscription < ActiveRecord::Base
+class TextMessageUnsubscription < ApplicationRecord
   belongs_to :identity
 end

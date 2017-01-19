@@ -1,4 +1,4 @@
-class SunExposure < ActiveRecord::Base
+class SunExposure < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :exposure_start, presence: true

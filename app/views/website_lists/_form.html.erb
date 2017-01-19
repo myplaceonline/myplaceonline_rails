@@ -1,7 +1,7 @@
 <%= myp_text_field(f, :website_list_name, "myplaceonline.website_lists.website_list_name", obj.website_list_name, autofocus) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.website_lists.items"),
     childpropertiesname: :website_list_items,
@@ -15,7 +15,7 @@
       {
         type: :renderpartial,
         name: :website_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.website_lists.item"),
         objform: "websites/form",
         existingobjurl: "website_path",
@@ -31,7 +31,7 @@
   } do |child_fields, childproperty|
 %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :website_attributes,
       existingobj: childproperty.website,

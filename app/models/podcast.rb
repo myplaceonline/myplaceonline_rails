@@ -1,12 +1,8 @@
-class Podcast < ActiveRecord::Base
+class Podcast < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
-  validates :feed, presence: true
-
-  belongs_to :feed
-  accepts_nested_attributes_for :feed, reject_if: proc { |attributes| FeedsController.reject_if_blank(attributes) }
-  allow_existing :feed
+  child_property(name: :feed, required: true)
   
   def display
     feed.display

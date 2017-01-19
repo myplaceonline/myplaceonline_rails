@@ -1,4 +1,4 @@
-class BankAccount < ActiveRecord::Base
+class BankAccount < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   include EncryptedConcern
@@ -38,22 +38,20 @@ class BankAccount < ActiveRecord::Base
   belongs_to_encrypted :pin
   before_validation :pin_finalize
 
-  belongs_to :password
-  accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
-  allow_existing :password
+  child_property(name: :password)
   
-  belongs_to :home_address, class_name: Location
-  accepts_nested_attributes_for :home_address, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
-  allow_existing :home_address, Location
+  child_property(name: :home_address, model: Location)
 
-  belongs_to :company, class_name: Company
-  accepts_nested_attributes_for :company, reject_if: proc { |attributes| CompaniesController.reject_if_blank(attributes) }
-  allow_existing :company
+  child_property(name: :company)
 
   def as_json(options={})
     if account_number_encrypted?
       options[:except] ||= %w(account_number routing_number pin)
     end
     super.as_json(options)
+  end
+
+  def self.skip_check_attributes
+    ["encrypt"]
   end
 end

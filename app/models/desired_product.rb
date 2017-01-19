@@ -1,4 +1,4 @@
-class DesiredProduct < ActiveRecord::Base
+class DesiredProduct < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :product_name, presence: true

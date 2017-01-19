@@ -1,10 +1,9 @@
-class Timing < ActiveRecord::Base
+class Timing < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :timing_name, presence: true
   
-  has_many :timing_events, :dependent => :destroy
-  accepts_nested_attributes_for :timing_events, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :timing_events)
 
   def display
     timing_name

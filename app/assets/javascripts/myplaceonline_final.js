@@ -885,6 +885,7 @@ var myplaceonline = function(mymodule) {
   }
 
   function href_extract_id(href) {
+    href = href.replace(/\/edit/, "");
     var x = href.lastIndexOf("/"); 
     if (x != -1) {
       href = href.substring(x + 1);

@@ -1,4 +1,4 @@
-class PasswordSecretShare < ActiveRecord::Base
+class PasswordSecretShare < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 

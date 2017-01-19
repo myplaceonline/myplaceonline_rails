@@ -4,7 +4,7 @@
 
 <p><%= t("myplaceonline.emails.personalize_description") %></p>
 <hr />
-<%= form_for @obj, :url => emails_personalize_path(@obj) do |f| %>
+<%= form_for @obj, :url => email_personalize_path(@obj) do |f| %>
   <% @obj.email_personalizations.each do |email_personalization| %>
     <%= f.fields_for :email_personalizations, email_personalization do |personalization_fields| %>
       <%= myp_check_box(personalization_fields, :do_send, email_personalization.contact.display + " (" + email_personalization.target + ")") %>

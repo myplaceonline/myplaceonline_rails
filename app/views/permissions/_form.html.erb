@@ -1,5 +1,5 @@
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :user,
     existingobj: obj.user,
@@ -7,9 +7,10 @@
     objform: "users/form",
     existingobjurl: "user_path",
     searchurl: "/users/allusers.json",
-    edit: true,
+    edit: edit,
     autofocus: autofocus,
-    always_search: true
+    always_search: true,
+    expanded_if_nil: true
   }
 %>
 <%= myp_check_box(f, :actionbit1, "myplaceonline.permissions.action_manage") %>

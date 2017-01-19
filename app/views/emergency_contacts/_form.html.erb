@@ -6,7 +6,7 @@
   <%= myp_hidden_field(sub_fields, :draft, obj.email.draft) %>
   <%= myp_hidden_field(sub_fields, :copy_self, obj.email.copy_self) %>
   <%=
-    render layout: 'myplaceonline/childproperties', locals: {
+    render layout: "myplaceonline/childproperties", locals: {
       f: sub_fields,
       heading: t("myplaceonline.emails.contacts"),
       childpropertiesname: :email_contacts,
@@ -18,12 +18,12 @@
         {
           type: :renderpartial,
           name: :contact_attributes,
-          partial: 'myplaceonline/select_or_create',
+          partial: "myplaceonline/select_or_create",
           heading: t("myplaceonline.emails.contact"),
           objform: "contacts/form",
           existingobjurl: "contact_path",
           searchurl: "/contacts.json?perpage=0",
-          edit: true,
+          edit: edit,
           autofocus: true,
           force_existing: true,
           simpleform: true
@@ -32,7 +32,7 @@
     } do |child_fields, childproperty|
   %>
     <%=
-      render partial: 'myplaceonline/select_or_create', locals: {
+      render partial: "myplaceonline/select_or_create", locals: {
         f: child_fields,
         name: :contact_attributes,
         existingobj: childproperty.contact,
@@ -40,13 +40,13 @@
         objform: "contacts/form",
         existingobjurl: "contact_path",
         searchurl: "/contacts.json?perpage=0",
-        edit: true,
+        edit: edit,
         autofocus: false
       }
     %>
   <% end %>
   <%=
-    render layout: 'myplaceonline/childproperties', locals: {
+    render layout: "myplaceonline/childproperties", locals: {
       f: sub_fields,
       heading: t("myplaceonline.emails.groups"),
       childpropertiesname: :email_groups,
@@ -58,12 +58,12 @@
         {
           type: :renderpartial,
           name: :group_attributes,
-          partial: 'myplaceonline/select_or_create',
+          partial: "myplaceonline/select_or_create",
           heading: t("myplaceonline.emails.group"),
           objform: "groups/form",
           existingobjurl: "group_path",
           searchurl: "/groups.json?perpage=0",
-          edit: true,
+          edit: edit,
           autofocus: true,
           force_existing: true
         }
@@ -71,7 +71,7 @@
     } do |child_fields, childproperty|
   %>
     <%=
-      render partial: 'myplaceonline/select_or_create', locals: {
+      render partial: "myplaceonline/select_or_create", locals: {
         f: child_fields,
         name: :group_attributes,
         existingobj: childproperty.group,
@@ -79,7 +79,7 @@
         objform: "groups/form",
         existingobjurl: "group_path",
         searchurl: "/groups.json?perpage=0",
-        edit: true,
+        edit: edit,
         autofocus: false
       }
     %>

@@ -1,4 +1,4 @@
-class Warranty < ActiveRecord::Base
+class Warranty < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :warranty_name, presence: true

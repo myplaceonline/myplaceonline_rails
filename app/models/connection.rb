@@ -1,19 +1,15 @@
-class Connection < ActiveRecord::Base
+class Connection < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   
   STATUS_PENDING = 1
   STATUS_CONNECTED = 2
 
-  belongs_to :user
-  accepts_nested_attributes_for :user, reject_if: :all_blank
-  allow_existing :user
+  child_property(name: :user)
 
   validates :user, presence: true
 
-  belongs_to :contact, dependent: :destroy
-  accepts_nested_attributes_for :contact, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
-  allow_existing :contact
+  child_property(name: :contact, destroy_dependent: true)
 
   def display
     user.display

@@ -1,24 +1,18 @@
-class Bar < ActiveRecord::Base
+class Bar < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
-  validates :location, presence: true
-
-  belongs_to :location
-  accepts_nested_attributes_for :location, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
-  allow_existing :location
+  child_property(name: :location, required: true)
   
   def display
     location.display
   end
 
-  before_validation :update_pic_folders
+  after_commit :update_file_folders, on: [:create, :update]
     
-  def update_pic_folders
+  def update_file_folders
     put_files_in_folder(bar_pictures, [I18n.t("myplaceonline.category.bars"), display])
   end
 
-  has_many :bar_pictures, :dependent => :destroy
-  accepts_nested_attributes_for :bar_pictures, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :bar_pictures, [{:name => :identity_file}]
+  child_properties(name: :bar_pictures)
 end

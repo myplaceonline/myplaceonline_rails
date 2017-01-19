@@ -1,4 +1,4 @@
-class TestObject < ActiveRecord::Base
+class TestObject < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -8,11 +8,9 @@ class TestObject < ActiveRecord::Base
     test_object_name
   end
 
-  has_many :test_object_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :test_object_files, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :test_object_files, [{:name => :identity_file}]
+  child_properties(name: :test_object_files, sort: "position ASC, updated_at ASC")
 
-  before_validation :update_file_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
   def update_file_folders
     put_files_in_folder(test_object_files, [I18n.t("myplaceonline.category.test_objects"), display])

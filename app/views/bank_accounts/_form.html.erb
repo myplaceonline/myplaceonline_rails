@@ -4,7 +4,7 @@
 <%= myp_text_field(f, :pin, "myplaceonline.bank_accounts.pin", obj.pin) %>
 <%= myp_check_box(f, :encrypt, "myplaceonline.general.encrypt") %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :password,
     existingobj: obj.password,
@@ -17,7 +17,7 @@
   }
 %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :home_address,
     existingobj: obj.home_address,
@@ -30,7 +30,7 @@
   }
 %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :company,
     existingobj: obj.company,

@@ -1,12 +1,10 @@
-class Vitamin < ActiveRecord::Base
+class Vitamin < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :vitamin_name, presence: true
 
-  has_many :vitamin_ingredients, :foreign_key => 'parent_vitamin_id'
-  accepts_nested_attributes_for :vitamin_ingredients, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :vitamin_ingredients, [{:name => :vitamin}]
+  child_properties(name: :vitamin_ingredients, foreign_key: "parent_vitamin_id")
 
   def display
     vitamin_name

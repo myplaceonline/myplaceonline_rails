@@ -1,4 +1,4 @@
-class SkinTreatment < ActiveRecord::Base
+class SkinTreatment < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :treatment_time, presence: true

@@ -1,12 +1,10 @@
-class TripFlight < ActiveRecord::Base
+class TripFlight < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :trip
 
-  belongs_to :flight
-  accepts_nested_attributes_for :flight, reject_if: proc { |attributes| FlightsController.reject_if_blank(attributes) }
-  allow_existing :flight
+  child_property(name: :flight)
   
   def display
     flight.display

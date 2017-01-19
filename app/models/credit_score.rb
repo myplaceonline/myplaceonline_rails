@@ -1,4 +1,4 @@
-class CreditScore < ActiveRecord::Base
+class CreditScore < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :score_date, presence: true

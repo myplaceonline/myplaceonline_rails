@@ -10,7 +10,7 @@
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.credit_cards.notes", obj.notes) %>
 <%= myp_check_box(f, :email_reminders, "myplaceonline.credit_cards.email_reminders") %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :password,
     existingobj: obj.password,
@@ -19,12 +19,11 @@
     existingobjurl: "password_path",
     searchurl: "/passwords.json?perpage=0",
     edit: edit,
-    autofocus: false,
-    collapsed: obj.password.nil?
+    autofocus: false
   }
 %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :address,
     existingobj: obj.address,
@@ -33,12 +32,11 @@
     existingobjurl: "location_path",
     searchurl: "/locations.json?perpage=0",
     edit: edit,
-    autofocus: false,
-    collapsed: obj.address.nil?
+    autofocus: false
   }
 %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.cashback.heading"),
     childpropertiesname: :credit_card_cashbacks,

@@ -1,14 +1,12 @@
-class Message < ActiveRecord::Base
+class Message < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :body, presence: true
   validates :message_category, presence: true
 
-  has_many :message_contacts, :dependent => :destroy
-  accepts_nested_attributes_for :message_contacts, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :message_contacts)
 
-  has_many :message_groups, :dependent => :destroy
-  accepts_nested_attributes_for :message_groups, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :message_groups)
 
   def display
     Myp.ellipses_if_needed(body, 32)
@@ -67,5 +65,9 @@ class Message < ActiveRecord::Base
       sms.save!
       sms.process
     end
+  end
+
+  def self.skip_check_attributes
+    ["send_emails", "send_texts", "draft", "copy_self"]
   end
 end

@@ -53,16 +53,6 @@ class PeriodicPaymentsController < MyplaceonlineController
     ]
   end
 
-  def self.reject_if_blank(attributes)
-    attributes.dup.delete_if {|key, value| key.to_s == "suppress_reminder" }.all?{|key, value|
-      if key == "password_attributes"
-        PasswordsController.reject_if_blank(value)
-      else
-        value.blank?
-      end
-    }
-  end
-
   def footer_items_index
     super + [
       {

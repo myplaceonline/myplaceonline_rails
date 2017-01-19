@@ -1,4 +1,4 @@
-class Loan < ActiveRecord::Base
+class Loan < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :lender, presence: true

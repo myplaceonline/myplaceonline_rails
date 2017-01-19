@@ -4,7 +4,7 @@
 <%= myp_select(f, :life_insurance_type, "myplaceonline.life_insurances.life_insurance_type", Myp.translate_options(LifeInsurance::LIFE_INSURANCE_TYPES), obj.life_insurance_type) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.life_insurances.notes", obj.notes) %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :company,
     existingobj: obj.company,
@@ -17,7 +17,7 @@
   }
 %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :periodic_payment,
     existingobj: obj.periodic_payment,

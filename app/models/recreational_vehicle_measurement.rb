@@ -1,4 +1,4 @@
-class RecreationalVehicleMeasurement < ActiveRecord::Base
+class RecreationalVehicleMeasurement < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   belongs_to :recreational_vehicle

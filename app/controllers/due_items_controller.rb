@@ -4,7 +4,7 @@ class DueItemsController < MyplaceonlineController
 
   def complete
     set_obj
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       ::CompleteDueItem.new(
         identity_id: @obj.identity_id,
         calendar: @obj.calendar,
@@ -37,7 +37,7 @@ class DueItemsController < MyplaceonlineController
     if !duration.nil?
       new_due_date = Time.now + duration
       
-      ActiveRecord::Base.transaction do
+      ApplicationRecord.transaction do
         ::SnoozedDueItem.new(
           identity_id: @obj.identity_id,
           calendar: @obj.calendar,

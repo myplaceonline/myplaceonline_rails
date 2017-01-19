@@ -1,9 +1,12 @@
-class ChecklistReference < ActiveRecord::Base
+class ChecklistReference < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :checklist_parent, class_name: Checklist
-  belongs_to :checklist
-  accepts_nested_attributes_for :checklist, allow_destroy: true, reject_if: :all_blank
-  allow_existing :checklist
+  
+  child_property(name: :checklist)
+
+  def self.skip_check_attributes
+    ["pre_checklist"]
+  end
 end

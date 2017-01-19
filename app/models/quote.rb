@@ -1,4 +1,4 @@
-class Quote < ActiveRecord::Base
+class Quote < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 

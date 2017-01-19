@@ -1,4 +1,4 @@
-class Stock < ActiveRecord::Base
+class Stock < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -10,14 +10,9 @@ class Stock < ActiveRecord::Base
     Myp.appendstrwrap(company.display, num_shares.to_s)
   end
   
-  belongs_to :company
-  accepts_nested_attributes_for :company, reject_if: proc { |attributes| CompaniesController.reject_if_blank(attributes) }
-  allow_existing :company
-  validates :company, presence: true
+  child_property(name: :company, required: true)
 
-  belongs_to :password
-  accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
-  allow_existing :password
+  child_property(name: :password)
   
   def self.calendar_item_display(calendar_item)
     stock = calendar_item.find_model_object
@@ -33,7 +28,7 @@ class Stock < ActiveRecord::Base
   def on_after_save
     if MyplaceonlineExecutionContext.handle_updates?
       if !vest_date.nil?
-        ActiveRecord::Base.transaction do
+        ApplicationRecord.transaction do
           CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
           User.current_user.primary_identity.calendars.each do |calendar|
             CalendarItem.create_calendar_item(

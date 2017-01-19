@@ -16,7 +16,7 @@
 <%= myp_text_field(f, :personnel_code, "myplaceonline.jobs.personnel_code", obj.personnel_code) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.jobs.notes", obj.notes) %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :company,
     existingobj: obj.company,
@@ -25,12 +25,11 @@
     existingobjurl: "company_path",
     searchurl: "/companies.json?perpage=0",
     edit: edit,
-    autofocus: false,
-    collapsed: obj.company.nil?
+    autofocus: false
   }
 %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.jobs.managers"),
     childpropertiesname: :job_managers,
@@ -42,12 +41,12 @@
       {
         type: :renderpartial,
         name: :contact_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.jobs.manager"),
         objform: "contacts/form",
         existingobjurl: "contact_path",
         searchurl: "/contacts.json?perpage=0",
-        edit: true,
+        edit: edit,
         autofocus: true,
         force_existing: true,
         simpleform: true
@@ -71,7 +70,7 @@
   } do |child_fields, childproperty|
 %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :contact_attributes,
       existingobj: childproperty.contact,
@@ -79,7 +78,7 @@
       objform: "contacts/form",
       existingobjurl: "contact_path",
       searchurl: "/contacts.json?perpage=0",
-      edit: true,
+      edit: edit,
       autofocus: false
     }
   %>
@@ -88,7 +87,7 @@
   <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.general.notes", childproperty.notes) %>
 <% end %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :internal_address,
     existingobj: obj.internal_address,
@@ -97,12 +96,11 @@
     existingobjurl: "location_path",
     searchurl: "/locations.json?perpage=0",
     edit: edit,
-    autofocus: false,
-    collapsed: obj.internal_address.nil?
+    autofocus: false
   }
 %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.jobs.job_salaries"),
     childpropertiesname: :job_salaries,
@@ -159,7 +157,7 @@
   <%= myp_text_field(child_fields, :new_title, "myplaceonline.job_salaries.new_title", childproperty.new_title) %>
 <% end %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.jobs.reviews"),
     childpropertiesname: :job_reviews,
@@ -191,12 +189,12 @@
       {
         type: :renderpartial,
         name: :contact_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.job_reviews.contact"),
         objform: "contacts/form",
         existingobjurl: "contact_path",
         searchurl: "/contacts.json?perpage=0",
-        edit: true,
+        edit: edit,
         autofocus: false,
         force_existing: true,
         simpleform: true
@@ -209,7 +207,7 @@
   <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.job_reviews.notes", childproperty.notes) %>
   <%= myp_text_area_markdown(child_fields, :self_evaluation, "myplaceonline.job_reviews.self_evaluation", childproperty.self_evaluation) %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :contact_attributes,
       existingobj: childproperty.contact,
@@ -217,7 +215,7 @@
       objform: "contacts/form",
       existingobjurl: "contact_path",
       searchurl: "/contacts.json?perpage=0",
-      edit: true,
+      edit: edit,
       autofocus: false
     }
   %>
@@ -236,7 +234,7 @@
   %>
 <% end %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.jobs.myreferences"),
     childpropertiesname: :job_myreferences,
@@ -248,12 +246,12 @@
       {
         type: :renderpartial,
         name: "myreference_attributes.contact_attributes",
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.myreferences.contact"),
         objform: "contacts/form",
         existingobjurl: "contact_path",
         searchurl: "/contacts.json?perpage=0",
-        edit: true,
+        edit: edit,
         autofocus: true,
         force_existing: true,
         simpleform: true
@@ -289,7 +287,7 @@
 %>
   <%= child_fields.fields_for :myreference, childproperty.myreference do |myreference_fields| %>
     <%=
-      render partial: 'myplaceonline/select_or_create', locals: {
+      render partial: "myplaceonline/select_or_create", locals: {
         f: myreference_fields,
         name: :contact_attributes,
         existingobj: childproperty.myreference.contact,
@@ -297,7 +295,7 @@
         objform: "contacts/form",
         existingobjurl: "contact_path",
         searchurl: "/contacts.json?perpage=0",
-        edit: true,
+        edit: edit,
         autofocus: false
       }
     %>

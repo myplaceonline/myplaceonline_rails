@@ -1,5 +1,5 @@
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :contact,
     existingobj: obj.contact,
@@ -9,7 +9,8 @@
     searchurl: "/contacts.json?perpage=0",
     edit: edit,
     autofocus: autofocus,
-    simpleform: true
+    simpleform: true,
+    expanded_if_nil: true
   }
 %>
 <%= myp_select(f, :reference_type, "myplaceonline.myreferences.reference_type", Myp.translate_options(Myreference::REFERENCE_TYPES), obj.reference_type) %>

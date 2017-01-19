@@ -1,4 +1,4 @@
-class RecreationalVehicle < ActiveRecord::Base
+class RecreationalVehicle < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -8,30 +8,25 @@ class RecreationalVehicle < ActiveRecord::Base
     rv_name
   end
 
-  belongs_to :location_purchased, class_name: Location, :autosave => true
-  accepts_nested_attributes_for :location_purchased, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
-  allow_existing :location_purchased, Location
+  child_property(name: :location_purchased, model: Location)
 
-  has_many :recreational_vehicle_loans, :dependent => :destroy
-  accepts_nested_attributes_for :recreational_vehicle_loans, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :recreational_vehicle_loans)
 
-  has_many :recreational_vehicle_pictures, :dependent => :destroy
-  accepts_nested_attributes_for :recreational_vehicle_pictures, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :recreational_vehicle_pictures, [{:name => :identity_file}]
+  child_properties(name: :recreational_vehicle_pictures)
 
-  before_validation :update_pic_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
-  def update_pic_folders
+  def update_file_folders
     put_files_in_folder(recreational_vehicle_pictures, [I18n.t("myplaceonline.category.recreational_vehicles"), display])
   end
 
-  has_many :recreational_vehicle_insurances, :dependent => :destroy
-  accepts_nested_attributes_for :recreational_vehicle_insurances, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :recreational_vehicle_insurances, [{:name => :company}, {:name => :periodic_payment}]
+  child_properties(name: :recreational_vehicle_insurances)
   
-  has_many :recreational_vehicle_measurements, :dependent => :destroy
-  accepts_nested_attributes_for :recreational_vehicle_measurements, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :recreational_vehicle_measurements)
 
-  has_many :recreational_vehicle_services, :dependent => :destroy
-  accepts_nested_attributes_for :recreational_vehicle_services, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :recreational_vehicle_services)
+
+  def self.skip_check_attributes
+    ["dimensions_type", "weight_type", "liquid_capacity_type", "volume_type"]
+  end
 end

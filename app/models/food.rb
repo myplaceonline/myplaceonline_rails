@@ -1,12 +1,10 @@
-class Food < ActiveRecord::Base
+class Food < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :food_name, presence: true
   
-  has_many :food_ingredients, :foreign_key => 'parent_food_id'
-  accepts_nested_attributes_for :food_ingredients, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :food_ingredients, [{:name => :food}]
+  child_properties(name: :food_ingredients, foreign_key: "parent_food_id")
 
   def display
     food_name
@@ -40,11 +38,9 @@ class Food < ActiveRecord::Base
     ]
   end
 
-  has_many :food_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :food_files, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :food_files, [{:name => :identity_file}]
+  child_properties(name: :food_files, sort: "position ASC, updated_at ASC")
 
-  before_validation :update_file_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
   def update_file_folders
     put_files_in_folder(food_files, [I18n.t("myplaceonline.category.foods"), display])

@@ -1,4 +1,4 @@
-class Dream < ActiveRecord::Base
+class Dream < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include EncryptedConcern
 
@@ -28,5 +28,9 @@ class Dream < ActiveRecord::Base
       options[:except] ||= %w(dream)
     end
     super.as_json(options)
+  end
+
+  def self.skip_check_attributes
+    ["encrypt"]
   end
 end

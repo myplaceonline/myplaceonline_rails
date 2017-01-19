@@ -1,4 +1,4 @@
-class MoneyBalanceItem < ActiveRecord::Base
+class MoneyBalanceItem < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 

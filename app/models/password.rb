@@ -1,6 +1,6 @@
 require 'kramdown'
 
-class Password < ActiveRecord::Base
+class Password < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include EncryptedConcern
   include ModelHelpersConcern
@@ -10,8 +10,7 @@ class Password < ActiveRecord::Base
   before_validation :password_finalize
   before_validation :set_encrypt_for_secrets
   
-  has_many :password_secrets, :dependent => :destroy
-  accepts_nested_attributes_for :password_secrets, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :password_secrets)
   
   validates :name, presence: true
   
@@ -55,5 +54,9 @@ class Password < ActiveRecord::Base
     super.as_json(options).merge({
       :password_secrets => password_secrets.to_a.map{|x| x.as_json}
     })
+  end
+
+  def self.skip_check_attributes
+    ["encrypt"]
   end
 end

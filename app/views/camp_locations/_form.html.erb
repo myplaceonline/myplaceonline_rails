@@ -1,5 +1,5 @@
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :location,
     existingobj: obj.location,
@@ -8,7 +8,8 @@
     existingobjurl: "location_path",
     searchurl: "/locations.json?perpage=0",
     edit: edit,
-    autofocus: true
+    autofocus: true,
+    expanded_if_nil: true
   }
 %>
 <%= myp_check_box(f, :overnight_allowed, "myplaceonline.camp_locations.overnight_allowed") %>
@@ -28,7 +29,7 @@
 <%= myp_select(f, :noise_level, "myplaceonline.camp_locations.noise_level", Myp.translate_options(Myp::NOISE_LEVELS), obj.noise_level) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.camp_locations.notes", obj.notes) %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :membership,
     existingobj: obj.membership,
@@ -37,7 +38,6 @@
     existingobjurl: "membership_path",
     searchurl: "/memberships.json?perpage=0",
     edit: edit,
-    autofocus: false,
-    collapsed: obj.membership.nil? ? true : false
+    autofocus: false
   }
 %>

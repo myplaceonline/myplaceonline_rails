@@ -1,4 +1,4 @@
-class Conversation < ActiveRecord::Base
+class Conversation < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   CALENDAR_ITEM_CONTEXT_CONVERSATION = "conversation"

@@ -1,20 +1,12 @@
-class PasswordShare < ActiveRecord::Base
+class PasswordShare < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
-  validates :password, presence: true
-  validates :user, presence: true
+  child_property(name: :password, required: true)
 
-  belongs_to :password
-  accepts_nested_attributes_for :password
-  allow_existing :password
-
-  belongs_to :user
-  accepts_nested_attributes_for :user
-  allow_existing :user
+  child_property(name: :user, required: true)
   
-  has_many :password_secret_shares, :dependent => :destroy
-  accepts_nested_attributes_for :password_secret_shares, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :password_secret_shares)
 
   def display
     password.display + ":" + user.display

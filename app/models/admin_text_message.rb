@@ -1,6 +1,5 @@
-class AdminTextMessage < ActiveRecord::Base
+class AdminTextMessage < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
-  belongs_to :text_message
-  accepts_nested_attributes_for :text_message, reject_if: :all_blank
+  child_property(name: :text_message, required: true)
 end

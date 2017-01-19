@@ -56,7 +56,7 @@ class FilesController < MyplaceonlineController
       @folder = params[:destination]
       
       if @folder.blank?
-        ActiveRecord::Base.transaction do
+        ApplicationRecord.transaction do
           @obj.folder = nil
           @obj.save!
         end
@@ -70,7 +70,7 @@ class FilesController < MyplaceonlineController
         @folder = @folder.to_i
         foundfolder = @folders.find{|k,v| v == @folder}
         if !foundfolder.nil?
-          ActiveRecord::Base.transaction do
+          ApplicationRecord.transaction do
             @obj.folder = IdentityFileFolder.find(@folder)
             @obj.save!
           end
@@ -164,6 +164,7 @@ class FilesController < MyplaceonlineController
   def self.param_names
     [
       :id,
+      :_updatetype,
       :file,
       :file_file_name,
       :notes,

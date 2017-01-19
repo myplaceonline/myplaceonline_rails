@@ -1,4 +1,4 @@
-class Calendar < ActiveRecord::Base
+class Calendar < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include TimespanConcern
   

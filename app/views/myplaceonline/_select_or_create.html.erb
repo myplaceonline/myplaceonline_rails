@@ -1,51 +1,91 @@
 <%
-existingobj ||= Myp.new_model(objform[0..(objform.index('/')-1)].singularize.camelize.constantize)
-collapsed = collapsed.nil? ? false : collapsed
-existingcollapsed = false
-random_name = SecureRandom.hex(10)
-new_item_collapsible_id = random_name + "_new_item"
-always_search ||= false
-only_new ||= false
-simpleform ||= nil
-noresultsfunc ||= "null"
-existingitems ||= nil
-if !(defined?(create_new))
+model = objform[0..(objform.index('/')-1)].singularize.camelize.constantize
+
+# This could be either that it's an object from the database, or a temporary object representing input fields
+existingobj_exists = defined?(existingobj) && !existingobj.nil?
+
+# In addition, this checks if it's an object from the database
+existingobj_exists_permanent = existingobj_exists && !existingobj.id.nil?
+
+Rails.logger.debug{"select_or_create context: #{f.object_name}[#{name}], model: #{model}"}
+
+# Set some defaults
+if !defined?(partial_render)
+  partial_render = false
+end
+if !defined?(expanded_if_nil)
+  expanded_if_nil = partial_render
+end
+if !defined?(collapsed)
+  if !existingobj_exists
+    collapsed = !expanded_if_nil
+  else
+    collapsed = false
+  end
+end
+if !defined?(create_new)
   create_new = true
 end
-if !(defined?(allow_new))
+if !defined?(allow_new)
   allow_new = true
 end
-if !existingobj.nil? && !existingobj.id.nil?
-  allow_new = false
+if !defined?(only_new)
+  only_new = false
+end
+if !defined?(simpleform)
+  simpleform = nil
+end
+if !defined?(always_search)
+  always_search = false
+end
+if !defined?(existingitems)
+  existingitems = nil
+end
+if !defined?(force_existing)
+  force_existing = false
+end
+if !defined?(existingcollapsed)
+  # By default, expand the existing section only if an existing object is already selected.
+  # The reason is that some users were confused when first using the app by the existing section being
+  # expanded because they expected to be able to enter a new item
+  existingcollapsed = !existingobj_exists_permanent && !force_existing
+end
+if !defined?(noresultsfunc)
+  noresultsfunc = "null"
 end
 
-# If there are no existing items, then expand the new item instead
-if !objform.blank?
-  i = objform.index('/')
-  if i != -1
-    m = Object.const_get(objform[0..i-1].singularize.camelize)
-    if m.new.respond_to?("identity_id")
-      x = m.send("where", identity_id: current_user.primary_identity.id)
-      if x.length == 0
-        existingcollapsed = true
-      end
-    end
+random_name = SecureRandom.hex(10)
+new_item_collapsible_id = random_name + "_new_item"
+
+# If the existing section is expanded, and no existing object is set, then collapse the existing section if there's
+# nothing to choose from
+if !existingcollapsed && !existingobj_exists_permanent && model.new.respond_to?("identity_id")
+  if model.send("where", identity_id: current_user.primary_identity_id).count == 0
+    existingcollapsed = true
   end
 end
 
-# Some user confusion when existing is expanded, so we always collapse it,
-# unless new isn't shown
-existingcollapsed = true
+# Finally, if the existingobj was nil coming in, then create a brand new one for the form
+if !existingobj_exists
+  existingobj = Myp.new_model(model)
+elsif !existingcollapsed && !existingobj_exists_permanent
+  # If the existing section is force-expanded, there's no selected permanent object, and
+  # the other attributes evaluate to non-blank, then there was probably an error submitting the form,
+  # but the other attributes will still be set, so we need to force the collapse of the existing section
+  attributes_search = f.object_name.gsub("\]", "").split("[") + [name.to_s + "_attributes"]
   
-if !existingobj.id.nil?
-  existingcollapsed = false
+  Rails.logger.debug{"select_or_create checking whether to force collapse: #{f.object_name}, name: #{name}, model: #{model}, search: #{attributes_search}"}
+  
+  attributes_found = params.dig(*attributes_search)
+  
+  Rails.logger.debug{"select_or_create attributes_found: #{Myp.debug_print(attributes_found.to_unsafe_hash)}"}
+  
+  if !model.attributes_blank?(attributes: attributes_found)
+    existingcollapsed = true
+  end
 end
 
-force_existing ||= false
-if force_existing
-  existingcollapsed = false
-end
-
+Rails.logger.debug{"select_or_create context: #{f.object_name}[#{name}], collapsed: #{collapsed}, existingobj: #{existingobj}, autofocus: #{autofocus}"}
 %>
 <div data-role="collapsible" data-collapsed="<%= collapsed %>" class="form_container">
   <h4><%= heading %></h4>
@@ -59,10 +99,16 @@ end
           <h3><%= t("myplaceonline.general.existing") + " " + heading %></h3>
           <div id="<%= random_name %>_searchable_container">
             <ul id="<%= random_name %>_searchable" data-role="listview" data-inset="true" data-filter="true" data-icon="false" data-filter-placeholder="<%= t("myplaceonline.search.placeholder") %>">
-              <% if !existingobj.nil? && !existingobj.id.nil? %>
+              <%
+                if existingobj_exists_permanent
+                  existingobj_link = existingobjurl
+                  if edit
+                    existingobj_link = "edit_" + existingobj_link
+                  end
+              %>
                 <li>
-                  <%= link_to(existingobj.display, send(existingobjurl, existingobj), onclick: Myp.select_listitem('#' + fieldid)) %>
-                  <%= link_to(existingobj.display, send(existingobjurl, existingobj), :class => "splitlink") %>
+                  <%= link_to(existingobj.display, send(existingobj_link, existingobj), onclick: Myp.select_listitem('#' + fieldid)) %>
+                  <%= link_to(existingobj.display, send(existingobj_link, existingobj), :class => "splitlink", data: { icon: edit ? "edit" : "search" }) %>
                 </li>
               <% end %>
               <% if !existingitems.nil? %>
@@ -97,7 +143,7 @@ end
                   myplaceonline.remoteDataListReset(ul, true);
                 <% end %>
               });
-              <% if autofocus && !existingcollapsed %>
+              <% if autofocus && !collapsed && !existingcollapsed %>
               myplaceonline.maybeFocus($("#<%= random_name %>_searchable_container input"));
               <% end %>
             });
@@ -108,11 +154,10 @@ end
     <% if allow_new %>
       <div id="<%= new_item_collapsible_id %>" data-role="collapsible" data-collapsed="<%= !existingcollapsed %>">
         <%
-          first = true
-          if !existingobj.id.nil?
-            # There's an existing object selected, so don't fill in the form
-            # with those attributes
-            existingobj = Myp.new_model(objform[0..(objform.index('/')-1)].singularize.camelize.constantize)
+          if existingobj_exists_permanent
+            # There's an existing object selected, so don't fill in the form with those attributes but instead create
+            # a blank new form for a potentially new object
+            existingobj = Myp.new_model(model)
           end
         %>
         <%
@@ -120,11 +165,10 @@ end
           if ExecutionContext.push_marker(:select_or_create_stack) < 5
         %>
             <%= f.fields_for name, existingobj do |sub_fields| %>
-              <h3><%= t("myplaceonline.general.new") + " " + heading %></h3>
+              <h3><%= (edit ? t("myplaceonline.general.replace_with_new") : t("myplaceonline.general.new")) + " " + heading %></h3>
               <%= render partial: objform + ".html", locals: { f: sub_fields, obj: existingobj, edit: false, autofocus: autofocus, nested: true, simpleform: simpleform } %>
               <%
-                if existingcollapsed && autofocus && first
-                  first = false
+              if autofocus && !collapsed && existingcollapsed
               %>
                 <script type="text/javascript">
                   myplaceonline.onPageLoad(function() {
@@ -140,10 +184,6 @@ end
         end
         %>
       </div>
-    <% else %>
-      <% if create_new && current_user.admin? %>
-        <p><%= link_to t("myplaceonline.general.create_new"), "/" + existingobj.class.name.underscore.pluralize + "/new", :class => 'ui-btn ui-btn-icon-left ui-icon-plus ui-btn-inline' %></p>
-      <% end %>
     <% end %>
   </div>
 </div>

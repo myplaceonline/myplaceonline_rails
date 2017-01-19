@@ -1,4 +1,4 @@
-class Phone < ActiveRecord::Base
+class Phone < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -19,21 +19,19 @@ class Phone < ActiveRecord::Base
     result
   end
   
-  belongs_to :manufacturer, class_name: Company
-  accepts_nested_attributes_for :manufacturer, reject_if: proc { |attributes| CompaniesController.reject_if_blank(attributes) }
-  allow_existing :manufacturer, Company
+  child_property(name: :manufacturer, model: Company)
 
-  belongs_to :password
-  accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
-  allow_existing :password
+  child_property(name: :password)
 
   before_validation :update_phone_files
   
-  has_many :phone_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :phone_files, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :phone_files, [{:name => :identity_file}]
+  child_properties(name: :phone_files, sort: "position ASC, updated_at ASC")
 
   def update_phone_files
     put_files_in_folder(phone_files, [I18n.t("myplaceonline.category.phones"), display])
+  end
+
+  def self.skip_check_attributes
+    ["hyperthreaded", "cdma", "gsm"]
   end
 end

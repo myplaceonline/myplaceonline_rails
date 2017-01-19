@@ -1,4 +1,4 @@
-class LocationPhone < ActiveRecord::Base
+class LocationPhone < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   belongs_to :location

@@ -1,19 +1,17 @@
-class Story < ActiveRecord::Base
+class Story < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :story_name, presence: true
   validates :story_time, presence: true
   
-  before_validation :update_pic_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
-  def update_pic_folders
+  def update_file_folders
     put_files_in_folder(story_pictures, [I18n.t("myplaceonline.category.stories"), display])
   end
 
-  has_many :story_pictures, :dependent => :destroy
-  accepts_nested_attributes_for :story_pictures, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :story_pictures, [{:name => :identity_file}]
+  child_properties(name: :story_pictures)
   
   def display
     Myp.appendstrwrap(story_name, Myp.display_datetime_short(story_time, User.current_user))
@@ -24,5 +22,9 @@ class Story < ActiveRecord::Base
     # initialize result here
     result.story_time = Time.now
     result
+  end
+
+  def self.skip_check_attributes
+    ["story_time"]
   end
 end

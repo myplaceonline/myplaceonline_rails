@@ -1,4 +1,4 @@
-class JobMyreference < ActiveRecord::Base
+class JobMyreference < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -6,7 +6,9 @@ class JobMyreference < ActiveRecord::Base
 
   validates :myreference, presence: true
 
-  belongs_to :myreference
-  accepts_nested_attributes_for :myreference, reject_if: proc { |attributes| MyreferencesController.reject_if_blank(attributes) }
-  allow_existing :myreference
+  child_property(name: :myreference)
+
+  def self.skip_check_attributes
+    ["can_contact"]
+  end
 end

@@ -1,4 +1,4 @@
-class Doctor < ActiveRecord::Base
+class Doctor < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -11,8 +11,6 @@ class Doctor < ActiveRecord::Base
     ["myplaceonline.doctors.type_physical_therapy", 5]
   ]
 
-  validates :contact, presence: true
-  
   def display
     result = contact.display
     if !doctor_type.nil?
@@ -21,7 +19,5 @@ class Doctor < ActiveRecord::Base
     result
   end
   
-  belongs_to :contact
-  accepts_nested_attributes_for :contact, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
-  allow_existing :contact
+  child_property(name: :contact, required: true)
 end

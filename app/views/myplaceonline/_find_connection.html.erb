@@ -7,7 +7,7 @@ connections = Connection.where(
 if connections.length > 0
 %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: f,
       name: :user,
       heading: t("myplaceonline.permissions.connection"),
@@ -20,6 +20,7 @@ if connections.length > 0
       allow_new: false,
       force_existing: true,
       create_new: false,
+      expanded_if_nil: true,
       existingitems: connections.map{|x| Myp::ListItemRow.new(x.user.display, user_path(x.user)) }
     }
   %>

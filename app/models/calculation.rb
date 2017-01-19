@@ -1,13 +1,11 @@
-class Calculation < ActiveRecord::Base
+class Calculation < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   
   before_validation :check_calculation_before_create
   
   validates :name, presence: true
   
-  belongs_to :calculation_form, dependent: :destroy, :autosave => true
-  accepts_nested_attributes_for :calculation_form
-  validates_presence_of :calculation_form
+  child_property(name: :calculation_form, required: true)
 
   belongs_to :original_calculation_form, class_name: CalculationForm
   

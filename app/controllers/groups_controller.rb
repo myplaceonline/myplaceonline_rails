@@ -25,12 +25,6 @@ class GroupsController < MyplaceonlineController
     
   end
   
-  def self.reject_if_blank(attributes)
-    attributes.all?{|key, value|
-      value.blank?
-    }
-  end
-  
   def self.param_names
     [
       :id,

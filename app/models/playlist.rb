@@ -1,10 +1,9 @@
-class Playlist < ActiveRecord::Base
+class Playlist < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :playlist_name, presence: true
   
-  has_many :playlist_songs, -> { order('position ASC') }, :dependent => :destroy
-  accepts_nested_attributes_for :playlist_songs, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :playlist_songs, sort: "position ASC")
   
   has_many :playlist_shares
 
@@ -69,7 +68,7 @@ class Playlist < ActiveRecord::Base
             ExecutionContext.push
             User.current_user = obj.identity.user
             
-            ActiveRecord::Base.transaction do
+            ApplicationRecord.transaction do
               iff = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.playlists")])
               identity_file = IdentityFile.build({ folder: iff.id })
               identity_file.file_file_name = Pathname.new(tfile).basename

@@ -1,14 +1,16 @@
-class WebsiteList < ActiveRecord::Base
+class WebsiteList < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :website_list_name, presence: true
   
-  has_many :website_list_items, -> { order('position ASC') }, :dependent => :destroy
-  accepts_nested_attributes_for :website_list_items, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :website_list_items, [{:name => :website}]
+  child_properties(name: :website_list_items, sort: "position ASC, updated_at ASC")
 
   def display
     website_list_name
+  end
+
+  def self.skip_check_attributes
+    ["disable_autoload"]
   end
 end

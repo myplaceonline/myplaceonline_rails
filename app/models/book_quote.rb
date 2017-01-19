@@ -1,4 +1,4 @@
-class BookQuote < ActiveRecord::Base
+class BookQuote < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -8,9 +8,5 @@ class BookQuote < ActiveRecord::Base
     quote.display
   end
 
-  validates :quote, presence: true
-  
-  belongs_to :quote
-  accepts_nested_attributes_for :quote, allow_destroy: true, reject_if: :all_blank
-  allow_existing :quote
+  child_property(name: :quote, required: true)
 end

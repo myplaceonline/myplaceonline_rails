@@ -1,4 +1,4 @@
-class Quest < ActiveRecord::Base
+class Quest < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -8,11 +8,9 @@ class Quest < ActiveRecord::Base
     quest_title
   end
 
-  has_many :quest_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :quest_files, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :quest_files, [{:name => :identity_file}]
+  child_properties(name: :quest_files, sort: "position ASC, updated_at ASC")
 
-  before_validation :update_file_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
   def update_file_folders
     put_files_in_folder(quest_files, [I18n.t("myplaceonline.category.quests"), display])

@@ -1,16 +1,14 @@
-class MediaDump < ActiveRecord::Base
+class MediaDump < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   validates :media_dump_name, presence: true
 
-  has_many :media_dump_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :media_dump_files, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :media_dump_files, [{:name => :identity_file}]
+  child_properties(name: :media_dump_files, sort: "position ASC, updated_at ASC")
   
-  before_validation :update_pic_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
-  def update_pic_folders
+  def update_file_folders
     put_files_in_folder(media_dump_files, [I18n.t("myplaceonline.category.media_dumps"), display])
   end
   

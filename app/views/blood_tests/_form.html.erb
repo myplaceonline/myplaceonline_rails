@@ -1,7 +1,7 @@
 <%= myp_datetime_field(f, :test_time, "myplaceonline.blood_tests.test_time", obj.test_time) %>
 <%= myp_datetime_field f, :fast_started, "myplaceonline.blood_tests.fast_started", obj.fast_started %>
 <%=
-  render(layout: 'myplaceonline/childproperties', locals: {
+  render(layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.blood_tests.results"),
     childpropertiesname: :blood_test_results,
@@ -13,7 +13,7 @@
       {
         type: :renderpartial,
         name: :blood_concentration_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.blood_tests.result"),
         objform: "blood_concentrations/form",
         existingobjurl: "blood_concentration_path",
@@ -30,7 +30,7 @@
   }) do |child_fields, childproperty|
 %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :blood_concentration_attributes,
       existingobj: childproperty.blood_concentration,
@@ -59,7 +59,7 @@
   }
 %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :location,
     existingobj: obj.location,
@@ -73,7 +73,7 @@
   }
 %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :doctor,
     existingobj: obj.doctor,

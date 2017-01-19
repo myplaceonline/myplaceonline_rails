@@ -1,4 +1,4 @@
-class TaxDocument < ActiveRecord::Base
+class TaxDocument < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -8,11 +8,9 @@ class TaxDocument < ActiveRecord::Base
     Myp.appendstrwrap(tax_document_form_name, tax_document_description)
   end
 
-  has_many :tax_document_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :tax_document_files, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :tax_document_files, [{:name => :identity_file}]
+  child_properties(name: :tax_document_files, sort: "position ASC, updated_at ASC")
 
-  before_validation :update_file_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
   def update_file_folders
     put_files_in_folder(tax_document_files, [I18n.t("myplaceonline.category.tax_documents"), display])

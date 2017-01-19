@@ -1,4 +1,4 @@
-class MoneyBalanceItemTemplate < ActiveRecord::Base
+class MoneyBalanceItemTemplate < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   belongs_to :money_balance

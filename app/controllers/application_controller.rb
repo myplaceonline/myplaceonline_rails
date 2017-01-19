@@ -62,8 +62,9 @@ class ApplicationController < ActionController::Base
     else
       Myp.handle_exception(exception, session[:myp_email], request)
       respond_to do |type|
-        #type.xml { render :template => "errors/error_404", :status => 500 }
-        type.all { render :text => exception.to_s, :status => 500 }
+        #type.html { render :template => "errors/500", :status => 500 }
+        #type.html { render :html => exception.to_s, :status => 500 }
+        type.all { render :plain => exception.to_s, :status => 500 }
       end
       true
     end
@@ -71,6 +72,9 @@ class ApplicationController < ActionController::Base
   
   def around_request
     Rails.logger.debug{"application_controller around_request entry. Referer: #{request.referer}"}
+    
+    Rails.logger.debug{"params: #{Myp.debug_print(params.to_unsafe_hash)}"}
+    
     begin
       ExecutionContext.push
       # only do this once per request

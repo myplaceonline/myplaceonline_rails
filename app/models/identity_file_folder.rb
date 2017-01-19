@@ -1,10 +1,8 @@
-class IdentityFileFolder < ActiveRecord::Base
+class IdentityFileFolder < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
-  belongs_to :parent_folder, class_name: IdentityFileFolder
-  accepts_nested_attributes_for :parent_folder
-  allow_existing :parent_folder, IdentityFileFolder
+  child_property(name: :parent_folder, model: IdentityFileFolder)
 
   validates :folder_name, presence: true
 

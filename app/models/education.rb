@@ -1,4 +1,4 @@
-class Education < ActiveRecord::Base
+class Education < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -26,9 +26,7 @@ class Education < ActiveRecord::Base
   validates :education_name, presence: true
   #validates :education_end, presence: true
   
-  belongs_to :location
-  accepts_nested_attributes_for :location, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
-  allow_existing :location
+  child_property(name: :location)
   
   attr_accessor :is_graduated
   boolean_time_transfer :is_graduated, :graduated
@@ -37,11 +35,9 @@ class Education < ActiveRecord::Base
     Myp.appendstrwrap(Myp.appendstrwrap(education_name, degree_name), Education.education_type_abbreviation(self.degree_type))
   end
 
-  has_many :education_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :education_files, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :education_files, [{:name => :identity_file}]
+  child_properties(name: :education_files, sort: "position ASC, updated_at ASC")
 
-  before_validation :update_file_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
   def update_file_folders
     put_files_in_folder(education_files, [I18n.t("myplaceonline.category.educations"), display])
@@ -53,5 +49,9 @@ class Education < ActiveRecord::Base
     else
       nil
     end
+  end
+
+  def self.skip_check_attributes
+    ["is_graduated"]
   end
 end

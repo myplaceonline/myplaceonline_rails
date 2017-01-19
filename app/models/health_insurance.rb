@@ -1,4 +1,4 @@
-class HealthInsurance < ActiveRecord::Base
+class HealthInsurance < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   include ModelHelpersConcern
@@ -9,25 +9,15 @@ class HealthInsurance < ActiveRecord::Base
     insurance_name
   end
   
-  belongs_to :insurance_company, class_name: Company
-  accepts_nested_attributes_for :insurance_company, reject_if: proc { |attributes| CompaniesController.reject_if_blank(attributes) }
-  allow_existing :insurance_company, Company
+  child_property(name: :insurance_company, model: Company)
 
-  belongs_to :group_company, class_name: Company
-  accepts_nested_attributes_for :group_company, reject_if: proc { |attributes| CompaniesController.reject_if_blank(attributes) }
-  allow_existing :group_company, Company
+  child_property(name: :group_company, model: Company)
 
-  belongs_to :periodic_payment
-  accepts_nested_attributes_for :periodic_payment, reject_if: proc { |attributes| PeriodicPaymentsController.reject_if_blank(attributes) }
-  allow_existing :periodic_payment
+  child_property(name: :periodic_payment)
 
-  belongs_to :password
-  accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
-  allow_existing :password
+  child_property(name: :password)
   
-  belongs_to :doctor
-  accepts_nested_attributes_for :doctor, reject_if: proc { |attributes| DoctorsController.reject_if_blank(attributes) }
-  allow_existing :doctor
+  child_property(name: :doctor)
   
   after_commit :on_after_create, on: :create
   
@@ -63,11 +53,9 @@ class HealthInsurance < ActiveRecord::Base
     end
   end
 
-  has_many :health_insurance_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :health_insurance_files, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :health_insurance_files, [{:name => :identity_file}]
+  child_properties(name: :health_insurance_files, sort: "position ASC, updated_at ASC")
 
-  before_validation :update_file_folders
+  after_commit :update_file_folders, on: [:create, :update]
 
   def update_file_folders
     put_files_in_folder(health_insurance_files, [I18n.t("myplaceonline.category.health_insurances"), display])

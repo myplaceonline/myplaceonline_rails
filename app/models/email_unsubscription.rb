@@ -1,3 +1,3 @@
-class EmailUnsubscription < ActiveRecord::Base
+class EmailUnsubscription < ApplicationRecord
   belongs_to :identity
 end

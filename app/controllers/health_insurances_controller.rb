@@ -16,23 +16,6 @@ class HealthInsurancesController < MyplaceonlineController
     ]
   end
 
-  def self.reject_if_blank(attributes)
-    result = attributes.dup.all?{|key, value|
-      if key == "password_attributes"
-        PasswordsController.reject_if_blank(value)
-      elsif key == "insurance_company_attributes" || key == "group_company_attributes"
-        CompaniesController.reject_if_blank(value)
-      elsif key == "doctor_attributes"
-        DoctorsController.reject_if_blank(value)
-      elsif key == "periodic_payment_attributes"
-        PeriodicPaymentsController.reject_if_blank(value)
-      else
-        value.blank?
-      end
-    }
-    result
-  end
-
   def may_upload
     true
   end

@@ -1,4 +1,4 @@
-class DueItem < ActiveRecord::Base
+class DueItem < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   
   belongs_to :calendar

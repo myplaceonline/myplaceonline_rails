@@ -11,7 +11,7 @@
                 if !pic.notes.blank?
                   title = pic.notes
                 end
-                "{ title: #{title.to_json}, src: '" + file_view_name_path(pic, pic.urlname, :h => pic.thumbnail_hash, token: params[:token]) + "'}"
+                "{ title: #{title.to_json}, src: '" + file_view_name_path(pic, pic.urlname, t: pic.updated_at.to_i, token: params[:token]) + "'}"
               }.join(", ")) %>
         ],
         gallery: {

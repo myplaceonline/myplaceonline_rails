@@ -8,7 +8,7 @@
   <%= myp_check_box(f, :send_emails, "myplaceonline.messages.send_emails") %>
   <%= myp_check_box(f, :send_texts, "myplaceonline.messages.send_texts") %>
   <%=
-    render layout: 'myplaceonline/childproperties', locals: {
+    render layout: "myplaceonline/childproperties", locals: {
       f: f,
       heading: t("myplaceonline.messages.contacts"),
       childpropertiesname: :message_contacts,
@@ -20,12 +20,12 @@
         {
           type: :renderpartial,
           name: :contact_attributes,
-          partial: 'myplaceonline/select_or_create',
+          partial: "myplaceonline/select_or_create",
           heading: t("myplaceonline.messages.contact"),
           objform: "contacts/form",
           existingobjurl: "contact_path",
           searchurl: "/contacts.json?perpage=0",
-          edit: true,
+          edit: edit,
           autofocus: true,
           force_existing: true,
           simpleform: true
@@ -34,7 +34,7 @@
     } do |child_fields, childproperty|
   %>
     <%=
-      render partial: 'myplaceonline/select_or_create', locals: {
+      render partial: "myplaceonline/select_or_create", locals: {
         f: child_fields,
         name: :contact_attributes,
         existingobj: childproperty.contact,
@@ -42,13 +42,13 @@
         objform: "contacts/form",
         existingobjurl: "contact_path",
         searchurl: "/contacts.json?perpage=0",
-        edit: true,
+        edit: edit,
         autofocus: false
       }
     %>
   <% end %>
   <%=
-    render layout: 'myplaceonline/childproperties', locals: {
+    render layout: "myplaceonline/childproperties", locals: {
       f: f,
       heading: t("myplaceonline.messages.groups"),
       childpropertiesname: :message_groups,
@@ -60,12 +60,12 @@
         {
           type: :renderpartial,
           name: :group_attributes,
-          partial: 'myplaceonline/select_or_create',
+          partial: "myplaceonline/select_or_create",
           heading: t("myplaceonline.messages.group"),
           objform: "groups/form",
           existingobjurl: "group_path",
           searchurl: "/groups.json?perpage=0",
-          edit: true,
+          edit: edit,
           autofocus: true,
           force_existing: true
         }
@@ -73,7 +73,7 @@
     } do |child_fields, childproperty|
   %>
     <%=
-      render partial: 'myplaceonline/select_or_create', locals: {
+      render partial: "myplaceonline/select_or_create", locals: {
         f: child_fields,
         name: :group_attributes,
         existingobj: childproperty.group,
@@ -81,7 +81,7 @@
         objform: "groups/form",
         existingobjurl: "group_path",
         searchurl: "/groups.json?perpage=0",
-        edit: true,
+        edit: edit,
         autofocus: false
       }
     %>

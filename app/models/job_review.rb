@@ -1,4 +1,4 @@
-class JobReview < ActiveRecord::Base
+class JobReview < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -6,15 +6,11 @@ class JobReview < ActiveRecord::Base
   
   validates :review_date, presence: true
 
-  belongs_to :contact
-  accepts_nested_attributes_for :contact, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
-  allow_existing :contact
+  child_property(name: :contact)
 
-  has_many :job_review_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :job_review_files, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :job_review_files, [{:name => :identity_file}]
+  child_properties(name: :job_review_files, sort: "position ASC, updated_at ASC")
 
-  before_validation :update_file_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
   def update_file_folders
     put_files_in_folder(job_review_files, [I18n.t("myplaceonline.jobs.reviews"), self.job.display])

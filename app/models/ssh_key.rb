@@ -1,4 +1,4 @@
-class SshKey < ActiveRecord::Base
+class SshKey < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   include EncryptedConcern
@@ -21,14 +21,16 @@ class SshKey < ActiveRecord::Base
     end
   end
   
-  belongs_to :password
-  accepts_nested_attributes_for :password, reject_if: proc { |attributes| PasswordsController.reject_if_blank(attributes) }
-  allow_existing :password
+  child_property(name: :password)
 
   def as_json(options={})
     if ssh_private_key_encrypted?
       options[:except] ||= %w(ssh_private_key)
     end
     super.as_json(options)
+  end
+
+  def self.skip_check_attributes
+    ["encrypt"]
   end
 end

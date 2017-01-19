@@ -286,7 +286,7 @@ module Myp
   
   def self.database_exists?
     begin
-      ActiveRecord::Base.connection.data_source_exists?(Category.table_name)
+      ApplicationRecord.connection.data_source_exists?(Category.table_name)
     rescue ActiveRecord::NoDatabaseError
       false
     end
@@ -703,7 +703,7 @@ module Myp
   end
   
   def self.modify_points(user, categoryName, amount, session = nil)
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       
       if user.primary_identity.points.nil?
         user.primary_identity.points = 0
@@ -717,7 +717,7 @@ module Myp
       # will fire commit hooks which for Identity will re-do calendar
       # entries
       #user.primary_identity.save
-      ActiveRecord::Base.connection.update("update identities set points = #{user.primary_identity.points} where id = #{user.primary_identity.id}")
+      ApplicationRecord.connection.update("update identities set points = #{user.primary_identity.points} where id = #{user.primary_identity.id}")
       
       category = Myp.categories(user)[categoryName]
       if category.nil?
@@ -768,7 +768,7 @@ module Myp
   end
   
   def self.reset_points(user)
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       user.primary_identity.points = 0
       user.primary_identity.save
       
@@ -981,6 +981,10 @@ module Myp
     result
   end
   
+  # We don't actually pass in params to new() because that will cause
+  # a ForbiddenAttributesError. They may be set separately using
+  # assign_attributes. The params are just passed in so that the model
+  # has a chance to access form values
   def self.new_model(model, params = nil)
     if model.respond_to?("build")
       result = model.build(params)
@@ -1464,7 +1468,7 @@ module Myp
     if val.nil?
       " IS NULL"
     else
-      " = " + ActiveRecord::Base.sanitize(val)
+      " = " + ApplicationRecord.sanitize(val)
     end
   end
   
@@ -1613,12 +1617,12 @@ module Myp
     
     Rails.logger.debug{"try_with_database_advisory_lock enter (#{key1}, #{key2})"}
 
-    if ActiveRecord::Base.connection.instance_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
+    if ApplicationRecord.connection.instance_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
       
       # pg_try_advisory_xact_lock is safer (in case this process dies before the ensure), but it enforces the block
       # to be in a transaction, which isn't always benign
       
-      lock_successful = ActiveRecord::Base.connection.select_value("select pg_try_advisory_lock(#{key1}, #{key2})")
+      lock_successful = ApplicationRecord.connection.select_value("select pg_try_advisory_lock(#{key1}, #{key2})")
       Rails.logger.debug{"try_with_database_advisory_lock locked (#{key1}, #{key2}), result: #{lock_successful}"}
     else
       raise "Not implemented"
@@ -1628,7 +1632,7 @@ module Myp
       begin
         block.call
       ensure
-        ActiveRecord::Base.connection.select_value("select pg_advisory_unlock(#{key1}, #{key2})")
+        ApplicationRecord.connection.select_value("select pg_advisory_unlock(#{key1}, #{key2})")
       end
     else
       Rails.logger.info{"try_with_database_advisory_lock failed to lock (#{key1}, #{key2})"}
@@ -2089,9 +2093,9 @@ module Myp
 
   def self.process_models(check_database: true, &block)
     Rails.application.eager_load!
-    ActiveRecord::Base.descendants.each do |klass|
-      next unless klass.ancestors.include?(ActiveRecord::Base)
-      if klass.include?(MyplaceonlineActiveRecordIdentityConcern) && (!check_database || ActiveRecord::Base.connection.data_source_exists?(klass.table_name))
+    ApplicationRecord.descendants.each do |klass|
+      next unless klass.ancestors.include?(ApplicationRecord)
+      if klass.include?(MyplaceonlineActiveRecordIdentityConcern) && (!check_database || ApplicationRecord.connection.data_source_exists?(klass.table_name))
         block.call(klass)
       end
     end
@@ -2130,9 +2134,24 @@ module Myp
     diff > 0 && diff <= 1.days
   end
   
-  def self.debug_print(obj)
+  def self.debug_print(obj, depth: 0)
+    
+    padding_self = depth == 0 ? "" : "\t".ljust(depth, "\t")
+    padding_children = "\t".ljust(depth + 1, "\t")
+    
     # use awesome print
-    obj.ai
+    result = padding_self + obj.ai
+
+    if !obj.nil?
+      MyplaceonlineActiveRecordBaseConcern.get_attributes_model_mappings(klass: obj.class).each do |name, model|
+        child = obj.send(name)
+        if !child.nil?
+          result += "\n#{padding_children}Child property: #{name}\n#{padding_children}" + Myp.debug_print(child, depth: depth + 1)
+        end
+      end
+    end
+    
+    result
   end
   
   Rails.logger.info{"myplaceonline: myp.rb static initialization ended"}

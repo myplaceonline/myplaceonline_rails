@@ -1,4 +1,4 @@
-class VehicleService < ActiveRecord::Base
+class VehicleService < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -26,7 +26,7 @@ class VehicleService < ActiveRecord::Base
       if !date_serviced.nil?
         CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
       elsif !date_due.nil?
-        ActiveRecord::Base.transaction do
+        ApplicationRecord.transaction do
           CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
           User.current_user.primary_identity.calendars.each do |calendar|
             CalendarItem.create_calendar_item(
@@ -56,11 +56,9 @@ class VehicleService < ActiveRecord::Base
     result
   end
 
-  has_many :vehicle_service_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :vehicle_service_files, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :vehicle_service_files, [{:name => :identity_file}]
+  child_properties(name: :vehicle_service_files, sort: "position ASC, updated_at ASC")
 
-  before_validation :update_file_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
   def update_file_folders
     put_files_in_folder(vehicle_service_files, [I18n.t("myplaceonline.category.vehicles"), vehicle.display, display])

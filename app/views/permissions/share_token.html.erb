@@ -4,7 +4,7 @@
 
 <%= form_for @share, :url => permissions_share_token_path do |f| %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: f,
       name: :email_attributes,
       existingobj: @share.email,
@@ -12,9 +12,10 @@
       objform: "emails/form",
       existingobjurl: "email_path",
       searchurl: "/emails.json?perpage=0",
-      edit: true,
+      edit: edit,
       autofocus: true,
-      only_new: true
+      only_new: true,
+      expanded_if_nil: true
     }
   %>
   <%= myp_hidden_field(f, :subject_class, @share.subject_class) %>

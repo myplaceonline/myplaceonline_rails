@@ -1,4 +1,4 @@
-class Annuity < ActiveRecord::Base
+class Annuity < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :annuity_name, presence: true

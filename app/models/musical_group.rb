@@ -1,4 +1,4 @@
-class MusicalGroup < ActiveRecord::Base
+class MusicalGroup < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include ModelHelpersConcern
 
@@ -23,5 +23,9 @@ class MusicalGroup < ActiveRecord::Base
       :secret,
       :musical_genre
     ]
+  end
+
+  def self.skip_check_attributes
+    ["is_listened_to", "awesome", "secret"]
   end
 end

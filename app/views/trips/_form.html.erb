@@ -1,7 +1,7 @@
 <%= myp_text_field(f, :trip_name, "myplaceonline.trips.trip_name", obj.trip_name, autofocus) %>
 <%= myp_date_field(f, :started, "myplaceonline.trips.started", obj.started) %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :location,
     existingobj: obj.location,
@@ -26,7 +26,7 @@
   }
 %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :hotel,
     existingobj: obj.hotel,
@@ -35,8 +35,7 @@
     existingobjurl: "hotel_path",
     searchurl: "/hotels.json?perpage=0",
     edit: edit,
-    autofocus: false,
-    collapsed: obj.hotel.nil?
+    autofocus: false
   }
 %>
 <%=
@@ -52,19 +51,19 @@
       {
         type: :renderpartial,
         name: :story_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.trips.story"),
         objform: "stories/form",
         existingobjurl: "story_path",
         searchurl: "/stories.json?perpage=0",
-        edit: true,
+        edit: edit,
         autofocus: true
       }
     ]
   } do |child_fields, childproperty|
 %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :story_attributes,
       existingobj: childproperty.story,
@@ -72,13 +71,13 @@
       objform: "stories/form",
       existingobjurl: "story_path",
       searchurl: "/stories.json?perpage=0",
-      edit: true,
+      edit: edit,
       autofocus: false
     }
   %>
 <% end %>
 <%=
-  render layout: 'myplaceonline/childproperties', locals: {
+  render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.trips.flights"),
     childpropertiesname: :trip_flights,
@@ -90,12 +89,12 @@
       {
         type: :renderpartial,
         name: :flight_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.trips.flight"),
         objform: "flights/form",
         existingobjurl: "flight_path",
         searchurl: "/flights.json?perpage=0",
-        edit: true,
+        edit: edit,
         autofocus: true,
         force_existing: true,
         simpleform: true
@@ -104,7 +103,7 @@
   } do |child_fields, childproperty|
 %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :flight_attributes,
       existingobj: childproperty.flight,
@@ -112,7 +111,7 @@
       objform: "flights/form",
       existingobjurl: "flight_path",
       searchurl: "/flights.json?perpage=0",
-      edit: true,
+      edit: edit,
       autofocus: false
     }
   %>

@@ -1,4 +1,4 @@
-class IdentityRelationship < ActiveRecord::Base
+class IdentityRelationship < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -25,9 +25,7 @@ class IdentityRelationship < ActiveRecord::Base
 
   belongs_to :parent_identity, class_name: Identity
   
-  belongs_to :contact
-  accepts_nested_attributes_for :contact, reject_if: :all_blank
-  allow_existing :contact
+  child_property(name: :contact)
   
   def relationship_name
     if relationship_type.nil?

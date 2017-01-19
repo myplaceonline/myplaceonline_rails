@@ -1,4 +1,4 @@
-class CalendarItemReminderPending < ActiveRecord::Base
+class CalendarItemReminderPending < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   belongs_to :calendar_item_reminder

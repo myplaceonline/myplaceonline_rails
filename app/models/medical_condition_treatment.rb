@@ -1,16 +1,12 @@
-class MedicalConditionTreatment < ActiveRecord::Base
+class MedicalConditionTreatment < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :medical_condition
 
-  belongs_to :doctor
-  accepts_nested_attributes_for :doctor, reject_if: proc { |attributes| DoctorsController.reject_if_blank(attributes) }
-  allow_existing :doctor
+  child_property(name: :doctor)
 
-  belongs_to :location
-  accepts_nested_attributes_for :location, reject_if: proc { |attributes| LocationsController.reject_if_blank(attributes) }
-  allow_existing :location
+  child_property(name: :location)
 
   validates :treatment_date, presence: true
   

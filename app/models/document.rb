@@ -1,4 +1,4 @@
-class Document < ActiveRecord::Base
+class Document < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
@@ -8,13 +8,15 @@ class Document < ActiveRecord::Base
     document_name
   end
 
-  has_many :document_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :document_files, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :document_files, [{:name => :identity_file}]
+  child_properties(name: :document_files, sort: "position ASC, updated_at ASC")
 
-  before_validation :update_file_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
   def update_file_folders
     put_files_in_folder(document_files, [I18n.t("myplaceonline.category.documents"), display])
+  end
+
+  def self.skip_check_attributes
+    ["important"]
   end
 end

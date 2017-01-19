@@ -1,4 +1,4 @@
-class LifeGoal < ActiveRecord::Base
+class LifeGoal < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :life_goal_name, presence: true

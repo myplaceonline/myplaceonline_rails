@@ -7,7 +7,7 @@
 <%= myp_date_field(f, :purchased, "myplaceonline.guns.purchased", obj.purchased) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.guns.notes", obj.notes) %>
 <%=
-  render(layout: 'myplaceonline/childproperties', locals: {
+  render(layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.gun_registrations.gun_registrations"),
     childpropertiesname: :gun_registrations,
@@ -19,12 +19,12 @@
       {
         type: :renderpartial,
         name: :location_attributes,
-        partial: 'myplaceonline/select_or_create',
+        partial: "myplaceonline/select_or_create",
         heading: t("myplaceonline.gun_registrations.location"),
         objform: "locations/form",
         existingobjurl: "location_path",
         searchurl: "/locations.json?perpage=0",
-        edit: true,
+        edit: edit,
         autofocus: true
       },
       {
@@ -41,7 +41,7 @@
   }) do |child_fields, childproperty|
 %>
   <%=
-    render partial: 'myplaceonline/select_or_create', locals: {
+    render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,
       name: :location_attributes,
       existingobj: childproperty.location,
@@ -49,7 +49,7 @@
       objform: "locations/form",
       existingobjurl: "location_path",
       searchurl: "/locations.json?perpage=0",
-      edit: true,
+      edit: edit,
       autofocus: false
     }
   %>

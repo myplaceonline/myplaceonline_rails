@@ -1,4 +1,4 @@
-class ProjectIssue < ActiveRecord::Base
+class ProjectIssue < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
   include ModelHelpersConcern
@@ -9,8 +9,7 @@ class ProjectIssue < ActiveRecord::Base
   
   belongs_to :project
 
-  has_many :project_issue_notifiers, :dependent => :destroy
-  accepts_nested_attributes_for :project_issue_notifiers, allow_destroy: true, reject_if: :all_blank
+  child_properties(name: :project_issue_notifiers)
 
   def display
     issue_name
@@ -51,11 +50,9 @@ class ProjectIssue < ActiveRecord::Base
     self.save!
   end
 
-  has_many :project_issue_files, -> { order("position ASC, updated_at ASC") }, :dependent => :destroy
-  accepts_nested_attributes_for :project_issue_files, allow_destroy: true, reject_if: :all_blank
-  allow_existing_children :project_issue_files, [{:name => :identity_file}]
+  child_properties(name: :project_issue_files, sort: "position ASC, updated_at ASC")
 
-  before_validation :update_file_folders
+  after_commit :update_file_folders, on: [:create, :update]
   
   def update_file_folders
     put_files_in_folder(project_issue_files, [I18n.t("myplaceonline.category.projects"), project.display])
@@ -68,5 +65,9 @@ class ProjectIssue < ActiveRecord::Base
       result.top = project.default_to_top
     end
     result
+  end
+
+  def self.skip_check_attributes
+    ["top"]
   end
 end

@@ -21,16 +21,6 @@ class LocationsController < MyplaceonlineController
     ]}
   end
   
-  def self.reject_if_blank(attributes)
-    attributes.dup.delete_if {|key, value| key.to_s == "region" }.all?{|key, value|
-      if key == "website_attributes"
-        WebsitesController.reject_if_blank(value)
-      else
-        value.blank?
-      end
-    }
-  end
-
   def may_upload
     true
   end

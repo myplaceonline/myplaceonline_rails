@@ -7,7 +7,7 @@
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.books.notes", obj.notes) %>
 <%= myp_text_area_markdown(f, :review, "myplaceonline.books.review", obj.review) %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :recommender,
     existingobj: obj.recommender,
@@ -17,12 +17,11 @@
     searchurl: "/contacts.json?perpage=0",
     edit: edit,
     autofocus: false,
-    collapsed: true,
     force_existing: true
   }
 %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :lent_to,
     existingobj: obj.lent_to,
@@ -32,13 +31,12 @@
     searchurl: "/contacts.json?perpage=0",
     edit: edit,
     autofocus: false,
-    collapsed: true,
     force_existing: true
   }
 %>
 <%= myp_date_field(f, :lent_date, "myplaceonline.books.lent_date", obj.lent_date) %>
 <%=
-  render partial: 'myplaceonline/select_or_create', locals: {
+  render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :borrowed_from,
     existingobj: obj.borrowed_from,
@@ -48,13 +46,12 @@
     searchurl: "/contacts.json?perpage=0",
     edit: edit,
     autofocus: false,
-    collapsed: true,
     force_existing: true
   }
 %>
 <%= myp_date_field(f, :borrowed_date, "myplaceonline.books.borrowed_date", obj.borrowed_date) %>
 <%=
-  render(layout: 'myplaceonline/childproperties', locals: {
+  render(layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.books.book_quotes"),
     childpropertiesname: :book_quotes,
@@ -83,7 +80,7 @@
   }) do |child_fields, childproperty|
 %>
   <%= child_fields.fields_for :quote, childproperty.quote || Quote.build do |sub_fields| %>
-    <%= render partial: "quotes/form", locals: { obj: childproperty.quote || Quote.build, edit: true, autofocus: true, f: sub_fields } %>
+    <%= render partial: "quotes/form", locals: { obj: childproperty.quote || Quote.build, edit: edit, autofocus: true, f: sub_fields } %>
   <% end %>
   <%= myp_text_field(child_fields, :pages, "myplaceonline.book_quotes.pages", childproperty.pages) %>
 <% end %>

@@ -1,4 +1,4 @@
-class Movie < ActiveRecord::Base
+class Movie < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include ModelHelpersConcern
   include AllowExistingConcern
@@ -7,19 +7,17 @@ class Movie < ActiveRecord::Base
   attr_accessor :is_watched
   boolean_time_transfer :is_watched, :watched
   
-  belongs_to :recommender, class_name: Contact, :autosave => true
-  accepts_nested_attributes_for :recommender, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
-  allow_existing :recommender, Contact
+  child_property(name: :recommender, model: Contact)
 
-  belongs_to :lent_to, class_name: Contact, :autosave => true
-  accepts_nested_attributes_for :lent_to, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
-  allow_existing :lent_to, Contact
+  child_property(name: :lent_to, model: Contact)
   
-  belongs_to :borrowed_from, class_name: Contact, :autosave => true
-  accepts_nested_attributes_for :borrowed_from, reject_if: proc { |attributes| ContactsController.reject_if_blank(attributes) }
-  allow_existing :borrowed_from, Contact
+  child_property(name: :borrowed_from, model: Contact)
 
   def display
     name
+  end
+
+  def self.skip_check_attributes
+    ["is_watched"]
   end
 end

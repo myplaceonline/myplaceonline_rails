@@ -7,16 +7,6 @@ class DesiredLocationsController < MyplaceonlineController
     category_name.singularize
   end
 
-  def self.reject_if_blank(attributes)
-    attributes.dup.all?{|key, value|
-      if key == "website_attributes"
-        WebsitesController.reject_if_blank(value)
-      else
-        value.blank?
-      end
-    }
-  end
-
   protected
     def sorts
       ["desired_locations.updated_at DESC"]

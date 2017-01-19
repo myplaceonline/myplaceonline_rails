@@ -1,12 +1,8 @@
-class RetirementPlanAmountFile < ActiveRecord::Base
+class RetirementPlanAmountFile < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
   belongs_to :retirement_plan_amount
 
-  validates :identity_file, presence: true
-
-  belongs_to :identity_file
-  accepts_nested_attributes_for :identity_file, reject_if: :all_blank
-  allow_existing :identity_file
+  child_property(name: :identity_file, required: true)
 end
