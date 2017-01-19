@@ -357,7 +357,7 @@ module ApplicationHelper
           file_download_path(identity_file, t: identity_file.updated_at.to_i),
           t("myplaceonline.files.download"),
           nil,
-          nil,
+          "externallink",
           true
         )
       )
