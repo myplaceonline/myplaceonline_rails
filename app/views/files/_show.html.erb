@@ -1,11 +1,11 @@
 <%= attribute_table_row(t("myplaceonline.files.name"), obj.file_file_name) %>
 <%= attribute_table_row(t("myplaceonline.files.size_bytes"), obj.file_file_size) %>
 <% if obj.urlname.blank? %>
-  <%= attribute_table_row_url(t("myplaceonline.files.download"), file_download_path(obj.id, t: obj.updated_at.to_i), false, obj.display, nil, "externallink", true) %>
-  <%= attribute_table_row_url(t("myplaceonline.files.view"), file_view_path(obj.id, t: obj.updated_at.to_i), false, obj.display, nil, "externallink", true) %>
+  <%= attribute_table_row_url(t("myplaceonline.files.download"), file_download_url(obj.id, t: obj.updated_at.to_i), false, obj.display, nil, "externallink", true) %>
+  <%= attribute_table_row_url(t("myplaceonline.files.view"), file_view_url(obj.id, t: obj.updated_at.to_i), false, obj.display, nil, "externallink", true) %>
 <% else %>
-  <%= attribute_table_row_url(t("myplaceonline.files.download"), file_download_name_path(obj, obj.urlname, t: obj.updated_at.to_i), false, obj.urlname, nil, "externallink", true) %>
-  <%= attribute_table_row_url(t("myplaceonline.files.view"), file_view_name_path(obj, obj.urlname, t: obj.updated_at.to_i), false, obj.urlname, nil, "externallink", true) %>
+  <%= attribute_table_row_url(t("myplaceonline.files.download"), file_download_name_url(obj, obj.urlname, t: obj.updated_at.to_i), false, obj.urlname, nil, "externallink", true) %>
+  <%= attribute_table_row_url(t("myplaceonline.files.view"), file_view_name_url(obj, obj.urlname, t: obj.updated_at.to_i), false, obj.urlname, nil, "externallink", true) %>
 <% end %>
 <%= attribute_table_row_markdown(t("myplaceonline.files.notes"), obj.notes) %>
 <%= attribute_table_row(t("myplaceonline.files.content_type"), obj.file_content_type) %>
