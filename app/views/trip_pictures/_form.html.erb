@@ -4,6 +4,7 @@
     <%= myp_file_field(file_fields, :file, "myplaceonline.pictures.picture", obj.identity_file.file) %>
     <%= myp_text_field(file_fields, :file_file_name, "myplaceonline.files.file_file_name", obj.identity_file.file_file_name) %>
     <%= myp_text_area_markdown(file_fields, :notes, "myplaceonline.general.notes", obj.identity_file.notes) %>
+    <%= myp_hidden_field(file_fields, :_updatetype, AllowExistingConcern::UPDATE_TYPE_COMBINE.to_s) %>
   <% end %>
 <% else %>
   <% obj.identity_file = IdentityFile.new %>
@@ -11,5 +12,6 @@
     <%= myp_file_field(file_fields, :file, "myplaceonline.pictures.picture", obj.identity_file.file) %>
     <%= myp_text_field(file_fields, :file_file_name, "myplaceonline.files.file_file_name", obj.identity_file.file_file_name) %>
     <%= myp_text_area_markdown(file_fields, :notes, "myplaceonline.general.notes", obj.identity_file.notes) %>
+    <%= myp_hidden_field(file_fields, :_updatetype, AllowExistingConcern::UPDATE_TYPE_COMBINE.to_s) %>
   <% end %>
 <% end %>

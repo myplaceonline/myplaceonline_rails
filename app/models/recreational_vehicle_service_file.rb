@@ -2,7 +2,5 @@ class RecreationalVehicleServiceFile < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
-  belongs_to :recreational_vehicle_service
-
-  child_property(name: :identity_file, required: true)
+  child_file(parent: :recreational_vehicle_service)
 end

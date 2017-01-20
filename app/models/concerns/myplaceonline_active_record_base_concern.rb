@@ -36,6 +36,14 @@ module MyplaceonlineActiveRecordBaseConcern
     def file_folders
       [I18n.t("myplaceonline.category." + self.class.table_name), self.display]
     end
+    
+    def file_folders_final
+      if file_folders_parent.nil?
+        self.file_folders
+      else
+        self.send(self.file_folders_parent).file_folders + [self.display]
+      end
+    end
   end
   
   class_methods do
@@ -127,6 +135,32 @@ module MyplaceonlineActiveRecordBaseConcern
       child_files(name: name, suffix: "pictures")
     end
     
+    def child_file(parent:, class_name: nil)
+      if class_name.nil?
+        belongs_to parent
+      else
+        belongs_to parent, class_name: class_name
+      end
+
+      child_property(name: :identity_file, required: true)
+      
+      define_method(:display) do
+        self.identity_file.display
+      end
+      
+      define_method(:update_file_folders) do
+        p = self.send(parent)
+        Rails.logger.debug{"child_file; parent: #{p.inspect}"}
+        if !p.nil?
+          folders = p.file_folders_final
+          Rails.logger.debug{"child_file; folders: #{folders}"}
+          put_file_in_folder(self, folders)
+        end
+      end
+
+      after_commit :update_file_folders, on: [:create, :update]
+    end
+    
     def child_files(name: nil, suffix: "files")
       if name.nil?
         name = (self.name.tableize.singularize + "_" + suffix).to_sym
@@ -135,15 +169,11 @@ module MyplaceonlineActiveRecordBaseConcern
       child_properties(name: name, sort: "position ASC, updated_at ASC")
 
       update_method_name = ("update_file_folders_" + name.to_s).to_sym
+      #update_method_name = :update_method_name
       
       define_method(update_method_name) do
         Rails.logger.debug{"Finding folders for: #{name}, file_folders_parent: #{file_folders_parent}"}
-        folders = nil
-        if file_folders_parent.nil?
-          folders = self.file_folders
-        else
-          folders = self.send(file_folders_parent).file_folders + [self.display]
-        end
+        folders = self.file_folders_final
         Rails.logger.debug{"Called with folders: #{folders}"}
         put_files_in_folder(self.send(name), folders)
       end

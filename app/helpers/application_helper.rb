@@ -1167,7 +1167,7 @@ module ApplicationHelper
     content_tag(
       :p,
       form.label(name, placeholder, class: "form_field_label") +
-      form.file_field(name, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes), value: value, data: { useprogress: useprogress })
+      form.file_field(name, placeholder: placeholder, class: myp_field_classes(autofocus, input_classes), data: { useprogress: useprogress })
     ).html_safe
   end
   
