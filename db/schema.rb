@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170120015001) do
+ActiveRecord::Schema.define(version: 20170120080036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2370,6 +2370,10 @@ ActiveRecord::Schema.define(version: 20170120015001) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.decimal  "cash_value",                      precision: 10, scale: 2
+    t.integer  "beneficiary_id"
+    t.decimal  "loan_interest_rate",              precision: 10, scale: 2
+    t.index ["beneficiary_id"], name: "index_life_insurances_on_beneficiary_id", using: :btree
     t.index ["company_id"], name: "index_life_insurances_on_company_id", using: :btree
     t.index ["identity_id"], name: "index_life_insurances_on_identity_id", using: :btree
     t.index ["periodic_payment_id"], name: "index_life_insurances_on_periodic_payment_id", using: :btree
@@ -5045,6 +5049,7 @@ ActiveRecord::Schema.define(version: 20170120015001) do
   add_foreign_key "life_insurance_files", "identity_files"
   add_foreign_key "life_insurance_files", "life_insurances"
   add_foreign_key "life_insurances", "companies", name: "life_insurances_company_id_fk"
+  add_foreign_key "life_insurances", "contacts", column: "beneficiary_id"
   add_foreign_key "life_insurances", "identities", name: "life_insurances_identity_id_fk"
   add_foreign_key "life_insurances", "periodic_payments", name: "life_insurances_periodic_payment_id_fk"
   add_foreign_key "list_items", "identities", name: "list_items_identity_id_fk"

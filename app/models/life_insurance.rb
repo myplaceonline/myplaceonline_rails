@@ -23,4 +23,6 @@ class LifeInsurance < ApplicationRecord
   child_property(name: :periodic_payment)
   
   child_files
+  
+  child_property(name: :beneficiary, model: Contact)
 end

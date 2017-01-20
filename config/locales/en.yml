@@ -1763,6 +1763,9 @@ en:
       periodic_payment: "Periodic Payment"
       type_whole: "Whole"
       type_term: "Term"
+      cash_value: "Current Cash Value"
+      loan_interest_rate: "Loan Interest Rate"
+      beneficiary: "Beneficiary"
     identity_phones:
       phone_type: "Phone Type"
       cell: "Cell"
