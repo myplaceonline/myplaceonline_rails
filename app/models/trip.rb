@@ -11,21 +11,15 @@ class Trip < ApplicationRecord
   
   child_property(name: :hotel)
 
-  child_properties(name: :trip_pictures, sort: "position ASC, updated_at ASC")
-  
   child_properties(name: :trip_stories)
   
   child_properties(name: :trip_flights)
   
   belongs_to :identity_file
 
-  after_commit :update_file_folders, on: [:create, :update]
+  child_pictures
   
-  def update_file_folders
-    put_files_in_folder(trip_pictures, picture_folders)
-  end
-  
-  def picture_folders
+  def file_folders
     folders = Array.new
     folders.push(I18n.t("myplaceonline.category.trips"))
     if !self.location.nil? && !self.location.region_name.blank?

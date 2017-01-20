@@ -50,12 +50,10 @@ class ProjectIssue < ApplicationRecord
     self.save!
   end
 
-  child_properties(name: :project_issue_files, sort: "position ASC, updated_at ASC")
+  child_files
 
-  after_commit :update_file_folders, on: [:create, :update]
-  
-  def update_file_folders
-    put_files_in_folder(project_issue_files, [I18n.t("myplaceonline.category.projects"), project.display])
+  def file_folders_parent
+    :project
   end
 
   def self.build(params = nil)

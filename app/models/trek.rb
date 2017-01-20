@@ -8,11 +8,5 @@ class Trek < ApplicationRecord
     location.display
   end
 
-  after_commit :update_file_folders, on: [:create, :update]
-    
-  def update_file_folders
-    put_files_in_folder(trek_pictures, [I18n.t("myplaceonline.category.treks"), display])
-  end
-
-  child_properties(name: :trek_pictures)
+  child_pictures
 end

@@ -20,11 +20,9 @@ class MedicalConditionEvaluation < ApplicationRecord
     ]
   end
 
-  child_properties(name: :medical_condition_evaluation_files, sort: "position ASC, updated_at ASC")
+  child_files
 
-  after_commit :update_file_folders, on: [:create, :update]
-
-  def update_file_folders
-    put_files_in_folder(medical_condition_evaluation_files, [I18n.t("myplaceonline.category.medical_condition_evaluations"), medical_condition.display, display])
+  def file_folders_parent
+    :medical_condition
   end
 end

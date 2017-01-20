@@ -20,11 +20,9 @@ class VehicleRegistration < ApplicationRecord
     ]
   end
 
-  child_properties(name: :vehicle_registration_files, sort: "position ASC, updated_at ASC")
+  child_files
 
-  after_commit :update_file_folders, on: [:create, :update]
-
-  def update_file_folders
-    put_files_in_folder(vehicle_registration_files, [I18n.t("myplaceonline.category.vehicle_registrations"), vehicle.display, display])
+  def file_folders_parent
+    :vehicle
   end
 end

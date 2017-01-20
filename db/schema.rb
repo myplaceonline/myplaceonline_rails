@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170116085933) do
+ActiveRecord::Schema.define(version: 20170119221620) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20170116085933) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "position"
     t.index ["acne_measurement_id"], name: "index_acne_measurement_pictures_on_acne_measurement_id", using: :btree
     t.index ["identity_file_id"], name: "index_acne_measurement_pictures_on_identity_file_id", using: :btree
     t.index ["identity_id"], name: "index_acne_measurement_pictures_on_identity_id", using: :btree
@@ -154,6 +155,7 @@ ActiveRecord::Schema.define(version: 20170116085933) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "position"
     t.index ["apartment_id"], name: "index_apartment_pictures_on_apartment_id", using: :btree
     t.index ["identity_file_id"], name: "index_apartment_pictures_on_identity_file_id", using: :btree
     t.index ["identity_id"], name: "index_apartment_pictures_on_identity_id", using: :btree
@@ -246,6 +248,7 @@ ActiveRecord::Schema.define(version: 20170116085933) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "position"
     t.index ["bar_id"], name: "index_bar_pictures_on_bar_id", using: :btree
     t.index ["identity_file_id"], name: "index_bar_pictures_on_identity_file_id", using: :btree
     t.index ["identity_id"], name: "index_bar_pictures_on_identity_id", using: :btree
@@ -860,6 +863,7 @@ ActiveRecord::Schema.define(version: 20170116085933) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "position"
     t.index ["concert_id"], name: "index_concert_pictures_on_concert_id", using: :btree
     t.index ["identity_file_id"], name: "index_concert_pictures_on_identity_file_id", using: :btree
     t.index ["identity_id"], name: "index_concert_pictures_on_identity_id", using: :btree
@@ -2081,6 +2085,7 @@ ActiveRecord::Schema.define(version: 20170116085933) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "position"
     t.index ["identity_file_id"], name: "index_identity_pictures_on_identity_file_id", using: :btree
     t.index ["identity_id"], name: "index_identity_pictures_on_identity_id", using: :btree
     t.index ["parent_identity_id"], name: "index_identity_pictures_on_parent_identity_id", using: :btree
@@ -2403,6 +2408,7 @@ ActiveRecord::Schema.define(version: 20170116085933) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "position"
     t.index ["identity_file_id"], name: "index_location_pictures_on_identity_file_id", using: :btree
     t.index ["identity_id"], name: "index_location_pictures_on_identity_id", using: :btree
     t.index ["location_id"], name: "index_location_pictures_on_location_id", using: :btree
@@ -2921,6 +2927,7 @@ ActiveRecord::Schema.define(version: 20170116085933) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "position"
     t.index ["identity_file_id"], name: "index_passport_pictures_on_identity_file_id", using: :btree
     t.index ["identity_id"], name: "index_passport_pictures_on_identity_id", using: :btree
     t.index ["passport_id"], name: "index_passport_pictures_on_passport_id", using: :btree
@@ -3445,6 +3452,7 @@ ActiveRecord::Schema.define(version: 20170116085933) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "position"
     t.index ["identity_file_id"], name: "index_recipe_pictures_on_identity_file_id", using: :btree
     t.index ["identity_id"], name: "index_recipe_pictures_on_identity_id", using: :btree
     t.index ["recipe_id"], name: "index_recipe_pictures_on_recipe_id", using: :btree
@@ -3517,6 +3525,7 @@ ActiveRecord::Schema.define(version: 20170116085933) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "position"
     t.index ["identity_file_id"], name: "index_recreational_vehicle_pictures_on_identity_file_id", using: :btree
     t.index ["identity_id"], name: "index_recreational_vehicle_pictures_on_identity_id", using: :btree
     t.index ["recreational_vehicle_id"], name: "index_recreational_vehicle_pictures_on_recreational_vehicle_id", using: :btree
@@ -3618,6 +3627,7 @@ ActiveRecord::Schema.define(version: 20170116085933) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "position"
     t.index ["identity_file_id"], name: "index_restaurant_pictures_on_identity_file_id", using: :btree
     t.index ["identity_id"], name: "index_restaurant_pictures_on_identity_id", using: :btree
     t.index ["restaurant_id"], name: "index_restaurant_pictures_on_restaurant_id", using: :btree
@@ -3881,6 +3891,7 @@ ActiveRecord::Schema.define(version: 20170116085933) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "position"
     t.index ["identity_file_id"], name: "index_story_pictures_on_identity_file_id", using: :btree
     t.index ["identity_id"], name: "index_story_pictures_on_identity_id", using: :btree
     t.index ["story_id"], name: "index_story_pictures_on_story_id", using: :btree
@@ -4079,6 +4090,7 @@ ActiveRecord::Schema.define(version: 20170116085933) do
     t.datetime "updated_at",       null: false
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "position"
     t.index ["identity_file_id"], name: "index_trek_pictures_on_identity_file_id", using: :btree
     t.index ["identity_id"], name: "index_trek_pictures_on_identity_id", using: :btree
     t.index ["trek_id"], name: "index_trek_pictures_on_trek_id", using: :btree
@@ -4299,6 +4311,7 @@ ActiveRecord::Schema.define(version: 20170116085933) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "position"
     t.index ["identity_file_id"], name: "index_vehicle_pictures_on_identity_file_id", using: :btree
     t.index ["identity_id"], name: "index_vehicle_pictures_on_identity_id", using: :btree
     t.index ["vehicle_id"], name: "index_vehicle_pictures_on_vehicle_id", using: :btree

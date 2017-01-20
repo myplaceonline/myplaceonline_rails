@@ -19,11 +19,5 @@ class Concert < ApplicationRecord
     result
   end
 
-  after_commit :update_file_folders, on: [:create, :update]
-    
-  def update_file_folders
-    put_files_in_folder(concert_pictures, [I18n.t("myplaceonline.category.concerts"), display])
-  end
-
-  child_properties(name: :concert_pictures)
+  child_pictures
 end

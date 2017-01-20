@@ -56,11 +56,5 @@ class Membership < ApplicationRecord
     CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: self.id)
   end
 
-  child_properties(name: :membership_files, sort: "position ASC, updated_at ASC")
-
-  after_commit :update_file_folders, on: [:create, :update]
-  
-  def update_file_folders
-    put_files_in_folder(membership_files, [I18n.t("myplaceonline.category.memberships"), display])
-  end
+  child_files
 end

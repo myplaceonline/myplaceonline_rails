@@ -28,6 +28,14 @@ module MyplaceonlineActiveRecordBaseConcern
       
       result
     end
+
+    def file_folders_parent
+      nil
+    end
+    
+    def file_folders
+      [I18n.t("myplaceonline.category." + self.class.table_name), self.display]
+    end
   end
   
   class_methods do
@@ -115,6 +123,34 @@ module MyplaceonlineActiveRecordBaseConcern
       allow_existing_children(name)
     end
     
+    def child_pictures(name: nil)
+      child_files(name: name, suffix: "pictures")
+    end
+    
+    def child_files(name: nil, suffix: "files")
+      if name.nil?
+        name = (self.name.tableize.singularize + "_" + suffix).to_sym
+      end
+      
+      child_properties(name: name, sort: "position ASC, updated_at ASC")
+
+      update_method_name = ("update_file_folders_" + name.to_s).to_sym
+      
+      define_method(update_method_name) do
+        Rails.logger.debug{"Finding folders for: #{name}, file_folders_parent: #{file_folders_parent}"}
+        folders = nil
+        if file_folders_parent.nil?
+          folders = self.file_folders
+        else
+          folders = self.send(file_folders_parent).file_folders + [self.display]
+        end
+        Rails.logger.debug{"Called with folders: #{folders}"}
+        put_files_in_folder(self.send(name), folders)
+      end
+      
+      after_commit update_method_name, on: [:create, :update]
+    end
+
     def attributes_blank?(attributes:)
       Rails.logger.debug{"#{name}.attributes_blank? attributes: #{attributes}"}
       result = attributes.all?{|key, value| check_attributes_blank_and_children?(key: key, value: value) }

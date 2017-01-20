@@ -3,13 +3,7 @@ class AcneMeasurement < ApplicationRecord
 
   validates :measurement_datetime, presence: true
   
-  child_properties(name: :acne_measurement_pictures)
-
-  after_commit :update_file_folders, on: [:create, :update]
-  
-  def update_file_folders
-    put_files_in_folder(acne_measurement_pictures, [I18n.t("myplaceonline.category.acne_measurements"), display])
-  end
+  child_pictures
 
   def display
     result = ""

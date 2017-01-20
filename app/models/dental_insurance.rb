@@ -53,11 +53,5 @@ class DentalInsurance < ApplicationRecord
     end
   end
 
-  child_properties(name: :dental_insurance_files, sort: "position ASC, updated_at ASC")
-
-  after_commit :update_file_folders, on: [:create, :update]
-
-  def update_file_folders
-    put_files_in_folder(dental_insurance_files, [I18n.t("myplaceonline.category.dental_insurances"), display])
-  end
+  child_files
 end

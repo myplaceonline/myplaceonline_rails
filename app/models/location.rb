@@ -31,13 +31,7 @@ class Location < ApplicationRecord
     end
   end
   
-  after_commit :update_file_folders, on: [:create, :update]
-  
-  def update_file_folders
-    put_files_in_folder(location_pictures, [I18n.t("myplaceonline.category.locations"), display])
-  end
-
-  child_properties(name: :location_pictures)
+  child_pictures
 
   def display(use_full_region_name: false)
     result = Myp.appendstr(nil, name, ", ")

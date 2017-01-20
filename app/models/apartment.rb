@@ -17,13 +17,7 @@ class Apartment < ApplicationRecord
     })
   end
   
-  child_properties(name: :apartment_pictures)
-
-  after_commit :update_file_folders, on: [:create, :update]
-  
-  def update_file_folders
-    put_files_in_folder(apartment_pictures, [I18n.t("myplaceonline.category.apartments"), display])
-  end
+  child_pictures
 
   def display
     location.display

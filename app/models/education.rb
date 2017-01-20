@@ -35,13 +35,7 @@ class Education < ApplicationRecord
     Myp.appendstrwrap(Myp.appendstrwrap(education_name, degree_name), Education.education_type_abbreviation(self.degree_type))
   end
 
-  child_properties(name: :education_files, sort: "position ASC, updated_at ASC")
-
-  after_commit :update_file_folders, on: [:create, :update]
-  
-  def update_file_folders
-    put_files_in_folder(education_files, [I18n.t("myplaceonline.category.educations"), display])
-  end
+  child_files
   
   def self.education_type_abbreviation(education_type)
     if !education_type.nil?

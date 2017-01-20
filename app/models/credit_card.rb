@@ -100,13 +100,7 @@ class CreditCard < ApplicationRecord
   
   child_properties(name: :credit_card_cashbacks)
 
-  child_properties(name: :credit_card_files, sort: "position ASC, updated_at ASC")
-
-  after_commit :update_file_folders, on: [:create, :update]
-
-  def update_file_folders
-    put_files_in_folder(credit_card_files, [I18n.t("myplaceonline.category.credit_cards"), display])
-  end
+  child_files
 
   def self.skip_check_attributes
     ["encrypt", "email_reminders"]

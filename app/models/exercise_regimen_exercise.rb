@@ -4,14 +4,12 @@ class ExerciseRegimenExercise < ApplicationRecord
 
   belongs_to :exercise_regimen
 
-  child_properties(name: :exercise_regimen_exercise_files, sort: "position ASC, updated_at ASC")
-
-  after_commit :update_file_folders, on: [:create, :update]
+  child_files
   
-  def update_file_folders
-    put_files_in_folder(exercise_regimen_exercise_files, [I18n.t("myplaceonline.category.exercise_regimens"), exercise_regimen.display, display])
+  def file_folders_parent
+    :exercise_regimen
   end
-  
+
   def display
     exercise_regimen_exercise_name
   end

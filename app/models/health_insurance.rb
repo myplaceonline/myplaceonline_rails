@@ -53,11 +53,5 @@ class HealthInsurance < ApplicationRecord
     end
   end
 
-  child_properties(name: :health_insurance_files, sort: "position ASC, updated_at ASC")
-
-  after_commit :update_file_folders, on: [:create, :update]
-
-  def update_file_folders
-    put_files_in_folder(health_insurance_files, [I18n.t("myplaceonline.category.health_insurances"), display])
-  end
+  child_files
 end

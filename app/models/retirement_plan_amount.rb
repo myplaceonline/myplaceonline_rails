@@ -16,11 +16,9 @@ class RetirementPlanAmount < ApplicationRecord
     result
   end
 
-  child_properties(name: :retirement_plan_amount_files, sort: "position ASC, updated_at ASC")
+  child_files
 
-  after_commit :update_file_folders, on: [:create, :update]
-  
-  def update_file_folders
-    put_files_in_folder(retirement_plan_amount_files, [I18n.t("myplaceonline.category.retirement_plans"), retirement_plan.display])
+  def file_folders_parent
+    :retirement_plan
   end
 end

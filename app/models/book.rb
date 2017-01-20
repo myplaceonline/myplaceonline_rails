@@ -16,13 +16,7 @@ class Book < ApplicationRecord
   
   child_properties(name: :book_quotes, sort: "pages ASC, updated_at DESC")
   
-  child_properties(name: :book_files, sort: "position ASC, updated_at ASC")
-
-  after_commit :update_file_folders, on: [:create, :update]
-
-  def update_file_folders
-    put_files_in_folder(book_files, [I18n.t("myplaceonline.category.books"), display])
-  end
+  child_files
 
   def display
     Myp.appendstrwrap(book_name, author)

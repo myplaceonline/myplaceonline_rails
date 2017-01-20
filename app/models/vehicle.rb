@@ -18,13 +18,7 @@ class Vehicle < ApplicationRecord
   
   child_property(name: :recreational_vehicle)
 
-  child_properties(name: :vehicle_pictures)
-
-  after_commit :update_file_folders, on: [:create, :update]
-  
-  def update_file_folders
-    put_files_in_folder(vehicle_pictures, [I18n.t("myplaceonline.category.vehicles"), name])
-  end
+  child_pictures
   
   child_properties(name: :vehicle_warranties)
 

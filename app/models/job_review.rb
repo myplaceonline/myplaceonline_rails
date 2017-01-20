@@ -8,15 +8,17 @@ class JobReview < ApplicationRecord
 
   child_property(name: :contact)
 
-  child_properties(name: :job_review_files, sort: "position ASC, updated_at ASC")
+  child_files
 
-  after_commit :update_file_folders, on: [:create, :update]
-  
-  def update_file_folders
-    put_files_in_folder(job_review_files, [I18n.t("myplaceonline.jobs.reviews"), self.job.display])
+  def file_folders_parent
+    :job
   end
 
   def final_search_result
     job
+  end
+  
+  def display
+    Myp.display_date_short_year(review_date, User.current_user)
   end
 end

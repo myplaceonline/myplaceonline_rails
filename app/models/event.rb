@@ -29,13 +29,7 @@ class Event < ApplicationRecord
     end
   end
   
-  after_commit :update_file_folders, on: [:create, :update]
-  
-  def update_file_folders
-    put_files_in_folder(event_pictures, [I18n.t("myplaceonline.category.events"), display])
-  end
-
-  child_properties(name: :event_pictures, sort: "position ASC, updated_at ASC")
+  child_pictures
 
   child_properties(name: :event_contacts)
 

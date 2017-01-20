@@ -12,11 +12,5 @@ class Prescription < ApplicationRecord
     prescription_name
   end
 
-  child_properties(name: :prescription_files, sort: "position ASC, updated_at ASC")
-
-  after_commit :update_file_folders, on: [:create, :update]
-  
-  def update_file_folders
-    put_files_in_folder(prescription_files, [I18n.t("myplaceonline.category.prescriptions"), display])
-  end
+  child_files
 end

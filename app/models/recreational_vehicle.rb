@@ -12,13 +12,7 @@ class RecreationalVehicle < ApplicationRecord
 
   child_properties(name: :recreational_vehicle_loans)
 
-  child_properties(name: :recreational_vehicle_pictures)
-
-  after_commit :update_file_folders, on: [:create, :update]
-  
-  def update_file_folders
-    put_files_in_folder(recreational_vehicle_pictures, [I18n.t("myplaceonline.category.recreational_vehicles"), display])
-  end
+  child_pictures
 
   child_properties(name: :recreational_vehicle_insurances)
   
