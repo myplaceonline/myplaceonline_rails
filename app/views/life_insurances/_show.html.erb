@@ -5,3 +5,9 @@
 <%= attribute_table_row_markdown(t("myplaceonline.life_insurances.notes"), obj.notes) %>
 <%= attribute_table_row_reference(t("myplaceonline.life_insurances.company"), "company_path", obj.company) %>
 <%= attribute_table_row_reference(t("myplaceonline.life_insurances.periodic_payment"), "periodic_payment_path", obj.periodic_payment) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.life_insurance_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>

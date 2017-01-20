@@ -21,4 +21,6 @@ class LifeInsurance < ApplicationRecord
   child_property(name: :company)
 
   child_property(name: :periodic_payment)
+  
+  child_files
 end

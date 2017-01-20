@@ -1,6 +1,6 @@
-class DoctorVisitFile < ApplicationRecord
+class LifeInsuranceFile < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
-  child_file(parent: :doctor_visit)
+  child_file(parent: :life_insurance)
 end
