@@ -4,3 +4,9 @@
 <%= attribute_table_row_markdown(t("myplaceonline.doctor_visits.notes"), obj.notes) %>
 <%= attribute_table_row_reference(t("myplaceonline.doctor_visits.doctor"), "doctor_path", obj.doctor) %>
 <%= attribute_table_row_reference(t("myplaceonline.doctor_visits.health_insurance"), "health_insurance_path", obj.health_insurance) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.doctor_visit_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>

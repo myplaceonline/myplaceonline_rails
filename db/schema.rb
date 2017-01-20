@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170119221620) do
+ActiveRecord::Schema.define(version: 20170120014019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1131,6 +1131,18 @@ ActiveRecord::Schema.define(version: 20170119221620) do
     t.integer  "rating"
     t.index ["entry_encrypted_id"], name: "index_diary_entries_on_entry_encrypted_id", using: :btree
     t.index ["identity_id"], name: "index_diary_entries_on_identity_id", using: :btree
+  end
+
+  create_table "doctor_visit_files", force: :cascade do |t|
+    t.integer  "doctor_visit_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["doctor_visit_id"], name: "index_doctor_visit_files_on_doctor_visit_id", using: :btree
+    t.index ["identity_file_id"], name: "index_doctor_visit_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_doctor_visit_files_on_identity_id", using: :btree
   end
 
   create_table "doctor_visits", force: :cascade do |t|
@@ -4840,6 +4852,9 @@ ActiveRecord::Schema.define(version: 20170119221620) do
   add_foreign_key "dessert_locations", "locations"
   add_foreign_key "diary_entries", "encrypted_values", column: "entry_encrypted_id"
   add_foreign_key "diary_entries", "identities", name: "diary_entries_identity_id_fk"
+  add_foreign_key "doctor_visit_files", "doctor_visits"
+  add_foreign_key "doctor_visit_files", "identities"
+  add_foreign_key "doctor_visit_files", "identity_files"
   add_foreign_key "doctor_visits", "doctors", name: "doctor_visits_doctor_id_fk"
   add_foreign_key "doctor_visits", "health_insurances", name: "doctor_visits_health_insurance_id_fk"
   add_foreign_key "doctor_visits", "identities", name: "doctor_visits_identity_id_fk"

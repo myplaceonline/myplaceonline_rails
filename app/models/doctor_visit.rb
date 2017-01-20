@@ -91,4 +91,6 @@ class DoctorVisit < ApplicationRecord
   def self.skip_check_attributes
     ["physical"]
   end
+  
+  child_files
 end
