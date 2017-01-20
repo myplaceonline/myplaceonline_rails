@@ -216,6 +216,7 @@ en:
       prescriptions: "Prescriptions"
       prescription_refills: "Prescription Refills"
       donations: "Donations"
+      periodic_payment_instances: "Periodic Payment Instances"
     general:
       email: "E-mail"
       password: "Password"
@@ -1544,6 +1545,10 @@ en:
       yearly_salary_needed_pretax: "Salary Needed (Pre-tax)"
       weekly_misc: "Weekly Miscellaneous Expenses"
       weekly_transportation: "Weekly Transportation Expenses"
+      instances: "Payment Instances"
+      instance: "Payment Instance"
+      add_instance: "Add Payment Instance"
+      delete_instance: "Delete Payment Instance"
     jobs:
       job_title: "Job Title"
       started: "Started"
@@ -3124,4 +3129,7 @@ en:
       donation_name: "Name"
       donation_date: "Date"
       location: "Location"
+      amount: "Amount"
+    periodic_payment_instances:
+      payment_date: "Payment Date"
       amount: "Amount"

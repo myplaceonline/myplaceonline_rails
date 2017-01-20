@@ -7,3 +7,7 @@
 <%= attribute_table_row_date(t("myplaceonline.periodic_payments.next_payment"), obj.next_payment) %>
 <%= attribute_table_row_markdown(t("myplaceonline.periodic_payments.notes"), obj.notes) %>
 <%= attribute_table_row_reference(t("myplaceonline.periodic_payments.password"), "password_path", obj.password) %>
+<% obj.periodic_payment_instances.each do |x| %>
+  <%= table_row_heading(t("myplaceonline.periodic_payments.instance")) %>
+  <%= render partial: "periodic_payment_instances/show", locals: { obj: x } %>
+<% end %>

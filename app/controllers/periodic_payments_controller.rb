@@ -1,6 +1,10 @@
 class PeriodicPaymentsController < MyplaceonlineController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:monthly_total]
 
+  def may_upload
+    true
+  end
+  
   def monthly_total
     @total = 0
     @weekly_food = 0
@@ -49,14 +53,15 @@ class PeriodicPaymentsController < MyplaceonlineController
       :date_period,
       :payment_amount,
       :suppress_reminder,
-      password_attributes: PasswordsController.param_names
+      password_attributes: PasswordsController.param_names,
+      periodic_payment_instances_attributes: PeriodicPaymentInstance.params
     ]
   end
 
   def footer_items_index
     super + [
       {
-        title: I18n.t('myplaceonline.periodic_payments.monthly_total'),
+        title: I18n.t("myplaceonline.periodic_payments.monthly_total"),
         link: periodic_payments_monthly_total_path,
         icon: "clock"
       }

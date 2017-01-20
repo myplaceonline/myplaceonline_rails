@@ -1,0 +1,9 @@
+<%= data_row(heading: t("myplaceonline.periodic_payment_instances.payment_date"), content: obj.payment_date) %>
+<%= data_row(heading: t("myplaceonline.periodic_payment_instances.amount"), content: obj.amount) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.periodic_payment_instance_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>

@@ -18,3 +18,27 @@
     autofocus: false
   }
 %>
+<%=
+  render(layout: "myplaceonline/childproperties", locals: {
+    f: f,
+    heading: t("myplaceonline.periodic_payments.instances"),
+    childpropertiesname: :periodic_payment_instances,
+    childproperties: obj.periodic_payment_instances,
+    deletebutton: t("myplaceonline.periodic_payments.delete_instance"),
+    addbutton: t("myplaceonline.periodic_payments.add_instance"),
+    expanded: @obj.periodic_payment_instances.length > 0,
+    formjson: [
+      {
+        type: :renderpartial,
+        partial: "myplaceonline/select_or_create",
+        heading: t("myplaceonline.periodic_payments.instance"),
+        objform: "periodic_payment_instances/form",
+        only_new: true,
+        edit: edit,
+        autofocus: true
+      }
+    ]
+  }) do |child_fields, childproperty|
+%>
+  <%= render partial: "periodic_payment_instances/form", locals: { obj: childproperty || PeriodicPaymentInstance.build, edit: edit, autofocus: false, f: child_fields } %>
+<% end %>

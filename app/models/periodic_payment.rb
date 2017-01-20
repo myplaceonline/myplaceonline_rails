@@ -104,4 +104,6 @@ class PeriodicPayment < ApplicationRecord
   def self.skip_check_attributes
     ["suppress_reminder"]
   end
+
+  child_properties(name: :periodic_payment_instances, sort: "payment_date DESC")
 end
