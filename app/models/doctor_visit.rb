@@ -8,7 +8,7 @@ class DoctorVisit < ApplicationRecord
   validates :visit_date, presence: true
   
   def display
-    Myp.display_datetime_short(visit_date, User.current_user)
+    Myp.display_datetime_short_year(visit_date, User.current_user)
   end
   
   child_property(name: :health_insurance)

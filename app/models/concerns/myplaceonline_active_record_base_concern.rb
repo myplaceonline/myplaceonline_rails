@@ -174,8 +174,12 @@ module MyplaceonlineActiveRecordBaseConcern
       define_method(update_method_name) do
         Rails.logger.debug{"Finding folders for: #{name}, file_folders_parent: #{file_folders_parent}"}
         folders = self.file_folders_final
-        Rails.logger.debug{"Called with folders: #{folders}"}
-        put_files_in_folder(self.send(name), folders)
+        if !folders.nil? && folders.length > 0
+          Rails.logger.debug{"Called with folders: #{folders}"}
+          put_files_in_folder(self.send(name), folders)
+        else
+          Myp.warn("Could not evaluate folders for name: #{name}, file_folders_parent: #{file_folders_parent}, self: #{Myp.debug_print(self)}")
+        end
       end
       
       after_commit update_method_name, on: [:create, :update]
