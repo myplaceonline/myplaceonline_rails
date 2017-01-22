@@ -183,6 +183,7 @@ class Identity < ApplicationRecord
   has_many :quotes, :dependent => :destroy
   has_many :prescriptions, :dependent => :destroy
   has_many :donations, :dependent => :destroy
+  has_many :checks, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 
@@ -388,6 +389,7 @@ class Identity < ApplicationRecord
       :quotes => quotes.to_a.map{|x| x.as_json},
       :prescriptions => prescriptions.to_a.sort{ |a,b| a.prescription_name.downcase <=> b.prescription_name.downcase }.map{|x| x.as_json},
       :donations => donations.to_a.sort{ |a,b| a.donation_name.downcase <=> b.donation_name.downcase }.map{|x| x.as_json},
+      :checks => checks.to_a.sort{ |a,b| a.description.downcase <=> b.description.downcase }.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

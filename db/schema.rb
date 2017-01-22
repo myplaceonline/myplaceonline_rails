@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170122110548) do
+ActiveRecord::Schema.define(version: 20170122114041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -724,6 +724,18 @@ ActiveRecord::Schema.define(version: 20170122110548) do
     t.index ["location_id"], name: "index_charities_on_location_id", using: :btree
   end
 
+  create_table "check_files", force: :cascade do |t|
+    t.integer  "check_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["check_id"], name: "index_check_files_on_check_id", using: :btree
+    t.index ["identity_file_id"], name: "index_check_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_check_files_on_identity_id", using: :btree
+  end
+
   create_table "checklist_items", force: :cascade do |t|
     t.string   "checklist_item_name", limit: 255
     t.integer  "checklist_id"
@@ -760,6 +772,27 @@ ActiveRecord::Schema.define(version: 20170122110548) do
     t.datetime "archived"
     t.integer  "rating"
     t.index ["identity_id"], name: "index_checklists_on_identity_id", using: :btree
+  end
+
+  create_table "checks", force: :cascade do |t|
+    t.string   "description"
+    t.text     "notes"
+    t.decimal  "amount",          precision: 10, scale: 2
+    t.integer  "contact_id"
+    t.integer  "company_id"
+    t.date     "deposit_date"
+    t.date     "received_date"
+    t.integer  "bank_account_id"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.index ["bank_account_id"], name: "index_checks_on_bank_account_id", using: :btree
+    t.index ["company_id"], name: "index_checks_on_company_id", using: :btree
+    t.index ["contact_id"], name: "index_checks_on_contact_id", using: :btree
+    t.index ["identity_id"], name: "index_checks_on_identity_id", using: :btree
   end
 
   create_table "companies", force: :cascade do |t|
@@ -4878,12 +4911,19 @@ ActiveRecord::Schema.define(version: 20170122110548) do
   add_foreign_key "category_points_amounts", "identities", name: "category_points_amounts_identity_id_fk"
   add_foreign_key "charities", "identities"
   add_foreign_key "charities", "locations"
+  add_foreign_key "check_files", "checks"
+  add_foreign_key "check_files", "identities"
+  add_foreign_key "check_files", "identity_files"
   add_foreign_key "checklist_items", "checklists", name: "checklist_items_checklist_id_fk"
   add_foreign_key "checklist_items", "identities", name: "checklist_items_identity_id_fk"
   add_foreign_key "checklist_references", "checklists", column: "checklist_parent_id", name: "checklist_references_checklist_parent_id_fk"
   add_foreign_key "checklist_references", "checklists", name: "checklist_references_checklist_id_fk"
   add_foreign_key "checklist_references", "identities", name: "checklist_references_identity_id_fk"
   add_foreign_key "checklists", "identities", name: "checklists_identity_id_fk"
+  add_foreign_key "checks", "bank_accounts"
+  add_foreign_key "checks", "companies"
+  add_foreign_key "checks", "contacts"
+  add_foreign_key "checks", "identities"
   add_foreign_key "companies", "identities", name: "companies_identity_id_fk"
   add_foreign_key "companies", "locations", name: "companies_location_id_fk"
   add_foreign_key "complete_due_items", "calendars", name: "complete_due_items_calendar_id_fk"

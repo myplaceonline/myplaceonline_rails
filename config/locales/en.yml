@@ -217,7 +217,8 @@ en:
       prescription_refills: "Prescription Refills"
       donations: "Donations"
       periodic_payment_instances: "Periodic Payment Instances"
-      test_object_children: "Test Object Children"
+      test_object_instances: "Test Object Instance"
+      checks: "Checks"
     general:
       email: "E-mail"
       password: "Password"
@@ -3140,3 +3141,11 @@ en:
       delete_instance: "Delete Instance"
     test_object_instances:
       test_object_instance_name: "Name"
+    checks:
+      description: "Description"
+      amount: "Amount"
+      contact: "From Contact"
+      company: "From Company"
+      deposit_date: "Deposit Date"
+      received_date: "Received Date"
+      bank_account: "Deposit Bank Account"
