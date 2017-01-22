@@ -4,6 +4,8 @@ class Gun < ApplicationRecord
   validates :gun_name, presence: true
   
   child_properties(name: :gun_registrations)
+  
+  child_files
 
   def display
     gun_name

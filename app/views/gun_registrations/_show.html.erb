@@ -1,0 +1,9 @@
+<%= attribute_table_row_reference(t("myplaceonline.gun_registrations.location"), "location_path", obj.location) %>
+<%= data_row(heading: t("myplaceonline.gun_registrations.registered"), content: obj.registered) %>
+<%= data_row(heading: t("myplaceonline.gun_registrations.expires"), content: obj.expires) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.gun_registration_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>

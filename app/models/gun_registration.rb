@@ -52,4 +52,21 @@ class GunRegistration < ApplicationRecord
   def on_after_destroy
     CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: self.id)
   end
+
+  def self.params
+    [
+      :id,
+      :_destroy,
+      :registered,
+      :expires,
+      location_attributes: LocationsController.param_names,
+      gun_registration_files_attributes: FilesController.multi_param_names
+    ]
+  end
+
+  child_files\
+
+  def file_folders_parent
+    :gun
+  end
 end

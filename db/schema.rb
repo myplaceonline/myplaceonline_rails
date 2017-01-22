@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170120084653) do
+ActiveRecord::Schema.define(version: 20170122110548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1779,6 +1779,30 @@ ActiveRecord::Schema.define(version: 20170120084653) do
     t.index ["identity_id"], name: "index_groups_on_identity_id", using: :btree
   end
 
+  create_table "gun_files", force: :cascade do |t|
+    t.integer  "gun_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["gun_id"], name: "index_gun_files_on_gun_id", using: :btree
+    t.index ["identity_file_id"], name: "index_gun_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_gun_files_on_identity_id", using: :btree
+  end
+
+  create_table "gun_registration_files", force: :cascade do |t|
+    t.integer  "gun_registration_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.index ["gun_registration_id"], name: "index_gun_registration_files_on_gun_registration_id", using: :btree
+    t.index ["identity_file_id"], name: "index_gun_registration_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_gun_registration_files_on_identity_id", using: :btree
+  end
+
   create_table "gun_registrations", force: :cascade do |t|
     t.integer  "location_id"
     t.date     "registered"
@@ -1991,6 +2015,7 @@ ActiveRecord::Schema.define(version: 20170120084653) do
     t.integer  "identity_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.string   "display_note"
     t.index ["company_id"], name: "index_identities_on_company_id", using: :btree
     t.index ["identity_id"], name: "index_identities_on_identity_id", using: :btree
     t.index ["user_id"], name: "index_identities_on_user_id", using: :btree
@@ -4021,6 +4046,32 @@ ActiveRecord::Schema.define(version: 20170120084653) do
     t.index ["test_object_id"], name: "index_test_object_files_on_test_object_id", using: :btree
   end
 
+  create_table "test_object_instance_files", force: :cascade do |t|
+    t.integer  "test_object_instance_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["identity_file_id"], name: "index_test_object_instance_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_test_object_instance_files_on_identity_id", using: :btree
+    t.index ["test_object_instance_id"], name: "index_test_object_instance_files_on_test_object_instance_id", using: :btree
+  end
+
+  create_table "test_object_instances", force: :cascade do |t|
+    t.integer  "test_object_id"
+    t.string   "test_object_instance_name"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.index ["identity_id"], name: "index_test_object_instances_on_identity_id", using: :btree
+    t.index ["test_object_id"], name: "index_test_object_instances_on_test_object_id", using: :btree
+  end
+
   create_table "test_objects", force: :cascade do |t|
     t.string   "test_object_name"
     t.text     "notes"
@@ -4991,6 +5042,12 @@ ActiveRecord::Schema.define(version: 20170120084653) do
   add_foreign_key "group_references", "groups", column: "parent_group_id"
   add_foreign_key "group_references", "identities"
   add_foreign_key "groups", "identities", name: "groups_identity_id_fk"
+  add_foreign_key "gun_files", "guns"
+  add_foreign_key "gun_files", "identities"
+  add_foreign_key "gun_files", "identity_files"
+  add_foreign_key "gun_registration_files", "gun_registrations"
+  add_foreign_key "gun_registration_files", "identities"
+  add_foreign_key "gun_registration_files", "identity_files"
   add_foreign_key "gun_registrations", "guns", name: "gun_registrations_gun_id_fk"
   add_foreign_key "gun_registrations", "identities", name: "gun_registrations_identity_id_fk"
   add_foreign_key "gun_registrations", "locations", name: "gun_registrations_location_id_fk"
@@ -5311,6 +5368,11 @@ ActiveRecord::Schema.define(version: 20170120084653) do
   add_foreign_key "test_object_files", "identities"
   add_foreign_key "test_object_files", "identity_files"
   add_foreign_key "test_object_files", "test_objects"
+  add_foreign_key "test_object_instance_files", "identities"
+  add_foreign_key "test_object_instance_files", "identity_files"
+  add_foreign_key "test_object_instance_files", "test_object_instances"
+  add_foreign_key "test_object_instances", "identities"
+  add_foreign_key "test_object_instances", "test_objects"
   add_foreign_key "test_objects", "identities"
   add_foreign_key "text_message_contacts", "contacts"
   add_foreign_key "text_message_contacts", "identities"

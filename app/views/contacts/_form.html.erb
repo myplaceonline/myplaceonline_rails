@@ -11,6 +11,7 @@
   <%= myp_text_field(identity_fields, :middle_name, "myplaceonline.contacts.middle_name", obj.contact_identity.middle_name) %>
   <%= myp_text_field(identity_fields, :last_name, "myplaceonline.contacts.last_name", obj.contact_identity.last_name) %>
   <%= myp_text_field(identity_fields, :nickname, "myplaceonline.contacts.nickname", obj.contact_identity.nickname) %>
+  <%= myp_text_field(identity_fields, :display_note, "myplaceonline.general.display_note", obj.contact_identity.display_note) %>
   
   <% if !simpleform %>
     <%= myp_date_field(identity_fields, :birthday, "myplaceonline.contacts.birthday", obj.contact_identity.birthday) %>

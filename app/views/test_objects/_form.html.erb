@@ -1,15 +1,39 @@
 <%= myp_text_field(f, :test_object_name, "myplaceonline.test_objects.test_object_name", obj.test_object_name, autofocus) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes, collapsed: false) %>
 <%=
+  render(layout: "myplaceonline/childproperties", locals: {
+    f: f,
+    heading: t("myplaceonline.test_objects.instances"),
+    childpropertiesname: :test_object_instances,
+    childproperties: obj.test_object_instances,
+    deletebutton: t("myplaceonline.test_objects.delete_instance"),
+    addbutton: t("myplaceonline.test_objects.add_instance"),
+    expanded: obj.test_object_instances.length > 0,
+    formjson: [
+      {
+        type: :renderpartial,
+        partial: "myplaceonline/select_or_create",
+        heading: t("myplaceonline.test_objects.instance"),
+        objform: "test_object_instances/form",
+        only_new: true,
+        edit: false,
+        autofocus: true
+      }
+    ]
+  }) do |child_fields, childproperty|
+%>
+  <%= render partial: "test_object_instances/form", locals: { obj: childproperty || TestObjectInstance.build, edit: edit, autofocus: false, f: child_fields } %>
+<% end %>
+<%=
   render partial: "myplaceonline/pictures_form", locals: {
     f: f,
     obj: obj,
     position_field: :position,
     pictures_field: :test_object_files,
-    item_placeholder: "myplaceonline.test_objects.file",
-    heading: "myplaceonline.test_objects.files",
-    addbutton: "myplaceonline.test_objects.add_file",
-    addbutton_multi: "myplaceonline.test_objects.add_files",
-    deletebutton: "myplaceonline.test_objects.delete_file"
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
   }
 %>

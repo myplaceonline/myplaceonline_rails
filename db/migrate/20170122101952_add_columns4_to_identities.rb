@@ -1,0 +1,5 @@
+class AddColumns4ToIdentities < ActiveRecord::Migration[5.0]
+  def change
+    add_column :identities, :display_note, :string
+  end
+end

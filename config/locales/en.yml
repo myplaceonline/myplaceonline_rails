@@ -217,6 +217,7 @@ en:
       prescription_refills: "Prescription Refills"
       donations: "Donations"
       periodic_payment_instances: "Periodic Payment Instances"
+      test_object_children: "Test Object Children"
     general:
       email: "E-mail"
       password: "Password"
@@ -337,6 +338,7 @@ en:
       updated_at: "Last Updated Date"
       more: "More"
       dup_item: "There's already an item with that %{dup_field}: %{link}"
+      display_note: "Display Note"
     categories:
       no_results: "No Results. Create New "
     everything:
@@ -1824,6 +1826,10 @@ en:
       price: "Price"
       purchased: "Purchased"
       notes: "Notes"
+      registrations: "Gun Registrations"
+      registration: "Gun Registration"
+      add_registration: "Add Gun Registration"
+      delete_registration: "Delete Gun Registration"
     desired_products:
       product_name: "Name"
       notes: "Notes"
@@ -3080,13 +3086,6 @@ en:
       add_file: "Add File/Picture"
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
-    test_objects:
-      test_object_name: "Name"
-      files: "Files/Pictures"
-      file: "File/Picture"
-      add_file: "Add File/Picture"
-      add_files: "Add File(s)/Picture(s)"
-      delete_file: "Delete File/Picture"
     tax_documents:
       tax_document_form_name: "Form Name"
       tax_document_description: "Short Description"
@@ -3133,3 +3132,11 @@ en:
     periodic_payment_instances:
       payment_date: "Payment Date"
       amount: "Amount"
+    test_objects:
+      test_object_name: "Name"
+      instances: "Instances"
+      instance: "Instance"
+      add_instance: "Add Instance"
+      delete_instance: "Delete Instance"
+    test_object_instances:
+      test_object_instance_name: "Name"

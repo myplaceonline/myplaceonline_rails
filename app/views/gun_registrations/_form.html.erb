@@ -1,0 +1,45 @@
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :location_attributes,
+    existingobj: obj.location,
+    heading: t("myplaceonline.gun_registrations.location"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    expanded_if_nil: true,
+    autofocus: autofocus
+  }
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATE,
+    name: :registered,
+    value: obj.registered,
+    placeholder: "myplaceonline.gun_registrations.registered"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATE,
+    name: :expires,
+    value: obj.expires,
+    placeholder: "myplaceonline.gun_registrations.expires"
+  )
+%>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :gun_registration_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>

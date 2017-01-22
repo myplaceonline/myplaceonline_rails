@@ -5,6 +5,7 @@
   <%= attribute_table_row(t("myplaceonline.contacts.full_name"), obj.contact_identity.full_name) %>
 <% end %>
 <%= attribute_table_row(t("myplaceonline.contacts.nickname"), obj.contact_identity.nickname) %>
+<%= attribute_table_row(t("myplaceonline.contacts.display_note"), obj.contact_identity.display_note) %>
 <%= attribute_table_row(t("myplaceonline.contacts.birthday"), obj.contact_identity.birthday) %>
 <% if !obj.contact_identity.birthday.nil? %>
   <%= attribute_table_row(t("myplaceonline.contacts.age"), Myp.time_difference_in_general_from_now(obj.contact_identity.birthday)) %>

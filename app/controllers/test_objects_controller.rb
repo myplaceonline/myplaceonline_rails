@@ -16,7 +16,8 @@ class TestObjectsController < MyplaceonlineController
       params.require(:test_object).permit(
         :test_object_name,
         :notes,
-        test_object_files_attributes: FilesController.multi_param_names
+        test_object_files_attributes: FilesController.multi_param_names,
+        test_object_instances_attributes: TestObjectInstance.params
       )
     end
 end

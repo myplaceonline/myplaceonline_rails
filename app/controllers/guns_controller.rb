@@ -1,4 +1,8 @@
 class GunsController < MyplaceonlineController
+  def may_upload
+    true
+  end
+  
   protected
     def sorts
       ["lower(guns.gun_name) ASC"]
@@ -14,13 +18,8 @@ class GunsController < MyplaceonlineController
         :price,
         :purchased,
         :notes,
-        gun_registrations_attributes: [
-          :id,
-          :_destroy,
-          :registered,
-          :expires,
-          location_attributes: LocationsController.param_names
-        ]
+        gun_files_attributes: FilesController.multi_param_names,
+        gun_registrations_attributes: GunRegistration.params
       )
     end
 end

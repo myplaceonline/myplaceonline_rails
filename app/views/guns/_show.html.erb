@@ -7,8 +7,12 @@
 <%= attribute_table_row_date(t("myplaceonline.guns.purchased"), obj.purchased) %>
 <%= attribute_table_row_markdown(t("myplaceonline.guns.notes"), obj.notes) %>
 <% obj.gun_registrations.each do |x| %>
-  <%= table_row_heading(t("myplaceonline.gun_registrations.gun_registration")) %>
-  <%= attribute_table_row_reference(t("myplaceonline.gun_registrations.location"), "location_path", x.location) %>
-  <%= attribute_table_row_date(t("myplaceonline.gun_registrations.registered"), x.registered) %>
-  <%= attribute_table_row_date(t("myplaceonline.gun_registrations.expires"), x.expires) %>
+  <%= table_row_heading(t("myplaceonline.guns.registration")) %>
+  <%= render partial: "gun_registrations/show", locals: { obj: x } %>
 <% end %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.gun_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>

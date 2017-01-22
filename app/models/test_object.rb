@@ -9,4 +9,6 @@ class TestObject < ApplicationRecord
   end
 
   child_files
+
+  child_properties(name: :test_object_instances, sort: "test_object_instance_name ASC")
 end

@@ -9,50 +9,37 @@
 <%=
   render(layout: "myplaceonline/childproperties", locals: {
     f: f,
-    heading: t("myplaceonline.gun_registrations.gun_registrations"),
+    heading: t("myplaceonline.guns.registrations"),
     childpropertiesname: :gun_registrations,
     childproperties: obj.gun_registrations,
-    deletebutton: t("myplaceonline.gun_registrations.delete"),
-    addbutton: t("myplaceonline.gun_registrations.add"),
+    deletebutton: t("myplaceonline.guns.delete_registration"),
+    addbutton: t("myplaceonline.guns.add_registration"),
     expanded: obj.gun_registrations.length > 0,
     formjson: [
       {
         type: :renderpartial,
-        name: :location_attributes,
         partial: "myplaceonline/select_or_create",
-        heading: t("myplaceonline.gun_registrations.location"),
-        objform: "locations/form",
-        existingobjurl: "location_path",
-        searchurl: "/locations.json?perpage=0",
-        edit: edit,
+        heading: t("myplaceonline.guns.registration"),
+        objform: "gun_registrations/form",
+        only_new: true,
+        edit: false,
         autofocus: true
-      },
-      {
-        type: 'date',
-        name: 'registered',
-        placeholder: t("myplaceonline.gun_registrations.registered")
-      },
-      {
-        type: 'date',
-        name: 'expires',
-        placeholder: t("myplaceonline.gun_registrations.expires")
       }
     ]
   }) do |child_fields, childproperty|
 %>
-  <%=
-    render partial: "myplaceonline/select_or_create", locals: {
-      f: child_fields,
-      name: :location_attributes,
-      existingobj: childproperty.location,
-      heading: t("myplaceonline.gun_registrations.location"),
-      objform: "locations/form",
-      existingobjurl: "location_path",
-      searchurl: "/locations.json?perpage=0",
-      edit: edit,
-      autofocus: false
-    }
-  %>
-  <%= myp_date_field(child_fields, :registered, "myplaceonline.gun_registrations.registered", childproperty.registered) %>
-  <%= myp_date_field(child_fields, :expires, "myplaceonline.gun_registrations.expires", childproperty.expires) %>
+  <%= render partial: "gun_registrations/form", locals: { obj: childproperty || GunRegistration.build, edit: edit, autofocus: false, f: child_fields } %>
 <% end %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :gun_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>

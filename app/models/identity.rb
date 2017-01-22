@@ -419,13 +419,8 @@ class Identity < ApplicationRecord
     result = name
     result = Myp.appendstr(result, middle_name)
     result = Myp.appendstr(result, last_name)
-    if !nickname.blank?
-      if result.blank?
-        result = nickname
-      else
-        result = Myp.appendstrwrap(result, nickname)
-      end
-    end
+    result = Myp.appendstrwrap(result, nickname)
+    result = Myp.appendstrwrap(result, display_note)
     if result.blank? && !user.nil?
       result = user.email
     end
@@ -455,6 +450,9 @@ class Identity < ApplicationRecord
     end
     if result.blank?
       result = display
+    end
+    if result.blank?
+      result = display_note
     end
     result
   end

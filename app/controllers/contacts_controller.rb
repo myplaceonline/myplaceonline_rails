@@ -36,6 +36,7 @@ class ContactsController < MyplaceonlineController
         :ktn,
         :sex_type,
         :new_years_resolution,
+        :display_note,
         identity_phones_attributes: [
           :id,
           :number,
