@@ -30,49 +30,9 @@ module AllowExistingConcern extend ActiveSupport::Concern
     def allow_existing_children(name)
       define_method("#{name.to_s}_attributes=") do |attributes|
         
-        Rails.logger.debug{"allow_existing_children setting attributes for name: #{name}, on self: #{self.inspect}, attributes: #{Myp.debug_print(attributes)}"}
+        Rails.logger.debug{"allow_existing_children name: #{name}"}
         
-        model = MyplaceonlineActiveRecordBaseConcern.get_attributes_model_mapping(klass: self.class, name: name)
-        
-        Rails.logger.debug{"allow_existing_children model: #{model}"}
-        
-        attrs_to_delete = []
-        
-        Rails.logger.debug{"allow_existing_children before processing:"}
-        self.send("#{name.to_s}").each do |updated_child|
-          Rails.logger.debug{"allow_existing_children initial child: #{Myp.debug_print(updated_child)}"}
-        end
-        
-        # Go through the existing collection of items to see if we should update any of them
-        self.send("#{name.to_s}").each do |x|
-          
-          Rails.logger.debug{"allow_existing_children for name #{name} on #{x.inspect}"}
-          
-          attributes.each do |key, value|
-            if value["_destroy"] != "1" && !value["id"].blank? && value["id"].to_i == x.id
-              Rails.logger.debug{"allow_existing_children found matching attributes: #{Myp.debug_print(value)}"}
-              
-              x.class.child_property_models.each do |child, model|
-                child_attributes = value["#{child}_attributes"]
-                x.set_property_with_attributes(name: child, attributes: child_attributes)
-              end
-              
-              value.delete_if{|key, value| key == "id" || key.end_with?("attributes")}
-              
-              Rails.logger.debug{"allow_existing_children assigning remaining attributes: #{Myp.debug_print(value)}"}
-              
-              x.assign_attributes(value)
-              
-              # Delete this key from the attributes we pass to super because we've already updated this child,
-              # and we don't want super to munge this updates, only to add any new ones
-              attrs_to_delete << key
-            end
-          end
-        end
-
-        attributes.delete_if {|innerkey, innervalue| !attrs_to_delete.find_index{|atd| atd == innerkey}.nil? }
-        
-        Rails.logger.debug{"allow_existing_children final attributes #{attributes}"}
+        self.set_properties_with_attributes(name: name, attributes: attributes)
         
         Rails.logger.debug{"allow_existing_children before setting:"}
         self.send("#{name.to_s}").each do |updated_child|
@@ -93,7 +53,7 @@ module AllowExistingConcern extend ActiveSupport::Concern
     def set_property_with_attributes(name:, attributes:, update_type: AllowExistingConcern::UPDATE_TYPE_UNKNOWN)
       model = self.class.child_property_models[name]
       
-      Rails.logger.debug{"set_property_with_attributes name: #{name}, model: #{model}, attributes: #{attributes}, self: #{self.inspect}"}
+      Rails.logger.debug{"set_property_with_attributes name: #{name}, model: #{model}, attributes: #{Myp.debug_print(attributes)}, self: #{self.inspect}"}
       
       if !attributes.nil?
         if !attributes["id"].blank?
@@ -161,6 +121,57 @@ module AllowExistingConcern extend ActiveSupport::Concern
           attributes.delete_if {|innerkey, innervalue| innerkey == "_updatetype" }
         end
       end
+    end
+
+    def set_properties_with_attributes(name:, attributes:)
+      Rails.logger.debug{"set_properties_with_attributes setting attributes for name: #{name}, on self: #{self.inspect}, attributes: #{Myp.debug_print(attributes)}"}
+      
+      model = MyplaceonlineActiveRecordBaseConcern.get_attributes_model_mapping(klass: self.class, name: name)
+      
+      Rails.logger.debug{"set_properties_with_attributes model: #{model}"}
+      
+      attrs_to_delete = []
+      
+      Rails.logger.debug{"set_properties_with_attributes before processing:"}
+      self.send("#{name.to_s}").each do |updated_child|
+        Rails.logger.debug{"set_properties_with_attributes initial child: #{Myp.debug_print(updated_child)}"}
+      end
+      
+      # Go through the existing collection of items to see if we should update any of them
+      self.send("#{name.to_s}").each do |x|
+        
+        Rails.logger.debug{"set_properties_with_attributes for name #{name} on #{x.inspect}"}
+        
+        attributes.each do |key, value|
+          if value["_destroy"] != "1" && !value["id"].blank? && value["id"].to_i == x.id
+            Rails.logger.debug{"set_properties_with_attributes found matching attributes: #{Myp.debug_print(value)}"}
+            
+            x.class.child_property_models.each do |child, model|
+              child_attributes = value["#{child}_attributes"]
+              
+              if child_attributes.keys.all?{|key| key.integer? }
+                x.set_properties_with_attributes(name: child, attributes: child_attributes)
+              else
+                x.set_property_with_attributes(name: child, attributes: child_attributes)
+              end
+            end
+            
+            value.delete_if{|key, value| key == "id" || key.end_with?("attributes")}
+            
+            Rails.logger.debug{"set_properties_with_attributes assigning remaining attributes: #{Myp.debug_print(value)}"}
+            
+            x.assign_attributes(value)
+            
+            # Delete this key from the attributes we pass to super because we've already updated this child,
+            # and we don't want super to munge this updates, only to add any new ones
+            attrs_to_delete << key
+          end
+        end
+      end
+
+      attributes.delete_if {|innerkey, innervalue| !attrs_to_delete.find_index{|atd| atd == innerkey}.nil? }
+      
+      Rails.logger.debug{"set_properties_with_attributes final attributes #{attributes}"}
     end
   end
 end

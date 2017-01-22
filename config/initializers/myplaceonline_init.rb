@@ -4,6 +4,10 @@ class String
     return false if self == false || self.blank? || self =~ (/^(false|f|no|n|0)$/i)
     raise ArgumentError.new("invalid value for Boolean: \"#{self}\"")
   end
+  
+  def integer?
+    return self =~ /\A[+-]?\d+\Z/ ? true : false
+  end
 end
 
 if Myp.is_web_server? || Rails.env.test?
