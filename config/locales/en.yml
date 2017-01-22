@@ -852,7 +852,7 @@ en:
       file_success: "Successfully uploaded %{name}"
     accomplishments:
       name: "Name"
-      accomplishment: "Wisdom"
+      accomplishment: "Accomplishment"
     feeds:
       name: "Name"
       url: "Website"

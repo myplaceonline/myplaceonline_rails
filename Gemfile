@@ -1,68 +1,69 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-gem 'rake'
-gem 'rails', '>= 5'
-gem 'pg'
-gem 'sass-rails'
-gem 'uglifier'
-gem 'coffee-rails'
-gem 'jquery-rails'
-# Older versions of turbolinks used to play nice with JQM, but recent versions didn't and we don't use turbolinks, so disable
-#gem 'turbolinks'
-gem 'jbuilder'
-gem 'sdoc', group: :doc
-gem 'spring', group: :development
-gem 'jquery_mobile_rails'
-gem 'devise'
-gem 'thin'
-gem 'roo'
-gem 'remotipart'
-gem 'paperclip'
-# Original gem doesn't support Rails 5
-gem 'paperclip_database', github: 'myplaceonline/paperclip_database'
-gem 'rubyzip'
-gem 'cancan'
-gem 'zeroclipboard-rails'
-gem 'noty-rails'
-gem 'eventmachine'
-gem 'letter_opener', :group => :development
-gem 'kramdown'
-gem 'nokogiri'
-gem 'factory_girl_rails'
-gem 'carmen'
-gem 'carmen-rails'
-gem 'dentaku'
-gem 'calculus'
-gem 'time_difference'
-gem 'yelp'
-gem 'rmagick'
-gem 'htmlentities'
-gem 'jquery-easing-rails'
-gem 'magnific-popup-rails'
-gem 'log4r'
-gem 'delayed_job_active_record'
-gem 'daemons'
-gem 'ckeditor', github: 'galetahub/ckeditor'
-#gem 'ckeditor', github: 'myplaceonline/ckeditor'
-gem 'github-markup'
-gem 'redcarpet'
-gem 'utf8_enforcer_workaround'
-gem 'seed_dump'
-gem 'elasticsearch'
-gem 'elasticsearch-rails'
-gem 'chewy'
-gem 'curb'
-gem 'twilio-ruby'
-# Original gem doesn't support Rails 5
-gem 'jsTimezoneDetect-rails', github: 'myplaceonline/jsTimezoneDetect-rails'
-gem 'simple-rss'
-gem 'browser'
-gem 'awesome_print'
-gem 'open_uri_redirections'
-gem 'geocoder'
-gem 'mini_portile2'
-gem 'pkg-config'
-gem 'rest-client'
-gem 'immigrant'
-gem 'listen'
-gem 'rails-controller-testing'
+gem "rake"
+gem "rails", ">= 5"
+gem "pg"
+gem "sass-rails"
+gem "uglifier"
+gem "coffee-rails"
+gem "jquery-rails"
+# Older versions of turbolinks used to play nice with JQM, but recent versions didn"t and we don"t use turbolinks, so disable
+#gem "turbolinks"
+gem "jbuilder"
+gem "sdoc", group: :doc
+gem "spring", group: :development
+gem "jquery_mobile_rails"
+gem "devise"
+gem "thin"
+gem "roo"
+gem "remotipart"
+gem "paperclip"
+# Original gem doesn"t support Rails 5
+gem "paperclip_database", github: "myplaceonline/paperclip_database"
+gem "rubyzip"
+gem "cancan"
+gem "zeroclipboard-rails"
+gem "noty-rails"
+gem "eventmachine"
+gem "letter_opener", :group => :development
+gem "kramdown"
+gem "nokogiri"
+gem "factory_girl_rails"
+gem "carmen"
+gem "carmen-rails"
+gem "dentaku"
+gem "calculus"
+gem "time_difference"
+gem "yelp"
+gem "rmagick"
+gem "htmlentities"
+gem "jquery-easing-rails"
+gem "magnific-popup-rails"
+gem "log4r"
+gem "delayed_job_active_record"
+gem "daemons"
+gem "ckeditor", github: "galetahub/ckeditor"
+#gem "ckeditor", github: "myplaceonline/ckeditor"
+gem "github-markup"
+gem "redcarpet"
+gem "utf8_enforcer_workaround"
+gem "seed_dump"
+gem "elasticsearch"
+gem "elasticsearch-rails"
+gem "chewy"
+gem "curb"
+gem "twilio-ruby"
+# Original gem doesn"t support Rails 5
+gem "jsTimezoneDetect-rails", github: "myplaceonline/jsTimezoneDetect-rails"
+gem "simple-rss"
+gem "browser"
+gem "awesome_print"
+gem "open_uri_redirections"
+gem "geocoder"
+gem "mini_portile2"
+gem "pkg-config"
+gem "rest-client"
+gem "immigrant"
+gem "listen"
+gem "rails-controller-testing"
+gem "faraday_middleware", "0.10.1"
