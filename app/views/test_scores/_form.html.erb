@@ -11,6 +11,15 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :test_score,
+    value: obj.test_score,
+    placeholder: "myplaceonline.test_scores.test_score"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_DATE,
     name: :test_score_date,
     value: obj.test_score_date,

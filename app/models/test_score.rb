@@ -5,7 +5,7 @@ class TestScore < ApplicationRecord
   validates :test_score_name, presence: true
   
   def display
-    test_score_name
+    Myp.appendstrwrap(test_score_name, test_score)
   end
 
   child_files

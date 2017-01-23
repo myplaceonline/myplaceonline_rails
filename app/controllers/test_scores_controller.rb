@@ -24,6 +24,7 @@ class TestScoresController < MyplaceonlineController
       params.require(:test_score).permit(
         :test_score_name,
         :test_score_date,
+        :test_score,
         :notes,
         test_score_files_attributes: FilesController.multi_param_names
       )

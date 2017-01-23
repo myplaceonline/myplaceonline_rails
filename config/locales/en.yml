@@ -3154,3 +3154,4 @@ en:
     test_scores:
       test_score_name: "Name"
       test_score_date: "Date"
+      test_score: "Score"
