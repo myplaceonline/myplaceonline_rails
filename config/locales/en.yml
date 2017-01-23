@@ -2676,7 +2676,7 @@ en:
       verb_planned: "planned"
       subject_new: "Notice: %{contact} has %{verb} a new %{subject}"
       subject_edit: "Notice: %{contact} has updated an existing %{subject}"
-      why_contacted: "You are receiving this because you are registered as an emergency contact."
+      why_contacted: "You're receiving this because you're an emergency contact."
     tv_shows:
       tv_show_name: "Show Name"
       watched: "Watched"

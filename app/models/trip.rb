@@ -266,13 +266,14 @@ class Trip < ApplicationRecord
       if notify_emergency_contacts
         identity.emergency_contacts.each do |emergency_contact|
           Rails.logger.debug{"Emergency contact #{emergency_contact.inspect}"}
+          location_display = Myp.appendstr(trip_name, location.display(use_full_region_name: true), ": ")
           emergency_contact.send_contact(
             is_new,
             self,
             I18n.t("myplaceonline.trips.emergency_contact_email",
               {
                 contact: identity.display_short,
-                location: location.display(use_full_region_name: true),
+                location: location_display,
                 start_date: Myp.display_date_short_year(started, User.current_user),
                 end_date: ended.nil? ? I18n.t("myplaceonline.general.unknown") : Myp.display_date_short_year(ended, User.current_user),
                 map: location.map_url,
