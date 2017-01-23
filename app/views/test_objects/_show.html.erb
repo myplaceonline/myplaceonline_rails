@@ -1,5 +1,5 @@
-<%= attribute_table_row(t("myplaceonline.test_objects.test_object_name"), obj.test_object_name) %>
-<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<%= data_row(heading: t("myplaceonline.test_objects.test_object_name"), content: obj.test_object_name) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
 <% obj.test_object_instances.each do |x| %>
   <%= table_row_heading(t("myplaceonline.test_objects.instance")) %>
   <%= render partial: "test_object_instances/show", locals: { obj: x } %>

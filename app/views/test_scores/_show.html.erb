@@ -1,0 +1,8 @@
+<%= data_row(heading: t("myplaceonline.test_scores.test_score_name"), content: obj.test_score_name) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.test_score_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>

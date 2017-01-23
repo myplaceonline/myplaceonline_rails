@@ -219,6 +219,7 @@ en:
       periodic_payment_instances: "Periodic Payment Instances"
       test_object_instances: "Test Object Instance"
       checks: "Checks"
+      test_scores: "Test Scores"
     general:
       email: "E-mail"
       password: "Password"
@@ -3150,3 +3151,6 @@ en:
       deposit_date: "Deposit Date"
       received_date: "Received Date"
       bank_account: "Deposit Bank Account"
+    test_scores:
+      test_score_name: "Name"
+      test_score_date: "Date"

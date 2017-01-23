@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170123223219) do
+ActiveRecord::Schema.define(version: 20170123231740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4118,6 +4118,31 @@ ActiveRecord::Schema.define(version: 20170123223219) do
     t.index ["identity_id"], name: "index_test_objects_on_identity_id", using: :btree
   end
 
+  create_table "test_score_files", force: :cascade do |t|
+    t.integer  "test_score_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["identity_file_id"], name: "index_test_score_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_test_score_files_on_identity_id", using: :btree
+    t.index ["test_score_id"], name: "index_test_score_files_on_test_score_id", using: :btree
+  end
+
+  create_table "test_scores", force: :cascade do |t|
+    t.string   "test_score_name"
+    t.date     "test_score_date"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["identity_id"], name: "index_test_scores_on_identity_id", using: :btree
+  end
+
   create_table "text_message_contacts", force: :cascade do |t|
     t.integer  "text_message_id"
     t.integer  "contact_id"
@@ -5415,6 +5440,10 @@ ActiveRecord::Schema.define(version: 20170123223219) do
   add_foreign_key "test_object_instances", "identities"
   add_foreign_key "test_object_instances", "test_objects"
   add_foreign_key "test_objects", "identities"
+  add_foreign_key "test_score_files", "identities"
+  add_foreign_key "test_score_files", "identity_files"
+  add_foreign_key "test_score_files", "test_scores"
+  add_foreign_key "test_scores", "identities"
   add_foreign_key "text_message_contacts", "contacts"
   add_foreign_key "text_message_contacts", "identities"
   add_foreign_key "text_message_contacts", "text_messages"

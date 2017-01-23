@@ -1,5 +1,23 @@
-<%= myp_text_field(f, :test_object_name, "myplaceonline.test_objects.test_object_name", obj.test_object_name, autofocus) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes, collapsed: false) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :test_object_name,
+    value: obj.test_object_name,
+    placeholder: "myplaceonline.test_objects.test_object_name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: false
+  )
+%>
 <%=
   render(layout: "myplaceonline/childproperties", locals: {
     f: f,
