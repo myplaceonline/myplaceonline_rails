@@ -3,13 +3,21 @@ class TaxDocumentsController < MyplaceonlineController
     true
   end
 
+  def use_bubble?
+    true
+  end
+  
+  def bubble_text(obj)
+    obj.fiscal_year.to_s
+  end
+
   protected
     def insecure
       true
     end
 
     def sorts
-      ["lower(tax_documents.tax_document_form_name) ASC"]
+      ["tax_documents.fiscal_year DESC NULLS LAST", "lower(tax_documents.tax_document_form_name) ASC"]
     end
 
     def obj_params

@@ -133,6 +133,7 @@ module Myplaceonline
     Time::DATE_FORMATS[:short_datetime_year] = "%b %d %Y, %l:%M%p"
     Time::DATE_FORMATS[:super_short_datetime_year] = "%a %b %d %l:%M%p %Y"
     Time::DATE_FORMATS[:full] = "%FT%T%:z"
+    Date::DATE_FORMATS[:just_year] = "%Y"
     
     # http://dev.jtsage.com/jQM-DateBox/api/timeOutput/
     Time::DATE_FORMATS[:timebox] = Myplaceonline::JQM_DATEBOX_TIMEBOX_FORMAT
