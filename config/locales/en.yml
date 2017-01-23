@@ -3013,6 +3013,7 @@ en:
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
       important: "Important"
+      document_date: "Date"
     vehicle_services:
       files: "Files/Pictures"
       file: "File/Picture"
