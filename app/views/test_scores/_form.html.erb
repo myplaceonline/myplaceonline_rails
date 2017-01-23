@@ -11,6 +11,15 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_DATE,
+    name: :test_score_date,
+    value: obj.test_score_date,
+    placeholder: "myplaceonline.test_scores.test_score_date"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,

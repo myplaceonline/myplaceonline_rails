@@ -3,6 +3,14 @@ class TestScoresController < MyplaceonlineController
     true
   end
 
+  def use_bubble?
+    true
+  end
+  
+  def bubble_text(obj)
+    Myp.display_date_short_year(obj.test_score_date, User.current_user)
+  end
+
   protected
     def insecure
       true
