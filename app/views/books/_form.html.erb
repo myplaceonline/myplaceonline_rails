@@ -69,7 +69,7 @@
         existingobjurl: "quote_path",
         searchurl: "/quotes.json?perpage=0",
         edit: false,
-        autofocus: autofocus
+        autofocus: false
       },
       {
         type: 'text',
@@ -80,7 +80,7 @@
   }) do |child_fields, childproperty|
 %>
   <%= child_fields.fields_for :quote, childproperty.quote || Quote.build do |sub_fields| %>
-    <%= render partial: "quotes/form", locals: { obj: childproperty.quote || Quote.build, edit: edit, autofocus: autofocus, f: sub_fields } %>
+    <%= render partial: "quotes/form", locals: { obj: childproperty.quote || Quote.build, edit: edit, autofocus: false, f: sub_fields } %>
   <% end %>
   <%= myp_text_field(child_fields, :pages, "myplaceonline.book_quotes.pages", childproperty.pages) %>
 <% end %>
