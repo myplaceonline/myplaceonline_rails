@@ -233,7 +233,7 @@ class MyplaceonlineController < ApplicationController
         end
 
         if do_check_double_post
-          return after_create_or_update
+          return after_create_redirect
         end
         
         if nested
@@ -279,7 +279,7 @@ class MyplaceonlineController < ApplicationController
             Rails.logger.debug{"after_create_result not nil"}
             return after_create_result
           end
-          return after_create_or_update
+          return after_create_redirect
         else
           return render :new
         end
@@ -297,7 +297,7 @@ class MyplaceonlineController < ApplicationController
     end
 
     if do_update
-      return after_create_or_update
+      return after_update_redirect
     else
       return render :edit
     end
@@ -364,7 +364,25 @@ class MyplaceonlineController < ApplicationController
   def do_update_before_save
   end
   
-  def after_create_or_update
+  def after_create_redirect
+    Rails.logger.debug{"after_create_redirect after_new_item: #{current_user.after_new_item}"}
+    respond_to do |format|
+      format.html {
+        if current_user.after_new_item.nil? || current_user.after_new_item == Myp::AFTER_NEW_ITEM_SHOW_ITEM
+          redirect_to_obj
+        elsif current_user.after_new_item == Myp::AFTER_NEW_ITEM_SHOW_LIST
+          redirect_to index_path
+        elsif current_user.after_new_item == Myp::AFTER_NEW_ITEM_ANOTHER_ITEM
+          redirect_to new_path
+        else
+          raise "TODO"
+        end
+      }
+      format.js { render :saved }
+    end
+  end
+  
+  def after_update_redirect
     respond_to do |format|
       format.html { redirect_to_obj }
       format.js { render :saved }

@@ -250,12 +250,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @recently_visited_categories = current_user.recently_visited_categories
     @most_visited_categories = current_user.most_visited_categories
     @most_visited_items = current_user.most_visited_items
+    @after_new_item = current_user.after_new_item
     if request.post?
       @page_transition = params[:page_transition]
       @always_autofocus = params[:always_autofocus]
       @show_timestamps = params[:show_timestamps]
       @top_left_icon = params[:top_left_icon]
       @recently_visited_categories = params[:recently_visited_categories]
+      @after_new_item = params[:after_new_item]
+
       if !@recently_visited_categories.blank?
         @recently_visited_categories = @recently_visited_categories.to_i
         if @recently_visited_categories > MyplaceonlineQuickCategoryDisplaysController::ABSOLUTE_MAXIMUM
@@ -292,6 +295,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       current_user.recently_visited_categories = @recently_visited_categories
       current_user.most_visited_categories = @most_visited_categories
       current_user.most_visited_items = @most_visited_items
+      current_user.after_new_item = @after_new_item
       current_user.save!
       redirect_to edit_user_registration_path,
         :flash => { :notice => I18n.t("myplaceonline.users.appearance_saved") }

@@ -1177,6 +1177,16 @@ module Myp
     end
   end
   
+  AFTER_NEW_ITEM_SHOW_ITEM = 0
+  AFTER_NEW_ITEM_SHOW_LIST = 1
+  AFTER_NEW_ITEM_ANOTHER_ITEM = 2
+  
+  AFTER_NEW_ITEM_LIST = [
+    ["myplaceonline.after_new_item.show_item", AFTER_NEW_ITEM_SHOW_ITEM],
+    ["myplaceonline.after_new_item.show_list", AFTER_NEW_ITEM_SHOW_LIST],
+    ["myplaceonline.after_new_item.another_item", AFTER_NEW_ITEM_ANOTHER_ITEM],
+  ]
+  
   CLIPBOARD_INTEGRATIONS = [
     ["myplaceonline.clipboard.none", 0],
     ["myplaceonline.clipboard.zeroclipboard", 1],

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170123234609) do
+ActiveRecord::Schema.define(version: 20170124001840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4408,6 +4408,7 @@ ActiveRecord::Schema.define(version: 20170123234609) do
     t.boolean  "minimize_password_checks"
     t.integer  "suppressions"
     t.boolean  "show_server_name"
+    t.integer  "after_new_item"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree

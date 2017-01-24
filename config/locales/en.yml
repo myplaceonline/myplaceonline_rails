@@ -728,6 +728,7 @@ en:
       notifications_mobile: "Mobile Phone Number for Notifications"
       notifications_mobile_suppress_reminder: "Suppress Reminder to Enter Mobile Phone Number"
       notifications_saved: "Notification Settings Saved"
+      after_new_item: "After New Item Created"
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"
@@ -3155,3 +3156,7 @@ en:
       test_score_name: "Name"
       test_score_date: "Date"
       test_score: "Score"
+    after_new_item:
+      show_item: "Show Item"
+      show_list: "Back to List"
+      another_item: "Add Another Item"

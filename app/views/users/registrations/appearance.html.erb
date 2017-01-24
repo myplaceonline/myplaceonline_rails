@@ -18,6 +18,8 @@
     <%= myp_text_field_tag(:most_visited_categories, I18n.t("myplaceonline.users.most_visited_categories", max: MyplaceonlineQuickCategoryDisplaysController::ABSOLUTE_MAXIMUM), @most_visited_categories) %>
 
     <%= myp_text_field_tag(:most_visited_items, I18n.t("myplaceonline.users.most_visited_items", max: MyplaceonlineQuickCategoryDisplaysController::ABSOLUTE_MAXIMUM), @most_visited_items) %>
+
+    <%= myp_select_tag(:after_new_item, "myplaceonline.users.after_new_item", Myp.translate_options(Myp::AFTER_NEW_ITEM_LIST), @after_new_item) %>
   </fieldset>
   <div><%= submit_tag t("myplaceonline.general.save") %></div>
 <% end %>

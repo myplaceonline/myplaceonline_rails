@@ -1,7 +1,15 @@
 <% if @error.nil? %>
   <% if params[:suppress_navigate].nil? %>
-    myplaceonline.navigate('<%= controller.obj_path(@obj) %>');
+    <%
+    navigate_link = controller.obj_path(@obj)
+    if current_user.after_new_item == Myp::AFTER_NEW_ITEM_SHOW_LIST
+      navigate_link = controller.index_path
+    elsif current_user.after_new_item == Myp::AFTER_NEW_ITEM_ANOTHER_ITEM
+      navigate_link = controller.new_path
+    end
+    %>
+    myplaceonline.navigate("<%= navigate_link %>");
   <% end %>
 <% else %>
-  alert('Error: ' + <%= @error.to_json.html_safe %>);
+  alert("Error: " + <%= @error.to_json.html_safe %>);
 <% end %>
