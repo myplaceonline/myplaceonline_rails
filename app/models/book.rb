@@ -10,6 +10,8 @@ class Book < ApplicationRecord
   
   boolean_time_transfer :is_owned, :when_owned
   
+  boolean_time_transfer :is_discarded, :when_discarded
+  
   child_property(name: :recommender, model: Contact)
   
   child_property(name: :lent_to, model: Contact)
@@ -25,6 +27,6 @@ class Book < ApplicationRecord
   end
 
   def self.skip_check_attributes
-    ["is_read", "is_owned"]
+    ["is_read", "is_owned", "is_discarded"]
   end
 end

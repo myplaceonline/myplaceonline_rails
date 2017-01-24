@@ -1863,6 +1863,7 @@ en:
       author: "Author"
       is_read: "Have Read?"
       is_owned: "Owned?"
+      is_discarded: "Discarded?"
       notes: "Notes"
       when_read: "Date Read"
       recommender: "Recommender"
