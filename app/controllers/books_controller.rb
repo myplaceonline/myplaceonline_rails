@@ -45,6 +45,7 @@ class BooksController < MyplaceonlineController
         :isbn,
         :author,
         :is_read,
+        :is_owned,
         :notes,
         :review,
         :lent_date,

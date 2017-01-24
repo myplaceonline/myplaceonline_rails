@@ -1862,6 +1862,7 @@ en:
       acquired: "Acquired"
       author: "Author"
       is_read: "Have Read?"
+      is_owned: "Owned?"
       notes: "Notes"
       when_read: "Date Read"
       recommender: "Recommender"

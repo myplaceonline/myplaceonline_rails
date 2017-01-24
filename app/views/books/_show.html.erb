@@ -2,6 +2,7 @@
 <%= attribute_table_row(t("myplaceonline.books.author"), obj.author) %>
 <%= attribute_table_row(t("myplaceonline.books.isbn"), obj.isbn) %>
 <%= attribute_table_row(t("myplaceonline.books.book_category"), obj.book_category) %>
+<%= attribute_table_row_boolean(t("myplaceonline.books.is_owned"), !obj.when_owned.nil?) %>
 <%= attribute_table_row_boolean(t("myplaceonline.books.is_read"), !obj.when_read.nil?) %>
 <%= attribute_table_row_date(t("myplaceonline.books.when_read"), obj.when_read) %>
 <%= attribute_table_row_date(t("myplaceonline.books.acquired"), obj.acquired) %>
@@ -18,7 +19,7 @@
   <%= attribute_table_row(t("myplaceonline.book_quotes.pages"), x.pages) %>
 <% end %>
 <%=
-  render partial: 'myplaceonline/pictures', locals: {
+  render partial: "myplaceonline/pictures", locals: {
     pics: obj.book_files,
     placeholder: "myplaceonline.books.file"
   }
