@@ -57,6 +57,7 @@ class BooksController < MyplaceonlineController
         lent_to_attributes: ContactsController.param_names,
         borrowed_from_attributes: ContactsController.param_names,
         book_files_attributes: FilesController.multi_param_names,
+        gift_from_attributes: ContactsController.param_names,
         book_quotes_attributes: [
           :id,
           :_destroy,

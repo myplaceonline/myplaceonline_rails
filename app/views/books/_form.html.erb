@@ -87,6 +87,20 @@
   <%= myp_text_field(child_fields, :pages, "myplaceonline.book_quotes.pages", childproperty.pages) %>
 <% end %>
 <%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :gift_from,
+    existingobj: obj.gift_from,
+    heading: t("myplaceonline.books.gift_from"),
+    objform: "contacts/form",
+    existingobjurl: "contact_path",
+    searchurl: "/contacts.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    force_existing: true
+  }
+%>
+<%=
   render partial: "myplaceonline/pictures_form", locals: {
     f: f,
     obj: obj,

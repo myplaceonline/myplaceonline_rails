@@ -19,6 +19,7 @@
   <%= render partial: "quotes/show", locals: { obj: x.quote } %>
   <%= attribute_table_row(t("myplaceonline.book_quotes.pages"), x.pages) %>
 <% end %>
+<%= attribute_table_row_reference(t("myplaceonline.books.gift_from"), "contact_path", obj.gift_from) %>
 <%=
   render partial: "myplaceonline/pictures", locals: {
     pics: obj.book_files,

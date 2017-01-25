@@ -18,6 +18,8 @@ class Book < ApplicationRecord
   
   child_property(name: :borrowed_from, model: Contact)
   
+  child_property(name: :gift_from, model: Contact)
+  
   child_properties(name: :book_quotes, sort: "pages ASC, updated_at DESC")
   
   child_files
