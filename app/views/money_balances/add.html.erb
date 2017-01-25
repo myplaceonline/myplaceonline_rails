@@ -36,12 +36,6 @@
           }
           return currentValue;
         }
-        
-        function transformInitialValueCurrencyProcess(str) {
-          str = $.trim(str);
-          str = str.replace(new RegExp(/\$/, "g"), "");
-          return str;
-        }
         </script>
       <%
         else
@@ -87,6 +81,12 @@
   </div>
 
   <script type="text/javascript">
+  function transformInitialValueCurrencyProcess(str) {
+    str = $.trim(str);
+    str = str.replace(new RegExp(/\$/, "g"), "");
+    return str;
+  }
+  
   myplaceonline.onPageLoad(function() {
     myplaceonline.maybeFocus(".autofocus");
   });
