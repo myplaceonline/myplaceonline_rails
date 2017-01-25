@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170125004113) do
+ActiveRecord::Schema.define(version: 20170125025853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2518,8 +2518,8 @@ ActiveRecord::Schema.define(version: 20170125004113) do
     t.datetime "updated_at"
     t.string   "postal_code", limit: 255
     t.text     "notes"
-    t.decimal  "latitude",                precision: 12, scale: 8
-    t.decimal  "longitude",               precision: 12, scale: 8
+    t.decimal  "latitude",                precision: 24, scale: 20
+    t.decimal  "longitude",               precision: 24, scale: 20
     t.integer  "visit_count"
     t.integer  "website_id"
     t.datetime "archived"

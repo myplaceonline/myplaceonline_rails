@@ -14,8 +14,8 @@
 <%= sub_region2_field %>
 <%= sub_region1_field %>
 <%
-  latitude_field = myp_decimal_field(f, :latitude, "myplaceonline.locations.latitude", obj.latitude, false, nil, 0.00000001)
-  longitude_field = myp_decimal_field(f, :longitude, "myplaceonline.locations.longitude", obj.longitude, false, nil, 0.00000001)
+  latitude_field = myp_decimal_field(f, :latitude, "myplaceonline.locations.latitude", obj.latitude, false, nil, 0.00000000000000000001)
+  longitude_field = myp_decimal_field(f, :longitude, "myplaceonline.locations.longitude", obj.longitude, false, nil, 0.00000000000000000001)
   random_name = SecureRandom.hex(10)
 %>
 <%= latitude_field %>
