@@ -59,6 +59,7 @@ $("#<%= extract_id(postal_code_field) %>").on("keyup", function(x) {
 function location_gps_success<%= random_name %>(location) {
   $("#<%= extract_id(latitude_field) %>").val(location.coords.latitude);
   $("#<%= extract_id(longitude_field) %>").val(location.coords.longitude);
+  myplaceonline.createSuccessNotification("GPS coordinates updated");
 }
 </script>
 <a href="#" onclick="return myplaceonline.requestGPS2(location_gps_success<%= random_name %>);" class="ui-btn"><%= t("myplaceonline.locations.request_gps") %></a>

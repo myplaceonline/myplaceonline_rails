@@ -1103,9 +1103,16 @@ var myplaceonline = function(mymodule) {
 
   function requestGPS2(onSuccess) {
     if (navigator.geolocation) {
+      myplaceonline.showLoading();
       navigator.geolocation.getCurrentPosition(function(location) {
+        myplaceonline.hideLoading();
         onSuccess(location);
+      }, function(err) {
+        myplaceonline.hideLoading();
+        myplaceonline.createErrorNotification("GPS failed: " + err);
       });
+    } else {
+      myplaceonline.createErrorNotification("GPS not available (navigator.geolocation is null)");
     }
     return false;
   }
