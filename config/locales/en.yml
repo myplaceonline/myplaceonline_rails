@@ -770,6 +770,13 @@ en:
       lent_date: "Lent Date"
       borrowed_from: "Borrowed From"
       borrowed_date: "Borrowed Date"
+      is_owned: "Owned?"
+      is_discarded: "Discarded?"
+      media_type: "Type"
+      number_of_media: "Number of Media"
+      media_types:
+        bluray: "Blu-ray"
+        dvd: "DVD"
     wisdoms:
       name: "Wisdom Name"
       wisdom: "Wisdom"

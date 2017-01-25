@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170125025853) do
+ActiveRecord::Schema.define(version: 20170125072717) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2888,6 +2888,10 @@ ActiveRecord::Schema.define(version: 20170125025853) do
     t.date     "lent_date"
     t.integer  "borrowed_from_id"
     t.date     "borrowed_date"
+    t.datetime "when_owned"
+    t.datetime "when_discarded"
+    t.integer  "media_type"
+    t.integer  "number_of_media"
     t.index ["borrowed_from_id"], name: "index_movies_on_borrowed_from_id", using: :btree
     t.index ["identity_id"], name: "index_movies_on_identity_id", using: :btree
     t.index ["lent_to_id"], name: "index_movies_on_lent_to_id", using: :btree

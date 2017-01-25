@@ -2,6 +2,10 @@
 <%= myp_text_field(f, :genre, "myplaceonline.movies.genre", obj.genre, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
 <%= myp_text_field(f, :url, "myplaceonline.movies.url", obj.url) %>
 <%= myp_check_box(f, :is_watched, "myplaceonline.movies.watched") %>
+<%= myp_check_box(f, :is_owned, "myplaceonline.movies.is_owned") %>
+<%= myp_check_box(f, :is_discarded, "myplaceonline.movies.is_discarded") %>
+<%= myp_select(f, :media_type, "myplaceonline.movies.media_type", Myp.translate_options(Movie::MEDIA_TYPES), obj.media_type) %>
+<%= myp_integer_field(f, :number_of_media, "myplaceonline.movies.number_of_media", obj.number_of_media) %>
 <%= myp_text_area_markdown(f, :review, "myplaceonline.movies.review", obj.review) %>
 <%=
   render partial: "myplaceonline/select_or_create", locals: {
