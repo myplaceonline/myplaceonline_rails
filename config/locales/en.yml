@@ -2913,6 +2913,7 @@ en:
       send_emails: "Send Email"
       send_texts: "Send Text Message"
       subject_required_for_email: "A subject is required when you've chosen to send emails"
+      subject: "Subject"
     media_dumps:
       media_dump: "Media Dump"
       media_dump_name: "Name"

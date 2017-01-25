@@ -1,14 +1,24 @@
 class CalculationsController < MyplaceonlineController
-  def after_create_or_update
+  def after_update_redirect
     respond_to do |format|
       format.html {
         flash[:notice] = I18n.t("myplaceonline.calculations.result") + " = " + @obj.evaluate
         render :edit
       }
-      format.js { super.after_create_or_update }
+      format.js { super }
     end
   end
-
+  
+  def after_create_redirect
+    respond_to do |format|
+      format.html {
+        flash[:notice] = I18n.t("myplaceonline.calculations.result") + " = " + @obj.evaluate
+        render :edit
+      }
+      format.js { super }
+    end
+  end
+  
   protected
     def sorts
       ["lower(calculations.name) ASC"]

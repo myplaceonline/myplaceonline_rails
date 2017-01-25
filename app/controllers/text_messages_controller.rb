@@ -20,7 +20,14 @@ class TextMessagesController < MyplaceonlineController
     ]
   end
   
-  def after_create_or_update
+  def after_update_redirect
+    if !@obj.draft
+      @obj.process
+    end
+    super
+  end
+  
+  def after_create_redirect
     if !@obj.draft
       @obj.process
     end

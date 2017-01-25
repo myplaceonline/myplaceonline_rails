@@ -7,7 +7,17 @@ class MypletsController < MyplaceonlineController
     false
   end
   
-  def after_create_or_update
+  def after_update_redirect
+    on_after_create_or_update
+    super
+  end
+  
+  def after_create_redirect
+    on_after_create_or_update
+    super
+  end
+  
+  def on_after_create_or_update
     set_category_obj
     controller_class = @obj.category_name + "_controller"
     controller = Object.const_get(controller_class.camelize)
@@ -17,8 +27,6 @@ class MypletsController < MyplaceonlineController
       ))
       @category_obj.save!
     end
-    
-    super
   end
   
   protected

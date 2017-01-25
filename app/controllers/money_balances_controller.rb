@@ -98,7 +98,7 @@ class MoneyBalancesController < MyplaceonlineController
           end
           to.send_email(@new_item.independent_description(false), body)
         end
-        return after_create_or_update
+        return after_update_redirect
       end
     end
   end

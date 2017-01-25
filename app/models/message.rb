@@ -70,4 +70,8 @@ class Message < ApplicationRecord
   def self.skip_check_attributes
     ["send_emails", "send_texts", "draft", "copy_self"]
   end
+  
+  def send_immediately
+    false
+  end
 end
