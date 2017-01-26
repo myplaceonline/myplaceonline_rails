@@ -3,6 +3,18 @@ class DonationsController < MyplaceonlineController
     true
   end
 
+  def use_bubble?
+    true
+  end
+  
+  def bubble_text(obj)
+    if obj.donation_date.nil?
+      nil
+    else
+      obj.donation_date.year.to_s
+    end
+  end
+
   protected
     def insecure
       true

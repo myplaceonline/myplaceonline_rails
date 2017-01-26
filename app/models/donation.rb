@@ -7,7 +7,7 @@ class Donation < ApplicationRecord
   child_property(name: :location)
 
   def display
-    donation_name
+    Myp.appendstrwrap(donation_name, Myp.display_currency(self.amount))
   end
 
   child_files

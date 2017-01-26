@@ -126,7 +126,7 @@ var myplaceonline = function(mymodule) {
     if (header) {
       html += "<li data-role='list-divider'>" + header + "</li>";
     }
-    myplaceonline.consoleLog("Updating list items");
+    myplaceonline.consoleLog("jqmSetList: updating list items");
     myplaceonline.consoleDir(items);
     $.each(items, function (i, x) {
       var filtertext = x.title;
@@ -177,13 +177,27 @@ var myplaceonline = function(mymodule) {
     var result = [];
     var i;
     var state = 0;
+    
+    myplaceonline.consoleLog("jqmReplaceListSection sectionTitle: " + sectionTitle + ", items count: " + (items ? items.length : 0));
+    
     if (existingItems) {
       for (i = 0; i < existingItems.length; i++) {
         var existingItem = existingItems[i];
         if (existingItem.divider) {
+          
+          // Always add the dividers to the result
           result.push(existingItem);
+          
+          // If the title of the divider is equal to the incoming
+          // section name, then start the state machine (state = 1)
+          // so that we don't add any items in this section to the result
+          // (since those will be added with the incoming `items` array).
+          // Otherwise, reset the state machine, so that subsequent
+          // existing items in other sections are added
           if (existingItem.title == sectionTitle) {
             state = 1;
+            
+            // Append the incoming overriden items on to this section
             Array.prototype.push.apply(result, items);
           } else {
             state = 0;
@@ -426,7 +440,7 @@ var myplaceonline = function(mymodule) {
         }
         filterCount++;
         remote.filterCount = filterCount;
-        myplaceonline.consoleLog("remoteDataList search " + value + " (previous: " + previousSearch + "), remote " + remote.title + ", count " + filterCount);
+        myplaceonline.consoleLog("remoteDataList search " + value + " (previous: " + previousSearch + "), remote " + remote.title + ", search # " + filterCount);
       }
         
       $ul.data("previousSearch", value);
