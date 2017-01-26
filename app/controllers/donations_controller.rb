@@ -8,11 +8,7 @@ class DonationsController < MyplaceonlineController
   end
   
   def bubble_text(obj)
-    if obj.donation_date.nil?
-      nil
-    else
-      obj.donation_date.year.to_s
-    end
+    Myp.display_date_month_year_simple(obj.donation_date, User.current_user)
   end
 
   protected
@@ -21,7 +17,7 @@ class DonationsController < MyplaceonlineController
     end
 
     def sorts
-      ["lower(donations.donation_name) ASC"]
+      ["donations.donation_date DESC NULLS LAST", "lower(donations.donation_name) ASC"]
     end
 
     def obj_params
