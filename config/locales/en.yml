@@ -1895,6 +1895,8 @@ en:
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
       gift_from: "Gift From"
+      discard: "Discard"
+      discarded: "Book Discarded"
     book_quotes:
       book_quote: "Quote"
       pages: "Page(s)"

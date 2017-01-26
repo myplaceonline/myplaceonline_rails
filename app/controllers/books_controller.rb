@@ -26,8 +26,28 @@ class BooksController < MyplaceonlineController
     ]
   end
   
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t("myplaceonline.books.discard"),
+        link: book_discard_path(@obj),
+        icon: "navigation"
+      },
+    ]
+  end
+  
   def may_upload
     true
+  end
+  
+  def discard
+    set_obj
+    @obj.is_discarded = true
+    @obj.save!
+    redirect_to index_path,
+      :flash => { :notice =>
+                  I18n.t("myplaceonline.books.discarded")
+                }
   end
 
   protected
