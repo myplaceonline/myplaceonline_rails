@@ -67,6 +67,7 @@ class BloodTestsController < MyplaceonlineController
           :id,
           :_destroy,
           :concentration,
+          :flag,
           blood_concentration_attributes: BloodConcentration.params
         ]
       )

@@ -1458,6 +1458,7 @@ en:
       doctor: "Doctor"
       graph: "Graph"
       concentration_name: "Concentration"
+      flag: "Flag"
     blood_concentrations:
       concentration_name: "Name"
       concentration_type: "Concentration Type"
@@ -3183,3 +3184,11 @@ en:
       bill_name: "Short Description"
       bill_date: "Date"
       amount: "Amount"
+    blood_test_results:
+      flags:
+        negative: "Negative"
+        positive: "Positive"
+        yellow: "Yellow"
+        clear: "Clear"
+        nonreactive: "Non-Reactive"
+        reactive: "Reactive"

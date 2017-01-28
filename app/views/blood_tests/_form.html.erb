@@ -25,6 +25,12 @@
         type: 'text',
         name: 'concentration',
         placeholder: t("myplaceonline.blood_tests.concentration")
+      },
+      {
+        type: 'select',
+        name: 'flag',
+        options: BloodTestResult::FLAGS.map{|x,y| [I18n.t(x),y]}.sort_by{|x| x[0]}.as_json,
+        placeholder: t("myplaceonline.blood_tests.flag")
       }
     ]
   }) do |child_fields, childproperty|
@@ -43,6 +49,7 @@
     }
   %>
   <%= myp_text_field(child_fields, :concentration, "myplaceonline.blood_tests.concentration", childproperty.concentration) %>
+  <%= myp_select(child_fields, :flag, "myplaceonline.blood_tests.flag", Myp.translate_options(BloodTestResult::FLAGS, sort: true), childproperty.flag) %>
 <% end %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.blood_tests.notes", obj.notes) %>
 <%=

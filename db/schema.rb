@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170128045232) do
+ActiveRecord::Schema.define(version: 20170128054654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -375,6 +375,7 @@ ActiveRecord::Schema.define(version: 20170128045232) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "flag"
     t.index ["blood_concentration_id"], name: "index_blood_test_results_on_blood_concentration_id", using: :btree
     t.index ["blood_test_id"], name: "index_blood_test_results_on_blood_test_id", using: :btree
     t.index ["identity_id"], name: "index_blood_test_results_on_identity_id", using: :btree
