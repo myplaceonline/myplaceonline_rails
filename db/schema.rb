@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170125072717) do
+ActiveRecord::Schema.define(version: 20170128045232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -295,6 +295,32 @@ ActiveRecord::Schema.define(version: 20170125072717) do
     t.datetime "archived"
     t.integer  "rating"
     t.index ["identity_id"], name: "index_bets_on_identity_id", using: :btree
+  end
+
+  create_table "bill_files", force: :cascade do |t|
+    t.integer  "bill_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["bill_id"], name: "index_bill_files_on_bill_id", using: :btree
+    t.index ["identity_file_id"], name: "index_bill_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_bill_files_on_identity_id", using: :btree
+  end
+
+  create_table "bills", force: :cascade do |t|
+    t.string   "bill_name"
+    t.date     "bill_date"
+    t.decimal  "amount",      precision: 10, scale: 2
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.index ["identity_id"], name: "index_bills_on_identity_id", using: :btree
   end
 
   create_table "blood_concentrations", force: :cascade do |t|
@@ -4886,6 +4912,10 @@ ActiveRecord::Schema.define(version: 20170125072717) do
   add_foreign_key "bet_contacts", "contacts"
   add_foreign_key "bet_contacts", "identities"
   add_foreign_key "bets", "identities"
+  add_foreign_key "bill_files", "bills"
+  add_foreign_key "bill_files", "identities"
+  add_foreign_key "bill_files", "identity_files"
+  add_foreign_key "bills", "identities"
   add_foreign_key "blood_concentrations", "identities", name: "blood_concentrations_identity_id_fk"
   add_foreign_key "blood_pressures", "identities", name: "blood_pressures_identity_id_fk"
   add_foreign_key "blood_test_files", "blood_tests"

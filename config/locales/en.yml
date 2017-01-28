@@ -220,6 +220,7 @@ en:
       test_object_instances: "Test Object Instance"
       checks: "Checks"
       test_scores: "Test Scores"
+      bills: "Bills"
     general:
       email: "E-mail"
       password: "Password"
@@ -1475,6 +1476,11 @@ en:
       ngml: "ng/mL"
       pgml: "pg/mL"
       number: "Number"
+      x10e3ul: "x10e3/uL"
+      x10e6ul: "x10e6/uL"
+      fL: "fL"
+      pg: "pg"
+      mlmin: "mL/min"
     checklists:
       checklist_name: "Name"
       add: "Add Item"
@@ -3173,3 +3179,7 @@ en:
       show_item: "Show Item"
       show_list: "Back to List"
       another_item: "Add Another Item"
+    bills:
+      bill_name: "Short Description"
+      bill_date: "Date"
+      amount: "Amount"

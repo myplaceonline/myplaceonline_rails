@@ -1,0 +1,10 @@
+<%= data_row(heading: t("myplaceonline.bills.bill_name"), content: obj.bill_name) %>
+<%= data_row(heading: t("myplaceonline.bills.bill_date"), content: obj.bill_date) %>
+<%= data_row(heading: t("myplaceonline.bills.amount"), content: obj.amount) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.bill_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>
