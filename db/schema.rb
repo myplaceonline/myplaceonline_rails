@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170128054654) do
+ActiveRecord::Schema.define(version: 20170128070952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -326,8 +326,8 @@ ActiveRecord::Schema.define(version: 20170128054654) do
   create_table "blood_concentrations", force: :cascade do |t|
     t.string   "concentration_name",    limit: 255
     t.integer  "concentration_type"
-    t.decimal  "concentration_minimum",             precision: 10, scale: 2
-    t.decimal  "concentration_maximum",             precision: 10, scale: 2
+    t.decimal  "concentration_minimum",             precision: 10, scale: 3
+    t.decimal  "concentration_maximum",             precision: 10, scale: 3
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -369,7 +369,7 @@ ActiveRecord::Schema.define(version: 20170128054654) do
   create_table "blood_test_results", force: :cascade do |t|
     t.integer  "blood_test_id"
     t.integer  "blood_concentration_id"
-    t.decimal  "concentration",          precision: 10, scale: 2
+    t.decimal  "concentration",          precision: 10, scale: 3
     t.integer  "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"

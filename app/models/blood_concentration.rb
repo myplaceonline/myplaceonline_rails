@@ -8,7 +8,7 @@ class BloodConcentration < ApplicationRecord
     if self.concentration_minimum.nil? && self.concentration_maximum.nil?
       result = Myp.appendstrwrap(result, Myp.get_select_name(self.concentration_type, Myp::LIQUID_CONCENTRATIONS))
     elsif !self.concentration_minimum.nil? && !self.concentration_maximum.nil?
-      result = Myp.appendstrwrap(result, self.concentration_minimum_with_type + " - " + self.concentration_maximum_with_type)
+      result = Myp.appendstrwrap(result, self.concentration_minimum.to_s + " - " + self.concentration_maximum_with_type)
     elsif !self.concentration_minimum.nil?
       result = Myp.appendstrwrap(result, "> " + self.concentration_minimum_with_type)
     else
