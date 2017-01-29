@@ -4,6 +4,6 @@ class Poem < ApplicationRecord
   validates :poem_name, presence: true
   
   def display
-    poem_name
+    Myp.appendstrwrap(self.poem_name, self.poem_author)
   end
 end
