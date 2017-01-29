@@ -11,7 +11,9 @@ class PoemsController < MyplaceonlineController
     def obj_params
       params.require(:poem).permit(
         :poem_name,
-        :poem
+        :poem,
+        :poem_author,
+        :poem_link
       )
     end
 end

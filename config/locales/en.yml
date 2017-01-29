@@ -1980,6 +1980,8 @@ en:
     poems:
       poem_name: "Name"
       poem: "Poem"
+      poem_author: "Author"
+      poem_link: "Link"
     musical_groups:
       musical_group_name: "Name"
       notes: "Notes"

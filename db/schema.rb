@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170128070952) do
+ActiveRecord::Schema.define(version: 20170129081920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3346,6 +3346,8 @@ ActiveRecord::Schema.define(version: 20170128070952) do
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.string   "poem_author"
+    t.string   "poem_link"
     t.index ["identity_id"], name: "index_poems_on_identity_id", using: :btree
   end
 
