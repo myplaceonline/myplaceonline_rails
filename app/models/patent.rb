@@ -5,7 +5,11 @@ class Patent < ApplicationRecord
   validates :patent_name, presence: true
   
   def display
-    Myp.appendstrwrap(self.patent_name, self.patent_number)
+    if self.patent_number.blank?
+      Myp.appendstrwrap(self.patent_name, self.patent_number)
+    else
+      Myp.appendstrwrap(self.patent_number, Myp.ellipses_if_needed(self.patent_name, 32))
+    end
   end
 
   def region_name
