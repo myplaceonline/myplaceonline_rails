@@ -23,7 +23,7 @@ class PatentsController < MyplaceonlineController
         :patent_abstract,
         :patent_text,
         :notes,
-        test_object_files_attributes: FilesController.multi_param_names
+        patent_files_attributes: FilesController.multi_param_names
       )
     end
 end
