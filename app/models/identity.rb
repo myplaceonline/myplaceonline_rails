@@ -186,6 +186,7 @@ class Identity < ApplicationRecord
   has_many :checks, :dependent => :destroy
   has_many :test_scores, :dependent => :destroy
   has_many :bills, :dependent => :destroy
+  has_many :patents, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 
@@ -394,6 +395,7 @@ class Identity < ApplicationRecord
       :checks => checks.to_a.sort{ |a,b| a.description.downcase <=> b.description.downcase }.map{|x| x.as_json},
       :test_scores => test_scores.to_a.map{|x| x.as_json},
       :bills => bills.to_a.map{|x| x.as_json},
+      :patents => patents.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

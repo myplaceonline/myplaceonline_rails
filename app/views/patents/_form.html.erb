@@ -1,0 +1,90 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :patent_name,
+    value: obj.patent_name,
+    placeholder: "myplaceonline.patents.patent_name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :patent_number,
+    value: obj.patent_number,
+    placeholder: "myplaceonline.patents.patent_number"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :authors,
+    value: obj.authors,
+    placeholder: "myplaceonline.patents.authors"
+  )
+%>
+<%= myp_region_field(f, :region, "myplaceonline.patents.region", obj.region) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATE,
+    name: :filed_date,
+    value: obj.filed_date,
+    placeholder: "myplaceonline.patents.filed_date"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATE,
+    name: :publication_date,
+    value: obj.publication_date,
+    placeholder: "myplaceonline.patents.publication_date"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :patent_abstract,
+    value: obj.patent_abstract,
+    placeholder: "myplaceonline.patents.patent_abstract",
+    collapsed: false
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :patent_text,
+    value: obj.patent_text,
+    placeholder: "myplaceonline.patents.patent_text",
+    collapsed: false
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: false
+  )
+%>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :patent_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>

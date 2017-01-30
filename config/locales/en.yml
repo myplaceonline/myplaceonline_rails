@@ -221,6 +221,7 @@ en:
       checks: "Checks"
       test_scores: "Test Scores"
       bills: "Bills"
+      patents: "Patents"
     general:
       email: "E-mail"
       password: "Password"
@@ -3194,3 +3195,12 @@ en:
         clear: "Clear"
         nonreactive: "Non-Reactive"
         reactive: "Reactive"
+    patents:
+      patent_name: "Name"
+      patent_number: "Number"
+      authors: "Authors"
+      region: "Country"
+      filed_date: "Filed Date"
+      publication_date: "Publication Date"
+      patent_abstract: "Abstract"
+      patent_text: "Patent Text"

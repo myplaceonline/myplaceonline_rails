@@ -1,0 +1,14 @@
+<%= data_row(heading: t("myplaceonline.patents.patent_name"), content: obj.patent_name) %>
+<%= data_row(heading: t("myplaceonline.patents.patent_number"), content: obj.patent_number) %>
+<%= data_row(heading: t("myplaceonline.patents.region"), content: obj.region_name) %>
+<%= data_row(heading: t("myplaceonline.patents.filed_date"), content: obj.filed_date) %>
+<%= data_row(heading: t("myplaceonline.patents.publication_date"), content: obj.publication_date) %>
+<%= data_row(heading: t("myplaceonline.patents.patent_abstract"), content: obj.patent_abstract, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.patents.patent_text"), content: obj.patent_text, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.patent_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>

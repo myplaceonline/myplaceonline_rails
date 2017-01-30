@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170129081920) do
+ActiveRecord::Schema.define(version: 20170130021910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3134,6 +3134,37 @@ ActiveRecord::Schema.define(version: 20170129081920) do
     t.index ["password_encrypted_id"], name: "index_passwords_on_password_encrypted_id", using: :btree
   end
 
+  create_table "patent_files", force: :cascade do |t|
+    t.integer  "patent_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["identity_file_id"], name: "index_patent_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_patent_files_on_identity_id", using: :btree
+    t.index ["patent_id"], name: "index_patent_files_on_patent_id", using: :btree
+  end
+
+  create_table "patents", force: :cascade do |t|
+    t.string   "patent_name"
+    t.string   "patent_number"
+    t.string   "authors"
+    t.string   "region"
+    t.date     "filed_date"
+    t.date     "publication_date"
+    t.text     "patent_abstract"
+    t.text     "patent_text"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["identity_id"], name: "index_patents_on_identity_id", using: :btree
+  end
+
   create_table "periodic_payment_instance_files", force: :cascade do |t|
     t.integer  "periodic_payment_instance_id"
     t.integer  "identity_file_id"
@@ -5342,6 +5373,10 @@ ActiveRecord::Schema.define(version: 20170129081920) do
   add_foreign_key "password_shares", "users"
   add_foreign_key "passwords", "encrypted_values", column: "password_encrypted_id", name: "passwords_password_encrypted_id_fk"
   add_foreign_key "passwords", "identities", name: "passwords_identity_id_fk"
+  add_foreign_key "patent_files", "identities"
+  add_foreign_key "patent_files", "identity_files"
+  add_foreign_key "patent_files", "patents"
+  add_foreign_key "patents", "identities"
   add_foreign_key "periodic_payment_instance_files", "identities"
   add_foreign_key "periodic_payment_instance_files", "identity_files"
   add_foreign_key "periodic_payment_instance_files", "periodic_payment_instances"
