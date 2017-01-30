@@ -20,5 +20,13 @@ class Patent < ApplicationRecord
     end
   end
   
+  def link
+    if !self.patent_number.blank? && !self.region.blank?
+      "https://patents.google.com/patent/" + self.region + self.patent_number
+    else
+      nil
+    end
+  end
+  
   child_files
 end

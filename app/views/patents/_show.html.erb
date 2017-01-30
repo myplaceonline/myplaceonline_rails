@@ -1,6 +1,16 @@
 <%= data_row(heading: t("myplaceonline.patents.patent_name"), content: obj.patent_name) %>
 <%= data_row(heading: t("myplaceonline.patents.patent_number"), content: obj.patent_number) %>
 <%= data_row(heading: t("myplaceonline.patents.region"), content: obj.region_name) %>
+<%=
+  data_row(
+    heading: t("myplaceonline.patents.link"),
+    content: obj.link,
+    url: true,
+    content_classes: "focusable",
+    url_external: true,
+    url_external_target_blank: true
+  )
+%>
 <%= data_row(heading: t("myplaceonline.patents.filed_date"), content: obj.filed_date) %>
 <%= data_row(heading: t("myplaceonline.patents.publication_date"), content: obj.publication_date) %>
 <%= data_row(heading: t("myplaceonline.patents.patent_abstract"), content: obj.patent_abstract, markdown: true) %>
