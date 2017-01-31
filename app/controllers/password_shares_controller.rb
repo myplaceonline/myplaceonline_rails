@@ -45,4 +45,12 @@ class PasswordSharesController < MyplaceonlineController
         :_destroy
       )
     end
+
+    def has_category
+      false
+    end
+    
+    def handle_object_not_found(id)
+      raise Myp::SuddenRedirectError.new(root_path, I18n.t("myplaceonline.password_shares.not_found"))
+    end
 end

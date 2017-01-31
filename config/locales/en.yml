@@ -3205,3 +3205,5 @@ en:
       patent_abstract: "Abstract"
       patent_text: "Patent Text"
       link: "Link"
+    password_shares:
+      not_found: "Password already accepted"

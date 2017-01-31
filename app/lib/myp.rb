@@ -2079,12 +2079,17 @@ module Myp
   end
   
   class SuddenRedirectError < StandardError
-    def initialize(path)
+    def initialize(path, notice = nil)
       @path = path
+      @notice = notice
     end
     
     def path
       @path
+    end
+
+    def notice
+      @notice
     end
   end
   

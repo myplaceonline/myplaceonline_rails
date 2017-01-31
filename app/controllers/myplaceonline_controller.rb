@@ -976,7 +976,7 @@ class MyplaceonlineController < ApplicationController
     end
 
     def set_obj(action = nil, p: params, override_existing: false)
-      Rails.logger.debug{"set_obj action: #{action}, p: #{p}"}
+      Rails.logger.debug{"set_obj action: #{action}, p: #{p.inspect}"}
       if action.nil?
         action = action_name
       end
@@ -993,7 +993,11 @@ class MyplaceonlineController < ApplicationController
           end
         end
         if @obj.nil? || override_existing
-          @obj = model.find(p[:id].to_i)
+          @obj = model.where(id: p[:id].to_i).order(nil).limit(1).first
+          
+          if @obj.nil?
+            handle_object_not_found(p[:id])
+          end
           
           Rails.logger.debug{"set_obj setting @obj: #{@obj}"}
         end
@@ -1005,6 +1009,10 @@ class MyplaceonlineController < ApplicationController
       
       # If this succeeds, then set the identity context for nested authorization checks
       Ability.context_identity = @obj.identity
+    end
+    
+    def handle_object_not_found(id)
+      raise ActiveRecord::RecordNotFound
     end
     
     def before_show

@@ -58,7 +58,11 @@ class ApplicationController < ActionController::Base
     elsif exception.is_a?(CanCan::AccessDenied)
       redirect_to root_url, :alert => exception.message
     elsif exception.is_a?(Myp::SuddenRedirectError)
-      redirect_to exception.path
+      if exception.notice.blank?
+        redirect_to exception.path
+      else
+        redirect_to exception.path, :flash => { :notice => exception.notice }
+      end
     else
       Myp.handle_exception(exception, session[:myp_email], request)
       respond_to do |type|
