@@ -3,9 +3,17 @@ class PrescriptionsController < MyplaceonlineController
     true
   end
 
+  def use_bubble?
+    true
+  end
+  
+  def bubble_text(obj)
+    Myp.display_date_month_year_simple(obj.prescription_date, User.current_user)
+  end
+
   protected
     def sorts
-      ["lower(prescriptions.prescription_name) ASC"]
+      ["prescriptions.prescription_date DESC NULLS FIRST", "lower(prescriptions.prescription_name) ASC"]
     end
 
     def obj_params
