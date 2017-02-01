@@ -8,7 +8,8 @@ class Doctor < ApplicationRecord
     ["myplaceonline.doctors.type_ultrasound", 2],
     ["myplaceonline.doctors.type_dermatologist", 3],
     ["myplaceonline.doctors.type_cosmetologist", 4],
-    ["myplaceonline.doctors.type_physical_therapy", 5]
+    ["myplaceonline.doctors.type_physical_therapy", 5],
+    ["myplaceonline.doctors.type_endocrinologist", 6]
   ]
 
   def display
