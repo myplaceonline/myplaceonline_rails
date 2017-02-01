@@ -1483,6 +1483,7 @@ en:
       fL: "fL"
       pg: "pg"
       mlmin: "mL/min"
+      mgl: "mg/L"
     checklists:
       checklist_name: "Name"
       add: "Add Item"
