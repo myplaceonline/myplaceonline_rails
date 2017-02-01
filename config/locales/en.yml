@@ -3198,6 +3198,9 @@ en:
         clear: "Clear"
         nonreactive: "Non-Reactive"
         reactive: "Reactive"
+        normal: "Normal"
+        few: "Few"
+        moderate: "Moderate"
     patents:
       patent_name: "Name"
       patent_number: "Number"
