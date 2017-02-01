@@ -77,7 +77,7 @@
     searchurl: "/locations.json?perpage=0",
     edit: edit,
     autofocus: false,
-    collapsed: true
+    collapsed: obj.location.nil?
   }
 %>
 <%=
@@ -91,6 +91,6 @@
     searchurl: "/doctors.json?perpage=0",
     edit: edit,
     autofocus: false,
-    collapsed: true
+    collapsed: obj.doctor.nil?
   }
 %>
