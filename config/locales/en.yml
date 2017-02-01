@@ -3188,6 +3188,7 @@ en:
       bill_date: "Date"
       amount: "Amount"
     blood_test_results:
+      blood_concentration: "Concentration"
       flags:
         negative: "Negative"
         positive: "Positive"

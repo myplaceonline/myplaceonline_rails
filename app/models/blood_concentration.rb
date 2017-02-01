@@ -44,4 +44,8 @@ class BloodConcentration < ApplicationRecord
       :notes
     ]
   end
+
+  def self.skip_check_attributes
+    ["concentration_type"]
+  end
 end

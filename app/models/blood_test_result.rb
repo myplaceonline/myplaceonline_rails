@@ -4,7 +4,7 @@ class BloodTestResult < ApplicationRecord
 
   belongs_to :blood_test
 
-  child_property(name: :blood_concentration)
+  child_property(name: :blood_concentration, required: true)
 
   FLAGS = [
     ["myplaceonline.blood_test_results.flags.negative", 1],
@@ -14,4 +14,8 @@ class BloodTestResult < ApplicationRecord
     ["myplaceonline.blood_test_results.flags.nonreactive", 5],
     ["myplaceonline.blood_test_results.flags.reactive", 6],
   ]
+
+  def self.skip_check_attributes
+    ["flag"]
+  end
 end
