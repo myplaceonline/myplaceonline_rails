@@ -350,7 +350,7 @@ module ApplicationHelper
   
   def file_video(identity_file)
     html = <<-HTML
-    <video src="#{file_view_name_path(identity_file, identity_file.urlname, t: identity_file.updated_at.to_i, token: params[:token])}" preload="none" controls>
+    <video style="max-width: 100%;" src="#{file_view_name_path(identity_file, identity_file.urlname, t: identity_file.updated_at.to_i, token: params[:token])}" preload="none" loop="true" controls>
       <p>#{I18n.t("myplaceonline.html5.novideo")}</p>
     </video>
     #{ url_or_blank(file_download_path(identity_file, t: identity_file.updated_at.to_i, token: params[:token]), t("myplaceonline.files.download"), nil, "ui-btn ui-btn-inline", true) }
