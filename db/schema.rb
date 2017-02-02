@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170130021910) do
+ActiveRecord::Schema.define(version: 20170202000636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -459,6 +459,7 @@ ActiveRecord::Schema.define(version: 20170130021910) do
     t.datetime "when_owned"
     t.datetime "when_discarded"
     t.integer  "gift_from_id"
+    t.string   "book_location"
     t.index ["borrowed_from_id"], name: "index_books_on_borrowed_from_id", using: :btree
     t.index ["gift_from_id"], name: "index_books_on_gift_from_id", using: :btree
     t.index ["identity_id"], name: "index_books_on_identity_id", using: :btree

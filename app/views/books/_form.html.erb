@@ -8,6 +8,7 @@
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.books.notes", obj.notes) %>
 <%= myp_text_area_markdown(f, :review, "myplaceonline.books.review", obj.review) %>
 <%= myp_check_box(f, :is_discarded, "myplaceonline.books.is_discarded") %>
+<%= myp_text_field(f, :book_location, "myplaceonline.books.book_location", obj.book_location, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
 <%=
   render partial: "myplaceonline/select_or_create", locals: {
     f: f,

@@ -7,6 +7,7 @@
 <%= attribute_table_row_date(t("myplaceonline.books.when_read"), obj.when_read) %>
 <%= attribute_table_row_date(t("myplaceonline.books.acquired"), obj.acquired) %>
 <%= attribute_table_row_boolean(t("myplaceonline.books.is_discarded"), !obj.when_discarded.nil?) %>
+<%= attribute_table_row(t("myplaceonline.books.book_location"), obj.book_location) %>
 <%= attribute_table_row_markdown(t("myplaceonline.books.notes"), obj.notes) %>
 <%= attribute_table_row_markdown(t("myplaceonline.books.review"), obj.review) %>
 <%= attribute_table_row_reference(t("myplaceonline.books.recommender"), "contact_path", obj.recommender) %>

@@ -1906,6 +1906,7 @@ en:
       gift_from: "Gift From"
       discard: "Discard"
       discarded: "Book Discarded"
+      book_location: "Location"
     book_quotes:
       book_quote: "Quote"
       pages: "Page(s)"
