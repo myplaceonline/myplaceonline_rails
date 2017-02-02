@@ -21,9 +21,19 @@ class MyplaceonlineController < ApplicationController
     @archived = param_bool(:archived)
 
     @selected_sort = params[:selected_sort]
+    # Sanitize
+    if !@selected_sort.blank?
+      @selected_sort = @selected_sort.gsub(/[^a-zA-Z\._\(\)]/, "")
+    end
+    
     @selected_sort_direction = params[:selected_sort_direction]
-    if @selected_sort_direction.blank? || (@selected_sort_direction != "asc" && @selected_sort_direction != "desc")
-      @selected_sort_direction = "asc"
+    # Sanitize to the only two vaild values
+    if @selected_sort_direction.blank?
+      @selected_sort_direction = "ASC"
+    elsif @selected_sort_direction.downcase != "asc" && @selected_sort_direction.downcase != "desc"
+      @selected_sort_direction = "ASC"
+    else
+      @selected_sort_direction = @selected_sort_direction.upcase
     end
     
     if has_category && params[:myplet].nil?
@@ -59,7 +69,7 @@ class MyplaceonlineController < ApplicationController
     @items_previous_page_link = items_previous_page(@offset - @perpage)
     @items_all_link = items_all_link
 
-    @objs = cached_all.offset(@offset).limit(@perpage).order(sorts)
+    @objs = cached_all.offset(@offset).limit(@perpage).order(sorts_wrapper)
     
     # If the controller wants to show top items (`additional_items?` returns
     # true), then the only other thing we'll check is if there's more than
@@ -679,7 +689,8 @@ class MyplaceonlineController < ApplicationController
   end
 
   def sorts_helper
-    if @selected_sort == "visit_count" || @selected_sort == "created_at" || @selected_sort == "updated_at"
+    if !@selected_sort.blank?
+      # Sanitized above
       ["#{@selected_sort} #{@selected_sort_direction} nulls last"]
     else
       if block_given?
@@ -837,6 +848,10 @@ class MyplaceonlineController < ApplicationController
     
     def sorts
       raise NotImplementedError
+    end
+    
+    def sorts_wrapper
+      sorts_helper {sorts}
     end
     
     def sensitive

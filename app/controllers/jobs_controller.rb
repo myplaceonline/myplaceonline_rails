@@ -2,7 +2,7 @@ class JobsController < MyplaceonlineController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:resume]
   
   def resume
-    @jobs = all.order(sorts).to_a.delete_if{|x| x.started.nil?}
+    @jobs = all.order(sorts_wrapper).to_a.delete_if{|x| x.started.nil?}
     @educations = Myp.model_instances(
       Education,
       current_user.primary_identity,

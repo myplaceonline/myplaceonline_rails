@@ -107,7 +107,7 @@ class PerishableFoodsController < MyplaceonlineController
   end
   
   def bubble_text(obj)
-    obj.quantity.to_s
+    Myp.display_date_month_year_simple(obj.expires, User.current_user)
   end
     
   def data_split_icon
@@ -119,6 +119,12 @@ class PerishableFoodsController < MyplaceonlineController
       I18n.t("myplaceonline.perishable_foods.consume_one"),
       perishable_food_consume_one_path(obj)
     )
+  end
+  
+  def index_sorts
+    [
+      [I18n.t("myplaceonline.perishable_foods.expires"), "perishable_foods.expires"],
+    ] + super
   end
   
   protected

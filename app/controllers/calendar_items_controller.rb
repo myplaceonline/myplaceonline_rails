@@ -69,6 +69,6 @@ class CalendarItemsController < MyplaceonlineController
     
     def get_default_offset
       t = User.current_user.time_now + 1.weeks
-      all.order(sorts).to_a.index{|calendar_item| calendar_item.calendar_item_time.nil? ? -1 : t >= calendar_item.calendar_item_time }
+      all.order(sorts_wrapper).to_a.index{|calendar_item| calendar_item.calendar_item_time.nil? ? -1 : t >= calendar_item.calendar_item_time }
     end
 end

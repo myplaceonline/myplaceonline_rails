@@ -29,7 +29,7 @@ class EmailAccountsController < MyplaceonlineController
     end
 
     def sorts
-      sorts_helper{["lower(concat(passwords.name, passwords.user, passwords.email)) ASC"]}
+      ["lower(concat(passwords.name, passwords.user, passwords.email)) ASC"]
     end
     
     def all_joins

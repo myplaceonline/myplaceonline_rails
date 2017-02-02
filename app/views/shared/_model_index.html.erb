@@ -136,14 +136,14 @@
 <%= yielded %>
 
 <% if !@myplet %>
-  <%#
-    render partial: 'myplaceonline/sort_items', locals: {
-      options: controller.index_sorts
-    }
-  %>
   <%=
     render partial: 'myplaceonline/filter_select', locals: {
       filters: controller.index_filters
+    }
+  %>
+  <%=
+    render partial: 'myplaceonline/sort_items', locals: {
+      options: controller.index_sorts
     }
   %>
   <% content_for :footer do -%>

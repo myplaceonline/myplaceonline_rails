@@ -7,7 +7,11 @@ class PerishableFood < ApplicationRecord
   child_property(name: :food, required: true)
   
   def display
-    Myp.appendstrwrap(food.display, Myp.ellipses_if_needed(self.storage_location, 10))
+    quantity_display = nil
+    if !self.quantity.nil? && self.quantity > 0
+      quantity_display = "x" + self.quantity.to_s
+    end
+    Myp.appendstr(Myp.appendstrwrap(food.display, Myp.ellipses_if_needed(self.storage_location, 10)), quantity_display)
   end
 
   def self.calendar_item_display(calendar_item)

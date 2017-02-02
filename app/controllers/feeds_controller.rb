@@ -120,7 +120,7 @@ class FeedsController < MyplaceonlineController
   
   protected
     def sorts
-      sorts_helper {["lower(feeds.name) #{@selected_sort_direction}"]}
+      ["lower(feeds.name) #{@selected_sort_direction}"]
     end
 
     def obj_params
