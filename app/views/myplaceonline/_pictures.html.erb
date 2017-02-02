@@ -19,7 +19,13 @@
     end
   %>
   <% process_pics.each do |pic| %>
-    <%= attribute_table_row_image(t(placeholder), pic.identity_file) %>
+    <% if pic.identity_file.is_audio? %>
+      <%= attribute_table_row_file_audio(t(placeholder), pic.identity_file) %>
+    <% elsif pic.identity_file.is_video? %>
+      <%= attribute_table_row_file_video(t(placeholder), pic.identity_file) %>
+    <% else %>
+      <%= attribute_table_row_image(t(placeholder), pic.identity_file) %>
+    <% end %>
   <% end %>
 
   <% if limited %>

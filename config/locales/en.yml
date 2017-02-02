@@ -349,6 +349,7 @@ en:
       no_results: "No Results. Create New "
     html5:
       noaudio: "Your browser doesn't support embedded audio."
+      novideo: "Your browser doesn't support embedded video."
     periods:
       monthly: "Monthly"
       yearly: "Yearly"

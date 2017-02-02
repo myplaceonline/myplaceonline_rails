@@ -126,6 +126,14 @@ class IdentityFile < ApplicationRecord
     self.file_content_type.index("x-xcf").nil?
   end
   
+  def is_audio?
+    !self.file.nil? && !self.file_content_type.blank? && self.file_content_type.start_with?("audio")
+  end
+  
+  def is_video?
+    !self.file.nil? && !self.file_content_type.blank? && self.file_content_type.start_with?("video")
+  end
+  
   def has_thumbnail?
     !self.thumbnail_skip && !self.thumbnail_contents.nil?
   end

@@ -348,6 +348,28 @@ module ApplicationHelper
     end
   end
   
+  def file_video(identity_file)
+    html = <<-HTML
+    <video src="#{file_view_name_path(identity_file, identity_file.urlname, t: identity_file.updated_at.to_i, token: params[:token])}" preload="none" controls>
+      <p>#{I18n.t("myplaceonline.html5.novideo")}</p>
+    </video>
+    #{ url_or_blank(file_download_path(identity_file, t: identity_file.updated_at.to_i, token: params[:token]), t("myplaceonline.files.download"), nil, "ui-btn ui-btn-inline", true) }
+    HTML
+  end
+  
+  def attribute_table_row_file_video(name, identity_file)
+    if !identity_file.nil? && !identity_file.file_content_type.nil? && identity_file.file_content_type.start_with?("video")
+      html = file_video(identity_file)
+      attribute_table_row_content(
+        name,
+        nil,
+        html.html_safe
+      )
+    else
+      nil
+    end
+  end
+  
   def attribute_table_row_file(name, identity_file)
     if !identity_file.nil?
       attribute_table_row_content(
