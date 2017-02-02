@@ -27,10 +27,9 @@ class PerishableFood < ApplicationRecord
   
   def on_after_save
     if MyplaceonlineExecutionContext.handle_updates?
-      if !self.expires.nil?
-        ApplicationRecord.transaction do
-          CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
-          
+      ApplicationRecord.transaction do
+        CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
+        if !self.expires.nil?
           if self.quantity.nil? || self.quantity > 0
             User.current_user.primary_identity.calendars.each do |calendar|
               CalendarItem.create_calendar_item(

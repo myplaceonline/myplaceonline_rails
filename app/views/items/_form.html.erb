@@ -2,6 +2,7 @@
 <%= myp_date_field(f, :acquired, "myplaceonline.items.acquired", obj.acquired) %>
 <%= myp_decimal_field(f, :cost, "myplaceonline.items.cost", obj.cost) %>
 <%= myp_text_field(f, :item_location, "myplaceonline.items.item_location", obj.item_location, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
+<%= myp_date_field(f, :expires, "myplaceonline.items.expires", obj.expires) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
 <%=
   render partial: "myplaceonline/pictures_form", locals: {

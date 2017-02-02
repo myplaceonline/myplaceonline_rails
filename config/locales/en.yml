@@ -3108,6 +3108,8 @@ en:
       add_file: "Add File/Picture"
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
+      expires: "Expires"
+      expiring: "Item %{name} expires %{delta}"
     vaccines:
       vaccine_name: "Vaccine Name"
       vaccine_date: "Date"
