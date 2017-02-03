@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170202022648) do
+ActiveRecord::Schema.define(version: 20170203205523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -832,11 +832,13 @@ ActiveRecord::Schema.define(version: 20170202022648) do
     t.integer  "location_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name",        limit: 255
+    t.string   "name",                limit: 255
     t.text     "notes"
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
+    t.integer  "company_identity_id"
+    t.index ["company_identity_id"], name: "index_companies_on_company_identity_id", using: :btree
     t.index ["identity_id"], name: "index_companies_on_identity_id", using: :btree
     t.index ["location_id"], name: "index_companies_on_location_id", using: :btree
   end
@@ -5027,6 +5029,7 @@ ActiveRecord::Schema.define(version: 20170202022648) do
   add_foreign_key "checks", "companies"
   add_foreign_key "checks", "contacts"
   add_foreign_key "checks", "identities"
+  add_foreign_key "companies", "identities", column: "company_identity_id"
   add_foreign_key "companies", "identities", name: "companies_identity_id_fk"
   add_foreign_key "companies", "locations", name: "companies_location_id_fk"
   add_foreign_key "complete_due_items", "calendars", name: "complete_due_items_calendar_id_fk"
