@@ -9,7 +9,7 @@ class StocksController < MyplaceonlineController
         :num_shares,
         :vest_date,
         :notes,
-        company_attributes: CompaniesController.param_names,
+        company_attributes: Company.param_names,
         password_attributes: PasswordsController.param_names
       )
     end

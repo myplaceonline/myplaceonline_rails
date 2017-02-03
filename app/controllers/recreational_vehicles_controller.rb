@@ -52,7 +52,7 @@ class RecreationalVehiclesController < MyplaceonlineController
         :started,
         :notes,
         :_destroy,
-        company_attributes: CompaniesController.param_names,
+        company_attributes: Company.param_names,
         periodic_payment_attributes: PeriodicPaymentsController.param_names
       ]
     ]

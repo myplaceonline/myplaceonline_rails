@@ -25,7 +25,7 @@ class RetirementPlansController < MyplaceonlineController
         :started,
         :notes,
         :retirement_plan_type,
-        company_attributes: CompaniesController.param_names,
+        company_attributes: Company.param_names,
         periodic_payment_attributes: PeriodicPaymentsController.param_names,
         password_attributes: PasswordsController.param_names
       )

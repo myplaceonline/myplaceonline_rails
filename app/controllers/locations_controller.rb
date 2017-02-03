@@ -1,5 +1,5 @@
 class LocationsController < MyplaceonlineController
-  def self.param_names(include_website: true)
+  def self.param_names(include_website: true, include_company: true)
     Myp.combine_conditionally([
       :id,
       :_destroy,
@@ -17,7 +17,7 @@ class LocationsController < MyplaceonlineController
       location_phones_attributes: [:id, :number, :_destroy],
       location_pictures_attributes: FilesController.multi_param_names
     ], include_website) {[
-      website_attributes: WebsitesController.param_names(include_website: include_website)
+      website_attributes: WebsitesController.param_names(include_website: include_website, include_company: include_company)
     ]}
   end
   

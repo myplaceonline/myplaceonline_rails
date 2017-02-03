@@ -1,3 +1,26 @@
-<%= attribute_table_row(t("myplaceonline.companies.name"), obj.name) %>
-<%= attribute_table_row_reference(t("myplaceonline.companies.location"), "location_path", obj.location) %>
-<%= attribute_table_row_markdown(t("myplaceonline.companies.notes"), obj.notes) %>
+<%= attribute_table_row(t("myplaceonline.contacts.name"), obj.company_identity.name) %>
+<%= attribute_table_row(t("myplaceonline.contacts.middle_name"), obj.company_identity.middle_name) %>
+<%= attribute_table_row(t("myplaceonline.contacts.last_name"), obj.company_identity.last_name) %>
+<%= attribute_table_row(t("myplaceonline.contacts.display_note"), obj.company_identity.display_note) %>
+<%= attribute_table_row_markdown(t("myplaceonline.contacts.notes"), obj.company_identity.notes) %>
+<% obj.company_identity.identity_emails.each do |email| %>
+  <%= attribute_table_row_email(t("myplaceonline.identities.email"), email.email) %>
+<% end %>
+<% obj.company_identity.identity_phones.each do |phone| %>
+  <% if Myp.has_phone?(request) %>
+      <%= attribute_table_row_url(t("myplaceonline.identities.phone"), "tel:#{phone.number}", false, phone.number) %>
+  <% else %>
+      <%= attribute_table_row(t("myplaceonline.identities.phone"), phone.number) %>
+  <% end %>
+  <%= attribute_table_row_select(t("myplaceonline.identity_phones.phone_type"), phone.phone_type, IdentityPhone::PHONE_TYPES) %>
+<% end %>
+<% obj.company_identity.identity_locations.each do |identity_location| %>
+  <%= attribute_table_row_reference(t("myplaceonline.identities.location"), "location_path", identity_location.location) %>
+  <%= attribute_table_row_boolean(t("myplaceonline.identities.location_secondary"), identity_location.secondary) %>
+<% end %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.company_identity.identity_pictures,
+    placeholder: "myplaceonline.contacts.picture"
+  }
+%>

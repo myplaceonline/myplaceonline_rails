@@ -34,7 +34,7 @@ class PhonesController < MyplaceonlineController
         :depth,
         :weight_type,
         :weight,
-        manufacturer_attributes: CompaniesController.param_names,
+        manufacturer_attributes: Company.param_names,
         password_attributes: PasswordsController.param_names,
         phone_files_attributes: FilesController.multi_param_names
       )

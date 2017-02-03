@@ -71,7 +71,7 @@ class JobsController < MyplaceonlineController
         :division_identifier,
         :personnel_code,
         :hours_per_week,
-        company_attributes: CompaniesController.param_names,
+        company_attributes: Company.param_names,
         internal_address_attributes: LocationsController.param_names,
         job_salaries_attributes: [
           :id,

@@ -15,4 +15,32 @@ class Company < ApplicationRecord
   def display
     company_identity.display
   end
+
+  def self.param_names(include_website: true, recurse: true)
+    [
+      :id,
+      :_destroy,
+      company_identity_attributes: Identity.param_names(include_website: include_website, recurse: recurse, include_company: false)
+    ]
+  end
+
+  after_commit :update_file_folders, on: [:create, :update]
+  
+  def update_file_folders
+    if !company_identity.nil?
+      put_files_in_folder(company_identity.identity_pictures, [I18n.t("myplaceonline.category.companies"), display])
+    end
+  end
+
+  def self.build(params = nil)
+    result = self.dobuild(params)
+    result.company_identity = Myp.new_model(Identity)
+    result
+  end
+
+  def as_json(options={})
+    super.as_json(options).merge({
+      :company_identity => company_identity.as_json
+    })
+  end
 end

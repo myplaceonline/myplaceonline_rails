@@ -17,7 +17,7 @@ class LifeInsurancesController < MyplaceonlineController
         :life_insurance_type,
         :cash_value,
         :loan_interest_rate,
-        company_attributes: CompaniesController.param_names,
+        company_attributes: Company.param_names,
         periodic_payment_attributes: PeriodicPaymentsController.param_names,
         life_insurance_files_attributes: FilesController.multi_param_names,
         beneficiary_attributes: ContactsController.param_names

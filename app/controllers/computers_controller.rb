@@ -25,7 +25,7 @@ class ComputersController < MyplaceonlineController
         :weight_type,
         :weight,
         :hostname,
-        manufacturer_attributes: CompaniesController.param_names,
+        manufacturer_attributes: Company.param_names,
         administrator_attributes: PasswordsController.param_names,
         main_user_attributes: PasswordsController.param_names,
         computer_ssh_keys_attributes: [

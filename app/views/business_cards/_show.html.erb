@@ -1,7 +1,7 @@
 <%= attribute_table_row_reference(t("myplaceonline.business_cards.contact"), "contact_path", obj.contact) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <%=
-  render partial: 'myplaceonline/pictures', locals: {
+  render partial: "myplaceonline/pictures", locals: {
       pics: obj.business_card_files,
       placeholder: "myplaceonline.business_cards.file"
   }

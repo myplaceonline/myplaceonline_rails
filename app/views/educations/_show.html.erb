@@ -9,7 +9,7 @@
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <%= attribute_table_row_reference(t("myplaceonline.educations.location"), "location_path", obj.location) %>
 <%=
-  render partial: 'myplaceonline/pictures', locals: {
+  render partial: "myplaceonline/pictures", locals: {
     pics: @obj.education_files,
     placeholder: "myplaceonline.educations.file"
   }

@@ -22,7 +22,7 @@ class WebsitesController < MyplaceonlineController
     super
   end
 
-  def self.param_names(include_website: true)
+  def self.param_names(include_website: true, include_company: true)
     [
       :id,
       :_destroy,
@@ -36,7 +36,7 @@ class WebsitesController < MyplaceonlineController
         :_destroy,
         password_attributes: PasswordsController.param_names + [:id]
       ],
-      recommender_attributes: ContactsController.param_names(include_website: false)
+      recommender_attributes: ContactsController.param_names(include_website: false, include_company: include_company)
     ]
   end
   

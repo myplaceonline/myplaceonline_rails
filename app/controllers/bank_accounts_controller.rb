@@ -9,7 +9,7 @@ class BankAccountsController < MyplaceonlineController
       :pin,
       :encrypt,
       password_attributes: PasswordsController.param_names,
-      company_attributes: CompaniesController.param_names,
+      company_attributes: Company.param_names,
       home_address_attributes: LocationsController.param_names
     ]
   end

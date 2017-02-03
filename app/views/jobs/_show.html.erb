@@ -56,7 +56,7 @@
           attribute_table_row_markdown(t("myplaceonline.job_reviews.notes"), x.notes) +
           attribute_table_row_markdown(t("myplaceonline.job_reviews.self_evaluation"), x.self_evaluation) +
           attribute_table_row_reference(t("myplaceonline.job_reviews.contact"), "contact_path", x.contact) + 
-          render(partial: 'myplaceonline/pictures', locals: {
+          render(partial: "myplaceonline/pictures", locals: {
             pics: x.job_review_files,
             placeholder: "myplaceonline.job_reviews.file"
           })
@@ -75,7 +75,7 @@
   <% end %>
 <% end %>
 <%=
-  render partial: 'myplaceonline/pictures', locals: {
+  render partial: "myplaceonline/pictures", locals: {
     pics: @obj.job_files,
     placeholder: "myplaceonline.jobs.file"
   }

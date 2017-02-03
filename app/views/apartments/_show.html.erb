@@ -17,7 +17,7 @@
       }
     ) %>
   <%=
-      render partial: 'myplaceonline/pictures', locals: {
+      render partial: "myplaceonline/pictures", locals: {
         pics: lease.apartment_lease_files,
         placeholder: "myplaceonline.apartment_leases.file"
       }
@@ -36,7 +36,7 @@
 <% end %>
 
 <%=
-  render partial: 'myplaceonline/pictures', locals: {
+  render partial: "myplaceonline/pictures", locals: {
       pics: obj.apartment_pictures,
       placeholder: "myplaceonline.apartments.picture"
   }

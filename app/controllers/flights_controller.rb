@@ -53,7 +53,7 @@ class FlightsController < MyplaceonlineController
         :arrive_time,
         :seat_number,
         :position,
-        flight_company_attributes: CompaniesController.param_names,
+        flight_company_attributes: Company.param_names,
         depart_location_attributes: LocationsController.param_names,
         arrival_location_attributes: LocationsController.param_names
       ]

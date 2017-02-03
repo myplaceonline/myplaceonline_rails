@@ -1,23 +1,25 @@
 class CompaniesController < MyplaceonlineController
-  
-  def self.param_names(include_website: true)
-    [
-      :id,
-      :_destroy,
-      :name,
-      :notes,
-      location_attributes: LocationsController.param_names(include_website: include_website)
-    ]
+  def may_upload
+    true
   end
-
+  
   protected
     def sorts
-      ["lower(companies.name) ASC"]
+      ["lower(identities.name) ASC"]
     end
-    
+
     def obj_params
       params.require(:company).permit(
-        CompaniesController.param_names
+        Company.param_names
       )
+    end
+
+    # Join because we're sorting by identity name
+    def all_joins
+      :company_identity
+    end
+    
+    def all_includes
+      :company_identity
     end
 end

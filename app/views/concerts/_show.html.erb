@@ -6,7 +6,7 @@
   <%= attribute_table_row_reference(t("myplaceonline.concerts.musical_group"), "musical_group_path", wrapper.musical_group) %>
 <% end %>
 <%=
-  render partial: 'myplaceonline/pictures', locals: {
+  render partial: "myplaceonline/pictures", locals: {
       pics: obj.concert_pictures,
       placeholder: "myplaceonline.concerts.picture"
   }

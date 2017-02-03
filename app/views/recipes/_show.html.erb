@@ -2,7 +2,7 @@
 <%= attribute_table_row(t("myplaceonline.recipes.recipe_category"), obj.recipe_category) %>
 <%= attribute_table_row_markdown(t("myplaceonline.recipes.recipe"), obj.recipe) %>
 <%=
-  render partial: 'myplaceonline/pictures', locals: {
+  render partial: "myplaceonline/pictures", locals: {
       pics: obj.recipe_pictures,
       placeholder: "myplaceonline.recipes.picture"
   }

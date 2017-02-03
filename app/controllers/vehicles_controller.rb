@@ -93,7 +93,7 @@ class VehiclesController < MyplaceonlineController
           :started,
           :notes,
           :_destroy,
-          company_attributes: CompaniesController.param_names,
+          company_attributes: Company.param_names,
           periodic_payment_attributes: PeriodicPaymentsController.param_names
         ],
         vehicle_pictures_attributes: FilesController.multi_param_names,

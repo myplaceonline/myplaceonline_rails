@@ -6,7 +6,7 @@
 <%= attribute_table_row_boolean(t("myplaceonline.trips.work"), obj.work) %>
 <%= attribute_table_row_date_diff(t("myplaceonline.trips.duration"), obj.started, obj.ended) %>
 <%=
-  render partial: 'myplaceonline/pictures', locals: {
+  render partial: "myplaceonline/pictures", locals: {
     pics: obj.trip_pictures,
     placeholder: "myplaceonline.trips.picture",
     limitobj: obj,

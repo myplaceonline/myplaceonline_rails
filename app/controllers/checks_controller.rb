@@ -17,7 +17,7 @@ class ChecksController < MyplaceonlineController
         :received_date,
         check_files_attributes: FilesController.multi_param_names,
         contact_attributes: ContactsController.param_names,
-        company_attributes: CompaniesController.param_names,
+        company_attributes: Company.param_names,
         bank_account_attributes: BankAccountsController.param_names,
       )
     end

@@ -11,7 +11,7 @@ class ContactsController < MyplaceonlineController
     super
   end
 
-  def self.param_names(include_website: true, recurse: true)
+  def self.param_names(include_website: true, recurse: true, include_company: true)
     [
       :id,
       :_destroy,
@@ -22,75 +22,7 @@ class ContactsController < MyplaceonlineController
         :conversation_date,
         :_destroy
       ],
-      contact_identity_attributes: [
-        :id,
-        :_updatetype,
-        :name,
-        :middle_name,
-        :last_name,
-        :nickname,
-        :birthday,
-        :notes,
-        :likes,
-        :gift_ideas,
-        :ktn,
-        :sex_type,
-        :new_years_resolution,
-        :display_note,
-        identity_phones_attributes: [
-          :id,
-          :number,
-          :phone_type,
-          :_destroy
-        ],
-        identity_emails_attributes: [
-          :id,
-          :_destroy,
-          :email,
-          :secondary
-        ],
-        identity_locations_attributes: [
-          :id,
-          :_destroy,
-          :secondary,
-          location_attributes: LocationsController.param_names(include_website: include_website)
-        ],
-        identity_drivers_licenses_attributes: [
-          :id,
-          :identifier,
-          :expires,
-          :region,
-          :sub_region1,
-          :_destroy,
-          identity_file_attributes: [
-            :id,
-            :file,
-            :_destroy
-          ]
-        ],
-        identity_relationships_attributes: [
-          :id,
-          :relationship_type,
-          :_destroy,
-          contact_attributes:
-            recurse ?
-              ContactsController.param_names(include_website: include_website, recurse: false) :
-              [
-                :id,
-                :_destroy
-              ]
-        ],
-        identity_pictures_attributes: [
-          :id,
-          :_destroy,
-          identity_file_attributes: [
-            :id,
-            :file,
-            :notes
-          ]
-        ],
-        company_attributes: CompaniesController.param_names(include_website: include_website)
-      ]
+      contact_identity_attributes: Identity.param_names(include_website: include_website, recurse: recurse, include_company: include_company)
     ]
   end
 

@@ -1,7 +1,7 @@
 <%= attribute_table_row(t("myplaceonline.media_dumps.media_dump_name"), obj.media_dump_name) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <%=
-  render partial: 'myplaceonline/pictures', locals: {
+  render partial: "myplaceonline/pictures", locals: {
     pics: obj.media_dump_files,
     placeholder: "myplaceonline.media_dumps.file",
     limitobj: obj,

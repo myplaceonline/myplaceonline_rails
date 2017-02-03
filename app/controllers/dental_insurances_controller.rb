@@ -8,9 +8,9 @@ class DentalInsurancesController < MyplaceonlineController
       :account_number,
       :group_number,
       password_attributes: PasswordsController.param_names,
-      insurance_company_attributes: CompaniesController.param_names,
+      insurance_company_attributes: Company.param_names,
       periodic_payment_attributes: PeriodicPaymentsController.param_names,
-      group_company_attributes: CompaniesController.param_names,
+      group_company_attributes: Company.param_names,
       doctor_attributes: DoctorsController.param_names,
       dental_insurance_files_attributes: FilesController.multi_param_names
     ]

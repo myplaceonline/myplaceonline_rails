@@ -8,7 +8,7 @@
 <%= attribute_table_row_reference(t("myplaceonline.dental_insurances.password"), "password_path", obj.password) %>
 <%= attribute_table_row_reference(t("myplaceonline.dental_insurances.doctor"), "doctor_path", obj.doctor) %>
 <%=
-  render partial: 'myplaceonline/pictures', locals: {
+  render partial: "myplaceonline/pictures", locals: {
     pics: obj.dental_insurance_files,
     placeholder: "myplaceonline.dental_insurances.file"
   }

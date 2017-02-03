@@ -5,7 +5,7 @@
 <%= attribute_table_row_date(t("myplaceonline.items.expires"), obj.expires) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <%=
-  render partial: 'myplaceonline/pictures', locals: {
+  render partial: "myplaceonline/pictures", locals: {
     pics: obj.item_files,
     placeholder: "myplaceonline.items.file"
   }

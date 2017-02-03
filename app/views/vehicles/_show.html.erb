@@ -99,7 +99,7 @@
   <%= attribute_table_row_reference(t("myplaceonline.vehicle_insurances.periodic_payment"), "periodic_payment_path", insurance.periodic_payment) %>
 <% end %>
 <%=
-  render partial: 'myplaceonline/pictures', locals: {
+  render partial: "myplaceonline/pictures", locals: {
       pics: obj.vehicle_pictures,
       placeholder: "myplaceonline.vehicles.picture"
   }
