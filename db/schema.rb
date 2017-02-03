@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170203205523) do
+ActiveRecord::Schema.define(version: 20170203211909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -829,18 +829,14 @@ ActiveRecord::Schema.define(version: 20170203205523) do
 
   create_table "companies", force: :cascade do |t|
     t.integer  "identity_id"
-    t.integer  "location_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name",                limit: 255
-    t.text     "notes"
     t.integer  "visit_count"
     t.datetime "archived"
     t.integer  "rating"
     t.integer  "company_identity_id"
     t.index ["company_identity_id"], name: "index_companies_on_company_identity_id", using: :btree
     t.index ["identity_id"], name: "index_companies_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_companies_on_location_id", using: :btree
   end
 
   create_table "complete_due_items", force: :cascade do |t|
@@ -5031,7 +5027,6 @@ ActiveRecord::Schema.define(version: 20170203205523) do
   add_foreign_key "checks", "identities"
   add_foreign_key "companies", "identities", column: "company_identity_id"
   add_foreign_key "companies", "identities", name: "companies_identity_id_fk"
-  add_foreign_key "companies", "locations", name: "companies_location_id_fk"
   add_foreign_key "complete_due_items", "calendars", name: "complete_due_items_calendar_id_fk"
   add_foreign_key "complete_due_items", "identities", name: "complete_due_items_identity_id_fk"
   add_foreign_key "computer_ssh_keys", "computers"
