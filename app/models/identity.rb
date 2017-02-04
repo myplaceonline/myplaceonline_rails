@@ -239,8 +239,12 @@ class Identity < ApplicationRecord
   
   child_property(name: :company)
   
+  def is_type_contact?
+    self.identity_type.nil? || self.identity_type == Identity::IDENTITY_TYPE_CONTACT
+  end
+  
   validate do
-    if !name.blank? && self.last_name.blank?
+    if !name.blank? && self.last_name.blank? && self.is_type_contact?
       splits = name.split(" ")
       if splits.length > 1
         self.name = splits[0]
@@ -606,5 +610,9 @@ class Identity < ApplicationRecord
     ], include_company) {[
       company_attributes: Company.param_names(include_website: include_website)
     ]}
+  end
+
+  def self.skip_check_attributes
+    ["identity_type"]
   end
 end
