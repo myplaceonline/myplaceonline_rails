@@ -682,9 +682,9 @@ class MyplaceonlineController < ApplicationController
   
   def index_sorts
     [
-      [I18n.t("myplaceonline.general.visit_count"), "visit_count"],
-      [I18n.t("myplaceonline.general.created_at"), "created_at"],
-      [I18n.t("myplaceonline.general.updated_at"), "updated_at"]
+      [I18n.t("myplaceonline.general.visit_count"), "#{model.table_name}.visit_count"],
+      [I18n.t("myplaceonline.general.created_at"), "#{model.table_name}.created_at"],
+      [I18n.t("myplaceonline.general.updated_at"), "#{model.table_name}.updated_at"]
     ]
   end
 
