@@ -1,0 +1,8 @@
+<%= data_row(heading: t("myplaceonline.company_interactions.company_interaction_date"), content: obj.company_interaction_date) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.company_interaction_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>

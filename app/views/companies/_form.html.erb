@@ -62,6 +62,31 @@
     <%= myp_select(child_fields, :phone_type, "myplaceonline.identity_phones.phone_type", Myp.translate_options(IdentityPhone::PHONE_TYPES), childproperty.phone_type) %>
   <% end %>
 
+  <%=
+    render(layout: "myplaceonline/childproperties", locals: {
+      f: f,
+      heading: t("myplaceonline.companies.interactions"),
+      childpropertiesname: :company_interactions,
+      childproperties: obj.company_interactions,
+      deletebutton: t("myplaceonline.companies.delete_interaction"),
+      addbutton: t("myplaceonline.companies.add_interaction"),
+      expanded: obj.company_interactions.length > 0,
+      formjson: [
+        {
+          type: :renderpartial,
+          partial: "myplaceonline/select_or_create",
+          heading: t("myplaceonline.companies.interaction"),
+          objform: "company_interactions/form",
+          only_new: true,
+          edit: false,
+          autofocus: true
+        }
+      ]
+    }) do |child_fields, childproperty|
+  %>
+    <%= render partial: "company_interactions/form", locals: { obj: childproperty || CompanyInteraction.build, edit: edit, autofocus: false, f: child_fields } %>
+  <% end %>
+  
   <% if !simpleform %>
 
     <%=

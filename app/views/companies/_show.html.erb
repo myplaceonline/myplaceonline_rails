@@ -15,6 +15,10 @@
   <%= attribute_table_row_reference(t("myplaceonline.identities.location"), "location_path", identity_location.location) %>
   <%= attribute_table_row_boolean(t("myplaceonline.identities.location_secondary"), identity_location.secondary) %>
 <% end %>
+<% obj.company_interactions.each do |x| %>
+  <%= table_row_heading(t("myplaceonline.companies.interaction")) %>
+  <%= render partial: "company_interactions/show", locals: { obj: x } %>
+<% end %>
 <%=
   render partial: "myplaceonline/pictures", locals: {
     pics: obj.company_identity.identity_pictures,

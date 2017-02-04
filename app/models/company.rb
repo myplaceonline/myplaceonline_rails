@@ -4,6 +4,8 @@ class Company < ApplicationRecord
 
   child_property(name: :company_identity, model: Identity, required: true)
   
+  child_properties(name: :company_interactions, sort: "company_interaction_date DESC")
+
   validate :custom_validation
 
   def custom_validation
@@ -20,7 +22,8 @@ class Company < ApplicationRecord
     [
       :id,
       :_destroy,
-      company_identity_attributes: Identity.param_names(include_website: include_website, recurse: recurse, include_company: false)
+      company_identity_attributes: Identity.param_names(include_website: include_website, recurse: recurse, include_company: false),
+      company_interactions_attributes: CompanyInteraction.params
     ]
   end
 

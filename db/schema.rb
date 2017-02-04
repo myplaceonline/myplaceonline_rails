@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170204041748) do
+ActiveRecord::Schema.define(version: 20170204202743) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -837,6 +837,32 @@ ActiveRecord::Schema.define(version: 20170204041748) do
     t.integer  "company_identity_id"
     t.index ["company_identity_id"], name: "index_companies_on_company_identity_id", using: :btree
     t.index ["identity_id"], name: "index_companies_on_identity_id", using: :btree
+  end
+
+  create_table "company_interaction_files", force: :cascade do |t|
+    t.integer  "company_interaction_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["company_interaction_id"], name: "index_company_interaction_files_on_company_interaction_id", using: :btree
+    t.index ["identity_file_id"], name: "index_company_interaction_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_company_interaction_files_on_identity_id", using: :btree
+  end
+
+  create_table "company_interactions", force: :cascade do |t|
+    t.integer  "company_id"
+    t.datetime "company_interaction_date"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["company_id"], name: "index_company_interactions_on_company_id", using: :btree
+    t.index ["identity_id"], name: "index_company_interactions_on_identity_id", using: :btree
   end
 
   create_table "complete_due_items", force: :cascade do |t|
@@ -5029,6 +5055,11 @@ ActiveRecord::Schema.define(version: 20170204041748) do
   add_foreign_key "checks", "identities"
   add_foreign_key "companies", "identities", column: "company_identity_id"
   add_foreign_key "companies", "identities", name: "companies_identity_id_fk"
+  add_foreign_key "company_interaction_files", "company_interactions"
+  add_foreign_key "company_interaction_files", "identities"
+  add_foreign_key "company_interaction_files", "identity_files"
+  add_foreign_key "company_interactions", "companies"
+  add_foreign_key "company_interactions", "identities"
   add_foreign_key "complete_due_items", "calendars", name: "complete_due_items_calendar_id_fk"
   add_foreign_key "complete_due_items", "identities", name: "complete_due_items_identity_id_fk"
   add_foreign_key "computer_ssh_keys", "computers"

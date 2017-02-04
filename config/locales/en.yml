@@ -958,6 +958,10 @@ en:
       source: "Source"
     companies:
       name: "Name"
+      interactions: "Interactions"
+      interaction: "Interaction"
+      add_interaction: "Add Interaction"
+      delete_interaction: "Delete Interaction"
     promises:
       name: "Promise Name"
       promise: "Promise"
@@ -3216,3 +3220,5 @@ en:
       link: "Link"
     password_shares:
       not_found: "Password already accepted"
+    company_interactions:
+      company_interaction_date: "Date"
