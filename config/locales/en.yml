@@ -732,6 +732,7 @@ en:
       notifications_mobile_suppress_reminder: "Suppress Reminder to Enter Mobile Phone Number"
       notifications_saved: "Notification Settings Saved"
       after_new_item: "After New Item Created"
+      allow_adding_existing_file: "Allow Adding Existing File"
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"

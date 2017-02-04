@@ -12,6 +12,9 @@
       <p>
         <%= myp_check_box_tag(:experimental_categories, t("myplaceonline.users.experimental_categories"), @experimental_categories) %>
       </p>
+      <p>
+        <%= myp_check_box_tag(:allow_adding_existing_file, t("myplaceonline.users.allow_adding_existing_file"), @allow_adding_existing_file) %>
+      </p>
       <%= myp_text_field_tag(:items_per_page, t("myplaceonline.users.items_per_page"), @items_per_page) %>
     </div>
   </fieldset>

@@ -54,6 +54,22 @@
       name: position_field.to_s
     })
   end
+  
+  if current_user.allow_adding_existing_file
+    formjson.clear
+    formjson.push({
+      type: :renderpartial,
+      name: :identity_file_attributes,
+      partial: "myplaceonline/select_or_create",
+      heading: t("myplaceonline.identity_files.file"),
+      objform: "files/form",
+      existingobjurl: "file_path",
+      searchurl: "/files.json?perpage=0&all=true",
+      edit: false,
+      autofocus: true,
+      model_name: "IdentityFile"
+    })
+  end
 %>
 <%=
   render layout: "myplaceonline/childproperties", locals: {

@@ -229,7 +229,11 @@ class FilesController < MyplaceonlineController
   protected
 
     def all_additional_sql(strict)
-      "and folder_id is null"
+      if params[:all].blank?
+        "and folder_id is null"
+      else
+        nil
+      end
     end
 
     def sorts

@@ -1,6 +1,10 @@
 <%
 model = objform[0..(objform.index('/')-1)].singularize.camelize.constantize
 
+if defined?(model_name)
+  model = model_name.constantize
+end
+
 # This could be either that it's an object from the database, or a temporary object representing input fields
 existingobj_exists = defined?(existingobj) && !existingobj.nil?
 
