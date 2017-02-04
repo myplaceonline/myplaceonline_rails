@@ -6,6 +6,9 @@ class Identity < ApplicationRecord
   
   CALENDAR_ITEM_CONTEXT_BIRTHDAY = "birthday"
   
+  IDENTITY_TYPE_CONTACT = 0
+  IDENTITY_TYPE_COMPANY = 1
+  
   has_one :contact, class_name: Contact, foreign_key: :contact_identity_id
   
   def self.email_to_name(email)
@@ -547,6 +550,7 @@ class Identity < ApplicationRecord
       :sex_type,
       :new_years_resolution,
       :display_note,
+      :identity_type,
       identity_phones_attributes: [
         :id,
         :number,

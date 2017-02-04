@@ -35,6 +35,7 @@ class Company < ApplicationRecord
   def self.build(params = nil)
     result = self.dobuild(params)
     result.company_identity = Myp.new_model(Identity)
+    result.company_identity.identity_type = Identity::IDENTITY_TYPE_COMPANY
     result
   end
 
