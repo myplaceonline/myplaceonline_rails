@@ -1,7 +1,4 @@
-<%= attribute_table_row(t("myplaceonline.contacts.name"), obj.company_identity.name) %>
-<%= attribute_table_row(t("myplaceonline.contacts.middle_name"), obj.company_identity.middle_name) %>
-<%= attribute_table_row(t("myplaceonline.contacts.last_name"), obj.company_identity.last_name) %>
-<%= attribute_table_row(t("myplaceonline.contacts.display_note"), obj.company_identity.display_note) %>
+<%= attribute_table_row(t("myplaceonline.companies.name"), obj.company_identity.name) %>
 <%= attribute_table_row_markdown(t("myplaceonline.contacts.notes"), obj.company_identity.notes) %>
 <% obj.company_identity.identity_emails.each do |email| %>
   <%= attribute_table_row_email(t("myplaceonline.identities.email"), email.email) %>

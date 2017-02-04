@@ -2,7 +2,7 @@ class Company < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
-  child_property(name: :company_identity, model: Identity)
+  child_property(name: :company_identity, model: Identity, required: true)
   
   validate :custom_validation
 

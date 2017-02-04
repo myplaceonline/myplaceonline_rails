@@ -8,10 +8,7 @@
 
   <%= myp_hidden_field(identity_fields, :_updatetype, AllowExistingConcern::UPDATE_TYPE_COMBINE.to_s) %>
   <%= myp_hidden_field(identity_fields, :identity_type, obj.company_identity.identity_type) %>
-  <%= myp_text_field(identity_fields, :name, "myplaceonline.contacts.name", obj.company_identity.name, autofocus) %>
-  <%= myp_text_field(identity_fields, :middle_name, "myplaceonline.contacts.middle_name", obj.company_identity.middle_name) %>
-  <%= myp_text_field(identity_fields, :last_name, "myplaceonline.contacts.last_name", obj.company_identity.last_name) %>
-  <%= myp_text_field(identity_fields, :display_note, "myplaceonline.general.display_note", obj.company_identity.display_note) %>
+  <%= myp_text_field(identity_fields, :name, "myplaceonline.companies.name", obj.company_identity.name, autofocus) %>
   
   <%=
     render(layout: "myplaceonline/childproperties", locals: {
@@ -116,7 +113,12 @@
       render partial: "myplaceonline/pictures_form", locals: {
         f: identity_fields,
         obj: obj.company_identity,
-        pictures_field: :identity_pictures
+        pictures_field: :identity_pictures,
+        item_placeholder: "myplaceonline.identity_files.file",
+        heading: "myplaceonline.identity_files.files",
+        addbutton: "myplaceonline.identity_files.add_file",
+        addbutton_multi: "myplaceonline.identity_files.add_files",
+        deletebutton: "myplaceonline.identity_files.delete_file"
       }
     %>
     

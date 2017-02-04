@@ -957,8 +957,6 @@ en:
       source: "Source"
     companies:
       name: "Name"
-      location: "Address"
-      notes: "Notes"
     promises:
       name: "Promise Name"
       promise: "Promise"
