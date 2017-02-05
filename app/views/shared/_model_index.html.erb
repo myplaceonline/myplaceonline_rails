@@ -114,7 +114,7 @@
     myplaceonline.onPageLoad(function() {
       myplaceonline.remoteDataListInitialize($(".searchable"), [
         <% if Myp.full_text_search? %>
-          {title: "<%= t("myplaceonline.category." + controller.category_name) %>", url: "/api/search.json?display_category_prefix=false&display_category_icon=false&category=<%= controller.search_index_name %>&parent_category=<%= controller.search_parent_category %>"}
+          {title: "<%= t("myplaceonline.category." + controller.category_name) %>", url: "/api/search.json?display_category_prefix=false&display_category_icon=false&category=<%= controller.search_index_name %>&parent_category=<%= controller.search_parent_category %>&search_filters_model=<%= controller.search_filters_model %>"}
         <% else %>
           {title: "<%= t("myplaceonline.category." + controller.category_name) %>", url: "<%= send("#{controller.paths_name}_path") %>.json<%= raw(@query_params_part_all) %>", static_list: true}
         <% end %>

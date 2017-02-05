@@ -1675,7 +1675,16 @@ module Myp
     end
   end
   
-  def self.full_text_search(user, search, category: nil, parent_category: nil, display_category_prefix: true, display_category_icon: true)
+  def self.full_text_search(
+    user,
+    search,
+    category: nil,
+    parent_category: nil,
+    display_category_prefix: true,
+    display_category_icon: true,
+    filters: {}
+  )
+    
     Myp.log_response_time(
       name: "Myp.full_text_search"
     ) do
@@ -1691,6 +1700,27 @@ module Myp
       
       if !search.blank?
         
+        Rails.logger.debug{"full_text_search: user: #{user.primary_identity_id}, filters: #{filters.inspect}, category: #{category}, parent_category: #{parent_category}, display_category_prefix: #{display_category_prefix}, display_category_icon: #{display_category_icon}"}
+        
+        if filters.size > 0
+          filters = {
+            bool: {
+              must: 
+                filters.merge!(
+                  { identity_id: user.primary_identity_id }
+                ).keys.map{|key|
+                  { term: { key => filters[key] } }
+                }.to_a
+            }
+          }
+        else
+          filters = {
+            term: {
+              identity_id: user.primary_identity_id
+            }
+          }
+        end
+        
         # http://stackoverflow.com/questions/37082797/elastic-search-edge-ngram-match-query-on-all-being-ignored
         
         if category.blank?
@@ -1701,11 +1731,7 @@ module Myp
                   _all: search
                 }
               },
-              filter: {
-                term: {
-                  identity_id: user.primary_identity_id
-                }
-              }
+              filter: filters
             }
           }
         else
@@ -1723,11 +1749,7 @@ module Myp
                   }
                 }
               ],
-              filter: {
-                term: {
-                  identity_id: user.primary_identity_id
-                }
-              }
+              filter: filters
             }
           }
         end
@@ -1777,6 +1799,7 @@ module Myp
     results = search_results.map do |search_result|
       result = nil
       prefix_text = ""
+      Rails.logger.debug{"search_result initial: #{search_result.inspect}"}
       if search_result.respond_to?("final_search_result")
         if !search_result.respond_to?("final_search_result_display?") || search_result.final_search_result_display?
           if display_category_prefix
@@ -1801,7 +1824,7 @@ module Myp
           if I18n.exists?("myplaceonline.category." + temp_cat_name)
             category = Category.new(name: temp_cat_name)
           else
-            Myp.warn("full_text_search found result but not category (perhaps use final_search_result?): #{search_result}; search: #{original_search}, user: #{User.current_user.primary_identity_id}")
+            Myp.warn("full_text_search found result but not category (perhaps use final_search_result?): #{search_result}; search: #{original_search}, user: #{User.current_user.primary_identity_id}, category: #{temp_cat_name}")
           end
         end
         if !category.nil?

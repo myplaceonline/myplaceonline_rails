@@ -17,13 +17,22 @@ class ApiController < ApplicationController
   def search
     display_category_prefix = Myp.param_bool(params, :display_category_prefix, default_value: true)
     display_category_icon = Myp.param_bool(params, :display_category_icon, default_value: true)
+    search_filters_model_name = params[:search_filters_model]
+    filters = {}
+    if !search_filters_model_name.blank?
+      search_filters_model = search_filters_model_name.constantize
+      if search_filters_model.respond_to?("search_filters")
+        filters = search_filters_model.search_filters
+      end
+    end
     response = Myp.full_text_search(
       current_user,
       params[:q],
       category: params[:category],
       parent_category: params[:parent_category],
       display_category_prefix: display_category_prefix,
-      display_category_icon: display_category_icon
+      display_category_icon: display_category_icon,
+      filters: filters
     )
     respond_to do |format|
       format.json { render json: response }

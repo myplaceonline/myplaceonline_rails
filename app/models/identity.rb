@@ -527,7 +527,7 @@ class Identity < ApplicationRecord
   end
   
   def final_search_result
-    contact
+    is_type_contact? ? contact : parent_company
   end
   
   def final_search_result_display?
@@ -614,5 +614,9 @@ class Identity < ApplicationRecord
 
   def self.skip_check_attributes
     ["identity_type"]
+  end
+  
+  def parent_company
+    Company.where(company_identity_id: self.id).first!
   end
 end

@@ -658,6 +658,10 @@ class MyplaceonlineController < ApplicationController
     nil
   end
   
+  def search_filters_model
+    nil
+  end
+  
   def share_permissions
     [Permission::ACTION_READ]
   end

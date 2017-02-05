@@ -3,6 +3,14 @@ class CompaniesController < MyplaceonlineController
     true
   end
   
+  def search_filters_model
+    Company.name
+  end
+  
+  def search_index_name
+    Identity.table_name
+  end
+  
   protected
     def sorts
       ["lower(identities.name) ASC"]

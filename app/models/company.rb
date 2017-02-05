@@ -47,4 +47,8 @@ class Company < ApplicationRecord
       :company_identity => company_identity.as_json
     })
   end
+  
+  def self.search_filters
+    { identity_type: 1 }
+  end
 end

@@ -32,14 +32,14 @@ class UserIndex < Chewy::Index
   
   Myp.process_models do |klass|
     string_columns = []
-    has_visit_count = false
+    integer_columns = []
     klass.columns.each do |column|
       if column.type == :string || column.type == :text
         if klass.instance_methods.index("#{column.name}_encrypted?".to_sym).nil?
           string_columns.push(column)
         end
-      elsif column.name == "visit_count"
-        has_visit_count = true
+      elsif column.type == :integer && column.name.index("_id").nil?
+        integer_columns.push(column)
       elsif column.type != :integer && column.type != :datetime && column.type != :date && column.type != :boolean && column.type != :decimal && column.type != :binary && column.type != :inet
         # TODO enforce https://www.elastic.co/blog/great-mapping-refactoring
       end
@@ -56,15 +56,14 @@ class UserIndex < Chewy::Index
         #field :allstrings
         
         string_columns.each do |column|
-          #puts "  Field: #{column.name}"
           field column.name.to_sym
         end
         
         # https://www.elastic.co/guide/en/elasticsearch/reference/current/number.html
         field :identity_id, type: "integer", include_in_all: false
         
-        if has_visit_count
-          field :visit_count, type: "integer", include_in_all: false
+        integer_columns.each do |column|
+          field column.name.to_sym, type: "integer", include_in_all: false
         end
       end
       
