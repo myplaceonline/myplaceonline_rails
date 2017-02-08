@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-
+  
   # By default, all pages require authentication unless the controller has
   #   skip_before_action :do_authenticate_user
   #before_action :authenticate_user!
@@ -73,24 +73,38 @@ class ApplicationController < ActionController::Base
       true
     end
   end
-  
+
   def around_request
     Rails.logger.debug{"application_controller around_request entry. Referer: #{request.referer}"}
     
     Rails.logger.debug{"params: #{Myp.debug_print(params.to_unsafe_hash)}"}
     
-    begin
-      ExecutionContext.push
-      # only do this once per request
-      if MyplaceonlineExecutionContext.user.nil?
-        request_accessor = instance_variable_get(:@_request)
+    # This method is called once per controller, and multiple controllers might render within a single request.
+    ExecutionContext.stack do
+      
+      # Once per request, save off some stuff into thread local storage
+      if MyplaceonlineExecutionContext.request.nil?
+        
+        MyplaceonlineExecutionContext.request = instance_variable_get(:@_request)
+        
         Rails.logger.debug{"Setting User.current_user: #{current_user.nil? ? "nil" : current_user.id}"}
+
         MyplaceonlineExecutionContext.user = current_user
-        MyplaceonlineExecutionContext.session = request_accessor.session
+        
+        expire_asap = true
+
         if !current_user.nil?
-          request_accessor.session[:myp_email] = current_user.email
+          MyplaceonlineExecutionContext.request.session[:myp_email] = current_user.email
+          
+          if current_user.minimize_password_checks
+            expire_asap = false
+          end
         end
-        MyplaceonlineExecutionContext.request = request_accessor
+
+        MyplaceonlineExecutionContext.persistent_user_store = PersistentUserStore.new(
+          cookies: cookies,
+          expire_asap: expire_asap
+        )
       end
       
       if !ENV["NODENAME"].blank?
@@ -103,18 +117,7 @@ class ApplicationController < ActionController::Base
       end
       
       yield
-    ensure
-      Rails.logger.debug{"application_controller around_request exit"}
-      ExecutionContext.pop
     end
-  end
-  
-  def self.current_session
-    MyplaceonlineExecutionContext.session
-  end
-  
-  def self.current_request
-    MyplaceonlineExecutionContext.request
   end
   
   def set_time_zone

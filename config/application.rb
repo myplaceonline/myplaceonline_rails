@@ -31,8 +31,9 @@ module Myplaceonline
     def call(env)
       
       # We could load up the user from warden, but that would mean we'd do a SQL request on all requests including
-      # images, etc. Instead, we just grab the user ID from warden's cookie
+      # images, etc.
       # user = env["warden"].user
+      # Instead, we just grab the user ID from warden's cookie
       warden_user_key = env["rack.session"]["warden.user.user.key"]
       user_id = warden_user_key.nil? ? -1 : warden_user_key[0][0]
       

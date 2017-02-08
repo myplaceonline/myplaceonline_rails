@@ -3,6 +3,7 @@ require 'fileutils'
 require 'github/markup'
 require 'twilio-ruby'
 require 'rest-client'
+require 'time'
 
 module Myp
   # See https://github.com/digitalbazaar/forge/issues/207
@@ -30,6 +31,7 @@ module Myp
   POSSIBILITIES_SPECIAL_ADDITIONAL = ['@', '$', '#', '%', '^', '&', '*', '(', ')', '[', ']', '+', '<', '>', '?', '/', ':', ';', ',', '=', '|', '{', '}', '~']
   
   COOKIE_EXPIRATION = 1.year
+  MAX_COOKIE_EXPIRES_DATE = DateTime.new(2038, 1, 1)
   
   DEFAULT_DECIMAL_STEP = "0.01"
   
@@ -602,23 +604,20 @@ module Myp
     defined?(Rails::Server) || defined?(::PhusionPassenger)
   end
   
-  def self.remember_password(session, password)
-    session[:password] = password
+  def self.persist_password(password)
+    MyplaceonlineExecutionContext.persistent_user_store[:password] = password
   end
   
-  def self.ensure_encryption_key(session)
-    if session.nil?
-      raise SessionUnavailableError
-    end
-    if !session.has_key?(:password)
+  def self.get_current_user_password!
+    result = MyplaceonlineExecutionContext.persistent_user_store[:password]
+    if result.nil?
       raise Myp::DecryptionKeyUnavailableError
     end
-    session[:password]
+    result
   end
   
-  def self.encrypt_from_session(user, session, message)
-    self.ensure_encryption_key(session)
-    self.encrypt(user, message, session[:password])
+  def self.encrypt_with_user_password!(user, message)
+    self.encrypt(user, message, self.get_current_user_password!)
   end
   
   def self.encrypt(user, message, key)
@@ -656,12 +655,11 @@ module Myp
     destination.val = source.val
   end
   
-  def self.decrypt_from_session(session, encrypted_value)
+  def self.decrypt_with_user_password!(encrypted_value)
     if encrypted_value.nil?
       raise Myp::EncryptedValueUnavailableError
     end
-    self.ensure_encryption_key(session)
-    self.decrypt(encrypted_value, session[:password])
+    self.decrypt(encrypted_value, self.get_current_user_password!)
   end
   
   def self.decrypt(encrypted_value, key)
@@ -1059,7 +1057,7 @@ module Myp
   
   def self.use_html5_inputs()
     result = true
-    request = ApplicationController.current_request
+    request = MyplaceonlineExecutionContext.request
     if !request.nil?
       if !request.user_agent.blank?
         if request.user_agent.include?("LG-D520")

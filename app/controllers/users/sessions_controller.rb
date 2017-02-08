@@ -24,7 +24,7 @@ class Users::SessionsController < Devise::SessionsController
     
     # If we make it here, the login is succesful
     session[:login_email] = nil
-    Myp.remember_password(session, params[:user][:password])
+    Myp.persist_password(params[:user][:password])
     
     #set_flash_message(:notice, :signed_in) if is_flashing_format?
     sign_in(resource_name, resource)
@@ -48,7 +48,7 @@ class Users::SessionsController < Devise::SessionsController
     if request.post?
       pwd = params[:password]
       if current_user.valid_password?(pwd)
-        Myp.remember_password(session, pwd)
+        Myp.persist_password(pwd)
         return redirect_to @redirect.nil? ? "/" : @redirect
       else
         flash.now[:error] = I18n.t("myplaceonline.errors.invalidpassword")
@@ -59,6 +59,7 @@ class Users::SessionsController < Devise::SessionsController
   # DELETE /resource/sign_out
   def destroy
     signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+    MyplaceonlineExecutionContext.persistent_user_store.clear
     #set_flash_message :notice, :signed_out if signed_out && is_flashing_format?
     yield if block_given?
     respond_to_on_destroy

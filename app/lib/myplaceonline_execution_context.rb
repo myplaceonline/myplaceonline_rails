@@ -17,14 +17,14 @@ class MyplaceonlineExecutionContext
   def self.request; self[:request]; end
   def self.request=(x); self[:request] = x; end
 
-  def self.session; self[:session]; end
-  def self.session=(x); self[:session] = x; end
-
   def self.ability_context_identity; self[:ability_context_identity]; end
   def self.ability_context_identity=(x); self[:ability_context_identity] = x; end
 
   def self.permission_target; self[:permission_target]; end
   def self.permission_target=(x); self[:permission_target] = x; end
+
+  def self.persistent_user_store; self[:persistent_user_store]; end
+  def self.persistent_user_store=(x); self[:persistent_user_store] = x; end
 
   def self.browser
     result = self[:browser]

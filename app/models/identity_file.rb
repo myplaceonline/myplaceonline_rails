@@ -38,7 +38,7 @@ class IdentityFile < ApplicationRecord
 
   def get_password(session)
     if !encrypted_password.nil?
-      Myp.decrypt_from_session(session, encrypted_password)
+      Myp.decrypt_with_user_password!(encrypted_password)
     else
       nil
     end

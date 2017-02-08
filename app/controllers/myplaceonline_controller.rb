@@ -680,7 +680,7 @@ class MyplaceonlineController < ApplicationController
       requires_check = false
     end
     if requires_check
-      Myp.ensure_encryption_key(session)
+      Myp.get_current_user_password!
     end
   end
   

@@ -31,8 +31,7 @@ module EncryptedConcern extend ActiveSupport::Concern
           result = super()
           Rails.logger.debug{"EncryptedConcern '#{name}' check unencrypted for #{self} = #{result}"}
         else
-          result = Myp.decrypt_from_session(
-            ApplicationController.current_session,
+          result = Myp.decrypt_with_user_password!(
             send("#{name}_encrypted")
           )
           Rails.logger.debug{"EncryptedConcern '#{name}' check encrypted for #{self} = #{result}"}
@@ -47,9 +46,8 @@ module EncryptedConcern extend ActiveSupport::Concern
           do_encrypt = encrypt || self[:encrypt] == true || (self.respond_to?("encrypt") && (self.encrypt == "1" || self.encrypt == true))
           Rails.logger.debug{"EncryptedConcern #{name}_finalize do_encrypt: #{do_encrypt}"}
           if do_encrypt
-            new_encrypted_value = Myp.encrypt_from_session(
+            new_encrypted_value = Myp.encrypt_with_user_password!(
               User.current_user,
-              ApplicationController.current_session,
               self[name]
             )
             self.send("#{name}=", nil)

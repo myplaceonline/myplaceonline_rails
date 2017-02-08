@@ -24,7 +24,7 @@ class PasswordsController < MyplaceonlineController
             identity_file.identity = current_user.primary_identity
             identity_file.file = file
             if !@password.to_s.empty?
-              identity_file.encrypted_password = Myp.encrypt_from_session(current_user, session, @password)
+              identity_file.encrypted_password = Myp.encrypt_with_user_password!(current_user, @password)
             end
             identity_file.save!
             

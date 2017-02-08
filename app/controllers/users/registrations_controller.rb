@@ -48,7 +48,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
           
           flash.clear
           
-          Myp.remember_password(session, params[:user][:password])
+          Myp.persist_password(params[:user][:password])
           
           Myp.send_support_email_safe("New User #{resource.email}", "New User #{resource.email}")
           
@@ -118,7 +118,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       yield resource if block_given?
       if resource_updated
         Myp.password_changed(self.resource, current_password, new_password)
-        Myp.remember_password(session, new_password)
+        Myp.persist_password(new_password)
         if is_flashing_format?
           flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
             :update_needs_confirmation : :updated
