@@ -9,39 +9,39 @@ module EncryptedConcern extend ActiveSupport::Concern
           end
           result = @encrypt
 
-          Rails.logger.debug{"EncryptedConcern encrypt check for #{self} = #{result}"}
+          Rails.logger.debug{"EncryptedConcern encrypt check = #{result}"}
           
           result
         end
 
         define_method("encrypt=") do |newvalue|
-          Rails.logger.debug{"EncryptedConcern encrypt set for #{self} = #{newvalue}"}
+          Rails.logger.debug{"EncryptedConcern encrypt set = #{newvalue}"}
           @encrypt = newvalue
         end
       end
 
       define_method("#{name}_encrypted?") do
         result = !send("#{name}_encrypted").nil?
-        Rails.logger.debug{"EncryptedConcern encrypted? for #{self} = #{result}"}
+        Rails.logger.debug{"EncryptedConcern encrypted? = #{result}"}
         result
       end
 
       define_method(name) do
         if !send("#{name}_encrypted?")
           result = super()
-          Rails.logger.debug{"EncryptedConcern '#{name}' check unencrypted for #{self} = #{result}"}
+          Rails.logger.debug{"EncryptedConcern '#{name}' check unencrypted for #{result}"}
         else
           result = Myp.decrypt_with_user_password!(
             send("#{name}_encrypted")
           )
-          Rails.logger.debug{"EncryptedConcern '#{name}' check encrypted for #{self} = #{result}"}
+          Rails.logger.debug{"EncryptedConcern '#{name}' check encrypted = #{result}"}
         end
         result
       end
 
       define_method("#{name}_finalize") do |encrypt = false|
         is_changed = self.send("#{name}_changed?")
-        Rails.logger.debug{"EncryptedConcern '#{name}_finalize' called for #{self}, encrypt: #{encrypt}, changed: #{is_changed}, self.encrypt: #{self.encrypt}"}
+        Rails.logger.debug{"EncryptedConcern '#{name}_finalize' called, encrypt: #{encrypt}, changed: #{is_changed}, self.encrypt: #{self.encrypt}"}
         if is_changed || (self.send("#{name}_encrypted?") && !self.encrypt) || (!self.send("#{name}_encrypted?") && self.encrypt)
           do_encrypt = encrypt || self[:encrypt] == true || (self.respond_to?("encrypt") && (self.encrypt == "1" || self.encrypt == true))
           Rails.logger.debug{"EncryptedConcern #{name}_finalize do_encrypt: #{do_encrypt}"}

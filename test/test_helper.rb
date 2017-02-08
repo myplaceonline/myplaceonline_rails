@@ -12,28 +12,6 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 end
 
-class TestPersistentUserStore
-  def initialize
-    @holder = {}
-  end
-  
-  def []=(name, val)
-    @holder[name] = val
-  end
-  
-  def [](name)
-    @holder[name]
-  end
-  
-  def delete(name)
-    @holder.delete(name)
-  end
-  
-  def clear
-    @holder.clear
-  end
-end
-
 class ActionController::TestCase
   include Devise::Test::ControllerHelpers
   
@@ -47,7 +25,7 @@ class ActionController::TestCase
       request: nil,
       session: session,
       user: @user,
-      persistent_user_store: TestPersistentUserStore.new
+      persistent_user_store: InMemoryPersistentUserStore.new
     )
     MyplaceonlineExecutionContext.initialized = true
     Myp.persist_password("password")
