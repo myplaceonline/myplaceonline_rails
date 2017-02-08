@@ -1056,16 +1056,7 @@ module Myp
   end
   
   def self.use_html5_inputs()
-    result = true
-    request = MyplaceonlineExecutionContext.request
-    if !request.nil?
-      if !request.user_agent.blank?
-        if request.user_agent.include?("LG-D520")
-          result = false
-        end
-      end
-    end
-    result
+    true
   end
   
   def self.is_ios

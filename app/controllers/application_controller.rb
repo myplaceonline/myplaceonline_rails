@@ -83,28 +83,25 @@ class ApplicationController < ActionController::Base
     ExecutionContext.stack do
       
       # Once per request, save off some stuff into thread local storage
-      if MyplaceonlineExecutionContext.request.nil?
-        
-        MyplaceonlineExecutionContext.request = instance_variable_get(:@_request)
-        
-        Rails.logger.debug{"Setting User.current_user: #{current_user.nil? ? "nil" : current_user.id}"}
-
-        MyplaceonlineExecutionContext.user = current_user
-        
+      if !MyplaceonlineExecutionContext.initialized
         expire_asap = true
-
-        if !current_user.nil?
-          MyplaceonlineExecutionContext.request.session[:myp_email] = current_user.email
-          
-          if current_user.minimize_password_checks
-            expire_asap = false
-          end
+        if !current_user.nil? && current_user.minimize_password_checks
+          expire_asap = false
         end
 
-        MyplaceonlineExecutionContext.persistent_user_store = PersistentUserStore.new(
-          cookies: cookies,
-          expire_asap: expire_asap
+        request = instance_variable_get(:@_request)
+        
+        MyplaceonlineExecutionContext.initialize(
+          request: request,
+          session: request.session,
+          user: current_user,
+          persistent_user_store: PersistentUserStore.new(
+            cookies: cookies,
+            expire_asap: expire_asap
+          )
         )
+        
+        MyplaceonlineExecutionContext.initialized = true
       end
       
       if !ENV["NODENAME"].blank?

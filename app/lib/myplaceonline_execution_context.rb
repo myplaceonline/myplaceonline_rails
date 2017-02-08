@@ -9,6 +9,9 @@ class MyplaceonlineExecutionContext
     ExecutionContext[name] = val
   end
   
+  def self.initialized; self[:initialized]; end
+  def self.initialized=(x); self[:initialized] = x; end
+
   def self.user; self[:user]; end
   def self.user=(x); self[:user] = x; end
   
@@ -84,5 +87,19 @@ class MyplaceonlineExecutionContext
     ensure
       ExecutionContext.current.delete(:skip_handling_updates)
     end
+  end
+  
+  def self.initialize(request:, session:, user:, persistent_user_store:)
+    MyplaceonlineExecutionContext.request = request
+    
+    Rails.logger.debug{"Setting User.user: #{user.nil? ? "nil" : user.id}"}
+
+    MyplaceonlineExecutionContext.user = user
+    
+    if !user.nil?
+      session[:myp_email] = user.email
+    end
+
+    MyplaceonlineExecutionContext.persistent_user_store = persistent_user_store
   end
 end
