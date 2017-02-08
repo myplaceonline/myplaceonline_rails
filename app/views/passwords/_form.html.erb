@@ -14,7 +14,7 @@
     button: t("myplaceonline.passwords.generate_password_button")
   }
 %>
-<%= myp_check_box(f, :encrypt, "myplaceonline.passwords.encrypt") %>
+<%= render(partial: "myplaceonline/encrypt_fields", locals: { f: f }) %>
 <%= myp_text_field(f, :url, "myplaceonline.passwords.url", obj.url) %>
 <%= myp_text_field(f, :account_number, "myplaceonline.passwords.account_number", obj.account_number) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.passwords.notes", obj.notes) %>

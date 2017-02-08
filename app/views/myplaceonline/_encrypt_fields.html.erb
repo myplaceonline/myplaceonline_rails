@@ -1,0 +1,9 @@
+<%# (f: form) %>
+<%
+if !current_user.has_encrypted_content? && current_user.encrypt_by_default
+%>
+<p class="important"><%= t("myplaceonline.encryption.first_encryption") %></p>
+<%
+end
+%>
+<%= myp_check_box(f, :encrypt, "myplaceonline.general.encrypt") %>

@@ -466,11 +466,11 @@ en:
         
         ### How is encryption used?
         
-        You may optionally encrypt some sensitive information, usually by checking an `Encrypt` checkbox when creating or editing an item. This protects that data from the following attacks:
+        You may optionally encrypt some sensitive information, usually by checking an `Encrypt` checkbox when creating or editing certain items such as passwords (this box is checked by default). This protects that data from the following attacks (assuming your password is hard to discover using a brute force search):
         
-        * If a malicious person hacks the myplaceonline servers.
-        * If a rogue myplaceonline administrator reads the database.
-        * If another myplaceonline user accesses your data by exploiting a bug in the server code (the reason this works is that even if the user accesses your data, unless you both happened to use the same password, the decryption will return garbage).
+        * If a malicious person hacks the myplaceonline database.
+        * If a myplaceonline administrator reads the database.
+        * If another myplaceonline user accesses your data by exploiting a bug in the website to access your data (the reason this fails is that even if the user accesses your data, unless you both happened to use the same password, the decryption will return garbage).
         
         ### How is data encrypted when stored in the database or in offline browser storage?
 
@@ -480,11 +480,9 @@ en:
 
         When [exporting all of your data](/users/export) into a downloadable file, you may optionally encrypt the file using symmetric [AES-256](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) and an [S2K](https://tools.ietf.org/html/rfc4880)+SHA512 key derivation function with an 8 byte salt and 65536 iterations.
         
-        ### Why isn't encryption enabled by default?
+        ### What are the issues with "at-rest" encryption?
         
-        If you choose to encrypt certain values, we encrypt them with your password using a [symmetric cipher](https://en.wikipedia.org/wiki/Symmetric-key_algorithm). This means that if you forget your password, you will not be able to recover those encrypted values (because only you had the key). The "forgot my password" function on websites simply resets your password to a new password after you click a link in an email. There is no such thing as a "forgot my password" function for symmetric encryption. For these reasons, we don't encrypt by default as many users might not understand these risks right away.
-        
-        An alternative to this would be to perform encryption and decryption on the client side.
+        At-rest encryption uses your main myplaceonline.com website password to encrypt the data in the database using a [symmetric cipher](https://en.wikipedia.org/wiki/Symmetric-key_algorithm) (see above). This means that if you forget your main myplaceonline.com website password, you will not be able to recover those encrypted values (because only you had the key). The "forgot my password" function on websites simply resets your password to a new password after you click a link in an email. There is no such thing as a "forgot my password" function for symmetric encryption.
         
         ]]>
       tips: "Tips"
@@ -3222,3 +3220,5 @@ en:
       not_found: "Password already accepted"
     company_interactions:
       company_interaction_date: "Date"
+    encryption:
+      first_encryption: "Note: If you check the box to encrypt and if you ever lose your myplaceonline.com main website password in the future, the above encrypted data will be lost forever. So, make sure your myplaceonline.com main website password is rememberable (and secure!). You can disable this warning by clicking on the top right menu, then Settings, then Security, and uncheck Encrypt By Default."

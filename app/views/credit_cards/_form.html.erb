@@ -5,7 +5,7 @@
 <%= myp_text_field(f, :security_code, "myplaceonline.credit_cards.security_code", obj.security_code) %>
 <%= myp_select(f, :card_type, "myplaceonline.credit_cards.card_type", Myp.translate_options(CreditCard::CARD_TYPES), obj.card_type) %>
 <%= myp_text_field(f, :pin, "myplaceonline.credit_cards.pin", obj.pin) %>
-<%= myp_check_box(f, :encrypt, "myplaceonline.general.encrypt") %>
+<%= render(partial: "myplaceonline/encrypt_fields", locals: { f: f }) %>
 <%= myp_decimal_field(f, :total_credit, "myplaceonline.credit_cards.total_credit", obj.total_credit) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.credit_cards.notes", obj.notes) %>
 <%= myp_check_box(f, :email_reminders, "myplaceonline.credit_cards.email_reminders") %>

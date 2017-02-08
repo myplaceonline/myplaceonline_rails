@@ -6,7 +6,6 @@
 <%= form_tag do %>
   <p><%= t("myplaceonline.users.encrypt_warning") %></p>
   <p><%= myp_check_box_tag(:encrypt_by_default, "myplaceonline.users.encrypt_by_default", @encrypt_by_default) %></p>
-  <hr />
   <p><%= myp_check_box_tag(:minimize_password_checks, "myplaceonline.users.minimize_password_checks", @minimize_password_checks) %></p>
   <div><%= submit_tag t("myplaceonline.general.save") %></div>
 <% end %>

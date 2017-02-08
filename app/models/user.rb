@@ -79,6 +79,7 @@ class User < ApplicationRecord
         
         # Set the identity in the user
         user.primary_identity = @identity
+        user.encrypt_by_default = true
         user.save!
         
         Rails.logger.debug{"Creating contact"}
@@ -169,6 +170,10 @@ class User < ApplicationRecord
   
   def suppresses(which)
     !self.suppressions.nil? && (self.suppressions & which) != 0
+  end
+  
+  def has_encrypted_content?
+    EncryptedValue.where(user_id: self.id).count > 0
   end
 
   protected

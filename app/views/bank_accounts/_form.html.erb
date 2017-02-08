@@ -2,7 +2,7 @@
 <%= myp_text_field(f, :account_number, "myplaceonline.bank_accounts.account_number", obj.account_number) %>
 <%= myp_text_field(f, :routing_number, "myplaceonline.bank_accounts.routing_number", obj.routing_number) %>
 <%= myp_text_field(f, :pin, "myplaceonline.bank_accounts.pin", obj.pin) %>
-<%= myp_check_box(f, :encrypt, "myplaceonline.general.encrypt") %>
+<%= render(partial: "myplaceonline/encrypt_fields", locals: { f: f }) %>
 <%=
   render partial: "myplaceonline/select_or_create", locals: {
     f: f,
