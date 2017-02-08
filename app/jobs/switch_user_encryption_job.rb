@@ -9,19 +9,19 @@ class SwitchUserEncryptionJob < ApplicationJob
 
       Rails.logger.info{"SwitchUserEncryptionJob user=#{user.inspect}, identity=#{identity.inspect}"}
       
-      MyplaceonlineExecutionContext.persistent_user_store = InMemoryPersistentUserStore.new
-      MyplaceonlineExecutionContext.persistent_user_store[:password] = password
-
-      model_mappings = {
-        bank_account: [:account_number, :routing_number, :pin],
-        credit_card: [:number, :expires, :security_code, :pin],
-        diary_entry: [:entry],
-        dream: [:dream],
-        password: [:password],
-        password_secret: [:answer],
-        ssh_key: [:ssh_private_key]
-      }
       MyplaceonlineExecutionContext.do_user(user) do
+        MyplaceonlineExecutionContext.persistent_user_store = InMemoryPersistentUserStore.new
+        MyplaceonlineExecutionContext.persistent_user_store[:password] = password
+
+        model_mappings = {
+          bank_account: [:account_number, :routing_number, :pin],
+          credit_card: [:number, :expires, :security_code, :pin],
+          diary_entry: [:entry],
+          dream: [:dream],
+          password: [:password],
+          password_secret: [:answer],
+          ssh_key: [:ssh_private_key]
+        }
         model_mappings.each do |model_name, fields|
           model = model_name.to_s.camelize.constantize
           first_field = fields[0]
