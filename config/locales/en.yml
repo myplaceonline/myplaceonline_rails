@@ -2759,6 +2759,7 @@ en:
         other_won_not_paid: "Other Person Won; Awaiting Payment"
         i_won_paid: "I Won; Paid"
         other_won_paid: "Other Person Won; Paid"
+      expiring: "Bet %{name} expires %{delta}"
     admin:
       title: "Administration"
       users: "User List"

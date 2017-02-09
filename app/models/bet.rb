@@ -1,6 +1,8 @@
 class Bet < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
+  DEFAULT_BET_THRESHOLD_SECONDS = 0.seconds
+
   BET_STATUS_PENDING = 0
   BET_STATUS_NOBODY_WON = 1
   BET_STATUS_I_WON_NOT_PAID = 2
@@ -106,9 +108,35 @@ class Bet < ApplicationRecord
         "bet_contacts",
         nil
       )
+      ApplicationRecord.transaction do
+        CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
+        
+        if !self.bet_end_date.nil?
+          User.current_user.primary_identity.calendars.each do |calendar|
+            CalendarItem.create_calendar_item(
+              identity: User.current_user.primary_identity,
+              calendar: calendar,
+              model: self.class,
+              calendar_item_time: self.bet_end_date,
+              reminder_threshold_amount: DEFAULT_BET_THRESHOLD_SECONDS,
+              reminder_threshold_type: Calendar::DEFAULT_REMINDER_TYPE,
+              model_id: id
+            )
+          end
+        end
+      end
     end
   end
 
+  def self.calendar_item_display(calendar_item)
+    x = calendar_item.find_model_object
+    I18n.t(
+      "myplaceonline.bets.expiring",
+      name: x.display,
+      delta: Myp.time_delta(x.bet_end_date)
+    )
+  end
+  
   def self.skip_check_attributes
     ["odds_direction_owner", "bet_status"]
   end
