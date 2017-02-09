@@ -4,7 +4,7 @@ class BetsController < MyplaceonlineController
   end
   
   def bubble_text(obj)
-    obj.bet_amount_with_currency
+    obj.bet_amount_with_currency(append_ratio: true)
   end
 
   def update_status

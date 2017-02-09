@@ -30,20 +30,35 @@ class Bet < ApplicationRecord
     Myp.time_delta(self.bet_end_date)
   end
   
-  def bet_amount_with_currency
+  def bet_amount_with_currency(append_ratio: false)
+    result = nil
     if !self.bet_amount.blank? && !self.bet_currency.blank?
       if self.bet_amount == 1
-        "#{Myp.decimal_to_s(value: self.bet_amount)} #{self.bet_currency.singularize}"
+        result = "#{Myp.decimal_to_s(value: self.bet_amount)} #{self.bet_currency.singularize}"
       else
-        "#{Myp.decimal_to_s(value: self.bet_amount)} #{self.bet_currency}"
+        result = "#{Myp.decimal_to_s(value: self.bet_amount)} #{self.bet_currency}"
       end
     elsif !self.bet_amount.blank?
-      Myp.decimal_to_s(value: self.bet_amount)
+      result = Myp.decimal_to_s(value: self.bet_amount)
     elsif !self.bet_currency.blank?
-      self.bet_currency
-    else
-      nil
+      result = self.bet_currency
     end
+    if append_ratio && !result.blank? && !self.odds_ratio.nil?
+      result = "#{result} (#{I18n.t("myplaceonline.bets.odds_ratio")} #{bet_ratio_short})"
+    end
+    result
+  end
+  
+  def bet_ratio_short
+    result = nil
+    if !self.odds_ratio.nil?
+      if self.odds_direction_owner
+        result = "#{Myp.decimal_to_s(value: self.odds_ratio)}:1"
+      else
+        result = "1:#{Myp.decimal_to_s(value: self.odds_ratio)}"
+      end
+    end
+    result
   end
 
   def self.build(params = nil)
