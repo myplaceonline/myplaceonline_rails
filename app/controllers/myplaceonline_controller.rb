@@ -623,7 +623,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def show_created_updated
-    true
+    current_user.show_timestamps
   end
   
   def form_path

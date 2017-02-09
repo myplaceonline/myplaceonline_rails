@@ -36,7 +36,7 @@
 
         <%= yield %>
 
-        <% if controller.show_created_updated && current_user.show_timestamps %>
+        <% if controller.show_created_updated %>
           <%= attribute_table_row(t("myplaceonline.general.created"), Myp.display_time(@obj.created_at, current_user)) %>
           <%= attribute_table_row(t("myplaceonline.general.last_updated"), Myp.display_time(@obj.updated_at, current_user)) %>
         <% end %>

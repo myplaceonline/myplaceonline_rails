@@ -1005,16 +1005,16 @@ module Myp
     result
   end
   
-  def self.get_select_name(val, select_values)
+  def self.get_select_name(val, select_values, default_value: nil)
     if !val.nil?
       found = select_values.find{|x| x[1] == val}
       if !found.nil?
         I18n.t(found[0])
       else
-        nil
+        default_value
       end
     else
-      nil
+      default_value
     end
   end
 
@@ -1076,6 +1076,14 @@ module Myp
   
   def self.number_with_delimiter(x)
     ActionController::Base.helpers.number_with_delimiter(x)
+  end
+  
+  def self.decimal_to_s(value:, precision: 2, truncate_zeros: true)
+    result = sprintf("%.#{precision}f", value.round(precision))
+    if result.end_with?("00")
+      result = result[0..result.length-4]
+    end
+    result
   end
   
   def self.migration_add_filtertext(category_name, filtertext)
@@ -1459,12 +1467,16 @@ module Myp
   end
   
   def self.time_delta(target)
-    now = User.current_user.time_now
-    delta = Myp.time_difference_in_general_human(TimeDifference.between(now, target).in_general)
-    if now > target
-      I18n.t("myplaceonline.general.delta_time_past", delta: delta)
+    if !target.nil?
+      now = User.current_user.time_now
+      delta = Myp.time_difference_in_general_human(TimeDifference.between(now, target).in_general)
+      if now > target
+        I18n.t("myplaceonline.general.delta_time_past", delta: delta)
+      else
+        I18n.t("myplaceonline.general.delta_time_upcoming", delta: delta)
+      end
     else
-      I18n.t("myplaceonline.general.delta_time_upcoming", delta: delta)
+      nil
     end
   end
   
@@ -1493,6 +1505,15 @@ module Myp
     v = params[name]
     if !v.blank?
       result = v.to_s.to_bool
+    end
+    result
+  end
+  
+  def self.param_integer(params, name, default_value: 0)
+    result = default_value
+    v = params[name]
+    if !v.blank?
+      result = v.to_i
     end
     result
   end

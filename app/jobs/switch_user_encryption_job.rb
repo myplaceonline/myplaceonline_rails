@@ -26,7 +26,7 @@ class SwitchUserEncryptionJob < ApplicationJob
           model = model_name.to_s.camelize.constantize
           first_field = fields[0]
           model.where(:identity_id => identity.id, "#{first_field}_encrypted_id".to_sym => nil).each do |decrypted|
-            Rails.logger.info{"SwitchUserEncryptionJob encrypting #{decrypted.id}"}
+            Rails.logger.info{"SwitchUserEncryptionJob encrypting #{model_name} #{decrypted.id}"}
             decrypted.encrypt = true
             decrypted.save!
           end

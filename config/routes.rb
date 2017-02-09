@@ -171,6 +171,9 @@ Rails.application.routes.draw do
   match 'files/:id/download/*imagename', :to => 'files#download', via: [:get], as: "file_download_name"
 
   additions = {
+    bets: [
+      { instance: true, link: "update_status" }
+    ],
     books: [
       { instance: true, link: "discard" },
     ],
