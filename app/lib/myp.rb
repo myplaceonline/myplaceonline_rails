@@ -971,19 +971,19 @@ module Myp
       if result.length > 0
         result += ", "
       end
-      result += ActionController::Base.helpers.pluralize(diff[:hours], "hour")
+      result += ActionController::Base.helpers.pluralize(Myp.decimal_to_s(value: diff[:hours]), "hour")
     end
     if diff[:minutes] > 0
       if result.length > 0
         result += ", "
       end
-      result += ActionController::Base.helpers.pluralize(diff[:minutes], "minute")
+      result += ActionController::Base.helpers.pluralize(Myp.decimal_to_s(value: diff[:minutes]), "minute")
     end
     if diff[:seconds] > 0
       if result.length > 0
         result += ", "
       end
-      result += ActionController::Base.helpers.pluralize(diff[:seconds], "second")
+      result += ActionController::Base.helpers.pluralize(Myp.decimal_to_s(value: diff[:seconds]), "second")
     end
     result
   end

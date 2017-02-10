@@ -18,6 +18,14 @@ class TimingsController < MyplaceonlineController
     ] + super
   end
   
+  def use_bubble?
+    true
+  end
+  
+  def bubble_text(obj)
+    Myp.seconds_to_time_in_general_human_detailed_hms(obj.average_duration)
+  end
+    
   protected
     def insecure
       true
