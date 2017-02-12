@@ -1,0 +1,13 @@
+<%= data_row(heading: t("myplaceonline.dating_profiles.dating_profile_name"), content: obj.dating_profile_name) %>
+<%= data_row(heading: t("myplaceonline.dating_profiles.about_me"), content: obj.about_me, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.dating_profiles.looking_for"), content: obj.looking_for, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.dating_profiles.movies"), content: obj.movies, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.dating_profiles.books"), content: obj.books, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.dating_profiles.music"), content: obj.music, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.dating_profile_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>

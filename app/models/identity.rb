@@ -190,6 +190,7 @@ class Identity < ApplicationRecord
   has_many :test_scores, :dependent => :destroy
   has_many :bills, :dependent => :destroy
   has_many :patents, :dependent => :destroy
+  has_many :dating_profiles, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 
@@ -403,6 +404,7 @@ class Identity < ApplicationRecord
       :test_scores => test_scores.to_a.map{|x| x.as_json},
       :bills => bills.to_a.map{|x| x.as_json},
       :patents => patents.to_a.map{|x| x.as_json},
+      :dating_profiles => dating_profiles.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

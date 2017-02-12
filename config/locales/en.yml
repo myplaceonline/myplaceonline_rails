@@ -222,6 +222,7 @@ en:
       test_scores: "Test Scores"
       bills: "Bills"
       patents: "Patents"
+      dating_profiles: "Dating Profiles"
     general:
       email: "E-mail"
       password: "Password"
@@ -3235,3 +3236,10 @@ en:
       company_interaction_date: "Date"
     encryption:
       first_encryption: "Note: If you check the box to encrypt and if you ever lose your myplaceonline.com main website password in the future, the above encrypted data will be lost forever. So, make sure your myplaceonline.com main website password is rememberable (and secure!). You can disable this warning by clicking on the top right menu, then Settings, then Security, and uncheck Encrypt By Default."
+    dating_profiles:
+      dating_profile_name: "Name"
+      about_me: "About Me"
+      looking_for: "Looking For"
+      movies: "Movies"
+      books: "Books"
+      music: "Music"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170209051637) do
+ActiveRecord::Schema.define(version: 20170212193700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1097,6 +1097,35 @@ ActiveRecord::Schema.define(version: 20170209051637) do
     t.integer  "rating"
     t.index ["identity_id"], name: "index_date_locations_on_identity_id", using: :btree
     t.index ["location_id"], name: "index_date_locations_on_location_id", using: :btree
+  end
+
+  create_table "dating_profile_files", force: :cascade do |t|
+    t.integer  "dating_profile_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["dating_profile_id"], name: "index_dating_profile_files_on_dating_profile_id", using: :btree
+    t.index ["identity_file_id"], name: "index_dating_profile_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_dating_profile_files_on_identity_id", using: :btree
+  end
+
+  create_table "dating_profiles", force: :cascade do |t|
+    t.string   "dating_profile_name"
+    t.text     "about_me"
+    t.text     "looking_for"
+    t.text     "movies"
+    t.text     "books"
+    t.text     "music"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.index ["identity_id"], name: "index_dating_profiles_on_identity_id", using: :btree
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -5103,6 +5132,10 @@ ActiveRecord::Schema.define(version: 20170209051637) do
   add_foreign_key "credit_scores", "identities", name: "credit_scores_identity_id_fk"
   add_foreign_key "date_locations", "identities", name: "date_locations_identity_id_fk"
   add_foreign_key "date_locations", "locations", name: "date_locations_location_id_fk"
+  add_foreign_key "dating_profile_files", "dating_profiles"
+  add_foreign_key "dating_profile_files", "identities"
+  add_foreign_key "dating_profile_files", "identity_files"
+  add_foreign_key "dating_profiles", "identities"
   add_foreign_key "dental_insurance_files", "dental_insurances"
   add_foreign_key "dental_insurance_files", "identities"
   add_foreign_key "dental_insurance_files", "identity_files"

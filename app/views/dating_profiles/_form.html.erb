@@ -1,0 +1,83 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :dating_profile_name,
+    value: obj.dating_profile_name,
+    placeholder: "myplaceonline.dating_profiles.dating_profile_name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :about_me,
+    value: obj.about_me,
+    placeholder: "myplaceonline.dating_profiles.about_me",
+    collapsed: false
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :looking_for,
+    value: obj.looking_for,
+    placeholder: "myplaceonline.dating_profiles.looking_for",
+    collapsed: true
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :movies,
+    value: obj.movies,
+    placeholder: "myplaceonline.dating_profiles.movies",
+    collapsed: true
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :books,
+    value: obj.books,
+    placeholder: "myplaceonline.dating_profiles.books",
+    collapsed: true
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :music,
+    value: obj.music,
+    placeholder: "myplaceonline.dating_profiles.music",
+    collapsed: true
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: true
+  )
+%>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :dating_profile_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>
