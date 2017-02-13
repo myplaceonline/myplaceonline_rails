@@ -223,6 +223,7 @@ en:
       bills: "Bills"
       patents: "Patents"
       dating_profiles: "Dating Profiles"
+      memories: "Memories"
     general:
       email: "E-mail"
       password: "Password"
@@ -3243,3 +3244,6 @@ en:
       movies: "Movies"
       books: "Books"
       music: "Music"
+    memories:
+      memory_name: "Name"
+      memory_date: "Date"

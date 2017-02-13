@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170212193700) do
+ActiveRecord::Schema.define(version: 20170213044037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2854,6 +2854,31 @@ ActiveRecord::Schema.define(version: 20170212193700) do
     t.index ["periodic_payment_id"], name: "index_memberships_on_periodic_payment_id", using: :btree
   end
 
+  create_table "memories", force: :cascade do |t|
+    t.string   "memory_name"
+    t.date     "memory_date"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["identity_id"], name: "index_memories_on_identity_id", using: :btree
+  end
+
+  create_table "memory_files", force: :cascade do |t|
+    t.integer  "memory_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["identity_file_id"], name: "index_memory_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_memory_files_on_identity_id", using: :btree
+    t.index ["memory_id"], name: "index_memory_files_on_memory_id", using: :btree
+  end
+
   create_table "message_contacts", force: :cascade do |t|
     t.integer  "message_id"
     t.integer  "contact_id"
@@ -5397,6 +5422,10 @@ ActiveRecord::Schema.define(version: 20170212193700) do
   add_foreign_key "memberships", "identities", name: "memberships_identity_id_fk"
   add_foreign_key "memberships", "passwords"
   add_foreign_key "memberships", "periodic_payments", name: "memberships_periodic_payment_id_fk"
+  add_foreign_key "memories", "identities"
+  add_foreign_key "memory_files", "identities"
+  add_foreign_key "memory_files", "identity_files"
+  add_foreign_key "memory_files", "memories"
   add_foreign_key "message_contacts", "contacts"
   add_foreign_key "message_contacts", "identities"
   add_foreign_key "message_contacts", "messages"

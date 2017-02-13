@@ -1,0 +1,9 @@
+<%= data_row(heading: t("myplaceonline.memories.memory_name"), content: obj.memory_name) %>
+<%= data_row(heading: t("myplaceonline.memories.memory_date"), content: obj.memory_date) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.memory_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>
