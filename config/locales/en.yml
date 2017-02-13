@@ -224,6 +224,7 @@ en:
       patents: "Patents"
       dating_profiles: "Dating Profiles"
       memories: "Memories"
+      licenses: "Licenses"
     general:
       email: "E-mail"
       password: "Password"
@@ -3247,3 +3248,8 @@ en:
     memories:
       memory_name: "Name"
       memory_date: "Date"
+    licenses:
+      license_name: "Name"
+      license_value: "Value"
+      license_purchase_date: "Purchase Date"
+      license_key: "License Key"

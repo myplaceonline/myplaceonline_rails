@@ -151,7 +151,8 @@ Category.create!([
   {id: 183, name: "bills", link: "bills", position: 0, parent_id: 51, additional_filtertext: "invoices", icon: "FatCow_Icons16x16/document_info.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 184, name: "patents", link: "patents", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/document_protect.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 185, name: "dating_profiles", link: "dating_profiles", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/personals.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 186, name: "memories", link: "memories", position: 0, parent_id: 3, additional_filtertext: nil, icon: "FatCow_Icons16x16/flashlight_shine.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
+  {id: 186, name: "memories", link: "memories", position: 0, parent_id: 3, additional_filtertext: nil, icon: "FatCow_Icons16x16/flashlight_shine.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 187, name: "licenses", link: "licenses", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/license_key.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
 ])
 
 user = User.new

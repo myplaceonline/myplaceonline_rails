@@ -1,0 +1,11 @@
+<%= data_row(heading: t("myplaceonline.licenses.license_name"), content: obj.license_name) %>
+<%= data_row(heading: t("myplaceonline.licenses.license_key"), content: obj.license_key, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.licenses.license_purchase_date"), content: obj.license_purchase_date) %>
+<%= data_row(heading: t("myplaceonline.licenses.license_value"), content: obj.license_value) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.license_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>
