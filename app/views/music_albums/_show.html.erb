@@ -1,0 +1,8 @@
+<%= data_row(heading: t("myplaceonline.music_albums.music_album_name"), content: obj.music_album_name) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.music_album_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170213050457) do
+ActiveRecord::Schema.define(version: 20170214204717) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3053,6 +3053,30 @@ ActiveRecord::Schema.define(version: 20170213050457) do
     t.index ["website_id"], name: "index_museums_on_website_id", using: :btree
   end
 
+  create_table "music_album_files", force: :cascade do |t|
+    t.integer  "music_album_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["identity_file_id"], name: "index_music_album_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_music_album_files_on_identity_id", using: :btree
+    t.index ["music_album_id"], name: "index_music_album_files_on_music_album_id", using: :btree
+  end
+
+  create_table "music_albums", force: :cascade do |t|
+    t.string   "music_album_name"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["identity_id"], name: "index_music_albums_on_identity_id", using: :btree
+  end
+
   create_table "musical_groups", force: :cascade do |t|
     t.string   "musical_group_name", limit: 255
     t.text     "notes"
@@ -5479,6 +5503,10 @@ ActiveRecord::Schema.define(version: 20170213050457) do
   add_foreign_key "museums", "identities", name: "museums_identity_id_fk"
   add_foreign_key "museums", "locations", name: "museums_location_id_fk"
   add_foreign_key "museums", "websites", name: "museums_website_id_fk"
+  add_foreign_key "music_album_files", "identities"
+  add_foreign_key "music_album_files", "identity_files"
+  add_foreign_key "music_album_files", "music_albums"
+  add_foreign_key "music_albums", "identities"
   add_foreign_key "musical_groups", "identities", name: "musical_groups_identity_id_fk"
   add_foreign_key "myplaceonline_quick_category_displays", "identities", name: "myplaceonline_quick_category_displays_identity_id_fk"
   add_foreign_key "myplaceonline_searches", "identities", name: "myplaceonline_searches_identity_id_fk"

@@ -1,0 +1,2 @@
+module MusicAlbumsHelper
+end

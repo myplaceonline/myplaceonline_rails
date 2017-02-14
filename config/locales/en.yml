@@ -225,6 +225,7 @@ en:
       dating_profiles: "Dating Profiles"
       memories: "Memories"
       licenses: "Licenses"
+      music_albums: "Music Albums"
     general:
       email: "E-mail"
       password: "Password"
@@ -3253,3 +3254,5 @@ en:
       license_value: "Value"
       license_purchase_date: "Purchase Date"
       license_key: "License Key"
+    music_albums:
+      music_album_name: "Name"
