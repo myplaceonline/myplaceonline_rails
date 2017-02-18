@@ -81,7 +81,14 @@ class Feed < ApplicationRecord
           #existing_item.update_column(:publication_date, date)
         end
       end
-      if new_items > 0
+      
+      if self.unread_items.nil?
+        total_count = FeedItem.where(feed_id: self.id).count
+        total_unread_count = FeedItem.where(feed_id: self.id, read: nil).count
+        ApplicationRecord.connection.update(
+          "update feeds set total_items = #{total_count}, unread_items = #{total_unread_count} where id = #{self.id}"
+        )
+      elsif new_items > 0
         ApplicationRecord.connection.update(
           "update feeds set total_items = total_items + #{new_items}, unread_items = unread_items + #{new_items} where id = #{self.id}"
         )
