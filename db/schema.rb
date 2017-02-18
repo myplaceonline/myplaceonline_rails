@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170214204717) do
+ActiveRecord::Schema.define(version: 20170218232104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1072,6 +1072,18 @@ ActiveRecord::Schema.define(version: 20170214204717) do
     t.index ["password_id"], name: "index_credit_cards_on_password_id", using: :btree
     t.index ["pin_encrypted_id"], name: "index_credit_cards_on_pin_encrypted_id", using: :btree
     t.index ["security_code_encrypted_id"], name: "index_credit_cards_on_security_code_encrypted_id", using: :btree
+  end
+
+  create_table "credit_score_files", force: :cascade do |t|
+    t.integer  "credit_score_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["credit_score_id"], name: "index_credit_score_files_on_credit_score_id", using: :btree
+    t.index ["identity_file_id"], name: "index_credit_score_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_credit_score_files_on_identity_id", using: :btree
   end
 
   create_table "credit_scores", force: :cascade do |t|
@@ -5205,6 +5217,9 @@ ActiveRecord::Schema.define(version: 20170214204717) do
   add_foreign_key "credit_cards", "identities", name: "credit_cards_identity_id_fk"
   add_foreign_key "credit_cards", "locations", column: "address_id", name: "credit_cards_address_id_fk"
   add_foreign_key "credit_cards", "passwords", name: "credit_cards_password_id_fk"
+  add_foreign_key "credit_score_files", "credit_scores"
+  add_foreign_key "credit_score_files", "identities"
+  add_foreign_key "credit_score_files", "identity_files"
   add_foreign_key "credit_scores", "identities", name: "credit_scores_identity_id_fk"
   add_foreign_key "date_locations", "identities", name: "date_locations_identity_id_fk"
   add_foreign_key "date_locations", "locations", name: "date_locations_location_id_fk"

@@ -15,12 +15,21 @@ class CreditScoresController < MyplaceonlineController
     ]
   end
   
+  def may_upload
+    true
+  end
+
   protected
     def sorts
       ["credit_scores.score_date DESC"]
     end
 
     def obj_params
-      params.require(:credit_score).permit(:score_date, :score, :source)
+      params.require(:credit_score).permit(
+        :score_date,
+        :score,
+        :source,
+        credit_score_files_attributes: FilesController.multi_param_names
+      )
     end
 end

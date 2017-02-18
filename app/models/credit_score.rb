@@ -13,4 +13,6 @@ class CreditScore < ApplicationRecord
     result.score_date = Date.today
     result
   end
+  
+  child_files
 end
