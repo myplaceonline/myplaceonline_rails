@@ -1477,6 +1477,7 @@ en:
       mmoll: "mmol/L"
       gdl: "g/dL"
       iul: "IU/L"
+      iuml: "IU/mL"
       uiul: "uIU/mL"
       ugdl: "ug/dL"
       percent: "%"
