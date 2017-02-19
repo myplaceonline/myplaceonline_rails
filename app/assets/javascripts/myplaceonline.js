@@ -1159,6 +1159,11 @@ var myplaceonline = function(mymodule) {
   }
 
   function encodeEntities(str) {
+    if (!str) {
+      str = "";
+    } else {
+      str = str.toString();
+    }
     return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#27;");
   }
 

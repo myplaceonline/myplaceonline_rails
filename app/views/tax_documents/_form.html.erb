@@ -5,7 +5,9 @@
     name: :tax_document_form_name,
     value: obj.tax_document_form_name,
     placeholder: "myplaceonline.tax_documents.tax_document_form_name",
-    autofocus: autofocus
+    autofocus: autofocus,
+    remote_autocomplete_model: obj.class,
+    remote_autocomplete_all: true
   )
 %>
 <%=
@@ -14,7 +16,9 @@
     type: Myp::FIELD_TEXT,
     name: :tax_document_description,
     value: obj.tax_document_description,
-    placeholder: "myplaceonline.tax_documents.tax_document_description"
+    placeholder: "myplaceonline.tax_documents.tax_document_description",
+    remote_autocomplete_model: obj.class,
+    remote_autocomplete_all: true
   )
 %>
 <%=
@@ -32,7 +36,9 @@
     type: Myp::FIELD_NUMBER,
     name: :fiscal_year,
     value: obj.fiscal_year,
-    placeholder: "myplaceonline.tax_documents.fiscal_year"
+    placeholder: "myplaceonline.tax_documents.fiscal_year",
+    remote_autocomplete_model: obj.class,
+    remote_autocomplete_all: true
   )
 %>
 <%=

@@ -874,7 +874,9 @@ module ApplicationHelper
       flexible: false,
       field_attributes: {},
       autofocus: false,
-      field_classes: ""
+      field_classes: "",
+      remote_autocomplete_model: nil,
+      remote_autocomplete_all: false # if true, show all items on focus; otherwise, show only items that match what's typed
     }.merge(options)
     
     case options[:type]
@@ -981,6 +983,49 @@ module ApplicationHelper
             )
           )
         end
+      end
+      
+      if !options[:remote_autocomplete_model].nil?
+        id = extract_id(result)
+        autocomplete_id = id + "_remote_autocomplete"
+        remote_autocomplete_all_script = ""
+        if options[:remote_autocomplete_all]
+          remote_autocomplete_all_script = <<-eos
+            $("##{id}").on("focus", function() {
+              myplaceonline.listviewSearch($("##{autocomplete_id}"), "/api/distinct_values.json?table_name=#{options[:remote_autocomplete_model]}&column_name=#{name}", null);
+              $("##{autocomplete_id} li").removeClass("ui-screen-hidden");
+            });
+            $("##{id}").on("blur", function() {
+              setTimeout(function() {
+                $("##{autocomplete_id} li").addClass("ui-screen-hidden");
+              }, 500);
+            });
+          eos
+        end
+        additional = <<-eos
+          <ul data-role="listview" data-inset="true" data-filter="true" data-filter-reveal="#{options[:remote_autocomplete_all] ? false : true}" data-input="##{id}" id="#{autocomplete_id}">
+          </ul>
+          <script type="text/javascript">
+            myplaceonline.onPageLoad(function() {
+              $("##{autocomplete_id}").on("click", "li", function() {
+                $("##{id}").val($(this).text());
+                $("##{autocomplete_id} li").addClass("ui-screen-hidden");
+              });
+              myplaceonline.hookListviewSearch($("##{autocomplete_id}"), "/api/distinct_values.json?table_name=#{options[:remote_autocomplete_model]}&column_name=#{name}");
+              
+              // When hooking up our input to the listview autocomplete with data-input, enter is squashed
+              $("##{id}").on('keydown', function(e) {
+                var code = (e.keyCode ? e.keyCode : e.which);
+                if (code == 13) {
+                  $(this.form).find(":submit").first().click();
+                }
+              });
+              
+              #{remote_autocomplete_all_script}
+            });
+          </script>
+        eos
+        result += additional.html_safe
       end
     else
       # http://dev.jtsage.com/jQM-DateBox/api/
