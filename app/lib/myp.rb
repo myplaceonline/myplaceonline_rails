@@ -93,6 +93,7 @@ module Myp
     ["myplaceonline.liquid_concentrations.pg", 16],
     ["myplaceonline.liquid_concentrations.mlmin", 17],
     ["myplaceonline.liquid_concentrations.mgl", 18],
+    ["myplaceonline.liquid_concentrations.mcgdl", 19],
   ]
 
   TEMPERATURES = [

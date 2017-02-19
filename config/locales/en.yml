@@ -1490,6 +1490,7 @@ en:
       pg: "pg"
       mlmin: "mL/min"
       mgl: "mg/L"
+      mcgdl: "mcg/dL"
     checklists:
       checklist_name: "Name"
       add: "Add Item"
@@ -3223,6 +3224,7 @@ en:
         normal: "Normal"
         few: "Few"
         moderate: "Moderate"
+        cloudy: "Cloudy"
     patents:
       patent_name: "Name"
       patent_number: "Number"

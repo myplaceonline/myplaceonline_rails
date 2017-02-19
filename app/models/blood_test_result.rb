@@ -16,6 +16,7 @@ class BloodTestResult < ApplicationRecord
     ["myplaceonline.blood_test_results.flags.normal", 7],
     ["myplaceonline.blood_test_results.flags.few", 8],
     ["myplaceonline.blood_test_results.flags.moderate", 9],
+    ["myplaceonline.blood_test_results.flags.cloudy", 10],
   ]
 
   def self.skip_check_attributes
