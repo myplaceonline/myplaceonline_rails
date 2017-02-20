@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170220051851) do
+ActiveRecord::Schema.define(version: 20170220054031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1404,6 +1404,36 @@ ActiveRecord::Schema.define(version: 20170220051851) do
     t.datetime "archived"
     t.integer  "rating"
     t.index ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
+  end
+
+  create_table "driver_license_files", force: :cascade do |t|
+    t.integer  "driver_license_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["driver_license_id"], name: "index_driver_license_files_on_driver_license_id", using: :btree
+    t.index ["identity_file_id"], name: "index_driver_license_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_driver_license_files_on_identity_id", using: :btree
+  end
+
+  create_table "driver_licenses", force: :cascade do |t|
+    t.string   "driver_license_identifier"
+    t.date     "driver_license_expires"
+    t.date     "driver_license_issued"
+    t.string   "sub_region1"
+    t.integer  "address_id"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "region"
+    t.index ["address_id"], name: "index_driver_licenses_on_address_id", using: :btree
+    t.index ["identity_id"], name: "index_driver_licenses_on_identity_id", using: :btree
   end
 
   create_table "due_items", force: :cascade do |t|
@@ -5324,6 +5354,11 @@ ActiveRecord::Schema.define(version: 20170220051851) do
   add_foreign_key "dreams", "encrypted_values", column: "dream_encrypted_id"
   add_foreign_key "dreams", "identities"
   add_foreign_key "drinks", "identities", name: "drinks_identity_id_fk"
+  add_foreign_key "driver_license_files", "driver_licenses"
+  add_foreign_key "driver_license_files", "identities"
+  add_foreign_key "driver_license_files", "identity_files"
+  add_foreign_key "driver_licenses", "identities"
+  add_foreign_key "driver_licenses", "locations", column: "address_id"
   add_foreign_key "due_items", "calendars", name: "due_items_calendar_id_fk"
   add_foreign_key "due_items", "identities", name: "due_items_identity_id_fk"
   add_foreign_key "education_files", "educations"

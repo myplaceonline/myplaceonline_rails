@@ -1,0 +1,66 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :driver_license_identifier,
+    value: obj.driver_license_identifier,
+    placeholder: "myplaceonline.driver_licenses.driver_license_identifier",
+    autofocus: autofocus
+  )
+%>
+<%= myp_region_field(f, :region, "myplaceonline.general.region", obj.region) %>
+<%= myp_subregion_field(f, :sub_region1, "myplaceonline.general.sub_region1", obj.region, obj.sub_region1) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATE,
+    name: :driver_license_expires,
+    value: obj.driver_license_expires,
+    placeholder: "myplaceonline.driver_licenses.driver_license_expires"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATE,
+    name: :driver_license_issued,
+    value: obj.driver_license_issued,
+    placeholder: "myplaceonline.driver_licenses.driver_license_issued"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: false
+  )
+%>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :address,
+    existingobj: obj.address,
+    heading: t("myplaceonline.driver_licenses.address"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :driver_license_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>

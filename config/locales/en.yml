@@ -228,6 +228,7 @@ en:
       music_albums: "Music Albums"
       surgeries: "Surgeries"
       injuries: "Injuries"
+      driver_licenses: "Driver Licenses"
     general:
       email: "E-mail"
       password: "Password"
@@ -3270,3 +3271,9 @@ en:
       injury_name: "Name"
       injury_date: "Date"
       location: "Location"
+    driver_licenses:
+      driver_license_identifier: "Number/Identifier"
+      driver_license_expires: "Expires"
+      driver_license_issued: "Issued"
+      address: "Address"
+      expiring: "Driver License %{name} expires %{delta}"

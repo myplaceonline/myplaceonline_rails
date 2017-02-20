@@ -1,0 +1,13 @@
+<%= data_row(heading: t("myplaceonline.driver_licenses.driver_license_identifier"), content: obj.driver_license_identifier) %>
+<%= data_row(heading: t("myplaceonline.driver_licenses.driver_license_expires"), content: obj.driver_license_expires) %>
+<%= data_row(heading: t("myplaceonline.driver_licenses.driver_license_issued"), content: obj.driver_license_issued) %>
+<%= data_row(heading: t("myplaceonline.general.region"), content: obj.region_name) %>
+<%= data_row(heading: t("myplaceonline.general.sub_region1"), content: obj.sub_region1_name) %>
+<%= attribute_table_row_reference(t("myplaceonline.driver_licenses.address"), "location_path", obj.address) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.driver_license_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>
