@@ -492,6 +492,10 @@ en:
         
         At-rest encryption uses your main myplaceonline.com website password to encrypt the data in the database using a [symmetric cipher](https://en.wikipedia.org/wiki/Symmetric-key_algorithm) (see above). This means that if you forget your main myplaceonline.com website password, you will not be able to recover those encrypted values (because only you had the key). The "forgot my password" function on websites simply resets your password to a new password after you click a link in an email. There is no such thing as a "forgot my password" function for symmetric encryption.
         
+        ### If I sign out of myplaceonline, why are all my other devices also signed out?
+        
+        This is a security feature. If you want to stay logged in on other devices, then do not use the sign out feature; instead, on the devices that you want to sign out of, do not check the "Remember Me" box when signing in, and simply close the browser when you want to sign out. This will sign you out on just that device.
+        
         ]]>
       tips: "Tips"
       tips_content: !xml |

@@ -217,6 +217,11 @@ Devise.setup do |config|
 
   # Set this configuration to false if you want /users/sign_out to sign out
   # only the current scope. By default, Devise signs out all scopes.
+  
+  # Note: changing this to false does not change the behavior of logging out
+  # all users within a scope across all cookies, it's only related to multiple
+  # scopes, which we don't use
+  
   # config.sign_out_all_scopes = true
 
   # ==> Navigation configuration
