@@ -226,6 +226,7 @@ en:
       memories: "Memories"
       licenses: "Licenses"
       music_albums: "Music Albums"
+      surgeries: "Surgeries"
     general:
       email: "E-mail"
       password: "Password"
@@ -3259,3 +3260,8 @@ en:
       license_key: "License Key"
     music_albums:
       music_album_name: "Name"
+    surgeries:
+      surgery_name: "Name"
+      surgery_date: "Date"
+      doctor: "Doctor"
+      hospital: "Hospital"

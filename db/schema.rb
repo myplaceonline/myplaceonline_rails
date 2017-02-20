@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170218232104) do
+ActiveRecord::Schema.define(version: 20170220043917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4240,6 +4240,35 @@ ActiveRecord::Schema.define(version: 20170218232104) do
     t.index ["identity_id"], name: "index_sun_exposures_on_identity_id", using: :btree
   end
 
+  create_table "surgeries", force: :cascade do |t|
+    t.string   "surgery_name"
+    t.date     "surgery_date"
+    t.integer  "hospital_id"
+    t.integer  "doctor_id"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["doctor_id"], name: "index_surgeries_on_doctor_id", using: :btree
+    t.index ["hospital_id"], name: "index_surgeries_on_hospital_id", using: :btree
+    t.index ["identity_id"], name: "index_surgeries_on_identity_id", using: :btree
+  end
+
+  create_table "surgery_files", force: :cascade do |t|
+    t.integer  "surgery_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["identity_file_id"], name: "index_surgery_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_surgery_files_on_identity_id", using: :btree
+    t.index ["surgery_id"], name: "index_surgery_files_on_surgery_id", using: :btree
+  end
+
   create_table "tax_document_files", force: :cascade do |t|
     t.integer  "tax_document_id"
     t.integer  "identity_file_id"
@@ -5677,6 +5706,12 @@ ActiveRecord::Schema.define(version: 20170218232104) do
   add_foreign_key "story_pictures", "identity_files"
   add_foreign_key "story_pictures", "stories"
   add_foreign_key "sun_exposures", "identities", name: "sun_exposures_identity_id_fk"
+  add_foreign_key "surgeries", "doctors"
+  add_foreign_key "surgeries", "identities"
+  add_foreign_key "surgeries", "locations", column: "hospital_id"
+  add_foreign_key "surgery_files", "identities"
+  add_foreign_key "surgery_files", "identity_files"
+  add_foreign_key "surgery_files", "surgeries"
   add_foreign_key "tax_document_files", "identities"
   add_foreign_key "tax_document_files", "identity_files"
   add_foreign_key "tax_document_files", "tax_documents"
