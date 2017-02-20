@@ -1,0 +1,11 @@
+<%= data_row(heading: t("myplaceonline.hospital_visits.hospital_visit_purpose"), content: obj.hospital_visit_purpose) %>
+<%= data_row(heading: t("myplaceonline.hospital_visits.hospital_visit_date"), content: obj.hospital_visit_date) %>
+<%= data_row(heading: t("myplaceonline.hospital_visits.emergency_room"), content: obj.emergency_room) %>
+<%= attribute_table_row_reference(t("myplaceonline.hospital_visits.hospital"), "location_path", obj.hospital) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.hospital_visit_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>

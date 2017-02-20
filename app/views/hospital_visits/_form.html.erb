@@ -1,0 +1,56 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :hospital_visit_purpose,
+    value: obj.hospital_visit_purpose,
+    placeholder: "myplaceonline.hospital_visits.hospital_visit_purpose",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATE,
+    name: :hospital_visit_date,
+    value: obj.hospital_visit_date,
+    placeholder: "myplaceonline.hospital_visits.hospital_visit_date"
+  )
+%>
+<%= myp_check_box(f, :emergency_room, "myplaceonline.hospital_visits.emergency_room") %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: false
+  )
+%>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :hospital,
+    existingobj: obj.hospital,
+    heading: t("myplaceonline.hospital_visits.hospital"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :hospital_visit_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>

@@ -229,6 +229,7 @@ en:
       surgeries: "Surgeries"
       injuries: "Injuries"
       driver_licenses: "Driver Licenses"
+      hospital_visits: "Hospital Visits"
     general:
       email: "E-mail"
       password: "Password"
@@ -3277,3 +3278,8 @@ en:
       driver_license_issued: "Issued"
       address: "Address"
       expiring: "Driver License %{name} expires %{delta}"
+    hospital_visits:
+      hospital_visit_purpose: "Purpose"
+      hospital_visit_date: "Date"
+      emergency_room: "Emergency Room"
+      hospital: "Hospital"

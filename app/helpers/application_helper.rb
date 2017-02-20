@@ -165,6 +165,10 @@ module ApplicationHelper
     Myp.display_datetime(content, current_user)
   end
   
+  def display_boolean(content:, format:)
+    content ? I18n.t("myplaceonline.general.y") : I18n.t("myplaceonline.general.n")
+  end
+  
   def data_row(heading:, content:, **options)
     options[:content_classes] ||= nil
     options[:format] ||= :html
@@ -188,6 +192,8 @@ module ApplicationHelper
         options[:transform] = method(:display_string)
       elsif content.is_a?(ActiveSupport::TimeWithZone)
         options[:transform] = method(:display_datetime)
+      elsif content.is_a?(TrueClass) ||  content.is_a?(FalseClass)
+        options[:transform] = method(:display_boolean)
       end
     elsif options[:transform].is_a?(Symbol)
       options[:transform] = method(options[:transform])

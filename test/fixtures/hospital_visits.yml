@@ -1,0 +1,3 @@
+hospital_visit:
+  identity: identity
+  hospital_visit_purpose: Test

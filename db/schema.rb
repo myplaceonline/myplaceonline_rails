@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170220054031) do
+ActiveRecord::Schema.define(version: 20170220055909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2098,6 +2098,34 @@ ActiveRecord::Schema.define(version: 20170220054031) do
     t.datetime "archived"
     t.integer  "rating"
     t.index ["identity_id"], name: "index_hobbies_on_identity_id", using: :btree
+  end
+
+  create_table "hospital_visit_files", force: :cascade do |t|
+    t.integer  "hospital_visit_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["hospital_visit_id"], name: "index_hospital_visit_files_on_hospital_visit_id", using: :btree
+    t.index ["identity_file_id"], name: "index_hospital_visit_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_hospital_visit_files_on_identity_id", using: :btree
+  end
+
+  create_table "hospital_visits", force: :cascade do |t|
+    t.string   "hospital_visit_purpose"
+    t.date     "hospital_visit_date"
+    t.integer  "hospital_id"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.boolean  "emergency_room"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["hospital_id"], name: "index_hospital_visits_on_hospital_id", using: :btree
+    t.index ["identity_id"], name: "index_hospital_visits_on_identity_id", using: :btree
   end
 
   create_table "hotels", force: :cascade do |t|
@@ -5458,6 +5486,11 @@ ActiveRecord::Schema.define(version: 20170220054031) do
   add_foreign_key "heart_rates", "identities", name: "heart_rates_identity_id_fk"
   add_foreign_key "heights", "identities", name: "heights_identity_id_fk"
   add_foreign_key "hobbies", "identities", name: "hobbies_identity_id_fk"
+  add_foreign_key "hospital_visit_files", "hospital_visits"
+  add_foreign_key "hospital_visit_files", "identities"
+  add_foreign_key "hospital_visit_files", "identity_files"
+  add_foreign_key "hospital_visits", "identities"
+  add_foreign_key "hospital_visits", "locations", column: "hospital_id"
   add_foreign_key "hotels", "identities"
   add_foreign_key "hotels", "locations"
   add_foreign_key "hypotheses", "identities", name: "hypotheses_identity_id_fk"
