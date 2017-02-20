@@ -1,0 +1,10 @@
+<%= data_row(heading: t("myplaceonline.injuries.injury_name"), content: obj.injury_name) %>
+<%= data_row(heading: t("myplaceonline.injuries.injury_date"), content: obj.injury_date) %>
+<%= attribute_table_row_reference(t("myplaceonline.injuries.location"), "location_path", obj.location) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.injury_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>

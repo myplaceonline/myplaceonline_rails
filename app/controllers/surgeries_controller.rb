@@ -3,6 +3,14 @@ class SurgeriesController < MyplaceonlineController
     true
   end
   
+  def use_bubble?
+    true
+  end
+  
+  def bubble_text(obj)
+    Myp.display_date_short_year(obj.surgery_date, User.current_user)
+  end
+
   protected
     def sorts
       ["surgeries.surgery_date DESC"]

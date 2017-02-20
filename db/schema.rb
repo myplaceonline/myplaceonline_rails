@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170220043917) do
+ActiveRecord::Schema.define(version: 20170220051851) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2274,6 +2274,33 @@ ActiveRecord::Schema.define(version: 20170220043917) do
     t.index ["contact_id"], name: "index_identity_relationships_on_contact_id", using: :btree
     t.index ["identity_id"], name: "index_identity_relationships_on_identity_id", using: :btree
     t.index ["parent_identity_id"], name: "index_identity_relationships_on_parent_identity_id", using: :btree
+  end
+
+  create_table "injuries", force: :cascade do |t|
+    t.string   "injury_name"
+    t.date     "injury_date"
+    t.integer  "location_id"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.text     "notes"
+    t.index ["identity_id"], name: "index_injuries_on_identity_id", using: :btree
+    t.index ["location_id"], name: "index_injuries_on_location_id", using: :btree
+  end
+
+  create_table "injury_files", force: :cascade do |t|
+    t.integer  "injury_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["identity_file_id"], name: "index_injury_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_injury_files_on_identity_id", using: :btree
+    t.index ["injury_id"], name: "index_injury_files_on_injury_id", using: :btree
   end
 
   create_table "invite_codes", force: :cascade do |t|
@@ -5427,6 +5454,11 @@ ActiveRecord::Schema.define(version: 20170220043917) do
   add_foreign_key "identity_relationships", "contacts", name: "identity_relationships_contact_id_fk"
   add_foreign_key "identity_relationships", "identities", column: "parent_identity_id", name: "identity_relationships_parent_identity_id_fk"
   add_foreign_key "identity_relationships", "identities", name: "identity_relationships_identity_id_fk"
+  add_foreign_key "injuries", "identities"
+  add_foreign_key "injuries", "locations"
+  add_foreign_key "injury_files", "identities"
+  add_foreign_key "injury_files", "identity_files"
+  add_foreign_key "injury_files", "injuries"
   add_foreign_key "invite_codes", "identities"
   add_foreign_key "invites", "users"
   add_foreign_key "item_files", "identities"

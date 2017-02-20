@@ -195,6 +195,7 @@ class Identity < ApplicationRecord
   has_many :licenses, :dependent => :destroy
   has_many :music_albums, :dependent => :destroy
   has_many :surgeries, :dependent => :destroy
+  has_many :injuries, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 
@@ -413,6 +414,7 @@ class Identity < ApplicationRecord
       :licenses => licenses.to_a.map{|x| x.as_json},
       :music_albums => music_albums.to_a.map{|x| x.as_json},
       :surgeries => surgeries.to_a.map{|x| x.as_json},
+      :injuries => injuries.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

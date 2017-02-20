@@ -227,6 +227,7 @@ en:
       licenses: "Licenses"
       music_albums: "Music Albums"
       surgeries: "Surgeries"
+      injuries: "Injuries"
     general:
       email: "E-mail"
       password: "Password"
@@ -3265,3 +3266,7 @@ en:
       surgery_date: "Date"
       doctor: "Doctor"
       hospital: "Hospital"
+    injuries:
+      injury_name: "Name"
+      injury_date: "Date"
+      location: "Location"
