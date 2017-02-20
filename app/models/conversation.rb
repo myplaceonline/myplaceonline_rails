@@ -7,6 +7,8 @@ class Conversation < ApplicationRecord
   
   validates :conversation_date, presence: true
   
+  child_files
+  
   def display
     Myp.appendstrwrap(Myp.display_date_short_year(conversation_date, User.current_user), Myp.ellipses_if_needed(self.conversation, 64))
   end

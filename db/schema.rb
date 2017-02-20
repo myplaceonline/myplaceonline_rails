@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170220055909) do
+ActiveRecord::Schema.define(version: 20170220062059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1002,6 +1002,18 @@ ActiveRecord::Schema.define(version: 20170220055909) do
     t.integer  "rating"
     t.index ["contact_identity_id"], name: "index_contacts_on_contact_identity_id", using: :btree
     t.index ["identity_id"], name: "index_contacts_on_identity_id", using: :btree
+  end
+
+  create_table "conversation_files", force: :cascade do |t|
+    t.integer  "conversation_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["conversation_id"], name: "index_conversation_files_on_conversation_id", using: :btree
+    t.index ["identity_file_id"], name: "index_conversation_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_conversation_files_on_identity_id", using: :btree
   end
 
   create_table "conversations", force: :cascade do |t|
@@ -5316,6 +5328,9 @@ ActiveRecord::Schema.define(version: 20170220055909) do
   add_foreign_key "connections", "users"
   add_foreign_key "contacts", "identities", column: "contact_identity_id", name: "contacts_contact_identity_id_fk"
   add_foreign_key "contacts", "identities", name: "contacts_identity_id_fk"
+  add_foreign_key "conversation_files", "conversations"
+  add_foreign_key "conversation_files", "identities"
+  add_foreign_key "conversation_files", "identity_files"
   add_foreign_key "conversations", "contacts", name: "conversations_contact_id_fk"
   add_foreign_key "conversations", "identities", name: "conversations_identity_id_fk"
   add_foreign_key "credit_card_cashbacks", "cashbacks", name: "credit_card_cashbacks_cashback_id_fk"

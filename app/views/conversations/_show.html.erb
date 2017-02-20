@@ -1,2 +1,8 @@
 <%= attribute_table_row_datetime(t("myplaceonline.contacts.conversation_date"), obj.conversation_date) %>
 <%= attribute_table_row_markdown(t("myplaceonline.contacts.conversation"), obj.conversation) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.conversation_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>

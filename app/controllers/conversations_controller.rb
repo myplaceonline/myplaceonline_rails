@@ -31,6 +31,10 @@ class ConversationsController < MyplaceonlineController
     ]
   end
   
+  def may_upload
+    true
+  end
+
   protected
     def sorts
       ["conversations.conversation_date DESC"]
@@ -39,7 +43,8 @@ class ConversationsController < MyplaceonlineController
     def obj_params
       params.require(:conversation).permit(
         :conversation,
-        :conversation_date
+        :conversation_date,
+        conversation_files_attributes: FilesController.multi_param_names
       )
     end
     
