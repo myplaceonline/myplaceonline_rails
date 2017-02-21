@@ -440,7 +440,7 @@ en:
       privacy: "Privacy Policy"
       terms: "Terms of Service"
       terms_short: "Terms"
-      faq: "Frequently Asked Questions"
+      faq: "Frequently Asked Questions (FAQs)"
       help: "Help"
       faq_content: !xml |
         <![CDATA[
@@ -3260,6 +3260,7 @@ en:
     memories:
       memory_name: "Name"
       memory_date: "Date"
+      feeling: "Feeling"
     licenses:
       license_name: "Name"
       license_value: "Value"

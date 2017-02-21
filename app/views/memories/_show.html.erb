@@ -1,5 +1,6 @@
 <%= data_row(heading: t("myplaceonline.memories.memory_name"), content: obj.memory_name) %>
 <%= data_row(heading: t("myplaceonline.memories.memory_date"), content: obj.memory_date) %>
+<%= attribute_table_row_select(t("myplaceonline.memories.feeling"), obj.feeling, Status::FEELINGS) %>
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
 <%=
   render partial: "myplaceonline/pictures", locals: {
