@@ -52,18 +52,36 @@ class ApplicationController < ActionController::Base
   end
 
   def catchall(exception)
-    Rails.logger.debug{"catchall: #{exception.inspect}"}
+    Rails.logger.debug{"ApplicationController.catchall: #{exception.inspect}"}
+    if exception.is_a?(ActionView::Template::Error)
+      exception = exception.cause
+    end
+    
     if exception.is_a?(Myp::DecryptionKeyUnavailableError)
-      redirect_to Myp.reentry_url(request)
+      reentry_url = Myp.reentry_url(request)
+      Rails.logger.debug{"ApplicationController.catchall redirecting to: #{reentry_url}"}
+      respond_to do |format|
+        format.html {
+          Rails.logger.debug{"ApplicationController.catchall format html"}
+          redirect_to reentry_url
+        }
+        format.js {
+          Rails.logger.debug{"ApplicationController.catchall format js"}
+          render js: "myplaceonline.navigate(\"#{reentry_url}\");"
+        }
+      end
     elsif exception.is_a?(CanCan::AccessDenied)
+      Rails.logger.debug{"ApplicationController.catchall access denied"}
       redirect_to root_url, :alert => exception.message
     elsif exception.is_a?(Myp::SuddenRedirectError)
+      Rails.logger.debug{"ApplicationController.catchall sudden redirect"}
       if exception.notice.blank?
         redirect_to exception.path
       else
         redirect_to exception.path, :flash => { :notice => exception.notice }
       end
     else
+      Rails.logger.debug{"ApplicationController.catchall unknown"}
       Myp.handle_exception(exception, session[:myp_email], request)
       respond_to do |type|
         #type.html { render :template => "errors/500", :status => 500 }
