@@ -143,3 +143,16 @@
 %>
   <%= render partial: "medical_condition_evaluations/form", locals: { obj: childproperty || MedicalConditionEvaluation.build, edit: edit, autofocus: false, f: child_fields } %>
 <% end %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :medical_condition_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>

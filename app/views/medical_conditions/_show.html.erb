@@ -18,3 +18,9 @@
   <%= table_row_heading(t("myplaceonline.medical_conditions.evaluation")) %>
   <%= render partial: "medical_condition_evaluations/show", locals: { obj: x } %>
 <% end %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.medical_condition_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>

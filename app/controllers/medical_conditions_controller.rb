@@ -1,4 +1,8 @@
 class MedicalConditionsController < MyplaceonlineController
+  def may_upload
+    true
+  end
+
   protected
     def sorts
       ["lower(medical_conditions.medical_condition_name) ASC"]
@@ -24,7 +28,8 @@ class MedicalConditionsController < MyplaceonlineController
           doctor_attributes: DoctorsController.param_names,
           location_attributes: LocationsController.param_names
         ],
-        medical_condition_evaluations_attributes: MedicalConditionEvaluation.params
+        medical_condition_evaluations_attributes: MedicalConditionEvaluation.params,
+        medical_condition_files_attributes: FilesController.multi_param_names
       )
     end
 end

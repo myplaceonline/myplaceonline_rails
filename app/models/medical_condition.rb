@@ -12,4 +12,6 @@ class MedicalCondition < ApplicationRecord
   child_properties(name: :medical_condition_treatments, sort: "treatment_date DESC")
 
   child_properties(name: :medical_condition_evaluations, sort: "evaluation_datetime DESC")
+  
+  child_files
 end

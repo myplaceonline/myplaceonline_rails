@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170221202630) do
+ActiveRecord::Schema.define(version: 20170227005206) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2872,6 +2872,18 @@ ActiveRecord::Schema.define(version: 20170221202630) do
     t.index ["medical_condition_id"], name: "index_medical_condition_evaluations_on_medical_condition_id", using: :btree
   end
 
+  create_table "medical_condition_files", force: :cascade do |t|
+    t.integer  "medical_condition_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.index ["identity_file_id"], name: "index_medical_condition_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_medical_condition_files_on_identity_id", using: :btree
+    t.index ["medical_condition_id"], name: "index_medical_condition_files_on_medical_condition_id", using: :btree
+  end
+
   create_table "medical_condition_instances", force: :cascade do |t|
     t.datetime "condition_start"
     t.datetime "condition_end"
@@ -5619,6 +5631,9 @@ ActiveRecord::Schema.define(version: 20170221202630) do
   add_foreign_key "medical_condition_evaluation_files", "medical_condition_evaluations"
   add_foreign_key "medical_condition_evaluations", "identities"
   add_foreign_key "medical_condition_evaluations", "medical_conditions"
+  add_foreign_key "medical_condition_files", "identities"
+  add_foreign_key "medical_condition_files", "identity_files"
+  add_foreign_key "medical_condition_files", "medical_conditions"
   add_foreign_key "medical_condition_instances", "identities", name: "medical_condition_instances_identity_id_fk"
   add_foreign_key "medical_condition_instances", "medical_conditions", name: "medical_condition_instances_medical_condition_id_fk"
   add_foreign_key "medical_condition_treatments", "doctors"
