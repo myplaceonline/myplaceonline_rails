@@ -1236,8 +1236,26 @@ var myplaceonline = function(mymodule) {
       } else {
         stackTrace = "";
       }
-      if (errorObjStack.indexOf('ckeditor') != -1 || message.indexOf('ckeditor') != -1 || stackTrace.indexOf('ckeditor') != -1) {
-        result = false;
+      var knownErrors = [];
+      
+      // CKeditor doesn't handle AJAX page transitions gracefully
+      knownErrors.push("ckeditor");
+      
+      // Appears to be related to CKEditor (same as above)
+      // TypeError: Cannot read property 'getComputedStyle' of undefined
+      //   at $.eval [as getComputedStyle] (eval at <anonymous> (file:///android_asset/www/js/jquery-1.11.2.min.js:2:2622), <anonymous>:10440:296)
+      //   at $.getDirection (eval at <anonymous> (file:///android_asset/www/js/jquery-1.11.2.min.js:2:2622), <anonymous>:10463:386)
+      //   at $.setup (eval at <anonymous> (file:///android_asset/www/js/jquery-1.11.2.min.js:2:2622), <anonymous>:10711:171)
+      //   at $.m (eval at <anonymous> (file:///android_asset/www/js/jquery-1.11.2.min.js:2:2622), <anonymous>:11213:310)
+      //   at eval (eval at <anonymous> (file:///android_asset/www/js/jquery-1.11.2.min.js:2:2622), <anonymous>:10367:472)
+      knownErrors.push("Cannot read property 'getComputedStyle' of undefined");
+      
+      for (var i = 0; i < knownErrors.length; i++) {
+        var knownError = knownErrors[i];
+        if (errorObjStack.indexOf(knownError) != -1 || message.indexOf(knownError) != -1 || stackTrace.indexOf(knownError) != -1) {
+          result = false;
+          break;
+        }
       }
     }
     if (result) {

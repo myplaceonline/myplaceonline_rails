@@ -133,14 +133,17 @@ class CalendarItem < ApplicationRecord
   # Note that the default context_info of nil means that any items with
   # a non-NULL context_info will not be destroyed
   def self.destroy_calendar_items(identity, model, model_id: nil, context_info: nil)
+    Rails.logger.debug{"CalendarItem.destroy_calendar_items entry identity: #{identity.id}, model: #{model.name}, model_id: #{model_id}, context_info: #{context_info}"}
     CalendarItem.where(
       identity: identity,
       model_class: model.name,
       model_id: model_id,
       context_info: context_info
     ).each do |calendar_item|
+      Rails.logger.debug{"CalendarItem.destroy_calendar_items item #{calendar_item.inspect}"}
       calendar_item.destroy!
     end
+    Rails.logger.debug{"CalendarItem.destroy_calendar_items exit"}
   end
   
   # max_pending: The maximum number of concurrently outstanding reminders for
