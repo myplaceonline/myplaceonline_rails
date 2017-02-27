@@ -148,11 +148,12 @@ module AllowExistingConcern extend ActiveSupport::Concern
             
             x.class.child_property_models.each do |child, model|
               child_attributes = value["#{child}_attributes"]
-              
-              if child_attributes.keys.all?{|key| key.integer? }
-                x.set_properties_with_attributes(name: child, attributes: child_attributes)
-              else
-                x.set_property_with_attributes(name: child, attributes: child_attributes)
+              if !child_attributes.nil?
+                if child_attributes.keys.all?{|key| key.integer? }
+                  x.set_properties_with_attributes(name: child, attributes: child_attributes)
+                else
+                  x.set_property_with_attributes(name: child, attributes: child_attributes)
+                end
               end
             end
             
