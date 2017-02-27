@@ -46,6 +46,14 @@ class CalendarItem < ApplicationRecord
     end
   end
   
+  def model_id_valid?
+    if !model_id.nil?
+      find_model_class.where(id: model_id).count != 0
+    else
+      true
+    end
+  end
+  
   def largest_reminder_threshold_seconds
     result = nil
     calendar_item_reminders.each do |calendar_item_reminder|

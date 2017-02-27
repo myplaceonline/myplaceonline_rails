@@ -152,112 +152,118 @@ class CalendarItemReminder < ApplicationRecord
       .includes(:calendar_item_reminder_pendings, :calendar_item)
       .where(identity: user.primary_identity)
       .each do |calendar_item_reminder|
-
-        Rails.logger.debug{"checking reminder=#{calendar_item_reminder.inspect}. Item: #{calendar_item_reminder.calendar_item.display}, Calendar Item: #{calendar_item_reminder.calendar_item.inspect}"}
         
-        if calendar_item_reminder.calendar_item_reminder_pendings.count == 0
-          if !calendar_item_reminder.calendar_item.calendar_item_time.nil?
+        # If for some reason the model object doesn't exist, then just destroy this reminder
+        if calendar_item_reminder.calendar_item.model_id_valid?
+          Rails.logger.debug{"checking reminder=#{calendar_item_reminder.inspect}. Item: #{calendar_item_reminder.calendar_item.display}, Calendar Item: #{calendar_item_reminder.calendar_item.inspect}"}
+          
+          if calendar_item_reminder.calendar_item_reminder_pendings.count == 0
+            if !calendar_item_reminder.calendar_item.calendar_item_time.nil?
 
-            Rails.logger.debug{"calendar_item_time = #{calendar_item_reminder.calendar_item.calendar_item_time}"}
-        
-            if calendar_item_reminder.calendar_item.calendar_item_time - calendar_item_reminder.threshold_in_seconds.seconds <= now &&
-                !calendar_item_reminder.is_expired(now)
-              
-              Rails.logger.debug{"meets threshold of #{calendar_item_reminder.threshold_in_seconds.seconds}"}
-        
-              # If there's a max_pending (often 1), then delete any pending
-              # items beyond that amount
-              new_pending = CalendarItemReminderPending.new(
-                calendar_item_reminder: calendar_item_reminder,
-                calendar: calendar_item_reminder.calendar_item.calendar,
-                calendar_item: calendar_item_reminder.calendar_item,
-                identity: user.primary_identity
-              )
-              
-              Rails.logger.debug{"creating new pending reminder #{new_pending.inspect}"}
-
-              begin
-                new_pending.save!
-
-                Rails.logger.debug{"created new pending item #{new_pending.inspect}"}
-              rescue ActiveRecord::InvalidForeignKey => ifk
-                Rails.logger.debug{"InvalidForeignKey while trying to create new pending item, probably benign. #{ifk.inspect}"}
-              end
-              
-              # Send any notifications about the new reminder
-              send_reminder_notifications(user, new_pending)
-              
-              item_class = calendar_item_reminder.calendar_item.find_model_class
-              if item_class.respond_to?("handle_new_reminder?")
-                item_obj = calendar_item_reminder.calendar_item.find_model_object
-                if !item_obj.nil?
-                  begin
-                    item_obj.handle_new_reminder
-                  rescue Exception => e
-                    Myp.warn("Error handling new reminder", e)
-                  end
-                end
-              end
-
-              if !calendar_item_reminder.max_pending.nil?
-                pendings_result = CalendarItemReminderPending.find_by_sql(
-                  %{
-                    SELECT calendar_item_reminder_pendings.*
-                    FROM calendar_item_reminder_pendings
-                      INNER JOIN calendar_items
-                        ON calendar_item_reminder_pendings.calendar_item_id = calendar_items.id
-                    WHERE calendar_item_reminder_pendings.calendar_id = #{calendar_item_reminder.calendar_item.calendar.id}
-                      AND calendar_item_reminder_pendings.identity_id = #{user.primary_identity.id}
-                      AND calendar_items.model_class #{Myp.sanitize_with_null(calendar_item_reminder.calendar_item.model_class)}
-                      AND calendar_items.model_id #{Myp.sanitize_with_null(calendar_item_reminder.calendar_item.model_id)}
-                    ORDER BY calendar_items.calendar_item_time ASC
-                  }
+              Rails.logger.debug{"calendar_item_time = #{calendar_item_reminder.calendar_item.calendar_item_time}"}
+          
+              if calendar_item_reminder.calendar_item.calendar_item_time - calendar_item_reminder.threshold_in_seconds.seconds <= now &&
+                  !calendar_item_reminder.is_expired(now)
+                
+                Rails.logger.debug{"meets threshold of #{calendar_item_reminder.threshold_in_seconds.seconds}"}
+          
+                # If there's a max_pending (often 1), then delete any pending
+                # items beyond that amount
+                new_pending = CalendarItemReminderPending.new(
+                  calendar_item_reminder: calendar_item_reminder,
+                  calendar: calendar_item_reminder.calendar_item.calendar,
+                  calendar_item: calendar_item_reminder.calendar_item,
+                  identity: user.primary_identity
                 )
                 
-                number_to_delete = pendings_result.count - calendar_item_reminder.max_pending
+                Rails.logger.debug{"creating new pending reminder #{new_pending.inspect}"}
+
+                begin
+                  new_pending.save!
+
+                  Rails.logger.debug{"created new pending item #{new_pending.inspect}"}
+                rescue ActiveRecord::InvalidForeignKey => ifk
+                  Rails.logger.debug{"InvalidForeignKey while trying to create new pending item, probably benign. #{ifk.inspect}"}
+                end
                 
-                if number_to_delete > 0
-                  pendings_result.first(number_to_delete).each do |x|
-                    
-                    # There's no point to keep the actual reminder around since we know there must be more recent
-                    # ${max_pending} reminder(s)
-                    Rails.logger.debug{"destroying excessive reminder #{x.calendar_item_reminder.inspect}; #{x.inspect}"}
-                    x.calendar_item_reminder.destroy!
+                # Send any notifications about the new reminder
+                send_reminder_notifications(user, new_pending)
+                
+                item_class = calendar_item_reminder.calendar_item.find_model_class
+                if item_class.respond_to?("handle_new_reminder?")
+                  item_obj = calendar_item_reminder.calendar_item.find_model_object
+                  if !item_obj.nil?
+                    begin
+                      item_obj.handle_new_reminder
+                    rescue Exception => e
+                      Myp.warn("Error handling new reminder", e)
+                    end
+                  end
+                end
+
+                if !calendar_item_reminder.max_pending.nil?
+                  pendings_result = CalendarItemReminderPending.find_by_sql(
+                    %{
+                      SELECT calendar_item_reminder_pendings.*
+                      FROM calendar_item_reminder_pendings
+                        INNER JOIN calendar_items
+                          ON calendar_item_reminder_pendings.calendar_item_id = calendar_items.id
+                      WHERE calendar_item_reminder_pendings.calendar_id = #{calendar_item_reminder.calendar_item.calendar.id}
+                        AND calendar_item_reminder_pendings.identity_id = #{user.primary_identity.id}
+                        AND calendar_items.model_class #{Myp.sanitize_with_null(calendar_item_reminder.calendar_item.model_class)}
+                        AND calendar_items.model_id #{Myp.sanitize_with_null(calendar_item_reminder.calendar_item.model_id)}
+                      ORDER BY calendar_items.calendar_item_time ASC
+                    }
+                  )
+                  
+                  number_to_delete = pendings_result.count - calendar_item_reminder.max_pending
+                  
+                  if number_to_delete > 0
+                    pendings_result.first(number_to_delete).each do |x|
+                      
+                      # There's no point to keep the actual reminder around since we know there must be more recent
+                      # ${max_pending} reminder(s)
+                      Rails.logger.debug{"destroying excessive reminder #{x.calendar_item_reminder.inspect}; #{x.inspect}"}
+                      x.calendar_item_reminder.destroy!
+                    end
                   end
                 end
               end
             end
           end
-        end
-        
-        is_expired = calendar_item_reminder.is_expired(now)
-
-        Rails.logger.debug{"is_expired = #{is_expired}"}
-
-        if is_expired
-          Rails.logger.debug{"reminder expired, deleting #{calendar_item_reminder.calendar_item_reminder_pendings.count} pendings"}
           
-          calendar_item_reminder.calendar_item_reminder_pendings.each do |calendar_item_reminder_pending|
-            calendar_item_reminder_pending.destroy!
-          end
-          
-          # The model might want a callback on expiration
-          if calendar_item_reminder.calendar_item.model_id.nil?
-            calendar_item_class = calendar_item_reminder.calendar_item.find_model_class
-            if calendar_item_class.respond_to?("handle_expired_reminder")
-              Rails.logger.debug{"calling handle_expired_reminder on class"}
-              calendar_item_class.handle_expired_reminder
-            end
-          else
-            calendar_item_object = calendar_item_reminder.calendar_item.find_model_object
+          is_expired = calendar_item_reminder.is_expired(now)
+
+          Rails.logger.debug{"is_expired = #{is_expired}"}
+
+          if is_expired
+            Rails.logger.debug{"reminder expired, deleting #{calendar_item_reminder.calendar_item_reminder_pendings.count} pendings"}
             
-            Rails.logger.debug{"checking calendar_item_object = #{calendar_item_object.inspect}"}
+            calendar_item_reminder.calendar_item_reminder_pendings.each do |calendar_item_reminder_pending|
+              calendar_item_reminder_pending.destroy!
+            end
+            
+            # The model might want a callback on expiration
+            if calendar_item_reminder.calendar_item.model_id.nil?
+              calendar_item_class = calendar_item_reminder.calendar_item.find_model_class
+              if calendar_item_class.respond_to?("handle_expired_reminder")
+                Rails.logger.debug{"calling handle_expired_reminder on class"}
+                calendar_item_class.handle_expired_reminder
+              end
+            else
+              calendar_item_object = calendar_item_reminder.calendar_item.find_model_object
+              
+              Rails.logger.debug{"checking calendar_item_object = #{calendar_item_object.inspect}"}
 
-            if !calendar_item_object.nil? && calendar_item_object.respond_to?("handle_expired_reminder")
-              Rails.logger.debug{"calling handle_expired_reminder on object"}
-              calendar_item_object.handle_expired_reminder
+              if !calendar_item_object.nil? && calendar_item_object.respond_to?("handle_expired_reminder")
+                Rails.logger.debug{"calling handle_expired_reminder on object"}
+                calendar_item_object.handle_expired_reminder
+              end
             end
           end
+        else
+          Myp.warn("Destroying invalid calendar item with identity: #{calendar_item_reminder.calendar_item.identity_id}, model_class: #{calendar_item_reminder.calendar_item.model_class}, model_id: #{calendar_item_reminder.calendar_item.model_id}")
+          calendar_item_reminder.calendar_item.destroy!
         end
         
         Rails.logger.debug{"finshed checking reminder"}
