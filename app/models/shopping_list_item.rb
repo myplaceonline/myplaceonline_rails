@@ -8,4 +8,8 @@ class ShoppingListItem < ApplicationRecord
   def display
     shopping_list_item_name
   end
+  
+  def final_search_result
+    shopping_list
+  end
 end

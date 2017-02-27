@@ -1250,6 +1250,9 @@ var myplaceonline = function(mymodule) {
       //   at eval (eval at <anonymous> (file:///android_asset/www/js/jquery-1.11.2.min.js:2:2622), <anonymous>:10367:472)
       knownErrors.push("Cannot read property 'getComputedStyle' of undefined");
       
+      // https://github.com/zeroclipboard/zeroclipboard/issues/661
+      knownErrors.push("Bad NPObject as private data!");
+      
       for (var i = 0; i < knownErrors.length; i++) {
         var knownError = knownErrors[i];
         if (errorObjStack.indexOf(knownError) != -1 || message.indexOf(knownError) != -1 || stackTrace.indexOf(knownError) != -1) {

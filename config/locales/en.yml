@@ -230,6 +230,7 @@ en:
       injuries: "Injuries"
       driver_licenses: "Driver Licenses"
       hospital_visits: "Hospital Visits"
+      shopping_list_items: "Shopping List Items"
     general:
       email: "E-mail"
       password: "Password"

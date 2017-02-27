@@ -25,4 +25,8 @@ class Cashback < ApplicationRecord
       :default_cashback
     ]
   end
+  
+  def final_search_result
+    credit_card_cashback.credit_card
+  end
 end
