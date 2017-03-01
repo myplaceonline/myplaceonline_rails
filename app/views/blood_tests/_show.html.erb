@@ -1,5 +1,6 @@
 <%= attribute_table_row_datetime(t("myplaceonline.blood_tests.test_time"), obj.test_time) %>
 <%= attribute_table_row_datetime(t("myplaceonline.blood_tests.fast_started"), obj.fast_started) %>
+<%= attribute_table_row(t("myplaceonline.blood_tests.preceding_changes"), obj.preceding_changes) %>
 <%= attribute_table_row_markdown(t("myplaceonline.blood_tests.notes"), obj.notes) %>
 <% obj.blood_test_results.each do |wrapper| %>
   <%= table_row_heading(t("myplaceonline.blood_tests.result")) %>

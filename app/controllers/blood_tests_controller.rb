@@ -60,6 +60,7 @@ class BloodTestsController < MyplaceonlineController
         :fast_started,
         :test_time,
         :notes,
+        :preceding_changes,
         blood_test_files_attributes: FilesController.multi_param_names,
         location_attributes: LocationsController.param_names,
         doctor_attributes: DoctorsController.param_names,

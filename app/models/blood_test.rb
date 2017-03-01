@@ -6,7 +6,7 @@ class BloodTest < ApplicationRecord
   validates :test_time, presence: true
   
   def display
-    Myp.display_datetime_short_year(test_time, User.current_user)
+    Myp.appendstrwrap(Myp.display_datetime_short_year(test_time, User.current_user), self.preceding_changes)
   end
   
   child_properties(name: :blood_test_results)

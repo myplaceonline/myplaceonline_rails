@@ -1475,6 +1475,7 @@ en:
       graph: "Graph"
       concentration_name: "Concentration"
       flag: "Flag"
+      preceding_changes: "Preceding Changes"
     blood_concentrations:
       concentration_name: "Name"
       concentration_type: "Concentration Type"

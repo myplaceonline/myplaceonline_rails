@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170301033131) do
+ActiveRecord::Schema.define(version: 20170301051219) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -395,6 +395,7 @@ ActiveRecord::Schema.define(version: 20170301033131) do
     t.integer  "location_id"
     t.datetime "archived"
     t.integer  "rating"
+    t.string   "preceding_changes"
     t.index ["doctor_id"], name: "index_blood_tests_on_doctor_id", using: :btree
     t.index ["identity_id"], name: "index_blood_tests_on_identity_id", using: :btree
     t.index ["location_id"], name: "index_blood_tests_on_location_id", using: :btree
