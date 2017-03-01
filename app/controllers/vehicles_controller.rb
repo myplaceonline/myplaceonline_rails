@@ -38,6 +38,7 @@ class VehiclesController < MyplaceonlineController
         :owned_start,
         :owned_end,
         :vin,
+        :bought_miles,
         :manufacturer,
         :model,
         :year,

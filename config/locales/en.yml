@@ -1160,6 +1160,7 @@ en:
       registration: "Registration"
       add_registration: "Add Registration"
       delete_registration: "Delete Registration"
+      bought_miles: "Miles when Bought"
     vehicle_insurances:
       insurance_name: "Name"
       insurances: "Insurances"
