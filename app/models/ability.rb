@@ -9,11 +9,11 @@ class Ability
       identity = user.primary_identity
     end
 
-    Rails.logger.debug{"Ability user: #{user.id}"}
+    Rails.logger.debug{"Ability.initialize user: #{user.id}"}
 
     if !Ability.context_identity.nil?
       identity = Ability.context_identity
-      Rails.logger.debug{"Ability identity from thread: #{identity.id}"}
+      Rails.logger.debug{"Ability.initialize identity from thread: #{identity.id}"}
     end
     
     can do |action, subject_class, subject|
@@ -47,31 +47,31 @@ class Ability
     end
     subject_class ||= subject.class
 
-    Rails.logger.debug{"authorize user: #{user.id}"}
+    Rails.logger.debug{"Ability.authorize user: #{user.id}"}
 
     if !Ability.context_identity.nil?
       identity = Ability.context_identity
-      Rails.logger.debug{"authorize identity from thread: #{identity.id}"}
+      Rails.logger.debug{"Ability.authorize identity from thread: #{identity.id}"}
     end
     
     # If the user owns the object, then they can do anything;
     # Otherwise, check the Shares and Permissions tables
     
-    Rails.logger.debug{"authorize checking action: #{action}, subject_class: #{subject_class}, subject: #{subject.id} with identity #{identity.id}"}
+    Rails.logger.debug{"Ability.authorize checking action: #{action}, subject_class: #{subject_class}, subject: #{subject.id} with identity #{identity.id}"}
     
     if !subject.nil?
       
       if subject.respond_to?("permission_check_target")
         subject = subject.permission_check_target
         subject_class = subject.class
-        Rails.logger.debug{"Changing subject to: subject_class: #{subject_class}, subject: #{subject.id}"}
+        Rails.logger.debug{"Ability.authorize Changing subject to: subject_class: #{subject_class}, subject: #{subject.id}"}
       end
       
       # If token is a query parameter, then check the share table
       if !request.nil? && !request.query_parameters.nil?
         token = request.query_parameters["token"]
         if !token.blank?
-          Rails.logger.debug{"Found token: #{token}"}
+          Rails.logger.debug{"Ability.Found token: #{token}"}
           ps = PermissionShare.find_by_sql(%{
             SELECT permission_shares.*
             FROM permission_shares
@@ -114,7 +114,7 @@ class Ability
       
       if !result && !user.new_record?
         if subject.respond_to?("identity_id") && subject.identity_id == identity.id
-          Rails.logger.debug{"Identities match: subject: #{subject.id}, identity: #{identity.id}"}
+          Rails.logger.debug{"Ability.authorize Identities match: subject: #{subject.id}, identity: #{identity.id}"}
           result = true
         else
           query = "user_id = ? and subject_class = ? and subject_id = ? and (action & #{Permission::ACTION_MANAGE} != 0"
@@ -135,21 +135,21 @@ class Ability
           query += ")"
           permission_results = Permission.where(query, user.id, Myp.model_to_category_name(subject_class), subject.id)
           if permission_results.length > 0
-            Rails.logger.debug{"Found permissions: #{permission_results.inspect}"}
+            Rails.logger.debug{"Ability.authorize Found permissions: #{permission_results.inspect}"}
             result = true
           else
-            Rails.logger.debug{"Returning false for user: #{user.id}, action: #{action}, category: #{Myp.model_to_category_name(subject_class)}, subject: #{subject.id}"}
+            Rails.logger.debug{"Ability.authorize Returning false for user: #{user.id}, action: #{action}, category: #{Myp.model_to_category_name(subject_class)}, subject: #{subject.id}"}
           end
         end
       end
     end
 
     if user.guest? && action != :show
-      Rails.logger.debug{"Guest can only do show action (tried #{action})"}
+      Rails.logger.debug{"Ability.authorize Guest can only do show action (tried #{action})"}
       result = false
     end
 
-    Rails.logger.debug{"Authorize returning #{result} for user #{user.id}, subject #{subject.inspect}"}
+    Rails.logger.debug{"Ability.authorize returning #{result} for user #{user.id}, subject #{subject.inspect}"}
     
     result
   end

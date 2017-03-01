@@ -995,7 +995,7 @@ class MyplaceonlineController < ApplicationController
     end
 
     def set_obj(action = nil, p: params, override_existing: false)
-      Rails.logger.debug{"set_obj action: #{action}, p: #{p.inspect}"}
+      Rails.logger.debug{"MyplaceonlineController.set_obj action: #{action}, p: #{p.inspect}"}
       if action.nil?
         action = action_name
       end
@@ -1004,10 +1004,10 @@ class MyplaceonlineController < ApplicationController
       begin
         if nested
           parent_id = parent_model_last.table_name.singularize.downcase + "_id"
-          Rails.logger.debug{"set_obj parent_id: #{parent_id}, param: #{p[parent_id]}"}
+          Rails.logger.debug{"MyplaceonlineController.set_obj parent_id: #{parent_id}, param: #{p[parent_id]}"}
           if !p[parent_id].nil?
             @parent = Myp.find_existing_object(parent_model_last, p[parent_id], false)
-            Rails.logger.debug{"set_obj parent: #{@parent.inspect}"}
+            Rails.logger.debug{"MyplaceonlineController.set_obj parent: #{@parent.inspect}"}
             @obj = model.where("id = ? and #{parent_id} = ?", p[:id].to_i, p[parent_id.to_sym].to_i).take!
           end
         end
@@ -1018,7 +1018,7 @@ class MyplaceonlineController < ApplicationController
             handle_object_not_found(p[:id])
           end
           
-          Rails.logger.debug{"set_obj setting @obj: #{@obj}"}
+          Rails.logger.debug{"MyplaceonlineController.set_obj setting @obj: #{@obj}"}
         end
       rescue ActiveRecord::RecordNotFound => rnf
         raise Myp::SuddenRedirectError.new(index_path)

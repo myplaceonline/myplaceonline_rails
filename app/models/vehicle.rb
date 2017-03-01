@@ -25,6 +25,6 @@ class Vehicle < ApplicationRecord
   child_properties(name: :vehicle_registrations, sort: "registration_date DESC")
 
   def display
-    Myp.appendstrwrap(name, license_plate)
+    Myp.appendstr(manufacturer, Myp.appendstrwrap(name, license_plate))
   end
 end

@@ -23,15 +23,15 @@ class ApplicationController < ActionController::Base
   utf8_enforcer_workaround
   
   def do_authenticate_user
-    Rails.logger.debug{"do_authenticate_user entry"}
+    Rails.logger.debug{"ApplicationController.do_authenticate_user entry"}
 
     catch_result = catch(:warden) do
-      Rails.logger.debug{"calling authenticate_user!"}
+      Rails.logger.debug{"ApplicationController.do_authenticate_user calling authenticate_user!"}
       authenticate_user!
-      Rails.logger.debug{"returned successfully"}
+      Rails.logger.debug{"ApplicationController.do_authenticate_user returned successfully"}
     end
     
-    Rails.logger.debug{"catch_result: #{catch_result.inspect}"}
+    Rails.logger.debug{"ApplicationController.do_authenticate_user catch_result: #{catch_result.inspect}"}
 
     # If catch_result is a Hash, then we assume it's {scope: :user} and
     # it's somebody trying to access a resource; otherwise, it might just be
@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
     if catch_result.is_a?(Hash)
       # authenticate_user! failed
       
-      Rails.logger.debug{"Setting user to guest: #{User.guest.inspect}"}
+      Rails.logger.debug{"ApplicationController.do_authenticate_user Setting user to guest: #{User.guest.inspect}"}
       
       warden.set_user(User.guest, {run_callbacks: false})
 
@@ -93,9 +93,9 @@ class ApplicationController < ActionController::Base
   end
 
   def around_request
-    Rails.logger.debug{"application_controller around_request entry. Referer: #{request.referer}"}
+    Rails.logger.debug{"ApplicationController.around_request entry. Referer: #{request.referer}"}
     
-    Rails.logger.debug{"params: #{Myp.debug_print(params.to_unsafe_hash)}"}
+    Rails.logger.debug{"ApplicationController.around_request params: #{Myp.debug_print(params.to_unsafe_hash)}"}
     
     # This method is called once per controller, and multiple controllers might render within a single request.
     ExecutionContext.stack do

@@ -92,7 +92,7 @@ class MyplaceonlineExecutionContext
   def self.initialize(request:, session:, user:, persistent_user_store:)
     MyplaceonlineExecutionContext.request = request
     
-    Rails.logger.debug{"Setting User.user: #{user.nil? ? "nil" : user.id}"}
+    Rails.logger.debug{"MyplaceonlineExecutionContext.initialize user: #{user.nil? ? "nil" : user.id}"}
 
     MyplaceonlineExecutionContext.user = user
     
