@@ -18,6 +18,14 @@ class VehiclesController < MyplaceonlineController
     ]
   end
   
+  def use_bubble?
+    true
+  end
+  
+  def bubble_text(obj)
+    obj.year
+  end
+    
   protected
     def sorts
       ["lower(vehicles.name) ASC"]
