@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170301052858) do
+ActiveRecord::Schema.define(version: 20170304233007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2614,6 +2614,18 @@ ActiveRecord::Schema.define(version: 20170301052858) do
     t.datetime "archived"
     t.integer  "rating"
     t.index ["identity_id"], name: "index_life_goals_on_identity_id", using: :btree
+  end
+
+  create_table "life_highlight_files", force: :cascade do |t|
+    t.integer  "life_highlight_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["identity_file_id"], name: "index_life_highlight_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_life_highlight_files_on_identity_id", using: :btree
+    t.index ["life_highlight_id"], name: "index_life_highlight_files_on_life_highlight_id", using: :btree
   end
 
   create_table "life_highlights", force: :cascade do |t|
@@ -5592,6 +5604,9 @@ ActiveRecord::Schema.define(version: 20170301052858) do
   add_foreign_key "license_files", "licenses"
   add_foreign_key "licenses", "identities"
   add_foreign_key "life_goals", "identities", name: "life_goals_identity_id_fk"
+  add_foreign_key "life_highlight_files", "identities"
+  add_foreign_key "life_highlight_files", "identity_files"
+  add_foreign_key "life_highlight_files", "life_highlights"
   add_foreign_key "life_highlights", "identities"
   add_foreign_key "life_insurance_files", "identities"
   add_foreign_key "life_insurance_files", "identity_files"

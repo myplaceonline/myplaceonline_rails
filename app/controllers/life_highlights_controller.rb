@@ -7,6 +7,10 @@ class LifeHighlightsController < MyplaceonlineController
     Myp.display_date_month_year(obj.life_highlight_time, User.current_user)
   end
     
+  def may_upload
+    true
+  end
+
   protected
     def insecure
       true
@@ -20,7 +24,8 @@ class LifeHighlightsController < MyplaceonlineController
       params.require(:life_highlight).permit(
         :life_highlight_time,
         :life_highlight_name,
-        :notes
+        :notes,
+        life_highlight_files_attributes: FilesController.multi_param_names
       )
     end
 end

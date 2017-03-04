@@ -1,3 +1,9 @@
 <%= attribute_table_row_datetime(t("myplaceonline.life_highlights.life_highlight_time"), obj.life_highlight_time) %>
 <%= attribute_table_row(t("myplaceonline.life_highlights.life_highlight_name"), obj.life_highlight_name) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.life_highlight_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>

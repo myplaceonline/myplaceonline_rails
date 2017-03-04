@@ -1,3 +1,16 @@
 <%= myp_text_field(f, :life_highlight_name, "myplaceonline.life_highlights.life_highlight_name", obj.life_highlight_name, autofocus) %>
 <%= myp_datetime_field(f, :life_highlight_time, "myplaceonline.life_highlights.life_highlight_time", obj.life_highlight_time) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes, collapsed: false) %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :life_highlight_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>

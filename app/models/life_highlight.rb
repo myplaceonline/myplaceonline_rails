@@ -13,4 +13,6 @@ class LifeHighlight < ApplicationRecord
     result.life_highlight_time = User.current_user.time_now
     result
   end
+
+  child_files
 end
