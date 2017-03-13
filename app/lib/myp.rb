@@ -1227,8 +1227,7 @@ module Myp
   ENCRYPTION_MODE_AES_256_GCM = 0
   ENCRYPTION_MODE_AES_256_CBC = 1
   
-  # TODO AES-128-GCM/AES-256-GCM don't work yet - they throw ActiveSupport::MessageEncryptor::InvalidMessage
-  # See Myp.play. Haven't investigated yet - presumably some library dependency doesn't have the GCM support yet.
+  # TODO http://stackoverflow.com/questions/42774930/how-do-i-use-aes-128-gcm-encryption-in-rails
   ENCRYPTION_MODE_DEFAULT = ENCRYPTION_MODE_AES_256_CBC
   
   ENCRYPTION_MODES = [
@@ -2284,7 +2283,7 @@ module Myp
       key   = ActiveSupport::KeyGenerator.new('password').generate_key(salt, 32)
       crypt = ActiveSupport::MessageEncryptor.new(key, cipher: cipher)
       encrypted_data = crypt.encrypt_and_sign('my secret data')
-      crypt.decrypt_and_verify(encrypted_data)
+      puts crypt.decrypt_and_verify(encrypted_data)
     end
   end
   
