@@ -1319,8 +1319,17 @@ module Myp
         from = User.current_user.email
       end
       
-      # Protect email servers from DoS
+      # Protect email servers from simple DoS
       sleep(1.0)
+      
+      if ExecutionContext.available? && !User.current_user.nil?
+        if !body.blank?
+          body += "\n\n<p>User: #{User.current_user.email}</p>"
+        end
+        if !body_plain.blank?
+          body_plain += "\n\nUser: #{User.current_user.email}"
+        end
+      end
       
       UserMailer.send_support_email(from, subject, body, body_plain).deliver_now
       
@@ -1814,7 +1823,11 @@ module Myp
     results = search_results.map do |search_result|
       result = nil
       prefix_text = ""
+      
       Rails.logger.debug{"search_result initial: #{search_result.inspect}"}
+      
+      original_search_result = search_result
+      
       if search_result.respond_to?("final_search_result")
         if !search_result.respond_to?("final_search_result_display?") || search_result.final_search_result_display?
           if display_category_prefix
@@ -1839,7 +1852,7 @@ module Myp
           if I18n.exists?("myplaceonline.category." + temp_cat_name)
             category = Category.new(name: temp_cat_name)
           else
-            Myp.warn("full_text_search found result but not category (perhaps use final_search_result?): #{search_result}; search: #{original_search}, user: #{User.current_user.primary_identity_id}, category: #{temp_cat_name}")
+            Myp.warn("Myp.process_search_results full_text_search found result but not category (perhaps use final_search_result?): #{search_result.inspect}; search: #{original_search}, user: #{User.current_user.primary_identity_id}, category: #{temp_cat_name}, original_search_result: #{original_search_result.inspect}")
           end
         end
         if !category.nil?
