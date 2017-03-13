@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170304233007) do
+ActiveRecord::Schema.define(version: 20170313063945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3295,6 +3295,38 @@ ActiveRecord::Schema.define(version: 20170304233007) do
     t.index ["identity_id"], name: "index_notepads_on_identity_id", using: :btree
   end
 
+  create_table "paid_tax_files", force: :cascade do |t|
+    t.integer  "paid_tax_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["identity_file_id"], name: "index_paid_tax_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_paid_tax_files_on_identity_id", using: :btree
+    t.index ["paid_tax_id"], name: "index_paid_tax_files_on_paid_tax_id", using: :btree
+  end
+
+  create_table "paid_taxes", force: :cascade do |t|
+    t.date     "paid_tax_date"
+    t.decimal  "donations",            precision: 10, scale: 2
+    t.decimal  "federal_refund",       precision: 10, scale: 2
+    t.decimal  "state_refund",         precision: 10, scale: 2
+    t.decimal  "service_fee",          precision: 10, scale: 2
+    t.text     "notes"
+    t.integer  "password_id"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.string   "paid_tax_description"
+    t.decimal  "total_taxes_paid",     precision: 10, scale: 2
+    t.index ["identity_id"], name: "index_paid_taxes_on_identity_id", using: :btree
+    t.index ["password_id"], name: "index_paid_taxes_on_password_id", using: :btree
+  end
+
   create_table "pains", force: :cascade do |t|
     t.string   "pain_location",   limit: 255
     t.integer  "intensity"
@@ -5706,6 +5738,11 @@ ActiveRecord::Schema.define(version: 20170304233007) do
   add_foreign_key "myreferences", "contacts"
   add_foreign_key "myreferences", "identities"
   add_foreign_key "notepads", "identities", name: "notepads_identity_id_fk"
+  add_foreign_key "paid_tax_files", "identities"
+  add_foreign_key "paid_tax_files", "identity_files"
+  add_foreign_key "paid_tax_files", "paid_taxes"
+  add_foreign_key "paid_taxes", "identities"
+  add_foreign_key "paid_taxes", "passwords"
   add_foreign_key "pains", "identities", name: "pains_identity_id_fk"
   add_foreign_key "passport_pictures", "identities", name: "passport_pictures_identity_id_fk"
   add_foreign_key "passport_pictures", "identity_files", name: "passport_pictures_identity_file_id_fk"

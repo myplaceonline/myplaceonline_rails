@@ -1,0 +1,2 @@
+module PaidTaxesHelper
+end

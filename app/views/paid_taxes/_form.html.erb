@@ -1,0 +1,100 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATE,
+    name: :paid_tax_date,
+    value: obj.paid_tax_date,
+    placeholder: "myplaceonline.paid_taxes.paid_tax_date",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :paid_tax_description,
+    value: obj.paid_tax_description,
+    placeholder: "myplaceonline.paid_taxes.paid_tax_description"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :total_taxes_paid,
+    value: obj.total_taxes_paid,
+    placeholder: "myplaceonline.paid_taxes.total_taxes_paid"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :federal_refund,
+    value: obj.federal_refund,
+    placeholder: "myplaceonline.paid_taxes.federal_refund"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :state_refund,
+    value: obj.state_refund,
+    placeholder: "myplaceonline.paid_taxes.state_refund"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :donations,
+    value: obj.donations,
+    placeholder: "myplaceonline.paid_taxes.donations"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :service_fee,
+    value: obj.service_fee,
+    placeholder: "myplaceonline.paid_taxes.service_fee"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: false
+  )
+%>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :password,
+    existingobj: obj.password,
+    heading: t("myplaceonline.paid_taxes.password"),
+    objform: "passwords/form",
+    existingobjurl: "password_path",
+    searchurl: "/passwords.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :paid_tax_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>

@@ -147,17 +147,18 @@ Category.create!([
   {id: 147, name: "prescriptions", link: "prescriptions", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/document_yellow.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 148, name: "donations", link: "donations", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/coins_in_hand.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 149, name: "checks", link: "checks", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/cheque.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 182, name: "test_scores", link: "test_scores", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/application_edit.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 183, name: "bills", link: "bills", position: 0, parent_id: 51, additional_filtertext: "invoices", icon: "FatCow_Icons16x16/document_info.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 184, name: "patents", link: "patents", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/document_protect.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 185, name: "dating_profiles", link: "dating_profiles", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/personals.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 186, name: "memories", link: "memories", position: 0, parent_id: 3, additional_filtertext: nil, icon: "FatCow_Icons16x16/flashlight_shine.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 187, name: "licenses", link: "licenses", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/license_key.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 188, name: "music_albums", link: "music_albums", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/cd_case.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 189, name: "surgeries", link: "surgeries", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/scalpel.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 190, name: "injuries", link: "injuries", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/fire.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 191, name: "driver_licenses", link: "driver_licenses", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/form_photo.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 192, name: "hospital_visits", link: "hospital_visits", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/stethoscope.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
+  {id: 150, name: "test_scores", link: "test_scores", position: 0, parent_id: 1, additional_filtertext: "SAT", icon: "FatCow_Icons16x16/application_edit.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 151, name: "bills", link: "bills", position: 0, parent_id: 51, additional_filtertext: "invoices", icon: "FatCow_Icons16x16/document_info.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 152, name: "patents", link: "patents", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/document_protect.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 153, name: "dating_profiles", link: "dating_profiles", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/personals.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 154, name: "memories", link: "memories", position: 0, parent_id: 3, additional_filtertext: nil, icon: "FatCow_Icons16x16/flashlight_shine.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 155, name: "licenses", link: "licenses", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/license_key.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 156, name: "music_albums", link: "music_albums", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/cd_case.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 157, name: "surgeries", link: "surgeries", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/scalpel.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 158, name: "injuries", link: "injuries", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/fire.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 159, name: "driver_licenses", link: "driver_licenses", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/form_photo.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 160, name: "hospital_visits", link: "hospital_visits", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/stethoscope.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 190, name: "paid_taxes", link: "paid_taxes", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/money.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
 ])
 
 user = User.new

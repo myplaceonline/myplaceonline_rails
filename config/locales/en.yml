@@ -231,6 +231,7 @@ en:
       driver_licenses: "Driver Licenses"
       hospital_visits: "Hospital Visits"
       shopping_list_items: "Shopping List Items"
+      paid_taxes: "Paid Taxes"
     general:
       email: "E-mail"
       password: "Password"
@@ -3291,3 +3292,12 @@ en:
       hospital_visit_date: "Date"
       emergency_room: "Emergency Room"
       hospital: "Hospital"
+    paid_taxes:
+      paid_tax_date: "Date"
+      donations: "Donations"
+      federal_refund: "Federal Refund"
+      state_refund: "State Refund"
+      service_fee: "Service Fee"
+      password: "Service"
+      paid_tax_description: "Description"
+      total_taxes_paid: "Total Taxes Paid"
