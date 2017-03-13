@@ -6,8 +6,6 @@ require 'rest-client'
 require 'time'
 
 module Myp
-  # See https://github.com/digitalbazaar/forge/issues/207
-  DEFAULT_AES_KEY_SIZE = 32
   @@all_categories = Hash.new.with_indifferent_access
   @@all_categories_without_explicit_without_experimental = Hash.new.with_indifferent_access
   @@all_categories_without_explicit_with_experimental = Hash.new.with_indifferent_access
@@ -630,6 +628,18 @@ module Myp
     self.encrypt_value(user, message, key, result)
   end
   
+  def self.map_cipher(encryption_mode)
+    case encryption_mode
+    when Myp::ENCRYPTION_MODE_AES_256_GCM
+      result = "aes-128-gcm"
+    when Myp::ENCRYPTION_MODE_AES_256_CBC
+      result = "aes-256-cbc"
+    else
+      raise "TODO"
+    end
+    result
+  end
+  
   def self.encrypt_value(user, message, key, value)
     if !message.nil? && !message.kind_of?(String)
       message = Myp.eye_catcher_marshalled + Marshal::dump(message)
@@ -638,19 +648,35 @@ module Myp
     if message.nil? || message == "" then
       message = " "
     end
-    value.encryption_type = 1
     if user.nil?
       raise Myp::UserUnavailableError
     end
+    value.encryption_type = user.get_encryption_mode
     value.user = user
+    
+    cipher = Myp.map_cipher(value.encryption_type)
+    
+    # https://github.com/digitalbazaar/forge/issues/207
+    cipher_key_length = OpenSSL::Cipher.new(cipher).key_len
+    
     # OpenSSL only uses an 8 byte salt: https://www.openssl.org/docs/crypto/EVP_BytesToKey.html
     # "The standard recommends a salt length of at least [8 bytes]." (http://en.wikipedia.org/wiki/PBKDF2)
-    value.salt = SecureRandom.random_bytes(8)
-    # This uses PBKDF2+HMAC+SHA1 with an iteration count is 65536:
+    # https://github.com/rails/rails/blob/master/activesupport/lib/active_support/message_encryptor.rb
+    value.salt = SecureRandom.random_bytes(64)
+    
+    # This uses PBKDF2+HMAC+SHA1 with an iteration count of 65536:
     # https://github.com/rails/rails/blob/master/activesupport/lib/active_support/key_generator.rb
-    generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(value.salt, Myp::DEFAULT_AES_KEY_SIZE)
-    crypt = ActiveSupport::MessageEncryptor.new(generated_key, :serializer => SimpleSerializer.new)
+    generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(value.salt, cipher_key_length)
+    
+    # https://github.com/rails/rails/blob/master/activesupport/lib/active_support/message_encryptor.rb
+    crypt = ActiveSupport::MessageEncryptor.new(
+      generated_key,
+      cipher: cipher,
+      serializer: SimpleSerializer.new
+    )
+    
     value.val = crypt.encrypt_and_sign(message)
+    
     value
   end
   
@@ -668,15 +694,28 @@ module Myp
   end
   
   def self.decrypt(encrypted_value, key)
-    generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(encrypted_value.salt, Myp::DEFAULT_AES_KEY_SIZE)
-    crypt = ActiveSupport::MessageEncryptor.new(generated_key, :serializer => SimpleSerializer.new)
+    cipher = Myp.map_cipher(encrypted_value.encryption_type)
+    
+    cipher_key_length = OpenSSL::Cipher.new(cipher).key_len
+    
+    generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(encrypted_value.salt, cipher_key_length)
+    
+    crypt = ActiveSupport::MessageEncryptor.new(
+      generated_key,
+      cipher: cipher,
+      serializer: SimpleSerializer.new
+    )
+    
     result = crypt.decrypt_and_verify(encrypted_value.val)
+    
     if !result.nil?
       result.force_encoding("utf-8")
     end
+    
     if result.start_with?(Myp.eye_catcher_marshalled)
       result = Marshal::load(result[Myp.eye_catcher_marshalled.length..-1])
     end
+    
     result
   end
   
@@ -1184,6 +1223,18 @@ module Myp
       nil
     end
   end
+  
+  ENCRYPTION_MODE_AES_256_GCM = 0
+  ENCRYPTION_MODE_AES_256_CBC = 1
+  
+  # TODO AES-128-GCM/AES-256-GCM don't work yet - they throw ActiveSupport::MessageEncryptor::InvalidMessage
+  # See Myp.play. Haven't investigated yet - presumably some library dependency doesn't have the GCM support yet.
+  ENCRYPTION_MODE_DEFAULT = ENCRYPTION_MODE_AES_256_CBC
+  
+  ENCRYPTION_MODES = [
+    # ["myplaceonline.encryption_modes.aes_256_gcm", ENCRYPTION_MODE_AES_256_GCM],
+    ["myplaceonline.encryption_modes.aes_256_cbc", ENCRYPTION_MODE_AES_256_CBC],
+  ]
   
   AFTER_NEW_ITEM_SHOW_ITEM = 0
   AFTER_NEW_ITEM_SHOW_LIST = 1
@@ -2224,6 +2275,17 @@ module Myp
     end
     
     result
+  end
+  
+  def self.play
+    ["aes-256-cbc", "aes-128-gcm"].each do |cipher|
+      puts "Cipher: #{cipher}"
+      salt  = SecureRandom.random_bytes(64)
+      key   = ActiveSupport::KeyGenerator.new('password').generate_key(salt, 32)
+      crypt = ActiveSupport::MessageEncryptor.new(key, cipher: cipher)
+      encrypted_data = crypt.encrypt_and_sign('my secret data')
+      crypt.decrypt_and_verify(encrypted_data)
+    end
   end
   
   Rails.logger.info{"myplaceonline: myp.rb static initialization ended"}

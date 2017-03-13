@@ -193,11 +193,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
     check_password
     @encrypt_by_default = current_user.encrypt_by_default
     @minimize_password_checks = current_user.minimize_password_checks
+    @encryption_mode = current_user.encryption_mode
     if request.post?
       @encrypt_by_default = params[:encrypt_by_default]
       @minimize_password_checks = params[:minimize_password_checks]
+      @encryption_mode = params[:encryption_mode]
       current_user.encrypt_by_default = @encrypt_by_default
       current_user.minimize_password_checks = @minimize_password_checks
+      current_user.encryption_mode = @encryption_mode
       current_user.save!
       redirect_to edit_user_registration_path,
         :flash => { :notice => I18n.t("myplaceonline.users.security_settings_saved") }

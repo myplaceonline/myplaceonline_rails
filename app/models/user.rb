@@ -175,6 +175,14 @@ class User < ApplicationRecord
   def has_encrypted_content?
     EncryptedValue.where(user_id: self.id).count > 0
   end
+  
+  def get_encryption_mode
+    result = Myp::ENCRYPTION_MODE_DEFAULT
+    if !self.encryption_mode.nil?
+      result = self.encryption_mode
+    end
+    result
+  end
 
   protected
     def confirmation_required?

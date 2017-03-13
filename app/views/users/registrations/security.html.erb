@@ -7,5 +7,6 @@
   <p><%= t("myplaceonline.users.encrypt_warning") %></p>
   <p><%= myp_check_box_tag(:encrypt_by_default, "myplaceonline.users.encrypt_by_default", @encrypt_by_default) %></p>
   <p><%= myp_check_box_tag(:minimize_password_checks, "myplaceonline.users.minimize_password_checks", @minimize_password_checks) %></p>
+  <p><%= myp_select_tag(:encryption_mode, "myplaceonline.users.encryption_mode", Myp.translate_options(Myp::ENCRYPTION_MODES), @encryption_mode) %></p>
   <div><%= submit_tag t("myplaceonline.general.save") %></div>
 <% end %>

@@ -745,6 +745,7 @@ en:
       notifications_saved: "Notification Settings Saved"
       after_new_item: "After New Item Created"
       allow_adding_existing_file: "Allow Adding Existing File"
+      encryption_mode: "Encryption Mode"
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"
@@ -3301,3 +3302,6 @@ en:
       password: "Service"
       paid_tax_description: "Description"
       total_taxes_paid: "Total Taxes Paid"
+    encryption_modes:
+      aes_256_cbc: "AES-256-CBC"
+      aes_256-gcm: "AES-256-GCM"
