@@ -22,11 +22,13 @@ module Myp
   # We want at least 128 bits of randomness, so
   # min(POSSIBILITIES_*.length)^DEFAULT_PASSWORD_LENGTH should be >= 2^128
   DEFAULT_PASSWORD_LENGTH = 22
-  POSSIBILITIES_NUMERIC = [('0'..'9')].map { |i| i.to_a }.flatten
-  POSSIBILITIES_LOWERCASE = [('a'..'z')].map { |i| i.to_a }.flatten
-  POSSIBILITIES_UPPERCASE = [('A'..'Z')].map { |i| i.to_a }.flatten
+  
+  # Avoid 1, l, o, O, 0, | characters to avoid ambiguity
+  POSSIBILITIES_NUMERIC = [('1'..'9')].map { |i| i.to_a }.flatten
+  POSSIBILITIES_LOWERCASE = [('a'..'k'), ('m'..'n'), ('p'..'z')].map { |i| i.to_a }.flatten
+  POSSIBILITIES_UPPERCASE = [('A'..'N'), ('P'..'Z')].map { |i| i.to_a }.flatten
   POSSIBILITIES_SPECIAL = ['_', '-', '!']
-  POSSIBILITIES_SPECIAL_ADDITIONAL = ['@', '$', '#', '%', '^', '&', '*', '(', ')', '[', ']', '+', '<', '>', '?', '/', ':', ';', ',', '=', '|', '{', '}', '~']
+  POSSIBILITIES_SPECIAL_ADDITIONAL = ['@', '$', '#', '%', '^', '&', '*', '(', ')', '[', ']', '+', '<', '>', '?', '/', ':', ';', ',', '=', '{', '}', '~']
   
   COOKIE_EXPIRATION = 1.year
   MAX_COOKIE_EXPIRES_DATE = DateTime.new(2038, 1, 1)
