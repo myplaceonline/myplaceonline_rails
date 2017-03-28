@@ -192,7 +192,7 @@ class Identity < ApplicationRecord
   has_many :patents, :dependent => :destroy
   has_many :dating_profiles, :dependent => :destroy
   has_many :memories, :dependent => :destroy
-  has_many :licenses, :dependent => :destroy
+  has_many :software_licenses, :dependent => :destroy
   has_many :music_albums, :dependent => :destroy
   has_many :surgeries, :dependent => :destroy
   has_many :injuries, :dependent => :destroy
@@ -414,7 +414,7 @@ class Identity < ApplicationRecord
       :patents => patents.to_a.map{|x| x.as_json},
       :dating_profiles => dating_profiles.to_a.map{|x| x.as_json},
       :memories => memories.to_a.map{|x| x.as_json},
-      :licenses => licenses.to_a.map{|x| x.as_json},
+      :software_licenses => software_licenses.to_a.map{|x| x.as_json},
       :music_albums => music_albums.to_a.map{|x| x.as_json},
       :surgeries => surgeries.to_a.map{|x| x.as_json},
       :injuries => injuries.to_a.map{|x| x.as_json},

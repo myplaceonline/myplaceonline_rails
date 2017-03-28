@@ -1,4 +1,4 @@
-class License < ApplicationRecord
+class SoftwareLicense < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 

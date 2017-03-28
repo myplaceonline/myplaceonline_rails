@@ -1,4 +1,4 @@
-class LicensesController < MyplaceonlineController
+class SoftwareLicensesController < MyplaceonlineController
   def may_upload
     true
   end
@@ -9,17 +9,17 @@ class LicensesController < MyplaceonlineController
     end
 
     def sorts
-      ["lower(licenses.license_name) ASC"]
+      ["lower(software_licenses.license_name) ASC"]
     end
 
     def obj_params
-      params.require(:license).permit(
+      params.require(:software_license).permit(
         :license_name,
         :license_value,
         :license_purchase_date,
         :license_key,
         :notes,
-        license_files_attributes: FilesController.multi_param_names
+        software_license_files_attributes: FilesController.multi_param_names
       )
     end
 end

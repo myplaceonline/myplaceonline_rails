@@ -4,7 +4,7 @@
     type: Myp::FIELD_TEXT,
     name: :license_name,
     value: obj.license_name,
-    placeholder: "myplaceonline.licenses.license_name",
+    placeholder: "myplaceonline.software_licenses.license_name",
     autofocus: autofocus
   )
 %>
@@ -14,7 +14,7 @@
     type: Myp::FIELD_TEXT_AREA,
     name: :license_key,
     value: obj.license_key,
-    placeholder: "myplaceonline.licenses.license_key",
+    placeholder: "myplaceonline.software_licenses.license_key",
     collapsed: false
   )
 %>
@@ -24,7 +24,7 @@
     type: Myp::FIELD_DATE,
     name: :license_purchase_date,
     value: obj.license_purchase_date,
-    placeholder: "myplaceonline.licenses.license_purchase_date"
+    placeholder: "myplaceonline.software_licenses.license_purchase_date"
   )
 %>
 <%=
@@ -33,7 +33,7 @@
     type: Myp::FIELD_DECIMAL,
     name: :license_value,
     value: obj.license_value,
-    placeholder: "myplaceonline.licenses.license_value"
+    placeholder: "myplaceonline.software_licenses.license_value"
   )
 %>
 <%=
@@ -50,7 +50,7 @@
     f: f,
     obj: obj,
     position_field: :position,
-    pictures_field: :license_files,
+    pictures_field: :software_license_files,
     item_placeholder: "myplaceonline.identity_files.file",
     heading: "myplaceonline.identity_files.files",
     addbutton: "myplaceonline.identity_files.add_file",

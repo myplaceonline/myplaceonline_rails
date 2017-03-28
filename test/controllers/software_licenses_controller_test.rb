@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class LicensesControllerTest < ActionController::TestCase
+class SoftwareLicensesControllerTest < ActionController::TestCase
   include MyplaceonlineControllerTest
   
   def test_attributes

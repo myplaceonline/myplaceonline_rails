@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170313212516) do
+ActiveRecord::Schema.define(version: 20170328060505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2574,33 +2574,6 @@ ActiveRecord::Schema.define(version: 20170313212516) do
     t.index ["identity_id"], name: "index_jokes_on_identity_id", using: :btree
   end
 
-  create_table "license_files", force: :cascade do |t|
-    t.integer  "license_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["identity_file_id"], name: "index_license_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_license_files_on_identity_id", using: :btree
-    t.index ["license_id"], name: "index_license_files_on_license_id", using: :btree
-  end
-
-  create_table "licenses", force: :cascade do |t|
-    t.string   "license_name"
-    t.decimal  "license_value",         precision: 10, scale: 2
-    t.date     "license_purchase_date"
-    t.text     "license_key"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
-    t.index ["identity_id"], name: "index_licenses_on_identity_id", using: :btree
-  end
-
   create_table "life_goals", force: :cascade do |t|
     t.string   "life_goal_name", limit: 255
     t.text     "notes"
@@ -4282,6 +4255,33 @@ ActiveRecord::Schema.define(version: 20170313212516) do
     t.index ["identity_id"], name: "index_snoozed_due_items_on_identity_id", using: :btree
   end
 
+  create_table "software_license_files", force: :cascade do |t|
+    t.integer  "software_license_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.index ["identity_file_id"], name: "index_software_license_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_software_license_files_on_identity_id", using: :btree
+    t.index ["software_license_id"], name: "index_software_license_files_on_software_license_id", using: :btree
+  end
+
+  create_table "software_licenses", force: :cascade do |t|
+    t.string   "license_name"
+    t.decimal  "license_value",         precision: 10, scale: 2
+    t.date     "license_purchase_date"
+    t.text     "license_key"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.index ["identity_id"], name: "index_software_licenses_on_identity_id", using: :btree
+  end
+
   create_table "songs", force: :cascade do |t|
     t.string   "song_name",        limit: 255
     t.decimal  "song_rating",                  precision: 10, scale: 2
@@ -5632,10 +5632,6 @@ ActiveRecord::Schema.define(version: 20170313212516) do
   add_foreign_key "jobs", "identities", name: "jobs_identity_id_fk"
   add_foreign_key "jobs", "locations", column: "internal_address_id", name: "jobs_internal_address_id_fk"
   add_foreign_key "jokes", "identities", name: "jokes_identity_id_fk"
-  add_foreign_key "license_files", "identities"
-  add_foreign_key "license_files", "identity_files"
-  add_foreign_key "license_files", "licenses"
-  add_foreign_key "licenses", "identities"
   add_foreign_key "life_goals", "identities", name: "life_goals_identity_id_fk"
   add_foreign_key "life_highlight_files", "identities"
   add_foreign_key "life_highlight_files", "identity_files"
@@ -5877,6 +5873,10 @@ ActiveRecord::Schema.define(version: 20170313212516) do
   add_foreign_key "sleep_measurements", "identities", name: "sleep_measurements_identity_id_fk"
   add_foreign_key "snoozed_due_items", "calendars", name: "snoozed_due_items_calendar_id_fk"
   add_foreign_key "snoozed_due_items", "identities", name: "snoozed_due_items_identity_id_fk"
+  add_foreign_key "software_license_files", "identities"
+  add_foreign_key "software_license_files", "identity_files"
+  add_foreign_key "software_license_files", "software_licenses"
+  add_foreign_key "software_licenses", "identities"
   add_foreign_key "songs", "identities", name: "songs_identity_id_fk"
   add_foreign_key "songs", "identity_files", name: "songs_identity_file_id_fk"
   add_foreign_key "songs", "musical_groups", name: "songs_musical_group_id_fk"

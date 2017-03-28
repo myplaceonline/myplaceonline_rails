@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :license_file do
+  factory :software_license_file do
     license nil
     identity_file nil
     identity nil

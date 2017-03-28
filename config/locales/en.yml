@@ -224,7 +224,7 @@ en:
       patents: "Patents"
       dating_profiles: "Dating Profiles"
       memories: "Memories"
-      licenses: "Licenses"
+      software_licenses: "Software Licenses"
       music_albums: "Music Albums"
       surgeries: "Surgeries"
       injuries: "Injuries"
@@ -3266,7 +3266,7 @@ en:
       memory_name: "Name"
       memory_date: "Date"
       feeling: "Feeling"
-    licenses:
+    software_licenses:
       license_name: "Name"
       license_value: "Value"
       license_purchase_date: "Purchase Date"
