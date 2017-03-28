@@ -150,14 +150,16 @@ class Location < ApplicationRecord
     end
   end
   
-  def address_one_line(usename = true)
+  def address_one_line(usename = true, address_details: true)
     result = nil
     if usename
       result = Myp.appendstr(result, name, ", ")
     end
     result = Myp.appendstr(result, address1, ", ")
-    result = Myp.appendstr(result, address2, ", ")
-    result = Myp.appendstr(result, address3, ", ")
+    if address_details
+      result = Myp.appendstr(result, address2, ", ")
+      result = Myp.appendstr(result, address3, ", ")
+    end
     result = Myp.appendstr(result, sub_region2, ", ")
     result = Myp.appendstr(result, sub_region1_short_name, ", ")
     result = Myp.appendstr(result, postal_code, " ")
@@ -186,7 +188,7 @@ class Location < ApplicationRecord
     if !latitude.blank? && !longitude.blank?
       result = latitude.to_s + "," + longitude.to_s
     else
-      result = address_one_line(false)
+      result = address_one_line(false, address_details: false)
     end
     if !result.blank?
       result = "https://www.google.com/maps/place/" + ERB::Util.url_encode(result)
