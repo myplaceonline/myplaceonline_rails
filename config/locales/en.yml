@@ -3205,6 +3205,14 @@ en:
       instance: "Instance"
       add_instance: "Add Instance"
       delete_instance: "Delete Instance"
+      test_object_currency: "Currency"
+      test_object_string: "String"
+      test_object_date: "Date"
+      test_object_datetime: "Date/Time"
+      test_object_time: "Time"
+      test_object_number: "Number"
+      test_object_decimal: "Decimal"
+      contact: "Contact"
     test_object_instances:
       test_object_instance_name: "Name"
     checks:

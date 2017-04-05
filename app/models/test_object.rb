@@ -11,4 +11,6 @@ class TestObject < ApplicationRecord
   child_files
 
   child_properties(name: :test_object_instances, sort: "test_object_instance_name ASC")
+
+  child_property(name: :contact)
 end

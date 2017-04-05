@@ -11,6 +11,69 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_TEXT,
+    name: :test_object_string,
+    value: obj.test_object_string,
+    placeholder: "myplaceonline.test_objects.test_object_string"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATE,
+    name: :test_object_date,
+    value: obj.test_object_date,
+    placeholder: "myplaceonline.test_objects.test_object_date"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATETIME,
+    name: :test_object_datetime,
+    value: obj.test_object_datetime,
+    placeholder: "myplaceonline.test_objects.test_object_datetime"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TIME,
+    name: :test_object_time,
+    value: obj.test_object_time,
+    placeholder: "myplaceonline.test_objects.test_object_time"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_NUMBER,
+    name: :test_object_number,
+    value: obj.test_object_number,
+    placeholder: "myplaceonline.test_objects.test_object_number"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :test_object_decimal,
+    value: obj.test_object_decimal,
+    placeholder: "myplaceonline.test_objects.test_object_decimal"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :test_object_currency,
+    value: obj.test_object_currency,
+    placeholder: "myplaceonline.test_objects.test_object_currency"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,
@@ -42,6 +105,19 @@
 %>
   <%= render partial: "test_object_instances/form", locals: { obj: childproperty || TestObjectInstance.build, edit: edit, autofocus: false, f: child_fields } %>
 <% end %>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :contact,
+    existingobj: obj.contact,
+    heading: t("myplaceonline.test_objects.contact"),
+    objform: "contacts/form",
+    existingobjurl: "contact_path",
+    searchurl: "/contacts.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
 <%=
   render partial: "myplaceonline/pictures_form", locals: {
     f: f,

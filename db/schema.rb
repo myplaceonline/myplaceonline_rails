@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170405191858) do
+ActiveRecord::Schema.define(version: 20170405205657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4539,8 +4539,17 @@ ActiveRecord::Schema.define(version: 20170405191858) do
     t.datetime "archived"
     t.integer  "rating"
     t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.integer  "contact_id"
+    t.string   "test_object_string"
+    t.date     "test_object_date"
+    t.datetime "test_object_datetime"
+    t.time     "test_object_time"
+    t.integer  "test_object_number"
+    t.decimal  "test_object_decimal",  precision: 10, scale: 2
+    t.decimal  "test_object_currency", precision: 10, scale: 2
+    t.index ["contact_id"], name: "index_test_objects_on_contact_id", using: :btree
     t.index ["identity_id"], name: "index_test_objects_on_identity_id", using: :btree
   end
 
@@ -5944,6 +5953,7 @@ ActiveRecord::Schema.define(version: 20170405191858) do
   add_foreign_key "test_object_instance_files", "test_object_instances"
   add_foreign_key "test_object_instances", "identities"
   add_foreign_key "test_object_instances", "test_objects"
+  add_foreign_key "test_objects", "contacts"
   add_foreign_key "test_objects", "identities"
   add_foreign_key "test_score_files", "identities"
   add_foreign_key "test_score_files", "identity_files"

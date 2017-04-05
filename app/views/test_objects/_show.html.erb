@@ -1,4 +1,12 @@
 <%= data_row(heading: t("myplaceonline.test_objects.test_object_name"), content: obj.test_object_name) %>
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
 <%= data_row(heading: t("myplaceonline.test_objects.instance"), content: obj.test_object_instances) %>
+<%= data_row(heading: t("myplaceonline.test_objects.test_object_string"), content: obj.test_object_string) %>
+<%= data_row(heading: t("myplaceonline.test_objects.test_object_date"), content: obj.test_object_date) %>
+<%= data_row(heading: t("myplaceonline.test_objects.test_object_datetime"), content: obj.test_object_datetime) %>
+<%= data_row(heading: t("myplaceonline.test_objects.test_object_time"), content: obj.test_object_time, onlytime: true) %>
+<%= data_row(heading: t("myplaceonline.test_objects.test_object_number"), content: obj.test_object_number) %>
+<%= data_row(heading: t("myplaceonline.test_objects.test_object_decimal"), content: obj.test_object_decimal) %>
+<%= data_row(heading: t("myplaceonline.test_objects.test_object_currency"), content: obj.test_object_currency, currency: true) %>
+<%= data_row(heading: t("myplaceonline.test_objects.contact"), content: obj.contact) %>
 <%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.test_object_files) %>

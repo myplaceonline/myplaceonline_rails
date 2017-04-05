@@ -181,8 +181,12 @@ module ApplicationHelper
     Myp.display_date(content, current_user)
   end
   
-  def display_datetime(content:, format:, options:)
-    Myp.display_datetime(content, current_user)
+  def display_time(content:, format:, options:)
+    if options[:onlytime]
+      Myp.display_time(content, current_user, :simple_time)
+    else
+      Myp.display_datetime(content, current_user)
+    end
   end
   
   def display_boolean(content:, format:, options:)
@@ -309,6 +313,8 @@ module ApplicationHelper
     options[:htmlencode_content] ||= true
     options[:wrap] ||= true
     options[:heading] = heading
+    options[:onlytime] ||= false
+    options[:currency] ||= false
     
     # ->(content:, format:, options: ){ content.to_s }
     if options[:transform].nil?
@@ -316,8 +322,8 @@ module ApplicationHelper
         options[:transform] = method(:display_date)
       elsif content.is_a?(Fixnum) || content.is_a?(BigDecimal)
         options[:transform] = method(:display_string)
-      elsif content.is_a?(ActiveSupport::TimeWithZone)
-        options[:transform] = method(:display_datetime)
+      elsif content.is_a?(ActiveSupport::TimeWithZone) ||  content.is_a?(Time)
+        options[:transform] = method(:display_time)
       elsif content.is_a?(TrueClass) ||  content.is_a?(FalseClass)
         options[:transform] = method(:display_boolean)
       elsif content.is_a?(ApplicationRecord)
