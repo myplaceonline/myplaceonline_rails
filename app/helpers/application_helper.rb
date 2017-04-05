@@ -306,8 +306,7 @@ module ApplicationHelper
     options[:background_highlight] ||= false
     options[:skip_blank_content] ||= true
     options[:markdown] ||= false
-    options[:boolean_hide_false] ||= true
-    options[:boolean] ||= false
+    options[:hide_false] ||= false
     options[:url] ||= false
     options[:url_external] ||= false
     options[:url_external_target_blank] ||= false
@@ -326,9 +325,9 @@ module ApplicationHelper
         options[:transform] = method(:display_date)
       elsif content.is_a?(Fixnum) || content.is_a?(BigDecimal)
         options[:transform] = method(:display_string)
-      elsif content.is_a?(ActiveSupport::TimeWithZone) ||  content.is_a?(Time)
+      elsif content.is_a?(ActiveSupport::TimeWithZone) || content.is_a?(Time)
         options[:transform] = method(:display_time)
-      elsif content.is_a?(TrueClass) ||  content.is_a?(FalseClass)
+      elsif content.is_a?(TrueClass) || content.is_a?(FalseClass)
         options[:transform] = method(:display_boolean)
       elsif content.is_a?(ApplicationRecord)
         options[:transform] = method(:display_reference)
@@ -339,6 +338,10 @@ module ApplicationHelper
       options[:transform] = method(options[:transform])
     end
 
+    if (content.is_a?(TrueClass) || content.is_a?(FalseClass)) && options[:hide_false] && !content
+      return nil
+    end
+    
     if options[:url]
       options[:transform] = method(:display_url)
     end
@@ -349,14 +352,6 @@ module ApplicationHelper
     
     if content.blank? && options[:skip_blank_content]
       return nil
-    end
-    
-    if options[:boolean]
-      if !content && options[:boolean_hide_false]
-        return nil
-      else
-        content = content ? I18n.t("myplaceonline.general.y") : I18n.t("myplaceonline.general.n")
-      end
     end
     
     options[:clipboard_text] ||= content

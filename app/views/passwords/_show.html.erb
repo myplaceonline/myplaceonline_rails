@@ -30,7 +30,7 @@
   <%= data_row(heading: secret.question, content: secret.answer) %>
 <% end %>
   
-<%= data_row(heading: t("myplaceonline.passwords.isencrypted"), content: obj.password_encrypted?, boolean: true) %>
+<%= data_row(heading: t("myplaceonline.passwords.isencrypted"), content: obj.password_encrypted?) %>
   
 <script type="text/javascript">
   myplaceonline.onPageLoad(function() {
