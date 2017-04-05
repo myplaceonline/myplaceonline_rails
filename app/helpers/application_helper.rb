@@ -262,22 +262,32 @@ module ApplicationHelper
     result = ""
     path = content.class.to_s
     path = path[0..path.index("::")-1].underscore.pluralize
-    content.each do |item|
-      child_html = render(partial: "#{path}/show", locals: { obj: item }).html_safe
-      child_html = <<-HTML
-        <tr>
-          <td>#{CGI::escapeHTML(options[:heading])}</td>
-          <td colspan="2">
-            <div data-role="collapsible" data-collapsed="true">
-              <h3>#{item.display}</h3>
-              #{data_table_start(format: format)}
-              #{child_html}
-              #{data_table_end(format: format)}
-            </div>
-          </td>
-        </tr>
-      HTML
-      result += child_html.html_safe
+    if path.end_with?("_files")
+      result = render(
+        partial: "myplaceonline/pictures",
+        locals: {
+          pics: content,
+          placeholder: options[:heading]
+        }
+      ).html_safe
+    else
+      content.each do |item|
+        child_html = render(partial: "#{path}/show", locals: { obj: item }).html_safe
+        child_html = <<-HTML
+          <tr>
+            <td>#{CGI::escapeHTML(options[:heading])}</td>
+            <td colspan="2">
+              <div data-role="collapsible" data-collapsed="true">
+                <h3>#{item.display}</h3>
+                #{data_table_start(format: format)}
+                #{child_html}
+                #{data_table_end(format: format)}
+              </div>
+            </td>
+          </tr>
+        HTML
+        result += child_html.html_safe
+      end
     end
     result
   end

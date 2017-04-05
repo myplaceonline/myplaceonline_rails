@@ -1,9 +1,4 @@
 <%= data_row(heading: t("myplaceonline.test_objects.test_object_name"), content: obj.test_object_name) %>
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
 <%= data_row(heading: t("myplaceonline.test_objects.instance"), content: obj.test_object_instances) %>
-<%=
-  render partial: "myplaceonline/pictures", locals: {
-    pics: obj.test_object_files,
-    placeholder: "myplaceonline.identity_files.file"
-  }
-%>
+<%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.test_object_files) %>
