@@ -153,6 +153,26 @@ module ApplicationHelper
     result
   end
   
+  def data_table_start(format:)
+    %{
+  <table data-role="table" data-mode="reflow" class="ui-responsive tablestripes normalwidth firstcolumnbold noheadertable">
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    <tbody>
+    }.html_safe
+  end
+  
+  def data_table_end(format:)
+    %{
+    </tbody>
+  </table>
+    }.html_safe
+  end
+  
   def display_string(content:, format:, options:)
     content.to_s
   end
@@ -236,6 +256,32 @@ module ApplicationHelper
     result
   end
   
+  def display_collection(content:, format:, options:)
+    options[:htmlencode_content] = false
+    options[:wrap] = false
+    result = ""
+    path = content.class.to_s
+    path = path[0..path.index("::")-1].underscore.pluralize
+    content.each do |item|
+      child_html = render(partial: "#{path}/show", locals: { obj: item }).html_safe
+      child_html = <<-HTML
+        <tr>
+          <td>#{CGI::escapeHTML(options[:heading])}</td>
+          <td colspan="2">
+            <div data-role="collapsible" data-collapsed="true">
+              <h3>#{item.display}</h3>
+              #{data_table_start(format: format)}
+              #{child_html}
+              #{data_table_end(format: format)}
+            </div>
+          </td>
+        </tr>
+      HTML
+      result += child_html.html_safe
+    end
+    result
+  end
+  
   def data_row(heading:, content:, **options)
     options[:content_classes] ||= nil
     options[:format] ||= :html
@@ -251,6 +297,8 @@ module ApplicationHelper
     options[:url_clipboard] ||= nil
     options[:url_innercontent] ||= nil
     options[:htmlencode_content] ||= true
+    options[:wrap] ||= true
+    options[:heading] = heading
     
     # ->(content:, format:, options: ){ content.to_s }
     if options[:transform].nil?
@@ -264,6 +312,8 @@ module ApplicationHelper
         options[:transform] = method(:display_boolean)
       elsif content.is_a?(ApplicationRecord)
         options[:transform] = method(:display_reference)
+      elsif content.is_a?(ActiveRecord::Associations::CollectionProxy)
+        options[:transform] = method(:display_collection)
       end
     elsif options[:transform].is_a?(Symbol)
       options[:transform] = method(options[:transform])
@@ -323,14 +373,18 @@ module ApplicationHelper
       if options[:background_highlight]
         options[:content_classes] = "bghighlight #{options[:content_classes]}"
       end
-      
-      html = <<-HTML
-        <tr>
-          <td>#{CGI::escapeHTML(heading)}</td>
-          <td class="#{options[:content_classes]}">#{content}</td>
-          <td style="padding: 0.2em; vertical-align: top;">#{options[:secondary_content]}</td>
-        </tr>
-      HTML
+
+      if options[:wrap]
+        html = <<-HTML
+          <tr>
+            <td>#{CGI::escapeHTML(heading)}</td>
+            <td class="#{options[:content_classes]}">#{content}</td>
+            <td style="padding: 0.2em; vertical-align: top;">#{options[:secondary_content]}</td>
+          </tr>
+        HTML
+      else
+        html = content
+      end
       
       if !options[:second_row].blank?
         html += options[:second_row]
