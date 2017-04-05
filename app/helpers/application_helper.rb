@@ -153,20 +153,87 @@ module ApplicationHelper
     result
   end
   
-  def display_string(content:, format:)
+  def display_string(content:, format:, options:)
     content.to_s
   end
   
-  def display_date(content:, format:)
+  def display_date(content:, format:, options:)
     Myp.display_date(content, current_user)
   end
   
-  def display_datetime(content:, format:)
+  def display_datetime(content:, format:, options:)
     Myp.display_datetime(content, current_user)
   end
   
-  def display_boolean(content:, format:)
+  def display_boolean(content:, format:, options:)
     content ? I18n.t("myplaceonline.general.y") : I18n.t("myplaceonline.general.n")
+  end
+  
+  def display_url(content:, format:, options:)
+    if options[:url_innercontent].blank?
+      options[:url_innercontent] = content
+    end
+
+    url_options = Hash.new
+    url_options[:href] = content
+    url_options[:class] = ""
+    
+    options[:clipboard_text] = content
+    
+    # If it's probably external
+    if options[:url_external] || (!content.start_with?("/") || content.start_with?("//"))
+      if options[:url_external_target_blank]
+        url_options[:target] = "_blank"
+      end
+      url_options["data-ajax"] = "false"
+    end
+    if !options[:url_clipboard].blank?
+      url_options[:class] = "clipboardable #{url_options[:class]}"
+      url_options["data-clipboard-text"] = clipboard_text_str(options[:url_clipboard])
+      url_options["data-clipboard-clickthrough"] = "yes"
+    end
+    if !options[:url_linkclasses].blank?
+      url_options[:class] = "#{options[:url_linkclasses]} #{url_options[:class]}"
+    end
+    
+    options[:htmlencode_content] = false
+    
+    content_tag(
+      :a,
+      CGI::escapeHTML(options[:url_innercontent]),
+      url_options,
+      escape = false
+    )
+  end
+  
+  def display_reference(content:, format:, options:)
+    options[:controller_name] ||= content.class.name.pluralize + "Controller"
+    url = send(content.class.name.underscore + "_path", content)
+    options[:htmlencode_content] = false
+    content_display = content.display
+    options[:clipboard_text] = content_display
+    result = display_url(
+      content: url,
+      format: :html,
+      options: {
+        url_innercontent: content_display
+      }
+    )
+    begin
+      if ExecutionContext.push_marker(:nest_count) <= 1
+        options[:second_row] = renderActionInOtherController(
+          Object.const_get(options[:controller_name]),
+          :show,
+          {
+            id: content.id,
+            nested_show: true
+          }
+        ).html_safe
+      end
+    ensure
+      ExecutionContext.pop_marker(:nest_count)
+    end
+    result
   end
   
   def data_row(heading:, content:, **options)
@@ -183,8 +250,9 @@ module ApplicationHelper
     options[:url_linkclasses] ||= nil
     options[:url_clipboard] ||= nil
     options[:url_innercontent] ||= nil
+    options[:htmlencode_content] ||= true
     
-    # ->(content:, format: ){ content.to_s }
+    # ->(content:, format:, options: ){ content.to_s }
     if options[:transform].nil?
       if content.is_a?(Date)
         options[:transform] = method(:display_date)
@@ -194,13 +262,19 @@ module ApplicationHelper
         options[:transform] = method(:display_datetime)
       elsif content.is_a?(TrueClass) ||  content.is_a?(FalseClass)
         options[:transform] = method(:display_boolean)
+      elsif content.is_a?(ApplicationRecord)
+        options[:transform] = method(:display_reference)
       end
     elsif options[:transform].is_a?(Symbol)
       options[:transform] = method(options[:transform])
     end
+
+    if options[:url]
+      options[:transform] = method(:display_url)
+    end
     
     if !options[:transform].nil?
-      content = options[:transform].call(content: content, format: options[:format])
+      content = options[:transform].call(content: content, format: options[:format], options: options)
     end
     
     if content.blank? && options[:skip_blank_content]
@@ -217,42 +291,6 @@ module ApplicationHelper
     
     options[:clipboard_text] ||= content
     
-    if options[:url]
-      if options[:url_innercontent].blank?
-        options[:url_innercontent] = content
-      end
-
-      url_options = Hash.new
-      url_options[:href] = content
-      url_options[:class] = ""
-      
-      # If it's probably external
-      if options[:url_external] || (!content.start_with?("/") || content.start_with?("//"))
-        if options[:url_external_target_blank]
-          url_options[:target] = "_blank"
-        end
-        url_options["data-ajax"] = "false"
-      end
-      if !options[:url_clipboard].blank?
-        url_options[:class] = "clipboardable #{url_options[:class]}"
-        url_options["data-clipboard-text"] = clipboard_text_str(options[:url_clipboard])
-        url_options["data-clipboard-clickthrough"] = "yes"
-      end
-      if !options[:url_linkclasses].blank?
-        url_options[:class] = "#{options[:url_linkclasses]} #{url_options[:class]}"
-      end
-      
-      content = content_tag(
-        :a,
-        CGI::escapeHTML(options[:url_innercontent]),
-        url_options,
-        escape = false
-      )
-      options[:htmlencode_content] ||= false
-    else
-      options[:htmlencode_content] ||= true
-    end
-      
     case options[:format]
     when :html
       if options[:markdown]
@@ -293,6 +331,10 @@ module ApplicationHelper
           <td style="padding: 0.2em; vertical-align: top;">#{options[:secondary_content]}</td>
         </tr>
       HTML
+      
+      if !options[:second_row].blank?
+        html += options[:second_row]
+      end
       
       html.html_safe
     else
