@@ -3,13 +3,22 @@ class TestObjectsController < MyplaceonlineController
     true
   end
 
+  def use_bubble?
+    true
+  end
+  
+  def bubble_text(obj)
+    Myp.display_date_month_year_simple(obj.test_object_date, User.current_user)
+  end
+
   protected
     def insecure
       true
     end
 
     def sorts
-      ["lower(test_objects.test_object_name) ASC"]
+      #["lower(test_objects.test_object_name) ASC"]
+      ["test_objects.test_object_date DESC NULLS LAST"]
     end
 
     def obj_params
