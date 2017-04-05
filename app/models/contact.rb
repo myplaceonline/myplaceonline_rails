@@ -1,6 +1,14 @@
 class Contact < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include ModelHelpersConcern
+  
+  def self.properties
+    [
+      { name: :contact_type, type: ApplicationRecord::PROPERTY_TYPE_NUMBER },
+      { name: :conversations, type: ApplicationRecord::PROPERTY_TYPE_CHILDREN },
+      { name: :contact_identity, type: ApplicationRecord::PROPERTY_TYPE_CHILD, model: Identity },
+    ]
+  end
 
   CONTACT_TYPES = [
     ["myplaceonline.contacts.best_friend", 0],

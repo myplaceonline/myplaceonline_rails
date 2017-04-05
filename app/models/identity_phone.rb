@@ -1,6 +1,13 @@
 class IdentityPhone < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   
+  def self.properties
+    [
+      { name: :number, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :phone_type, type: ApplicationRecord::PROPERTY_TYPE_NUMBER },
+    ]
+  end
+  
   PHONE_TYPE_CELL = 0
   PHONE_TYPE_HOME = 1
   PHONE_TYPE_TEMPORARY = 2

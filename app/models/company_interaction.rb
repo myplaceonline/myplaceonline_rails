@@ -2,6 +2,14 @@ class CompanyInteraction < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
+  def self.properties
+    [
+      { name: :company_interaction_date, type: ApplicationRecord::PROPERTY_TYPE_DATE },
+      { name: :notes, type: ApplicationRecord::PROPERTY_TYPE_MARKDOWN },
+      { name: :company_interaction_files, type: ApplicationRecord::PROPERTY_TYPE_FILES },
+    ]
+  end
+  
   belongs_to :company
   
   validates :company_interaction_date, presence: true

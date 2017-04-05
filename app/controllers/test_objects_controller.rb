@@ -32,7 +32,6 @@ class TestObjectsController < MyplaceonlineController
         :test_object_time,
         :test_object_number,
         :test_object_decimal,
-        :contact,
         test_object_files_attributes: FilesController.multi_param_names,
         test_object_instances_attributes: TestObjectInstance.params,
         contact_attributes: ContactsController.param_names

@@ -2,6 +2,25 @@
 class Location < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
+
+  def self.properties
+    [
+      { name: :name, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :address1, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :address2, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :address3, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :region, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :sub_region1, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :sub_region2, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :postal_code, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :notes, type: ApplicationRecord::PROPERTY_TYPE_MARKDOWN },
+      { name: :latitude, type: ApplicationRecord::PROPERTY_TYPE_DECIMAL },
+      { name: :longitude, type: ApplicationRecord::PROPERTY_TYPE_DECIMAL },
+      { name: :location_phones, type: ApplicationRecord::PROPERTY_TYPE_CHILDREN },
+      { name: :location_pictures, type: ApplicationRecord::PROPERTY_TYPE_FILES },
+      { name: :website, type: ApplicationRecord::PROPERTY_TYPE_CHILD },
+    ]
+  end
   
   validate :at_least_one
   

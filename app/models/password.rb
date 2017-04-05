@@ -5,6 +5,20 @@ class Password < ApplicationRecord
   include EncryptedConcern
   include ModelHelpersConcern
   
+  def self.properties
+    [
+      { name: :name, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :user, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :password, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :email, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :url, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :account_number, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :encrypt, type: ApplicationRecord::PROPERTY_TYPE_BOOLEAN },
+      { name: :notes, type: ApplicationRecord::PROPERTY_TYPE_MARKDOWN },
+      { name: :password_secrets, type: ApplicationRecord::PROPERTY_TYPE_CHILDREN },
+    ]
+  end
+
   belongs_to :password_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
   belongs_to_encrypted :password
   before_validation :password_finalize

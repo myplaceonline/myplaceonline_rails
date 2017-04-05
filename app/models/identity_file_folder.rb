@@ -2,6 +2,12 @@ class IdentityFileFolder < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
+  def self.properties
+    [
+      { name: :folder_name, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+    ]
+  end
+  
   child_property(name: :parent_folder, model: IdentityFileFolder)
 
   validates :folder_name, presence: true

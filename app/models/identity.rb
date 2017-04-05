@@ -2,6 +2,31 @@ class Identity < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
+  def self.properties
+    [
+      { name: :name, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :middle_name, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :last_name, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :nickname, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :birthday, type: ApplicationRecord::PROPERTY_TYPE_DATE },
+      { name: :notes, type: ApplicationRecord::PROPERTY_TYPE_MARKDOWN },
+      { name: :likes, type: ApplicationRecord::PROPERTY_TYPE_MARKDOWN },
+      { name: :gift_ideas, type: ApplicationRecord::PROPERTY_TYPE_MARKDOWN },
+      { name: :ktn, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :sex_type, type: ApplicationRecord::PROPERTY_TYPE_NUMBER },
+      { name: :new_years_resolution, type: ApplicationRecord::PROPERTY_TYPE_MARKDOWN },
+      { name: :display_note, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :identity_type, type: ApplicationRecord::PROPERTY_TYPE_NUMBER },
+      { name: :identity_phones, type: ApplicationRecord::PROPERTY_TYPE_CHILDREN },
+      { name: :identity_emails, type: ApplicationRecord::PROPERTY_TYPE_CHILDREN },
+      { name: :identity_locations, type: ApplicationRecord::PROPERTY_TYPE_CHILDREN },
+      { name: :identity_relationships, type: ApplicationRecord::PROPERTY_TYPE_CHILDREN },
+      { name: :identity_pictures, type: ApplicationRecord::PROPERTY_TYPE_FILES },
+      { name: :company, type: ApplicationRecord::PROPERTY_TYPE_CHILD },
+      { name: :_updatetype, type: ApplicationRecord::PROPERTY_TYPE_HIDDEN },
+    ]
+  end
+      
   DEFAULT_BIRTHDAY_THRESHOLD_SECONDS = 60.days
   
   CALENDAR_ITEM_CONTEXT_BIRTHDAY = "birthday"

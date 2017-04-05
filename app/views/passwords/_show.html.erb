@@ -23,14 +23,6 @@
     url_external_target_blank: true
   )
 %>
-<%=
-  data_row(
-    heading: t("myplaceonline.passwords.url"),
-    content: nil,
-    clipboard_text: obj.get_url,
-    content_classes: "focusable"
-  )
-%>
 <%= data_row(heading: t("myplaceonline.passwords.account_number"), content: obj.account_number) %>
 <%= data_row(heading: t("myplaceonline.passwords.notes"), content: obj.notes, markdown: true) %>
 

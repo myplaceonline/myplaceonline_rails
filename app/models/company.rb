@@ -2,6 +2,13 @@ class Company < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
+  def self.properties
+    [
+      { name: :company_identity, type: ApplicationRecord::PROPERTY_TYPE_CHILD, model: Identity },
+      { name: :company_interactions, type: ApplicationRecord::PROPERTY_TYPE_CHILDREN },
+    ]
+  end
+  
   child_property(name: :company_identity, model: Identity, required: true)
   
   child_properties(name: :company_interactions, sort: "company_interaction_date DESC")

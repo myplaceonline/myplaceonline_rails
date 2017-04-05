@@ -2,6 +2,13 @@ class IdentityRelationship < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
+  def self.properties
+    [
+      { name: :relationship_type, type: ApplicationRecord::PROPERTY_TYPE_NUMBER },
+      { name: :contact, type: ApplicationRecord::PROPERTY_TYPE_CHILD },
+    ]
+  end
+  
   RELATIONSHIPS = [
     ["myplaceonline.relationships.aunt", 11],
     ["myplaceonline.relationships.boyfriend", 8],

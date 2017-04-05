@@ -6,6 +6,16 @@ require "base64"
 class IdentityFile < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
+
+  def self.properties
+    [
+      { name: :file, type: ApplicationRecord::PROPERTY_TYPE_FILE },
+      { name: :file_file_name, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :notes, type: ApplicationRecord::PROPERTY_TYPE_MARKDOWN },
+      { name: :folder, type: ApplicationRecord::PROPERTY_TYPE_CHILD, model: IdentityFileFolder },
+      { name: :_updatetype, type: ApplicationRecord::PROPERTY_TYPE_HIDDEN },
+    ]
+  end
   
   SIZE_THRESHOLD_FILESYSTEM = 1048576 * 10
 

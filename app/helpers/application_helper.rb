@@ -194,40 +194,44 @@ module ApplicationHelper
   end
   
   def display_url(content:, format:, options:)
-    if options[:url_innercontent].blank?
-      options[:url_innercontent] = content
-    end
-
-    url_options = Hash.new
-    url_options[:href] = content
-    url_options[:class] = ""
-    
-    options[:clipboard_text] = content
-    
-    # If it's probably external
-    if options[:url_external] || (!content.start_with?("/") || content.start_with?("//"))
-      if options[:url_external_target_blank]
-        url_options[:target] = "_blank"
+    if !content.blank?
+      if options[:url_innercontent].blank?
+        options[:url_innercontent] = content
       end
-      url_options["data-ajax"] = "false"
+
+      url_options = Hash.new
+      url_options[:href] = content
+      url_options[:class] = ""
+      
+      options[:clipboard_text] = content
+      
+      # If it's probably external
+      if options[:url_external] || (!content.start_with?("/") || content.start_with?("//"))
+        if options[:url_external_target_blank]
+          url_options[:target] = "_blank"
+        end
+        url_options["data-ajax"] = "false"
+      end
+      if !options[:url_clipboard].blank?
+        url_options[:class] = "clipboardable #{url_options[:class]}"
+        url_options["data-clipboard-text"] = clipboard_text_str(options[:url_clipboard])
+        url_options["data-clipboard-clickthrough"] = "yes"
+      end
+      if !options[:url_linkclasses].blank?
+        url_options[:class] = "#{options[:url_linkclasses]} #{url_options[:class]}"
+      end
+      
+      options[:htmlencode_content] = false
+      
+      content_tag(
+        :a,
+        CGI::escapeHTML(options[:url_innercontent]),
+        url_options,
+        escape = false
+      )
+    else
+      nil
     end
-    if !options[:url_clipboard].blank?
-      url_options[:class] = "clipboardable #{url_options[:class]}"
-      url_options["data-clipboard-text"] = clipboard_text_str(options[:url_clipboard])
-      url_options["data-clipboard-clickthrough"] = "yes"
-    end
-    if !options[:url_linkclasses].blank?
-      url_options[:class] = "#{options[:url_linkclasses]} #{url_options[:class]}"
-    end
-    
-    options[:htmlencode_content] = false
-    
-    content_tag(
-      :a,
-      CGI::escapeHTML(options[:url_innercontent]),
-      url_options,
-      escape = false
-    )
   end
   
   def display_reference(content:, format:, options:)

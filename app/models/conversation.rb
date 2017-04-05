@@ -1,6 +1,13 @@
 class Conversation < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
+  def self.properties
+    [
+      { name: :conversation, type: ApplicationRecord::PROPERTY_TYPE_MARKDOWN },
+      { name: :conversation_date, type: ApplicationRecord::PROPERTY_TYPE_DATE },
+    ]
+  end
+      
   CALENDAR_ITEM_CONTEXT_CONVERSATION = "conversation"
   
   belongs_to :contact
@@ -15,7 +22,6 @@ class Conversation < ApplicationRecord
 
   def self.build(params = nil)
     result = self.dobuild(params)
-    # initialize result here
     result.conversation_date = Date.today
     result
   end

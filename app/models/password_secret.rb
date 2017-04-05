@@ -2,6 +2,13 @@ class PasswordSecret < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include EncryptedConcern
 
+  def self.properties
+    [
+      { name: :question, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :answer, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+    ]
+  end
+
   belongs_to :password
   
   belongs_to :answer_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
