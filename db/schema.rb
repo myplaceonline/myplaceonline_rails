@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170328060505) do
+ActiveRecord::Schema.define(version: 20170405191858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3821,6 +3821,34 @@ ActiveRecord::Schema.define(version: 20170328060505) do
     t.index ["identity_id"], name: "index_promotions_on_identity_id", using: :btree
   end
 
+  create_table "psychological_evaluation_files", force: :cascade do |t|
+    t.integer  "psychological_evaluation_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["identity_file_id"], name: "index_psychological_evaluation_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_psychological_evaluation_files_on_identity_id", using: :btree
+    t.index ["psychological_evaluation_id"], name: "table_pef_on_pef_id", using: :btree
+  end
+
+  create_table "psychological_evaluations", force: :cascade do |t|
+    t.string   "psychological_evaluation_name"
+    t.date     "evaluation_date"
+    t.integer  "evaluator_id"
+    t.decimal  "score",                         precision: 10, scale: 2
+    t.text     "evaluation"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+    t.index ["evaluator_id"], name: "index_psychological_evaluations_on_evaluator_id", using: :btree
+    t.index ["identity_id"], name: "index_psychological_evaluations_on_identity_id", using: :btree
+  end
+
   create_table "quest_files", force: :cascade do |t|
     t.integer  "quest_id"
     t.integer  "identity_file_id"
@@ -5815,6 +5843,11 @@ ActiveRecord::Schema.define(version: 20170328060505) do
   add_foreign_key "projects", "identities"
   add_foreign_key "promises", "identities", name: "promises_identity_id_fk"
   add_foreign_key "promotions", "identities", name: "promotions_identity_id_fk"
+  add_foreign_key "psychological_evaluation_files", "identities"
+  add_foreign_key "psychological_evaluation_files", "identity_files"
+  add_foreign_key "psychological_evaluation_files", "psychological_evaluations"
+  add_foreign_key "psychological_evaluations", "contacts", column: "evaluator_id"
+  add_foreign_key "psychological_evaluations", "identities"
   add_foreign_key "quest_files", "identities"
   add_foreign_key "quest_files", "identity_files"
   add_foreign_key "quest_files", "quests"

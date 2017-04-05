@@ -158,7 +158,8 @@ Category.create!([
   {id: 158, name: "injuries", link: "injuries", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/fire.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 159, name: "driver_licenses", link: "driver_licenses", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/form_photo.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 160, name: "hospital_visits", link: "hospital_visits", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/stethoscope.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 161, name: "paid_taxes", link: "paid_taxes", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/money.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
+  {id: 161, name: "paid_taxes", link: "paid_taxes", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/money.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 194, name: "psychological_evaluations", link: "psychological_evaluations", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/emotion_detective.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
 ])
 
 user = User.new

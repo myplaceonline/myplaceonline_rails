@@ -232,6 +232,7 @@ en:
       hospital_visits: "Hospital Visits"
       shopping_list_items: "Shopping List Items"
       paid_taxes: "Paid Taxes"
+      psychological_evaluations: "Psychological Evaluations"
     general:
       email: "E-mail"
       password: "Password"
@@ -3305,3 +3306,9 @@ en:
     encryption_modes:
       aes_256_cbc: "AES-256-CBC"
       aes_256-gcm: "AES-256-GCM"
+    psychological_evaluations:
+      psychological_evaluation_name: "Evaluation Name"
+      evaluation_date: "Date"
+      evaluator: "Evaluator"
+      score: "Score"
+      evaluation: "Evaluation"

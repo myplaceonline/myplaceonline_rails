@@ -1,0 +1,64 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :psychological_evaluation_name,
+    value: obj.psychological_evaluation_name,
+    placeholder: "myplaceonline.psychological_evaluations.psychological_evaluation_name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATE,
+    name: :evaluation_date,
+    value: obj.evaluation_date,
+    placeholder: "myplaceonline.psychological_evaluations.evaluation_date"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :evaluation,
+    value: obj.evaluation,
+    placeholder: "myplaceonline.psychological_evaluations.evaluation",
+    collapsed: false
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :score,
+    value: obj.score,
+    placeholder: "myplaceonline.psychological_evaluations.score"
+  )
+%>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :evaluator,
+    existingobj: obj.evaluator,
+    heading: t("myplaceonline.psychological_evaluations.evaluator"),
+    objform: "contacts/form",
+    existingobjurl: "contact_path",
+    searchurl: "/contacts.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :psychological_evaluation_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>

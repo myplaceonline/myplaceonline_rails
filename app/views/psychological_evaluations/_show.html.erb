@@ -1,0 +1,11 @@
+<%= data_row(heading: t("myplaceonline.psychological_evaluations.psychological_evaluation_name"), content: obj.psychological_evaluation_name) %>
+<%= data_row(heading: t("myplaceonline.psychological_evaluations.evaluation_date"), content: obj.evaluation_date) %>
+<%= data_row(heading: t("myplaceonline.psychological_evaluations.score"), content: obj.score) %>
+<%= attribute_table_row_reference(t("myplaceonline.psychological_evaluations.evaluator"), "contact_path", obj.evaluator) %>
+<%= data_row(heading: t("myplaceonline.psychological_evaluations.evaluation"), content: obj.evaluation, markdown: true) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.psychological_evaluation_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>
