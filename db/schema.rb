@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170405205657) do
+ActiveRecord::Schema.define(version: 20170409235509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4177,6 +4177,18 @@ ActiveRecord::Schema.define(version: 20170405205657) do
     t.index ["periodic_payment_id"], name: "index_retirement_plans_on_periodic_payment_id", using: :btree
   end
 
+  create_table "reward_program_files", force: :cascade do |t|
+    t.integer  "reward_program_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["identity_file_id"], name: "index_reward_program_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_reward_program_files_on_identity_id", using: :btree
+    t.index ["reward_program_id"], name: "index_reward_program_files_on_reward_program_id", using: :btree
+  end
+
   create_table "reward_programs", force: :cascade do |t|
     t.string   "reward_program_name",   limit: 255
     t.date     "started"
@@ -5905,6 +5917,9 @@ ActiveRecord::Schema.define(version: 20170405205657) do
   add_foreign_key "retirement_plans", "identities"
   add_foreign_key "retirement_plans", "passwords"
   add_foreign_key "retirement_plans", "periodic_payments"
+  add_foreign_key "reward_program_files", "identities"
+  add_foreign_key "reward_program_files", "identity_files"
+  add_foreign_key "reward_program_files", "reward_programs"
   add_foreign_key "reward_programs", "identities", name: "reward_programs_identity_id_fk"
   add_foreign_key "reward_programs", "passwords", name: "reward_programs_password_id_fk"
   add_foreign_key "shares", "identities", name: "shares_identity_id_fk"

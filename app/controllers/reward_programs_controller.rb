@@ -6,6 +6,10 @@ class RewardProgramsController < MyplaceonlineController
     end
     super
   end
+  
+  def may_upload
+    true
+  end
 
   protected
     def sorts
@@ -29,7 +33,8 @@ class RewardProgramsController < MyplaceonlineController
         :reward_program_status,
         :notes,
         :program_type,
-        password_attributes: PasswordsController.param_names
+        password_attributes: PasswordsController.param_names,
+        reward_program_files_attributes: FilesController.multi_param_names
       )
     end
 end

@@ -6,3 +6,9 @@
 <%= attribute_table_row_select t("myplaceonline.reward_programs.program_type"), obj.program_type, RewardProgram::REWARD_PROGRAM_TYPES %>
 <%= attribute_table_row_markdown(t("myplaceonline.reward_programs.notes"), obj.notes) %>
 <%= attribute_table_row_reference(t("myplaceonline.reward_programs.password"), "password_path", obj.password) %>
+<%=
+  render partial: "myplaceonline/pictures", locals: {
+    pics: obj.reward_program_files,
+    placeholder: "myplaceonline.identity_files.file"
+  }
+%>

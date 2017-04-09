@@ -10,6 +10,8 @@ class RewardProgram < ApplicationRecord
   
   child_property(name: :password)
   
+  child_files
+  
   validates :reward_program_name, presence: true
 
   def display(show_default_cashback = true)
