@@ -608,7 +608,7 @@ module Myp
   
   def self.persist_password(password)
     MyplaceonlineExecutionContext.persistent_user_store[:password] = password
-    if User.current_user.pending_encryption_switch
+    if !User.current_user.nil? && User.current_user.pending_encryption_switch
       ApplicationJob.perform(SwitchUserEncryptionJob, User.current_user, password)
     end
   end
