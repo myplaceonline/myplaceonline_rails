@@ -236,6 +236,7 @@ en:
       job_salaries: "Job Salaries"
       job_reviews: "Job Evaluations"
       job_myreferences: "Job References"
+      job_awards: "Job Awards"
     general:
       email: "E-mail"
       password: "Password"
@@ -1644,6 +1645,8 @@ en:
       add_accomplishment: "Add Accomplishment"
       resume: "Resume"
       job: "Job"
+      awards: "Awards"
+      add_award: "Add Award"
     resume:
       jobs: "Jobs"
       education: "Education"
@@ -3325,3 +3328,7 @@ en:
       evaluator: "Evaluator"
       score: "Score"
       evaluation: "Evaluation"
+    job_awards:
+      job_award_description: "Description"
+      job_award_date: "Date"
+      job_award_amount: "Amount"

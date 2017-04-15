@@ -290,6 +290,10 @@ Rails.application.routes.draw do
         subresources: true,
         name: :job_myreferences
       },
+      {
+        subresources: true,
+        name: :job_awards
+      },
     ],
     media_dumps: [
       {

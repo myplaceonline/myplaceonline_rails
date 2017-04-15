@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170412001829) do
+ActiveRecord::Schema.define(version: 20170415144618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2436,6 +2436,22 @@ ActiveRecord::Schema.define(version: 20170412001829) do
     t.boolean  "major"
     t.index ["identity_id"], name: "index_job_accomplishments_on_identity_id", using: :btree
     t.index ["job_id"], name: "index_job_accomplishments_on_job_id", using: :btree
+  end
+
+  create_table "job_awards", force: :cascade do |t|
+    t.date     "job_award_date"
+    t.integer  "job_id"
+    t.decimal  "job_award_amount",      precision: 10, scale: 2
+    t.string   "job_award_description"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.index ["identity_id"], name: "index_job_awards_on_identity_id", using: :btree
+    t.index ["job_id"], name: "index_job_awards_on_job_id", using: :btree
   end
 
   create_table "job_files", force: :cascade do |t|
@@ -5659,6 +5675,7 @@ ActiveRecord::Schema.define(version: 20170412001829) do
   add_foreign_key "items", "identities"
   add_foreign_key "job_accomplishments", "identities"
   add_foreign_key "job_accomplishments", "jobs"
+  add_foreign_key "job_awards", "identities"
   add_foreign_key "job_files", "identities"
   add_foreign_key "job_files", "identity_files"
   add_foreign_key "job_files", "jobs"

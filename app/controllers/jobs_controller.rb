@@ -64,6 +64,16 @@ class JobsController < MyplaceonlineController
         link: job_job_accomplishments_path(@obj),
         icon: "bars"
       },
+      {
+        title: I18n.t("myplaceonline.jobs.add_award"),
+        link: new_job_job_award_path(@obj),
+        icon: "plus"
+      },
+      {
+        title: I18n.t("myplaceonline.jobs.awards"),
+        link: job_job_awards_path(@obj),
+        icon: "bars"
+      },
     ]
   end
 
