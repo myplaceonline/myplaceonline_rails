@@ -34,18 +34,6 @@
   <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), wrapper.notes) %>
 <% end %>
 <%= attribute_table_row_reference(t("myplaceonline.jobs.internal_address"), "location_path", obj.internal_address) %>
-<% obj.job_salaries.each do |js| %>
-  <%= table_row_heading(t("myplaceonline.jobs.job_salaries")) %>
-  <%= attribute_table_row_date(t("myplaceonline.job_salaries.started"), js.started) %>
-  <%= attribute_table_row_date(t("myplaceonline.job_salaries.ended"), js.ended) %>
-  <%= attribute_table_row_currency(t("myplaceonline.job_salaries.salary"), js.salary) %>
-  <%= attribute_table_row_select(t("myplaceonline.job_salaries.salary_period"), js.salary_period, Myp::PERIODS) %>
-  <%= attribute_table_row_currency(t("myplaceonline.job_salaries.salary_yearly"), js.yearly_salary) %>
-  <%= attribute_table_row_currency(t("myplaceonline.job_salaries.salary_hourly"), js.yearly_hourly) %>
-  <%= attribute_table_row(t("myplaceonline.jobs.hours_per_week"), js.hours_per_week) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.job_salaries.notes"), js.notes) %>
-  <%= attribute_table_row(t("myplaceonline.job_salaries.new_title"), js.new_title) %>
-<% end %>
 <% obj.job_reviews.each do |x| %>
   <%= table_row_span do %>
     <% collapsible(heading: Myp.appendstrwrap(t("myplaceonline.jobs.review"), Myp.display_date(x.review_date, current_user)), collapsed: true) do %>

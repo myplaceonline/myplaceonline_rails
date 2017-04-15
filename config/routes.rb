@@ -277,7 +277,19 @@ Rails.application.routes.draw do
       {
         subresources: true,
         name: :job_accomplishments
-      }
+      },
+      {
+        subresources: true,
+        name: :job_salaries
+      },
+      {
+        subresources: true,
+        name: :job_evaluations
+      },
+      {
+        subresources: true,
+        name: :job_myreferences
+      },
     ],
     media_dumps: [
       {

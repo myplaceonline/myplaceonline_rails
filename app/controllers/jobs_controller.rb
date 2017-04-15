@@ -25,12 +25,22 @@ class JobsController < MyplaceonlineController
   def footer_items_show
     super + [
       {
-        title: I18n.t('myplaceonline.jobs.add_accomplishment'),
+        title: I18n.t("myplaceonline.jobs.add_salary"),
+        link: new_job_job_salary_path(@obj),
+        icon: "plus"
+      },
+      {
+        title: I18n.t("myplaceonline.jobs.job_salaries"),
+        link: job_job_salaries_path(@obj),
+        icon: "bars"
+      },
+      {
+        title: I18n.t("myplaceonline.jobs.add_accomplishment"),
         link: new_job_job_accomplishment_path(@obj),
         icon: "plus"
       },
       {
-        title: I18n.t('myplaceonline.jobs.accomplishments'),
+        title: I18n.t("myplaceonline.jobs.accomplishments"),
         link: job_job_accomplishments_path(@obj),
         icon: "bars"
       },
@@ -40,7 +50,7 @@ class JobsController < MyplaceonlineController
   def footer_items_index
     super + [
       {
-        title: I18n.t('myplaceonline.jobs.resume'),
+        title: I18n.t("myplaceonline.jobs.resume"),
         link: jobs_resume_path,
         icon: "info"
       }

@@ -8,11 +8,7 @@ class JobSalary < ApplicationRecord
   validates :salary_period, presence: true
 
   def display
-    result = Myp.number_to_currency(salary)
-    if !salary_period.nil?
-      result += " " + Myp.get_select_name(salary_period, Myp::PERIODS)
-    end
-    result
+    Myp.appendstrwrap(Myp.number_to_currency(yearly_salary) + " " + I18n.t("myplaceonline.periods.yearly"), self.new_title)
   end
   
   def yearly_salary

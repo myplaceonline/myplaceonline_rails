@@ -102,63 +102,6 @@
 <%=
   render layout: "myplaceonline/childproperties", locals: {
     f: f,
-    heading: t("myplaceonline.jobs.job_salaries"),
-    childpropertiesname: :job_salaries,
-    childproperties: obj.job_salaries,
-    deletebutton: t("myplaceonline.jobs.delete_salary"),
-    addbutton: t("myplaceonline.jobs.add_salary"),
-    expanded: obj.job_salaries.length > 0,
-    formjson: [
-      {
-        type: 'date',
-        name: 'started',
-        placeholder: t("myplaceonline.job_salaries.started")
-      },
-      {
-        type: 'date',
-        name: 'ended',
-        placeholder: t("myplaceonline.job_salaries.ended")
-      },
-      {
-        type: 'text',
-        name: 'salary',
-        placeholder: t("myplaceonline.job_salaries.salary")
-      },
-      {
-        type: 'select',
-        name: 'salary_period',
-        options: Myp::PERIODS.map{|x,y| [I18n.t(x),y]}.as_json,
-        placeholder: t("myplaceonline.job_salaries.salary_period")
-      },
-      {
-        type: 'text',
-        name: 'hours_per_week',
-        placeholder: t("myplaceonline.jobs.hours_per_week")
-      },
-      {
-        type: 'textarea',
-        name: 'notes',
-        placeholder: t("myplaceonline.job_salaries.notes")
-      },
-      {
-        type: 'text',
-        name: 'new_title',
-        placeholder: t("myplaceonline.job_salaries.new_title")
-      }
-    ]
-  } do |child_fields, childproperty|
-%>
-  <%= myp_date_field(child_fields, :started, "myplaceonline.job_salaries.started", childproperty.started) %>
-  <%= myp_date_field(child_fields, :ended, "myplaceonline.job_salaries.ended", childproperty.ended) %>
-  <%= myp_decimal_field(child_fields, :salary, "myplaceonline.job_salaries.salary", childproperty.salary) %>
-  <%= myp_select(child_fields, :salary_period, "myplaceonline.job_salaries.salary_period", Myp.translate_options(Myp::PERIODS), childproperty.salary_period) %>
-  <%= myp_decimal_field(child_fields, :hours_per_week, "myplaceonline.jobs.hours_per_week", childproperty.hours_per_week) %>
-  <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.job_salaries.notes", childproperty.notes) %>
-  <%= myp_text_field(child_fields, :new_title, "myplaceonline.job_salaries.new_title", childproperty.new_title) %>
-<% end %>
-<%=
-  render layout: "myplaceonline/childproperties", locals: {
-    f: f,
     heading: t("myplaceonline.jobs.reviews"),
     childpropertiesname: :job_reviews,
     childproperties: obj.job_reviews,

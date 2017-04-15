@@ -233,6 +233,7 @@ en:
       shopping_list_items: "Shopping List Items"
       paid_taxes: "Paid Taxes"
       psychological_evaluations: "Psychological Evaluations"
+      job_salaries: "Salaries"
     general:
       email: "E-mail"
       password: "Password"
@@ -1610,7 +1611,7 @@ en:
       department_name: "Department Name"
       division_name: "Division Name"
       duration: "Time in Job"
-      total_time_off: "Total Days Off"
+      total_time_off: "Total Days Off Available"
       business_unit: "Business Unit"
       email: "E-mail"
       internal_mail_id: "Company Mail ID"

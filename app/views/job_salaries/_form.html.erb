@@ -1,0 +1,7 @@
+<%= myp_date_field(f, :started, "myplaceonline.job_salaries.started", obj.started, autofocus) %>
+<%= myp_date_field(f, :ended, "myplaceonline.job_salaries.ended", obj.ended) %>
+<%= myp_decimal_field(f, :salary, "myplaceonline.job_salaries.salary", obj.salary) %>
+<%= myp_select(f, :salary_period, "myplaceonline.job_salaries.salary_period", Myp.translate_options(Myp::PERIODS), obj.salary_period) %>
+<%= myp_decimal_field(f, :hours_per_week, "myplaceonline.jobs.hours_per_week", obj.hours_per_week) %>
+<%= myp_text_area_markdown(f, :notes, "myplaceonline.job_salaries.notes", obj.notes) %>
+<%= myp_text_field(f, :new_title, "myplaceonline.job_salaries.new_title", obj.new_title) %>

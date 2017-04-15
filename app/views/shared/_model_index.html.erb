@@ -75,7 +75,7 @@
       @objs.each do |obj|
       %>
         <li>
-          <%= link_to((controller.display_obj(obj) + controller.display_obj_bubble(obj)).html_safe, controller.show_path(obj), class: controller.item_classes(obj)) %>
+          <%= link_to((CGI::escapeHTML(controller.display_obj(obj)) + controller.display_obj_bubble(obj)).html_safe, controller.show_path(obj), class: controller.item_classes(obj)) %>
           <%= controller.split_link(obj) %>
         </li>
       <%

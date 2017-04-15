@@ -7,7 +7,7 @@ class JobAccomplishment < ApplicationRecord
   validates :accomplishment_title, presence: true
 
   def display
-    Myp.appendstrwrap(Myp.display_datetime(self.accomplishment_time, User.current_user), Myp.ellipses_if_needed(self.accomplishment_title, 16))
+    Myp.ellipses_if_needed(self.accomplishment_title, 32)
   end
 
   def self.build(params = nil)
