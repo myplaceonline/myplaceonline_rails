@@ -472,21 +472,25 @@ class ApiController < ApplicationController
       result: false
     }
     link = params[:link]
-    begin
-      info = Myp.website_info(link)
-      if !info.nil?
-        if info[:title].blank?
-          raise "Could not find title in link"
+    if !Myp.valid_link?(link)
+      result[:error] = I18n.t("myplaceonline.websites.invalid_link")
+    else
+      begin
+        info = Myp.website_info(link)
+        if !info.nil?
+          if info[:title].blank?
+            raise "Could not find title in link"
+          end
+          result[:title] = info[:title].force_encoding("utf-8")
+          result[:link] = info[:link].force_encoding("utf-8")
+          result[:result] = true
+        else
+          raise "Website returned no content"
         end
-        result[:title] = info[:title].force_encoding("utf-8")
-        result[:link] = info[:link].force_encoding("utf-8")
-        result[:result] = true
-      else
-        raise "Website returned no content"
+      rescue Exception => e
+        Myp.warn("website_title error with URL: '#{link}'", e)
+        result[:error] = e.to_s
       end
-    rescue Exception => e
-      Myp.warn("website_title error with #{link}", e)
-      result[:error] = e.to_s
     end
     render json: result
   end

@@ -810,15 +810,17 @@ module Myp
   end
   
   def self.warn(message, exception = nil)
+    subject = "Myplaceonline Warning"
     body_plain = message
     body_html = CGI::escapeHTML(message)
     if !exception.nil?
       error_details = Myp.error_details(exception)
       body_plain += "\n\n" + error_details
       body_html += "\n\n<p>" + CGI::escapeHTML(error_details).gsub(/\n/, "<br />\n").gsub(/\t/, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;") + "</p>"
+      #subject += " (#{exception.class})"
     end
     Rails.logger.warn{"Myp.warn: #{message}"}
-    Myp.send_support_email_safe("Warning", body_html.html_safe, body_plain)
+    Myp.send_support_email_safe(subject, body_html.html_safe, body_plain)
   end
   
   def self.reset_points(user)
@@ -2030,11 +2032,12 @@ module Myp
   end
   
   def self.raw_http_get(url:)
+    Rails.logger.info{"Myp.raw_http_get #{url}"}
     RestClient::Request.execute(
       method: :get,
       url: url,
       read_timeout: 15,
-      open_timeout: 15,
+      open_timeout: 5,
       max_redirects: 5,
       headers: {
         "User-Agent" => "myplaceonline.com V1.0 (https://myplaceonline.com/)"
@@ -2104,8 +2107,25 @@ module Myp
     end
   end
   
-  def self.website_info(link)
+  def self.valid_link?(link)
+    result = false
     if !link.blank?
+      link = link.downcase
+      if Rails.env.production?
+        if !link.include?("://localhost") && (link.start_with?("http") || link.start_with?("https"))
+          result = true
+        end
+      else
+        if link.start_with?("http") || link.start_with?("https")
+          result = true
+        end
+      end
+    end
+    result
+  end
+  
+  def self.website_info(link)
+    if Myp.valid_link?(link)
       response = Myp.http_get(url: link, try_https: true)
       
       # If it's XML, we assume it's RSS

@@ -40,10 +40,10 @@
         this.wrapper.find(".website_link").first().val(data.link);
         title.focus();
       } else {
-        myplaceonline.createErrorNotification(data.error + " (" + this.link + ")");
+        myplaceonline.createErrorNotification(data.error);
       }
     }).fail(function(jqXHR, textStatus, errorThrown) {
-      myplaceonline.createErrorNotification(textStatus + " (" + this.link + ")");
+      myplaceonline.createErrorNotification(textStatus);
     }).complete(function(jqXHR, textStatus) {
       myplaceonline.hideLoading();
     });

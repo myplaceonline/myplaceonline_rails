@@ -1008,6 +1008,7 @@ en:
       recommender: "Recommender"
       request_title: "Request Title from Link"
       website_category: "Category"
+      invalid_link: "Invalid link. Should be of the form http(s)://link.com/..."
     credit_cards:
       name: "Name"
       number: "Number"
