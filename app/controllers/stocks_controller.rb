@@ -1,4 +1,12 @@
 class StocksController < MyplaceonlineController
+  def use_bubble?
+    true
+  end
+  
+  def bubble_text(obj)
+    Myp.display_date_month_year_simple(obj.vest_date, User.current_user)
+  end
+
   protected
     def sorts
       ["stocks.updated_at DESC"]
