@@ -37,6 +37,17 @@ class InfoController < ApplicationController
     redirect_to info_diagnostics_path
   end
   
+  def raise_server_warning
+    if !current_user.nil? && current_user.admin?
+      begin
+        raise "Test exception"
+      rescue Exception => e
+        Myp.warn("Test server warning", e)
+      end
+    end
+    redirect_to info_diagnostics_path
+  end
+  
   def contact
     @obj = SiteContact.new
     if !params[:subject].blank?

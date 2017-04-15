@@ -810,11 +810,15 @@ module Myp
   end
   
   def self.warn(message, exception = nil)
+    body_plain = message
+    body_html = CGI::escapeHTML(message)
     if !exception.nil?
-      message += "\n" + Myp.error_details(exception)
+      error_details = Myp.error_details(exception)
+      body_plain += "\n\n" + error_details
+      body_html += "\n\n<p>" + CGI::escapeHTML(error_details).gsub(/\n/, "<br />\n").gsub(/\t/, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;") + "</p>"
     end
-    Rails.logger.warn{message}
-    Myp.send_support_email_safe("Warning", message)
+    Rails.logger.warn{"Myp.warn: #{message}"}
+    Myp.send_support_email_safe("Warning", body_html.html_safe, body_plain)
   end
   
   def self.reset_points(user)
@@ -1376,7 +1380,7 @@ module Myp
       
       if ExecutionContext.available? && !User.current_user.nil?
         if !body.blank?
-          body += "\n\n<p>User: #{User.current_user.email}</p>"
+          body += "\n\n<p>User: #{User.current_user.email}</p>".html_safe
         end
         if !body_plain.blank?
           body_plain += "\n\nUser: #{User.current_user.email}"

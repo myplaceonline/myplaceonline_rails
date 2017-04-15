@@ -120,6 +120,7 @@ Rails.application.routes.draw do
     info/diagnostics
     info/sleep_time
     info/raise_server_exception
+    info/raise_server_warning
     info/faq
     info/tips
     info/about
