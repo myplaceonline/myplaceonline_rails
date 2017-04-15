@@ -73,7 +73,7 @@ class TripsController < MyplaceonlineController
         icon: "plus"
       }
     ]
-    if @obj.active? && !@obj.explicitly_completed
+    if !@obj.explicitly_completed
       result << {
         title: I18n.t("myplaceonline.trips.complete"),
         link: trip_complete_path(@obj),
