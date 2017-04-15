@@ -233,7 +233,9 @@ en:
       shopping_list_items: "Shopping List Items"
       paid_taxes: "Paid Taxes"
       psychological_evaluations: "Psychological Evaluations"
-      job_salaries: "Salaries"
+      job_salaries: "Job Salaries"
+      job_reviews: "Job Evaluations"
+      job_myreferences: "Job References"
     general:
       email: "E-mail"
       password: "Password"
@@ -1641,6 +1643,7 @@ en:
       accomplishments: "Accomplishments"
       add_accomplishment: "Add Accomplishment"
       resume: "Resume"
+      job: "Job"
     resume:
       jobs: "Jobs"
       education: "Education"

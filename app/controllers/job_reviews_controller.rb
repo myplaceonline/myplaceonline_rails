@@ -1,10 +1,10 @@
-class JobAccomplishmentsController < MyplaceonlineController
+class JobReviewsController < MyplaceonlineController
   def path_name
-    "job_job_accomplishment"
+    "job_job_review"
   end
 
   def form_path
-    "job_accomplishments/form"
+    "job_reviews/form"
   end
 
   def nested
@@ -36,7 +36,7 @@ class JobAccomplishmentsController < MyplaceonlineController
   end
   
   def bubble_text(obj)
-    Myp.display_date_month_year_simple(obj.accomplishment_time, User.current_user)
+    Myp.display_date_month_year_simple(obj.review_date, User.current_user)
   end
 
   protected
@@ -45,15 +45,17 @@ class JobAccomplishmentsController < MyplaceonlineController
     end
 
     def sorts
-      ["job_accomplishments.accomplishment_time DESC"]
+      ["job_reviews.review_date DESC"]
     end
 
     def obj_params
-      params.require(:job_accomplishment).permit(
-        :accomplishment_title,
-        :accomplishment,
-        :accomplishment_time,
-        :major
+      params.require(:job_review).permit(
+        :review_date,
+        :company_score,
+        :notes,
+        :self_evaluation,
+        contact_attributes: ContactsController.param_names,
+        job_review_files_attributes: FilesController.multi_param_names
       )
     end
     

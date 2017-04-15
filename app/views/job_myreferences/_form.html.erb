@@ -1,0 +1,27 @@
+<%
+if obj.myreference.nil?
+  obj.myreference = Myreference.build
+end
+%>
+<%= f.fields_for :myreference, obj.myreference do |myreference_fields| %>
+  <%=
+    render partial: "myplaceonline/select_or_create", locals: {
+      f: myreference_fields,
+      name: :contact_attributes,
+      existingobj: obj.myreference.contact,
+      heading: t("myplaceonline.myreferences.contact"),
+      objform: "contacts/form",
+      existingobjurl: "contact_path",
+      searchurl: "/contacts.json?perpage=0",
+      edit: edit,
+      autofocus: false,
+      simpleform: true,
+      expanded_if_nil: true
+    }
+  %>
+  <%= myp_select(myreference_fields, :reference_type, "myplaceonline.myreferences.reference_type", Myp.translate_options(Myreference::REFERENCE_TYPES), obj.myreference.reference_type) %>
+  <%= myp_text_field(myreference_fields, :reference_relationship, "myplaceonline.myreferences.reference_relationship", obj.myreference.reference_relationship) %>
+  <%= myp_decimal_field(myreference_fields, :years_experience, "myplaceonline.myreferences.years_experience", obj.myreference.years_experience) %>
+  <%= myp_check_box(myreference_fields, :can_contact, "myplaceonline.myreferences.can_contact") %>
+  <%= myp_text_area_markdown(myreference_fields, :notes, "myplaceonline.general.notes", obj.myreference.notes) %>
+<% end %>

@@ -1,10 +1,10 @@
-class JobAccomplishmentsController < MyplaceonlineController
+class JobMyreferencesController < MyplaceonlineController
   def path_name
-    "job_job_accomplishment"
+    "job_job_myreference"
   end
 
   def form_path
-    "job_accomplishments/form"
+    "job_myreferences/form"
   end
 
   def nested
@@ -36,7 +36,7 @@ class JobAccomplishmentsController < MyplaceonlineController
   end
   
   def bubble_text(obj)
-    Myp.display_date_month_year_simple(obj.accomplishment_time, User.current_user)
+    Myp.display_date_month_year_simple(obj.created_at, User.current_user)
   end
 
   protected
@@ -45,15 +45,12 @@ class JobAccomplishmentsController < MyplaceonlineController
     end
 
     def sorts
-      ["job_accomplishments.accomplishment_time DESC"]
+      ["job_myreferences.created_at DESC"]
     end
 
     def obj_params
-      params.require(:job_accomplishment).permit(
-        :accomplishment_title,
-        :accomplishment,
-        :accomplishment_time,
-        :major
+      params.require(:job_myreference).permit(
+        myreference_attributes: MyreferencesController.param_names
       )
     end
     

@@ -19,6 +19,13 @@ class JobReview < ApplicationRecord
   end
   
   def display
-    Myp.display_date_short_year(review_date, User.current_user)
+    result = self.company_score
+    if result.blank?
+      result = Myp.display_date_short_year(self.review_date, User.current_user)
+    end
+    if !contact.nil?
+      result = Myp.appendstrwrap(result, contact.display)
+    end
+    result
   end
 end

@@ -284,7 +284,7 @@ Rails.application.routes.draw do
       },
       {
         subresources: true,
-        name: :job_evaluations
+        name: :job_reviews
       },
       {
         subresources: true,

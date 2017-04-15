@@ -35,6 +35,26 @@ class JobsController < MyplaceonlineController
         icon: "bars"
       },
       {
+        title: I18n.t("myplaceonline.jobs.add_review"),
+        link: new_job_job_review_path(@obj),
+        icon: "plus"
+      },
+      {
+        title: I18n.t("myplaceonline.jobs.reviews"),
+        link: job_job_reviews_path(@obj),
+        icon: "bars"
+      },
+      {
+        title: I18n.t("myplaceonline.jobs.add_myreference"),
+        link: new_job_job_myreference_path(@obj),
+        icon: "plus"
+      },
+      {
+        title: I18n.t("myplaceonline.jobs.myreferences"),
+        link: job_job_myreferences_path(@obj),
+        icon: "bars"
+      },
+      {
         title: I18n.t("myplaceonline.jobs.add_accomplishment"),
         link: new_job_job_accomplishment_path(@obj),
         icon: "plus"
@@ -83,17 +103,6 @@ class JobsController < MyplaceonlineController
         :hours_per_week,
         company_attributes: Company.param_names,
         internal_address_attributes: LocationsController.param_names,
-        job_salaries_attributes: [
-          :id,
-          :_destroy,
-          :started,
-          :ended,
-          :notes,
-          :salary,
-          :salary_period,
-          :new_title,
-          :hours_per_week
-        ],
         job_managers_attributes: [
           :id,
           :_destroy,
@@ -101,21 +110,6 @@ class JobsController < MyplaceonlineController
           :end_date,
           :notes,
           contact_attributes: ContactsController.param_names
-        ],
-        job_reviews_attributes: [
-          :id,
-          :_destroy,
-          :review_date,
-          :company_score,
-          :notes,
-          :self_evaluation,
-          contact_attributes: ContactsController.param_names,
-          job_review_files_attributes: FilesController.multi_param_names
-        ],
-        job_myreferences_attributes: [
-          :id,
-          :_destroy,
-          myreference_attributes: MyreferencesController.param_names
         ],
         job_files_attributes: FilesController.multi_param_names
       )

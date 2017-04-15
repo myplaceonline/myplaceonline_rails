@@ -7,6 +7,10 @@ class JobMyreference < ApplicationRecord
   validates :myreference, presence: true
 
   child_property(name: :myreference)
+  
+  def display
+    myreference.display
+  end
 
   def self.skip_check_attributes
     ["can_contact"]

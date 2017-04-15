@@ -14,7 +14,7 @@ class JobSalariesController < MyplaceonlineController
   def footer_items_index
     super + [
       {
-        title: I18n.t("myplaceonline.job_accomplishments.job"),
+        title: I18n.t("myplaceonline.jobs.job"),
         link: job_path(@parent),
         icon: "back"
       }
@@ -24,7 +24,7 @@ class JobSalariesController < MyplaceonlineController
   def footer_items_show
     super + [
       {
-        title: I18n.t("myplaceonline.job_accomplishments.job"),
+        title: I18n.t("myplaceonline.jobs.job"),
         link: job_path(@obj.job),
         icon: "back"
       }

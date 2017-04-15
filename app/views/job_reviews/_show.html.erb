@@ -1,0 +1,11 @@
+<%= attribute_table_row_date(t("myplaceonline.job_reviews.review_date"), obj.review_date) %>
+<%= attribute_table_row(t("myplaceonline.job_reviews.company_score"), obj.company_score) %>
+<%= attribute_table_row_markdown(t("myplaceonline.job_reviews.notes"), obj.notes) %>
+<%= attribute_table_row_markdown(t("myplaceonline.job_reviews.self_evaluation"), obj.self_evaluation) %>
+<%= attribute_table_row_reference(t("myplaceonline.job_reviews.contact"), "contact_path", obj.contact) %>
+<%=
+  render(partial: "myplaceonline/pictures", locals: {
+    pics: obj.job_review_files,
+    placeholder: "myplaceonline.job_reviews.file"
+  })
+%>
