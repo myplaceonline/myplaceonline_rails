@@ -19,7 +19,7 @@ Category.create!([
   {id: 18, name: "memberships", link: "memberships", position: 0, parent_id: 1, additional_filtertext: "subscriptions", icon: "FatCow_Icons16x16/protect_share_workbook.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 19, name: "credit_scores", link: "credit_scores", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/table_money.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 20, name: "websites", link: "websites", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/page_world.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 21, name: "credit_cards", link: "credit_cards", position: 0, parent_id: 1, additional_filtertext: nil, icon: "famfamfam/creditcards.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 21, name: "credit_cards", link: "credit_cards", position: 0, parent_id: 1, additional_filtertext: "debit", icon: "famfamfam/creditcards.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 22, name: "bank_accounts", link: "bank_accounts", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/bank.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 23, name: "ideas", link: "ideas", position: 0, parent_id: 1, additional_filtertext: nil, icon: "famfamfam/lightning.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 24, name: "lists", link: "lists", position: 0, parent_id: 1, additional_filtertext: nil, icon: "famfamfam/note.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
@@ -159,7 +159,8 @@ Category.create!([
   {id: 159, name: "driver_licenses", link: "driver_licenses", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/form_photo.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 160, name: "hospital_visits", link: "hospital_visits", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/stethoscope.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 161, name: "paid_taxes", link: "paid_taxes", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/money.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 194, name: "psychological_evaluations", link: "psychological_evaluations", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/emotion_detective.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
+  {id: 162, name: "psychological_evaluations", link: "psychological_evaluations", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/emotion_detective.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 195, name: "insurance_cards", link: "insurance_cards", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/infocard.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
 ])
 
 user = User.new

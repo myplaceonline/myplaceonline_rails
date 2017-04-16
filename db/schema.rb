@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170415144618) do
+ActiveRecord::Schema.define(version: 20170416181427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2372,6 +2372,32 @@ ActiveRecord::Schema.define(version: 20170415144618) do
     t.index ["identity_file_id"], name: "index_injury_files_on_identity_file_id", using: :btree
     t.index ["identity_id"], name: "index_injury_files_on_identity_id", using: :btree
     t.index ["injury_id"], name: "index_injury_files_on_injury_id", using: :btree
+  end
+
+  create_table "insurance_card_files", force: :cascade do |t|
+    t.integer  "insurance_card_id"
+    t.integer  "identity_file_id"
+    t.integer  "identity_id"
+    t.integer  "position"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["identity_file_id"], name: "index_insurance_card_files_on_identity_file_id", using: :btree
+    t.index ["identity_id"], name: "index_insurance_card_files_on_identity_id", using: :btree
+    t.index ["insurance_card_id"], name: "index_insurance_card_files_on_insurance_card_id", using: :btree
+  end
+
+  create_table "insurance_cards", force: :cascade do |t|
+    t.string   "insurance_card_name"
+    t.date     "insurance_card_start"
+    t.date     "insurance_card_end"
+    t.text     "notes"
+    t.integer  "visit_count"
+    t.datetime "archived"
+    t.integer  "rating"
+    t.integer  "identity_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.index ["identity_id"], name: "index_insurance_cards_on_identity_id", using: :btree
   end
 
   create_table "invite_codes", force: :cascade do |t|
@@ -5667,6 +5693,10 @@ ActiveRecord::Schema.define(version: 20170415144618) do
   add_foreign_key "injury_files", "identities"
   add_foreign_key "injury_files", "identity_files"
   add_foreign_key "injury_files", "injuries"
+  add_foreign_key "insurance_card_files", "identities"
+  add_foreign_key "insurance_card_files", "identity_files"
+  add_foreign_key "insurance_card_files", "insurance_cards"
+  add_foreign_key "insurance_cards", "identities"
   add_foreign_key "invite_codes", "identities"
   add_foreign_key "invites", "users"
   add_foreign_key "item_files", "identities"

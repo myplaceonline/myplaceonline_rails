@@ -237,6 +237,7 @@ en:
       job_reviews: "Job Evaluations"
       job_myreferences: "Job References"
       job_awards: "Job Awards"
+      insurance_cards: "Insurance Cards"
     general:
       email: "E-mail"
       password: "Password"
@@ -3332,3 +3333,7 @@ en:
       job_award_description: "Description"
       job_award_date: "Date"
       job_award_amount: "Amount"
+    insurance_cards:
+      insurance_card_name: "Name"
+      insurance_card_start: "Start"
+      insurance_card_end: "Expires"
