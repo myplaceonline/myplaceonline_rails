@@ -583,8 +583,24 @@ module Myp
   
   def self.markdown_for_email(markdown)
     if !markdown.nil?
+      i = 0
+      while true do
+        match_data = markdown.match(/\[([^\]]+)\]\(([^)]+)\)/, i)
+        if !match_data.nil?
+          if match_data[1] == match_data[2]
+            replacement = match_data[1]
+          else
+            replacement = match_data[1] + " (" + match_data[2] + ")"
+          end
+          markdown = match_data.pre_match + replacement + match_data.post_match
+          i = match_data.offset(0)[0] + replacement.length + 1
+        else
+          break
+        end
+      end
       #markdown.gsub(/\[([^\]]+)\]\(([^)]+)\)/, "\\1 (\\2)")
-      markdown.gsub(/\[([^\]]+)\]\(([^)]+)\)/, "\\2")
+      #markdown.gsub(/\[([^\]]+)\]\(([^)]+)\)/, "\\2")
+      markdown
     else
       nil
     end
