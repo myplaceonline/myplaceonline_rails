@@ -574,8 +574,17 @@ module Myp
   end
 
   def self.markdown_to_html(markdown)
-    if !markdown.blank?
+    if !markdown.nil?
       GitHub::Markup::Markdown.new.render(markdown)
+    else
+      nil
+    end
+  end
+  
+  def self.markdown_for_email(markdown)
+    if !markdown.nil?
+      #markdown.gsub(/\[([^\]]+)\]\(([^)]+)\)/, "\\1 (\\2)")
+      markdown.gsub(/\[([^\]]+)\]\(([^)]+)\)/, "\\2")
     else
       nil
     end
