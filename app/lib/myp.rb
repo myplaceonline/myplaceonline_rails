@@ -2110,16 +2110,27 @@ module Myp
   def self.valid_link?(link)
     result = false
     if !link.blank?
-      link = link.downcase
-      if Rails.env.production?
-        if !link.include?("://localhost") && (link.start_with?("http") || link.start_with?("https"))
-          result = true
+      begin
+        link_uri = URI.parse(URI.escape(link))
+        if !link_uri.scheme.nil?
+          if Rails.env.production?
+            # Don't allow IP addresses for now - need to blacklist myplaceonline IPs
+            if link_uri.scheme.start_with?("http") && (link_uri.host =~ /^[\d\.:]+$/).nil? && !link_uri.host.include?("localhost") && !link_uri.host.include?(".myplaceonline.com")
+              result = true
+            end
+          else
+            if link_uri.scheme.start_with?("http")
+              result = true
+            end
+          end
         end
-      else
-        if link.start_with?("http") || link.start_with?("https")
-          result = true
-        end
+      rescue URI::InvalidURIError
+        # Do nothing, just return false (but warn so we can see any patterns)
+        Myp.warn("valid_link InvalidURIError for #{link}")
       end
+    end
+    if !result
+      Myp.warn("valid_link invalid link: #{link}")
     end
     result
   end
