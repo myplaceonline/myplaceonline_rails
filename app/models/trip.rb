@@ -19,6 +19,12 @@ class Trip < ApplicationRecord
 
   child_pictures
   
+  validate do
+    if !self.started.nil? && !self.ended.nil? && self.ended < self.started
+      errors.add(:ended, I18n.t("myplaceonline.trips.end_before_start"))
+    end
+  end
+
   def file_folders
     folders = Array.new
     folders.push(I18n.t("myplaceonline.category.trips"))

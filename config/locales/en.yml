@@ -1711,6 +1711,7 @@ en:
       complete: "Complete Trip"
       trip_completed: "The trip has been marked completed."
       trip_name: "Trip Name"
+      end_before_start: "The end date is before the start date"
     passports:
       region: "Country"
       passport_number: "Passport Number"
