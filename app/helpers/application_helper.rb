@@ -1015,6 +1015,12 @@ module ApplicationHelper
 
       # Tried the date, datetime, and datetime_local tags, but they have various quirks, so override
       options[:type] = Myp::FIELD_TEXT
+      
+      # If autofocus is true but there's already a date/time value, we're probably just editing, so don't bother
+      # to focus
+      if options[:autofocus] && !options[:value].blank?
+        options[:autofocus] = false
+      end
     when Myp::FIELD_TEXT_AREA
       options = {
         collapsible: true,
