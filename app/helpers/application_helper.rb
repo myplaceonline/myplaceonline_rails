@@ -301,24 +301,26 @@ module ApplicationHelper
   end
   
   def data_row(heading:, content:, **options)
-    options[:content_classes] ||= nil
-    options[:format] ||= :html
-    options[:background_highlight] ||= false
-    options[:skip_blank_content] ||= true
-    options[:markdown] ||= false
-    options[:hide_false] ||= false
-    options[:url] ||= false
-    options[:url_external] ||= false
-    options[:url_external_target_blank] ||= false
-    options[:url_linkclasses] ||= nil
-    options[:url_clipboard] ||= nil
-    options[:url_innercontent] ||= nil
-    options[:htmlencode_content] ||= true
-    options[:wrap] ||= true
-    options[:heading] = heading
-    options[:onlytime] ||= false
-    options[:currency] ||= false
-    options[:tooltip] ||= nil
+    options = {
+      content_classes: nil,
+      format: :html,
+      background_highlight: false,
+      skip_blank_content: true,
+      markdown: false,
+      hide_false: false,
+      url: false,
+      url_external: false,
+      url_external_target_blank: false,
+      url_linkclasses: nil,
+      url_clipboard: nil,
+      url_innercontent: nil,
+      htmlencode_content: true,
+      wrap: true,
+      heading: heading,
+      onlytime: false,
+      currency: false,
+      tooltip: nil,
+    }.merge(options)
     
     # ->(content:, format:, options: ){ content.to_s }
     if options[:transform].nil?
