@@ -57,6 +57,16 @@
   input_field(
     form: f,
     type: Myp::FIELD_DECIMAL,
+    name: :agi,
+    value: obj.agi,
+    placeholder: "myplaceonline.paid_taxes.agi",
+    tooltip: t("myplaceonline.paid_taxes.agi_tooltip")
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
     name: :service_fee,
     value: obj.service_fee,
     placeholder: "myplaceonline.paid_taxes.service_fee"

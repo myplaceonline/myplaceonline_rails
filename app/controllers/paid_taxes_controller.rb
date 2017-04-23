@@ -26,6 +26,7 @@ class PaidTaxesController < MyplaceonlineController
         :state_refund,
         :service_fee,
         :notes,
+        :agi,
         paid_tax_files_attributes: FilesController.multi_param_names,
         password_attributes: PasswordsController.param_names
       )

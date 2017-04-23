@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170416181427) do
+ActiveRecord::Schema.define(version: 20170423220615) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3338,6 +3338,7 @@ ActiveRecord::Schema.define(version: 20170416181427) do
     t.datetime "updated_at",                                    null: false
     t.string   "paid_tax_description"
     t.decimal  "total_taxes_paid",     precision: 10, scale: 2
+    t.decimal  "agi",                  precision: 10, scale: 2
     t.index ["identity_id"], name: "index_paid_taxes_on_identity_id", using: :btree
     t.index ["password_id"], name: "index_paid_taxes_on_password_id", using: :btree
   end

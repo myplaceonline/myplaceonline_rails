@@ -318,6 +318,7 @@ module ApplicationHelper
     options[:heading] = heading
     options[:onlytime] ||= false
     options[:currency] ||= false
+    options[:tooltip] ||= nil
     
     # ->(content:, format:, options: ){ content.to_s }
     if options[:transform].nil?
@@ -392,7 +393,7 @@ module ApplicationHelper
       if options[:wrap]
         html = <<-HTML
           <tr>
-            <td>#{CGI::escapeHTML(heading)}</td>
+            <td>#{content_tag(:span, CGI::escapeHTML(heading), class: "tooltipable", title: options[:tooltip])}</td>
             <td class="#{options[:content_classes]}">#{content}</td>
             <td style="padding: 0.2em; vertical-align: top;">#{options[:secondary_content]}</td>
           </tr>
@@ -993,7 +994,8 @@ module ApplicationHelper
       autofocus: false,
       field_classes: "",
       remote_autocomplete_model: nil,
-      remote_autocomplete_all: false # if true, show all items on focus; otherwise, show only items that match what's typed
+      remote_autocomplete_all: false, # if true, show all items on focus; otherwise, show only items that match what's typed
+      tooltip: nil
     }.merge(options)
     
     case options[:type]
@@ -1038,18 +1040,18 @@ module ApplicationHelper
     result = nil
     
     if options[:include_label]
-      # We only want to show the label if value is blank.
-      label_classes = options[:value].blank? ? "ui-hidden-accessible" : "form_field_label"
+      # We only want to show the label if value is blank and there's no tooltip
+      label_classes = (options[:value].blank? && options[:tooltip].blank?) ? "ui-hidden-accessible" : "form_field_label"
       
       if options[:form].nil?
         result = Myp.appendstr(
           result,
-          label_tag(name, options[:placeholder], class: label_classes)
+          label_tag(name, options[:placeholder], class: label_classes, title: options[:tooltip])
         )
       else
         result = Myp.appendstr(
           result,
-          options[:form].label(name, options[:placeholder], class: label_classes)
+          options[:form].label(name, options[:placeholder], class: label_classes, title: options[:tooltip])
         )
       end
     end

@@ -194,3 +194,8 @@ img.fit {
   border: 1px solid red;
   padding: 10px;
 }
+
+label[title], .tooltipable[title] {
+  cursor: help !important;
+  border-bottom: 1px dashed !important;
+}

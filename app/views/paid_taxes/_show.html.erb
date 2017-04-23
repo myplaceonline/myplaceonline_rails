@@ -4,6 +4,7 @@
 <%= data_row(heading: t("myplaceonline.paid_taxes.federal_refund"), content: obj.federal_refund) %>
 <%= data_row(heading: t("myplaceonline.paid_taxes.state_refund"), content: obj.state_refund) %>
 <%= data_row(heading: t("myplaceonline.paid_taxes.donations"), content: obj.donations) %>
+<%= data_row(heading: t("myplaceonline.paid_taxes.agi"), content: obj.agi, tooltip: t("myplaceonline.paid_taxes.agi_tooltip")) %>
 <%= data_row(heading: t("myplaceonline.paid_taxes.service_fee"), content: obj.service_fee) %>
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
 <%= attribute_table_row_reference(t("myplaceonline.paid_taxes.password"), "password_path", obj.password) %>
