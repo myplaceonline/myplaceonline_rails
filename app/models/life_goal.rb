@@ -4,6 +4,6 @@ class LifeGoal < ApplicationRecord
   validates :life_goal_name, presence: true
   
   def display
-    life_goal_name
+    Myp.appendstrwrap(life_goal_name, self.long_term ? I18n.t("myplaceonline.life_goals.long_term") : nil)
   end
 end

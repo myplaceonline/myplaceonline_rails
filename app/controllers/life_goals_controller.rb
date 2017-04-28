@@ -1,7 +1,7 @@
 class LifeGoalsController < MyplaceonlineController
   protected
     def sorts
-      ["lower(life_goals.life_goal_name) ASC"]
+      ["life_goals.long_term ASC NULLS FIRST, lower(life_goals.life_goal_name) ASC"]
     end
 
     def obj_params
