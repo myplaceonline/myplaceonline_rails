@@ -37,7 +37,7 @@ class LifeGoalsController < MyplaceonlineController
 
     def all_additional_sql(strict)
       if !strict && @myplet
-        "and long_term is null"
+        "and (long_term is null or long_term = false)"
       else
         nil
       end
