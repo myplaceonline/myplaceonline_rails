@@ -1557,6 +1557,7 @@ en:
       notes: "Notes"
       goal_started: "Start"
       goal_ended: "End"
+      long_term: "Long Term"
     temperatures:
       measured: "Measurement Time"
       measured_temperature: "Temperature (Degrees)"

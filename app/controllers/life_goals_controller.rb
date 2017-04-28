@@ -10,7 +10,8 @@ class LifeGoalsController < MyplaceonlineController
         :notes,
         :position,
         :goal_started,
-        :goal_ended
+        :goal_ended,
+        :long_term
       )
     end
 end
