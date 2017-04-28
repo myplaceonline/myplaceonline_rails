@@ -18,6 +18,7 @@ class MyplaceonlineController < ApplicationController
       check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
     end
     
+    @myplet = params[:myplet]
     @archived = param_bool(:archived)
 
     @selected_sort = params[:selected_sort]
@@ -86,7 +87,6 @@ class MyplaceonlineController < ApplicationController
 
     @query_params_part_all = items_query_params_part_all
     
-    @myplet = params[:myplet]
     if !@myplet
       respond_with(@objs)
     else
@@ -838,6 +838,34 @@ class MyplaceonlineController < ApplicationController
         :name => simple_index_filter[:name],
         :display => "myplaceonline.#{category_name}.#{simple_index_filter[:name].to_s}"
       }
+    end
+    result
+  end
+  
+  def show_search
+    true
+  end
+  
+  def show_favorites
+    true
+  end
+  
+  def show_additional
+    true
+  end
+  
+  def show_add_button
+    @myplet
+  end
+  
+  def myplet_title_linked?
+    false
+  end
+  
+  def myplet_title
+    result = @myplet.display
+    if myplet_title_linked?
+      result = ActionController::Base.helpers.link_to(result, @myplet.link)
     end
     result
   end

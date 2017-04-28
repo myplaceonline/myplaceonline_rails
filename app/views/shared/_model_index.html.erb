@@ -19,7 +19,7 @@
 
 <% else %>
 
-  <% if !@additional_items.nil? && @additional_items.count > 0 %>
+  <% if controller.show_additional && !@additional_items.nil? && @additional_items.count > 0 %>
 
     <div data-role="collapsible" data-collapsed="true" class="nonprintable">
       <h3><%= t("myplaceonline.general.top_items", max: controller.how_many_top_items) %></h3>
@@ -37,7 +37,7 @@
 
   <% end %>
 
-  <% if !@favorite_items.nil? && @favorite_items.count > 0 %>
+  <% if controller.show_favorites && !@favorite_items.nil? && @favorite_items.count > 0 %>
 
     <div data-role="collapsible" data-collapsed="true" data-collapsed-icon="star" data-expanded-icon="star" class="nonprintable">
       <h3><%= t("myplaceonline.general.favorite_items") %></h3>
@@ -56,7 +56,7 @@
   <% end %>
 
   <div class="searchable_container">
-    <ul class="searchable" data-role="listview" data-inset="true" data-filter="true" data-split-icon="<%= controller.data_split_icon %>" data-filter-placeholder="<%= t("myplaceonline.general.search") %>">
+    <ul class="searchable" data-role="listview" data-inset="true" data-filter="<%= controller.show_search %>" data-split-icon="<%= controller.data_split_icon %>" data-filter-placeholder="<%= t("myplaceonline.general.search") %>">
       <%
       if !@objs2.nil? && controller.second_list_before
         @objs2.each do |obj|
@@ -129,7 +129,7 @@
 
 <% end %>
 
-<% if @myplet %>
+<% if controller.show_add_button && @myplet %>
   <p><%= link_to(t("myplaceonline.general.add") + " " + t("myplaceonline.category." + controller.category_name).singularize, controller.new_path, "class" => "ui-btn") %></p>
 <% end %>
 

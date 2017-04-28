@@ -97,4 +97,12 @@ class Myplet < ApplicationRecord
   def show_highly_visited?
     false
   end
+  
+  def link
+    result = "/#{self.category_name}"
+    if !self.category_id.nil?
+      result += "/#{self.category_id}"
+    end
+    result
+  end
 end
