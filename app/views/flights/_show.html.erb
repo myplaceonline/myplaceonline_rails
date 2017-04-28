@@ -1,5 +1,6 @@
 <%= attribute_table_row(t("myplaceonline.flights.flight_name"), obj.flight_name) %>
 <%= attribute_table_row(t("myplaceonline.flights.confirmation_number"), obj.confirmation_number) %>
+<%= attribute_table_row_url(t("myplaceonline.flights.trip_info"), obj.trip_info_url, false, nil, nil, nil, false, true) %>
 <%= attribute_table_row_date(t("myplaceonline.flights.flight_start_date"), obj.flight_start_date) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <% obj.flight_legs.each do |flight_leg| %>

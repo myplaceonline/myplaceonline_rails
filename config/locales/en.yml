@@ -2880,6 +2880,7 @@ en:
       delete_group: "Delete Group"
       message_category: "Flight Info"
       last_leg_info: "%{name} is scheduled to arrive on %{airline} %{flight_number} at %{time} @ %{location}"
+      trip_info: "Trip Information"
     flight_legs:
       flight_leg: "Flight Leg"
       flight_number: "Flight Number"
