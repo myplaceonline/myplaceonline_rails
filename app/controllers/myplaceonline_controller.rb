@@ -796,6 +796,11 @@ class MyplaceonlineController < ApplicationController
     # calendar items, but we can just surgically update this field
     # and skip that
     @obj.update_column(:archived, Time.now)
+    
+    if @obj.respond_to?("on_after_destroy")
+      @obj.on_after_destroy
+    end
+    
     redirect_to index_path,
       :flash => { :notice => notice }
   end
