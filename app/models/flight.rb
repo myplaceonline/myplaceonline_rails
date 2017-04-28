@@ -6,7 +6,7 @@ class Flight < ApplicationRecord
   child_properties(name: :flight_legs, sort: "depart_time ASC, position ASC")
 
   def display
-    Myp.appendstrwrap(flight_name, Myp.display_datetime_short_year(flight_start_date, User.current_user))
+    Myp.appendstrwrap(flight_name, Myp.display_date_short_year(flight_start_date, User.current_user))
   end
   
   def display_with_first_leg
