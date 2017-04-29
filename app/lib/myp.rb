@@ -1357,7 +1357,7 @@ module Myp
       !key.start_with?("REMOTE_") && 
       !key.start_with?("WEB_") && 
       !key.start_with?("ORIGINAL_")) || key.start_with?("HTTP_COOKIE")
-    }.to_a.map{|kv| "#{kv[0]}=#{kv[1]}"}.join(",\n\t")
+    }.to_a.map{|kv| "#{kv[0]}: #{kv[1]}"}.join("\n\t")
   end
   
   def self.handle_exception(exception, email = nil, request = nil)
@@ -1376,7 +1376,7 @@ module Myp
     end
 
     if !request.nil?
-      str = "\n\n  Request: {" +
+      str = "Request: {" +
           "\n\tfullpath: #{request.fullpath.inspect}, " +
           "\n\tip: #{request.ip.inspect}, " +
           "\n\tmethod: #{request.method.inspect}, " +
@@ -1386,22 +1386,22 @@ module Myp
           "\n\tremote_ip: #{request.remote_ip.inspect}, " +
           "\n\trequest_method: #{request.request_method.inspect}, " +
           "\n\tuuid: #{request.uuid.inspect}" +
-          "\n  }\n"
+          "\n}"
       
-      body_plain += str
+      body_plain += "\n\n" + str
       body_html += "\n\n<p>" + CGI::escapeHTML(str).gsub(/\n/, "<br />\n").gsub(/\t/, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;") + "</p>"
       
       headers = request.headers
       if !headers.nil?
-        str = "\n  Headers: {\n\t#{self.process_headers(request)}\n  }\n"
+        str = "Headers: {\n\t#{self.process_headers(request)}\n}"
 
-        body_plain += str
+        body_plain += "\n\n" + str
         body_html += "\n\n<p>" + CGI::escapeHTML(str).gsub(/\n/, "<br />\n").gsub(/\t/, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;") + "</p>"
       end
     end
     
     if !ENV["NODENAME"].blank?
-      body_html += "\n\n<p>nServer: #{ENV["NODENAME"]}</p>".html_safe
+      body_html += "\n\n<p>Server: #{ENV["NODENAME"]}</p>".html_safe
       body_plain += "\n\nServer: #{ENV["NODENAME"]}"
     end
     
