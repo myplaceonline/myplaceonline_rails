@@ -203,3 +203,13 @@ label[title], .tooltipable[title] {
 .myplet_content .searchable_container > ul {
   margin: 0;
 }
+
+.myplet_border_title_content a:link, .myplet_border_title_content a:visited, .myplet_border_title_content a:active {
+  text-decoration: none;
+  color: black !important;
+}
+
+.myplet_border_title_content a:hover {
+  text-decoration: underline;
+  color: blue !important;
+}
