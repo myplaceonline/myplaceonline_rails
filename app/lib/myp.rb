@@ -1357,40 +1357,57 @@ module Myp
       !key.start_with?("REMOTE_") && 
       !key.start_with?("WEB_") && 
       !key.start_with?("ORIGINAL_")) || key.start_with?("HTTP_COOKIE")
-    }.to_a.map{|kv| "#{kv[0]}=#{kv[1]}"}.join(",\n    ")
+    }.to_a.map{|kv| "#{kv[0]}=#{kv[1]}"}.join(",\n\t")
   end
   
   def self.handle_exception(exception, email = nil, request = nil)
-    stack = Myp.error_details(exception)
-    body = ""
-    if !email.nil?
-      body += "User: " + email + "\n\n"
-    elsif ExecutionContext.available? && !User.current_user.nil?
-      body += "User: " + User.current_user.email + "\n\n"
+    body_plain = ""
+    body_html = ""
+    
+    if !email.blank?
+      body_html += "<p>User: #{email}</p>".html_safe
+      body_plain += "User: #{email}"
     end
-    body += "Stack:\n\n  " + stack + "\n"
+
+    if !exception.nil?
+      error_details = Myp.error_details(exception)
+      body_plain += "\n\n" + error_details
+      body_html += "\n\n<p>" + CGI::escapeHTML(error_details).gsub(/\n/, "<br />\n").gsub(/\t/, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;") + "</p>"
+    end
+
     if !request.nil?
-      body += "\n  Request: {" +
-          "\n    fullpath: #{request.fullpath.inspect}, " +
-          "\n    ip: #{request.ip.inspect}, " +
-          "\n    method: #{request.method.inspect}, " +
-          "\n    original_fullpath: #{request.original_fullpath.inspect}, " +
-          "\n    original_url: #{request.original_url.inspect}, " +
-          "\n    query_parameters: #{request.query_parameters.inspect}, " +
-          "\n    remote_ip: #{request.remote_ip.inspect}, " +
-          "\n    request_method: #{request.request_method.inspect}, " +
-          "\n    uuid: #{request.uuid.inspect}" +
+      str = "\n\n  Request: {" +
+          "\n\tfullpath: #{request.fullpath.inspect}, " +
+          "\n\tip: #{request.ip.inspect}, " +
+          "\n\tmethod: #{request.method.inspect}, " +
+          "\n\toriginal_fullpath: #{request.original_fullpath.inspect}, " +
+          "\n\toriginal_url: #{request.original_url.inspect}, " +
+          "\n\tquery_parameters: #{request.query_parameters.inspect}, " +
+          "\n\tremote_ip: #{request.remote_ip.inspect}, " +
+          "\n\trequest_method: #{request.request_method.inspect}, " +
+          "\n\tuuid: #{request.uuid.inspect}" +
           "\n  }\n"
+      
+      body_plain += str
+      body_html += "\n\n<p>" + CGI::escapeHTML(str).gsub(/\n/, "<br />\n").gsub(/\t/, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;") + "</p>"
+      
       headers = request.headers
       if !headers.nil?
-        body += "\n  Headers: {\n    #{self.process_headers(request)}\n  }\n"
+        str = "\n  Headers: {\n\t#{self.process_headers(request)}\n  }\n"
+
+        body_plain += str
+        body_html += "\n\n<p>" + CGI::escapeHTML(str).gsub(/\n/, "<br />\n").gsub(/\t/, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;") + "</p>"
       end
     end
+    
     if !ENV["NODENAME"].blank?
-      body += "\nServer: #{ENV["NODENAME"]}"
+      body_html += "\n\n<p>nServer: #{ENV["NODENAME"]}</p>".html_safe
+      body_plain += "\n\nServer: #{ENV["NODENAME"]}"
     end
-    Rails.logger.warn{"handle_exception: " + body}
-    Myp.send_support_email_safe("User Exception", body, email: email)
+    
+    Rails.logger.warn{"handle_exception: " + body_plain}
+    
+    Myp.send_support_email_safe("User Exception", body_html.html_safe, body_plain, email: email)
   end
   
   def self.send_support_email_safe(subject, body, body_plain = nil, email: nil)
