@@ -178,6 +178,8 @@ class CalendarItem < ApplicationRecord
     context_info: nil,
     max_pending: nil
   )
+    Rails.logger.debug{"CalendarItem.create_calendar_item entry time: #{calendar_item_time}"}
+
     ApplicationRecord.transaction do
       calendar_item = CalendarItem.new(
         identity: identity,

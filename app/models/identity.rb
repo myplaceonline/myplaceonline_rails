@@ -27,7 +27,7 @@ class Identity < ApplicationRecord
     ]
   end
       
-  DEFAULT_BIRTHDAY_THRESHOLD_SECONDS = 60.days
+  DEFAULT_BIRTHDAY_THRESHOLD_SECONDS = 60.days.seconds
   
   CALENDAR_ITEM_CONTEXT_BIRTHDAY = "birthday"
   
@@ -540,12 +540,28 @@ class Identity < ApplicationRecord
         ApplicationRecord.transaction do
           User.current_user.primary_identity.calendars.each do |calendar|
             on_after_destroy
+            
+            t = next_birthday
+            
             CalendarItem.create_calendar_item(
               identity: User.current_user.primary_identity,
               calendar: calendar,
               model: self.class,
-              calendar_item_time: next_birthday,
+              calendar_item_time: t,
               reminder_threshold_amount: (calendar.birthday_threshold_seconds || DEFAULT_BIRTHDAY_THRESHOLD_SECONDS),
+              reminder_threshold_type: Calendar::DEFAULT_REMINDER_TYPE,
+              model_id: id,
+              repeat_amount: 1,
+              repeat_type: Myp::TIME_DURATION_YEARS,
+              context_info: Identity::CALENDAR_ITEM_CONTEXT_BIRTHDAY
+            )
+            
+            CalendarItem.create_calendar_item(
+              identity: User.current_user.primary_identity,
+              calendar: calendar,
+              model: self.class,
+              calendar_item_time: t + 12.hours,
+              reminder_threshold_amount: 5.minutes.seconds,
               reminder_threshold_type: Calendar::DEFAULT_REMINDER_TYPE,
               model_id: id,
               repeat_amount: 1,
