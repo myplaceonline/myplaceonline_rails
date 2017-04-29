@@ -199,3 +199,7 @@ label[title], .tooltipable[title] {
   cursor: help !important;
   border-bottom: 1px dashed !important;
 }
+
+.myplet_content .searchable_container > ul {
+  margin: 0;
+}
