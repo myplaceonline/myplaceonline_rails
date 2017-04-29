@@ -23,7 +23,7 @@ class MoneyBalanceItemTemplatesController < MyplaceonlineController
   
   def other_display
     if @parent.current_user_owns?
-      @parent.contact.display
+      @parent.contact.display(simple: true)
     else
       @parent.identity.display
     end

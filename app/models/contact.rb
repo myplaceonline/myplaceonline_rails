@@ -65,7 +65,7 @@ class Contact < ApplicationRecord
     })
   end
 
-  def display
+  def display(simple: false)
     if !contact_identity.nil?
       result = contact_identity.display
       whitespace = result =~ /\s+/
@@ -76,7 +76,7 @@ class Contact < ApplicationRecord
           result = Myp.appendstrwrap(result, I18n.t("myplaceonline.contacts.related_to") + " " + relationship.contact.contact_identity.name)
         end
       end
-      if !contact_identity.company.nil?
+      if !simple && !contact_identity.company.nil?
         result = Myp.appendstrwrap(result, contact_identity.company.display)
       end
       result

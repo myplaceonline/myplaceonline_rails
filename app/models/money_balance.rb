@@ -5,9 +5,9 @@ class MoneyBalance < ApplicationRecord
 
   def display
     if current_user_owns?
-      contact.display
+      contact.display(simple: true)
     else
-      identity.display + "/" + contact.display
+      identity.display + "/" + contact.display(simple: true)
     end
   end
   
@@ -30,9 +30,9 @@ class MoneyBalance < ApplicationRecord
     if balance == 0
       Myp.number_to_currency(0)
     elsif balance < 0
-      I18n.t("myplaceonline.money_balances.you_owe", source: identity.display, contact: contact.display, amount: Myp.number_to_currency(balance.abs))
+      I18n.t("myplaceonline.money_balances.you_owe", source: identity.display, contact: contact.display(simple: true), amount: Myp.number_to_currency(balance.abs))
     else
-      I18n.t("myplaceonline.money_balances.contact_owes", source: identity.display, contact: contact.display, amount: Myp.number_to_currency(balance))
+      I18n.t("myplaceonline.money_balances.contact_owes", source: identity.display, contact: contact.display(simple: true), amount: Myp.number_to_currency(balance))
     end
   end
   

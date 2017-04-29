@@ -53,7 +53,7 @@ class MoneyBalanceItem < ApplicationRecord
     name = withtime ? "myplaceonline.money_balances.paid" : "myplaceonline.money_balances.paid_notime"
     if amount < 0
       I18n.t(name, {
-          x: initials ? money_balance.contact.display_initials : money_balance.contact.display,
+          x: initials ? money_balance.contact.display_initials : money_balance.contact.display(simple: true),
           y: initials ? money_balance.identity.display_initials : money_balance.identity.display,
           amount: Myp.number_to_currency(amount.abs),
           time: item_time
@@ -62,7 +62,7 @@ class MoneyBalanceItem < ApplicationRecord
     else
       I18n.t(name, {
           x: initials ? money_balance.identity.display_initials : money_balance.identity.display,
-          y: initials ? money_balance.contact.display_initials : money_balance.contact.display,
+          y: initials ? money_balance.contact.display_initials : money_balance.contact.display(simple: true),
           amount: Myp.number_to_currency(amount),
           time: item_time
         }
