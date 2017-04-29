@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170429003251) do
+ActiveRecord::Schema.define(version: 20170429181054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1183,7 +1183,6 @@ ActiveRecord::Schema.define(version: 20170429003251) do
   create_table "dental_insurances", force: :cascade do |t|
     t.string   "insurance_name",       limit: 255
     t.integer  "insurance_company_id"
-    t.boolean  "archived"
     t.integer  "periodic_payment_id"
     t.text     "notes"
     t.integer  "group_company_id"
@@ -1196,6 +1195,7 @@ ActiveRecord::Schema.define(version: 20170429003251) do
     t.integer  "doctor_id"
     t.integer  "visit_count"
     t.integer  "rating"
+    t.datetime "archived"
     t.index ["doctor_id"], name: "index_dental_insurances_on_doctor_id", using: :btree
     t.index ["group_company_id"], name: "index_dental_insurances_on_group_company_id", using: :btree
     t.index ["identity_id"], name: "index_dental_insurances_on_identity_id", using: :btree
