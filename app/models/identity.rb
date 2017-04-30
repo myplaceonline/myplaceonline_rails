@@ -536,10 +536,10 @@ class Identity < ApplicationRecord
   
   def on_after_save
     if ExecutionContext.count > 0 && MyplaceonlineExecutionContext.handle_updates?
-      if !birthday.nil?
-        ApplicationRecord.transaction do
+      ApplicationRecord.transaction do
+        on_after_destroy
+        if !birthday.nil?
           User.current_user.primary_identity.calendars.each do |calendar|
-            on_after_destroy
             
             t = next_birthday
             
