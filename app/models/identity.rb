@@ -535,7 +535,7 @@ class Identity < ApplicationRecord
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
-    if ExecutionContext.count > 0 && MyplaceonlineExecutionContext.handle_updates?
+    if ExecutionContext.count > 0 && MyplaceonlineExecutionContext.handle_updates? && !User.current_user.primary_identity.nil?
       ApplicationRecord.transaction do
         on_after_destroy
         if !birthday.nil?
