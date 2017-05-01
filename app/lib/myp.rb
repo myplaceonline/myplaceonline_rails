@@ -1943,65 +1943,73 @@ module Myp
         end
         search_result = search_result.final_search_result
       end
+      
       Rails.logger.debug{"search_result: #{search_result.inspect}"}
-      might_be_archived = search_result.respond_to?("archived")
-      if !might_be_archived || (might_be_archived && search_result.archived.nil?)
-        category = Myp.instance_to_category(search_result, false)
-        if category.nil? && search_result.class != Share
-          temp_cat_name = search_result.class.name.pluralize.underscore
-          if I18n.exists?("myplaceonline.category." + temp_cat_name)
-            category = Category.new(name: temp_cat_name)
-          else
-            Myp.warn("Myp.process_search_results full_text_search found result but not category (perhaps use final_search_result?): #{search_result.inspect}; search: #{original_search}, user: #{User.current_user.primary_identity_id}, category: #{temp_cat_name}, original_search_result: #{original_search_result.inspect}")
-          end
-        end
-        if !category.nil?
-          if display_category_prefix
-            final_display = prefix_text + category.human_title_singular + ": " + search_result.display
-          else
-            final_display = prefix_text + search_result.display
-          end
-          if final_display.length > 100
-            final_display = final_display[0..97] + "..."
-          end
-          split_button_link = nil
-          split_button_title = nil
-          split_button_icon = nil
-          if search_result.respond_to?("action_link")
-            split_button_link = search_result.action_link
-            if search_result.respond_to?("action_link_title")
-              split_button_title = search_result.action_link_title
-            end
-            if search_result.respond_to?("action_link_icon")
-              split_button_icon = search_result.action_link_icon
+      
+      if !search_result.nil?
+        might_be_archived = search_result.respond_to?("archived")
+        if !might_be_archived || (might_be_archived && search_result.archived.nil?)
+          category = Myp.instance_to_category(search_result, false)
+          if category.nil? && search_result.class != Share
+            temp_cat_name = search_result.class.name.pluralize.underscore
+            if I18n.exists?("myplaceonline.category." + temp_cat_name)
+              category = Category.new(name: temp_cat_name)
+            else
+              Myp.warn("Myp.process_search_results full_text_search found result but not category (perhaps use final_search_result?): #{search_result.inspect}; search: #{original_search}, user: #{User.current_user.primary_identity_id}, category: #{temp_cat_name}, original_search_result: #{original_search_result.inspect}")
             end
           end
-          final_icon = category.icon
-          if search_result.respond_to?("display_icon")
-            final_icon = search_result.display_icon
+          if !category.nil?
+            if display_category_prefix
+              final_display = prefix_text + category.human_title_singular + ": " + search_result.display
+            else
+              final_display = prefix_text + search_result.display
+            end
+            if final_display.length > 100
+              final_display = final_display[0..97] + "..."
+            end
+            split_button_link = nil
+            split_button_title = nil
+            split_button_icon = nil
+            if search_result.respond_to?("action_link")
+              split_button_link = search_result.action_link
+              if search_result.respond_to?("action_link_title")
+                split_button_title = search_result.action_link_title
+              end
+              if search_result.respond_to?("action_link_icon")
+                split_button_icon = search_result.action_link_icon
+              end
+            end
+            final_icon = category.icon
+            if search_result.respond_to?("display_icon")
+              final_icon = search_result.display_icon
+            end
+            final_path = "/" + category.name + "/" + search_result.id.to_s
+            if search_result.respond_to?("ideal_path")
+              final_path = search_result.ideal_path
+            end
+            result = ListItemRow.new(
+              final_display,
+              final_path,
+              Rails.env.development? && search_result.respond_to?("visit_count") ? search_result.visit_count : nil,
+              nil,
+              nil,
+              original_search,
+              display_category_icon ? final_icon : nil,
+              split_button_link,
+              split_button_title,
+              split_button_icon
+            )
           end
-          final_path = "/" + category.name + "/" + search_result.id.to_s
-          if search_result.respond_to?("ideal_path")
-            final_path = search_result.ideal_path
-          end
-          result = ListItemRow.new(
-            final_display,
-            final_path,
-            Rails.env.development? && search_result.respond_to?("visit_count") ? search_result.visit_count : nil,
-            nil,
-            nil,
-            original_search,
-            display_category_icon ? final_icon : nil,
-            split_button_link,
-            split_button_title,
-            split_button_icon
-          )
         end
       end
+      
       result
     end
+    
     results = results.compact
+    
     Rails.logger.debug{"results: #{results.inspect}"}
+    
     results
   end
   

@@ -27,6 +27,6 @@ class Cashback < ApplicationRecord
   end
   
   def final_search_result
-    credit_card_cashback.nil? ? cashback_percentage.to_s : credit_card_cashback.credit_card
+    credit_card_cashback.nil? ? nil : credit_card_cashback.credit_card
   end
 end
