@@ -204,12 +204,12 @@ label[title], .tooltipable[title] {
   margin: 0;
 }
 
-.myplet_border_title_content a:link, .myplet_border_title_content a:visited, .myplet_border_title_content a:active {
+.hidden_link a:link, .hidden_link a:visited, .hidden_link a:active, a.hidden_link:link, a.hidden_link:visited, a.hidden_link:active {
   text-decoration: none;
   color: black !important;
 }
 
-.myplet_border_title_content a:hover {
+.hidden_link a:hover, a.hidden_link:hover {
   text-decoration: underline;
   color: blue !important;
 }

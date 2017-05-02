@@ -511,6 +511,7 @@ en:
         # Tips
         
         1. Click the icon in the top header to go back to the category list. For example, if you are in a password, click the icon to go to the list of all passwords.
+        1. Click the title in the top header to refresh the current page.
         1. Hold `Shift` and click the icon in the top header and a small box will pop up with a search box to quickly jump to a different category.
         1. Hold `Control` and click the icon in the top header to go to the homepage.
         1. Press `Enter` in any search/filter box to go to the first result.
