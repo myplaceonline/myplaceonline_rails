@@ -63,8 +63,10 @@ class PodcastsController < MyplaceonlineController
     else
       message = I18n.t("myplaceonline.feeds.no_new_items")
     end
-    redirect_to obj_path(@obj,
-          :flash => { :notice => message })
+    redirect_to(
+      obj_path(@obj),
+      flash: { notice: message }
+    )
   end
   
   def load_all
