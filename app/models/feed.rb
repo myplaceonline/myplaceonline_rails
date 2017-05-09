@@ -20,17 +20,24 @@ class Feed < ApplicationRecord
   end
   
   def load_feed
+    Rails.logger.debug{"Loading feed for #{self.id}"}
     response = Myp.http_get(url: url)
+    Rails.logger.debug{"Feed response:\n#{response}"}
     rss = SimpleRSS.parse(response[:body])
     new_items = 0
     all_feed_items = feed_items.to_a
     ApplicationRecord.transaction do
       rss.items.each do |item|
-        #Rails.logger.debug{"Processing #{item.inspect}"}
+        Rails.logger.debug{"Processing #{item.inspect}"}
         
         feed_link = item.link
         if feed_link.blank?
           feed_link = item.feed_link
+        end
+        if feed_link.blank?
+          if !URI.regexp.match(item.guid).nil?
+            feed_link = item.guid
+          end
         end
           
         date = item.pubDate
