@@ -52,17 +52,15 @@ var myplaceonline = function(mymodule) {
     
     myplaceonline.consoleLog("ajax:complete Content-Type: " + contentType);
     
-    if (myplaceonline.isDebug()) {
-      myplaceonline.consoleLog("ajax:complete xhr:");
-      myplaceonline.consoleDir(xhr);
-      myplaceonline.consoleLog("ajax:complete status:");
-      myplaceonline.consoleDir(status);
-      
-      // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/getAllResponseHeaders
-      var responseHeaders = status.getAllResponseHeaders();
-      if (responseHeaders) {
-        myplaceonline.consoleLog("ajax:complete response headers: " + responseHeaders);
-      }
+    myplaceonline.consoleLog("ajax:complete xhr:");
+    myplaceonline.consoleDir(xhr);
+    myplaceonline.consoleLog("ajax:complete status:");
+    myplaceonline.consoleDir(status);
+    
+    // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/getAllResponseHeaders
+    var responseHeaders = status.getAllResponseHeaders();
+    if (responseHeaders) {
+      myplaceonline.consoleLog("ajax:complete response headers: " + responseHeaders);
     }
     
     // We expect a "successful" submission will return text/javascript

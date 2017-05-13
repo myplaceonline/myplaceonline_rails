@@ -2,7 +2,7 @@
 
 <ul data-role="listview" data-inset="true">
   <li><a href="#" onclick="myplaceonline.setDebug(true); myplaceonline.alertHTML(); return false;">Show HTML</a></li>
-  <li><a href="#" onclick="myplaceonline.setDebug(true); myplaceonline.consoleDir($.mobile.path.documentUrl); myplaceonline.showDebugConsole(); if (myplaceonline.scrollY) { myplaceonline.scrollY($('#debugConsole').offset().top); } else { alert('Scroll to the bottom'); }; return false;">Debug</a></li>
+  <li><a href="#" onclick="myplaceonline.setDebug(true); myplaceonline.consoleDir($.mobile.path.documentUrl); myplaceonline.showDebugConsole(); if (myplaceonline.scrollY) { myplaceonline.scrollY($('#debugConsole').offset().top); } else { alert('Scroll to the bottom'); }; return false;">Show Debug Console</a></li>
   <li><a href="#" onclick="myplaceonline.createSuccessNotification('Test'); return false;">Test Noty</a></li>
   <li><a href="#" onclick="alert('Expect no response, but debug is sent.');myplaceonline.foo(); return false;">Test Javascript Exception</a></li>
   <li>
