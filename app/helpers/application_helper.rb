@@ -254,7 +254,8 @@ module ApplicationHelper
           :show,
           {
             id: content.id,
-            nested_show: true
+            nested_show: true,
+            nested_expanded: options[:expanded]
           }
         ).html_safe
       end
@@ -320,7 +321,15 @@ module ApplicationHelper
       onlytime: false,
       currency: false,
       tooltip: nil,
+      enumeration: nil,
+      expanded: false,
     }.merge(options)
+    
+    original_content = content
+    
+    if !options[:enumeration].nil?
+      content = Myp.get_select_name(content, options[:enumeration])
+    end
     
     # ->(content:, format:, options: ){ content.to_s }
     if options[:transform].nil?
@@ -390,6 +399,10 @@ module ApplicationHelper
       
       if options[:background_highlight]
         options[:content_classes] = "bghighlight #{options[:content_classes]}"
+      end
+      
+      if options[:warning] && original_content.is_a?(TrueClass)
+        options[:content_classes] = "bgwarning #{options[:content_classes]}"
       end
 
       if options[:wrap]

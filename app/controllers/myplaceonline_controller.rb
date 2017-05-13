@@ -159,6 +159,7 @@ class MyplaceonlineController < ApplicationController
       check_password
     end
     @nested_show = params[:nested_show]
+    @nested_expanded = params[:nested_expanded]
     before_show
     @myplet = params[:myplet]
     if @nested_show

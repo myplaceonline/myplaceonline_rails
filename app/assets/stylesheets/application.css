@@ -213,3 +213,7 @@ label[title], .tooltipable[title] {
   text-decoration: underline;
   color: blue !important;
 }
+
+.bgwarning {
+  background-color: yellow !important;
+}
