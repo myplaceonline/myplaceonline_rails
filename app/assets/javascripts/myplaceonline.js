@@ -972,8 +972,8 @@ var myplaceonline = function(mymodule) {
     if (y > heightPadding) {
       y -= heightPadding;
     }
-    $('html, body').stop().animate({
-      scrollTop : y
+    $("html, body").stop().animate({
+      scrollTop: y
     }, 650, easingType);
   }
 
@@ -1185,6 +1185,7 @@ var myplaceonline = function(mymodule) {
   mymodule.saveCollapsibleStates = saveCollapsibleStates;
   mymodule.ensureStyledPage = ensureStyledPage;
   mymodule.scrollTop = scrollTop;
+  mymodule.scrollY = scrollY;
   mymodule.playSound = playSound;
   mymodule.maybeFocus = maybeFocus;
   mymodule.createSuccessNotification = createSuccessNotification;
