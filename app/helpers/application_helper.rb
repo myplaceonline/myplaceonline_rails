@@ -236,17 +236,23 @@ module ApplicationHelper
   
   def display_reference(content:, format:, options:)
     options[:controller_name] ||= content.class.name.pluralize + "Controller"
-    url = send(content.class.name.underscore + "_path", content)
     options[:htmlencode_content] = false
     content_display = content.display
     options[:clipboard_text] = content_display
-    result = display_url(
-      content: url,
-      format: :html,
-      options: {
-        url_innercontent: content_display
-      }
-    )
+
+    if content.current_user_owns?
+      url = send(content.class.name.underscore + "_path", content)
+      result = display_url(
+        content: url,
+        format: :html,
+        options: {
+          url_innercontent: content_display
+        }
+      )
+    else
+      result = CGI::escapeHTML(content_display).html_safe
+    end
+    
     begin
       if ExecutionContext.push_marker(:nest_count) <= 1
         options[:second_row] = renderActionInOtherController(
