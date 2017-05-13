@@ -25,6 +25,7 @@
 <%= myp_check_box(f, :boondocking, "myplaceonline.camp_locations.boondocking") %>
 <%= myp_check_box(f, :cell_phone_reception, "myplaceonline.camp_locations.cell_phone_reception") %>
 <%= myp_check_box(f, :cell_phone_data, "myplaceonline.camp_locations.cell_phone_data") %>
+<%= myp_check_box(f, :chance_high_wind, "myplaceonline.camp_locations.chance_high_wind") %>
 <%= myp_select(f, :rating, "myplaceonline.camp_locations.rating", Myp.translate_options(Myp::RATINGS), obj.rating) %>
 <%= myp_select(f, :noise_level, "myplaceonline.camp_locations.noise_level", Myp.translate_options(Myp::NOISE_LEVELS), obj.noise_level) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.camp_locations.notes", obj.notes) %>

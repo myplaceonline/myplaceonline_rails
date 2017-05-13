@@ -32,6 +32,7 @@ $("#<%= extract_id(postal_code_field) %>").on("keyup", function(x) {
     }
     queryCount++;
     $this.data("queryCount", queryCount);
+    myplaceonline.showLoading();
     $.get({
       url: "/api/postal_code_search",
       dataType: "json",
@@ -52,6 +53,10 @@ $("#<%= extract_id(postal_code_field) %>").on("keyup", function(x) {
         $("#<%= extract_id(sub_region2_field) %>").val(data.sub_region2);
         myplaceonline.createSuccessNotification(data.looked_up_postal_code);
       }
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+      myplaceonline.createErrorNotification("Could not find details for postal code " + postal_code + ": " + textStatus);
+    }).complete(function(jqXHR, textStatus) {
+      myplaceonline.hideLoading();
     });
   }
 });

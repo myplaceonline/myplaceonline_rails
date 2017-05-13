@@ -26,6 +26,7 @@ class CampLocationsController < MyplaceonlineController
         :boondocking,
         :cell_phone_reception,
         :cell_phone_data,
+        :chance_high_wind,
         location_attributes: LocationsController.param_names,
         membership_attributes: MembershipsController.param_names
       )

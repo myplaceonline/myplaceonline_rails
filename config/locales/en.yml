@@ -1864,6 +1864,7 @@ en:
       cell_phone_reception: "Cell Phone Reception"
       cell_phone_data: "Cell Phone Data Reception"
       membership: "Membership Required"
+      chance_high_wind: "Chance of High Winds"
     noise_levels:
       quiet: "Quiet"
       nature: "Nature"

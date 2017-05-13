@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170429181054) do
+ActiveRecord::Schema.define(version: 20170513035940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -694,6 +694,7 @@ ActiveRecord::Schema.define(version: 20170429181054) do
     t.boolean  "cell_phone_data"
     t.integer  "membership_id"
     t.datetime "archived"
+    t.boolean  "chance_high_wind"
     t.index ["identity_id"], name: "index_camp_locations_on_identity_id", using: :btree
     t.index ["location_id"], name: "index_camp_locations_on_location_id", using: :btree
     t.index ["membership_id"], name: "index_camp_locations_on_membership_id", using: :btree

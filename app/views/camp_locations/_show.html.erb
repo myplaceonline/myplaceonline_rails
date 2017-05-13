@@ -12,6 +12,7 @@
 <%= attribute_table_row_boolean(t("myplaceonline.camp_locations.boondocking"), obj.boondocking) %>
 <%= attribute_table_row_boolean(t("myplaceonline.camp_locations.cell_phone_reception"), obj.cell_phone_reception) %>
 <%= attribute_table_row_boolean(t("myplaceonline.camp_locations.cell_phone_data"), obj.cell_phone_data) %>
+<%= attribute_table_row_boolean(t("myplaceonline.camp_locations.chance_high_wind"), obj.chance_high_wind) %>
 <%= attribute_table_row_select(t("myplaceonline.camp_locations.rating"), obj.rating, Myp::RATINGS) %>
 <%= attribute_table_row_select(t("myplaceonline.camp_locations.noise_level"), obj.noise_level, Myp::NOISE_LEVELS) %>
 <%= attribute_table_row_markdown(t("myplaceonline.camp_locations.notes"), obj.notes) %>
