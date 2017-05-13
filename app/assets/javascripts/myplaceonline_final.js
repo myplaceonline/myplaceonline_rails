@@ -50,9 +50,9 @@ var myplaceonline = function(mymodule) {
     
     var contentType = status.getResponseHeader("Content-Type");
     
-    myplaceonline.consoleLog("ajax:complete Content-Type: " + contentType + " (" + myplaceonline.isDebug + ")");
+    myplaceonline.consoleLog("ajax:complete Content-Type: " + contentType);
     
-    if (myplaceonline.isDebug) {
+    if (myplaceonline.isDebug()) {
       myplaceonline.consoleLog("ajax:complete xhr:");
       myplaceonline.consoleDir(xhr);
       myplaceonline.consoleLog("ajax:complete status:");
