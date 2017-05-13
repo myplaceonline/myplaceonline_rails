@@ -39,18 +39,31 @@ var myplaceonline = function(mymodule) {
   });
 
   // https://github.com/rails/jquery-ujs/wiki/ajax
-  $(document).on('ajax:remotipartSubmit', 'form', function() {
-    myplaceonline.consoleLog("ajax:remotipartSubmit: Submitting...");
+  $(document).on("ajax:remotipartSubmit", "form", function() {
+    myplaceonline.consoleLog("ajax:remotipartSubmit: Submitting " + this.action + " ...");
     myplaceonline.showLoading();
   });
 
-  $(document).on('ajax:complete', 'form', function(xhr, status) {
+  $(document).on("ajax:complete", "form", function(xhr, status) {
     
     myplaceonline.hideLoading();
     
     var contentType = status.getResponseHeader("Content-Type");
     
     myplaceonline.consoleLog("ajax:complete " + contentType);
+    
+    if (myplaceonline.isDebug) {
+      myplaceonline.consoleLog("ajax:complete xhr:");
+      myplaceonline.consoleDir(xhr);
+      myplaceonline.consoleLog("ajax:complete status:");
+      myplaceonline.consoleDir(status);
+      
+      // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/getAllResponseHeaders
+      var responseHeaders = status.getAllResponseHeaders();
+      if (responseHeaders) {
+        myplaceonline.consoleLog("ajax:complete response headers: " + responseHeaders);
+      }
+    }
     
     // We expect a "successful" submission will return text/javascript
     // which will do something like navigate to the success page
@@ -72,13 +85,11 @@ var myplaceonline = function(mymodule) {
         myplaceonline.runPendingPageLoads();
       }
     } else {
-      if (myplaceonline.isDebug) {
-        myplaceonline.consoleDir(status);
-      }
+      // Nothing to do
     }
   });
 
-  $(document).on('ajax:error', 'form', function(xhr, status, error) {
+  $(document).on("ajax:error", "form", function(xhr, status, error) {
     if (status && status.statusText == "timeout") {
       alert("The request timed out. Please check your internet connection and try again.");
     }
