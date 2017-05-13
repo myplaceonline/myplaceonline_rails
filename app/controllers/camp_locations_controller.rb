@@ -27,6 +27,8 @@ class CampLocationsController < MyplaceonlineController
         :cell_phone_reception,
         :cell_phone_data,
         :chance_high_wind,
+        :birds_chirping,
+        :near_busy_road,
         location_attributes: LocationsController.param_names,
         membership_attributes: MembershipsController.param_names
       )
