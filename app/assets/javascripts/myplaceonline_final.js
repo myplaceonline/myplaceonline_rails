@@ -67,7 +67,7 @@ var myplaceonline = function(mymodule) {
 
     if (!contentType) {
       if (status.status == 200) {
-        myplaceonline.criticalError("Submission succeeded but we failed to refresh the page. Sending you back to the previous page...");
+        myplaceonline.criticalError("Submission succeeded but we failed to process the result. Refreshing the page...");
         myplaceonline.refreshWithParam();
       } else {
         myplaceonline.criticalError("Error (" + status.status + "): " + status.responseText);

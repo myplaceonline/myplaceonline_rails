@@ -171,7 +171,7 @@
           {
             type: 'select',
             name: 'relationship_type',
-            options: IdentityRelationship::RELATIONSHIPS.map{|x,y| [I18n.t(x),y]}.as_json,
+            options: Myp.translate_options(IdentityRelationship::RELATIONSHIPS, sort: true).as_json,
             placeholder: t("myplaceonline.identity_relationships.relationship_type")
           }
         ]
@@ -190,7 +190,7 @@
           autofocus: false
         }
       %>
-      <%= myp_select(child_fields, :relationship_type, "myplaceonline.identity_relationships.relationship_type", Myp.translate_options(IdentityRelationship::RELATIONSHIPS), childproperty.relationship_type) %>
+      <%= myp_select(child_fields, :relationship_type, "myplaceonline.identity_relationships.relationship_type", Myp.translate_options(IdentityRelationship::RELATIONSHIPS, sort: true), childproperty.relationship_type) %>
     <% end %>
     
     <%=

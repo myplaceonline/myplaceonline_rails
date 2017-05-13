@@ -1746,6 +1746,7 @@ en:
       friend: "Friend"
       dog: "Dog"
       cat: "Cat"
+      coworker: "Co-worker"
     identity_relationships:
       relationship_type: "Relationship"
     graphs:
