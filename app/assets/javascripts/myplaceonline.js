@@ -193,7 +193,7 @@ var myplaceonline = function(mymodule) {
         }
         return result;
       } catch (e) {
-        return "null (error " + e + ", object: " + obj + ")";
+        return "getJSON failed (error " + e + ", object: " + obj + ")";
       }
     } else {
       return "null";

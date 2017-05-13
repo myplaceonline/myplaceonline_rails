@@ -52,22 +52,31 @@ var myplaceonline = function(mymodule) {
     
     myplaceonline.consoleLog("ajax:complete Content-Type: " + contentType);
     
-    myplaceonline.consoleLog("ajax:complete xhr:");
+    myplaceonline.consoleLog("ajax:complete xhr: " + xhr);
     myplaceonline.consoleDir(xhr);
-    myplaceonline.consoleLog("ajax:complete status:");
+    myplaceonline.consoleLog("ajax:complete status: " + status);
     myplaceonline.consoleDir(status);
     
     // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/getAllResponseHeaders
     var responseHeaders = status.getAllResponseHeaders();
     if (responseHeaders) {
       myplaceonline.consoleLog("ajax:complete response headers: " + responseHeaders);
+    } else {
+      myplaceonline.consoleLog("ajax:complete response headers blank!");
     }
-    
-    // We expect a "successful" submission will return text/javascript
-    // which will do something like navigate to the success page
-    // (see MyplaceonlineController.may_upload). If it's text/html,
-    // then there was probably some error, so we need to display it.
-    if (myplaceonline.startsWith(contentType, "text/html")) {
+
+    if (!contentType) {
+      if (status.status == 200) {
+        myplaceonline.criticalError("Submission succeeded but we failed to refresh the page. Sending you back to the previous page...");
+        myplaceonline.refreshWithParam();
+      } else {
+        myplaceonline.criticalError("Error (" + status.status + "): " + status.responseText);
+      }
+    } else if (myplaceonline.startsWith(contentType, "text/html")) {
+      // We expect a "successful" submission will return text/javascript
+      // which will do something like navigate to the success page
+      // (see MyplaceonlineController.may_upload). If it's text/html,
+      // then there was probably some error, so we need to display it.
       myplaceonline.showLoading();
       
       var html = $(status.responseText);
@@ -83,7 +92,7 @@ var myplaceonline = function(mymodule) {
         myplaceonline.runPendingPageLoads();
       }
     } else {
-      // Nothing to do
+      // Successful
     }
   });
 
@@ -1062,21 +1071,40 @@ var myplaceonline = function(mymodule) {
   
   function refreshWithParam(paramName, paramValue) {
     var url = removeParam(window.location.search, paramName);
-    if (url.indexOf('?') == -1) {
-      url += "?" + paramName + "=" + paramValue;
-    } else {
-      url += "&" + paramName + "=" + paramValue;
+    if (paramName) {
+      if (url.indexOf('?') == -1) {
+        url += "?" + paramName + "=" + paramValue;
+      } else {
+        url += "&" + paramName + "=" + paramValue;
+      }
     }
     myplaceonline.navigate(window.location.pathname+url);
   }
 
   function removeParam(url, paramName) {
-    var searching = true;
-    while (searching) {
-      var x = url.indexOf("?" + paramName);
-      if (x == -1) {
-        x = url.indexOf("&" + paramName);
-        if (x != -1) {
+    if (paramName) {
+      var searching = true;
+      while (searching) {
+        var x = url.indexOf("?" + paramName);
+        if (x == -1) {
+          x = url.indexOf("&" + paramName);
+          if (x != -1) {
+            var y = url.indexOf('&', x + 1);
+            if (y == -1) {
+              url = url.substring(0, x);
+            } else {
+              var remaining = url.substring(y);
+              url = url.substring(0, x);
+              if (url.indexOf('?') == -1) {
+                url += "?" + remaining.substring(1);
+              } else {
+                url += remaining;
+              }
+            }
+          } else {
+            searching = false;
+          }
+        } else {
           var y = url.indexOf('&', x + 1);
           if (y == -1) {
             url = url.substring(0, x);
@@ -1088,21 +1116,6 @@ var myplaceonline = function(mymodule) {
             } else {
               url += remaining;
             }
-          }
-        } else {
-          searching = false;
-        }
-      } else {
-        var y = url.indexOf('&', x + 1);
-        if (y == -1) {
-          url = url.substring(0, x);
-        } else {
-          var remaining = url.substring(y);
-          url = url.substring(0, x);
-          if (url.indexOf('?') == -1) {
-            url += "?" + remaining.substring(1);
-          } else {
-            url += remaining;
           }
         }
       }
