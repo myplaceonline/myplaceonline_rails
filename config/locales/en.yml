@@ -925,6 +925,7 @@ en:
       delete_phone: "Delete Phone"
       phone: "Phone Number"
       map: "Map"
+      map_directions_from_home: "Directions (from Home)"
       full_address: "Full Address"
       notes: "Notes"
       latitude: "Latitude"

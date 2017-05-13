@@ -204,13 +204,31 @@ class Location < ApplicationRecord
   end
   
   def map_url
+    result = self.map_link_component
+    if !result.blank?
+      result = "https://www.google.com/maps/place/" + ERB::Util.url_encode(result)
+    end
+    result
+  end
+  
+  def map_link_component
     if !latitude.blank? && !longitude.blank?
       result = latitude.to_s + "," + longitude.to_s
     else
       result = address_one_line(false, address_details: false)
     end
+  end
+  
+  def map_directions_url(source_location: nil, destination_location: nil)
+    result = self.map_link_component
     if !result.blank?
-      result = "https://www.google.com/maps/place/" + ERB::Util.url_encode(result)
+      if !source_location.nil?
+        result = "https://www.google.com/maps/dir/" + ERB::Util.url_encode(source_location.map_link_component) + "/" + ERB::Util.url_encode(result)
+      elsif !destination_location.nil?
+        result = "https://www.google.com/maps/dir/" + ERB::Util.url_encode(result) + "/" + ERB::Util.url_encode(destination_location.map_link_component)
+      else
+        result = nil
+      end
     end
     result
   end
