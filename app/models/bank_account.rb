@@ -14,7 +14,7 @@ class BankAccount < ApplicationRecord
   
   validates :name, presence: true
 
-  belongs_to :account_number_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
+  belongs_to :account_number_encrypted, class_name: "EncryptedValue", dependent: :destroy, :autosave => true
   belongs_to_encrypted :account_number
   before_validation :account_number_finalize
 
@@ -24,7 +24,7 @@ class BankAccount < ApplicationRecord
   #  end
   #end
 
-  belongs_to :routing_number_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
+  belongs_to :routing_number_encrypted, class_name: "EncryptedValue", dependent: :destroy, :autosave => true
   belongs_to_encrypted :routing_number
   before_validation :routing_number_finalize
 
@@ -34,7 +34,7 @@ class BankAccount < ApplicationRecord
   #  end
   #end
 
-  belongs_to :pin_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
+  belongs_to :pin_encrypted, class_name: "EncryptedValue", dependent: :destroy, :autosave => true
   belongs_to_encrypted :pin
   before_validation :pin_finalize
 

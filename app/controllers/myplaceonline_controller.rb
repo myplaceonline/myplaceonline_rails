@@ -77,10 +77,14 @@ class MyplaceonlineController < ApplicationController
     # a few items
     if additional_items? && @count > 1
       @additional_items = additional_items
+      @additional_items_count = @additional_items.count
+      @additional_items = @additional_items.limit(additional_items_max_items).order(additional_items_sort)
     end
 
     if favorite_items? && @count > 1
       @favorite_items = favorite_items
+      @favorite_items_count = @favorite_items.count
+      @favorite_items = @favorite_items.limit(additional_items_max_items).order(favorite_items_sort)
     end
 
     index_pre_respond()
@@ -987,7 +991,7 @@ class MyplaceonlineController < ApplicationController
       end
       if nested
         parent_id = parent_model_last.table_name.singularize.downcase + "_id"
-        additional += " AND #{model.table_name}.#{parent_id} = #{ActionController::Base.helpers.sanitize(params[parent_id.to_sym])}"
+        additional += " AND #{model.table_name}.#{parent_id} = #{ActiveRecord::Base.connection.quote(params[parent_id.to_sym])}"
       end
       Rails.logger.debug{"all query strict: #{strict}, additional: #{additional}"}
       model.includes(all_includes).joins(all_joins).where(
@@ -1005,7 +1009,7 @@ class MyplaceonlineController < ApplicationController
         model.table_name + ".identity_id = ? and " + model.table_name + ".visit_count >= ? " + additional,
         current_user.primary_identity,
         additional_items_min_visit_count
-      ).limit(additional_items_max_items).order(additional_items_sort)
+      )
     end
 
     def additional_items_sort
@@ -1021,7 +1025,7 @@ class MyplaceonlineController < ApplicationController
         model.table_name + ".identity_id = ? and " + model.table_name + ".rating = ? " + additional,
         current_user.primary_identity,
         Myp::MAX_RATING
-      ).limit(favorite_items_max_items).order(favorite_items_sort)
+      )
     end
     
     def favorite_items_sort

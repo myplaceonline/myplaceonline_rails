@@ -31,7 +31,7 @@ class IdentityRelationship < ApplicationRecord
     ["myplaceonline.relationships.coworker", 18],
   ]
 
-  belongs_to :parent_identity, class_name: Identity
+  belongs_to :parent_identity, class_name: "Identity"
   
   child_property(name: :contact)
   

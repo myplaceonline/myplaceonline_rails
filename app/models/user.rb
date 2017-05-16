@@ -22,7 +22,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable
 
-  belongs_to :primary_identity, class_name: Identity, :dependent => :destroy
+  belongs_to :primary_identity, class_name: "Identity", :dependent => :destroy
   
   has_many :encrypted_values, :dependent => :destroy
   

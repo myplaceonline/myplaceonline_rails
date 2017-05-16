@@ -53,7 +53,7 @@ class CreditCard < ApplicationRecord
   
   validates :name, presence: true
 
-  belongs_to :number_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
+  belongs_to :number_encrypted, class_name: "EncryptedValue", dependent: :destroy, :autosave => true
   belongs_to_encrypted :number
   before_validation :number_finalize
 
@@ -63,7 +63,7 @@ class CreditCard < ApplicationRecord
     end
   end
 
-  belongs_to :expires_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
+  belongs_to :expires_encrypted, class_name: "EncryptedValue", dependent: :destroy, :autosave => true
   belongs_to_encrypted :expires
   before_validation :expires_finalize
 
@@ -73,7 +73,7 @@ class CreditCard < ApplicationRecord
     end
   end
 
-  belongs_to :security_code_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
+  belongs_to :security_code_encrypted, class_name: "EncryptedValue", dependent: :destroy, :autosave => true
   belongs_to_encrypted :security_code
   before_validation :security_code_finalize
   
@@ -83,7 +83,7 @@ class CreditCard < ApplicationRecord
     end
   end
 
-  belongs_to :pin_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
+  belongs_to :pin_encrypted, class_name: "EncryptedValue", dependent: :destroy, :autosave => true
   belongs_to_encrypted :pin
   before_validation :pin_finalize
 

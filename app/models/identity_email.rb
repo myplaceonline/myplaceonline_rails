@@ -8,7 +8,7 @@ class IdentityEmail < ApplicationRecord
     ]
   end
   
-  belongs_to :parent_identity, class_name: Identity
+  belongs_to :parent_identity, class_name: "Identity"
   
   def final_search_result
     parent_identity.contact

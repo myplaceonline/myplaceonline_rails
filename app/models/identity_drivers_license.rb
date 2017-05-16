@@ -3,7 +3,7 @@ class IdentityDriversLicense < ApplicationRecord
 
   DEFAULT_DRIVERS_LICENSE_EXPIRATION_THRESHOLD_SECONDS = 60.days
 
-  belongs_to :parent_identity, class_name: Identity
+  belongs_to :parent_identity, class_name: "Identity"
   
   validates :identifier, presence: true
 

@@ -34,7 +34,7 @@ class Identity < ApplicationRecord
   IDENTITY_TYPE_CONTACT = 0
   IDENTITY_TYPE_COMPANY = 1
   
-  has_one :contact, class_name: Contact, foreign_key: :contact_identity_id
+  has_one :contact, class_name: "Contact", foreign_key: :contact_identity_id
   
   def self.email_to_name(email)
     email[0..email.index("@")-1]

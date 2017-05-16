@@ -22,7 +22,7 @@ class IdentityFile < ApplicationRecord
   before_create :do_before_create
   before_update :do_before_update
 
-  belongs_to :encrypted_password, class_name: EncryptedValue
+  belongs_to :encrypted_password, class_name: "EncryptedValue"
 
   has_attached_file :file, :storage => :database
   do_not_validate_attachment_file_type :file

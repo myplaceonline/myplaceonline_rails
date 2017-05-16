@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   
   rescue_from StandardError, :with => :catchall
   
-  utf8_enforcer_workaround
+  #utf8_enforcer_workaround
   
   def do_authenticate_user
     Rails.logger.debug{"ApplicationController.do_authenticate_user entry"}

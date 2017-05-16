@@ -22,7 +22,7 @@ class IdentityPhone < ApplicationRecord
     ["myplaceonline.identity_phones.archived", PHONE_TYPE_ARCHIVED]
   ]
   
-  belongs_to :parent_identity, class_name: Identity
+  belongs_to :parent_identity, class_name: "Identity"
   
   def context_info
     case phone_type

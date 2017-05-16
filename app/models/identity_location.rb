@@ -9,7 +9,7 @@ class IdentityLocation < ApplicationRecord
     ]
   end
   
-  belongs_to :parent_identity, class_name: Identity
+  belongs_to :parent_identity, class_name: "Identity"
 
   child_property(name: :location, required: true)
 

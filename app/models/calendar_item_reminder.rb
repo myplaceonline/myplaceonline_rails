@@ -210,8 +210,8 @@ class CalendarItemReminder < ApplicationRecord
                           ON calendar_item_reminder_pendings.calendar_item_id = calendar_items.id
                       WHERE calendar_item_reminder_pendings.calendar_id = #{calendar_item_reminder.calendar_item.calendar.id}
                         AND calendar_item_reminder_pendings.identity_id = #{user.primary_identity.id}
-                        AND calendar_items.model_class #{Myp.sanitize_with_null(calendar_item_reminder.calendar_item.model_class)}
-                        AND calendar_items.model_id #{Myp.sanitize_with_null(calendar_item_reminder.calendar_item.model_id)}
+                        AND calendar_items.model_class #{Myp.sanitize_with_null_for_conditions(calendar_item_reminder.calendar_item.model_class)}
+                        AND calendar_items.model_id #{Myp.sanitize_with_null_for_conditions(calendar_item_reminder.calendar_item.model_id)}
                       ORDER BY calendar_items.calendar_item_time ASC
                     }
                   )

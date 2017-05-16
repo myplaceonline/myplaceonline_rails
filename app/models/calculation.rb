@@ -7,7 +7,7 @@ class Calculation < ApplicationRecord
   
   child_property(name: :calculation_form, required: true)
 
-  belongs_to :original_calculation_form, class_name: CalculationForm
+  belongs_to :original_calculation_form, class_name: "CalculationForm"
   
   def display
     name

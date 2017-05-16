@@ -7,7 +7,7 @@ class SshKey < ApplicationRecord
   validates :ssh_private_key, presence: true
   validates :ssh_public_key, presence: true
   
-  belongs_to :ssh_private_key_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
+  belongs_to :ssh_private_key_encrypted, class_name: "EncryptedValue", dependent: :destroy, :autosave => true
   belongs_to_encrypted :ssh_private_key
   before_validation :ssh_private_key_finalize
   

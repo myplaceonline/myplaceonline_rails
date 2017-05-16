@@ -5,7 +5,7 @@ class DiaryEntry < ApplicationRecord
   validates :diary_time, presence: true
   validates :diary_title, presence: true
   
-  belongs_to :entry_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
+  belongs_to :entry_encrypted, class_name: "EncryptedValue", dependent: :destroy, :autosave => true
   belongs_to_encrypted :entry
   before_validation :entry_finalize
   

@@ -432,7 +432,7 @@ module Myp
       LEFT OUTER JOIN category_points_amounts
         ON category_points_amounts.category_id = categories.id
             AND category_points_amounts.identity_id = #{
-                CategoryPointsAmount.sanitize(user.primary_identity.id)
+                ActiveRecord::Base.connection.quote(user.primary_identity.id)
               }
       #{ where_clause }
       ORDER BY #{
@@ -482,7 +482,7 @@ module Myp
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
         WHERE category_points_amounts.last_visit IS NOT NULL AND #{ explicit_check } categories.parent_id IS NOT NULL AND category_points_amounts.identity_id = #{
-                CategoryPointsAmount.sanitize(user.primary_identity.id)
+                ActiveRecord::Base.connection.quote(user.primary_identity.id)
               }
         ORDER BY category_points_amounts.last_visit DESC
         LIMIT #{ recentlyVisited }
@@ -493,7 +493,7 @@ module Myp
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
         WHERE category_points_amounts.visits IS NOT NULL AND #{ explicit_check } categories.parent_id IS NOT NULL AND category_points_amounts.identity_id = #{
-                CategoryPointsAmount.sanitize(user.primary_identity.id)
+                ActiveRecord::Base.connection.quote(user.primary_identity.id)
               }
         ORDER BY category_points_amounts.visits DESC
         LIMIT #{ mostVisited }
@@ -575,7 +575,7 @@ module Myp
 
   def self.markdown_to_html(markdown)
     if !markdown.nil?
-      GitHub::Markup::Markdown.new.render(markdown)
+      GitHub::Markup.render_s(GitHub::Markups::MARKUP_MARKDOWN, markdown)
     else
       nil
     end
@@ -1595,11 +1595,11 @@ module Myp
     !Rails.env.development? && !Rails.env.test?
   end
   
-  def self.sanitize_with_null(val)
+  def self.sanitize_with_null_for_conditions(val)
     if val.nil?
       " IS NULL"
     else
-      " = " + ApplicationRecord.sanitize(val)
+      " = " + ActiveRecord::Base.connection.quote(val)
     end
   end
   

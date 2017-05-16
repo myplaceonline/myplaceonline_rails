@@ -5,7 +5,7 @@ class Dream < ApplicationRecord
   validates :dream_time, presence: true
   #validates :dream_name, presence: true
   
-  belongs_to :dream_encrypted, class_name: EncryptedValue, dependent: :destroy, :autosave => true
+  belongs_to :dream_encrypted, class_name: "EncryptedValue", dependent: :destroy, :autosave => true
   belongs_to_encrypted :dream
   before_validation :dream_finalize
   

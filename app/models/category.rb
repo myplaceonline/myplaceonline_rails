@@ -1,7 +1,7 @@
 class Category < ApplicationRecord
   include MyplaceonlineActiveRecordBaseConcern
 
-  belongs_to :parent, class_name: Category
+  belongs_to :parent, class_name: "Category"
   has_many :category_points_amounts
   
   def human_title

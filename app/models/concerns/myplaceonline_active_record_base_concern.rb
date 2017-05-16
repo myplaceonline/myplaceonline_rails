@@ -72,7 +72,7 @@ module MyplaceonlineActiveRecordBaseConcern
       
       belongs_to(
         name,
-        class_name: model,
+        class_name: model.name,
         autosave: autosave
       )
 

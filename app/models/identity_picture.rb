@@ -8,5 +8,5 @@ class IdentityPicture < ApplicationRecord
     ]
   end
   
-  child_file(parent: :parent_identity, class_name: Identity)
+  child_file(parent: :parent_identity, class_name: "Identity")
 end

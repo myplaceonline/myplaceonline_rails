@@ -75,7 +75,7 @@ class WebsitesController < MyplaceonlineController
         @categories.each do |category|
           instance_name = "category_" + Myp.string_to_variable_name(category)
           if instance_variable_get("@" + instance_name)
-            result = Myp.appendstr(result, "website_category = " + ApplicationRecord.sanitize(category), " ", leftwrap = " and ")
+            result = Myp.appendstr(result, "website_category = " + ActiveRecord::Base.connection.quote(category), " ", leftwrap = " and ")
           end
         end
       end
