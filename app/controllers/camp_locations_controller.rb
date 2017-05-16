@@ -29,6 +29,7 @@ class CampLocationsController < MyplaceonlineController
         :chance_high_wind,
         :birds_chirping,
         :near_busy_road,
+        :level_ground,
         location_attributes: LocationsController.param_names,
         membership_attributes: MembershipsController.param_names
       )

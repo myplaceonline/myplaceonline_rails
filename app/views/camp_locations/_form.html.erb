@@ -28,6 +28,7 @@
 <%= myp_check_box(f, :chance_high_wind, "myplaceonline.camp_locations.chance_high_wind") %>
 <%= myp_check_box(f, :birds_chirping, "myplaceonline.camp_locations.birds_chirping") %>
 <%= myp_check_box(f, :near_busy_road, "myplaceonline.camp_locations.near_busy_road") %>
+<%= myp_check_box(f, :level_ground, "myplaceonline.camp_locations.level_ground") %>
 <%= myp_select(f, :rating, "myplaceonline.camp_locations.rating", Myp.translate_options(Myp::RATINGS), obj.rating) %>
 <%= myp_select(f, :noise_level, "myplaceonline.camp_locations.noise_level", Myp.translate_options(Myp::NOISE_LEVELS), obj.noise_level) %>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.camp_locations.notes", obj.notes) %>

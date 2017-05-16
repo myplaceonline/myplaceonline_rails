@@ -1869,6 +1869,7 @@ en:
       chance_high_wind: "Chance of High Winds"
       birds_chirping: "Birds Chirping"
       near_busy_road: "Near Busy Road"
+      level_ground: "Level or Easily Level-able Ground"
     noise_levels:
       quiet: "Quiet"
       nature: "Nature"
