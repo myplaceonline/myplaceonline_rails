@@ -84,7 +84,7 @@ class MyplaceonlineController < ApplicationController
     if favorite_items? && @count > 1
       @favorite_items = favorite_items
       @favorite_items_count = @favorite_items.count
-      @favorite_items = @favorite_items.limit(additional_items_max_items).order(favorite_items_sort)
+      @favorite_items = @favorite_items.limit(favorite_items_max_items).order(favorite_items_sort)
     end
 
     index_pre_respond()

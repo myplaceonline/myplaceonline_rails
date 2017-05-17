@@ -71,26 +71,6 @@ module ApplicationHelper
         (value.length == 0 || value == "&nbsp;"))
   end
   
-  def attribute_table_start
-    %{
-  <table data-role="table" data-mode="reflow" class="ui-responsive tablestripes normalwidth firstcolumnbold noheadertable">
-    <thead>
-      <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-    <tbody>
-    }.html_safe
-  end
-  
-  def attribute_table_end
-    %{
-    </tbody>
-  </table>
-    }.html_safe
-  end
-  
   def attribute_table_row_highlight(name, value, clipboard_text = value, valueclass = nil)
     if valueclass.nil?
       valueclass = "bghighlight"
@@ -153,23 +133,25 @@ module ApplicationHelper
     result
   end
   
-  def data_table_start(format:)
+  def data_table_start(format: :html)
+    # https://api.jquerymobile.com/table-reflow/
     %{
-  <table data-role="table" data-mode="reflow" class="ui-responsive tablestripes normalwidth firstcolumnbold noheadertable">
-    <thead>
-      <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-    <tbody>
+      <table data-role="table" data-mode="reflow" class="ui-responsive tablestripes normalwidth firstcolumnbold noheadertable">
+        <thead>
+          <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
     }.html_safe
   end
   
-  def data_table_end(format:)
+  def data_table_end(format: :html)
     %{
-    </tbody>
-  </table>
+        </tbody>
+      </table>
     }.html_safe
   end
   

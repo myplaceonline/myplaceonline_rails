@@ -17,6 +17,10 @@
  *= require magnific-popup
  */
 
+.ui-content {
+  overflow-x: auto !important;
+}
+
 a.headerlink:link, a.headerlink:visited, a.headerlink:hover, a.headerlink:active {
   text-decoration: none;
 }

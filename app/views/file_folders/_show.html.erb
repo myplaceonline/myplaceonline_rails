@@ -7,7 +7,7 @@
     %>
         <% if identity_files_include_pics?(files) %>
           <br />
-          <%= attribute_table_start %>
+          <%= data_table_start %>
             <% random_name = "slideshow-" + SecureRandom.hex(10) %>
             <%= attribute_table_row_span(link_to(t("myplaceonline.pictures.slideshow"), "#", class: "ui-btn", id: random_name)) %>
             <%=
@@ -16,7 +16,7 @@
                 random_name: random_name
               }
             %>
-          <%= attribute_table_end %>
+          <%= data_table_end %>
         <% end %>
         
         <div class="searchable_container">
