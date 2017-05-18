@@ -118,6 +118,12 @@ class FeedsController < MyplaceonlineController
     ] + super
   end
   
+  def index_sorts
+    [
+      [I18n.t("myplaceonline.feeds.unread_count"), "feeds.unread_items"],
+    ] + super
+  end
+  
   protected
     def sorts
       ["lower(feeds.name) #{@selected_sort_direction}"]
@@ -139,5 +145,14 @@ class FeedsController < MyplaceonlineController
     
     def favorite_items(strict: false)
       super(strict: strict).where("unread_items > 0")
+    end
+    
+    def object_to_destroy(obj)
+      podcast = Podcast.where(feed: obj).take
+      if !podcast.nil?
+        podcast
+      else
+        obj
+      end
     end
 end

@@ -24,7 +24,9 @@ class FeedItem < ApplicationRecord
   after_commit :on_after_update, on: [:update, :destroy]
 
   def on_after_update
-    self.feed.reset_counts
+    if !self.feed.nil?
+      self.feed.reset_counts
+    end
   end
   
   def full_feed_link

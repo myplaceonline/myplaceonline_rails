@@ -412,8 +412,11 @@ class MyplaceonlineController < ApplicationController
     deny_guest
     
     check_password
+    
+    obj_to_destroy = self.object_to_destroy(@obj)
+    
     ApplicationRecord.transaction do
-      @obj.destroy
+      obj_to_destroy.destroy
       if has_category
         Myp.subtract_point(current_user, category_name, session)
       end
@@ -1181,5 +1184,9 @@ class MyplaceonlineController < ApplicationController
 
     def simple_index_filters
       []
+    end
+    
+    def object_to_destroy(obj)
+      obj
     end
 end

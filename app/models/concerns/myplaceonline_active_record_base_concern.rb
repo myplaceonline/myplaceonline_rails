@@ -61,7 +61,7 @@ module MyplaceonlineActiveRecordBaseConcern
       model: nil,
       allow_destroy: true,
       autosave: true,
-      destroy_dependent: false,
+      destroy_dependent: nil,
       required: false
     )
       if model.nil?
@@ -70,10 +70,15 @@ module MyplaceonlineActiveRecordBaseConcern
       
       MyplaceonlineActiveRecordBaseConcern.set_attributes_model_mapping(klass: self, name: name, model: model)
       
+      if destroy_dependent
+        destroy_dependent = :destroy
+      end
+      
       belongs_to(
         name,
         class_name: model.name,
-        autosave: autosave
+        autosave: autosave,
+        dependent: destroy_dependent
       )
 
       # dup the attributes so that the attributes_blank? method can call delete_if/keep_if without consequence
