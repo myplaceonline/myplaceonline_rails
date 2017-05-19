@@ -1,4 +1,39 @@
 <% content_for :heading do -%><%= t("myplaceonline.feeds.all_items") %><% end -%>
+
+<script type="text/javascript">
+  function feed_item_mark_read_all(obj, feed_id, id) {
+    if (!$(obj).parents("li").first().find(".feed_item").first().hasClass("bghighlight")) {
+      var link = "<%= feed_feed_item_mark_read_url(-1, -2) %>";
+      link = link.replace(/-1/, feed_id);
+      link = link.replace(/-2/, id);
+      myplaceonline.showLoading();
+      $.ajax({
+        url: link,
+        method: "POST",
+        dataType: "json",
+        context: {
+          obj: obj
+        }
+      }).done(function(data, textStatus, jqXHR) {
+        if (data.result) {
+          myplaceonline.createSuccessNotification("<%= t("myplaceonline.feed_items.item_marked_read") %>");
+          var $obj = $(this.obj);
+          $obj.parents("li").first().find(".feed_item").first().addClass("bghighlight");
+          $obj.removeClass("ui-icon-check");
+          $obj.addClass("ui-icon-edit");
+        }
+      }).fail(function(jqXHR, textStatus, errorThrown) {
+        myplaceonline.criticalError("Error. jqXHR: " + jqXHR.readyState + "," + jqXHR.status + ", " + jqXHR.responseText + ", " + jqXHR.responseXML + ", status: " + textStatus, errorThrown);
+      }).complete(function(jqXHR, textStatus) {
+        myplaceonline.hideLoading();
+      });
+      return false;
+    } else {
+      return true;
+    }
+  }
+</script>
+
 <%
 offset = controller.items_offset
 perpage = controller.items_per_page
@@ -21,7 +56,7 @@ query_params_part_all = controller.items_query_params_part_all
           <%= t("myplaceonline.general.show") %>
         <% end %>
       <% else %>
-        <%= link_to(feed_feed_item_path(item.feed, item), data: { icon: "check" }, onclick: "return feed_item_mark_read(this, " + item.id.to_s + ");") do %>
+        <%= link_to(feed_feed_item_path(item.feed, item), data: { icon: "check" }, onclick: "return feed_item_mark_read_all(this, " + item.feed.id.to_s + ", " + item.id.to_s + ");") do %>
           <%= t("myplaceonline.feed_items.item_mark_read") %>
         <% end %>
       <% end %>

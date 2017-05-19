@@ -152,7 +152,12 @@ class FeedsController < MyplaceonlineController
       if !podcast.nil?
         podcast
       else
-        obj
+        web_comic = WebComic.where(feed: obj).take
+        if !web_comic.nil?
+          web_comic
+        else
+          obj
+        end
       end
     end
 end
