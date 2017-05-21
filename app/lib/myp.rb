@@ -18,6 +18,7 @@ module Myp
   FIELD_TIME = :time
   FIELD_NUMBER = :number
   FIELD_DECIMAL = :decimal
+  FIELD_BOOLEAN = :boolean
   
   # We want at least 128 bits of randomness, so
   # min(POSSIBILITIES_*.length)^DEFAULT_PASSWORD_LENGTH should be >= 2^128

@@ -1,0 +1,12 @@
+<%= data_row(heading: t("myplaceonline.sicknesses.sickness_start"), content: obj.sickness_start) %>
+<%= data_row(heading: t("myplaceonline.sicknesses.sickness_end"), content: obj.sickness_end) %>
+<% if !obj.sickness_start.nil? && !obj.sickness_end.nil? %>
+  <%= data_row(heading: t("myplaceonline.sicknesses.sickness_duration"), content: Myp.time_difference_in_general_from_date(obj.sickness_end, obj.sickness_start)) %>
+<% end %>
+<%= data_row(heading: t("myplaceonline.sicknesses.coughing"), content: obj.coughing) %>
+<%= data_row(heading: t("myplaceonline.sicknesses.sneezing"), content: obj.sneezing) %>
+<%= data_row(heading: t("myplaceonline.sicknesses.throwing_up"), content: obj.throwing_up) %>
+<%= data_row(heading: t("myplaceonline.sicknesses.fever"), content: obj.fever) %>
+<%= data_row(heading: t("myplaceonline.sicknesses.runny_nose"), content: obj.runny_nose) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.sickness_files) %>

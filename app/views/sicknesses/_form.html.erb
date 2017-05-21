@@ -1,0 +1,85 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATE,
+    name: :sickness_start,
+    value: obj.sickness_start,
+    placeholder: "myplaceonline.sicknesses.sickness_start"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATE,
+    name: :sickness_end,
+    value: obj.sickness_end,
+    placeholder: "myplaceonline.sicknesses.sickness_end"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :coughing,
+    value: obj.coughing,
+    placeholder: "myplaceonline.sicknesses.coughing"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :sneezing,
+    value: obj.sneezing,
+    placeholder: "myplaceonline.sicknesses.sneezing"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :throwing_up,
+    value: obj.throwing_up,
+    placeholder: "myplaceonline.sicknesses.throwing_up"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :fever,
+    value: obj.fever,
+    placeholder: "myplaceonline.sicknesses.fever"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :runny_nose,
+    value: obj.runny_nose,
+    placeholder: "myplaceonline.sicknesses.runny_nose"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes"
+  )
+%>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :sickness_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>

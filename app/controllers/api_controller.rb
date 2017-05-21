@@ -260,7 +260,7 @@ class ApiController < ApplicationController
               break
             end
             objclass = spliturl[objclass_index].singularize
-            paramnode = params[objclass]
+            paramnode = params[objclass].dup.permit!.to_hash
             
             Rails.logger.debug{"checking objclass: #{objclass}, paramnode: #{paramnode}"}
             
@@ -295,7 +295,7 @@ class ApiController < ApplicationController
           prevkey_full = nil
           newfilewrapper = nil
 
-          Rails.logger.debug{"initial node: #{paramnode}"}
+          Rails.logger.debug{"initial node: #{paramnode.inspect}"}
           
           keepgoing = !paramnode.nil?
           iterations = 0

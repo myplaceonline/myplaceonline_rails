@@ -238,6 +238,7 @@ en:
       job_myreferences: "Job References"
       job_awards: "Job Awards"
       insurance_cards: "Insurance Cards"
+      sicknesses: "Sicknesses"
     general:
       email: "E-mail"
       password: "Password"
@@ -3349,3 +3350,12 @@ en:
       insurance_card_name: "Name"
       insurance_card_start: "Start"
       insurance_card_end: "Expires"
+    sicknesses:
+      sickness_start: "Start Date"
+      sickness_end: "End Date"
+      sickness_duration: "Duration"
+      coughing: "Coughing"
+      sneezing: "Sneezing"
+      throwing_up: "Throwing Up"
+      fever: "Fever"
+      runny_nose: "Runny Nose"

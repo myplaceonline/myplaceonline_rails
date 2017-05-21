@@ -10,5325 +10,5355 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170516024154) do
+ActiveRecord::Schema.define(version: 20170521022437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "accomplishments", force: :cascade do |t|
-    t.string   "name",           limit: 255
-    t.text     "accomplishment"
-    t.integer  "identity_id"
+  create_table "accomplishments", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.text "accomplishment"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_accomplishments_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_accomplishments_on_identity_id"
   end
 
-  create_table "acne_measurement_pictures", force: :cascade do |t|
-    t.integer  "acne_measurement_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
+  create_table "acne_measurement_pictures", id: :serial, force: :cascade do |t|
+    t.integer "acne_measurement_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "position"
-    t.index ["acne_measurement_id"], name: "index_acne_measurement_pictures_on_acne_measurement_id", using: :btree
-    t.index ["identity_file_id"], name: "index_acne_measurement_pictures_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_acne_measurement_pictures_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "position"
+    t.index ["acne_measurement_id"], name: "index_acne_measurement_pictures_on_acne_measurement_id"
+    t.index ["identity_file_id"], name: "index_acne_measurement_pictures_on_identity_file_id"
+    t.index ["identity_id"], name: "index_acne_measurement_pictures_on_identity_id"
   end
 
-  create_table "acne_measurements", force: :cascade do |t|
+  create_table "acne_measurements", id: :serial, force: :cascade do |t|
     t.datetime "measurement_datetime"
-    t.string   "acne_location",        limit: 255
-    t.integer  "total_pimples"
-    t.integer  "new_pimples"
-    t.integer  "worrying_pimples"
-    t.integer  "identity_id"
+    t.string "acne_location", limit: 255
+    t.integer "total_pimples"
+    t.integer "new_pimples"
+    t.integer "worrying_pimples"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_acne_measurements_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_acne_measurements_on_identity_id"
   end
 
-  create_table "activities", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.integer  "identity_id"
+  create_table "activities", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
-    t.text     "notes"
+    t.integer "visit_count"
+    t.text "notes"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_activities_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_activities_on_identity_id"
   end
 
-  create_table "admin_emails", force: :cascade do |t|
-    t.integer  "email_id"
-    t.integer  "identity_id"
-    t.string   "send_only_to"
-    t.string   "exclude_emails"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+  create_table "admin_emails", id: :serial, force: :cascade do |t|
+    t.integer "email_id"
+    t.integer "identity_id"
+    t.string "send_only_to"
+    t.string "exclude_emails"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["email_id"], name: "index_admin_emails_on_email_id", using: :btree
-    t.index ["identity_id"], name: "index_admin_emails_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["email_id"], name: "index_admin_emails_on_email_id"
+    t.index ["identity_id"], name: "index_admin_emails_on_identity_id"
   end
 
-  create_table "admin_text_messages", force: :cascade do |t|
-    t.integer  "text_message_id"
-    t.integer  "identity_id"
-    t.string   "send_only_to"
-    t.string   "exclude_numbers"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+  create_table "admin_text_messages", id: :serial, force: :cascade do |t|
+    t.integer "text_message_id"
+    t.integer "identity_id"
+    t.string "send_only_to"
+    t.string "exclude_numbers"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_admin_text_messages_on_identity_id", using: :btree
-    t.index ["text_message_id"], name: "index_admin_text_messages_on_text_message_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_admin_text_messages_on_identity_id"
+    t.index ["text_message_id"], name: "index_admin_text_messages_on_text_message_id"
   end
 
-  create_table "alerts_displays", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.boolean  "suppress_hotel"
+  create_table "alerts_displays", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "suppress_hotel"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_alerts_displays_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_alerts_displays_on_identity_id"
   end
 
-  create_table "annuities", force: :cascade do |t|
-    t.string   "annuity_name"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+  create_table "annuities", id: :serial, force: :cascade do |t|
+    t.string "annuity_name"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_annuities_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_annuities_on_identity_id"
   end
 
-  create_table "apartment_lease_files", force: :cascade do |t|
-    t.integer  "apartment_lease_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+  create_table "apartment_lease_files", id: :serial, force: :cascade do |t|
+    t.integer "apartment_lease_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["apartment_lease_id"], name: "index_apartment_lease_files_on_apartment_lease_id", using: :btree
-    t.index ["identity_file_id"], name: "index_apartment_lease_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_apartment_lease_files_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["apartment_lease_id"], name: "index_apartment_lease_files_on_apartment_lease_id"
+    t.index ["identity_file_id"], name: "index_apartment_lease_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_apartment_lease_files_on_identity_id"
   end
 
-  create_table "apartment_leases", force: :cascade do |t|
-    t.date     "start_date"
-    t.date     "end_date"
-    t.integer  "apartment_id"
+  create_table "apartment_leases", id: :serial, force: :cascade do |t|
+    t.date "start_date"
+    t.date "end_date"
+    t.integer "apartment_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "monthly_rent", precision: 10, scale: 2
-    t.decimal  "moveout_fee",  precision: 10, scale: 2
-    t.decimal  "deposit",      precision: 10, scale: 2
-    t.date     "terminate_by"
-    t.integer  "identity_id"
+    t.decimal "monthly_rent", precision: 10, scale: 2
+    t.decimal "moveout_fee", precision: 10, scale: 2
+    t.decimal "deposit", precision: 10, scale: 2
+    t.date "terminate_by"
+    t.integer "identity_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["apartment_id"], name: "index_apartment_leases_on_apartment_id", using: :btree
-    t.index ["identity_id"], name: "index_apartment_leases_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["apartment_id"], name: "index_apartment_leases_on_apartment_id"
+    t.index ["identity_id"], name: "index_apartment_leases_on_identity_id"
   end
 
-  create_table "apartment_pictures", force: :cascade do |t|
-    t.integer  "apartment_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "position"
-    t.index ["apartment_id"], name: "index_apartment_pictures_on_apartment_id", using: :btree
-    t.index ["identity_file_id"], name: "index_apartment_pictures_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_apartment_pictures_on_identity_id", using: :btree
-  end
-
-  create_table "apartment_trash_pickups", force: :cascade do |t|
-    t.integer  "trash_type"
-    t.text     "notes"
-    t.integer  "apartment_id"
-    t.integer  "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "repeat_id"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["apartment_id"], name: "index_apartment_trash_pickups_on_apartment_id", using: :btree
-    t.index ["identity_id"], name: "index_apartment_trash_pickups_on_identity_id", using: :btree
-    t.index ["repeat_id"], name: "index_apartment_trash_pickups_on_repeat_id", using: :btree
-  end
-
-  create_table "apartments", force: :cascade do |t|
-    t.integer  "location_id"
-    t.integer  "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "landlord_id"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_apartments_on_identity_id", using: :btree
-    t.index ["landlord_id"], name: "index_apartments_on_landlord_id", using: :btree
-    t.index ["location_id"], name: "index_apartments_on_location_id", using: :btree
-  end
-
-  create_table "awesome_list_items", force: :cascade do |t|
-    t.string   "item_name"
-    t.integer  "awesome_list_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.index ["awesome_list_id"], name: "index_awesome_list_items_on_awesome_list_id", using: :btree
-    t.index ["identity_id"], name: "index_awesome_list_items_on_identity_id", using: :btree
-  end
-
-  create_table "awesome_lists", force: :cascade do |t|
-    t.integer  "location_id"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_awesome_lists_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_awesome_lists_on_location_id", using: :btree
-  end
-
-  create_table "bank_accounts", force: :cascade do |t|
-    t.string   "name",                        limit: 255
-    t.string   "account_number",              limit: 255
-    t.integer  "account_number_encrypted_id"
-    t.string   "routing_number",              limit: 255
-    t.integer  "routing_number_encrypted_id"
-    t.string   "pin",                         limit: 255
-    t.integer  "pin_encrypted_id"
-    t.integer  "password_id"
-    t.integer  "company_id"
-    t.integer  "home_address_id"
-    t.integer  "identity_id"
+  create_table "apartment_pictures", id: :serial, force: :cascade do |t|
+    t.integer "apartment_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "visit_count"
-    t.integer  "rating"
-    t.index ["account_number_encrypted_id"], name: "index_bank_accounts_on_account_number_encrypted_id", using: :btree
-    t.index ["company_id"], name: "index_bank_accounts_on_company_id", using: :btree
-    t.index ["home_address_id"], name: "index_bank_accounts_on_home_address_id", using: :btree
-    t.index ["identity_id"], name: "index_bank_accounts_on_identity_id", using: :btree
-    t.index ["password_id"], name: "index_bank_accounts_on_password_id", using: :btree
-    t.index ["pin_encrypted_id"], name: "index_bank_accounts_on_pin_encrypted_id", using: :btree
-    t.index ["routing_number_encrypted_id"], name: "index_bank_accounts_on_routing_number_encrypted_id", using: :btree
+    t.integer "rating"
+    t.integer "position"
+    t.index ["apartment_id"], name: "index_apartment_pictures_on_apartment_id"
+    t.index ["identity_file_id"], name: "index_apartment_pictures_on_identity_file_id"
+    t.index ["identity_id"], name: "index_apartment_pictures_on_identity_id"
   end
 
-  create_table "bar_pictures", force: :cascade do |t|
-    t.integer  "bar_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "position"
-    t.index ["bar_id"], name: "index_bar_pictures_on_bar_id", using: :btree
-    t.index ["identity_file_id"], name: "index_bar_pictures_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_bar_pictures_on_identity_id", using: :btree
-  end
-
-  create_table "bars", force: :cascade do |t|
-    t.integer  "location_id"
-    t.integer  "rating"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.datetime "archived"
-    t.index ["identity_id"], name: "index_bars_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_bars_on_location_id", using: :btree
-  end
-
-  create_table "bet_contacts", force: :cascade do |t|
-    t.integer  "bet_id"
-    t.integer  "identity_id"
-    t.integer  "contact_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["bet_id"], name: "index_bet_contacts_on_bet_id", using: :btree
-    t.index ["contact_id"], name: "index_bet_contacts_on_contact_id", using: :btree
-    t.index ["identity_id"], name: "index_bet_contacts_on_identity_id", using: :btree
-  end
-
-  create_table "bets", force: :cascade do |t|
-    t.string   "bet_name"
-    t.date     "bet_start_date"
-    t.date     "bet_end_date"
-    t.decimal  "bet_amount",           precision: 10, scale: 2
-    t.decimal  "odds_ratio",           precision: 10, scale: 2
-    t.boolean  "odds_direction_owner"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
-    t.datetime "archived"
-    t.integer  "rating"
-    t.string   "bet_currency"
-    t.integer  "bet_status"
-    t.index ["identity_id"], name: "index_bets_on_identity_id", using: :btree
-  end
-
-  create_table "bill_files", force: :cascade do |t|
-    t.integer  "bill_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["bill_id"], name: "index_bill_files_on_bill_id", using: :btree
-    t.index ["identity_file_id"], name: "index_bill_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_bill_files_on_identity_id", using: :btree
-  end
-
-  create_table "bills", force: :cascade do |t|
-    t.string   "bill_name"
-    t.date     "bill_date"
-    t.decimal  "amount",      precision: 10, scale: 2
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.index ["identity_id"], name: "index_bills_on_identity_id", using: :btree
-  end
-
-  create_table "blood_concentrations", force: :cascade do |t|
-    t.string   "concentration_name",    limit: 255
-    t.integer  "concentration_type"
-    t.decimal  "concentration_minimum",             precision: 10, scale: 3
-    t.decimal  "concentration_maximum",             precision: 10, scale: 3
-    t.integer  "identity_id"
+  create_table "apartment_trash_pickups", id: :serial, force: :cascade do |t|
+    t.integer "trash_type"
+    t.text "notes"
+    t.integer "apartment_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "repeat_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.text     "notes"
-    t.index ["identity_id"], name: "index_blood_concentrations_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["apartment_id"], name: "index_apartment_trash_pickups_on_apartment_id"
+    t.index ["identity_id"], name: "index_apartment_trash_pickups_on_identity_id"
+    t.index ["repeat_id"], name: "index_apartment_trash_pickups_on_repeat_id"
   end
 
-  create_table "blood_pressures", force: :cascade do |t|
-    t.integer  "systolic_pressure"
-    t.integer  "diastolic_pressure"
-    t.date     "measurement_date"
-    t.string   "measurement_source", limit: 255
-    t.integer  "identity_id"
+  create_table "apartments", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "landlord_id"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_blood_pressures_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_apartments_on_identity_id"
+    t.index ["landlord_id"], name: "index_apartments_on_landlord_id"
+    t.index ["location_id"], name: "index_apartments_on_location_id"
   end
 
-  create_table "blood_test_files", force: :cascade do |t|
-    t.integer  "blood_test_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["blood_test_id"], name: "index_blood_test_files_on_blood_test_id", using: :btree
-    t.index ["identity_file_id"], name: "index_blood_test_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_blood_test_files_on_identity_id", using: :btree
+  create_table "awesome_list_items", id: :serial, force: :cascade do |t|
+    t.string "item_name"
+    t.integer "awesome_list_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["awesome_list_id"], name: "index_awesome_list_items_on_awesome_list_id"
+    t.index ["identity_id"], name: "index_awesome_list_items_on_identity_id"
   end
 
-  create_table "blood_test_results", force: :cascade do |t|
-    t.integer  "blood_test_id"
-    t.integer  "blood_concentration_id"
-    t.decimal  "concentration",          precision: 10, scale: 3
-    t.integer  "identity_id"
+  create_table "awesome_lists", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_awesome_lists_on_identity_id"
+    t.index ["location_id"], name: "index_awesome_lists_on_location_id"
+  end
+
+  create_table "bank_accounts", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.string "account_number", limit: 255
+    t.integer "account_number_encrypted_id"
+    t.string "routing_number", limit: 255
+    t.integer "routing_number_encrypted_id"
+    t.string "pin", limit: 255
+    t.integer "pin_encrypted_id"
+    t.integer "password_id"
+    t.integer "company_id"
+    t.integer "home_address_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "flag"
-    t.index ["blood_concentration_id"], name: "index_blood_test_results_on_blood_concentration_id", using: :btree
-    t.index ["blood_test_id"], name: "index_blood_test_results_on_blood_test_id", using: :btree
-    t.index ["identity_id"], name: "index_blood_test_results_on_identity_id", using: :btree
+    t.integer "visit_count"
+    t.integer "rating"
+    t.index ["account_number_encrypted_id"], name: "index_bank_accounts_on_account_number_encrypted_id"
+    t.index ["company_id"], name: "index_bank_accounts_on_company_id"
+    t.index ["home_address_id"], name: "index_bank_accounts_on_home_address_id"
+    t.index ["identity_id"], name: "index_bank_accounts_on_identity_id"
+    t.index ["password_id"], name: "index_bank_accounts_on_password_id"
+    t.index ["pin_encrypted_id"], name: "index_bank_accounts_on_pin_encrypted_id"
+    t.index ["routing_number_encrypted_id"], name: "index_bank_accounts_on_routing_number_encrypted_id"
   end
 
-  create_table "blood_tests", force: :cascade do |t|
+  create_table "bar_pictures", id: :serial, force: :cascade do |t|
+    t.integer "bar_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived"
+    t.integer "rating"
+    t.integer "position"
+    t.index ["bar_id"], name: "index_bar_pictures_on_bar_id"
+    t.index ["identity_file_id"], name: "index_bar_pictures_on_identity_file_id"
+    t.index ["identity_id"], name: "index_bar_pictures_on_identity_id"
+  end
+
+  create_table "bars", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.integer "rating"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived"
+    t.index ["identity_id"], name: "index_bars_on_identity_id"
+    t.index ["location_id"], name: "index_bars_on_location_id"
+  end
+
+  create_table "bet_contacts", id: :serial, force: :cascade do |t|
+    t.integer "bet_id"
+    t.integer "identity_id"
+    t.integer "contact_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["bet_id"], name: "index_bet_contacts_on_bet_id"
+    t.index ["contact_id"], name: "index_bet_contacts_on_contact_id"
+    t.index ["identity_id"], name: "index_bet_contacts_on_identity_id"
+  end
+
+  create_table "bets", id: :serial, force: :cascade do |t|
+    t.string "bet_name"
+    t.date "bet_start_date"
+    t.date "bet_end_date"
+    t.decimal "bet_amount", precision: 10, scale: 2
+    t.decimal "odds_ratio", precision: 10, scale: 2
+    t.boolean "odds_direction_owner"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived"
+    t.integer "rating"
+    t.string "bet_currency"
+    t.integer "bet_status"
+    t.index ["identity_id"], name: "index_bets_on_identity_id"
+  end
+
+  create_table "bill_files", id: :serial, force: :cascade do |t|
+    t.integer "bill_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bill_id"], name: "index_bill_files_on_bill_id"
+    t.index ["identity_file_id"], name: "index_bill_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_bill_files_on_identity_id"
+  end
+
+  create_table "bills", id: :serial, force: :cascade do |t|
+    t.string "bill_name"
+    t.date "bill_date"
+    t.decimal "amount", precision: 10, scale: 2
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_bills_on_identity_id"
+  end
+
+  create_table "blood_concentrations", id: :serial, force: :cascade do |t|
+    t.string "concentration_name", limit: 255
+    t.integer "concentration_type"
+    t.decimal "concentration_minimum", precision: 10, scale: 3
+    t.decimal "concentration_maximum", precision: 10, scale: 3
+    t.integer "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.text "notes"
+    t.index ["identity_id"], name: "index_blood_concentrations_on_identity_id"
+  end
+
+  create_table "blood_pressures", id: :serial, force: :cascade do |t|
+    t.integer "systolic_pressure"
+    t.integer "diastolic_pressure"
+    t.date "measurement_date"
+    t.string "measurement_source", limit: 255
+    t.integer "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_blood_pressures_on_identity_id"
+  end
+
+  create_table "blood_test_files", id: :serial, force: :cascade do |t|
+    t.integer "blood_test_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["blood_test_id"], name: "index_blood_test_files_on_blood_test_id"
+    t.index ["identity_file_id"], name: "index_blood_test_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_blood_test_files_on_identity_id"
+  end
+
+  create_table "blood_test_results", id: :serial, force: :cascade do |t|
+    t.integer "blood_test_id"
+    t.integer "blood_concentration_id"
+    t.decimal "concentration", precision: 10, scale: 3
+    t.integer "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "archived"
+    t.integer "rating"
+    t.integer "flag"
+    t.index ["blood_concentration_id"], name: "index_blood_test_results_on_blood_concentration_id"
+    t.index ["blood_test_id"], name: "index_blood_test_results_on_blood_test_id"
+    t.index ["identity_id"], name: "index_blood_test_results_on_identity_id"
+  end
+
+  create_table "blood_tests", id: :serial, force: :cascade do |t|
     t.datetime "fast_started"
     t.datetime "test_time"
-    t.text     "notes"
-    t.integer  "identity_id"
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
-    t.integer  "doctor_id"
-    t.integer  "location_id"
+    t.integer "visit_count"
+    t.integer "doctor_id"
+    t.integer "location_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.string   "preceding_changes"
-    t.index ["doctor_id"], name: "index_blood_tests_on_doctor_id", using: :btree
-    t.index ["identity_id"], name: "index_blood_tests_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_blood_tests_on_location_id", using: :btree
+    t.integer "rating"
+    t.string "preceding_changes"
+    t.index ["doctor_id"], name: "index_blood_tests_on_doctor_id"
+    t.index ["identity_id"], name: "index_blood_tests_on_identity_id"
+    t.index ["location_id"], name: "index_blood_tests_on_location_id"
   end
 
-  create_table "book_files", force: :cascade do |t|
-    t.integer  "book_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["book_id"], name: "index_book_files_on_book_id", using: :btree
-    t.index ["identity_file_id"], name: "index_book_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_book_files_on_identity_id", using: :btree
+  create_table "book_files", id: :serial, force: :cascade do |t|
+    t.integer "book_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_book_files_on_book_id"
+    t.index ["identity_file_id"], name: "index_book_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_book_files_on_identity_id"
   end
 
-  create_table "book_quotes", force: :cascade do |t|
-    t.integer  "book_id"
-    t.string   "pages"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "book_quotes", id: :serial, force: :cascade do |t|
+    t.integer "book_id"
+    t.string "pages"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "quote_id"
-    t.index ["book_id"], name: "index_book_quotes_on_book_id", using: :btree
-    t.index ["identity_id"], name: "index_book_quotes_on_identity_id", using: :btree
-    t.index ["quote_id"], name: "index_book_quotes_on_quote_id", using: :btree
+    t.integer "rating"
+    t.integer "quote_id"
+    t.index ["book_id"], name: "index_book_quotes_on_book_id"
+    t.index ["identity_id"], name: "index_book_quotes_on_identity_id"
+    t.index ["quote_id"], name: "index_book_quotes_on_quote_id"
   end
 
-  create_table "book_stores", force: :cascade do |t|
-    t.integer  "location_id"
-    t.integer  "rating"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "book_stores", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.integer "rating"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.index ["identity_id"], name: "index_book_stores_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_book_stores_on_location_id", using: :btree
+    t.index ["identity_id"], name: "index_book_stores_on_identity_id"
+    t.index ["location_id"], name: "index_book_stores_on_location_id"
   end
 
-  create_table "books", force: :cascade do |t|
-    t.string   "book_name",        limit: 255
-    t.string   "isbn",             limit: 255
-    t.string   "author",           limit: 255
+  create_table "books", id: :serial, force: :cascade do |t|
+    t.string "book_name", limit: 255
+    t.string "isbn", limit: 255
+    t.string "author", limit: 255
     t.datetime "when_read"
-    t.integer  "identity_id"
-    t.text     "notes"
+    t.integer "identity_id"
+    t.text "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
-    t.integer  "recommender_id"
-    t.text     "review"
-    t.integer  "lent_to_id"
-    t.date     "lent_date"
-    t.integer  "borrowed_from_id"
-    t.date     "borrowed_date"
+    t.integer "visit_count"
+    t.integer "recommender_id"
+    t.text "review"
+    t.integer "lent_to_id"
+    t.date "lent_date"
+    t.integer "borrowed_from_id"
+    t.date "borrowed_date"
     t.datetime "archived"
-    t.integer  "rating"
-    t.string   "book_category"
-    t.date     "acquired"
+    t.integer "rating"
+    t.string "book_category"
+    t.date "acquired"
     t.datetime "when_owned"
     t.datetime "when_discarded"
-    t.integer  "gift_from_id"
-    t.string   "book_location"
-    t.index ["borrowed_from_id"], name: "index_books_on_borrowed_from_id", using: :btree
-    t.index ["gift_from_id"], name: "index_books_on_gift_from_id", using: :btree
-    t.index ["identity_id"], name: "index_books_on_identity_id", using: :btree
-    t.index ["lent_to_id"], name: "index_books_on_lent_to_id", using: :btree
-    t.index ["recommender_id"], name: "index_books_on_recommender_id", using: :btree
+    t.integer "gift_from_id"
+    t.string "book_location"
+    t.index ["borrowed_from_id"], name: "index_books_on_borrowed_from_id"
+    t.index ["gift_from_id"], name: "index_books_on_gift_from_id"
+    t.index ["identity_id"], name: "index_books_on_identity_id"
+    t.index ["lent_to_id"], name: "index_books_on_lent_to_id"
+    t.index ["recommender_id"], name: "index_books_on_recommender_id"
   end
 
-  create_table "business_card_files", force: :cascade do |t|
-    t.integer  "business_card_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+  create_table "business_card_files", id: :serial, force: :cascade do |t|
+    t.integer "business_card_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["business_card_id"], name: "index_business_card_files_on_business_card_id", using: :btree
-    t.index ["identity_file_id"], name: "index_business_card_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_business_card_files_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["business_card_id"], name: "index_business_card_files_on_business_card_id"
+    t.index ["identity_file_id"], name: "index_business_card_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_business_card_files_on_identity_id"
   end
 
-  create_table "business_cards", force: :cascade do |t|
-    t.integer  "contact_id"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "business_cards", id: :serial, force: :cascade do |t|
+    t.integer "contact_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["contact_id"], name: "index_business_cards_on_contact_id", using: :btree
-    t.index ["identity_id"], name: "index_business_cards_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["contact_id"], name: "index_business_cards_on_contact_id"
+    t.index ["identity_id"], name: "index_business_cards_on_identity_id"
   end
 
-  create_table "cafes", force: :cascade do |t|
-    t.integer  "location_id"
-    t.integer  "rating"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "cafes", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.integer "rating"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.index ["identity_id"], name: "index_cafes_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_cafes_on_location_id", using: :btree
+    t.index ["identity_id"], name: "index_cafes_on_identity_id"
+    t.index ["location_id"], name: "index_cafes_on_location_id"
   end
 
-  create_table "calculation_elements", force: :cascade do |t|
-    t.integer  "left_operand_id"
-    t.integer  "right_operand_id"
-    t.integer  "operator"
+  create_table "calculation_elements", id: :serial, force: :cascade do |t|
+    t.integer "left_operand_id"
+    t.integer "right_operand_id"
+    t.integer "operator"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "identity_id"
+    t.integer "identity_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_calculation_elements_on_identity_id", using: :btree
-    t.index ["left_operand_id"], name: "index_calculation_elements_on_left_operand_id", using: :btree
-    t.index ["right_operand_id"], name: "index_calculation_elements_on_right_operand_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_calculation_elements_on_identity_id"
+    t.index ["left_operand_id"], name: "index_calculation_elements_on_left_operand_id"
+    t.index ["right_operand_id"], name: "index_calculation_elements_on_right_operand_id"
   end
 
-  create_table "calculation_forms", force: :cascade do |t|
-    t.string   "name",            limit: 255
-    t.integer  "identity_id"
+  create_table "calculation_forms", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "root_element_id"
-    t.text     "equation"
-    t.boolean  "is_duplicate"
-    t.integer  "visit_count"
+    t.integer "root_element_id"
+    t.text "equation"
+    t.boolean "is_duplicate"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_calculation_forms_on_identity_id", using: :btree
-    t.index ["root_element_id"], name: "index_calculation_forms_on_root_element_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_calculation_forms_on_identity_id"
+    t.index ["root_element_id"], name: "index_calculation_forms_on_root_element_id"
   end
 
-  create_table "calculation_inputs", force: :cascade do |t|
-    t.string   "input_name",          limit: 255
-    t.string   "input_value",         limit: 255
-    t.integer  "calculation_form_id"
+  create_table "calculation_inputs", id: :serial, force: :cascade do |t|
+    t.string "input_name", limit: 255
+    t.string "input_value", limit: 255
+    t.integer "calculation_form_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "variable_name",       limit: 255
-    t.integer  "identity_id"
+    t.string "variable_name", limit: 255
+    t.integer "identity_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["calculation_form_id"], name: "index_calculation_inputs_on_calculation_form_id", using: :btree
-    t.index ["identity_id"], name: "index_calculation_inputs_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["calculation_form_id"], name: "index_calculation_inputs_on_calculation_form_id"
+    t.index ["identity_id"], name: "index_calculation_inputs_on_identity_id"
   end
 
-  create_table "calculation_operands", force: :cascade do |t|
-    t.string   "constant_value",         limit: 255
-    t.integer  "calculation_element_id"
+  create_table "calculation_operands", id: :serial, force: :cascade do |t|
+    t.string "constant_value", limit: 255
+    t.integer "calculation_element_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "calculation_input_id"
-    t.integer  "identity_id"
+    t.integer "calculation_input_id"
+    t.integer "identity_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["calculation_element_id"], name: "index_calculation_operands_on_calculation_element_id", using: :btree
-    t.index ["identity_id"], name: "index_calculation_operands_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["calculation_element_id"], name: "index_calculation_operands_on_calculation_element_id"
+    t.index ["identity_id"], name: "index_calculation_operands_on_identity_id"
   end
 
-  create_table "calculations", force: :cascade do |t|
-    t.string   "name",                         limit: 255
-    t.integer  "calculation_form_id"
-    t.decimal  "result",                                   precision: 10, scale: 2
-    t.integer  "identity_id"
+  create_table "calculations", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.integer "calculation_form_id"
+    t.decimal "result", precision: 10, scale: 2
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "original_calculation_form_id"
-    t.integer  "visit_count"
+    t.integer "original_calculation_form_id"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["calculation_form_id"], name: "index_calculations_on_calculation_form_id", using: :btree
-    t.index ["identity_id"], name: "index_calculations_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["calculation_form_id"], name: "index_calculations_on_calculation_form_id"
+    t.index ["identity_id"], name: "index_calculations_on_identity_id"
   end
 
-  create_table "calendar_item_reminder_pendings", force: :cascade do |t|
-    t.integer  "calendar_item_reminder_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.integer  "calendar_id"
-    t.integer  "calendar_item_id"
+  create_table "calendar_item_reminder_pendings", id: :serial, force: :cascade do |t|
+    t.integer "calendar_item_reminder_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "calendar_id"
+    t.integer "calendar_item_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["calendar_id"], name: "index_calendar_item_reminder_pendings_on_calendar_id", using: :btree
-    t.index ["calendar_item_id"], name: "index_calendar_item_reminder_pendings_on_calendar_item_id", using: :btree
-    t.index ["calendar_item_reminder_id"], name: "index_calendar_item_reminder_pendings_on_cir_id", using: :btree
-    t.index ["identity_id"], name: "index_calendar_item_reminder_pendings_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["calendar_id"], name: "index_calendar_item_reminder_pendings_on_calendar_id"
+    t.index ["calendar_item_id"], name: "index_calendar_item_reminder_pendings_on_calendar_item_id"
+    t.index ["calendar_item_reminder_id"], name: "index_calendar_item_reminder_pendings_on_cir_id"
+    t.index ["identity_id"], name: "index_calendar_item_reminder_pendings_on_identity_id"
   end
 
-  create_table "calendar_item_reminders", force: :cascade do |t|
-    t.integer  "threshold_amount"
-    t.integer  "threshold_type"
-    t.integer  "repeat_amount"
-    t.integer  "repeat_type"
-    t.integer  "expire_amount"
-    t.integer  "expire_type"
-    t.integer  "calendar_item_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.integer  "max_pending"
+  create_table "calendar_item_reminders", id: :serial, force: :cascade do |t|
+    t.integer "threshold_amount"
+    t.integer "threshold_type"
+    t.integer "repeat_amount"
+    t.integer "repeat_type"
+    t.integer "expire_amount"
+    t.integer "expire_type"
+    t.integer "calendar_item_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "max_pending"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["calendar_item_id"], name: "index_calendar_item_reminders_on_calendar_item_id", using: :btree
-    t.index ["identity_id"], name: "index_calendar_item_reminders_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["calendar_item_id"], name: "index_calendar_item_reminders_on_calendar_item_id"
+    t.index ["identity_id"], name: "index_calendar_item_reminders_on_identity_id"
   end
 
-  create_table "calendar_items", force: :cascade do |t|
-    t.integer  "calendar_id"
+  create_table "calendar_items", id: :serial, force: :cascade do |t|
+    t.integer "calendar_id"
     t.datetime "calendar_item_time"
-    t.text     "notes"
-    t.boolean  "persistent"
-    t.integer  "repeat_amount"
-    t.integer  "repeat_type"
-    t.string   "model_class"
-    t.integer  "model_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.string   "context_info"
-    t.boolean  "is_repeat"
+    t.text "notes"
+    t.boolean "persistent"
+    t.integer "repeat_amount"
+    t.integer "repeat_type"
+    t.string "model_class"
+    t.integer "model_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "context_info"
+    t.boolean "is_repeat"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["calendar_id"], name: "index_calendar_items_on_calendar_id", using: :btree
-    t.index ["identity_id"], name: "index_calendar_items_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["calendar_id"], name: "index_calendar_items_on_calendar_id"
+    t.index ["identity_id"], name: "index_calendar_items_on_identity_id"
   end
 
-  create_table "calendars", force: :cascade do |t|
-    t.boolean  "trash"
-    t.integer  "identity_id"
+  create_table "calendars", id: :serial, force: :cascade do |t|
+    t.boolean "trash"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
-    t.integer  "exercise_threshold"
-    t.integer  "contact_best_friend_threshold"
-    t.integer  "contact_good_friend_threshold"
-    t.integer  "contact_acquaintance_threshold"
-    t.integer  "contact_best_family_threshold"
-    t.integer  "contact_good_family_threshold"
-    t.integer  "dentist_visit_threshold"
-    t.integer  "doctor_visit_threshold"
-    t.integer  "status_threshold"
-    t.integer  "trash_pickup_threshold"
-    t.integer  "periodic_payment_before_threshold"
-    t.integer  "periodic_payment_after_threshold"
-    t.integer  "drivers_license_expiration_threshold"
-    t.integer  "birthday_threshold"
-    t.integer  "promotion_threshold"
-    t.integer  "gun_registration_expiration_threshold"
-    t.integer  "event_threshold"
-    t.integer  "stocks_vest_threshold"
-    t.integer  "todo_threshold"
-    t.integer  "vehicle_service_threshold"
-    t.integer  "reminder_repeat_amount"
-    t.integer  "reminder_repeat_type"
-    t.integer  "general_threshold"
-    t.integer  "happy_things_threshold"
-    t.integer  "website_domain_registration_threshold"
+    t.integer "visit_count"
+    t.integer "exercise_threshold"
+    t.integer "contact_best_friend_threshold"
+    t.integer "contact_good_friend_threshold"
+    t.integer "contact_acquaintance_threshold"
+    t.integer "contact_best_family_threshold"
+    t.integer "contact_good_family_threshold"
+    t.integer "dentist_visit_threshold"
+    t.integer "doctor_visit_threshold"
+    t.integer "status_threshold"
+    t.integer "trash_pickup_threshold"
+    t.integer "periodic_payment_before_threshold"
+    t.integer "periodic_payment_after_threshold"
+    t.integer "drivers_license_expiration_threshold"
+    t.integer "birthday_threshold"
+    t.integer "promotion_threshold"
+    t.integer "gun_registration_expiration_threshold"
+    t.integer "event_threshold"
+    t.integer "stocks_vest_threshold"
+    t.integer "todo_threshold"
+    t.integer "vehicle_service_threshold"
+    t.integer "reminder_repeat_amount"
+    t.integer "reminder_repeat_type"
+    t.integer "general_threshold"
+    t.integer "happy_things_threshold"
+    t.integer "website_domain_registration_threshold"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_calendars_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_calendars_on_identity_id"
   end
 
-  create_table "camp_locations", force: :cascade do |t|
-    t.integer  "location_id"
-    t.boolean  "vehicle_parking"
-    t.boolean  "free"
-    t.boolean  "sewage"
-    t.boolean  "fresh_water"
-    t.boolean  "electricity"
-    t.boolean  "internet"
-    t.boolean  "trash"
-    t.boolean  "shower"
-    t.boolean  "bathroom"
-    t.integer  "noise_level"
-    t.integer  "rating"
-    t.boolean  "overnight_allowed"
-    t.text     "notes"
-    t.integer  "identity_id"
+  create_table "camp_locations", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.boolean "vehicle_parking"
+    t.boolean "free"
+    t.boolean "sewage"
+    t.boolean "fresh_water"
+    t.boolean "electricity"
+    t.boolean "internet"
+    t.boolean "trash"
+    t.boolean "shower"
+    t.boolean "bathroom"
+    t.integer "noise_level"
+    t.integer "rating"
+    t.boolean "overnight_allowed"
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
-    t.boolean  "boondocking"
-    t.boolean  "cell_phone_reception"
-    t.boolean  "cell_phone_data"
-    t.integer  "membership_id"
+    t.integer "visit_count"
+    t.boolean "boondocking"
+    t.boolean "cell_phone_reception"
+    t.boolean "cell_phone_data"
+    t.integer "membership_id"
     t.datetime "archived"
-    t.boolean  "chance_high_wind"
-    t.boolean  "birds_chirping"
-    t.boolean  "near_busy_road"
-    t.boolean  "level_ground"
-    t.index ["identity_id"], name: "index_camp_locations_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_camp_locations_on_location_id", using: :btree
-    t.index ["membership_id"], name: "index_camp_locations_on_membership_id", using: :btree
+    t.boolean "chance_high_wind"
+    t.boolean "birds_chirping"
+    t.boolean "near_busy_road"
+    t.boolean "level_ground"
+    t.index ["identity_id"], name: "index_camp_locations_on_identity_id"
+    t.index ["location_id"], name: "index_camp_locations_on_location_id"
+    t.index ["membership_id"], name: "index_camp_locations_on_membership_id"
   end
 
-  create_table "cashbacks", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.decimal  "cashback_percentage",             precision: 10, scale: 2
-    t.string   "applies_to",          limit: 255
-    t.date     "start_date"
-    t.date     "end_date"
-    t.decimal  "yearly_maximum",                  precision: 10, scale: 2
-    t.text     "notes"
+  create_table "cashbacks", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.decimal "cashback_percentage", precision: 10, scale: 2
+    t.string "applies_to", limit: 255
+    t.date "start_date"
+    t.date "end_date"
+    t.decimal "yearly_maximum", precision: 10, scale: 2
+    t.text "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "default_cashback"
+    t.boolean "default_cashback"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_cashbacks_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_cashbacks_on_identity_id"
   end
 
-  create_table "categories", force: :cascade do |t|
-    t.string   "name",                  limit: 255
-    t.string   "link",                  limit: 255
-    t.integer  "position"
-    t.integer  "parent_id"
+  create_table "categories", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.string "link", limit: 255
+    t.integer "position"
+    t.integer "parent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "additional_filtertext", limit: 255
-    t.string   "icon",                  limit: 255
-    t.boolean  "explicit"
-    t.integer  "user_type_mask"
-    t.boolean  "experimental"
-    t.boolean  "simple"
-    t.index ["name"], name: "index_categories_on_name", unique: true, using: :btree
-    t.index ["parent_id"], name: "index_categories_on_parent_id", using: :btree
+    t.string "additional_filtertext", limit: 255
+    t.string "icon", limit: 255
+    t.boolean "explicit"
+    t.integer "user_type_mask"
+    t.boolean "experimental"
+    t.boolean "simple"
+    t.index ["name"], name: "index_categories_on_name", unique: true
+    t.index ["parent_id"], name: "index_categories_on_parent_id"
   end
 
-  create_table "category_points_amounts", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.integer  "category_id"
-    t.integer  "count"
+  create_table "category_points_amounts", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.integer "category_id"
+    t.integer "count"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visits"
+    t.integer "visits"
     t.datetime "last_visit"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["category_id"], name: "index_category_points_amounts_on_category_id", using: :btree
-    t.index ["identity_id"], name: "index_category_points_amounts_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["category_id"], name: "index_category_points_amounts_on_category_id"
+    t.index ["identity_id"], name: "index_category_points_amounts_on_identity_id"
   end
 
-  create_table "charities", force: :cascade do |t|
-    t.integer  "location_id"
-    t.text     "notes"
-    t.integer  "rating"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "charities", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.text "notes"
+    t.integer "rating"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.index ["identity_id"], name: "index_charities_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_charities_on_location_id", using: :btree
+    t.index ["identity_id"], name: "index_charities_on_identity_id"
+    t.index ["location_id"], name: "index_charities_on_location_id"
   end
 
-  create_table "check_files", force: :cascade do |t|
-    t.integer  "check_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["check_id"], name: "index_check_files_on_check_id", using: :btree
-    t.index ["identity_file_id"], name: "index_check_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_check_files_on_identity_id", using: :btree
+  create_table "check_files", id: :serial, force: :cascade do |t|
+    t.integer "check_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["check_id"], name: "index_check_files_on_check_id"
+    t.index ["identity_file_id"], name: "index_check_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_check_files_on_identity_id"
   end
 
-  create_table "checklist_items", force: :cascade do |t|
-    t.string   "checklist_item_name", limit: 255
-    t.integer  "checklist_id"
-    t.integer  "position"
-    t.integer  "identity_id"
+  create_table "checklist_items", id: :serial, force: :cascade do |t|
+    t.string "checklist_item_name", limit: 255
+    t.integer "checklist_id"
+    t.integer "position"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["checklist_id"], name: "index_checklist_items_on_checklist_id", using: :btree
-    t.index ["identity_id"], name: "index_checklist_items_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["checklist_id"], name: "index_checklist_items_on_checklist_id"
+    t.index ["identity_id"], name: "index_checklist_items_on_identity_id"
   end
 
-  create_table "checklist_references", force: :cascade do |t|
-    t.integer  "checklist_parent_id"
-    t.integer  "checklist_id"
-    t.integer  "identity_id"
-    t.boolean  "pre_checklist"
+  create_table "checklist_references", id: :serial, force: :cascade do |t|
+    t.integer "checklist_parent_id"
+    t.integer "checklist_id"
+    t.integer "identity_id"
+    t.boolean "pre_checklist"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["checklist_id"], name: "index_checklist_references_on_checklist_id", using: :btree
-    t.index ["checklist_parent_id"], name: "index_checklist_references_on_checklist_parent_id", using: :btree
-    t.index ["identity_id"], name: "index_checklist_references_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["checklist_id"], name: "index_checklist_references_on_checklist_id"
+    t.index ["checklist_parent_id"], name: "index_checklist_references_on_checklist_parent_id"
+    t.index ["identity_id"], name: "index_checklist_references_on_identity_id"
   end
 
-  create_table "checklists", force: :cascade do |t|
-    t.string   "checklist_name", limit: 255
-    t.integer  "identity_id"
+  create_table "checklists", id: :serial, force: :cascade do |t|
+    t.string "checklist_name", limit: 255
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_checklists_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_checklists_on_identity_id"
   end
 
-  create_table "checks", force: :cascade do |t|
-    t.string   "description"
-    t.text     "notes"
-    t.decimal  "amount",          precision: 10, scale: 2
-    t.integer  "contact_id"
-    t.integer  "company_id"
-    t.date     "deposit_date"
-    t.date     "received_date"
-    t.integer  "bank_account_id"
-    t.integer  "visit_count"
+  create_table "checks", id: :serial, force: :cascade do |t|
+    t.string "description"
+    t.text "notes"
+    t.decimal "amount", precision: 10, scale: 2
+    t.integer "contact_id"
+    t.integer "company_id"
+    t.date "deposit_date"
+    t.date "received_date"
+    t.integer "bank_account_id"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.index ["bank_account_id"], name: "index_checks_on_bank_account_id", using: :btree
-    t.index ["company_id"], name: "index_checks_on_company_id", using: :btree
-    t.index ["contact_id"], name: "index_checks_on_contact_id", using: :btree
-    t.index ["identity_id"], name: "index_checks_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bank_account_id"], name: "index_checks_on_bank_account_id"
+    t.index ["company_id"], name: "index_checks_on_company_id"
+    t.index ["contact_id"], name: "index_checks_on_contact_id"
+    t.index ["identity_id"], name: "index_checks_on_identity_id"
   end
 
-  create_table "companies", force: :cascade do |t|
-    t.integer  "identity_id"
+  create_table "companies", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "company_identity_id"
-    t.index ["company_identity_id"], name: "index_companies_on_company_identity_id", using: :btree
-    t.index ["identity_id"], name: "index_companies_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "company_identity_id"
+    t.index ["company_identity_id"], name: "index_companies_on_company_identity_id"
+    t.index ["identity_id"], name: "index_companies_on_identity_id"
   end
 
-  create_table "company_interaction_files", force: :cascade do |t|
-    t.integer  "company_interaction_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.index ["company_interaction_id"], name: "index_company_interaction_files_on_company_interaction_id", using: :btree
-    t.index ["identity_file_id"], name: "index_company_interaction_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_company_interaction_files_on_identity_id", using: :btree
+  create_table "company_interaction_files", id: :serial, force: :cascade do |t|
+    t.integer "company_interaction_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_interaction_id"], name: "index_company_interaction_files_on_company_interaction_id"
+    t.index ["identity_file_id"], name: "index_company_interaction_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_company_interaction_files_on_identity_id"
   end
 
-  create_table "company_interactions", force: :cascade do |t|
-    t.integer  "company_id"
+  create_table "company_interactions", id: :serial, force: :cascade do |t|
+    t.integer "company_id"
     t.datetime "company_interaction_date"
-    t.text     "notes"
-    t.integer  "visit_count"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.index ["company_id"], name: "index_company_interactions_on_company_id", using: :btree
-    t.index ["identity_id"], name: "index_company_interactions_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_company_interactions_on_company_id"
+    t.index ["identity_id"], name: "index_company_interactions_on_identity_id"
   end
 
-  create_table "complete_due_items", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.string   "display",           limit: 255
-    t.string   "link",              limit: 255
+  create_table "complete_due_items", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.string "display", limit: 255
+    t.string "link", limit: 255
     t.datetime "due_date"
-    t.string   "myp_model_name",    limit: 255
-    t.integer  "model_id"
+    t.string "myp_model_name", limit: 255
+    t.integer "model_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "original_due_date"
-    t.integer  "calendar_id"
+    t.integer "calendar_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["calendar_id"], name: "index_complete_due_items_on_calendar_id", using: :btree
-    t.index ["identity_id"], name: "index_complete_due_items_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["calendar_id"], name: "index_complete_due_items_on_calendar_id"
+    t.index ["identity_id"], name: "index_complete_due_items_on_identity_id"
   end
 
-  create_table "computer_ssh_keys", force: :cascade do |t|
-    t.integer  "computer_id"
-    t.integer  "ssh_key_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "username"
+  create_table "computer_ssh_keys", id: :serial, force: :cascade do |t|
+    t.integer "computer_id"
+    t.integer "ssh_key_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "username"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["computer_id"], name: "index_computer_ssh_keys_on_computer_id", using: :btree
-    t.index ["identity_id"], name: "index_computer_ssh_keys_on_identity_id", using: :btree
-    t.index ["ssh_key_id"], name: "index_computer_ssh_keys_on_ssh_key_id", using: :btree
+    t.integer "rating"
+    t.index ["computer_id"], name: "index_computer_ssh_keys_on_computer_id"
+    t.index ["identity_id"], name: "index_computer_ssh_keys_on_identity_id"
+    t.index ["ssh_key_id"], name: "index_computer_ssh_keys_on_ssh_key_id"
   end
 
-  create_table "computers", force: :cascade do |t|
-    t.date     "purchased"
-    t.decimal  "price",                             precision: 10, scale: 2
-    t.string   "computer_model",        limit: 255
-    t.string   "serial_number",         limit: 255
-    t.integer  "manufacturer_id"
-    t.integer  "max_resolution_width"
-    t.integer  "max_resolution_height"
-    t.integer  "ram"
-    t.integer  "num_cpus"
-    t.integer  "num_cores_per_cpu"
-    t.boolean  "hyperthreaded"
-    t.decimal  "max_cpu_speed",                     precision: 10, scale: 2
-    t.text     "notes"
-    t.integer  "identity_id"
+  create_table "computers", id: :serial, force: :cascade do |t|
+    t.date "purchased"
+    t.decimal "price", precision: 10, scale: 2
+    t.string "computer_model", limit: 255
+    t.string "serial_number", limit: 255
+    t.integer "manufacturer_id"
+    t.integer "max_resolution_width"
+    t.integer "max_resolution_height"
+    t.integer "ram"
+    t.integer "num_cpus"
+    t.integer "num_cores_per_cpu"
+    t.boolean "hyperthreaded"
+    t.decimal "max_cpu_speed", precision: 10, scale: 2
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "administrator_id"
-    t.integer  "main_user_id"
-    t.integer  "dimensions_type"
-    t.decimal  "width",                             precision: 10, scale: 2
-    t.decimal  "height",                            precision: 10, scale: 2
-    t.decimal  "depth",                             precision: 10, scale: 2
-    t.integer  "weight_type"
-    t.decimal  "weight",                            precision: 10, scale: 2
-    t.integer  "visit_count"
-    t.string   "hostname"
+    t.integer "administrator_id"
+    t.integer "main_user_id"
+    t.integer "dimensions_type"
+    t.decimal "width", precision: 10, scale: 2
+    t.decimal "height", precision: 10, scale: 2
+    t.decimal "depth", precision: 10, scale: 2
+    t.integer "weight_type"
+    t.decimal "weight", precision: 10, scale: 2
+    t.integer "visit_count"
+    t.string "hostname"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["administrator_id"], name: "index_computers_on_administrator_id", using: :btree
-    t.index ["identity_id"], name: "index_computers_on_identity_id", using: :btree
-    t.index ["main_user_id"], name: "index_computers_on_main_user_id", using: :btree
-    t.index ["manufacturer_id"], name: "index_computers_on_manufacturer_id", using: :btree
+    t.integer "rating"
+    t.index ["administrator_id"], name: "index_computers_on_administrator_id"
+    t.index ["identity_id"], name: "index_computers_on_identity_id"
+    t.index ["main_user_id"], name: "index_computers_on_main_user_id"
+    t.index ["manufacturer_id"], name: "index_computers_on_manufacturer_id"
   end
 
-  create_table "concert_musical_groups", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.integer  "concert_id"
-    t.integer  "musical_group_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["concert_id"], name: "index_concert_musical_groups_on_concert_id", using: :btree
-    t.index ["identity_id"], name: "index_concert_musical_groups_on_identity_id", using: :btree
-    t.index ["musical_group_id"], name: "index_concert_musical_groups_on_musical_group_id", using: :btree
-  end
-
-  create_table "concert_pictures", force: :cascade do |t|
-    t.integer  "concert_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "position"
-    t.index ["concert_id"], name: "index_concert_pictures_on_concert_id", using: :btree
-    t.index ["identity_file_id"], name: "index_concert_pictures_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_concert_pictures_on_identity_id", using: :btree
-  end
-
-  create_table "concerts", force: :cascade do |t|
-    t.string   "concert_date",  limit: 255
-    t.string   "concert_title", limit: 255
-    t.integer  "location_id"
-    t.text     "notes"
-    t.integer  "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "visit_count"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_concerts_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_concerts_on_location_id", using: :btree
-  end
-
-  create_table "connections", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "connection_status"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.string   "connection_request_token"
-    t.integer  "contact_id"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["contact_id"], name: "index_connections_on_contact_id", using: :btree
-    t.index ["identity_id"], name: "index_connections_on_identity_id", using: :btree
-    t.index ["user_id"], name: "index_connections_on_user_id", using: :btree
-  end
-
-  create_table "contacts", force: :cascade do |t|
-    t.integer  "contact_identity_id"
-    t.integer  "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "contact_type"
-    t.integer  "visit_count"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["contact_identity_id"], name: "index_contacts_on_contact_identity_id", using: :btree
-    t.index ["identity_id"], name: "index_contacts_on_identity_id", using: :btree
-  end
-
-  create_table "conversation_files", force: :cascade do |t|
-    t.integer  "conversation_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["conversation_id"], name: "index_conversation_files_on_conversation_id", using: :btree
-    t.index ["identity_file_id"], name: "index_conversation_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_conversation_files_on_identity_id", using: :btree
-  end
-
-  create_table "conversations", force: :cascade do |t|
-    t.integer  "contact_id"
-    t.text     "conversation"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.date     "conversation_date"
-    t.integer  "identity_id"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["contact_id"], name: "index_conversations_on_contact_id", using: :btree
-    t.index ["identity_id"], name: "index_conversations_on_identity_id", using: :btree
-  end
-
-  create_table "credit_card_cashbacks", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.integer  "credit_card_id"
-    t.integer  "cashback_id"
+  create_table "concert_musical_groups", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.integer "concert_id"
+    t.integer "musical_group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["cashback_id"], name: "index_credit_card_cashbacks_on_cashback_id", using: :btree
-    t.index ["credit_card_id"], name: "index_credit_card_cashbacks_on_credit_card_id", using: :btree
-    t.index ["identity_id"], name: "index_credit_card_cashbacks_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["concert_id"], name: "index_concert_musical_groups_on_concert_id"
+    t.index ["identity_id"], name: "index_concert_musical_groups_on_identity_id"
+    t.index ["musical_group_id"], name: "index_concert_musical_groups_on_musical_group_id"
   end
 
-  create_table "credit_card_files", force: :cascade do |t|
-    t.integer  "credit_card_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["credit_card_id"], name: "index_credit_card_files_on_credit_card_id", using: :btree
-    t.index ["identity_file_id"], name: "index_credit_card_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_credit_card_files_on_identity_id", using: :btree
+  create_table "concert_pictures", id: :serial, force: :cascade do |t|
+    t.integer "concert_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived"
+    t.integer "rating"
+    t.integer "position"
+    t.index ["concert_id"], name: "index_concert_pictures_on_concert_id"
+    t.index ["identity_file_id"], name: "index_concert_pictures_on_identity_file_id"
+    t.index ["identity_id"], name: "index_concert_pictures_on_identity_id"
   end
 
-  create_table "credit_cards", force: :cascade do |t|
-    t.string   "name",                       limit: 255
-    t.string   "number",                     limit: 255
-    t.date     "expires"
-    t.string   "security_code",              limit: 255
-    t.integer  "password_id"
-    t.integer  "identity_id"
+  create_table "concerts", id: :serial, force: :cascade do |t|
+    t.string "concert_date", limit: 255
+    t.string "concert_title", limit: 255
+    t.integer "location_id"
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "pin",                        limit: 255
-    t.text     "notes"
-    t.integer  "address_id"
-    t.integer  "number_encrypted_id"
-    t.integer  "security_code_encrypted_id"
-    t.integer  "pin_encrypted_id"
-    t.integer  "expires_encrypted_id"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "card_type"
-    t.decimal  "total_credit",                           precision: 10, scale: 2
-    t.integer  "visit_count"
-    t.boolean  "email_reminders"
-    t.integer  "rating"
-    t.date     "start_date"
-    t.index ["address_id"], name: "index_credit_cards_on_address_id", using: :btree
-    t.index ["expires_encrypted_id"], name: "index_credit_cards_on_expires_encrypted_id", using: :btree
-    t.index ["identity_id"], name: "index_credit_cards_on_identity_id", using: :btree
-    t.index ["number_encrypted_id"], name: "index_credit_cards_on_number_encrypted_id", using: :btree
-    t.index ["password_id"], name: "index_credit_cards_on_password_id", using: :btree
-    t.index ["pin_encrypted_id"], name: "index_credit_cards_on_pin_encrypted_id", using: :btree
-    t.index ["security_code_encrypted_id"], name: "index_credit_cards_on_security_code_encrypted_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_concerts_on_identity_id"
+    t.index ["location_id"], name: "index_concerts_on_location_id"
   end
 
-  create_table "credit_score_files", force: :cascade do |t|
-    t.integer  "credit_score_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["credit_score_id"], name: "index_credit_score_files_on_credit_score_id", using: :btree
-    t.index ["identity_file_id"], name: "index_credit_score_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_credit_score_files_on_identity_id", using: :btree
+  create_table "connections", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "connection_status"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "connection_request_token"
+    t.integer "contact_id"
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["contact_id"], name: "index_connections_on_contact_id"
+    t.index ["identity_id"], name: "index_connections_on_identity_id"
+    t.index ["user_id"], name: "index_connections_on_user_id"
   end
 
-  create_table "credit_scores", force: :cascade do |t|
-    t.date     "score_date"
-    t.integer  "score"
-    t.string   "source",      limit: 255
-    t.integer  "identity_id"
+  create_table "contacts", id: :serial, force: :cascade do |t|
+    t.integer "contact_identity_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "contact_type"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_credit_scores_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["contact_identity_id"], name: "index_contacts_on_contact_identity_id"
+    t.index ["identity_id"], name: "index_contacts_on_identity_id"
   end
 
-  create_table "date_locations", force: :cascade do |t|
-    t.integer  "location_id"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
+  create_table "conversation_files", id: :serial, force: :cascade do |t|
+    t.integer "conversation_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_conversation_files_on_conversation_id"
+    t.index ["identity_file_id"], name: "index_conversation_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_conversation_files_on_identity_id"
+  end
+
+  create_table "conversations", id: :serial, force: :cascade do |t|
+    t.integer "contact_id"
+    t.text "conversation"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.date "conversation_date"
+    t.integer "identity_id"
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["contact_id"], name: "index_conversations_on_contact_id"
+    t.index ["identity_id"], name: "index_conversations_on_identity_id"
+  end
+
+  create_table "credit_card_cashbacks", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.integer "credit_card_id"
+    t.integer "cashback_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_date_locations_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_date_locations_on_location_id", using: :btree
+    t.integer "rating"
+    t.index ["cashback_id"], name: "index_credit_card_cashbacks_on_cashback_id"
+    t.index ["credit_card_id"], name: "index_credit_card_cashbacks_on_credit_card_id"
+    t.index ["identity_id"], name: "index_credit_card_cashbacks_on_identity_id"
   end
 
-  create_table "dating_profile_files", force: :cascade do |t|
-    t.integer  "dating_profile_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.index ["dating_profile_id"], name: "index_dating_profile_files_on_dating_profile_id", using: :btree
-    t.index ["identity_file_id"], name: "index_dating_profile_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_dating_profile_files_on_identity_id", using: :btree
+  create_table "credit_card_files", id: :serial, force: :cascade do |t|
+    t.integer "credit_card_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["credit_card_id"], name: "index_credit_card_files_on_credit_card_id"
+    t.index ["identity_file_id"], name: "index_credit_card_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_credit_card_files_on_identity_id"
   end
 
-  create_table "dating_profiles", force: :cascade do |t|
-    t.string   "dating_profile_name"
-    t.text     "about_me"
-    t.text     "looking_for"
-    t.text     "movies"
-    t.text     "books"
-    t.text     "music"
-    t.text     "notes"
-    t.integer  "visit_count"
+  create_table "credit_cards", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.string "number", limit: 255
+    t.date "expires"
+    t.string "security_code", limit: 255
+    t.integer "password_id"
+    t.integer "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string "pin", limit: 255
+    t.text "notes"
+    t.integer "address_id"
+    t.integer "number_encrypted_id"
+    t.integer "security_code_encrypted_id"
+    t.integer "pin_encrypted_id"
+    t.integer "expires_encrypted_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.index ["identity_id"], name: "index_dating_profiles_on_identity_id", using: :btree
+    t.integer "card_type"
+    t.decimal "total_credit", precision: 10, scale: 2
+    t.integer "visit_count"
+    t.boolean "email_reminders"
+    t.integer "rating"
+    t.date "start_date"
+    t.index ["address_id"], name: "index_credit_cards_on_address_id"
+    t.index ["expires_encrypted_id"], name: "index_credit_cards_on_expires_encrypted_id"
+    t.index ["identity_id"], name: "index_credit_cards_on_identity_id"
+    t.index ["number_encrypted_id"], name: "index_credit_cards_on_number_encrypted_id"
+    t.index ["password_id"], name: "index_credit_cards_on_password_id"
+    t.index ["pin_encrypted_id"], name: "index_credit_cards_on_pin_encrypted_id"
+    t.index ["security_code_encrypted_id"], name: "index_credit_cards_on_security_code_encrypted_id"
   end
 
-  create_table "delayed_jobs", force: :cascade do |t|
-    t.integer  "priority",   default: 0, null: false
-    t.integer  "attempts",   default: 0, null: false
-    t.text     "handler",                null: false
-    t.text     "last_error"
+  create_table "credit_score_files", id: :serial, force: :cascade do |t|
+    t.integer "credit_score_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["credit_score_id"], name: "index_credit_score_files_on_credit_score_id"
+    t.index ["identity_file_id"], name: "index_credit_score_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_credit_score_files_on_identity_id"
+  end
+
+  create_table "credit_scores", id: :serial, force: :cascade do |t|
+    t.date "score_date"
+    t.integer "score"
+    t.string "source", limit: 255
+    t.integer "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_credit_scores_on_identity_id"
+  end
+
+  create_table "date_locations", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_date_locations_on_identity_id"
+    t.index ["location_id"], name: "index_date_locations_on_location_id"
+  end
+
+  create_table "dating_profile_files", id: :serial, force: :cascade do |t|
+    t.integer "dating_profile_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dating_profile_id"], name: "index_dating_profile_files_on_dating_profile_id"
+    t.index ["identity_file_id"], name: "index_dating_profile_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_dating_profile_files_on_identity_id"
+  end
+
+  create_table "dating_profiles", id: :serial, force: :cascade do |t|
+    t.string "dating_profile_name"
+    t.text "about_me"
+    t.text "looking_for"
+    t.text "movies"
+    t.text "books"
+    t.text "music"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_dating_profiles_on_identity_id"
+  end
+
+  create_table "delayed_jobs", id: :serial, force: :cascade do |t|
+    t.integer "priority", default: 0, null: false
+    t.integer "attempts", default: 0, null: false
+    t.text "handler", null: false
+    t.text "last_error"
     t.datetime "run_at"
     t.datetime "locked_at"
     t.datetime "failed_at"
-    t.string   "locked_by"
-    t.string   "queue"
+    t.string "locked_by"
+    t.string "queue"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
-  create_table "dental_insurance_files", force: :cascade do |t|
-    t.integer  "dental_insurance_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.index ["dental_insurance_id"], name: "index_dental_insurance_files_on_dental_insurance_id", using: :btree
-    t.index ["identity_file_id"], name: "index_dental_insurance_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_dental_insurance_files_on_identity_id", using: :btree
+  create_table "dental_insurance_files", id: :serial, force: :cascade do |t|
+    t.integer "dental_insurance_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dental_insurance_id"], name: "index_dental_insurance_files_on_dental_insurance_id"
+    t.index ["identity_file_id"], name: "index_dental_insurance_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_dental_insurance_files_on_identity_id"
   end
 
-  create_table "dental_insurances", force: :cascade do |t|
-    t.string   "insurance_name",       limit: 255
-    t.integer  "insurance_company_id"
-    t.integer  "periodic_payment_id"
-    t.text     "notes"
-    t.integer  "group_company_id"
-    t.integer  "password_id"
-    t.string   "account_number",       limit: 255
-    t.string   "group_number",         limit: 255
-    t.integer  "identity_id"
+  create_table "dental_insurances", id: :serial, force: :cascade do |t|
+    t.string "insurance_name", limit: 255
+    t.integer "insurance_company_id"
+    t.integer "periodic_payment_id"
+    t.text "notes"
+    t.integer "group_company_id"
+    t.integer "password_id"
+    t.string "account_number", limit: 255
+    t.string "group_number", limit: 255
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "doctor_id"
-    t.integer  "visit_count"
-    t.integer  "rating"
+    t.integer "doctor_id"
+    t.integer "visit_count"
+    t.integer "rating"
     t.datetime "archived"
-    t.index ["doctor_id"], name: "index_dental_insurances_on_doctor_id", using: :btree
-    t.index ["group_company_id"], name: "index_dental_insurances_on_group_company_id", using: :btree
-    t.index ["identity_id"], name: "index_dental_insurances_on_identity_id", using: :btree
-    t.index ["insurance_company_id"], name: "index_dental_insurances_on_insurance_company_id", using: :btree
-    t.index ["password_id"], name: "index_dental_insurances_on_password_id", using: :btree
-    t.index ["periodic_payment_id"], name: "index_dental_insurances_on_periodic_payment_id", using: :btree
+    t.index ["doctor_id"], name: "index_dental_insurances_on_doctor_id"
+    t.index ["group_company_id"], name: "index_dental_insurances_on_group_company_id"
+    t.index ["identity_id"], name: "index_dental_insurances_on_identity_id"
+    t.index ["insurance_company_id"], name: "index_dental_insurances_on_insurance_company_id"
+    t.index ["password_id"], name: "index_dental_insurances_on_password_id"
+    t.index ["periodic_payment_id"], name: "index_dental_insurances_on_periodic_payment_id"
   end
 
-  create_table "dentist_visits", force: :cascade do |t|
-    t.date     "visit_date"
-    t.integer  "cavities"
-    t.text     "notes"
-    t.integer  "dentist_id"
-    t.integer  "dental_insurance_id"
-    t.decimal  "paid",                precision: 10, scale: 2
-    t.boolean  "cleaning"
-    t.integer  "identity_id"
+  create_table "dentist_visits", id: :serial, force: :cascade do |t|
+    t.date "visit_date"
+    t.integer "cavities"
+    t.text "notes"
+    t.integer "dentist_id"
+    t.integer "dental_insurance_id"
+    t.decimal "paid", precision: 10, scale: 2
+    t.boolean "cleaning"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["dental_insurance_id"], name: "index_dentist_visits_on_dental_insurance_id", using: :btree
-    t.index ["dentist_id"], name: "index_dentist_visits_on_dentist_id", using: :btree
-    t.index ["identity_id"], name: "index_dentist_visits_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["dental_insurance_id"], name: "index_dentist_visits_on_dental_insurance_id"
+    t.index ["dentist_id"], name: "index_dentist_visits_on_dentist_id"
+    t.index ["identity_id"], name: "index_dentist_visits_on_identity_id"
   end
 
-  create_table "desired_locations", force: :cascade do |t|
-    t.integer  "location_id"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "website_id"
+  create_table "desired_locations", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "website_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_desired_locations_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_desired_locations_on_location_id", using: :btree
-    t.index ["website_id"], name: "index_desired_locations_on_website_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_desired_locations_on_identity_id"
+    t.index ["location_id"], name: "index_desired_locations_on_location_id"
+    t.index ["website_id"], name: "index_desired_locations_on_website_id"
   end
 
-  create_table "desired_products", force: :cascade do |t|
-    t.string   "product_name", limit: 255
-    t.text     "notes"
-    t.integer  "identity_id"
+  create_table "desired_products", id: :serial, force: :cascade do |t|
+    t.string "product_name", limit: 255
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_desired_products_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_desired_products_on_identity_id"
   end
 
-  create_table "dessert_locations", force: :cascade do |t|
-    t.integer  "location_id"
-    t.integer  "rating"
-    t.text     "notes"
-    t.boolean  "visited"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "dessert_locations", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.integer "rating"
+    t.text "notes"
+    t.boolean "visited"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.index ["identity_id"], name: "index_dessert_locations_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_dessert_locations_on_location_id", using: :btree
+    t.index ["identity_id"], name: "index_dessert_locations_on_identity_id"
+    t.index ["location_id"], name: "index_dessert_locations_on_location_id"
   end
 
-  create_table "diary_entries", force: :cascade do |t|
+  create_table "diary_entries", id: :serial, force: :cascade do |t|
     t.datetime "diary_time"
-    t.text     "entry"
-    t.integer  "identity_id"
+    t.text "entry"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "diary_title",        limit: 255
-    t.integer  "visit_count"
-    t.integer  "entry_encrypted_id"
+    t.string "diary_title", limit: 255
+    t.integer "visit_count"
+    t.integer "entry_encrypted_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["entry_encrypted_id"], name: "index_diary_entries_on_entry_encrypted_id", using: :btree
-    t.index ["identity_id"], name: "index_diary_entries_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["entry_encrypted_id"], name: "index_diary_entries_on_entry_encrypted_id"
+    t.index ["identity_id"], name: "index_diary_entries_on_identity_id"
   end
 
-  create_table "doctor_visit_files", force: :cascade do |t|
-    t.integer  "doctor_visit_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["doctor_visit_id"], name: "index_doctor_visit_files_on_doctor_visit_id", using: :btree
-    t.index ["identity_file_id"], name: "index_doctor_visit_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_doctor_visit_files_on_identity_id", using: :btree
+  create_table "doctor_visit_files", id: :serial, force: :cascade do |t|
+    t.integer "doctor_visit_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["doctor_visit_id"], name: "index_doctor_visit_files_on_doctor_visit_id"
+    t.index ["identity_file_id"], name: "index_doctor_visit_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_doctor_visit_files_on_identity_id"
   end
 
-  create_table "doctor_visits", force: :cascade do |t|
-    t.date     "visit_date"
-    t.text     "notes"
-    t.integer  "doctor_id"
-    t.integer  "health_insurance_id"
-    t.decimal  "paid",                precision: 10, scale: 2
-    t.boolean  "physical"
-    t.integer  "identity_id"
+  create_table "doctor_visits", id: :serial, force: :cascade do |t|
+    t.date "visit_date"
+    t.text "notes"
+    t.integer "doctor_id"
+    t.integer "health_insurance_id"
+    t.decimal "paid", precision: 10, scale: 2
+    t.boolean "physical"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["doctor_id"], name: "index_doctor_visits_on_doctor_id", using: :btree
-    t.index ["health_insurance_id"], name: "index_doctor_visits_on_health_insurance_id", using: :btree
-    t.index ["identity_id"], name: "index_doctor_visits_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["doctor_id"], name: "index_doctor_visits_on_doctor_id"
+    t.index ["health_insurance_id"], name: "index_doctor_visits_on_health_insurance_id"
+    t.index ["identity_id"], name: "index_doctor_visits_on_identity_id"
   end
 
-  create_table "doctors", force: :cascade do |t|
-    t.integer  "contact_id"
-    t.integer  "identity_id"
+  create_table "doctors", id: :serial, force: :cascade do |t|
+    t.integer "contact_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "doctor_type"
-    t.integer  "visit_count"
+    t.integer "doctor_type"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["contact_id"], name: "index_doctors_on_contact_id", using: :btree
-    t.index ["identity_id"], name: "index_doctors_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["contact_id"], name: "index_doctors_on_contact_id"
+    t.index ["identity_id"], name: "index_doctors_on_identity_id"
   end
 
-  create_table "document_files", force: :cascade do |t|
-    t.integer  "document_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["document_id"], name: "index_document_files_on_document_id", using: :btree
-    t.index ["identity_file_id"], name: "index_document_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_document_files_on_identity_id", using: :btree
+  create_table "document_files", id: :serial, force: :cascade do |t|
+    t.integer "document_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_id"], name: "index_document_files_on_document_id"
+    t.index ["identity_file_id"], name: "index_document_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_document_files_on_identity_id"
   end
 
-  create_table "documents", force: :cascade do |t|
-    t.string   "document_name"
-    t.text     "notes"
-    t.string   "document_category"
-    t.integer  "visit_count"
+  create_table "documents", id: :serial, force: :cascade do |t|
+    t.string "document_name"
+    t.text "notes"
+    t.string "document_category"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.boolean  "important"
-    t.date     "document_date"
-    t.index ["identity_id"], name: "index_documents_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "important"
+    t.date "document_date"
+    t.index ["identity_id"], name: "index_documents_on_identity_id"
   end
 
-  create_table "donation_files", force: :cascade do |t|
-    t.integer  "donation_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["donation_id"], name: "index_donation_files_on_donation_id", using: :btree
-    t.index ["identity_file_id"], name: "index_donation_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_donation_files_on_identity_id", using: :btree
+  create_table "donation_files", id: :serial, force: :cascade do |t|
+    t.integer "donation_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["donation_id"], name: "index_donation_files_on_donation_id"
+    t.index ["identity_file_id"], name: "index_donation_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_donation_files_on_identity_id"
   end
 
-  create_table "donations", force: :cascade do |t|
-    t.string   "donation_name"
-    t.date     "donation_date"
-    t.decimal  "amount",        precision: 10, scale: 2
-    t.integer  "location_id"
-    t.text     "notes"
-    t.integer  "visit_count"
+  create_table "donations", id: :serial, force: :cascade do |t|
+    t.string "donation_name"
+    t.date "donation_date"
+    t.decimal "amount", precision: 10, scale: 2
+    t.integer "location_id"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-    t.index ["identity_id"], name: "index_donations_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_donations_on_location_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_donations_on_identity_id"
+    t.index ["location_id"], name: "index_donations_on_location_id"
   end
 
-  create_table "drafts", force: :cascade do |t|
-    t.string   "draft_name"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "drafts", id: :serial, force: :cascade do |t|
+    t.string "draft_name"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_drafts_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_drafts_on_identity_id"
   end
 
-  create_table "dreams", force: :cascade do |t|
-    t.string   "dream_name"
+  create_table "dreams", id: :serial, force: :cascade do |t|
+    t.string "dream_name"
     t.datetime "dream_time"
-    t.text     "dream"
-    t.integer  "dream_encrypted_id"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-    t.integer  "dream_encrypted_id_id"
+    t.text "dream"
+    t.integer "dream_encrypted_id"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "dream_encrypted_id_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["dream_encrypted_id"], name: "index_dreams_on_dream_encrypted_id", using: :btree
-    t.index ["dream_encrypted_id_id"], name: "index_dreams_on_dream_encrypted_id_id", using: :btree
-    t.index ["identity_id"], name: "index_dreams_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["dream_encrypted_id"], name: "index_dreams_on_dream_encrypted_id"
+    t.index ["dream_encrypted_id_id"], name: "index_dreams_on_dream_encrypted_id_id"
+    t.index ["identity_id"], name: "index_dreams_on_identity_id"
   end
 
-  create_table "drinks", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.string   "drink_name",  limit: 255
-    t.text     "notes"
-    t.decimal  "calories",                precision: 10, scale: 2
-    t.decimal  "price",                   precision: 10, scale: 2
+  create_table "drinks", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.string "drink_name", limit: 255
+    t.text "notes"
+    t.decimal "calories", precision: 10, scale: 2
+    t.decimal "price", precision: 10, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_drinks_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_drinks_on_identity_id"
   end
 
-  create_table "driver_license_files", force: :cascade do |t|
-    t.integer  "driver_license_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.index ["driver_license_id"], name: "index_driver_license_files_on_driver_license_id", using: :btree
-    t.index ["identity_file_id"], name: "index_driver_license_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_driver_license_files_on_identity_id", using: :btree
+  create_table "driver_license_files", id: :serial, force: :cascade do |t|
+    t.integer "driver_license_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["driver_license_id"], name: "index_driver_license_files_on_driver_license_id"
+    t.index ["identity_file_id"], name: "index_driver_license_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_driver_license_files_on_identity_id"
   end
 
-  create_table "driver_licenses", force: :cascade do |t|
-    t.string   "driver_license_identifier"
-    t.date     "driver_license_expires"
-    t.date     "driver_license_issued"
-    t.string   "sub_region1"
-    t.integer  "address_id"
-    t.text     "notes"
-    t.integer  "visit_count"
+  create_table "driver_licenses", id: :serial, force: :cascade do |t|
+    t.string "driver_license_identifier"
+    t.date "driver_license_expires"
+    t.date "driver_license_issued"
+    t.string "sub_region1"
+    t.integer "address_id"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.string   "region"
-    t.index ["address_id"], name: "index_driver_licenses_on_address_id", using: :btree
-    t.index ["identity_id"], name: "index_driver_licenses_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "region"
+    t.index ["address_id"], name: "index_driver_licenses_on_address_id"
+    t.index ["identity_id"], name: "index_driver_licenses_on_identity_id"
   end
 
-  create_table "due_items", force: :cascade do |t|
-    t.string   "display",           limit: 255
-    t.string   "link",              limit: 255
+  create_table "due_items", id: :serial, force: :cascade do |t|
+    t.string "display", limit: 255
+    t.string "link", limit: 255
     t.datetime "due_date"
-    t.string   "myp_model_name",    limit: 255
-    t.integer  "model_id"
-    t.integer  "identity_id"
+    t.string "myp_model_name", limit: 255
+    t.integer "model_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "original_due_date"
-    t.boolean  "is_date_arbitrary"
-    t.integer  "calendar_id"
+    t.boolean "is_date_arbitrary"
+    t.integer "calendar_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["calendar_id"], name: "index_due_items_on_calendar_id", using: :btree
-    t.index ["identity_id"], name: "index_due_items_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["calendar_id"], name: "index_due_items_on_calendar_id"
+    t.index ["identity_id"], name: "index_due_items_on_identity_id"
   end
 
-  create_table "education_files", force: :cascade do |t|
-    t.integer  "education_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["education_id"], name: "index_education_files_on_education_id", using: :btree
-    t.index ["identity_file_id"], name: "index_education_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_education_files_on_identity_id", using: :btree
+  create_table "education_files", id: :serial, force: :cascade do |t|
+    t.integer "education_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["education_id"], name: "index_education_files_on_education_id"
+    t.index ["identity_file_id"], name: "index_education_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_education_files_on_identity_id"
   end
 
-  create_table "educations", force: :cascade do |t|
-    t.string   "education_name"
-    t.date     "education_start"
-    t.date     "education_end"
-    t.decimal  "gpa",             precision: 9, scale: 3
-    t.integer  "location_id"
-    t.text     "notes"
-    t.integer  "visit_count"
+  create_table "educations", id: :serial, force: :cascade do |t|
+    t.string "education_name"
+    t.date "education_start"
+    t.date "education_end"
+    t.decimal "gpa", precision: 9, scale: 3
+    t.integer "location_id"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.string   "degree_name"
-    t.integer  "identity_id"
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
-    t.integer  "degree_type"
+    t.integer "rating"
+    t.string "degree_name"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "degree_type"
     t.datetime "graduated"
-    t.string   "student_id"
-    t.index ["identity_id"], name: "index_educations_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_educations_on_location_id", using: :btree
+    t.string "student_id"
+    t.index ["identity_id"], name: "index_educations_on_identity_id"
+    t.index ["location_id"], name: "index_educations_on_location_id"
   end
 
-  create_table "email_accounts", force: :cascade do |t|
-    t.integer  "password_id"
-    t.integer  "visit_count"
+  create_table "email_accounts", id: :serial, force: :cascade do |t|
+    t.integer "password_id"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["identity_id"], name: "index_email_accounts_on_identity_id", using: :btree
-    t.index ["password_id"], name: "index_email_accounts_on_password_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_email_accounts_on_identity_id"
+    t.index ["password_id"], name: "index_email_accounts_on_password_id"
   end
 
-  create_table "email_contacts", force: :cascade do |t|
-    t.integer  "email_id"
-    t.integer  "identity_id"
-    t.integer  "contact_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "email_contacts", id: :serial, force: :cascade do |t|
+    t.integer "email_id"
+    t.integer "identity_id"
+    t.integer "contact_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["contact_id"], name: "index_email_contacts_on_contact_id", using: :btree
-    t.index ["email_id"], name: "index_email_contacts_on_email_id", using: :btree
-    t.index ["identity_id"], name: "index_email_contacts_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["contact_id"], name: "index_email_contacts_on_contact_id"
+    t.index ["email_id"], name: "index_email_contacts_on_email_id"
+    t.index ["identity_id"], name: "index_email_contacts_on_identity_id"
   end
 
-  create_table "email_groups", force: :cascade do |t|
-    t.integer  "email_id"
-    t.integer  "group_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "email_groups", id: :serial, force: :cascade do |t|
+    t.integer "email_id"
+    t.integer "group_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["email_id"], name: "index_email_groups_on_email_id", using: :btree
-    t.index ["group_id"], name: "index_email_groups_on_group_id", using: :btree
-    t.index ["identity_id"], name: "index_email_groups_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["email_id"], name: "index_email_groups_on_email_id"
+    t.index ["group_id"], name: "index_email_groups_on_group_id"
+    t.index ["identity_id"], name: "index_email_groups_on_identity_id"
   end
 
-  create_table "email_personalizations", force: :cascade do |t|
-    t.string   "target"
-    t.text     "additional_text"
-    t.boolean  "do_send"
-    t.integer  "identity_id"
-    t.integer  "email_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+  create_table "email_personalizations", id: :serial, force: :cascade do |t|
+    t.string "target"
+    t.text "additional_text"
+    t.boolean "do_send"
+    t.integer "identity_id"
+    t.integer "email_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["email_id"], name: "index_email_personalizations_on_email_id", using: :btree
-    t.index ["identity_id"], name: "index_email_personalizations_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["email_id"], name: "index_email_personalizations_on_email_id"
+    t.index ["identity_id"], name: "index_email_personalizations_on_identity_id"
   end
 
-  create_table "email_tokens", force: :cascade do |t|
-    t.string   "email"
-    t.string   "token"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "identity_id"
-    t.index ["identity_id"], name: "index_email_tokens_on_identity_id", using: :btree
+  create_table "email_tokens", id: :serial, force: :cascade do |t|
+    t.string "email"
+    t.string "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "identity_id"
+    t.index ["identity_id"], name: "index_email_tokens_on_identity_id"
   end
 
-  create_table "email_unsubscriptions", force: :cascade do |t|
-    t.string   "email"
-    t.string   "category"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "identity_id"
-    t.index ["identity_id"], name: "index_email_unsubscriptions_on_identity_id", using: :btree
+  create_table "email_unsubscriptions", id: :serial, force: :cascade do |t|
+    t.string "email"
+    t.string "category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "identity_id"
+    t.index ["identity_id"], name: "index_email_unsubscriptions_on_identity_id"
   end
 
-  create_table "emails", force: :cascade do |t|
-    t.string   "subject"
-    t.text     "body"
-    t.boolean  "copy_self"
-    t.string   "email_category"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.boolean  "use_bcc"
-    t.boolean  "draft"
-    t.boolean  "personalize"
+  create_table "emails", id: :serial, force: :cascade do |t|
+    t.string "subject"
+    t.text "body"
+    t.boolean "copy_self"
+    t.string "email_category"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "use_bcc"
+    t.boolean "draft"
+    t.boolean "personalize"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_emails_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_emails_on_identity_id"
   end
 
-  create_table "emergency_contacts", force: :cascade do |t|
-    t.integer  "email_id"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "emergency_contacts", id: :serial, force: :cascade do |t|
+    t.integer "email_id"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["email_id"], name: "index_emergency_contacts_on_email_id", using: :btree
-    t.index ["identity_id"], name: "index_emergency_contacts_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["email_id"], name: "index_emergency_contacts_on_email_id"
+    t.index ["identity_id"], name: "index_emergency_contacts_on_identity_id"
   end
 
-  create_table "encrypted_values", force: :cascade do |t|
-    t.binary   "val"
-    t.binary   "salt"
-    t.integer  "user_id"
+  create_table "encrypted_values", id: :serial, force: :cascade do |t|
+    t.binary "val"
+    t.binary "salt"
+    t.integer "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "encryption_type"
-    t.index ["user_id"], name: "index_encrypted_values_on_user_id", using: :btree
+    t.integer "encryption_type"
+    t.index ["user_id"], name: "index_encrypted_values_on_user_id"
   end
 
-  create_table "event_contacts", force: :cascade do |t|
-    t.integer  "event_id"
-    t.integer  "contact_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "event_contacts", id: :serial, force: :cascade do |t|
+    t.integer "event_id"
+    t.integer "contact_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["contact_id"], name: "index_event_contacts_on_contact_id", using: :btree
-    t.index ["event_id"], name: "index_event_contacts_on_event_id", using: :btree
-    t.index ["identity_id"], name: "index_event_contacts_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["contact_id"], name: "index_event_contacts_on_contact_id"
+    t.index ["event_id"], name: "index_event_contacts_on_event_id"
+    t.index ["identity_id"], name: "index_event_contacts_on_identity_id"
   end
 
-  create_table "event_pictures", force: :cascade do |t|
-    t.integer  "event_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.integer  "position"
+  create_table "event_pictures", id: :serial, force: :cascade do |t|
+    t.integer "event_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "position"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["event_id"], name: "index_event_pictures_on_event_id", using: :btree
-    t.index ["identity_file_id"], name: "index_event_pictures_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_event_pictures_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["event_id"], name: "index_event_pictures_on_event_id"
+    t.index ["identity_file_id"], name: "index_event_pictures_on_identity_file_id"
+    t.index ["identity_id"], name: "index_event_pictures_on_identity_id"
   end
 
-  create_table "event_rsvps", force: :cascade do |t|
-    t.integer  "event_id"
-    t.integer  "identity_id"
-    t.integer  "rsvp_type"
-    t.string   "email"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "event_rsvps", id: :serial, force: :cascade do |t|
+    t.integer "event_id"
+    t.integer "identity_id"
+    t.integer "rsvp_type"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["event_id"], name: "index_event_rsvps_on_event_id", using: :btree
-    t.index ["identity_id"], name: "index_event_rsvps_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["event_id"], name: "index_event_rsvps_on_event_id"
+    t.index ["identity_id"], name: "index_event_rsvps_on_identity_id"
   end
 
-  create_table "events", force: :cascade do |t|
-    t.string   "event_name",     limit: 255
-    t.text     "notes"
+  create_table "events", id: :serial, force: :cascade do |t|
+    t.string "event_name", limit: 255
+    t.text "notes"
     t.datetime "event_time"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.integer  "repeat_id"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.integer "repeat_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "event_end_time"
-    t.integer  "location_id"
+    t.integer "location_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_events_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_events_on_location_id", using: :btree
-    t.index ["repeat_id"], name: "index_events_on_repeat_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_events_on_identity_id"
+    t.index ["location_id"], name: "index_events_on_location_id"
+    t.index ["repeat_id"], name: "index_events_on_repeat_id"
   end
 
-  create_table "exercise_regimen_exercise_files", force: :cascade do |t|
-    t.integer  "exercise_regimen_exercise_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+  create_table "exercise_regimen_exercise_files", id: :serial, force: :cascade do |t|
+    t.integer "exercise_regimen_exercise_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["exercise_regimen_exercise_id"], name: "eref_on_erei", using: :btree
-    t.index ["identity_file_id"], name: "index_exercise_regimen_exercise_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_exercise_regimen_exercise_files_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["exercise_regimen_exercise_id"], name: "eref_on_erei"
+    t.index ["identity_file_id"], name: "index_exercise_regimen_exercise_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_exercise_regimen_exercise_files_on_identity_id"
   end
 
-  create_table "exercise_regimen_exercises", force: :cascade do |t|
-    t.string   "exercise_regimen_exercise_name"
-    t.text     "notes"
-    t.integer  "position"
-    t.integer  "exercise_regimen_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+  create_table "exercise_regimen_exercises", id: :serial, force: :cascade do |t|
+    t.string "exercise_regimen_exercise_name"
+    t.text "notes"
+    t.integer "position"
+    t.integer "exercise_regimen_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["exercise_regimen_id"], name: "index_exercise_regimen_exercises_on_exercise_regimen_id", using: :btree
-    t.index ["identity_id"], name: "index_exercise_regimen_exercises_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["exercise_regimen_id"], name: "index_exercise_regimen_exercises_on_exercise_regimen_id"
+    t.index ["identity_id"], name: "index_exercise_regimen_exercises_on_identity_id"
   end
 
-  create_table "exercise_regimens", force: :cascade do |t|
-    t.string   "exercise_regimen_name"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+  create_table "exercise_regimens", id: :serial, force: :cascade do |t|
+    t.string "exercise_regimen_name"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_exercise_regimens_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_exercise_regimens_on_identity_id"
   end
 
-  create_table "exercises", force: :cascade do |t|
+  create_table "exercises", id: :serial, force: :cascade do |t|
     t.datetime "exercise_start"
     t.datetime "exercise_end"
-    t.string   "exercise_activity", limit: 255
-    t.text     "notes"
-    t.integer  "identity_id"
+    t.string "exercise_activity", limit: 255
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "situps"
-    t.integer  "pushups"
-    t.integer  "cardio_time"
-    t.integer  "visit_count"
+    t.integer "situps"
+    t.integer "pushups"
+    t.integer "cardio_time"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_exercises_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_exercises_on_identity_id"
   end
 
-  create_table "favorite_locations", force: :cascade do |t|
-    t.integer  "location_id"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "favorite_locations", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_favorite_locations_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_favorite_locations_on_location_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_favorite_locations_on_identity_id"
+    t.index ["location_id"], name: "index_favorite_locations_on_location_id"
   end
 
-  create_table "favorite_product_files", force: :cascade do |t|
-    t.integer  "favorite_product_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+  create_table "favorite_product_files", id: :serial, force: :cascade do |t|
+    t.integer "favorite_product_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["favorite_product_id"], name: "index_favorite_product_files_on_favorite_product_id", using: :btree
-    t.index ["identity_file_id"], name: "index_favorite_product_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_favorite_product_files_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["favorite_product_id"], name: "index_favorite_product_files_on_favorite_product_id"
+    t.index ["identity_file_id"], name: "index_favorite_product_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_favorite_product_files_on_identity_id"
   end
 
-  create_table "favorite_product_links", force: :cascade do |t|
-    t.integer  "favorite_product_id"
-    t.integer  "identity_id"
-    t.string   "link",                limit: 2000
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+  create_table "favorite_product_links", id: :serial, force: :cascade do |t|
+    t.integer "favorite_product_id"
+    t.integer "identity_id"
+    t.string "link", limit: 2000
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["favorite_product_id"], name: "index_favorite_product_links_on_favorite_product_id", using: :btree
-    t.index ["identity_id"], name: "index_favorite_product_links_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["favorite_product_id"], name: "index_favorite_product_links_on_favorite_product_id"
+    t.index ["identity_id"], name: "index_favorite_product_links_on_identity_id"
   end
 
-  create_table "favorite_products", force: :cascade do |t|
-    t.string   "product_name", limit: 255
-    t.text     "notes"
-    t.integer  "identity_id"
+  create_table "favorite_products", id: :serial, force: :cascade do |t|
+    t.string "product_name", limit: 255
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_favorite_products_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_favorite_products_on_identity_id"
   end
 
-  create_table "feed_items", force: :cascade do |t|
-    t.string   "feed_title"
-    t.integer  "feed_id"
-    t.string   "feed_link"
-    t.text     "content"
+  create_table "feed_items", id: :serial, force: :cascade do |t|
+    t.string "feed_title"
+    t.integer "feed_id"
+    t.string "feed_link"
+    t.text "content"
     t.datetime "publication_date"
-    t.string   "guid"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.string "guid"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "read"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["feed_id"], name: "index_feed_items_on_feed_id", using: :btree
-    t.index ["identity_id"], name: "index_feed_items_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["feed_id"], name: "index_feed_items_on_feed_id"
+    t.index ["identity_id"], name: "index_feed_items_on_identity_id"
   end
 
-  create_table "feed_load_statuses", force: :cascade do |t|
-    t.integer  "items_total"
-    t.integer  "items_complete"
-    t.integer  "identity_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.integer  "items_error"
-    t.index ["identity_id"], name: "index_feed_load_statuses_on_identity_id", using: :btree
+  create_table "feed_load_statuses", id: :serial, force: :cascade do |t|
+    t.integer "items_total"
+    t.integer "items_complete"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "items_error"
+    t.index ["identity_id"], name: "index_feed_load_statuses_on_identity_id"
   end
 
-  create_table "feeds", force: :cascade do |t|
-    t.string   "name",         limit: 255
-    t.string   "url",          limit: 255
-    t.integer  "identity_id"
+  create_table "feeds", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.string "url", limit: 255
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "total_items"
-    t.integer  "unread_items"
-    t.index ["identity_id"], name: "index_feeds_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "total_items"
+    t.integer "unread_items"
+    t.index ["identity_id"], name: "index_feeds_on_identity_id"
   end
 
-  create_table "files", force: :cascade do |t|
+  create_table "files", id: :serial, force: :cascade do |t|
     t.integer "identity_file_id"
-    t.string  "style",            limit: 255
-    t.binary  "file_contents"
+    t.string "style", limit: 255
+    t.binary "file_contents"
     t.integer "visit_count"
   end
 
-  create_table "flight_legs", force: :cascade do |t|
-    t.integer  "flight_id"
-    t.integer  "flight_number"
-    t.integer  "flight_company_id"
-    t.string   "depart_airport_code"
-    t.integer  "depart_location_id"
+  create_table "flight_legs", id: :serial, force: :cascade do |t|
+    t.integer "flight_id"
+    t.integer "flight_number"
+    t.integer "flight_company_id"
+    t.string "depart_airport_code"
+    t.integer "depart_location_id"
     t.datetime "depart_time"
-    t.string   "arrival_airport_code"
-    t.integer  "arrival_location_id"
+    t.string "arrival_airport_code"
+    t.integer "arrival_location_id"
     t.datetime "arrive_time"
-    t.string   "seat_number"
-    t.integer  "position"
-    t.integer  "identity_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.string "seat_number"
+    t.integer "position"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["arrival_location_id"], name: "index_flight_legs_on_arrival_location_id", using: :btree
-    t.index ["depart_location_id"], name: "index_flight_legs_on_depart_location_id", using: :btree
-    t.index ["flight_company_id"], name: "index_flight_legs_on_flight_company_id", using: :btree
-    t.index ["flight_id"], name: "index_flight_legs_on_flight_id", using: :btree
-    t.index ["identity_id"], name: "index_flight_legs_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["arrival_location_id"], name: "index_flight_legs_on_arrival_location_id"
+    t.index ["depart_location_id"], name: "index_flight_legs_on_depart_location_id"
+    t.index ["flight_company_id"], name: "index_flight_legs_on_flight_company_id"
+    t.index ["flight_id"], name: "index_flight_legs_on_flight_id"
+    t.index ["identity_id"], name: "index_flight_legs_on_identity_id"
   end
 
-  create_table "flights", force: :cascade do |t|
-    t.string   "flight_name"
-    t.date     "flight_start_date"
-    t.string   "confirmation_number"
-    t.integer  "visit_count"
-    t.text     "notes"
-    t.integer  "identity_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+  create_table "flights", id: :serial, force: :cascade do |t|
+    t.string "flight_name"
+    t.date "flight_start_date"
+    t.string "confirmation_number"
+    t.integer "visit_count"
+    t.text "notes"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_flights_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_flights_on_identity_id"
   end
 
-  create_table "food_files", force: :cascade do |t|
-    t.integer  "food_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["food_id"], name: "index_food_files_on_food_id", using: :btree
-    t.index ["identity_file_id"], name: "index_food_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_food_files_on_identity_id", using: :btree
+  create_table "food_files", id: :serial, force: :cascade do |t|
+    t.integer "food_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["food_id"], name: "index_food_files_on_food_id"
+    t.index ["identity_file_id"], name: "index_food_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_food_files_on_identity_id"
   end
 
-  create_table "food_ingredients", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.integer  "parent_food_id"
-    t.integer  "food_id"
+  create_table "food_ingredients", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.integer "parent_food_id"
+    t.integer "food_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["food_id"], name: "index_food_ingredients_on_food_id", using: :btree
-    t.index ["identity_id"], name: "index_food_ingredients_on_identity_id", using: :btree
-    t.index ["parent_food_id"], name: "index_food_ingredients_on_parent_food_id", using: :btree
+    t.integer "rating"
+    t.index ["food_id"], name: "index_food_ingredients_on_food_id"
+    t.index ["identity_id"], name: "index_food_ingredients_on_identity_id"
+    t.index ["parent_food_id"], name: "index_food_ingredients_on_parent_food_id"
   end
 
-  create_table "foods", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.string   "food_name",   limit: 255
-    t.text     "notes"
-    t.decimal  "calories",                precision: 10, scale: 2
-    t.decimal  "price",                   precision: 10, scale: 2
+  create_table "foods", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.string "food_name", limit: 255
+    t.text "notes"
+    t.decimal "calories", precision: 10, scale: 2
+    t.decimal "price", precision: 10, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "weight_type"
-    t.decimal  "weight",                  precision: 10, scale: 2
-    t.integer  "visit_count"
+    t.integer "weight_type"
+    t.decimal "weight", precision: 10, scale: 2
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_foods_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_foods_on_identity_id"
   end
 
-  create_table "gas_stations", force: :cascade do |t|
-    t.integer  "location_id"
-    t.boolean  "gas"
-    t.boolean  "diesel"
-    t.boolean  "propane_replacement"
-    t.boolean  "propane_fillup"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_gas_stations_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_gas_stations_on_location_id", using: :btree
-  end
-
-  create_table "group_contacts", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.integer  "group_id"
-    t.integer  "contact_id"
+  create_table "gas_stations", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.boolean "gas"
+    t.boolean "diesel"
+    t.boolean "propane_replacement"
+    t.boolean "propane_fillup"
+    t.integer "visit_count"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["contact_id"], name: "index_group_contacts_on_contact_id", using: :btree
-    t.index ["group_id"], name: "index_group_contacts_on_group_id", using: :btree
-    t.index ["identity_id"], name: "index_group_contacts_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_gas_stations_on_identity_id"
+    t.index ["location_id"], name: "index_gas_stations_on_location_id"
   end
 
-  create_table "group_references", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.integer  "parent_group_id"
-    t.integer  "group_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["group_id"], name: "index_group_references_on_group_id", using: :btree
-    t.index ["identity_id"], name: "index_group_references_on_identity_id", using: :btree
-    t.index ["parent_group_id"], name: "index_group_references_on_parent_group_id", using: :btree
-  end
-
-  create_table "groups", force: :cascade do |t|
-    t.string   "group_name",  limit: 255
-    t.text     "notes"
-    t.integer  "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "visit_count"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_groups_on_identity_id", using: :btree
-  end
-
-  create_table "gun_files", force: :cascade do |t|
-    t.integer  "gun_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["gun_id"], name: "index_gun_files_on_gun_id", using: :btree
-    t.index ["identity_file_id"], name: "index_gun_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_gun_files_on_identity_id", using: :btree
-  end
-
-  create_table "gun_registration_files", force: :cascade do |t|
-    t.integer  "gun_registration_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.index ["gun_registration_id"], name: "index_gun_registration_files_on_gun_registration_id", using: :btree
-    t.index ["identity_file_id"], name: "index_gun_registration_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_gun_registration_files_on_identity_id", using: :btree
-  end
-
-  create_table "gun_registrations", force: :cascade do |t|
-    t.integer  "location_id"
-    t.date     "registered"
-    t.date     "expires"
-    t.integer  "gun_id"
-    t.integer  "identity_id"
+  create_table "group_contacts", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.integer "group_id"
+    t.integer "contact_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["gun_id"], name: "index_gun_registrations_on_gun_id", using: :btree
-    t.index ["identity_id"], name: "index_gun_registrations_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_gun_registrations_on_location_id", using: :btree
+    t.integer "rating"
+    t.index ["contact_id"], name: "index_group_contacts_on_contact_id"
+    t.index ["group_id"], name: "index_group_contacts_on_group_id"
+    t.index ["identity_id"], name: "index_group_contacts_on_identity_id"
   end
 
-  create_table "guns", force: :cascade do |t|
-    t.string   "gun_name",          limit: 255
-    t.string   "manufacturer_name", limit: 255
-    t.string   "gun_model",         limit: 255
-    t.decimal  "bullet_caliber",                precision: 10, scale: 2
-    t.integer  "max_bullets"
-    t.decimal  "price",                         precision: 10, scale: 2
-    t.date     "purchased"
-    t.text     "notes"
-    t.integer  "identity_id"
+  create_table "group_references", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.integer "parent_group_id"
+    t.integer "group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["group_id"], name: "index_group_references_on_group_id"
+    t.index ["identity_id"], name: "index_group_references_on_identity_id"
+    t.index ["parent_group_id"], name: "index_group_references_on_parent_group_id"
+  end
+
+  create_table "groups", id: :serial, force: :cascade do |t|
+    t.string "group_name", limit: 255
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_guns_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_groups_on_identity_id"
   end
 
-  create_table "happy_things", force: :cascade do |t|
-    t.string   "happy_thing_name"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_happy_things_on_identity_id", using: :btree
+  create_table "gun_files", id: :serial, force: :cascade do |t|
+    t.integer "gun_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gun_id"], name: "index_gun_files_on_gun_id"
+    t.index ["identity_file_id"], name: "index_gun_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_gun_files_on_identity_id"
   end
 
-  create_table "headaches", force: :cascade do |t|
+  create_table "gun_registration_files", id: :serial, force: :cascade do |t|
+    t.integer "gun_registration_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gun_registration_id"], name: "index_gun_registration_files_on_gun_registration_id"
+    t.index ["identity_file_id"], name: "index_gun_registration_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_gun_registration_files_on_identity_id"
+  end
+
+  create_table "gun_registrations", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.date "registered"
+    t.date "expires"
+    t.integer "gun_id"
+    t.integer "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["gun_id"], name: "index_gun_registrations_on_gun_id"
+    t.index ["identity_id"], name: "index_gun_registrations_on_identity_id"
+    t.index ["location_id"], name: "index_gun_registrations_on_location_id"
+  end
+
+  create_table "guns", id: :serial, force: :cascade do |t|
+    t.string "gun_name", limit: 255
+    t.string "manufacturer_name", limit: 255
+    t.string "gun_model", limit: 255
+    t.decimal "bullet_caliber", precision: 10, scale: 2
+    t.integer "max_bullets"
+    t.decimal "price", precision: 10, scale: 2
+    t.date "purchased"
+    t.text "notes"
+    t.integer "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_guns_on_identity_id"
+  end
+
+  create_table "happy_things", id: :serial, force: :cascade do |t|
+    t.string "happy_thing_name"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_happy_things_on_identity_id"
+  end
+
+  create_table "headaches", id: :serial, force: :cascade do |t|
     t.datetime "started"
     t.datetime "ended"
-    t.integer  "intensity"
-    t.string   "headache_location", limit: 255
-    t.integer  "identity_id"
+    t.integer "intensity"
+    t.string "headache_location", limit: 255
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_headaches_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_headaches_on_identity_id"
   end
 
-  create_table "health_insurance_files", force: :cascade do |t|
-    t.integer  "health_insurance_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.index ["health_insurance_id"], name: "index_health_insurance_files_on_health_insurance_id", using: :btree
-    t.index ["identity_file_id"], name: "index_health_insurance_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_health_insurance_files_on_identity_id", using: :btree
+  create_table "health_insurance_files", id: :serial, force: :cascade do |t|
+    t.integer "health_insurance_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["health_insurance_id"], name: "index_health_insurance_files_on_health_insurance_id"
+    t.index ["identity_file_id"], name: "index_health_insurance_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_health_insurance_files_on_identity_id"
   end
 
-  create_table "health_insurances", force: :cascade do |t|
-    t.string   "insurance_name",       limit: 255
-    t.integer  "insurance_company_id"
+  create_table "health_insurances", id: :serial, force: :cascade do |t|
+    t.string "insurance_name", limit: 255
+    t.integer "insurance_company_id"
     t.datetime "archived"
-    t.integer  "periodic_payment_id"
-    t.text     "notes"
-    t.integer  "group_company_id"
-    t.integer  "password_id"
-    t.string   "account_number",       limit: 255
-    t.string   "group_number",         limit: 255
-    t.integer  "identity_id"
+    t.integer "periodic_payment_id"
+    t.text "notes"
+    t.integer "group_company_id"
+    t.integer "password_id"
+    t.string "account_number", limit: 255
+    t.string "group_number", limit: 255
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "doctor_id"
-    t.integer  "visit_count"
-    t.integer  "rating"
-    t.index ["doctor_id"], name: "index_health_insurances_on_doctor_id", using: :btree
-    t.index ["group_company_id"], name: "index_health_insurances_on_group_company_id", using: :btree
-    t.index ["identity_id"], name: "index_health_insurances_on_identity_id", using: :btree
-    t.index ["insurance_company_id"], name: "index_health_insurances_on_insurance_company_id", using: :btree
-    t.index ["password_id"], name: "index_health_insurances_on_password_id", using: :btree
-    t.index ["periodic_payment_id"], name: "index_health_insurances_on_periodic_payment_id", using: :btree
+    t.integer "doctor_id"
+    t.integer "visit_count"
+    t.integer "rating"
+    t.index ["doctor_id"], name: "index_health_insurances_on_doctor_id"
+    t.index ["group_company_id"], name: "index_health_insurances_on_group_company_id"
+    t.index ["identity_id"], name: "index_health_insurances_on_identity_id"
+    t.index ["insurance_company_id"], name: "index_health_insurances_on_insurance_company_id"
+    t.index ["password_id"], name: "index_health_insurances_on_password_id"
+    t.index ["periodic_payment_id"], name: "index_health_insurances_on_periodic_payment_id"
   end
 
-  create_table "heart_rates", force: :cascade do |t|
-    t.integer  "beats"
-    t.date     "measurement_date"
-    t.string   "measurement_source", limit: 255
-    t.integer  "identity_id"
+  create_table "heart_rates", id: :serial, force: :cascade do |t|
+    t.integer "beats"
+    t.date "measurement_date"
+    t.string "measurement_source", limit: 255
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_heart_rates_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_heart_rates_on_identity_id"
   end
 
-  create_table "heights", force: :cascade do |t|
-    t.decimal  "height_amount",                  precision: 10, scale: 2
-    t.integer  "amount_type"
-    t.date     "measurement_date"
-    t.string   "measurement_source", limit: 255
-    t.integer  "identity_id"
+  create_table "heights", id: :serial, force: :cascade do |t|
+    t.decimal "height_amount", precision: 10, scale: 2
+    t.integer "amount_type"
+    t.date "measurement_date"
+    t.string "measurement_source", limit: 255
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_heights_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_heights_on_identity_id"
   end
 
-  create_table "hobbies", force: :cascade do |t|
-    t.string   "hobby_name",  limit: 255
-    t.text     "notes"
-    t.integer  "identity_id"
+  create_table "hobbies", id: :serial, force: :cascade do |t|
+    t.string "hobby_name", limit: 255
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_hobbies_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_hobbies_on_identity_id"
   end
 
-  create_table "hospital_visit_files", force: :cascade do |t|
-    t.integer  "hospital_visit_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.index ["hospital_visit_id"], name: "index_hospital_visit_files_on_hospital_visit_id", using: :btree
-    t.index ["identity_file_id"], name: "index_hospital_visit_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_hospital_visit_files_on_identity_id", using: :btree
+  create_table "hospital_visit_files", id: :serial, force: :cascade do |t|
+    t.integer "hospital_visit_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hospital_visit_id"], name: "index_hospital_visit_files_on_hospital_visit_id"
+    t.index ["identity_file_id"], name: "index_hospital_visit_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_hospital_visit_files_on_identity_id"
   end
 
-  create_table "hospital_visits", force: :cascade do |t|
-    t.string   "hospital_visit_purpose"
-    t.date     "hospital_visit_date"
-    t.integer  "hospital_id"
-    t.text     "notes"
-    t.integer  "visit_count"
+  create_table "hospital_visits", id: :serial, force: :cascade do |t|
+    t.string "hospital_visit_purpose"
+    t.date "hospital_visit_date"
+    t.integer "hospital_id"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.boolean  "emergency_room"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.index ["hospital_id"], name: "index_hospital_visits_on_hospital_id", using: :btree
-    t.index ["identity_id"], name: "index_hospital_visits_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.boolean "emergency_room"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hospital_id"], name: "index_hospital_visits_on_hospital_id"
+    t.index ["identity_id"], name: "index_hospital_visits_on_identity_id"
   end
 
-  create_table "hotels", force: :cascade do |t|
-    t.integer  "location_id"
-    t.integer  "breakfast_rating"
-    t.integer  "overall_rating"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.integer  "room_number"
+  create_table "hotels", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.integer "breakfast_rating"
+    t.integer "overall_rating"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "room_number"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_hotels_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_hotels_on_location_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_hotels_on_identity_id"
+    t.index ["location_id"], name: "index_hotels_on_location_id"
   end
 
-  create_table "hypotheses", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.text     "notes"
-    t.integer  "question_id"
-    t.integer  "identity_id"
+  create_table "hypotheses", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.text "notes"
+    t.integer "question_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "position"
+    t.integer "position"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_hypotheses_on_identity_id", using: :btree
-    t.index ["question_id"], name: "index_hypotheses_on_question_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_hypotheses_on_identity_id"
+    t.index ["question_id"], name: "index_hypotheses_on_question_id"
   end
 
-  create_table "hypothesis_experiments", force: :cascade do |t|
-    t.string   "name",          limit: 255
-    t.text     "notes"
-    t.date     "started"
-    t.date     "ended"
-    t.integer  "hypothesis_id"
-    t.integer  "identity_id"
+  create_table "hypothesis_experiments", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.text "notes"
+    t.date "started"
+    t.date "ended"
+    t.integer "hypothesis_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["hypothesis_id"], name: "index_hypothesis_experiments_on_hypothesis_id", using: :btree
-    t.index ["identity_id"], name: "index_hypothesis_experiments_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["hypothesis_id"], name: "index_hypothesis_experiments_on_hypothesis_id"
+    t.index ["identity_id"], name: "index_hypothesis_experiments_on_identity_id"
   end
 
-  create_table "ideas", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.text     "idea"
-    t.integer  "identity_id"
+  create_table "ideas", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.text "idea"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_ideas_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_ideas_on_identity_id"
   end
 
-  create_table "identities", force: :cascade do |t|
-    t.integer  "user_id"
+  create_table "identities", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "points"
-    t.string   "name",                 limit: 255
-    t.date     "birthday"
-    t.text     "notes"
-    t.text     "notepad"
-    t.string   "nickname",             limit: 255
-    t.text     "likes"
-    t.text     "gift_ideas"
-    t.string   "ktn",                  limit: 255
-    t.text     "new_years_resolution"
-    t.integer  "sex_type"
-    t.integer  "company_id"
-    t.string   "middle_name"
-    t.string   "last_name"
-    t.integer  "identity_id"
+    t.integer "points"
+    t.string "name", limit: 255
+    t.date "birthday"
+    t.text "notes"
+    t.text "notepad"
+    t.string "nickname", limit: 255
+    t.text "likes"
+    t.text "gift_ideas"
+    t.string "ktn", limit: 255
+    t.text "new_years_resolution"
+    t.integer "sex_type"
+    t.integer "company_id"
+    t.string "middle_name"
+    t.string "last_name"
+    t.integer "identity_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.string   "display_note"
-    t.integer  "identity_type"
-    t.index ["company_id"], name: "index_identities_on_company_id", using: :btree
-    t.index ["identity_id"], name: "index_identities_on_identity_id", using: :btree
-    t.index ["user_id"], name: "index_identities_on_user_id", using: :btree
+    t.integer "rating"
+    t.string "display_note"
+    t.integer "identity_type"
+    t.index ["company_id"], name: "index_identities_on_company_id"
+    t.index ["identity_id"], name: "index_identities_on_identity_id"
+    t.index ["user_id"], name: "index_identities_on_user_id"
   end
 
-  create_table "identity_drivers_licenses", force: :cascade do |t|
-    t.string   "identifier",         limit: 255
-    t.string   "region",             limit: 255
-    t.string   "sub_region1",        limit: 255
-    t.date     "expires"
-    t.integer  "parent_identity_id"
+  create_table "identity_drivers_licenses", id: :serial, force: :cascade do |t|
+    t.string "identifier", limit: 255
+    t.string "region", limit: 255
+    t.string "sub_region1", limit: 255
+    t.date "expires"
+    t.integer "parent_identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["parent_identity_id"], name: "index_identity_drivers_licenses_on_parent_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["parent_identity_id"], name: "index_identity_drivers_licenses_on_parent_identity_id"
   end
 
-  create_table "identity_emails", force: :cascade do |t|
-    t.string   "email",              limit: 255
-    t.integer  "parent_identity_id"
+  create_table "identity_emails", id: :serial, force: :cascade do |t|
+    t.string "email", limit: 255
+    t.integer "parent_identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "identity_id"
-    t.boolean  "secondary"
+    t.integer "identity_id"
+    t.boolean "secondary"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_identity_emails_on_identity_id", using: :btree
-    t.index ["parent_identity_id"], name: "index_identity_emails_on_parent_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_identity_emails_on_identity_id"
+    t.index ["parent_identity_id"], name: "index_identity_emails_on_parent_identity_id"
   end
 
-  create_table "identity_file_folders", force: :cascade do |t|
-    t.string   "folder_name",      limit: 255
-    t.integer  "parent_folder_id"
-    t.integer  "identity_id"
+  create_table "identity_file_folders", id: :serial, force: :cascade do |t|
+    t.string "folder_name", limit: 255
+    t.integer "parent_folder_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_identity_file_folders_on_identity_id", using: :btree
-    t.index ["parent_folder_id"], name: "index_identity_file_folders_on_parent_folder_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_identity_file_folders_on_identity_id"
+    t.index ["parent_folder_id"], name: "index_identity_file_folders_on_parent_folder_id"
   end
 
-  create_table "identity_files", force: :cascade do |t|
-    t.integer  "identity_id"
+  create_table "identity_files", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "file_file_name",        limit: 255
-    t.string   "file_content_type",     limit: 255
-    t.integer  "file_file_size"
+    t.string "file_file_name", limit: 255
+    t.string "file_content_type", limit: 255
+    t.integer "file_file_size"
     t.datetime "file_updated_at"
-    t.integer  "encrypted_password_id"
-    t.text     "notes"
-    t.integer  "folder_id"
-    t.binary   "thumbnail_contents"
-    t.integer  "thumbnail_bytes"
-    t.integer  "visit_count"
-    t.string   "filesystem_path"
-    t.boolean  "thumbnail_skip"
-    t.string   "thumbnail_hash"
-    t.string   "file_hash"
+    t.integer "encrypted_password_id"
+    t.text "notes"
+    t.integer "folder_id"
+    t.binary "thumbnail_contents"
+    t.integer "thumbnail_bytes"
+    t.integer "visit_count"
+    t.string "filesystem_path"
+    t.boolean "thumbnail_skip"
+    t.string "thumbnail_hash"
+    t.string "file_hash"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["encrypted_password_id"], name: "index_identity_files_on_encrypted_password_id", using: :btree
-    t.index ["folder_id"], name: "index_identity_files_on_folder_id", using: :btree
-    t.index ["identity_id"], name: "index_identity_files_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["encrypted_password_id"], name: "index_identity_files_on_encrypted_password_id"
+    t.index ["folder_id"], name: "index_identity_files_on_folder_id"
+    t.index ["identity_id"], name: "index_identity_files_on_identity_id"
   end
 
-  create_table "identity_locations", force: :cascade do |t|
-    t.integer  "location_id"
-    t.integer  "parent_identity_id"
+  create_table "identity_locations", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.integer "parent_identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "identity_id"
+    t.integer "identity_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.boolean  "secondary"
-    t.index ["identity_id"], name: "index_identity_locations_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_identity_locations_on_location_id", using: :btree
-    t.index ["parent_identity_id"], name: "index_identity_locations_on_parent_identity_id", using: :btree
+    t.integer "rating"
+    t.boolean "secondary"
+    t.index ["identity_id"], name: "index_identity_locations_on_identity_id"
+    t.index ["location_id"], name: "index_identity_locations_on_location_id"
+    t.index ["parent_identity_id"], name: "index_identity_locations_on_parent_identity_id"
   end
 
-  create_table "identity_phones", force: :cascade do |t|
-    t.string   "number",             limit: 255
-    t.integer  "parent_identity_id"
+  create_table "identity_phones", id: :serial, force: :cascade do |t|
+    t.string "number", limit: 255
+    t.integer "parent_identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "identity_id"
-    t.integer  "phone_type"
+    t.integer "identity_id"
+    t.integer "phone_type"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_identity_phones_on_identity_id", using: :btree
-    t.index ["parent_identity_id"], name: "index_identity_phones_on_parent_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_identity_phones_on_identity_id"
+    t.index ["parent_identity_id"], name: "index_identity_phones_on_parent_identity_id"
   end
 
-  create_table "identity_pictures", force: :cascade do |t|
-    t.integer  "parent_identity_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "position"
-    t.index ["identity_file_id"], name: "index_identity_pictures_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_identity_pictures_on_identity_id", using: :btree
-    t.index ["parent_identity_id"], name: "index_identity_pictures_on_parent_identity_id", using: :btree
-  end
-
-  create_table "identity_relationships", force: :cascade do |t|
-    t.integer  "contact_id"
-    t.integer  "relationship_type"
-    t.integer  "identity_id"
-    t.integer  "parent_identity_id"
+  create_table "identity_pictures", id: :serial, force: :cascade do |t|
+    t.integer "parent_identity_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["contact_id"], name: "index_identity_relationships_on_contact_id", using: :btree
-    t.index ["identity_id"], name: "index_identity_relationships_on_identity_id", using: :btree
-    t.index ["parent_identity_id"], name: "index_identity_relationships_on_parent_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "position"
+    t.index ["identity_file_id"], name: "index_identity_pictures_on_identity_file_id"
+    t.index ["identity_id"], name: "index_identity_pictures_on_identity_id"
+    t.index ["parent_identity_id"], name: "index_identity_pictures_on_parent_identity_id"
   end
 
-  create_table "injuries", force: :cascade do |t|
-    t.string   "injury_name"
-    t.date     "injury_date"
-    t.integer  "location_id"
-    t.integer  "visit_count"
+  create_table "identity_relationships", id: :serial, force: :cascade do |t|
+    t.integer "contact_id"
+    t.integer "relationship_type"
+    t.integer "identity_id"
+    t.integer "parent_identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.text     "notes"
-    t.index ["identity_id"], name: "index_injuries_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_injuries_on_location_id", using: :btree
+    t.integer "rating"
+    t.index ["contact_id"], name: "index_identity_relationships_on_contact_id"
+    t.index ["identity_id"], name: "index_identity_relationships_on_identity_id"
+    t.index ["parent_identity_id"], name: "index_identity_relationships_on_parent_identity_id"
   end
 
-  create_table "injury_files", force: :cascade do |t|
-    t.integer  "injury_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["identity_file_id"], name: "index_injury_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_injury_files_on_identity_id", using: :btree
-    t.index ["injury_id"], name: "index_injury_files_on_injury_id", using: :btree
-  end
-
-  create_table "insurance_card_files", force: :cascade do |t|
-    t.integer  "insurance_card_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.index ["identity_file_id"], name: "index_insurance_card_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_insurance_card_files_on_identity_id", using: :btree
-    t.index ["insurance_card_id"], name: "index_insurance_card_files_on_insurance_card_id", using: :btree
-  end
-
-  create_table "insurance_cards", force: :cascade do |t|
-    t.string   "insurance_card_name"
-    t.date     "insurance_card_start"
-    t.date     "insurance_card_end"
-    t.text     "notes"
-    t.integer  "visit_count"
+  create_table "injuries", id: :serial, force: :cascade do |t|
+    t.string "injury_name"
+    t.date "injury_date"
+    t.integer "location_id"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.index ["identity_id"], name: "index_insurance_cards_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "notes"
+    t.index ["identity_id"], name: "index_injuries_on_identity_id"
+    t.index ["location_id"], name: "index_injuries_on_location_id"
   end
 
-  create_table "invite_codes", force: :cascade do |t|
-    t.string   "code"
-    t.integer  "current_uses"
-    t.integer  "max_uses"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+  create_table "injury_files", id: :serial, force: :cascade do |t|
+    t.integer "injury_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_injury_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_injury_files_on_identity_id"
+    t.index ["injury_id"], name: "index_injury_files_on_injury_id"
+  end
+
+  create_table "insurance_card_files", id: :serial, force: :cascade do |t|
+    t.integer "insurance_card_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_insurance_card_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_insurance_card_files_on_identity_id"
+    t.index ["insurance_card_id"], name: "index_insurance_card_files_on_insurance_card_id"
+  end
+
+  create_table "insurance_cards", id: :serial, force: :cascade do |t|
+    t.string "insurance_card_name"
+    t.date "insurance_card_start"
+    t.date "insurance_card_end"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_invite_codes_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_insurance_cards_on_identity_id"
   end
 
-  create_table "invites", force: :cascade do |t|
-    t.string   "email"
-    t.text     "invite_body"
-    t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["user_id"], name: "index_invites_on_user_id", using: :btree
-  end
-
-  create_table "item_files", force: :cascade do |t|
-    t.integer  "item_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["identity_file_id"], name: "index_item_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_item_files_on_identity_id", using: :btree
-    t.index ["item_id"], name: "index_item_files_on_item_id", using: :btree
-  end
-
-  create_table "items", force: :cascade do |t|
-    t.string   "item_name"
-    t.text     "notes"
-    t.string   "item_location"
-    t.decimal  "cost",          precision: 10, scale: 2
-    t.date     "acquired"
-    t.integer  "visit_count"
+  create_table "invite_codes", id: :serial, force: :cascade do |t|
+    t.string "code"
+    t.integer "current_uses"
+    t.integer "max_uses"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-    t.date     "expires"
-    t.index ["identity_id"], name: "index_items_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_invite_codes_on_identity_id"
   end
 
-  create_table "job_accomplishments", force: :cascade do |t|
-    t.integer  "job_id"
-    t.integer  "identity_id"
-    t.string   "accomplishment_title"
-    t.text     "accomplishment"
+  create_table "invites", id: :serial, force: :cascade do |t|
+    t.string "email"
+    t.text "invite_body"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_invites_on_user_id"
+  end
+
+  create_table "item_files", id: :serial, force: :cascade do |t|
+    t.integer "item_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_item_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_item_files_on_identity_id"
+    t.index ["item_id"], name: "index_item_files_on_item_id"
+  end
+
+  create_table "items", id: :serial, force: :cascade do |t|
+    t.string "item_name"
+    t.text "notes"
+    t.string "item_location"
+    t.decimal "cost", precision: 10, scale: 2
+    t.date "acquired"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "expires"
+    t.index ["identity_id"], name: "index_items_on_identity_id"
+  end
+
+  create_table "job_accomplishments", id: :serial, force: :cascade do |t|
+    t.integer "job_id"
+    t.integer "identity_id"
+    t.string "accomplishment_title"
+    t.text "accomplishment"
     t.datetime "accomplishment_time"
     t.datetime "archived"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.boolean  "major"
-    t.index ["identity_id"], name: "index_job_accomplishments_on_identity_id", using: :btree
-    t.index ["job_id"], name: "index_job_accomplishments_on_job_id", using: :btree
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "major"
+    t.index ["identity_id"], name: "index_job_accomplishments_on_identity_id"
+    t.index ["job_id"], name: "index_job_accomplishments_on_job_id"
   end
 
-  create_table "job_awards", force: :cascade do |t|
-    t.date     "job_award_date"
-    t.integer  "job_id"
-    t.decimal  "job_award_amount",      precision: 10, scale: 2
-    t.string   "job_award_description"
-    t.text     "notes"
-    t.integer  "visit_count"
+  create_table "job_awards", id: :serial, force: :cascade do |t|
+    t.date "job_award_date"
+    t.integer "job_id"
+    t.decimal "job_award_amount", precision: 10, scale: 2
+    t.string "job_award_description"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
-    t.index ["identity_id"], name: "index_job_awards_on_identity_id", using: :btree
-    t.index ["job_id"], name: "index_job_awards_on_job_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_job_awards_on_identity_id"
+    t.index ["job_id"], name: "index_job_awards_on_job_id"
   end
 
-  create_table "job_files", force: :cascade do |t|
-    t.integer  "job_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["identity_file_id"], name: "index_job_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_job_files_on_identity_id", using: :btree
-    t.index ["job_id"], name: "index_job_files_on_job_id", using: :btree
+  create_table "job_files", id: :serial, force: :cascade do |t|
+    t.integer "job_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_job_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_job_files_on_identity_id"
+    t.index ["job_id"], name: "index_job_files_on_job_id"
   end
 
-  create_table "job_managers", force: :cascade do |t|
-    t.integer  "job_id"
-    t.integer  "contact_id"
-    t.integer  "identity_id"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.text     "notes"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "job_managers", id: :serial, force: :cascade do |t|
+    t.integer "job_id"
+    t.integer "contact_id"
+    t.integer "identity_id"
+    t.date "start_date"
+    t.date "end_date"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["contact_id"], name: "index_job_managers_on_contact_id", using: :btree
-    t.index ["identity_id"], name: "index_job_managers_on_identity_id", using: :btree
-    t.index ["job_id"], name: "index_job_managers_on_job_id", using: :btree
+    t.integer "rating"
+    t.index ["contact_id"], name: "index_job_managers_on_contact_id"
+    t.index ["identity_id"], name: "index_job_managers_on_identity_id"
+    t.index ["job_id"], name: "index_job_managers_on_job_id"
   end
 
-  create_table "job_myreferences", force: :cascade do |t|
-    t.integer  "job_id"
-    t.integer  "myreference_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+  create_table "job_myreferences", id: :serial, force: :cascade do |t|
+    t.integer "job_id"
+    t.integer "myreference_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_job_myreferences_on_identity_id", using: :btree
-    t.index ["job_id"], name: "index_job_myreferences_on_job_id", using: :btree
-    t.index ["myreference_id"], name: "index_job_myreferences_on_myreference_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_job_myreferences_on_identity_id"
+    t.index ["job_id"], name: "index_job_myreferences_on_job_id"
+    t.index ["myreference_id"], name: "index_job_myreferences_on_myreference_id"
   end
 
-  create_table "job_review_files", force: :cascade do |t|
-    t.integer  "job_review_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+  create_table "job_review_files", id: :serial, force: :cascade do |t|
+    t.integer "job_review_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_file_id"], name: "index_job_review_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_job_review_files_on_identity_id", using: :btree
-    t.index ["job_review_id"], name: "index_job_review_files_on_job_review_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_file_id"], name: "index_job_review_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_job_review_files_on_identity_id"
+    t.index ["job_review_id"], name: "index_job_review_files_on_job_review_id"
   end
 
-  create_table "job_reviews", force: :cascade do |t|
-    t.integer  "job_id"
-    t.integer  "identity_id"
-    t.date     "review_date"
-    t.string   "company_score"
-    t.integer  "contact_id"
-    t.text     "notes"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+  create_table "job_reviews", id: :serial, force: :cascade do |t|
+    t.integer "job_id"
+    t.integer "identity_id"
+    t.date "review_date"
+    t.string "company_score"
+    t.integer "contact_id"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.text     "self_evaluation"
-    t.index ["contact_id"], name: "index_job_reviews_on_contact_id", using: :btree
-    t.index ["identity_id"], name: "index_job_reviews_on_identity_id", using: :btree
-    t.index ["job_id"], name: "index_job_reviews_on_job_id", using: :btree
+    t.integer "rating"
+    t.text "self_evaluation"
+    t.index ["contact_id"], name: "index_job_reviews_on_contact_id"
+    t.index ["identity_id"], name: "index_job_reviews_on_identity_id"
+    t.index ["job_id"], name: "index_job_reviews_on_job_id"
   end
 
-  create_table "job_salaries", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.integer  "job_id"
-    t.date     "started"
-    t.date     "ended"
-    t.text     "notes"
-    t.decimal  "salary",         precision: 10, scale: 2
-    t.integer  "salary_period"
+  create_table "job_salaries", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.integer "job_id"
+    t.date "started"
+    t.date "ended"
+    t.text "notes"
+    t.decimal "salary", precision: 10, scale: 2
+    t.integer "salary_period"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "new_title"
+    t.string "new_title"
     t.datetime "archived"
-    t.integer  "rating"
-    t.decimal  "hours_per_week", precision: 10, scale: 2
-    t.index ["identity_id"], name: "index_job_salaries_on_identity_id", using: :btree
-    t.index ["job_id"], name: "index_job_salaries_on_job_id", using: :btree
+    t.integer "rating"
+    t.decimal "hours_per_week", precision: 10, scale: 2
+    t.index ["identity_id"], name: "index_job_salaries_on_identity_id"
+    t.index ["job_id"], name: "index_job_salaries_on_job_id"
   end
 
-  create_table "jobs", force: :cascade do |t|
-    t.string   "job_title",             limit: 255
-    t.integer  "company_id"
-    t.date     "started"
-    t.date     "ended"
-    t.integer  "manager_contact_id"
-    t.text     "notes"
-    t.integer  "identity_id"
+  create_table "jobs", id: :serial, force: :cascade do |t|
+    t.string "job_title", limit: 255
+    t.integer "company_id"
+    t.date "started"
+    t.date "ended"
+    t.integer "manager_contact_id"
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "days_holiday"
-    t.integer  "days_vacation"
-    t.string   "employee_identifier",   limit: 255
-    t.string   "department_name",       limit: 255
-    t.string   "division_name",         limit: 255
-    t.string   "business_unit",         limit: 255
-    t.string   "email",                 limit: 255
-    t.string   "internal_mail_id",      limit: 255
-    t.string   "internal_mail_server",  limit: 255
-    t.integer  "internal_address_id"
-    t.string   "department_identifier", limit: 255
-    t.string   "division_identifier",   limit: 255
-    t.string   "personnel_code",        limit: 255
-    t.integer  "visit_count"
+    t.integer "days_holiday"
+    t.integer "days_vacation"
+    t.string "employee_identifier", limit: 255
+    t.string "department_name", limit: 255
+    t.string "division_name", limit: 255
+    t.string "business_unit", limit: 255
+    t.string "email", limit: 255
+    t.string "internal_mail_id", limit: 255
+    t.string "internal_mail_server", limit: 255
+    t.integer "internal_address_id"
+    t.string "department_identifier", limit: 255
+    t.string "division_identifier", limit: 255
+    t.string "personnel_code", limit: 255
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.decimal  "hours_per_week",                    precision: 10, scale: 2
-    t.index ["company_id"], name: "index_jobs_on_company_id", using: :btree
-    t.index ["identity_id"], name: "index_jobs_on_identity_id", using: :btree
-    t.index ["internal_address_id"], name: "index_jobs_on_internal_address_id", using: :btree
-    t.index ["manager_contact_id"], name: "index_jobs_on_manager_contact_id", using: :btree
+    t.integer "rating"
+    t.decimal "hours_per_week", precision: 10, scale: 2
+    t.index ["company_id"], name: "index_jobs_on_company_id"
+    t.index ["identity_id"], name: "index_jobs_on_identity_id"
+    t.index ["internal_address_id"], name: "index_jobs_on_internal_address_id"
+    t.index ["manager_contact_id"], name: "index_jobs_on_manager_contact_id"
   end
 
-  create_table "jokes", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.text     "joke"
-    t.string   "source",      limit: 255
-    t.integer  "identity_id"
+  create_table "jokes", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.text "joke"
+    t.string "source", limit: 255
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_jokes_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_jokes_on_identity_id"
   end
 
-  create_table "life_goals", force: :cascade do |t|
-    t.string   "life_goal_name", limit: 255
-    t.text     "notes"
-    t.integer  "position"
+  create_table "life_goals", id: :serial, force: :cascade do |t|
+    t.string "life_goal_name", limit: 255
+    t.text "notes"
+    t.integer "position"
     t.datetime "goal_started"
     t.datetime "goal_ended"
-    t.integer  "identity_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.boolean  "long_term"
-    t.index ["identity_id"], name: "index_life_goals_on_identity_id", using: :btree
+    t.integer "rating"
+    t.boolean "long_term"
+    t.index ["identity_id"], name: "index_life_goals_on_identity_id"
   end
 
-  create_table "life_highlight_files", force: :cascade do |t|
-    t.integer  "life_highlight_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.index ["identity_file_id"], name: "index_life_highlight_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_life_highlight_files_on_identity_id", using: :btree
-    t.index ["life_highlight_id"], name: "index_life_highlight_files_on_life_highlight_id", using: :btree
+  create_table "life_highlight_files", id: :serial, force: :cascade do |t|
+    t.integer "life_highlight_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_life_highlight_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_life_highlight_files_on_identity_id"
+    t.index ["life_highlight_id"], name: "index_life_highlight_files_on_life_highlight_id"
   end
 
-  create_table "life_highlights", force: :cascade do |t|
+  create_table "life_highlights", id: :serial, force: :cascade do |t|
     t.datetime "life_highlight_time"
-    t.string   "life_highlight_name"
-    t.text     "notes"
-    t.integer  "visit_count"
+    t.string "life_highlight_name"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.index ["identity_id"], name: "index_life_highlights_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_life_highlights_on_identity_id"
   end
 
-  create_table "life_insurance_files", force: :cascade do |t|
-    t.integer  "life_insurance_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.index ["identity_file_id"], name: "index_life_insurance_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_life_insurance_files_on_identity_id", using: :btree
-    t.index ["life_insurance_id"], name: "index_life_insurance_files_on_life_insurance_id", using: :btree
+  create_table "life_insurance_files", id: :serial, force: :cascade do |t|
+    t.integer "life_insurance_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_life_insurance_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_life_insurance_files_on_identity_id"
+    t.index ["life_insurance_id"], name: "index_life_insurance_files_on_life_insurance_id"
   end
 
-  create_table "life_insurances", force: :cascade do |t|
-    t.string   "insurance_name",      limit: 255
-    t.integer  "company_id"
-    t.decimal  "insurance_amount",                precision: 10, scale: 2
-    t.date     "started"
-    t.integer  "periodic_payment_id"
-    t.text     "notes"
-    t.integer  "identity_id"
-    t.integer  "life_insurance_type"
+  create_table "life_insurances", id: :serial, force: :cascade do |t|
+    t.string "insurance_name", limit: 255
+    t.integer "company_id"
+    t.decimal "insurance_amount", precision: 10, scale: 2
+    t.date "started"
+    t.integer "periodic_payment_id"
+    t.text "notes"
+    t.integer "identity_id"
+    t.integer "life_insurance_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.decimal  "cash_value",                      precision: 10, scale: 2
-    t.integer  "beneficiary_id"
-    t.decimal  "loan_interest_rate",              precision: 10, scale: 2
-    t.index ["beneficiary_id"], name: "index_life_insurances_on_beneficiary_id", using: :btree
-    t.index ["company_id"], name: "index_life_insurances_on_company_id", using: :btree
-    t.index ["identity_id"], name: "index_life_insurances_on_identity_id", using: :btree
-    t.index ["periodic_payment_id"], name: "index_life_insurances_on_periodic_payment_id", using: :btree
+    t.integer "rating"
+    t.decimal "cash_value", precision: 10, scale: 2
+    t.integer "beneficiary_id"
+    t.decimal "loan_interest_rate", precision: 10, scale: 2
+    t.index ["beneficiary_id"], name: "index_life_insurances_on_beneficiary_id"
+    t.index ["company_id"], name: "index_life_insurances_on_company_id"
+    t.index ["identity_id"], name: "index_life_insurances_on_identity_id"
+    t.index ["periodic_payment_id"], name: "index_life_insurances_on_periodic_payment_id"
   end
 
-  create_table "list_items", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.integer  "list_id"
+  create_table "list_items", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.integer "list_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "identity_id"
+    t.integer "identity_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_list_items_on_identity_id", using: :btree
-    t.index ["list_id"], name: "index_list_items_on_list_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_list_items_on_identity_id"
+    t.index ["list_id"], name: "index_list_items_on_list_id"
   end
 
-  create_table "lists", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.integer  "identity_id"
+  create_table "lists", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_lists_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_lists_on_identity_id"
   end
 
-  create_table "loans", force: :cascade do |t|
-    t.string   "lender",          limit: 255
-    t.decimal  "amount",                      precision: 10, scale: 2
-    t.date     "start"
-    t.date     "paid_off"
-    t.decimal  "monthly_payment",             precision: 10, scale: 2
-    t.integer  "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_loans_on_identity_id", using: :btree
-  end
-
-  create_table "location_phones", force: :cascade do |t|
-    t.string   "number",      limit: 255
-    t.integer  "location_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "identity_id"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_location_phones_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_location_phones_on_location_id", using: :btree
-  end
-
-  create_table "location_pictures", force: :cascade do |t|
-    t.integer  "location_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "position"
-    t.index ["identity_file_id"], name: "index_location_pictures_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_location_pictures_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_location_pictures_on_location_id", using: :btree
-  end
-
-  create_table "locations", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.string   "address1",    limit: 255
-    t.string   "address2",    limit: 255
-    t.string   "address3",    limit: 255
-    t.string   "region",      limit: 255
-    t.string   "sub_region1", limit: 255
-    t.string   "sub_region2", limit: 255
-    t.integer  "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "postal_code", limit: 255
-    t.text     "notes"
-    t.decimal  "latitude",                precision: 24, scale: 20
-    t.decimal  "longitude",               precision: 24, scale: 20
-    t.integer  "visit_count"
-    t.integer  "website_id"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_locations_on_identity_id", using: :btree
-    t.index ["website_id"], name: "index_locations_on_website_id", using: :btree
-  end
-
-  create_table "meadows", force: :cascade do |t|
-    t.integer  "location_id"
-    t.integer  "rating"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.text     "notes"
-    t.boolean  "visited"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.datetime "archived"
-    t.index ["identity_id"], name: "index_meadows_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_meadows_on_location_id", using: :btree
-  end
-
-  create_table "meal_drinks", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.integer  "meal_id"
-    t.integer  "drink_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.decimal  "drink_servings", precision: 10, scale: 2
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["drink_id"], name: "index_meal_drinks_on_drink_id", using: :btree
-    t.index ["identity_id"], name: "index_meal_drinks_on_identity_id", using: :btree
-    t.index ["meal_id"], name: "index_meal_drinks_on_meal_id", using: :btree
-  end
-
-  create_table "meal_foods", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.integer  "meal_id"
-    t.integer  "food_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.decimal  "food_servings", precision: 10, scale: 2
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["food_id"], name: "index_meal_foods_on_food_id", using: :btree
-    t.index ["identity_id"], name: "index_meal_foods_on_identity_id", using: :btree
-    t.index ["meal_id"], name: "index_meal_foods_on_meal_id", using: :btree
-  end
-
-  create_table "meal_vitamins", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.integer  "meal_id"
-    t.integer  "vitamin_id"
+  create_table "loans", id: :serial, force: :cascade do |t|
+    t.string "lender", limit: 255
+    t.decimal "amount", precision: 10, scale: 2
+    t.date "start"
+    t.date "paid_off"
+    t.decimal "monthly_payment", precision: 10, scale: 2
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_meal_vitamins_on_identity_id", using: :btree
-    t.index ["meal_id"], name: "index_meal_vitamins_on_meal_id", using: :btree
-    t.index ["vitamin_id"], name: "index_meal_vitamins_on_vitamin_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_loans_on_identity_id"
   end
 
-  create_table "meals", force: :cascade do |t|
+  create_table "location_phones", id: :serial, force: :cascade do |t|
+    t.string "number", limit: 255
+    t.integer "location_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "identity_id"
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_location_phones_on_identity_id"
+    t.index ["location_id"], name: "index_location_phones_on_location_id"
+  end
+
+  create_table "location_pictures", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived"
+    t.integer "rating"
+    t.integer "position"
+    t.index ["identity_file_id"], name: "index_location_pictures_on_identity_file_id"
+    t.index ["identity_id"], name: "index_location_pictures_on_identity_id"
+    t.index ["location_id"], name: "index_location_pictures_on_location_id"
+  end
+
+  create_table "locations", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.string "address1", limit: 255
+    t.string "address2", limit: 255
+    t.string "address3", limit: 255
+    t.string "region", limit: 255
+    t.string "sub_region1", limit: 255
+    t.string "sub_region2", limit: 255
+    t.integer "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string "postal_code", limit: 255
+    t.text "notes"
+    t.decimal "latitude", precision: 24, scale: 20
+    t.decimal "longitude", precision: 24, scale: 20
+    t.integer "visit_count"
+    t.integer "website_id"
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_locations_on_identity_id"
+    t.index ["website_id"], name: "index_locations_on_website_id"
+  end
+
+  create_table "meadows", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.integer "rating"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.text "notes"
+    t.boolean "visited"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived"
+    t.index ["identity_id"], name: "index_meadows_on_identity_id"
+    t.index ["location_id"], name: "index_meadows_on_location_id"
+  end
+
+  create_table "meal_drinks", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.integer "meal_id"
+    t.integer "drink_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.decimal "drink_servings", precision: 10, scale: 2
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["drink_id"], name: "index_meal_drinks_on_drink_id"
+    t.index ["identity_id"], name: "index_meal_drinks_on_identity_id"
+    t.index ["meal_id"], name: "index_meal_drinks_on_meal_id"
+  end
+
+  create_table "meal_foods", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.integer "meal_id"
+    t.integer "food_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.decimal "food_servings", precision: 10, scale: 2
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["food_id"], name: "index_meal_foods_on_food_id"
+    t.index ["identity_id"], name: "index_meal_foods_on_identity_id"
+    t.index ["meal_id"], name: "index_meal_foods_on_meal_id"
+  end
+
+  create_table "meal_vitamins", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.integer "meal_id"
+    t.integer "vitamin_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_meal_vitamins_on_identity_id"
+    t.index ["meal_id"], name: "index_meal_vitamins_on_meal_id"
+    t.index ["vitamin_id"], name: "index_meal_vitamins_on_vitamin_id"
+  end
+
+  create_table "meals", id: :serial, force: :cascade do |t|
     t.datetime "meal_time"
-    t.text     "notes"
-    t.integer  "location_id"
-    t.decimal  "price",       precision: 10, scale: 2
-    t.decimal  "calories",    precision: 10, scale: 2
-    t.integer  "identity_id"
+    t.text "notes"
+    t.integer "location_id"
+    t.decimal "price", precision: 10, scale: 2
+    t.decimal "calories", precision: 10, scale: 2
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_meals_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_meals_on_location_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_meals_on_identity_id"
+    t.index ["location_id"], name: "index_meals_on_location_id"
   end
 
-  create_table "media_dump_files", force: :cascade do |t|
-    t.integer  "media_dump_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+  create_table "media_dump_files", id: :serial, force: :cascade do |t|
+    t.integer "media_dump_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_file_id"], name: "index_media_dump_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_media_dump_files_on_identity_id", using: :btree
-    t.index ["media_dump_id"], name: "index_media_dump_files_on_media_dump_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_file_id"], name: "index_media_dump_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_media_dump_files_on_identity_id"
+    t.index ["media_dump_id"], name: "index_media_dump_files_on_media_dump_id"
   end
 
-  create_table "media_dumps", force: :cascade do |t|
-    t.string   "media_dump_name"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+  create_table "media_dumps", id: :serial, force: :cascade do |t|
+    t.string "media_dump_name"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_media_dumps_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_media_dumps_on_identity_id"
   end
 
-  create_table "medical_condition_evaluation_files", force: :cascade do |t|
-    t.integer  "medical_condition_evaluation_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.index ["identity_file_id"], name: "index_medical_condition_evaluation_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_medical_condition_evaluation_files_on_identity_id", using: :btree
-    t.index ["medical_condition_evaluation_id"], name: "mcef_on_mcei", using: :btree
+  create_table "medical_condition_evaluation_files", id: :serial, force: :cascade do |t|
+    t.integer "medical_condition_evaluation_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_medical_condition_evaluation_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_medical_condition_evaluation_files_on_identity_id"
+    t.index ["medical_condition_evaluation_id"], name: "mcef_on_mcei"
   end
 
-  create_table "medical_condition_evaluations", force: :cascade do |t|
-    t.integer  "medical_condition_id"
-    t.text     "notes"
+  create_table "medical_condition_evaluations", id: :serial, force: :cascade do |t|
+    t.integer "medical_condition_id"
+    t.text "notes"
     t.datetime "evaluation_datetime"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.index ["identity_id"], name: "index_medical_condition_evaluations_on_identity_id", using: :btree
-    t.index ["medical_condition_id"], name: "index_medical_condition_evaluations_on_medical_condition_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_medical_condition_evaluations_on_identity_id"
+    t.index ["medical_condition_id"], name: "index_medical_condition_evaluations_on_medical_condition_id"
   end
 
-  create_table "medical_condition_files", force: :cascade do |t|
-    t.integer  "medical_condition_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.index ["identity_file_id"], name: "index_medical_condition_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_medical_condition_files_on_identity_id", using: :btree
-    t.index ["medical_condition_id"], name: "index_medical_condition_files_on_medical_condition_id", using: :btree
+  create_table "medical_condition_files", id: :serial, force: :cascade do |t|
+    t.integer "medical_condition_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_medical_condition_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_medical_condition_files_on_identity_id"
+    t.index ["medical_condition_id"], name: "index_medical_condition_files_on_medical_condition_id"
   end
 
-  create_table "medical_condition_instances", force: :cascade do |t|
+  create_table "medical_condition_instances", id: :serial, force: :cascade do |t|
     t.datetime "condition_start"
     t.datetime "condition_end"
-    t.text     "notes"
-    t.integer  "medical_condition_id"
-    t.integer  "identity_id"
+    t.text "notes"
+    t.integer "medical_condition_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_medical_condition_instances_on_identity_id", using: :btree
-    t.index ["medical_condition_id"], name: "index_medical_condition_instances_on_medical_condition_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_medical_condition_instances_on_identity_id"
+    t.index ["medical_condition_id"], name: "index_medical_condition_instances_on_medical_condition_id"
   end
 
-  create_table "medical_condition_treatments", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.integer  "medical_condition_id"
-    t.date     "treatment_date"
-    t.text     "notes"
-    t.string   "treatment_description"
-    t.integer  "doctor_id"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-    t.integer  "location_id"
+  create_table "medical_condition_treatments", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.integer "medical_condition_id"
+    t.date "treatment_date"
+    t.text "notes"
+    t.string "treatment_description"
+    t.integer "doctor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "location_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["doctor_id"], name: "index_medical_condition_treatments_on_doctor_id", using: :btree
-    t.index ["identity_id"], name: "index_medical_condition_treatments_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_medical_condition_treatments_on_location_id", using: :btree
-    t.index ["medical_condition_id"], name: "index_medical_condition_treatments_on_medical_condition_id", using: :btree
+    t.integer "rating"
+    t.index ["doctor_id"], name: "index_medical_condition_treatments_on_doctor_id"
+    t.index ["identity_id"], name: "index_medical_condition_treatments_on_identity_id"
+    t.index ["location_id"], name: "index_medical_condition_treatments_on_location_id"
+    t.index ["medical_condition_id"], name: "index_medical_condition_treatments_on_medical_condition_id"
   end
 
-  create_table "medical_conditions", force: :cascade do |t|
-    t.string   "medical_condition_name", limit: 255
-    t.text     "notes"
-    t.integer  "identity_id"
+  create_table "medical_conditions", id: :serial, force: :cascade do |t|
+    t.string "medical_condition_name", limit: 255
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_medical_conditions_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_medical_conditions_on_identity_id"
   end
 
-  create_table "medicine_usage_medicines", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.integer  "medicine_usage_id"
-    t.integer  "medicine_id"
+  create_table "medicine_usage_medicines", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.integer "medicine_usage_id"
+    t.integer "medicine_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_medicine_usage_medicines_on_identity_id", using: :btree
-    t.index ["medicine_id"], name: "index_medicine_usage_medicines_on_medicine_id", using: :btree
-    t.index ["medicine_usage_id"], name: "index_medicine_usage_medicines_on_medicine_usage_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_medicine_usage_medicines_on_identity_id"
+    t.index ["medicine_id"], name: "index_medicine_usage_medicines_on_medicine_id"
+    t.index ["medicine_usage_id"], name: "index_medicine_usage_medicines_on_medicine_usage_id"
   end
 
-  create_table "medicine_usages", force: :cascade do |t|
+  create_table "medicine_usages", id: :serial, force: :cascade do |t|
     t.datetime "usage_time"
-    t.integer  "medicine_id"
-    t.text     "usage_notes"
-    t.integer  "identity_id"
+    t.integer "medicine_id"
+    t.text "usage_notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_medicine_usages_on_identity_id", using: :btree
-    t.index ["medicine_id"], name: "index_medicine_usages_on_medicine_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_medicine_usages_on_identity_id"
+    t.index ["medicine_id"], name: "index_medicine_usages_on_medicine_id"
   end
 
-  create_table "medicines", force: :cascade do |t|
-    t.string   "medicine_name", limit: 255
-    t.decimal  "dosage",                    precision: 10, scale: 2
-    t.integer  "dosage_type"
-    t.text     "notes"
-    t.integer  "identity_id"
+  create_table "medicines", id: :serial, force: :cascade do |t|
+    t.string "medicine_name", limit: 255
+    t.decimal "dosage", precision: 10, scale: 2
+    t.integer "dosage_type"
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_medicines_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_medicines_on_identity_id"
   end
 
-  create_table "membership_files", force: :cascade do |t|
-    t.integer  "membership_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+  create_table "membership_files", id: :serial, force: :cascade do |t|
+    t.integer "membership_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_file_id"], name: "index_membership_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_membership_files_on_identity_id", using: :btree
-    t.index ["membership_id"], name: "index_membership_files_on_membership_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_file_id"], name: "index_membership_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_membership_files_on_identity_id"
+    t.index ["membership_id"], name: "index_membership_files_on_membership_id"
   end
 
-  create_table "memberships", force: :cascade do |t|
-    t.string   "name",                  limit: 255
-    t.date     "start_date"
-    t.date     "end_date"
-    t.integer  "identity_id"
+  create_table "memberships", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.date "start_date"
+    t.date "end_date"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "notes"
-    t.integer  "periodic_payment_id"
-    t.integer  "visit_count"
-    t.string   "membership_identifier", limit: 255
+    t.text "notes"
+    t.integer "periodic_payment_id"
+    t.integer "visit_count"
+    t.string "membership_identifier", limit: 255
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "password_id"
-    t.index ["identity_id"], name: "index_memberships_on_identity_id", using: :btree
-    t.index ["password_id"], name: "index_memberships_on_password_id", using: :btree
-    t.index ["periodic_payment_id"], name: "index_memberships_on_periodic_payment_id", using: :btree
+    t.integer "rating"
+    t.integer "password_id"
+    t.index ["identity_id"], name: "index_memberships_on_identity_id"
+    t.index ["password_id"], name: "index_memberships_on_password_id"
+    t.index ["periodic_payment_id"], name: "index_memberships_on_periodic_payment_id"
   end
 
-  create_table "memories", force: :cascade do |t|
-    t.string   "memory_name"
-    t.date     "memory_date"
-    t.text     "notes"
-    t.integer  "visit_count"
+  create_table "memories", id: :serial, force: :cascade do |t|
+    t.string "memory_name"
+    t.date "memory_date"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "feeling"
-    t.index ["identity_id"], name: "index_memories_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "feeling"
+    t.index ["identity_id"], name: "index_memories_on_identity_id"
   end
 
-  create_table "memory_files", force: :cascade do |t|
-    t.integer  "memory_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["identity_file_id"], name: "index_memory_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_memory_files_on_identity_id", using: :btree
-    t.index ["memory_id"], name: "index_memory_files_on_memory_id", using: :btree
+  create_table "memory_files", id: :serial, force: :cascade do |t|
+    t.integer "memory_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_memory_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_memory_files_on_identity_id"
+    t.index ["memory_id"], name: "index_memory_files_on_memory_id"
   end
 
-  create_table "message_contacts", force: :cascade do |t|
-    t.integer  "message_id"
-    t.integer  "contact_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "message_contacts", id: :serial, force: :cascade do |t|
+    t.integer "message_id"
+    t.integer "contact_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["contact_id"], name: "index_message_contacts_on_contact_id", using: :btree
-    t.index ["identity_id"], name: "index_message_contacts_on_identity_id", using: :btree
-    t.index ["message_id"], name: "index_message_contacts_on_message_id", using: :btree
+    t.integer "rating"
+    t.index ["contact_id"], name: "index_message_contacts_on_contact_id"
+    t.index ["identity_id"], name: "index_message_contacts_on_identity_id"
+    t.index ["message_id"], name: "index_message_contacts_on_message_id"
   end
 
-  create_table "message_groups", force: :cascade do |t|
-    t.integer  "message_id"
-    t.integer  "group_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "message_groups", id: :serial, force: :cascade do |t|
+    t.integer "message_id"
+    t.integer "group_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["group_id"], name: "index_message_groups_on_group_id", using: :btree
-    t.index ["identity_id"], name: "index_message_groups_on_identity_id", using: :btree
-    t.index ["message_id"], name: "index_message_groups_on_message_id", using: :btree
+    t.integer "rating"
+    t.index ["group_id"], name: "index_message_groups_on_group_id"
+    t.index ["identity_id"], name: "index_message_groups_on_identity_id"
+    t.index ["message_id"], name: "index_message_groups_on_message_id"
   end
 
-  create_table "messages", force: :cascade do |t|
-    t.text     "body"
-    t.boolean  "copy_self"
-    t.string   "message_category"
-    t.boolean  "draft"
-    t.boolean  "personalize"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.boolean  "send_emails"
-    t.boolean  "send_texts"
-    t.string   "subject"
+  create_table "messages", id: :serial, force: :cascade do |t|
+    t.text "body"
+    t.boolean "copy_self"
+    t.string "message_category"
+    t.boolean "draft"
+    t.boolean "personalize"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "send_emails"
+    t.boolean "send_texts"
+    t.string "subject"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_messages_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_messages_on_identity_id"
   end
 
-  create_table "money_balance_item_templates", force: :cascade do |t|
-    t.decimal  "amount",                  precision: 10, scale: 2
-    t.decimal  "original_amount",         precision: 10, scale: 2
-    t.string   "money_balance_item_name"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.integer  "money_balance_id"
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
+  create_table "money_balance_item_templates", id: :serial, force: :cascade do |t|
+    t.decimal "amount", precision: 10, scale: 2
+    t.decimal "original_amount", precision: 10, scale: 2
+    t.string "money_balance_item_name"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.integer "money_balance_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_money_balance_item_templates_on_identity_id", using: :btree
-    t.index ["money_balance_id"], name: "index_money_balance_item_templates_on_money_balance_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_money_balance_item_templates_on_identity_id"
+    t.index ["money_balance_id"], name: "index_money_balance_item_templates_on_money_balance_id"
   end
 
-  create_table "money_balance_items", force: :cascade do |t|
-    t.integer  "money_balance_id"
-    t.integer  "identity_id"
-    t.decimal  "amount",                  precision: 10, scale: 2
+  create_table "money_balance_items", id: :serial, force: :cascade do |t|
+    t.integer "money_balance_id"
+    t.integer "identity_id"
+    t.decimal "amount", precision: 10, scale: 2
     t.datetime "item_time"
-    t.string   "money_balance_item_name"
-    t.text     "notes"
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
-    t.decimal  "original_amount",         precision: 10, scale: 2
+    t.string "money_balance_item_name"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "original_amount", precision: 10, scale: 2
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_money_balance_items_on_identity_id", using: :btree
-    t.index ["money_balance_id"], name: "index_money_balance_items_on_money_balance_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_money_balance_items_on_identity_id"
+    t.index ["money_balance_id"], name: "index_money_balance_items_on_money_balance_id"
   end
 
-  create_table "money_balances", force: :cascade do |t|
-    t.integer  "contact_id"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "money_balances", id: :serial, force: :cascade do |t|
+    t.integer "contact_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["contact_id"], name: "index_money_balances_on_contact_id", using: :btree
-    t.index ["identity_id"], name: "index_money_balances_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["contact_id"], name: "index_money_balances_on_contact_id"
+    t.index ["identity_id"], name: "index_money_balances_on_identity_id"
   end
 
-  create_table "movie_theaters", force: :cascade do |t|
-    t.string   "theater_name", limit: 255
-    t.integer  "location_id"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
+  create_table "movie_theaters", id: :serial, force: :cascade do |t|
+    t.string "theater_name", limit: 255
+    t.integer "location_id"
+    t.integer "visit_count"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_movie_theaters_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_movie_theaters_on_location_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_movie_theaters_on_identity_id"
+    t.index ["location_id"], name: "index_movie_theaters_on_location_id"
   end
 
-  create_table "movies", force: :cascade do |t|
-    t.string   "name",             limit: 255
+  create_table "movies", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
     t.datetime "watched"
-    t.string   "url",              limit: 255
-    t.integer  "identity_id"
+    t.string "url", limit: 255
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
-    t.integer  "recommender_id"
-    t.string   "genre"
+    t.integer "visit_count"
+    t.integer "recommender_id"
+    t.string "genre"
     t.datetime "archived"
-    t.integer  "rating"
-    t.text     "review"
-    t.integer  "lent_to_id"
-    t.date     "lent_date"
-    t.integer  "borrowed_from_id"
-    t.date     "borrowed_date"
+    t.integer "rating"
+    t.text "review"
+    t.integer "lent_to_id"
+    t.date "lent_date"
+    t.integer "borrowed_from_id"
+    t.date "borrowed_date"
     t.datetime "when_owned"
     t.datetime "when_discarded"
-    t.integer  "media_type"
-    t.integer  "number_of_media"
-    t.index ["borrowed_from_id"], name: "index_movies_on_borrowed_from_id", using: :btree
-    t.index ["identity_id"], name: "index_movies_on_identity_id", using: :btree
-    t.index ["lent_to_id"], name: "index_movies_on_lent_to_id", using: :btree
-    t.index ["recommender_id"], name: "index_movies_on_recommender_id", using: :btree
+    t.integer "media_type"
+    t.integer "number_of_media"
+    t.index ["borrowed_from_id"], name: "index_movies_on_borrowed_from_id"
+    t.index ["identity_id"], name: "index_movies_on_identity_id"
+    t.index ["lent_to_id"], name: "index_movies_on_lent_to_id"
+    t.index ["recommender_id"], name: "index_movies_on_recommender_id"
   end
 
-  create_table "museums", force: :cascade do |t|
-    t.integer  "location_id"
-    t.string   "museum_id",     limit: 255
-    t.integer  "website_id"
-    t.integer  "museum_type"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
+  create_table "museums", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.string "museum_id", limit: 255
+    t.integer "website_id"
+    t.integer "museum_type"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "museum_source", limit: 255
+    t.string "museum_source", limit: 255
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_museums_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_museums_on_location_id", using: :btree
-    t.index ["website_id"], name: "index_museums_on_website_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_museums_on_identity_id"
+    t.index ["location_id"], name: "index_museums_on_location_id"
+    t.index ["website_id"], name: "index_museums_on_website_id"
   end
 
-  create_table "music_album_files", force: :cascade do |t|
-    t.integer  "music_album_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["identity_file_id"], name: "index_music_album_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_music_album_files_on_identity_id", using: :btree
-    t.index ["music_album_id"], name: "index_music_album_files_on_music_album_id", using: :btree
+  create_table "music_album_files", id: :serial, force: :cascade do |t|
+    t.integer "music_album_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_music_album_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_music_album_files_on_identity_id"
+    t.index ["music_album_id"], name: "index_music_album_files_on_music_album_id"
   end
 
-  create_table "music_albums", force: :cascade do |t|
-    t.string   "music_album_name"
-    t.text     "notes"
-    t.integer  "visit_count"
+  create_table "music_albums", id: :serial, force: :cascade do |t|
+    t.string "music_album_name"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["identity_id"], name: "index_music_albums_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_music_albums_on_identity_id"
   end
 
-  create_table "musical_groups", force: :cascade do |t|
-    t.string   "musical_group_name", limit: 255
-    t.text     "notes"
+  create_table "musical_groups", id: :serial, force: :cascade do |t|
+    t.string "musical_group_name", limit: 255
+    t.text "notes"
     t.datetime "listened"
-    t.integer  "rating"
-    t.boolean  "awesome"
-    t.boolean  "secret"
-    t.integer  "identity_id"
+    t.integer "rating"
+    t.boolean "awesome"
+    t.boolean "secret"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "musical_genre",      limit: 255
-    t.integer  "visit_count"
+    t.string "musical_genre", limit: 255
+    t.integer "visit_count"
     t.datetime "archived"
-    t.index ["identity_id"], name: "index_musical_groups_on_identity_id", using: :btree
+    t.index ["identity_id"], name: "index_musical_groups_on_identity_id"
   end
 
-  create_table "myplaceonline_quick_category_displays", force: :cascade do |t|
-    t.boolean  "trash"
-    t.integer  "identity_id"
+  create_table "myplaceonline_quick_category_displays", id: :serial, force: :cascade do |t|
+    t.boolean "trash"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_myplaceonline_quick_category_displays_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_myplaceonline_quick_category_displays_on_identity_id"
   end
 
-  create_table "myplaceonline_searches", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.boolean  "trash"
+  create_table "myplaceonline_searches", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.boolean "trash"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_myplaceonline_searches_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_myplaceonline_searches_on_identity_id"
   end
 
-  create_table "myplets", force: :cascade do |t|
-    t.integer  "x_coordinate"
-    t.integer  "y_coordinate"
-    t.string   "title",         limit: 255
-    t.string   "category_name", limit: 255
-    t.integer  "category_id"
-    t.integer  "border_type"
-    t.boolean  "collapsed"
-    t.integer  "identity_id"
+  create_table "myplets", id: :serial, force: :cascade do |t|
+    t.integer "x_coordinate"
+    t.integer "y_coordinate"
+    t.string "title", limit: 255
+    t.string "category_name", limit: 255
+    t.integer "category_id"
+    t.integer "border_type"
+    t.boolean "collapsed"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_myplets_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_myplets_on_identity_id"
   end
 
-  create_table "myreferences", force: :cascade do |t|
-    t.integer  "contact_id"
-    t.text     "notes"
-    t.integer  "reference_type"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+  create_table "myreferences", id: :serial, force: :cascade do |t|
+    t.integer "contact_id"
+    t.text "notes"
+    t.integer "reference_type"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.string   "reference_relationship"
-    t.decimal  "years_experience",       precision: 10, scale: 2
-    t.boolean  "can_contact"
-    t.index ["contact_id"], name: "index_myreferences_on_contact_id", using: :btree
-    t.index ["identity_id"], name: "index_myreferences_on_identity_id", using: :btree
+    t.integer "rating"
+    t.string "reference_relationship"
+    t.decimal "years_experience", precision: 10, scale: 2
+    t.boolean "can_contact"
+    t.index ["contact_id"], name: "index_myreferences_on_contact_id"
+    t.index ["identity_id"], name: "index_myreferences_on_identity_id"
   end
 
-  create_table "notepads", force: :cascade do |t|
-    t.string   "title",        limit: 255
-    t.text     "notepad_data"
-    t.integer  "identity_id"
+  create_table "notepads", id: :serial, force: :cascade do |t|
+    t.string "title", limit: 255
+    t.text "notepad_data"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_notepads_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_notepads_on_identity_id"
   end
 
-  create_table "paid_tax_files", force: :cascade do |t|
-    t.integer  "paid_tax_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["identity_file_id"], name: "index_paid_tax_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_paid_tax_files_on_identity_id", using: :btree
-    t.index ["paid_tax_id"], name: "index_paid_tax_files_on_paid_tax_id", using: :btree
+  create_table "paid_tax_files", id: :serial, force: :cascade do |t|
+    t.integer "paid_tax_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_paid_tax_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_paid_tax_files_on_identity_id"
+    t.index ["paid_tax_id"], name: "index_paid_tax_files_on_paid_tax_id"
   end
 
-  create_table "paid_taxes", force: :cascade do |t|
-    t.date     "paid_tax_date"
-    t.decimal  "donations",            precision: 10, scale: 2
-    t.decimal  "federal_refund",       precision: 10, scale: 2
-    t.decimal  "state_refund",         precision: 10, scale: 2
-    t.decimal  "service_fee",          precision: 10, scale: 2
-    t.text     "notes"
-    t.integer  "password_id"
-    t.integer  "visit_count"
+  create_table "paid_taxes", id: :serial, force: :cascade do |t|
+    t.date "paid_tax_date"
+    t.decimal "donations", precision: 10, scale: 2
+    t.decimal "federal_refund", precision: 10, scale: 2
+    t.decimal "state_refund", precision: 10, scale: 2
+    t.decimal "service_fee", precision: 10, scale: 2
+    t.text "notes"
+    t.integer "password_id"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
-    t.string   "paid_tax_description"
-    t.decimal  "total_taxes_paid",     precision: 10, scale: 2
-    t.decimal  "agi",                  precision: 10, scale: 2
-    t.index ["identity_id"], name: "index_paid_taxes_on_identity_id", using: :btree
-    t.index ["password_id"], name: "index_paid_taxes_on_password_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "paid_tax_description"
+    t.decimal "total_taxes_paid", precision: 10, scale: 2
+    t.decimal "agi", precision: 10, scale: 2
+    t.index ["identity_id"], name: "index_paid_taxes_on_identity_id"
+    t.index ["password_id"], name: "index_paid_taxes_on_password_id"
   end
 
-  create_table "pains", force: :cascade do |t|
-    t.string   "pain_location",   limit: 255
-    t.integer  "intensity"
+  create_table "pains", id: :serial, force: :cascade do |t|
+    t.string "pain_location", limit: 255
+    t.integer "intensity"
     t.datetime "pain_start_time"
     t.datetime "pain_end_time"
-    t.text     "notes"
-    t.integer  "identity_id"
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_pains_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_pains_on_identity_id"
   end
 
-  create_table "passport_pictures", force: :cascade do |t|
-    t.integer  "passport_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
+  create_table "passport_pictures", id: :serial, force: :cascade do |t|
+    t.integer "passport_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "position"
-    t.index ["identity_file_id"], name: "index_passport_pictures_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_passport_pictures_on_identity_id", using: :btree
-    t.index ["passport_id"], name: "index_passport_pictures_on_passport_id", using: :btree
+    t.integer "rating"
+    t.integer "position"
+    t.index ["identity_file_id"], name: "index_passport_pictures_on_identity_file_id"
+    t.index ["identity_id"], name: "index_passport_pictures_on_identity_id"
+    t.index ["passport_id"], name: "index_passport_pictures_on_passport_id"
   end
 
-  create_table "passports", force: :cascade do |t|
-    t.string   "region",            limit: 255
-    t.string   "passport_number",   limit: 255
-    t.date     "expires"
-    t.date     "issued"
-    t.integer  "identity_id"
+  create_table "passports", id: :serial, force: :cascade do |t|
+    t.string "region", limit: 255
+    t.string "passport_number", limit: 255
+    t.date "expires"
+    t.date "issued"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "issuing_authority", limit: 255
-    t.string   "name",              limit: 255
-    t.integer  "visit_count"
-    t.text     "notes"
+    t.string "issuing_authority", limit: 255
+    t.string "name", limit: 255
+    t.integer "visit_count"
+    t.text "notes"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_passports_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_passports_on_identity_id"
   end
 
-  create_table "password_secret_shares", force: :cascade do |t|
-    t.integer  "password_secret_id"
-    t.integer  "password_share_id"
-    t.integer  "identity_id"
-    t.string   "unencrypted_answer"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+  create_table "password_secret_shares", id: :serial, force: :cascade do |t|
+    t.integer "password_secret_id"
+    t.integer "password_share_id"
+    t.integer "identity_id"
+    t.string "unencrypted_answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_password_secret_shares_on_identity_id", using: :btree
-    t.index ["password_secret_id"], name: "index_password_secret_shares_on_password_secret_id", using: :btree
-    t.index ["password_share_id"], name: "index_password_secret_shares_on_password_share_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_password_secret_shares_on_identity_id"
+    t.index ["password_secret_id"], name: "index_password_secret_shares_on_password_secret_id"
+    t.index ["password_share_id"], name: "index_password_secret_shares_on_password_share_id"
   end
 
-  create_table "password_secrets", force: :cascade do |t|
-    t.string   "question",            limit: 255
-    t.string   "answer",              limit: 255
-    t.integer  "answer_encrypted_id"
-    t.integer  "password_id"
+  create_table "password_secrets", id: :serial, force: :cascade do |t|
+    t.string "question", limit: 255
+    t.string "answer", limit: 255
+    t.integer "answer_encrypted_id"
+    t.integer "password_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "identity_id"
+    t.integer "identity_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["answer_encrypted_id"], name: "index_password_secrets_on_answer_encrypted_id", using: :btree
-    t.index ["identity_id"], name: "index_password_secrets_on_identity_id", using: :btree
-    t.index ["password_id"], name: "index_password_secrets_on_password_id", using: :btree
+    t.integer "rating"
+    t.index ["answer_encrypted_id"], name: "index_password_secrets_on_answer_encrypted_id"
+    t.index ["identity_id"], name: "index_password_secrets_on_identity_id"
+    t.index ["password_id"], name: "index_password_secrets_on_password_id"
   end
 
-  create_table "password_shares", force: :cascade do |t|
-    t.integer  "password_id"
-    t.integer  "user_id"
-    t.integer  "identity_id"
-    t.string   "unencrypted_password"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+  create_table "password_shares", id: :serial, force: :cascade do |t|
+    t.integer "password_id"
+    t.integer "user_id"
+    t.integer "identity_id"
+    t.string "unencrypted_password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_password_shares_on_identity_id", using: :btree
-    t.index ["password_id"], name: "index_password_shares_on_password_id", using: :btree
-    t.index ["user_id"], name: "index_password_shares_on_user_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_password_shares_on_identity_id"
+    t.index ["password_id"], name: "index_password_shares_on_password_id"
+    t.index ["user_id"], name: "index_password_shares_on_user_id"
   end
 
-  create_table "passwords", force: :cascade do |t|
-    t.string   "name",                  limit: 255
-    t.string   "user",                  limit: 255
-    t.string   "password",              limit: 255
-    t.string   "url",                   limit: 2000
-    t.text     "notes"
-    t.integer  "identity_id"
+  create_table "passwords", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.string "user", limit: 255
+    t.string "password", limit: 255
+    t.string "url", limit: 2000
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "password_encrypted_id"
-    t.string   "account_number",        limit: 255
+    t.integer "password_encrypted_id"
+    t.string "account_number", limit: 255
     t.datetime "archived"
-    t.string   "email",                 limit: 255
-    t.integer  "visit_count"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_passwords_on_identity_id", using: :btree
-    t.index ["password_encrypted_id"], name: "index_passwords_on_password_encrypted_id", using: :btree
+    t.string "email", limit: 255
+    t.integer "visit_count"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_passwords_on_identity_id"
+    t.index ["password_encrypted_id"], name: "index_passwords_on_password_encrypted_id"
   end
 
-  create_table "patent_files", force: :cascade do |t|
-    t.integer  "patent_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["identity_file_id"], name: "index_patent_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_patent_files_on_identity_id", using: :btree
-    t.index ["patent_id"], name: "index_patent_files_on_patent_id", using: :btree
+  create_table "patent_files", id: :serial, force: :cascade do |t|
+    t.integer "patent_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_patent_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_patent_files_on_identity_id"
+    t.index ["patent_id"], name: "index_patent_files_on_patent_id"
   end
 
-  create_table "patents", force: :cascade do |t|
-    t.string   "patent_name"
-    t.string   "patent_number"
-    t.string   "authors"
-    t.string   "region"
-    t.date     "filed_date"
-    t.date     "publication_date"
-    t.text     "patent_abstract"
-    t.text     "patent_text"
-    t.text     "notes"
-    t.integer  "visit_count"
+  create_table "patents", id: :serial, force: :cascade do |t|
+    t.string "patent_name"
+    t.string "patent_number"
+    t.string "authors"
+    t.string "region"
+    t.date "filed_date"
+    t.date "publication_date"
+    t.text "patent_abstract"
+    t.text "patent_text"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["identity_id"], name: "index_patents_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_patents_on_identity_id"
   end
 
-  create_table "periodic_payment_instance_files", force: :cascade do |t|
-    t.integer  "periodic_payment_instance_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.index ["identity_file_id"], name: "index_periodic_payment_instance_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_periodic_payment_instance_files_on_identity_id", using: :btree
-    t.index ["periodic_payment_instance_id"], name: "ppif_on_ppi", using: :btree
+  create_table "periodic_payment_instance_files", id: :serial, force: :cascade do |t|
+    t.integer "periodic_payment_instance_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_periodic_payment_instance_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_periodic_payment_instance_files_on_identity_id"
+    t.index ["periodic_payment_instance_id"], name: "ppif_on_ppi"
   end
 
-  create_table "periodic_payment_instances", force: :cascade do |t|
-    t.integer  "periodic_payment_id"
-    t.date     "payment_date"
-    t.decimal  "amount",              precision: 10, scale: 2
-    t.text     "notes"
-    t.integer  "visit_count"
+  create_table "periodic_payment_instances", id: :serial, force: :cascade do |t|
+    t.integer "periodic_payment_id"
+    t.date "payment_date"
+    t.decimal "amount", precision: 10, scale: 2
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
-    t.index ["identity_id"], name: "index_periodic_payment_instances_on_identity_id", using: :btree
-    t.index ["periodic_payment_id"], name: "index_periodic_payment_instances_on_periodic_payment_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_periodic_payment_instances_on_identity_id"
+    t.index ["periodic_payment_id"], name: "index_periodic_payment_instances_on_periodic_payment_id"
   end
 
-  create_table "periodic_payments", force: :cascade do |t|
-    t.string   "periodic_payment_name", limit: 255
-    t.text     "notes"
-    t.date     "started"
-    t.date     "ended"
-    t.integer  "date_period"
-    t.decimal  "payment_amount",                    precision: 10, scale: 2
-    t.integer  "identity_id"
+  create_table "periodic_payments", id: :serial, force: :cascade do |t|
+    t.string "periodic_payment_name", limit: 255
+    t.text "notes"
+    t.date "started"
+    t.date "ended"
+    t.integer "date_period"
+    t.decimal "payment_amount", precision: 10, scale: 2
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
-    t.boolean  "suppress_reminder"
-    t.integer  "password_id"
+    t.integer "visit_count"
+    t.boolean "suppress_reminder"
+    t.integer "password_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_periodic_payments_on_identity_id", using: :btree
-    t.index ["password_id"], name: "index_periodic_payments_on_password_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_periodic_payments_on_identity_id"
+    t.index ["password_id"], name: "index_periodic_payments_on_password_id"
   end
 
-  create_table "perishable_foods", force: :cascade do |t|
-    t.integer  "food_id"
-    t.date     "purchased"
-    t.date     "expires"
-    t.string   "storage_location"
-    t.text     "notes"
-    t.integer  "visit_count"
+  create_table "perishable_foods", id: :serial, force: :cascade do |t|
+    t.integer "food_id"
+    t.date "purchased"
+    t.date "expires"
+    t.string "storage_location"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "quantity"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["food_id"], name: "index_perishable_foods_on_food_id", using: :btree
-    t.index ["identity_id"], name: "index_perishable_foods_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "quantity"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["food_id"], name: "index_perishable_foods_on_food_id"
+    t.index ["identity_id"], name: "index_perishable_foods_on_identity_id"
   end
 
-  create_table "permission_share_children", force: :cascade do |t|
-    t.string   "subject_class"
-    t.integer  "subject_id"
-    t.integer  "permission_share_id"
-    t.integer  "identity_id"
-    t.integer  "share_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+  create_table "permission_share_children", id: :serial, force: :cascade do |t|
+    t.string "subject_class"
+    t.integer "subject_id"
+    t.integer "permission_share_id"
+    t.integer "identity_id"
+    t.integer "share_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_permission_share_children_on_identity_id", using: :btree
-    t.index ["permission_share_id"], name: "index_permission_share_children_on_permission_share_id", using: :btree
-    t.index ["share_id"], name: "index_permission_share_children_on_share_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_permission_share_children_on_identity_id"
+    t.index ["permission_share_id"], name: "index_permission_share_children_on_permission_share_id"
+    t.index ["share_id"], name: "index_permission_share_children_on_share_id"
   end
 
-  create_table "permission_shares", force: :cascade do |t|
-    t.string   "subject_class"
-    t.integer  "subject_id"
-    t.string   "subject"
-    t.text     "body"
-    t.boolean  "copy_self"
-    t.integer  "share_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.integer  "email_id"
-    t.string   "child_selections"
+  create_table "permission_shares", id: :serial, force: :cascade do |t|
+    t.string "subject_class"
+    t.integer "subject_id"
+    t.string "subject"
+    t.text "body"
+    t.boolean "copy_self"
+    t.integer "share_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "email_id"
+    t.string "child_selections"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["email_id"], name: "index_permission_shares_on_email_id", using: :btree
-    t.index ["identity_id"], name: "index_permission_shares_on_identity_id", using: :btree
-    t.index ["share_id"], name: "index_permission_shares_on_share_id", using: :btree
+    t.integer "rating"
+    t.index ["email_id"], name: "index_permission_shares_on_email_id"
+    t.index ["identity_id"], name: "index_permission_shares_on_identity_id"
+    t.index ["share_id"], name: "index_permission_shares_on_share_id"
   end
 
-  create_table "permissions", force: :cascade do |t|
-    t.integer  "action"
-    t.string   "subject_class"
-    t.integer  "subject_id"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "user_id"
+  create_table "permissions", id: :serial, force: :cascade do |t|
+    t.integer "action"
+    t.string "subject_class"
+    t.integer "subject_id"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_permissions_on_identity_id", using: :btree
-    t.index ["user_id"], name: "index_permissions_on_user_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_permissions_on_identity_id"
+    t.index ["user_id"], name: "index_permissions_on_user_id"
   end
 
-  create_table "phone_files", force: :cascade do |t|
-    t.integer  "phone_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+  create_table "phone_files", id: :serial, force: :cascade do |t|
+    t.integer "phone_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "position"
-    t.index ["identity_file_id"], name: "index_phone_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_phone_files_on_identity_id", using: :btree
-    t.index ["phone_id"], name: "index_phone_files_on_phone_id", using: :btree
+    t.integer "rating"
+    t.integer "position"
+    t.index ["identity_file_id"], name: "index_phone_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_phone_files_on_identity_id"
+    t.index ["phone_id"], name: "index_phone_files_on_phone_id"
   end
 
-  create_table "phones", force: :cascade do |t|
-    t.string   "phone_model_name",         limit: 255
-    t.string   "phone_number",             limit: 255
-    t.integer  "manufacturer_id"
-    t.date     "purchased"
-    t.decimal  "price",                                precision: 10, scale: 2
-    t.integer  "operating_system"
-    t.string   "operating_system_version", limit: 255
-    t.integer  "max_resolution_width"
-    t.integer  "max_resolution_height"
-    t.integer  "ram"
-    t.integer  "num_cpus"
-    t.integer  "num_cores_per_cpu"
-    t.boolean  "hyperthreaded"
-    t.decimal  "max_cpu_speed",                        precision: 10, scale: 2
-    t.boolean  "cdma"
-    t.boolean  "gsm"
-    t.decimal  "front_camera_megapixels",              precision: 10, scale: 2
-    t.decimal  "back_camera_megapixels",               precision: 10, scale: 2
-    t.text     "notes"
-    t.integer  "identity_id"
-    t.integer  "password_id"
+  create_table "phones", id: :serial, force: :cascade do |t|
+    t.string "phone_model_name", limit: 255
+    t.string "phone_number", limit: 255
+    t.integer "manufacturer_id"
+    t.date "purchased"
+    t.decimal "price", precision: 10, scale: 2
+    t.integer "operating_system"
+    t.string "operating_system_version", limit: 255
+    t.integer "max_resolution_width"
+    t.integer "max_resolution_height"
+    t.integer "ram"
+    t.integer "num_cpus"
+    t.integer "num_cores_per_cpu"
+    t.boolean "hyperthreaded"
+    t.decimal "max_cpu_speed", precision: 10, scale: 2
+    t.boolean "cdma"
+    t.boolean "gsm"
+    t.decimal "front_camera_megapixels", precision: 10, scale: 2
+    t.decimal "back_camera_megapixels", precision: 10, scale: 2
+    t.text "notes"
+    t.integer "identity_id"
+    t.integer "password_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "dimensions_type"
-    t.decimal  "width",                                precision: 10, scale: 2
-    t.decimal  "height",                               precision: 10, scale: 2
-    t.decimal  "depth",                                precision: 10, scale: 2
-    t.integer  "weight_type"
-    t.decimal  "weight",                               precision: 10, scale: 2
-    t.integer  "visit_count"
+    t.integer "dimensions_type"
+    t.decimal "width", precision: 10, scale: 2
+    t.decimal "height", precision: 10, scale: 2
+    t.decimal "depth", precision: 10, scale: 2
+    t.integer "weight_type"
+    t.decimal "weight", precision: 10, scale: 2
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_phones_on_identity_id", using: :btree
-    t.index ["manufacturer_id"], name: "index_phones_on_manufacturer_id", using: :btree
-    t.index ["password_id"], name: "index_phones_on_password_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_phones_on_identity_id"
+    t.index ["manufacturer_id"], name: "index_phones_on_manufacturer_id"
+    t.index ["password_id"], name: "index_phones_on_password_id"
   end
 
-  create_table "playlist_songs", force: :cascade do |t|
-    t.integer  "playlist_id"
-    t.integer  "song_id"
-    t.integer  "identity_id"
+  create_table "playlist_songs", id: :serial, force: :cascade do |t|
+    t.integer "playlist_id"
+    t.integer "song_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "position"
+    t.integer "position"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_playlist_songs_on_identity_id", using: :btree
-    t.index ["playlist_id"], name: "index_playlist_songs_on_playlist_id", using: :btree
-    t.index ["song_id"], name: "index_playlist_songs_on_song_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_playlist_songs_on_identity_id"
+    t.index ["playlist_id"], name: "index_playlist_songs_on_playlist_id"
+    t.index ["song_id"], name: "index_playlist_songs_on_song_id"
   end
 
-  create_table "playlists", force: :cascade do |t|
-    t.string   "playlist_name",    limit: 255
-    t.integer  "visit_count"
-    t.integer  "identity_id"
+  create_table "playlists", id: :serial, force: :cascade do |t|
+    t.string "playlist_name", limit: 255
+    t.integer "visit_count"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "identity_file_id"
+    t.integer "identity_file_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_file_id"], name: "index_playlists_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_playlists_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_file_id"], name: "index_playlists_on_identity_file_id"
+    t.index ["identity_id"], name: "index_playlists_on_identity_id"
   end
 
-  create_table "podcasts", force: :cascade do |t|
-    t.integer  "feed_id"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "podcasts", id: :serial, force: :cascade do |t|
+    t.integer "feed_id"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["feed_id"], name: "index_podcasts_on_feed_id", using: :btree
-    t.index ["identity_id"], name: "index_podcasts_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["feed_id"], name: "index_podcasts_on_feed_id"
+    t.index ["identity_id"], name: "index_podcasts_on_identity_id"
   end
 
-  create_table "poems", force: :cascade do |t|
-    t.string   "poem_name",   limit: 255
-    t.text     "poem"
-    t.integer  "identity_id"
+  create_table "poems", id: :serial, force: :cascade do |t|
+    t.string "poem_name", limit: 255
+    t.text "poem"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.string   "poem_author"
-    t.string   "poem_link"
-    t.index ["identity_id"], name: "index_poems_on_identity_id", using: :btree
+    t.integer "rating"
+    t.string "poem_author"
+    t.string "poem_link"
+    t.index ["identity_id"], name: "index_poems_on_identity_id"
   end
 
-  create_table "point_displays", force: :cascade do |t|
-    t.boolean  "trash"
-    t.integer  "identity_id"
+  create_table "point_displays", id: :serial, force: :cascade do |t|
+    t.boolean "trash"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_point_displays_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_point_displays_on_identity_id"
   end
 
-  create_table "prescription_files", force: :cascade do |t|
-    t.integer  "prescription_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["identity_file_id"], name: "index_prescription_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_prescription_files_on_identity_id", using: :btree
-    t.index ["prescription_id"], name: "index_prescription_files_on_prescription_id", using: :btree
+  create_table "prescription_files", id: :serial, force: :cascade do |t|
+    t.integer "prescription_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_prescription_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_prescription_files_on_identity_id"
+    t.index ["prescription_id"], name: "index_prescription_files_on_prescription_id"
   end
 
-  create_table "prescription_refills", force: :cascade do |t|
-    t.integer  "prescription_id"
-    t.date     "refill_date"
-    t.integer  "location_id"
-    t.text     "notes"
-    t.integer  "visit_count"
+  create_table "prescription_refills", id: :serial, force: :cascade do |t|
+    t.integer "prescription_id"
+    t.date "refill_date"
+    t.integer "location_id"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.index ["identity_id"], name: "index_prescription_refills_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_prescription_refills_on_location_id", using: :btree
-    t.index ["prescription_id"], name: "index_prescription_refills_on_prescription_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_prescription_refills_on_identity_id"
+    t.index ["location_id"], name: "index_prescription_refills_on_location_id"
+    t.index ["prescription_id"], name: "index_prescription_refills_on_prescription_id"
   end
 
-  create_table "prescriptions", force: :cascade do |t|
-    t.string   "prescription_name"
-    t.date     "prescription_date"
-    t.text     "notes"
-    t.integer  "doctor_id"
-    t.integer  "visit_count"
+  create_table "prescriptions", id: :serial, force: :cascade do |t|
+    t.string "prescription_name"
+    t.date "prescription_date"
+    t.text "notes"
+    t.integer "doctor_id"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.integer  "refill_maximum"
-    t.index ["doctor_id"], name: "index_prescriptions_on_doctor_id", using: :btree
-    t.index ["identity_id"], name: "index_prescriptions_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "refill_maximum"
+    t.index ["doctor_id"], name: "index_prescriptions_on_doctor_id"
+    t.index ["identity_id"], name: "index_prescriptions_on_identity_id"
   end
 
-  create_table "problem_report_files", force: :cascade do |t|
-    t.integer  "problem_report_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+  create_table "problem_report_files", id: :serial, force: :cascade do |t|
+    t.integer "problem_report_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_file_id"], name: "index_problem_report_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_problem_report_files_on_identity_id", using: :btree
-    t.index ["problem_report_id"], name: "index_problem_report_files_on_problem_report_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_file_id"], name: "index_problem_report_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_problem_report_files_on_identity_id"
+    t.index ["problem_report_id"], name: "index_problem_report_files_on_problem_report_id"
   end
 
-  create_table "problem_reports", force: :cascade do |t|
-    t.string   "report_name"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "problem_reports", id: :serial, force: :cascade do |t|
+    t.string "report_name"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_problem_reports_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_problem_reports_on_identity_id"
   end
 
-  create_table "project_issue_files", force: :cascade do |t|
-    t.integer  "project_issue_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+  create_table "project_issue_files", id: :serial, force: :cascade do |t|
+    t.integer "project_issue_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_file_id"], name: "index_project_issue_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_project_issue_files_on_identity_id", using: :btree
-    t.index ["project_issue_id"], name: "index_project_issue_files_on_project_issue_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_file_id"], name: "index_project_issue_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_project_issue_files_on_identity_id"
+    t.index ["project_issue_id"], name: "index_project_issue_files_on_project_issue_id"
   end
 
-  create_table "project_issue_notifiers", force: :cascade do |t|
-    t.integer  "contact_id"
-    t.integer  "project_issue_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+  create_table "project_issue_notifiers", id: :serial, force: :cascade do |t|
+    t.integer "contact_id"
+    t.integer "project_issue_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["contact_id"], name: "index_project_issue_notifiers_on_contact_id", using: :btree
-    t.index ["identity_id"], name: "index_project_issue_notifiers_on_identity_id", using: :btree
-    t.index ["project_issue_id"], name: "index_project_issue_notifiers_on_project_issue_id", using: :btree
+    t.integer "rating"
+    t.index ["contact_id"], name: "index_project_issue_notifiers_on_contact_id"
+    t.index ["identity_id"], name: "index_project_issue_notifiers_on_identity_id"
+    t.index ["project_issue_id"], name: "index_project_issue_notifiers_on_project_issue_id"
   end
 
-  create_table "project_issues", force: :cascade do |t|
-    t.integer  "project_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.string   "issue_name"
-    t.text     "notes"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "project_issues", id: :serial, force: :cascade do |t|
+    t.integer "project_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.string "issue_name"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_project_issues_on_identity_id", using: :btree
-    t.index ["project_id"], name: "index_project_issues_on_project_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_project_issues_on_identity_id"
+    t.index ["project_id"], name: "index_project_issues_on_project_id"
   end
 
-  create_table "projects", force: :cascade do |t|
-    t.string   "project_name"
-    t.text     "notes"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+  create_table "projects", id: :serial, force: :cascade do |t|
+    t.string "project_name"
+    t.text "notes"
+    t.date "start_date"
+    t.date "end_date"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.boolean  "default_to_top"
-    t.index ["identity_id"], name: "index_projects_on_identity_id", using: :btree
+    t.integer "rating"
+    t.boolean "default_to_top"
+    t.index ["identity_id"], name: "index_projects_on_identity_id"
   end
 
-  create_table "promises", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.date     "due"
-    t.text     "promise"
-    t.integer  "identity_id"
+  create_table "promises", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.date "due"
+    t.text "promise"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_promises_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_promises_on_identity_id"
   end
 
-  create_table "promotions", force: :cascade do |t|
-    t.string   "promotion_name",   limit: 255
-    t.date     "started"
-    t.date     "expires"
-    t.decimal  "promotion_amount",             precision: 10, scale: 2
-    t.text     "notes"
-    t.integer  "identity_id"
+  create_table "promotions", id: :serial, force: :cascade do |t|
+    t.string "promotion_name", limit: 255
+    t.date "started"
+    t.date "expires"
+    t.decimal "promotion_amount", precision: 10, scale: 2
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_promotions_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_promotions_on_identity_id"
   end
 
-  create_table "psychological_evaluation_files", force: :cascade do |t|
-    t.integer  "psychological_evaluation_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.index ["identity_file_id"], name: "index_psychological_evaluation_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_psychological_evaluation_files_on_identity_id", using: :btree
-    t.index ["psychological_evaluation_id"], name: "table_pef_on_pef_id", using: :btree
+  create_table "psychological_evaluation_files", id: :serial, force: :cascade do |t|
+    t.integer "psychological_evaluation_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_psychological_evaluation_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_psychological_evaluation_files_on_identity_id"
+    t.index ["psychological_evaluation_id"], name: "table_pef_on_pef_id"
   end
 
-  create_table "psychological_evaluations", force: :cascade do |t|
-    t.string   "psychological_evaluation_name"
-    t.date     "evaluation_date"
-    t.integer  "evaluator_id"
-    t.decimal  "score",                         precision: 10, scale: 2
-    t.text     "evaluation"
-    t.integer  "visit_count"
+  create_table "psychological_evaluations", id: :serial, force: :cascade do |t|
+    t.string "psychological_evaluation_name"
+    t.date "evaluation_date"
+    t.integer "evaluator_id"
+    t.decimal "score", precision: 10, scale: 2
+    t.text "evaluation"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
-    t.index ["evaluator_id"], name: "index_psychological_evaluations_on_evaluator_id", using: :btree
-    t.index ["identity_id"], name: "index_psychological_evaluations_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["evaluator_id"], name: "index_psychological_evaluations_on_evaluator_id"
+    t.index ["identity_id"], name: "index_psychological_evaluations_on_identity_id"
   end
 
-  create_table "quest_files", force: :cascade do |t|
-    t.integer  "quest_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+  create_table "quest_files", id: :serial, force: :cascade do |t|
+    t.integer "quest_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_file_id"], name: "index_quest_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_quest_files_on_identity_id", using: :btree
-    t.index ["quest_id"], name: "index_quest_files_on_quest_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_file_id"], name: "index_quest_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_quest_files_on_identity_id"
+    t.index ["quest_id"], name: "index_quest_files_on_quest_id"
   end
 
-  create_table "questions", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.text     "notes"
-    t.integer  "identity_id"
+  create_table "questions", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_questions_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_questions_on_identity_id"
   end
 
-  create_table "quests", force: :cascade do |t|
-    t.string   "quest_title"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "quests", id: :serial, force: :cascade do |t|
+    t.string "quest_title"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_quests_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_quests_on_identity_id"
   end
 
-  create_table "quotes", force: :cascade do |t|
-    t.text     "quote_text"
-    t.date     "quote_date"
-    t.integer  "visit_count"
+  create_table "quotes", id: :serial, force: :cascade do |t|
+    t.text "quote_text"
+    t.date "quote_date"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "source"
-    t.index ["identity_id"], name: "index_quotes_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "source"
+    t.index ["identity_id"], name: "index_quotes_on_identity_id"
   end
 
-  create_table "receipt_files", force: :cascade do |t|
-    t.integer  "receipt_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+  create_table "receipt_files", id: :serial, force: :cascade do |t|
+    t.integer "receipt_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "position"
-    t.index ["identity_file_id"], name: "index_receipt_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_receipt_files_on_identity_id", using: :btree
-    t.index ["receipt_id"], name: "index_receipt_files_on_receipt_id", using: :btree
+    t.integer "rating"
+    t.integer "position"
+    t.index ["identity_file_id"], name: "index_receipt_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_receipt_files_on_identity_id"
+    t.index ["receipt_id"], name: "index_receipt_files_on_receipt_id"
   end
 
-  create_table "receipts", force: :cascade do |t|
-    t.string   "receipt_name"
+  create_table "receipts", id: :serial, force: :cascade do |t|
+    t.string "receipt_name"
     t.datetime "receipt_time"
-    t.decimal  "amount",       precision: 10, scale: 2
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.decimal "amount", precision: 10, scale: 2
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_receipts_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_receipts_on_identity_id"
   end
 
-  create_table "recipe_pictures", force: :cascade do |t|
-    t.integer  "recipe_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+  create_table "recipe_pictures", id: :serial, force: :cascade do |t|
+    t.integer "recipe_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "position"
-    t.index ["identity_file_id"], name: "index_recipe_pictures_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_recipe_pictures_on_identity_id", using: :btree
-    t.index ["recipe_id"], name: "index_recipe_pictures_on_recipe_id", using: :btree
+    t.integer "rating"
+    t.integer "position"
+    t.index ["identity_file_id"], name: "index_recipe_pictures_on_identity_file_id"
+    t.index ["identity_id"], name: "index_recipe_pictures_on_identity_id"
+    t.index ["recipe_id"], name: "index_recipe_pictures_on_recipe_id"
   end
 
-  create_table "recipes", force: :cascade do |t|
-    t.string   "name",            limit: 255
-    t.text     "recipe"
-    t.integer  "identity_id"
+  create_table "recipes", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.text "recipe"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
-    t.string   "recipe_category"
+    t.integer "visit_count"
+    t.string "recipe_category"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_recipes_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_recipes_on_identity_id"
   end
 
-  create_table "recreational_vehicle_insurances", force: :cascade do |t|
-    t.string   "insurance_name",          limit: 255
-    t.integer  "company_id"
-    t.date     "started"
-    t.integer  "periodic_payment_id"
-    t.text     "notes"
-    t.integer  "recreational_vehicle_id"
-    t.integer  "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["company_id"], name: "index_recreational_vehicle_insurances_on_company_id", using: :btree
-    t.index ["identity_id"], name: "index_recreational_vehicle_insurances_on_identity_id", using: :btree
-    t.index ["periodic_payment_id"], name: "index_recreational_vehicle_insurances_on_periodic_payment_id", using: :btree
-  end
-
-  create_table "recreational_vehicle_loans", force: :cascade do |t|
-    t.integer  "recreational_vehicle_id"
-    t.integer  "loan_id"
-    t.integer  "identity_id"
+  create_table "recreational_vehicle_insurances", id: :serial, force: :cascade do |t|
+    t.string "insurance_name", limit: 255
+    t.integer "company_id"
+    t.date "started"
+    t.integer "periodic_payment_id"
+    t.text "notes"
+    t.integer "recreational_vehicle_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_recreational_vehicle_loans_on_identity_id", using: :btree
-    t.index ["loan_id"], name: "index_recreational_vehicle_loans_on_loan_id", using: :btree
-    t.index ["recreational_vehicle_id"], name: "index_recreational_vehicle_loans_on_recreational_vehicle_id", using: :btree
+    t.integer "rating"
+    t.index ["company_id"], name: "index_recreational_vehicle_insurances_on_company_id"
+    t.index ["identity_id"], name: "index_recreational_vehicle_insurances_on_identity_id"
+    t.index ["periodic_payment_id"], name: "index_recreational_vehicle_insurances_on_periodic_payment_id"
   end
 
-  create_table "recreational_vehicle_measurements", force: :cascade do |t|
-    t.string   "measurement_name",        limit: 255
-    t.integer  "measurement_type"
-    t.decimal  "width",                               precision: 10, scale: 2
-    t.decimal  "height",                              precision: 10, scale: 2
-    t.decimal  "depth",                               precision: 10, scale: 2
-    t.text     "notes"
-    t.integer  "identity_id"
-    t.integer  "recreational_vehicle_id"
+  create_table "recreational_vehicle_loans", id: :serial, force: :cascade do |t|
+    t.integer "recreational_vehicle_id"
+    t.integer "loan_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_recreational_vehicle_measurements_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_recreational_vehicle_loans_on_identity_id"
+    t.index ["loan_id"], name: "index_recreational_vehicle_loans_on_loan_id"
+    t.index ["recreational_vehicle_id"], name: "index_recreational_vehicle_loans_on_recreational_vehicle_id"
   end
 
-  create_table "recreational_vehicle_pictures", force: :cascade do |t|
-    t.integer  "recreational_vehicle_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
+  create_table "recreational_vehicle_measurements", id: :serial, force: :cascade do |t|
+    t.string "measurement_name", limit: 255
+    t.integer "measurement_type"
+    t.decimal "width", precision: 10, scale: 2
+    t.decimal "height", precision: 10, scale: 2
+    t.decimal "depth", precision: 10, scale: 2
+    t.text "notes"
+    t.integer "identity_id"
+    t.integer "recreational_vehicle_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "position"
-    t.index ["identity_file_id"], name: "index_recreational_vehicle_pictures_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_recreational_vehicle_pictures_on_identity_id", using: :btree
-    t.index ["recreational_vehicle_id"], name: "index_recreational_vehicle_pictures_on_recreational_vehicle_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_recreational_vehicle_measurements_on_identity_id"
   end
 
-  create_table "recreational_vehicle_service_files", force: :cascade do |t|
-    t.integer  "recreational_vehicle_service_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.index ["identity_file_id"], name: "index_recreational_vehicle_service_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_recreational_vehicle_service_files_on_identity_id", using: :btree
-    t.index ["recreational_vehicle_service_id"], name: "index_rvservicefiles_rvserviceid", using: :btree
-  end
-
-  create_table "recreational_vehicle_services", force: :cascade do |t|
-    t.integer  "recreational_vehicle_id"
-    t.text     "notes"
-    t.string   "short_description"
-    t.date     "date_due"
-    t.date     "date_serviced"
-    t.string   "service_location"
-    t.decimal  "cost",                    precision: 10, scale: 2
-    t.integer  "visit_count"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
-    t.index ["identity_id"], name: "index_recreational_vehicle_services_on_identity_id", using: :btree
-    t.index ["recreational_vehicle_id"], name: "index_recreational_vehicle_services_on_recreational_vehicle_id", using: :btree
-  end
-
-  create_table "recreational_vehicles", force: :cascade do |t|
-    t.string   "rv_name",               limit: 255
-    t.string   "vin",                   limit: 255
-    t.string   "manufacturer",          limit: 255
-    t.string   "model",                 limit: 255
-    t.integer  "year"
-    t.decimal  "price",                             precision: 10, scale: 2
-    t.decimal  "msrp",                              precision: 10, scale: 2
-    t.date     "purchased"
-    t.date     "owned_start"
-    t.date     "owned_end"
-    t.text     "notes"
-    t.integer  "location_purchased_id"
-    t.integer  "vehicle_id"
-    t.decimal  "wet_weight",                        precision: 10, scale: 2
-    t.integer  "sleeps"
-    t.integer  "dimensions_type"
-    t.decimal  "exterior_length",                   precision: 10, scale: 2
-    t.decimal  "exterior_width",                    precision: 10, scale: 2
-    t.decimal  "exterior_height",                   precision: 10, scale: 2
-    t.decimal  "exterior_height_over",              precision: 10, scale: 2
-    t.decimal  "interior_height",                   precision: 10, scale: 2
-    t.integer  "liquid_capacity_type"
-    t.integer  "fresh_tank"
-    t.integer  "grey_tank"
-    t.integer  "black_tank"
-    t.date     "warranty_ends"
-    t.integer  "water_heater"
-    t.integer  "propane"
-    t.integer  "volume_type"
-    t.integer  "weight_type"
-    t.integer  "refrigerator"
-    t.integer  "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.decimal  "exterior_length_over",              precision: 10, scale: 2
-    t.decimal  "slideouts_extra_width",             precision: 10, scale: 2
-    t.decimal  "floor_length",                      precision: 10, scale: 2
-    t.integer  "visit_count"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_recreational_vehicles_on_identity_id", using: :btree
-    t.index ["location_purchased_id"], name: "index_recreational_vehicles_on_location_purchased_id", using: :btree
-    t.index ["vehicle_id"], name: "index_recreational_vehicles_on_vehicle_id", using: :btree
-  end
-
-  create_table "repeats", force: :cascade do |t|
-    t.date     "start_date"
-    t.integer  "period_type"
-    t.integer  "period"
-    t.integer  "identity_id"
+  create_table "recreational_vehicle_pictures", id: :serial, force: :cascade do |t|
+    t.integer "recreational_vehicle_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_repeats_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "position"
+    t.index ["identity_file_id"], name: "index_recreational_vehicle_pictures_on_identity_file_id"
+    t.index ["identity_id"], name: "index_recreational_vehicle_pictures_on_identity_id"
+    t.index ["recreational_vehicle_id"], name: "index_recreational_vehicle_pictures_on_recreational_vehicle_id"
   end
 
-  create_table "restaurant_pictures", force: :cascade do |t|
-    t.integer  "restaurant_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+  create_table "recreational_vehicle_service_files", id: :serial, force: :cascade do |t|
+    t.integer "recreational_vehicle_service_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_recreational_vehicle_service_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_recreational_vehicle_service_files_on_identity_id"
+    t.index ["recreational_vehicle_service_id"], name: "index_rvservicefiles_rvserviceid"
+  end
+
+  create_table "recreational_vehicle_services", id: :serial, force: :cascade do |t|
+    t.integer "recreational_vehicle_id"
+    t.text "notes"
+    t.string "short_description"
+    t.date "date_due"
+    t.date "date_serviced"
+    t.string "service_location"
+    t.decimal "cost", precision: 10, scale: 2
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "position"
-    t.index ["identity_file_id"], name: "index_restaurant_pictures_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_restaurant_pictures_on_identity_id", using: :btree
-    t.index ["restaurant_id"], name: "index_restaurant_pictures_on_restaurant_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_recreational_vehicle_services_on_identity_id"
+    t.index ["recreational_vehicle_id"], name: "index_recreational_vehicle_services_on_recreational_vehicle_id"
   end
 
-  create_table "restaurants", force: :cascade do |t|
-    t.integer  "location_id"
-    t.integer  "rating"
-    t.text     "notes"
-    t.integer  "identity_id"
+  create_table "recreational_vehicles", id: :serial, force: :cascade do |t|
+    t.string "rv_name", limit: 255
+    t.string "vin", limit: 255
+    t.string "manufacturer", limit: 255
+    t.string "model", limit: 255
+    t.integer "year"
+    t.decimal "price", precision: 10, scale: 2
+    t.decimal "msrp", precision: 10, scale: 2
+    t.date "purchased"
+    t.date "owned_start"
+    t.date "owned_end"
+    t.text "notes"
+    t.integer "location_purchased_id"
+    t.integer "vehicle_id"
+    t.decimal "wet_weight", precision: 10, scale: 2
+    t.integer "sleeps"
+    t.integer "dimensions_type"
+    t.decimal "exterior_length", precision: 10, scale: 2
+    t.decimal "exterior_width", precision: 10, scale: 2
+    t.decimal "exterior_height", precision: 10, scale: 2
+    t.decimal "exterior_height_over", precision: 10, scale: 2
+    t.decimal "interior_height", precision: 10, scale: 2
+    t.integer "liquid_capacity_type"
+    t.integer "fresh_tank"
+    t.integer "grey_tank"
+    t.integer "black_tank"
+    t.date "warranty_ends"
+    t.integer "water_heater"
+    t.integer "propane"
+    t.integer "volume_type"
+    t.integer "weight_type"
+    t.integer "refrigerator"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
-    t.boolean  "visited"
+    t.decimal "exterior_length_over", precision: 10, scale: 2
+    t.decimal "slideouts_extra_width", precision: 10, scale: 2
+    t.decimal "floor_length", precision: 10, scale: 2
+    t.integer "visit_count"
     t.datetime "archived"
-    t.index ["identity_id"], name: "index_restaurants_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_restaurants_on_location_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_recreational_vehicles_on_identity_id"
+    t.index ["location_purchased_id"], name: "index_recreational_vehicles_on_location_purchased_id"
+    t.index ["vehicle_id"], name: "index_recreational_vehicles_on_vehicle_id"
   end
 
-  create_table "retirement_plan_amount_files", force: :cascade do |t|
-    t.integer  "retirement_plan_amount_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.index ["identity_file_id"], name: "index_retirement_plan_amount_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_retirement_plan_amount_files_on_identity_id", using: :btree
-    t.index ["retirement_plan_amount_id"], name: "index_retirement_plan_amount_files_on_retirement_plan_amount_id", using: :btree
-  end
-
-  create_table "retirement_plan_amounts", force: :cascade do |t|
-    t.integer  "retirement_plan_id"
-    t.date     "input_date"
-    t.decimal  "amount",             precision: 10, scale: 2
-    t.integer  "identity_id"
-    t.text     "notes"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
-    t.index ["identity_id"], name: "index_retirement_plan_amounts_on_identity_id", using: :btree
-    t.index ["retirement_plan_id"], name: "index_retirement_plan_amounts_on_retirement_plan_id", using: :btree
-  end
-
-  create_table "retirement_plans", force: :cascade do |t|
-    t.string   "retirement_plan_name"
-    t.integer  "retirement_plan_type"
-    t.integer  "company_id"
-    t.integer  "periodic_payment_id"
-    t.date     "started"
-    t.text     "notes"
-    t.integer  "password_id"
-    t.integer  "visit_count"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.index ["company_id"], name: "index_retirement_plans_on_company_id", using: :btree
-    t.index ["identity_id"], name: "index_retirement_plans_on_identity_id", using: :btree
-    t.index ["password_id"], name: "index_retirement_plans_on_password_id", using: :btree
-    t.index ["periodic_payment_id"], name: "index_retirement_plans_on_periodic_payment_id", using: :btree
-  end
-
-  create_table "reward_program_files", force: :cascade do |t|
-    t.integer  "reward_program_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.index ["identity_file_id"], name: "index_reward_program_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_reward_program_files_on_identity_id", using: :btree
-    t.index ["reward_program_id"], name: "index_reward_program_files_on_reward_program_id", using: :btree
-  end
-
-  create_table "reward_programs", force: :cascade do |t|
-    t.string   "reward_program_name",   limit: 255
-    t.date     "started"
-    t.date     "ended"
-    t.string   "reward_program_number", limit: 255
-    t.string   "reward_program_status", limit: 255
-    t.text     "notes"
-    t.integer  "password_id"
-    t.integer  "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "program_type"
-    t.integer  "visit_count"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_reward_programs_on_identity_id", using: :btree
-    t.index ["password_id"], name: "index_reward_programs_on_password_id", using: :btree
-  end
-
-  create_table "shares", force: :cascade do |t|
-    t.string   "token",         limit: 255
-    t.integer  "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "use_count"
-    t.integer  "max_use_count"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_shares_on_identity_id", using: :btree
-  end
-
-  create_table "shopping_list_items", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.integer  "shopping_list_id"
-    t.string   "shopping_list_item_name", limit: 255
-    t.integer  "position"
+  create_table "repeats", id: :serial, force: :cascade do |t|
+    t.date "start_date"
+    t.integer "period_type"
+    t.integer "period"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_shopping_list_items_on_identity_id", using: :btree
-    t.index ["shopping_list_id"], name: "index_shopping_list_items_on_shopping_list_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_repeats_on_identity_id"
   end
 
-  create_table "shopping_lists", force: :cascade do |t|
-    t.string   "shopping_list_name", limit: 255
-    t.integer  "identity_id"
+  create_table "restaurant_pictures", id: :serial, force: :cascade do |t|
+    t.integer "restaurant_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived"
+    t.integer "rating"
+    t.integer "position"
+    t.index ["identity_file_id"], name: "index_restaurant_pictures_on_identity_file_id"
+    t.index ["identity_id"], name: "index_restaurant_pictures_on_identity_id"
+    t.index ["restaurant_id"], name: "index_restaurant_pictures_on_restaurant_id"
+  end
+
+  create_table "restaurants", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.integer "rating"
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
+    t.boolean "visited"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_shopping_lists_on_identity_id", using: :btree
+    t.index ["identity_id"], name: "index_restaurants_on_identity_id"
+    t.index ["location_id"], name: "index_restaurants_on_location_id"
   end
 
-  create_table "site_contacts", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "subject"
-    t.text     "body"
+  create_table "retirement_plan_amount_files", id: :serial, force: :cascade do |t|
+    t.integer "retirement_plan_amount_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_retirement_plan_amount_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_retirement_plan_amount_files_on_identity_id"
+    t.index ["retirement_plan_amount_id"], name: "index_retirement_plan_amount_files_on_retirement_plan_amount_id"
+  end
+
+  create_table "retirement_plan_amounts", id: :serial, force: :cascade do |t|
+    t.integer "retirement_plan_id"
+    t.date "input_date"
+    t.decimal "amount", precision: 10, scale: 2
+    t.integer "identity_id"
+    t.text "notes"
+    t.datetime "archived"
+    t.integer "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_retirement_plan_amounts_on_identity_id"
+    t.index ["retirement_plan_id"], name: "index_retirement_plan_amounts_on_retirement_plan_id"
+  end
+
+  create_table "retirement_plans", id: :serial, force: :cascade do |t|
+    t.string "retirement_plan_name"
+    t.integer "retirement_plan_type"
+    t.integer "company_id"
+    t.integer "periodic_payment_id"
+    t.date "started"
+    t.text "notes"
+    t.integer "password_id"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_retirement_plans_on_company_id"
+    t.index ["identity_id"], name: "index_retirement_plans_on_identity_id"
+    t.index ["password_id"], name: "index_retirement_plans_on_password_id"
+    t.index ["periodic_payment_id"], name: "index_retirement_plans_on_periodic_payment_id"
+  end
+
+  create_table "reward_program_files", id: :serial, force: :cascade do |t|
+    t.integer "reward_program_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_reward_program_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_reward_program_files_on_identity_id"
+    t.index ["reward_program_id"], name: "index_reward_program_files_on_reward_program_id"
+  end
+
+  create_table "reward_programs", id: :serial, force: :cascade do |t|
+    t.string "reward_program_name", limit: 255
+    t.date "started"
+    t.date "ended"
+    t.string "reward_program_number", limit: 255
+    t.string "reward_program_status", limit: 255
+    t.text "notes"
+    t.integer "password_id"
+    t.integer "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "program_type"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_reward_programs_on_identity_id"
+    t.index ["password_id"], name: "index_reward_programs_on_password_id"
+  end
+
+  create_table "shares", id: :serial, force: :cascade do |t|
+    t.string "token", limit: 255
+    t.integer "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "use_count"
+    t.integer "max_use_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_shares_on_identity_id"
+  end
+
+  create_table "shopping_list_items", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.integer "shopping_list_id"
+    t.string "shopping_list_item_name", limit: 255
+    t.integer "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_shopping_list_items_on_identity_id"
+    t.index ["shopping_list_id"], name: "index_shopping_list_items_on_shopping_list_id"
+  end
+
+  create_table "shopping_lists", id: :serial, force: :cascade do |t|
+    t.string "shopping_list_name", limit: 255
+    t.integer "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_shopping_lists_on_identity_id"
+  end
+
+  create_table "sickness_files", force: :cascade do |t|
+    t.bigint "sickness_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_sickness_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_sickness_files_on_identity_id"
+    t.index ["sickness_id"], name: "index_sickness_files_on_sickness_id"
+  end
+
+  create_table "sicknesses", force: :cascade do |t|
+    t.date "sickness_start"
+    t.date "sickness_end"
+    t.boolean "coughing"
+    t.boolean "sneezing"
+    t.boolean "throwing_up"
+    t.boolean "fever"
+    t.boolean "runny_nose"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_sicknesses_on_identity_id"
+  end
+
+  create_table "site_contacts", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "subject"
+    t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "skin_treatments", force: :cascade do |t|
+  create_table "skin_treatments", id: :serial, force: :cascade do |t|
     t.datetime "treatment_time"
-    t.string   "treatment_activity", limit: 255
-    t.string   "treatment_location", limit: 255
-    t.integer  "identity_id"
+    t.string "treatment_activity", limit: 255
+    t.string "treatment_location", limit: 255
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_skin_treatments_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_skin_treatments_on_identity_id"
   end
 
-  create_table "sleep_measurements", force: :cascade do |t|
+  create_table "sleep_measurements", id: :serial, force: :cascade do |t|
     t.datetime "sleep_start_time"
     t.datetime "sleep_end_time"
-    t.integer  "identity_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_sleep_measurements_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_sleep_measurements_on_identity_id"
   end
 
-  create_table "snoozed_due_items", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.string   "display",           limit: 255
-    t.string   "link",              limit: 255
+  create_table "snoozed_due_items", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.string "display", limit: 255
+    t.string "link", limit: 255
     t.datetime "due_date"
     t.datetime "original_due_date"
-    t.string   "myp_model_name",    limit: 255
-    t.integer  "model_id"
+    t.string "myp_model_name", limit: 255
+    t.integer "model_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "calendar_id"
+    t.integer "calendar_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["calendar_id"], name: "index_snoozed_due_items_on_calendar_id", using: :btree
-    t.index ["identity_id"], name: "index_snoozed_due_items_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["calendar_id"], name: "index_snoozed_due_items_on_calendar_id"
+    t.index ["identity_id"], name: "index_snoozed_due_items_on_identity_id"
   end
 
-  create_table "software_license_files", force: :cascade do |t|
-    t.integer  "software_license_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.index ["identity_file_id"], name: "index_software_license_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_software_license_files_on_identity_id", using: :btree
-    t.index ["software_license_id"], name: "index_software_license_files_on_software_license_id", using: :btree
+  create_table "software_license_files", id: :serial, force: :cascade do |t|
+    t.integer "software_license_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_software_license_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_software_license_files_on_identity_id"
+    t.index ["software_license_id"], name: "index_software_license_files_on_software_license_id"
   end
 
-  create_table "software_licenses", force: :cascade do |t|
-    t.string   "license_name"
-    t.decimal  "license_value",         precision: 10, scale: 2
-    t.date     "license_purchase_date"
-    t.text     "license_key"
-    t.text     "notes"
-    t.integer  "visit_count"
+  create_table "software_licenses", id: :serial, force: :cascade do |t|
+    t.string "license_name"
+    t.decimal "license_value", precision: 10, scale: 2
+    t.date "license_purchase_date"
+    t.text "license_key"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
-    t.index ["identity_id"], name: "index_software_licenses_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_software_licenses_on_identity_id"
   end
 
-  create_table "songs", force: :cascade do |t|
-    t.string   "song_name",        limit: 255
-    t.decimal  "song_rating",                  precision: 10, scale: 2
-    t.text     "lyrics"
-    t.integer  "song_plays"
+  create_table "songs", id: :serial, force: :cascade do |t|
+    t.string "song_name", limit: 255
+    t.decimal "song_rating", precision: 10, scale: 2
+    t.text "lyrics"
+    t.integer "song_plays"
     t.datetime "lastplay"
-    t.boolean  "secret"
-    t.boolean  "awesome"
-    t.integer  "identity_id"
+    t.boolean "secret"
+    t.boolean "awesome"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
-    t.integer  "identity_file_id"
-    t.integer  "musical_group_id"
+    t.integer "visit_count"
+    t.integer "identity_file_id"
+    t.integer "musical_group_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_file_id"], name: "index_songs_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_songs_on_identity_id", using: :btree
-    t.index ["musical_group_id"], name: "index_songs_on_musical_group_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_file_id"], name: "index_songs_on_identity_file_id"
+    t.index ["identity_id"], name: "index_songs_on_identity_id"
+    t.index ["musical_group_id"], name: "index_songs_on_musical_group_id"
   end
 
-  create_table "ssh_keys", force: :cascade do |t|
-    t.string   "ssh_key_name"
-    t.text     "ssh_private_key"
-    t.text     "ssh_public_key"
-    t.integer  "password_id"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.integer  "ssh_private_key_encrypted_id"
+  create_table "ssh_keys", id: :serial, force: :cascade do |t|
+    t.string "ssh_key_name"
+    t.text "ssh_private_key"
+    t.text "ssh_public_key"
+    t.integer "password_id"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "ssh_private_key_encrypted_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_ssh_keys_on_identity_id", using: :btree
-    t.index ["password_id"], name: "index_ssh_keys_on_password_id", using: :btree
-    t.index ["ssh_private_key_encrypted_id"], name: "index_ssh_keys_on_ssh_private_key_encrypted_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_ssh_keys_on_identity_id"
+    t.index ["password_id"], name: "index_ssh_keys_on_password_id"
+    t.index ["ssh_private_key_encrypted_id"], name: "index_ssh_keys_on_ssh_private_key_encrypted_id"
   end
 
-  create_table "statuses", force: :cascade do |t|
+  create_table "statuses", id: :serial, force: :cascade do |t|
     t.datetime "status_time"
-    t.text     "three_good_things"
-    t.integer  "identity_id"
+    t.text "three_good_things"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "feeling"
-    t.integer  "visit_count"
-    t.string   "status1",           limit: 255
-    t.string   "status2",           limit: 255
-    t.string   "status3",           limit: 255
+    t.integer "feeling"
+    t.integer "visit_count"
+    t.string "status1", limit: 255
+    t.string "status2", limit: 255
+    t.string "status3", limit: 255
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_statuses_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_statuses_on_identity_id"
   end
 
-  create_table "stocks", force: :cascade do |t|
-    t.integer  "company_id"
-    t.integer  "num_shares"
-    t.text     "notes"
-    t.date     "vest_date"
-    t.integer  "password_id"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
+  create_table "stocks", id: :serial, force: :cascade do |t|
+    t.integer "company_id"
+    t.integer "num_shares"
+    t.text "notes"
+    t.date "vest_date"
+    t.integer "password_id"
+    t.integer "visit_count"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["company_id"], name: "index_stocks_on_company_id", using: :btree
-    t.index ["identity_id"], name: "index_stocks_on_identity_id", using: :btree
-    t.index ["password_id"], name: "index_stocks_on_password_id", using: :btree
+    t.integer "rating"
+    t.index ["company_id"], name: "index_stocks_on_company_id"
+    t.index ["identity_id"], name: "index_stocks_on_identity_id"
+    t.index ["password_id"], name: "index_stocks_on_password_id"
   end
 
-  create_table "stories", force: :cascade do |t|
-    t.string   "story_name"
-    t.text     "story"
+  create_table "stories", id: :serial, force: :cascade do |t|
+    t.string "story_name"
+    t.text "story"
     t.datetime "story_time"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_stories_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_stories_on_identity_id"
   end
 
-  create_table "story_pictures", force: :cascade do |t|
-    t.integer  "story_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+  create_table "story_pictures", id: :serial, force: :cascade do |t|
+    t.integer "story_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "position"
-    t.index ["identity_file_id"], name: "index_story_pictures_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_story_pictures_on_identity_id", using: :btree
-    t.index ["story_id"], name: "index_story_pictures_on_story_id", using: :btree
+    t.integer "rating"
+    t.integer "position"
+    t.index ["identity_file_id"], name: "index_story_pictures_on_identity_file_id"
+    t.index ["identity_id"], name: "index_story_pictures_on_identity_id"
+    t.index ["story_id"], name: "index_story_pictures_on_story_id"
   end
 
-  create_table "sun_exposures", force: :cascade do |t|
+  create_table "sun_exposures", id: :serial, force: :cascade do |t|
     t.datetime "exposure_start"
     t.datetime "exposure_end"
-    t.string   "uncovered_body_parts",   limit: 255
-    t.string   "sunscreened_body_parts", limit: 255
-    t.string   "sunscreen_type",         limit: 255
-    t.integer  "identity_id"
+    t.string "uncovered_body_parts", limit: 255
+    t.string "sunscreened_body_parts", limit: 255
+    t.string "sunscreen_type", limit: 255
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_sun_exposures_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_sun_exposures_on_identity_id"
   end
 
-  create_table "surgeries", force: :cascade do |t|
-    t.string   "surgery_name"
-    t.date     "surgery_date"
-    t.integer  "hospital_id"
-    t.integer  "doctor_id"
-    t.text     "notes"
-    t.integer  "visit_count"
+  create_table "surgeries", id: :serial, force: :cascade do |t|
+    t.string "surgery_name"
+    t.date "surgery_date"
+    t.integer "hospital_id"
+    t.integer "doctor_id"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["doctor_id"], name: "index_surgeries_on_doctor_id", using: :btree
-    t.index ["hospital_id"], name: "index_surgeries_on_hospital_id", using: :btree
-    t.index ["identity_id"], name: "index_surgeries_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["doctor_id"], name: "index_surgeries_on_doctor_id"
+    t.index ["hospital_id"], name: "index_surgeries_on_hospital_id"
+    t.index ["identity_id"], name: "index_surgeries_on_identity_id"
   end
 
-  create_table "surgery_files", force: :cascade do |t|
-    t.integer  "surgery_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["identity_file_id"], name: "index_surgery_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_surgery_files_on_identity_id", using: :btree
-    t.index ["surgery_id"], name: "index_surgery_files_on_surgery_id", using: :btree
+  create_table "surgery_files", id: :serial, force: :cascade do |t|
+    t.integer "surgery_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_surgery_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_surgery_files_on_identity_id"
+    t.index ["surgery_id"], name: "index_surgery_files_on_surgery_id"
   end
 
-  create_table "tax_document_files", force: :cascade do |t|
-    t.integer  "tax_document_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["identity_file_id"], name: "index_tax_document_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_tax_document_files_on_identity_id", using: :btree
-    t.index ["tax_document_id"], name: "index_tax_document_files_on_tax_document_id", using: :btree
+  create_table "tax_document_files", id: :serial, force: :cascade do |t|
+    t.integer "tax_document_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_tax_document_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_tax_document_files_on_identity_id"
+    t.index ["tax_document_id"], name: "index_tax_document_files_on_tax_document_id"
   end
 
-  create_table "tax_documents", force: :cascade do |t|
-    t.string   "tax_document_form_name"
-    t.string   "tax_document_description"
-    t.text     "notes"
-    t.date     "received_date"
-    t.integer  "fiscal_year"
-    t.decimal  "amount",                   precision: 10, scale: 2
-    t.integer  "visit_count"
+  create_table "tax_documents", id: :serial, force: :cascade do |t|
+    t.string "tax_document_form_name"
+    t.string "tax_document_description"
+    t.text "notes"
+    t.date "received_date"
+    t.integer "fiscal_year"
+    t.decimal "amount", precision: 10, scale: 2
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
-    t.index ["identity_id"], name: "index_tax_documents_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_tax_documents_on_identity_id"
   end
 
-  create_table "temperatures", force: :cascade do |t|
+  create_table "temperatures", id: :serial, force: :cascade do |t|
     t.datetime "measured"
-    t.decimal  "measured_temperature",             precision: 10, scale: 2
-    t.string   "measurement_source",   limit: 255
-    t.integer  "temperature_type"
-    t.integer  "identity_id"
+    t.decimal "measured_temperature", precision: 10, scale: 2
+    t.string "measurement_source", limit: 255
+    t.integer "temperature_type"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_temperatures_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_temperatures_on_identity_id"
   end
 
-  create_table "test_object_files", force: :cascade do |t|
-    t.integer  "test_object_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["identity_file_id"], name: "index_test_object_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_test_object_files_on_identity_id", using: :btree
-    t.index ["test_object_id"], name: "index_test_object_files_on_test_object_id", using: :btree
+  create_table "test_object_files", id: :serial, force: :cascade do |t|
+    t.integer "test_object_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_test_object_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_test_object_files_on_identity_id"
+    t.index ["test_object_id"], name: "index_test_object_files_on_test_object_id"
   end
 
-  create_table "test_object_instance_files", force: :cascade do |t|
-    t.integer  "test_object_instance_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.index ["identity_file_id"], name: "index_test_object_instance_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_test_object_instance_files_on_identity_id", using: :btree
-    t.index ["test_object_instance_id"], name: "index_test_object_instance_files_on_test_object_instance_id", using: :btree
+  create_table "test_object_instance_files", id: :serial, force: :cascade do |t|
+    t.integer "test_object_instance_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_test_object_instance_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_test_object_instance_files_on_identity_id"
+    t.index ["test_object_instance_id"], name: "index_test_object_instance_files_on_test_object_instance_id"
   end
 
-  create_table "test_object_instances", force: :cascade do |t|
-    t.integer  "test_object_id"
-    t.string   "test_object_instance_name"
-    t.text     "notes"
-    t.integer  "visit_count"
+  create_table "test_object_instances", id: :serial, force: :cascade do |t|
+    t.integer "test_object_id"
+    t.string "test_object_instance_name"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.index ["identity_id"], name: "index_test_object_instances_on_identity_id", using: :btree
-    t.index ["test_object_id"], name: "index_test_object_instances_on_test_object_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_test_object_instances_on_identity_id"
+    t.index ["test_object_id"], name: "index_test_object_instances_on_test_object_id"
   end
 
-  create_table "test_objects", force: :cascade do |t|
-    t.string   "test_object_name"
-    t.text     "notes"
-    t.integer  "visit_count"
+  create_table "test_objects", id: :serial, force: :cascade do |t|
+    t.string "test_object_name"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
-    t.integer  "contact_id"
-    t.string   "test_object_string"
-    t.date     "test_object_date"
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "contact_id"
+    t.string "test_object_string"
+    t.date "test_object_date"
     t.datetime "test_object_datetime"
-    t.time     "test_object_time"
-    t.integer  "test_object_number"
-    t.decimal  "test_object_decimal",  precision: 10, scale: 2
-    t.decimal  "test_object_currency", precision: 10, scale: 2
-    t.index ["contact_id"], name: "index_test_objects_on_contact_id", using: :btree
-    t.index ["identity_id"], name: "index_test_objects_on_identity_id", using: :btree
+    t.time "test_object_time"
+    t.integer "test_object_number"
+    t.decimal "test_object_decimal", precision: 10, scale: 2
+    t.decimal "test_object_currency", precision: 10, scale: 2
+    t.index ["contact_id"], name: "index_test_objects_on_contact_id"
+    t.index ["identity_id"], name: "index_test_objects_on_identity_id"
   end
 
-  create_table "test_score_files", force: :cascade do |t|
-    t.integer  "test_score_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["identity_file_id"], name: "index_test_score_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_test_score_files_on_identity_id", using: :btree
-    t.index ["test_score_id"], name: "index_test_score_files_on_test_score_id", using: :btree
+  create_table "test_score_files", id: :serial, force: :cascade do |t|
+    t.integer "test_score_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_test_score_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_test_score_files_on_identity_id"
+    t.index ["test_score_id"], name: "index_test_score_files_on_test_score_id"
   end
 
-  create_table "test_scores", force: :cascade do |t|
-    t.string   "test_score_name"
-    t.date     "test_score_date"
-    t.text     "notes"
-    t.integer  "visit_count"
+  create_table "test_scores", id: :serial, force: :cascade do |t|
+    t.string "test_score_name"
+    t.date "test_score_date"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.decimal  "test_score",      precision: 10, scale: 2
-    t.index ["identity_id"], name: "index_test_scores_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "test_score", precision: 10, scale: 2
+    t.index ["identity_id"], name: "index_test_scores_on_identity_id"
   end
 
-  create_table "text_message_contacts", force: :cascade do |t|
-    t.integer  "text_message_id"
-    t.integer  "contact_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+  create_table "text_message_contacts", id: :serial, force: :cascade do |t|
+    t.integer "text_message_id"
+    t.integer "contact_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["contact_id"], name: "index_text_message_contacts_on_contact_id", using: :btree
-    t.index ["identity_id"], name: "index_text_message_contacts_on_identity_id", using: :btree
-    t.index ["text_message_id"], name: "index_text_message_contacts_on_text_message_id", using: :btree
+    t.integer "rating"
+    t.index ["contact_id"], name: "index_text_message_contacts_on_contact_id"
+    t.index ["identity_id"], name: "index_text_message_contacts_on_identity_id"
+    t.index ["text_message_id"], name: "index_text_message_contacts_on_text_message_id"
   end
 
-  create_table "text_message_groups", force: :cascade do |t|
-    t.integer  "text_message_id"
-    t.integer  "group_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+  create_table "text_message_groups", id: :serial, force: :cascade do |t|
+    t.integer "text_message_id"
+    t.integer "group_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["group_id"], name: "index_text_message_groups_on_group_id", using: :btree
-    t.index ["identity_id"], name: "index_text_message_groups_on_identity_id", using: :btree
-    t.index ["text_message_id"], name: "index_text_message_groups_on_text_message_id", using: :btree
+    t.integer "rating"
+    t.index ["group_id"], name: "index_text_message_groups_on_group_id"
+    t.index ["identity_id"], name: "index_text_message_groups_on_identity_id"
+    t.index ["text_message_id"], name: "index_text_message_groups_on_text_message_id"
   end
 
-  create_table "text_message_unsubscriptions", force: :cascade do |t|
-    t.string   "phone_number"
-    t.string   "category"
-    t.integer  "identity_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["identity_id"], name: "index_text_message_unsubscriptions_on_identity_id", using: :btree
+  create_table "text_message_unsubscriptions", id: :serial, force: :cascade do |t|
+    t.string "phone_number"
+    t.string "category"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_text_message_unsubscriptions_on_identity_id"
   end
 
-  create_table "text_messages", force: :cascade do |t|
-    t.text     "body"
-    t.boolean  "copy_self"
-    t.string   "message_category"
-    t.boolean  "draft"
-    t.boolean  "personalize"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+  create_table "text_messages", id: :serial, force: :cascade do |t|
+    t.text "body"
+    t.boolean "copy_self"
+    t.string "message_category"
+    t.boolean "draft"
+    t.boolean "personalize"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_text_messages_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_text_messages_on_identity_id"
   end
 
-  create_table "therapists", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.text     "notes"
-    t.integer  "identity_id"
+  create_table "therapists", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "contact_id"
-    t.integer  "visit_count"
+    t.integer "contact_id"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["contact_id"], name: "index_therapists_on_contact_id", using: :btree
-    t.index ["identity_id"], name: "index_therapists_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["contact_id"], name: "index_therapists_on_contact_id"
+    t.index ["identity_id"], name: "index_therapists_on_identity_id"
   end
 
-  create_table "timing_events", force: :cascade do |t|
-    t.integer  "timing_id"
+  create_table "timing_events", id: :serial, force: :cascade do |t|
+    t.integer "timing_id"
     t.datetime "timing_event_start"
     t.datetime "timing_event_end"
-    t.text     "notes"
-    t.integer  "identity_id"
-    t.integer  "visit_count"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.text "notes"
+    t.integer "identity_id"
+    t.integer "visit_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_timing_events_on_identity_id", using: :btree
-    t.index ["timing_id"], name: "index_timing_events_on_timing_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_timing_events_on_identity_id"
+    t.index ["timing_id"], name: "index_timing_events_on_timing_id"
   end
 
-  create_table "timings", force: :cascade do |t|
-    t.string   "timing_name"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "timings", id: :serial, force: :cascade do |t|
+    t.string "timing_name"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_timings_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_timings_on_identity_id"
   end
 
-  create_table "to_dos", force: :cascade do |t|
-    t.string   "short_description", limit: 255
-    t.text     "notes"
-    t.integer  "identity_id"
+  create_table "to_dos", id: :serial, force: :cascade do |t|
+    t.string "short_description", limit: 255
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "due_time"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_to_dos_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_to_dos_on_identity_id"
   end
 
-  create_table "trek_pictures", force: :cascade do |t|
-    t.integer  "trek_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+  create_table "trek_pictures", id: :serial, force: :cascade do |t|
+    t.integer "trek_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "position"
-    t.index ["identity_file_id"], name: "index_trek_pictures_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_trek_pictures_on_identity_id", using: :btree
-    t.index ["trek_id"], name: "index_trek_pictures_on_trek_id", using: :btree
+    t.integer "rating"
+    t.integer "position"
+    t.index ["identity_file_id"], name: "index_trek_pictures_on_identity_file_id"
+    t.index ["identity_id"], name: "index_trek_pictures_on_identity_id"
+    t.index ["trek_id"], name: "index_trek_pictures_on_trek_id"
   end
 
-  create_table "treks", force: :cascade do |t|
-    t.integer  "location_id"
-    t.integer  "rating"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "treks", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.integer "rating"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.index ["identity_id"], name: "index_treks_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_treks_on_location_id", using: :btree
+    t.index ["identity_id"], name: "index_treks_on_identity_id"
+    t.index ["location_id"], name: "index_treks_on_location_id"
   end
 
-  create_table "trip_flights", force: :cascade do |t|
-    t.integer  "trip_id"
-    t.integer  "flight_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "trip_flights", id: :serial, force: :cascade do |t|
+    t.integer "trip_id"
+    t.integer "flight_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["flight_id"], name: "index_trip_flights_on_flight_id", using: :btree
-    t.index ["identity_id"], name: "index_trip_flights_on_identity_id", using: :btree
-    t.index ["trip_id"], name: "index_trip_flights_on_trip_id", using: :btree
+    t.integer "rating"
+    t.index ["flight_id"], name: "index_trip_flights_on_flight_id"
+    t.index ["identity_id"], name: "index_trip_flights_on_identity_id"
+    t.index ["trip_id"], name: "index_trip_flights_on_trip_id"
   end
 
-  create_table "trip_pictures", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.integer  "trip_id"
-    t.integer  "identity_file_id"
+  create_table "trip_pictures", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.integer "trip_id"
+    t.integer "identity_file_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "position"
+    t.integer "position"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_file_id"], name: "index_trip_pictures_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_trip_pictures_on_identity_id", using: :btree
-    t.index ["trip_id"], name: "index_trip_pictures_on_trip_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_file_id"], name: "index_trip_pictures_on_identity_file_id"
+    t.index ["identity_id"], name: "index_trip_pictures_on_identity_id"
+    t.index ["trip_id"], name: "index_trip_pictures_on_trip_id"
   end
 
-  create_table "trip_stories", force: :cascade do |t|
-    t.integer  "trip_id"
-    t.integer  "story_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "trip_stories", id: :serial, force: :cascade do |t|
+    t.integer "trip_id"
+    t.integer "story_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_trip_stories_on_identity_id", using: :btree
-    t.index ["story_id"], name: "index_trip_stories_on_story_id", using: :btree
-    t.index ["trip_id"], name: "index_trip_stories_on_trip_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_trip_stories_on_identity_id"
+    t.index ["story_id"], name: "index_trip_stories_on_story_id"
+    t.index ["trip_id"], name: "index_trip_stories_on_trip_id"
   end
 
-  create_table "trips", force: :cascade do |t|
-    t.integer  "location_id"
-    t.date     "started"
-    t.date     "ended"
-    t.text     "notes"
-    t.boolean  "work"
-    t.integer  "identity_id"
+  create_table "trips", id: :serial, force: :cascade do |t|
+    t.integer "location_id"
+    t.date "started"
+    t.date "ended"
+    t.text "notes"
+    t.boolean "work"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
-    t.integer  "hotel_id"
-    t.integer  "identity_file_id"
-    t.boolean  "notify_emergency_contacts"
-    t.boolean  "explicitly_completed"
+    t.integer "visit_count"
+    t.integer "hotel_id"
+    t.integer "identity_file_id"
+    t.boolean "notify_emergency_contacts"
+    t.boolean "explicitly_completed"
     t.datetime "archived"
-    t.integer  "rating"
-    t.string   "trip_name"
-    t.index ["hotel_id"], name: "index_trips_on_hotel_id", using: :btree
-    t.index ["identity_file_id"], name: "index_trips_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_trips_on_identity_id", using: :btree
-    t.index ["location_id"], name: "index_trips_on_location_id", using: :btree
+    t.integer "rating"
+    t.string "trip_name"
+    t.index ["hotel_id"], name: "index_trips_on_hotel_id"
+    t.index ["identity_file_id"], name: "index_trips_on_identity_file_id"
+    t.index ["identity_id"], name: "index_trips_on_identity_id"
+    t.index ["location_id"], name: "index_trips_on_location_id"
   end
 
-  create_table "tv_shows", force: :cascade do |t|
-    t.string   "tv_show_name"
-    t.text     "notes"
+  create_table "tv_shows", id: :serial, force: :cascade do |t|
+    t.string "tv_show_name"
+    t.text "notes"
     t.datetime "watched"
-    t.string   "url"
-    t.integer  "recommender_id"
-    t.string   "tv_genre"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.string "url"
+    t.integer "recommender_id"
+    t.string "tv_genre"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_tv_shows_on_identity_id", using: :btree
-    t.index ["recommender_id"], name: "index_tv_shows_on_recommender_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_tv_shows_on_identity_id"
+    t.index ["recommender_id"], name: "index_tv_shows_on_recommender_id"
   end
 
-  create_table "us_zip_codes", force: :cascade do |t|
-    t.string   "zip_code"
-    t.string   "city"
-    t.string   "state"
-    t.string   "county"
-    t.decimal  "latitude",   precision: 12, scale: 8
-    t.decimal  "longitude",  precision: 12, scale: 8
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+  create_table "us_zip_codes", id: :serial, force: :cascade do |t|
+    t.string "zip_code"
+    t.string "city"
+    t.string "state"
+    t.string "county"
+    t.decimal "latitude", precision: 12, scale: 8
+    t.decimal "longitude", precision: 12, scale: 8
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string   "email",                       limit: 255, default: "",    null: false
-    t.string   "encrypted_password",          limit: 255, default: "",    null: false
-    t.string   "reset_password_token",        limit: 255
+  create_table "users", id: :serial, force: :cascade do |t|
+    t.string "email", limit: 255, default: "", null: false
+    t.string "encrypted_password", limit: 255, default: "", null: false
+    t.string "reset_password_token", limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                           default: 0,     null: false
+    t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "primary_identity_id"
-    t.string   "confirmation_token",          limit: 255
+    t.integer "primary_identity_id"
+    t.string "confirmation_token", limit: 255
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.integer  "failed_attempts",                         default: 0
-    t.string   "unlock_token",                limit: 255
+    t.integer "failed_attempts", default: 0
+    t.string "unlock_token", limit: 255
     t.datetime "locked_at"
-    t.string   "unconfirmed_email",           limit: 255
-    t.boolean  "encrypt_by_default",                      default: false
-    t.string   "timezone",                    limit: 255
-    t.integer  "page_transition"
-    t.integer  "clipboard_integration"
-    t.boolean  "explicit_categories"
-    t.integer  "user_type"
-    t.boolean  "clipboard_transform_numbers"
-    t.integer  "visit_count"
-    t.boolean  "enable_sounds"
-    t.boolean  "always_autofocus"
-    t.boolean  "experimental_categories"
-    t.integer  "items_per_page"
-    t.boolean  "show_timestamps"
-    t.boolean  "always_enable_debug"
-    t.integer  "top_left_icon"
-    t.integer  "recently_visited_categories"
-    t.integer  "most_visited_categories"
-    t.integer  "most_visited_items"
-    t.boolean  "minimize_password_checks"
-    t.integer  "suppressions"
-    t.boolean  "show_server_name"
-    t.integer  "after_new_item"
-    t.boolean  "allow_adding_existing_file"
-    t.boolean  "pending_encryption_switch"
-    t.integer  "encryption_mode"
-    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
-    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
+    t.string "unconfirmed_email", limit: 255
+    t.boolean "encrypt_by_default", default: false
+    t.string "timezone", limit: 255
+    t.integer "page_transition"
+    t.integer "clipboard_integration"
+    t.boolean "explicit_categories"
+    t.integer "user_type"
+    t.boolean "clipboard_transform_numbers"
+    t.integer "visit_count"
+    t.boolean "enable_sounds"
+    t.boolean "always_autofocus"
+    t.boolean "experimental_categories"
+    t.integer "items_per_page"
+    t.boolean "show_timestamps"
+    t.boolean "always_enable_debug"
+    t.integer "top_left_icon"
+    t.integer "recently_visited_categories"
+    t.integer "most_visited_categories"
+    t.integer "most_visited_items"
+    t.boolean "minimize_password_checks"
+    t.integer "suppressions"
+    t.boolean "show_server_name"
+    t.integer "after_new_item"
+    t.boolean "allow_adding_existing_file"
+    t.boolean "pending_encryption_switch"
+    t.integer "encryption_mode"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
-  create_table "vaccine_files", force: :cascade do |t|
-    t.integer  "vaccine_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["identity_file_id"], name: "index_vaccine_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_vaccine_files_on_identity_id", using: :btree
-    t.index ["vaccine_id"], name: "index_vaccine_files_on_vaccine_id", using: :btree
+  create_table "vaccine_files", id: :serial, force: :cascade do |t|
+    t.integer "vaccine_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_vaccine_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_vaccine_files_on_identity_id"
+    t.index ["vaccine_id"], name: "index_vaccine_files_on_vaccine_id"
   end
 
-  create_table "vaccines", force: :cascade do |t|
-    t.string   "vaccine_name"
-    t.date     "vaccine_date"
-    t.text     "notes"
-    t.integer  "visit_count"
+  create_table "vaccines", id: :serial, force: :cascade do |t|
+    t.string "vaccine_name"
+    t.date "vaccine_date"
+    t.text "notes"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["identity_id"], name: "index_vaccines_on_identity_id", using: :btree
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_vaccines_on_identity_id"
   end
 
-  create_table "vehicle_insurances", force: :cascade do |t|
-    t.string   "insurance_name",      limit: 255
-    t.integer  "company_id"
-    t.date     "started"
-    t.integer  "periodic_payment_id"
-    t.integer  "vehicle_id"
-    t.text     "notes"
-    t.integer  "identity_id"
+  create_table "vehicle_insurances", id: :serial, force: :cascade do |t|
+    t.string "insurance_name", limit: 255
+    t.integer "company_id"
+    t.date "started"
+    t.integer "periodic_payment_id"
+    t.integer "vehicle_id"
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["company_id"], name: "index_vehicle_insurances_on_company_id", using: :btree
-    t.index ["identity_id"], name: "index_vehicle_insurances_on_identity_id", using: :btree
-    t.index ["periodic_payment_id"], name: "index_vehicle_insurances_on_periodic_payment_id", using: :btree
-    t.index ["vehicle_id"], name: "index_vehicle_insurances_on_vehicle_id", using: :btree
+    t.integer "rating"
+    t.index ["company_id"], name: "index_vehicle_insurances_on_company_id"
+    t.index ["identity_id"], name: "index_vehicle_insurances_on_identity_id"
+    t.index ["periodic_payment_id"], name: "index_vehicle_insurances_on_periodic_payment_id"
+    t.index ["vehicle_id"], name: "index_vehicle_insurances_on_vehicle_id"
   end
 
-  create_table "vehicle_loans", force: :cascade do |t|
-    t.integer  "vehicle_id"
+  create_table "vehicle_loans", id: :serial, force: :cascade do |t|
+    t.integer "vehicle_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "loan_id"
-    t.integer  "identity_id"
+    t.integer "loan_id"
+    t.integer "identity_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_vehicle_loans_on_identity_id", using: :btree
-    t.index ["vehicle_id"], name: "index_vehicle_loans_on_vehicle_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_vehicle_loans_on_identity_id"
+    t.index ["vehicle_id"], name: "index_vehicle_loans_on_vehicle_id"
   end
 
-  create_table "vehicle_pictures", force: :cascade do |t|
-    t.integer  "vehicle_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "position"
-    t.index ["identity_file_id"], name: "index_vehicle_pictures_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_vehicle_pictures_on_identity_id", using: :btree
-    t.index ["vehicle_id"], name: "index_vehicle_pictures_on_vehicle_id", using: :btree
-  end
-
-  create_table "vehicle_registration_files", force: :cascade do |t|
-    t.integer  "vehicle_registration_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.index ["identity_file_id"], name: "index_vehicle_registration_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_vehicle_registration_files_on_identity_id", using: :btree
-    t.index ["vehicle_registration_id"], name: "index_vehicle_registration_files_on_vehicle_registration_id", using: :btree
-  end
-
-  create_table "vehicle_registrations", force: :cascade do |t|
-    t.integer  "vehicle_id"
-    t.string   "registration_source"
-    t.date     "registration_date"
-    t.decimal  "amount",              precision: 10, scale: 2
-    t.integer  "visit_count"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.integer  "identity_id"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
-    t.index ["identity_id"], name: "index_vehicle_registrations_on_identity_id", using: :btree
-    t.index ["vehicle_id"], name: "index_vehicle_registrations_on_vehicle_id", using: :btree
-  end
-
-  create_table "vehicle_service_files", force: :cascade do |t|
-    t.integer  "vehicle_service_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.index ["identity_file_id"], name: "index_vehicle_service_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_vehicle_service_files_on_identity_id", using: :btree
-    t.index ["vehicle_service_id"], name: "index_vehicle_service_files_on_vehicle_service_id", using: :btree
-  end
-
-  create_table "vehicle_services", force: :cascade do |t|
-    t.integer  "vehicle_id"
-    t.text     "notes"
-    t.string   "short_description", limit: 255
-    t.date     "date_due"
-    t.date     "date_serviced"
-    t.text     "service_location"
-    t.decimal  "cost",                          precision: 10, scale: 2
-    t.integer  "miles"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "identity_id"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_vehicle_services_on_identity_id", using: :btree
-    t.index ["vehicle_id"], name: "index_vehicle_services_on_vehicle_id", using: :btree
-  end
-
-  create_table "vehicle_warranties", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.integer  "warranty_id"
-    t.integer  "vehicle_id"
+  create_table "vehicle_pictures", id: :serial, force: :cascade do |t|
+    t.integer "vehicle_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_vehicle_warranties_on_identity_id", using: :btree
-    t.index ["vehicle_id"], name: "index_vehicle_warranties_on_vehicle_id", using: :btree
-    t.index ["warranty_id"], name: "index_vehicle_warranties_on_warranty_id", using: :btree
+    t.integer "rating"
+    t.integer "position"
+    t.index ["identity_file_id"], name: "index_vehicle_pictures_on_identity_file_id"
+    t.index ["identity_id"], name: "index_vehicle_pictures_on_identity_id"
+    t.index ["vehicle_id"], name: "index_vehicle_pictures_on_vehicle_id"
   end
 
-  create_table "vehicles", force: :cascade do |t|
-    t.string   "name",                     limit: 255
-    t.text     "notes"
-    t.date     "owned_start"
-    t.date     "owned_end"
-    t.string   "vin",                      limit: 255
-    t.string   "manufacturer",             limit: 255
-    t.string   "model",                    limit: 255
-    t.integer  "year"
-    t.string   "color",                    limit: 255
-    t.string   "license_plate",            limit: 255
-    t.string   "region",                   limit: 255
-    t.string   "sub_region1",              limit: 255
-    t.integer  "identity_id"
+  create_table "vehicle_registration_files", id: :serial, force: :cascade do |t|
+    t.integer "vehicle_registration_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_vehicle_registration_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_vehicle_registration_files_on_identity_id"
+    t.index ["vehicle_registration_id"], name: "index_vehicle_registration_files_on_vehicle_registration_id"
+  end
+
+  create_table "vehicle_registrations", id: :serial, force: :cascade do |t|
+    t.integer "vehicle_id"
+    t.string "registration_source"
+    t.date "registration_date"
+    t.decimal "amount", precision: 10, scale: 2
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_vehicle_registrations_on_identity_id"
+    t.index ["vehicle_id"], name: "index_vehicle_registrations_on_vehicle_id"
+  end
+
+  create_table "vehicle_service_files", id: :serial, force: :cascade do |t|
+    t.integer "vehicle_service_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_vehicle_service_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_vehicle_service_files_on_identity_id"
+    t.index ["vehicle_service_id"], name: "index_vehicle_service_files_on_vehicle_service_id"
+  end
+
+  create_table "vehicle_services", id: :serial, force: :cascade do |t|
+    t.integer "vehicle_id"
+    t.text "notes"
+    t.string "short_description", limit: 255
+    t.date "date_due"
+    t.date "date_serviced"
+    t.text "service_location"
+    t.decimal "cost", precision: 10, scale: 2
+    t.integer "miles"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "trim_name",                limit: 255
-    t.integer  "dimensions_type"
-    t.decimal  "height",                               precision: 10, scale: 2
-    t.decimal  "width",                                precision: 10, scale: 2
-    t.decimal  "length",                               precision: 10, scale: 2
-    t.decimal  "wheel_base",                           precision: 10, scale: 2
-    t.decimal  "ground_clearance",                     precision: 10, scale: 2
-    t.integer  "weight_type"
-    t.integer  "doors_type"
-    t.integer  "passenger_seats"
-    t.decimal  "gvwr",                                 precision: 10, scale: 2
-    t.decimal  "gcwr",                                 precision: 10, scale: 2
-    t.decimal  "gawr_front",                           precision: 10, scale: 2
-    t.decimal  "gawr_rear",                            precision: 10, scale: 2
-    t.string   "front_axle_details",       limit: 255
-    t.decimal  "front_axle_rating",                    precision: 10, scale: 2
-    t.string   "front_suspension_details", limit: 255
-    t.decimal  "front_suspension_rating",              precision: 10, scale: 2
-    t.string   "rear_axle_details",        limit: 255
-    t.decimal  "rear_axle_rating",                     precision: 10, scale: 2
-    t.string   "rear_suspension_details",  limit: 255
-    t.decimal  "rear_suspension_rating",               precision: 10, scale: 2
-    t.string   "tire_details",             limit: 255
-    t.decimal  "tire_rating",                          precision: 10, scale: 2
-    t.decimal  "tire_diameter",                        precision: 10, scale: 2
-    t.string   "wheel_details",            limit: 255
-    t.decimal  "wheel_rating",                         precision: 10, scale: 2
-    t.integer  "engine_type"
-    t.integer  "wheel_drive_type"
-    t.integer  "wheels_type"
-    t.integer  "fuel_tank_capacity_type"
-    t.decimal  "fuel_tank_capacity",                   precision: 10, scale: 2
-    t.decimal  "wet_weight_front",                     precision: 10, scale: 2
-    t.decimal  "wet_weight_rear",                      precision: 10, scale: 2
-    t.decimal  "tailgate_weight",                      precision: 10, scale: 2
-    t.integer  "horsepower"
-    t.integer  "cylinders"
-    t.integer  "displacement_type"
-    t.integer  "doors"
-    t.decimal  "displacement",                         precision: 10, scale: 2
-    t.decimal  "bed_length",                           precision: 10, scale: 2
-    t.integer  "recreational_vehicle_id"
-    t.decimal  "price",                                precision: 10, scale: 2
-    t.decimal  "msrp",                                 precision: 10, scale: 2
-    t.integer  "visit_count"
+    t.integer "identity_id"
     t.datetime "archived"
-    t.integer  "rating"
-    t.decimal  "bought_miles",                         precision: 10, scale: 2
-    t.index ["identity_id"], name: "index_vehicles_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_vehicle_services_on_identity_id"
+    t.index ["vehicle_id"], name: "index_vehicle_services_on_vehicle_id"
   end
 
-  create_table "vitamin_ingredients", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.integer  "parent_vitamin_id"
-    t.integer  "vitamin_id"
+  create_table "vehicle_warranties", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.integer "warranty_id"
+    t.integer "vehicle_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_vitamin_ingredients_on_identity_id", using: :btree
-    t.index ["parent_vitamin_id"], name: "index_vitamin_ingredients_on_parent_vitamin_id", using: :btree
-    t.index ["vitamin_id"], name: "index_vitamin_ingredients_on_vitamin_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_vehicle_warranties_on_identity_id"
+    t.index ["vehicle_id"], name: "index_vehicle_warranties_on_vehicle_id"
+    t.index ["warranty_id"], name: "index_vehicle_warranties_on_warranty_id"
   end
 
-  create_table "vitamins", force: :cascade do |t|
-    t.integer  "identity_id"
-    t.string   "vitamin_name",   limit: 255
-    t.text     "notes"
-    t.decimal  "vitamin_amount",             precision: 10, scale: 2
-    t.integer  "amount_type"
+  create_table "vehicles", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.text "notes"
+    t.date "owned_start"
+    t.date "owned_end"
+    t.string "vin", limit: 255
+    t.string "manufacturer", limit: 255
+    t.string "model", limit: 255
+    t.integer "year"
+    t.string "color", limit: 255
+    t.string "license_plate", limit: 255
+    t.string "region", limit: 255
+    t.string "sub_region1", limit: 255
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.string "trim_name", limit: 255
+    t.integer "dimensions_type"
+    t.decimal "height", precision: 10, scale: 2
+    t.decimal "width", precision: 10, scale: 2
+    t.decimal "length", precision: 10, scale: 2
+    t.decimal "wheel_base", precision: 10, scale: 2
+    t.decimal "ground_clearance", precision: 10, scale: 2
+    t.integer "weight_type"
+    t.integer "doors_type"
+    t.integer "passenger_seats"
+    t.decimal "gvwr", precision: 10, scale: 2
+    t.decimal "gcwr", precision: 10, scale: 2
+    t.decimal "gawr_front", precision: 10, scale: 2
+    t.decimal "gawr_rear", precision: 10, scale: 2
+    t.string "front_axle_details", limit: 255
+    t.decimal "front_axle_rating", precision: 10, scale: 2
+    t.string "front_suspension_details", limit: 255
+    t.decimal "front_suspension_rating", precision: 10, scale: 2
+    t.string "rear_axle_details", limit: 255
+    t.decimal "rear_axle_rating", precision: 10, scale: 2
+    t.string "rear_suspension_details", limit: 255
+    t.decimal "rear_suspension_rating", precision: 10, scale: 2
+    t.string "tire_details", limit: 255
+    t.decimal "tire_rating", precision: 10, scale: 2
+    t.decimal "tire_diameter", precision: 10, scale: 2
+    t.string "wheel_details", limit: 255
+    t.decimal "wheel_rating", precision: 10, scale: 2
+    t.integer "engine_type"
+    t.integer "wheel_drive_type"
+    t.integer "wheels_type"
+    t.integer "fuel_tank_capacity_type"
+    t.decimal "fuel_tank_capacity", precision: 10, scale: 2
+    t.decimal "wet_weight_front", precision: 10, scale: 2
+    t.decimal "wet_weight_rear", precision: 10, scale: 2
+    t.decimal "tailgate_weight", precision: 10, scale: 2
+    t.integer "horsepower"
+    t.integer "cylinders"
+    t.integer "displacement_type"
+    t.integer "doors"
+    t.decimal "displacement", precision: 10, scale: 2
+    t.decimal "bed_length", precision: 10, scale: 2
+    t.integer "recreational_vehicle_id"
+    t.decimal "price", precision: 10, scale: 2
+    t.decimal "msrp", precision: 10, scale: 2
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_vitamins_on_identity_id", using: :btree
+    t.integer "rating"
+    t.decimal "bought_miles", precision: 10, scale: 2
+    t.index ["identity_id"], name: "index_vehicles_on_identity_id"
   end
 
-  create_table "volunteering_activities", force: :cascade do |t|
-    t.string   "volunteering_activity_name"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_volunteering_activities_on_identity_id", using: :btree
-  end
-
-  create_table "warranties", force: :cascade do |t|
-    t.string   "warranty_name",      limit: 255
-    t.date     "warranty_start"
-    t.date     "warranty_end"
-    t.string   "warranty_condition", limit: 255
-    t.text     "notes"
-    t.integer  "identity_id"
+  create_table "vitamin_ingredients", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.integer "parent_vitamin_id"
+    t.integer "vitamin_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_warranties_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_vitamin_ingredients_on_identity_id"
+    t.index ["parent_vitamin_id"], name: "index_vitamin_ingredients_on_parent_vitamin_id"
+    t.index ["vitamin_id"], name: "index_vitamin_ingredients_on_vitamin_id"
   end
 
-  create_table "web_comics", force: :cascade do |t|
-    t.string   "web_comic_name"
-    t.integer  "website_id"
-    t.integer  "feed_id"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["feed_id"], name: "index_web_comics_on_feed_id", using: :btree
-    t.index ["identity_id"], name: "index_web_comics_on_identity_id", using: :btree
-    t.index ["website_id"], name: "index_web_comics_on_website_id", using: :btree
-  end
-
-  create_table "website_domain_registrations", force: :cascade do |t|
-    t.integer  "website_domain_id"
-    t.integer  "repeat_id"
-    t.integer  "periodic_payment_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_website_domain_registrations_on_identity_id", using: :btree
-    t.index ["periodic_payment_id"], name: "index_website_domain_registrations_on_periodic_payment_id", using: :btree
-    t.index ["repeat_id"], name: "index_website_domain_registrations_on_repeat_id", using: :btree
-    t.index ["website_domain_id"], name: "index_website_domain_registrations_on_website_domain_id", using: :btree
-  end
-
-  create_table "website_domain_ssh_keys", force: :cascade do |t|
-    t.integer  "website_domain_id"
-    t.integer  "identity_id"
-    t.integer  "ssh_key_id"
-    t.string   "username"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_website_domain_ssh_keys_on_identity_id", using: :btree
-    t.index ["ssh_key_id"], name: "index_website_domain_ssh_keys_on_ssh_key_id", using: :btree
-    t.index ["website_domain_id"], name: "index_website_domain_ssh_keys_on_website_domain_id", using: :btree
-  end
-
-  create_table "website_domains", force: :cascade do |t|
-    t.string   "domain_name"
-    t.text     "notes"
-    t.integer  "domain_host_id"
-    t.integer  "website_id"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["domain_host_id"], name: "index_website_domains_on_domain_host_id", using: :btree
-    t.index ["identity_id"], name: "index_website_domains_on_identity_id", using: :btree
-    t.index ["website_id"], name: "index_website_domains_on_website_id", using: :btree
-  end
-
-  create_table "website_list_items", force: :cascade do |t|
-    t.integer  "website_list_id"
-    t.integer  "website_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_website_list_items_on_identity_id", using: :btree
-    t.index ["website_id"], name: "index_website_list_items_on_website_id", using: :btree
-    t.index ["website_list_id"], name: "index_website_list_items_on_website_list_id", using: :btree
-  end
-
-  create_table "website_lists", force: :cascade do |t|
-    t.string   "website_list_name"
-    t.text     "notes"
-    t.integer  "visit_count"
-    t.integer  "identity_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.boolean  "disable_autoload"
-    t.integer  "iframe_height"
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_website_lists_on_identity_id", using: :btree
-  end
-
-  create_table "website_passwords", force: :cascade do |t|
-    t.integer  "website_id"
-    t.integer  "password_id"
-    t.integer  "identity_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_website_passwords_on_identity_id", using: :btree
-    t.index ["password_id"], name: "index_website_passwords_on_password_id", using: :btree
-    t.index ["website_id"], name: "index_website_passwords_on_website_id", using: :btree
-  end
-
-  create_table "websites", force: :cascade do |t|
-    t.string   "title",            limit: 255
-    t.string   "url",              limit: 2000
-    t.integer  "identity_id"
+  create_table "vitamins", id: :serial, force: :cascade do |t|
+    t.integer "identity_id"
+    t.string "vitamin_name", limit: 255
+    t.text "notes"
+    t.decimal "vitamin_amount", precision: 10, scale: 2
+    t.integer "amount_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
-    t.boolean  "to_visit"
-    t.integer  "recommender_id"
-    t.text     "notes"
-    t.string   "website_category"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_websites_on_identity_id", using: :btree
-    t.index ["recommender_id"], name: "index_websites_on_recommender_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_vitamins_on_identity_id"
   end
 
-  create_table "weights", force: :cascade do |t|
-    t.decimal  "amount",                   precision: 10, scale: 2
-    t.integer  "amount_type"
-    t.date     "measure_date"
-    t.string   "source",       limit: 255
-    t.integer  "identity_id"
+  create_table "volunteering_activities", id: :serial, force: :cascade do |t|
+    t.string "volunteering_activity_name"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_volunteering_activities_on_identity_id"
+  end
+
+  create_table "warranties", id: :serial, force: :cascade do |t|
+    t.string "warranty_name", limit: 255
+    t.date "warranty_start"
+    t.date "warranty_end"
+    t.string "warranty_condition", limit: 255
+    t.text "notes"
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_weights_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_warranties_on_identity_id"
   end
 
-  create_table "wisdom_files", force: :cascade do |t|
-    t.integer  "wisdom_id"
-    t.integer  "identity_file_id"
-    t.integer  "identity_id"
-    t.integer  "position"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+  create_table "web_comics", id: :serial, force: :cascade do |t|
+    t.string "web_comic_name"
+    t.integer "website_id"
+    t.integer "feed_id"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_file_id"], name: "index_wisdom_files_on_identity_file_id", using: :btree
-    t.index ["identity_id"], name: "index_wisdom_files_on_identity_id", using: :btree
-    t.index ["wisdom_id"], name: "index_wisdom_files_on_wisdom_id", using: :btree
+    t.integer "rating"
+    t.index ["feed_id"], name: "index_web_comics_on_feed_id"
+    t.index ["identity_id"], name: "index_web_comics_on_identity_id"
+    t.index ["website_id"], name: "index_web_comics_on_website_id"
   end
 
-  create_table "wisdoms", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.text     "notes"
-    t.integer  "identity_id"
+  create_table "website_domain_registrations", id: :serial, force: :cascade do |t|
+    t.integer "website_domain_id"
+    t.integer "repeat_id"
+    t.integer "periodic_payment_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_website_domain_registrations_on_identity_id"
+    t.index ["periodic_payment_id"], name: "index_website_domain_registrations_on_periodic_payment_id"
+    t.index ["repeat_id"], name: "index_website_domain_registrations_on_repeat_id"
+    t.index ["website_domain_id"], name: "index_website_domain_registrations_on_website_domain_id"
+  end
+
+  create_table "website_domain_ssh_keys", id: :serial, force: :cascade do |t|
+    t.integer "website_domain_id"
+    t.integer "identity_id"
+    t.integer "ssh_key_id"
+    t.string "username"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_website_domain_ssh_keys_on_identity_id"
+    t.index ["ssh_key_id"], name: "index_website_domain_ssh_keys_on_ssh_key_id"
+    t.index ["website_domain_id"], name: "index_website_domain_ssh_keys_on_website_domain_id"
+  end
+
+  create_table "website_domains", id: :serial, force: :cascade do |t|
+    t.string "domain_name"
+    t.text "notes"
+    t.integer "domain_host_id"
+    t.integer "website_id"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["domain_host_id"], name: "index_website_domains_on_domain_host_id"
+    t.index ["identity_id"], name: "index_website_domains_on_identity_id"
+    t.index ["website_id"], name: "index_website_domains_on_website_id"
+  end
+
+  create_table "website_list_items", id: :serial, force: :cascade do |t|
+    t.integer "website_list_id"
+    t.integer "website_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_website_list_items_on_identity_id"
+    t.index ["website_id"], name: "index_website_list_items_on_website_id"
+    t.index ["website_list_id"], name: "index_website_list_items_on_website_list_id"
+  end
+
+  create_table "website_lists", id: :serial, force: :cascade do |t|
+    t.string "website_list_name"
+    t.text "notes"
+    t.integer "visit_count"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "disable_autoload"
+    t.integer "iframe_height"
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_website_lists_on_identity_id"
+  end
+
+  create_table "website_passwords", id: :serial, force: :cascade do |t|
+    t.integer "website_id"
+    t.integer "password_id"
+    t.integer "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_website_passwords_on_identity_id"
+    t.index ["password_id"], name: "index_website_passwords_on_password_id"
+    t.index ["website_id"], name: "index_website_passwords_on_website_id"
+  end
+
+  create_table "websites", id: :serial, force: :cascade do |t|
+    t.string "title", limit: 255
+    t.string "url", limit: 2000
+    t.integer "identity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "visit_count"
+    t.integer "visit_count"
+    t.boolean "to_visit"
+    t.integer "recommender_id"
+    t.text "notes"
+    t.string "website_category"
     t.datetime "archived"
-    t.integer  "rating"
-    t.index ["identity_id"], name: "index_wisdoms_on_identity_id", using: :btree
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_websites_on_identity_id"
+    t.index ["recommender_id"], name: "index_websites_on_recommender_id"
+  end
+
+  create_table "weights", id: :serial, force: :cascade do |t|
+    t.decimal "amount", precision: 10, scale: 2
+    t.integer "amount_type"
+    t.date "measure_date"
+    t.string "source", limit: 255
+    t.integer "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_weights_on_identity_id"
+  end
+
+  create_table "wisdom_files", id: :serial, force: :cascade do |t|
+    t.integer "wisdom_id"
+    t.integer "identity_file_id"
+    t.integer "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_file_id"], name: "index_wisdom_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_wisdom_files_on_identity_id"
+    t.index ["wisdom_id"], name: "index_wisdom_files_on_wisdom_id"
+  end
+
+  create_table "wisdoms", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.text "notes"
+    t.integer "identity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.index ["identity_id"], name: "index_wisdoms_on_identity_id"
   end
 
   add_foreign_key "accomplishments", "identities", name: "accomplishments_identity_id_fk"
@@ -5979,6 +6009,10 @@ ActiveRecord::Schema.define(version: 20170516024154) do
   add_foreign_key "shopping_list_items", "identities", name: "shopping_list_items_identity_id_fk"
   add_foreign_key "shopping_list_items", "shopping_lists", name: "shopping_list_items_shopping_list_id_fk"
   add_foreign_key "shopping_lists", "identities", name: "shopping_lists_identity_id_fk"
+  add_foreign_key "sickness_files", "identities"
+  add_foreign_key "sickness_files", "identity_files"
+  add_foreign_key "sickness_files", "sicknesses"
+  add_foreign_key "sicknesses", "identities"
   add_foreign_key "skin_treatments", "identities", name: "skin_treatments_identity_id_fk"
   add_foreign_key "sleep_measurements", "identities", name: "sleep_measurements_identity_id_fk"
   add_foreign_key "snoozed_due_items", "calendars", name: "snoozed_due_items_calendar_id_fk"

@@ -1043,8 +1043,23 @@ module ApplicationHelper
     result = nil
     
     if options[:include_label]
-      # We only want to show the label if value is blank and there's no tooltip
-      label_classes = (options[:value].blank? && options[:tooltip].blank?) ? "ui-hidden-accessible" : "form_field_label"
+      if options[:type] != Myp::FIELD_BOOLEAN
+        # We only want to show the label if value is blank and there's no tooltip
+        label_classes = (options[:value].blank? && options[:tooltip].blank?) ? "ui-hidden-accessible" : "form_field_label"
+      else
+        # Rails creates two input elements for a checkbox which means we can't use
+        # the trick to wrap a checkbox with a label as per:
+        # https://www.w3.org/TR/html401/interact/forms.html#h-17.9.1
+        # Instead we use the explicitly enhanced form as per ("Providing pre-rendered markup"):
+        # http://api.jquerymobile.com/checkboxradio/
+        label_classes = Myp.appendstr(label_classes, "ui-btn ui-btn-inherit ui-btn-icon-left")
+        
+        if options[:value]
+          label_classes = Myp.appendstr(label_classes, "ui-checkbox-on")
+        else
+          label_classes = Myp.appendstr(label_classes, "ui-checkbox-off")
+        end
+      end
       
       if options[:form].nil?
         result = Myp.appendstr(
@@ -1070,9 +1085,11 @@ module ApplicationHelper
     if !options[:field_classes].nil?
       field_attributes[:class] = Myp.appendstr(field_attributes[:class], options[:field_classes])
     end
-    
     if options[:type] != :text && !options[:step].nil?
       field_attributes[:step] = options[:step]
+    end
+    if options[:type] == Myp::FIELD_BOOLEAN
+      field_attributes[:data] = { enhanced: "true" }
     end
 
     if options[:datebox_mode].nil?
@@ -1092,24 +1109,38 @@ module ApplicationHelper
         end
       else
         if !options[:form].nil?
-          result = Myp.appendstr(
-            result,
-            options[:form].send(
-              options[:type].to_s + "_field",
-              name,
-              field_attributes
+          if options[:type] == Myp::FIELD_BOOLEAN
+            result = Myp.appendstr(
+              result,
+              options[:form].check_box(name, field_attributes)
             )
-          )
+          else
+            result = Myp.appendstr(
+              result,
+              options[:form].send(
+                options[:type].to_s + "_field",
+                name,
+                field_attributes
+              )
+            )
+          end
         else
-          result = Myp.appendstr(
-            result,
-            send(
-              options[:type].to_s + "_field_tag",
-              name,
-              options[:value],
-              field_attributes
+          if options[:type] == Myp::FIELD_BOOLEAN
+            result = Myp.appendstr(
+              result,
+              check_box_tag(name, true, (options[:value] ? true : false), field_attributes)
             )
-          )
+          else
+            result = Myp.appendstr(
+              result,
+              send(
+                options[:type].to_s + "_field_tag",
+                name,
+                options[:value],
+                field_attributes
+              )
+            )
+          end
         end
       end
       
@@ -1210,6 +1241,10 @@ module ApplicationHelper
           field_attributes
         ) + hidden_time
       )
+    end
+    
+    if options[:type] == Myp::FIELD_BOOLEAN
+      result = content_tag(:div, result.html_safe, class: "ui-checkbox")
     end
 
     if !options[:wrapper_tag].nil?
