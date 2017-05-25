@@ -582,7 +582,7 @@ module Myp
     end
   end
   
-  def self.markdown_for_email(markdown)
+  def self.markdown_for_plain_email(markdown)
     if !markdown.nil?
       i = 0
       while true do

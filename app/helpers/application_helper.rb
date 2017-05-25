@@ -114,7 +114,7 @@ module ApplicationHelper
     )
   end
   
-  def clipboard_text_str(clipboard_text, encode_entities: true)
+  def clipboard_text_str(clipboard_text, encode_entities: true, strip_markdown: true)
     result = ""
     if !clipboard_text.blank?
       result = clipboard_text.to_s
@@ -125,6 +125,9 @@ module ApplicationHelper
         if (result.length == 15 && result.gsub(/[^0-9]+/, "").length == 15) || (result.length == 16 && result.gsub(/[^0-9]+/, "").length == 16)
           result += " "
         end
+      end
+      if strip_markdown
+        result = Myp.markdown_for_plain_email(result)
       end
     end
     if encode_entities

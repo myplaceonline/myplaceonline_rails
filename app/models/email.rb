@@ -53,7 +53,7 @@ class Email < ApplicationRecord
       content += body2_html
     end
     
-    content_plain = Myp.markdown_for_email(body)
+    content_plain = Myp.markdown_for_plain_email(body)
     if content_plain.nil?
       content_plain = ""
     end
