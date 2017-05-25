@@ -239,6 +239,7 @@ en:
       job_awards: "Job Awards"
       insurance_cards: "Insurance Cards"
       sicknesses: "Sicknesses"
+      picnic_locations: "Picnic Locations"
     general:
       email: "E-mail"
       password: "Password"
@@ -3359,3 +3360,5 @@ en:
       throwing_up: "Throwing Up"
       fever: "Fever"
       runny_nose: "Runny Nose"
+    picnic_locations:
+      location: "Location"

@@ -1,0 +1,14 @@
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :location,
+    existingobj: obj.location,
+    heading: t("myplaceonline.picnic_locations.location"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    autofocus: autofocus,
+    expanded_if_nil: true
+  }
+%>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170521022437) do
+ActiveRecord::Schema.define(version: 20170525023846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3651,6 +3651,19 @@ ActiveRecord::Schema.define(version: 20170521022437) do
     t.index ["password_id"], name: "index_phones_on_password_id"
   end
 
+  create_table "picnic_locations", force: :cascade do |t|
+    t.bigint "location_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_picnic_locations_on_identity_id"
+    t.index ["location_id"], name: "index_picnic_locations_on_location_id"
+  end
+
   create_table "playlist_songs", id: :serial, force: :cascade do |t|
     t.integer "playlist_id"
     t.integer "song_id"
@@ -5915,6 +5928,8 @@ ActiveRecord::Schema.define(version: 20170521022437) do
   add_foreign_key "phones", "companies", column: "manufacturer_id", name: "phones_manufacturer_id_fk"
   add_foreign_key "phones", "identities", name: "phones_identity_id_fk"
   add_foreign_key "phones", "passwords", name: "phones_password_id_fk"
+  add_foreign_key "picnic_locations", "identities"
+  add_foreign_key "picnic_locations", "locations"
   add_foreign_key "playlist_songs", "identities", name: "playlist_songs_identity_id_fk"
   add_foreign_key "playlist_songs", "playlists", name: "playlist_songs_playlist_id_fk"
   add_foreign_key "playlist_songs", "songs", name: "playlist_songs_song_id_fk"

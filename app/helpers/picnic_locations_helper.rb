@@ -1,0 +1,2 @@
+module PicnicLocationsHelper
+end
