@@ -15,7 +15,13 @@ class StatusesController < MyplaceonlineController
         :feeling,
         :status1,
         :status2,
-        :status3
+        :status3,
+        :stoic_ailments,
+        :stoic_failings,
+        :stoic_failed,
+        :stoic_duties,
+        :stoic_improvement,
+        :stoic_faults,
       )
     end
 end

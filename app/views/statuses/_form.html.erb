@@ -9,3 +9,12 @@
   <h4><%= t("myplaceonline.statuses.need_help") %></h4>
   <p><%= raw(Myp.parse_yaml_to_html("myplaceonline.statuses.status_ideas")) %></p>
 </div>
+<div data-role="collapsible" data-collapsed="true">
+  <h4><%= t("myplaceonline.statuses.stoic") %></h4>
+  <%= myp_text_field(f, :stoic_ailments, "myplaceonline.statuses.stoic_ailments", obj.stoic_ailments) %>
+  <%= myp_text_field(f, :stoic_failings, "myplaceonline.statuses.stoic_failings", obj.stoic_failings) %>
+  <%= myp_text_field(f, :stoic_failed, "myplaceonline.statuses.stoic_failed", obj.stoic_failed) %>
+  <%= myp_text_field(f, :stoic_duties, "myplaceonline.statuses.stoic_duties", obj.stoic_duties) %>
+  <%= myp_text_field(f, :stoic_improvement, "myplaceonline.statuses.stoic_improvement", obj.stoic_improvement) %>
+  <%= myp_text_field(f, :stoic_faults, "myplaceonline.statuses.stoic_faults", obj.stoic_faults) %>
+</div>

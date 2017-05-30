@@ -101,6 +101,7 @@ Rails.application.routes.draw do
     welcome/index
     graph/source_values
     graph/display
+    map/display
     api/website_title
     api/categories
     api/search

@@ -2,6 +2,12 @@
 <%= attribute_table_row(t("myplaceonline.statuses.status1"), obj.status1) %>
 <%= attribute_table_row(t("myplaceonline.statuses.status2"), obj.status2) %>
 <%= attribute_table_row(t("myplaceonline.statuses.status3"), obj.status3) %>
+<%= attribute_table_row(t("myplaceonline.statuses.stoic_ailments"), obj.stoic_ailments) %>
+<%= attribute_table_row(t("myplaceonline.statuses.stoic_failings"), obj.stoic_failings) %>
+<%= attribute_table_row(t("myplaceonline.statuses.stoic_failed"), obj.stoic_failed) %>
+<%= attribute_table_row(t("myplaceonline.statuses.stoic_duties"), obj.stoic_duties) %>
+<%= attribute_table_row(t("myplaceonline.statuses.stoic_improvement"), obj.stoic_improvement) %>
+<%= attribute_table_row(t("myplaceonline.statuses.stoic_faults"), obj.stoic_faults) %>
 <%= attribute_table_row_markdown(t("myplaceonline.statuses.three_good_things"), obj.three_good_things) %>
 <%= attribute_table_row_select(t("myplaceonline.statuses.feeling"), obj.feeling, Status::FEELINGS) %>
 <% content_for :aftertable do %>

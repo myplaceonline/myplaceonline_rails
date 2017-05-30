@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170525023846) do
+ActiveRecord::Schema.define(version: 20170530033539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4464,6 +4464,12 @@ ActiveRecord::Schema.define(version: 20170525023846) do
     t.string "status3", limit: 255
     t.datetime "archived"
     t.integer "rating"
+    t.string "stoic_ailments"
+    t.string "stoic_failings"
+    t.string "stoic_failed"
+    t.string "stoic_duties"
+    t.string "stoic_improvement"
+    t.string "stoic_faults"
     t.index ["identity_id"], name: "index_statuses_on_identity_id"
   end
 

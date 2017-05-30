@@ -358,6 +358,15 @@ module Myp
     @@trusted_client_ips
   end
 
+  if !ENV["GOOGLE_MAPS_API_KEY"].blank?
+    @@google_maps_api_key = ENV["GOOGLE_MAPS_API_KEY"]
+    Rails.logger.info{"Found Google Maps API key"}
+  end
+  
+  def self.google_maps_api_key
+    @@google_maps_api_key
+  end
+
   def self.categories(user = nil)
     if user.nil?
       @@all_categories

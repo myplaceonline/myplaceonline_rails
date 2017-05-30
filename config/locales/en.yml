@@ -2071,6 +2071,13 @@ en:
       status1: "First Good Thing"
       status2: "Second Good Thing"
       status3: "Third Good Thing"
+      stoic: "Daily Stoic Thoughts"
+      stoic_ailments: "What ailment have I cured today?"
+      stoic_failings: "What failing have I resisted?"
+      stoic_failed: "Where have I failed?"
+      stoic_duties: "What duties did I forget to do?"
+      stoic_improvement: "Where can I show improvement?"
+      stoic_faults: "Find fault with what was badly done and rejoice with what was good."
       need_help: "Need Ideas?"
       status_ideas: !xml |
         <![CDATA[
@@ -3362,3 +3369,5 @@ en:
       runny_nose: "Runny Nose"
     picnic_locations:
       location: "Location"
+    maps:
+      map: "Map"
