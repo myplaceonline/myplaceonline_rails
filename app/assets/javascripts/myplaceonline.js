@@ -895,7 +895,7 @@ var myplaceonline = function(mymodule) {
     if (!multiple) {
       for (var i in loadedScripts) {
         if (loadedScripts[i] == url) {
-          consoleLog("loadExternalScript: returning false");
+          consoleLog("loadExternalScript: script already loaded");
           return false;
         }
       }

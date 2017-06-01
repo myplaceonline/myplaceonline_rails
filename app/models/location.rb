@@ -28,6 +28,10 @@ class Location < ApplicationRecord
   
   child_property(name: :website)
   
+  # https://github.com/alexreisner/geocoder
+  geocoded_by :geocode_address
+  #reverse_geocoded_by :latitude, :longitude
+  
   def at_least_one
     if [name, address1, address2, address3, region, sub_region1, sub_region2].reject(&:blank?).size == 0
       errors.add("", "Name or address required")
@@ -169,6 +173,10 @@ class Location < ApplicationRecord
     end
   end
   
+  def geocode_address
+    address_one_line(false, address_details: false)
+  end
+  
   def address_one_line(usename = true, address_details: true)
     result = nil
     if usename
@@ -261,5 +269,13 @@ class Location < ApplicationRecord
 
   def self.skip_check_attributes
     ["region"]
+  end
+  
+  def ensure_gps
+    if self.latitude.nil?
+      self.geocode
+      self.save!
+    end
+    return !self.latitude.nil?
   end
 end

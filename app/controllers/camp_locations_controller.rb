@@ -1,4 +1,6 @@
 class CampLocationsController < MyplaceonlineController
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:map]
+
   def search_index_name
     Location.table_name
   end
@@ -7,6 +9,30 @@ class CampLocationsController < MyplaceonlineController
     category_name.singularize
   end
 
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t("myplaceonline.maps.map"),
+        link: camp_locations_map_path,
+        icon: "navigation"
+      }
+    ]
+  end
+  
+  def map
+    @locations = self.all.map{ |x|
+      if x.location.ensure_gps
+        MapLocation.new(
+          latitude: x.location.latitude,
+          longitude: x.location.longitude,
+          label: nil # No label because it takes too much space on the display
+        )
+      else
+        nil
+      end
+    }.compact
+  end
+  
   protected
     def obj_params
       params.require(:camp_location).permit(

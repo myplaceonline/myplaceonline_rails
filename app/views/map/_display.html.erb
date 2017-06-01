@@ -1,0 +1,59 @@
+<%
+Rails.logger.debug{"map/display"}
+if defined?(center)
+  Rails.logger.debug{"center defined #{center.inspect}"}
+  center.ensure_gps
+  latitude = center.latitude
+  longitude = center.longitude
+  if !defined?(zoom)
+    # https://developers.google.com/maps/documentation/javascript/tutorial#zoom-levels
+    zoom = 10
+  end
+end
+if !defined?(latitude)
+  Rails.logger.debug{"setting default latitude"}
+  latitude = 32.715738
+end
+if !defined?(longitude)
+  Rails.logger.debug{"setting default longitude"}
+  longitude = -117.1610838
+end
+if !defined?(zoom)
+  Rails.logger.debug{"setting default zoom"}
+  zoom = 1
+end
+if !defined?(locations)
+  locations = []
+end
+%>
+
+<div id="map" style="width: 100%; height: 400px;"></div>
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+<script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    $("#map").height($(window).height() * .7);
+    //myplaceonline.loadExternalScript("https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js");
+    myplaceonline.loadExternalScript("https://maps.googleapis.com/maps/api/js?key=<%= Myp.google_maps_api_key %>&callback=initMap", true, null, true);
+  });
+  
+  function initMap() {
+    // https://developers.google.com/maps/documentation/javascript/tutorial#MapOptions
+    // https://developers.google.com/maps/documentation/javascript/reference#MapOptions
+    var map = new google.maps.Map(document.getElementById("map"), {
+      center: {lat: <%= latitude %>, lng: <%= longitude %>},
+      zoom: <%= zoom %>,
+      fullscreenControl: true
+    });
+    
+    var locations = <%= raw(locations.to_json) %>;
+    
+    var markers = locations.map(function(location, i) {
+      return new google.maps.Marker({
+        position: location.position,
+        label: location.label
+      });
+    });
+    
+    var markerCluster = new MarkerClusterer(map, markers, {imagePath: "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m"});
+  }
+</script>

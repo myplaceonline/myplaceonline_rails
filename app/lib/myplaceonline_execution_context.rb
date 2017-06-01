@@ -49,7 +49,7 @@ class MyplaceonlineExecutionContext
       ExecutionContext.pop
     end
   end
-
+  
   def self.do_user(user, &block)
     ExecutionContext.push
     begin
@@ -101,5 +101,19 @@ class MyplaceonlineExecutionContext
     end
 
     MyplaceonlineExecutionContext.persistent_user_store = persistent_user_store
+  end
+  
+  # This should mostly be used only for debugging since the context is not unset
+  def self.set(user: nil, identity: nil, context: nil)
+    ExecutionContext.push
+    if !user.nil?
+      self.user = user
+    end
+    if !identity.nil?
+      self.user = identity.user
+    end
+    if !context.nil?
+      self.user = context.identity.user
+    end
   end
 end

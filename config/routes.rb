@@ -186,6 +186,9 @@ Rails.application.routes.draw do
       { instance: true, link: "complete" },
       { instance: true, link: "snooze" }
     ],
+    camp_locations: [
+      { instance: false, link: "map" }
+    ],
     calendars: [
       {
         subresources: true,
