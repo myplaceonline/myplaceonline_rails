@@ -20,6 +20,6 @@ Geocoder.configure(
   # distances: :linear          # :spherical or :linear
   
   google: {
-    api_key: ENV["GOOGLE_MAPS_API_KEY"]
+    api_key: ENV["GOOGLE_MAPS_API_SERVER_KEY"]
   }
 )
