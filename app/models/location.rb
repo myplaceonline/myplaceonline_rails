@@ -276,7 +276,7 @@ class Location < ApplicationRecord
   end
   
   def ensure_gps
-    if self.latitude.nil?
+    if self.latitude.nil? && self.current_user_owns?
       self.geocode
       self.save!
     end
