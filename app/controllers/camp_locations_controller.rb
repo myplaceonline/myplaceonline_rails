@@ -25,7 +25,9 @@ class CampLocationsController < MyplaceonlineController
         MapLocation.new(
           latitude: x.location.latitude,
           longitude: x.location.longitude,
-          label: nil # No label because it takes too much space on the display
+          label: nil, # No label because it takes too much space on the display
+          tooltip: x.display,
+          popupHtml: ActionController::Base.helpers.link_to(x.display, x.location.map_url, target: "_blank")
         )
       else
         nil

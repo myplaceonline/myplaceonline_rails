@@ -48,10 +48,20 @@ end
     var locations = <%= raw(locations.to_json) %>;
     
     var markers = locations.map(function(location, i) {
-      return new google.maps.Marker({
+      var marker = new google.maps.Marker({
         position: location.position,
-        label: location.label
+        label: location.label,
+        title: location.tooltip,
       });
+      if (location.popupHtml) {
+        var infoWindow = new google.maps.InfoWindow({
+          content: location.popupHtml
+        });
+        marker.addListener("click", function() {
+          infoWindow.open(map, marker);
+        });
+      }
+      return marker;
     });
     
     var markerCluster = new MarkerClusterer(map, markers, {imagePath: "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m"});
