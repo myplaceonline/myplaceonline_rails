@@ -1,3 +1,7 @@
+require 'googlemaps/services/client'
+require 'googlemaps/services/directions'
+include GoogleMaps::Services
+
 # `region` is country, `sub_region1` is state, and `sub_region2` is city.
 class Location < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
@@ -277,5 +281,33 @@ class Location < ApplicationRecord
       self.save!
     end
     return !self.latitude.nil?
+  end
+  
+  def estimate_driving_time
+    if self.time_from_home.nil? && self.current_user_owns?
+      location = User.current_user.primary_identity.primary_location
+      if !location.nil?
+        client = GoogleClient.new(key: ENV["GOOGLE_MAPS_API_SERVER_KEY"], response_format: :json, read_timeout: 5)
+        # https://developers.google.com/maps/documentation/directions/intro
+        directions = Directions.new(client)
+        result = directions.query(
+          origin: location.map_link_component,
+          destination: self.map_link_component,
+          mode: "driving",
+          departure_time: Time.now,
+          alternatives: false
+        )
+        # "For routes that contain no waypoints, the route will consist of a single "leg,""
+        # https://developers.google.com/maps/documentation/directions/intro#Legs
+        duration = result[0]["legs"][0]["duration_in_traffic"]
+        if duration.nil?
+          duration = result[0]["legs"][0]["duration"]
+        end
+        # value indicates the duration in seconds.
+        self.time_from_home = duration["value"]
+        self.save!
+      end
+    end
+    return !self.time_from_home.nil?
   end
 end
