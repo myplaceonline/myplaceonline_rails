@@ -1370,7 +1370,7 @@ module Myp
     }.to_a.map{|kv| "#{kv[0]}: #{kv[1]}"}.join("\n\t")
   end
   
-  def self.handle_exception(exception, email = nil, request = nil)
+  def self.handle_exception(exception, email = nil, request = nil, subject = "User Exception")
     body_plain = ""
     body_html = ""
     
@@ -1417,7 +1417,7 @@ module Myp
     
     Rails.logger.warn{"handle_exception: " + body_plain}
     
-    Myp.send_support_email_safe("User Exception", body_html.html_safe, body_plain, email: email)
+    Myp.send_support_email_safe(subject, body_html.html_safe, body_plain, email: email)
   end
   
   def self.send_support_email_safe(subject, body, body_plain = nil, email: nil)

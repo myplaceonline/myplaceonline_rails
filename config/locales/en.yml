@@ -2813,6 +2813,7 @@ en:
       title: "Administration"
       users: "User List"
       create_test_job: "Perform Test Job"
+      create_test_error_job: "Perform Test Error Job"
       send_email:
         title: "Send Email to Users"
         subject: "Subject"

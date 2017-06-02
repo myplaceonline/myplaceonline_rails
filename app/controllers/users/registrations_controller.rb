@@ -168,7 +168,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         if !foundcat.nil?
           cl = Object.const_get(@category.singularize)
           ApplicationRecord.transaction do
-            destroyed = cl.destroy_all(identity: current_user.primary_identity)
+            destroyed = cl.where(identity: current_user.primary_identity).destroy_all
             count = destroyed.length
             if count > 0 && foundcat[0] != "foods" && foundcat[0] != "drinks"
               Myp.modify_points(current_user, cl.name.downcase.pluralize, -1 * count, session)

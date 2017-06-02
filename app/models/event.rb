@@ -112,12 +112,12 @@ class Event < ApplicationRecord
     # Pictures may have been added since the last share, so first we destroy any previous
     # picture shares and then reshare everything
     
-    PermissionShareChild.destroy_all(
+    PermissionShareChild.where(
       identity_id: self.identity_id,
       share_id: permission_share.share_id,
       permission_share_id: permission_share.id,
       subject_class: IdentityFile.name
-    )
+    ).destroy_all
     
     self.event_pictures.map{|x| x.identity_file}.each do |identity_file|
       psc = PermissionShareChild.new

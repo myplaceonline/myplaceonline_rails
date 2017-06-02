@@ -115,6 +115,7 @@ Rails.application.routes.draw do
     admin/test
     admin/ensure_pending_all_users
     admin/create_test_job
+    admin/create_test_error_job
     admin/gc
     search/show
     info/credits

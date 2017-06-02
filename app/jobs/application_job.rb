@@ -10,6 +10,11 @@ class ApplicationJob < ActiveJob::Base
       job.perform_now(*args)
     end
   end
+  
+  # http://edgeguides.rubyonrails.org/active_job_basics.html#exceptions
+  rescue_from(StandardError) do |exception|
+    Myp.handle_exception(exception, nil, nil, "ActiveJob Failure: #{self.class.name}")
+  end
 
   protected
     def default_url_options

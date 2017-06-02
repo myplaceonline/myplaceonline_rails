@@ -129,7 +129,7 @@ class Feed < ApplicationRecord
       # If the status is more than 30 minutes old, there was probably an error
       if Time.now - 30.minutes >= status.updated_at
         do_reload = true
-        FeedLoadStatus.destroy_all(identity_id: User.current_user.primary_identity_id)
+        FeedLoadStatus.where(identity_id: User.current_user.primary_identity_id).destroy_all
         Myp.warn("Found old feed load status for identity #{User.current_user.primary_identity_id}")
       end
     end

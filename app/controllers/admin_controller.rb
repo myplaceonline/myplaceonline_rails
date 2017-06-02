@@ -35,6 +35,14 @@ class AdminController < ApplicationController
     end
   end
 
+  def create_test_error_job
+    ApplicationJob.perform(TestErrorJob)
+    respond_to do |format|
+      format.json { render(json: { success: true }) }
+      format.html { redirect_to(admin_path, notice: "Test error job created") }
+    end
+  end
+
   def index; end
 
   def send_email
