@@ -896,6 +896,9 @@ var myplaceonline = function(mymodule) {
       for (var i in loadedScripts) {
         if (loadedScripts[i] == url) {
           consoleLog("loadExternalScript: script already loaded");
+          if (successFunc) {
+            successFunc();
+          }
           return false;
         }
       }
@@ -903,10 +906,10 @@ var myplaceonline = function(mymodule) {
     loadedScripts.push(url);
     return $.ajax({
       url: url,
-      dataType: 'script',
+      dataType: "script",
       success: successFunc,
       error: function() {
-        criticalError('Could not load ' + url);
+        criticalError("Could not load " + url);
       },
       async: async
     });

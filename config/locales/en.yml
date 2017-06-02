@@ -275,6 +275,7 @@ en:
       metadescription: "myplaceonline: your online helper"
       metakeywords: "myplaceonline, joy, meaning, order, online, helper, assistant"
       submit: "Submit"
+      update: "Update"
       created: "Created"
       last_updated: "Last Updated"
       child_attribute_removed: "Click Update to complete the deletion"
@@ -361,6 +362,7 @@ en:
       more: "More"
       dup_item: "There's already an item with that %{dup_field}: %{link}"
       display_note: "Display Note"
+      loading_with_ellipses: "Loading..."
     categories:
       no_results: "No Results. Create New "
     everything:

@@ -27,13 +27,22 @@ if !defined?(locations)
 end
 %>
 
-<div id="map" style="width: 100%; height: 400px;">Loading...</div>
+<div id="map" style="width: 100%; height: 400px;"><h1><%= t("myplaceonline.general.loading_with_ellipses") %></h1></div>
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 <script type="text/javascript">
   myplaceonline.onPageLoad(function() {
     $("#map").height($(window).height() * .7);
-    //myplaceonline.loadExternalScript("https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js");
-    myplaceonline.loadExternalScript("https://maps.googleapis.com/maps/api/js?key=<%= Myp.google_maps_api_key %>&callback=initMap", true, null, true);
+    myplaceonline.loadExternalScript(
+      "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js",
+      true,
+      function() {
+        myplaceonline.loadExternalScript(
+          "https://maps.googleapis.com/maps/api/js?key=<%= Myp.google_maps_api_key %>",
+          true,
+          initMap
+        );
+      }
+    );
   });
   
   function initMap() {
@@ -64,6 +73,12 @@ end
       return marker;
     });
     
-    var markerCluster = new MarkerClusterer(map, markers, {imagePath: "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m"});
+    new MarkerClusterer(
+      map,
+      markers,
+      {
+        imagePath: "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m"
+      }
+    );
   }
 </script>
