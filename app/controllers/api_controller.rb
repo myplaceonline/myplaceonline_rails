@@ -336,7 +336,7 @@ class ApiController < ApplicationController
 
                     newfile = newfilewrapper.identity_file
                   else
-                    newfile = IdentityFile.create(val["identity_file_attributes"])
+                    newfile = IdentityFile.create!(val["identity_file_attributes"])
                   end
 
                   Rails.logger.debug{"newfile: #{newfile.inspect}"}
@@ -373,7 +373,7 @@ class ApiController < ApplicationController
           if !result[:result]
             # Just a simple add of a file
             if !params[:identity_file].nil?
-              newfile = IdentityFile.create(params.require(:identity_file).permit(FilesController.param_names))
+              newfile = IdentityFile.create!(params.require(:identity_file).permit(FilesController.param_names))
               Rails.logger.debug{"newfile final: #{newfile.inspect}"}
               result = create_newfile_result(newfile, params, singular: true)
             end

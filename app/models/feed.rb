@@ -74,7 +74,7 @@ class Feed < ApplicationRecord
         #Rails.logger.debug{"existing_item: #{existing_item.inspect}"}
         
         if existing_item.nil?
-          FeedItem.create({
+          FeedItem.create!({
             feed_id: self.id,
             feed_link: feed_link,
             feed_title: item.title,
@@ -134,7 +134,7 @@ class Feed < ApplicationRecord
       end
     end
     if do_reload
-      FeedLoadStatus.create(
+      FeedLoadStatus.create!(
         identity_id: User.current_user.primary_identity_id,
         items_complete: 0,
         items_total: all_count,

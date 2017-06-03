@@ -363,8 +363,12 @@ en:
       dup_item: "There's already an item with that %{dup_field}: %{link}"
       display_note: "Display Note"
       loading_with_ellipses: "Loading..."
+      settings: "Settings"
+      settings_saved: "Settings Saved"
     categories:
       no_results: "No Results. Create New "
+      always_expand_top_used: "Always Expand Top Used"
+      always_expand_favorites: "Always Expand Favorites"
     everything:
       no_results: "No Results. Create New "
     html5:

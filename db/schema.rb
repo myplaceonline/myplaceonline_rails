@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170601050200) do
+ActiveRecord::Schema.define(version: 20170603043822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4270,6 +4270,17 @@ ActiveRecord::Schema.define(version: 20170601050200) do
     t.index ["password_id"], name: "index_reward_programs_on_password_id"
   end
 
+  create_table "settings", force: :cascade do |t|
+    t.string "setting_name"
+    t.string "setting_value"
+    t.bigint "category_id"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_settings_on_category_id"
+    t.index ["identity_id"], name: "index_settings_on_identity_id"
+  end
+
   create_table "shares", id: :serial, force: :cascade do |t|
     t.string "token", limit: 255
     t.integer "identity_id"
@@ -6027,6 +6038,8 @@ ActiveRecord::Schema.define(version: 20170601050200) do
   add_foreign_key "reward_program_files", "reward_programs"
   add_foreign_key "reward_programs", "identities", name: "reward_programs_identity_id_fk"
   add_foreign_key "reward_programs", "passwords", name: "reward_programs_password_id_fk"
+  add_foreign_key "settings", "categories"
+  add_foreign_key "settings", "identities"
   add_foreign_key "shares", "identities", name: "shares_identity_id_fk"
   add_foreign_key "shopping_list_items", "identities", name: "shopping_list_items_identity_id_fk"
   add_foreign_key "shopping_list_items", "shopping_lists", name: "shopping_list_items_shopping_list_id_fk"

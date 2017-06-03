@@ -1078,7 +1078,7 @@ module ApplicationHelper
     end
     
     field_attributes = options[:field_attributes]
-    if options[:form].nil?
+    if options[:form].nil? && options[:type] != Myp::FIELD_BOOLEAN
       field_attributes[:value] = options[:value]
     end
     field_attributes[:placeholder] = options[:placeholder]
@@ -1129,9 +1129,10 @@ module ApplicationHelper
           end
         else
           if options[:type] == Myp::FIELD_BOOLEAN
+            Rails.logger.debug{"ApplicationHelper.input_field: non-form boolean, value: #{(options[:value] ? true : false)}"}
             result = Myp.appendstr(
               result,
-              check_box_tag(name, true, (options[:value] ? true : false), field_attributes)
+              check_box_tag(name, "true", (options[:value] ? true : false), field_attributes)
             )
           else
             result = Myp.appendstr(

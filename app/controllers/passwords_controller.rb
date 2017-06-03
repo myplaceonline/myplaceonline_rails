@@ -224,7 +224,7 @@ class PasswordsController < MyplaceonlineController
       ApplicationRecord.transaction do
         @password_share.save!
         
-        Permission.create(
+        Permission.create!(
           action: Permission::ACTION_READ,
           subject_class: PasswordShare.name.underscore.pluralize,
           subject_id: @password_share.id,

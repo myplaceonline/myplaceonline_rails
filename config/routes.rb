@@ -15,6 +15,7 @@ def process_resources(name, context)
   context << { instance: true, link: "unarchive" }
   context << { instance: true, link: "favorite" }
   context << { instance: true, link: "unfavorite" }
+  context << { instance: false, link: "settings" }
 
   context.each do |context_addition|
     if !context_addition[:instance].nil?

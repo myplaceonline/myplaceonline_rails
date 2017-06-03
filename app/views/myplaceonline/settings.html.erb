@@ -1,0 +1,35 @@
+<% content_for :heading do -%><%= t("myplaceonline.general.settings") %><% end -%>
+<h1><%= t("myplaceonline.general.settings") %></h1>
+
+<%= form_tag(controller.settings_path, method: :post) do %>
+
+  <% @fields.map do |field| %>
+    <%=
+      input_field(
+        type: field[:type],
+        name: field[:name],
+        value: field[:value],
+        placeholder: field[:placeholder]
+      )
+    %>
+  <% end %>
+
+  <%=
+    render(
+      partial: "shared/footer",
+      locals: {
+        items: [
+          {
+            content: submit_tag(t("myplaceonline.general.save"), "data-icon" => "action", "data-iconpos" => "top", "style" => "background-color: green")
+          },
+          {
+            title: I18n.t("myplaceonline.general.cancel"),
+            link: controller.index_path,
+            icon: "back"
+          }
+        ]
+      }
+    )
+  %>
+
+<% end %>

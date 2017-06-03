@@ -2,10 +2,13 @@ class MyplaceonlineController < ApplicationController
   before_action :before_all_actions
   before_action :set_obj, only: [:show, :edit, :update, :destroy]
   
-  DEFAULT_SKIP_AUTHORIZATION_CHECK = [:index, :new, :create, :destroy_all]
+  DEFAULT_SKIP_AUTHORIZATION_CHECK = [:index, :new, :create, :destroy_all, :settings]
   
   CHECK_PASSWORD_REQUIRED = 1
   CHECK_PASSWORD_OPTIONAL = 2
+  
+  SETTING_ALWAYS_EXPAND_FAVORITES = :always_expand_favorites
+  SETTING_ALWAYS_EXPAND_TOP_USED = :always_expand_top_used
   
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK
 
@@ -464,6 +467,10 @@ class MyplaceonlineController < ApplicationController
     raise NotImplementedError
   end
   
+  def category
+    Myp.categories[self.category_name.to_sym]
+  end
+  
   def category_name
     model.table_name
   end
@@ -569,6 +576,10 @@ class MyplaceonlineController < ApplicationController
     send("new_" + path_name + "_path")
   end
   
+  def settings_path()
+    send("#{paths_name}_settings_path")
+  end
+  
   def destroy_all_path(context = nil)
     if nested
       set_parent
@@ -658,6 +669,10 @@ class MyplaceonlineController < ApplicationController
     false
   end
   
+  def index_settings_link?
+    has_category
+  end
+  
   def search_index_name
     category_name
   end
@@ -727,6 +742,13 @@ class MyplaceonlineController < ApplicationController
         title: I18n.t("myplaceonline.general.delete_all"),
         link: self.destroy_all_path,
         icon: "delete"
+      }
+    end
+    if self.index_settings_link?
+      result << {
+        title: I18n.t("myplaceonline.general.settings"),
+        link: self.settings_path,
+        icon: "gear"
       }
     end
     result
@@ -876,6 +898,89 @@ class MyplaceonlineController < ApplicationController
       result = ActionController::Base.helpers.link_to(result, @myplet.link)
     end
     result
+  end
+  
+  def settings_boolean(name:, default_value: false)
+    Myp.param_bool(
+      params,
+      name,
+      default_value:
+        Setting.get_value_boolean(
+          category: self.category,
+          name: name,
+          default_value: default_value
+        )
+    )
+  end
+  
+  def settings
+    deny_guest
+    
+    check_password
+    
+    @always_expand_favorites = settings_boolean(name: SETTING_ALWAYS_EXPAND_FAVORITES)
+    @always_expand_top_used = settings_boolean(name: SETTING_ALWAYS_EXPAND_TOP_USED)
+    
+    @fields = [
+      {
+        type: Myp::FIELD_BOOLEAN,
+        name: SETTING_ALWAYS_EXPAND_FAVORITES,
+        value: @always_expand_favorites,
+        placeholder: "myplaceonline.categories.always_expand_favorites"
+      },
+      {
+        type: Myp::FIELD_BOOLEAN,
+        name: SETTING_ALWAYS_EXPAND_TOP_USED,
+        value: @always_expand_top_used,
+        placeholder: "myplaceonline.categories.always_expand_top_used"
+      },
+    ]
+    
+    if request.post?
+      
+      @fields.each do |field|
+        
+        case field[:type]
+        when Myp::FIELD_BOOLEAN
+          value = Myp.param_bool(
+            params,
+            field[:name]
+          )
+        else
+          raise "TODO"
+        end
+        
+        Rails.logger.debug{"MyplaceonlineController.settings setting #{self.category.human_title}.#{field[:name]} = #{value}"}
+        Setting.set_value(
+          category: self.category,
+          name: field[:name],
+          value: value
+        )
+      end
+      
+      redirect_to(
+        index_path,
+        flash: { notice: I18n.t("myplaceonline.general.settings_saved") }
+      )
+    end
+  end
+  
+  def additional_items_collapsed
+    if !defined?(@cached_additional_items_collapsed)
+      @cached_additional_items_collapsed = !Setting.get_value_boolean(category: self.category, name: SETTING_ALWAYS_EXPAND_TOP_USED)
+    end
+    @cached_additional_items_collapsed
+  end
+  
+  def favorite_items_collapsed
+    if !defined?(@cached_favorite_items_collapsed)
+      @cached_favorite_items_collapsed = !Setting.get_value_boolean(category: self.category, name: SETTING_ALWAYS_EXPAND_FAVORITES)
+    end
+    @cached_favorite_items_collapsed
+  end
+  
+  def autofocus_search
+    self.additional_items_collapsed && self.favorite_items_collapsed
   end
   
   protected
@@ -1062,6 +1167,7 @@ class MyplaceonlineController < ApplicationController
           Rails.logger.debug{"MyplaceonlineController.set_obj setting @obj: #{@obj}"}
         end
       rescue ActiveRecord::RecordNotFound => rnf
+        Rails.logger.debug{"MyplaceonlineController.set_obj caught #{rnf}"}
         raise Myp::SuddenRedirectError.new(index_path)
       end
       

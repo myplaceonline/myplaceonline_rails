@@ -43,7 +43,7 @@ class ContactsController < MyplaceonlineController
             # Nothing to do, already in group
           else
             # Need to add to the group
-            GroupContact.create(
+            GroupContact.create!(
               identity_id: User.current_user.primary_identity.id,
               group_id: group.id,
               contact_id: @obj.id

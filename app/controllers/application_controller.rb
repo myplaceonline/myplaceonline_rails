@@ -74,7 +74,7 @@ class ApplicationController < ActionController::Base
       Rails.logger.debug{"ApplicationController.catchall access denied"}
       redirect_to root_url, :alert => exception.message
     elsif exception.is_a?(Myp::SuddenRedirectError)
-      Rails.logger.debug{"ApplicationController.catchall sudden redirect"}
+      Rails.logger.debug{"ApplicationController.catchall sudden redirect #{exception.path}"}
       if exception.notice.blank?
         redirect_to exception.path
       else

@@ -1734,7 +1734,7 @@ module Myp
       if zip_code.length == 2
         code = zip_code[0]
         json = zip_code[1]
-        UsZipCode.create(
+        UsZipCode.create!(
           zip_code: code,
           city: json["city"].titleize,
           state: json["state"],
