@@ -16,3 +16,13 @@
 <%= myp_check_box(f, :diesel, "myplaceonline.gas_stations.diesel") %>
 <%= myp_check_box(f, :propane_fillup, "myplaceonline.gas_stations.propane_fillup") %>
 <%= myp_check_box(f, :propane_replacement, "myplaceonline.gas_stations.propane_replacement") %>
+<%= myp_check_box(f, :rv_dump_station, "myplaceonline.gas_stations.rv_dump_station") %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes"
+  )
+%>

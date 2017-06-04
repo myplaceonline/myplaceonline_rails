@@ -3,3 +3,5 @@
 <%= attribute_table_row_boolean(t("myplaceonline.gas_stations.diesel"), obj.diesel) %>
 <%= attribute_table_row_boolean(t("myplaceonline.gas_stations.propane_fillup"), obj.propane_fillup) %>
 <%= attribute_table_row_boolean(t("myplaceonline.gas_stations.propane_replacement"), obj.propane_replacement) %>
+<%= attribute_table_row_boolean(t("myplaceonline.gas_stations.rv_dump_station"), obj.rv_dump_station) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>

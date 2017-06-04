@@ -2411,6 +2411,7 @@ en:
       diesel: "Diesel"
       propane_replacement: "Propane Tank Replacement"
       propane_fillup: "Propane Fillup"
+      rv_dump_station: "RV Dump Station"
     repeats:
       heading_singular: "Repeat"
       start_date: "Start Date"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170603043822) do
+ActiveRecord::Schema.define(version: 20170604162927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1917,6 +1917,8 @@ ActiveRecord::Schema.define(version: 20170603043822) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.text "notes"
+    t.boolean "rv_dump_station"
     t.index ["identity_id"], name: "index_gas_stations_on_identity_id"
     t.index ["location_id"], name: "index_gas_stations_on_location_id"
   end

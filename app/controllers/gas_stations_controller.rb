@@ -18,6 +18,8 @@ class GasStationsController < MyplaceonlineController
         :diesel,
         :propane_replacement,
         :propane_fillup,
+        :rv_dump_station,
+        :notes,
         location_attributes: LocationsController.param_names
       )
     end
@@ -28,6 +30,7 @@ class GasStationsController < MyplaceonlineController
         { name: :diesel },
         { name: :propane_replacement },
         { name: :propane_fillup },
+        { name: :rv_dump_station },
       ]
     end
 end
