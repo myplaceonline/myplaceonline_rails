@@ -1174,6 +1174,7 @@ class MyplaceonlineController < ApplicationController
       authorize! action.to_sym, @obj
       
       # If this succeeds, then set the identity context for nested authorization checks
+      Rails.logger.debug{"MyplaceonlineController.set_obj setting Ability.context_identity = #{@obj.identity_id}"}
       Ability.context_identity = @obj.identity
     end
     

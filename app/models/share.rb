@@ -6,4 +6,11 @@ class Share < ApplicationRecord
   def display
     token
   end
+  
+  def self.build_share(owner_identity:)
+    result = Share.new
+    result.identity = owner_identity
+    result.token = SecureRandom.hex(10)
+    result
+  end
 end

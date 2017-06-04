@@ -17,7 +17,7 @@
  *= require magnific-popup
  */
 
-.ui-content {
+#main_content {
   overflow-x: auto !important;
 }
 

@@ -9,7 +9,7 @@ class PermissionShare < ApplicationRecord
 
   has_many :permission_share_children, :dependent => :destroy
   
-  child_property(name: :email, required: true)
+  child_property(name: :email)
 
   def display
     subject_class + "/" + subject_id.to_s

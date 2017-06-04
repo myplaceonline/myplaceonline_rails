@@ -451,11 +451,14 @@ module ApplicationHelper
   end
   
   def file_audio(identity_file)
+    
+    token = share_token(context: identity_file)
+    
     html = <<-HTML
-    <audio src="#{file_view_name_path(identity_file, identity_file.urlname, t: identity_file.updated_at.to_i, token: params[:token])}" preload="none" controls>
+    <audio src="#{file_view_name_path(identity_file, identity_file.urlname, t: identity_file.updated_at.to_i, token: token)}" preload="none" controls>
       <p>#{I18n.t("myplaceonline.html5.noaudio")}</p>
     </audio>
-    #{ url_or_blank(file_download_path(identity_file, t: identity_file.updated_at.to_i, token: params[:token]), t("myplaceonline.files.download"), nil, "ui-btn ui-btn-inline", true) }
+    #{ url_or_blank(file_download_path(identity_file, t: identity_file.updated_at.to_i, token: token), t("myplaceonline.files.download"), nil, "ui-btn ui-btn-inline", true) }
     HTML
   end
   
@@ -473,11 +476,14 @@ module ApplicationHelper
   end
   
   def file_video(identity_file)
+    
+    token = share_token(context: identity_file)
+    
     html = <<-HTML
-    <video style="max-width: 100%;" src="#{file_view_name_path(identity_file, identity_file.urlname, t: identity_file.updated_at.to_i, token: params[:token])}" preload="none" loop="true" controls>
+    <video style="max-width: 100%;" src="#{file_view_name_path(identity_file, identity_file.urlname, t: identity_file.updated_at.to_i, token: token)}" preload="none" loop="true" controls>
       <p>#{I18n.t("myplaceonline.html5.novideo")}</p>
     </video>
-    #{ url_or_blank(file_download_path(identity_file, t: identity_file.updated_at.to_i, token: params[:token]), t("myplaceonline.files.download"), nil, "ui-btn ui-btn-inline", true) }
+    #{ url_or_blank(file_download_path(identity_file, t: identity_file.updated_at.to_i, token: token), t("myplaceonline.files.download"), nil, "ui-btn ui-btn-inline", true) }
     HTML
   end
   
@@ -525,6 +531,9 @@ module ApplicationHelper
   end
   
   def image_content(identity_file, link_to_original = true, useParams: true)
+    
+    token = share_token(context: identity_file)
+    
     if has_image(identity_file)
       identity_file.ensure_thumbnail
       
@@ -532,21 +541,68 @@ module ApplicationHelper
       # may have been updated
       if has_thumbnail(identity_file)
         if useParams
-          content = image_tag(file_thumbnail_name_path(identity_file, identity_file.urlname, t: identity_file.updated_at.to_i, token: params[:token]), alt: identity_file.display, title: identity_file.display, class: "fit")
+          content =
+              image_tag(
+                file_thumbnail_name_path(
+                  identity_file,
+                  identity_file.urlname,
+                  t: identity_file.updated_at.to_i,
+                  token: token
+                ),
+                alt: identity_file.display,
+                title: identity_file.display,
+                class: "fit"
+              )
         else
-          content = image_tag(file_thumbnail_name_path(identity_file, identity_file.urlname, t: identity_file.updated_at.to_i), alt: identity_file.display, title: identity_file.display, class: "fit")
+          content =
+              image_tag(
+                file_thumbnail_name_path(
+                  identity_file,
+                  identity_file.urlname,
+                  t: identity_file.updated_at.to_i
+                ),
+                alt: identity_file.display,
+                title: identity_file.display,
+                class: "fit"
+              )
         end
       else
         if useParams
-          content = image_tag(file_view_name_path(identity_file, identity_file.urlname, t: identity_file.updated_at.to_i, token: params[:token]), alt: identity_file.display, title: identity_file.display, class: "fit")
+          content =
+              image_tag(
+                file_view_name_path(
+                  identity_file,
+                  identity_file.urlname,
+                  t: identity_file.updated_at.to_i,
+                  token: token
+                ),
+                alt: identity_file.display,
+                title: identity_file.display,
+                class: "fit"
+              )
         else
-          content = image_tag(file_view_name_path(identity_file, identity_file.urlname, t: identity_file.updated_at.to_i), alt: identity_file.display, title: identity_file.display, class: "fit")
+          content =
+              image_tag(
+                file_view_name_path(
+                  identity_file,
+                  identity_file.urlname,
+                  t: identity_file.updated_at.to_i
+                ),
+                alt: identity_file.display,
+                title: identity_file.display,
+                class: "fit"
+              )
         end
       end
       if link_to_original
         if useParams
           url_or_blank(
-            file_view_name_url(identity_file, identity_file.urlname, t: identity_file.updated_at.to_i, token: params[:token]),
+            file_view_name_url(
+              identity_file,
+              identity_file.urlname,
+              t: identity_file.updated_at.to_i,
+              token: token
+            ),
             content,
             nil,
             "externallink",
@@ -554,7 +610,11 @@ module ApplicationHelper
           )
         else
           url_or_blank(
-            file_view_name_url(identity_file, identity_file.urlname, t: identity_file.updated_at.to_i),
+            file_view_name_url(
+              identity_file,
+              identity_file.urlname,
+              t: identity_file.updated_at.to_i
+            ),
             content,
             nil,
             "externallink",
@@ -569,10 +629,84 @@ module ApplicationHelper
     end
   end
   
+  def share_token(context:)
+    
+    token = params[:token]
+    
+    Rails.logger.debug{"ApplicationHelper.share_token: params[:token] = #{token}"}
+    
+    if token.blank?
+      # If Ability.context_identity is different from the current user, then it could be, for example, a shared
+      # (or nested) item which we can assume has already passed authorization checks, so we need to create a token for
+      # the subsequent image request (because Ability.context_identity won't be set on the image request).
+      
+      Rails.logger.debug{"ApplicationHelper.share_token: context identity = #{Ability.context_identity.id}, current user = #{User.current_user.primary_identity_id}"}
+      
+      if Ability.context_identity.id != User.current_user.primary_identity_id
+        
+        # Check if we've already done this first
+        existing_permission_share = PermissionShare.includes(:share).where(
+          identity: User.current_user.primary_identity,
+          subject_class: context.class.name,
+          subject_id: context.id
+        ).first
+        
+        if existing_permission_share.nil?
+          share = Share.build_share(owner_identity: User.current_user.primary_identity)
+          share.save!
+          
+          PermissionShare.create!(
+            identity: User.current_user.primary_identity,
+            share: share,
+            subject_class: context.class.name,
+            subject_id: context.id
+          )
+          
+          token = share.token
+        else
+          token = existing_permission_share.share.token
+        end
+      end
+    end
+    
+    token
+  end
+  
   def attribute_table_row_image(name, identity_file, link_to_original = true)
     content = image_content(identity_file, link_to_original)
+    
+    token = share_token(context: identity_file)
+    
     if !content.nil?
-      content += "<p>#{url_or_blank(file_path(identity_file, t: identity_file.updated_at.to_i, token: params[:token]), identity_file.file_file_name, nil, "", true)} | #{url_or_blank(file_download_name_url(identity_file, identity_file.urlname, t: identity_file.updated_at.to_i, token: params[:token]), t("myplaceonline.files.download"), nil, "externallink", true)}</p>".html_safe
+      
+      content +=
+        "<p>#{
+                url_or_blank(
+                  file_path(
+                    identity_file,
+                    t: identity_file.updated_at.to_i,
+                    token: token
+                  ),
+                  identity_file.file_file_name,
+                  nil,
+                  "",
+                  true
+                )
+             } | #{
+                    url_or_blank(
+                      file_download_name_url(
+                        identity_file,
+                        identity_file.urlname,
+                        t: identity_file.updated_at.to_i,
+                        token: token
+                      ),
+                      t("myplaceonline.files.download"),
+                      nil,
+                      "externallink",
+                      true
+                    )
+                  }</p>".html_safe
+      
       if !identity_file.notes.blank?
         content += Myp.markdown_to_html(identity_file.notes).html_safe
       end
@@ -584,11 +718,44 @@ module ApplicationHelper
     else
       if !identity_file.nil?
         if identity_file.urlname.blank?
-          download_path = file_download_url(identity_file, t: identity_file.updated_at.to_i, token: params[:token])
+          download_path =
+              file_download_url(
+                identity_file,
+                t: identity_file.updated_at.to_i,
+                token: token
+              )
         else
-          download_path = file_download_name_url(identity_file, identity_file.urlname, t: identity_file.updated_at.to_i, token: params[:token])
+          download_path =
+              file_download_name_url(
+                identity_file,
+                identity_file.urlname,
+                t: identity_file.updated_at.to_i,
+                token: token
+              )
         end
-        content = "<p>#{url_or_blank(file_path(identity_file, t: identity_file.updated_at.to_i, token: params[:token]), identity_file.file_file_name, nil, "", true)} | #{url_or_blank(download_path, t("myplaceonline.files.download"), nil, "externallink", true)}</p>".html_safe
+        content =
+            "<p>#{
+                    url_or_blank(
+                      file_path(
+                        identity_file,
+                        t: identity_file.updated_at.to_i,
+                        token: token
+                      ),
+                      identity_file.file_file_name,
+                      nil,
+                      "",
+                      true
+                    )
+                  } | #{
+                          url_or_blank(
+                            download_path,
+                            t("myplaceonline.files.download"),
+                            nil,
+                            "externallink",
+                            true
+                          )
+                        }</p>".html_safe
+
         if !identity_file.notes.blank?
           content += Myp.markdown_to_html(identity_file.notes).html_safe
         end

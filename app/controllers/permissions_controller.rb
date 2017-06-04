@@ -92,9 +92,7 @@ class PermissionsController < MyplaceonlineController
 
       @share.identity = User.current_user.primary_identity
       
-      public_share = Share.new
-      public_share.identity = @share.identity
-      public_share.token = SecureRandom.hex(10)
+      public_share = Share.build_share(owner_identity: @share.identity)
       public_share.save!
       
       @share.share = public_share
