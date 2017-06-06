@@ -14,15 +14,17 @@
 <%= sub_region2_field %>
 <%= sub_region1_field %>
 <%
-  latitude_field = myp_decimal_field(f, :latitude, "myplaceonline.locations.latitude", obj.latitude, false, nil, 0.00000000000000000001)
+  # We need a text field because otherwise we can't support parsing a "latitude,longitude" format
+  # See https://stackoverflow.com/questions/18852244/how-to-get-the-raw-value-an-input-type-number-field
+  latitude_field = myp_text_field(f, :latitude, "myplaceonline.locations.latitude", obj.latitude)
   longitude_field = myp_decimal_field(f, :longitude, "myplaceonline.locations.longitude", obj.longitude, false, nil, 0.00000000000000000001)
   random_name = SecureRandom.hex(10)
 %>
 <%= latitude_field %>
 <%= longitude_field %>
-<script>
 
-$("#<%= extract_id(postal_code_field) %>").on("keyup", function(x) {
+<script>
+$("#<%= extract_id(postal_code_field) %>").on("input propertychange paste", function(x) {
   var $this = $(this);
   var postal_code = $this.val();
   if (postal_code.length == 5) {
@@ -61,12 +63,25 @@ $("#<%= extract_id(postal_code_field) %>").on("keyup", function(x) {
   }
 });
 
+$("#<%= extract_id(latitude_field) %>").on("input propertychange paste", function(x) {
+  var $this = $(this);
+  var latitude_value = $this.val();
+  var i = latitude_value.indexOf(",");
+  if (i != -1) {
+    var cut_left = latitude_value.substring(0, i).trim();
+    var cut_right = latitude_value.substring(i + 1).trim();
+    $this.val(cut_left);
+    $("#<%= extract_id(longitude_field) %>").val(cut_right);
+  }
+});
+
 function location_gps_success<%= random_name %>(location) {
   $("#<%= extract_id(latitude_field) %>").val(location.coords.latitude);
   $("#<%= extract_id(longitude_field) %>").val(location.coords.longitude);
   myplaceonline.createSuccessNotification("GPS coordinates updated");
 }
 </script>
+
 <a href="#" onclick="return myplaceonline.requestGPS2(location_gps_success<%= random_name %>);" class="ui-btn"><%= t("myplaceonline.locations.request_gps") %></a>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.locations.notes", obj.notes) %>
 <%=
