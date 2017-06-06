@@ -73,6 +73,9 @@ class PeriodicPayment < ApplicationRecord
       ApplicationRecord.transaction do
         on_after_destroy
         if !suppress_reminder && !next_payment.nil? && !self.is_archived?
+          
+          Rails.logger.debug{"PeriodicPayment.on_after_save identity: #{User.current_user.primary_identity_id}, next_payment: #{next_payment}, model_id: #{self.id}"}
+          
           User.current_user.primary_identity.calendars.each do |calendar|
             CalendarItem.create_calendar_item(
               identity: User.current_user.primary_identity,
@@ -83,7 +86,8 @@ class PeriodicPayment < ApplicationRecord
               reminder_threshold_type: Calendar::DEFAULT_REMINDER_TYPE,
               model_id: id,
               repeat_amount: 1,
-              repeat_type: Myp.period_to_repeat_type(date_period)
+              repeat_type: Myp.period_to_repeat_type(date_period),
+              max_pending: 1
             )
           end
         end

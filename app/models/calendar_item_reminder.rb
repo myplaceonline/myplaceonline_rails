@@ -157,13 +157,15 @@ class CalendarItemReminder < ApplicationRecord
         if calendar_item_reminder.calendar_item.model_id_valid?
           Rails.logger.debug{"checking reminder=#{calendar_item_reminder.inspect}. Item: #{calendar_item_reminder.calendar_item.display}, Calendar Item: #{calendar_item_reminder.calendar_item.inspect}"}
           
+          # Don't process a reminder that already has pendings outstanding because that means it has previously been
+          # processed
           if calendar_item_reminder.calendar_item_reminder_pendings.count == 0
+            
             if !calendar_item_reminder.calendar_item.calendar_item_time.nil?
 
               Rails.logger.debug{"calendar_item_time = #{calendar_item_reminder.calendar_item.calendar_item_time}"}
           
-              if calendar_item_reminder.calendar_item.calendar_item_time - calendar_item_reminder.threshold_in_seconds.seconds <= now &&
-                  !calendar_item_reminder.is_expired(now)
+              if calendar_item_reminder.threshold <= now && !calendar_item_reminder.is_expired(now)
                 
                 Rails.logger.debug{"meets threshold of #{calendar_item_reminder.threshold_in_seconds.seconds}"}
           
@@ -365,5 +367,9 @@ class CalendarItemReminder < ApplicationRecord
       end
     end
     result
+  end
+  
+  def threshold
+    self.calendar_item.calendar_item_time - self.threshold_in_seconds.seconds
   end
 end

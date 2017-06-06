@@ -2726,6 +2726,7 @@ en:
       calendar_item: "Item"
       text_message: "Reminder (%{time}): %{display}"
       calendar_item_reminder_pendings: "Pending Items"
+      threshold: "Threshold"
     calendar_item_reminder_pendings:
       calendar_item_reminder: "Item"
       display: "Pending Reminder"
