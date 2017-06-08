@@ -3398,4 +3398,4 @@ en:
     website_scraper_transformations:
       transformation_type: "Transformation Type"
       transformation: "Transformation"
-      transformation_extract: "Extract with Non-Greedy Multi-line Regular Expression"
+      transformation_extract1: "Extract RSS Feed with Regular Expression"

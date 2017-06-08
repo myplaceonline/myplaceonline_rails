@@ -15,7 +15,7 @@ class WebsiteScrapersController < MyplaceonlineController
     begin
       results = Myp.http_get(url: @obj.website_url)
       
-      results = process_results(results)
+      results[:body] = process_results(results[:body])
       
       @raw_response = CGI::escapeHTML(results[:body])
       @raw_response = @raw_response.gsub(/\n/, "\n<br />")
@@ -47,6 +47,9 @@ class WebsiteScrapersController < MyplaceonlineController
     end
     
     def process_results(results)
+      @obj.website_scraper_transformations.each do |t|
+        results = t.execute_transform(results)
+      end
 #       while true do
 #         match_data = markdown.match(/\[([^\]]+)\]\(([^)]+)\)/, i)
 #         if !match_data.nil?
