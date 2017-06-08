@@ -26,3 +26,33 @@
     placeholder: "myplaceonline.general.notes"
   )
 %>
+<%=
+  render(layout: "myplaceonline/childproperties", locals: {
+    f: f,
+    heading: t("myplaceonline.website_scrapers.transformations"),
+    childpropertiesname: :website_scraper_transformations,
+    childproperties: obj.website_scraper_transformations,
+    deletebutton: t("myplaceonline.website_scrapers.delete_transformation"),
+    addbutton: t("myplaceonline.website_scrapers.add_transformation"),
+    expanded: obj.website_scraper_transformations.length > 0,
+    position_field: :position,
+    itemname: t("myplaceonline.website_scrapers.transformation"),
+    formjson: [
+      {
+        type: :renderpartial,
+        partial: "myplaceonline/select_or_create",
+        heading: t("myplaceonline.website_scrapers.transformation"),
+        objform: "website_scraper_transformations/form",
+        only_new: true,
+        edit: false,
+        autofocus: true
+      },
+      {
+        type: "position",
+        name: "position"
+      }
+    ]
+  }) do |child_fields, childproperty|
+%>
+  <%= render partial: "website_scraper_transformations/form", locals: { obj: childproperty || WebsiteScraperTransformation.build, edit: edit, autofocus: false, f: child_fields } %>
+<% end %>

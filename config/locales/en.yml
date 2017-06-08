@@ -3391,3 +3391,11 @@ en:
       scrape: "Scrape"
       scrape_results: "Scrape Results"
       scrape_error: "Scrape Error: %{message}"
+      transformation: "Transformation"
+      transformations: "Transformations"
+      add_transformation: "Add Transformation"
+      delete_transformation: "Delete Transformation"
+    website_scraper_transformations:
+      transformation_type: "Transformation Type"
+      transformation: "Transformation"
+      transformation_extract: "Extract with Non-Greedy Multi-line Regular Expression"

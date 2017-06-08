@@ -16,4 +16,6 @@ class WebsiteScraper < ApplicationRecord
   def display
     scraper_name
   end
+
+  child_properties(name: :website_scraper_transformations, sort: "position ASC")
 end

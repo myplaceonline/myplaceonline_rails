@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170608041623) do
+ActiveRecord::Schema.define(version: 20170608054738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -5349,6 +5349,20 @@ ActiveRecord::Schema.define(version: 20170608041623) do
     t.index ["website_id"], name: "index_website_passwords_on_website_id"
   end
 
+  create_table "website_scraper_transformations", force: :cascade do |t|
+    t.integer "transformation_type"
+    t.text "transformation"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.bigint "website_scraper_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_website_scraper_transformations_on_identity_id"
+    t.index ["website_scraper_id"], name: "index_website_scraper_transformations_on_website_scraper_id"
+  end
+
   create_table "website_scrapers", force: :cascade do |t|
     t.string "scraper_name"
     t.string "website_url"
@@ -6214,6 +6228,8 @@ ActiveRecord::Schema.define(version: 20170608041623) do
   add_foreign_key "website_passwords", "identities"
   add_foreign_key "website_passwords", "passwords"
   add_foreign_key "website_passwords", "websites"
+  add_foreign_key "website_scraper_transformations", "identities"
+  add_foreign_key "website_scraper_transformations", "website_scrapers"
   add_foreign_key "website_scrapers", "identities"
   add_foreign_key "websites", "contacts", column: "recommender_id"
   add_foreign_key "websites", "identities", name: "websites_identity_id_fk"

@@ -1,0 +1,21 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_SELECT,
+    name: :transformation_type,
+    value: obj.transformation_type,
+    placeholder: "myplaceonline.website_scraper_transformations.transformation_type",
+    select_options: WebsiteScraperTransformation::TRANSFORMATIONS,
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :transformation,
+    value: obj.transformation,
+    placeholder: "myplaceonline.website_scraper_transformations.transformation",
+    collapsed: false
+  )
+%>

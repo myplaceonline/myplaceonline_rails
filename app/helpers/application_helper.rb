@@ -277,7 +277,7 @@ module ApplicationHelper
           <tr>
             <td>#{CGI::escapeHTML(options[:heading])}</td>
             <td colspan="2">
-              <div data-role="collapsible" data-collapsed="true">
+              <div data-role="collapsible" data-collapsed="#{!options[:expanded]}">
                 <h3>#{item.display}</h3>
                 #{data_table_start(format: format)}
                 #{child_html}
