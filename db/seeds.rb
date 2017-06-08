@@ -161,8 +161,9 @@ Category.create!([
   {id: 161, name: "paid_taxes", link: "paid_taxes", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/money.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 162, name: "psychological_evaluations", link: "psychological_evaluations", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/emotion_detective.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 163, name: "insurance_cards", link: "insurance_cards", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/infocard.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 196, name: "sicknesses", link: "sicknesses", position: 0, parent_id: 29, additional_filtertext: "cold fever", icon: "FatCow_Icons16x16/emotion_sick.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 197, name: "picnic_locations", link: "picnic_locations", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/grass.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
+  {id: 164, name: "sicknesses", link: "sicknesses", position: 0, parent_id: 29, additional_filtertext: "cold fever", icon: "FatCow_Icons16x16/emotion_sick.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 165, name: "picnic_locations", link: "picnic_locations", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/grass.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 198, name: "user_capabilities", link: "user_capabilities", position: 0, parent_id: 107, additional_filtertext: nil, icon: "FatCow_Icons16x16/user_ninja.png", explicit: nil, user_type_mask: nil, experimental: true, simple: nil}
 ])
 
 user = User.new

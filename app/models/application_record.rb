@@ -15,6 +15,7 @@ class ApplicationRecord < ActiveRecord::Base
   PROPERTY_TYPE_HIDDEN = 11
   PROPERTY_TYPE_BOOLEAN = 12
   PROPERTY_TYPE_FILE = 13
+  PROPERTY_TYPE_SELECT = 14
 
   def self.properties
     raise "self.properties not implemented in #{self.name}"

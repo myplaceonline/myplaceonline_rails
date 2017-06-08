@@ -16,6 +16,7 @@ class MyplaceonlineController < ApplicationController
 
   def index
     deny_guest
+    require_admin? && deny_nonadmin
     
     if sensitive
       check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
@@ -186,6 +187,7 @@ class MyplaceonlineController < ApplicationController
     end
     
     deny_guest
+    require_admin? && deny_nonadmin
     
     if !insecure
       check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
@@ -207,6 +209,7 @@ class MyplaceonlineController < ApplicationController
 
   def edit
     deny_guest
+    require_admin? && deny_nonadmin
 
     check_password
     @url = obj_path(@obj)
@@ -216,6 +219,7 @@ class MyplaceonlineController < ApplicationController
   
   def create
     deny_guest
+    require_admin? && deny_nonadmin
     
     Rails.logger.debug{"create"}
     if !insecure
@@ -309,6 +313,7 @@ class MyplaceonlineController < ApplicationController
   
   def update
     deny_guest
+    require_admin? && deny_nonadmin
     
     if sensitive
       check_password
@@ -413,6 +418,7 @@ class MyplaceonlineController < ApplicationController
 
   def destroy
     deny_guest
+    require_admin? && deny_nonadmin
     
     check_password
     
@@ -431,6 +437,7 @@ class MyplaceonlineController < ApplicationController
   def destroy_all
     check_password
     deny_guest
+    require_admin? && deny_nonadmin
     ApplicationRecord.transaction do
       all.each do |obj|
         authorize! :destroy, obj
@@ -915,6 +922,7 @@ class MyplaceonlineController < ApplicationController
   
   def settings
     deny_guest
+    require_admin? && deny_nonadmin
     
     check_password
     
@@ -990,6 +998,16 @@ class MyplaceonlineController < ApplicationController
         Rails.logger.debug{"Denying guest access"}
         raise CanCan::AccessDenied
       end
+    end
+    
+    def deny_nonadmin
+      if !current_user.admin?
+        raise CanCan::AccessDenied
+      end
+    end
+    
+    def require_admin?
+      false
     end
   
     def obj_params

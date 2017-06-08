@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170606031434) do
+ActiveRecord::Schema.define(version: 20170607022416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4924,6 +4924,18 @@ ActiveRecord::Schema.define(version: 20170606031434) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_capabilities", force: :cascade do |t|
+    t.integer "capability"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_user_capabilities_on_identity_id"
+  end
+
   create_table "users", id: :serial, force: :cascade do |t|
     t.string "email", limit: 255, default: "", null: false
     t.string "encrypted_password", limit: 255, default: "", null: false
@@ -6132,6 +6144,7 @@ ActiveRecord::Schema.define(version: 20170606031434) do
   add_foreign_key "trips", "locations", name: "trips_location_id_fk"
   add_foreign_key "tv_shows", "contacts", column: "recommender_id"
   add_foreign_key "tv_shows", "identities"
+  add_foreign_key "user_capabilities", "identities"
   add_foreign_key "users", "identities", column: "primary_identity_id", name: "users_primary_identity_id_fk"
   add_foreign_key "vaccine_files", "identities"
   add_foreign_key "vaccine_files", "identity_files"

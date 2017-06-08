@@ -1,0 +1,11 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_SELECT,
+    name: :capability,
+    value: obj.capability,
+    placeholder: "myplaceonline.user_capabilities.capability",
+    select_options: UserCapability::CAPABILITIES,
+    autofocus: autofocus
+  )
+%>

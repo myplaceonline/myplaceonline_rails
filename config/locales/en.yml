@@ -240,6 +240,7 @@ en:
       insurance_cards: "Insurance Cards"
       sicknesses: "Sicknesses"
       picnic_locations: "Picnic Locations"
+      user_capabilities: "User Capabilities"
     general:
       email: "E-mail"
       password: "Password"
@@ -3380,3 +3381,6 @@ en:
       location: "Location"
     maps:
       map: "Map"
+    user_capabilities:
+      capability: "Capability"
+      capability_screen_scraper: "Screen Scraper"

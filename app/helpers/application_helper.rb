@@ -1168,7 +1168,8 @@ module ApplicationHelper
       field_classes: "",
       remote_autocomplete_model: nil,
       remote_autocomplete_all: false, # if true, show all items on focus; otherwise, show only items that match what's typed
-      tooltip: nil
+      tooltip: nil,
+      select_options: nil
     }.merge(options)
     
     case options[:type]
@@ -1204,6 +1205,8 @@ module ApplicationHelper
       
       # The collapsible header is effectively the label
       options[:include_label] = false
+    when Myp::FIELD_SELECT
+      options[:select_options] = Myp.translate_options(options[:select_options], sort: true)
     end
 
     if Myp.is_probably_i18n(options[:placeholder])
@@ -1261,6 +1264,10 @@ module ApplicationHelper
     if options[:type] == Myp::FIELD_BOOLEAN
       field_attributes[:data] = { enhanced: "true" }
     end
+    if options[:type] == Myp::FIELD_SELECT
+      field_attributes[:prompt] = options[:placeholder]
+      field_attributes[:include_blank] = !options[:value].nil?
+    end
 
     if options[:datebox_mode].nil?
       if options[:type] == Myp::FIELD_TEXT_AREA
@@ -1284,6 +1291,16 @@ module ApplicationHelper
               result,
               options[:form].check_box(name, field_attributes)
             )
+          elsif options[:type] == Myp::FIELD_SELECT
+            result = Myp.appendstr(
+              result,
+              options[:form].send(
+                options[:type].to_s,
+                name,
+                options_for_select(options[:select_options], options[:value]),
+                field_attributes
+              )
+            )
           else
             result = Myp.appendstr(
               result,
@@ -1300,6 +1317,16 @@ module ApplicationHelper
             result = Myp.appendstr(
               result,
               check_box_tag(name, "true", (options[:value] ? true : false), field_attributes)
+            )
+          elsif options[:type] == Myp::FIELD_SELECT
+            result = Myp.appendstr(
+              result,
+              send(
+                options[:type].to_s + "_tag",
+                name,
+                options_for_select(options[:select_options], options[:value]),
+                field_attributes
+              )
             )
           else
             result = Myp.appendstr(

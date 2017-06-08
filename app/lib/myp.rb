@@ -19,6 +19,7 @@ module Myp
   FIELD_NUMBER = :number
   FIELD_DECIMAL = :decimal
   FIELD_BOOLEAN = :boolean
+  FIELD_SELECT = :select
   
   # We want at least 128 bits of randomness, so
   # min(POSSIBILITIES_*.length)^DEFAULT_PASSWORD_LENGTH should be >= 2^128
@@ -853,6 +854,10 @@ module Myp
       body_plain += "\n\n" + error_details
       body_html += "\n\n<p>" + CGI::escapeHTML(error_details).gsub(/\n/, "<br />\n").gsub(/\t/, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;") + "</p>"
       #subject += " (#{exception.class})"
+    end
+    if !ENV["NODENAME"].blank?
+      body_plain += "\n\nServer: #{ENV["NODENAME"]}"
+      body_html += "\n\n<p>Server: #{ENV["NODENAME"]}</p>"
     end
     Rails.logger.warn{"Myp.warn: #{message}"}
     Myp.send_support_email_safe(subject, body_html.html_safe, body_plain)

@@ -1,0 +1,2 @@
+module UserCapabilitiesHelper
+end
