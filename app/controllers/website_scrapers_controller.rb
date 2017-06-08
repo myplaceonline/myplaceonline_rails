@@ -6,25 +6,42 @@ class WebsiteScrapersController < MyplaceonlineController
         link: website_scraper_scrape_path(@obj),
         icon: "action"
       }
-    ] + super
+    ] + super + [
+      {
+        title: I18n.t("myplaceonline.website_scrapers.test"),
+        link: website_scraper_test_path(@obj),
+        icon: "action"
+      }
+    ]
   end
   
   def scrape
-    set_obj
-    
-    begin
-      results = Myp.http_get(url: @obj.website_url)
-      
-      results[:body] = process_results(results[:body])
-      
-      @raw_response = CGI::escapeHTML(results[:body])
-      @raw_response = @raw_response.gsub(/\n/, "\n<br />")
-    rescue => e
-      flash[:error] = t("myplaceonline.website_scrapers.scrape_error", message: e.to_s)
-    end
+    execute_scrape(escape: false)
+    render(layout: false)
+  end
+  
+  def test
+    execute_scrape(escape: true)
   end
   
   protected
+    def execute_scrape(escape:)
+      set_obj
+      
+      begin
+        results = Myp.http_get(url: @obj.website_url)
+        
+        @raw_response = process_results(results[:body])
+        
+        if escape
+          @raw_response = CGI::escapeHTML(@raw_response)
+          @raw_response = @raw_response.gsub(/\n/, "\n<br />")
+        end
+      rescue => e
+        flash[:error] = t("myplaceonline.website_scrapers.scrape_error", message: e.to_s)
+      end
+    end
+    
     def insecure
       true
     end

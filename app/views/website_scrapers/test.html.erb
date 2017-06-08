@@ -1,0 +1,32 @@
+<% content_for :heading do -%><%= controller.display_obj(@obj) %><% end -%>
+<h1><%= t("myplaceonline.website_scrapers.scrape_results") %></h1>
+<%= flashes! %>
+<p><%= t("myplaceonline.website_scrapers.website_url") %>: <%=
+  data_row(
+    heading: t("myplaceonline.website_scrapers.website_url"),
+    content: @obj.website_url,
+    url: true,
+    url_external: true,
+    url_external_target_blank: true,
+    wrap: false
+  )
+%></p>
+<%= raw(@raw_response) %>
+
+<%= form_tag(camp_locations_map_path, method: :get) do %>
+
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.website_scrapers.scrape"), "data-icon" => "action", "data-iconpos" => "top")
+        },
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: controller.obj_path,
+          icon: "back"
+        }
+      ]
+    })
+  %>
+<% end %>

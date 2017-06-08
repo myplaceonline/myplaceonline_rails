@@ -3389,6 +3389,7 @@ en:
       scraper_name: "Name"
       website_url: "Website URL"
       scrape: "Scrape"
+      test: "Test"
       scrape_results: "Scrape Results"
       scrape_error: "Scrape Error: %{message}"
       transformation: "Transformation"

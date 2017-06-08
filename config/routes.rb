@@ -414,7 +414,8 @@ Rails.application.routes.draw do
       { instance: true, link: "roll" }
     ],
     website_scrapers: [
-      { instance: true, link: "scrape" }
+      { instance: true, link: "scrape" },
+      { instance: true, link: "test" },
     ],
   }
 
