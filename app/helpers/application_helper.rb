@@ -1169,11 +1169,13 @@ module ApplicationHelper
       remote_autocomplete_model: nil,
       remote_autocomplete_all: false, # if true, show all items on focus; otherwise, show only items that match what's typed
       tooltip: nil,
-      select_options: nil
+      select_options: nil,
+      text_area_rich: true
     }.merge(options)
     
-    case options[:type]
-    when Myp::FIELD_NUMBER, Myp::FIELD_DECIMAL
+    input_method_prefix = "_field"
+    
+    if options[:type] == Myp::FIELD_NUMBER || options[:type] == Myp::FIELD_DECIMAL
       if options[:type] == Myp::FIELD_DECIMAL
         options = {
           step: Myp::DEFAULT_DECIMAL_STEP
@@ -1183,7 +1185,7 @@ module ApplicationHelper
       if !Myp.use_html5_inputs || options[:flexible]
         options[:type] = :text
       end
-    when Myp::FIELD_DATE, Myp::FIELD_DATETIME, Myp::FIELD_TIME
+    elsif options[:type] == Myp::FIELD_DATE || options[:type] == Myp::FIELD_DATETIME || options[:type] == Myp::FIELD_TIME
       options = {
         datebox_mode: options[:type],
         date_format: options[:type] == Myp::FIELD_DATETIME || options[:type] == Myp::FIELD_TIME ? Myplaceonline::DEFAULT_TIME_FORMAT : Myplaceonline::DEFAULT_DATE_FORMAT
@@ -1197,15 +1199,19 @@ module ApplicationHelper
       if options[:autofocus] && !options[:value].blank?
         options[:autofocus] = false
       end
-    when Myp::FIELD_TEXT_AREA
-      options = {
-        collapsible: true,
-        collapsed: options[:value].blank?
-      }.merge(options)
-      
-      # The collapsible header is effectively the label
-      options[:include_label] = false
-    when Myp::FIELD_SELECT
+    elsif options[:type] == Myp::FIELD_TEXT_AREA
+      if options[:text_area_rich]
+        options = {
+          collapsible: true,
+          collapsed: options[:value].blank?
+        }.merge(options)
+        
+        # The collapsible header is effectively the label
+        options[:include_label] = false
+      else
+        input_method_prefix = ""
+      end
+    elsif options[:type] == Myp::FIELD_SELECT
       options[:select_options] = Myp.translate_options(options[:select_options], sort: true)
     end
 
@@ -1270,7 +1276,7 @@ module ApplicationHelper
     end
 
     if options[:datebox_mode].nil?
-      if options[:type] == Myp::FIELD_TEXT_AREA
+      if options[:type] == Myp::FIELD_TEXT_AREA && options[:text_area_rich]
         result = Myp.appendstr(
           result,
           render(partial: "myplaceonline/rte", locals: {
@@ -1305,7 +1311,7 @@ module ApplicationHelper
             result = Myp.appendstr(
               result,
               options[:form].send(
-                options[:type].to_s + "_field",
+                options[:type].to_s + input_method_prefix,
                 name,
                 field_attributes
               )
@@ -1332,7 +1338,7 @@ module ApplicationHelper
             result = Myp.appendstr(
               result,
               send(
-                options[:type].to_s + "_field_tag",
+                options[:type].to_s + "#{input_method_prefix}_tag",
                 name,
                 options[:value],
                 field_attributes

@@ -3,9 +3,13 @@ class WebsiteScraperTransformation < ApplicationRecord
   include AllowExistingConcern
 
   TRANSFORMATION_EXTRACT1 = 0
+  TRANSFORMATION_PREPEND = 1
+  TRANSFORMATION_APPEND = 2
 
   TRANSFORMATIONS = [
     ["myplaceonline.website_scraper_transformations.transformation_extract1", TRANSFORMATION_EXTRACT1],
+    ["myplaceonline.website_scraper_transformations.transformation_prepend", TRANSFORMATION_PREPEND],
+    ["myplaceonline.website_scraper_transformations.transformation_append", TRANSFORMATION_APPEND],
   ]
 
   def self.properties
@@ -54,6 +58,10 @@ class WebsiteScraperTransformation < ApplicationRecord
 }
       end
       str = matches.join("\n")
+    when WebsiteScraperTransformation::TRANSFORMATION_PREPEND
+      str = self.transformation + str
+    when WebsiteScraperTransformation::TRANSFORMATION_APPEND
+      str = str + self.transformation
     else
       raise "TODO"
     end

@@ -12,9 +12,10 @@
 <%=
   input_field(
     form: f,
-    type: Myp::FIELD_TEXT,
+    type: Myp::FIELD_TEXT_AREA,
     name: :transformation,
     value: obj.transformation,
-    placeholder: "myplaceonline.website_scraper_transformations.transformation"
+    placeholder: "myplaceonline.website_scraper_transformations.transformation",
+    text_area_rich: false
   )
 %>

@@ -3399,3 +3399,5 @@ en:
       transformation_type: "Transformation Type"
       transformation: "Transformation"
       transformation_extract1: "Extract RSS Feed with Regular Expression"
+      transformation_prepend: "Prepend"
+      transformation_append: "Append"
