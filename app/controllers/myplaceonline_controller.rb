@@ -15,8 +15,7 @@ class MyplaceonlineController < ApplicationController
   respond_to :html, :json
 
   def index
-    deny_guest
-    require_admin? && deny_nonadmin
+    initial_checks
     
     if sensitive
       check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
@@ -186,8 +185,7 @@ class MyplaceonlineController < ApplicationController
       raise "Unauthorized"
     end
     
-    deny_guest
-    require_admin? && deny_nonadmin
+    initial_checks
     
     if !insecure
       check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
@@ -208,8 +206,7 @@ class MyplaceonlineController < ApplicationController
   end
 
   def edit
-    deny_guest
-    require_admin? && deny_nonadmin
+    initial_checks
 
     check_password
     @url = obj_path(@obj)
@@ -218,8 +215,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def create
-    deny_guest
-    require_admin? && deny_nonadmin
+    initial_checks
     
     Rails.logger.debug{"create"}
     if !insecure
@@ -312,8 +308,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def update
-    deny_guest
-    require_admin? && deny_nonadmin
+    initial_checks
     
     if sensitive
       check_password
@@ -417,8 +412,7 @@ class MyplaceonlineController < ApplicationController
   end
 
   def destroy
-    deny_guest
-    require_admin? && deny_nonadmin
+    initial_checks
     
     check_password
     
@@ -436,8 +430,9 @@ class MyplaceonlineController < ApplicationController
 
   def destroy_all
     check_password
-    deny_guest
-    require_admin? && deny_nonadmin
+    
+    initial_checks
+    
     ApplicationRecord.transaction do
       all.each do |obj|
         authorize! :destroy, obj
@@ -921,8 +916,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def settings
-    deny_guest
-    require_admin? && deny_nonadmin
+    initial_checks
     
     check_password
     
@@ -1313,5 +1307,20 @@ class MyplaceonlineController < ApplicationController
     
     def object_to_destroy(obj)
       obj
+    end
+    
+    def initial_checks
+      deny_guest
+      require_admin? && deny_nonadmin
+      
+      required_capabilities.each do |capability|
+        if !UserCapability.has_capability?(identity: User.current_user.primary_identity, capability: capability)
+          raise CanCan::AccessDenied
+        end
+      end
+    end
+    
+    def required_capabilities
+      []
     end
 end

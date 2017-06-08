@@ -412,7 +412,10 @@ Rails.application.routes.draw do
     ],
     website_lists: [
       { instance: true, link: "roll" }
-    ]
+    ],
+    website_scrapers: [
+      { instance: true, link: "scrape" }
+    ],
   }
 
   overriden = [:users, :event_rsvps]

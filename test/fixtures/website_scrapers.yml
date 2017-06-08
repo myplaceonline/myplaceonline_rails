@@ -1,0 +1,5 @@
+website_scraper:
+  identity: identity
+  scraper_name: Test
+  website_url: https://myplaceonline.com/
+

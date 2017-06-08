@@ -1,0 +1,28 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :scraper_name,
+    value: obj.scraper_name,
+    placeholder: "myplaceonline.website_scrapers.scraper_name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :website_url,
+    value: obj.website_url,
+    placeholder: "myplaceonline.website_scrapers.website_url"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes"
+  )
+%>

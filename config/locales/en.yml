@@ -241,6 +241,7 @@ en:
       sicknesses: "Sicknesses"
       picnic_locations: "Picnic Locations"
       user_capabilities: "User Capabilities"
+      website_scrapers: "Website Scrapers"
     general:
       email: "E-mail"
       password: "Password"
@@ -3384,3 +3385,9 @@ en:
     user_capabilities:
       capability: "Capability"
       capability_screen_scraper: "Screen Scraper"
+    website_scrapers:
+      scraper_name: "Name"
+      website_url: "Website URL"
+      scrape: "Scrape"
+      scrape_results: "Scrape Results"
+      scrape_error: "Scrape Error: %{message}"

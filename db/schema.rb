@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170607022416) do
+ActiveRecord::Schema.define(version: 20170608041623) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -5349,6 +5349,19 @@ ActiveRecord::Schema.define(version: 20170607022416) do
     t.index ["website_id"], name: "index_website_passwords_on_website_id"
   end
 
+  create_table "website_scrapers", force: :cascade do |t|
+    t.string "scraper_name"
+    t.string "website_url"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_website_scrapers_on_identity_id"
+  end
+
   create_table "websites", id: :serial, force: :cascade do |t|
     t.string "title", limit: 255
     t.string "url", limit: 2000
@@ -6201,6 +6214,7 @@ ActiveRecord::Schema.define(version: 20170607022416) do
   add_foreign_key "website_passwords", "identities"
   add_foreign_key "website_passwords", "passwords"
   add_foreign_key "website_passwords", "websites"
+  add_foreign_key "website_scrapers", "identities"
   add_foreign_key "websites", "contacts", column: "recommender_id"
   add_foreign_key "websites", "identities", name: "websites_identity_id_fk"
   add_foreign_key "weights", "identities", name: "weights_identity_id_fk"

@@ -1,9 +1,11 @@
 class UserCapability < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
+  
+  CAPABILITY_SCREEN_SCRAPER = 0
 
   CAPABILITIES = [
-    ["myplaceonline.user_capabilities.capability_screen_scraper", 0],
+    ["myplaceonline.user_capabilities.capability_screen_scraper", CAPABILITY_SCREEN_SCRAPER],
   ]
 
   def self.properties
@@ -16,5 +18,9 @@ class UserCapability < ApplicationRecord
   
   def display
     Myp.get_select_name(self.capability, UserCapability::CAPABILITIES)
+  end
+  
+  def self.has_capability?(identity:, capability:)
+    !UserCapability.where(identity: identity, capability: capability).take.nil?
   end
 end
