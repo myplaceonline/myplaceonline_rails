@@ -1170,6 +1170,7 @@ module ApplicationHelper
       remote_autocomplete_all: false, # if true, show all items on focus; otherwise, show only items that match what's typed
       tooltip: nil,
       select_options: nil,
+      translate_select_options: true,
       text_area_rich: true
     }.merge(options)
     
@@ -1212,7 +1213,9 @@ module ApplicationHelper
         input_method_prefix = ""
       end
     elsif options[:type] == Myp::FIELD_SELECT
-      options[:select_options] = Myp.translate_options(options[:select_options], sort: true)
+      if options[:translate_select_options]
+        options[:select_options] = Myp.translate_options(options[:select_options], sort: true)
+      end
     end
 
     if Myp.is_probably_i18n(options[:placeholder])

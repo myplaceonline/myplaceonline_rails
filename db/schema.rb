@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170608054738) do
+ActiveRecord::Schema.define(version: 20170609051927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3582,6 +3582,7 @@ ActiveRecord::Schema.define(version: 20170608054738) do
     t.string "child_selections"
     t.datetime "archived"
     t.integer "rating"
+    t.string "valid_actions"
     t.index ["email_id"], name: "index_permission_shares_on_email_id"
     t.index ["identity_id"], name: "index_permission_shares_on_identity_id"
     t.index ["share_id"], name: "index_permission_shares_on_share_id"
@@ -5373,6 +5374,7 @@ ActiveRecord::Schema.define(version: 20170608054738) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "content_type"
     t.index ["identity_id"], name: "index_website_scrapers_on_identity_id"
   end
 

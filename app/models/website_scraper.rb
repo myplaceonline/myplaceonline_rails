@@ -1,6 +1,11 @@
 class WebsiteScraper < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
+  
+  CONTENT_TYPES = [
+    ["text/html", "text/html"],
+    ["application/rss+xml", "application/rss+xml"],
+  ]
 
   def self.properties
     [

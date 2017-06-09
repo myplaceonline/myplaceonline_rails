@@ -3,7 +3,8 @@ class Ability
 
   def initialize(user, request = nil)
     if user.nil?
-      user = User.new
+      Rails.logger.debug{"Ability.initialize no user, setting to Guest"}
+      user = User.guest
       identity = Identity.new(user: user)
     else
       identity = user.primary_identity
@@ -36,18 +37,23 @@ class Ability
   
   def self.authorize(identity:, subject:, action: :edit, request: nil, subject_class: nil)
     result = false
+    
     if identity.nil?
-      user = User.new
-      identity = Identity.new
+      Rails.logger.debug{"Ability.authorize no identity specified, setting to Guest"}
+      user = User.guest
+      identity = User.guest.primary_identity
     else
       user = identity.user
       if user.nil?
-        user = User.new
+        Rails.logger.debug{"Ability.authorize no user exists, setting to Guest"}
+        user = User.guest
       end
     end
+    
     subject_class ||= subject.class
 
-    Rails.logger.debug{"Ability.authorize user: #{user.id}"}
+    Rails.logger.debug{"Ability.authorize user: #{user.inspect}"}
+    Rails.logger.debug{"Ability.authorize identity: #{identity.inspect}"}
 
     if !Ability.context_identity.nil?
       identity = Ability.context_identity
@@ -58,6 +64,8 @@ class Ability
     # Otherwise, check the Shares and Permissions tables
     
     Rails.logger.debug{"Ability.authorize checking action: #{action}, subject_class: #{subject_class}, subject: #{subject.id} with identity #{identity.id}"}
+    
+    valid_guest_actions = [:show]
     
     if !subject.nil?
       
@@ -83,6 +91,11 @@ class Ability
           }).first
           if !ps.nil?
             result = true
+            
+            if !ps.valid_actions.blank?
+              valid_guest_actions = ps.valid_actions.split(",").map{|x| x.to_sym}
+            end
+            
             if !ps.share.use_count.nil?
               ps.share.update_column(:use_count, ps.share.use_count + 1)
             else
@@ -144,8 +157,8 @@ class Ability
       end
     end
 
-    if user.guest? && action != :show
-      Rails.logger.debug{"Ability.authorize Guest can only do show action (tried #{action})"}
+    if user.guest? && valid_guest_actions.index(action).nil?
+      Rails.logger.debug{"Ability.authorize Guest can only do #{valid_guest_actions} actions (tried #{action})"}
       result = false
     end
 

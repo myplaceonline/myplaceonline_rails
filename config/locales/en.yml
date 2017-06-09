@@ -367,6 +367,11 @@ en:
       loading_with_ellipses: "Loading..."
       settings: "Settings"
       settings_saved: "Settings Saved"
+      share: "Share"
+      share_with_connection: "Share with Connection"
+      share_link: "Create Public Link"
+      public_link: "Public Link"
+      link: "Link"
     categories:
       no_results: "No Results. Create New "
       always_expand_top_used: "Always Expand Top Used"
@@ -3396,6 +3401,7 @@ en:
       transformations: "Transformations"
       add_transformation: "Add Transformation"
       delete_transformation: "Delete Transformation"
+      content_type: "Content Type"
     website_scraper_transformations:
       transformation_type: "Transformation Type"
       transformation: "Transformation"

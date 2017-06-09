@@ -45,14 +45,18 @@ class User < ApplicationRecord
   end
   
   def self.guest
-    User.new(
+    result = User.new(
       id: GUEST_ID,
       email: GUEST_EMAIL,
-      primary_identity_id: GUEST_ID,
-      primary_identity: Identity.new(
-        id: GUEST_ID
-      )
+      primary_identity_id: GUEST_ID
     )
+    identity = Identity.new(
+      id: GUEST_ID,
+      user_id: GUEST_ID,
+      user: result
+    )
+    result.primary_identity = identity
+    result
   end
   
   def display

@@ -56,3 +56,14 @@
 %>
   <%= render partial: "website_scraper_transformations/form", locals: { obj: childproperty || WebsiteScraperTransformation.build, edit: edit, autofocus: false, f: child_fields } %>
 <% end %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_SELECT,
+    name: :content_type,
+    value: obj.content_type,
+    placeholder: "myplaceonline.website_scrapers.content_type",
+    select_options: WebsiteScraper::CONTENT_TYPES,
+    translate_select_options: false
+  )
+%>

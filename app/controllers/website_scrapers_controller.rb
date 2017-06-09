@@ -3,7 +3,7 @@ class WebsiteScrapersController < MyplaceonlineController
     [
       {
         title: I18n.t("myplaceonline.website_scrapers.scrape"),
-        link: website_scraper_scrape_path(@obj),
+        link: add_token(website_scraper_scrape_path(@obj)),
         icon: "action"
       }
     ] + super + [
@@ -16,18 +16,24 @@ class WebsiteScrapersController < MyplaceonlineController
   end
   
   def scrape
+    set_obj
+      
     execute_scrape(escape: false)
-    render(layout: false)
+    content_type = @obj.content_type
+    if content_type.blank?
+      content_type = "text/html"
+    end
+    render(layout: false, content_type: content_type)
   end
   
   def test
+    set_obj
+      
     execute_scrape(escape: true)
   end
   
   protected
     def execute_scrape(escape:)
-      set_obj
-      
       begin
         results = Myp.http_get(url: @obj.website_url)
         
@@ -55,6 +61,7 @@ class WebsiteScrapersController < MyplaceonlineController
         :scraper_name,
         :website_url,
         :notes,
+        :content_type,
         website_scraper_transformations_attributes: WebsiteScraperTransformation.params,
       )
     end
@@ -67,25 +74,10 @@ class WebsiteScrapersController < MyplaceonlineController
       @obj.website_scraper_transformations.each do |t|
         results = t.execute_transform(results)
       end
-#       while true do
-#         match_data = markdown.match(/\[([^\]]+)\]\(([^)]+)\)/, i)
-#         if !match_data.nil?
-#           if match_data[1] == match_data[2]
-#             replacement = match_data[1]
-#           else
-#             replacement = match_data[1] + " (" + match_data[2] + ")"
-#           end
-#           markdown = match_data.pre_match + replacement + match_data.post_match
-#           i = match_data.offset(0)[0] + replacement.length + 1
-#         else
-#           break
-#         end
-#       end
-  #https://stackoverflow.com/questions/5239997/regex-how-to-match-multiple-lines#5240101    
-# <div class="date">June 7, 2017</div>
-# <a href="http://econlog.econlib.org/archives/2017/06/unfortunately_i.html" class="title">Unfortunately, I Win My Obama Immigration Bet</a>
-# <br/>
-# <div class="hosted">Bryan Caplan</div> 
       results
+    end
+
+    def publicly_shareable_actions
+      [:show, :scrape]
     end
 end

@@ -44,7 +44,7 @@ class WebsiteScraperTransformation < ApplicationRecord
       Rails.logger.debug{"WebsiteScraperTransformation.execute_transform regex: #{r}"}
       matches = str.to_enum(:scan, r).map { Regexp.last_match }
       matches = matches.map do |match|
-        Rails.logger.debug{"WebsiteScraperTransformation.execute_transform match: #{match}"}
+        #Rails.logger.debug{"WebsiteScraperTransformation.execute_transform match: #{match}"}
         link = match[:link]
         title = match[:title]
         dateyyyymmdd = match[:dateyyyymmdd]

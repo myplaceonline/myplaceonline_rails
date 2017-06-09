@@ -526,6 +526,14 @@ class MyplaceonlineController < ApplicationController
     end
   end
   
+  def obj_url(obj = @obj)
+    if nested
+      send(path_name + "_url", obj.send(parent_model.table_name.singularize.downcase), obj)
+    else
+      send(path_name + "_url", obj)
+    end
+  end
+  
   def edit_obj_path(obj = @obj)
     if nested
       send("edit_" + path_name + "_path", obj.send(parent_model.table_name.singularize.downcase), obj)
@@ -563,6 +571,22 @@ class MyplaceonlineController < ApplicationController
       send(path_name + "_unfavorite_path", obj.send(parent_model.table_name.singularize.downcase), obj)
     else
       send(path_name + "_unfavorite_path", obj)
+    end
+  end
+  
+  def share_obj_path(obj = @obj)
+    if nested
+      send(path_name + "_create_share_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+    else
+      send(path_name + "_create_share_path", obj)
+    end
+  end
+  
+  def share_link_obj_path(obj = @obj)
+    if nested
+      send(path_name + "_create_share_link_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+    else
+      send(path_name + "_create_share_link_path", obj)
     end
   end
   
@@ -759,7 +783,7 @@ class MyplaceonlineController < ApplicationController
   def footer_items_show
     result = []
     result << {
-      title: I18n.t('myplaceonline.general.edit'),
+      title: I18n.t("myplaceonline.general.edit"),
       link: self.edit_obj_path,
       icon: "edit"
     }
@@ -792,8 +816,8 @@ class MyplaceonlineController < ApplicationController
     end
     if self.show_share
       result << {
-        title: I18n.t('myplaceonline.permission_shares.share'),
-        link: permissions_share_path + "?" + Permission.permission_params(self.category_name, @obj.id, self.share_permissions).to_query,
+        title: I18n.t("myplaceonline.general.share"),
+        link: self.share_obj_path,
         icon: "action"
       }
     end
@@ -823,6 +847,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def archive(notice: I18n.t("myplaceonline.general.archived"))
+    initial_checks
     set_obj
     # Some models have after_saves that do things like recalculate
     # calendar items, but we can just surgically update this field
@@ -838,6 +863,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def unarchive(notice: I18n.t("myplaceonline.general.unarchived"))
+    initial_checks
     set_obj
     @obj.update_column(:archived, nil)
     redirect_to index_path,
@@ -845,6 +871,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def favorite(notice: I18n.t("myplaceonline.general.favorited"))
+    initial_checks
     set_obj
     @obj.update_column(:rating, Myp::MAX_RATING)
     redirect_to obj_path,
@@ -852,10 +879,47 @@ class MyplaceonlineController < ApplicationController
   end
   
   def unfavorite(notice: I18n.t("myplaceonline.general.unfavorited"))
+    initial_checks
     set_obj
     @obj.update_column(:rating, nil)
     redirect_to obj_path,
       :flash => { :notice => notice }
+  end
+  
+  def create_share
+    initial_checks
+    set_obj
+    
+    @connections_link = permissions_share_path + "?" + Permission.permission_params(self.category_name, @obj.id, self.share_permissions).to_query
+  end
+  
+  def create_share_link
+    initial_checks
+    set_obj
+    
+    existing_permission_share = PermissionShare.includes(:share).where(
+      identity: User.current_user.primary_identity,
+      subject_class: self.model.name,
+      subject_id: @obj.id
+    ).first
+    
+    if existing_permission_share.nil?
+      share = Share.build_share(owner_identity: User.current_user.primary_identity)
+      share.save!
+      
+      PermissionShare.create!(
+        identity: User.current_user.primary_identity,
+        share: share,
+        subject_class: self.model.name,
+        subject_id: @obj.id,
+        valid_actions: self.publicly_shareable_actions.map{|x| x.to_s}.join(",")
+      )
+      
+      token = share.token
+    else
+      token = existing_permission_share.share.token
+    end
+    @link = "#{obj_url}?token=#{token}"
   end
   
   def index_filters
@@ -1322,5 +1386,21 @@ class MyplaceonlineController < ApplicationController
     
     def required_capabilities
       []
+    end
+    
+    def add_token(link)
+      token = params[:token]
+      if !token.blank?
+        if link.index("?").nil?
+          link = "#{link}?token=#{token}"
+        else
+          link = "#{link}&token=#{token}"
+        end
+      end
+      link
+    end
+    
+    def publicly_shareable_actions
+      [:show]
     end
 end
