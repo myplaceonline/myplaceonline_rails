@@ -1,13 +1,8 @@
-<%= attribute_table_row(t("myplaceonline.memberships.name"), obj.name) %>
-<%= attribute_table_row(t("myplaceonline.memberships.membership_identifier"), obj.membership_identifier) %>
-<%= attribute_table_row(t("myplaceonline.memberships.start_date"), Myp.display_date(obj.start_date, current_user)) %>
-<%= attribute_table_row(t("myplaceonline.memberships.end_date"), Myp.display_date(obj.end_date, current_user)) %>
-<%= attribute_table_row_markdown(t("myplaceonline.memberships.notes"), obj.notes) %>
-<%= attribute_table_row_reference(t("myplaceonline.memberships.periodic_payment"), "periodic_payment_path", obj.periodic_payment) %>
-<%= attribute_table_row_reference(t("myplaceonline.memberships.password"), "password_path", obj.password) %>
-<%=
-  render partial: "myplaceonline/pictures", locals: {
-      pics: obj.membership_files,
-      placeholder: "myplaceonline.memberships.file"
-  }
-%>
+<%= data_row(heading: t("myplaceonline.memberships.name"), content: obj.name) %>
+<%= data_row(heading: t("myplaceonline.memberships.membership_identifier"), content: obj.membership_identifier) %>
+<%= data_row(heading: t("myplaceonline.memberships.start_date"), content: obj.start_date) %>
+<%= data_row(heading: t("myplaceonline.memberships.end_date"), content: obj.end_date) %>
+<%= data_row(heading: t("myplaceonline.memberships.notes"), content: obj.notes, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.memberships.periodic_payment"), content: obj.periodic_payment) %>
+<%= data_row(heading: t("myplaceonline.memberships.password"), content: obj.password) %>
+<%= data_row(heading: t("myplaceonline.memberships.file"), content: obj.membership_files) %>
