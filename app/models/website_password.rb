@@ -13,4 +13,8 @@ class WebsitePassword < ApplicationRecord
   child_property(name: :password)
 
   validates :password, presence: true
+  
+  def display
+    self.password.display
+  end
 end

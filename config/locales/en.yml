@@ -242,6 +242,7 @@ en:
       picnic_locations: "Picnic Locations"
       user_capabilities: "User Capabilities"
       website_scrapers: "Website Scrapers"
+      repeats: "Repeats"
     general:
       email: "E-mail"
       password: "Password"

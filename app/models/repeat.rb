@@ -4,6 +4,10 @@ class Repeat < ApplicationRecord
   validates :start_date, presence: true
   validates :period_type, presence: true
   validates :period, presence: true
+  
+  def display
+    I18n.t("myplaceonline.category.repeats").singularize
+  end
 
   def next_instance
     # Start at the start date, and keep adding the period until we're >= today

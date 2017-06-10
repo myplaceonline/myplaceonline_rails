@@ -45,4 +45,8 @@ class WebsiteDomainRegistration < ApplicationRecord
       model_id: id
     )
   end
+  
+  def display
+    self.periodic_payment.display
+  end
 end

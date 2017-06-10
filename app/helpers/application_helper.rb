@@ -239,7 +239,7 @@ module ApplicationHelper
     end
     
     begin
-      if ExecutionContext.push_marker(:nest_count) <= 1
+      if ExecutionContext.push_marker(:nest_count) <= ExecutionContext.get(:max_nest, default: 1)
         options[:second_row] = renderActionInOtherController(
           Object.const_get(options[:controller_name]),
           :show,
@@ -272,6 +272,9 @@ module ApplicationHelper
       ).html_safe
     else
       content.each do |item|
+        
+        Rails.logger.debug{"ApplicationHelper.display_collection: item: #{item}, path: #{path}, heading: #{options[:heading]}"}
+        
         child_html = render(partial: "#{path}/show", locals: { obj: item }).html_safe
         child_html = <<-HTML
           <tr>
@@ -314,6 +317,7 @@ module ApplicationHelper
       tooltip: nil,
       enumeration: nil,
       expanded: false,
+      max_nest: nil
     }.merge(options)
     
     original_content = content
@@ -350,7 +354,9 @@ module ApplicationHelper
     end
     
     if !options[:transform].nil?
-      content = options[:transform].call(content: content, format: options[:format], options: options)
+      ExecutionContext.stack(max_nest: options[:max_nest]) do
+        content = options[:transform].call(content: content, format: options[:format], options: options)
+      end
     end
     
     if content.blank? && options[:skip_blank_content]

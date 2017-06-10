@@ -1,17 +1,6 @@
-<%= attribute_table_row(t("myplaceonline.website_domains.domain_name"), obj.domain_name) %>
-<%= attribute_table_row_reference(t("myplaceonline.website_domains.website"), "website_path", obj.website) %>
-<%= attribute_table_row_markdown(t("myplaceonline.website_domains.notes"), obj.notes) %>
-<%= attribute_table_row_reference(t("myplaceonline.website_domains.domain_host"), "membership_path", obj.domain_host) %>
-<% obj.website_domain_ssh_keys.each do |wrapper| %>
-  <%= attribute_table_row_reference(t("myplaceonline.website_domains.ssh_key"), "ssh_key_path", wrapper.ssh_key) %>
-  <%= attribute_table_row(t("myplaceonline.website_domains.ssh_key_username"), wrapper.username) %>
-<% end %>
-<% obj.website_domain_registrations.each do |wrapper| %>
-  <%= table_row_heading(t("myplaceonline.website_domains.website_domain_registration")) %>
-  <%=
-      render partial: 'repeats/show', locals: {
-        obj: wrapper.repeat
-      }
-    %>
-  <%= attribute_table_row_reference(t("myplaceonline.website_domains.website_domain_registrations_periodic_payment"), "periodic_payment_path", wrapper.periodic_payment) %>
-<% end %>
+<%= data_row(heading: t("myplaceonline.website_domains.domain_name"), content: obj.domain_name) %>
+<%= data_row(heading: t("myplaceonline.website_domains.website"), content: obj.website, expanded: true, max_nest: 2) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.website_domains.domain_host"), content: obj.domain_host) %>
+<%= data_row(heading: t("myplaceonline.website_domains.ssh_key"), content: obj.website_domain_ssh_keys) %>
+<%= data_row(heading: t("myplaceonline.website_domains.website_domain_registration"), content: obj.website_domain_registrations) %>

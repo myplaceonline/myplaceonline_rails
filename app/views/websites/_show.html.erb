@@ -1,9 +1,7 @@
-<%= attribute_table_row(t("myplaceonline.websites.title"), obj.title) %>
-<%= attribute_table_row_url(t("myplaceonline.websites.url"), obj.url) %>
-<%= attribute_table_row(t("myplaceonline.websites.website_category"), obj.website_category) %>
-<%= attribute_table_row_boolean(t("myplaceonline.websites.to_visit"), obj.to_visit) %>
-<% obj.website_passwords.each do |wrapper| %>
-  <%= attribute_table_row_reference(t("myplaceonline.websites.password"), "password_path", wrapper.password) %>
-<% end %>
-<%= attribute_table_row_reference(t("myplaceonline.websites.recommender"), "contact_path", obj.recommender) %>
-<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<%= data_row(heading: t("myplaceonline.websites.title"), content: obj.title) %>
+<%= data_row(heading: t("myplaceonline.websites.url"), content: obj.url, url: true, url_external: true, url_external_target_blank: true) %>
+<%= data_row(heading: t("myplaceonline.websites.website_category"), content: obj.website_category) %>
+<%= data_row(heading: t("myplaceonline.websites.to_visit"), content: obj.to_visit, hide_false: true) %>
+<%= data_row(heading: t("myplaceonline.websites.password"), content: obj.website_passwords) %>
+<%= data_row(heading: t("myplaceonline.websites.recommender"), content: obj.recommender) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>

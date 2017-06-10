@@ -75,9 +75,36 @@ class ExecutionContext
       raise "No execution contexts"
     end
   end
+  
+  def self.get(name, default: nil)
+    result = ExecutionContext[name]
+    if result.nil?
+      result = default
+    end
+    result
+  end
 
   def self.[]=(name, val)
     self.current[name] = val
+  end
+
+  def self.delete()
+    execution_contexts = Thread.current[:execution_contexts]
+    if !execution_contexts.nil?
+      i = execution_contexts.length - 1
+      while i >= 0
+        execution_context = execution_contexts[i]
+        result = execution_context[name]
+        if !result.nil?
+          execution_context.delete(name)
+          break
+        end
+        i -= 1
+      end
+      result
+    else
+      raise "No execution contexts"
+    end
   end
 
   def self.root
@@ -124,8 +151,12 @@ class ExecutionContext
     self.count > 0
   end
 
-  def self.stack(&block)
-    ExecutionContext.push
+  def self.stack(**options, &block)
+    context = ExecutionContext.push
+    # We don't need to delete these in the ensure, since they just go away on the pop
+    options.each do |key, value|
+      context[key] = value
+    end
     begin
       block.call
     ensure
