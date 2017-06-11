@@ -1,0 +1,19 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :regimen_item_name,
+    value: obj.regimen_item_name,
+    placeholder: "myplaceonline.regimen_items.regimen_item_name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes"
+  )
+%>

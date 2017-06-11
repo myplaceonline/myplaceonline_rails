@@ -230,6 +230,7 @@ class Identity < ApplicationRecord
   has_many :picnic_locations, :dependent => :destroy
   has_many :user_capabilities, :dependent => :destroy
   has_many :website_scrapers, :dependent => :destroy
+  has_many :regimens, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 
@@ -458,6 +459,7 @@ class Identity < ApplicationRecord
       :picnic_locations => picnic_locations.to_a.map{|x| x.as_json},
       :user_capabilities => user_capabilities.to_a.map{|x| x.as_json},
       :website_scrapers => website_scrapers.to_a.map{|x| x.as_json},
+      :regimens => regimens.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

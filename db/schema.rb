@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170609051927) do
+ActiveRecord::Schema.define(version: 20170611233157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4156,6 +4156,33 @@ ActiveRecord::Schema.define(version: 20170609051927) do
     t.index ["vehicle_id"], name: "index_recreational_vehicles_on_vehicle_id"
   end
 
+  create_table "regimen_items", force: :cascade do |t|
+    t.bigint "regimen_id"
+    t.string "regimen_item_name"
+    t.integer "position"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_regimen_items_on_identity_id"
+    t.index ["regimen_id"], name: "index_regimen_items_on_regimen_id"
+  end
+
+  create_table "regimens", force: :cascade do |t|
+    t.string "regimen_name"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_regimens_on_identity_id"
+  end
+
   create_table "repeats", id: :serial, force: :cascade do |t|
     t.date "start_date"
     t.integer "period_type"
@@ -6061,6 +6088,9 @@ ActiveRecord::Schema.define(version: 20170609051927) do
   add_foreign_key "recreational_vehicle_services", "recreational_vehicles"
   add_foreign_key "recreational_vehicles", "identities", name: "recreational_vehicles_identity_id_fk"
   add_foreign_key "recreational_vehicles", "locations", column: "location_purchased_id", name: "recreational_vehicles_location_purchased_id_fk"
+  add_foreign_key "regimen_items", "identities"
+  add_foreign_key "regimen_items", "regimens"
+  add_foreign_key "regimens", "identities"
   add_foreign_key "repeats", "identities", name: "repeats_identity_id_fk"
   add_foreign_key "restaurant_pictures", "identities"
   add_foreign_key "restaurant_pictures", "identity_files"

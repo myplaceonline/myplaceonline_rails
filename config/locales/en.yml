@@ -243,6 +243,7 @@ en:
       user_capabilities: "User Capabilities"
       website_scrapers: "Website Scrapers"
       repeats: "Repeats"
+      regimens: "Regimens"
     general:
       email: "E-mail"
       password: "Password"
@@ -3409,3 +3410,11 @@ en:
       transformation_extract1: "Extract RSS Feed with Regular Expression"
       transformation_prepend: "Prepend"
       transformation_append: "Append"
+    regimens:
+      regimen_name: "Name"
+      items: "Items"
+      item: "Item"
+      add_item: "Add Item"
+      delete_item: "Delete Item"
+    regimen_items:
+      regimen_item_name: "Name"

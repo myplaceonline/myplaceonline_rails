@@ -1,0 +1,49 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :regimen_name,
+    value: obj.regimen_name,
+    placeholder: "myplaceonline.regimens.regimen_name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes"
+  )
+%>
+<%=
+  render(layout: "myplaceonline/childproperties", locals: {
+    f: f,
+    heading: t("myplaceonline.regimens.items"),
+    childpropertiesname: :regimen_items,
+    childproperties: obj.regimen_items,
+    deletebutton: t("myplaceonline.regimens.delete_item"),
+    addbutton: t("myplaceonline.regimens.add_item"),
+    expanded: true,
+    position_field: :position,
+    itemname: t("myplaceonline.regimens.item"),
+    formjson: [
+      {
+        type: :renderpartial,
+        partial: "myplaceonline/select_or_create",
+        heading: t("myplaceonline.regimens.item"),
+        objform: "regimen_items/form",
+        only_new: true,
+        edit: false,
+        autofocus: true
+      },
+      {
+        type: "position",
+        name: "position"
+      }
+    ]
+  }) do |child_fields, childproperty|
+%>
+  <%= render partial: "regimen_items/form", locals: { obj: childproperty || RegimenItem.build, edit: edit, autofocus: false, f: child_fields } %>
+<% end %>
