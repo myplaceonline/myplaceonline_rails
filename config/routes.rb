@@ -375,6 +375,10 @@ Rails.application.routes.draw do
         name: :recreational_vehicle_services
       }
     ],
+    regimens: [
+      { instance: true, link: "reset" },
+      { instance: true, link: "complete_item" }
+    ],
     restaurants: [
       { instance: false, link: "random" }
     ],

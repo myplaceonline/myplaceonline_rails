@@ -18,6 +18,16 @@
   )
 %>
 <%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_SELECT,
+    name: :regimen_type,
+    value: obj.regimen_type,
+    placeholder: "myplaceonline.regimens.regimen_type",
+    select_options: Regimen::TYPES
+  )
+%>
+<%=
   render(layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.regimens.items"),

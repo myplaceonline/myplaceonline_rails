@@ -3412,9 +3412,17 @@ en:
       transformation_append: "Append"
     regimens:
       regimen_name: "Name"
+      regimen_type: "Type"
       items: "Items"
       item: "Item"
       add_item: "Add Item"
       delete_item: "Delete Item"
+      completed: "%{type} Regimen Completed."
+      reset: "Reset"
+      reset_complete: "Regimen Reset Successfully"
+      item_completed: "Regimen Item Completed"
+      item_complete_failed: "Failed to Complete Regimen Item"
+      types:
+        daily: "Daily"
     regimen_items:
       regimen_item_name: "Name"

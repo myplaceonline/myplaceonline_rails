@@ -1,7 +1,53 @@
 <%# data_row(heading: t("myplaceonline.regimens.regimen_name"), content: obj.regimen_name) %>
 <%# data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%# data_row(heading: t("myplaceonline.regimens.regimen_type"), content: obj.regimen_type, enumeration: Regimen::TYPES) %>
 <%# data_row(heading: t("myplaceonline.regimens.item"), content: obj.regimen_items) %>
 
-<% obj.regimen_items.each do |item| %>
-  <%= input_field(name: "item_#{item.id}", type: Myp::FIELD_BOOLEAN, placeholder: item.regimen_item_name, field_attributes: { onclick: "return myplaceonline.hideIfChecked(this);" }) %>
+<% if @items.length > 0 %>
+  <script type="text/javascript">
+    function complete_regimen_item(obj, $checkbox) {
+      var x = $checkbox.attr("name");
+      x = x.substring(5);
+      var link = "<%= regimen_complete_item_path(obj.id) %>?item_id=" + x;
+      myplaceonline.showLoading();
+      $.ajax({
+        url: link,
+        method: "POST",
+        dataType: "json",
+        context: {
+          obj: obj,
+          checkbox: $checkbox
+        }
+      }).done(function(data, textStatus, jqXHR) {
+        if (data.result) {
+          myplaceonline.completeCheckboxHiding(this.obj);
+          myplaceonline.createSuccessNotification("<%= t("myplaceonline.regimens.item_completed") %>");
+        } else {
+          myplaceonline.cancelCheckboxHiding(this.checkbox);
+          myplaceonline.createErrorNotification("<%= t("myplaceonline.regimens.item_complete_failed") %>");
+        }
+      }).fail(function(jqXHR, textStatus, errorThrown) {
+        myplaceonline.createErrorNotification("<%= t("myplaceonline.general.execute_link_fail") %> " + link + ": " + textStatus);
+        myplaceonline.cancelCheckboxHiding(this.checkbox);
+      }).complete(function(jqXHR, textStatus) {
+        myplaceonline.hideLoading();
+      });
+    }
+  </script>
+
+  <% @items.each do |item| %>
+    <%=
+      input_field(
+        name: "item_#{item.id}",
+        type: Myp::FIELD_BOOLEAN,
+        placeholder: item.regimen_item_name,
+        wrapper_tag: nil,
+        field_attributes: {
+          onclick: "return myplaceonline.hideIfChecked(this, null, complete_regimen_item);"
+        }
+      )
+    %>
+  <% end %>
+<% else %>
+  <%= t("myplaceonline.regimens.completed", type: Myp.get_select_name(obj.evaluated_regimen_type, Regimen::TYPES)) %>
 <% end %>
