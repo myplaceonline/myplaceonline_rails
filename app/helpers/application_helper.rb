@@ -1160,14 +1160,14 @@ module ApplicationHelper
     ).html_safe
   end
   
-  def input_field(name:, **options)
+  def input_field(name:, type:, **options)
     options = {
       wrapper_tag: :p,
       include_label: true,
       placeholder: "",
-      value: "",
+      value: nil,
       form: nil,
-      type: Myp::FIELD_TEXT,
+      type: type,
       flexible: false,
       field_attributes: {},
       autofocus: false,

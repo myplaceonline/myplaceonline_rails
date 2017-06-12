@@ -56,5 +56,19 @@
     <%= myp_select(child_fields, :border_type, "myplaceonline.myplets.border_type", Myp.translate_options(Myplet::BORDER_TYPES), childproperty.border_type) %>
     <%= myp_hidden_field(child_fields, :x_coordinate, childproperty.x_coordinate) %>
   <% end %>
-  <%= f.submit t("myplaceonline.general.save") %>
+
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.general.save"), "data-icon" => "action", "data-iconpos" => "top")
+        },
+        {
+          title: I18n.t("myplaceonline.general.cancel"),
+          link: users_advanced_path,
+          icon: "back"
+        }
+      ]
+    })
+  %>
 <% end %>

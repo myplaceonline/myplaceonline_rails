@@ -1,3 +1,7 @@
-<%= data_row(heading: t("myplaceonline.regimens.regimen_name"), content: obj.regimen_name) %>
-<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
-<%= data_row(heading: t("myplaceonline.regimens.item"), content: obj.regimen_items) %>
+<%# data_row(heading: t("myplaceonline.regimens.regimen_name"), content: obj.regimen_name) %>
+<%# data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%# data_row(heading: t("myplaceonline.regimens.item"), content: obj.regimen_items) %>
+
+<% obj.regimen_items.each do |item| %>
+  <%= input_field(name: "item_#{item.id}", type: Myp::FIELD_BOOLEAN, placeholder: item.regimen_item_name, field_attributes: { onclick: "return myplaceonline.hideIfChecked(this);" }) %>
+<% end %>
