@@ -41,14 +41,29 @@ class Regimen < ApplicationRecord
       raise "TODO"
     end
   end
-
-  def reset
+  
+  def reset_time
     case evaluated_regimen_type
     when DAILY
-      new_updated_at = User.current_user.in_time_zone(User.current_user.date_now - 1.days, end_of_day: true)
+      User.current_user.in_time_zone(User.current_user.date_now - 1.days, end_of_day: true)
     else
       raise "TODO"
     end
-    regimen_items.update_all(updated_at: new_updated_at)
+  end
+
+  def reset
+    regimen_items.update_all(updated_at: reset_time)
+  end
+
+  after_commit :on_after_update, on: [:update]
+  
+  def on_after_update
+    reset
+  end
+
+  def self.build(params = nil)
+    result = self.dobuild(params)
+    result.regimen_type = DAILY
+    result
   end
 end
