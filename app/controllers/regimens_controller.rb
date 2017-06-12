@@ -2,6 +2,9 @@ class RegimensController < MyplaceonlineController
   
   def show
     @items = @obj.unfinished_items
+    if @items.length == 0
+      @nocontent = true
+    end
     super
   end
   

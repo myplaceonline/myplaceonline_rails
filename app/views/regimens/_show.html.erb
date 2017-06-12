@@ -48,6 +48,6 @@
       )
     %>
   <% end %>
-<% else %>
+<% elsif !@nocontent %>
   <%= t("myplaceonline.regimens.completed", type: Myp.get_select_name(obj.evaluated_regimen_type, Regimen::TYPES)) %>
 <% end %>
