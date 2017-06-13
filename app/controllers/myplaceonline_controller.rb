@@ -955,7 +955,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def myplet_title_linked?
-    false
+    true
   end
   
   def myplet_title
