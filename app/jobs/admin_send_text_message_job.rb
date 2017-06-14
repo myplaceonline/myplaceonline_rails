@@ -22,6 +22,7 @@ class AdminSendTextMessageJob < ApplicationJob
           if identity_phone.accepts_sms?
             if send_only_to.nil? || send_only_to[identity_phone.number]
               if exclude_numbers.nil? || !exclude_numbers[identity_phone.number]
+                Rails.logger.info{"AdminSendTextMessageJob processing user #{user.id} @ #{identity_phone.number}"}
                 admin_text_message.text_message.process_single_target(identity_phone.number)
               end
             end
