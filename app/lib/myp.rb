@@ -609,8 +609,6 @@ module Myp
           break
         end
       end
-      #markdown.gsub(/\[([^\]]+)\]\(([^)]+)\)/, "\\1 (\\2)")
-      #markdown.gsub(/\[([^\]]+)\]\(([^)]+)\)/, "\\2")
       markdown
     else
       nil

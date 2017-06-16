@@ -32,6 +32,10 @@ class MyplaceonlineQuickCategoryDisplaysController < MyplaceonlineController
     end
   end
   
+  def myplet_title_linked?
+    false
+  end
+  
   protected
     def sorts
       ["myplaceonline_quick_category_displays.updated_at DESC"]

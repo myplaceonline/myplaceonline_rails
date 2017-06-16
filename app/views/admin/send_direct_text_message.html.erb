@@ -1,0 +1,33 @@
+<% content_for :heading do -%><%= t("myplaceonline.admin.send_direct_text_message.title") %><% end -%>
+<h1><%= t("myplaceonline.admin.send_direct_text_message.title") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag(admin_send_direct_text_message_path, method: :get) do %>
+  <%= input_field(name: :to, type: Myp::FIELD_TEXT, placeholder: t("myplaceonline.admin.send_direct_text_message.to"), value: @to, autofocus: true) %>
+  <%= input_field(name: :body, type: Myp::FIELD_TEXT_AREA, placeholder: t("myplaceonline.admin.send_direct_text_message.body"), collapsed: false, value: @body, text_area_rich: false) %>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.admin.send_direct_text_message.title"), "data-icon" => "action", "data-iconpos" => "top")
+        },
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: admin_path,
+          icon: "back"
+        }
+      ]
+    })
+  %>
+<% end %>
+
+<hr />
+
+<p><%= link_to(t("myplaceonline.admin.users"), users_path) %></p>
+
+<script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+</script>

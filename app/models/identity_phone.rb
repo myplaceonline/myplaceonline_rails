@@ -60,4 +60,8 @@ class IdentityPhone < ApplicationRecord
   def worth_to_display?
     self.phone_type != PHONE_TYPE_TEMPORARY && self.phone_type != PHONE_TYPE_ARCHIVED
   end
+  
+  def self.for_comparison(number)
+    number.gsub(/[\- .]+/, "")
+  end
 end

@@ -1,0 +1,37 @@
+<% content_for :heading do -%><%= t("myplaceonline.admin.send_direct_email.title") %><% end -%>
+<h1><%= t("myplaceonline.admin.send_direct_email.title") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag(admin_send_direct_email_path, method: :get) do %>
+  <%= input_field(name: :from, type: Myp::FIELD_TEXT, placeholder: t("myplaceonline.admin.send_direct_email.from"), value: @from) %>
+  <%= input_field(name: :to, type: Myp::FIELD_TEXT, placeholder: t("myplaceonline.admin.send_direct_email.to"), value: @to, autofocus: true) %>
+  <%= input_field(name: :cc, type: Myp::FIELD_TEXT, placeholder: t("myplaceonline.admin.send_direct_email.cc"), value: @cc) %>
+  <%= input_field(name: :bcc, type: Myp::FIELD_TEXT, placeholder: t("myplaceonline.admin.send_direct_email.bcc"), value: @bcc) %>
+  <%= input_field(name: :subject, type: Myp::FIELD_TEXT, placeholder: t("myplaceonline.admin.send_direct_email.subject"), value: @subject) %>
+  <%= input_field(name: :body, type: Myp::FIELD_TEXT_AREA, placeholder: t("myplaceonline.admin.send_direct_email.body"), collapsed: false, value: @body) %>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.admin.send_direct_email.title"), "data-icon" => "action", "data-iconpos" => "top")
+        },
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: admin_path,
+          icon: "back"
+        }
+      ]
+    })
+  %>
+<% end %>
+
+<hr />
+
+<p><%= link_to(t("myplaceonline.admin.users"), users_path) %></p>
+
+<script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+</script>

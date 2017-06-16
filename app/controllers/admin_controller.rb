@@ -100,6 +100,71 @@ class AdminController < ApplicationController
     end
   end
   
+  def send_direct_email
+    @from = params[:from]
+    @to = params[:to]
+    @cc = params[:cc]
+    @bcc = params[:bcc]
+    @subject = params[:subject]
+    @body = params[:body]
+    
+    if @from.blank?
+      @from = I18n.t("myplaceonline.siteEmail")
+    end
+    
+    if !@body.blank?
+      if !@from.blank?
+        if !@to.blank?
+          if !@subject.blank?
+            content = Myp.markdown_to_html(@body)
+            content_plain = @body
+            
+            Myp.send_email(
+              @to.split(","),
+              @subject,
+              content.html_safe,
+              @cc.split(","),
+              @bcc.split(","),
+              content_plain
+            )
+            
+            redirect_to(
+              admin_path,
+              flash: { notice: I18n.t("myplaceonline.admin.send_direct_email.sent") }
+            )
+          else
+            flash[:error] = I18n.t("myplaceonline.admin.send_direct_email.subject_missing")
+          end
+        else
+          flash[:error] = I18n.t("myplaceonline.admin.send_direct_email.to_missing")
+        end
+      else
+        flash[:error] = I18n.t("myplaceonline.admin.send_direct_email.from_missing")
+      end
+    end
+  end
+  
+  def send_direct_text_message
+    @to = params[:to]
+    @body = params[:body]
+    
+    if !@body.blank?
+      if !@to.blank?
+        
+        @to.split(",").each do |to|
+          Myp.send_sms(to: to, body: @body)
+        end
+        
+        redirect_to(
+          admin_path,
+          flash: { notice: I18n.t("myplaceonline.admin.send_direct_text_message.sent") }
+        )
+      else
+        flash[:error] = I18n.t("myplaceonline.admin.send_direct_text_message.to_missing")
+      end
+    end
+  end
+  
   def gc
     GC.start
     sleep(5.0)

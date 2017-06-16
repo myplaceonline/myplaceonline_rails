@@ -157,6 +157,8 @@ Rails.application.routes.draw do
     info/invite
     admin/send_email
     admin/send_text_message
+    admin/send_direct_email
+    admin/send_direct_text_message
   ))
 
   match 'c/:id', :to => 'calendar_item_reminder_pendings#short', via: [:get], as: "calendar_item_reminder_short"

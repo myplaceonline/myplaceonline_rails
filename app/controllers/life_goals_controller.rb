@@ -15,10 +15,6 @@ class LifeGoalsController < MyplaceonlineController
     false
   end
   
-  def myplet_title_linked?
-    true
-  end
-  
   protected
     def sorts
       ["life_goals.long_term ASC NULLS FIRST, lower(life_goals.life_goal_name) ASC"]
