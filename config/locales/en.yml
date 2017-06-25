@@ -3449,6 +3449,10 @@ en:
       regimen_item_name: "Name"
     dietary_requirements_collections:
       dietary_requirements_collection_name: "Name"
+      dietary_requirement: "Dietary Requirement"
+      dietary_requirements: "Dietary Requirements"
+      add_dietary_requirement: "Add Dietary Requirement"
+      delete_dietary_requirement: "Delete Dietary Requirement"
     dietary_requirements:
       dietary_requirement_name: "Name"
       dietary_requirement_amount: "Amount"

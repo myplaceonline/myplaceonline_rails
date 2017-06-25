@@ -17,4 +17,7 @@ class DietaryRequirementsCollection < ApplicationRecord
   end
 
   child_files
+  
+  child_properties(name: :dietary_requirements, sort: "dietary_requirement_name ASC")
+
 end

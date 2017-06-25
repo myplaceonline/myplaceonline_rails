@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170625070244) do
+ActiveRecord::Schema.define(version: 20170625071715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1294,6 +1294,8 @@ ActiveRecord::Schema.define(version: 20170625070244) do
     t.decimal "dietary_requirement_amount", precision: 10, scale: 2
     t.integer "dietary_requirement_type"
     t.integer "dietary_requirement_context"
+    t.bigint "dietary_requirements_collection_id"
+    t.index ["dietary_requirements_collection_id"], name: "dr_on_drci"
     t.index ["identity_id"], name: "index_dietary_requirements_on_identity_id"
   end
 
@@ -5704,6 +5706,7 @@ ActiveRecord::Schema.define(version: 20170625070244) do
   add_foreign_key "dessert_locations", "locations"
   add_foreign_key "diary_entries", "encrypted_values", column: "entry_encrypted_id"
   add_foreign_key "diary_entries", "identities", name: "diary_entries_identity_id_fk"
+  add_foreign_key "dietary_requirements", "dietary_requirements_collections"
   add_foreign_key "dietary_requirements", "identities"
   add_foreign_key "dietary_requirements_collection_files", "dietary_requirements_collections"
   add_foreign_key "dietary_requirements_collection_files", "identities"
