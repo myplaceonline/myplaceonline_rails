@@ -21,7 +21,33 @@ class GroupsController < MyplaceonlineController
   def missing_list
     set_obj
     
-    @missing_contacts = Contact.where("identity_id = ? and id NOT IN (?)", User.current_user.primary_identity.id, @obj.all_contacts.map{|c| c.id})
+    @missing_contacts = Contact.joins(:contact_identity).includes(:contact_identity).where(
+      "contacts.identity_id = ? and contacts.id NOT IN (?) and contacts.archived IS NULL",
+      User.current_user.primary_identity.id,
+      @obj.all_contacts.map{|c| c.id}
+    ).order(Identity.order)
+    
+    if request.post?
+      
+      contacts_added = 0
+      
+      params.each do |key, value|
+        if key.start_with?("contact_")
+          contact_id = key[8..-1].to_i
+          contact = Contact.where(id: contact_id, identity_id: User.current_user.primary_identity_id).take!
+          GroupContact.create!(
+            identity_id: User.current_user.primary_identity.id,
+            group_id: @obj.id,
+            contact_id: contact.id
+          )
+          contacts_added = contacts_added + 1
+        end
+      end
+      
+      if contacts_added > 0
+        redirect_to(group_path(@obj), notice: I18n.t("myplaceonline.groups.added_contacts", count: contacts_added))
+      end
+    end
     
   end
   

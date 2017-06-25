@@ -499,6 +499,10 @@ class Identity < ApplicationRecord
     result
   end
   
+  def self.order
+    ["identities.name"]
+  end
+  
   def display_initials
     result = name[0]
     if !last_name.blank?

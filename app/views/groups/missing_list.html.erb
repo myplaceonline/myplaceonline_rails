@@ -1,5 +1,25 @@
-<% content_for :heading do -%><%= t('myplaceonline.groups.missing') %><% end -%>
-<h1><%= t('myplaceonline.groups.missing') %></h1>
-<% @missing_contacts.each do |c| %>
-  <p><%= link_to c.display, contact_path(c) %></p>
+<% content_for :heading do -%><%= t("myplaceonline.groups.missing") %><% end -%>
+<h1><%= t("myplaceonline.groups.missing") %></h1>
+
+<%= flashes!(@obj) %>
+
+<%= form_tag group_missing_list_path(@obj), method: :post do %>
+  <% @missing_contacts.each do |c| %>
+    <%= input_field(name: "contact_#{c.id}", type: Myp::FIELD_BOOLEAN, placeholder: c.display) %>
+  <% end %>
+
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.general.add"), "data-icon" => "action", "data-iconpos" => "top")
+        },
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: controller.obj_path,
+          icon: "back"
+        }
+      ]
+    })
+  %>
 <% end %>

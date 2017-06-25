@@ -2243,6 +2243,7 @@ en:
       delete_group_reference: "Delete Group Reference"
       missing: "Missing"
       contact: "Contact"
+      added_contacts: "Added %{count} contacts"
     terms: !xml |
       <![CDATA[
       
