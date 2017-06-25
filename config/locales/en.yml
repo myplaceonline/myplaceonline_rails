@@ -245,6 +245,7 @@ en:
       repeats: "Repeats"
       regimens: "Regimens"
       dietary_requirements_collections: "Dietary Requirements Collections"
+      dietary_requirements: "Dietary Requirements"
     general:
       email: "E-mail"
       password: "Password"
@@ -3448,3 +3449,5 @@ en:
       regimen_item_name: "Name"
     dietary_requirements_collections:
       dietary_requirements_collection_name: "Name"
+    dietary_requirements:
+      dietary_requirement_name: "Name"
