@@ -1,0 +1,33 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATETIME,
+    name: :consumed_food_time,
+    value: obj.consumed_food_time,
+    placeholder: "myplaceonline.consumed_foods.consumed_food_time"
+  )
+%>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :food,
+    existingobj: obj.food,
+    heading: t("myplaceonline.consumed_foods.food"),
+    objform: "foods/form",
+    existingobjurl: "food_path",
+    searchurl: "/foods.json?perpage=0",
+    edit: edit,
+    expanded_if_nil: true,
+    autofocus: autofocus,
+    existingcollapsed: false
+  }
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_NUMBER,
+    name: :quantity,
+    value: obj.quantity,
+    placeholder: "myplaceonline.consumed_foods.quantity"
+  )
+%>

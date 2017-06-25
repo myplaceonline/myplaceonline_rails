@@ -247,6 +247,7 @@ en:
       dietary_requirements_collections: "Dietary Requirements Collections"
       dietary_requirements: "Dietary Requirements"
       diets: "Diets"
+      consumed_foods: "Consumed Foods"
     general:
       email: "E-mail"
       password: "Password"
@@ -3477,3 +3478,7 @@ en:
     diet_foods:
       food: "Food"
       quantity: "Quantity"
+    consumed_foods:
+      consumed_food_time: "Time"
+      quantity: "Quantity"
+      food: "Food"

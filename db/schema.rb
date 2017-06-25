@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170625112352) do
+ActiveRecord::Schema.define(version: 20170625143110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -994,6 +994,20 @@ ActiveRecord::Schema.define(version: 20170625112352) do
     t.index ["contact_id"], name: "index_connections_on_contact_id"
     t.index ["identity_id"], name: "index_connections_on_identity_id"
     t.index ["user_id"], name: "index_connections_on_user_id"
+  end
+
+  create_table "consumed_foods", force: :cascade do |t|
+    t.datetime "consumed_food_time"
+    t.bigint "food_id"
+    t.integer "quantity"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["food_id"], name: "index_consumed_foods_on_food_id"
+    t.index ["identity_id"], name: "index_consumed_foods_on_identity_id"
   end
 
   create_table "contacts", id: :serial, force: :cascade do |t|
@@ -5685,6 +5699,8 @@ ActiveRecord::Schema.define(version: 20170625112352) do
   add_foreign_key "connections", "contacts"
   add_foreign_key "connections", "identities"
   add_foreign_key "connections", "users"
+  add_foreign_key "consumed_foods", "foods"
+  add_foreign_key "consumed_foods", "identities"
   add_foreign_key "contacts", "identities", column: "contact_identity_id", name: "contacts_contact_identity_id_fk"
   add_foreign_key "contacts", "identities", name: "contacts_identity_id_fk"
   add_foreign_key "conversation_files", "conversations"
