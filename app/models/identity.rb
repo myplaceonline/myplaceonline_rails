@@ -231,6 +231,7 @@ class Identity < ApplicationRecord
   has_many :user_capabilities, :dependent => :destroy
   has_many :website_scrapers, :dependent => :destroy
   has_many :regimens, :dependent => :destroy
+  has_many :dietary_requirements_collections, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 
@@ -460,6 +461,7 @@ class Identity < ApplicationRecord
       :user_capabilities => user_capabilities.to_a.map{|x| x.as_json},
       :website_scrapers => website_scrapers.to_a.map{|x| x.as_json},
       :regimens => regimens.to_a.map{|x| x.as_json},
+      :dietary_requirements_collections => dietary_requirements_collections.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

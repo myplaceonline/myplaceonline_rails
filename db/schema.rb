@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170612034731) do
+ActiveRecord::Schema.define(version: 20170625055810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1280,6 +1280,30 @@ ActiveRecord::Schema.define(version: 20170612034731) do
     t.integer "rating"
     t.index ["entry_encrypted_id"], name: "index_diary_entries_on_entry_encrypted_id"
     t.index ["identity_id"], name: "index_diary_entries_on_identity_id"
+  end
+
+  create_table "dietary_requirements_collection_files", force: :cascade do |t|
+    t.bigint "dietary_requirements_collection_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dietary_requirements_collection_id"], name: "drcf_on_drc"
+    t.index ["identity_file_id"], name: "index_dietary_requirements_collection_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_dietary_requirements_collection_files_on_identity_id"
+  end
+
+  create_table "dietary_requirements_collections", force: :cascade do |t|
+    t.string "dietary_requirements_collection_name"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_dietary_requirements_collections_on_identity_id"
   end
 
   create_table "doctor_visit_files", id: :serial, force: :cascade do |t|
@@ -5665,6 +5689,10 @@ ActiveRecord::Schema.define(version: 20170612034731) do
   add_foreign_key "dessert_locations", "locations"
   add_foreign_key "diary_entries", "encrypted_values", column: "entry_encrypted_id"
   add_foreign_key "diary_entries", "identities", name: "diary_entries_identity_id_fk"
+  add_foreign_key "dietary_requirements_collection_files", "dietary_requirements_collections"
+  add_foreign_key "dietary_requirements_collection_files", "identities"
+  add_foreign_key "dietary_requirements_collection_files", "identity_files"
+  add_foreign_key "dietary_requirements_collections", "identities"
   add_foreign_key "doctor_visit_files", "doctor_visits"
   add_foreign_key "doctor_visit_files", "identities"
   add_foreign_key "doctor_visit_files", "identity_files"

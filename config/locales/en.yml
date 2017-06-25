@@ -244,6 +244,7 @@ en:
       website_scrapers: "Website Scrapers"
       repeats: "Repeats"
       regimens: "Regimens"
+      dietary_requirements_collections: "Dietary Requirements Collections"
     general:
       email: "E-mail"
       password: "Password"
@@ -3445,3 +3446,5 @@ en:
         daily: "Daily"
     regimen_items:
       regimen_item_name: "Name"
+    dietary_requirements_collections:
+      dietary_requirements_collection_name: "Name"

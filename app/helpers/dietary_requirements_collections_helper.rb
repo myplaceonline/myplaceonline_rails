@@ -1,0 +1,2 @@
+module DietaryRequirementsCollectionsHelper
+end
