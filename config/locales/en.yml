@@ -3458,3 +3458,8 @@ en:
       dietary_requirement_amount: "Amount"
       dietary_requirement_type: "Type"
       dietary_requirement_context: "Context"
+      measurements:
+        mg: "Milligrams (mg)"
+        micrograms: "Micrograms (mg)"
+        grams: "Grams (g)"
+        micrograms_rae: "Micrograms of Retinol Activity Equivalent (mg RAE)"

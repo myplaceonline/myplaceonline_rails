@@ -2,6 +2,13 @@ class DietaryRequirement < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
+  MEASUREMENTS = [
+    ["myplaceonline.dietary_requirements.measurements.grams", 0],
+    ["myplaceonline.dietary_requirements.measurements.mg", 1],
+    ["myplaceonline.dietary_requirements.measurements.micrograms", 2],
+    ["myplaceonline.dietary_requirements.measurements.micrograms_rae", 3],
+  ]
+
   def self.properties
     [
       { name: :dietary_requirement_name, type: ApplicationRecord::PROPERTY_TYPE_STRING },
