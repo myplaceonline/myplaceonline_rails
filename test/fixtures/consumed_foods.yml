@@ -1,0 +1,4 @@
+consumed_food:
+  identity: identity
+  consumed_food_time: 2017-01-01 01:01:01
+  food: food
