@@ -1,0 +1,32 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :diet_name,
+    value: obj.diet_name,
+    placeholder: "myplaceonline.diets.diet_name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+  )
+%>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :dietary_requirements_collection,
+    existingobj: obj.dietary_requirements_collection,
+    heading: t("myplaceonline.diets.dietary_requirements_collection"),
+    objform: "dietary_requirements_collections/form",
+    existingobjurl: "dietary_requirements_collection_path",
+    searchurl: "/dietary_requirements_collections.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>

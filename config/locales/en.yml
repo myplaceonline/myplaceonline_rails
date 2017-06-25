@@ -246,6 +246,7 @@ en:
       regimens: "Regimens"
       dietary_requirements_collections: "Dietary Requirements Collections"
       dietary_requirements: "Dietary Requirements"
+      diets: "Diets"
     general:
       email: "E-mail"
       password: "Password"
@@ -3466,3 +3467,6 @@ en:
       contexts:
         per_day: "Per Day"
         per_1000_calories: "Per 1,000 Calories"
+    diets:
+      diet_name: "Name"
+      dietary_requirements_collection: "Dietary Requirements"

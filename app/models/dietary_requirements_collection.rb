@@ -20,4 +20,14 @@ class DietaryRequirementsCollection < ApplicationRecord
   
   child_properties(name: :dietary_requirements, sort: "dietary_requirement_name ASC")
 
+  def self.param_names
+    [
+      :id,
+      :_destroy,
+      :dietary_requirements_collection_name,
+      :notes,
+      dietary_requirements_collections_attributes: FilesController.multi_param_names,
+      dietary_requirements_attributes: DietaryRequirement.params,
+    ]
+  end
 end

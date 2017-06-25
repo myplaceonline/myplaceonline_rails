@@ -14,10 +14,7 @@ class DietaryRequirementsCollectionsController < MyplaceonlineController
 
     def obj_params
       params.require(:dietary_requirements_collection).permit(
-        :dietary_requirements_collection_name,
-        :notes,
-        dietary_requirements_collections_attributes: FilesController.multi_param_names,
-        dietary_requirements_attributes: DietaryRequirement.params,
+        DietaryRequirementsCollections.param_names
       )
     end
 end
