@@ -30,6 +30,16 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_SELECT,
+    name: :dietary_requirement_context,
+    value: obj.dietary_requirement_context,
+    placeholder: "myplaceonline.dietary_requirements.dietary_requirement_context",
+    select_options: DietaryRequirement::CONTEXTS,
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,

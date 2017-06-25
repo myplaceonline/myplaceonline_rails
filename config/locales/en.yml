@@ -3463,3 +3463,6 @@ en:
         micrograms: "Micrograms (mg)"
         grams: "Grams (g)"
         micrograms_rae: "Micrograms of Retinol Activity Equivalent (mg RAE)"
+      contexts:
+        per_day: "Per Day"
+        per_1000_calories: "Per 1,000 Calories"

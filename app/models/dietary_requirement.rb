@@ -9,6 +9,11 @@ class DietaryRequirement < ApplicationRecord
     ["myplaceonline.dietary_requirements.measurements.micrograms_rae", 3],
   ]
 
+  CONTEXTS = [
+    ["myplaceonline.dietary_requirements.contexts.per_day", 0],
+    ["myplaceonline.dietary_requirements.contexts.per_1000_calories", 1],
+  ]
+
   def self.properties
     [
       { name: :dietary_requirement_name, type: ApplicationRecord::PROPERTY_TYPE_STRING },
