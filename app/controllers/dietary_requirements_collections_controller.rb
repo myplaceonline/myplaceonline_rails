@@ -14,7 +14,7 @@ class DietaryRequirementsCollectionsController < MyplaceonlineController
 
     def obj_params
       params.require(:dietary_requirements_collection).permit(
-        DietaryRequirementsCollections.param_names
+        DietaryRequirementsCollection.param_names
       )
     end
 end

@@ -3470,3 +3470,10 @@ en:
     diets:
       diet_name: "Name"
       dietary_requirements_collection: "Dietary Requirements"
+      foods: "Foods"
+      food: "Food"
+      add_food: "Add Food"
+      delete_food: "Delete Food"
+    diet_foods:
+      food: "Food"
+      quantity: "Quantity"

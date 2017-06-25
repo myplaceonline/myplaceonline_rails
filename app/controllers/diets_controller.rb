@@ -12,7 +12,8 @@ class DietsController < MyplaceonlineController
       params.require(:diet).permit(
         :diet_name,
         :notes,
-        dietary_requirements_collection_attributes: DietaryRequirementsCollection.param_names
+        dietary_requirements_collection_attributes: DietaryRequirementsCollection.param_names,
+        diet_foods_attributes: DietFood.params,
       )
     end
 end

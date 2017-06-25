@@ -17,4 +17,6 @@ class Diet < ApplicationRecord
   end
 
   child_property(name: :dietary_requirements_collection)
+  
+  child_properties(name: :diet_foods)
 end

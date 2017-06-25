@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170625105742) do
+ActiveRecord::Schema.define(version: 20170625112352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1280,6 +1280,21 @@ ActiveRecord::Schema.define(version: 20170625105742) do
     t.integer "rating"
     t.index ["entry_encrypted_id"], name: "index_diary_entries_on_entry_encrypted_id"
     t.index ["identity_id"], name: "index_diary_entries_on_identity_id"
+  end
+
+  create_table "diet_foods", force: :cascade do |t|
+    t.bigint "diet_id"
+    t.bigint "food_id"
+    t.integer "quantity"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["diet_id"], name: "index_diet_foods_on_diet_id"
+    t.index ["food_id"], name: "index_diet_foods_on_food_id"
+    t.index ["identity_id"], name: "index_diet_foods_on_identity_id"
   end
 
   create_table "dietary_requirements", force: :cascade do |t|
@@ -5720,6 +5735,9 @@ ActiveRecord::Schema.define(version: 20170625105742) do
   add_foreign_key "dessert_locations", "locations"
   add_foreign_key "diary_entries", "encrypted_values", column: "entry_encrypted_id"
   add_foreign_key "diary_entries", "identities", name: "diary_entries_identity_id_fk"
+  add_foreign_key "diet_foods", "diets"
+  add_foreign_key "diet_foods", "foods"
+  add_foreign_key "diet_foods", "identities"
   add_foreign_key "dietary_requirements", "dietary_requirements_collections"
   add_foreign_key "dietary_requirements", "identities"
   add_foreign_key "dietary_requirements_collection_files", "dietary_requirements_collections"

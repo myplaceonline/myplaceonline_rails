@@ -1,0 +1,23 @@
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :food,
+    existingobj: obj.food,
+    heading: t("myplaceonline.diet_foods.food"),
+    objform: "foods/form",
+    existingobjurl: "food_path",
+    searchurl: "/foods.json?perpage=0",
+    edit: edit,
+    autofocus: autofocus,
+    expanded_if_nil: true
+  }
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_NUMBER,
+    name: :quantity,
+    value: obj.quantity,
+    placeholder: "myplaceonline.diet_foods.quantity"
+  )
+%>
