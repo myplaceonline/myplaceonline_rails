@@ -3451,3 +3451,6 @@ en:
       dietary_requirements_collection_name: "Name"
     dietary_requirements:
       dietary_requirement_name: "Name"
+      dietary_requirement_amount: "Amount"
+      dietary_requirement_type: "Type"
+      dietary_requirement_context: "Context"

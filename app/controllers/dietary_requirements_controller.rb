@@ -12,6 +12,9 @@ class DietaryRequirementsController < MyplaceonlineController
       params.require(:dietary_requirement).permit(
         :dietary_requirement_name,
         :notes,
+        :dietary_requirement_amount,
+        :dietary_requirement_type,
+        :dietary_requirement_context,
       )
     end
 end

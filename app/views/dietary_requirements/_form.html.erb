@@ -11,6 +11,25 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :dietary_requirement_amount,
+    value: obj.dietary_requirement_amount,
+    placeholder: "myplaceonline.dietary_requirements.dietary_requirement_amount",
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_SELECT,
+    name: :dietary_requirement_type,
+    value: obj.dietary_requirement_type,
+    placeholder: "myplaceonline.dietary_requirements.dietary_requirement_type",
+    select_options: Myp::MEASUREMENTS,
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,
