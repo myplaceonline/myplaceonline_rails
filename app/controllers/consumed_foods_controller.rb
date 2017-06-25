@@ -1,4 +1,12 @@
 class ConsumedFoodsController < MyplaceonlineController
+  def use_bubble?
+    true
+  end
+  
+  def bubble_text(obj)
+    Myp.display_datetime_short(obj.consumed_food_time, User.current_user)
+  end
+
   protected
     def insecure
       true
