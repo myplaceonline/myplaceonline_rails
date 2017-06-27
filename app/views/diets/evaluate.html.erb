@@ -1,0 +1,26 @@
+<% content_for :heading do -%><%= t("myplaceonline.diets.evaluate") %><% end -%>
+
+<h1><%= t("myplaceonline.diets.evaluate") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag(diet_evaluate_path(@obj), method: :get) do %>
+
+  <%= input_field(name: :days, type: Myp::FIELD_NUMBER, placeholder: t("myplaceonline.diets.evaluate_days"), value: @days) %>
+  <%= data_row(heading: t("myplaceonline.diets.evaluate_since"), content: @start, wrap: false) %>
+
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.general.update"), "data-icon" => "action", "data-iconpos" => "top")
+        },
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: controller.obj_path,
+          icon: "back"
+        }
+      ]
+    })
+  %>
+<% end %>

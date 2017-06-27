@@ -107,13 +107,14 @@ class MyplaceonlineExecutionContext
   def self.set(user: nil, identity: nil, context: nil)
     ExecutionContext.push
     if !user.nil?
-      self.user = user
+      result = self.user = user
     end
     if !identity.nil?
-      self.user = identity.user
+      result = self.user = identity.user
     end
     if !context.nil?
-      self.user = context.identity.user
+      result = self.user = context.identity.user
     end
+    result
   end
 end

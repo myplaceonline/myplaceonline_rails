@@ -3475,6 +3475,9 @@ en:
       food: "Food"
       add_food: "Add Food"
       delete_food: "Delete Food"
+      evaluate: "Evaluate"
+      evaluate_days: "Days"
+      evaluate_since: "Since"
     diet_foods:
       food: "Food"
       quantity: "Quantity"
