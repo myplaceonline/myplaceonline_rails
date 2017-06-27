@@ -400,6 +400,7 @@ Rails.application.routes.draw do
       }
     ],
     trips: [
+      { instance: false, link: "map" },
       { instance: true, link: "share" },
       { instance: true, link: "shared" },
       { instance: true, link: "complete" },

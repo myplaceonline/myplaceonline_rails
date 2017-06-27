@@ -378,6 +378,7 @@ en:
       share_link: "Create Public Link"
       public_link: "Public Link"
       link: "Link"
+      map: "Map"
     categories:
       no_results: "No Results. Create New "
       always_expand_top_used: "Always Expand Top Used"

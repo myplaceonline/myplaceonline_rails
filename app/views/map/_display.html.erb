@@ -1,5 +1,5 @@
 <%
-Rails.logger.debug{"map/display"}
+Rails.logger.debug{"map/display center: #{defined?(center) ? "true" : "false"}"}
 if defined?(center)
   Rails.logger.debug{"center defined #{center.inspect}"}
   center.ensure_gps
@@ -10,15 +10,16 @@ if defined?(center)
     zoom = 10
   end
 end
-if !defined?(latitude)
+Rails.logger.debug{"map/display latitude: #{defined?(latitude)}, #{latitude.inspect}"}
+if !defined?(latitude) || latitude.nil?
   Rails.logger.debug{"setting default latitude"}
   latitude = 32.715738
 end
-if !defined?(longitude)
+if !defined?(longitude) || longitude.nil?
   Rails.logger.debug{"setting default longitude"}
   longitude = -117.1610838
 end
-if !defined?(zoom)
+if !defined?(zoom) || zoom.nil?
   Rails.logger.debug{"setting default zoom"}
   zoom = 1
 end
@@ -28,7 +29,6 @@ end
 %>
 
 <div id="map" style="width: 100%; height: 400px;"><h1><%= t("myplaceonline.general.loading_with_ellipses") %></h1></div>
-<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 <script type="text/javascript">
   myplaceonline.onPageLoad(function() {
     $("#map").height($(window).height() * .7);

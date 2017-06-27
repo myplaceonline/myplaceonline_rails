@@ -1,4 +1,6 @@
 class TripsController < MyplaceonlineController
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:map]
+
   def may_upload
     true
   end
@@ -98,6 +100,33 @@ class TripsController < MyplaceonlineController
       redirect_to trip_path(@obj),
         :flash => { :notice => I18n.t("myplaceonline.trips.trip_completed") }
     end
+  end
+  
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t("myplaceonline.general.map"),
+        link: trips_map_path,
+        icon: "navigation"
+      }
+    ]
+  end
+  
+  def map
+    @locations = self.all.map{ |x|
+      if x.location.ensure_gps
+        label = nil
+        MapLocation.new(
+          latitude: x.location.latitude,
+          longitude: x.location.longitude,
+          label: label,
+          tooltip: x.display,
+          popupHtml: ActionController::Base.helpers.link_to(x.display, x.location.map_url, target: "_blank")
+        )
+      else
+        nil
+      end
+    }.compact
   end
   
   protected
