@@ -8,6 +8,32 @@
 
   <%= input_field(name: :days, type: Myp::FIELD_NUMBER, placeholder: t("myplaceonline.diets.evaluate_days"), value: @days) %>
   <%= data_row(heading: t("myplaceonline.diets.evaluate_since"), prefix_heading: true, content: @start, wrap: false) %>
+  
+  <hr />
+  
+  <%= data_row(heading: t("myplaceonline.diets.total_calories"), prefix_heading: true, content: @total_calories, wrap: false) %>
+  <%= data_row(heading: t("myplaceonline.diets.total_calories_per_day"), prefix_heading: true, content: @total_calories_per_day, wrap: false) %>
+  
+  <p><b><%= t("myplaceonline.diets.total_requirements") %></b></p>
+  <%= data_table_start %>
+  <% @total_requirements.map do |name, requirement| %>
+    <%=
+      if requirement[:needed] > 0
+        data_row(
+          heading: name,
+          htmlencode_content: false,
+          content: CGI::escapeHTML(
+            "#{t("myplaceonline.diets.requirements_needed")}#{DietaryRequirement.display_with_measurement(requirement[:needed], requirement[:details].dietary_requirement_type)}"
+          ) + "<br />" + CGI::escapeHTML(
+            "#{t("myplaceonline.diets.requirements_consumed")}#{DietaryRequirement.display_with_measurement(requirement[:consumed], requirement[:details].dietary_requirement_type)}"
+          ) + "<br />" + CGI::escapeHTML(
+            "#{t("myplaceonline.diets.requirements_consumed_percent")}#{(requirement[:consumed] / requirement[:needed]) * 100.0}"
+          )
+        )
+      end
+    %>
+  <% end %>
+  <%= data_table_end %>
 
   <%=
     render(partial: "shared/footer", locals: {

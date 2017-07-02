@@ -1,7 +1,8 @@
 <% content_for :heading do -%><%= controller.display_obj(@obj) %><% end -%>
 <h1><%= t("myplaceonline.website_scrapers.scrape_results") %></h1>
 <%= flashes! %>
-<p><%= t("myplaceonline.website_scrapers.website_url") %>: <%=
+
+<%= t("myplaceonline.website_scrapers.website_url") %>: <%=
   data_row(
     heading: t("myplaceonline.website_scrapers.website_url"),
     content: @obj.website_url,
@@ -10,7 +11,8 @@
     url_external_target_blank: true,
     wrap: false
   )
-%></p>
+%>
+
 <%= raw(@raw_response) %>
 
 <%= form_tag(camp_locations_map_path, method: :get) do %>

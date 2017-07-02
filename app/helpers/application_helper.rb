@@ -259,6 +259,7 @@ module ApplicationHelper
   def display_collection(content:, format:, options:)
     options[:htmlencode_content] = false
     options[:wrap] = false
+    options[:non_wrap_container] = nil
     result = ""
     path = content.class.to_s
     path = path[0..path.index("::")-1].underscore.pluralize
@@ -320,7 +321,8 @@ module ApplicationHelper
       max_nest: nil,
       prefix_heading: false,
       prefix_wrapper: :b,
-      prefix_separator: ": "
+      prefix_separator: ": ",
+      non_wrap_container: :p
     }.merge(options)
     
     original_content = content
@@ -422,6 +424,9 @@ module ApplicationHelper
           end
         else
           html = content
+        end
+        if !options[:non_wrap_container].nil?
+          html = content_tag(options[:non_wrap_container], html)
         end
       end
       

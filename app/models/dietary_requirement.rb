@@ -8,10 +8,13 @@ class DietaryRequirement < ApplicationRecord
     ["myplaceonline.dietary_requirements.measurements.micrograms", 2],
     ["myplaceonline.dietary_requirements.measurements.micrograms_rae", 3],
   ]
+  
+  CONTEXT_PER_DAY = 0
+  CONTEXT_PER_1000_CALORIES = 1
 
   CONTEXTS = [
-    ["myplaceonline.dietary_requirements.contexts.per_day", 0],
-    ["myplaceonline.dietary_requirements.contexts.per_1000_calories", 1],
+    ["myplaceonline.dietary_requirements.contexts.per_day", CONTEXT_PER_DAY],
+    ["myplaceonline.dietary_requirements.contexts.per_1000_calories", CONTEXT_PER_1000_CALORIES],
   ]
 
   def self.properties
@@ -39,5 +42,9 @@ class DietaryRequirement < ApplicationRecord
       :dietary_requirement_context,
       :notes,
     ]
+  end
+  
+  def self.display_with_measurement(amount, type)
+    "#{amount} #{Myp.get_select_name(type, MEASUREMENTS)}"
   end
 end

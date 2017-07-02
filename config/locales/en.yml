@@ -3479,6 +3479,12 @@ en:
       evaluate: "Evaluate"
       evaluate_days: "Days"
       evaluate_since: "Since"
+      total_calories: "Total Calories"
+      total_calories_per_day: "Total Calories per Day"
+      total_requirements: "Total Requirements:"
+      requirements_needed: "Needed: "
+      requirements_consumed: "Consumed: "
+      requirements_consumed_percent: "Consumed (%): "
     diet_foods:
       food: "Food"
       quantity: "Quantity"
