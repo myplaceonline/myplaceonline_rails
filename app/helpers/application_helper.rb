@@ -311,6 +311,7 @@ module ApplicationHelper
       url_clipboard: nil,
       url_innercontent: nil,
       htmlencode_content: true,
+      htmlencode_heading: false,
       wrap: true,
       heading: heading,
       onlytime: false,
@@ -399,6 +400,10 @@ module ApplicationHelper
         content = CGI::escapeHTML(content)
       end
       
+      if options[:htmlencode_heading]
+        heading = CGI::escapeHTML(heading)
+      end
+
       if options[:background_highlight]
         options[:content_classes] = "bghighlight #{options[:content_classes]}"
       end
@@ -406,11 +411,11 @@ module ApplicationHelper
       if options[:warning] && original_content.is_a?(TrueClass)
         options[:content_classes] = "bgwarning #{options[:content_classes]}"
       end
-
+      
       if options[:wrap]
         html = <<-HTML
           <tr>
-            <td>#{content_tag(:span, CGI::escapeHTML(heading), class: "tooltipable", title: options[:tooltip])}</td>
+            <td>#{content_tag(:span, heading, class: "tooltipable", title: options[:tooltip])}</td>
             <td class="#{options[:content_classes]}">#{content}</td>
             <td style="padding: 0.2em; vertical-align: top;">#{options[:secondary_content]}</td>
           </tr>
@@ -418,9 +423,9 @@ module ApplicationHelper
       else
         if options[:prefix_heading]
           if options[:prefix_wrapper].nil?
-            html = CGI::escapeHTML(heading) + options[:prefix_separator] + content
+            html = heading + options[:prefix_separator] + content
           else
-            html = content_tag(options[:prefix_wrapper], CGI::escapeHTML(heading) + options[:prefix_separator]) + content
+            html = content_tag(options[:prefix_wrapper], heading + options[:prefix_separator]) + content
           end
         else
           html = content
