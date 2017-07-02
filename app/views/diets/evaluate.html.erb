@@ -14,7 +14,7 @@
   <%= data_row(heading: t("myplaceonline.diets.total_calories"), prefix_heading: true, content: @total_calories, wrap: false) %>
   <%= data_row(heading: t("myplaceonline.diets.total_calories_per_day"), prefix_heading: true, content: @total_calories_per_day, wrap: false) %>
   
-  <p><b><%= t("myplaceonline.diets.total_requirements") %></b></p>
+  <p><b><%= link_to(t("myplaceonline.diets.total_requirements"), dietary_requirements_collection_path(@obj.dietary_requirements_collection)) %></b></p>
   <%= data_table_start %>
   <% @total_requirements.map do |name, requirement| %>
     <%=
@@ -31,6 +31,23 @@
           )
         )
       end
+    %>
+  <% end %>
+  <%= data_table_end %>
+  
+  <hr />
+  
+  <p><b><%= link_to(t("myplaceonline.diets.consumed_foods"), consumed_foods_path) %></b></p>
+  <%= data_table_start %>
+  <% @total_consumed_foods.map do |key, food_info| %>
+    <%=
+      data_row(
+        heading: food_info[:consumed_food].display,
+        htmlencode_content: false,
+        content: CGI::escapeHTML(
+          "#{t("myplaceonline.consumed_foods.quantity")}: #{food_info[:quantity]}"
+        )
+      )
     %>
   <% end %>
   <%= data_table_end %>
