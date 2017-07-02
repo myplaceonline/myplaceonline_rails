@@ -42,4 +42,12 @@ class Food < ApplicationRecord
   child_files
 
   child_property(name: :food_nutrition_information, destroy_dependent: true)
+  
+  def total_calories(quantity:)
+    if !self.food_nutrition_information.nil? && !self.food_nutrition_information.calories_per_serving.nil?
+      self.food_nutrition_information.calories_per_serving * quantity
+    else
+      self.calories * quantity
+    end
+  end
 end

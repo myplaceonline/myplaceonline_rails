@@ -40,11 +40,7 @@ class DietsController < MyplaceonlineController
     @total_calories = 0.0
     @consumed_foods.each do |consumed_food|
       
-      quantity = 1
-      if !consumed_food.quantity.nil?
-        quantity = consumed_food.quantity
-      end
-      @total_calories = @total_calories + (consumed_food.food.calories * quantity)
+      @total_calories = @total_calories + consumed_food.food.total_calories(quantity: consumed_food.quantity_with_fallback)
       
     end
 
@@ -54,7 +50,7 @@ class DietsController < MyplaceonlineController
         total_req = {
           needed: 0.0,
           consumed: 0.0,
-          details: req # Assume same by name
+          details: req # Assume multiple same by name
         }
         @total_requirements[req.dietary_requirement_name] = total_req
       end
@@ -68,9 +64,50 @@ class DietsController < MyplaceonlineController
       end
     end
     
-    @total_requirements.each do |k, v|
+    @total_requirements.each do |k, total_req|
+      
+      Rails.logger.debug{"DietsController.evaluate requirement key: #{k}, value: #{total_req}"}
+      
       @consumed_foods.each do |consumed_food|
-        # nutrients
+        ni = consumed_food.food.food_nutrition_information
+
+        if !ni.nil?
+          
+          Rails.logger.debug{"DietsController.evaluate consumed food: #{consumed_food.display}"}
+      
+          ni.food_nutrition_information_amounts.each do |fnia|
+
+            if fnia.nutrient.nutrient_name.downcase == k.downcase
+              if !fnia.nutrient.measurement_type.nil? && total_req[:details].dietary_requirement_type != fnia.nutrient.measurement_type
+                raise "Unmatched nutrient types for #{fnia.nutrient.nutrient_name} (#{total_req[:details].dietary_requirement_type} vs. #{fnia.nutrient.measurement_type})"
+              end
+              
+              Rails.logger.debug{"DietsController.evaluate name: #{fnia.nutrient.nutrient_name}, quantity: #{consumed_food.quantity_with_fallback}, amount: #{fnia.amount}"}
+              
+              if fnia.measurement_type == FoodNutritionInformationAmount::MEASUREMENT_TYPE_PERCENT
+                # "Percent Daily Values are based on a 2,000 calorie diet."
+                
+                needed_per_day = total_req[:needed] / @days
+
+                calories_consumed_per_day = @total_calories / @days
+                
+                if calories_consumed_per_day < 2000.0
+                  calories_consumed_per_day = 2000.0
+                end
+                
+                needed_per_day_adjusted = needed_per_day * (calories_consumed_per_day / 2000.0)
+                
+                Rails.logger.debug{"DietsController.evaluate percent needed_per_day: #{needed_per_day}, calories_consumed_per_day: #{calories_consumed_per_day}, needed_per_day_adjusted: #{needed_per_day_adjusted}"}
+                
+                total_req[:consumed] = total_req[:consumed] + (consumed_food.quantity_with_fallback * needed_per_day_adjusted * (fnia.amount / 100.0))
+              else
+                total_req[:consumed] = total_req[:consumed] + (consumed_food.quantity_with_fallback * fnia.amount)
+              end
+            else
+              # TODO display skipped warnings
+            end
+          end
+        end
       end
     end
     

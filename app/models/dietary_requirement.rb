@@ -38,6 +38,6 @@ class DietaryRequirement < ApplicationRecord
   end
   
   def self.display_with_measurement(amount, type)
-    "#{amount} #{Myp.get_select_name(type, Nutrient::MEASUREMENTS)}"
+    "#{Myp.decimal_to_s(value: amount)} #{Myp.get_select_name(type, Nutrient::MEASUREMENTS)}"
   end
 end

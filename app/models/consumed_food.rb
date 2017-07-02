@@ -34,4 +34,12 @@ class ConsumedFood < ApplicationRecord
     result.consumed_food_time = User.current_user.time_now
     result
   end
+  
+  def quantity_with_fallback(default_quantity: 1)
+    if !self.quantity.nil?
+      self.quantity
+    else
+      default_quantity
+    end
+  end
 end

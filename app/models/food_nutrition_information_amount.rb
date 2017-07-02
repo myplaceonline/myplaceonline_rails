@@ -1,6 +1,9 @@
 class FoodNutritionInformationAmount < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
+  
+  MEASUREMENT_TYPE_NUMBER = 0
+  MEASUREMENT_TYPE_PERCENT = 1
 
   MEASUREMENT_TYPES = [
     ["myplaceonline.food_nutrition_information_amounts.measurement_types.number", 0],
