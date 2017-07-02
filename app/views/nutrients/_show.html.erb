@@ -1,0 +1,3 @@
+<%= data_row(heading: t("myplaceonline.nutrients.nutrient_name"), content: obj.nutrient_name) %>
+<%= data_row(heading: t("myplaceonline.nutrients.measurement_type"), content: obj.measurement_type, enumeration: Nutrient::MEASUREMENTS) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>

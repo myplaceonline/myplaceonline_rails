@@ -249,6 +249,8 @@ en:
       diets: "Diets"
       consumed_foods: "Consumed Foods"
       food_nutrition_informations: "Food Nutrition Informations"
+      nutrients: "Nutrients"
+      food_nutrition_information_amounts: "Nutrient Amounts"
     general:
       email: "E-mail"
       password: "Password"
@@ -3463,11 +3465,6 @@ en:
       dietary_requirement_amount: "Amount"
       dietary_requirement_type: "Type"
       dietary_requirement_context: "Context"
-      measurements:
-        mg: "Milligrams (mg)"
-        micrograms: "Micrograms (mg)"
-        grams: "Grams (g)"
-        micrograms_rae: "Micrograms of Retinol Activity Equivalent (mg RAE)"
       contexts:
         per_day: "Per Day"
         per_1000_calories: "Per 1,000 Calories"
@@ -3502,3 +3499,22 @@ en:
       calories_per_serving: "Calories per Serving"
       calories_per_serving_from_fat: "Calories per Serving from Fat"
       food: "Food"
+      amount: "Amount"
+      amounts: "Amounts"
+      add_amount: "Add Amount"
+      delete_amount: "Delete Amount"
+    food_nutrition_information_amounts:
+      amount: "Amount"
+      nutrient: "Nutrient"
+      measurement_type: "Measurement Type"
+      measurement_types:
+        number: "Number"
+        percent: "Percent"
+    nutrients:
+      nutrient_name: "Name"
+      measurement_type: "Measurement"
+      measurements:
+        mg: "Milligrams (mg)"
+        micrograms: "Micrograms (mg)"
+        grams: "Grams (g)"
+        micrograms_rae: "Micrograms of Retinol Activity Equivalent (mg RAE)"

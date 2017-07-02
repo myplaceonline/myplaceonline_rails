@@ -36,13 +36,36 @@
   )
 %>
 <%=
+  render(layout: "myplaceonline/childproperties", locals: {
+    f: f,
+    heading: t("myplaceonline.food_nutrition_informations.amounts"),
+    childpropertiesname: :food_nutrition_information_amounts,
+    childproperties: obj.food_nutrition_information_amounts,
+    deletebutton: t("myplaceonline.food_nutrition_informations.delete_amount"),
+    addbutton: t("myplaceonline.food_nutrition_informations.add_amount"),
+    expanded: obj.food_nutrition_information_amounts.length > 0,
+    formjson: [
+      {
+        type: :renderpartial,
+        partial: "myplaceonline/select_or_create",
+        heading: t("myplaceonline.food_nutrition_informations.amount"),
+        objform: "food_nutrition_information_amounts/form",
+        only_new: true,
+        edit: false,
+        autofocus: true
+      }
+    ]
+  }) do |child_fields, childproperty|
+%>
+  <%= render partial: "food_nutrition_information_amounts/form", locals: { obj: childproperty || FoodNutritionInformationAmount.build, edit: edit, autofocus: false, f: child_fields } %>
+<% end %>
+<%=
   input_field(
     form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,
-    placeholder: "myplaceonline.general.notes",
-    collapsed: false
+    placeholder: "myplaceonline.general.notes"
   )
 %>
 <%=

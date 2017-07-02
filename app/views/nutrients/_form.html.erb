@@ -1,0 +1,29 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :nutrient_name,
+    value: obj.nutrient_name,
+    placeholder: "myplaceonline.nutrients.nutrient_name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_SELECT,
+    name: :measurement_type,
+    value: obj.measurement_type,
+    placeholder: "myplaceonline.nutrients.measurement_type",
+    select_options: Nutrient::MEASUREMENTS,
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes"
+  )
+%>

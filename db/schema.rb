@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170702122343) do
+ActiveRecord::Schema.define(version: 20170702153420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1973,6 +1973,23 @@ ActiveRecord::Schema.define(version: 20170702122343) do
     t.index ["parent_food_id"], name: "index_food_ingredients_on_parent_food_id"
   end
 
+  create_table "food_nutrition_information_amounts", force: :cascade do |t|
+    t.decimal "amount", precision: 10, scale: 2
+    t.integer "measurement_type"
+    t.bigint "nutrient_id"
+    t.bigint "food_nutrition_information_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["food_nutrition_information_id"], name: "fnia_on_fni"
+    t.index ["identity_id"], name: "index_food_nutrition_information_amounts_on_identity_id"
+    t.index ["nutrient_id"], name: "index_food_nutrition_information_amounts_on_nutrient_id"
+  end
+
   create_table "food_nutrition_information_files", force: :cascade do |t|
     t.bigint "food_nutrition_information_id"
     t.bigint "identity_file_id"
@@ -3431,6 +3448,19 @@ ActiveRecord::Schema.define(version: 20170702122343) do
     t.datetime "archived"
     t.integer "rating"
     t.index ["identity_id"], name: "index_notepads_on_identity_id"
+  end
+
+  create_table "nutrients", force: :cascade do |t|
+    t.string "nutrient_name"
+    t.integer "measurement_type"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_nutrients_on_identity_id"
   end
 
   create_table "paid_tax_files", id: :serial, force: :cascade do |t|
@@ -5884,6 +5914,9 @@ ActiveRecord::Schema.define(version: 20170702122343) do
   add_foreign_key "food_ingredients", "foods", column: "parent_food_id", name: "food_ingredients_parent_food_id_fk"
   add_foreign_key "food_ingredients", "foods", name: "food_ingredients_food_id_fk"
   add_foreign_key "food_ingredients", "identities", name: "food_ingredients_identity_id_fk"
+  add_foreign_key "food_nutrition_information_amounts", "food_nutrition_informations"
+  add_foreign_key "food_nutrition_information_amounts", "identities"
+  add_foreign_key "food_nutrition_information_amounts", "nutrients"
   add_foreign_key "food_nutrition_information_files", "food_nutrition_informations"
   add_foreign_key "food_nutrition_information_files", "identities"
   add_foreign_key "food_nutrition_information_files", "identity_files"
@@ -6103,6 +6136,7 @@ ActiveRecord::Schema.define(version: 20170702122343) do
   add_foreign_key "myreferences", "contacts"
   add_foreign_key "myreferences", "identities"
   add_foreign_key "notepads", "identities", name: "notepads_identity_id_fk"
+  add_foreign_key "nutrients", "identities"
   add_foreign_key "paid_tax_files", "identities"
   add_foreign_key "paid_tax_files", "identity_files"
   add_foreign_key "paid_tax_files", "paid_taxes"

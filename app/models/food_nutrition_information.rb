@@ -27,8 +27,11 @@ class FoodNutritionInformation < ApplicationRecord
       :calories_per_serving_from_fat,
       :notes,
       food_nutrition_information_files_attributes: FilesController.multi_param_names,
+      food_nutrition_information_amounts_attributes: FoodNutritionInformationAmount.params,
     ]
   end
   
   child_property(name: :food)
+  
+  child_properties(name: :food_nutrition_information_amounts)
 end

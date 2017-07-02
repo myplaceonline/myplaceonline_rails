@@ -1,5 +1,5 @@
 <%= data_row(heading: t("myplaceonline.dietary_requirements.dietary_requirement_name"), content: obj.dietary_requirement_name) %>
 <%= data_row(heading: t("myplaceonline.dietary_requirements.dietary_requirement_amount"), content: obj.dietary_requirement_amount) %>
-<%= data_row(heading: t("myplaceonline.dietary_requirements.dietary_requirement_type"), content: obj.dietary_requirement_type, enumeration: DietaryRequirement::MEASUREMENTS) %>
+<%= data_row(heading: t("myplaceonline.dietary_requirements.dietary_requirement_type"), content: obj.dietary_requirement_type, enumeration: Nutrient::MEASUREMENTS) %>
 <%= data_row(heading: t("myplaceonline.dietary_requirements.dietary_requirement_context"), content: obj.dietary_requirement_context, enumeration: DietaryRequirement::CONTEXTS) %>
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>

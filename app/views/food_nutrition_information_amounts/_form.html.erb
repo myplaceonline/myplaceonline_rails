@@ -1,0 +1,42 @@
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :nutrient,
+    existingobj: obj.nutrient,
+    heading: t("myplaceonline.food_nutrition_information_amounts.nutrient"),
+    objform: "nutrients/form",
+    existingobjurl: "nutrient_path",
+    searchurl: "/nutrients.json?perpage=0",
+    edit: edit,
+    autofocus: autofocus,
+    expanded_if_nil: true
+  }
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :amount,
+    value: obj.amount,
+    placeholder: "myplaceonline.food_nutrition_information_amounts.amount"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_SELECT,
+    name: :measurement_type,
+    value: obj.measurement_type,
+    placeholder: "myplaceonline.food_nutrition_information_amounts.measurement_type",
+    select_options: FoodNutritionInformationAmount::MEASUREMENT_TYPES,
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes"
+  )
+%>

@@ -2,13 +2,6 @@ class DietaryRequirement < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
-  MEASUREMENTS = [
-    ["myplaceonline.dietary_requirements.measurements.grams", 0],
-    ["myplaceonline.dietary_requirements.measurements.mg", 1],
-    ["myplaceonline.dietary_requirements.measurements.micrograms", 2],
-    ["myplaceonline.dietary_requirements.measurements.micrograms_rae", 3],
-  ]
-  
   CONTEXT_PER_DAY = 0
   CONTEXT_PER_1000_CALORIES = 1
 
@@ -45,6 +38,6 @@ class DietaryRequirement < ApplicationRecord
   end
   
   def self.display_with_measurement(amount, type)
-    "#{amount} #{Myp.get_select_name(type, MEASUREMENTS)}"
+    "#{amount} #{Myp.get_select_name(type, Nutrient::MEASUREMENTS)}"
   end
 end
