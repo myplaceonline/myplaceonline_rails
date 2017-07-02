@@ -7,7 +7,7 @@
 <%= form_tag(diet_evaluate_path(@obj), method: :get) do %>
 
   <%= input_field(name: :days, type: Myp::FIELD_NUMBER, placeholder: t("myplaceonline.diets.evaluate_days"), value: @days) %>
-  <%= data_row(heading: t("myplaceonline.diets.evaluate_since"), content: @start, wrap: false) %>
+  <%= data_row(heading: t("myplaceonline.diets.evaluate_since"), prefix_heading: true, content: @start, wrap: false) %>
 
   <%=
     render(partial: "shared/footer", locals: {

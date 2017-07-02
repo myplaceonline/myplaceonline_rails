@@ -317,7 +317,10 @@ module ApplicationHelper
       tooltip: nil,
       enumeration: nil,
       expanded: false,
-      max_nest: nil
+      max_nest: nil,
+      prefix_heading: false,
+      prefix_wrapper: :b,
+      prefix_separator: ": "
     }.merge(options)
     
     original_content = content
@@ -411,7 +414,15 @@ module ApplicationHelper
           </tr>
         HTML
       else
-        html = content
+        if options[:prefix_heading]
+          if options[:prefix_wrapper].nil?
+            html = CGI::escapeHTML(heading) + options[:prefix_separator] + content
+          else
+            html = content_tag(options[:prefix_wrapper], CGI::escapeHTML(heading) + options[:prefix_separator]) + content
+          end
+        else
+          html = content
+        end
       end
       
       if !options[:second_row].blank?
