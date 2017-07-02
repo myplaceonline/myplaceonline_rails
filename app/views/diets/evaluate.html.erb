@@ -47,6 +47,8 @@
         htmlencode_content: false,
         content: CGI::escapeHTML(
           "#{t("myplaceonline.consumed_foods.quantity")}: #{food_info[:quantity]}"
+        ) + "<br />" + CGI::escapeHTML(
+          "#{t("myplaceonline.diets.total_calories")}: #{food_info[:calories]}"
         )
       )
     %>

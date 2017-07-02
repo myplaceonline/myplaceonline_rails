@@ -42,18 +42,22 @@ class DietsController < MyplaceonlineController
     @total_calories = 0.0
     @consumed_foods.each do |consumed_food|
       
-      @total_calories = @total_calories + consumed_food.food.total_calories(quantity: consumed_food.quantity_with_fallback)
+      consumed_food_calories = consumed_food.food.total_calories(quantity: consumed_food.quantity_with_fallback)
+      
+      @total_calories = @total_calories + consumed_food_calories
       
       total_consumed_food = @total_consumed_foods[consumed_food.food.id]
       if total_consumed_food.nil?
         total_consumed_food = {
           quantity: 0,
-          consumed_food: consumed_food
+          consumed_food: consumed_food,
+          calories: 0
         }
         @total_consumed_foods[consumed_food.food.id] = total_consumed_food
       end
       
       total_consumed_food[:quantity] = total_consumed_food[:quantity] + consumed_food.quantity_with_fallback
+      total_consumed_food[:calories] = total_consumed_food[:calories] + consumed_food_calories
       
     end
 
