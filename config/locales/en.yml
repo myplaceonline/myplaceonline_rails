@@ -3486,6 +3486,8 @@ en:
       requirements_consumed_percent: "Consumed (%): "
       default_evaluation_days: "Default Evaluation Days"
       consumed_foods: "Consumed Foods:"
+      consume: "Consume"
+      consumed_items: "Consumed %{count} Items"
     diet_foods:
       food: "Food"
       quantity: "Quantity"

@@ -1,0 +1,25 @@
+<% content_for :heading do -%><%= t("myplaceonline.diets.consume") %><% end -%>
+<h1><%= t("myplaceonline.diets.consume") %></h1>
+
+<%= flashes!(@obj) %>
+
+<%= form_tag(diet_consume_path(@obj), method: :post) do %>
+  <% @diet_foods.each do |diet_food| %>
+    <%= input_field(name: "diet_food_#{diet_food.id}", type: Myp::FIELD_BOOLEAN, placeholder: diet_food.display) %>
+  <% end %>
+
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.diets.consume"), "data-icon" => "check", "data-iconpos" => "top")
+        },
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: controller.obj_path,
+          icon: "back"
+        }
+      ]
+    })
+  %>
+<% end %>

@@ -18,5 +18,5 @@ class Diet < ApplicationRecord
 
   child_property(name: :dietary_requirements_collection)
   
-  child_properties(name: :diet_foods)
+  child_properties(name: :diet_foods, sort: "food_type NULLS LAST")
 end

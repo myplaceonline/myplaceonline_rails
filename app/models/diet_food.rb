@@ -18,7 +18,7 @@ class DietFood < ApplicationRecord
   validates :food, presence: true
   
   def display
-    food.display
+    "#{food.display} x#{self.quantity_with_fallback}"
   end
 
   child_property(name: :food)
@@ -33,4 +33,11 @@ class DietFood < ApplicationRecord
     ]
   end
 
+  def quantity_with_fallback(default_quantity: 1)
+    if !self.quantity.nil?
+      self.quantity
+    else
+      default_quantity
+    end
+  end
 end

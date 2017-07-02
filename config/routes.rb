@@ -229,7 +229,8 @@ Rails.application.routes.draw do
       { instance: false, link: "listcashback" }
     ],
     diets: [
-      { instance: true, link: "evaluate" }
+      { instance: true, link: "evaluate" },
+      { instance: true, link: "consume" },
     ],
     due_items: [
       { instance: true, link: "complete" },

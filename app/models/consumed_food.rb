@@ -14,7 +14,7 @@ class ConsumedFood < ApplicationRecord
   validates :food, presence: true
   
   def display
-    food.display
+    "#{food.display} x#{self.quantity_with_fallback}"
   end
 
   child_property(name: :food)

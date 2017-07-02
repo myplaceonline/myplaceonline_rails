@@ -10,7 +10,12 @@ class DietsController < MyplaceonlineController
         title: I18n.t("myplaceonline.diets.evaluate"),
         link: diet_evaluate_path(@obj),
         icon: "search"
-      }
+      },
+      {
+        title: I18n.t("myplaceonline.diets.consume"),
+        link: diet_consume_path(@obj),
+        icon: "check"
+      },
     ] + super
   end
   
@@ -130,6 +135,32 @@ class DietsController < MyplaceonlineController
     
     @total_calories_per_day = (@total_calories / @days).to_i
     @total_calories = @total_calories.to_i
+  end
+  
+  def consume
+    set_obj
+    
+    @diet_foods = @obj.diet_foods
+    
+    if request.post?
+      foods_consumed = 0
+      
+      params.each do |key, value|
+        if key.start_with?("diet_food_")
+          diet_food_id = key[10..-1].to_i
+          diet_food = DietFood.where(id: diet_food_id, identity_id: User.current_user.primary_identity_id).take!
+          ConsumedFood.create!(
+            identity_id: User.current_user.primary_identity_id,
+            consumed_food_time: User.current_user.time_now,
+            food_id: diet_food.food_id,
+            quantity: diet_food.quantity
+          )
+          foods_consumed = foods_consumed + 1
+        end
+      end
+      
+      redirect_to(obj_path, notice: I18n.t("myplaceonline.diets.consumed_items", count: foods_consumed))
+    end
   end
   
   protected
