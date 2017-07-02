@@ -1,0 +1,60 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :serving_size,
+    value: obj.serving_size,
+    placeholder: "myplaceonline.food_nutrition_informations.serving_size",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :servings_per_container,
+    value: obj.servings_per_container,
+    placeholder: "myplaceonline.food_nutrition_informations.servings_per_container"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :calories_per_serving,
+    value: obj.calories_per_serving,
+    placeholder: "myplaceonline.food_nutrition_informations.calories_per_serving"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :calories_per_serving_from_fat,
+    value: obj.calories_per_serving_from_fat,
+    placeholder: "myplaceonline.food_nutrition_informations.calories_per_serving_from_fat"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: false
+  )
+%>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :food_nutrition_information_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>

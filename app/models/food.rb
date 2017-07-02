@@ -34,9 +34,12 @@ class Food < ApplicationRecord
           :weight_type
         ]
       ],
-      food_files_attributes: FilesController.multi_param_names
+      food_files_attributes: FilesController.multi_param_names,
+      food_nutrition_information_attributes: FoodNutritionInformation.params
     ]
   end
 
   child_files
+
+  child_property(name: :food_nutrition_information, destroy_dependent: true)
 end

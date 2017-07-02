@@ -13,7 +13,7 @@
       childproperties: obj.food_ingredients,
       deletebutton: t("myplaceonline.foods.delete_ingredient"),
       addbutton: t("myplaceonline.foods.add_ingredient"),
-      expanded: true,
+      expanded: obj.food_ingredients.length > 0,
       formjson: [
         {
           type: :renderpartial,
@@ -44,6 +44,19 @@
     %>
   <% end %>
 <% end %>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :food_nutrition_information,
+    existingobj: obj.food_nutrition_information,
+    heading: t("myplaceonline.foods.food_nutrition_information"),
+    objform: "food_nutrition_informations/form",
+    existingobjurl: "food_nutrition_information_path",
+    searchurl: "/food_nutrition_informations.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
 <%=
   render partial: "myplaceonline/pictures_form", locals: {
     f: f,

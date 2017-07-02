@@ -248,6 +248,7 @@ en:
       dietary_requirements: "Dietary Requirements"
       diets: "Diets"
       consumed_foods: "Consumed Foods"
+      food_nutrition_informations: "Food Nutrition Informations"
     general:
       email: "E-mail"
       password: "Password"
@@ -1396,6 +1397,7 @@ en:
       add_file: "Add File/Picture"
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
+      food_nutrition_information: "Nutrition Information"
     drinks:
       heading: "Drinks"
       drink: "Drink"
@@ -3492,4 +3494,11 @@ en:
     consumed_foods:
       consumed_food_time: "Time"
       quantity: "Quantity"
+      food: "Food"
+    food_nutrition_informations:
+      display: "Nutrition Information"
+      serving_size: "Serving Size"
+      servings_per_container: "Servings per Container"
+      calories_per_serving: "Calories per Serving"
+      calories_per_serving_from_fat: "Calories per Serving from Fat"
       food: "Food"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170702055943) do
+ActiveRecord::Schema.define(version: 20170702122343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1973,6 +1973,35 @@ ActiveRecord::Schema.define(version: 20170702055943) do
     t.index ["parent_food_id"], name: "index_food_ingredients_on_parent_food_id"
   end
 
+  create_table "food_nutrition_information_files", force: :cascade do |t|
+    t.bigint "food_nutrition_information_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["food_nutrition_information_id"], name: "fnif_on_fni"
+    t.index ["identity_file_id"], name: "index_food_nutrition_information_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_food_nutrition_information_files_on_identity_id"
+  end
+
+  create_table "food_nutrition_informations", force: :cascade do |t|
+    t.decimal "serving_size", precision: 10, scale: 2
+    t.decimal "servings_per_container", precision: 10, scale: 2
+    t.decimal "calories_per_serving", precision: 10, scale: 2
+    t.decimal "calories_per_serving_from_fat", precision: 10, scale: 2
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.bigint "food_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["food_id"], name: "index_food_nutrition_informations_on_food_id"
+    t.index ["identity_id"], name: "index_food_nutrition_informations_on_identity_id"
+  end
+
   create_table "foods", id: :serial, force: :cascade do |t|
     t.integer "identity_id"
     t.string "food_name", limit: 255
@@ -1986,6 +2015,8 @@ ActiveRecord::Schema.define(version: 20170702055943) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.bigint "food_nutrition_information_id"
+    t.index ["food_nutrition_information_id"], name: "index_foods_on_food_nutrition_information_id"
     t.index ["identity_id"], name: "index_foods_on_identity_id"
   end
 
@@ -5853,6 +5884,12 @@ ActiveRecord::Schema.define(version: 20170702055943) do
   add_foreign_key "food_ingredients", "foods", column: "parent_food_id", name: "food_ingredients_parent_food_id_fk"
   add_foreign_key "food_ingredients", "foods", name: "food_ingredients_food_id_fk"
   add_foreign_key "food_ingredients", "identities", name: "food_ingredients_identity_id_fk"
+  add_foreign_key "food_nutrition_information_files", "food_nutrition_informations"
+  add_foreign_key "food_nutrition_information_files", "identities"
+  add_foreign_key "food_nutrition_information_files", "identity_files"
+  add_foreign_key "food_nutrition_informations", "foods"
+  add_foreign_key "food_nutrition_informations", "identities"
+  add_foreign_key "foods", "food_nutrition_informations"
   add_foreign_key "foods", "identities", name: "foods_identity_id_fk"
   add_foreign_key "gas_stations", "identities", name: "gas_stations_identity_id_fk"
   add_foreign_key "gas_stations", "locations", name: "gas_stations_location_id_fk"
