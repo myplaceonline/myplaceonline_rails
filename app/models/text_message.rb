@@ -43,7 +43,7 @@ class TextMessage < ApplicationRecord
       process_single_target(target, nil, contact)
     end
     if copy_self
-      User.current_user.primary_identity.identity_phones.each do |identity_phone|
+      User.current_user.primary_identity_identity_phones.each do |identity_phone|
         if identity_phone.accepts_sms?
           process_single_target(identity_phone.number)
         end

@@ -44,7 +44,7 @@ class Contact < ApplicationRecord
   before_destroy :check_if_user_contact, prepend: true
   
   def check_if_user_contact
-    if contact_identity_id == User.current_user.primary_identity.id
+    if contact_identity_id == User.current_user.primary_identity_id
       raise "Cannot delete own identity"
     end
   end

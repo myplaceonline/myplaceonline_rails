@@ -187,6 +187,14 @@ class User < ApplicationRecord
     end
     result
   end
+  
+  def current_identity
+    primary_identity
+  end
+  
+  def current_identity_id
+    primary_identity_id
+  end
 
   protected
     def confirmation_required?

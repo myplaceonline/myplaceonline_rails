@@ -18,7 +18,7 @@ class AlertsDisplaysController < MyplaceonlineController
         ? <= ended AND
         (explicitly_completed IS NULL OR explicitly_completed = ?)
       },
-      User.current_user.primary_identity.id,
+      User.current_user.primary_identity_id,
       now,
       now,
       false
