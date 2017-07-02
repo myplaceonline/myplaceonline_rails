@@ -39,6 +39,10 @@ class Setting < ApplicationRecord
     self.get_value(category: category, name: name, default_value: default_value.to_s).to_bool
   end
   
+  def self.get_value_integer(category:, name:, default_value: false)
+    self.get_value(category: category, name: name, default_value: default_value.to_s).to_i
+  end
+  
   def self.set_value(category:, name:, value:)
     setting = self.get_setting(category: category, name: name)
     if setting.nil?

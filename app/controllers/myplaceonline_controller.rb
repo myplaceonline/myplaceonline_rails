@@ -979,28 +979,26 @@ class MyplaceonlineController < ApplicationController
     )
   end
   
+  def settings_string(name:, default_value: nil)
+    result = params[name]
+    if result.blank?
+      result = Setting.get_value(
+        category: self.category,
+        name: name,
+        default_value: default_value
+      )
+    end
+    result
+  end
+  
   def settings
     initial_checks
     
     check_password
+
+    load_settings_params
     
-    @always_expand_favorites = settings_boolean(name: SETTING_ALWAYS_EXPAND_FAVORITES)
-    @always_expand_top_used = settings_boolean(name: SETTING_ALWAYS_EXPAND_TOP_USED)
-    
-    @fields = [
-      {
-        type: Myp::FIELD_BOOLEAN,
-        name: SETTING_ALWAYS_EXPAND_FAVORITES,
-        value: @always_expand_favorites,
-        placeholder: "myplaceonline.categories.always_expand_favorites"
-      },
-      {
-        type: Myp::FIELD_BOOLEAN,
-        name: SETTING_ALWAYS_EXPAND_TOP_USED,
-        value: @always_expand_top_used,
-        placeholder: "myplaceonline.categories.always_expand_top_used"
-      },
-    ]
+    @fields = settings_fields
     
     if request.post?
       
@@ -1012,11 +1010,14 @@ class MyplaceonlineController < ApplicationController
             params,
             field[:name]
           )
+        when Myp::FIELD_TEXT
+          value = params[field[:name]]
         else
           raise "TODO"
         end
         
         Rails.logger.debug{"MyplaceonlineController.settings setting #{self.category.human_title}.#{field[:name]} = #{value}"}
+        
         Setting.set_value(
           category: self.category,
           name: field[:name],
@@ -1402,5 +1403,27 @@ class MyplaceonlineController < ApplicationController
     
     def publicly_shareable_actions
       [:show]
+    end
+    
+    def settings_fields
+      [
+        {
+          type: Myp::FIELD_BOOLEAN,
+          name: SETTING_ALWAYS_EXPAND_FAVORITES,
+          value: @always_expand_favorites,
+          placeholder: "myplaceonline.categories.always_expand_favorites"
+        },
+        {
+          type: Myp::FIELD_BOOLEAN,
+          name: SETTING_ALWAYS_EXPAND_TOP_USED,
+          value: @always_expand_top_used,
+          placeholder: "myplaceonline.categories.always_expand_top_used"
+        },
+      ]
+    end
+    
+    def load_settings_params
+      @always_expand_favorites = settings_boolean(name: SETTING_ALWAYS_EXPAND_FAVORITES)
+      @always_expand_top_used = settings_boolean(name: SETTING_ALWAYS_EXPAND_TOP_USED)
     end
 end

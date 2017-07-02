@@ -3485,6 +3485,7 @@ en:
       requirements_needed: "Needed: "
       requirements_consumed: "Consumed: "
       requirements_consumed_percent: "Consumed (%): "
+      default_evaluation_days: "Default Evaluation Days"
     diet_foods:
       food: "Food"
       quantity: "Quantity"

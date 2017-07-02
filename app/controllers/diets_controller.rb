@@ -1,4 +1,9 @@
 class DietsController < MyplaceonlineController
+  
+  DEFAULT_EVALUATION_DAYS = 1
+  
+  DEFAULT_EVALUATION_DAYS_NAME = :default_evaluation_days
+  
   def footer_items_show
     [
       {
@@ -12,7 +17,15 @@ class DietsController < MyplaceonlineController
   def evaluate
     set_obj
     
-    @days = Myp.param_integer(params, :days, default_value: 1)
+    @days = Myp.param_integer(
+      params,
+      :days,
+      default_value: Setting.get_value_integer(
+        category: self.category,
+        name: DEFAULT_EVALUATION_DAYS_NAME,
+        default_value: 1
+      )
+    )
     
     @start = ActiveSupport::TimeZone[User.current_user.timezone].now.beginning_of_day - (@days - 1).days
     
@@ -81,5 +94,21 @@ class DietsController < MyplaceonlineController
         dietary_requirements_collection_attributes: DietaryRequirementsCollection.param_names,
         diet_foods_attributes: DietFood.params,
       )
+    end
+    
+    def settings_fields
+      super + [
+        {
+          type: Myp::FIELD_TEXT,
+          name: DEFAULT_EVALUATION_DAYS_NAME,
+          value: @default_evaluation_days,
+          placeholder: "myplaceonline.diets.default_evaluation_days"
+        },
+      ]
+    end
+
+    def load_settings_params
+      super
+      @default_evaluation_days = settings_string(name: DEFAULT_EVALUATION_DAYS_NAME, default_value: DEFAULT_EVALUATION_DAYS.to_s)
     end
 end
