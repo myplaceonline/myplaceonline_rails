@@ -11,6 +11,16 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_SELECT,
+    name: :serving_size_type,
+    value: obj.serving_size_type,
+    placeholder: "myplaceonline.food_nutrition_informations.serving_size_type",
+    select_options: Myp::FOOD_WEIGHTS,
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_DECIMAL,
     name: :servings_per_container,
     value: obj.servings_per_container,

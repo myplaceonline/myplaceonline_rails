@@ -1,4 +1,5 @@
 <%= data_row(heading: t("myplaceonline.food_nutrition_informations.serving_size"), content: obj.serving_size) %>
+<%= data_row(heading: t("myplaceonline.food_nutrition_informations.serving_size_type"), content: obj.serving_size_type, enumeration: Myp::FOOD_WEIGHTS) %>
 <%= data_row(heading: t("myplaceonline.food_nutrition_informations.servings_per_container"), content: obj.servings_per_container) %>
 <%= data_row(heading: t("myplaceonline.food_nutrition_informations.calories_per_serving"), content: obj.calories_per_serving) %>
 <%= data_row(heading: t("myplaceonline.food_nutrition_informations.calories_per_serving_from_fat"), content: obj.calories_per_serving_from_fat) %>

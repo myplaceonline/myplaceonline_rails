@@ -3495,6 +3495,7 @@ en:
     food_nutrition_informations:
       display: "Nutrition Information"
       serving_size: "Serving Size"
+      serving_size_type: "Serving Size Type"
       servings_per_container: "Servings per Container"
       calories_per_serving: "Calories per Serving"
       calories_per_serving_from_fat: "Calories per Serving from Fat"

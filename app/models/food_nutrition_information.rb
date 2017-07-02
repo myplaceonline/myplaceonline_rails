@@ -22,6 +22,7 @@ class FoodNutritionInformation < ApplicationRecord
   def self.params
     [
       :serving_size,
+      :serving_size_type,
       :servings_per_container,
       :calories_per_serving,
       :calories_per_serving_from_fat,
