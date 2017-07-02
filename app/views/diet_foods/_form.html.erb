@@ -21,3 +21,13 @@
     placeholder: "myplaceonline.diet_foods.quantity"
   )
 %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_SELECT,
+    name: :food_type,
+    value: obj.food_type,
+    placeholder: "myplaceonline.diet_foods.food_type",
+    select_options: DietFood::FOOD_TYPES,
+  )
+%>

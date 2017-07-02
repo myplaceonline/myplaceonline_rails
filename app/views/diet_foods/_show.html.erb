@@ -1,2 +1,3 @@
 <%= data_row(heading: t("myplaceonline.diet_foods.food"), content: obj.food) %>
 <%= data_row(heading: t("myplaceonline.diet_foods.quantity"), content: obj.quantity) %>
+<%= data_row(heading: t("myplaceonline.diet_foods.food_type"), content: obj.food_type, enumeration: DietFood::FOOD_TYPES) %>

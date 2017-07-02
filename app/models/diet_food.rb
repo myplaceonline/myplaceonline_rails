@@ -2,6 +2,12 @@ class DietFood < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
+  FOOD_TYPES = [
+    ["myplaceonline.diet_foods.food_types.breakfast", 0],
+    ["myplaceonline.diet_foods.food_types.lunch", 1],
+    ["myplaceonline.diet_foods.food_types.dinner", 2],
+  ]
+  
   def self.properties
     [
       { name: :food, type: ApplicationRecord::PROPERTY_TYPE_CHILD },
@@ -22,6 +28,7 @@ class DietFood < ApplicationRecord
       :id,
       :_destroy,
       :quantity,
+      :food_type,
       food_attributes: Food.params
     ]
   end

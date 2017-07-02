@@ -3489,6 +3489,11 @@ en:
     diet_foods:
       food: "Food"
       quantity: "Quantity"
+      food_type: "Type"
+      food_types:
+        breakfast: "Breakfast"
+        lunch: "Lunch"
+        dinner: "Dinner"
     consumed_foods:
       consumed_food_time: "Time"
       quantity: "Quantity"
