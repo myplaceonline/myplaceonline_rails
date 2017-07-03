@@ -285,7 +285,7 @@ class Location < ApplicationRecord
   
   def estimate_driving_time
     if self.time_from_home.nil? && self.current_user_owns?
-      location = User.current_user.primary_identity.primary_location
+      location = User.current_user.current_identity.primary_location
       if !location.nil?
         client = GoogleClient.new(key: ENV["GOOGLE_MAPS_API_SERVER_KEY"], response_format: :json, read_timeout: 5)
         # https://developers.google.com/maps/documentation/directions/intro

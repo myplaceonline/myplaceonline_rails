@@ -36,7 +36,7 @@ class DietsController < MyplaceonlineController
     
     @consumed_foods = ConsumedFood.where(
       "identity_id = ? and consumed_food_time >= ?",
-      User.current_user.primary_identity_id,
+      User.current_user.current_identity_id,
       @start
     )
     
@@ -148,9 +148,9 @@ class DietsController < MyplaceonlineController
       params.each do |key, value|
         if key.start_with?("diet_food_")
           diet_food_id = key[10..-1].to_i
-          diet_food = DietFood.where(id: diet_food_id, identity_id: User.current_user.primary_identity_id).take!
+          diet_food = DietFood.where(id: diet_food_id, identity_id: User.current_user.current_identity_id).take!
           ConsumedFood.create!(
-            identity_id: User.current_user.primary_identity_id,
+            identity_id: User.current_user.current_identity_id,
             consumed_food_time: User.current_user.time_now,
             food_id: diet_food.food_id,
             quantity: diet_food.quantity

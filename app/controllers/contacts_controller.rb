@@ -32,8 +32,8 @@ class ContactsController < MyplaceonlineController
   
   def groups
     set_obj
-    @groups = Group.where(identity_id: User.current_user.primary_identity_id).order(:group_name)
-    @contact_groups = GroupContact.where(identity_id: User.current_user.primary_identity_id, contact_id: @obj.id).map{|g| g.group_id}
+    @groups = Group.where(identity_id: User.current_user.current_identity_id).order(:group_name)
+    @contact_groups = GroupContact.where(identity_id: User.current_user.current_identity_id, contact_id: @obj.id).map{|g| g.group_id}
     
     if request.post?
       @groups.each do |group|
@@ -44,7 +44,7 @@ class ContactsController < MyplaceonlineController
           else
             # Need to add to the group
             GroupContact.create!(
-              identity_id: User.current_user.primary_identity_id,
+              identity_id: User.current_user.current_identity_id,
               group_id: group.id,
               contact_id: @obj.id
             )
@@ -52,7 +52,7 @@ class ContactsController < MyplaceonlineController
         else
           if is_in_group
             # Remove the contact from the group
-            GroupContact.where(identity_id: User.current_user.primary_identity_id, contact_id: @obj.id, group_id: group.id).take!.destroy!
+            GroupContact.where(identity_id: User.current_user.current_identity_id, contact_id: @obj.id, group_id: group.id).take!.destroy!
           else
             # Nothing to do, already not in group
           end
@@ -60,7 +60,7 @@ class ContactsController < MyplaceonlineController
       end
 
       # Reset in case there were changes
-      @contact_groups = GroupContact.where(identity_id: User.current_user.primary_identity_id, contact_id: @obj.id).map{|g| g.group_id}
+      @contact_groups = GroupContact.where(identity_id: User.current_user.current_identity_id, contact_id: @obj.id).map{|g| g.group_id}
     end
   end
   

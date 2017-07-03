@@ -13,7 +13,7 @@
   <%= attribute_table_row(t("myplaceonline.locations.latitude_longitude"), obj.latitude.to_s + "," + obj.longitude.to_s) %>
 <% end %>
 <%= attribute_table_row_url(t("myplaceonline.locations.map"), obj.map_url) %>
-<%= attribute_table_row_url(t("myplaceonline.locations.map_directions_from_home"), obj.map_directions_url(source_location: User.current_user.primary_identity.primary_location)) %>
+<%= attribute_table_row_url(t("myplaceonline.locations.map_directions_from_home"), obj.map_directions_url(source_location: User.current_user.current_identity.primary_location)) %>
 <%= attribute_table_row_markdown(t("myplaceonline.locations.notes"), obj.notes) %>
 <% obj.location_phones.each do |phone| %>
   <%= attribute_table_row(t("myplaceonline.locations.phone"), phone.number) %>

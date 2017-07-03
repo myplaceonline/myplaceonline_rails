@@ -5,7 +5,7 @@ class PasswordSharesController < MyplaceonlineController
     
     ApplicationRecord.transaction do
       new_password = @obj.password.dup
-      new_password.identity = User.current_user.primary_identity
+      new_password.identity = User.current_user.current_identity
       if new_password.password_encrypted?
         new_password.encrypt = true
         new_password.password_encrypted = nil

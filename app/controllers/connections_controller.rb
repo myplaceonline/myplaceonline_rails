@@ -12,7 +12,7 @@ class ConnectionsController < MyplaceonlineController
   
   def allconnections
     @objs = Connection.where(
-      identity_id: User.current_user.primary_identity_id,
+      identity_id: User.current_user.current_identity_id,
       connection_status: Connection::STATUS_CONNECTED
     ).map{|x| x.user}
     if !params[:q].blank?

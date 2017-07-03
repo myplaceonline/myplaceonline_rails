@@ -898,17 +898,17 @@ class MyplaceonlineController < ApplicationController
     set_obj
     
     existing_permission_share = PermissionShare.includes(:share).where(
-      identity: User.current_user.primary_identity,
+      identity: User.current_user.current_identity,
       subject_class: self.model.name,
       subject_id: @obj.id
     ).first
     
     if existing_permission_share.nil?
-      share = Share.build_share(owner_identity: User.current_user.primary_identity)
+      share = Share.build_share(owner_identity: User.current_user.current_identity)
       share.save!
       
       PermissionShare.create!(
-        identity: User.current_user.primary_identity,
+        identity: User.current_user.current_identity,
         share: share,
         subject_class: self.model.name,
         subject_id: @obj.id,
@@ -1379,7 +1379,7 @@ class MyplaceonlineController < ApplicationController
       require_admin? && deny_nonadmin
       
       required_capabilities.each do |capability|
-        if !UserCapability.has_capability?(identity: User.current_user.primary_identity, capability: capability)
+        if !UserCapability.has_capability?(identity: User.current_user.current_identity, capability: capability)
           raise CanCan::AccessDenied
         end
       end

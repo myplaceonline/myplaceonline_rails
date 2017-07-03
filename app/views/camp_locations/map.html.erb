@@ -4,7 +4,7 @@
 
 <%=
   render partial: "map/display", locals: {
-    center: User.current_user.primary_identity.primary_location,
+    center: User.current_user.current_identity.primary_location,
     locations: @locations
   }
 %>

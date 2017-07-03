@@ -263,7 +263,7 @@ class Email < ApplicationRecord
   def set_subject(new_subject)
     if self.subject.blank?
       if ExecutionContext.count > 0 && !User.current_user.nil?
-        self.subject = "#{User.current_user.primary_identity.display_short} #{I18n.t("myplaceonline.emails.subject_shared")}: #{new_subject}"
+        self.subject = "#{User.current_user.current_identity.display_short} #{I18n.t("myplaceonline.emails.subject_shared")}: #{new_subject}"
       else
         self.subject = new_subject
       end
@@ -328,7 +328,7 @@ class Email < ApplicationRecord
     if (!contacts.nil? && contacts.length > 0) || (!groups.nil? && groups.length > 0)
       e = Email.new
       e.email_category = category
-      e.identity = User.current_user.primary_identity
+      e.identity = User.current_user.current_identity
       contacts.each do |contact|
         ec = EmailContact.new
         ec.contact = contact

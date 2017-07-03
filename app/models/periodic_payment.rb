@@ -74,11 +74,11 @@ class PeriodicPayment < ApplicationRecord
         on_after_destroy
         if !suppress_reminder && !next_payment.nil? && !self.is_archived?
           
-          Rails.logger.debug{"PeriodicPayment.on_after_save identity: #{User.current_user.primary_identity_id}, next_payment: #{next_payment}, model_id: #{self.id}"}
+          Rails.logger.debug{"PeriodicPayment.on_after_save identity: #{User.current_user.current_identity_id}, next_payment: #{next_payment}, model_id: #{self.id}"}
           
-          User.current_user.primary_identity.calendars.each do |calendar|
+          User.current_user.current_identity.calendars.each do |calendar|
             CalendarItem.create_calendar_item(
-              identity: User.current_user.primary_identity,
+              identity: User.current_user.current_identity,
               calendar: calendar,
               model: self.class,
               calendar_item_time: next_payment,
@@ -99,7 +99,7 @@ class PeriodicPayment < ApplicationRecord
   
   def on_after_destroy
     CalendarItem.destroy_calendar_items(
-      User.current_user.primary_identity,
+      User.current_user.current_identity,
       self.class,
       model_id: id
     )

@@ -667,23 +667,23 @@ module ApplicationHelper
       # (or nested) item which we can assume has already passed authorization checks, so we need to create a token for
       # the subsequent image request (because Ability.context_identity won't be set on the image request).
       
-      Rails.logger.debug{"ApplicationHelper.share_token: context identity = #{Ability.context_identity.id}, current user = #{User.current_user.primary_identity_id}"}
+      Rails.logger.debug{"ApplicationHelper.share_token: context identity = #{Ability.context_identity.id}, current user = #{User.current_user.current_identity_id}"}
       
-      if Ability.context_identity.id != User.current_user.primary_identity_id
+      if Ability.context_identity.id != User.current_user.current_identity_id
         
         # Check if we've already done this first
         existing_permission_share = PermissionShare.includes(:share).where(
-          identity: User.current_user.primary_identity,
+          identity: User.current_user.current_identity,
           subject_class: context.class.name,
           subject_id: context.id
         ).first
         
         if existing_permission_share.nil?
-          share = Share.build_share(owner_identity: User.current_user.primary_identity)
+          share = Share.build_share(owner_identity: User.current_user.current_identity)
           share.save!
           
           PermissionShare.create!(
-            identity: User.current_user.primary_identity,
+            identity: User.current_user.current_identity,
             share: share,
             subject_class: context.class.name,
             subject_id: context.id

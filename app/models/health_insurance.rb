@@ -24,16 +24,16 @@ class HealthInsurance < ApplicationRecord
   def on_after_create
     if MyplaceonlineExecutionContext.handle_updates?
       last_physical = DoctorVisit.last_physical(
-        User.current_user.primary_identity
+        User.current_user.current_identity
       )
 
       if last_physical.nil?
-        User.current_user.primary_identity.calendars.each do |calendar|
+        User.current_user.current_identity.calendars.each do |calendar|
           # If there are no doctor visits for a physical and there is health
           # insurance, then create a persistent reminder to get a physical
           # (if one doesn't already exist)
           CalendarItem.ensure_persistent_calendar_item(
-            User.current_user.primary_identity,
+            User.current_user.current_identity,
             calendar,
             DoctorVisit
           )
@@ -45,9 +45,9 @@ class HealthInsurance < ApplicationRecord
   after_commit :on_after_destroy, on: :destroy
   
   def on_after_destroy
-    if Myp.count(HealthInsurance, User.current_user.primary_identity) == 0
+    if Myp.count(HealthInsurance, User.current_user.current_identity) == 0
       CalendarItem.destroy_calendar_items(
-        User.current_user.primary_identity,
+        User.current_user.current_identity,
         DoctorVisit
       )
     end

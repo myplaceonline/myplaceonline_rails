@@ -7,7 +7,7 @@ class FeedsController < MyplaceonlineController
   end
   
   def all_items
-    @items = FeedItem.includes(:feed).where("identity_id = #{User.current_user.primary_identity_id} and read is null").order("publication_date DESC")
+    @items = FeedItem.includes(:feed).where("identity_id = #{User.current_user.current_identity_id} and read is null").order("publication_date DESC")
     render :all_items
   end
 

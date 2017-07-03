@@ -46,7 +46,7 @@ class Calculation < ApplicationRecord
   
   def check_calculation_before_create
     if !self.original_calculation_form_id.nil? && self.calculation_form.nil?
-      existing_form = User.current_user.primary_identity.calculation_forms_available.find(self.original_calculation_form_id)
+      existing_form = User.current_user.current_identity.calculation_forms_available.find(self.original_calculation_form_id)
       new_inputs = existing_form.calculation_inputs.map{|calculation_input| calculation_input.dup}
       self.calculation_form = existing_form.dup
       self.calculation_form.calculation_inputs = new_inputs
@@ -57,7 +57,7 @@ class Calculation < ApplicationRecord
   def self.build(params = nil)
     result = self.dobuild(params)
     if !params.nil? && !params[:form].nil?
-      existing_form = User.current_user.primary_identity.calculation_forms_available.find(params[:form].to_i)
+      existing_form = User.current_user.current_identity.calculation_forms_available.find(params[:form].to_i)
       if !existing_form.nil?
         result.original_calculation_form_id = existing_form.id
         result.check_calculation_before_create

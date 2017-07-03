@@ -1664,7 +1664,7 @@ module Myp
     CSV.parse(contents, { headers: true, skip_blanks: true }) do |row|
       m = Museum.new 
       m.location = Location.new
-      m.location.identity = User.current_user.primary_identity
+      m.location.identity = User.current_user.current_identity
       m.location.name = row["COMMONNAME"].titleize
       m.location.region = "US"
       if !row["GSTREET"].blank?
@@ -1683,17 +1683,17 @@ module Myp
       m.location.longitude = row["LONGITUDE"]
       if !row["PHONE"].blank?
         phone = LocationPhone.new
-        phone.identity = User.current_user.primary_identity
+        phone.identity = User.current_user.current_identity
         phone.number = row["PHONE"]
         m.location.location_phones << phone
       end
       if !row["WEBURL"].blank?
         m.website = Website.new
-        m.website.identity = User.current_user.primary_identity
+        m.website.identity = User.current_user.current_identity
         m.website.url = row["WEBURL"].downcase
         m.website.title = m.location.name
       end
-      m.identity = User.current_user.primary_identity
+      m.identity = User.current_user.current_identity
       m.museum_id = row["MID"]
       m.museum_source = "mudf"
       museum_type = row["DISCIPL"]
@@ -1968,7 +1968,7 @@ module Myp
             if I18n.exists?("myplaceonline.category." + temp_cat_name)
               category = Category.new(name: temp_cat_name)
             else
-              Myp.warn("Myp.process_search_results full_text_search found result but not category (perhaps use final_search_result?): #{search_result.inspect}; search: #{original_search}, user: #{User.current_user.primary_identity_id}, category: #{temp_cat_name}, original_search_result: #{original_search_result.inspect}")
+              Myp.warn("Myp.process_search_results full_text_search found result but not category (perhaps use final_search_result?): #{search_result.inspect}; search: #{original_search}, user: #{User.current_user.current_identity_id}, category: #{temp_cat_name}, original_search_result: #{original_search_result.inspect}")
             end
           end
           if !category.nil?

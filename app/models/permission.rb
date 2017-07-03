@@ -73,7 +73,7 @@ class Permission < ApplicationRecord
   def self.current_target_identity
     target = Permission.current_target
     if target.nil?
-      target_identity = User.current_user.primary_identity
+      target_identity = User.current_user.current_identity
     else
       target_identity = target.identity
     end

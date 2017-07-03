@@ -360,7 +360,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
   def homepage
     check_password
-    @obj = User.current_user.primary_identity
+    @obj = User.current_user.current_identity
     if request.patch?
       @obj.assign_attributes(
         params.require(:identity).permit(

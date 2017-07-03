@@ -20,7 +20,7 @@ class IdentityFileFolder < ApplicationRecord
   
   def subfolders
     IdentityFileFolder.where(
-      identity_id: User.current_user.primary_identity_id,
+      identity_id: User.current_user.current_identity_id,
       parent_folder: self.id
     ).order(FileFoldersController.sorts)
   end
@@ -31,11 +31,11 @@ class IdentityFileFolder < ApplicationRecord
       name = names.pop
       if parent.nil?
         folders = IdentityFileFolder.where(
-          identity_id: User.current_user.primary_identity_id,
+          identity_id: User.current_user.current_identity_id,
           folder_name: name
         )
         if folders.length == 0
-          parent = IdentityFileFolder.new(folder_name: name, identity_id: User.current_user.primary_identity_id)
+          parent = IdentityFileFolder.new(folder_name: name, identity_id: User.current_user.current_identity_id)
           # This save seems to be needed for deep structures even though we have implicit autosave
           parent.save!
         elsif folders.length == 1
@@ -45,12 +45,12 @@ class IdentityFileFolder < ApplicationRecord
         end
       else
         folders = IdentityFileFolder.where(
-          identity_id: User.current_user.primary_identity_id,
+          identity_id: User.current_user.current_identity_id,
           folder_name: name,
           parent_folder_id: parent.id
         )
         if folders.length == 0
-          parent = IdentityFileFolder.new(folder_name: name, identity_id: User.current_user.primary_identity_id, parent_folder_id: parent.id)
+          parent = IdentityFileFolder.new(folder_name: name, identity_id: User.current_user.current_identity_id, parent_folder_id: parent.id)
           # This save seems to be needed for deep structures even though we have implicit autosave
           parent.save!
         elsif folders.length == 1
@@ -67,7 +67,7 @@ class IdentityFileFolder < ApplicationRecord
     result = self.dobuild(params)
     if !params[:parent].nil?
       folders = IdentityFileFolder.where(
-        identity_id: User.current_user.primary_identity_id,
+        identity_id: User.current_user.current_identity_id,
         id: params[:parent].to_i
       )
       if folders.size > 0

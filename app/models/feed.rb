@@ -123,19 +123,19 @@ class Feed < ApplicationRecord
   end
   
   def self.load_all(all_count)
-    status = FeedLoadStatus.where(identity_id: User.current_user.primary_identity_id).first
+    status = FeedLoadStatus.where(identity_id: User.current_user.current_identity_id).first
     do_reload = status.nil?
     if !do_reload
       # If the status is more than 30 minutes old, there was probably an error
       if Time.now - 30.minutes >= status.updated_at
         do_reload = true
-        FeedLoadStatus.where(identity_id: User.current_user.primary_identity_id).destroy_all
-        Myp.warn("Found old feed load status for identity #{User.current_user.primary_identity_id}")
+        FeedLoadStatus.where(identity_id: User.current_user.current_identity_id).destroy_all
+        Myp.warn("Found old feed load status for identity #{User.current_user.current_identity_id}")
       end
     end
     if do_reload
       FeedLoadStatus.create!(
-        identity_id: User.current_user.primary_identity_id,
+        identity_id: User.current_user.current_identity_id,
         items_complete: 0,
         items_total: all_count,
         items_error: 0
@@ -146,7 +146,7 @@ class Feed < ApplicationRecord
   
   def self.status_message
     result = nil
-    status = FeedLoadStatus.where(identity_id: User.current_user.primary_identity_id).first
+    status = FeedLoadStatus.where(identity_id: User.current_user.current_identity_id).first
     if !status.nil?
       if status.finished?
         result = I18n.t("myplaceonline.feeds.loading_all_finished", complete: status.items_complete, errors: status.items_error)
@@ -161,7 +161,7 @@ class Feed < ApplicationRecord
   def mark_all_read
     ApplicationRecord.transaction do
       FeedItem.where(
-        identity_id: User.current_user.primary_identity_id,
+        identity_id: User.current_user.current_identity_id,
         feed_id: self.id
       ).update_all(
         read: Time.now

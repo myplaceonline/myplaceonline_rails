@@ -24,16 +24,16 @@ class DentalInsurance < ApplicationRecord
   def on_after_create
     if MyplaceonlineExecutionContext.handle_updates?
       last_dentist_visit = DentistVisit.last_cleaning(
-        User.current_user.primary_identity
+        User.current_user.current_identity
       )
 
       if last_dentist_visit.nil?
-        User.current_user.primary_identity.calendars.each do |calendar|
+        User.current_user.current_identity.calendars.each do |calendar|
           # If there are no dental visits for a cleaning and there is dental
           # insurance, then create a persistent reminder to get a dental
           # cleaning (if one doesn't already exist)
           CalendarItem.ensure_persistent_calendar_item(
-            User.current_user.primary_identity,
+            User.current_user.current_identity,
             calendar,
             DentistVisit
           )
@@ -45,9 +45,9 @@ class DentalInsurance < ApplicationRecord
   after_commit :on_after_destroy, on: :destroy
   
   def on_after_destroy
-    if Myp.count(DentalInsurance, User.current_user.primary_identity) == 0
+    if Myp.count(DentalInsurance, User.current_user.current_identity) == 0
       CalendarItem.destroy_calendar_items(
-        User.current_user.primary_identity,
+        User.current_user.current_identity,
         DentistVisit
       )
     end

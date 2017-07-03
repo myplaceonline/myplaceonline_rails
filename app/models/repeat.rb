@@ -75,12 +75,12 @@ class Repeat < ApplicationRecord
       Rails.logger.debug{"Repeat create_calendar_reminders object #{obj.inspect}, repeat object #{repeat_obj.inspect}"}
       
       ApplicationRecord.transaction do
-        User.current_user.primary_identity.calendars.each do |calendar|
+        User.current_user.current_identity.calendars.each do |calendar|
           if destroy
             obj.on_after_destroy
           end
           CalendarItem.create_calendar_item(
-            identity: User.current_user.primary_identity,
+            identity: User.current_user.current_identity,
             calendar: calendar,
             model: obj.class,
             calendar_item_time: repeat_obj.next_instance,

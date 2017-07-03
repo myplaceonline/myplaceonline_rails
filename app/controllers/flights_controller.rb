@@ -18,7 +18,7 @@ class FlightsController < MyplaceonlineController
       if params[:send_last_leg] == "true" && !last_leg.nil?
         @message.subject = @message.body = I18n.t(
           "myplaceonline.flights.last_leg_info",
-          name: User.current_user.primary_identity.display_short,
+          name: User.current_user.current_identity.display_short,
           airline: last_leg.flight_company.display,
           time: Myp.display_datetime_short(last_leg.arrive_time, User.current_user),
           location: last_leg.arrival_location.nil? ? last_leg.arrival_airport_code : last_leg.arrival_location.display_simple,

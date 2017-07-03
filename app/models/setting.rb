@@ -20,7 +20,7 @@ class Setting < ApplicationRecord
   
   def self.get_setting(category:, name:)
     Setting.where(
-      identity_id: User.current_user.primary_identity_id,
+      identity_id: User.current_user.current_identity_id,
       setting_name: name,
       category: category
     ).take
@@ -47,7 +47,7 @@ class Setting < ApplicationRecord
     setting = self.get_setting(category: category, name: name)
     if setting.nil?
       Setting.create!(
-        identity_id: User.current_user.primary_identity_id,
+        identity_id: User.current_user.current_identity_id,
         setting_name: name,
         category: category,
         setting_value: value

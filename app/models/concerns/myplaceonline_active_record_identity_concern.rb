@@ -58,7 +58,7 @@ module MyplaceonlineActiveRecordIdentityConcern
     end
     
     def current_user_owns?
-      identity == User.current_user.primary_identity
+      identity == User.current_user.current_identity
     end
     
     def owning_user
@@ -77,7 +77,7 @@ module MyplaceonlineActiveRecordIdentityConcern
           
           existing_object = self.where(
             field => data[:value],
-            :identity_id => User.current_user.primary_identity_id
+            :identity_id => User.current_user.current_identity_id
           ).take!
           
           I18n.t(

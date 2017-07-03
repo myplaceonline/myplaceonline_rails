@@ -15,7 +15,7 @@ class Myplet < ApplicationRecord
     # Make sure the user has access to this object
     if !category_name.blank? && !category_id.nil?
       cls = Object.const_get(category_name.camelize.singularize)
-      if cls.where(id: category_id, identity: User.current_user.primary_identity).count == 0
+      if cls.where(id: category_id, identity: User.current_user.current_identity).count == 0
         errors.add(:category_id, I18n.t("myplaceonline.general.not_auhorized"))
       end
     end

@@ -45,19 +45,19 @@ class DoctorVisit < ApplicationRecord
   def on_after_save
     if MyplaceonlineExecutionContext.handle_updates?
       last_physical = DoctorVisit.last_physical(
-        User.current_user.primary_identity,
+        User.current_user.current_identity,
       )
 
       if !last_physical.nil?
         ApplicationRecord.transaction do
           CalendarItem.destroy_calendar_items(
-            User.current_user.primary_identity,
+            User.current_user.current_identity,
             DoctorVisit
           )
 
-          User.current_user.primary_identity.calendars.each do |calendar|
+          User.current_user.current_identity.calendars.each do |calendar|
             CalendarItem.create_calendar_item(
-              identity: User.current_user.primary_identity,
+              identity: User.current_user.current_identity,
               calendar: calendar,
               model: DoctorVisit,
               calendar_item_time: last_physical.visit_date + (calendar.doctor_visit_threshold_seconds || DEFAULT_DOCTOR_VISIT_THRESHOLD_SECONDS).seconds,
@@ -74,12 +74,12 @@ class DoctorVisit < ApplicationRecord
   
   def on_after_destroy
     last_physical = DoctorVisit.last_physical(
-      User.current_user.primary_identity,
+      User.current_user.current_identity,
     )
     
     if last_physical.nil?
       CalendarItem.destroy_calendar_items(
-        User.current_user.primary_identity,
+        User.current_user.current_identity,
         DoctorVisit
       )
       HealthInsurance.new.on_after_create

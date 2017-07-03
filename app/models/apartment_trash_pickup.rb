@@ -45,7 +45,7 @@ class ApartmentTrashPickup < ApplicationRecord
   
   def on_after_destroy
     CalendarItem.destroy_calendar_items(
-      User.current_user.primary_identity,
+      User.current_user.current_identity,
       self.class,
       model_id: id
     )

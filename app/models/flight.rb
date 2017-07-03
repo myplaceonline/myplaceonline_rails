@@ -37,7 +37,7 @@ class Flight < ApplicationRecord
 
   def trip_info_url
     if !self.confirmation_number.blank?
-      "https://viewtrip.travelport.com/#!/itinerary?loc=#{self.confirmation_number}&lName=#{ERB::Util.url_encode(User.current_user.primary_identity.last_name)}"
+      "https://viewtrip.travelport.com/#!/itinerary?loc=#{self.confirmation_number}&lName=#{ERB::Util.url_encode(User.current_user.current_identity.last_name)}"
     else
       nil
     end

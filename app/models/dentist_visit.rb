@@ -45,19 +45,19 @@ class DentistVisit < ApplicationRecord
   def on_after_save
     if MyplaceonlineExecutionContext.handle_updates?
       last_dentist_visit = DentistVisit.last_cleaning(
-        User.current_user.primary_identity,
+        User.current_user.current_identity,
       )
 
       if !last_dentist_visit.nil?
         ApplicationRecord.transaction do
           CalendarItem.destroy_calendar_items(
-            User.current_user.primary_identity,
+            User.current_user.current_identity,
             DentistVisit
           )
 
-          User.current_user.primary_identity.calendars.each do |calendar|
+          User.current_user.current_identity.calendars.each do |calendar|
             CalendarItem.create_calendar_item(
-              identity: User.current_user.primary_identity,
+              identity: User.current_user.current_identity,
               calendar: calendar,
               model: DentistVisit,
               calendar_item_time: last_dentist_visit.visit_date + (calendar.dentist_visit_threshold_seconds || DEFAULT_DENTIST_VISIT_THRESHOLD_SECONDS).seconds,
@@ -74,12 +74,12 @@ class DentistVisit < ApplicationRecord
   
   def on_after_destroy
     last_dentist_visit = DentistVisit.last_cleaning(
-      User.current_user.primary_identity,
+      User.current_user.current_identity,
     )
     
     if last_dentist_visit.nil?
       CalendarItem.destroy_calendar_items(
-        User.current_user.primary_identity,
+        User.current_user.current_identity,
         DentistVisit
       )
       DentalInsurance.new.on_after_create

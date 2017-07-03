@@ -87,7 +87,7 @@ class IdentityFile < ApplicationRecord
     result = self.dobuild(params)
     if !params.nil? && !params[:folder].nil?
       folders = IdentityFileFolder.where(
-        identity_id: User.current_user.primary_identity_id,
+        identity_id: User.current_user.current_identity_id,
         id: params[:folder].to_i
       )
       if folders.size > 0

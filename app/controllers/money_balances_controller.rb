@@ -49,7 +49,7 @@ class MoneyBalancesController < MyplaceonlineController
     # The sort order is: Default Cashback, Visit Count, Cashback Percentage
     @all_cashbacks = []
     if (@owner_paid && @obj.current_user_owns?) || (!@owner_paid && !@obj.current_user_owns?)
-      @all_cashbacks = User.current_user.primary_identity.credit_cards.map{|credit_card|
+      @all_cashbacks = User.current_user.current_identity.credit_cards.map{|credit_card|
         credit_card.credit_card_cashbacks.map{|cc_cashback| cc_cashback.cashback}
       }.flatten.compact.reject{|cashback| cashback.expired?}.sort{|cashback1, cashback2|
         if cashback1.default_cashback && cashback2.default_cashback

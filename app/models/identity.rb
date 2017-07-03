@@ -557,16 +557,16 @@ class Identity < ApplicationRecord
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
-    if ExecutionContext.count > 0 && MyplaceonlineExecutionContext.handle_updates? && !User.current_user.primary_identity.nil?
+    if ExecutionContext.count > 0 && MyplaceonlineExecutionContext.handle_updates? && !User.current_user.current_identity.nil?
       ApplicationRecord.transaction do
         on_after_destroy
         if !birthday.nil?
-          User.current_user.primary_identity.calendars.each do |calendar|
+          User.current_user.current_identity.calendars.each do |calendar|
             
             t = next_birthday
             
             CalendarItem.create_calendar_item(
-              identity: User.current_user.primary_identity,
+              identity: User.current_user.current_identity,
               calendar: calendar,
               model: self.class,
               calendar_item_time: t,
@@ -579,7 +579,7 @@ class Identity < ApplicationRecord
             )
             
             CalendarItem.create_calendar_item(
-              identity: User.current_user.primary_identity,
+              identity: User.current_user.current_identity,
               calendar: calendar,
               model: self.class,
               calendar_item_time: t + 12.hours,
@@ -600,7 +600,7 @@ class Identity < ApplicationRecord
   
   def on_after_destroy
     CalendarItem.destroy_calendar_items(
-      User.current_user.primary_identity,
+      User.current_user.current_identity,
       self.class,
       model_id: id,
       context_info: Identity::CALENDAR_ITEM_CONTEXT_BIRTHDAY

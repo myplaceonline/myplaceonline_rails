@@ -65,11 +65,11 @@ class Status < ApplicationRecord
   def self.reset_calendar_reminder(after_expiration: false, initial: false)
     
     CalendarItem.destroy_calendar_items(
-      User.current_user.primary_identity,
+      User.current_user.current_identity,
       Status
     )
     
-    User.current_user.primary_identity.calendars.each do |calendar|
+    User.current_user.current_identity.calendars.each do |calendar|
       new_time = User.current_user.time_now
       if !after_expiration
         new_time += 1.day
@@ -84,7 +84,7 @@ class Status < ApplicationRecord
       Rails.logger.debug{"Creating status reminder for #{new_time}"}
 
       CalendarItem.create_calendar_item(
-        identity: User.current_user.primary_identity,
+        identity: User.current_user.current_identity,
         calendar: calendar,
         model: Status,
         calendar_item_time: new_time,

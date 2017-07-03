@@ -109,12 +109,12 @@ class Bet < ApplicationRecord
         nil
       )
       ApplicationRecord.transaction do
-        CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
+        CalendarItem.destroy_calendar_items(User.current_user.current_identity, self.class, model_id: id)
         
         if !self.bet_end_date.nil?
-          User.current_user.primary_identity.calendars.each do |calendar|
+          User.current_user.current_identity.calendars.each do |calendar|
             CalendarItem.create_calendar_item(
-              identity: User.current_user.primary_identity,
+              identity: User.current_user.current_identity,
               calendar: calendar,
               model: self.class,
               calendar_item_time: self.bet_end_date,

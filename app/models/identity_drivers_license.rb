@@ -32,10 +32,10 @@ class IdentityDriversLicense < ApplicationRecord
     if MyplaceonlineExecutionContext.handle_updates?
       if !expires.nil?
         ApplicationRecord.transaction do
-          CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: id)
-          User.current_user.primary_identity.calendars.each do |calendar|
+          CalendarItem.destroy_calendar_items(User.current_user.current_identity, self.class, model_id: id)
+          User.current_user.current_identity.calendars.each do |calendar|
             CalendarItem.create_calendar_item(
-              identity: User.current_user.primary_identity,
+              identity: User.current_user.current_identity,
               calendar: calendar,
               model: self.class,
               calendar_item_time: expires,
@@ -52,6 +52,6 @@ class IdentityDriversLicense < ApplicationRecord
   after_commit :on_after_destroy, on: :destroy
   
   def on_after_destroy
-    CalendarItem.destroy_calendar_items(User.current_user.primary_identity, self.class, model_id: self.id)
+    CalendarItem.destroy_calendar_items(User.current_user.current_identity, self.class, model_id: self.id)
   end
 end

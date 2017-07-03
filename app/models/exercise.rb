@@ -33,19 +33,19 @@ class Exercise < ApplicationRecord
   def on_after_save
     if MyplaceonlineExecutionContext.handle_updates?
       last_exercise = Exercise.last_exercise(
-        User.current_user.primary_identity,
+        User.current_user.current_identity,
       )
 
       if !last_exercise.nil?
         ApplicationRecord.transaction do
           CalendarItem.destroy_calendar_items(
-            User.current_user.primary_identity,
+            User.current_user.current_identity,
             Exercise
           )
 
-          User.current_user.primary_identity.calendars.each do |calendar|
+          User.current_user.current_identity.calendars.each do |calendar|
             CalendarItem.create_calendar_item(
-              identity: User.current_user.primary_identity,
+              identity: User.current_user.current_identity,
               calendar: calendar,
               model: Exercise,
               calendar_item_time: last_exercise.exercise_start + (calendar.exercise_threshold_seconds || DEFAULT_EXERCISE_THRESHOLD_SECONDS).seconds,
@@ -62,12 +62,12 @@ class Exercise < ApplicationRecord
   
   def on_after_destroy
     last_exercise = Exercise.last_exercise(
-      User.current_user.primary_identity,
+      User.current_user.current_identity,
     )
     
     if last_exercise.nil?
       CalendarItem.destroy_calendar_items(
-        User.current_user.primary_identity,
+        User.current_user.current_identity,
         Exercise
       )
     else

@@ -7,7 +7,7 @@ class BloodTestsController < MyplaceonlineController
       FROM blood_test_results btr
         INNER JOIN blood_concentrations bc
           ON btr.blood_concentration_id = bc.id
-      WHERE btr.identity_id = #{User.current_user.primary_identity_id}
+      WHERE btr.identity_id = #{User.current_user.current_identity_id}
       ORDER BY bc.concentration_name
     }).map{|x| [x["concentration_name"], x["id"]]}
     
@@ -22,7 +22,7 @@ class BloodTestsController < MyplaceonlineController
             ON btr.blood_concentration_id = bc.id
           INNER JOIN blood_tests bt
             ON btr.blood_test_id = bt.id
-        WHERE btr.identity_id = #{User.current_user.primary_identity_id}
+        WHERE btr.identity_id = #{User.current_user.current_identity_id}
           AND bc.id = #{@concentration.to_i}
         ORDER BY bt.test_time
       }).each do |x|

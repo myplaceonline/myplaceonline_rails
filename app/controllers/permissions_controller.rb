@@ -90,7 +90,7 @@ class PermissionsController < MyplaceonlineController
       @check_obj = @share.get_obj
       authorize! :show, @check_obj
 
-      @share.identity = User.current_user.primary_identity
+      @share.identity = User.current_user.current_identity
       
       public_share = Share.build_share(owner_identity: @share.identity)
       public_share.save!

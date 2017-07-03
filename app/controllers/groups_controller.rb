@@ -23,7 +23,7 @@ class GroupsController < MyplaceonlineController
     
     @missing_contacts = Contact.joins(:contact_identity).includes(:contact_identity).where(
       "contacts.identity_id = ? and contacts.id NOT IN (?) and contacts.archived IS NULL",
-      User.current_user.primary_identity_id,
+      User.current_user.current_identity_id,
       @obj.all_contacts.map{|c| c.id}
     ).order(Identity.order)
     
@@ -34,9 +34,9 @@ class GroupsController < MyplaceonlineController
       params.each do |key, value|
         if key.start_with?("contact_")
           contact_id = key[8..-1].to_i
-          contact = Contact.where(id: contact_id, identity_id: User.current_user.primary_identity_id).take!
+          contact = Contact.where(id: contact_id, identity_id: User.current_user.current_identity_id).take!
           GroupContact.create!(
-            identity_id: User.current_user.primary_identity_id,
+            identity_id: User.current_user.current_identity_id,
             group_id: @obj.id,
             contact_id: contact.id
           )

@@ -180,7 +180,7 @@ class ApiController < ApplicationController
             render json: model.find_by_sql(%{
               SELECT DISTINCT #{column_name}
               FROM #{model.table_name}
-              WHERE identity_id = #{User.current_user.primary_identity_id}
+              WHERE identity_id = #{User.current_user.current_identity_id}
               ORDER BY #{column_name}
             }).map{|x| x.send(column_name) }.delete_if{|x| x.blank?}.map{|x|
               {

@@ -44,7 +44,7 @@ class Contact < ApplicationRecord
   before_destroy :check_if_user_contact, prepend: true
   
   def check_if_user_contact
-    if contact_identity_id == User.current_user.primary_identity_id
+    if contact_identity_id == User.current_user.current_identity_id
       raise "Cannot delete own identity"
     end
   end
@@ -181,13 +181,13 @@ class Contact < ApplicationRecord
         # delete any persistent reminders
         on_after_destroy
         if !contact_type.nil?
-          User.current_user.primary_identity.calendars.each do |calendar|
+          User.current_user.current_identity.calendars.each do |calendar|
             contact_threshold = Contact.contact_type_threshold(calendar)[contact_type]
             if !contact_threshold.nil?
               last = last_conversation_date
               if last.nil?
                 CalendarItem.create_persistent_calendar_item(
-                  User.current_user.primary_identity,
+                  User.current_user.current_identity,
                   calendar,
                   Contact,
                   model_id: id,
@@ -196,7 +196,7 @@ class Contact < ApplicationRecord
               else
                 next_conversation = last + contact_threshold.seconds
                 CalendarItem.create_calendar_item(
-                  identity: User.current_user.primary_identity,
+                  identity: User.current_user.current_identity,
                   calendar: calendar,
                   model: Contact,
                   calendar_item_time: next_conversation,
@@ -217,7 +217,7 @@ class Contact < ApplicationRecord
   
   def on_after_destroy
     CalendarItem.destroy_calendar_items(
-      User.current_user.primary_identity,
+      User.current_user.current_identity,
       Contact,
       model_id: id,
       context_info: Conversation::CALENDAR_ITEM_CONTEXT_CONVERSATION
