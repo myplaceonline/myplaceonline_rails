@@ -18,6 +18,7 @@ class DietaryRequirement < ApplicationRecord
   end
 
   validates :dietary_requirement_name, presence: true
+  validates :dietary_requirement_amount, presence: true
   
   belongs_to :dietary_requirements_collection
   
@@ -39,5 +40,11 @@ class DietaryRequirement < ApplicationRecord
   
   def self.display_with_measurement(amount, type)
     "#{Myp.decimal_to_s(value: amount)} #{Myp.get_select_name(type, Nutrient::MEASUREMENTS)}"
+  end
+
+  def self.build(params = nil)
+    result = self.dobuild(params)
+    result.dietary_requirement_context = CONTEXT_PER_DAY
+    result
   end
 end
