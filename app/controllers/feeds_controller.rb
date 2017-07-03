@@ -128,6 +128,11 @@ class FeedsController < MyplaceonlineController
         icon: "gear"
       },
       {
+        title: I18n.t("myplaceonline.feeds.load"),
+        link: feed_load_path(@obj),
+        icon: "refresh"
+      },
+      {
         title: I18n.t("myplaceonline.feeds.mark_page_read"),
         link:
           feed_mark_page_read_path(
@@ -147,11 +152,6 @@ class FeedsController < MyplaceonlineController
         link: feed_feed_items_path(@obj),
         icon: "bars"
       },
-      {
-        title: I18n.t("myplaceonline.feeds.load"),
-        link: feed_load_path(@obj),
-        icon: "refresh"
-      }
     ] + super
   end
   
