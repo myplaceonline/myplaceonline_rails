@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170703101915) do
+ActiveRecord::Schema.define(version: 20170703195804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1959,6 +1959,20 @@ ActiveRecord::Schema.define(version: 20170703101915) do
     t.index ["food_id"], name: "index_food_files_on_food_id"
     t.index ["identity_file_id"], name: "index_food_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_food_files_on_identity_id"
+  end
+
+  create_table "food_informations", force: :cascade do |t|
+    t.string "food_name"
+    t.text "notes"
+    t.bigint "usda_food_id"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "nutrient_databank_number"
+    t.bigint "usda_foods_id"
+    t.index ["identity_id"], name: "index_food_informations_on_identity_id"
+    t.index ["usda_food_id"], name: "index_food_informations_on_usda_food_id"
+    t.index ["usda_foods_id"], name: "index_food_informations_on_usda_foods_id"
   end
 
   create_table "food_ingredients", id: :serial, force: :cascade do |t|
@@ -5108,7 +5122,7 @@ ActiveRecord::Schema.define(version: 20170703101915) do
     t.index ["code"], name: "index_usda_food_groups_on_code", unique: true
   end
 
-  create_table "usda_foods", id: false, force: :cascade do |t|
+  create_table "usda_foods", force: :cascade do |t|
     t.string "nutrient_databank_number", null: false
     t.string "food_group_code"
     t.string "long_description", null: false
@@ -6011,6 +6025,9 @@ ActiveRecord::Schema.define(version: 20170703101915) do
   add_foreign_key "food_files", "foods"
   add_foreign_key "food_files", "identities"
   add_foreign_key "food_files", "identity_files"
+  add_foreign_key "food_informations", "identities"
+  add_foreign_key "food_informations", "usda_foods"
+  add_foreign_key "food_informations", "usda_foods", column: "usda_foods_id"
   add_foreign_key "food_ingredients", "foods", column: "parent_food_id", name: "food_ingredients_parent_food_id_fk"
   add_foreign_key "food_ingredients", "foods", name: "food_ingredients_food_id_fk"
   add_foreign_key "food_ingredients", "identities", name: "food_ingredients_identity_id_fk"

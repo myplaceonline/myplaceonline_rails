@@ -195,6 +195,10 @@ class User < ApplicationRecord
   def current_identity_id
     primary_identity_id
   end
+  
+  def self.super_user
+    User.find(0)
+  end
 
   protected
     def confirmation_required?
