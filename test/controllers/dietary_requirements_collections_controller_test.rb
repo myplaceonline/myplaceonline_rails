@@ -4,6 +4,6 @@ class DietaryRequirementsCollectionsControllerTest < ActionController::TestCase
   include MyplaceonlineControllerTest
   
   def test_attributes
-    { dietary_requirements_collection_name: "test", dietary_requirement_amount: 1 }
+    { dietary_requirements_collection_name: "test" }
   end
 end

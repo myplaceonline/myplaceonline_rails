@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/composite-primary-keys/composite_primary_keys.git
+  revision: 03dc16ec61c3afbf57f062de644041665b66cf47
+  specs:
+    composite_primary_keys (9.0.7)
+      activerecord (~> 5.1.0)
+
+GIT
   remote: git://github.com/galetahub/ckeditor.git
   revision: 437501e2789dc764c58e57cad0897854c186fa82
   specs:
@@ -72,6 +79,8 @@ GEM
       activemodel (= 5.1.2)
       activesupport (= 5.1.2)
       arel (~> 8.0)
+    activerecord-import (0.19.0)
+      activerecord (>= 3.2)
     activesupport (5.1.2)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (~> 0.7)
@@ -340,6 +349,11 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.4)
+    usda-nutrient-database (2.1.2)
+      activerecord (>= 3.0.0)
+      composite_primary_keys
+      faraday
+      rubyzip
     warden (1.2.7)
       rack (>= 1.0)
     websocket-driver (0.6.5)
@@ -356,6 +370,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-import
   awesome_print
   browser
   calculus
@@ -365,6 +380,7 @@ DEPENDENCIES
   chewy
   ckeditor!
   coffee-rails
+  composite_primary_keys!
   curb
   daemons
   delayed_job!
@@ -418,6 +434,7 @@ DEPENDENCIES
   time_difference
   twilio-ruby
   uglifier
+  usda-nutrient-database
   yelp
   zeroclipboard-rails
 
