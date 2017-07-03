@@ -1,3 +1,4 @@
 dietary_requirement:
   identity: identity
   dietary_requirement_name: Test
+  dietary_requirement_amount: 1

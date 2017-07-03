@@ -8,7 +8,7 @@ class GraphController < MyplaceonlineController
     categories = Myp.categories(User.current_user)
     @values = get_values()
     @sources = categories.map{|k,v| I18n.t("myplaceonline.category." + v.name) }.sort
-    series_numbers = params.dup.delete_if{|k,v| !k.start_with?("series_") || !k.end_with?("_source") }.to_a.map{|x| x[0][x[0].index('_')+1..x[0].rindex('_')-1].to_i}.sort
+    series_numbers = params.dup.permit!.to_hash.delete_if{|k,v| !k.start_with?("series_") || !k.end_with?("_source") }.to_a.map{|x| x[0][x[0].index('_')+1..x[0].rindex('_')-1].to_i}.sort
     data = Hash.new
     @selected_sources = Hash.new
     @selected_values = Hash.new
