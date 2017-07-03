@@ -249,6 +249,7 @@ Rails.application.routes.draw do
       { instance: false, link: "load_all" },
       { instance: false, link: "random" },
       { instance: true, link: "load" },
+      { instance: true, link: "mark_page_read" },
       { instance: true, link: "mark_all_read" },
       {
         subresources: true,

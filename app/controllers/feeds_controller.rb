@@ -54,6 +54,33 @@ class FeedsController < MyplaceonlineController
     )
   end
   
+  def mark_page_read
+    set_obj
+
+    offset = Myp.param_integer(params, MyplaceonlineController::PARAM_OFFSET, default_value: 0)
+    perpage = Myp.param_integer(params, MyplaceonlineController::PARAM_PER_PAGE, default_value: MyplaceonlineController::DEFAULT_PER_PAGE)
+
+    count = 0
+    
+    ApplicationRecord.transaction do
+      items = @obj.unread_feed_items.offset(offset).limit(perpage)
+      count = items.count
+      FeedItem.where("id in (?)", items.map{|x| x.id}).update_all(
+        read: Time.now
+      )
+      @obj.update_column(:unread_items, @obj.unread_items - count)
+    end
+    
+    redirect_to(
+      feed_path(
+        @obj,
+        MyplaceonlineController::PARAM_OFFSET => params[MyplaceonlineController::PARAM_OFFSET],
+        MyplaceonlineController::PARAM_PER_PAGE => params[MyplaceonlineController::PARAM_PER_PAGE]
+      ),
+      flash: { notice: I18n.t("myplaceonline.feeds.page_marked_read", count: count) }
+    )
+  end
+  
   def use_bubble?
     true
   end
@@ -99,6 +126,16 @@ class FeedsController < MyplaceonlineController
         title: I18n.t("myplaceonline.feeds.random_feed"),
         link: feeds_random_path,
         icon: "gear"
+      },
+      {
+        title: I18n.t("myplaceonline.feeds.mark_page_read"),
+        link:
+          feed_mark_page_read_path(
+            @obj,
+            MyplaceonlineController::PARAM_OFFSET => params[MyplaceonlineController::PARAM_OFFSET],
+            MyplaceonlineController::PARAM_PER_PAGE => params[MyplaceonlineController::PARAM_PER_PAGE]
+          ),
+        icon: "check"
       },
       {
         title: I18n.t("myplaceonline.feeds.mark_all_read"),

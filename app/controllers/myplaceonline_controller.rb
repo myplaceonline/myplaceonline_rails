@@ -10,6 +10,11 @@ class MyplaceonlineController < ApplicationController
   SETTING_ALWAYS_EXPAND_FAVORITES = :always_expand_favorites
   SETTING_ALWAYS_EXPAND_TOP_USED = :always_expand_top_used
   
+  PARAM_OFFSET = :offset
+  PARAM_PER_PAGE = :perpage
+  
+  DEFAULT_PER_PAGE = 20
+  
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK
 
   respond_to :html, :json
@@ -103,7 +108,7 @@ class MyplaceonlineController < ApplicationController
   end
 
   def items_offset
-    result = params[:offset].nil? ? get_default_offset : params[:offset].to_i
+    result = params[PARAM_OFFSET].nil? ? get_default_offset : params[PARAM_OFFSET].to_i
     if result < 0
       result = 0
     end
@@ -111,13 +116,13 @@ class MyplaceonlineController < ApplicationController
   end
   
   def items_per_page
-    if params[:perpage].nil?
-      result = 20
+    if params[PARAM_PER_PAGE].nil?
+      result = DEFAULT_PER_PAGE
       if !current_user.items_per_page.nil?
         result = current_user.items_per_page.to_i
       end
     else
-      result = params[:perpage].to_i
+      result = params[PARAM_PER_PAGE].to_i
     end
     result
   end
@@ -132,7 +137,7 @@ class MyplaceonlineController < ApplicationController
   def items_query_params_part_all
     # Save off any query parameters which might be used by AJAX callbacks to
     # index.json.erb (for example, for a full item search)
-    part = Myp.query_parameters_uri_part(request, [:offset])
+    part = Myp.query_parameters_uri_part(request, [PARAM_OFFSET])
     result = ""
     if part.blank?
       result = "?perpage=0"
@@ -143,11 +148,11 @@ class MyplaceonlineController < ApplicationController
   end
   
   def items_next_page(offset)
-    send("#{paths_name}_path", :offset => offset)
+    send("#{paths_name}_path", PARAM_OFFSET => offset)
   end
   
   def items_previous_page(offset)
-    send("#{paths_name}_path", :offset => offset)
+    send("#{paths_name}_path", PARAM_OFFSET => offset)
   end
   
   def items_all_link

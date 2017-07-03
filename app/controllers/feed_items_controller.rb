@@ -36,7 +36,7 @@ class FeedItemsController < MyplaceonlineController
   def footer_items_index
     super + [
       {
-        title: I18n.t('myplaceonline.feed_items.feed'),
+        title: I18n.t("myplaceonline.feed_items.feed"),
         link: feed_path(@parent),
         icon: "back"
       }
@@ -46,7 +46,7 @@ class FeedItemsController < MyplaceonlineController
   def footer_items_show
     super + [
       {
-        title: I18n.t('myplaceonline.feed_items.feed'),
+        title: I18n.t("myplaceonline.feed_items.feed"),
         link: feed_path(@obj.feed),
         icon: "back"
       }
