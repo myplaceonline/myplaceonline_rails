@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170703195804) do
+ActiveRecord::Schema.define(version: 20170703220153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2049,6 +2049,8 @@ ActiveRecord::Schema.define(version: 20170703195804) do
     t.datetime "archived"
     t.integer "rating"
     t.bigint "food_nutrition_information_id"
+    t.bigint "food_information_id"
+    t.index ["food_information_id"], name: "index_foods_on_food_information_id"
     t.index ["food_nutrition_information_id"], name: "index_foods_on_food_nutrition_information_id"
     t.index ["identity_id"], name: "index_foods_on_identity_id"
   end
@@ -6039,6 +6041,7 @@ ActiveRecord::Schema.define(version: 20170703195804) do
   add_foreign_key "food_nutrition_information_files", "identity_files"
   add_foreign_key "food_nutrition_informations", "foods"
   add_foreign_key "food_nutrition_informations", "identities"
+  add_foreign_key "foods", "food_informations"
   add_foreign_key "foods", "food_nutrition_informations"
   add_foreign_key "foods", "identities", name: "foods_identity_id_fk"
   add_foreign_key "gas_stations", "identities", name: "gas_stations_identity_id_fk"

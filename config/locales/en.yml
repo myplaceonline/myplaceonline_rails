@@ -1402,6 +1402,7 @@ en:
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
       food_nutrition_information: "Nutrition Information"
+      food_information: "USDA Nutrition Database Information"
     drinks:
       heading: "Drinks"
       drink: "Drink"
@@ -3530,3 +3531,5 @@ en:
         grams: "Grams (g)"
         micrograms_rae: "Micrograms of Retinol Activity Equivalent (mg RAE)"
         liters: "Liters (L)"
+    food_informations:
+      food_name: "Name"

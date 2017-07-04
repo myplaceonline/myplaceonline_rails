@@ -35,7 +35,10 @@ class Food < ApplicationRecord
         ]
       ],
       food_files_attributes: FilesController.multi_param_names,
-      food_nutrition_information_attributes: FoodNutritionInformation.params
+      food_nutrition_information_attributes: FoodNutritionInformation.params,
+      food_information_attributes: [
+        :id
+      ]
     ]
   end
 
@@ -43,6 +46,8 @@ class Food < ApplicationRecord
 
   child_property(name: :food_nutrition_information, destroy_dependent: true)
   
+  child_property(name: :food_information)
+
   def total_calories(quantity:)
     if !self.food_nutrition_information.nil? && !self.food_nutrition_information.calories_per_serving.nil?
       self.food_nutrition_information.calories_per_serving * quantity

@@ -1100,10 +1100,14 @@ class MyplaceonlineController < ApplicationController
       end
     end
     
+    def check_archived
+      true
+    end
+    
     def all_additional_sql(strict)
       result = nil
       if !strict
-        if @archived.blank? || !@archived
+        if check_archived && (@archived.blank? || !@archived)
           result = Myp.appendstr(result, "#{model.table_name}.archived is null", nil, " and (", ")")
         end
         simple_index_filters.each do |simple_index_filter|

@@ -1,8 +1,14 @@
 <%
-model = objform[0..(objform.index('/')-1)].singularize.camelize.constantize
+if defined?(objform)
+  model = objform[0..(objform.index('/')-1)].singularize.camelize.constantize
+end
 
 if defined?(model_name)
   model = model_name.constantize
+end
+
+if !defined?(allow_existing_edit)
+  allow_existing_edit = true
 end
 
 # This could be either that it's an object from the database, or a temporary object representing input fields
@@ -41,6 +47,12 @@ if !defined?(simpleform)
 end
 if !defined?(always_search)
   always_search = false
+end
+if !defined?(itemsPerPage)
+  itemsPerPage = ""
+  if always_search
+    itemsPerPage = 10
+  end
 end
 if !defined?(existingitems)
   existingitems = nil
@@ -89,6 +101,10 @@ elsif !existingcollapsed && !existingobj_exists_permanent
   end
 end
 
+if defined?(force_existing_collapsed)
+  existingcollapsed = force_existing_collapsed
+end
+
 Rails.logger.debug{"select_or_create context: #{f.object_name}[#{name}], collapsed: #{collapsed}, existingobj: #{existingobj}, autofocus: #{autofocus}"}
 %>
 <div data-role="collapsible" data-collapsed="<%= collapsed %>" class="form_container">
@@ -102,7 +118,7 @@ Rails.logger.debug{"select_or_create context: #{f.object_name}[#{name}], collaps
           %>
           <h3><%= t("myplaceonline.general.existing") + " " + heading %></h3>
           <div id="<%= random_name %>_searchable_container">
-            <ul id="<%= random_name %>_searchable" data-role="listview" data-inset="true" data-filter="true" data-icon="false" data-filter-placeholder="<%= t("myplaceonline.search.placeholder") %>">
+            <ul id="<%= random_name %>_searchable" data-role="listview" data-inset="true" data-filter="true" data-icon="false" data-filter-placeholder="<%= t("myplaceonline.search.placeholder") %>" data-items-per-page="<%= itemsPerPage %>">
               <%
                 if existingobj_exists_permanent
                   existingobj_link = existingobjurl
@@ -112,7 +128,9 @@ Rails.logger.debug{"select_or_create context: #{f.object_name}[#{name}], collaps
               %>
                 <li>
                   <%= link_to(existingobj.display, send(existingobj_link, existingobj), onclick: Myp.select_listitem('#' + fieldid)) %>
-                  <%= link_to(existingobj.display, send(existingobj_link, existingobj), :class => "splitlink", data: { icon: edit ? "edit" : "search" }) %>
+                  <% if allow_existing_edit %>
+                    <%= link_to(existingobj.display, send(existingobj_link, existingobj), :class => "splitlink", data: { icon: edit ? "edit" : "search" }) %>
+                  <% end %>
                 </li>
               <% end %>
               <% if !existingitems.nil? %>
@@ -140,7 +158,7 @@ Rails.logger.debug{"select_or_create context: #{f.object_name}[#{name}], collaps
                   noresults: <%= noresultsfunc %>
                 }
               ], function(ul) {
-                ul.find("li a:not(.splitlink)").each(function(index) {
+                ul.find("li > a:not(.splitlink)").each(function(index) {
                   $(this).attr("onclick", "<%= raw(Myp.select_listitem('#' + fieldid)) %>");
                 });
                 <% if always_search %>

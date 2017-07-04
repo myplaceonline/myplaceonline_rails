@@ -70,3 +70,19 @@
     deletebutton: "myplaceonline.foods.delete_file"
   }
 %>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :food_information,
+    existingobj: obj.food_information,
+    heading: t("myplaceonline.foods.food_information"),
+    allow_existing_edit: false,
+    searchurl: "/food_informations.json?perpage=0&remote_filter=true",
+    edit: false,
+    autofocus: false,
+    allow_new: false,
+    model_name: FoodInformation.name,
+    force_existing_collapsed: false,
+    always_search: true
+  }
+%>

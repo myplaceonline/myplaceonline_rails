@@ -139,14 +139,29 @@ var myplaceonline = function(mymodule) {
   }
   
   /* items: [{title: String, link: String, count: Integer, filtertext: String, icon: String, splitLink: String, splitLinkTitle: String}, ...] */
-  function jqmSetList(list, items, header) {
+  function jqmSetList(list, items, header, itemsOffset, itemsPerPage) {
     var html = "";
     if (header) {
       html += "<li data-role='list-divider'>" + header + "</li>";
     }
+
+    if (!itemsOffset) {
+      itemsOffset = 0;
+    }
+    if (!itemsPerPage) {
+      itemsPerPage = list.data("items-per-page");
+      if (!itemsPerPage || itemsPerPage == "") {
+        itemsPerPage = 1000;
+      }
+    }
+    
     myplaceonline.consoleLog("jqmSetList: updating list items");
     myplaceonline.consoleDir(items);
-    $.each(items, function (i, x) {
+    
+    var itemsMaxBounds = itemsOffset + itemsPerPage;
+    var i;
+    for (i = itemsOffset; i < items.length && i < itemsMaxBounds; i++) {
+      var x = items[i];
       var filtertext = x.title;
       if (x.filtertext) {
         filtertext = x.filtertext;
@@ -180,7 +195,28 @@ var myplaceonline = function(mymodule) {
         html += "<a href='" + x.splitLink + "' class='splitlink'>" + myplaceonline.encodeEntities(x.splitLinkTitle) + "</a>";
       }
       html += "</li>";
-    });
+    };
+    
+    if (i < items.length || itemsOffset > 0) {
+      html += "<li style='text-align: center;' data-forcevisible='true'>";
+      html += "Items " + (itemsOffset + 1) + " - " + (itemsOffset + itemsPerPage) + " of " + items.length + ". <span>";
+      
+      var hasNext = (i < items.length);
+      
+      if (itemsOffset > 0) {
+        html += "<a href='#' onclick='myplaceonline.jqmListPrevious(this); return false;'>Previous " + itemsPerPage + "</a>";
+        if (hasNext) {
+          html += " | ";
+        }
+      }
+      
+      if (hasNext) {
+        html += "<a href='#' onclick='myplaceonline.jqmListNext(this); return false;'>Next " + itemsPerPage + "</a>";
+      }
+      
+      html += "</span></li>";
+    }
+    
     //myplaceonline.consoleLog("Updating HTML: " + html);
     list.html(html);
     list.listview("refresh");
@@ -188,6 +224,41 @@ var myplaceonline = function(mymodule) {
     
     // Store the actual data also
     list.data("rawItems", items);
+    list.data("header", header);
+    list.data("itemsOffset", itemsOffset);
+    list.data("itemsPerPage", itemsPerPage);
+  }
+  
+  function jqmListNext(obj) {
+    var $ul = $(obj).parents("ul").first();
+    var itemsOffset = $ul.data("itemsOffset");
+    var itemsPerPage = $ul.data("itemsPerPage");
+    var rawItems = $ul.data("rawItems");
+    var header = $ul.data("header");
+    
+    itemsOffset += itemsPerPage;
+    
+    myplaceonline.jqmSetList($ul, rawItems, header, itemsOffset, itemsPerPage);
+    jqmRunAfterLoad($ul);
+  }
+
+  function jqmListPrevious(obj) {
+    var $ul = $(obj).parents("ul").first();
+    var itemsOffset = $ul.data("itemsOffset");
+    var itemsPerPage = $ul.data("itemsPerPage");
+    var rawItems = $ul.data("rawItems");
+    var header = $ul.data("header");
+    
+    itemsOffset -= itemsPerPage;
+    
+    myplaceonline.jqmSetList($ul, rawItems, header, itemsOffset, itemsPerPage);
+    jqmRunAfterLoad($ul);
+  }
+  
+  function jqmRunAfterLoad($list) {
+    if ($list.data("afterload")) {
+      $list.data("afterload")($list);
+    }
   }
 
   function jqmReplaceListSection(list, sectionTitle, items) {
@@ -312,9 +383,7 @@ var myplaceonline = function(mymodule) {
   function listLoadComplete($list, context, items, query) {
     jqmReplaceListSection($list, context.title, items);
     context.failed = false;
-    if ($list.data("afterload")) {
-      $list.data("afterload")($list);
-    }
+    jqmRunAfterLoad($list);
     
     if (context.noresults && !jqmSectionHasMatch($list, context.title, query)) {
       context.noresults($list, context, context.title, query);
@@ -402,9 +471,7 @@ var myplaceonline = function(mymodule) {
     if (!skipListReset) {
       list.html(list.data("originalItems"));
 
-      if (list.data("afterload")) {
-        list.data("afterload")(list);
-      }
+      jqmRunAfterLoad(list);
     }
     
     myplaceonline.consoleLog("remoteDataList setting hasInitialized");
@@ -1320,6 +1387,8 @@ var myplaceonline = function(mymodule) {
   mymodule.jqmSetListMessage = jqmSetListMessage;
   mymodule.jqmSetList = jqmSetList;
   mymodule.jqmReplaceListSection = jqmReplaceListSection;
+  mymodule.jqmListNext = jqmListNext;
+  mymodule.jqmListPrevious = jqmListPrevious;
   mymodule.remoteDataListReset = remoteDataListReset;
   mymodule.form_set_positions = form_set_positions;
   mymodule.cancelCheckboxHiding = cancelCheckboxHiding;
