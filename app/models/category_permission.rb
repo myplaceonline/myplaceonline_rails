@@ -7,6 +7,7 @@ class CategoryPermission < ApplicationRecord
   validates :subject_class, presence: true
   
   child_property(name: :user)
+  child_property(name: :target_identity, model: Identity, required: true)
 
   def display
     result = user.display

@@ -34,7 +34,7 @@ class Permission < ApplicationRecord
     result
   end
   
-  child_property(name: :user)
+  child_property(name: :user, required: true)
 
   validate do
     if !subject_id.nil? && Myp.find_existing_object(Myp.category_to_model_name(subject_class), subject_id).nil?

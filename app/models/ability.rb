@@ -130,33 +130,33 @@ class Ability
           Rails.logger.debug{"Ability.authorize Identities match: subject: #{subject.id}, identity: #{identity.id}"}
           result = true
         else
-          query = "subject_class = ? and (subject_id = ? or subject_id IS NULL) and (action & #{Permission::ACTION_MANAGE} != 0"
-          if action == :show
-            query += " or action & #{Permission::ACTION_READ} != 0"
-          elsif action == :edit || action == :update
-            query += " or action & #{Permission::ACTION_UPDATE} != 0"
-          elsif action == :destroy
-            query += " or action & #{Permission::ACTION_DESTROY} != 0"
-          elsif subject.respond_to?("permission_action")
-            permission_action = subject.permission_action(action)
-            query += " or action & #{permission_action} != 0"
-          else
-            # If it's any other action, it's probably custom and so just
-            # assume it's an edit
-            query += " or action & #{Permission::ACTION_UPDATE} != 0"
-          end
+          query = "user_id = ? and subject_class = ? and subject_id = ? and (action & #{Permission::ACTION_MANAGE} != 0"
+          query = self.add_action_query_parts(action: action, query: query, subject: subject)
           query += ")"
-          if user.guest?
-            query = "user_id = ? and " + query
-          else
-            query = "(user_id = ? or user_id IS NULL) and " + query
-          end
           permission_results = Permission.where(query, user.id, Myp.model_to_category_name(subject_class), subject.id)
           if permission_results.length > 0
             Rails.logger.debug{"Ability.authorize Found permissions: #{permission_results.inspect}"}
             result = true
           else
-            Rails.logger.debug{"Ability.authorize Returning false for user: #{user.id}, action: #{action}, category: #{Myp.model_to_category_name(subject_class)}, subject: #{subject.id}"}
+            Rails.logger.debug{"Ability.authorize no direct permission found"}
+          end
+          
+          if !result
+            query = "(user_id = :user_id or user_id IS NULL) and subject_class = :subject_class and target_identity_id = :target_identity_id and (action & #{Permission::ACTION_MANAGE} != 0"
+            query = self.add_action_query_parts(action: action, query: query, subject: subject)
+            query += ")"
+            category_permissions = CategoryPermission.where(
+              query,
+              user_id: user.id,
+              subject_class: Myp.model_to_category_name(subject_class),
+              target_identity_id: subject.identity_id
+            )
+            if category_permissions.length > 0
+              Rails.logger.debug{"Ability.authorize Found category permissions: #{category_permissions.inspect}"}
+              result = true
+            else
+              Rails.logger.debug{"Ability.authorize Returning false for user: #{user.id}, action: #{action}, category: #{Myp.model_to_category_name(subject_class)}, subject: #{subject.id}"}
+            end
           end
         end
       end
@@ -170,5 +170,23 @@ class Ability
     Rails.logger.debug{"Ability.authorize returning #{result} for user #{user.id}, subject #{subject.inspect}"}
     
     result
+  end
+  
+  def self.add_action_query_parts(action:, query:, subject:)
+    if action == :show
+      query += " or action & #{Permission::ACTION_READ} != 0"
+    elsif action == :edit || action == :update
+      query += " or action & #{Permission::ACTION_UPDATE} != 0"
+    elsif action == :destroy
+      query += " or action & #{Permission::ACTION_DESTROY} != 0"
+    elsif subject.respond_to?("permission_action")
+      permission_action = subject.permission_action(action)
+      query += " or action & #{permission_action} != 0"
+    else
+      # If it's any other action, it's probably custom and so just
+      # assume it's an edit
+      query += " or action & #{Permission::ACTION_UPDATE} != 0"
+    end
+    query
   end
 end
