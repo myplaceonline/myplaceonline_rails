@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170704194713) do
+ActiveRecord::Schema.define(version: 20170704195909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -734,6 +734,20 @@ ActiveRecord::Schema.define(version: 20170704194713) do
     t.boolean "simple"
     t.index ["name"], name: "index_categories_on_name", unique: true
     t.index ["parent_id"], name: "index_categories_on_parent_id"
+  end
+
+  create_table "category_permissions", force: :cascade do |t|
+    t.integer "action"
+    t.string "subject_class"
+    t.bigint "user_id"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_category_permissions_on_identity_id"
+    t.index ["user_id"], name: "index_category_permissions_on_user_id"
   end
 
   create_table "category_points_amounts", id: :serial, force: :cascade do |t|
@@ -5832,6 +5846,8 @@ ActiveRecord::Schema.define(version: 20170704194713) do
   add_foreign_key "camp_locations", "memberships", name: "camp_locations_membership_id_fk"
   add_foreign_key "cashbacks", "identities", name: "cashbacks_identity_id_fk"
   add_foreign_key "categories", "categories", column: "parent_id", name: "categories_parent_id_fk"
+  add_foreign_key "category_permissions", "identities"
+  add_foreign_key "category_permissions", "users"
   add_foreign_key "category_points_amounts", "categories", name: "category_points_amounts_category_id_fk"
   add_foreign_key "category_points_amounts", "identities", name: "category_points_amounts_identity_id_fk"
   add_foreign_key "charities", "identities"
