@@ -1,2 +1,5 @@
 <%= data_row(heading: t("myplaceonline.food_informations.food_name"), content: obj.food_name) %>
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<% @nutrients.each do |food_nutrient| %>
+  <%= data_row(heading: food_nutrient.nutrient.nutrient_description, content: "#{food_nutrient.nutrient_value} #{food_nutrient.nutrient.units}/100g") %>
+<% end %>

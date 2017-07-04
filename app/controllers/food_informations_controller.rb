@@ -33,4 +33,8 @@ class FoodInformationsController < MyplaceonlineController
     def check_archived
       false
     end
+
+    def before_show
+      @nutrients = @obj.usda_food.foods_nutrients.to_a.dup.sort{|x, y| x.nutrient.nutrient_description <=> y.nutrient.nutrient_description}
+    end
 end
