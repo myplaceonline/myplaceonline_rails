@@ -130,7 +130,7 @@ class Ability
           Rails.logger.debug{"Ability.authorize Identities match: subject: #{subject.id}, identity: #{identity.id}"}
           result = true
         else
-          query = "user_id = ? and subject_class = ? and subject_id = ? and (action & #{Permission::ACTION_MANAGE} != 0"
+          query = "subject_class = ? and (subject_id = ? or subject_id IS NULL) and (action & #{Permission::ACTION_MANAGE} != 0"
           if action == :show
             query += " or action & #{Permission::ACTION_READ} != 0"
           elsif action == :edit || action == :update
@@ -146,6 +146,11 @@ class Ability
             query += " or action & #{Permission::ACTION_UPDATE} != 0"
           end
           query += ")"
+          if user.guest?
+            query = "user_id = ? and " + query
+          else
+            query = "(user_id = ? or user_id IS NULL) and " + query
+          end
           permission_results = Permission.where(query, user.id, Myp.model_to_category_name(subject_class), subject.id)
           if permission_results.length > 0
             Rails.logger.debug{"Ability.authorize Found permissions: #{permission_results.inspect}"}

@@ -12,6 +12,7 @@
   <%= attribute_table_row_markdown(t("myplaceonline.foods.notes"), wrapper.food.notes) %>
 <% end %>
 <%= data_row(heading: t("myplaceonline.foods.food_nutrition_information"), content: obj.food_nutrition_information) %>
+<%= data_row(heading: t("myplaceonline.foods.food_information"), content: obj.food_information) %>
 <%=
   render partial: "myplaceonline/pictures", locals: {
     pics: obj.food_files,

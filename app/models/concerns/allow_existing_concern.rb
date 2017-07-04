@@ -107,7 +107,7 @@ module AllowExistingConcern extend ActiveSupport::Concern
               Rails.logger.debug{"set_property_with_attributes existing_obj: #{Myp.debug_print(existing_obj)}"}
             end
           when AllowExistingConcern::UPDATE_TYPE_COMBINE
-            existing_obj = Myp.set_existing_object(self, name, model, attributes["id"].to_i, action: :show)
+            existing_obj = Myp.set_existing_object(self, name, model, attributes["id"].to_i, action: :edit)
 
             attributes.delete_if {|innerkey, innervalue| innerkey == "id" }
             existing_obj.assign_attributes(attributes)

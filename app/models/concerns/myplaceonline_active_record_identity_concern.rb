@@ -15,6 +15,9 @@ module MyplaceonlineActiveRecordIdentityConcern
     boolean_time_transfer :is_archived, :archived
 
     def identity_record_set
+      
+      Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set saving #{self.inspect}"}
+      
       if self.respond_to?("identity=")
         current_user = User.current_user
         if !current_user.nil?
