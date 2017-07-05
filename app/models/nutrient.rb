@@ -8,6 +8,7 @@ class Nutrient < ApplicationRecord
     ["myplaceonline.nutrients.measurements.micrograms", 2],
     ["myplaceonline.nutrients.measurements.micrograms_rae", 3],
     ["myplaceonline.nutrients.measurements.liters", 4],
+    ["myplaceonline.nutrients.measurements.ius", 5],
   ]
   
   def self.properties

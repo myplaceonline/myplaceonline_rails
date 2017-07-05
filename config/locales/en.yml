@@ -3529,8 +3529,9 @@ en:
         mg: "Milligrams (mg)"
         micrograms: "Micrograms (µg)"
         grams: "Grams (g)"
-        micrograms_rae: "Micrograms of Retinol Activity Equivalent (mg RAE)"
+        micrograms_rae: "Micrograms of Retinol Activity Equivalent (µg RAE)"
         liters: "Liters (L)"
+        ius: "International Units (IU)"
     food_informations:
       food_name: "Name"
       calories: "Calories"
