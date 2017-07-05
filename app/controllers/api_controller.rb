@@ -176,11 +176,17 @@ class ApiController < ApplicationController
       if !column_name.blank?
         model = Object.const_get(table_name)
         if !model.nil?
+          
+          identity = User.current_user.current_identity_id
+          if !params[:identity].blank? && params[:identity].to_i == User.super_user.current_identity_id && model.allow_super_user_search?
+            identity = User.super_user.current_identity_id
+          end
+          
           if !model.column_names.index(column_name).nil?
             render json: model.find_by_sql(%{
               SELECT DISTINCT #{column_name}
               FROM #{model.table_name}
-              WHERE identity_id = #{User.current_user.current_identity_id}
+              WHERE identity_id = #{identity}
               ORDER BY #{column_name}
             }).map{|x| x.send(column_name) }.delete_if{|x| x.blank?}.map{|x|
               {

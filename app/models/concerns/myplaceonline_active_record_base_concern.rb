@@ -44,6 +44,10 @@ module MyplaceonlineActiveRecordBaseConcern
         self.send(self.file_folders_parent).file_folders + [self.display]
       end
     end
+    
+    def self.allow_super_user_search?
+      false
+    end
   end
   
   class_methods do

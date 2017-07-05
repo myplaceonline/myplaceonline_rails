@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170705002922) do
+ActiveRecord::Schema.define(version: 20170705114227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2000,6 +2000,15 @@ ActiveRecord::Schema.define(version: 20170705002922) do
     t.index ["food_id"], name: "index_food_ingredients_on_food_id"
     t.index ["identity_id"], name: "index_food_ingredients_on_identity_id"
     t.index ["parent_food_id"], name: "index_food_ingredients_on_parent_food_id"
+  end
+
+  create_table "food_nutrient_informations", force: :cascade do |t|
+    t.string "nutrient_name"
+    t.string "usda_nutrient_nutrient_number"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_food_nutrient_informations_on_identity_id"
   end
 
   create_table "food_nutrition_information_amounts", force: :cascade do |t|
@@ -6048,6 +6057,7 @@ ActiveRecord::Schema.define(version: 20170705002922) do
   add_foreign_key "food_ingredients", "foods", column: "parent_food_id", name: "food_ingredients_parent_food_id_fk"
   add_foreign_key "food_ingredients", "foods", name: "food_ingredients_food_id_fk"
   add_foreign_key "food_ingredients", "identities", name: "food_ingredients_identity_id_fk"
+  add_foreign_key "food_nutrient_informations", "identities"
   add_foreign_key "food_nutrition_information_amounts", "food_nutrition_informations"
   add_foreign_key "food_nutrition_information_amounts", "identities"
   add_foreign_key "food_nutrition_information_amounts", "nutrients"

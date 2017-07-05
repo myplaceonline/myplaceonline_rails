@@ -1194,11 +1194,13 @@ module ApplicationHelper
       autofocus: false,
       field_classes: "",
       remote_autocomplete_model: nil,
+      remote_autocomplete_name: name,
       remote_autocomplete_all: false, # if true, show all items on focus; otherwise, show only items that match what's typed
+      remote_autocomplete_identity: nil,
       tooltip: nil,
       select_options: nil,
       translate_select_options: true,
-      text_area_rich: true
+      text_area_rich: true,
     }.merge(options)
     
     input_method_prefix = "_field"
@@ -1385,7 +1387,7 @@ module ApplicationHelper
         if options[:remote_autocomplete_all]
           remote_autocomplete_all_script = <<-eos
             $("##{id}").on("focus", function() {
-              myplaceonline.listviewSearch($("##{autocomplete_id}"), "/api/distinct_values.json?table_name=#{options[:remote_autocomplete_model]}&column_name=#{name}", null);
+              myplaceonline.listviewSearch($("##{autocomplete_id}"), "/api/distinct_values.json?table_name=#{options[:remote_autocomplete_model]}&column_name=#{options[:remote_autocomplete_name]}&identity=#{options[:remote_autocomplete_identity]}", null);
               $("##{autocomplete_id} li").removeClass("ui-screen-hidden");
             });
             $("##{id}").on("blur", function() {
@@ -1404,7 +1406,7 @@ module ApplicationHelper
                 $("##{id}").val($(this).text());
                 $("##{autocomplete_id} li").addClass("ui-screen-hidden");
               });
-              myplaceonline.hookListviewSearch($("##{autocomplete_id}"), "/api/distinct_values.json?table_name=#{options[:remote_autocomplete_model]}&column_name=#{name}");
+              myplaceonline.hookListviewSearch($("##{autocomplete_id}"), "/api/distinct_values.json?table_name=#{options[:remote_autocomplete_model]}&column_name=#{options[:remote_autocomplete_name]}&identity=#{options[:remote_autocomplete_identity]}");
               
               // When hooking up our input to the listview autocomplete with data-input, enter is squashed
               $("##{id}").on('keydown', function(e) {
