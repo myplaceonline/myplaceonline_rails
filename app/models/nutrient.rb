@@ -1,14 +1,21 @@
 class Nutrient < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
+  
+  MEASUREMENT_GRAMS = 0
+  MEASUREMENT_MILLI_GRAMS = 1
+  MEASUREMENT_MICRO_GRAMS = 2
+  MEASUREMENT_MICRO_GRAMS_RAE = 3
+  MEASUREMENT_LITERS = 4
+  MEASUREMENT_IUS = 5
 
   MEASUREMENTS = [
-    ["myplaceonline.nutrients.measurements.grams", 0],
-    ["myplaceonline.nutrients.measurements.mg", 1],
-    ["myplaceonline.nutrients.measurements.micrograms", 2],
-    ["myplaceonline.nutrients.measurements.micrograms_rae", 3],
-    ["myplaceonline.nutrients.measurements.liters", 4],
-    ["myplaceonline.nutrients.measurements.ius", 5],
+    ["myplaceonline.nutrients.measurements.grams", MEASUREMENT_GRAMS],
+    ["myplaceonline.nutrients.measurements.mg", MEASUREMENT_MILLI_GRAMS],
+    ["myplaceonline.nutrients.measurements.micrograms", MEASUREMENT_MICRO_GRAMS],
+    ["myplaceonline.nutrients.measurements.micrograms_rae", MEASUREMENT_MICRO_GRAMS_RAE],
+    ["myplaceonline.nutrients.measurements.liters", MEASUREMENT_LITERS],
+    ["myplaceonline.nutrients.measurements.ius", MEASUREMENT_IUS],
   ]
   
   def self.properties

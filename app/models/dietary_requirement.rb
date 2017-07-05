@@ -47,4 +47,13 @@ class DietaryRequirement < ApplicationRecord
     result.dietary_requirement_context = CONTEXT_PER_DAY
     result
   end
+  
+  def nutrient_units
+    case self.dietary_requirement_type
+    when Nutrient::MEASUREMENT_MICRO_GRAMS_RAE
+      Nutrient::MEASUREMENT_MICRO_GRAMS
+    else
+      self.dietary_requirement_type
+    end
+  end
 end
