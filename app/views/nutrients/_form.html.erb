@@ -5,6 +5,9 @@
     name: :nutrient_name,
     value: obj.nutrient_name,
     placeholder: "myplaceonline.nutrients.nutrient_name",
+    remote_autocomplete_model: FoodNutrientInformation,
+    remote_autocomplete_name: "nutrient_name",
+    remote_autocomplete_identity: User.super_user.current_identity_id,
     autofocus: autofocus
   )
 %>

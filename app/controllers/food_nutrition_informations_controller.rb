@@ -17,4 +17,8 @@ class FoodNutritionInformationsController < MyplaceonlineController
         FoodNutritionInformation.params
       )
     end
+    
+    def has_category
+      false
+    end
 end
