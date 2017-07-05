@@ -3534,3 +3534,4 @@ en:
     food_informations:
       food_name: "Name"
       calories: "Calories"
+      weight: "Weight (g)"

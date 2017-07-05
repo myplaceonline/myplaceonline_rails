@@ -22,32 +22,22 @@ class FoodInformation < ApplicationRecord
     food_name
   end
   
-  def weight_types
-    if self.usda_food.nil?
-      nil
-    else
-      self.usda_food.weights.map{|x| [x.amount == 1 ? "#{x.amount} #{x.measurement_description}" : "#{x.amount} #{x.measurement_description.pluralize}", x.sequence_number.to_i]}
-    end
-  end
-  
-  def calories(weight_type:)
-    weight_index = self.usda_food.weights.index{|x| x.sequence_number.to_i == weight_type}
-    weight = self.usda_food.weights[weight_index]
-    
+  # https://www.ars.usda.gov/ARSUserFiles/80400525/Data/SR/SR28/sr28_doc.pdf
+  def calories
     protein = 0
-    protein_factor = 0
+    protein_factor = 4
     if !self.usda_food.protein_factor.nil?
       protein_factor = self.usda_food.protein_factor
     end
     
     total_fat = 0
-    total_fat_factor = 0
+    total_fat_factor = 9
     if !self.usda_food.fat_factor.nil?
       total_fat_factor = self.usda_food.fat_factor
     end
     
     carbohydrates = 0
-    carbohydrates_factor = 0
+    carbohydrates_factor = 4
     if !self.usda_food.carbohydrate_factor.nil?
       carbohydrates_factor = self.usda_food.carbohydrate_factor
     end
@@ -61,7 +51,11 @@ class FoodInformation < ApplicationRecord
         carbohydrates = x.nutrient_value
       end
     end
-    per_100 = weight.gram_weight / 100.0
+    per_100 = self.usda_weight.gram_weight / 100.0
     (protein * per_100 * protein_factor) + (total_fat * per_100 * total_fat_factor) + (carbohydrates * per_100 * carbohydrates_factor)
+  end
+  
+  def nutrient_value(food_nutrient:)
+    food_nutrient.nutrient_value * (self.usda_weight.gram_weight / 100.0)
   end
 end
