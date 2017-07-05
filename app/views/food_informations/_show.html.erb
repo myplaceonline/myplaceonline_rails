@@ -1,5 +1,8 @@
 <%= data_row(heading: t("myplaceonline.food_informations.food_name"), content: obj.food_name) %>
-<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<% @obj.weight_types.each do |weight_type| %>
+  <%= data_row(heading: Myp.appendstrwrap(t("myplaceonline.food_informations.calories"), weight_type[0]), content: Myp.decimal_to_s(value: obj.calories(weight_type: weight_type[1]))) %>
+<% end %>
 <% @nutrients.each do |food_nutrient| %>
   <%= data_row(heading: food_nutrient.nutrient.nutrient_description, content: "#{food_nutrient.nutrient_value} #{food_nutrient.nutrient.units}/100g") %>
 <% end %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
