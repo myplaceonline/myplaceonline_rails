@@ -19,6 +19,7 @@
   <% @total_requirements.map do |name, requirement| %>
     <%=
       if requirement[:needed] > 0
+        consumed_percent = requirement[:consumed] / requirement[:needed]
         data_row(
           heading: name,
           htmlencode_content: false,
@@ -27,8 +28,9 @@
           ) + "<br />" + CGI::escapeHTML(
             "#{t("myplaceonline.diets.requirements_consumed")}#{DietaryRequirement.display_with_measurement(requirement[:consumed], requirement[:details].dietary_requirement_type)}"
           ) + "<br />" + CGI::escapeHTML(
-            "#{t("myplaceonline.diets.requirements_consumed_percent")}#{Myp.decimal_to_s(value: (requirement[:consumed] / requirement[:needed]) * 100.0)}"
-          )
+            "#{t("myplaceonline.diets.requirements_consumed_percent")}#{Myp.decimal_to_s(value: consumed_percent * 100.0)}"
+          ),
+          content_classes: consumed_percent < 1 ? "bgwarning" : (consumed_percent > 2 ? "bgerror" : "")
         )
       end
     %>

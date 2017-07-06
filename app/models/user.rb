@@ -196,8 +196,11 @@ class User < ApplicationRecord
     primary_identity_id
   end
   
+  SUPER_USER_ID = 0
+  SUPER_USER_IDENTITY_ID = 0
+  
   def self.super_user
-    User.find(0)
+    User.find(SUPER_USER_ID)
   end
 
   protected

@@ -5,11 +5,11 @@ class FoodInformationsController < MyplaceonlineController
     if Myp.param_bool(params, :remote_filter)
       @allobjs = FoodInformation.where(
         "identity_id = :identity_id and lower(food_name) LIKE :query",
-        identity_id: User.super_user.current_identity_id,
+        identity_id: User::SUPER_USER_IDENTITY_ID,
         query: "%#{params[:q].downcase}%"
       ).order(sorts_wrapper)
     else
-      @allobjs = FoodInformation.where(identity_id: User.super_user.current_identity_id).order(sorts_wrapper)
+      @allobjs = FoodInformation.where(identity_id: User::SUPER_USER_IDENTITY_ID).order(sorts_wrapper)
     end
     
     super

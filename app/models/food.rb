@@ -57,4 +57,19 @@ class Food < ApplicationRecord
       self.food_information.calories * quantity
     end
   end
+  
+  def gram_weight
+    result = nil
+    if !self.weight.nil?
+      case self.weight_type
+      when Myp::FOOD_WEIGHT_GRAMS
+        result = self.weight
+      else
+        raise "TODO"
+      end
+    elsif !self.food_information.nil? && !self.food_information.usda_weight.nil? && !self.food_information.usda_weight.gram_weight.nil?
+      result = self.food_information.usda_weight.gram_weight
+    end
+    result
+  end
 end

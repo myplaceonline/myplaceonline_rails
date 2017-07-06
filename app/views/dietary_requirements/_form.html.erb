@@ -8,7 +8,7 @@
     autofocus: autofocus,
     remote_autocomplete_model: FoodNutrientInformation,
     remote_autocomplete_name: "nutrient_name",
-    remote_autocomplete_identity: User.super_user.current_identity_id
+    remote_autocomplete_identity: User::SUPER_USER_IDENTITY_ID
   )
 %>
 <%=

@@ -41,13 +41,20 @@ module Myp
     ["myplaceonline.general.pounds", 0]
   ]
   
+  FOOD_WEIGHT_POUNDS = 0
+  FOOD_WEIGHT_CUPS = 1
+  FOOD_WEIGHT_OUNCES = 2
+  FOOD_WEIGHT_FLUID_OUNCES = 3
+  FOOD_WEIGHT_MILLILITERS = 4
+  FOOD_WEIGHT_GRAMS = 5
+  
   FOOD_WEIGHTS = [
-    ["myplaceonline.general.pounds", 0],
-    ["myplaceonline.general.cups", 1],
-    ["myplaceonline.general.ounces", 2],
-    ["myplaceonline.general.fluid_ounces", 3],
-    ["myplaceonline.general.milliliters", 4],
-    ["myplaceonline.general.grams", 5]
+    ["myplaceonline.general.pounds", FOOD_WEIGHT_POUNDS],
+    ["myplaceonline.general.cups", FOOD_WEIGHT_CUPS],
+    ["myplaceonline.general.ounces", FOOD_WEIGHT_OUNCES],
+    ["myplaceonline.general.fluid_ounces", FOOD_WEIGHT_FLUID_OUNCES],
+    ["myplaceonline.general.milliliters", FOOD_WEIGHT_MILLILITERS],
+    ["myplaceonline.general.grams", FOOD_WEIGHT_GRAMS]
   ]
   
   DIMENSIONS = [["myplaceonline.general.inches", 0]]

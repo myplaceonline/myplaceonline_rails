@@ -128,25 +128,34 @@ class DietsController < MyplaceonlineController
               # TODO display skipped warnings
             end
           end
-        elsif !consumed_food.food.food_information.nil? && !consumed_food.food.food_information.usda_food.nil?
+        end
+        
+        if !consumed_food.food.food_information.nil? && !consumed_food.food.food_information.usda_food.nil?
           # First match up the nutrient
           if food_nutrient_information.nil?
-            food_nutrient_information = FoodNutrientInformation.where(nutrient_name: k).take!
+            Rails.logger.debug{"DietsController.evaluate looking up #{k} for #{consumed_food.food.food_information.inspect} and #{consumed_food.food.food_information.usda_food.inspect}"}
+            
+            food_nutrient_information = FoodNutrientInformation.where(nutrient_name: k).take
           end
           
-          usda_food = consumed_food.food.food_information.usda_food
-          
-          fn_index = usda_food.foods_nutrients.find_index do |fn|
-            fn.nutrient_number == food_nutrient_information.usda_nutrient_nutrient_number
-          end
-          
-          if !fn_index.nil?
-            fn = usda_food.foods_nutrients[fn_index]
-            amount_in_nutrient_type = consumed_food.quantity_with_fallback * fn.nutrient_value * (consumed_food.food.food_information.usda_weight.gram_weight / 100.0)
-            if food_nutrient_information.nutrient_units != total_req[:details].nutrient_units
-              raise "TODO"
+          if !food_nutrient_information.nil?
+            usda_food = consumed_food.food.food_information.usda_food
+            
+            fn_index = usda_food.foods_nutrients.find_index do |fn|
+              fn.nutrient_number == food_nutrient_information.usda_nutrient_nutrient_number
             end
-            total_req[:consumed] = total_req[:consumed] + amount_in_nutrient_type
+            
+            if !fn_index.nil?
+              fn = usda_food.foods_nutrients[fn_index]
+              amount_in_nutrient_type = consumed_food.quantity_with_fallback * fn.nutrient_value * (consumed_food.food.gram_weight / 100.0)
+              
+              Rails.logger.debug{"DietsController.evaluate usda_food: #{usda_food.nutrient_databank_number}, usda_nutrient: #{food_nutrient_information.usda_nutrient_nutrient_number}, quantity: #{consumed_food.quantity_with_fallback}, nutrient_value: #{fn.nutrient_value}, weight: #{consumed_food.food.gram_weight} g, weight/100: #{(consumed_food.food.gram_weight / 100.0)}, nutrient_units: #{food_nutrient_information.nutrient_units}"}
+              
+              if food_nutrient_information.nutrient_units != total_req[:details].nutrient_units
+                raise "TODO"
+              end
+              total_req[:consumed] = total_req[:consumed] + amount_in_nutrient_type
+            end
           end
         end
       end

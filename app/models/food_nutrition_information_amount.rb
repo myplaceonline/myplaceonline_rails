@@ -30,6 +30,7 @@ class FoodNutritionInformationAmount < ApplicationRecord
   def self.params
     [
       :id,
+      :_destroy,
       :amount,
       :measurement_type,
       :notes,

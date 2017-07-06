@@ -83,9 +83,13 @@ class ApplicationController < ActionController::Base
     else
       Rails.logger.debug{"ApplicationController.catchall unknown"}
       Myp.handle_exception(exception, session[:myp_email], request)
+      if Rails.env.test?
+        raise exception
+      end
       respond_to do |type|
         #type.html { render :template => "errors/500", :status => 500 }
         #type.html { render :html => exception.to_s, :status => 500 }
+        #type.all { render :plain => exception.to_s + (Rails.env.production? ? "" : "\n#{Myp.error_details(exception)}"), :status => 500 }
         type.all { render :plain => exception.to_s, :status => 500 }
       end
       true

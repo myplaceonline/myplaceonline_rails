@@ -221,3 +221,7 @@ label[title], .tooltipable[title] {
 .bgwarning {
   background-color: yellow !important;
 }
+
+.bgerror {
+  background-color: red !important;
+}

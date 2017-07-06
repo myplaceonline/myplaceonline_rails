@@ -178,8 +178,8 @@ class ApiController < ApplicationController
         if !model.nil?
           
           identity = User.current_user.current_identity_id
-          if !params[:identity].blank? && params[:identity].to_i == User.super_user.current_identity_id && model.allow_super_user_search?
-            identity = User.super_user.current_identity_id
+          if !params[:identity].blank? && params[:identity].to_i == User::SUPER_USER_IDENTITY_ID && model.allow_super_user_search?
+            identity = User::SUPER_USER_IDENTITY_ID
           end
           
           if !model.column_names.index(column_name).nil?
