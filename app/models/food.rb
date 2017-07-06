@@ -55,6 +55,8 @@ class Food < ApplicationRecord
       self.food_nutrition_information.calories_per_serving * quantity
     elsif !self.food_information.nil?
       self.food_information.calories * quantity
+    else
+      0
     end
   end
   
