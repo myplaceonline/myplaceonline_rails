@@ -30,7 +30,7 @@
           ) + "<br />" + CGI::escapeHTML(
             "#{t("myplaceonline.diets.requirements_consumed_percent")}#{Myp.decimal_to_s(value: consumed_percent * 100.0)}"
           ),
-          content_classes: consumed_percent < 1 ? "bgwarning" : (consumed_percent > 2 ? "bgerror" : "")
+          content_classes: consumed_percent < 0.8 ? "bgwarning" : (consumed_percent > 2.0 ? "bgerror" : "bghighlight")
         )
       end
     %>
