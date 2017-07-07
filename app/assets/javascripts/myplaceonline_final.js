@@ -192,7 +192,11 @@ var myplaceonline = function(mymodule) {
         html += "</a>";
       }
       if (x.splitLink) {
-        html += "<a href='" + x.splitLink + "' class='splitlink'>" + myplaceonline.encodeEntities(x.splitLinkTitle) + "</a>";
+        html += "<a href='" + x.splitLink + "' class='splitlink'";
+        if (x.splitLinkButton) {
+          html += " data-icon='" + x.splitLinkButton + "'";
+        }
+        html += ">" + myplaceonline.encodeEntities(x.splitLinkTitle) + "</a>";
       }
       html += "</li>";
     };

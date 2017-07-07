@@ -19,4 +19,16 @@ class Diet < ApplicationRecord
   child_property(name: :dietary_requirements_collection)
   
   child_properties(name: :diet_foods, sort: "food_type NULLS LAST")
+
+  def action_link
+    Rails.application.routes.url_helpers.send("diet_consume_path", self)
+  end
+  
+  def action_link_title
+    I18n.t("myplaceonline.diets.consume")
+  end
+  
+  def action_link_icon
+    "check"
+  end
 end

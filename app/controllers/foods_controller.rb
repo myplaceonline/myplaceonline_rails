@@ -3,6 +3,16 @@ class FoodsController < MyplaceonlineController
     true
   end
 
+  def footer_items_show
+    [
+      {
+        title: I18n.t("myplaceonline.foods.consume_food"),
+        link: new_consumed_food_path(food_id: @obj.id),
+        icon: "check"
+      }
+    ] + super
+  end
+  
   protected
     def sorts
       ["lower(foods.food_name) ASC"]

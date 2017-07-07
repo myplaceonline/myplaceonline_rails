@@ -74,4 +74,16 @@ class Food < ApplicationRecord
     end
     result
   end
+
+  def action_link
+    Rails.application.routes.url_helpers.send("new_consumed_food_path", food_id: self.id)
+  end
+  
+  def action_link_title
+    I18n.t("myplaceonline.foods.consume_food")
+  end
+  
+  def action_link_icon
+    "check"
+  end
 end

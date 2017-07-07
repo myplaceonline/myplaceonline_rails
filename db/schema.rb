@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170705125444) do
+ActiveRecord::Schema.define(version: 20170706200645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1015,7 +1015,7 @@ ActiveRecord::Schema.define(version: 20170705125444) do
   create_table "consumed_foods", force: :cascade do |t|
     t.datetime "consumed_food_time"
     t.bigint "food_id"
-    t.integer "quantity"
+    t.decimal "quantity", precision: 10, scale: 2
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
@@ -2050,11 +2050,9 @@ ActiveRecord::Schema.define(version: 20170705125444) do
     t.datetime "archived"
     t.integer "rating"
     t.bigint "identity_id"
-    t.bigint "food_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "serving_size_type"
-    t.index ["food_id"], name: "index_food_nutrition_informations_on_food_id"
     t.index ["identity_id"], name: "index_food_nutrition_informations_on_identity_id"
   end
 
@@ -6064,7 +6062,6 @@ ActiveRecord::Schema.define(version: 20170705125444) do
   add_foreign_key "food_nutrition_information_files", "food_nutrition_informations"
   add_foreign_key "food_nutrition_information_files", "identities"
   add_foreign_key "food_nutrition_information_files", "identity_files"
-  add_foreign_key "food_nutrition_informations", "foods"
   add_foreign_key "food_nutrition_informations", "identities"
   add_foreign_key "foods", "food_informations"
   add_foreign_key "foods", "food_nutrition_informations"

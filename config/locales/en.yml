@@ -1403,6 +1403,7 @@ en:
       delete_file: "Delete File/Picture"
       food_nutrition_information: "Nutrition Information"
       food_information: "USDA Nutrition Database Information"
+      consume_food: "Consume"
     drinks:
       heading: "Drinks"
       drink: "Drink"
@@ -3491,6 +3492,8 @@ en:
       consumed_foods: "Consumed Foods:"
       consume: "Consume"
       consumed_items: "Consumed %{count} Items"
+      add_day: "+ Day"
+      minus_day: "- Day"
     diet_foods:
       food: "Food"
       quantity: "Quantity"

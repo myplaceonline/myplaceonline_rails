@@ -32,6 +32,10 @@ class DietsController < MyplaceonlineController
       )
     )
     
+    if @days < 1
+      @days = 1
+    end
+    
     @start = ActiveSupport::TimeZone[User.current_user.timezone].now.beginning_of_day - (@days - 1).days
     
     @consumed_foods = ConsumedFood.where(

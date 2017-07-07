@@ -18,16 +18,17 @@
     searchurl: "/foods.json?perpage=0",
     edit: edit,
     expanded_if_nil: true,
-    autofocus: autofocus,
+    autofocus: obj.food.nil? ? autofocus : false,
     existingcollapsed: false
   }
 %>
 <%=
   input_field(
     form: f,
-    type: Myp::FIELD_NUMBER,
+    type: Myp::FIELD_DECIMAL,
     name: :quantity,
     value: obj.quantity,
-    placeholder: "myplaceonline.consumed_foods.quantity"
+    placeholder: "myplaceonline.consumed_foods.quantity",
+    autofocus: obj.food.nil? ? false : autofocus
   )
 %>

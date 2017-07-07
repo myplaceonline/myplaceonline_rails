@@ -67,7 +67,22 @@
           title: I18n.t("myplaceonline.general.back"),
           link: controller.obj_path,
           icon: "back"
-        }
+        },
+        {
+          title: I18n.t("myplaceonline.diets.consume"),
+          link: diet_consume_path(@obj),
+          icon: "check"
+        },
+        {
+          title: I18n.t("myplaceonline.diets.add_day"),
+          link: diet_evaluate_path(@obj, days: @days + 1),
+          icon: "plus"
+        },
+        {
+          title: I18n.t("myplaceonline.diets.minus_day"),
+          link: diet_evaluate_path(@obj, days: @days - 1),
+          icon: "minus"
+        },
       ]
     })
   %>

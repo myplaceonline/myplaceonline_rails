@@ -23,4 +23,10 @@ class ConsumedFoodsController < MyplaceonlineController
         food_attributes: Food.params
       )
     end
+
+    def new_prerespond
+      if !params[:food_id].blank?
+        Myp.set_existing_object(@obj, :food, Food, params[:food_id].to_i, action: :show)
+      end
+    end
 end

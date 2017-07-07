@@ -319,7 +319,7 @@ module ApplicationHelper
       tooltip: nil,
       enumeration: nil,
       expanded: false,
-      max_nest: nil,
+      max_nest: nil, # default: 1
       prefix_heading: false,
       prefix_wrapper: :b,
       prefix_separator: ": ",
