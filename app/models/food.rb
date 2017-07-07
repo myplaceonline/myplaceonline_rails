@@ -63,11 +63,15 @@ class Food < ApplicationRecord
   def gram_weight
     result = nil
     if !self.weight.nil?
-      case self.weight_type
-      when Myp::FOOD_WEIGHT_GRAMS
-        result = self.weight
+      if self.weight_type == Myp::FOOD_WEIGHT_CUPS && !self.food_information.nil? && !self.food_information.usda_weight.nil? && !self.food_information.usda_weight.gram_weight.nil?
+        result = self.weight * self.food_information.usda_weight.gram_weight
       else
-        raise "TODO"
+        case self.weight_type
+        when Myp::FOOD_WEIGHT_GRAMS
+          result = self.weight
+        else
+          raise "TODO"
+        end
       end
     elsif !self.food_information.nil? && !self.food_information.usda_weight.nil? && !self.food_information.usda_weight.gram_weight.nil?
       result = self.food_information.usda_weight.gram_weight
