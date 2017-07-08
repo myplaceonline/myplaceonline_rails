@@ -3494,6 +3494,7 @@ en:
       consumed_items: "Consumed %{count} Items"
       add_day: "+ Day"
       minus_day: "- Day"
+      main: "Main Diet"
     diet_foods:
       food: "Food"
       quantity: "Quantity"

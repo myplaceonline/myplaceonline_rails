@@ -1,6 +1,6 @@
 class DietsController < MyplaceonlineController
   
-  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:evaluate_main]
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:main]
 
   DEFAULT_EVALUATION_DAYS = 1
   
@@ -53,22 +53,24 @@ class DietsController < MyplaceonlineController
     @total_calories = 0.0
     @consumed_foods.each do |consumed_food|
       
-      consumed_food_calories = consumed_food.food.total_calories(quantity: consumed_food.quantity_with_fallback)
-      
-      @total_calories = @total_calories + consumed_food_calories
-      
-      total_consumed_food = @total_consumed_foods[consumed_food.food.id]
-      if total_consumed_food.nil?
-        total_consumed_food = {
-          quantity: 0,
-          consumed_food: consumed_food,
-          calories: 0
-        }
-        @total_consumed_foods[consumed_food.food.id] = total_consumed_food
+      if params[:only].blank? || params[:only].to_i == consumed_food.food.id
+        consumed_food_calories = consumed_food.food.total_calories(quantity: consumed_food.quantity_with_fallback)
+        
+        @total_calories = @total_calories + consumed_food_calories
+        
+        total_consumed_food = @total_consumed_foods[consumed_food.food.id]
+        if total_consumed_food.nil?
+          total_consumed_food = {
+            quantity: 0,
+            consumed_food: consumed_food,
+            calories: 0
+          }
+          @total_consumed_foods[consumed_food.food.id] = total_consumed_food
+        end
+        
+        total_consumed_food[:quantity] = total_consumed_food[:quantity] + consumed_food.quantity_with_fallback
+        total_consumed_food[:calories] = total_consumed_food[:calories] + consumed_food_calories
       end
-      
-      total_consumed_food[:quantity] = total_consumed_food[:quantity] + consumed_food.quantity_with_fallback
-      total_consumed_food[:calories] = total_consumed_food[:calories] + consumed_food_calories
       
     end
 
@@ -100,70 +102,73 @@ class DietsController < MyplaceonlineController
       
       @consumed_foods.each do |consumed_food|
         
-        Rails.logger.debug{"DietsController.evaluate consumed food: #{consumed_food.display}"}
-      
-        if !consumed_food.food.food_nutrition_information.nil?
-          consumed_food.food.food_nutrition_information.food_nutrition_information_amounts.each do |fnia|
-            if fnia.nutrient.nutrient_name.downcase == k.downcase
-              if !fnia.nutrient.measurement_type.nil? && total_req[:details].dietary_requirement_type != fnia.nutrient.measurement_type
-                raise "Unmatched nutrient types for #{fnia.nutrient.nutrient_name} (#{total_req[:details].dietary_requirement_type} vs. #{fnia.nutrient.measurement_type})"
-              end
-              
-              Rails.logger.debug{"DietsController.evaluate name: #{fnia.nutrient.nutrient_name}, quantity: #{consumed_food.quantity_with_fallback}, amount: #{fnia.amount}"}
-              
-              if fnia.measurement_type == FoodNutritionInformationAmount::MEASUREMENT_TYPE_PERCENT
-                # "Percent Daily Values are based on a 2,000 calorie diet."
-                
-                needed_per_day = total_req[:needed] / @days
-
-                calories_consumed_per_day = @total_calories / @days
-                
-                if calories_consumed_per_day < 2000.0
-                  calories_consumed_per_day = 2000.0
+        if params[:only].blank? || params[:only].to_i == consumed_food.food.id
+          Rails.logger.debug{"DietsController.evaluate consumed food: #{consumed_food.display}"}
+        
+          if !consumed_food.food.food_nutrition_information.nil?
+            consumed_food.food.food_nutrition_information.food_nutrition_information_amounts.each do |fnia|
+              if fnia.nutrient.nutrient_name.downcase == k.downcase
+                if !fnia.nutrient.measurement_type.nil? && total_req[:details].dietary_requirement_type != fnia.nutrient.measurement_type
+                  raise "Unmatched nutrient types for #{fnia.nutrient.nutrient_name} (#{total_req[:details].dietary_requirement_type} vs. #{fnia.nutrient.measurement_type})"
                 end
                 
-                needed_per_day_adjusted = needed_per_day * (calories_consumed_per_day / 2000.0)
+                Rails.logger.debug{"DietsController.evaluate name: #{fnia.nutrient.nutrient_name}, quantity: #{consumed_food.quantity_with_fallback}, amount: #{fnia.amount}"}
                 
-                Rails.logger.debug{"DietsController.evaluate percent needed_per_day: #{needed_per_day}, calories_consumed_per_day: #{calories_consumed_per_day}, needed_per_day_adjusted: #{needed_per_day_adjusted}"}
-                
-                total_req[:consumed] = total_req[:consumed] + (consumed_food.quantity_with_fallback * needed_per_day_adjusted * (fnia.amount / 100.0))
+                if fnia.measurement_type == FoodNutritionInformationAmount::MEASUREMENT_TYPE_PERCENT
+                  # "Percent Daily Values are based on a 2,000 calorie diet."
+                  
+                  needed_per_day = total_req[:needed] / @days
+
+                  calories_consumed_per_day = @total_calories / @days
+                  
+                  if calories_consumed_per_day < 2000.0
+                    calories_consumed_per_day = 2000.0
+                  end
+                  
+                  needed_per_day_adjusted = needed_per_day * (calories_consumed_per_day / 2000.0)
+                  
+                  Rails.logger.debug{"DietsController.evaluate percent needed_per_day: #{needed_per_day}, calories_consumed_per_day: #{calories_consumed_per_day}, needed_per_day_adjusted: #{needed_per_day_adjusted}"}
+                  
+                  total_req[:consumed] = total_req[:consumed] + (consumed_food.quantity_with_fallback * needed_per_day_adjusted * (fnia.amount / 100.0))
+                else
+                  total_req[:consumed] = total_req[:consumed] + (consumed_food.quantity_with_fallback * fnia.amount)
+                end
               else
-                total_req[:consumed] = total_req[:consumed] + (consumed_food.quantity_with_fallback * fnia.amount)
+                # TODO display skipped warnings
               end
-            else
-              # TODO display skipped warnings
+            end
+          end
+          
+          if !consumed_food.food.food_information.nil? && !consumed_food.food.food_information.usda_food.nil?
+            # First match up the nutrient
+            if food_nutrient_information.nil?
+              Rails.logger.debug{"DietsController.evaluate looking up #{k} for #{consumed_food.food.food_information.inspect} and #{consumed_food.food.food_information.usda_food.inspect}"}
+              
+              food_nutrient_information = FoodNutrientInformation.where(nutrient_name: k).take
+            end
+            
+            if !food_nutrient_information.nil?
+              usda_food = consumed_food.food.food_information.usda_food
+              
+              fn_index = usda_food.foods_nutrients.find_index do |fn|
+                fn.nutrient_number == food_nutrient_information.usda_nutrient_nutrient_number
+              end
+              
+              if !fn_index.nil?
+                fn = usda_food.foods_nutrients[fn_index]
+                amount_in_nutrient_type = consumed_food.quantity_with_fallback * fn.nutrient_value * (consumed_food.food.gram_weight / 100.0)
+                
+                Rails.logger.debug{"DietsController.evaluate usda_food: #{usda_food.nutrient_databank_number}, usda_nutrient: #{food_nutrient_information.usda_nutrient_nutrient_number}, quantity: #{consumed_food.quantity_with_fallback}, nutrient_value: #{fn.nutrient_value}, weight: #{consumed_food.food.gram_weight} g, weight/100: #{(consumed_food.food.gram_weight / 100.0)}, nutrient_units: #{food_nutrient_information.nutrient_units}"}
+                
+                if food_nutrient_information.nutrient_units != total_req[:details].nutrient_units
+                  raise "TODO"
+                end
+                total_req[:consumed] = total_req[:consumed] + amount_in_nutrient_type
+              end
             end
           end
         end
         
-        if !consumed_food.food.food_information.nil? && !consumed_food.food.food_information.usda_food.nil?
-          # First match up the nutrient
-          if food_nutrient_information.nil?
-            Rails.logger.debug{"DietsController.evaluate looking up #{k} for #{consumed_food.food.food_information.inspect} and #{consumed_food.food.food_information.usda_food.inspect}"}
-            
-            food_nutrient_information = FoodNutrientInformation.where(nutrient_name: k).take
-          end
-          
-          if !food_nutrient_information.nil?
-            usda_food = consumed_food.food.food_information.usda_food
-            
-            fn_index = usda_food.foods_nutrients.find_index do |fn|
-              fn.nutrient_number == food_nutrient_information.usda_nutrient_nutrient_number
-            end
-            
-            if !fn_index.nil?
-              fn = usda_food.foods_nutrients[fn_index]
-              amount_in_nutrient_type = consumed_food.quantity_with_fallback * fn.nutrient_value * (consumed_food.food.gram_weight / 100.0)
-              
-              Rails.logger.debug{"DietsController.evaluate usda_food: #{usda_food.nutrient_databank_number}, usda_nutrient: #{food_nutrient_information.usda_nutrient_nutrient_number}, quantity: #{consumed_food.quantity_with_fallback}, nutrient_value: #{fn.nutrient_value}, weight: #{consumed_food.food.gram_weight} g, weight/100: #{(consumed_food.food.gram_weight / 100.0)}, nutrient_units: #{food_nutrient_information.nutrient_units}"}
-              
-              if food_nutrient_information.nutrient_units != total_req[:details].nutrient_units
-                raise "TODO"
-              end
-              total_req[:consumed] = total_req[:consumed] + amount_in_nutrient_type
-            end
-          end
-        end
       end
     end
     
@@ -197,8 +202,8 @@ class DietsController < MyplaceonlineController
     end
   end
   
-  def evaluate_main
-    redirect_to(diet_evaluate_path(self.all.take(1)))
+  def main
+    redirect_to(diet_path(self.all.take(1)))
   end
   
   protected

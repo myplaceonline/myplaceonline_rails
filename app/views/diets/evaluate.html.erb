@@ -49,9 +49,9 @@
         htmlencode_content: false,
         content: CGI::escapeHTML(
           "#{t("myplaceonline.consumed_foods.quantity")}: #{food_info[:quantity]}"
-        ) + "<br />" + CGI::escapeHTML(
+        ) + "<br />" + link_to(CGI::escapeHTML(
           "#{t("myplaceonline.diets.total_calories")}: #{Myp.decimal_to_s(value: food_info[:calories])}"
-        )
+        ), diet_evaluate_path(@obj, days: @days, only: food_info[:consumed_food].food.id))
       )
     %>
   <% end %>

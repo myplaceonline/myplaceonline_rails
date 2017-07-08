@@ -231,7 +231,7 @@ Rails.application.routes.draw do
     diets: [
       { instance: true, link: "evaluate" },
       { instance: true, link: "consume" },
-      { instance: false, link: "evaluate_main" },
+      { instance: false, link: "main" },
     ],
     due_items: [
       { instance: true, link: "complete" },

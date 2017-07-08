@@ -33,14 +33,14 @@ class Diet < ApplicationRecord
   end
 
   def self.category_split_button_link
-    Rails.application.routes.url_helpers.send("diets_evaluate_main_path")
+    Rails.application.routes.url_helpers.send("diets_main_path")
   end
   
   def self.category_split_button_title
-    I18n.t("myplaceonline.diets.evaluate")
+    I18n.t("myplaceonline.diets.main")
   end
 
   def self.category_split_button_icon
-    "check"
+    "star"
   end
 end
