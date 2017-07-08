@@ -31,4 +31,24 @@ class Category < ApplicationRecord
     end
     result
   end
+  
+  # This can be nil for things like simple categories (e.g. health)
+  def model
+    Object.const_get(Myp.category_to_model_name(self.name))
+  end
+
+  def category_split_button_link
+    m = self.model
+    m.nil? ? nil : m.category_split_button_link
+  end
+
+  def category_split_button_title
+    m = self.model
+    m.nil? ? nil : m.category_split_button_title
+  end
+
+  def category_split_button_icon
+    m = self.model
+    m.nil? ? nil : m.category_split_button_icon
+  end
 end

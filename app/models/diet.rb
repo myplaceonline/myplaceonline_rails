@@ -31,4 +31,16 @@ class Diet < ApplicationRecord
   def action_link_icon
     "check"
   end
+
+  def self.category_split_button_link
+    Rails.application.routes.url_helpers.send("diets_evaluate_main_path")
+  end
+  
+  def self.category_split_button_title
+    I18n.t("myplaceonline.diets.evaluate")
+  end
+
+  def self.category_split_button_icon
+    "check"
+  end
 end

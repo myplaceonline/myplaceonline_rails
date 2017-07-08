@@ -467,8 +467,9 @@ module Myp
         category.parent_id,
         category.filtertext,
         category.icon,
-        category.simple ? nil : "/" + category.link + "/new",
-        category.simple ? nil : I18n.t("myplaceonline.general.add")
+        category.simple ? nil : category.category_split_button_link,
+        category.simple ? nil : category.category_split_button_title,
+        category.simple ? nil : category.category_split_button_icon,
       )
     }
   end
@@ -1582,7 +1583,14 @@ module Myp
   end
   
   def self.category_to_model_name(category_name)
-    category_name.camelize.singularize
+    case category_name
+    when "files"
+      "IdentityFile"
+    when "folders"
+      "IdentityFileFolder"
+    else
+      category_name.camelize.singularize
+    end
   end
   
   def self.model_to_category_name(model)

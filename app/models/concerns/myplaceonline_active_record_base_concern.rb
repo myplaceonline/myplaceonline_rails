@@ -228,6 +228,18 @@ module MyplaceonlineActiveRecordBaseConcern
     def skip_check_attributes
       []
     end
+    
+    def category_split_button_link
+      "/" + self.table_name + "/new"
+    end
+    
+    def category_split_button_title
+      I18n.t("myplaceonline.general.add")
+    end
+    
+    def category_split_button_icon
+      "plus"
+    end
   end
 
   @@attributes_model_map = {}
