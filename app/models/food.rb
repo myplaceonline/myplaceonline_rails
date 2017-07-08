@@ -54,7 +54,11 @@ class Food < ApplicationRecord
     elsif !self.food_nutrition_information.nil? && !self.food_nutrition_information.calories_per_serving.nil?
       self.food_nutrition_information.calories_per_serving * quantity
     elsif !self.food_information.nil?
-      self.food_information.calories * quantity
+      if !self.weight_type.nil?
+        self.food_information.calories(weight: self.gram_weight) * quantity
+      else
+        self.food_information.calories * quantity
+      end
     else
       0
     end

@@ -23,7 +23,12 @@ class FoodInformation < ApplicationRecord
   end
   
   # https://www.ars.usda.gov/ARSUserFiles/80400525/Data/SR/SR28/sr28_doc.pdf
-  def calories
+  def calories(weight: nil)
+    
+    if weight.nil?
+      weight = self.usda_weight.gram_weight
+    end
+    
     protein = 0
     protein_factor = 4
     if !self.usda_food.protein_factor.nil?
@@ -51,7 +56,7 @@ class FoodInformation < ApplicationRecord
         carbohydrates = x.nutrient_value
       end
     end
-    per_100 = self.usda_weight.gram_weight / 100.0
+    per_100 = weight / 100.0
     (protein * per_100 * protein_factor) + (total_fat * per_100 * total_fat_factor) + (carbohydrates * per_100 * carbohydrates_factor)
   end
   
