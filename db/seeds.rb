@@ -27,7 +27,7 @@ Category.create!([
   {id: 26, name: "calculations", link: "calculations", position: 0, parent_id: 1, additional_filtertext: nil, icon: "famfamfam/calculator_add.png", explicit: nil, user_type_mask: nil, experimental: true, simple: nil},
   {id: 27, name: "vehicles", link: "vehicles", position: 0, parent_id: 1, additional_filtertext: "cars truck", icon: "famfamfam/car.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 28, name: "questions", link: "questions", position: 0, parent_id: 3, additional_filtertext: nil, icon: "famfamfam/help.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 29, name: "health", link: "health", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/health.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 29, name: "health", link: "health", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/health.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: true},
   {id: 30, name: "weights", link: "weights", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/weighing_mashine.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 31, name: "blood_pressures", link: "blood_pressures", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/celsius.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 32, name: "heart_rates", link: "heart_rates", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/heart.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
@@ -67,7 +67,7 @@ Category.create!([
   {id: 66, name: "favorite_products", link: "favorite_products", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/star.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 67, name: "therapists", link: "therapists", position: 0, parent_id: 3, additional_filtertext: nil, icon: "FatCow_Icons16x16/account_functions.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 68, name: "health_insurances", link: "health_insurances", position: 0, parent_id: 29, additional_filtertext: "medical", icon: "FatCow_Icons16x16/support.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 69, name: "random", link: "random", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/dice.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 69, name: "random", link: "random", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/dice.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: true},
   {id: 70, name: "doctors", link: "doctors", position: 0, parent_id: 29, additional_filtertext: "dentists", icon: "FatCow_Icons16x16/user_medical.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 71, name: "dental_insurances", link: "dental_insurances", position: 0, parent_id: 29, additional_filtertext: "health medical", icon: "FatCow_Icons16x16/tooth.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 72, name: "hobbies", link: "hobbies", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/paper_airplane.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
@@ -80,7 +80,7 @@ Category.create!([
   {id: 79, name: "notepads", link: "notepads", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/note.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 80, name: "concerts", link: "concerts", position: 0, parent_id: 2, additional_filtertext: "music", icon: "FatCow_Icons16x16/speakers.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 81, name: "shopping_lists", link: "shopping_lists", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/cart_put.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 82, name: "tools", link: "tools", position: 0, parent_id: 1, additional_filtertext: nil, icon: "famfamfam/wrench.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 82, name: "tools", link: "tools", position: 0, parent_id: 1, additional_filtertext: nil, icon: "famfamfam/wrench.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: true},
   {id: 83, name: "groups", link: "groups", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/group.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 84, name: "phones", link: "phones", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/phone.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 85, name: "movie_theaters", link: "movie_theaters", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/movies.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
@@ -105,7 +105,7 @@ Category.create!([
   {id: 104, name: "podcasts", link: "podcasts", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/ipod_cast.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 105, name: "hotels", link: "hotels", position: 0, parent_id: 1, additional_filtertext: nil, icon: "famfamfam/building.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 106, name: "emails", link: "emails", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/email.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 107, name: "obscure", link: "obscure", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/donut.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 107, name: "obscure", link: "obscure", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/donut.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: true},
   {id: 108, name: "drafts", link: "drafts", position: 0, parent_id: 107, additional_filtertext: nil, icon: "FatCow_Icons16x16/draft.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 109, name: "awesome_lists", link: "awesome_lists", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/emotion_grin.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 110, name: "ssh_keys", link: "ssh_keys", position: 0, parent_id: 107, additional_filtertext: nil, icon: "FatCow_Icons16x16/ssh_shell_access.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
@@ -166,10 +166,11 @@ Category.create!([
   {id: 166, name: "user_capabilities", link: "user_capabilities", position: 0, parent_id: 107, additional_filtertext: nil, icon: "FatCow_Icons16x16/user_ninja.png", explicit: nil, user_type_mask: nil, experimental: true, simple: nil},
   {id: 167, name: "website_scrapers", link: "website_scrapers", position: 0, parent_id: 107, additional_filtertext: nil, icon: "FatCow_Icons16x16/domain_template.png", explicit: nil, user_type_mask: nil, experimental: true, simple: nil},
   {id: 168, name: "regimens", link: "regimens", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/cargo.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 201, name: "dietary_requirements_collections", link: "dietary_requirements_collections", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/tubes.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 202, name: "dietary_requirements", link: "dietary_requirements", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/show_accounts_over_quota.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 203, name: "diets", link: "diets", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/omelet.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 204, name: "consumed_foods", link: "consumed_foods", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/omelet.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
+  {id: 169, name: "dietary_requirements_collections", link: "dietary_requirements_collections", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/tubes.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 170, name: "dietary_requirements", link: "dietary_requirements", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/show_accounts_over_quota.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 171, name: "diets", link: "diets", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/omelet.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 172, name: "consumed_foods", link: "consumed_foods", position: 0, parent_id: 29, additional_filtertext: "eat breakfast lunch dinner snack meals", icon: "FatCow_Icons16x16/omelet.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 173, name: "nutrients", link: "nutrients", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/node.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
 ])
 
 user = User.new
