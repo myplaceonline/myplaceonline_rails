@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/badlamer/time_difference.git
+  revision: a2ad74398281f5bb86703133a50eaf88ecba7bd0
+  specs:
+    time_difference (0.5.0)
+      activesupport
+
+GIT
   remote: git://github.com/composite-primary-keys/composite_primary_keys.git
   revision: 03dc16ec61c3afbf57f062de644041665b66cf47
   specs:
@@ -7,7 +14,7 @@ GIT
 
 GIT
   remote: git://github.com/galetahub/ckeditor.git
-  revision: 437501e2789dc764c58e57cad0897854c186fa82
+  revision: 752bca97f78e5c5df3fbd876e51a06918da804e2
   specs:
     ckeditor (4.2.4)
       cocaine
@@ -299,7 +306,7 @@ GEM
       rubyzip (~> 1.1, < 2.0.0)
     ruby_dep (1.5.0)
     rubyzip (1.2.1)
-    sass (3.4.24)
+    sass (3.4.25)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
       sass (~> 3.1)
@@ -335,8 +342,6 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.7)
-    time_difference (0.5.0)
-      activesupport
     twilio-ruby (4.13.0)
       builder (>= 2.1.2)
       jwt (~> 1.0)
@@ -431,7 +436,7 @@ DEPENDENCIES
   simple-rss
   spring
   thin
-  time_difference
+  time_difference!
   twilio-ruby
   uglifier
   usda-nutrient-database

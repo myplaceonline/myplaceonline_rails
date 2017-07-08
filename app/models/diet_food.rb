@@ -11,7 +11,7 @@ class DietFood < ApplicationRecord
   def self.properties
     [
       { name: :food, type: ApplicationRecord::PROPERTY_TYPE_CHILD },
-      { name: :quantity, type: ApplicationRecord::PROPERTY_TYPE_NUMBER },
+      { name: :quantity, type: ApplicationRecord::PROPERTY_TYPE_DECIMAL },
     ]
   end
 
