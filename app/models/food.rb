@@ -49,9 +49,7 @@ class Food < ApplicationRecord
   child_property(name: :food_information)
 
   def total_calories(quantity:)
-    if !self.calories.nil?
-      self.calories * quantity
-    elsif !self.food_nutrition_information.nil? && !self.food_nutrition_information.calories_per_serving.nil?
+    if !self.food_nutrition_information.nil? && !self.food_nutrition_information.calories_per_serving.nil?
       self.food_nutrition_information.calories_per_serving * quantity
     elsif !self.food_information.nil?
       if !self.weight_type.nil?
@@ -59,6 +57,8 @@ class Food < ApplicationRecord
       else
         self.food_information.calories * quantity
       end
+    elsif !self.calories.nil?
+      self.calories * quantity
     else
       0
     end

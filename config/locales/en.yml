@@ -3473,6 +3473,7 @@ en:
         per_day: "Per Day"
         per_1000_calories: "Per 1,000 Calories"
     diets:
+      diet: "Diet"
       diet_name: "Name"
       dietary_requirements_collection: "Dietary Requirements"
       foods: "Foods"
