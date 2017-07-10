@@ -34,16 +34,24 @@ class DietsController < MyplaceonlineController
       )
     )
     
+    tz = ActiveSupport::TimeZone[User.current_user.timezone]
+    
+    @start_day = params[:start_day]
+    if @start_day.blank?
+      @start_day = tz.now.beginning_of_day.to_date.to_s
+    end
+    
     if @days < 1
       @days = 1
     end
-    
-    @start = ActiveSupport::TimeZone[User.current_user.timezone].now.beginning_of_day - (@days - 1).days
+
+    @end_day = tz.parse(@start_day)
+    @start_day = tz.parse(@start_day) - (@days - 1).days
     
     @consumed_foods = ConsumedFood.where(
       "identity_id = ? and consumed_food_time >= ?",
       User.current_user.current_identity_id,
-      @start
+      @start_day
     )
     
     @total_requirements = {}

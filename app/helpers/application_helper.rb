@@ -1469,14 +1469,26 @@ module ApplicationHelper
       field_attributes["data-datetime-id"] = random_name
       
       # datebox or calbox
-      result = Myp.appendstr(
-        result,
-        options[:form].send(
-          options[:type].to_s + "_field",
-          name,
-          field_attributes
-        ) + hidden_time
-      )
+      if options[:form].nil?
+        result = Myp.appendstr(
+          result,
+          send(
+            "#{options[:type]}_field_tag",
+            name,
+            "",
+            field_attributes
+          ) + hidden_time
+        )
+      else
+        result = Myp.appendstr(
+          result,
+          options[:form].send(
+            "#{options[:type]}_field",
+            name,
+            field_attributes
+          ) + hidden_time
+        )
+      end
     end
     
     if options[:type] == Myp::FIELD_BOOLEAN

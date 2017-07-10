@@ -4,8 +4,22 @@
 <%= flashes!(@obj) %>
 
 <%= form_tag(diet_consume_path(@obj), method: :post) do %>
+
+  <%
+  previous_food_type = nil
+  %>
+
   <% @diet_foods.each do |diet_food| %>
-    <%= input_field(name: "diet_food_#{diet_food.id}", type: Myp::FIELD_BOOLEAN, placeholder: diet_food.display) %>
+    <%
+    if previous_food_type != diet_food.food_type
+    %>
+      <hr />
+      <h2 style="cursor: pointer" onclick=""><%= Myp.get_select_name(diet_food.food_type, DietFood::FOOD_TYPES) %></h2>
+    <%
+    end
+    previous_food_type = diet_food.food_type
+    %>
+    <%= input_field(name: "diet_food_#{diet_food.id}", type: Myp::FIELD_BOOLEAN, placeholder: diet_food.display, field_classes: "food_type_#{diet_food.food_type}") %>
   <% end %>
 
   <%=

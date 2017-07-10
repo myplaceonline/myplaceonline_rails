@@ -6,10 +6,13 @@
 
 <%= form_tag(diet_evaluate_path(@obj), method: :get) do %>
 
+  <p><%= t("myplaceonline.diets.evaluate_choose") %></p>
+  <%= input_field(name: :start_day, type: Myp::FIELD_DATE, placeholder: t("myplaceonline.diets.evaluate_start"), value: @end_day.to_date) %>
   <%= input_field(name: :days, type: Myp::FIELD_NUMBER, placeholder: t("myplaceonline.diets.evaluate_days"), value: @days) %>
-  <%= data_row(heading: t("myplaceonline.diets.evaluate_since"), prefix_heading: true, content: @start, wrap: false) %>
   
   <hr />
+  
+  <%= t("myplaceonline.diets.evaluating", start_time: @start_day.to_date, end_time: @end_day.to_date) %>
   
   <%= data_row(heading: t("myplaceonline.diets.total_calories"), prefix_heading: true, content: @total_calories, wrap: false) %>
   <%= data_row(heading: t("myplaceonline.diets.total_calories_per_day"), prefix_heading: true, content: @total_calories_per_day, wrap: false) %>
@@ -51,7 +54,7 @@
           "#{t("myplaceonline.consumed_foods.quantity")}: #{food_info[:quantity]}"
         ) + "<br />" + link_to(CGI::escapeHTML(
           "#{t("myplaceonline.diets.total_calories")}: #{Myp.decimal_to_s(value: food_info[:calories])}"
-        ), diet_evaluate_path(@obj, days: @days, only: food_info[:consumed_food].food.id))
+        ), diet_evaluate_path(@obj, days: @days, start_day: @end_day.to_date, only: food_info[:consumed_food].food.id))
       )
     %>
   <% end %>
@@ -75,12 +78,12 @@
         },
         {
           title: I18n.t("myplaceonline.diets.add_day"),
-          link: diet_evaluate_path(@obj, days: @days + 1),
+          link: diet_evaluate_path(@obj, days: @days + 1, start_day: @end_day.to_date, only: params[:only]),
           icon: "plus"
         },
         {
           title: I18n.t("myplaceonline.diets.minus_day"),
-          link: diet_evaluate_path(@obj, days: @days - 1),
+          link: diet_evaluate_path(@obj, days: @days - 1, start_day: @end_day.to_date, only: params[:only]),
           icon: "minus"
         },
       ]
