@@ -86,6 +86,11 @@
           link: diet_evaluate_path(@obj, days: @days - 1, start_day: @end_day.to_date, only: params[:only]),
           icon: "minus"
         },
+        {
+          title: I18n.t("myplaceonline.diets.today"),
+          link: diet_evaluate_path(@obj, days: 1, start_day: @today.to_date, only: params[:only]),
+          icon: "calendar"
+        },
       ]
     })
   %>

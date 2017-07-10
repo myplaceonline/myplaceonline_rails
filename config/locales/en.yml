@@ -3499,6 +3499,7 @@ en:
       evaluate_choose: "Choose the start date and the number of days to evaluate before that day (inclusive):"
       evaluate_start: "Start Day"
       evaluating: "Evaluating between %{start_time} and %{end_time}"
+      today: "Today"
     diet_foods:
       food: "Food"
       quantity: "Quantity"

@@ -73,6 +73,8 @@ class Food < ApplicationRecord
         case self.weight_type
         when Myp::FOOD_WEIGHT_GRAMS
           result = self.weight
+        when Myp::FOOD_WEIGHT_POUNDS
+          result = self.weight * 453.592
         else
           raise "TODO"
         end

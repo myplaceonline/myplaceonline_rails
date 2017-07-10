@@ -36,9 +36,11 @@ class DietsController < MyplaceonlineController
     
     tz = ActiveSupport::TimeZone[User.current_user.timezone]
     
+    @today = tz.now.beginning_of_day.to_date
+    
     @start_day = params[:start_day]
     if @start_day.blank?
-      @start_day = tz.now.beginning_of_day.to_date.to_s
+      @start_day = @today.to_s
     end
     
     if @days < 1
