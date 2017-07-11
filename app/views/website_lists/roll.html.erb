@@ -13,11 +13,15 @@
 </div>
 
 <% if !@myplet %>
-  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <div data-role="navbar">
-      <ul>
-        <li><%= link_to t("myplaceonline.general.back"), controller.obj_path, "data-icon" => "back" %></li>
-      </ul>
-    </div>
-  </div>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: controller.obj_path,
+          icon: "back"
+        },
+      ]
+    })
+  %>
 <% end %>

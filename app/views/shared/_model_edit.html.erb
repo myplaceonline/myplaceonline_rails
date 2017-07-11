@@ -8,16 +8,20 @@
 
   <%= yield %>
 
-  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <div data-role="navbar">
-      <ul>
-        <li>
-          <%= f.submit(t("myplaceonline.general.save") + " " + t("myplaceonline.category." + controller.category_name).singularize, "data-icon" => "check", "data-iconpos" => "top", "style" => "background-color: green") %>
-        </li>
-        <li><%= link_to t("myplaceonline.general.cancel"), controller.obj_path, "data-icon" => "back" %></li>
-      </ul>
-    </div>
-  </div>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: f.submit(t("myplaceonline.general.save") + " " + t("myplaceonline.category." + controller.category_name).singularize, "data-icon" => "action", "data-iconpos" => "top", "style" => "background-color: green")
+        },
+        {
+          title: I18n.t("myplaceonline.general.cancel"),
+          link: controller.obj_path,
+          icon: "back"
+        },
+      ]
+    })
+  %>
 
   <script type="text/javascript">
   myplaceonline.onPageLoad(function() {

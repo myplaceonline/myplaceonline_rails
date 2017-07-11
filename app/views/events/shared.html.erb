@@ -60,11 +60,15 @@
 <% end %>
 
 <% if @obj.current_user_owns? %>
-  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <div data-role="navbar">
-      <ul>
-        <li><%= link_to t("myplaceonline.general.share"), event_share_path(@obj), "data-icon" => "action" %></li>
-      </ul>
-    </div>
-  </div>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          title: I18n.t("myplaceonline.general.share"),
+          link: event_share_path(@obj),
+          icon: "action"
+        },
+      ]
+    })
+  %>
 <% end %>

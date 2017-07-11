@@ -5,16 +5,20 @@
 <%= form_for(@obj, url: perishable_food_move_path(@obj)) do |f| %>
   <%= myp_text_field(f, :storage_location, "myplaceonline.perishable_foods.storage_location", @obj.storage_location, true, remote_autocomplete_model: @obj.class, remote_autocomplete_all: true) %>
   <%= myp_integer_field(f, :quantity, "myplaceonline.perishable_foods.quantity", @obj.quantity) %>
-  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <div data-role="navbar">
-      <ul>
-        <li>
-          <%= f.submit(t("myplaceonline.perishable_foods.move"), "data-icon" => "navigation", "data-iconpos" => "top") %>
-        </li>
-        <li><%= link_to t("myplaceonline.general.cancel"), controller.obj_path, "data-icon" => "back" %></li>
-      </ul>
-    </div>
-  </div>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: f.submit(t("myplaceonline.perishable_foods.move"), "data-icon" => "action", "data-iconpos" => "top", "style" => "background-color: green")
+        },
+        {
+          title: I18n.t("myplaceonline.general.cancel"),
+          link: controller.obj_path,
+          icon: "back"
+        },
+      ]
+    })
+  %>
 <% end %>
 
 <script type="text/javascript">

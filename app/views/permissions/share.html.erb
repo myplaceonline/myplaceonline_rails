@@ -22,15 +22,15 @@
     <%= myp_check_box(f, :actionbit8, "myplaceonline.permissions.action_update") %>
     <%= myp_check_box(f, :actionbit16, "myplaceonline.permissions.action_destroy") %>
   </div>
-  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <div data-role="navbar">
-      <ul>
-        <li>
-          <%= f.submit(t("myplaceonline.permissions.share"), "data-icon" => "action", "data-iconpos" => "top") %>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: f.submit(t("myplaceonline.permissions.share"), "data-icon" => "action", "data-iconpos" => "top", "style" => "background-color: green")
+        },
+      ]
+    })
+  %>
 <% end %>
 
 <script type="text/javascript">

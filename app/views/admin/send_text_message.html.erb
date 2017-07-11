@@ -10,15 +10,15 @@
   <% end %>
   <%= myp_text_area(f, :send_only_to, "myplaceonline.admin.send_text_message.only_send_to", @admin_text_message.send_only_to) %>
   <%= myp_text_area(f, :exclude_numbers, "myplaceonline.admin.send_text_message.exclude_numbers", @admin_text_message.exclude_numbers) %>
-  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <div data-role="navbar">
-      <ul>
-        <li>
-          <%= f.submit(t("myplaceonline.admin.send_text_message.title"), "data-icon" => "action", "data-iconpos" => "top") %>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: f.submit(t("myplaceonline.admin.send_text_message.title"), "data-icon" => "action", "data-iconpos" => "top")
+        },
+      ]
+    })
+  %>
 <% end %>
 
 <hr />

@@ -778,6 +778,8 @@ en:
       after_new_item: "After New Item Created"
       allow_adding_existing_file: "Allow Adding Existing File"
       encryption_mode: "Encryption Mode"
+      non_fixed_header: "Non-Fixed Header"
+      toggle_hide_footer: "Tap Hides Header & Footer"
     identities:
       phones: "Phone Numbers"
       add_phone: "Add Phone"

@@ -11,15 +11,15 @@
   <% end %>
   <%= myp_text_area(f, :send_only_to, "myplaceonline.admin.send_email.only_send_to", @admin_email.send_only_to) %>
   <%= myp_text_area(f, :exclude_emails, "myplaceonline.admin.send_email.exclude_emails", @admin_email.exclude_emails) %>
-  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <div data-role="navbar">
-      <ul>
-        <li>
-          <%= f.submit(t("myplaceonline.admin.send_email.title"), "data-icon" => "action", "data-iconpos" => "top") %>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: f.submit(t("myplaceonline.admin.send_email.title"), "data-icon" => "action", "data-iconpos" => "top")
+        },
+      ]
+    })
+  %>
 <% end %>
 
 <hr />

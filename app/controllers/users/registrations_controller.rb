@@ -257,6 +257,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @most_visited_categories = current_user.most_visited_categories
     @most_visited_items = current_user.most_visited_items
     @after_new_item = current_user.after_new_item
+    @non_fixed_header = current_user.non_fixed_header
+    @toggle_hide_footer = current_user.toggle_hide_footer
     if request.post?
       @page_transition = params[:page_transition]
       @always_autofocus = params[:always_autofocus]
@@ -264,6 +266,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
       @top_left_icon = params[:top_left_icon]
       @recently_visited_categories = params[:recently_visited_categories]
       @after_new_item = params[:after_new_item]
+      @non_fixed_header = params[:non_fixed_header]
+      @toggle_hide_footer = params[:toggle_hide_footer]
 
       if !@recently_visited_categories.blank?
         @recently_visited_categories = @recently_visited_categories.to_i
@@ -302,6 +306,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
       current_user.most_visited_categories = @most_visited_categories
       current_user.most_visited_items = @most_visited_items
       current_user.after_new_item = @after_new_item
+      current_user.non_fixed_header = @non_fixed_header
+      current_user.toggle_hide_footer = @toggle_hide_footer
       current_user.save!
       redirect_to edit_user_registration_path,
         :flash => { :notice => I18n.t("myplaceonline.users.appearance_saved") }

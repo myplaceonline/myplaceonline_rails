@@ -11,6 +11,10 @@
     
     <%= myp_check_box_tag(:show_timestamps, t("myplaceonline.users.show_timestamps"), @show_timestamps) %>
     
+    <%= myp_check_box_tag(:non_fixed_header, t("myplaceonline.users.non_fixed_header"), @non_fixed_header) %>
+
+    <%= myp_check_box_tag(:toggle_hide_footer, t("myplaceonline.users.toggle_hide_footer"), @toggle_hide_footer) %>
+
     <%= myp_select_tag(:top_left_icon, "myplaceonline.users.top_left_icon", Myp.translate_options(User::TOP_LEFT_ICONS), @top_left_icon) %>
 
     <%= myp_text_field_tag(:recently_visited_categories, I18n.t("myplaceonline.users.recently_visited_categories", max: MyplaceonlineQuickCategoryDisplaysController::ABSOLUTE_MAXIMUM), @recently_visited_categories) %>

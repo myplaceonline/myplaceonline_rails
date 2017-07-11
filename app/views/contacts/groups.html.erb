@@ -9,16 +9,30 @@
     <%= myp_check_box_tag("group" + group.id.to_s, group.group_name, !@contact_groups.index(group.id).nil?) %>
   <% end %>
 
-  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <div data-role="navbar">
-      <ul>
-        <li>
-          <%= submit_tag(t("myplaceonline.general.save"), "data-icon" => "check", "data-iconpos" => "top", "style" => "background-color: green") %>
-        </li>
-        <li><%= link_to t("myplaceonline.groups.contact"), controller.obj_path, "data-icon" => "back" %></li>
-        <li><%= link_to t("myplaceonline.general.select_all"), "#", "data-icon" => "check", onclick: "$(':checkbox').each(function() {$(this).prop('checked', true).checkboxradio('refresh');}); return false;" %></li>
-        <li><%= link_to t("myplaceonline.general.deselect_all"), "#", "data-icon" => "delete", onclick: "$(':checkbox').each(function() {$(this).prop('checked', false).checkboxradio('refresh');}); return false;" %></li>
-      </ul>
-    </div>
-  </div>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.general.save"), "data-icon" => "action", "data-iconpos" => "top", "style" => "background-color: green")
+        },
+        {
+          title: I18n.t("myplaceonline.groups.contact"),
+          link: controller.obj_path,
+          icon: "back"
+        },
+        {
+          title: I18n.t("myplaceonline.general.select_all"),
+          link: "#",
+          icon: "check",
+          onclick: "$(':checkbox').each(function() {$(this).prop('checked', true).checkboxradio('refresh');}); return false;"
+        },
+        {
+          title: I18n.t("myplaceonline.general.deselect_all"),
+          link: "#",
+          icon: "delete",
+          onclick: "$(':checkbox').each(function() {$(this).prop('checked', false).checkboxradio('refresh');}); return false;"
+        },
+      ]
+    })
+  %>
 <% end %>

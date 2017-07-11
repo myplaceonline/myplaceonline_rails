@@ -6,14 +6,18 @@
   <% if current_user.has_emergency_contacts? %>
     <%= myp_check_box_tag(:notify_emergency_contacts, "myplaceonline.trips.notify_emergency_contacts", @notify_emergency_contacts) %>
   <% end %>
-  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <div data-role="navbar">
-      <ul>
-        <li>
-          <%= submit_tag(t("myplaceonline.trips.complete"), "data-icon" => "action", "data-iconpos" => "top") %>
-        </li>
-        <li><%= link_to t("myplaceonline.general.cancel"), controller.obj_path, "data-icon" => "back" %></li>
-      </ul>
-    </div>
-  </div>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.trips.complete"), "data-icon" => "action", "data-iconpos" => "top", "style" => "background-color: green")
+        },
+        {
+          title: I18n.t("myplaceonline.general.cancel"),
+          link: controller.obj_path,
+          icon: "back"
+        },
+      ]
+    })
+  %>
 <% end %>
