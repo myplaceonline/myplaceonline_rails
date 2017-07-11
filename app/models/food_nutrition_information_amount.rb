@@ -4,10 +4,12 @@ class FoodNutritionInformationAmount < ApplicationRecord
   
   MEASUREMENT_TYPE_NUMBER = 0
   MEASUREMENT_TYPE_PERCENT = 1
+  MEASUREMENT_TYPE_PER_100_GRAMS = 2
 
   MEASUREMENT_TYPES = [
-    ["myplaceonline.food_nutrition_information_amounts.measurement_types.number", 0],
-    ["myplaceonline.food_nutrition_information_amounts.measurement_types.percent", 1],
+    ["myplaceonline.food_nutrition_information_amounts.measurement_types.number", MEASUREMENT_TYPE_NUMBER],
+    ["myplaceonline.food_nutrition_information_amounts.measurement_types.percent", MEASUREMENT_TYPE_PERCENT],
+    ["myplaceonline.food_nutrition_information_amounts.measurement_types.per_100g", MEASUREMENT_TYPE_PER_100_GRAMS],
   ]
   
   def self.properties

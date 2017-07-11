@@ -124,7 +124,8 @@ class DietsController < MyplaceonlineController
                 
                 Rails.logger.debug{"DietsController.evaluate name: #{fnia.nutrient.nutrient_name}, quantity: #{consumed_food.quantity_with_fallback}, amount: #{fnia.amount}"}
                 
-                if fnia.measurement_type == FoodNutritionInformationAmount::MEASUREMENT_TYPE_PERCENT
+                case fnia.measurement_type
+                when FoodNutritionInformationAmount::MEASUREMENT_TYPE_PERCENT
                   # "Percent Daily Values are based on a 2,000 calorie diet."
                   
                   needed_per_day = total_req[:needed] / @days
@@ -140,8 +141,10 @@ class DietsController < MyplaceonlineController
                   Rails.logger.debug{"DietsController.evaluate percent needed_per_day: #{needed_per_day}, calories_consumed_per_day: #{calories_consumed_per_day}, needed_per_day_adjusted: #{needed_per_day_adjusted}"}
                   
                   total_req[:consumed] = total_req[:consumed] + (consumed_food.quantity_with_fallback * needed_per_day_adjusted * (fnia.amount / 100.0))
-                else
+                when FoodNutritionInformationAmount::MEASUREMENT_TYPE_NUMBER
                   total_req[:consumed] = total_req[:consumed] + (consumed_food.quantity_with_fallback * fnia.amount)
+                when FoodNutritionInformationAmount::MEASUREMENT_TYPE_PER_100_GRAMS
+                  total_req[:consumed] = total_req[:consumed] + (consumed_food.quantity_with_fallback * fnia.amount * (consumed_food.food.gram_weight / 100.0))
                 end
               else
                 # TODO display skipped warnings

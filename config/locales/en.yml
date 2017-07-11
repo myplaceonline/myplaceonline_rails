@@ -3533,6 +3533,7 @@ en:
       measurement_types:
         number: "Number"
         percent: "Percent"
+        per_100g: "Per 100 Grams"
     nutrients:
       nutrient_name: "Name"
       measurement_type: "Measurement"
