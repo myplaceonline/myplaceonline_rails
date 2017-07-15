@@ -933,6 +933,8 @@ en:
       random_feed: "Random Feed"
       items_hidden: "Note: %{count} read items have been hidden. Click the %{items_link} button for all items."
       all_items: "All Items"
+      new_notify: "Notify for New Items"
+      notify_new_items_subject: "New Feed Items for %{name}"
     feed_items:
       feed_title: "Title"
       feed_link: "Link"
@@ -3292,6 +3294,7 @@ en:
       test_object_time: "Time"
       test_object_number: "Number"
       test_object_decimal: "Decimal"
+      test_object_boolean: "Boolean"
       contact: "Contact"
     test_object_instances:
       test_object_instance_name: "Name"

@@ -10,3 +10,12 @@
     button_text: "myplaceonline.websites.request_title"
   }
 %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :new_notify,
+    value: obj.new_notify,
+    placeholder: "myplaceonline.feeds.new_notify"
+  )
+%>

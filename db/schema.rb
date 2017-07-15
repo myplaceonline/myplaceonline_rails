@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170710170114) do
+ActiveRecord::Schema.define(version: 20170715192210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1917,6 +1917,7 @@ ActiveRecord::Schema.define(version: 20170710170114) do
     t.integer "rating"
     t.integer "total_items"
     t.integer "unread_items"
+    t.boolean "new_notify"
     t.index ["identity_id"], name: "index_feeds_on_identity_id"
   end
 
@@ -4885,6 +4886,7 @@ ActiveRecord::Schema.define(version: 20170710170114) do
     t.integer "test_object_number"
     t.decimal "test_object_decimal", precision: 10, scale: 2
     t.decimal "test_object_currency", precision: 10, scale: 2
+    t.boolean "test_object_boolean"
     t.index ["contact_id"], name: "index_test_objects_on_contact_id"
     t.index ["identity_id"], name: "index_test_objects_on_identity_id"
   end

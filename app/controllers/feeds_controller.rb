@@ -16,7 +16,8 @@ class FeedsController < MyplaceonlineController
       :id,
       :_destroy,
       :name,
-      :url
+      :url,
+      :new_notify
     ]
   end
 

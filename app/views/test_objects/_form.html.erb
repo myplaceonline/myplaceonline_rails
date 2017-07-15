@@ -74,6 +74,15 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :test_object_boolean,
+    value: obj.test_object_boolean,
+    placeholder: "myplaceonline.test_objects.test_object_boolean"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,

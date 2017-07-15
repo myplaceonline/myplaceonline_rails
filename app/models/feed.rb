@@ -25,6 +25,7 @@ class Feed < ApplicationRecord
     Rails.logger.debug{"Feed response:\n#{response}"}
     rss = SimpleRSS.parse(response[:body])
     new_items = 0
+    new_feed_items = []
     all_feed_items = feed_items.to_a
     ApplicationRecord.transaction do
       rss.items.each do |item|
@@ -74,7 +75,7 @@ class Feed < ApplicationRecord
         #Rails.logger.debug{"existing_item: #{existing_item.inspect}"}
         
         if existing_item.nil?
-          FeedItem.create!({
+          new_feed_item = FeedItem.create!({
             feed_id: self.id,
             feed_link: feed_link,
             feed_title: item.title,
@@ -82,6 +83,7 @@ class Feed < ApplicationRecord
             publication_date: date,
             guid: guid
           })
+          new_feed_items << new_feed_item
           new_items += 1
         #elsif existing_item.publication_date.blank? && !date.blank?
           #Rails.logger.debug{"Updating publication date to #{date}"}
@@ -99,6 +101,19 @@ class Feed < ApplicationRecord
         ApplicationRecord.connection.update(
           "update feeds set total_items = total_items + #{new_items}, unread_items = unread_items + #{new_items} where id = #{self.id}"
         )
+        
+        if self.new_notify
+          markdown = new_feed_items.map{|x| "[#{x.full_feed_link}](#{x.full_feed_link})" }.join("\n\n")
+          body = Myp.markdown_to_html(markdown)
+          body_plain = Myp.markdown_for_plain_email(markdown)
+          User.current_user.current_identity.send_email(
+            I18n.t("myplaceonline.feeds.notify_new_items_subject", name: self.display),
+            body,
+            nil,
+            nil,
+            body_plain
+          )
+        end
       end
     end
     new_items
