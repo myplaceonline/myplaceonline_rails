@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170715192210) do
+ActiveRecord::Schema.define(version: 20170716164434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -5618,6 +5618,14 @@ ActiveRecord::Schema.define(version: 20170715192210) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "verified"
+    t.boolean "default_domain"
+    t.string "meta_description"
+    t.string "meta_keywords"
+    t.string "hosts"
+    t.text "static_homepage"
+    t.text "menu_links_static"
+    t.text "menu_links_logged_in"
     t.index ["domain_host_id"], name: "index_website_domains_on_domain_host_id"
     t.index ["identity_id"], name: "index_website_domains_on_identity_id"
     t.index ["website_id"], name: "index_website_domains_on_website_id"

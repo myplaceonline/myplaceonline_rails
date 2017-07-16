@@ -55,7 +55,7 @@ class TextMessage < ApplicationRecord
     Rails.logger.debug{"SMS process_single_target target: #{target}, content: #{content}"}
 
     if content.nil?
-      content = "#{identity.display_short} #{I18n.t("myplaceonline.emails.from_prefix_context")} #{I18n.t("myplaceonline.siteTitle")} #{I18n.t("myplaceonline.emails.subject_shared")}: "
+      content = "#{identity.display_short} #{I18n.t("myplaceonline.emails.from_prefix_context")} #{Myp.website_domain.domain_name} #{I18n.t("myplaceonline.emails.subject_shared")}: "
       content += body
     end
     

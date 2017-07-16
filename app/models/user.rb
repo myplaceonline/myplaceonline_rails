@@ -1,14 +1,23 @@
 class User < ApplicationRecord
   include MyplaceonlineActiveRecordBaseConcern
 
+  USER_TYPE_NORMAL = 0
+  USER_TYPE_ADMIN = 1
+  
   USER_TYPES = [
-    ["myplaceonline.users.type_normal", 0],
-    ["myplaceonline.users.type_admin", 1]
+    ["myplaceonline.users.type_normal", USER_TYPE_NORMAL],
+    ["myplaceonline.users.type_admin", USER_TYPE_ADMIN]
   ]
   
-  GUEST_ID = -1
-  GUEST_EMAIL = "guest@myplaceonline.com"
-
+  # The guest user will not exist in the database
+  GUEST_USER_ID = -1
+  GUEST_USER_IDENTITY_ID = -1
+  DEFAULT_GUEST_EMAIL = "guest@myplaceonline.com"
+  
+  SUPER_USER_ID = 0
+  SUPER_USER_IDENTITY_ID = 0
+  DEFAULT_SUPER_USER_EMAIL = "root@myplaceonline.com"
+  
   TOP_LEFT_ICONS = [
     ["myplaceonline.users.top_left_icon_home", 0],
     ["myplaceonline.users.top_left_icon_back", 1]
@@ -16,6 +25,25 @@ class User < ApplicationRecord
   
   SUPPRESSION_MOBILE = 1
   
+  def self.guest
+    result = User.new(
+      id: GUEST_USER_ID,
+      email: DEFAULT_GUEST_EMAIL,
+      primary_identity_id: GUEST_USER_IDENTITY_ID
+    )
+    identity = Identity.new(
+      id: GUEST_USER_IDENTITY_ID,
+      user_id: GUEST_USER_ID,
+      user: result
+    )
+    result.primary_identity = identity
+    result
+  end
+  
+  def self.super_user
+    User.find(SUPER_USER_ID)
+  end
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -42,21 +70,6 @@ class User < ApplicationRecord
     else
       false
     end
-  end
-  
-  def self.guest
-    result = User.new(
-      id: GUEST_ID,
-      email: GUEST_EMAIL,
-      primary_identity_id: GUEST_ID
-    )
-    identity = Identity.new(
-      id: GUEST_ID,
-      user_id: GUEST_ID,
-      user: result
-    )
-    result.primary_identity = identity
-    result
   end
   
   def display
@@ -157,7 +170,7 @@ class User < ApplicationRecord
   end
   
   def guest?
-    id == GUEST_ID
+    id == GUEST_USER_ID
   end
   
   def has_emergency_contacts?
@@ -196,13 +209,6 @@ class User < ApplicationRecord
     primary_identity_id
   end
   
-  SUPER_USER_ID = 0
-  SUPER_USER_IDENTITY_ID = 0
-  
-  def self.super_user
-    User.find(SUPER_USER_ID)
-  end
-
   protected
     def confirmation_required?
       Rails.env.production?

@@ -1,6 +1,6 @@
 <% content_for :heading do -%><%= t('myplaceonline.info.contact') %><% end -%>
 
-<p><b><%= t("myplaceonline.email") %></b>: <%= mail_to(t("myplaceonline.siteEmail")) %></p>
+<p><b><%= t("myplaceonline.email") %></b>: <%= mail_to(Myp.create_email) %></p>
 <hr />
 <%= flashes!(@obj) %>
 

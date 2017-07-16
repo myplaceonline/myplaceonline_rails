@@ -29,6 +29,16 @@ class MyplaceonlineExecutionContext
   def self.persistent_user_store; self[:persistent_user_store]; end
   def self.persistent_user_store=(x); self[:persistent_user_store] = x; end
 
+  def self.host
+    result = self[:host]
+    if result.blank?
+      result = Myp.default_host
+    end
+    result
+  end
+  
+  def self.host=(x); self[:host] = x; end
+
   def self.browser
     result = self[:browser]
     if result.nil?

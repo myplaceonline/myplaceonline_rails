@@ -109,7 +109,7 @@ class AdminController < ApplicationController
     @body = params[:body]
     
     if @from.blank?
-      @from = I18n.t("myplaceonline.siteEmail")
+      @from = Myp.create_email
     end
     
     if !@body.blank?

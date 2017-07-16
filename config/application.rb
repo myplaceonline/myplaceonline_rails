@@ -18,11 +18,8 @@ module Myplaceonline
   DEFAULT_DATE_FORMAT = "%A, %b %d, %Y"
   DEFAULT_TIME_FORMAT = "%A, %b %d, %Y %-l:%M:%S %p"
   JQM_DATEBOX_TIMEBOX_FORMAT = "%I:%M %p"
-  DEFAULT_SUPPORT_EMAIL = "Myplaceonline.com <contact@myplaceonline.com>"
   # End mirrored constants
 
-  DEFAULT_ROOT_EMAIL = "root@myplaceonline.com"
-  
   class MyplaceonlineRack
     def initialize(app)
       @app = app
@@ -32,7 +29,9 @@ module Myplaceonline
       
       # We could load up the user from warden, but that would mean we'd do a SQL request on all requests including
       # images, etc.
+      
       # user = env["warden"].user
+      
       # Instead, we just grab the user ID from warden's cookie
       warden_user_key = env["rack.session"]["warden.user.user.key"]
       user_id = warden_user_key.nil? ? -1 : warden_user_key[0][0]
@@ -51,7 +50,48 @@ module Myplaceonline
         ExecutionContext.clear
         
         ExecutionContext.stack do
+          
+          # Save off any per-request info:
+          
+          # "SERVER_SOFTWARE" => "thin 1.7.1 codename Muffin Mode",
+          # "SERVER_NAME" => "localhost",
+          # "REQUEST_METHOD" => "GET",
+          # "REQUEST_PATH" => "/",
+          # "PATH_INFO" => "/",
+          # "REQUEST_URI" => "/",
+          # "HTTP_VERSION" => "HTTP/1.1",
+          # "HTTP_HOST" => "localhost:3000",
+          # "HTTP_USER_AGENT" => "curl/7.51.0",
+          # "HTTP_ACCEPT" => "*/*",
+          # "GATEWAY_INTERFACE" => "CGI/1.2",
+          # "SERVER_PORT" => "3000",
+          # "QUERY_STRING" => "",
+          # "SERVER_PROTOCOL" => "HTTP/1.1",
+          # "SCRIPT_NAME" => "",
+          # "REMOTE_ADDR" => "127.0.0.1",
+          # "ORIGINAL_FULLPATH" => "/",
+          # "ORIGINAL_SCRIPT_NAME" => "",
+          
+          host = env["HTTP_HOST"]
+          if host.nil?
+            host = ""
+          end
+          if !host.index(':').nil?
+            host = host.gsub(/:\d+$/, "")
+          end
+          if host == "localhost"
+            host = ""
+          end
+          
+          # See also https://github.com/knu/ruby-domain_name/
+          if host.starts_with?("www.")
+            host = host[4..-1]
+          end
+          
+          MyplaceonlineExecutionContext.host = host
+          
           @app.call(env)
+          
         end
       end
     end

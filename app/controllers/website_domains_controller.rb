@@ -8,6 +8,12 @@ class WebsiteDomainsController < MyplaceonlineController
       params.require(:website_domain).permit(
         :domain_name,
         :notes,
+        :meta_description,
+        :meta_keywords,
+        :hosts,
+        :static_homepage,
+        :menu_links_static,
+        :menu_links_logged_in,
         website_attributes: WebsitesController.param_names,
         domain_host_attributes: MembershipsController.param_names,
         website_domain_ssh_keys_attributes: [

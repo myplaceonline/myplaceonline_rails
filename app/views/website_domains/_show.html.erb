@@ -2,5 +2,12 @@
 <%= data_row(heading: t("myplaceonline.website_domains.website"), content: obj.website, expanded: true, max_nest: 2) %>
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
 <%= data_row(heading: t("myplaceonline.website_domains.domain_host"), content: obj.domain_host, max_nest: 3) %>
-<%= data_row(heading: t("myplaceonline.website_domains.ssh_key"), content: obj.website_domain_ssh_keys) %>
+<%= data_row(heading: t("myplaceonline.website_domains.ssh_key"), content: obj.website_domain_ssh_keys, max_nest: 2) %>
 <%= data_row(heading: t("myplaceonline.website_domains.website_domain_registration"), content: obj.website_domain_registrations, max_nest: 2) %>
+<%= data_row(heading: t("myplaceonline.website_domains.verified"), content: obj.verified) %>
+<%= data_row(heading: t("myplaceonline.website_domains.meta_description"), content: obj.meta_description) %>
+<%= data_row(heading: t("myplaceonline.website_domains.meta_keywords"), content: obj.meta_keywords) %>
+<%= data_row(heading: t("myplaceonline.website_domains.hosts"), content: obj.hosts) %>
+<%= data_row(heading: t("myplaceonline.website_domains.static_homepage"), content: obj.static_homepage) %>
+<%= data_row(heading: t("myplaceonline.website_domains.menu_links_static"), content: obj.menu_links_static) %>
+<%= data_row(heading: t("myplaceonline.website_domains.menu_links_logged_in"), content: obj.menu_links_logged_in) %>

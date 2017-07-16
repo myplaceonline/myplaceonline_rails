@@ -1,6 +1,4 @@
 class UserMailer < ActionMailer::Base
-  default from: Myplaceonline::DEFAULT_SUPPORT_EMAIL
-  
   def send_support_email(from, subject, content, content_plain = nil)
     @time = Time.now.in_time_zone(Rails.application.config.time_zone).to_s(:full)
     @from = from
@@ -10,7 +8,8 @@ class UserMailer < ActionMailer::Base
     else
       @content_plain = @content
     end
-    mail(from: Myplaceonline::DEFAULT_SUPPORT_EMAIL, to: Myplaceonline::DEFAULT_SUPPORT_EMAIL, subject: subject, reply_to: @from)
+    support = Myp.create_email
+    mail(from: support, to: support, subject: subject, reply_to: @from)
   end
   
   def send_email(to, subject, content, cc = nil, bcc = nil, content_plain = nil, reply_to = nil, from_prefix: nil)
@@ -20,15 +19,7 @@ class UserMailer < ActionMailer::Base
     else
       @content_plain = @content
     end
-    from = Myplaceonline::DEFAULT_SUPPORT_EMAIL
-    if !from_prefix.blank?
-      from = clean_from_prefix(from_prefix) + " " + I18n.t("myplaceonline.emails.from_prefix_context") + " " + from
-    end
+    from = Myp.create_email(display_prefix: from_prefix, display_prefix_suffix: I18n.t("myplaceonline.emails.from_prefix_context"))
     mail(from: from, to: to, subject: subject, cc: cc, bcc: bcc, reply_to: reply_to)
   end
-  
-  private
-    def clean_from_prefix(from_prefix)
-      from_prefix.gsub(/[<@>]/, "")
-    end
 end

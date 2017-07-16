@@ -21,8 +21,6 @@
 
 en:
   myplaceonline:
-    siteTitle: "myplaceonline"
-    siteEmail: "support@myplaceonline.com"
     email: "E-mail"
     category:
       order: "Order"
@@ -111,9 +109,9 @@ en:
       doctor_visits: "Doctor Visits"
       statuses: "Statuses"
       notepads: "Notepads"
-      myplaceonline_searches: "Myplaceonline Searches"
+      myplaceonline_searches: "Website Searches"
       point_displays: "Point Displays"
-      myplaceonline_quick_category_displays: "Myplaceonline Quick Category Displays"
+      myplaceonline_quick_category_displays: "Quick Category Displays"
       calendars: "Calendars"
       concerts: "Concerts"
       shopping_lists: "Shopping Lists"
@@ -251,6 +249,9 @@ en:
       food_nutrition_informations: "Food Nutrition Informations"
       nutrients: "Nutrients"
       food_nutrition_information_amounts: "Nutrient Amounts"
+    default_domain:
+      meta_description: "myplaceonline: your online helper"
+      meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant"
     general:
       email: "E-mail"
       password: "Password"
@@ -283,8 +284,6 @@ en:
       clipboard: "Copy to Clipboard"
       encrypt: "Encrypt"
       is_encrypted: "Is Encrypted?"
-      metadescription: "myplaceonline: your online helper"
-      metakeywords: "myplaceonline, joy, meaning, order, online, helper, assistant"
       submit: "Submit"
       update: "Update"
       created: "Created"
@@ -2809,6 +2808,13 @@ en:
       website_domain_registrations_add: "Add Registration"
       website_domain_registrations_delete: "Delete Registration"
       website_domain_registrations_periodic_payment: "Payment"
+      verified: "Verified"
+      meta_description: "Meta Description"
+      meta_keywords: "Meta Keywords"
+      hosts: "Matching Hosts"
+      static_homepage: "Static Homepage HTML"
+      menu_links_static: "Static Menu Links"
+      menu_links_logged_in: "Logged-in Menu Links"
     bets:
       bet_name: "Bet Name"
       notes: "Conditions"

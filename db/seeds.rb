@@ -174,22 +174,22 @@ Category.create!([
 ])
 
 user = User.new
-user.id = 0
-user.email = "root@myplaceonline.com"
-user.password = "password"
+user.id = User::SUPER_USER_ID
+user.email = "root@myplaceonline.com" # Generated from ENV["ROOT_EMAIL"]
+user.password = "password" # Generated from ENV["ROOT_PASSWORD"]
 user.password_confirmation = user.password
 user.confirmed_at = Time.now
-user.user_type = 1
+user.user_type = User::USER_TYPE_ADMIN
 user.save(:validate => false)
 
-begin
-  ExecutionContext.push
+ExecutionContext.stack do
+
   User.current_user = user
 
-  identity = Identity.new
-  identity.id = 0
-  identity.user = user
-  identity.save!
+  identity = Identity.create!(
+    id: User::SUPER_USER_IDENTITY_ID,
+    user_id: User::SUPER_USER_ID,
+  )
       
   user.primary_identity = identity
   user.save!
@@ -201,8 +201,8 @@ begin
     Myp.import_zip_codes
   end
 
-ensure
-  ExecutionContext.clear
+  Myp.create_default_website
+
 end
 
 # Modifications to this file go into mypdump.rake

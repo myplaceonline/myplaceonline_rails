@@ -2,7 +2,7 @@
 <html>
   <head>
     <%
-    main_title = content_for?(:heading) ? yield(:heading) : t("myplaceonline.siteTitle")
+    main_title = content_for?(:heading) ? yield(:heading) : Myp.website_domain.domain_name
     if !current_user.nil? && current_user.show_server_name && !ENV["NODENAME"].blank?
       main_title += " (" + ENV["NODENAME"].gsub(/\..*$/, "") + ")"
     end
@@ -12,13 +12,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="Content-Language" content="en_US">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="<%= t('myplaceonline.general.metadescription') %>">
-    <meta name="keywords" content="<%= t('myplaceonline.general.metakeywords') %>">
+    <meta name="description" content="<%= Myp.website_domain.meta_description %>">
+    <meta name="keywords" content="<%= Myp.website_domain.meta_keywords %>">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="Owner" content="contact@myplaceonline.com">
+    <meta name="Owner" content="<%= Myp.website_domain.identity.user.email %>">
     <meta name="DC.Language" content="en-US">
     <meta name="Country" content="US">
     <meta name="Robots" content="index,follow">

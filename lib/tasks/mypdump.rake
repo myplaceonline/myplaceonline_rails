@@ -6,22 +6,22 @@ namespace :myp do
     open("db/seeds.rb", "a") { |f|
       f.puts %{
 user = User.new
-user.id = 0
-user.email = "#{ENV["ROOT_EMAIL"].blank? ? Myplaceonline::DEFAULT_ROOT_EMAIL : ENV["ROOT_EMAIL"]}"
-user.password = "#{ENV["ROOT_PASSWORD"].blank? ? "password" : ENV["ROOT_PASSWORD"]}"
+user.id = User::SUPER_USER_ID
+user.email = "#{ENV["ROOT_EMAIL"].blank? ? User::DEFAULT_SUPER_USER_EMAIL : ENV["ROOT_EMAIL"]}" # Generated from ENV["ROOT_EMAIL"]
+user.password = "#{ENV["ROOT_PASSWORD"].blank? ? "password" : ENV["ROOT_PASSWORD"]}" # Generated from ENV["ROOT_PASSWORD"]
 user.password_confirmation = user.password
 user.confirmed_at = Time.now
-user.user_type = 1
+user.user_type = User::USER_TYPE_ADMIN
 user.save(:validate => false)
 
-begin
-  ExecutionContext.push
+ExecutionContext.stack do
+
   User.current_user = user
 
-  identity = Identity.new
-  identity.id = 0
-  identity.user = user
-  identity.save!
+  identity = Identity.create!(
+    id: User::SUPER_USER_IDENTITY_ID,
+    user_id: User::SUPER_USER_ID,
+  )
       
   user.primary_identity = identity
   user.save!
@@ -33,8 +33,8 @@ begin
     Myp.import_zip_codes
   end
 
-ensure
-  ExecutionContext.clear
+  Myp.create_default_website
+
 end
 
 # Modifications to this file go into mypdump.rake
@@ -42,7 +42,7 @@ end
     }
   end
 
-  task :reload_categories => :environment do
-    Myp.initialize_categories
+  task :reinitialize => :environment do
+    Myp.reinitialize
   end
 end

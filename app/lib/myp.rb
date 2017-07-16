@@ -6,11 +6,46 @@ require 'rest-client'
 require 'time'
 
 module Myp
-  @@all_categories = Hash.new.with_indifferent_access
-  @@all_categories_without_explicit_without_experimental = Hash.new.with_indifferent_access
-  @@all_categories_without_explicit_with_experimental = Hash.new.with_indifferent_access
-  @@all_categories_without_experimental_with_explicit = Hash.new.with_indifferent_access
-
+  
+  DEFAULT_FROM_EMAIL = "contact"
+  
+  @@default_host = "myplaceonline.com"
+  
+  if !ENV["DEFAULT_HOST"].blank?
+    @@default_host = ENV["DEFAULT_HOST"]
+  end
+  
+  def self.default_host
+    @@default_host
+  end
+  
+  def self.create_email(
+    name: Myp::DEFAULT_FROM_EMAIL,
+    host: nil,
+    display: nil,
+    display_prefix: nil,
+    display_prefix_suffix: nil
+  )
+    if host.blank?
+      host = MyplaceonlineExecutionContext.host
+    end
+    result = name + "@" + host
+    if display.blank?
+      display = host.camelize
+    end
+    if !display_prefix.blank? && !display_prefix_suffix.blank?
+      display_prefix = display_prefix + " " + display_prefix_suffix
+    end
+    if !display.blank? && !display_prefix.blank?
+      result = display_prefix.gsub(/[<@>]/, "") + " " + display.gsub(/[<@>]/, "") + " <" + result + ">"
+    elsif !display.blank?
+      result = display.gsub(/[<@>]/, "") + " <" + result + ">"
+    elsif !display_prefix.blank?
+      result = display_prefix.gsub(/[<@>]/, "") + " <" + result + ">"
+    end
+    result
+  end
+  
   FIELD_TEXT = :text
   FIELD_TEXT_AREA = :text_area
   FIELD_DATE = :date
@@ -315,7 +350,16 @@ module Myp
   
   Rails.logger.info{"Process pid: #{Process.pid}, ppid: #{Process.ppid}, uid: #{Process.uid}, gid: #{Process.gid}, argv: #{ARGV}"}
   
-  def self.initialize_categories
+  @@all_categories = Hash.new.with_indifferent_access
+  @@all_categories_without_explicit_without_experimental = Hash.new.with_indifferent_access
+  @@all_categories_without_explicit_with_experimental = Hash.new.with_indifferent_access
+  @@all_categories_without_experimental_with_explicit = Hash.new.with_indifferent_access
+  
+  @@all_website_domains = Hash.new
+  @@default_website_domain = nil
+
+  # This may be called multiple times to re-initialize
+  def self.reinitialize
     if Myp.database_exists?
       
       @@all_categories.clear
@@ -341,12 +385,33 @@ module Myp
           @@all_categories_without_explicit_without_experimental.delete(existing_category.name.to_sym)
         end
       end
-      Rails.logger.info{"Categories cached: #{@@all_categories.count}"}
+      Rails.logger.info{"Myp: Categories cached: #{@@all_categories.count}"}
+      puts "Myp: Categories cached: #{@@all_categories.count}"
       #puts "myplaceonline: Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
+      
+      begin
+        @@default_website_domain = nil
+        @@all_website_domains.clear
+        WebsiteDomain.where(verified: true).each do |website_domain|
+          if website_domain.default_domain
+            @@default_website_domain = website_domain
+          end
+          website_domain.hosts.split(",").each do |matching_host|
+            if !matching_host.blank?
+              @@all_website_domains[matching_host] = website_domain
+            end
+          end
+        end
+      rescue ActiveRecord::StatementInvalid
+        # Mid-migration
+      end
+
+      Rails.logger.info{"Myp: Website domains cached: #{@@all_website_domains.count}"}
+      puts "Myp: Website domains cached: #{@@all_website_domains.count}"
     end
   end
   
-  initialize_categories
+  self.reinitialize
   
   if !ENV["FTS_TARGET"].blank?
     Rails.logger.info{"Configuring full text search with #{ENV["FTS_TARGET"]}"}
@@ -389,6 +454,17 @@ module Myp
         @@all_categories
       end
     end
+  end
+  
+  def self.website_domain(host: nil)
+    if host.blank?
+      host = MyplaceonlineExecutionContext.host
+    end
+    result = @@all_website_domains[host]
+    if result.nil?
+      result = @@default_website_domain
+    end
+    result
   end
 
   # Return a list of ListItemRow objects.
@@ -1433,7 +1509,7 @@ module Myp
   
   def self.send_support_email_safe(subject, body, body_plain = nil, email: nil)
     begin
-      from = I18n.t("myplaceonline.siteEmail")
+      from = Myp.create_email
       if !email.blank?
         from = email
       elsif ExecutionContext.available? && !User.current_user.nil?
@@ -1461,7 +1537,7 @@ module Myp
   
   def self.send_email(to, subject, body, cc = nil, bcc = nil, body_plain = nil, reply_to = nil, from_prefix: nil)
     begin
-      from = I18n.t("myplaceonline.siteEmail")
+      from = Myp.create_email
       UserMailer.send_email(to, subject, body, cc, bcc, body_plain, reply_to, from_prefix: from_prefix).deliver_now
       Rails.logger.info{"send_email to: #{to}, cc: #{cc}, bcc: #{bcc}"}
     rescue Exception => e
@@ -2400,6 +2476,26 @@ module Myp
       encrypted_data = crypt.encrypt_and_sign('my secret data')
       puts crypt.decrypt_and_verify(encrypted_data)
     end
+  end
+  
+  def self.create_default_website
+    website = Website.create!(
+      identity_id: User::SUPER_USER_IDENTITY_ID,
+      title: "Myplaceonline.com",
+    )
+    WebsiteDomain.create!(
+      identity_id: User::SUPER_USER_IDENTITY_ID,
+      domain_name: "myplaceonline",
+      verified: true,
+      default_domain: true,
+      meta_description: I18n.t("myplaceonline.default_domain.meta_description"),
+      meta_keywords: I18n.t("myplaceonline.default_domain.meta_keywords"),
+      hosts: "myplaceonline.com",
+      static_homepage: "",
+      menu_links_static: "",
+      menu_links_logged_in: "",
+      website: website,
+    )
   end
   
   Rails.logger.info{"myplaceonline: myp.rb static initialization ended"}
