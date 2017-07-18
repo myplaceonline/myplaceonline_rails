@@ -88,6 +88,12 @@ module Myplaceonline
             host = host[4..-1]
           end
           
+          # Internal, direct requests from things like Apache Bench to initialize a server:
+          i = host.index("-internal.myplaceonline.com")
+          if !i.nil?
+            host = host[i + 10..-1]
+          end
+          
           MyplaceonlineExecutionContext.host = host
           
           @app.call(env)
