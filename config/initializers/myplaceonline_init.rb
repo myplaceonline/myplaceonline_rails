@@ -13,11 +13,16 @@ end
 if Myp.is_web_server? || Rails.env.test?
   if Rails.env.production?
     Myplaceonline::Application.config.session_store :cookie_store,
-        :key => 'mypsession',
+        :key => "mypsession",
         :expire_after => 30.minutes
   end
 
   if Myp.database_exists? && !Rails.env.test?
     CalendarItemReminder.ensure_pending_all_users
+  end
+  
+  ActiveSupport.on_load(:after_initialize) do
+    # Initialize any caches after Rails has loaded so that we have access to things like the asset pipeline digests
+    Myp.reinitialize_in_rails_context
   end
 end

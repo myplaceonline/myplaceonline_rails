@@ -350,18 +350,37 @@ module Myp
   
   Rails.logger.info{"Process pid: #{Process.pid}, ppid: #{Process.ppid}, uid: #{Process.uid}, gid: #{Process.gid}, argv: #{ARGV}"}
   
+  def self.prepare_website_domain_html(html:)
+    i = 0
+    while true do
+      match_data = html.match(/(<img.*)src=\"([^\"]+)\"/, i)
+      if !match_data.nil?
+        if match_data[2].index("://").nil?
+          replacement = match_data[1] + "src=\"" + ActionController::Base.helpers.asset_path(match_data[2]) + "\""
+          html = match_data.pre_match + replacement + match_data.post_match
+          i = match_data.offset(0)[0] + replacement.length + 1
+        else
+          i = match_data.offset(0)[0] + match_data[0].length + 1
+        end
+      else
+        break
+      end
+    end
+    html
+  end
+  
   @@all_categories = Hash.new.with_indifferent_access
   @@all_categories_without_explicit_without_experimental = Hash.new.with_indifferent_access
   @@all_categories_without_explicit_with_experimental = Hash.new.with_indifferent_access
   @@all_categories_without_experimental_with_explicit = Hash.new.with_indifferent_access
   
   @@all_website_domains = Hash.new
+  @@all_website_domain_homepages = Hash.new
   @@default_website_domain = nil
 
   # This may be called multiple times to re-initialize
   def self.reinitialize
     if Myp.database_exists?
-      
       @@all_categories.clear
       @@all_categories_without_explicit_with_experimental.clear
       @@all_categories_without_experimental_with_explicit.clear
@@ -389,9 +408,16 @@ module Myp
       puts "Myp: Categories cached: #{@@all_categories.count}"
       #puts "myplaceonline: Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
       
+      self.reinitialize_in_rails_context
+    end
+  end
+  
+  def self.reinitialize_in_rails_context
+    if Myp.database_exists?
       begin
         @@default_website_domain = nil
         @@all_website_domains.clear
+        @@all_website_domain_homepages.clear
         WebsiteDomain.where(verified: true).each do |website_domain|
           if website_domain.default_domain
             @@default_website_domain = website_domain
@@ -399,6 +425,7 @@ module Myp
           website_domain.hosts.split(",").each do |matching_host|
             if !matching_host.blank?
               @@all_website_domains[matching_host] = website_domain
+              @@all_website_domain_homepages[matching_host] = self.prepare_website_domain_html(html: website_domain.static_homepage)
             end
           end
         end
@@ -465,6 +492,13 @@ module Myp
       result = @@default_website_domain
     end
     result
+  end
+
+  def self.website_domain_homepage(host: nil)
+    if host.blank?
+      host = MyplaceonlineExecutionContext.host
+    end
+    @@all_website_domain_homepages[host]
   end
 
   # Return a list of ListItemRow objects.
@@ -708,16 +742,6 @@ module Myp
     else
       raise "nil CDATA for #{xml}"
     end
-  end
-  
-  def self.welcome_features
-    self.parse_yaml_to_html("myplaceonline.welcome.features") % {
-      :screenshot1 => ActionController::Base.helpers.image_tag("screenshot1.png", class: "fit"),
-      :screenshot2 => ActionController::Base.helpers.image_tag("screenshot6.png", class: "fit"),
-      :screenshot3 => ActionController::Base.helpers.image_tag("screenshot7.png", class: "fit"),
-      :screenshot4 => ActionController::Base.helpers.image_tag("screenshot8.png", class: "fit"),
-      :feature_details => self.parse_yaml_to_html("myplaceonline.welcome.feature_details")
-    }
   end
   
   def self.is_web_server?
@@ -2491,7 +2515,7 @@ module Myp
       meta_description: I18n.t("myplaceonline.default_domain.meta_description"),
       meta_keywords: I18n.t("myplaceonline.default_domain.meta_keywords"),
       hosts: "myplaceonline.com",
-      static_homepage: "",
+      static_homepage: Myp.parse_yaml_to_html("myplaceonline.default_domain.homepage"),
       menu_links_static: "",
       menu_links_logged_in: "",
       website: website,

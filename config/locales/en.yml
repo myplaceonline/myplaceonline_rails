@@ -252,6 +252,41 @@ en:
     default_domain:
       meta_description: "myplaceonline: your online helper"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant"
+      homepage: !xml |
+        <![CDATA[
+        <p class="horizontal_center">myplaceonline is your online helper. We'll never sell your private data. The code is <a href="https://github.com/myplaceonline/myplaceonline" target="_blank">open source</a> if you want to review it or run it on your computer.</p>
+        <p class="horizontal_center">organize, <strong>harmonize</strong>, <em>maximize</em>.</p>
+
+        <p style="text-align: center">
+          <a href="/users/sign_in" class="ui-btn ui-btn-icon-left ui-icon-user ui-btn-inline">Login</a>
+          <a href="/users/sign_up" class="ui-btn ui-btn-icon-left ui-icon-power ui-btn-inline">Join</a>
+        </p>
+
+        <div class="non-phonegap">
+          <div class="ui-grid-a">
+            <div class="ui-block-a" style="padding-right: 7px;">
+              <div style="text-align: right">
+                <a href="https://play.google.com/store/apps/details?id=com.myplaceonline"><img src="play_store.png" alt="Android App on Google Play Store" title="Android App on Google Play Store" width="129" height="45" style="padding-top: 3px;" /></a>
+                &nbsp;
+              </div>
+            </div>
+            <div class="ui-block-b">
+              <div>
+                <a href="https://itunes.apple.com/us/app/myplaceonline/id1148233790"><img src="Download_on_the_App_Store_Badge_US-UK_135x40.svg" alt="Download on the App Store" title="Download on the App Store" width="146" height="51" /></a>
+              </div>
+            </div>
+          </div>
+          <div data-role="collapsible-set">
+            <div data-role="collapsible" data-collapsed="true" data-collapsed-icon="eye" and data-expanded-icon="eye">
+              <h3>Screenshots</h3>
+              <p><img src="screenshot1.png" class="fit" /></p>
+              <p><img src="screenshot7.png" class="fit" /></p>
+              <p><img src="screenshot8.png" class="fit" /></p>
+              <p><img src="screenshot6.png" class="fit" /></p>
+            </div>
+          </div>
+        </div>
+        ]]>
     general:
       email: "E-mail"
       password: "Password"
@@ -408,54 +443,8 @@ en:
       home: "Home"
       feedback: "Quick Feedback"
     welcome:
-      intro_html: "myplaceonline is your online helper. We'll never sell your private data. The code is %{opensourcelink} if you want to review it or run it on your computer."
-      opensourcelink: "open source"
-      motto: "organize, <strong>harmonize</strong>, <em>maximize</em>."
       due: "Due"
       notepad: "Notepad"
-      features: !xml |
-        <![CDATA[
-
-        <div data-role="collapsible-set">
-          <div data-role="collapsible" data-collapsed="true" data-collapsed-icon="eye" and data-expanded-icon="eye">
-            <h3>Screenshots</h3>
-            <p>%{screenshot1}</p>
-            <p>%{screenshot3}</p>
-            <p>%{screenshot4}</p>
-            <p>%{screenshot2}</p>
-          </div>
-          <!--<div data-role="collapsible" data-collapsed="true" data-collapsed-icon="gear" and data-expanded-icon="gear">
-            <h3>Features</h3>
-            <p>%{feature_details}</p>
-          </div>-->
-        </div>
-        
-        ]]>
-      feature_details: !xml |
-        <![CDATA[
-
-          * Points system tracks life across three categories related to [happiness](/info/faq): order, joy, and meaning.
-          * Order
-            * Manage online passwords (user name, password, URL, notes, recovery questions & answers, etc.)
-              * Optionally encrypt passwords in the database so that even if the website is hacked, your passwords are encrypted with a key only you have.
-              * Import passwords from an OpenDocument .ods spreadsheet (with support for encrypted spreadsheets).
-              * Generate random passwords.
-              * Quickly copy passwords to the clipboard.
-              * Password notes support Markdown syntax.
-            * Manage apartments, bank accounts, contacts, credit cards, credit scores, RSS feeds, files, ideas, lists, vehicles, To Dos, etc.
-            * Create calculation forms with inputs and an equation and then create calculations from these forms.
-          * Joy
-            * Manage jokes.
-            * Manage movies you want to watch or have watched.
-          * Meaning
-            * Manage notes of wisdom gathered in life.
-            * Manage questions including hypotheses.
-          * General Features
-            * Export all data to a downloadable file with the option of encrypting it in a standardized format which can be decrypted with the open source gpg tool.
-            * Save exported data in offline browser storage and display some of it even without internet.
-              * Even if your phone is hacked, your passwords in offline storage are encrypted.
-        
-        ]]>
       search: "Search"
       recentlyused: "Recently or Frequently Used"
     info:

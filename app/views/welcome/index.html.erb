@@ -4,33 +4,7 @@
 
 <% if !user_signed_in? %>
 
-  <p class="horizontal_center"><%= t("myplaceonline.welcome.intro_html", :opensourcelink => link_to(t("myplaceonline.welcome.opensourcelink"), "https://github.com/myplaceonline/myplaceonline")) %></p>
-  <p class="horizontal_center"><%= raw(t("myplaceonline.welcome.motto")) %></p>
-
-  <p style="text-align: center">
-    <%= link_to t("myplaceonline.buttons.signup"), new_user_registration_path, :class => 'ui-btn ui-btn-icon-left ui-icon-user ui-btn-inline'  %>
-    <%= link_to t("myplaceonline.buttons.signin"), new_user_session_path, :class => 'ui-btn ui-btn-icon-left ui-icon-power ui-btn-inline'  %>
-  </p>
-
-  <% if !Myp.is_phonegap_request(params, session) %>
-    <div class="ui-grid-a">
-      <div class="ui-block-a" style="padding-right: 7px;">
-        <div style="text-align: right">
-          <%= link_to("https://play.google.com/store/apps/details?id=com.myplaceonline") do %><%= image_tag("play_store.png", width: 129, height: 45, alt: t("myplaceonline.general.play_store"), style: "padding-top: 3px;") %><% end %>
-          &nbsp;
-        </div>
-      </div>
-      <div class="ui-block-b">
-        <div>
-          <%= link_to("https://itunes.apple.com/us/app/myplaceonline/id1148233790") do %><%= image_tag("Download_on_the_App_Store_Badge_US-UK_135x40.svg", width: 146, height: 51, alt: t("myplaceonline.general.apple_store")) %><% end %>
-        </div>
-      </div>
-    </div>
-
-    <%# No screenshots for phonegap since they saw those when they installed the app %>
-    <%= raw(Myp.welcome_features) %>
-
-  <% end %>
+  <%= raw(Myp.website_domain_homepage) %>
 
 <% else %>
 
