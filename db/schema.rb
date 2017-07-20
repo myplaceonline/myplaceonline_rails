@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170718034041) do
+ActiveRecord::Schema.define(version: 20170720203903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1752,6 +1752,18 @@ ActiveRecord::Schema.define(version: 20170718034041) do
     t.integer "rating"
     t.index ["event_id"], name: "index_event_rsvps_on_event_id"
     t.index ["identity_id"], name: "index_event_rsvps_on_identity_id"
+  end
+
+  create_table "event_stories", force: :cascade do |t|
+    t.bigint "event_id"
+    t.bigint "story_id"
+    t.bigint "identity_id"
+    t.datetime "archived"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_event_stories_on_event_id"
+    t.index ["identity_id"], name: "index_event_stories_on_identity_id"
+    t.index ["story_id"], name: "index_event_stories_on_story_id"
   end
 
   create_table "events", id: :serial, force: :cascade do |t|
@@ -6032,6 +6044,9 @@ ActiveRecord::Schema.define(version: 20170718034041) do
   add_foreign_key "event_pictures", "identity_files"
   add_foreign_key "event_rsvps", "events"
   add_foreign_key "event_rsvps", "identities"
+  add_foreign_key "event_stories", "events"
+  add_foreign_key "event_stories", "identities"
+  add_foreign_key "event_stories", "stories"
   add_foreign_key "events", "identities", name: "events_identity_id_fk"
   add_foreign_key "events", "locations", name: "events_location_id_fk"
   add_foreign_key "events", "repeats", name: "events_repeat_id_fk"

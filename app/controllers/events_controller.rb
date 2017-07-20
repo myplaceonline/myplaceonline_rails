@@ -92,13 +92,23 @@ class EventsController < MyplaceonlineController
         title: I18n.t("myplaceonline.events.show_shared"),
         link: event_shared_path(@obj),
         icon: "search"
-      }
+      },
+      {
+        title: I18n.t("myplaceonline.events.add_story"),
+        link: new_event_event_story_path(@obj),
+        icon: "plus"
+      },
+      {
+        title: I18n.t("myplaceonline.events.stories"),
+        link: event_event_stories_path(@obj),
+        icon: "bullets"
+      },
     ] + super
   end
-  
+
   protected
     def sorts
-      ["events.event_time DESC"]
+      ["events.event_time DESC NULLS LAST"]
     end
     
     def obj_params
@@ -114,7 +124,7 @@ class EventsController < MyplaceonlineController
           :id,
           :_destroy,
           contact_attributes: ContactsController.param_names
-        ]
+        ],
       )
     end
 

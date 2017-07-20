@@ -265,13 +265,19 @@ class ApiController < ApplicationController
               objclass_index -= 2
               break
             end
-            objclass = spliturl[objclass_index].singularize
-            paramnode = params[objclass].dup.permit!.to_hash
             
-            Rails.logger.debug{"checking objclass: #{objclass}, paramnode: #{paramnode}"}
+            objclass = spliturl[objclass_index].singularize
+
+            Rails.logger.debug{"objclass: #{objclass}"}
+
+            paramnode = params[objclass]
+            
+            Rails.logger.debug{"checking paramnode: #{paramnode}"}
             
             if paramnode.nil?
               objclass_index += 2
+            else
+              paramnode = paramnode.dup.permit!.to_hash
             end
           end
 

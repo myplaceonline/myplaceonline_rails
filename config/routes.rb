@@ -243,7 +243,11 @@ Rails.application.routes.draw do
     events: [
       { instance: true, link: "share" },
       { instance: true, link: "shared" },
-      { instance: true, link: "rsvp" }
+      { instance: true, link: "rsvp" },
+      {
+        subresources: true,
+        name: :event_stories
+      }
     ],
     feeds: [
       { instance: false, link: "all_items" },

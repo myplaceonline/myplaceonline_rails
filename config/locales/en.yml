@@ -249,6 +249,7 @@ en:
       food_nutrition_informations: "Food Nutrition Informations"
       nutrients: "Nutrients"
       food_nutrition_information_amounts: "Nutrient Amounts"
+      event_stories: "Story"
     default_domain:
       meta_description: "myplaceonline: your online helper"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant"
@@ -2464,6 +2465,8 @@ en:
       rsvp_reminder_title: "Event Reminder: %{name}"
       rsvp_reminder_body_markdown: "Event Reminder: %{name}. Details: %{link}"
       rsvp_update_title: "Event Update: %{name}"
+      add_story: "Add Story"
+      stories: "Stories"
     stocks:
       company: "Company"
       password: "Password"
@@ -3546,3 +3549,5 @@ en:
       food_name: "Name"
       calories: "Calories"
       weight: "Weight (g)"
+    event_stories:
+      event: "Event"

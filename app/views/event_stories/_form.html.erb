@@ -1,0 +1,3 @@
+<%= f.fields_for :story, obj.story || Story.build do |sub_fields| %>
+  <%= render partial: "stories/form", locals: { obj: obj.story || Story.build, edit: edit, autofocus: true, f: sub_fields } %>
+<% end %>
