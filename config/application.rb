@@ -1,11 +1,12 @@
-require_relative 'boot'
+require_relative "boot"
 
-require 'rails/all'
+require "rails/all"
 
-require 'log4r'
-require 'log4r/yamlconfigurator'
-require 'log4r/outputter/datefileoutputter'
-require 'fileutils'
+require "log4r"
+require "log4r/yamlconfigurator"
+require "log4r/outputter/datefileoutputter"
+require "fileutils"
+require "twilio-ruby"
 include Log4r
 
 # Require the gems listed in Gemfile, including any gems
@@ -192,5 +193,9 @@ module Myplaceonline
     
     Date::DATE_FORMATS[:dygraph] = "%Y-%m-%d"
     Time::DATE_FORMATS[:dygraph] = "%Y-%m-%d %H:%M:%S"
+    
+    if !ENV["TWILIO_AUTH"].blank?
+      config.middleware.use(Rack::TwilioWebhookAuthentication, ENV["TWILIO_AUTH"], "/api/twilio")
+    end
   end
 end

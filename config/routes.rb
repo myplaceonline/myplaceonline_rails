@@ -148,6 +148,7 @@ Rails.application.routes.draw do
     api/renderpartial
     api/quickfeedback
     api/newfile
+    api/twilio_sms
   ))
 
   routes_get_post(%w(

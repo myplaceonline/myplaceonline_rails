@@ -2,8 +2,9 @@ class ApiController < ApplicationController
   include Rails.application.routes.url_helpers
 
   skip_authorization_check
-  
-  skip_before_action :verify_authenticity_token, only: [:debug]
+
+  # Only applies for POST methods (http://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html#method-i-protect_from_forgery)
+  skip_before_action :verify_authenticity_token, only: [:debug, :twilio_sms]
   
   def index
   end
@@ -505,6 +506,15 @@ class ApiController < ApplicationController
       end
     end
     render json: result
+  end
+  
+  # https://www.twilio.com/docs/api/twiml/sms/your_response
+  def twilio_sms
+    twiml = Twilio::TwiML::MessagingResponse.new do |r|
+      #r.message(body: "Hello World")
+    end
+
+    render(body: twiml.to_s, content_type: "text/xml", layout: false)
   end
 
   protected
