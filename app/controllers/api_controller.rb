@@ -510,9 +510,38 @@ class ApiController < ApplicationController
   
   # https://www.twilio.com/docs/api/twiml/sms/your_response
   def twilio_sms
+    
+    body = params["Body"]
+    from = params["From"]
+    
+    # Parameters:
+    # {
+    #   "ToCountry"=>"US",
+    #   "ToState"=>"CA",
+    #   "SmsMessageSid"=>"SM5[...]",
+    #   "NumMedia"=>"0",
+    #   "ToCity"=>"SAN DIEGO",
+    #   "FromZip"=>"92110",
+    #   "SmsSid"=>"SM5[...]",
+    #   "FromState"=>"CA",
+    #   "SmsStatus"=>"received",
+    #   "FromCity"=>"SAN DIEGO",
+    #   "Body"=>"Test",
+    #   "FromCountry"=>"US",
+    #   "To"=>"+1[...]",
+    #   "ToZip"=>"92064",
+    #   "NumSegments"=>"1",
+    #   "MessageSid"=>"SM5[...]",
+    #   "AccountSid"=>"[...]",
+    #   "From"=>"+1[...]",
+    #   "ApiVersion"=>"2010-04-01"
+    # }
+    
     twiml = Twilio::TwiML::MessagingResponse.new do |r|
-      #r.message(body: "Hello World")
+      r.message(body: I18n.t("myplaceonline.twilio.message_received"))
     end
+    
+    Myp.warn("SMS Received from #{from}: #{body}")
 
     render(body: twiml.to_s, content_type: "text/xml", layout: false)
   end
