@@ -538,7 +538,7 @@ class ApiController < ApplicationController
     # }
     
     twiml = Twilio::TwiML::MessagingResponse.new do |r|
-      r.message(body: I18n.t("myplaceonline.twilio.message_received"))
+      #r.message(body: I18n.t("myplaceonline.twilio.message_received"))
     end
     
     Myp.warn("SMS Received from #{from}: #{body}")
