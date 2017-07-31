@@ -3553,3 +3553,5 @@ en:
       event: "Event"
     twilio:
       message_received: "Message Received"
+      unsubscribed: "You have been unsubscribed."
+      resubscribed: "You have been resubscribed."

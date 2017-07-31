@@ -2355,13 +2355,21 @@ module Myp
   def self.send_sms(to: nil, body: nil, from: @@twilio_number)
     if !@@twilio_client.nil?
       Rails.logger.info{"Sending twilio SMS to: #{to}, body: #{body}"}
-      @@twilio_client.messages.create(
-        from: from,
-        to: to,
-        body: body
-      )
+      
+      if TextMessageUnsubscription.where(
+        "phone_number = ? and category is null and identity_id is null",
+        TextMessage.normalize(phone_number: to)
+      ).first.nil?
+        @@twilio_client.messages.create(
+          from: from,
+          to: to,
+          body: body
+        )
+      else
+        Rails.logger.debug{"Not sending SMS because unsubscribed: #{to}, body: #{body}"}
+      end
     else
-      Rails.logger.info{"Not sending twilio SMS: #{to}, body: #{body}"}
+      Rails.logger.info{"Not sending SMS because Twilio unconfigured: #{to}, body: #{body}"}
     end
   end
 

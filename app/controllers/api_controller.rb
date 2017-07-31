@@ -509,6 +509,7 @@ class ApiController < ApplicationController
   end
   
   # https://www.twilio.com/docs/api/twiml/sms/your_response
+  # Test: curl -X POST "http://localhost:3000/api/twilio_sms?Body=a&From=+11234567890"
   def twilio_sms
     
     body = params["Body"]
@@ -537,12 +538,51 @@ class ApiController < ApplicationController
     #   "ApiVersion"=>"2010-04-01"
     # }
     
-    twiml = Twilio::TwiML::MessagingResponse.new do |r|
-      #r.message(body: I18n.t("myplaceonline.twilio.message_received"))
+    if body.nil?
+      body = ""
+    end
+    if from.nil?
+      from = "Unknown Number"
     end
     
-    Myp.warn("SMS Received from #{from}: #{body}")
+    from = TextMessage.normalize(phone_number: from)
+    
+    transformed_body = body.downcase.gsub(/^please/, "").strip
+    
+    context_identity_id = nil
 
+    last_text_message = LastTextMessage.where(phone_number: from).take
+    if !last_text_message.nil?
+      context_identity_id = last_text_message.identity_id
+    end
+    
+    if ["unsub", "remove"].any?{|x| transformed_body.start_with?(x)}
+      
+      TextMessageUnsubscription.create!(
+        phone_number: from,
+        identity_id: context_identity_id,
+      )
+      
+      twiml = Twilio::TwiML::MessagingResponse.new do |r|
+        r.message(body: I18n.t("myplaceonline.twilio.unsubscribed"))
+      end
+      
+    elsif ["sub", "resub"].any?{|x| transformed_body.start_with?(x)}
+      
+      TextMessageUnsubscription.where(
+        phone_number: from,
+        identity_id: context_identity_id,
+      ).destroy_all
+      
+      twiml = Twilio::TwiML::MessagingResponse.new do |r|
+        r.message(body: I18n.t("myplaceonline.twilio.resubscribed"))
+      end
+      
+    else
+      Myp.warn("SMS Received from #{from}:\n\n#{body}")
+      twiml = Twilio::TwiML::MessagingResponse.new
+    end
+    
     render(body: twiml.to_s, content_type: "text/xml", layout: false)
   end
 

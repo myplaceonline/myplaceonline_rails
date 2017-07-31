@@ -8,8 +8,8 @@ class AsyncTextMessageJob < ApplicationJob
   def perform(*args)
     Chewy.strategy(:atomic) do
       Rails.logger.debug{"Started AsyncTextMessageJob"}
-      email = args[0]
-      email.send_sms
+      text_message = args[0]
+      text_message.send_sms
       Rails.logger.debug{"Finished AsyncTextMessageJob"}
     end
   end

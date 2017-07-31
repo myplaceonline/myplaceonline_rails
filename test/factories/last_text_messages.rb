@@ -1,6 +1,7 @@
 FactoryGirl.define do
-  factory :text_message_unsubscription do
+  factory :last_text_message do
     sms_number "MyString"
     category "MyString"
+    identity nil
   end
 end

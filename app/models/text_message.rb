@@ -61,7 +61,7 @@ class TextMessage < ApplicationRecord
     
     if TextMessageUnsubscription.where(
         "phone_number = ? and (category is null or category = ?) and (identity_id is null or identity_id = ?)",
-        target,
+        TextMessage.normalize(phone_number: target),
         message_category,
         identity.id
       ).first.nil?
@@ -122,5 +122,19 @@ class TextMessage < ApplicationRecord
 
   def self.skip_check_attributes
     ["draft", "copy_self"]
+  end
+  
+  def self.normalize(phone_number:)
+    if phone_number.nil?
+      phone_number = ""
+    end
+    phone_number = phone_number.gsub(/[^\d]+/, "")
+    if phone_number.length == 10
+      phone_number = "1" + phone_number
+    end
+    if !phone_number.start_with?("+")
+      phone_number = "+" + phone_number
+    end
+    phone_number
   end
 end
