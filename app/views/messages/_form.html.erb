@@ -9,8 +9,8 @@
     autofocus: autofocus
   )
 %>
-<%= myp_text_field(f, :subject, "myplaceonline.messages.subject", obj.subject) %>
 <%= myp_text_field(f, :message_category, "myplaceonline.messages.message_category", obj.message_category, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
+<%= myp_text_field(f, :subject, "myplaceonline.messages.subject", obj.subject) %>
 <%= myp_check_box(f, :send_emails, "myplaceonline.messages.send_emails") %>
 <%= myp_check_box(f, :send_texts, "myplaceonline.messages.send_texts") %>
 <%=
