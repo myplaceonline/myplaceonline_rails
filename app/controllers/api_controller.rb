@@ -578,6 +578,15 @@ class ApiController < ApplicationController
         r.message(body: I18n.t("myplaceonline.twilio.resubscribed"))
       end
       
+    elsif !context_identity_id.nil? && last_text_message.identity.has_mobile?
+      
+      # Pass it on to the most recent texter
+      if !body.blank?
+        last_text_message.identity.send_sms(body: body)
+      end
+      
+      twiml = Twilio::TwiML::MessagingResponse.new
+      
     else
       Myp.warn("SMS Received from #{from}:\n\n#{body}")
       twiml = Twilio::TwiML::MessagingResponse.new

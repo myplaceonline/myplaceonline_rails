@@ -22,14 +22,18 @@ class TextMessage < ApplicationRecord
     targets = {}
 
     text_message_contacts.each do |text_message_contact|
+      Rails.logger.debug{"TextMessage.all_targets contact: #{text_message_contact.inspect}"}
       text_message_contact.contact.contact_identity.identity_phones.each do |identity_phone|
+        Rails.logger.debug{"TextMessage.all_targets found phone: #{identity_phone.inspect}"}
         if identity_phone.accepts_sms?
+          Rails.logger.debug{"TextMessage.all_targets accepts SMS"}
           targets[identity_phone.number] = text_message_contact.contact
         end
       end
     end
 
     text_message_groups.each do |text_message_group|
+      Rails.logger.debug{"TextMessage.all_targets process group: #{text_message_group.inspect}"}
       process_group(targets, text_message_group.group)
     end
     
@@ -52,43 +56,45 @@ class TextMessage < ApplicationRecord
   end
   
   def process_single_target(target, content = nil, contact = nil)
-    Rails.logger.debug{"SMS process_single_target target: #{target}, content: #{content}"}
 
     if content.nil?
-      content = "#{identity.display_short} #{I18n.t("myplaceonline.emails.from_prefix_context")} #{Myp.website_domain.domain_name} #{I18n.t("myplaceonline.emails.subject_shared")}: "
+      content = "#{identity.display_short} #{I18n.t("myplaceonline.emails.subject_shared")}: "
       content += body
     end
     
+    target = TextMessage.normalize(phone_number: target)
+    
+    Rails.logger.debug{"SMS process_single_target target: #{target}, content: #{content}"}
+
     if TextMessageUnsubscription.where(
         "phone_number = ? and (category is null or category = ?) and (identity_id is null or identity_id = ?)",
-        TextMessage.normalize(phone_number: target),
+        target,
         message_category,
         identity.id
       ).first.nil?
       
       Rails.logger.info{"Sending SMS to #{target}"}
 
-      Myp.send_sms(to: target, body: body)
+      Myp.send_sms(to: target, body: content)
+      
+      last_text_message = LastTextMessage.where(phone_number: target).take
+      if last_text_message.nil?
+        last_text_message = LastTextMessage.new(
+          phone_number: target,
+          category: self.message_category,
+          identity_id: User.current_user.current_identity_id
+        )
+      end
+      last_text_message.save!
 
       if !contact.nil?
-        async = ExecutionContext.count == 0
-        begin
-          if async
-            ExecutionContext.push
-            User.current_user = self.identity.user
-          end
-          # If we sent an email, add a conversation
-          Conversation.new(
-            contact: contact,
-            identity: identity,
-            conversation: "[#{body}](/text_messages/#{id})",
-            conversation_date: User.current_user.date_now
-          ).save!
-        ensure
-          if async
-            ExecutionContext.pop
-          end
-        end
+        # If we sent an email, add a conversation
+        Conversation.new(
+          contact: contact,
+          identity: identity,
+          conversation: "[#{content}](/text_messages/#{id})",
+          conversation_date: User.current_user.date_now
+        ).save!
       end
       
       sleep(1.0)

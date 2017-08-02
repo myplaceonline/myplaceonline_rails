@@ -611,6 +611,13 @@ class Identity < ApplicationRecord
     Myp.send_email(user.email, subject, body, cc, bcc, body_plain)
   end
   
+  def send_sms(body:)
+    target = self.first_mobile_number
+    if !target.nil?
+      Myp.send_sms(to: target, body: body)
+    end
+  end
+  
   def final_search_result
     is_type_contact? ? contact : parent_company
   end

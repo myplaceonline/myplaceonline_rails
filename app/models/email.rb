@@ -205,24 +205,13 @@ class Email < ApplicationRecord
         )
         
         if !contact.nil?
-          async = ExecutionContext.count == 0
-          begin
-            if async
-              ExecutionContext.push
-              User.current_user = self.identity.user
-            end
-            # If we sent an email, add a conversation
-            Conversation.new(
-              contact: contact,
-              identity: identity,
-              conversation: "[#{subject}](/emails/#{id})",
-              conversation_date: User.current_user.date_now
-            ).save!
-          ensure
-            if async
-              ExecutionContext.pop
-            end
-          end
+          # If we sent an email, add a conversation
+          Conversation.new(
+            contact: contact,
+            identity: identity,
+            conversation: "[#{subject}](/emails/#{id})",
+            conversation_date: User.current_user.date_now
+          ).save!
         end
         
         sleep(1.0)

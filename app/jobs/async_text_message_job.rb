@@ -9,7 +9,9 @@ class AsyncTextMessageJob < ApplicationJob
     Chewy.strategy(:atomic) do
       Rails.logger.debug{"Started AsyncTextMessageJob"}
       text_message = args[0]
-      text_message.send_sms
+      MyplaceonlineExecutionContext.do_identity(text_message.identity) do
+        text_message.send_sms
+      end
       Rails.logger.debug{"Finished AsyncTextMessageJob"}
     end
   end
