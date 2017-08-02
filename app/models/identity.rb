@@ -614,7 +614,7 @@ class Identity < ApplicationRecord
   def send_sms(body:)
     target = self.first_mobile_number
     if !target.nil?
-      Myp.send_sms(to: target, body: body)
+      Myp.send_sms(to: target.number, body: body)
     end
   end
   
