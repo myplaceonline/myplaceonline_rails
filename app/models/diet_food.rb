@@ -6,6 +6,7 @@ class DietFood < ApplicationRecord
     ["myplaceonline.diet_foods.food_types.breakfast", 0],
     ["myplaceonline.diet_foods.food_types.lunch", 1],
     ["myplaceonline.diet_foods.food_types.dinner", 2],
+    ["myplaceonline.diet_foods.food_types.snack", 3],
   ]
   
   def self.properties

@@ -3511,6 +3511,7 @@ en:
         breakfast: "Breakfast"
         lunch: "Lunch"
         dinner: "Dinner"
+        snack: "Snack"
     consumed_foods:
       consumed_food_time: "Time"
       quantity: "Quantity"
