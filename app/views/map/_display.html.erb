@@ -10,6 +10,9 @@ if defined?(center)
     zoom = 10
   end
 end
+if !defined?(marker_cluster)
+  marker_cluster = false
+end
 Rails.logger.debug{"map/display latitude: #{defined?(latitude)}, #{latitude.inspect}"}
 if !defined?(latitude) || latitude.nil?
   Rails.logger.debug{"setting default latitude"}
@@ -61,6 +64,9 @@ end
         position: location.position,
         label: location.label,
         title: location.tooltip,
+        <% if !marker_cluster %>
+        map: map,
+        <% end %>
       });
       if (location.popupHtml) {
         var infoWindow = new google.maps.InfoWindow({
@@ -73,12 +79,14 @@ end
       return marker;
     });
     
-    new MarkerClusterer(
-      map,
-      markers,
-      {
-        imagePath: "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m"
-      }
-    );
+    <% if marker_cluster %>
+      new MarkerClusterer(
+        map,
+        markers,
+        {
+          imagePath: "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m"
+        }
+      );
+    <% end %>
   }
 </script>
