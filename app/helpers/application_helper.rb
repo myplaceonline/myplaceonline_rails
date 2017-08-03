@@ -334,7 +334,7 @@ module ApplicationHelper
     
     # ->(content:, format:, options: ){ content.to_s }
     if options[:transform].nil?
-      if content.is_a?(Fixnum) || content.is_a?(BigDecimal)
+      if content.is_a?(Numeric)
         options[:transform] = method(:display_string)
       elsif content.is_a?(ActiveSupport::TimeWithZone) || content.is_a?(Time) || content.is_a?(DateTime)
         options[:transform] = method(:display_time)

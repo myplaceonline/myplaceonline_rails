@@ -2007,7 +2007,7 @@ module Myp
         end
         
         # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html
-        search_results = UserIndex.query(query).order(visit_count: {order: :desc, missing: :_last}).limit(10).load.to_a
+        search_results = UserIndex.query(query).order(visit_count: {order: :desc, missing: :_last}).limit(10).load.objects
         
         results = Myp.process_search_results(
           search_results,
@@ -2151,7 +2151,7 @@ module Myp
         terms: {
           identity_id: [user.primary_identity_id]
         }
-      }).order(visit_count: {order: :desc, missing: :_last}).limit(limit).load.to_a
+      }).order(visit_count: {order: :desc, missing: :_last}).limit(limit).load.objects
       
       permissions = Permission.where(user_id: user.id)
       if permissions.length > 0
@@ -2159,7 +2159,7 @@ module Myp
           terms: {
             "_uid" => permissions.map{|p| p.subject_class.singularize + "#" + p.subject_id.to_s }.to_a
           }
-        }).order(visit_count: {order: :desc, missing: :_last}).limit(limit).load.to_a
+        }).order(visit_count: {order: :desc, missing: :_last}).limit(limit).load.objects
         
         search_results = search_results + permissions_results
         
