@@ -164,6 +164,8 @@ Rails.application.routes.draw do
 
   match 'c/:id', :to => 'calendar_item_reminder_pendings#short', via: [:get], as: "calendar_item_reminder_short"
 
+  match 'm/:token', :to => 'text_messages#short', via: [:get], as: "text_message_short"
+
   match 'passwords/import/odf', :to => 'passwords#importodf', via: [:get, :post]
   match 'passwords/import/odf/:id/step1', :to => 'passwords#importodf1', via: [:get, :post], :as => "passwords_import_odf1"
   match 'passwords/import/odf/:id/step2', :to => 'passwords#importodf2', via: [:get, :post], :as => "passwords_import_odf2"

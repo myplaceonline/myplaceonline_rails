@@ -1,4 +1,14 @@
-<%= myp_text_area_markdown(f, :body, "myplaceonline.text_messages.body", obj.body, autofocus, collapsed: false) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :body,
+    value: obj.body,
+    placeholder: "myplaceonline.text_messages.body",
+    collapsed: false,
+    autofocus: autofocus
+  )
+%>
 <%= myp_text_field(f, :message_category, "myplaceonline.text_messages.message_category", obj.message_category, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
 <%=
   render layout: "myplaceonline/childproperties", locals: {

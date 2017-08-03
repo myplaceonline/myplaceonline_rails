@@ -1,5 +1,5 @@
 class TextMessagesController < MyplaceonlineController
-  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:unsubscribe]
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:unsubscribe, :short]
   
   def self.param_names
     [
@@ -79,6 +79,13 @@ class TextMessagesController < MyplaceonlineController
     ]
   end
   
+  def short
+    # Don't bother authorizing - we'll redirect and do the authorization there. This leaks
+    # some object classes and IDs but that shouldn't matter
+    obj = PermissionShare.joins("INNER JOIN shares ON permission_shares.share_id = shares.id").where("shares.token = ?", params[:token]).take!.get_obj
+    redirect_to(text_message_shared_path(obj, token: params[:token]))
+  end
+
   def shared
     set_obj
     @token = TextMessageToken.where(token: params[:token]).first
