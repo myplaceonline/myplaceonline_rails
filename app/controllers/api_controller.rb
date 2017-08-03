@@ -584,7 +584,7 @@ class ApiController < ApplicationController
       if !body.blank?
         if last_text_message.from_identity.send_sms(body: body)
           LastTextMessage.update_ltm(
-            phone_number: last_text_message.from_identity.first_mobile_number,
+            phone_number: last_text_message.from_identity.first_mobile_number.number,
             message_category: last_text_message.category,
             to_identity_id: last_text_message.from_identity_id,
             from_identity_id: last_text_message.to_identity_id,
