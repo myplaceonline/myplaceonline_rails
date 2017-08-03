@@ -3,7 +3,6 @@ class UnsubscribeController < ApplicationController
   skip_authorization_check
   
   def index
-    email = params[:email]
     category = params[:category]
     token = params[:token]
     
@@ -14,11 +13,15 @@ class UnsubscribeController < ApplicationController
     if !token.nil?
       flash.clear
       
-      eu = EmailUnsubscription.new
-      eu.email = email
-      eu.category = category
-      eu.identity = token.identity
-      eu.save!
+      email = token.email
+      
+      if EmailUnsubscription.where(email: email, category: category, identity: token.identity).count == 0
+        eu = EmailUnsubscription.new
+        eu.email = email
+        eu.category = category
+        eu.identity = token.identity
+        eu.save!
+      end
       
       if category.blank?
         @content = t("myplaceonline.unsubscribe.unsubscribed_all")

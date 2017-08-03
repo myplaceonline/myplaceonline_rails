@@ -107,8 +107,8 @@ class Email < ApplicationRecord
 
       et = EmailToken.find_or_create_token_by_email(target, identity: identity)
       
-      unsubscribe_all_link = unsubscribe_url(email: target, token: et.token)
-      unsubscribe_category_link = unsubscribe_url(email: target, category: email_category, token: et.token)
+      unsubscribe_all_link = unsubscribe_url(token: et.token)
+      unsubscribe_category_link = unsubscribe_url(category: email_category, token: et.token)
       
       user_display_short = identity.display_short
       user_email = identity.user.email
