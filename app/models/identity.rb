@@ -246,18 +246,6 @@ class Identity < ApplicationRecord
     identity_emails.to_a.delete_if{|ie| ie.secondary }.map{|ie| ie.email }
   end
   
-  def phone_numbers
-    identity_phones.to_a.map{|ip| ip.number }
-  end
-  
-  def first_mobile_number
-    result = identity_phones.to_a.index{|x| x.accepts_sms? }
-    if !result.nil?
-      result = identity_phones[result]
-    end
-    result
-  end
-  
   child_properties(name: :identity_locations, foreign_key: "parent_identity_id")
   
   def primary_location
@@ -611,10 +599,29 @@ class Identity < ApplicationRecord
     Myp.send_email(user.email, subject, body, cc, bcc, body_plain)
   end
   
+  def phone_numbers
+    identity_phones.to_a.map{|ip| ip.number }
+  end
+  
+  def first_mobile_number
+    result = identity_phones.to_a.index{|x| x.accepts_sms? }
+    if !result.nil?
+      result = identity_phones[result]
+    end
+    result
+  end
+  
+  def has_mobile?
+    identity_phones.any?{|identity_phone| identity_phone.accepts_sms?}
+  end
+  
   def send_sms(body:)
     target = self.first_mobile_number
     if !target.nil?
       Myp.send_sms(to: target.number, body: body)
+      true
+    else
+      false
     end
   end
   
@@ -626,10 +633,6 @@ class Identity < ApplicationRecord
     false
   end
 
-  def has_mobile?
-    identity_phones.any?{|identity_phone| identity_phone.accepts_sms?}
-  end
-  
   def self.param_names(include_website: true, recurse: true, include_company: true)
     Myp.combine_conditionally([
       :id,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170730234036) do
+ActiveRecord::Schema.define(version: 20170803022206) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2809,11 +2809,13 @@ ActiveRecord::Schema.define(version: 20170730234036) do
   create_table "last_text_messages", force: :cascade do |t|
     t.string "phone_number"
     t.string "category"
-    t.bigint "identity_id"
+    t.bigint "from_identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["identity_id"], name: "index_last_text_messages_on_identity_id"
+    t.bigint "to_identity_id"
+    t.index ["from_identity_id"], name: "index_last_text_messages_on_from_identity_id"
     t.index ["phone_number"], name: "index_last_text_messages_on_phone_number"
+    t.index ["to_identity_id"], name: "index_last_text_messages_on_to_identity_id"
   end
 
   create_table "life_goals", id: :serial, force: :cascade do |t|
@@ -6212,7 +6214,8 @@ ActiveRecord::Schema.define(version: 20170730234036) do
   add_foreign_key "jobs", "identities", name: "jobs_identity_id_fk"
   add_foreign_key "jobs", "locations", column: "internal_address_id", name: "jobs_internal_address_id_fk"
   add_foreign_key "jokes", "identities", name: "jokes_identity_id_fk"
-  add_foreign_key "last_text_messages", "identities"
+  add_foreign_key "last_text_messages", "identities", column: "from_identity_id"
+  add_foreign_key "last_text_messages", "identities", column: "to_identity_id"
   add_foreign_key "life_goals", "identities", name: "life_goals_identity_id_fk"
   add_foreign_key "life_highlight_files", "identities"
   add_foreign_key "life_highlight_files", "identity_files"

@@ -77,15 +77,12 @@ class TextMessage < ApplicationRecord
 
       Myp.send_sms(to: target, body: content)
       
-      last_text_message = LastTextMessage.where(phone_number: target).take
-      if last_text_message.nil?
-        last_text_message = LastTextMessage.new(
-          phone_number: target,
-          category: self.message_category,
-          identity_id: User.current_user.current_identity_id
-        )
-      end
-      last_text_message.save!
+      LastTextMessage.update_ltm(
+        phone_number: target,
+        message_category: self.message_category,
+        to_identity_id: contact.nil? ? nil : contact.contact_identity_id,
+        from_identity_id: User.current_user.current_identity_id,
+      )
 
       if !contact.nil?
         # If we sent an email, add a conversation

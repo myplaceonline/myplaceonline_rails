@@ -553,7 +553,7 @@ class ApiController < ApplicationController
 
     last_text_message = LastTextMessage.where(phone_number: from).take
     if !last_text_message.nil?
-      context_identity_id = last_text_message.identity_id
+      context_identity_id = last_text_message.from_identity_id
     end
     
     if ["unsub", "remove"].any?{|x| transformed_body.start_with?(x)}
@@ -578,11 +578,18 @@ class ApiController < ApplicationController
         r.message(body: I18n.t("myplaceonline.twilio.resubscribed"))
       end
       
-    elsif !context_identity_id.nil? && last_text_message.identity.has_mobile?
+    elsif !context_identity_id.nil? && last_text_message.from_identity.has_mobile? && last_text_message.to_identity_id != last_text_message.from_identity_id
       
       # Pass it on to the most recent texter
       if !body.blank?
-        last_text_message.identity.send_sms(body: body)
+        if last_text_message.from_identity.send_sms(body: body)
+          LastTextMessage.update_ltm(
+            phone_number: last_text_message.from_identity.first_mobile_number,
+            message_category: last_text_message.category,
+            to_identity_id: last_text_message.from_identity_id,
+            from_identity_id: last_text_message.to_identity_id,
+          )
+        end
       end
       
       twiml = Twilio::TwiML::MessagingResponse.new
