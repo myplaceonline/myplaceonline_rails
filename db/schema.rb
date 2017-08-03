@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170803022206) do
+ActiveRecord::Schema.define(version: 20170803041533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4967,6 +4967,15 @@ ActiveRecord::Schema.define(version: 20170803022206) do
     t.index ["text_message_id"], name: "index_text_message_groups_on_text_message_id"
   end
 
+  create_table "text_message_tokens", force: :cascade do |t|
+    t.string "phone_number"
+    t.string "token"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_text_message_tokens_on_identity_id"
+  end
+
   create_table "text_message_unsubscriptions", id: :serial, force: :cascade do |t|
     t.string "phone_number"
     t.string "category"
@@ -6527,6 +6536,7 @@ ActiveRecord::Schema.define(version: 20170803022206) do
   add_foreign_key "text_message_groups", "groups"
   add_foreign_key "text_message_groups", "identities"
   add_foreign_key "text_message_groups", "text_messages"
+  add_foreign_key "text_message_tokens", "identities"
   add_foreign_key "text_message_unsubscriptions", "identities"
   add_foreign_key "text_messages", "identities"
   add_foreign_key "therapists", "contacts", name: "therapists_contact_id_fk"

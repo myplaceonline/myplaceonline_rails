@@ -92,8 +92,11 @@ class Ability
           if !ps.nil?
             result = true
             
+            Rails.logger.debug{"Ability.authorize Found permission share #{ps}"}
+            
             if !ps.valid_actions.blank?
               valid_guest_actions = ps.valid_actions.split(",").map{|x| x.to_sym}
+              Rails.logger.debug{"Ability.authorize valid_guest_actions #{valid_guest_actions}"}
             end
             
             if !ps.share.use_count.nil?

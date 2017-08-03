@@ -401,6 +401,10 @@ Rails.application.routes.draw do
         name: :retirement_plan_amounts
       }
     ],
+    text_messages: [
+      { instance: true, link: "shared" },
+      { instance: false, link: "unsubscribe" },
+    ],
     timings: [
       {
         subresources: true,

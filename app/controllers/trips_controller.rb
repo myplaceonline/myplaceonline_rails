@@ -10,7 +10,6 @@ class TripsController < MyplaceonlineController
     authorize! :show, @obj
     
     @pics = @obj.trip_pictures.to_a.dup.keep_if{|p| can?(:show, p.identity_file)}
-    
   end
   
   def share

@@ -375,7 +375,7 @@ module ApplicationHelper
     when :html
       if options[:markdown]
         options[:clipboard_text] = content
-        content = Myp.markdown_to_html(content)
+        content = Myp.markdown_to_html(content).html_safe
         options[:htmlencode_content] = false
         options[:content_classes] = "markdowncell #{options[:content_classes]}"
       end

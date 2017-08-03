@@ -2981,6 +2981,13 @@ en:
       send_sucess_sync: "The text message(s) have been sent"
       subject_shared: "shared"
       duplicate: "Duplicate"
+      show_shared: "Display"
+      details: " Details: "
+      link_unsubscribe_all: "Unsubscribe from all myplaceonline text messages from %{user}"
+      link_unsubscribe_category: "Unsubscribe from %{user}'s '%{category}' text messages"
+      unsubscribed_all: "Successfully unsubscribed from all text messages."
+      unsubscribed_category: "Successfully unsubscribed from %{category} text messages."
+      from: "From"
     business_cards:
       contact: "Contact"
       files: "Pictures"

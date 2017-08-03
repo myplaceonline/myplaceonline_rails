@@ -1,5 +1,8 @@
 class TextMessage < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
+  include ActionView::Helpers
+  include ActionDispatch::Routing
+  include Rails.application.routes.url_helpers
 
   validates :body, presence: true
   validates :message_category, presence: true
@@ -64,7 +67,7 @@ class TextMessage < ApplicationRecord
     
     target = TextMessage.normalize(phone_number: target)
     
-    Rails.logger.debug{"SMS process_single_target target: #{target}, content: #{content}"}
+    Rails.logger.debug{"SMS process_single_target target: #{target}"}
 
     if TextMessageUnsubscription.where(
         "phone_number = ? and (category is null or category = ?) and (identity_id is null or identity_id = ?)",
@@ -73,7 +76,27 @@ class TextMessage < ApplicationRecord
         identity.id
       ).first.nil?
       
-      Rails.logger.info{"Sending SMS to #{target}"}
+      token = TextMessageToken.find_or_create_by_phone(phone_number: target, identity: User.current_user.current_identity)
+      
+      share = Share.create!(
+        token: token,
+        identity: self.identity,
+      )
+      
+      PermissionShare.create!(
+        identity: self.identity,
+        share: share,
+        subject_class: self.class.name,
+        subject_id: self.id,
+        valid_actions: "shared"
+      )
+      
+      if !content.end_with?(".", "!")
+        content += "."
+      end
+      content += I18n.t("myplaceonline.text_messages.details") + text_message_shared_url(self, token: token)
+      
+      Rails.logger.info{"Sending SMS to #{target}, content: #{content}"}
 
       Myp.send_sms(to: target, body: content)
       
@@ -139,5 +162,10 @@ class TextMessage < ApplicationRecord
       phone_number = "+" + phone_number
     end
     phone_number
+  end
+  
+  protected
+  def default_url_options
+    Rails.configuration.default_url_options
   end
 end

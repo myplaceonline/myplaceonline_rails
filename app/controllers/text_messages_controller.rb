@@ -1,4 +1,5 @@
 class TextMessagesController < MyplaceonlineController
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:unsubscribe]
   
   def self.param_names
     [
@@ -60,7 +61,12 @@ class TextMessagesController < MyplaceonlineController
         title: I18n.t("myplaceonline.text_messages.duplicate"),
         link: new_text_message_path(duplicate: @obj.id),
         icon: "plus"
-      }
+      },
+      {
+        title: I18n.t("myplaceonline.trips.show_shared"),
+        link: text_message_shared_path(@obj),
+        icon: "search"
+      },
     ]
   end
   
@@ -71,6 +77,52 @@ class TextMessagesController < MyplaceonlineController
         :display => "myplaceonline.text_messages.draft"
       }
     ]
+  end
+  
+  def shared
+    set_obj
+    @token = TextMessageToken.where(token: params[:token]).first
+    @from = CGI::escapeHTML(@obj.identity.display)
+    if !@obj.identity.user.nil?
+      @from = "#{@from} (#{ActionController::Base.helpers.mail_to(@obj.identity.user.email)})"
+    end
+    from_number = @obj.identity.first_mobile_number
+    if !from_number.nil?
+      @from = "#{@from} (#{ActionController::Base.helpers.link_to(from_number.number, "tel:#{from_number.number}")})"
+    end
+    @from = @from.html_safe
+  end
+  
+  def unsubscribe
+    category = params[:category]
+    token = params[:token]
+    
+    @content = ""
+    
+    token = TextMessageToken.where(token: token).first
+    
+    if !token.nil?
+      flash.clear
+      
+      phone_number = token.phone_number
+      
+      if TextMessageUnsubscription.where(phone_number: phone_number, category: category, identity: token.identity).count == 0
+        TextMessageUnsubscription.create!(
+          phone_number: phone_number,
+          category: category,
+          identity: token.identity,
+        )
+      end
+      
+      if category.blank?
+        @content = t("myplaceonline.text_messages.unsubscribed_all")
+      else
+        @content = t("myplaceonline.text_messages.unsubscribed_category", {category: category})
+      end
+      
+    else
+      flash[:error] = t("myplaceonline.unsubscribe.invalid_token")
+    end
   end
   
   protected

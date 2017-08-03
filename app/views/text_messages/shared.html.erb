@@ -1,0 +1,23 @@
+<% content_for :heading do -%><%= t("myplaceonline.text_messages.body") %><% end -%>
+<%= data_row(heading: t("myplaceonline.text_messages.body"), content: @obj.body, markdown: true, wrap: false, prefix_heading: true) %>
+<%= data_row(heading: t("myplaceonline.text_messages.message_category"), content: @obj.message_category, wrap: false, prefix_heading: true) %>
+<%= data_row(heading: t("myplaceonline.text_messages.from"), content: @from, wrap: false, prefix_heading: true, htmlencode_content: false) %>
+<% if !@token.nil? %>
+  <hr />
+  <p><%= link_to(t("myplaceonline.text_messages.link_unsubscribe_category", user: @obj.identity.display, category: @obj.message_category), text_messages_unsubscribe_path(token: @token.token, category: @obj.message_category)) %></p>
+  <p><%= link_to(t("myplaceonline.text_messages.link_unsubscribe_all", user: @obj.identity.display), text_messages_unsubscribe_path(token: @token.token)) %></p>
+<% end %>
+
+<% if @obj.current_user_owns? %>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: text_message_path(@obj),
+          icon: "back"
+        },
+      ]
+    })
+  %>
+<% end %>
