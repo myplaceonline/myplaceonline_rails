@@ -94,7 +94,7 @@ class TextMessage < ApplicationRecord
       if !content.end_with?(".", "!")
         content += "."
       end
-      content += I18n.t("myplaceonline.text_messages.details") + text_message_short_url(token)
+      content += I18n.t("myplaceonline.text_messages.details") + text_message_short_url(self.id, token)
       
       Rails.logger.info{"Sending SMS to #{target}, content: #{content}"}
 
