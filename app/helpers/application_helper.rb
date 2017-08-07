@@ -1199,6 +1199,7 @@ module ApplicationHelper
       remote_autocomplete_identity: nil,
       tooltip: nil,
       select_options: nil,
+      select_options_sort: true,
       translate_select_options: true,
       text_area_rich: true,
     }.merge(options)
@@ -1243,7 +1244,7 @@ module ApplicationHelper
       end
     elsif options[:type] == Myp::FIELD_SELECT
       if options[:translate_select_options]
-        options[:select_options] = Myp.translate_options(options[:select_options], sort: true)
+        options[:select_options] = Myp.translate_options(options[:select_options], sort: options[:select_options_sort])
       end
     end
 

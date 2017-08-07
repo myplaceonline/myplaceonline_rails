@@ -29,6 +29,14 @@ class Contact < ApplicationRecord
     ["myplaceonline.contacts.sex_male", 1]
   ]
   
+  CONTACT_PREFERENCE_EMAIL = 0
+  CONTACT_PREFERENCE_TEXT = 1
+  
+  CONTACT_PREFERENCES = [
+    ["myplaceonline.contacts.contact_preferences.email", CONTACT_PREFERENCE_EMAIL],
+    ["myplaceonline.contacts.contact_preferences.text", CONTACT_PREFERENCE_TEXT],
+  ]
+  
   DEFAULT_CONTACT_BEST_FRIEND_THRESHOLD_SECONDS = 20.days
   DEFAULT_CONTACT_GOOD_FRIEND_THRESHOLD_SECONDS = 45.days
   DEFAULT_CONTACT_ACQUAINTANCE_THRESHOLD_SECONDS = 90.days
@@ -122,6 +130,14 @@ class Contact < ApplicationRecord
     email.email_contacts << EmailContact.new(contact: self)
     email.save!
     email.process
+  end
+  
+  def has_email?
+    contact_identity.has_email?
+  end
+
+  def has_mobile?
+    contact_identity.has_mobile?
   end
 
   def self.contact_type_threshold(calendar)

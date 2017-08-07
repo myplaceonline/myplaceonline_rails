@@ -9,10 +9,29 @@
     autofocus: autofocus
   )
 %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :long_body,
+    value: obj.long_body,
+    placeholder: "myplaceonline.messages.long_body",
+    collapsed: false
+  )
+%>
 <%= myp_text_field(f, :message_category, "myplaceonline.messages.message_category", obj.message_category, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
 <%= myp_text_field(f, :subject, "myplaceonline.messages.subject", obj.subject) %>
-<%= myp_check_box(f, :send_emails, "myplaceonline.messages.send_emails") %>
-<%= myp_check_box(f, :send_texts, "myplaceonline.messages.send_texts") %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_SELECT,
+    name: :send_preferences,
+    value: obj.send_preferences,
+    placeholder: "myplaceonline.messages.send_preferences_title",
+    select_options: Message::SEND_PREFERENCES,
+    select_options_sort: false,
+  )
+%>
 <%=
   render layout: "myplaceonline/childproperties", locals: {
     f: f,

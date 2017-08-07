@@ -4,12 +4,12 @@ class MessagesController < MyplaceonlineController
     [
       :id,
       :body,
+      :long_body,
       :subject,
       :copy_self,
       :message_category,
       :draft,
-      :send_emails,
-      :send_texts,
+      :send_preferences,
       message_contacts_attributes: [
         :id,
         :_destroy,

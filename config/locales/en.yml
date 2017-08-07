@@ -877,6 +877,10 @@ en:
       extra: "Extra Fields"
       company: "Work"
       groups: "Groups"
+      contact_preference: "Contact Preference"
+      contact_preferences:
+        email: "Email"
+        text: "Text"
     files:
       name: "Name"
       download: "Download"
@@ -3035,7 +3039,8 @@ en:
       dream_time: "Dream Time"
       dream: "Dream"
     messages:
-      body: "Message"
+      body: "Short Message (for Text)"
+      long_body: "Long Message (for Email)"
       copy_self: "Blind Carbon Copy Me"
       message_category: "Category"
       draft: "Draft"
@@ -3054,10 +3059,16 @@ en:
       send_sucess_sync: "The message(s) have been sent"
       subject_shared: "shared"
       duplicate: "Duplicate"
-      send_emails: "Send Email"
-      send_texts: "Send Text Message"
       subject_required_for_email: "A subject is required when you've chosen to send emails"
       subject: "Subject (Email Only)"
+      message_contacts: "Contacts"
+      send_preferences_title: "Send Preferences"
+      send_preferences:
+        email_or_text_prefer_email: "Email or Text (Prefer Email)"
+        email_or_text_prefer_text: "Email or Text (Prefer Text)"
+        email_and_text: "Email and Text"
+        email: "Email Only"
+        text: "Text Only"
     media_dumps:
       media_dump: "Media Dump"
       media_dump_name: "Name"

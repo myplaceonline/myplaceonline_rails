@@ -16,6 +16,17 @@
   <% if !simpleform %>
     <%= myp_date_field(identity_fields, :birthday, "myplaceonline.contacts.birthday", obj.contact_identity.birthday) %>
     <%= myp_select(f, :contact_type, "myplaceonline.contacts.contact_type", Myp.translate_options(Contact::CONTACT_TYPES), obj.contact_type) %>
+    <%=
+      input_field(
+        form: f,
+        type: Myp::FIELD_SELECT,
+        name: :contact_preference,
+        value: obj.contact_preference,
+        placeholder: "myplaceonline.contacts.contact_preference",
+        select_options: Contact::CONTACT_PREFERENCES,
+        select_options_sort: false,
+      )
+    %>
     <%= myp_select(identity_fields, :sex_type, "myplaceonline.contacts.sex_type", Myp.translate_options(Contact::SEX_TYPES), obj.contact_identity.sex_type) %>
   <% end %>
   

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170803041533) do
+ActiveRecord::Schema.define(version: 20170807021843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1035,6 +1035,7 @@ ActiveRecord::Schema.define(version: 20170803041533) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.integer "contact_preference"
     t.index ["contact_identity_id"], name: "index_contacts_on_contact_identity_id"
     t.index ["identity_id"], name: "index_contacts_on_identity_id"
   end
@@ -3296,11 +3297,11 @@ ActiveRecord::Schema.define(version: 20170803041533) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "send_emails"
-    t.boolean "send_texts"
     t.string "subject"
     t.datetime "archived"
     t.integer "rating"
+    t.text "long_body"
+    t.integer "send_preferences"
     t.index ["identity_id"], name: "index_messages_on_identity_id"
   end
 

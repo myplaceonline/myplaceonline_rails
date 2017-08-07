@@ -246,6 +246,10 @@ class Identity < ApplicationRecord
     identity_emails.to_a.delete_if{|ie| ie.secondary }.map{|ie| ie.email }
   end
   
+  def has_email?
+    self.emails.length > 0
+  end
+  
   child_properties(name: :identity_locations, foreign_key: "parent_identity_id")
   
   def primary_location

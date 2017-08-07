@@ -1,8 +1,8 @@
-<%= attribute_table_row(t("myplaceonline.messages.subject"), obj.subject) %>
 <%= attribute_table_row_markdown(t("myplaceonline.messages.body"), obj.body) %>
+<%= attribute_table_row_markdown(t("myplaceonline.messages.long_body"), obj.long_body) %>
 <%= attribute_table_row(t("myplaceonline.messages.message_category"), obj.message_category) %>
-<%= attribute_table_row_boolean(t("myplaceonline.messages.send_emails"), obj.send_emails) %>
-<%= attribute_table_row_boolean(t("myplaceonline.messages.send_texts"), obj.send_texts, hide_if_false: false) %>
+<%= attribute_table_row(t("myplaceonline.messages.subject"), obj.subject) %>
+<%= data_row(heading: t("myplaceonline.messages.send_preferences_title"), content: obj.send_preferences, enumeration: Message::SEND_PREFERENCES) %>
 <%= attribute_table_row_boolean(t("myplaceonline.messages.copy_self"), obj.copy_self, hide_if_false: false) %>
 <% obj.message_contacts.each do |wrapper| %>
   <%= attribute_table_row_reference(t("myplaceonline.messages.contact"), "contact_path", wrapper.contact) %>

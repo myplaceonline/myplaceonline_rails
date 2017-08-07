@@ -16,6 +16,7 @@ class ContactsController < MyplaceonlineController
       :id,
       :_destroy,
       :contact_type,
+      :contact_preference,
       conversations_attributes: [
         :id,
         :conversation,
