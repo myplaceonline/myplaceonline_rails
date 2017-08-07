@@ -11,6 +11,16 @@
 %>
 <%= myp_text_field(f, :message_category, "myplaceonline.text_messages.message_category", obj.message_category, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
 <%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :long_body,
+    value: obj.long_body,
+    placeholder: "myplaceonline.text_messages.long_body",
+    collapsed: obj.long_body.blank?,
+  )
+%>
+<%=
   render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.text_messages.contacts"),

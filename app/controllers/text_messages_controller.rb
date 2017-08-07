@@ -8,6 +8,7 @@ class TextMessagesController < MyplaceonlineController
       :copy_self,
       :message_category,
       :draft,
+      :long_body,
       text_message_contacts_attributes: [
         :id,
         :_destroy,

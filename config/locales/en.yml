@@ -2992,6 +2992,8 @@ en:
       unsubscribed_all: "Successfully unsubscribed from all text messages."
       unsubscribed_category: "Successfully unsubscribed from %{category} text messages."
       from: "From"
+      long_body: "Long Body (Seen in Details Link)"
+      long_body_shared: "Details"
     business_cards:
       contact: "Contact"
       files: "Pictures"

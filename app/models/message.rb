@@ -134,7 +134,8 @@ class Message < ApplicationRecord
       message_category: self.message_category,
       identity_id: self.identity_id,
       draft: self.draft,
-      personalize: self.personalize
+      personalize: self.personalize,
+      long_body: self.long_body,
     )
     self.message_contacts.each do |x|
       if x.contact.has_mobile? && should_send_text?(contact: x.contact, skip_contacts: skip_contacts)
