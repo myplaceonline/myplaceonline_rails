@@ -464,6 +464,7 @@ en:
       terms_short: "Terms"
       faq: "Frequently Asked Questions (FAQs)"
       help: "Help"
+      upload: "Upload"
       faq_content: !xml |
         <![CDATA[
         # Frequently Asked Questions

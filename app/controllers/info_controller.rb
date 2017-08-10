@@ -123,4 +123,18 @@ Body:
       end
     end
   end
+  
+  def upload
+    if request.post?
+      file = params[:file]
+      if !file.nil?
+        # http://api.rubyonrails.org/classes/ActionDispatch/Http/UploadedFile.html
+        result = "Successfully uploaded. Name: #{file.original_filename}, Size: #{file.size}, Content type: #{file.content_type}"
+      else
+        result = "No file selected"
+      end
+      flash[:notice] = result
+      Rails.logger.info{"InfoController.upload #{result}"}
+    end
+  end
 end

@@ -6,7 +6,7 @@ require "base64"
 class IdentityFile < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
-
+  
   def self.properties
     [
       { name: :file, type: ApplicationRecord::PROPERTY_TYPE_FILE },

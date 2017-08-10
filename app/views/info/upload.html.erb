@@ -1,0 +1,18 @@
+<% content_for :heading do -%><%= t("myplaceonline.info.upload") %><% end -%>
+
+<h1><%= t("myplaceonline.info.upload") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag(info_upload_path, multipart: true, data: { ajax: false }) do %>
+  <%= file_field_tag("file") %>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.info.upload"), "data-icon" => "action", "data-iconpos" => "top")
+        },
+      ]
+    })
+  %>
+<% end %>

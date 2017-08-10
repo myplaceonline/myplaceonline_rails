@@ -156,6 +156,7 @@ Rails.application.routes.draw do
     random/activity
     info/contact
     info/invite
+    info/upload
     admin/send_email
     admin/send_text_message
     admin/send_direct_email
