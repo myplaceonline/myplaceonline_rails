@@ -3,6 +3,7 @@ require "awesome_print"
 class InfoController < ApplicationController
   skip_before_action :do_authenticate_user
   skip_authorization_check
+  skip_before_action :verify_authenticity_token, only: [:upload]
   
   def index; end
   def credits; end
