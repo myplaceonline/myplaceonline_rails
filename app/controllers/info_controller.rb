@@ -129,8 +129,24 @@ Body:
     if request.post?
       file = params[:file]
       if !file.nil?
-        # http://api.rubyonrails.org/classes/ActionDispatch/Http/UploadedFile.html
-        result = "Successfully uploaded. Name: #{file.original_filename}, Size: #{file.size}, Content type: #{file.content_type}"
+        # If it's an UploadedFile object, then this was just a normal form submission; otherwise, it's been processed
+        # by nginx-upload-module
+        if file.is_a?(ActionDispatch::Http::UploadedFile)
+          # http://api.rubyonrails.org/classes/ActionDispatch/Http/UploadedFile.html
+          result = "Successfully uploaded. Name: #{file.original_filename}, Size: #{file.size}, Content type: #{file.content_type}"
+        else
+          # {
+          #   "file" => {
+          #     "original_filename"=>"helloworld.txt",
+          #     "content_type"=>"text/plain",
+          #     "path"=>"/var/lib/remotenfs//uploads/0063322223",
+          #     "md5"=>"e59ff97941044f85df5297e1c302d260",
+          #     "size"=>"12"
+          #   },
+          #   "submit" => "blah"
+          # }
+          result = "Successfully uploaded. Name: #{file[:original_filename]}, Size: #{file[:size]}, Content type: #{file[:content_type]}"
+        end
       else
         result = "No file selected"
       end
