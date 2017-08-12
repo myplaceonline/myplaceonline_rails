@@ -50,10 +50,17 @@ module AllowExistingConcern extend ActiveSupport::Concern
   end
   
   included do
+    def set_property_modify_attributes(attributes:)
+    end
+    
     def set_property_with_attributes(name:, attributes:, update_type: AllowExistingConcern::UPDATE_TYPE_UNKNOWN)
       model = self.class.child_property_models[name]
       
-      Rails.logger.debug{"set_property_with_attributes name: #{name}, model: #{model}, attributes: #{Myp.debug_print(attributes)}, self: #{self.inspect}"}
+      Rails.logger.debug{"#{self.class}.set_property_with_attributes name: #{name}, model: #{model}, attributes: #{Myp.debug_print(attributes)}, self: #{self.inspect}"}
+      
+      set_property_modify_attributes(attributes: attributes)
+      
+      Rails.logger.debug{"#{self.class}.set_property_with_attributes attributes: #{Myp.debug_print(attributes)}"}
       
       if !attributes.nil?
         if !attributes["id"].blank?

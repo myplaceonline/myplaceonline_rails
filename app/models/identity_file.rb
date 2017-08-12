@@ -19,6 +19,13 @@ class IdentityFile < ApplicationRecord
   
   SIZE_THRESHOLD_FILESYSTEM = 1048576 * 10
 
+  # Unclear why but in some situations validations don't get called, so use do_before* instead
+  #validate do
+  #  if file.nil? || get_file_contents.nil? || get_file_contents.length == 0
+  #    errors.add(:file, I18n.t("myplaceonline.general.non_blank"))
+  #  end
+  #end
+  
   before_create :do_before_create
   before_update :do_before_update
 
@@ -26,13 +33,6 @@ class IdentityFile < ApplicationRecord
 
   has_attached_file :file, :storage => :database
   do_not_validate_attachment_file_type :file
-  
-  # Unclear why but validations don't get called
-  #validate do
-  #  if file.nil? || get_file_contents.nil? || get_file_contents.length == 0
-  #    errors.add(:file, I18n.t("myplaceonline.general.non_blank"))
-  #  end
-  #end
   
   child_property(name: :folder, model: IdentityFileFolder)
 
@@ -58,8 +58,16 @@ class IdentityFile < ApplicationRecord
     file_file_size
   end
   
+  def verify_file
+    Rails.logger.debug{"IdentityFile verify_file"}
+    if !ENV["PERMDIR"].blank? && !self.filesystem_path.blank? && !File.absolute_path(self.filesystem_path).start_with?(ENV["PERMDIR"])
+      raise "Path #{File.absolute_path(self.filesystem_path)} must start with #{ENV["PERMDIR"]}"
+    end
+  end
+  
   def do_before_create
     Rails.logger.debug{"IdentityFile do_before_create"}
+    verify_file
     if file_file_name.blank? && !file.nil?
       if !file.queued_for_write.nil? && file.queued_for_write[:original]
         self.file_file_name = file.queued_for_write[:original].original_filename
@@ -70,6 +78,7 @@ class IdentityFile < ApplicationRecord
   def do_before_update
     file_sized_changed = self.file_file_size_changed?
     Rails.logger.debug{"IdentityFile do_before_update; file_sized_changed: #{file_sized_changed}"}
+    verify_file
     if file_sized_changed
       # Make sure any thumbnail is cleared (if it's a picture)
       clear_thumbnail
@@ -178,5 +187,21 @@ class IdentityFile < ApplicationRecord
       self.thumbnail_hash = Digest::MD5.hexdigest(self.thumbnail_contents)
       self.save!
     end
+  end
+  
+  def self.create_for_path!(file_hash:)
+    #   "file" => {
+    #     "original_filename"=>"helloworld.txt",
+    #     "content_type"=>"text/plain",
+    #     "path"=>"/var/lib/remotenfs//uploads/0063322223",
+    #     "md5"=>"e59ff97941044f85df5297e1c302d260",
+    #     "size"=>"12"
+    #   }
+    IdentityFile.create!(
+      file_file_name: file_hash[:original_filename],
+      file_content_type: file_hash[:content_type],
+      file_file_size: file_hash[:size],
+      filesystem_path: file_hash[:path],
+    )
   end
 end

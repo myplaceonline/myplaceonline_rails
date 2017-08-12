@@ -21,13 +21,13 @@ class FilesController < MyplaceonlineController
   def download
     @obj = model.find_by(id: params[:id])
     authorize! :show, @obj
-    respond_download_identity_file('attachment', @obj)
+    respond_download_identity_file("attachment", @obj)
   end
   
   def view
     @obj = model.find_by(id: params[:id])
     authorize! :show, @obj
-    respond_download_identity_file('inline', @obj)
+    respond_download_identity_file("inline", @obj)
   end
   
   def thumbnail
@@ -35,10 +35,10 @@ class FilesController < MyplaceonlineController
     authorize! :show, @obj
     if !@obj.thumbnail_contents.nil?
       Rails.logger.debug{"FilesController.thumbnail: found thumbnail_contents #{@obj.thumbnail_bytes}"}
-      respond_download('inline', @obj.thumbnail_contents, @obj.thumbnail_bytes)
+      respond_download("inline", @obj.thumbnail_contents, @obj.thumbnail_bytes)
     else
       Rails.logger.debug{"FilesController.thumbnail: no thumbnail, sending whole image"}
-      respond_download_identity_file('inline', @obj)
+      respond_download_identity_file("inline", @obj)
     end
   end
   
@@ -260,7 +260,7 @@ class FilesController < MyplaceonlineController
     end
     
     def respond_download(respond_type, data, data_bytes)
-      response.headers['Content-Length'] = data_bytes.to_s
+      response.headers["Content-Length"] = data_bytes.to_s
       send_data(
         data,
         :type => @obj.file_content_type,

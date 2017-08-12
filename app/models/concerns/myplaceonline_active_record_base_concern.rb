@@ -157,6 +157,17 @@ module MyplaceonlineActiveRecordBaseConcern
         self.identity_file.display
       end
       
+      define_method(:set_property_modify_attributes) do |attributes:|
+        if !attributes["file"].is_a?(ActionDispatch::Http::UploadedFile)
+          file_hash = attributes["file"]
+          attributes["file_file_name"] = file_hash["original_filename"]
+          attributes["file_content_type"] = file_hash["content_type"]
+          attributes["file_file_size"] = file_hash["size"]
+          attributes["filesystem_path"] = file_hash["path"]
+          attributes.delete("file")
+        end
+      end
+      
       define_method(:update_file_folders) do
         p = self.send(parent)
         Rails.logger.debug{"child_file; parent: #{p.inspect}"}
