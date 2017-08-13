@@ -1,4 +1,5 @@
 require "base64"
+require "open3"
 
 # TODO
 # https://github.com/willbryant/columns_on_demand
@@ -87,9 +88,15 @@ class IdentityFile < ApplicationRecord
   
   def clear_thumbnail
     self.thumbnail_contents = nil
-    self.thumbnail_bytes = nil
+    self.thumbnail_size_bytes = nil
     self.thumbnail_skip = nil
-    self.thumbnail_hash = nil
+    
+    if !self.thumbnail_filesystem_path.blank?
+      File.delete(self.thumbnail_filesystem_path)
+    end
+    
+    self.thumbnail_filesystem_path = nil
+    self.thumbnail_filesystem_size = nil
   end
   
   def self.build(params = nil)
@@ -124,8 +131,12 @@ class IdentityFile < ApplicationRecord
   def get_file_contents
     Rails.logger.info{"get_file_contents: Request for full image contents id #{self.id}"}
     result = nil
-    if !self.file.nil? && self.file.exists?
-      result = self.file.file_contents
+    if self.has_file?
+      if self.filesystem_path.blank?
+        result = self.file.file_contents
+      else
+        IO.binread(self.filesystem_path)
+      end
     end
     Rails.logger.info{"get_file_contents: Returning #{ result.nil? ? 0 : result.length }"}
     result
@@ -136,9 +147,13 @@ class IdentityFile < ApplicationRecord
   def on_after_save
     ensure_thumbnail
   end
+  
+  def has_file?
+    (!self.file.nil? && self.file.exists?) || !self.filesystem_path.blank?
+  end
 
   def is_image?
-    !self.file.nil? && self.file.exists? && !self.file_content_type.blank? && self.file_content_type.start_with?("image")
+    self.has_file? && !self.file_content_type.blank? && self.file_content_type.start_with?("image")
   end
 
   def is_thumbnailable?
@@ -146,11 +161,11 @@ class IdentityFile < ApplicationRecord
   end
   
   def is_audio?
-    !self.file.nil? && self.file.exists? && !self.file_content_type.blank? && self.file_content_type.start_with?("audio")
+    self.has_file? && !self.file_content_type.blank? && self.file_content_type.start_with?("audio")
   end
   
   def is_video?
-    !self.file.nil? && self.file.exists? && !self.file_content_type.blank? && self.file_content_type.start_with?("video")
+    self.has_file? && !self.file_content_type.blank? && self.file_content_type.start_with?("video")
   end
   
   def has_thumbnail?
@@ -159,33 +174,53 @@ class IdentityFile < ApplicationRecord
 
   def ensure_thumbnail
     Rails.logger.debug{"IdentityFile ensure_thumbnail"}
-    if is_image? && self.thumbnail_contents.nil? && !self.thumbnail_skip && is_thumbnailable?
+    if self.is_image? && self.thumbnail_contents.nil? && !self.thumbnail_skip && self.is_thumbnailable?
+      
       Rails.logger.debug{"image_content: Generating thumbnail for #{self.id}, type #{self.file_content_type}"}
-      image = Magick::Image::from_blob(self.get_file_contents)
-      Rails.logger.debug{"image_content: Loaded image"}
-      image = image.first
-      Rails.logger.debug{"image_content: Acquired first image cols #{image.columns}"}
-      max_width = 400
-      if image.columns > max_width
-        Rails.logger.debug{"image_content: Requires thumbnailing"}
-        image.resize_to_fit!(max_width)
-        blob = image.to_blob
-        self.thumbnail_contents = blob
-        self.thumbnail_bytes = blob.length
-        self.thumbnail_hash = Digest::MD5.hexdigest(blob)
-        self.save!
-        Rails.logger.debug{"image_content: Saved thumbnail"}
+      
+      if self.filesystem_path.blank?
+        image = Magick::Image::from_blob(self.get_file_contents)
+        
+        Rails.logger.debug{"image_content: Loaded image"}
+        
+        image = image.first
+        
+        Rails.logger.debug{"image_content: Acquired first image cols #{image.columns}"}
+        
+        max_width = 400
+        
+        if image.columns > max_width
+          Rails.logger.debug{"image_content: Requires thumbnailing"}
+          image.resize_to_fit!(max_width)
+          blob = image.to_blob
+          self.thumbnail_contents = blob
+          self.thumbnail_size_bytes = blob.length
+          self.save!
+          Rails.logger.debug{"image_content: Saved thumbnail"}
+        else
+          Rails.logger.debug{"image_content: Thumbnail not required"}
+          self.thumbnail_skip = true
+          self.save!
+        end
       else
-        Rails.logger.debug{"image_content: Thumbnail not required"}
-        self.thumbnail_skip = true
+        thumbnail_path = self.filesystem_path + "t"
+        
+        # https://imagemagick.org/script/command-line-processing.php#geometry
+        # http://www.imagemagick.org/Usage/thumbnails/
+        # http://www.imagemagick.org/Usage/resize/
+        Open3.popen3(%{
+          convert #{self.filesystem_path} -auto-orient -thumbnail '#{max_width}>' #{thumbnail_path}
+        }) do |stdin, stdout, stderr, wait_thr|
+          exit_status = wait_thr.value
+          if exit_status != 0
+            raise "Thumbnail creation exit status " + exit_status.to_s
+          end
+        end
+        
+        self.thumbnail_filesystem_path = thumbnail_path
+        self.thumbnail_filesystem_size = File.size(thumbnail_path)
         self.save!
       end
-    end
-    
-    if has_thumbnail? && thumbnail_hash.nil?
-      Rails.logger.debug{"image_content: Updating hash for already generated thumbnail"}
-      self.thumbnail_hash = Digest::MD5.hexdigest(self.thumbnail_contents)
-      self.save!
     end
   end
   
@@ -210,6 +245,9 @@ class IdentityFile < ApplicationRecord
   def on_after_destroy
     if !self.filesystem_path.blank?
       File.delete(self.filesystem_path)
+    end
+    if !self.thumbnail_filesystem_path.blank?
+      File.delete(self.thumbnail_filesystem_path)
     end
   end
 end

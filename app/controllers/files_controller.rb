@@ -1,3 +1,5 @@
+require "open3"
+
 class FilesController < MyplaceonlineController
   #skip_authorization_check :only => [:download, :view, :thumbnail]
   #skip_before_action :do_authenticate_user, :only => [:download, :view, :thumbnail]
@@ -36,6 +38,13 @@ class FilesController < MyplaceonlineController
     if !@obj.thumbnail_contents.nil?
       Rails.logger.debug{"FilesController.thumbnail: found thumbnail_contents #{@obj.thumbnail_bytes}"}
       respond_download("inline", @obj.thumbnail_contents, @obj.thumbnail_bytes)
+    elsif !@obj.thumbnail_filesystem_path.blank?
+      send_file(
+        @obj.thumbnail_filesystem_path,
+        :type => @obj.file_content_type,
+        :filename => @obj.file_file_name,
+        :disposition => "inline"
+      )
     else
       Rails.logger.debug{"FilesController.thumbnail: no thumbnail, sending whole image"}
       respond_download_identity_file("inline", @obj)
@@ -97,29 +106,43 @@ class FilesController < MyplaceonlineController
       degrees = degrees_str.to_i
       if degrees >= -360 && degrees <= 360
         
-        image = Magick::Image.from_blob(@obj.get_file_contents).first
-        
-        Myp.tmpfile("file" + @obj.id.to_s + "_", "") do |tfile|
-          image.background_color = "none"
-          image.rotate!(degrees)
+        if @obj.filesystem_path.blank?
+          image = Magick::Image.from_blob(@obj.get_file_contents).first
           
-          # Reset any EXIF orientation data when rotating
-          if image.respond_to?("orientation=")
-            image.orientation = Magick::UndefinedOrientation
+          Myp.tmpfile("file" + @obj.id.to_s + "_", "") do |tfile|
+            image.background_color = "none"
+            image.rotate!(degrees)
+            
+            # Reset any EXIF orientation data when rotating
+            if image.respond_to?("orientation=")
+              image.orientation = Magick::UndefinedOrientation
+            end
+            
+            image.write(tfile.path)
+            
+            tfile.flush
+            
+            uploaded_file = ActionDispatch::Http::UploadedFile.new(
+              tempfile: tfile,
+              filename: @obj.file_file_name,
+              type: @obj.file_content_type
+            )
+            
+            @obj.clear_thumbnail
+            @obj.file = uploaded_file
+            @obj.save!
+          end
+        else
+          Open3.popen3(%{
+            mogrify -auto-orient -rotate #{degrees} #{@obj.filesystem_path}
+          }) do |stdin, stdout, stderr, wait_thr|
+            exit_status = wait_thr.value
+            if exit_status != 0
+              raise "Rotation exit status " + exit_status.to_s
+            end
           end
           
-          image.write(tfile.path)
-          
-          tfile.flush
-          
-          uploaded_file = ActionDispatch::Http::UploadedFile.new(
-            tempfile: tfile,
-            filename: @obj.file_file_name,
-            type: @obj.file_content_type
-          )
-          
           @obj.clear_thumbnail
-          @obj.file = uploaded_file
           @obj.save!
         end
 
