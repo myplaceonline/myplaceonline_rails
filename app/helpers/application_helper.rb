@@ -546,15 +546,15 @@ module ApplicationHelper
   end
   
   def file_image?(identity_file)
-    !identity_file.nil? && !identity_file.file_content_type.nil? && (identity_file.file_content_type.start_with?("image"))
+    !identity_file.nil? && identity_file.is_image?
   end
   
   def has_image(identity_file)
-    !identity_file.nil? && !identity_file.file.nil? && !identity_file.file_content_type.nil? && (identity_file.file_content_type.start_with?("image"))
+    !identity_file.nil? && identity_file.is_image?
   end
   
   def has_thumbnail(identity_file)
-    !identity_file.nil? && !identity_file.thumbnail_skip && !identity_file.thumbnail_contents.nil?
+    !identity_file.nil? && identity_file.has_thumbnail?
   end
   
   def image_content(identity_file, link_to_original = true, useParams: true)

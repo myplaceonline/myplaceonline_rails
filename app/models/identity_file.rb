@@ -124,7 +124,7 @@ class IdentityFile < ApplicationRecord
   def get_file_contents
     Rails.logger.info{"get_file_contents: Request for full image contents id #{self.id}"}
     result = nil
-    if !self.file.nil?
+    if !self.file.nil? && self.file.exists?
       result = self.file.file_contents
     end
     Rails.logger.info{"get_file_contents: Returning #{ result.nil? ? 0 : result.length }"}
@@ -138,7 +138,7 @@ class IdentityFile < ApplicationRecord
   end
 
   def is_image?
-    !self.file.nil? && !self.file_content_type.blank? && self.file_content_type.start_with?("image")
+    !self.file.nil? && self.file.exists? && !self.file_content_type.blank? && self.file_content_type.start_with?("image")
   end
 
   def is_thumbnailable?
@@ -146,11 +146,11 @@ class IdentityFile < ApplicationRecord
   end
   
   def is_audio?
-    !self.file.nil? && !self.file_content_type.blank? && self.file_content_type.start_with?("audio")
+    !self.file.nil? && self.file.exists? && !self.file_content_type.blank? && self.file_content_type.start_with?("audio")
   end
   
   def is_video?
-    !self.file.nil? && !self.file_content_type.blank? && self.file_content_type.start_with?("video")
+    !self.file.nil? && self.file.exists? && !self.file_content_type.blank? && self.file_content_type.start_with?("video")
   end
   
   def has_thumbnail?
