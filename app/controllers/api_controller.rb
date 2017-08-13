@@ -278,7 +278,7 @@ class ApiController < ApplicationController
             if paramnode.nil?
               objclass_index += 2
             else
-              paramnode = paramnode.dup.permit!.to_hash
+              paramnode = paramnode.dup.permit!.to_hash.with_indifferent_access
             end
           end
 
