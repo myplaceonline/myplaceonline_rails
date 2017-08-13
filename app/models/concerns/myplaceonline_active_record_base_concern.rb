@@ -158,7 +158,11 @@ module MyplaceonlineActiveRecordBaseConcern
       end
       
       define_method(:set_property_modify_attributes) do |attributes:|
-        if !attributes["file"].is_a?(ActionDispatch::Http::UploadedFile)
+        # There are a couple different cases here:
+        # 1. Normal file upload comes in
+        # 2. nginx file upload comes in
+        # 3. File attributes are being updated outside both cases above
+        if !attributes["file"].nil? && !attributes["file"].is_a?(ActionDispatch::Http::UploadedFile)
           file_hash = attributes["file"]
           attributes["file_file_name"] = file_hash["original_filename"]
           attributes["file_content_type"] = file_hash["content_type"]

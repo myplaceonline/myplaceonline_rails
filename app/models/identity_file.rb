@@ -204,4 +204,12 @@ class IdentityFile < ApplicationRecord
       filesystem_path: file_hash[:path],
     )
   end
+  
+  after_commit :on_after_destroy, on: :destroy
+  
+  def on_after_destroy
+    if !self.filesystem_path.blank?
+      File.delete(self.filesystem_path)
+    end
+  end
 end
