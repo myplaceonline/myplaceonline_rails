@@ -134,7 +134,7 @@ class FilesController < MyplaceonlineController
           end
         else
           Open3.popen3(%{
-            mogrify -auto-orient -rotate #{degrees} #{@obj.filesystem_path}
+            ulimit -v 102400; mogrify -auto-orient -rotate #{degrees} #{@obj.filesystem_path}
           }) do |stdin, stdout, stderr, wait_thr|
             exit_status = wait_thr.value
             if exit_status != 0
