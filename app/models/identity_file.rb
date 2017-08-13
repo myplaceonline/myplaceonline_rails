@@ -204,17 +204,22 @@ class IdentityFile < ApplicationRecord
         end
       else
         thumbnail_path = self.filesystem_path + "t"
+        index = ""
+        if !self.file_content_type.index("gif").nil?
+          index = "[0]"
+          thumbnail_path = thumbnail_path + ".jpg"
+        end
         
         # https://imagemagick.org/script/command-line-processing.php#geometry
         # http://www.imagemagick.org/Usage/thumbnails/
         # http://www.imagemagick.org/Usage/resize/
         # Ulimit is in KB
         Open3.popen2e(%{
-          ulimit -Sv 102400 && convert #{self.filesystem_path} -auto-orient -thumbnail '#{max_width}>' #{thumbnail_path}
+          ulimit -Sv 102400 && convert #{self.filesystem_path}#{index} -auto-orient -thumbnail '#{max_width}>' #{thumbnail_path}
         }) do |stdin, stdout_and_stderr, wait_thr|
           exit_status = wait_thr.value
           if exit_status != 0
-            raise "Rotation exit status " + exit_status.to_s + ": #{stdout_and_stderr.read}"
+            raise "Thumbnail exit status " + exit_status.to_s + ": #{stdout_and_stderr.read}"
           end
         end
         
