@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170813215634) do
+ActiveRecord::Schema.define(version: 20170813221325) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4952,6 +4952,7 @@ ActiveRecord::Schema.define(version: 20170813215634) do
     t.decimal "test_object_decimal", precision: 10, scale: 2
     t.decimal "test_object_currency", precision: 10, scale: 2
     t.boolean "test_object_boolean"
+    t.integer "test_object_enum"
     t.index ["contact_id"], name: "index_test_objects_on_contact_id"
     t.index ["identity_id"], name: "index_test_objects_on_identity_id"
   end

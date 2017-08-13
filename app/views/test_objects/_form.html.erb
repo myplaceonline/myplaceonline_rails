@@ -83,6 +83,16 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_SELECT,
+    name: :test_object_enum,
+    value: obj.test_object_enum,
+    placeholder: "myplaceonline.test_objects.test_object_enum",
+    select_options: TestObject::ENUM,
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,

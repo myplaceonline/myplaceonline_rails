@@ -3317,6 +3317,10 @@ en:
       test_object_decimal: "Decimal"
       test_object_boolean: "Boolean"
       contact: "Contact"
+      test_object_enum: "Enumeration"
+      test_object_enums:
+        a: "A"
+        b: "B"
     test_object_instances:
       test_object_instance_name: "Name"
     checks:
@@ -3585,3 +3589,5 @@ en:
     imports:
       import_name: "Name"
       import_type: "Type"
+      import_types:
+        mediawiki: "MediaWiki"

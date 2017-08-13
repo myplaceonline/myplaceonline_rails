@@ -11,6 +11,16 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_SELECT,
+    name: :import_type,
+    value: obj.import_type,
+    placeholder: "myplaceonline.imports.import_type",
+    select_options: Import::IMPORT_TYPES,
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,
