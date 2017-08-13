@@ -1,4 +1,6 @@
 class BeachesController < MyplaceonlineController
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:map]
+
   def search_index_name
     Location.table_name
   end
@@ -7,6 +9,36 @@ class BeachesController < MyplaceonlineController
     category_name.singularize
   end
 
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t("myplaceonline.maps.map"),
+        link: beaches_map_path,
+        icon: "navigation"
+      }
+    ]
+  end
+  
+  def map
+    @locations = self.all.map{ |x|
+      if x.location.ensure_gps
+        label = nil
+        if x.location.estimate_driving_time && x.location.time_from_home < 86400
+          label = (x.location.time_from_home/60.0).ceil.to_s
+        end
+        MapLocation.new(
+          latitude: x.location.latitude,
+          longitude: x.location.longitude,
+          label: label,
+          tooltip: x.display,
+          popupHtml: ActionController::Base.helpers.link_to(x.display, x.location.map_url, target: "_blank")
+        )
+      else
+        nil
+      end
+    }.compact
+  end
+  
   protected
     def insecure
       true

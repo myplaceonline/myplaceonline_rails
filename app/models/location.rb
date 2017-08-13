@@ -290,6 +290,9 @@ class Location < ApplicationRecord
         client = GoogleClient.new(key: ENV["GOOGLE_MAPS_API_SERVER_KEY"], response_format: :json, read_timeout: 5)
         # https://developers.google.com/maps/documentation/directions/intro
         directions = Directions.new(client)
+
+        Rails.logger.debug{"Directions Origin: #{location.map_link_component}, Destination: #{self.map_link_component}"}
+
         result = directions.query(
           origin: location.map_link_component,
           destination: self.map_link_component,
@@ -297,15 +300,20 @@ class Location < ApplicationRecord
           departure_time: Time.now,
           alternatives: false
         )
-        # "For routes that contain no waypoints, the route will consist of a single "leg,""
-        # https://developers.google.com/maps/documentation/directions/intro#Legs
-        duration = result[0]["legs"][0]["duration_in_traffic"]
-        if duration.nil?
-          duration = result[0]["legs"][0]["duration"]
+
+        Rails.logger.debug{"Directions Result: #{Myp.debug_print(result)}"}
+        
+        if result.length > 0
+          # "For routes that contain no waypoints, the route will consist of a single "leg,""
+          # https://developers.google.com/maps/documentation/directions/intro#Legs
+          duration = result[0]["legs"][0]["duration_in_traffic"]
+          if duration.nil?
+            duration = result[0]["legs"][0]["duration"]
+          end
+          # value indicates the duration in seconds.
+          self.time_from_home = duration["value"]
+          self.save!
         end
-        # value indicates the duration in seconds.
-        self.time_from_home = duration["value"]
-        self.save!
       end
     end
     return !self.time_from_home.nil?
