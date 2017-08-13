@@ -1,2 +1,3 @@
-<%= data_row(heading: t("myplaceonline.blog_posts.blog_post_title"), content: obj.blog_post_title) %>
-<%= data_row(heading: t("myplaceonline.blog_posts.post"), content: obj.post, markdown: true) %>
+<small><em><%= data_row(heading: t("myplaceonline.blog_posts.last_updated"), content: obj.updated_at, wrap: false, prefix_heading: true, prefix_wrapper: :span) %></em></small>
+<hr />
+<%= data_row(heading: t("myplaceonline.blog_posts.post"), content: obj.post, markdown: true, wrap: false) %>

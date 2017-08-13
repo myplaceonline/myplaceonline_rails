@@ -1055,6 +1055,10 @@ class MyplaceonlineController < ApplicationController
     self.additional_items_collapsed && self.favorite_items_collapsed
   end
   
+  def show_table
+    true
+  end
+  
   protected
   
     def deny_guest
