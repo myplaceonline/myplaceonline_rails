@@ -174,7 +174,7 @@ class IdentityFile < ApplicationRecord
 
   def ensure_thumbnail
     Rails.logger.debug{"IdentityFile ensure_thumbnail"}
-    if self.is_image? && self.thumbnail_contents.nil? && !self.thumbnail_skip && self.is_thumbnailable?
+    if self.is_image? && self.thumbnail_contents.nil? && self.thumbnail_filesystem_path.blank? && !self.thumbnail_skip && self.is_thumbnailable?
       
       Rails.logger.debug{"image_content: Generating thumbnail for #{self.id}, type #{self.file_content_type}"}
       
