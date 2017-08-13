@@ -205,7 +205,7 @@ class IdentityFile < ApplicationRecord
       else
         thumbnail_path = self.filesystem_path + "t"
         index = ""
-        if !self.file_content_type.index("gif").nil?
+        if !self.file_content_type.index("gif").nil? || !self.file_content_type.index("webm").nil?
           index = "[0]"
           thumbnail_path = thumbnail_path + ".jpg"
         end
