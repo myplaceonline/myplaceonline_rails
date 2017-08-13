@@ -236,6 +236,7 @@ class Identity < ApplicationRecord
   has_many :diets, :dependent => :destroy
   has_many :consumed_foods, :dependent => :destroy
   has_many :beaches, :dependent => :destroy
+  has_many :imports, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 
@@ -462,6 +463,7 @@ class Identity < ApplicationRecord
       :diets => diets.to_a.map{|x| x.as_json},
       :consumed_foods => consumed_foods.to_a.map{|x| x.as_json},
       :beaches => beaches.to_a.map{|x| x.as_json},
+      :imports => imports.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

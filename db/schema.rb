@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170813211530) do
+ActiveRecord::Schema.define(version: 20170813215634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2551,6 +2551,31 @@ ActiveRecord::Schema.define(version: 20170813211530) do
     t.index ["contact_id"], name: "index_identity_relationships_on_contact_id"
     t.index ["identity_id"], name: "index_identity_relationships_on_identity_id"
     t.index ["parent_identity_id"], name: "index_identity_relationships_on_parent_identity_id"
+  end
+
+  create_table "import_files", force: :cascade do |t|
+    t.bigint "import_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_import_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_import_files_on_identity_id"
+    t.index ["import_id"], name: "index_import_files_on_import_id"
+  end
+
+  create_table "imports", force: :cascade do |t|
+    t.string "import_name"
+    t.integer "import_type"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_imports_on_identity_id"
   end
 
   create_table "injuries", id: :serial, force: :cascade do |t|
@@ -6202,6 +6227,10 @@ ActiveRecord::Schema.define(version: 20170813211530) do
   add_foreign_key "identity_relationships", "contacts", name: "identity_relationships_contact_id_fk"
   add_foreign_key "identity_relationships", "identities", column: "parent_identity_id", name: "identity_relationships_parent_identity_id_fk"
   add_foreign_key "identity_relationships", "identities", name: "identity_relationships_identity_id_fk"
+  add_foreign_key "import_files", "identities"
+  add_foreign_key "import_files", "identity_files"
+  add_foreign_key "import_files", "imports"
+  add_foreign_key "imports", "identities"
   add_foreign_key "injuries", "identities"
   add_foreign_key "injuries", "locations"
   add_foreign_key "injury_files", "identities"
