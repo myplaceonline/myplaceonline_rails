@@ -133,12 +133,12 @@ class FilesController < MyplaceonlineController
             @obj.save!
           end
         else
-          Open3.popen3(%{
+          Open3.popen2e(%{
             ulimit -Sv 102400 && mogrify -auto-orient -rotate #{degrees} #{@obj.filesystem_path}
-          }) do |stdin, stdout, stderr, wait_thr|
+          }) do |stdin, stdout_and_stderr, wait_thr|
             exit_status = wait_thr.value
             if exit_status != 0
-              raise "Rotation exit status " + exit_status.to_s
+              raise "Rotation exit status " + exit_status.to_s + ": #{stdout_and_stderr.read}"
             end
           end
           

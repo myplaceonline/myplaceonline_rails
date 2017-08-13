@@ -2534,5 +2534,8 @@ module Myp
     )
   end
   
+  def self.play
+  end
+  
   Rails.logger.info{"myplaceonline: myp.rb static initialization ended"}
 end

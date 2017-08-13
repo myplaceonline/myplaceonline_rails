@@ -209,12 +209,12 @@ class IdentityFile < ApplicationRecord
         # http://www.imagemagick.org/Usage/thumbnails/
         # http://www.imagemagick.org/Usage/resize/
         # Ulimit is in KB
-        Open3.popen3(%{
+        Open3.popen2e(%{
           ulimit -Sv 102400 && convert #{self.filesystem_path} -auto-orient -thumbnail '#{max_width}>' #{thumbnail_path}
-        }) do |stdin, stdout, stderr, wait_thr|
+        }) do |stdin, stdout_and_stderr, wait_thr|
           exit_status = wait_thr.value
           if exit_status != 0
-            raise "Thumbnail creation exit status " + exit_status.to_s
+            raise "Rotation exit status " + exit_status.to_s + ": #{stdout_and_stderr.read}"
           end
         end
         
