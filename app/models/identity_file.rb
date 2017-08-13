@@ -210,7 +210,7 @@ class IdentityFile < ApplicationRecord
         # http://www.imagemagick.org/Usage/resize/
         # Ulimit is in KB
         Open3.popen3(%{
-          ulimit -v 102400; convert #{self.filesystem_path} -auto-orient -thumbnail '#{max_width}>' #{thumbnail_path}
+          ulimit -Sv 102400 && convert #{self.filesystem_path} -auto-orient -thumbnail '#{max_width}>' #{thumbnail_path}
         }) do |stdin, stdout, stderr, wait_thr|
           exit_status = wait_thr.value
           if exit_status != 0
