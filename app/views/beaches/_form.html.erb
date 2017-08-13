@@ -1,0 +1,33 @@
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :location,
+    existingobj: obj.location,
+    heading: t("myplaceonline.beaches.location"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    autofocus: autofocus,
+    collapsed: false,
+  }
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :crowded,
+    value: obj.crowded,
+    placeholder: "myplaceonline.beaches.crowded"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: true,
+  )
+%>

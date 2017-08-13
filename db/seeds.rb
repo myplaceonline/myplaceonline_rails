@@ -170,7 +170,8 @@ Category.create!([
   {id: 170, name: "dietary_requirements", link: "dietary_requirements", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/show_accounts_over_quota.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 171, name: "diets", link: "diets", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/omelet.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 172, name: "consumed_foods", link: "consumed_foods", position: 0, parent_id: 29, additional_filtertext: "eat breakfast lunch dinner snack meals", icon: "FatCow_Icons16x16/omelet.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
-  {id: 173, name: "nutrients", link: "nutrients", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/node.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
+  {id: 173, name: "nutrients", link: "nutrients", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/node.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
+  {id: 206, name: "beaches", link: "beaches", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/weather_sun.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
 ])
 
 user = User.new

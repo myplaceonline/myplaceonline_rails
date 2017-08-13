@@ -250,6 +250,7 @@ en:
       nutrients: "Nutrients"
       food_nutrition_information_amounts: "Nutrient Amounts"
       event_stories: "Story"
+      beaches: "Beaches"
     default_domain:
       meta_description: "myplaceonline: your online helper"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant"
@@ -3577,3 +3578,6 @@ en:
       message_received: "Message Received"
       unsubscribed: "You have been unsubscribed."
       resubscribed: "You have been resubscribed."
+    beaches:
+      crowded: "Crowded?"
+      location: "Location"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170813015902) do
+ActiveRecord::Schema.define(version: 20170813211530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -265,6 +265,20 @@ ActiveRecord::Schema.define(version: 20170813015902) do
     t.datetime "archived"
     t.index ["identity_id"], name: "index_bars_on_identity_id"
     t.index ["location_id"], name: "index_bars_on_location_id"
+  end
+
+  create_table "beaches", force: :cascade do |t|
+    t.bigint "location_id"
+    t.boolean "crowded"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_beaches_on_identity_id"
+    t.index ["location_id"], name: "index_beaches_on_location_id"
   end
 
   create_table "bet_contacts", id: :serial, force: :cascade do |t|
@@ -5835,6 +5849,8 @@ ActiveRecord::Schema.define(version: 20170813015902) do
   add_foreign_key "bar_pictures", "identity_files"
   add_foreign_key "bars", "identities"
   add_foreign_key "bars", "locations"
+  add_foreign_key "beaches", "identities"
+  add_foreign_key "beaches", "locations"
   add_foreign_key "bet_contacts", "bets"
   add_foreign_key "bet_contacts", "contacts"
   add_foreign_key "bet_contacts", "identities"

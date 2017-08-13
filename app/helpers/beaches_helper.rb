@@ -1,0 +1,2 @@
+module BeachesHelper
+end
