@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170813221325) do
+ActiveRecord::Schema.define(version: 20170813223209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -337,6 +337,30 @@ ActiveRecord::Schema.define(version: 20170813221325) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_bills_on_identity_id"
+  end
+
+  create_table "blog_files", force: :cascade do |t|
+    t.bigint "blog_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["blog_id"], name: "index_blog_files_on_blog_id"
+    t.index ["identity_file_id"], name: "index_blog_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_blog_files_on_identity_id"
+  end
+
+  create_table "blogs", force: :cascade do |t|
+    t.string "blog_name"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_blogs_on_identity_id"
   end
 
   create_table "blood_concentrations", id: :serial, force: :cascade do |t|
@@ -5885,6 +5909,10 @@ ActiveRecord::Schema.define(version: 20170813221325) do
   add_foreign_key "bill_files", "identities"
   add_foreign_key "bill_files", "identity_files"
   add_foreign_key "bills", "identities"
+  add_foreign_key "blog_files", "blogs"
+  add_foreign_key "blog_files", "identities"
+  add_foreign_key "blog_files", "identity_files"
+  add_foreign_key "blogs", "identities"
   add_foreign_key "blood_concentrations", "identities", name: "blood_concentrations_identity_id_fk"
   add_foreign_key "blood_pressures", "identities", name: "blood_pressures_identity_id_fk"
   add_foreign_key "blood_test_files", "blood_tests"

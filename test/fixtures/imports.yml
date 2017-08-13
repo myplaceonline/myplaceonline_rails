@@ -1,3 +1,4 @@
 import:
   identity: identity
   import_name: Test
+  import_type: 0
