@@ -253,6 +253,7 @@ en:
       beaches: "Beaches"
       imports: "Imports"
       blogs: "Blogs"
+      blog_posts: "Blog Posts"
     default_domain:
       meta_description: "myplaceonline: your online helper"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant"
@@ -3324,6 +3325,7 @@ en:
         b: "B"
     test_object_instances:
       test_object_instance_name: "Name"
+      back: "Test Object"
     checks:
       description: "Description"
       amount: "Amount"
@@ -3594,3 +3596,9 @@ en:
         mediawiki: "MediaWiki"
     blogs:
       blog_name: "Name"
+      add_blog_post: "Add Post"
+      blog_posts: "Posts"
+    blog_posts:
+      blog_post_title: "Title"
+      post: "Post"
+      back: "Blog"

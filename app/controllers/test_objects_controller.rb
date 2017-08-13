@@ -11,6 +11,21 @@ class TestObjectsController < MyplaceonlineController
     Myp.display_date_month_year_simple(obj.test_object_date, User.current_user)
   end
 
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t("myplaceonline.test_objects.add_instance"),
+        link: new_test_object_test_object_instance_path(@obj),
+        icon: "plus"
+      },
+      {
+        title: I18n.t("myplaceonline.test_objects.instances"),
+        link: test_object_test_object_instances_path(@obj),
+        icon: "bars"
+      },
+    ]
+  end
+
   protected
     def insecure
       true

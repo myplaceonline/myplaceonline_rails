@@ -1,0 +1,20 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :blog_post_title,
+    value: obj.blog_post_title,
+    placeholder: "myplaceonline.blog_posts.blog_post_title",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :post,
+    value: obj.post,
+    placeholder: "myplaceonline.blog_posts.post",
+    collapsed: false,
+  )
+%>

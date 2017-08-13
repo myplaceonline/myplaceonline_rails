@@ -7,6 +7,7 @@ class Blog < ApplicationRecord
       { name: :blog_name, type: ApplicationRecord::PROPERTY_TYPE_STRING },
       { name: :notes, type: ApplicationRecord::PROPERTY_TYPE_MARKDOWN },
       { name: :blog_files, type: ApplicationRecord::PROPERTY_TYPE_FILES },
+      { name: :blog_posts, type: ApplicationRecord::PROPERTY_TYPE_CHILDREN },
     ]
   end
 
@@ -17,4 +18,6 @@ class Blog < ApplicationRecord
   end
 
   child_files
+
+  child_properties(name: :blog_posts, sort: "updated_at DESC")
 end

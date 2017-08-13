@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170813223209) do
+ActiveRecord::Schema.define(version: 20170813224958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -349,6 +349,20 @@ ActiveRecord::Schema.define(version: 20170813223209) do
     t.index ["blog_id"], name: "index_blog_files_on_blog_id"
     t.index ["identity_file_id"], name: "index_blog_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_blog_files_on_identity_id"
+  end
+
+  create_table "blog_posts", force: :cascade do |t|
+    t.bigint "blog_id"
+    t.string "blog_post_title"
+    t.text "post"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["blog_id"], name: "index_blog_posts_on_blog_id"
+    t.index ["identity_id"], name: "index_blog_posts_on_identity_id"
   end
 
   create_table "blogs", force: :cascade do |t|
@@ -5912,6 +5926,8 @@ ActiveRecord::Schema.define(version: 20170813223209) do
   add_foreign_key "blog_files", "blogs"
   add_foreign_key "blog_files", "identities"
   add_foreign_key "blog_files", "identity_files"
+  add_foreign_key "blog_posts", "blogs"
+  add_foreign_key "blog_posts", "identities"
   add_foreign_key "blogs", "identities"
   add_foreign_key "blood_concentrations", "identities", name: "blood_concentrations_identity_id_fk"
   add_foreign_key "blood_pressures", "identities", name: "blood_pressures_identity_id_fk"

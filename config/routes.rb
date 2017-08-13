@@ -192,6 +192,12 @@ Rails.application.routes.draw do
     books: [
       { instance: true, link: "discard" },
     ],
+    blogs: [
+      {
+        subresources: true,
+        name: :blog_posts
+      },
+    ],
     blood_tests: [
       { instance: false, link: "graph" }
     ],
@@ -406,6 +412,12 @@ Rails.application.routes.draw do
         subresources: true,
         name: :retirement_plan_amounts
       }
+    ],
+    test_objects: [
+      {
+        subresources: true,
+        name: :test_object_instances
+      },
     ],
     text_messages: [
       { instance: true, link: "shared" },
