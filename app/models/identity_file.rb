@@ -178,6 +178,8 @@ class IdentityFile < ApplicationRecord
       
       Rails.logger.debug{"image_content: Generating thumbnail for #{self.id}, type #{self.file_content_type}"}
       
+      max_width = 400
+      
       if self.filesystem_path.blank?
         image = Magick::Image::from_blob(self.get_file_contents)
         
@@ -186,8 +188,6 @@ class IdentityFile < ApplicationRecord
         image = image.first
         
         Rails.logger.debug{"image_content: Acquired first image cols #{image.columns}"}
-        
-        max_width = 400
         
         if image.columns > max_width
           Rails.logger.debug{"image_content: Requires thumbnailing"}
