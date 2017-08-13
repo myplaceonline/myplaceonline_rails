@@ -169,7 +169,7 @@ class IdentityFile < ApplicationRecord
   end
   
   def has_thumbnail?
-    !self.thumbnail_skip && !self.thumbnail_contents.nil?
+    !self.thumbnail_skip && (!self.thumbnail_contents.nil? || !self.thumbnail_filesystem_path.blank?)
   end
 
   def ensure_thumbnail
