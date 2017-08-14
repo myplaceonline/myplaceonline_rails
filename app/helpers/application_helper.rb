@@ -1832,7 +1832,7 @@ module ApplicationHelper
   def header_icon
     category = find_category_by_url
     if category.nil? || category.icon.blank?
-      "myplaceonlinelogo.gif"
+      "/api/header_icon.png"
     else
       category.icon
     end
