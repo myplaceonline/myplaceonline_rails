@@ -678,8 +678,7 @@ class ApiController < ApplicationController
       respond_identity_file("inline", identity_file)
     else
       if Rails.env.production?
-        file = Rails.root.join("public", ActionController::Base.helpers.image_path(default_file_name))
-        Rails.logger.info{"handle_domain_image Rails.root: #{Rails.root}, image_path: #{ActionController::Base.helpers.image_path(default_file_name)}, file: #{file}"}
+        file = Rails.root.join("public#{ActionController::Base.helpers.image_path(default_file_name)}")
       else
         file = Rails.root.join("app/assets/images/#{default_file_name}")
       end
