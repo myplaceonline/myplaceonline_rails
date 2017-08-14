@@ -644,11 +644,51 @@ class ApiController < ApplicationController
   end
   
   def favicon_png
-    domain = Myp.website_domain
+    handle_domain_image(
+      child_property_name: :favicon_png_identity_file,
+      default_file_name: "default_favicon.png",
+      target_file_name: "favicon.png",
+      content_type: "image/png",
+    )
   end
 
   def favicon_ico
+    handle_domain_image(
+      child_property_name: :favicon_ico_identity_file,
+      default_file_name: "default_favicon.ico",
+      target_file_name: "favicon.ico",
+      content_type: "image/vnd.microsoft.icon",
+    )
+  end
+  
+  def header_icon_png
+    handle_domain_image(
+      child_property_name: :default_header_icon_identity_file,
+      default_file_name: "default_header_icon.png",
+      target_file_name: "header_icon.png",
+      content_type: "image/png",
+    )
+  end
+  
+  def handle_domain_image(child_property_name:, default_file_name:, target_file_name:, content_type:)
+    request.session_options[:skip] = true
     domain = Myp.website_domain
+    identity_file = domain.send(child_property_name)
+    if !identity_file.nil?
+      respond_identity_file("inline", identity_file)
+    else
+      if Rails.env.production?
+        file = Rails.root.join("public", ActionController::Base.helpers.asset_path(default_file_name))
+      else
+        file = Rails.root.join("app/assets/images/#{default_file_name}")
+      end
+      send_file(
+        file,
+        filename: target_file_name,
+        disposition: "inline",
+        type: content_type,
+      )
+    end
   end
 
   protected

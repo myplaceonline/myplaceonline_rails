@@ -182,8 +182,10 @@ Rails.application.routes.draw do
   match 'files/:id/thumbnail/*imagename', :to => 'files#thumbnail', via: [:get], as: "file_thumbnail_name"
   match 'files/:id/download/*imagename', :to => 'files#download', via: [:get], as: "file_download_name"
 
+  match 'favicon.ico', :to => 'api#favicon_ico', via: [:get]
   match 'api/favicon.ico', :to => 'api#favicon_ico', via: [:get]
   match 'api/favicon.png', :to => 'api#favicon_png', via: [:get]
+  match 'api/header_icon.png', :to => 'api#header_icon_png', via: [:get]
 
   additions = {
     beaches: [

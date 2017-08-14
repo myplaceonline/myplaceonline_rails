@@ -155,6 +155,7 @@ class ApplicationController < ActionController::Base
   
   protected
 
+    # respond_type: [download, inline]
     def respond_identity_file(respond_type, identity_file)
       if identity_file.filesystem_path.blank?
         Rails.logger.debug{"MyplaceonlineController.respond_identity_file: Not on the filesystem"}
@@ -170,6 +171,7 @@ class ApplicationController < ActionController::Base
       end
     end
     
+    # respond_type: [download, inline]
     def respond_data(respond_type, data, data_bytes)
       response.headers["Content-Length"] = data_bytes.to_s
       send_data(
