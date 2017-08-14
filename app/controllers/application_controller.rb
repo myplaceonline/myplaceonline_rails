@@ -156,28 +156,34 @@ class ApplicationController < ActionController::Base
   protected
 
     # respond_type: [download, inline]
-    def respond_identity_file(respond_type, identity_file)
+    def respond_identity_file(respond_type, identity_file, filename = nil, content_type = nil)
       if identity_file.filesystem_path.blank?
         Rails.logger.debug{"MyplaceonlineController.respond_identity_file: Not on the filesystem"}
         respond_data(respond_type, identity_file.get_file_contents, identity_file.file_file_size)
       else
         Rails.logger.debug{"MyplaceonlineController.respond_identity_file: Sending from #{identity_file.filesystem_path}"}
+        if filename.nil?
+          filename = identity_file.file_file_name
+        end
+        if content_type.nil?
+          content_type = identity_file.file_content_type
+        end
         send_file(
           identity_file.filesystem_path,
-          :type => @obj.file_content_type,
-          :filename => @obj.file_file_name,
+          :type => content_type,
+          :filename => filename,
           :disposition => respond_type
         )
       end
     end
     
     # respond_type: [download, inline]
-    def respond_data(respond_type, data, data_bytes)
+    def respond_data(respond_type, data, data_bytes, filename, content_type)
       response.headers["Content-Length"] = data_bytes.to_s
       send_data(
         data,
-        :type => @obj.file_content_type,
-        :filename => @obj.file_file_name,
+        :type => content_type,
+        :filename => filename,
         :disposition => respond_type
       )
     end

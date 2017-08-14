@@ -37,7 +37,7 @@ class FilesController < MyplaceonlineController
     authorize! :show, @obj
     if !@obj.thumbnail_contents.nil?
       Rails.logger.debug{"FilesController.thumbnail: found thumbnail_contents #{@obj.thumbnail_size_bytes}"}
-      respond_data("inline", @obj.thumbnail_contents, @obj.thumbnail_size_bytes)
+      respond_data("inline", @obj.thumbnail_contents, @obj.thumbnail_size_bytes, @obj.file_file_name, @obj.file_content_type)
     elsif !@obj.thumbnail_filesystem_path.blank?
       send_file(
         @obj.thumbnail_filesystem_path,

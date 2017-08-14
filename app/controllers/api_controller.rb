@@ -675,7 +675,12 @@ class ApiController < ApplicationController
     domain = Myp.website_domain
     identity_file = domain.send(child_property_name)
     if !identity_file.nil?
-      respond_identity_file("inline", identity_file)
+      respond_identity_file(
+        "inline",
+        identity_file,
+        target_file_name,
+        content_type
+      )
     else
       if Rails.env.production?
         file = Rails.root.join("public#{ActionController::Base.helpers.image_path(default_file_name)}")
