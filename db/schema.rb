@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170813224958) do
+ActiveRecord::Schema.define(version: 20170814015806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -5740,7 +5740,13 @@ ActiveRecord::Schema.define(version: 20170813224958) do
     t.text "static_homepage"
     t.text "menu_links_static"
     t.text "menu_links_logged_in"
+    t.bigint "favicon_ico_identity_file_id"
+    t.bigint "favicon_png_identity_file_id"
+    t.bigint "default_header_icon_identity_file_id"
+    t.index ["default_header_icon_identity_file_id"], name: "index_website_domains_on_default_header_icon_identity_file_id"
     t.index ["domain_host_id"], name: "index_website_domains_on_domain_host_id"
+    t.index ["favicon_ico_identity_file_id"], name: "index_website_domains_on_favicon_ico_identity_file_id"
+    t.index ["favicon_png_identity_file_id"], name: "index_website_domains_on_favicon_png_identity_file_id"
     t.index ["identity_id"], name: "index_website_domains_on_identity_id"
     t.index ["website_id"], name: "index_website_domains_on_website_id"
   end
@@ -6706,6 +6712,9 @@ ActiveRecord::Schema.define(version: 20170813224958) do
   add_foreign_key "website_domain_ssh_keys", "ssh_keys"
   add_foreign_key "website_domain_ssh_keys", "website_domains"
   add_foreign_key "website_domains", "identities"
+  add_foreign_key "website_domains", "identity_files", column: "default_header_icon_identity_file_id"
+  add_foreign_key "website_domains", "identity_files", column: "favicon_ico_identity_file_id"
+  add_foreign_key "website_domains", "identity_files", column: "favicon_png_identity_file_id"
   add_foreign_key "website_domains", "memberships", column: "domain_host_id"
   add_foreign_key "website_domains", "websites"
   add_foreign_key "website_list_items", "identities"

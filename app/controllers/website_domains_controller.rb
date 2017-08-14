@@ -27,7 +27,10 @@ class WebsiteDomainsController < MyplaceonlineController
           :_destroy,
           repeat_attributes: Repeat.params,
           periodic_payment_attributes: PeriodicPaymentsController.param_names
-        ]
+        ],
+        favicon_ico_identity_file_attributes: FilesController.param_names,
+        favicon_png_identity_file_attributes: FilesController.param_names,
+        default_header_icon_identity_file_attributes: FilesController.param_names,
       )
     end
 end

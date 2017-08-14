@@ -617,7 +617,11 @@ var myplaceonline = function(mymodule) {
       
       if (data.singular) {
         $(data.items[0].value).insertAfter(fileControl);
-        $("<input type='hidden' name='identity_file[id]' value='" + data.id + "' />").insertAfter(fileControl);
+        var singularNamePrefix = "identity_file";
+        if (data.singularNamePrefix) {
+          singularNamePrefix = data.singularNamePrefix;
+        }
+        $("<input type='hidden' name='" + singularNamePrefix + "[id]' value='" + data.id + "' />").insertAfter(fileControl);
         
         // Don't show a success notification because then the user might not click Save
         // myplaceonline.createSuccessNotification(data.successNotification);

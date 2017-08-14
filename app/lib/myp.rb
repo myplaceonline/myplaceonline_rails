@@ -2485,6 +2485,10 @@ module Myp
   
   def self.debug_print(obj, depth: 0)
     
+    if obj.is_a?(ActionController::Parameters)
+      obj = obj.dup.permit!.to_hash
+    end
+    
     padding_self = depth == 0 ? "" : "\t".ljust(depth, "\t")
     padding_children = "\t".ljust(depth + 1, "\t")
     

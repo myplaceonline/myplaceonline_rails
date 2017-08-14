@@ -152,8 +152,36 @@ class ApplicationController < ActionController::Base
   def check_password(level: MyplaceonlineController::CHECK_PASSWORD_REQUIRED)
     MyplaceonlineController.check_password(current_user, session, level: level)
   end
+  
+  protected
+
+    def respond_identity_file(respond_type, identity_file)
+      if identity_file.filesystem_path.blank?
+        Rails.logger.debug{"MyplaceonlineController.respond_identity_file: Not on the filesystem"}
+        respond_data(respond_type, identity_file.get_file_contents, identity_file.file_file_size)
+      else
+        Rails.logger.debug{"MyplaceonlineController.respond_identity_file: Sending from #{identity_file.filesystem_path}"}
+        send_file(
+          identity_file.filesystem_path,
+          :type => @obj.file_content_type,
+          :filename => @obj.file_file_name,
+          :disposition => respond_type
+        )
+      end
+    end
+    
+    def respond_data(respond_type, data, data_bytes)
+      response.headers["Content-Length"] = data_bytes.to_s
+      send_data(
+        data,
+        :type => @obj.file_content_type,
+        :filename => @obj.file_file_name,
+        :disposition => respond_type
+      )
+    end
 
   private
+  
     # https://github.com/CanCanCommunity/cancancan/wiki/Accessing-request-data
     def current_ability
       @current_ability ||= Ability.new(current_user, request)

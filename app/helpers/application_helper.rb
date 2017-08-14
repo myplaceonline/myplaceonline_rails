@@ -220,13 +220,13 @@ module ApplicationHelper
   end
   
   def display_reference(content:, format:, options:)
-    options[:controller_name] ||= content.class.name.pluralize + "Controller"
+    options[:controller_name] ||= (options[:evaluated_class_name].nil? ? content.class.name : options[:evaluated_class_name]).pluralize + "Controller"
     options[:htmlencode_content] = false
     content_display = content.display
     options[:clipboard_text] = content_display
 
     if content.current_user_owns?
-      url = send(content.class.name.underscore + "_path", content)
+      url = send((options[:evaluated_class_name].nil? ? content.class.name : options[:evaluated_class_name]).underscore + "_path", content)
       result = display_url(
         content: url,
         format: :html,
@@ -323,7 +323,8 @@ module ApplicationHelper
       prefix_heading: false,
       prefix_wrapper: :b,
       prefix_separator: ": ",
-      non_wrap_container: :p
+      non_wrap_container: :p,
+      evaluated_class_name: nil,
     }.merge(options)
     
     original_content = content

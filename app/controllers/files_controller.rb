@@ -23,13 +23,13 @@ class FilesController < MyplaceonlineController
   def download
     @obj = model.find_by(id: params[:id])
     authorize! :show, @obj
-    respond_download_identity_file("attachment", @obj)
+    respond_identity_file("attachment", @obj)
   end
   
   def view
     @obj = model.find_by(id: params[:id])
     authorize! :show, @obj
-    respond_download_identity_file("inline", @obj)
+    respond_identity_file("inline", @obj)
   end
   
   def thumbnail
@@ -37,7 +37,7 @@ class FilesController < MyplaceonlineController
     authorize! :show, @obj
     if !@obj.thumbnail_contents.nil?
       Rails.logger.debug{"FilesController.thumbnail: found thumbnail_contents #{@obj.thumbnail_bytes}"}
-      respond_download("inline", @obj.thumbnail_contents, @obj.thumbnail_bytes)
+      respond_data("inline", @obj.thumbnail_contents, @obj.thumbnail_bytes)
     elsif !@obj.thumbnail_filesystem_path.blank?
       send_file(
         @obj.thumbnail_filesystem_path,
@@ -47,7 +47,7 @@ class FilesController < MyplaceonlineController
       )
     else
       Rails.logger.debug{"FilesController.thumbnail: no thumbnail, sending whole image"}
-      respond_download_identity_file("inline", @obj)
+      respond_identity_file("inline", @obj)
     end
   end
   
@@ -267,12 +267,12 @@ class FilesController < MyplaceonlineController
       params.require(:identity_file).permit(FilesController.param_names)
     end
 
-    def respond_download_identity_file(respond_type, identity_file)
+    def respond_identity_file(respond_type, identity_file)
       if identity_file.filesystem_path.blank?
-        Rails.logger.debug{"FilesController.respond_download_identity_file: Not on the filesystem"}
-        respond_download(respond_type, identity_file.get_file_contents, identity_file.file_file_size)
+        Rails.logger.debug{"FilesController.respond_identity_file: Not on the filesystem"}
+        respond_data(respond_type, identity_file.get_file_contents, identity_file.file_file_size)
       else
-        Rails.logger.debug{"FilesController.respond_download_identity_file: Sending from #{identity_file.filesystem_path}"}
+        Rails.logger.debug{"FilesController.respond_identity_file: Sending from #{identity_file.filesystem_path}"}
         send_file(
           identity_file.filesystem_path,
           :type => @obj.file_content_type,
@@ -282,7 +282,7 @@ class FilesController < MyplaceonlineController
       end
     end
     
-    def respond_download(respond_type, data, data_bytes)
+    def respond_data(respond_type, data, data_bytes)
       response.headers["Content-Length"] = data_bytes.to_s
       send_data(
         data,

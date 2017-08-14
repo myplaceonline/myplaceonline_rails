@@ -182,3 +182,45 @@
     text_area_rich: false
   )
 %>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :favicon_ico_identity_file,
+    existingobj: obj.favicon_ico_identity_file,
+    heading: t("myplaceonline.website_domains.favicon_ico_identity_file"),
+    objform: "files/form",
+    existingobjurl: "file_path",
+    searchurl: "/files.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    model_name: "IdentityFile",
+  }
+%>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :favicon_png_identity_file,
+    existingobj: obj.favicon_png_identity_file,
+    heading: t("myplaceonline.website_domains.favicon_png_identity_file"),
+    objform: "files/form",
+    existingobjurl: "file_path",
+    searchurl: "/files.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    model_name: "IdentityFile",
+  }
+%>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :default_header_icon_identity_file,
+    existingobj: obj.default_header_icon_identity_file,
+    heading: t("myplaceonline.website_domains.default_header_icon_identity_file"),
+    objform: "files/form",
+    existingobjurl: "file_path",
+    searchurl: "/files.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    model_name: "IdentityFile",
+  }
+%>

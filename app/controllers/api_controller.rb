@@ -256,6 +256,8 @@ class ApiController < ApplicationController
       if !urlpath.blank?
         spliturl = urlpath.split('/')
         if spliturl.length >= 3
+          
+          accumulatedSingularNamePrefix = ""
 
           objclass_index = 1
           
@@ -270,10 +272,12 @@ class ApiController < ApplicationController
             objclass = spliturl[objclass_index].singularize
 
             Rails.logger.debug{"objclass: #{objclass}"}
+            
+            accumulatedSingularNamePrefix = objclass
 
             paramnode = params[objclass]
             
-            Rails.logger.debug{"checking paramnode: #{paramnode}"}
+            Rails.logger.debug{"checking paramnode: #{Myp.debug_print(paramnode)}"}
             
             if paramnode.nil?
               objclass_index += 2
@@ -323,9 +327,32 @@ class ApiController < ApplicationController
             if key.end_with?("_attributes")
               key = key[0..key.index("_attributes")-1]
             end
-            
-            # Regex checking for only digits
-            if !!(key =~ /\A[-+]?[0-9]+\z/)
+
+            if val.has_key?("file") # Singular file upload (e.g. website domain favicon)
+              Rails.logger.debug{"found identity_file_attributes key"}
+              
+              if val[:file].is_a?(ActionDispatch::Http::UploadedFile)
+                newfile = IdentityFile.create!(val)
+              else
+                newfile = IdentityFile.create_for_path!(file_hash: val[:file])
+              end
+              
+              if !prevnode.nil?
+                prevnode.send("#{key}=", newfile)
+
+                Rails.logger.debug{"saving: #{Myp.debug_print(prevnode)}"}
+
+                prevnode.save!
+              end
+              
+              keepgoing = false
+              
+              accumulatedSingularNamePrefix = accumulatedSingularNamePrefix + "[" + pair[0] + "]"
+              
+              result = create_newfile_result(newfile, params, singular: true, singularNamePrefix: accumulatedSingularNamePrefix)
+              
+              Rails.logger.debug{"breaking loop"}
+            elsif !!(key =~ /\A[-+]?[0-9]+\z/) # Regex checking for only digits
               ikey = key.to_i
               
               # If the next child is identity_file_attributes, then we know
@@ -343,7 +370,7 @@ class ApiController < ApplicationController
                     
                     prevnode.send(prevkey) << newfilewrapper
 
-                    Rails.logger.debug{"saving: #{prevnode.inspect}"}
+                    Rails.logger.debug{"saving: #{Myp.debug_print(prevnode)}"}
 
                     prevnode.save!
 
@@ -359,7 +386,7 @@ class ApiController < ApplicationController
                     end
                   end
 
-                  Rails.logger.debug{"newfile: #{newfile.inspect}"}
+                  Rails.logger.debug{"newfile: #{Myp.debug_print(newfile)}"}
                 else
                   raise "todo"
                 end
@@ -376,17 +403,19 @@ class ApiController < ApplicationController
                 prevkey_full = pair[0]
                 if !obj.nil?
                   obj = obj[ikey]
-                  Rails.logger.debug{"nested indexed node: #{obj.inspect}"}
+                  Rails.logger.debug{"nested indexed node: #{Myp.debug_print(obj)}"}
                 end
               end
             else
+              Rails.logger.debug{"outer else: #{Myp.debug_print(obj)}, key: #{key}"}
+              
               prevnode = obj
               prevkey = key
               prevkey_full = pair[0]
               
               if !obj.nil?
                 obj = obj.send(key)
-                Rails.logger.debug{"nested node: #{obj.inspect}"}
+                Rails.logger.debug{"nested node: #{Myp.debug_print(obj)}"}
               end
             end
           end
@@ -409,7 +438,7 @@ class ApiController < ApplicationController
     render json: result
   end
   
-  def create_newfile_result(newfile, params, newfilewrapper: nil, singular: false)
+  def create_newfile_result(newfile, params, newfilewrapper: nil, singular: false, singularNamePrefix: "")
     items = [
       {
         type: "raw",
@@ -460,7 +489,8 @@ class ApiController < ApplicationController
       successNotification: I18n.t("myplaceonline.files.file_success", name: newfile.file_file_name),
       items: items,
       singular: singular,
-      id: newfile.id
+      id: newfile.id,
+      singularNamePrefix: singularNamePrefix,
     }
   end
   
@@ -611,6 +641,14 @@ class ApiController < ApplicationController
     end
     
     render(body: twiml.to_s, content_type: "text/xml", layout: false)
+  end
+  
+  def favicon_png
+    domain = Myp.website_domain
+  end
+
+  def favicon_ico
+    domain = Myp.website_domain
   end
 
   protected

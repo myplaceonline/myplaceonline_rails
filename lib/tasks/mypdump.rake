@@ -12,6 +12,8 @@ user.password = "#{ENV["ROOT_PASSWORD"].blank? ? "password" : ENV["ROOT_PASSWORD
 user.password_confirmation = user.password
 user.confirmed_at = Time.now
 user.user_type = User::USER_TYPE_ADMIN
+user.explicit_categories = true
+user.experimental_categories = true
 user.save(:validate => false)
 
 ExecutionContext.stack do

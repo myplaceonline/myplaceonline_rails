@@ -420,6 +420,9 @@ en:
       public_link: "Public Link"
       link: "Link"
       map: "Map"
+    site_contacts:
+      name: "Name"
+      email: "Email"
     categories:
       no_results: "No Results. Create New "
       always_expand_top_used: "Always Expand Top Used"
@@ -2815,6 +2818,9 @@ en:
       static_homepage: "Static Homepage HTML"
       menu_links_static: "Static Menu Links"
       menu_links_logged_in: "Logged-in Menu Links"
+      favicon_ico_identity_file: "favicon.ico"
+      favicon_png_identity_file: "favicon.png (196x196)"
+      default_header_icon_identity_file: "Default Header Icon (16x16)"
     bets:
       bet_name: "Bet Name"
       notes: "Conditions"
