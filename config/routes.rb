@@ -193,6 +193,7 @@ Rails.application.routes.draw do
       { instance: true, link: "discard" },
     ],
     blogs: [
+      { instance: true, link: "display" },
       {
         subresources: true,
         name: :blog_posts

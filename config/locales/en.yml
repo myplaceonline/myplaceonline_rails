@@ -3598,6 +3598,7 @@ en:
       blog_name: "Name"
       add_blog_post: "Add Post"
       blog_posts: "Posts"
+      display: "Display"
     blog_posts:
       blog_post_title: "Title"
       post: "Post"

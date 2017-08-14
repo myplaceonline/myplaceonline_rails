@@ -39,7 +39,7 @@ class BlogPostsController < MyplaceonlineController
     Myp.display_datetime_short_year(obj.updated_at, User.current_user)
   end
 
-  def show_table
+  def show_wrap
     false
   end
   

@@ -117,7 +117,7 @@ class MyplaceonlineController < ApplicationController
   
   def items_per_page
     if params[PARAM_PER_PAGE].nil?
-      result = DEFAULT_PER_PAGE
+      result = default_items_per_page
       if !current_user.items_per_page.nil?
         result = current_user.items_per_page.to_i
       end
@@ -132,6 +132,10 @@ class MyplaceonlineController < ApplicationController
       perpage = count
     end
     perpage
+  end
+  
+  def default_items_per_page
+    DEFAULT_PER_PAGE
   end
   
   def items_query_params_part_all
@@ -1055,7 +1059,7 @@ class MyplaceonlineController < ApplicationController
     self.additional_items_collapsed && self.favorite_items_collapsed
   end
   
-  def show_table
+  def show_wrap
     true
   end
   

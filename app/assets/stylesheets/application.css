@@ -225,3 +225,7 @@ label[title], .tooltipable[title] {
 .bgerror {
   background-color: red !important;
 }
+
+.itemdivider {
+  border-top: 1px dotted #000000;
+}

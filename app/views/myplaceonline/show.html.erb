@@ -1,2 +1,7 @@
-<%= render layout: "shared/model_show" do %>
+<%
+if !defined?(locals)
+  locals = {}
+end
+%>
+<%= render(layout: "shared/model_show", locals: locals) do %>
 <% end %>

@@ -1,0 +1,39 @@
+<% content_for :heading do -%><%= @obj.display %><% end -%>
+<%
+  offset = controller.items_offset
+  perpage = controller.items_per_page
+  count = @obj.blog_posts.count
+  perpage = controller.update_items_per_page(perpage, count)
+  items_next_page_link = blog_display_path(@obj, offset: offset + perpage)
+  items_previous_page_link = blog_display_path(@obj, offset: offset - perpage)
+  items_all_link = blog_display_path
+  query_params_part_all = controller.items_query_params_part_all
+%>
+<% @blog_posts.each do |blog_post| %>
+  <%= render partial: "blog_posts/show", locals: { obj: blog_post, link_title: true } %>
+  <hr class="itemdivider" />
+<% end %>
+<%=
+  render partial: "shared/offset_navigation", locals: {
+    offset: offset,
+    perpage: perpage,
+    count: count,
+    query_params_part_all: query_params_part_all,
+    items_next_page_link: items_next_page_link,
+    items_previous_page_link: items_previous_page_link,
+    items_all_link: items_all_link
+  }
+%>
+<% if @obj.current_user_owns? %>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: controller.obj_path,
+          icon: "back"
+        }
+      ]
+    })
+  %>
+<% end %>

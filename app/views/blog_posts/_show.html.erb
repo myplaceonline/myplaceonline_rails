@@ -1,3 +1,15 @@
+<%
+if !defined?(link_title)
+  link_title = false
+end
+%>
+
+<% if link_title %>
+  <h1><%= link_to(controller.display_obj(obj), blog_blog_post_path(obj.blog, obj)) %></h1>
+<% else %>
+  <h1><%= controller.display_obj(obj) %></h1>
+<% end %>
+
 <small><em><%= data_row(heading: t("myplaceonline.blog_posts.last_updated"), content: obj.updated_at, wrap: false, prefix_heading: true, prefix_wrapper: :span) %></em></small>
 <hr />
 <%= data_row(heading: t("myplaceonline.blog_posts.post"), content: obj.post, markdown: true, wrap: false) %>

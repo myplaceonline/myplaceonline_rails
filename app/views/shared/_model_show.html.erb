@@ -1,10 +1,19 @@
+<%
+if !defined?(locals)
+  locals = {}
+end
+locals = { obj: @obj }.merge(locals)
+%>
+
 <% if !@myplet %>
   <% if !@nested_show %>
     <% if !@myplet %>
       <% content_for :heading do -%><%= page_heading(@obj, controller) %><% end -%>
     <% end %>
 
-    <h1><%= controller.display_obj(@obj) %></h1>
+    <% if controller.show_wrap %>
+      <h1><%= controller.display_obj(@obj) %></h1>
+    <% end %>
 
     <% if !@myplet %>
       <%= flashes!(@obj) %>
@@ -23,10 +32,10 @@
     <% end %>
   <% end %>
 
-    <% if controller.show_table %>
+    <% if controller.show_wrap %>
       <%= data_table_start %>
       
-      <%= render partial: controller.paths_form_name + "/show", locals: { obj: @obj } %>
+      <%= render partial: controller.paths_form_name + "/show", locals: locals %>
 
       <%= yield %>
 
@@ -37,7 +46,7 @@
 
       <%= data_table_end %>
     <% else %>
-      <%= render partial: controller.paths_form_name + "/show", locals: { obj: @obj } %>
+      <%= render partial: controller.paths_form_name + "/show", locals: locals %>
     <% end %>
 
   <% if !@nested_show %>
@@ -59,5 +68,5 @@
     </tr>
   <% end %>
 <% else %>
-  <%= render partial: controller.paths_name + "/show", locals: { obj: @obj } %>
+  <%= render partial: controller.paths_name + "/show", locals: locals %>
 <% end %>
