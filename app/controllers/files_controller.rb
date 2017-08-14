@@ -36,8 +36,8 @@ class FilesController < MyplaceonlineController
     @obj = model.find_by(id: params[:id])
     authorize! :show, @obj
     if !@obj.thumbnail_contents.nil?
-      Rails.logger.debug{"FilesController.thumbnail: found thumbnail_contents #{@obj.thumbnail_bytes}"}
-      respond_data("inline", @obj.thumbnail_contents, @obj.thumbnail_bytes)
+      Rails.logger.debug{"FilesController.thumbnail: found thumbnail_contents #{@obj.thumbnail_size_bytes}"}
+      respond_data("inline", @obj.thumbnail_contents, @obj.thumbnail_size_bytes)
     elsif !@obj.thumbnail_filesystem_path.blank?
       send_file(
         @obj.thumbnail_filesystem_path,
@@ -267,31 +267,6 @@ class FilesController < MyplaceonlineController
       params.require(:identity_file).permit(FilesController.param_names)
     end
 
-    def respond_identity_file(respond_type, identity_file)
-      if identity_file.filesystem_path.blank?
-        Rails.logger.debug{"FilesController.respond_identity_file: Not on the filesystem"}
-        respond_data(respond_type, identity_file.get_file_contents, identity_file.file_file_size)
-      else
-        Rails.logger.debug{"FilesController.respond_identity_file: Sending from #{identity_file.filesystem_path}"}
-        send_file(
-          identity_file.filesystem_path,
-          :type => @obj.file_content_type,
-          :filename => @obj.file_file_name,
-          :disposition => respond_type
-        )
-      end
-    end
-    
-    def respond_data(respond_type, data, data_bytes)
-      response.headers["Content-Length"] = data_bytes.to_s
-      send_data(
-        data,
-        :type => @obj.file_content_type,
-        :filename => @obj.file_file_name,
-        :disposition => respond_type
-      )
-    end
-    
     def index_pre_respond()
       if @offset == 0
         @objs2 = IdentityFileFolder.where(
