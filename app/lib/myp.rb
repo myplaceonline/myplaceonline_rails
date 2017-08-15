@@ -487,21 +487,44 @@ module Myp
     end
   end
   
-  def self.website_domain(host: nil)
+  def self.current_host(host: nil)
+    # A host usually isn't specified, so we figure it out from the request header
     if host.blank?
-      host = MyplaceonlineExecutionContext.host
+      # Check if the host is emulated
+      query_string = MyplaceonlineExecutionContext.query_string
+      if !query_string.nil?
+        ehi = query_string.index("emulate_host=")
+        if !ehi.nil?
+          host = query_string[ehi+14..-1]
+        end
+      end
+      
+      cookie_hash = MyplaceonlineExecutionContext.cookie_hash
+      if !cookie_hash.nil?
+        host = cookie_hash["emulate_host"]
+      end
+
+      if host.blank?
+        host = MyplaceonlineExecutionContext.host
+      end
     end
-    result = @@all_website_domains[host]
+    
+    host
+  end
+  
+  def self.website_domain(host: nil)
+    
+    result = @@all_website_domains[Myp.current_host(host: host)]
+    
     if result.nil?
       result = @@default_website_domain
     end
+    
     result
   end
 
   def self.website_domain_homepage(host: nil)
-    if host.blank?
-      host = MyplaceonlineExecutionContext.host
-    end
+    host = Myp.current_host(host: host)
     @@all_website_domain_homepages[host]
   end
 

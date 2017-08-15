@@ -135,7 +135,13 @@ class IdentityFile < ApplicationRecord
       if self.filesystem_path.blank?
         result = self.file.file_contents
       else
-        IO.binread(self.filesystem_path)
+        path = self.filesystem_path
+        
+        if !ENV["FILES_PREFIX"].blank? && !File.exist?(path)
+          path = ENV["FILES_PREFIX"] + path
+        end
+
+        result = IO.binread(path)
       end
     end
     Rails.logger.info{"get_file_contents: Returning #{ result.nil? ? 0 : result.length }"}

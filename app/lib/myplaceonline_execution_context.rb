@@ -29,6 +29,12 @@ class MyplaceonlineExecutionContext
   def self.persistent_user_store; self[:persistent_user_store]; end
   def self.persistent_user_store=(x); self[:persistent_user_store] = x; end
 
+  def self.query_string; self[:query_string]; end
+  def self.query_string=(x); self[:query_string] = x; end
+
+  def self.cookie_hash; self[:cookie_hash]; end
+  def self.cookie_hash=(x); self[:cookie_hash] = x; end
+
   def self.host
     result = self[:host]
     if result.blank?

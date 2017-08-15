@@ -458,7 +458,7 @@ en:
       title: "Information"
       apk: "Android Test Application APK"
       phonegap: "Phonegap Build"
-      about: "About Myplaceonline"
+      about: "About"
       contact: "Contact"
       credits: "Credits"
       credits_description: "Thank you to the following projects:"
@@ -2821,6 +2821,7 @@ en:
       favicon_ico_identity_file: "favicon.ico"
       favicon_png_identity_file: "favicon.png (196x196)"
       default_header_icon_identity_file: "Default Header Icon (16x16)"
+      hosted_details: "Hosted Details"
     bets:
       bet_name: "Bet Name"
       notes: "Conditions"

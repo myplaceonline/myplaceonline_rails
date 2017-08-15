@@ -6,5 +6,12 @@ class WelcomeController < ApplicationController
     if user_signed_in?
       @myplets = Myplet.where(identity: current_user.primary_identity).order(:x_coordinate, :y_coordinate).all
     end
+    
+    if !params[:emulate_host].blank?
+      # http://api.rubyonrails.org/classes/ActionDispatch/Cookies.html
+      cookies[:emulate_host] = {
+        value: params[:emulate_host]
+      }
+    end
   end
 end

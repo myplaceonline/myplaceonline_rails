@@ -96,6 +96,10 @@ module Myplaceonline
           end
           
           MyplaceonlineExecutionContext.host = host
+          MyplaceonlineExecutionContext.query_string = env["rack.request.query_string"]
+          MyplaceonlineExecutionContext.cookie_hash = env["rack.request.cookie_hash"]
+          
+          #Rails.logger.debug{"MyplaceonlineRack.call setting context host: #{MyplaceonlineExecutionContext.host}, query_string: #{MyplaceonlineExecutionContext.query_string}, cookie_hash: #{Myp.debug_print(MyplaceonlineExecutionContext.cookie_hash)}"}
           
           @app.call(env)
           

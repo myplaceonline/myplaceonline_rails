@@ -62,14 +62,17 @@ class ExecutionContext
   
   def self.[](name)
     execution_contexts = Thread.current[:execution_contexts]
+    #Rails.logger.debug{"ExecutionContext.[] name: #{name}"}
     if !execution_contexts.nil?
       result = nil
       i = execution_contexts.length - 1
       while result.nil? && i >= 0
         execution_context = execution_contexts[i]
         result = execution_context[name]
+        #Rails.logger.debug{"ExecutionContext.[] result of #{i}: #{result}"}
         i -= 1
       end
+      #Rails.logger.debug{"ExecutionContext.[] returning: #{result}"}
       result
     else
       raise "No execution contexts"
