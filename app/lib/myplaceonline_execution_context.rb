@@ -36,10 +36,30 @@ class MyplaceonlineExecutionContext
   def self.cookie_hash=(x); self[:cookie_hash] = x; end
 
   def self.host
-    result = self[:host]
+    result = nil
+    
+    # Check if the host is emulated
+    query_string = self.query_string
+    if !query_string.nil?
+      ehi = query_string.index("emulate_host=")
+      if !ehi.nil?
+        result = query_string[ehi+14..-1]
+      end
+    end
+    
+    cookie_hash = self.cookie_hash
+    if !cookie_hash.nil?
+      result = cookie_hash["emulate_host"]
+    end
+
+    if result.blank?
+      result = self[:host]
+    end
+
     if result.blank?
       result = Myp.default_host
     end
+    
     result
   end
   

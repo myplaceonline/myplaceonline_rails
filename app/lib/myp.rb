@@ -488,25 +488,8 @@ module Myp
   end
   
   def self.current_host(host: nil)
-    # A host usually isn't specified, so we figure it out from the request header
     if host.blank?
-      # Check if the host is emulated
-      query_string = MyplaceonlineExecutionContext.query_string
-      if !query_string.nil?
-        ehi = query_string.index("emulate_host=")
-        if !ehi.nil?
-          host = query_string[ehi+14..-1]
-        end
-      end
-      
-      cookie_hash = MyplaceonlineExecutionContext.cookie_hash
-      if !cookie_hash.nil?
-        host = cookie_hash["emulate_host"]
-      end
-
-      if host.blank?
-        host = MyplaceonlineExecutionContext.host
-      end
+      host = MyplaceonlineExecutionContext.host
     end
     
     host
