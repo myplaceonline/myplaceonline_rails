@@ -154,4 +154,12 @@ Body:
       Rails.logger.info{"InfoController.upload #{result}"}
     end
   end
+  
+  def terms
+    @content = Myp.parse_yaml_to_html("myplaceonline.terms").gsub("${HOST}", Myp.website_domain.display)
+  end
+  
+  def privacy
+    @content = Myp.parse_yaml_to_html("myplaceonline.privacy_policy").gsub("${HOST}", Myp.website_domain.display)
+  end
 end
