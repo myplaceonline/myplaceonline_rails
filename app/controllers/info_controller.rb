@@ -8,7 +8,9 @@ class InfoController < ApplicationController
   def index; end
   def credits; end
   def diagnostics; end
+
   def faq; end
+  
   def serverinfo; end
   def jqm; end
     
@@ -101,12 +103,13 @@ Body:
             "myplaceonline.info.invite_body_markdown",
             name: User.current_user.display,
             link: Rails.application.routes.url_helpers.send("root_url", Rails.configuration.default_url_options),
-            additional_body: @obj.invite_body
+            additional_body: @obj.invite_body,
+            host: Myp.website_domain.display,
           )
           
           Myp.send_email(
             @obj.email,
-            I18n.t("myplaceonline.info.invite_subject", name: User.current_user.display),
+            I18n.t("myplaceonline.info.invite_subject", host: Myp.website_domain.display, name: User.current_user.display),
             Myp.markdown_to_html(body_markdown).html_safe,
             nil,
             nil,

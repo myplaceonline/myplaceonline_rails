@@ -1,3 +1,3 @@
 <% content_for :heading do -%><%= t('myplaceonline.info.faq') %><% end -%>
 
-<%= raw(Myp.parse_yaml_to_html("myplaceonline.info.faq_content")) %>
+<%= raw(Myp.markdown_to_html(Myp.website_domain.faq)) %>

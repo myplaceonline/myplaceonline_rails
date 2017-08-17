@@ -186,6 +186,43 @@
     )
   %>
   <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_TEXT_AREA,
+      name: :new_user_welcome,
+      value: obj.new_user_welcome,
+      placeholder: "myplaceonline.website_domains.new_user_welcome",
+      text_area_rich: false
+    )
+  %>
+  <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_TEXT_AREA,
+      name: :about,
+      value: obj.about,
+      placeholder: "myplaceonline.website_domains.about",
+    )
+  %>
+  <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_TEXT_AREA,
+      name: :mission_statement,
+      value: obj.mission_statement,
+      placeholder: "myplaceonline.website_domains.mission_statement",
+    )
+  %>
+  <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_TEXT_AREA,
+      name: :faq,
+      value: obj.faq,
+      placeholder: "myplaceonline.website_domains.faq",
+    )
+  %>
+  <%=
     render partial: "myplaceonline/select_or_create", locals: {
       f: f,
       name: :favicon_ico_identity_file,

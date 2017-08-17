@@ -14,6 +14,10 @@ class WebsiteDomainsController < MyplaceonlineController
         :static_homepage,
         :menu_links_static,
         :menu_links_logged_in,
+        :new_user_welcome,
+        :about,
+        :mission_statement,
+        :faq,
         website_attributes: WebsitesController.param_names,
         domain_host_attributes: MembershipsController.param_names,
         website_domain_ssh_keys_attributes: [

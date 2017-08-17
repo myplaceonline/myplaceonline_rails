@@ -1,3 +1,3 @@
 <% content_for :heading do -%><%= t("myplaceonline.info.about") %><% end -%>
 
-<%= raw(Myp.website_domain_homepage) %>
+<%= raw(Myp.markdown_to_html(Myp.website_domain.about)) %>

@@ -48,8 +48,8 @@ class AdminController < ApplicationController
   def send_email
     @admin_email = AdminEmail.new(
       email: Email.new(
-               email_category: I18n.t("myplaceonline.admin.send_email.default_category"),
-               subject: I18n.t("myplaceonline.admin.send_email.default_category") + ": "
+               email_category: I18n.t("myplaceonline.admin.send_email.default_category", host: Myp.website_domain.display),
+               subject: I18n.t("myplaceonline.admin.send_email.default_category", host: Myp.website_domain.display) + ": "
              )
     )
     
@@ -76,7 +76,7 @@ class AdminController < ApplicationController
   def send_text_message
     @admin_text_message = AdminTextMessage.new(
       text_message: TextMessage.new(
-               message_category: I18n.t("myplaceonline.admin.send_text_message.default_category")
+               message_category: I18n.t("myplaceonline.admin.send_text_message.default_category", host: Myp.website_domain.display)
              )
     )
     

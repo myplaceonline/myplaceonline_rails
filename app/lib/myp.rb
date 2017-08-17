@@ -2541,6 +2541,10 @@ module Myp
       menu_links_static: "",
       menu_links_logged_in: "",
       website: website,
+      new_user_welcome: I18n.t("myplaceonline.default_domain.new_user_welcome"),
+      about: Myp.parse_yaml_to_html("myplaceonline.default_domain.about"),
+      mission_statement: Myp.parse_yaml_to_html("myplaceonline.default_domain.mission_statement"),
+      faq: Myp.parse_yaml_to_html("myplaceonline.default_domain.faq"),
     )
   end
   

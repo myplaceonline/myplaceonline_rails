@@ -291,6 +291,76 @@ en:
           </div>
         </div>
         ]]>
+      new_user_welcome: "Welcome to myplaceonline! Explore the Joy, Meaning, and Order categories below to start entering data. Below that is a daily reminder to enter three things that went well to improve your happiness (you can enter your mobile number to get nightly text reminders). Finally, there's an auto-saving notepad for quick notes."
+      about: !xml |
+        <![CDATA[
+        # About
+        
+        The source code for myplaceonline is fully open source at [https://github.com/myplaceonline/myplaceonline](https://github.com/myplaceonline/myplaceonline).
+        
+        ]]>
+      mission_statement: !xml |
+        <![CDATA[
+        # Mission Statement
+        
+        Fight entropy.
+        
+        ]]>
+      faq: !xml |
+        <![CDATA[
+        # Frequently Asked Questions
+        
+        ## General
+
+        ### <a name="theory"></a>What is the theory of the categories?
+        
+        > ‘Happiness' is too worn and too weary a term to be of much scientific use, and the discipline of Positive Psychology divides it into three very different realms, each of which is measurable and, most importantly, each of which is skill-based and can be taught (Seligman, 2002). The first is hedonic: positive emotion (joy, love, contentment, pleasure etc.). A life led around having as much of this good stuff as possible, is the ‘Pleasant Life'. The second, much closer to what Thomas Jefferson and Aristotle sought, is the state of flow, and a life led around it is the ‘Engaged Life'. Flow, a major part of the Engaged Life, consists in a loss of self-consciousness, time stopping for you, being ‘one with the music' (Csikszentmihalyi, 1990). Importantly engagement seems to be the opposite of positive emotion: when one is totally absorbed, no thoughts or feelings are present—even though one says afterwards ‘that was fun' (Delle Fave & Massimini, 2005). And while there are shortcuts to positive emotion—you can take drugs, masturbate, watch television, or go shopping—there are no shortcuts to flow. Flow only occurs when you deploy your highest strengths and talents to meet the challenges that come your way, and it is clear that flow facilitates learning. The third realm in the framework of Positive Psychology is the one with the best intellectual provenance, the Meaningful Life. Flow and positive emotion can be found in solipsistic pursuits, but not meaning or purpose. Meaning is increased through our connections to others, future generations, or causes that transcend the self (Durkheim, 1951/1897; Erikson, 1963). From a Positive Psychology perspective, meaning consists in knowing what your highest strengths are, and then using them to belong to and serve something you believe is larger than the self (Seligman, 2002).
+        > 
+        > Positive education: positive psychology and classroom interventions, Seligman et al, Oxford Review of Education, 2009, [http://www.sas.upenn.edu/~duckwort/images/upperdarbypd/10082012_PDReading.pdf](http://www.sas.upenn.edu/~duckwort/images/upperdarbypd/10082012_PDReading.pdf)
+        
+        ### What is the purpose of the points system?
+        
+        The points system is an experiment to try to help people balance the three dimensions of happiness mentioned above.
+        
+        ### How safe is my data?
+        
+        Regarding the availability of your data, it is stored in a PostgreSQL database which is asynchronously but nearly instantaneously streamed to a backup database (see [our architecture](https://github.com/myplaceonline/myplaceonline/blob/master/doc/Development.md#architecture)). If the main database server crashes, your data will most likely be safe. The only potential danger of losing your data is if something happens to the entire [Digital Ocean](https://www.digitalocean.com/) San Francisco data center because the architecture is currently limited to a single data center.
+        
+        If you are concerned that your data is stored in the United States, you may use symmetric encryption for certain sensitive data (see the `Security` section below), or run the website locally.
+        
+        ## <a name="security"></a>Security
+        
+        ### How are website passwords managed?
+        
+        We never store your website password on our servers. A bcrypt [hash and salt](https://www.owasp.org/index.php/Password_Storage_Cheat_Sheet) for the password is stored and used to authenticate you. Your password is stored in an [encrypted and signed form in your cookie](http://api.rubyonrails.org/classes/ActionDispatch/Session/CookieStore.html). This is needed because your password is used to decrypt any values you chose to encrypt, and asking you for your password every time something needs to be decrypted would be annoying.
+        
+        When you change your password, we symmetrically decrypt all encrypted values and then re-encrypt them with the new password. This can take a long time if you have a lot of encrypted values.
+        
+        ### How is encryption used?
+        
+        You may optionally encrypt some sensitive information, usually by checking an `Encrypt` checkbox when creating or editing certain items such as passwords (this box is checked by default). This protects that data from the following attacks (assuming your password is hard to discover using a brute force search):
+        
+        * If a malicious person hacks the Myplaceonline database.
+        * If a Myplaceonline administrator reads the database.
+        * If another Myplaceonline user accesses your data by exploiting a bug in the website to access your data (the reason this fails is that even if the user accesses your data, unless you both happened to use the same password, the decryption will return garbage).
+        
+        ### How is data encrypted when stored in the database or in offline browser storage?
+
+        Symmetric [AES-256-CBC](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) and a [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2)+HMAC+SHA1 key derivation function with an 8 byte salt and 65536 iterations.
+        
+        ### How is data encrypted when exported?
+
+        When [exporting all of your data](/users/export) into a downloadable file, you may optionally encrypt the file using symmetric [AES-256](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) and an [S2K](https://tools.ietf.org/html/rfc4880)+SHA512 key derivation function with an 8 byte salt and 65536 iterations.
+        
+        ### What are the issues with "at-rest" encryption?
+        
+        At-rest encryption uses your main Myplaceonline.com website password to encrypt the data in the database using a [symmetric cipher](https://en.wikipedia.org/wiki/Symmetric-key_algorithm) (see above). This means that if you forget your main Myplaceonline.com website password, you will not be able to recover those encrypted values (because only you had the key). The "forgot my password" function on websites simply resets your password to a new password after you click a link in an email. There is no such thing as a "forgot my password" function for symmetric encryption.
+        
+        ### If I sign out of Myplaceonline, why are all my other devices also signed out?
+        
+        This is a security feature. If you want to stay logged in on other devices, then do not use the sign out feature; instead, on the devices that you want to sign out of, do not check the "Remember Me" box when signing in, and simply close the browser when you want to sign out. This will sign you out on just that device.
+        
+        ]]>
     general:
       email: "E-mail"
       password: "Password"
@@ -471,61 +541,6 @@ en:
       faq: "Frequently Asked Questions (FAQs)"
       help: "Help"
       upload: "Upload"
-      faq_content: !xml |
-        <![CDATA[
-        # Frequently Asked Questions
-        
-        ## General
-
-        ### <a name="theory"></a>What is the theory of the categories?
-        
-        > ‘Happiness' is too worn and too weary a term to be of much scientific use, and the discipline of Positive Psychology divides it into three very different realms, each of which is measurable and, most importantly, each of which is skill-based and can be taught (Seligman, 2002). The first is hedonic: positive emotion (joy, love, contentment, pleasure etc.). A life led around having as much of this good stuff as possible, is the ‘Pleasant Life'. The second, much closer to what Thomas Jefferson and Aristotle sought, is the state of flow, and a life led around it is the ‘Engaged Life'. Flow, a major part of the Engaged Life, consists in a loss of self-consciousness, time stopping for you, being ‘one with the music' (Csikszentmihalyi, 1990). Importantly engagement seems to be the opposite of positive emotion: when one is totally absorbed, no thoughts or feelings are present—even though one says afterwards ‘that was fun' (Delle Fave & Massimini, 2005). And while there are shortcuts to positive emotion—you can take drugs, masturbate, watch television, or go shopping—there are no shortcuts to flow. Flow only occurs when you deploy your highest strengths and talents to meet the challenges that come your way, and it is clear that flow facilitates learning. The third realm in the framework of Positive Psychology is the one with the best intellectual provenance, the Meaningful Life. Flow and positive emotion can be found in solipsistic pursuits, but not meaning or purpose. Meaning is increased through our connections to others, future generations, or causes that transcend the self (Durkheim, 1951/1897; Erikson, 1963). From a Positive Psychology perspective, meaning consists in knowing what your highest strengths are, and then using them to belong to and serve something you believe is larger than the self (Seligman, 2002).
-        > 
-        > Positive education: positive psychology and classroom interventions, Seligman et al, Oxford Review of Education, 2009, [http://www.sas.upenn.edu/~duckwort/images/upperdarbypd/10082012_PDReading.pdf](http://www.sas.upenn.edu/~duckwort/images/upperdarbypd/10082012_PDReading.pdf)
-        
-        ### What is the purpose of the points system?
-        
-        The points system is an experiment to try to help people balance the three dimensions of happiness mentioned above.
-        
-        ### How safe is my data?
-        
-        Regarding the availability of your data, it is stored in a PostgreSQL database which is asynchronously but nearly instantaneously streamed to a backup database (see [our architecture](https://github.com/myplaceonline/myplaceonline/blob/master/doc/Development.md#architecture)). If the main database server crashes, your data will most likely be safe. The only potential danger of losing your data is if something happens to the entire [Digital Ocean](https://www.digitalocean.com/) San Francisco data center because the architecture is currently limited to a single data center.
-        
-        If you are concerned that your data is stored in the United States, you may use symmetric encryption for certain sensitive data (see the `Security` section below), or run the website locally.
-        
-        ## <a name="security"></a>Security
-        
-        ### How are website passwords managed?
-        
-        We never store your website password on our servers. A bcrypt [hash and salt](https://www.owasp.org/index.php/Password_Storage_Cheat_Sheet) for the password is stored and used to authenticate you. Your password is stored in an [encrypted and signed form in your cookie](http://api.rubyonrails.org/classes/ActionDispatch/Session/CookieStore.html). This is needed because your password is used to decrypt any values you chose to encrypt, and asking you for your password every time something needs to be decrypted would be annoying.
-        
-        When you change your password, we symmetrically decrypt all encrypted values and then re-encrypt them with the new password. This can take a long time if you have a lot of encrypted values.
-        
-        ### How is encryption used?
-        
-        You may optionally encrypt some sensitive information, usually by checking an `Encrypt` checkbox when creating or editing certain items such as passwords (this box is checked by default). This protects that data from the following attacks (assuming your password is hard to discover using a brute force search):
-        
-        * If a malicious person hacks the myplaceonline database.
-        * If a myplaceonline administrator reads the database.
-        * If another myplaceonline user accesses your data by exploiting a bug in the website to access your data (the reason this fails is that even if the user accesses your data, unless you both happened to use the same password, the decryption will return garbage).
-        
-        ### How is data encrypted when stored in the database or in offline browser storage?
-
-        Symmetric [AES-256-CBC](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) and a [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2)+HMAC+SHA1 key derivation function with an 8 byte salt and 65536 iterations.
-        
-        ### How is data encrypted when exported?
-
-        When [exporting all of your data](/users/export) into a downloadable file, you may optionally encrypt the file using symmetric [AES-256](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) and an [S2K](https://tools.ietf.org/html/rfc4880)+SHA512 key derivation function with an 8 byte salt and 65536 iterations.
-        
-        ### What are the issues with "at-rest" encryption?
-        
-        At-rest encryption uses your main myplaceonline.com website password to encrypt the data in the database using a [symmetric cipher](https://en.wikipedia.org/wiki/Symmetric-key_algorithm) (see above). This means that if you forget your main myplaceonline.com website password, you will not be able to recover those encrypted values (because only you had the key). The "forgot my password" function on websites simply resets your password to a new password after you click a link in an email. There is no such thing as a "forgot my password" function for symmetric encryption.
-        
-        ### If I sign out of myplaceonline, why are all my other devices also signed out?
-        
-        This is a security feature. If you want to stay logged in on other devices, then do not use the sign out feature; instead, on the devices that you want to sign out of, do not check the "Remember Me" box when signing in, and simply close the browser when you want to sign out. This will sign you out on just that device.
-        
-        ]]>
       tips: "Tips"
       tips_content: !xml |
         <![CDATA[
@@ -544,8 +559,8 @@ en:
       invite_form_body: "Personalized Message"
       invite_form_send: "Send Invite"
       invite: "Invite"
-      invite_subject: "You've been invited to try Myplaceonline by %{name}"
-      invite_body_markdown: "%{name} has invited you to try Myplaceonline, your free online helper:\n\n[%{link}](%{link})\n\n%{additional_body}"
+      invite_subject: "You've been invited to try %{host} by %{name}"
+      invite_body_markdown: "%{name} has invited you to try %{host}, your free online helper:\n\n[%{link}](%{link})\n\n%{additional_body}"
       invite_sent: "Your invite has been sent."
       invite_intro: "This will send an email invite to this person. You may enter a personalized message."
       invite_duplicate: "You may only invite an email address once."
@@ -553,13 +568,6 @@ en:
         title: "JQueryMobile"
       mission_statement:
         title: "Mission Statement"
-        content: !xml |
-          <![CDATA[
-          # Mission Statement
-          
-          Fight entropy.
-          
-          ]]>
     help:
       title: "Help"
       features: "Features"
@@ -585,7 +593,7 @@ en:
         
         1. Enter a subject and body of the email. For the subject, we recommend
         starting it with `Name Shared: `, and we'll add that by default. The
-        reason for this is that the email will come from `Myplaceonline.com`
+        reason for this is that the email will come from this website
         so it may be useful for the recipient to quickly know who sent the email
         without having to check it. For the body, you may use the
         placeholder `%{name}` which will be replaced by the contact name.
@@ -623,10 +631,10 @@ en:
             {image:help/categories/trips/share7.png}
         
         1. In about 5 minutes, the emails will be sent to the contacts.
-        Remember that myplaceonline cannot guarantee email delivery. Even if you
+        Remember that we cannot guarantee email delivery. Even if you
         blind carbon copy yourself and receive a copy, we do not track email
         opens so you can never be sure the email arrived or was opened. The
-        email will be addressed from `Myplaceonline.com` although a `Reply-To`
+        email will be addressed from our domain although a `Reply-To`
         is setup so that if the person clicks reply, they will automatically
         reply to your email address. The user will have a link to the shared
         trip view. This link has a unique token so that only they, or anyone
@@ -688,7 +696,6 @@ en:
       generate_special: "Special Characters (_, -, !)"
       generate_special_additional: "Additional Special Characters"
     users:
-      welcome: "Welcome to myplaceonline! Explore the Joy, Meaning, and Order categories below to start entering data. Below that is a daily reminder to enter three things that went well to improve your happiness (you can enter your mobile number to get nightly text reminders). Finally, there's an auto-saving notepad for quick notes."
       invite: "Invite Code"
       invite_invalid: "invalid"
       reenterpassword: "Re-enter Password"
@@ -2153,7 +2160,7 @@ en:
     notepads:
       title: "Title"
       notepad_data: "Notepad"
-      initial_help_text: "This notepad saves as you type. Use it as a quick way to open myplaceonline and save some notes."
+      initial_help_text: "This notepad saves as you type. Use it as a quick way to save some notes."
     myplets:
       settings: "Settings"
       title: "Title"
@@ -2720,7 +2727,7 @@ en:
       reply_hint: "Reply to this email to chat with %{respond_to}."
       unsubscribed_all: "Successfully unsubscribed from all categories."
       unsubscribed_category: "Successfully unsubscribed from %{category} posts."
-      link_unsubscribe_all: "Unsubscribe from all myplaceonline emails from %{user}"
+      link_unsubscribe_all: "Unsubscribe from all emails from %{user}"
       link_unsubscribe_category: "Unsubscribe from %{user}'s '%{category}' emails"
     drafts:
       draft_name: "Name"
@@ -2822,6 +2829,10 @@ en:
       favicon_png_identity_file: "favicon.png (196x196)"
       default_header_icon_identity_file: "Default Header Icon (16x16)"
       hosted_details: "Hosted Details"
+      new_user_welcome: "New User Welcome"
+      about: "About"
+      mission_statement: "Mission Statement"
+      faq: "FAQ"
     bets:
       bet_name: "Bet Name"
       notes: "Conditions"
@@ -2866,7 +2877,7 @@ en:
         sent: "Email will be sent to users in about 5 minutes"
         body: "Body"
         category: "Category"
-        default_category: "Myplaceonline Announcement"
+        default_category: "%{host} Announcement"
         only_send_to: "Only Send to These Email Addresses (Comma Separated)"
         exclude_emails: "Exclude These Email Addresses (Comma Separated)"
       send_text_message:
@@ -2874,7 +2885,7 @@ en:
         sent: "Text Message will be sent to users in about 5 minutes"
         body: "Body"
         category: "Category"
-        default_category: "Myplaceonline Announcement"
+        default_category: "%{host} Announcement"
         only_send_to: "Only Send to These Phone Numbers (Comma Separated)"
         exclude_numbers: "Exclude These Phone Numbers (Comma Separated)"
       send_direct_email:
@@ -2998,7 +3009,7 @@ en:
       duplicate: "Duplicate"
       show_shared: "Display"
       details: " Details: "
-      link_unsubscribe_all: "Unsubscribe from all myplaceonline text messages from %{user}"
+      link_unsubscribe_all: "Unsubscribe from all text messages from %{user}"
       link_unsubscribe_category: "Unsubscribe from %{user}'s '%{category}' text messages"
       unsubscribed_all: "Successfully unsubscribed from all text messages."
       unsubscribed_category: "Successfully unsubscribed from %{category} text messages."
@@ -3023,7 +3034,7 @@ en:
       user: "User (by email)"
       with_self: "You're already connected with yourself :-)"
       connection_request_subject: "%{name} would like to be connected"
-      connection_request_body: "%{name} would like to connect with you on Myplaceonline. Connecting will allow both of you to share items with each other. Click the following link to accept:\n\n[Accept Connection Request](%{link})"
+      connection_request_body: "%{name} would like to connect with you on %{host}. Connecting will allow both of you to share items with each other. Click the following link to accept:\n\n[Accept Connection Request](%{link})"
       connection_accepted: "You are now connected with %{name}"
       connection_accept_invalid: "Invalid parameters"
       connection_accepted_body: "You are now connected with %{name}\n\nYou can click the **Share** button at the bottom of most items to share them with your connections.\n\nYou can review this connection at [%{link}](%{link})"
@@ -3036,7 +3047,7 @@ en:
       invalid_search: "Please enter an email address."
       no_results: "No users found."
       no_results_invite_start: "Invite"
-      no_results_invite_end: "to Myplaceonline"
+      no_results_invite_end: "to %{host}"
       request: "Request"
     myreferences:
       contact: "Contact"
@@ -3380,7 +3391,7 @@ en:
     company_interactions:
       company_interaction_date: "Date"
     encryption:
-      first_encryption: "Note: If you check the box to encrypt and if you ever lose your myplaceonline.com main website password in the future, the above encrypted data will be lost forever. So, make sure your myplaceonline.com main website password is rememberable (and secure!). You can disable this warning by clicking on the top right menu, then Settings, then Security, and uncheck Encrypt By Default."
+      first_encryption: "Note: If you check the box to encrypt and if you ever lose your main website password in the future, the above encrypted data will be lost forever. So, make sure your main website password is rememberable (and secure!). You can disable this warning by clicking on the top right menu, then Settings, then Security, and uncheck Encrypt By Default."
     dating_profiles:
       dating_profile_name: "Name"
       about_me: "About Me"

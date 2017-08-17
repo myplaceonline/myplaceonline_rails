@@ -4,7 +4,7 @@ function find_connection_no_results(list, remote, section, search) {
   if (search.indexOf('@') == -1) {
     html = "<%= t("myplaceonline.connections.invalid_search") %>";
   } else {
-    html = "<%= t("myplaceonline.connections.no_results") %><br/><button onclick='myplaceonline.navigate(\"<%= info_invite_path %>?email=" + encodeURIComponent(search) + "\"); return false;'><%= t("myplaceonline.connections.no_results_invite_start") %> " + myplaceonline.encodeEntities(search) + " <%= t("myplaceonline.connections.no_results_invite_end") %></button>";
+    html = "<%= t("myplaceonline.connections.no_results") %><br/><button onclick='myplaceonline.navigate(\"<%= info_invite_path %>?email=" + encodeURIComponent(search) + "\"); return false;'><%= t("myplaceonline.connections.no_results_invite_start") %> " + myplaceonline.encodeEntities(search) + " <%= t("myplaceonline.connections.no_results_invite_end", host: Myp.website_domain.display) %></button>";
   }
   myplaceonline.jqmReplaceListSection(list, section, [{
     title: html,
