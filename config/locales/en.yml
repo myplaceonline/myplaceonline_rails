@@ -254,6 +254,7 @@ en:
       imports: "Imports"
       blogs: "Blogs"
       blog_posts: "Blog Posts"
+      translations: "Translations"
     default_domain:
       meta_description: "myplaceonline: your digital garden"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, garden"
@@ -3621,3 +3622,10 @@ en:
       post: "Post"
       back: "Blog"
       last_updated: "Last Updated"
+    translations:
+      translation_input: "Input"
+      translation_output: "Output"
+      input_language: "Input Language"
+      output_language: "Output Language"
+      source: "Source"
+      website: "Website"

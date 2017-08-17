@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170817032957) do
+ActiveRecord::Schema.define(version: 20170817144112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -5135,6 +5135,23 @@ ActiveRecord::Schema.define(version: 20170817032957) do
     t.index ["identity_id"], name: "index_to_dos_on_identity_id"
   end
 
+  create_table "translations", force: :cascade do |t|
+    t.text "translation_input"
+    t.text "translation_output"
+    t.string "input_language"
+    t.string "output_language"
+    t.string "source"
+    t.string "website"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_translations_on_identity_id"
+  end
+
   create_table "trek_pictures", id: :serial, force: :cascade do |t|
     t.integer "trek_id"
     t.integer "identity_file_id"
@@ -6648,6 +6665,7 @@ ActiveRecord::Schema.define(version: 20170817032957) do
   add_foreign_key "timing_events", "timings"
   add_foreign_key "timings", "identities"
   add_foreign_key "to_dos", "identities", name: "to_dos_identity_id_fk"
+  add_foreign_key "translations", "identities"
   add_foreign_key "trek_pictures", "identities"
   add_foreign_key "trek_pictures", "identity_files"
   add_foreign_key "trek_pictures", "treks"

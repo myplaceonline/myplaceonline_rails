@@ -1,0 +1,67 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :translation_input,
+    value: obj.translation_input,
+    placeholder: "myplaceonline.translations.translation_input",
+    collapsed: false,
+    autofocus: autofocus,
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :translation_output,
+    value: obj.translation_output,
+    placeholder: "myplaceonline.translations.translation_output",
+    collapsed: false,
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :input_language,
+    value: obj.input_language,
+    placeholder: "myplaceonline.translations.input_language"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :output_language,
+    value: obj.output_language,
+    placeholder: "myplaceonline.translations.output_language"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :source,
+    value: obj.source,
+    placeholder: "myplaceonline.translations.source"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :website,
+    value: obj.website,
+    placeholder: "myplaceonline.translations.website"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: false
+  )
+%>
