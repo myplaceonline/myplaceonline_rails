@@ -507,7 +507,9 @@ var myplaceonline = function(mymodule) {
                     headers: {
                       "X-CSRF-Token": $("meta[name='csrf-token']").attr("content")
                     }
-                  }
+                  },
+                  false,
+                  false
                 );
               }, function() {
                 criticalError("Could not get file object");
