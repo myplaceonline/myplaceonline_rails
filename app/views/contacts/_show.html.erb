@@ -14,6 +14,7 @@
 <%= attribute_table_row_select(t("myplaceonline.contacts.contact_type"), obj.contact_type, Contact::CONTACT_TYPES) %>
 <%= data_row(heading: t("myplaceonline.contacts.contact_preference"), content: obj.contact_preference, enumeration: Contact::CONTACT_PREFERENCES) %>
 <%= attribute_table_row_select(t("myplaceonline.contacts.sex_type"), obj.contact_identity.sex_type, Contact::SEX_TYPES) %>
+<%= data_row(heading: t("myplaceonline.contacts.blood_type"), content: obj.contact_identity.blood_type, enumeration: Identity::BLOOD_TYPES) %>
 <%= attribute_table_row_markdown(t("myplaceonline.contacts.notes"), obj.contact_identity.notes) %>
 <%= attribute_table_row_reference(t("myplaceonline.contacts.company"), "company_path", obj.contact_identity.company) %>
 <%= attribute_table_row_markdown(t("myplaceonline.contacts.likes"), obj.contact_identity.likes) %>

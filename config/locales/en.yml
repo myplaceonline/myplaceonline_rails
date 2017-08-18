@@ -893,9 +893,19 @@ en:
       company: "Work"
       groups: "Groups"
       contact_preference: "Contact Preference"
+      blood_type: "Blood Type"
       contact_preferences:
         email: "Email"
         text: "Text"
+      blood_types:
+        aminus: "A-"
+        aplus: "A+"
+        bminus: "B-"
+        bplus: "B+"
+        abminus: "AB-"
+        abplus: "AB+"
+        ominus: "O-"
+        oplus: "O+"
     files:
       name: "Name"
       download: "Download"

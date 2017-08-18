@@ -28,6 +28,16 @@
       )
     %>
     <%= myp_select(identity_fields, :sex_type, "myplaceonline.contacts.sex_type", Myp.translate_options(Contact::SEX_TYPES), obj.contact_identity.sex_type) %>
+    <%=
+      input_field(
+        form: identity_fields,
+        type: Myp::FIELD_SELECT,
+        name: :blood_type,
+        value: obj.contact_identity.blood_type,
+        placeholder: "myplaceonline.contacts.blood_type",
+        select_options: Identity::BLOOD_TYPES,
+      )
+    %>
   <% end %>
   
   <%=

@@ -23,6 +23,7 @@ class Identity < ApplicationRecord
       { name: :identity_relationships, type: ApplicationRecord::PROPERTY_TYPE_CHILDREN },
       { name: :identity_pictures, type: ApplicationRecord::PROPERTY_TYPE_FILES },
       { name: :company, type: ApplicationRecord::PROPERTY_TYPE_CHILD },
+      { name: :blood_type, type: ApplicationRecord::PROPERTY_TYPE_SELECT },
       { name: :_updatetype, type: ApplicationRecord::PROPERTY_TYPE_HIDDEN },
     ]
   end
@@ -34,6 +35,26 @@ class Identity < ApplicationRecord
   IDENTITY_TYPE_CONTACT = 0
   IDENTITY_TYPE_COMPANY = 1
   
+  BLOOD_TYPE_AMINUS = 0
+  BLOOD_TYPE_APLUS = 1
+  BLOOD_TYPE_BMINUS = 2
+  BLOOD_TYPE_BPLUS = 3
+  BLOOD_TYPE_ABMINUS = 4
+  BLOOD_TYPE_ABPLUS = 5
+  BLOOD_TYPE_OMINUS = 6
+  BLOOD_TYPE_OPLUS = 7
+
+  BLOOD_TYPES = [
+    ["myplaceonline.contacts.blood_types.aminus", BLOOD_TYPE_AMINUS],
+    ["myplaceonline.contacts.blood_types.aplus", BLOOD_TYPE_APLUS],
+    ["myplaceonline.contacts.blood_types.bminus", BLOOD_TYPE_BMINUS],
+    ["myplaceonline.contacts.blood_types.bplus", BLOOD_TYPE_BPLUS],
+    ["myplaceonline.contacts.blood_types.abminus", BLOOD_TYPE_ABMINUS],
+    ["myplaceonline.contacts.blood_types.abplus", BLOOD_TYPE_ABPLUS],
+    ["myplaceonline.contacts.blood_types.ominus", BLOOD_TYPE_OMINUS],
+    ["myplaceonline.contacts.blood_types.oplus", BLOOD_TYPE_OPLUS],
+  ]
+
   has_one :contact, class_name: "Contact", foreign_key: :contact_identity_id
   
   def self.email_to_name(email)
@@ -662,6 +683,7 @@ class Identity < ApplicationRecord
       :new_years_resolution,
       :display_note,
       :identity_type,
+      :blood_type,
       identity_phones_attributes: [
         :id,
         :number,
