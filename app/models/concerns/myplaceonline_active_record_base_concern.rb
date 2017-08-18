@@ -117,7 +117,8 @@ module MyplaceonlineActiveRecordBaseConcern
       dependent: :destroy,
       required: false,
       sort: "updated_at DESC",
-      foreign_key: nil
+      foreign_key: nil,
+      has_many_lambda: nil
     )
       if model.nil?
         model = Object.const_get(name.to_s.singularize.camelize)
@@ -125,10 +126,14 @@ module MyplaceonlineActiveRecordBaseConcern
       
       MyplaceonlineActiveRecordBaseConcern.set_attributes_model_mapping(klass: self, name: name, model: model)
       
+      if has_many_lambda.nil?
+        has_many_lambda = lambda { order(sort) }
+      end
+      
       if foreign_key.nil?
-        has_many(name, -> { order(sort) }, autosave: autosave, dependent: dependent)
+        has_many(name, has_many_lambda, autosave: autosave, dependent: dependent)
       else
-        has_many(name, -> { order(sort) }, autosave: autosave, dependent: dependent, foreign_key: foreign_key)
+        has_many(name, has_many_lambda, autosave: autosave, dependent: dependent, foreign_key: foreign_key)
       end
       
       accepts_nested_attributes_for(

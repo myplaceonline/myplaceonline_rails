@@ -18,7 +18,7 @@ class Diet < ApplicationRecord
 
   child_property(name: :dietary_requirements_collection)
   
-  child_properties(name: :diet_foods, sort: "food_type NULLS LAST")
+  child_properties(name: :diet_foods, has_many_lambda: lambda { includes(:food).order(["diet_foods.food_type NULLS LAST", "foods.food_name"]) })
 
   def action_link
     Rails.application.routes.url_helpers.send("diet_consume_path", self)

@@ -251,6 +251,10 @@ Rails.application.routes.draw do
       { instance: true, link: "evaluate" },
       { instance: true, link: "consume" },
       { instance: false, link: "main" },
+      {
+        subresources: true,
+        name: :diet_foods
+      },
     ],
     due_items: [
       { instance: true, link: "complete" },

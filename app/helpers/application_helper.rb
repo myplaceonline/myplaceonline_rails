@@ -272,25 +272,38 @@ module ApplicationHelper
         }
       ).html_safe
     else
-      content.each do |item|
-        
-        Rails.logger.debug{"ApplicationHelper.display_collection: item: #{item}, path: #{path}, heading: #{options[:heading]}"}
-        
-        child_html = render(partial: "#{path}/show", locals: { obj: item }).html_safe
-        child_html = <<-HTML
-          <tr>
-            <td>#{CGI::escapeHTML(options[:heading])}</td>
-            <td colspan="2">
-              <div data-role="collapsible" data-collapsed="#{!options[:expanded]}">
-                <h3>#{item.display}</h3>
-                #{data_table_start(format: format)}
-                #{child_html}
-                #{data_table_end(format: format)}
-              </div>
-            </td>
-          </tr>
-        HTML
-        result += child_html.html_safe
+      
+      if content.length <= options[:max_collection_items]
+        content.each do |item|
+          
+          Rails.logger.debug{"ApplicationHelper.display_collection: item: #{item}, path: #{path}, heading: #{options[:heading]}"}
+          
+          child_html = render(partial: "#{path}/show", locals: { obj: item }).html_safe
+          child_html = <<-HTML
+            <tr>
+              <td>#{CGI::escapeHTML(options[:heading])}</td>
+              <td colspan="2">
+                <div data-role="collapsible" data-collapsed="#{!options[:expanded]}">
+                  <h3>#{item.display}</h3>
+                  #{data_table_start(format: format)}
+                  #{child_html}
+                  #{data_table_end(format: format)}
+                </div>
+              </td>
+            </tr>
+          HTML
+          result += child_html.html_safe
+        end
+      else
+#         else_html = <<-HTML
+#           <tr>
+#             <td>#{CGI::escapeHTML(options[:heading])}</td>
+#             <td colspan="2">
+#               link to items
+#             </td>
+#           </tr>
+#         HTML
+#         result += else_html.html_safe
       end
     end
     result
@@ -325,6 +338,7 @@ module ApplicationHelper
       prefix_separator: ": ",
       non_wrap_container: :p,
       evaluated_class_name: nil,
+      max_collection_items: 25,
     }.merge(options)
     
     original_content = content

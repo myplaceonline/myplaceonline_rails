@@ -18,6 +18,8 @@ class DietFood < ApplicationRecord
 
   validates :food, presence: true
   
+  belongs_to :diet
+  
   def display
     "#{food.display} x#{self.quantity_with_fallback}"
   end
