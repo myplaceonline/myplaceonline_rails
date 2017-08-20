@@ -27,10 +27,16 @@ class BlogPostsController < MyplaceonlineController
         title: I18n.t("myplaceonline.blog_posts.back"),
         link: blog_path(@obj.blog),
         icon: "back"
-      }
+      },
+      {
+        title: I18n.t("myplaceonline.blog_posts.comments"),
+        link: blog_blog_post_blog_post_comments_path(@obj.blog, @obj),
+        icon: "bars"
+      },
     ] + super
   end
   
+
   def use_bubble?
     true
   end

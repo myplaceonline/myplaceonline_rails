@@ -257,6 +257,7 @@ en:
       translations: "Translations"
       diet_foods: "Diet Foods"
       boycotts: "Boycotts"
+      blog_post_comments: "Comments"
     default_domain:
       meta_description: "myplaceonline: your digital garden"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, garden"
@@ -3635,6 +3636,13 @@ en:
       post: "Post"
       back: "Blog"
       last_updated: "Last Updated"
+      comments: "Comments"
+    blog_post_comments:
+      comment: "Comment"
+      commenter_name: "Name"
+      commenter_email: "Email"
+      commenter_website: "Website"
+      back: "Blog Post"
     translations:
       translation_input: "Input"
       translation_output: "Output"

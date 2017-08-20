@@ -7,7 +7,7 @@ FactoryGirl.define do
     commenter_email "MyString"
     commenter_website "MyString"
     visit_count 1
-    archived "2017-08-19 18:14:56"
+    archived "2017-08-19 18:18:07"
     rating 1
     identity nil
   end

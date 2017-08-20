@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170820005219) do
+ActiveRecord::Schema.define(version: 20170820011806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -349,6 +349,24 @@ ActiveRecord::Schema.define(version: 20170820005219) do
     t.index ["blog_id"], name: "index_blog_files_on_blog_id"
     t.index ["identity_file_id"], name: "index_blog_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_blog_files_on_identity_id"
+  end
+
+  create_table "blog_post_comments", force: :cascade do |t|
+    t.bigint "blog_post_id"
+    t.text "comment"
+    t.string "commenter_name"
+    t.string "commenter_email"
+    t.string "commenter_website"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "commenter_identity_id"
+    t.index ["blog_post_id"], name: "index_blog_post_comments_on_blog_post_id"
+    t.index ["commenter_identity_id"], name: "index_blog_post_comments_on_commenter_identity_id"
+    t.index ["identity_id"], name: "index_blog_post_comments_on_identity_id"
   end
 
   create_table "blog_posts", force: :cascade do |t|
@@ -5967,6 +5985,9 @@ ActiveRecord::Schema.define(version: 20170820005219) do
   add_foreign_key "blog_files", "blogs"
   add_foreign_key "blog_files", "identities"
   add_foreign_key "blog_files", "identity_files"
+  add_foreign_key "blog_post_comments", "blog_posts"
+  add_foreign_key "blog_post_comments", "identities"
+  add_foreign_key "blog_post_comments", "identities", column: "commenter_identity_id"
   add_foreign_key "blog_posts", "blogs"
   add_foreign_key "blog_posts", "identities"
   add_foreign_key "blogs", "identities"

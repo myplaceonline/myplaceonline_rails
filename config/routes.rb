@@ -201,7 +201,13 @@ Rails.application.routes.draw do
       { instance: true, link: "display" },
       {
         subresources: true,
-        name: :blog_posts
+        name: :blog_posts,
+        subitems: [
+          {
+            subresources: true,
+            name: :blog_post_comments,
+          }
+        ]
       },
     ],
     blood_tests: [

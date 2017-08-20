@@ -1,0 +1,38 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :commenter_name,
+    value: obj.commenter_name,
+    placeholder: "myplaceonline.blog_post_comments.commenter_name",
+    autofocus: autofocus,
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :commenter_email,
+    value: obj.commenter_email,
+    placeholder: "myplaceonline.blog_post_comments.commenter_email",
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :commenter_website,
+    value: obj.commenter_website,
+    placeholder: "myplaceonline.blog_post_comments.commenter_website",
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :comment,
+    value: obj.comment,
+    placeholder: "myplaceonline.blog_post_comments.comment",
+    collapsed: false,
+  )
+%>
