@@ -2548,7 +2548,293 @@ module Myp
     )
   end
   
-  def self.play
+  def self.media_wiki_str_to_markdown(str, link_prefix: "/", image_prefix: "/")
+    i = 0
+    while true do
+      match_data = str.match(/\[([^\[\]]+?) ([^\]]+)\]/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        if match_offset == 0 || str[match_offset-1] != '['
+          replacement = "[" + match_data[2] + "](" + match_data[1] + ")"
+          str = match_data.pre_match + replacement + match_data.post_match
+        else
+          replacement = "[" + match_data[2] + " " + match_data[1] + "]"
+        end
+        i = match_offset + replacement.length + 1
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/'''/, i)
+      if !match_data.nil?
+        start = match_data.offset(0)[0]
+        endi = str.index("'''", start + 3)
+        replacement = "**" + str[start+3..endi-1] + "**"
+        str = match_data.pre_match + replacement + str[endi+3..-1]
+        i = start + replacement.length + 1
+      else
+        break
+      end
+    end
+    
+    link_references = {}
+    
+    i = 0
+    while true do
+      match_data = str.match(/<ref>([^<]+)\[([^\]]+)\]\(([^)]+)\)([^<]*)<\/ref>/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        link_reference_id = (link_references.count + 1).to_s
+        link_references[link_reference_id] = {
+          link: match_data[3],
+          text: match_data[1] + match_data[2] + match_data[4],
+        }
+        replacement = " ([" + link_reference_id + "][" + link_reference_id + "])"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length + 1
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/<ref name="([^"]+)">([^<]+)\[([^\]]+)\]\(([^)]+)\)([^<]*)<\/ref>/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        link_reference_id = match_data[1]
+        link_references[link_reference_id] = {
+          link: match_data[4],
+          text: match_data[2] + match_data[3] + match_data[5],
+        }
+        replacement = " ([" + link_reference_id + "][" + link_reference_id + "])"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length + 1
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/<ref name="([^"]+)" ?\/>/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        link_reference_id = match_data[1]
+        replacement = " ([" + link_reference_id + "][" + link_reference_id + "])"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length + 1
+      else
+        break
+      end
+    end
+        
+    i = 0
+    while true do
+      match_data = str.match(/== ([^=]+)==\n/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        replacement = "# " + match_data[1] + "\n"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length + 1
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/=== ([^=]+)===\n/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        replacement = "## " + match_data[1] + "\n"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length + 1
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/==== ([^=]+)====\n/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        replacement = "### " + match_data[1] + "\n"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length + 1
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/===== ([^=]+)=====\n/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        replacement = "#### " + match_data[1] + "\n"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length + 1
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/\[\[File:([^\]]+)\]\]/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        replacement = "<img src=\"" + image_prefix + match_data[1] + "\" />"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length + 1
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/\[\[([^\]]+)\]\]/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        post = match_data[1]
+        fragment = nil
+        explicit_title = false
+
+        j = post.rindex("|")
+        if !j.nil?
+          title = post[j+1..-1]
+          post = post[0..j-1]
+          explicit_title = true
+        else
+          title = post
+        end
+
+        j = post.rindex("#")
+        if !j.nil?
+          fragment = post[j+1..-1]
+          post = post[0..j-1]
+          if !explicit_title
+            title = post
+          end
+        end
+
+        replacement = "[" + title + "]("
+        replacement << link_prefix + post
+        if !fragment.nil?
+          replacement << "#" + fragment
+        end
+        replacement << ")"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length + 1
+      else
+        break
+      end
+    end
+    
+    all_references = link_references.map{|k,v|
+      "  [" + k + "]: " + v[:link] + " (" + v[:text] + ")"
+    }.join("\n")
+
+    if str.index("<references/>").nil?
+      str << all_references
+    else
+      str = str.gsub("<references/>", all_references)
+    end
+    
+    str = str.gsub("__NOTOC__", "")
+
+    str
+  end
+  
+  # If id_hash is true, then asume the first value inserted is the row's ID, and create a result of the form:
+  #   {
+  #     "1" => [column2, column3, [...], columnN],
+  #     [...]
+  #     "N" => [column2, column3, [...], columnN]
+  #   }
+  # Otherwise, create a result of the form:
+  #   [
+  #     ["1", column2, column3, [...], columnN],
+  #     [...]
+  #     ["N", column2, column3, [...], columnN]
+  #   ]
+  def self.parse_sql_insert(sql, id_hash: false)
+    if id_hash
+      result = {}
+    else
+      result = []
+    end
+    sql = sql[sql.index("VALUES ")+7..-1]
+    state = 0
+    str = ""
+    item = nil
+    escaping = false
+    sql.each_char do |char|
+      case state
+      when 0
+        if char == '('
+          state = 1
+          item = []
+        elsif char == ','
+          # no-op
+        else
+          raise "Expecting ( or , but found #{char}"
+        end
+      when 1
+        if char == ')'
+          item.push(str)
+          if id_hash
+            result[item[0]] = item[1..-1]
+          else
+            result.push(item)
+          end
+          str = ""
+          state = 0
+        elsif char == '\''
+          escaping = false
+          state = 2
+        elsif char == ','
+          item.push(str)
+          str = ""
+        else
+          str << char
+        end
+      when 2
+        if escaping
+          escaping = false
+          if char == 'n'
+            str << "\n"
+          elsif char == 'r'
+            str << "\r"
+          elsif char == 't'
+            str << "\t"
+          else
+            str << char
+          end
+        else
+          if char == '\\'
+            escaping = true
+          else
+            if char == '\''
+              state = 1
+              item.push(str)
+              str = ""
+            else
+              str << char
+            end
+          end
+        end
+      else
+        raise "TODO"
+      end
+    end
+    result
   end
   
   Rails.logger.info{"myplaceonline: myp.rb static initialization ended"}

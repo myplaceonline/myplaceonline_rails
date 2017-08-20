@@ -113,18 +113,67 @@ class ImportJob < ApplicationJob
             blog.blog_files << newblogfile
           end
           
-          if storage[:uploads].size > 0
-            blog.save!
-          end
-          
           storage[:sqlfiles].each do |sqlfile|
             sqlfilename = sqlfile.to_s
             if sqlfilename.index("/maintenance/").nil? && sqlfilename.index("/tests/").nil? && sqlfilename.index("/extensions/").nil?
               append_message(import, "Processing SQL file #{sqlfile}")
+              statements = File.read(sqlfile).split(/;$/)
+              
+              pages = nil
+              texts = nil
+              last_revisions = {}
+              
+              statements.each do |statement|
+                statement.lstrip!
+                if statement.start_with?("INSERT INTO `revision`")
+                  revisions = Myp.parse_sql_insert(statement)
+                  revisions.each do |revision|
+                    last_revisions[revision[1]] = revision
+                  end
+                elsif statement.start_with?("INSERT INTO `page`")
+                  pages = Myp.parse_sql_insert(statement, id_hash: true)
+                elsif statement.start_with?("INSERT INTO `text`")
+                  texts = Myp.parse_sql_insert(statement, id_hash: true)
+                end
+              end
+              
+              last_revisions.each do |page_id, revision|
+                page = pages[revision[1].to_s]
+                text = texts[revision[2].to_s]
+                
+                # If text is blank, that it's probably an image, so just skip that
+                if !text.nil?
+                  
+                  # Page namespaces:
+                  #   0: Normal page
+                  #   4: About page
+                  #   6: Upload
+                  #   2/3: User
+                  if page[0] == "0" || page[0] == "4"
+                    pagename = page[1]
+                    markdown = Myp.media_wiki_str_to_markdown(
+                      text[0],
+                      link_prefix: "/blogs/#{blog.id}/page/",
+                      image_prefix: "/blogs/#{blog.id}/uploads/",
+                    )
+                    
+                    blog_post = BlogPost.create!(
+                      blog_post_title: pagename,
+                      post: markdown
+                    )
+                    
+                    append_message(import, "Imported blog post [#{pagename}](/blogs/#{blog.id}/blog_posts/#{blog_post.id})")
+                    
+                    blog.blog_posts << blog_post
+                  end
+                end
+              end
             end
           end
         end
       end
+      
+      blog.save!
     end
   end
   

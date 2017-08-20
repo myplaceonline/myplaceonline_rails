@@ -20,4 +20,15 @@ class Blog < ApplicationRecord
   child_files
 
   child_properties(name: :blog_posts, sort: "updated_at DESC")
+  
+  def identity_file_by_name(name)
+    result = nil
+    name = name.downcase
+    self.blog_files.each do |blog_file|
+      if blog_file.identity_file.file_file_name.downcase == name
+        result = blog_file.identity_file
+      end
+    end
+    result
+  end
 end
