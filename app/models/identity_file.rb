@@ -62,7 +62,9 @@ class IdentityFile < ApplicationRecord
   def verify_file
     Rails.logger.debug{"IdentityFile verify_file"}
     if !ENV["PERMDIR"].blank? && !self.filesystem_path.blank? && !File.absolute_path(self.filesystem_path).start_with?(ENV["PERMDIR"])
-      raise "Path #{File.absolute_path(self.filesystem_path)} must start with #{ENV["PERMDIR"]}"
+      if ENV["FILES_PREFIX"].blank? || (!ENV["FILES_PREFIX"].blank? && !File.absolute_path(self.filesystem_path).start_with?(ENV["FILES_PREFIX"]))
+        raise "Path #{File.absolute_path(self.filesystem_path)} must start with #{ENV["PERMDIR"]}"
+      end
     end
   end
   
@@ -135,16 +137,36 @@ class IdentityFile < ApplicationRecord
       if self.filesystem_path.blank?
         result = self.file.file_contents
       else
-        path = self.filesystem_path
-        
-        if !ENV["FILES_PREFIX"].blank? && !File.exist?(path)
-          path = ENV["FILES_PREFIX"] + path
-        end
+        path = evaluated_path
 
         result = IO.binread(path)
       end
     end
     Rails.logger.info{"get_file_contents: Returning #{ result.nil? ? 0 : result.length }"}
+    result
+  end
+  
+  def evaluated_path
+    result = self.filesystem_path
+    
+    if !ENV["FILES_PREFIX"].blank? && !File.exist?(result)
+      result = ENV["FILES_PREFIX"] + result
+    end
+    
+    result
+  end
+  
+  def self.uploads_path
+    if ENV["PERMDIR"].blank?
+      raise "PERMDIR not set"
+    end
+    
+    result = ENV["PERMDIR"] + "/uploads/";
+    
+    if !ENV["FILES_PREFIX"].blank? && !File.exist?(result)
+      result = ENV["FILES_PREFIX"] + result
+    end
+    
     result
   end
   
@@ -179,7 +201,7 @@ class IdentityFile < ApplicationRecord
   end
 
   def ensure_thumbnail
-    Rails.logger.debug{"IdentityFile ensure_thumbnail"}
+    Rails.logger.debug{"IdentityFile ensure_thumbnail is_image: #{self.is_image?}, thumbnail_contents_nil: #{self.thumbnail_contents.nil?}, thumbnail_filesystem_path_blank: #{self.thumbnail_filesystem_path.blank?}, thumbnail_skip: #{self.thumbnail_skip}, thumbnailable: #{self.is_thumbnailable?}"}
     if self.is_image? && self.thumbnail_contents.nil? && self.thumbnail_filesystem_path.blank? && !self.thumbnail_skip && self.is_thumbnailable?
       
       Rails.logger.debug{"image_content: Generating thumbnail for #{self.id}, type #{self.file_content_type}"}
@@ -220,8 +242,10 @@ class IdentityFile < ApplicationRecord
         # http://www.imagemagick.org/Usage/thumbnails/
         # http://www.imagemagick.org/Usage/resize/
         # Ulimit is in KB
+        # Too small of a ulimit will cause errors such as:
+        #   "libgomp: Thread creation failed: Resource temporarily unavailable"
         Open3.popen2e(%{
-          ulimit -Sv 102400 && convert #{self.filesystem_path}#{index} -auto-orient -thumbnail '#{max_width}>' #{thumbnail_path}
+          ulimit -Sv 302400 && convert #{self.filesystem_path}#{index} -auto-orient -thumbnail '#{max_width}>' #{thumbnail_path}
         }) do |stdin, stdout_and_stderr, wait_thr|
           exit_status = wait_thr.value
           if exit_status != 0
@@ -261,5 +285,41 @@ class IdentityFile < ApplicationRecord
     if !self.thumbnail_filesystem_path.blank?
       File.delete(self.thumbnail_filesystem_path)
     end
+  end
+  
+  def self.infer_content_type(path:)
+    result = nil
+    path = path.downcase
+    pindex = path.rindex(".")
+    if !pindex.nil?
+      ext = path[pindex + 1..-1]
+      case ext
+      when "jpg", "jpeg"
+        result = "image/jpeg"
+      when "png"
+        result = "image/png"
+      when "gif"
+        result = "image/gif"
+      else
+        raise "Unimplemented extension #{ext}"
+      end
+    else
+      raise "No extension found for #{path}"
+    end
+    result
+  end
+  
+  def self.name_to_random(name:, prefix: "R", extension: nil)
+    if extension.nil?
+      pindex = name.rindex(".")
+      if !pindex.nil?
+        extension = name[pindex..-1]
+      end
+    end
+    result = prefix + SecureRandom.hex(10)
+    if !extension.blank?
+      result = result + extension
+    end
+    result
   end
 end

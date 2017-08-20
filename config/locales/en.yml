@@ -3631,6 +3631,8 @@ en:
         ready: "Ready"
         importing: "Importing"
         imported: "Imported"
+        error: "Error"
+        waiting_for_worker: "Waiting for Worker"
       import_progress: "Import Progress"
       import_types:
         mediawiki: "MediaWiki"

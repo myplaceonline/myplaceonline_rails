@@ -8,5 +8,5 @@ class BlogFile < ApplicationRecord
     ]
   end
 
-  child_file(parent: :blog)
+  child_file(parent: :blog, destroy_dependent: true)
 end

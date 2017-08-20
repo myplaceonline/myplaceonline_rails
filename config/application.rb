@@ -166,7 +166,11 @@ module Myplaceonline
     end
 
     FileUtils.mkdir_p(config.tmpdir)
-    FileUtils.mkdir_p(config.filetmpdir)
+    
+    # IdentityFile has different logic if PERMDIR doesn't exist
+    if Rails.env.production?
+      FileUtils.mkdir_p(config.filetmpdir)
+    end
 
     config.active_job.queue_adapter = :delayed_job
     

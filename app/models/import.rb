@@ -20,11 +20,15 @@ class Import < ApplicationRecord
   IMPORT_STATUS_READY = 0
   IMPORT_STATUS_IMPORTING = 1
   IMPORT_STATUS_IMPORTED = 2
+  IMPORT_STATUS_ERROR = 3
+  IMPORT_STATUS_WAITING_FOR_WORKER = 4
 
   IMPORT_STATUSES = [
     ["myplaceonline.imports.import_statuses.ready", IMPORT_STATUS_READY],
     ["myplaceonline.imports.import_statuses.importing", IMPORT_STATUS_IMPORTING],
     ["myplaceonline.imports.import_statuses.imported", IMPORT_STATUS_IMPORTED],
+    ["myplaceonline.imports.import_statuses.error", IMPORT_STATUS_ERROR],
+    ["myplaceonline.imports.import_statuses.waiting_for_worker", IMPORT_STATUS_WAITING_FOR_WORKER],
   ]
 
   validates :import_name, presence: true

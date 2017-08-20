@@ -17,7 +17,15 @@ class ImportsController < MyplaceonlineController
     set_obj
     
     if params[:exec] == "start"
-      ApplicationJob.perform(ImportJob, @obj, params[:exec])
+      if @obj.import_status != Import::IMPORT_STATUS_WAITING_FOR_WORKER
+        @obj.import_status = Import::IMPORT_STATUS_WAITING_FOR_WORKER
+        @obj.import_progress = "* _#{User.current_user.time_now}_: Waiting for worker"
+        @obj.save!
+        ApplicationJob.perform_async(ImportJob, @obj, params[:exec])
+      end
+      redirect_to import_import_path(@obj)
+    else
+      render :import
     end
   end
   

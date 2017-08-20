@@ -11,6 +11,10 @@ class ApplicationJob < ActiveJob::Base
     end
   end
   
+  def self.perform_async(job, *args)
+    job.perform_later(*args)
+  end
+
   # http://edgeguides.rubyonrails.org/active_job_basics.html#exceptions
   rescue_from(StandardError) do |exception|
     Myp.handle_exception(exception, nil, nil, "ActiveJob Failure: #{self.class.name}")
