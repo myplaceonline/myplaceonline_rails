@@ -40,7 +40,6 @@ class BlogPostsController < MyplaceonlineController
       },
     ] + super
   end
-  
 
   def use_bubble?
     true
