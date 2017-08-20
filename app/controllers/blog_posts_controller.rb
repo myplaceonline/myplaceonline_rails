@@ -29,6 +29,11 @@ class BlogPostsController < MyplaceonlineController
         icon: "back"
       },
       {
+        title: I18n.t("myplaceonline.blog_posts.add_comment"),
+        link: new_blog_blog_post_blog_post_comment_path(@obj.blog, @obj),
+        icon: "plus"
+      },
+      {
         title: I18n.t("myplaceonline.blog_posts.comments"),
         link: blog_blog_post_blog_post_comments_path(@obj.blog, @obj),
         icon: "bars"

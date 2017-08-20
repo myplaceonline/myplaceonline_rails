@@ -29,6 +29,10 @@ class BlogPostComment < ApplicationRecord
     Myp.ellipses_if_needed(self.comment, 32)
   end
   
+  def commenter_display
+    self.commenter_name
+  end
+  
   def self.params
     [
       :id,

@@ -3636,7 +3636,10 @@ en:
       post: "Post"
       back: "Blog"
       last_updated: "Last Updated"
+      add_comment: "Add Comment"
       comments: "Comments"
+      show_comments: "%{num} Comments"
+      about_comment: "By %{name} on %{date}"
     blog_post_comments:
       comment: "Comment"
       commenter_name: "Name"
