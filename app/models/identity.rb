@@ -260,6 +260,7 @@ class Identity < ApplicationRecord
   has_many :imports, :dependent => :destroy
   has_many :blogs, :dependent => :destroy
   has_many :translations, :dependent => :destroy
+  has_many :boycotts, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 
@@ -489,6 +490,7 @@ class Identity < ApplicationRecord
       :imports => imports.to_a.map{|x| x.as_json},
       :blogs => blogs.to_a.map{|x| x.as_json},
       :translations => translations.to_a.map{|x| x.as_json},
+      :boycotts => boycotts.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json}
     })
   end

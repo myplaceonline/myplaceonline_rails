@@ -1,0 +1,29 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :boycott_name,
+    value: obj.boycott_name,
+    placeholder: "myplaceonline.boycotts.boycott_name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATE,
+    name: :boycott_start,
+    value: obj.boycott_start,
+    placeholder: "myplaceonline.boycotts.boycott_start"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: false
+  )
+%>

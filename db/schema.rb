@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170818021056) do
+ActiveRecord::Schema.define(version: 20170820005219) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -520,6 +520,19 @@ ActiveRecord::Schema.define(version: 20170818021056) do
     t.index ["identity_id"], name: "index_books_on_identity_id"
     t.index ["lent_to_id"], name: "index_books_on_lent_to_id"
     t.index ["recommender_id"], name: "index_books_on_recommender_id"
+  end
+
+  create_table "boycotts", force: :cascade do |t|
+    t.string "boycott_name"
+    t.date "boycott_start"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_boycotts_on_identity_id"
   end
 
   create_table "business_card_files", id: :serial, force: :cascade do |t|
@@ -5981,6 +5994,7 @@ ActiveRecord::Schema.define(version: 20170818021056) do
   add_foreign_key "books", "contacts", column: "lent_to_id"
   add_foreign_key "books", "contacts", column: "recommender_id", name: "books_recommender_id_fk"
   add_foreign_key "books", "identities", name: "books_identity_id_fk"
+  add_foreign_key "boycotts", "identities"
   add_foreign_key "business_card_files", "business_cards"
   add_foreign_key "business_card_files", "identities"
   add_foreign_key "business_card_files", "identity_files"
