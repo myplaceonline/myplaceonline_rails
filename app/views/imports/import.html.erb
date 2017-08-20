@@ -1,0 +1,29 @@
+<% content_for :heading do -%><%= t("myplaceonline.imports.import") %><% end -%>
+<h1><%= t("myplaceonline.imports.import") %></h1>
+
+<%= flashes!(@obj) %>
+
+<%= data_row(heading: t("myplaceonline.imports.import_status"), content: @obj.import_status_display, wrap: false, prefix_heading: true, enumeration: Import::IMPORT_STATUSES, skip_blank_content: false) %>
+<%= data_row(heading: t("myplaceonline.imports.import_progress"), content: @obj.import_progress_display, markdown: true, wrap: false, prefix_heading: true, skip_blank_content: false) %>
+
+<%=
+  render(partial: "shared/footer", locals: {
+    items: [
+      {
+        title: I18n.t("myplaceonline.imports.refresh"),
+        link: import_import_path(@obj),
+        icon: "refresh"
+      },
+      {
+        title: I18n.t("myplaceonline.imports.start"),
+        link: import_import_path(@obj) + "?exec=start",
+        icon: "check"
+      },
+      {
+        title: I18n.t("myplaceonline.general.back"),
+        link: controller.obj_path,
+        icon: "back"
+      },
+    ]
+  })
+%>

@@ -1,6 +1,6 @@
 class LoadRssFeedsJob < ApplicationJob
   def perform(*args)
-    # Use the urgent strategy because the atomic strategy would keep the feed objcts in memory which might blow RAM
+    # Use the urgent strategy because the atomic strategy would keep the feed objects in memory which might blow RAM
     Chewy.strategy(:urgent) do
       user = args[0]
       

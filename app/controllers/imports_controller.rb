@@ -3,6 +3,24 @@ class ImportsController < MyplaceonlineController
     true
   end
 
+  def footer_items_show
+    [
+      {
+        title: I18n.t("myplaceonline.imports.import"),
+        link: import_import_path(@obj),
+        icon: "gear"
+      },
+    ] + super
+  end
+  
+  def import
+    set_obj
+    
+    if params[:exec] == "start"
+      ApplicationJob.perform(ImportJob, @obj, params[:exec])
+    end
+  end
+  
   protected
     def insecure
       true

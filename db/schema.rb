@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170820011806) do
+ActiveRecord::Schema.define(version: 20170820032256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2645,6 +2645,8 @@ ActiveRecord::Schema.define(version: 20170820011806) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "import_status"
+    t.text "import_progress"
     t.index ["identity_id"], name: "index_imports_on_identity_id"
   end
 

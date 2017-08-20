@@ -321,6 +321,9 @@ Rails.application.routes.draw do
       { instance: true, link: "thumbnail" },
       { instance: true, link: "download" }
     ],
+    imports: [
+      { instance: true, link: "import" }
+    ],
     jobs: [
       { instance: false, link: "resume" },
       {

@@ -3624,8 +3624,18 @@ en:
     imports:
       import_name: "Name"
       import_type: "Type"
+      import_status: "Status"
+      import: "Import"
+      refresh: "Refresh"
+      import_statuses:
+        ready: "Ready"
+        importing: "Importing"
+        imported: "Imported"
+      import_progress: "Import Progress"
       import_types:
         mediawiki: "MediaWiki"
+      pending: "Pending"
+      start: "Start"
     blogs:
       blog_name: "Name"
       add_blog_post: "Add Post"

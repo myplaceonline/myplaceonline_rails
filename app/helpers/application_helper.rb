@@ -380,8 +380,12 @@ module ApplicationHelper
       end
     end
     
-    if content.blank? && options[:skip_blank_content]
-      return nil
+    if content.blank?
+      if options[:skip_blank_content]
+        return nil
+      else
+        content = ""
+      end
     end
     
     options[:clipboard_text] ||= content
