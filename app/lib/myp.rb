@@ -2513,17 +2513,17 @@ module Myp
     result
   end
   
-  def self.play
-    ["aes-256-cbc", "aes-128-gcm"].each do |cipher|
-      puts "Cipher: #{cipher}"
-      salt  = SecureRandom.random_bytes(64)
-      key   = ActiveSupport::KeyGenerator.new('password').generate_key(salt, 32)
-      crypt = ActiveSupport::MessageEncryptor.new(key, cipher: cipher)
-      encrypted_data = crypt.encrypt_and_sign('my secret data')
-      puts crypt.decrypt_and_verify(encrypted_data)
-    end
-  end
-  
+#   def self.play
+#     ["aes-256-cbc", "aes-128-gcm"].each do |cipher|
+#       puts "Cipher: #{cipher}"
+#       salt  = SecureRandom.random_bytes(64)
+#       key   = ActiveSupport::KeyGenerator.new('password').generate_key(salt, 32)
+#       crypt = ActiveSupport::MessageEncryptor.new(key, cipher: cipher)
+#       encrypted_data = crypt.encrypt_and_sign('my secret data')
+#       puts crypt.decrypt_and_verify(encrypted_data)
+#     end
+#   end
+   
   def self.create_default_website
     website = Website.create!(
       identity_id: User::SUPER_USER_IDENTITY_ID,
@@ -2548,7 +2548,7 @@ module Myp
     )
   end
   
-  def self.media_wiki_str_to_markdown(str, link_prefix: "/", image_prefix: "/")
+  def self.media_wiki_str_to_markdown(str, link_prefix: "/", image_prefix: "/", simple_references: false)
     i = 0
     while true do
       match_data = str.match(/\[([^\[\]]+?) ([^\]]+)\]/, i)
@@ -2592,7 +2592,11 @@ module Myp
           link: match_data[3],
           text: match_data[1] + match_data[2] + match_data[4],
         }
-        replacement = " ([" + link_reference_id + "][" + link_reference_id + "])"
+        if simple_references
+          replacement = " ([" + match_data[1] + "](" + match_data[3] + "))"
+        else
+          replacement = " ([" + link_reference_id + "][" + link_reference_id + "])"
+        end
         str = match_data.pre_match + replacement + match_data.post_match
         i = match_offset + replacement.length + 1
       else
@@ -2610,7 +2614,11 @@ module Myp
           link: match_data[4],
           text: match_data[2] + match_data[3] + match_data[5],
         }
-        replacement = " ([" + link_reference_id + "][" + link_reference_id + "])"
+        if simple_references
+          replacement = " ([" + match_data[2] + "](" + match_data[4] + "))"
+        else
+          replacement = " ([" + link_reference_id + "][" + link_reference_id + "])"
+        end
         str = match_data.pre_match + replacement + match_data.post_match
         i = match_offset + replacement.length + 1
       else
@@ -2738,7 +2746,7 @@ module Myp
     end
     
     all_references = link_references.map{|k,v|
-      "  [" + k + "]: " + v[:link] + " (" + v[:text] + ")"
+      "  [" + k + "]: " + v[:link] + " (" + v[:text].gsub("(", "").gsub(")", "") + ")"
     }.join("\n")
 
     if str.index("<references/>").nil?
@@ -2823,8 +2831,6 @@ module Myp
           else
             if char == '\''
               state = 1
-              item.push(str)
-              str = ""
             else
               str << char
             end
@@ -2835,6 +2841,50 @@ module Myp
       end
     end
     result
+  end
+  
+  def self.play(file)
+    statements = File.read(file).split(/;$/)
+    
+    pages = {}
+    texts = {}
+    last_revisions = {}
+    
+    statements.each do |statement|
+      statement.lstrip!
+      if statement.start_with?("INSERT INTO `revision`")
+        revisions = Myp.parse_sql_insert(statement)
+        revisions.each do |revision|
+          last_revisions[revision[1]] = revision
+        end
+      elsif statement.start_with?("INSERT INTO `page`")
+        pages.merge!(Myp.parse_sql_insert(statement, id_hash: true))
+      elsif statement.start_with?("INSERT INTO `text`")
+        texts.merge!(Myp.parse_sql_insert(statement, id_hash: true))
+      end
+    end
+    
+    last_revisions.each do |page_id, revision|
+      page = pages[revision[1].to_s]
+      text = texts[revision[2].to_s]
+      
+      # If text is blank, that it's probably an image, so just skip that
+      if !text.nil?
+        
+        # Page namespaces:
+        #   0: Normal page
+        #   4: About page
+        #   6: Upload
+        #   2/3: User
+        if page[0] == "0" || page[0] == "4"
+          pagename = page[1]
+          markdown = Myp.media_wiki_str_to_markdown(text[0])
+          puts "Page: #{pagename}, Text:\n#{text[0]}\n\nMarkdown:\n#{markdown}"
+        end
+      end
+    end
+    
+    nil
   end
   
   Rails.logger.info{"myplaceonline: myp.rb static initialization ended"}

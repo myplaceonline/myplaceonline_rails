@@ -119,8 +119,8 @@ class ImportJob < ApplicationJob
               append_message(import, "Processing SQL file #{sqlfile}")
               statements = File.read(sqlfile).split(/;$/)
               
-              pages = nil
-              texts = nil
+              pages = {}
+              texts = {}
               last_revisions = {}
               
               statements.each do |statement|
@@ -131,9 +131,9 @@ class ImportJob < ApplicationJob
                     last_revisions[revision[1]] = revision
                   end
                 elsif statement.start_with?("INSERT INTO `page`")
-                  pages = Myp.parse_sql_insert(statement, id_hash: true)
+                  pages.merge!(Myp.parse_sql_insert(statement, id_hash: true))
                 elsif statement.start_with?("INSERT INTO `text`")
-                  texts = Myp.parse_sql_insert(statement, id_hash: true)
+                  texts.merge!(Myp.parse_sql_insert(statement, id_hash: true))
                 end
               end
               
