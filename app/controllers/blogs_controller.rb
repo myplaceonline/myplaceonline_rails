@@ -37,6 +37,12 @@ class BlogsController < MyplaceonlineController
     10
   end
   
+  def upload
+    set_obj
+    file = @obj.identity_file_by_name(params[:uploadname])
+    respond_identity_file("inline", file)
+  end
+  
   protected
     def insecure
       true
