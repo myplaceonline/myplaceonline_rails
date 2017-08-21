@@ -188,6 +188,7 @@ Rails.application.routes.draw do
   match 'api/header_icon.png', :to => 'api#header_icon_png', via: [:get]
 
   match 'blogs/:id/uploads/*uploadname', :to => 'blogs#upload', via: [:get], as: "blog_upload"
+  match 'blogs/:id/page/*pagename', :to => 'blogs#page', via: [:get], as: "blog_page"
 
   additions = {
     beaches: [
