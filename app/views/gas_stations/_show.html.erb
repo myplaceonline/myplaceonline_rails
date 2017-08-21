@@ -1,4 +1,4 @@
-<%= attribute_table_row_reference(t("myplaceonline.gas_stations.location"), "location_path", obj.location) %>
+<%= data_row(heading: t("myplaceonline.gas_stations.location"), content: obj.location, expanded: true) %>
 <%= attribute_table_row_boolean(t("myplaceonline.gas_stations.gas"), obj.gas) %>
 <%= attribute_table_row_boolean(t("myplaceonline.gas_stations.diesel"), obj.diesel) %>
 <%= attribute_table_row_boolean(t("myplaceonline.gas_stations.propane_fillup"), obj.propane_fillup) %>
