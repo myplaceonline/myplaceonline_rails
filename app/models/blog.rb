@@ -24,7 +24,8 @@ class Blog < ApplicationRecord
   def identity_file_by_name(name)
     result = nil
     name = name.downcase
-    Rails.logger.debug{"Blog.identity_file_by_name searching for: #{name}"}
+    name2 = name.gsub(" ", "_")
+    Rails.logger.debug{"Blog.identity_file_by_name searching for: #{name} or #{name2}"}
     self.blog_files.each do |blog_file|
       checkname = blog_file.identity_file.file_file_name.downcase
       i = checkname.rindex(".")
@@ -32,7 +33,7 @@ class Blog < ApplicationRecord
         checkname = checkname[0..i-1]
       end
       Rails.logger.debug{"Blog.identity_file_by_name comparing: #{checkname}"}
-      if checkname == name
+      if checkname == name || checkname == name2
         result = blog_file.identity_file
       end
     end
