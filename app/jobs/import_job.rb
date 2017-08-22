@@ -150,21 +150,28 @@ class ImportJob < ApplicationJob
                   #   6: Upload
                   #   2/3: User
                   if page[0] == "0" || page[0] == "4"
-                    pagename = page[1]
-                    markdown = Myp.media_wiki_str_to_markdown(
-                      text[0],
-                      link_prefix: "/blogs/#{blog.id}/page/",
-                      image_prefix: "/blogs/#{blog.id}/uploads/",
-                    )
                     
-                    blog_post = BlogPost.create!(
-                      blog_post_title: pagename,
-                      post: markdown
-                    )
-                    
-                    append_message(import, "Imported blog post [#{pagename}](/blogs/#{blog.id}/blog_posts/#{blog_post.id})")
-                    
-                    blog.blog_posts << blog_post
+                    # No support for redirects yet
+                    if !text[0].start_with?("#REDIRECT")
+                      pagename = page[1].gsub("_", " ")
+                      markdown = Myp.media_wiki_str_to_markdown(
+                        text[0],
+                        link_prefix: "/blogs/#{blog.id}/page/",
+                        image_prefix: "/blogs/#{blog.id}/uploads/",
+                      )
+                      
+                      blog_post = BlogPost.create!(
+                        blog_post_title: pagename,
+                        post: markdown,
+                        import_original: text[0],
+                        hide_title: true,
+                        edit_type: BlogPost::EDIT_TYPE_TEXT,
+                      )
+                      
+                      append_message(import, "Imported blog post [#{pagename}](/blogs/#{blog.id}/blog_posts/#{blog_post.id})")
+                      
+                      blog.blog_posts << blog_post
+                    end
                   end
                 end
               end

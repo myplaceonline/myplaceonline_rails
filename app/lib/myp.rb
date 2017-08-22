@@ -2548,10 +2548,112 @@ module Myp
     )
   end
   
-  def self.media_wiki_str_to_markdown(str, link_prefix: "/", image_prefix: "/", simple_references: false)
+  def self.media_wiki_str_to_markdown(str, link_prefix: "/", image_prefix: "/")
+    
+    original_str = str
+    
+    link_references = {}
+    link_references_names = {}
+    
+    str = str.gsub("== References ==", "")
+    
     i = 0
     while true do
-      match_data = str.match(/\[([^\[\]]+?) ([^\]]+)\]/, i)
+      match_data = str.match(/<ref>([^\[]*)\[([^ ]+) ([^\]]+)\]([^<]*)<\/ref>/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        link_reference_id = (link_references.count + 1).to_s
+        link_references[link_reference_id] = {
+          link: match_data[2],
+          text: match_data[1] + match_data[3] + match_data[4],
+        }
+        replacement = " <sup>[" + link_reference_id + "][" + link_reference_id + "]</sup>"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/<ref>([^\[]*)\[([^\]]+)\]([^<]*)<\/ref>/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        link_reference_id = (link_references.count + 1).to_s
+        link_references[link_reference_id] = {
+          link: match_data[2],
+          text: match_data[1] + match_data[3],
+        }
+        replacement = " <sup>[" + link_reference_id + "][" + link_reference_id + "]</sup>"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/<ref name="([^"]+)">([^\[]+)\[([^ ]+) ([^\]]+)\]([^<]*)<\/ref>/, i)
+      if !match_data.nil?
+        if str[match_data.offset(1)[1]+2] != '<'
+          match_offset = match_data.offset(0)[0]
+          link_reference_id = (link_references.count + 1).to_s
+          link_references_names[match_data[1]] = link_reference_id
+          link_references[link_reference_id] = {
+            link: match_data[3],
+            text: match_data[2] + match_data[4] + match_data[5],
+          }
+          replacement = " <sup>[" + link_reference_id + "][" + link_reference_id + "]</sup>"
+          str = match_data.pre_match + replacement + match_data.post_match
+          i = match_offset + replacement.length
+        else
+          i = match_data.offset(1)[1]+2
+        end
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/<ref name="([^"]+)" ?\/>/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        link_reference_id = link_references_names[match_data[1]]
+        if link_reference_id.nil?
+          raise "Could not find matching reference for #{match_data[1]}. Names: #{link_references_names}, Input: #{original_str}, Modified: #{str}"
+        end
+        replacement = " <sup>[" + link_reference_id + "][" + link_reference_id + "]</sup>"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/<ref name="([^"]+)"><\/ref>/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        link_reference_id = link_references_names[match_data[1]]
+        if link_reference_id.nil?
+          raise "Could not find matching reference for #{match_data[1]}. Names: #{link_references_names}, Input: #{original_str}, Modified: #{str}"
+        end
+        replacement = " <sup>[" + link_reference_id + "][" + link_reference_id + "]</sup>"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length
+      else
+        break
+      end
+    end
+
+    # External link
+    i = 0
+    while true do
+      match_data = str.match(/\[([a-z]+:[^\[\]]+?) ([^\]]+)\]/, i)
       if !match_data.nil?
         match_offset = match_data.offset(0)[0]
         if match_offset == 0 || str[match_offset-1] != '['
@@ -2560,7 +2662,24 @@ module Myp
         else
           replacement = "[" + match_data[2] + " " + match_data[1] + "]"
         end
-        i = match_offset + replacement.length + 1
+        i = match_offset + replacement.length
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/\[(\/\/[^\[\]]+?) ([^\]]+)\]/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        if match_offset == 0 || str[match_offset-1] != '['
+          replacement = "[" + match_data[2] + "](" + match_data[1] + ")"
+          str = match_data.pre_match + replacement + match_data.post_match
+        else
+          replacement = "[" + match_data[2] + " " + match_data[1] + "]"
+        end
+        i = match_offset + replacement.length
       else
         break
       end
@@ -2574,80 +2693,20 @@ module Myp
         endi = str.index("'''", start + 3)
         replacement = "**" + str[start+3..endi-1] + "**"
         str = match_data.pre_match + replacement + str[endi+3..-1]
-        i = start + replacement.length + 1
+        i = start + replacement.length
       else
         break
       end
     end
     
-    link_references = {}
-    
-    i = 0
-    while true do
-      match_data = str.match(/<ref>([^<]+)\[([^\]]+)\]\(([^)]+)\)([^<]*)<\/ref>/, i)
-      if !match_data.nil?
-        match_offset = match_data.offset(0)[0]
-        link_reference_id = (link_references.count + 1).to_s
-        link_references[link_reference_id] = {
-          link: match_data[3],
-          text: match_data[1] + match_data[2] + match_data[4],
-        }
-        if simple_references
-          replacement = " ([" + match_data[1] + "](" + match_data[3] + "))"
-        else
-          replacement = " ([" + link_reference_id + "][" + link_reference_id + "])"
-        end
-        str = match_data.pre_match + replacement + match_data.post_match
-        i = match_offset + replacement.length + 1
-      else
-        break
-      end
-    end
-    
-    i = 0
-    while true do
-      match_data = str.match(/<ref name="([^"]+)">([^<]+)\[([^\]]+)\]\(([^)]+)\)([^<]*)<\/ref>/, i)
-      if !match_data.nil?
-        match_offset = match_data.offset(0)[0]
-        link_reference_id = match_data[1]
-        link_references[link_reference_id] = {
-          link: match_data[4],
-          text: match_data[2] + match_data[3] + match_data[5],
-        }
-        if simple_references
-          replacement = " ([" + match_data[2] + "](" + match_data[4] + "))"
-        else
-          replacement = " ([" + link_reference_id + "][" + link_reference_id + "])"
-        end
-        str = match_data.pre_match + replacement + match_data.post_match
-        i = match_offset + replacement.length + 1
-      else
-        break
-      end
-    end
-    
-    i = 0
-    while true do
-      match_data = str.match(/<ref name="([^"]+)" ?\/>/, i)
-      if !match_data.nil?
-        match_offset = match_data.offset(0)[0]
-        link_reference_id = match_data[1]
-        replacement = " ([" + link_reference_id + "][" + link_reference_id + "])"
-        str = match_data.pre_match + replacement + match_data.post_match
-        i = match_offset + replacement.length + 1
-      else
-        break
-      end
-    end
-        
     i = 0
     while true do
       match_data = str.match(/== ([^=]+)==\n/, i)
       if !match_data.nil?
         match_offset = match_data.offset(0)[0]
-        replacement = "# " + match_data[1] + "\n"
+        replacement = "# <a name=\"" + match_data[1] + "\"></a>" + match_data[1] + "\n"
         str = match_data.pre_match + replacement + match_data.post_match
-        i = match_offset + replacement.length + 1
+        i = match_offset + replacement.length
       else
         break
       end
@@ -2658,9 +2717,9 @@ module Myp
       match_data = str.match(/=== ([^=]+)===\n/, i)
       if !match_data.nil?
         match_offset = match_data.offset(0)[0]
-        replacement = "## " + match_data[1] + "\n"
+        replacement = "## <a name=\"" + match_data[1] + "\"></a>" + match_data[1] + "\n"
         str = match_data.pre_match + replacement + match_data.post_match
-        i = match_offset + replacement.length + 1
+        i = match_offset + replacement.length
       else
         break
       end
@@ -2671,9 +2730,9 @@ module Myp
       match_data = str.match(/==== ([^=]+)====\n/, i)
       if !match_data.nil?
         match_offset = match_data.offset(0)[0]
-        replacement = "### " + match_data[1] + "\n"
+        replacement = "### <a name=\"" + match_data[1] + "\"></a>" + match_data[1] + "\n"
         str = match_data.pre_match + replacement + match_data.post_match
-        i = match_offset + replacement.length + 1
+        i = match_offset + replacement.length
       else
         break
       end
@@ -2684,9 +2743,9 @@ module Myp
       match_data = str.match(/===== ([^=]+)=====\n/, i)
       if !match_data.nil?
         match_offset = match_data.offset(0)[0]
-        replacement = "#### " + match_data[1] + "\n"
+        replacement = "#### <a name=\"" + match_data[1] + "\"></a>" + match_data[1] + "\n"
         str = match_data.pre_match + replacement + match_data.post_match
-        i = match_offset + replacement.length + 1
+        i = match_offset + replacement.length
       else
         break
       end
@@ -2697,9 +2756,9 @@ module Myp
       match_data = str.match(/\[\[File:([^\]]+)\]\]/, i)
       if !match_data.nil?
         match_offset = match_data.offset(0)[0]
-        replacement = "<img src=\"" + image_prefix + match_data[1] + "\" />"
+        replacement = "<p><img src=\"" + image_prefix + match_data[1] + "\" /></p>"
         str = match_data.pre_match + replacement + match_data.post_match
-        i = match_offset + replacement.length + 1
+        i = match_offset + replacement.length
       else
         break
       end
@@ -2739,18 +2798,31 @@ module Myp
         end
         replacement << ")"
         str = match_data.pre_match + replacement + match_data.post_match
-        i = match_offset + replacement.length + 1
+        i = match_offset + replacement.length
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/<blockquote>(.+?)<\/blockquote>/m, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        replacement = "> " + match_data[1].gsub("\n", "\n> ")
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length
       else
         break
       end
     end
     
     all_references = link_references.map{|k,v|
-      "  [" + k + "]: " + v[:link] + " (" + v[:text].gsub("(", "").gsub(")", "") + ")"
+      "  [" + k + "]: " + v[:link] + " (" + v[:text].gsub("(", "").gsub(")", "").gsub("\n", "") + ")"
     }.join("\n")
 
     if str.index("<references/>").nil?
-      str << all_references
+      str << "\n" + all_references
     else
       str = str.gsub("<references/>", all_references)
     end
@@ -2879,7 +2951,10 @@ module Myp
         if page[0] == "0" || page[0] == "4"
           pagename = page[1]
           markdown = Myp.media_wiki_str_to_markdown(text[0])
-          puts "Page: #{pagename}, Text:\n#{text[0]}\n\nMarkdown:\n#{markdown}"
+          #puts "Page: #{pagename}, Text:\n#{text[0]}\n\nMarkdown:\n#{markdown}"
+          if pagename == "Death"
+            puts "Page: #{pagename}, Text:\n#{text[0]}"
+          end
         end
       end
     end

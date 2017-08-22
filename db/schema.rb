@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170821052621) do
+ActiveRecord::Schema.define(version: 20170822041503) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -379,6 +379,9 @@ ActiveRecord::Schema.define(version: 20170821052621) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "hide_title"
+    t.text "import_original"
+    t.integer "edit_type"
     t.index ["blog_id"], name: "index_blog_posts_on_blog_id"
     t.index ["identity_id"], name: "index_blog_posts_on_identity_id"
   end

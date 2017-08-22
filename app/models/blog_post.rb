@@ -10,6 +10,14 @@ class BlogPost < ApplicationRecord
     ]
   end
 
+  EDIT_TYPE_DEFAULT = 0
+  EDIT_TYPE_TEXT = 1
+
+  ENUM = [
+    ["myplaceonline.blog_posts.edit_types.default", EDIT_TYPE_DEFAULT],
+    ["myplaceonline.blog_posts.edit_types.text", EDIT_TYPE_TEXT],
+  ]
+
   belongs_to :blog
   
   validates :blog_post_title, presence: true
@@ -26,6 +34,7 @@ class BlogPost < ApplicationRecord
       :_destroy,
       :blog_post_title,
       :post,
+      :edit_type,
       blog_post_comments_attributes: BlogPostComment.params,
     ]
   end
