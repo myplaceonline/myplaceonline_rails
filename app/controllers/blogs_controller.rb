@@ -98,6 +98,7 @@ class BlogsController < MyplaceonlineController
         :blog_name,
         :notes,
         blog_files_attributes: FilesController.multi_param_names,
+        main_post_attributes: BlogPost.params,
       )
     end
 end

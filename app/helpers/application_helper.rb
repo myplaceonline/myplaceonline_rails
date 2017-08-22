@@ -235,7 +235,11 @@ module ApplicationHelper
     options[:clipboard_text] = content_display
 
     if content.current_user_owns?
-      url = send((options[:evaluated_class_name].nil? ? content.class.name : options[:evaluated_class_name]).underscore + "_path", content)
+      if options[:reference_url].nil?
+        url = send((options[:evaluated_class_name].nil? ? content.class.name : options[:evaluated_class_name]).underscore + "_path", content)
+      else
+        url = options[:reference_url]
+      end
       result = display_url(
         content: url,
         format: :html,
@@ -247,21 +251,24 @@ module ApplicationHelper
       result = CGI::escapeHTML(content_display).html_safe
     end
     
-    begin
-      if ExecutionContext.push_marker(:nest_count) <= ExecutionContext.get(:max_nest, default: 1)
-        options[:second_row] = renderActionInOtherController(
-          Object.const_get(options[:controller_name]),
-          :show,
-          {
-            id: content.id,
-            nested_show: true,
-            nested_expanded: options[:expanded]
-          }
-        ).html_safe
+    if options[:show_reference]
+      begin
+        if ExecutionContext.push_marker(:nest_count) <= ExecutionContext.get(:max_nest, default: 1)
+          options[:second_row] = renderActionInOtherController(
+            Object.const_get(options[:controller_name]),
+            :show,
+            {
+              id: content.id,
+              nested_show: true,
+              nested_expanded: options[:expanded]
+            }
+          ).html_safe
+        end
+      ensure
+        ExecutionContext.pop_marker(:nest_count)
       end
-    ensure
-      ExecutionContext.pop_marker(:nest_count)
     end
+    
     result
   end
   
@@ -348,6 +355,8 @@ module ApplicationHelper
       non_wrap_container: :p,
       evaluated_class_name: nil,
       max_collection_items: 25,
+      show_reference: true,
+      reference_url: nil,
     }.merge(options)
     
     original_content = content

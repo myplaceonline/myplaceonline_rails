@@ -3643,6 +3643,7 @@ en:
       add_blog_post: "Add Post"
       blog_posts: "Posts"
       display: "Display"
+      main_post: "Main Post"
     blog_posts:
       blog_post_title: "Title"
       post: "Post"

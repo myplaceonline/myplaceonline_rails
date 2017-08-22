@@ -19,6 +19,21 @@
   )
 %>
 <%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :main_post,
+    existingobj: obj.main_post,
+    heading: t("myplaceonline.blogs.main_post"),
+    objform: "blog_posts/form",
+    existingobjurl: "blog_post_path",
+    searchurl: "/blogs/#{obj.id}/blog_posts.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    allow_new: false,
+    existingcollapsed: false,
+  }
+%>
+<%=
   render partial: "myplaceonline/pictures_form", locals: {
     f: f,
     obj: obj,

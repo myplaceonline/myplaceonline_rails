@@ -8,6 +8,7 @@ class Blog < ApplicationRecord
       { name: :notes, type: ApplicationRecord::PROPERTY_TYPE_MARKDOWN },
       { name: :blog_files, type: ApplicationRecord::PROPERTY_TYPE_FILES },
       { name: :blog_posts, type: ApplicationRecord::PROPERTY_TYPE_CHILDREN },
+      { name: :main_post, type: ApplicationRecord::PROPERTY_TYPE_CHILD },
     ]
   end
 
@@ -21,6 +22,8 @@ class Blog < ApplicationRecord
 
   child_properties(name: :blog_posts, sort: "updated_at DESC")
   
+  child_property(name: :main_post, model: BlogPost)
+
   def identity_file_by_name(name)
     result = nil
     name = name.downcase

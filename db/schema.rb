@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170822041503) do
+ActiveRecord::Schema.define(version: 20170822052557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -395,7 +395,9 @@ ActiveRecord::Schema.define(version: 20170822041503) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "main_post_id"
     t.index ["identity_id"], name: "index_blogs_on_identity_id"
+    t.index ["main_post_id"], name: "index_blogs_on_main_post_id"
   end
 
   create_table "blood_concentrations", id: :serial, force: :cascade do |t|
@@ -5995,6 +5997,7 @@ ActiveRecord::Schema.define(version: 20170822041503) do
   add_foreign_key "blog_post_comments", "identities", column: "commenter_identity_id"
   add_foreign_key "blog_posts", "blogs"
   add_foreign_key "blog_posts", "identities"
+  add_foreign_key "blogs", "blog_posts", column: "main_post_id"
   add_foreign_key "blogs", "identities"
   add_foreign_key "blood_concentrations", "identities", name: "blood_concentrations_identity_id_fk"
   add_foreign_key "blood_pressures", "identities", name: "blood_pressures_identity_id_fk"
