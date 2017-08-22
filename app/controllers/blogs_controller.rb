@@ -45,21 +45,43 @@ class BlogsController < MyplaceonlineController
   
   def page
     set_obj
-    matched_post = nil
+    @matched_post = nil
     pagename = params[:pagename].downcase
     Rails.logger.debug{"BlogsController.page pagename: #{pagename}"}
     @obj.blog_posts.each do |post|
       checkpagename = post.blog_post_title.downcase
       Rails.logger.debug{"BlogsController.page checkpagename: #{checkpagename}"}
       if checkpagename == pagename
-        matched_post = post
+        @matched_post = post
       end
     end
-    if matched_post.nil?
+    if @matched_post.nil?
       redirect_to blog_path(@obj)
     else
-      redirect_to blog_blog_post_path(@obj, matched_post)
+      @obj = @matched_post
+      render(template: "myplaceonline/show")
+      #redirect_to blog_blog_post_path(@obj, @matched_post)
     end
+  end
+  
+  def show_wrap
+    if @matched_post.nil?
+      super
+    else
+      false
+    end
+  end
+  
+  def paths_form_name
+    if @matched_post.nil?
+      super
+    else
+      "blog_posts"
+    end
+  end
+  
+  def heading_prefix_category
+    false
   end
   
   protected

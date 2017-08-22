@@ -8,7 +8,7 @@ locals = { obj: @obj }.merge(locals)
 <% if !@myplet %>
   <% if !@nested_show %>
     <% if !@myplet %>
-      <% content_for :heading do -%><%= page_heading(@obj, controller) %><% end -%>
+      <% content_for :heading do -%><%= page_heading(@obj, controller, prefix_category: controller.heading_prefix_category) %><% end -%>
     <% end %>
 
     <% if controller.show_wrap %>

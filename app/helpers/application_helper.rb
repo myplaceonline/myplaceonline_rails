@@ -52,13 +52,22 @@ module ApplicationHelper
     end
   end
   
-  def page_heading(obj, controller)
-    result = I18n.t("myplaceonline.category.#{controller.category_name}").singularize
+  def page_heading(obj, controller, prefix_category: true)
+    result = ""
+    
     obj_display = controller.display_obj(obj)
-    if !obj_display.nil?
-      result += ": "
+    
+    if prefix_category || obj_display.blank?
+      result = I18n.t("myplaceonline.category.#{controller.category_name}").singularize
+    end
+    
+    if !obj_display.blank?
+      if prefix_category
+        result += ": "
+      end
       result += obj_display
     end
+    
     result
   end
   

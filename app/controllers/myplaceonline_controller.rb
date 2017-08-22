@@ -1063,6 +1063,10 @@ class MyplaceonlineController < ApplicationController
     true
   end
   
+  def heading_prefix_category
+    true
+  end
+  
   protected
   
     def deny_guest
