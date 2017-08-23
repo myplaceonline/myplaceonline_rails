@@ -12,8 +12,11 @@ end
   <% end %>
 <% end %>
 
-<small><em><%= data_row(heading: t("myplaceonline.blog_posts.last_updated"), content: obj.updated_at, wrap: false, prefix_heading: true, prefix_wrapper: :span) %></em></small>
-<hr />
+<% if !obj.last_updated_bottom %>
+  <small><em><%= data_row(heading: t("myplaceonline.blog_posts.last_updated"), content: obj.updated_at, wrap: false, prefix_heading: true, prefix_wrapper: :span) %></em></small>
+  <hr />
+<% end %>
+
 <%= data_row(heading: t("myplaceonline.blog_posts.post"), content: obj.post, markdown: true, wrap: false) %>
 
 <% if obj.blog_post_comments.length > 0 %>
@@ -25,4 +28,9 @@ end
       <hr />
     <% end %>
   </div>
+<% end %>
+
+<% if obj.last_updated_bottom %>
+  <hr />
+  <small><em><%= data_row(heading: t("myplaceonline.blog_posts.last_updated"), content: obj.updated_at, wrap: false, prefix_heading: true, prefix_wrapper: :span) %></em></small>
 <% end %>

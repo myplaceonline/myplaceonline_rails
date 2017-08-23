@@ -166,6 +166,7 @@ class ImportJob < ApplicationJob
                         import_original: text[0],
                         hide_title: true,
                         edit_type: BlogPost::EDIT_TYPE_TEXT,
+                        last_updated_bottom: true,
                       )
                       
                       append_message(import, "Imported blog post [#{pagename}](/blogs/#{blog.id}/blog_posts/#{blog_post.id})")
