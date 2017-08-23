@@ -254,7 +254,8 @@ Rails.application.routes.draw do
     ],
     credit_cards: [
       { instance: false, link: "total_credit" },
-      { instance: false, link: "listcashback" }
+      { instance: false, link: "listcashback" },
+      { instance: false, link: "main" },
     ],
     diets: [
       { instance: true, link: "evaluate" },

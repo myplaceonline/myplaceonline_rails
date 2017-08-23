@@ -105,4 +105,17 @@ class CreditCard < ApplicationRecord
   def self.skip_check_attributes
     ["encrypt", "email_reminders"]
   end
+
+
+  def self.category_split_button_link
+    Rails.application.routes.url_helpers.send("credit_cards_main_path")
+  end
+  
+  def self.category_split_button_title
+    I18n.t("myplaceonline.credit_cards.most_used")
+  end
+
+  def self.category_split_button_icon
+    "star"
+  end
 end

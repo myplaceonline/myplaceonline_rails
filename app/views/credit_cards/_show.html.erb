@@ -4,7 +4,7 @@
 <%= attribute_table_row_date_month_year(t("myplaceonline.credit_cards.start_date"), obj.start_date) %>
 <%= attribute_table_row(t("myplaceonline.credit_cards.security_code"), obj.security_code) %>
 <%= attribute_table_row_select(t("myplaceonline.credit_cards.card_type"), obj.card_type, CreditCard::CARD_TYPES) %>
-<%= attribute_table_row_reference(t("myplaceonline.credit_cards.password"), "password_path", obj.password) %>
+<%= data_row(heading: t("myplaceonline.credit_cards.password"), content: obj.password, expanded: true) %>
 <%= attribute_table_row_reference(t("myplaceonline.credit_cards.address"), "location_path", obj.address) %>
 <%= attribute_table_row(t("myplaceonline.credit_cards.pin"), obj.pin) %>
 <%= attribute_table_row_currency(t("myplaceonline.credit_cards.total_credit"), obj.total_credit) %>

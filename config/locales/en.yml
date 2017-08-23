@@ -1091,6 +1091,7 @@ en:
       add_file: "Add File/Picture"
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
+      most_used: "Most Visited"
     bank_accounts:
       name: "Name"
       account_number: "Account Number"
