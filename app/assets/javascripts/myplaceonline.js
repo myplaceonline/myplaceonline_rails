@@ -484,7 +484,7 @@ var myplaceonline = function(mymodule) {
                 }
                 ft.upload(
                   fileURI,
-                  encodeURI(app.base_url + "/api/newfile"),
+                  encodeURI(app.base_url + "/api/newfile2"),
                   function(result) {
                     $uploading.remove();
                     var resultObj = jQuery.parseJSON(result.response);
@@ -697,7 +697,7 @@ var myplaceonline = function(mymodule) {
 
     var jqxhr = $.ajax({
       type: "POST",
-      url: "/api/newfile",
+      url: "/api/newfile2",
       data: formData,
       timeout: 0,
       context: filecontext,
