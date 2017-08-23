@@ -20,7 +20,7 @@ class ImportJob < ApplicationJob
             
             case import.import_type
             when Import::IMPORT_TYPE_MEDIAWIKI
-              Rails.logger.debug{"ImportJob mediawiki"}
+              Rails.logger.info{"ImportJob mediawiki"}
               
               import_medawiki(import)
               
@@ -70,7 +70,7 @@ class ImportJob < ApplicationJob
         
         ifile = file.identity_file
         
-        Rails.logger.debug{"ImportJob path: #{ifile.evaluated_path}"}
+        Rails.logger.info{"ImportJob path: #{ifile.evaluated_path}"}
         
         # We'll process the SQL last. First we process all the files
         storage = {
@@ -79,13 +79,13 @@ class ImportJob < ApplicationJob
         }
         
         Myp.mktmpdir do |dir|
-          Rails.logger.debug{"ImportJob temp dir: #{dir}"}
+          Rails.logger.info{"ImportJob temp dir: #{dir}"}
           
           FileUtils.cp(ifile.evaluated_path, dir)
           
           tmpfile = Pathname.new(dir).join(ifile.file_file_name)
 
-          Rails.logger.debug{"ImportJob tmpfile: #{tmpfile}"}
+          Rails.logger.info{"ImportJob tmpfile: #{tmpfile}"}
           
           if ifile.file_content_type == "application/gzip"
             execute_command("gunzip #{tmpfile}")
@@ -192,18 +192,18 @@ class ImportJob < ApplicationJob
       fullfname = f.to_s
       fname = Pathname.new(f).basename.to_s
       
-      Rails.logger.debug{"ImportJob found file: #{f}"}
+      Rails.logger.info{"ImportJob found file: #{f}"}
       
       #append_message(import, "Processing #{f.to_s[root_path.length+1..-1]}")
       
       if fname.end_with?(".sql")
-        Rails.logger.debug{"ImportJob sql"}
+        Rails.logger.info{"ImportJob sql"}
         #append_message(import, "Found SQL file, assuming it's the MediaWiki database")
         storage[:sqlfiles] = storage[:sqlfiles] + [f]
       elsif fname.end_with?(".tar")
         childdir = Pathname.new(dir).join("#{fname}_expanded")
         Dir.mkdir(childdir)
-        Rails.logger.debug{"ImportJob made directory: #{childdir}"}
+        Rails.logger.info{"ImportJob made directory: #{childdir}"}
         execute_command("mv \"#{f}\" \"#{childdir}\" && cd \"#{childdir}\" && tar xvf \"#{fname}\" && rm \"#{fname}\"")
         process_directory(import, storage, childdir, root_path)
       elsif !fullfname.index("/images/").nil? && fullfname.index("/images/thumb/").nil? && fullfname.index("/images/archive/").nil? && fullfname.index("/skins/").nil? && fullfname.index("/extensions/").nil? && fullfname.index("/resources/").nil? && fname.index(".htaccess").nil? && fname.index("README").nil?
@@ -215,7 +215,7 @@ class ImportJob < ApplicationJob
   
   def execute_command(message)
     result = ""
-    Rails.logger.debug{"ImportJob executing: #{message}"}
+    Rails.logger.info{"ImportJob executing: #{message}"}
     Open3.popen2e(message) do |stdin, stdout_and_stderr, wait_thr|
       result = stdout_and_stderr.read
       exit_status = wait_thr.value
@@ -223,7 +223,7 @@ class ImportJob < ApplicationJob
         raise "Exit status " + exit_status.to_s + ": #{stdout_and_stderr.read}"
       end
     end
-    Rails.logger.debug{"ImportJob result: #{result}"}
+    Rails.logger.info{"ImportJob result: #{result}"}
     result
   end
 end
