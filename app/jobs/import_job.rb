@@ -220,7 +220,7 @@ class ImportJob < ApplicationJob
       result = stdout_and_stderr.read
       exit_status = wait_thr.value
       if exit_status != 0
-        raise "Exit status " + exit_status.to_s + ": #{stdout_and_stderr.read}"
+        raise "Exit status " + exit_status.to_s + ": #{result}"
       end
     end
     Rails.logger.info{"ImportJob result: #{result}"}

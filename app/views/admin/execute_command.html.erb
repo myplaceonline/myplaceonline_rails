@@ -1,0 +1,28 @@
+<% content_for :heading do -%><%= t("myplaceonline.admin.execute_command") %><% end -%>
+<h1><%= t("myplaceonline.admin.execute_command") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag(admin_execute_command_path, method: :post) do %>
+  <%= input_field(name: :command, type: Myp::FIELD_TEXT_AREA, placeholder: t("myplaceonline.admin.command"), collapsed: false, value: @command, autofocus: true) %>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.admin.execute_command"), "data-icon" => "action", "data-iconpos" => "top")
+        },
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: admin_path,
+          icon: "back"
+        }
+      ]
+    })
+  %>
+<% end %>
+
+<script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+</script>

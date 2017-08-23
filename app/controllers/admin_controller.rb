@@ -43,6 +43,13 @@ class AdminController < ApplicationController
     end
   end
 
+  def execute_command
+    if request.post?
+      @command = params[:command]
+      ApplicationJob.perform(AdminExecuteCommandJob, @command)
+    end
+  end
+
   def index; end
 
   def send_email

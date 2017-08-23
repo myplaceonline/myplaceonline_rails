@@ -2924,6 +2924,8 @@ en:
       invite_codes: "Invite Codes"
       gc: "Collect Garbage"
       gc_collected: "Garbage Collection Started"
+      execute_command: "Execute Command"
+      command: "Command"
     share:
       link: "Link"
     trip_pictures:
