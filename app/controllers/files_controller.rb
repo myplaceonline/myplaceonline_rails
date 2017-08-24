@@ -39,8 +39,15 @@ class FilesController < MyplaceonlineController
       Rails.logger.debug{"FilesController.thumbnail: found thumbnail_contents #{@obj.thumbnail_size_bytes}"}
       respond_data("inline", @obj.thumbnail_contents, @obj.thumbnail_size_bytes, @obj.file_file_name, @obj.file_content_type)
     elsif !@obj.thumbnail_filesystem_path.blank?
+      
+      thumbnail_path = @obj.thumbnail_filesystem_path
+      
+      if !ENV["FILES_PREFIX"].blank? && !File.exist?(thumbnail_path)
+        thumbnail_path = ENV["FILES_PREFIX"] + thumbnail_path
+      end
+      
       send_file(
-        @obj.thumbnail_filesystem_path,
+        thumbnail_path,
         :type => @obj.file_content_type,
         :filename => @obj.file_file_name,
         :disposition => "inline"
