@@ -81,12 +81,14 @@ class ImportJob < ApplicationJob
         Myp.mktmpdir do |dir|
           Rails.logger.info{"ImportJob temp dir: #{dir}"}
           
-          FileUtils.cp(ifile.evaluated_path, "#{dir}/#{ifile.file_file_name}")
+          file_name = ifile.file_file_name.gsub("/", "").gsub("..", "")
+          
+          FileUtils.cp(ifile.evaluated_path, "#{dir}/#{file_name}")
           
 #           dir_listing = execute_command("ls -l #{dir}")
 #           Rails.logger.info{"ImportJob dir_listing: #{dir_listing}"}
           
-          tmpfile = Pathname.new(dir).join(ifile.file_file_name)
+          tmpfile = Pathname.new(dir).join(file_name)
 
           Rails.logger.info{"ImportJob tmpfile: #{tmpfile}"}
           
