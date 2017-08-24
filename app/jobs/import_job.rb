@@ -83,6 +83,9 @@ class ImportJob < ApplicationJob
           
           FileUtils.cp(ifile.evaluated_path, dir)
           
+          dir_listing = execute_command("ls -l #{dir}")
+          Rails.logger.info{"ImportJob dir_listing: #{dir_listing}"}
+          
           tmpfile = Pathname.new(dir).join(ifile.file_file_name)
 
           Rails.logger.info{"ImportJob tmpfile: #{tmpfile}"}
