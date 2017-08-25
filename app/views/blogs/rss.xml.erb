@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title><%= @title %></title>
+    <description><%= @description %></description>
+    <link><%= @link %></link>
+  </channel>
+  <% @blog_posts.each do |blog_post| %>
+    <item>
+      <title><%= blog_post.display %></title>
+      <link><%= blog_page_url(@obj, blog_post.display) %></link>
+      <pubDate><%= blog_post.updated_at.rfc822 %></pubDate>
+    </item>
+  <% end %>
+</rss>

@@ -205,6 +205,7 @@ Rails.application.routes.draw do
     ],
     blogs: [
       { instance: true, link: "display" },
+      { instance: true, link: "rss" },
       {
         subresources: true,
         name: :blog_posts,

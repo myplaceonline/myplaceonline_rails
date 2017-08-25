@@ -20,6 +20,11 @@ class BlogsController < MyplaceonlineController
         link: blog_blog_posts_path(@obj),
         icon: "bars"
       },
+      {
+        title: I18n.t("myplaceonline.blogs.rss"),
+        link: blog_rss_path(@obj) + ".xml",
+        icon: "gear"
+      },
     ] + super
   end
   
@@ -31,6 +36,14 @@ class BlogsController < MyplaceonlineController
     perpage = update_items_per_page(perpage, @obj.blog_posts.count)
     
     @blog_posts = @obj.blog_posts.offset(offset).limit(perpage)
+  end
+  
+  def rss
+    set_obj
+    
+    @title = @description = @obj.display
+    @link = blog_display_url(@obj)
+    @blog_posts = @obj.blog_posts
   end
 
   def default_items_per_page

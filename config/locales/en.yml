@@ -3649,6 +3649,7 @@ en:
       blog_posts: "Posts"
       display: "Display"
       main_post: "Main Post"
+      rss: "RSS"
     blog_posts:
       blog_post_title: "Title"
       post: "Post"
