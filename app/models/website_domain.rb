@@ -51,7 +51,7 @@ class WebsiteDomain < ApplicationRecord
   end
   
   def authorize_homepage_path
-    obj_action = self.homepage_path_object
+    obj_action = self.homepage_path_object_action
     if !obj.nil?
       Ability.authorize(identity: User.current_user.current_identity, subject: obj_action[0], action: obj_action[1])
     else
