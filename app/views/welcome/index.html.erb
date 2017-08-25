@@ -9,7 +9,7 @@
 <% else %>
 
   <% @myplets.each do |myplet| %>
-    <%= render :html => renderActionInOtherController(
+    <%= render :html => Myp.renderActionInOtherController(
                           Object.const_get(myplet.category_name.camelize + "Controller"),
                           myplet.category_id.nil? ? :index : :show,
                           {

@@ -116,6 +116,16 @@ class MyplaceonlineExecutionContext
     end
   end
 
+  def self.do_ability_identity(identity, &block)
+    ExecutionContext.push
+    begin
+      self.ability_context_identity = identity
+      block.call
+    ensure
+      ExecutionContext.pop
+    end
+  end
+
   def self.disable_handling_updates(&block)
     begin
       self[:skip_handling_updates] = true

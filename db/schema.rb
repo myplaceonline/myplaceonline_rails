@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170823030536) do
+ActiveRecord::Schema.define(version: 20170824224817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -5804,6 +5804,7 @@ ActiveRecord::Schema.define(version: 20170823030536) do
     t.text "about"
     t.text "mission_statement"
     t.text "faq"
+    t.string "homepage_path"
     t.index ["default_header_icon_identity_file_id"], name: "index_website_domains_on_default_header_icon_identity_file_id"
     t.index ["domain_host_id"], name: "index_website_domains_on_domain_host_id"
     t.index ["favicon_ico_identity_file_id"], name: "index_website_domains_on_favicon_ico_identity_file_id"

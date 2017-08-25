@@ -228,6 +228,14 @@ module ApplicationHelper
     end
   end
   
+  def show_reference(controller:, id:, locals: {})
+    Myp.renderActionInOtherController(
+      controller,
+      :show,
+      locals.merge({id: id})
+    ).html_safe
+  end
+  
   def display_reference(content:, format:, options:)
     options[:controller_name] ||= (options[:evaluated_class_name].nil? ? content.class.name : options[:evaluated_class_name]).pluralize + "Controller"
     options[:htmlencode_content] = false
@@ -254,15 +262,14 @@ module ApplicationHelper
     if options[:show_reference]
       begin
         if ExecutionContext.push_marker(:nest_count) <= ExecutionContext.get(:max_nest, default: 1)
-          options[:second_row] = renderActionInOtherController(
-            Object.const_get(options[:controller_name]),
-            :show,
-            {
-              id: content.id,
+          options[:second_row] = show_reference(
+            controller: Object.const_get(options[:controller_name]),
+            id: content.id,
+            locals: {
               nested_show: true,
               nested_expanded: options[:expanded]
             }
-          ).html_safe
+          )
         end
       ensure
         ExecutionContext.pop_marker(:nest_count)
@@ -878,7 +885,7 @@ module ApplicationHelper
       result = attribute_table_row(name, url_or_blank(url, ref.display), url)
       begin
         if ExecutionContext.push_marker(:nest_count) <= 1
-          render_result = renderActionInOtherController(
+          render_result = Myp.renderActionInOtherController(
               Object.const_get(controllerName.nil? ? ref.class.name.pluralize + "Controller" : controllerName),
               :show,
               {
@@ -1890,21 +1897,6 @@ module ApplicationHelper
     else
       category.human_title
     end
-  end
-  
-  # http://stackoverflow.com/a/7085969
-  def renderActionInOtherController(controller, action, params)
-    c = controller.new
-    c.params = params
-    # TODO before_actions are not called (process_action is protected and
-    # calling it through a public wrapper doesn't work)
-    r = controller.make_response!(request)
-    c.dispatch(action, request, r)
-    if r.response_code == 302
-      # Assume password required redirect
-      raise Myp::DecryptionKeyUnavailableError
-    end
-    r.body
   end
   
   def extract_id(html)

@@ -21,4 +21,41 @@ class WebsiteDomain < ApplicationRecord
   def display
     domain_name
   end
+
+  validate do
+    if !self.homepage_path.blank? && !self.authorize_homepage_path
+      errors.add(:homepage_path, I18n.t("myplaceonline.website_domains.homepage_path_not_authorized"))
+    end
+  end
+  
+  def homepage_path_object_action
+    result = nil
+    if !self.homepage_path.blank?
+      pieces = self.homepage_path.split("/")
+      if pieces.length < 2
+        raise "Unexpected path"
+      end
+      last_piece = pieces[pieces.length - 1]
+      if Myp.is_number?(last_piece)
+        action = :show
+        id = last_piece.to_i
+        controller_name = pieces[pieces.length - 2]
+      else
+        action = pieces[pieces.length - 1].to_sym
+        id = pieces[pieces.length - 2].to_i
+        controller_name = pieces[pieces.length - 3]
+      end
+      result = [Object.const_get(controller_name.camelize.singularize).send("find", id), action]
+    end
+    result
+  end
+  
+  def authorize_homepage_path
+    obj_action = self.homepage_path_object
+    if !obj.nil?
+      Ability.authorize(identity: User.current_user.current_identity, subject: obj_action[0], action: obj_action[1])
+    else
+      false
+    end
+  end
 end

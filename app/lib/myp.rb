@@ -424,10 +424,19 @@ module Myp
           if website_domain.default_domain
             @@default_website_domain = website_domain
           end
+          
+          html = website_domain.static_homepage
+
+          if !html.blank?
+            html = self.prepare_website_domain_html(html: html)
+          end
+          
+          #Rails.logger.debug{"Homepage for #{website_domain.display}:\n#{html}"}
+          
           website_domain.hosts.split(",").each do |matching_host|
             if !matching_host.blank?
               @@all_website_domains[matching_host] = website_domain
-              @@all_website_domain_homepages[matching_host] = self.prepare_website_domain_html(html: website_domain.static_homepage)
+              @@all_website_domain_homepages[matching_host] = html
             end
           end
         end
@@ -508,7 +517,59 @@ module Myp
 
   def self.website_domain_homepage(host: nil)
     host = Myp.current_host(host: host)
-    @@all_website_domain_homepages[host]
+    result = @@all_website_domain_homepages[host]
+    if result.blank?
+      website_domain = self.website_domain(host: host)
+      Rails.logger.debug{"Myp.website_domain_homepage initializing domain #{host}"}
+      if !website_domain.homepage_path.blank?
+        Rails.logger.debug{"Myp.website_domain_homepage processing #{website_domain.homepage_path}"}
+        params = {}
+        pieces = website_domain.homepage_path.split("/")
+        i = pieces.length - 1
+        save_id = nil
+        action = nil
+        last_controller = nil
+        while i >= 0
+          piece = pieces[i]
+          if Myp.is_number?(piece)
+            if params.length == 0
+              params["id"] = piece
+            else
+              save_id = piece
+            end
+          else
+            Rails.logger.debug{"Myp.website_domain_homepage piece: #{piece}, params: #{params.length}"}
+            if last_controller.nil? && params.length == 1
+              last_controller = piece
+            else
+              if !save_id.nil?
+                params[piece.singularize + "_id"] = save_id
+                save_id = nil
+              else
+                if action.nil?
+                  action = piece.to_sym
+                end
+              end
+            end
+          end
+          i = i - 1
+        end
+        if action.blank?
+          action = :show
+        end
+        params[:no_layout] = true
+        controller_class = last_controller.camelize + "Controller"
+        Rails.logger.debug{"Myp.website_domain_homepage rendering controller: #{controller_class}, action: #{action}, params: #{params.inspect}"}
+        obj = Object.const_get(last_controller.camelize.singularize).send("find", params["id"])
+        MyplaceonlineExecutionContext.do_ability_identity(obj.identity) do
+          result = Myp.renderActionInOtherController(Object.const_get(controller_class), action, params)
+        end
+        result = self.prepare_website_domain_html(html: result)
+        Rails.logger.debug{"Myp.website_domain_homepage html: #{result}"}
+        @@all_website_domain_homepages[host] = result
+      end
+    end
+    result
   end
 
   # Return a list of ListItemRow objects.
@@ -2960,6 +3021,25 @@ module Myp
     end
     
     nil
+  end
+  
+  def self.is_number?(str)
+    !!(str =~ /\A[-+]?[0-9]+\z/)
+  end
+  
+  # http://stackoverflow.com/a/7085969
+  def self.renderActionInOtherController(controller, action, params)
+    c = controller.new
+    c.params = params
+    # TODO before_actions are not called (process_action is protected and
+    # calling it through a public wrapper doesn't work)
+    r = controller.make_response!(MyplaceonlineExecutionContext.request)
+    c.dispatch(action, MyplaceonlineExecutionContext.request, r)
+    if r.response_code == 302
+      # Assume password required redirect
+      raise Myp::DecryptionKeyUnavailableError
+    end
+    r.body
   end
   
   Rails.logger.info{"myplaceonline: myp.rb static initialization ended"}

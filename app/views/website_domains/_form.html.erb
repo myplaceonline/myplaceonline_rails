@@ -168,6 +168,15 @@
   <%=
     input_field(
       form: f,
+      type: Myp::FIELD_TEXT,
+      name: :homepage_path,
+      value: obj.homepage_path,
+      placeholder: "myplaceonline.website_domains.homepage_path",
+    )
+  %>
+  <%=
+    input_field(
+      form: f,
       type: Myp::FIELD_TEXT_AREA,
       name: :menu_links_static,
       value: obj.menu_links_static,

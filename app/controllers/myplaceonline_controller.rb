@@ -174,11 +174,12 @@ class MyplaceonlineController < ApplicationController
     if sensitive
       check_password
     end
+    @no_layout = params[:no_layout]
     @nested_show = params[:nested_show]
     @nested_expanded = params[:nested_expanded]
     before_show
     @myplet = params[:myplet]
-    if @nested_show
+    if @nested_show || @no_layout
       render action: "show", layout: "blank"
     elsif !@myplet
       respond_with(@obj)
@@ -524,7 +525,11 @@ class MyplaceonlineController < ApplicationController
   end
   
   def index_path
-    send(paths_name + "_path")
+    if nested
+      send(paths_name + "_path", @obj.send(parent_model.table_name.singularize.downcase))
+    else
+      send(paths_name + "_path")
+    end
   end
   
   def obj_path(obj = @obj)
@@ -608,7 +613,11 @@ class MyplaceonlineController < ApplicationController
   end
   
   def new_path(context = nil)
-    send("new_" + path_name + "_path")
+    if nested
+      send("new_" + path_name + "_path", @obj.send(parent_model.table_name.singularize.downcase))
+    else
+      send("new_" + path_name + "_path")
+    end
   end
   
   def settings_path()

@@ -2848,6 +2848,8 @@ en:
       about: "About"
       mission_statement: "Mission Statement"
       faq: "FAQ"
+      homepage_path: "Homepage Path"
+      homepage_path_not_authorized: "Homepage Path Object Not Authorized"
     bets:
       bet_name: "Bet Name"
       notes: "Conditions"
