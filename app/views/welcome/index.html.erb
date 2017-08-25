@@ -4,7 +4,25 @@
 
 <% if !user_signed_in? %>
 
-  <%= raw(Myp.website_domain_homepage) %>
+  <%
+  homepage = Myp.website_domain_homepage
+  if homepage.is_a?(Hash)
+    MyplaceonlineExecutionContext.do_ability_identity(homepage[:obj].identity) do
+  %>
+      <%= render :html => Myp.renderActionInOtherController(
+                            homepage[:controller_class],
+                            homepage[:action],
+                            homepage[:params],
+                          ).html_safe
+      %>
+  <%
+    end
+  else
+  %>
+    <%= raw(homepage) %>
+  <%
+  end
+  %>
 
 <% else %>
 

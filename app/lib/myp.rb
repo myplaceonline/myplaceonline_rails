@@ -558,14 +558,25 @@ module Myp
           action = :show
         end
         params[:no_layout] = true
-        controller_class = last_controller.camelize + "Controller"
+        controller_class = Object.const_get(last_controller.camelize + "Controller")
         Rails.logger.debug{"Myp.website_domain_homepage rendering controller: #{controller_class}, action: #{action}, params: #{params.inspect}"}
         obj = Object.const_get(last_controller.camelize.singularize).send("find", params["id"])
-        MyplaceonlineExecutionContext.do_ability_identity(obj.identity) do
-          result = Myp.renderActionInOtherController(Object.const_get(controller_class), action, params)
+        
+        if website_domain.homepage_path_cached
+          MyplaceonlineExecutionContext.do_ability_identity(obj.identity) do
+            result = Myp.renderActionInOtherController(controller_class, action, params)
+          end
+          result = self.prepare_website_domain_html(html: result)
+          Rails.logger.debug{"Myp.website_domain_homepage html: #{result}"}
+        else
+          result = {
+            obj: obj,
+            controller_class: controller_class,
+            action: action,
+            params: params,
+          }
         end
-        result = self.prepare_website_domain_html(html: result)
-        Rails.logger.debug{"Myp.website_domain_homepage html: #{result}"}
+        
         @@all_website_domain_homepages[host] = result
       end
     end
