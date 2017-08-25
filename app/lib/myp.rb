@@ -421,22 +421,24 @@ module Myp
         @@all_website_domains.clear
         @@all_website_domain_homepages.clear
         WebsiteDomain.where(verified: true).each do |website_domain|
-          if website_domain.default_domain
-            @@default_website_domain = website_domain
-          end
-          
-          html = website_domain.static_homepage
+          if !website_domain.hosts.blank?
+            if website_domain.default_domain
+              @@default_website_domain = website_domain
+            end
+            
+            html = website_domain.static_homepage
 
-          if !html.blank?
-            html = self.prepare_website_domain_html(html: html)
-          end
-          
-          #Rails.logger.debug{"Homepage for #{website_domain.display}:\n#{html}"}
-          
-          website_domain.hosts.split(",").each do |matching_host|
-            if !matching_host.blank?
-              @@all_website_domains[matching_host] = website_domain
-              @@all_website_domain_homepages[matching_host] = html
+            if !html.blank?
+              html = self.prepare_website_domain_html(html: html)
+            end
+            
+            #Rails.logger.debug{"Homepage for #{website_domain.display}:\n#{html}"}
+            
+            website_domain.hosts.split(",").each do |matching_host|
+              if !matching_host.blank?
+                @@all_website_domains[matching_host] = website_domain
+                @@all_website_domain_homepages[matching_host] = html
+              end
             end
           end
         end
