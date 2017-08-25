@@ -134,7 +134,7 @@
       <%= yield(:footer) %>
       <%# We give a unique id to each popup because the menu may change between requests. %>
       <div data-role="popup" data-history="false" id="menuPopup<%= request.uuid %>">
-        <% if user_signed_in? %>
+        <% if user_signed_in? && !current_user.guest? %>
           <p style="text-align: center;"><%= current_user.email %></p>
         <% end %>
         <ul data-role="listview">
