@@ -604,6 +604,14 @@ class MyplaceonlineController < ApplicationController
     end
   end
   
+  def make_public_obj_path(obj = @obj)
+    if nested
+      send(path_name + "_make_public_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+    else
+      send(path_name + "_make_public_path", obj)
+    end
+  end
+  
   def show_path(obj)
     if nested
       send("#{path_name}_path", obj.send(parent_model.table_name.singularize.downcase), obj)
@@ -909,6 +917,31 @@ class MyplaceonlineController < ApplicationController
     set_obj
     
     @connections_link = permissions_share_path + "?" + Permission.permission_params(self.category_name, @obj.id, self.share_permissions).to_query
+  end
+  
+  def make_public
+    initial_checks
+    set_obj
+    
+    permission = Permission.where(
+      "user_id IS NULL and subject_class = :subject_class and subject_id = :subject_id",
+      subject_class: self.model.name.underscore.pluralize,
+      subject_id: @obj.id
+    ).first
+    
+    if permission.nil?
+      Permission.create!(
+        identity: User.current_user.current_identity,
+        subject_class: self.model.name.underscore.pluralize,
+        subject_id: @obj.id,
+        action: Permission::ACTION_READ,
+      )
+    end
+
+    redirect_to(
+      obj_path,
+      flash: { notice: I18n.t("myplaceonline.general.made_public", link: obj_url) }
+    )
   end
   
   def create_share_link

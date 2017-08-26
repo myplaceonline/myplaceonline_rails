@@ -128,12 +128,12 @@ class Ability
         end
       end
       
-      if !result && !user.new_record?
+      if !result && (!user.new_record? || user.guest?)
         if subject.respond_to?("identity_id") && subject.identity_id == identity.id
           Rails.logger.debug{"Ability.authorize Identities match: subject: #{subject.id}, identity: #{identity.id}"}
           result = true
         else
-          query = "user_id = ? and subject_class = ? and subject_id = ? and (action & #{Permission::ACTION_MANAGE} != 0"
+          query = "(user_id = ? or user_id IS NULL) and subject_class = ? and subject_id = ? and (action & #{Permission::ACTION_MANAGE} != 0"
           query = self.add_action_query_parts(action: action, query: query, subject: subject)
           query += ")"
           permission_results = Permission.where(query, user.id, Myp.model_to_category_name(subject_class), subject.id)

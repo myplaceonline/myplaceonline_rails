@@ -17,6 +17,12 @@
       <%= t("myplaceonline.general.share_link") %>
     <% end %>
   </li>
+  <li>
+    <%= link_to(controller.make_public_obj_path) do %>
+      <%= image_tag("FatCow_Icons16x16/world.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.general.make_public") %>
+    <% end %>
+  </li>
 </ul>
 
 <%=

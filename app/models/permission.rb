@@ -23,7 +23,11 @@ class Permission < ApplicationRecord
   bit_flags_transfer :actionbit, Permission::ACTION_TYPES, :action
   
   def display
-    result = user.display
+    if !user.nil?
+      result = user.display
+    else
+      result = User.guest.display
+    end
     result = Myp.appendstrwrap(result, Myp.get_select_name(action, Permission::ACTION_TYPES))
     if !Myp.categories(User.current_user)[subject_class.to_sym].nil?
       result = Myp.appendstrwrap(result, category_display)
@@ -34,7 +38,7 @@ class Permission < ApplicationRecord
     result
   end
   
-  child_property(name: :user, required: true)
+  child_property(name: :user)
 
   validate do
     if !subject_id.nil? && Myp.find_existing_object(Myp.category_to_model_name(subject_class), subject_id).nil?

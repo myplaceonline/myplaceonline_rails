@@ -717,7 +717,7 @@ module ApplicationHelper
         
         # Check if we've already done this first
         existing_permission_share = PermissionShare.includes(:share).where(
-          identity: User.current_user.current_identity,
+          identity_id: User.current_user.current_identity_id,
           subject_class: context.class.name,
           subject_id: context.id
         ).first
@@ -727,7 +727,7 @@ module ApplicationHelper
           share.save!
           
           PermissionShare.create!(
-            identity: User.current_user.current_identity,
+            identity_id: User.current_user.current_identity_id,
             share: share,
             subject_class: context.class.name,
             subject_id: context.id

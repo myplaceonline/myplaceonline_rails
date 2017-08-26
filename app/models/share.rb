@@ -9,7 +9,7 @@ class Share < ApplicationRecord
   
   def self.build_share(owner_identity:)
     result = Share.new
-    result.identity = owner_identity
+    result.identity_id = owner_identity.id
     result.token = SecureRandom.hex(22)
     result
   end
