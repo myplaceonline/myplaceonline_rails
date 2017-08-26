@@ -526,7 +526,7 @@ class MyplaceonlineController < ApplicationController
   
   def index_path
     if nested
-      send(paths_name + "_path", @obj.send(parent_model.table_name.singularize.downcase))
+      send(paths_name + "_path", @parent)
     else
       send(paths_name + "_path")
     end
@@ -622,7 +622,7 @@ class MyplaceonlineController < ApplicationController
   
   def new_path(context = nil)
     if nested
-      send("new_" + path_name + "_path", @obj.send(parent_model.table_name.singularize.downcase))
+      send("new_" + path_name + "_path", @parent)
     else
       send("new_" + path_name + "_path")
     end

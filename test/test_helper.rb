@@ -22,7 +22,7 @@ class ActionController::TestCase
     ExecutionContext.push
     User.current_user = @user
     MyplaceonlineExecutionContext.initialize(
-      request: nil,
+      request: @request,
       session: session,
       user: @user,
       persistent_user_store: InMemoryPersistentUserStore.new
