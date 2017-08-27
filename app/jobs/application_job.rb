@@ -5,7 +5,10 @@ class ApplicationJob < ActiveJob::Base
   
   def self.job_context
     {
-      execution_context: ExecutionContext.export
+      # http://edgeapi.rubyonrails.org/classes/ActiveJob/SerializationError.html
+      execution_context: ExecutionContext.export.keep_if{|k,v|
+        v.is_a?(NilClass) || v.is_a?(Numeric) || v.is_a?(String) || v.is_a?(TrueClass) || v.is_a?(FalseClass) || v.is_a?(ActiveRecord::Base)
+      }
     }
   end
 
