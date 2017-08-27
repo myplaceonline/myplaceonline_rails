@@ -43,7 +43,7 @@ class MyplaceonlineExecutionContext
     if !query_string.nil?
       ehi = query_string.index("emulate_host=")
       if !ehi.nil?
-        result = query_string[ehi+14..-1]
+        result = query_string[ehi+13..-1]
       end
     end
     
