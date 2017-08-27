@@ -178,4 +178,33 @@ class ExecutionContext
   def delete(name)
     @map.delete(name)
   end
+  
+  def hash
+    @map
+  end
+  
+  def self.import(hash)
+    self.current.import(hash)
+  end
+  
+  def import(hash)
+    @map.merge!(hash)
+  end
+  
+  def self.export
+    result = {}
+    execution_contexts = Thread.current[:execution_contexts]
+    if !execution_contexts.nil?
+      i = 0
+      while i < execution_contexts.length
+        execution_context = execution_contexts[i]
+        result.merge!(execution_context.hash)
+        i += 1
+      end
+      result
+    else
+      raise "No execution contexts"
+    end
+    result
+  end
 end

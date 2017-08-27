@@ -2989,51 +2989,62 @@ module Myp
     result
   end
   
-  def self.play(file)
-    statements = File.read(file).split(/;$/)
-    
-    pages = {}
-    texts = {}
-    last_revisions = {}
-    
-    statements.each do |statement|
-      statement.lstrip!
-      if statement.start_with?("INSERT INTO `revision`")
-        revisions = Myp.parse_sql_insert(statement)
-        revisions.each do |revision|
-          last_revisions[revision[1]] = revision
-        end
-      elsif statement.start_with?("INSERT INTO `page`")
-        pages.merge!(Myp.parse_sql_insert(statement, id_hash: true))
-      elsif statement.start_with?("INSERT INTO `text`")
-        texts.merge!(Myp.parse_sql_insert(statement, id_hash: true))
-      end
-    end
-    
-    last_revisions.each do |page_id, revision|
-      page = pages[revision[1].to_s]
-      text = texts[revision[2].to_s]
-      
-      # If text is blank, that it's probably an image, so just skip that
-      if !text.nil?
-        
-        # Page namespaces:
-        #   0: Normal page
-        #   4: About page
-        #   6: Upload
-        #   2/3: User
-        if page[0] == "0" || page[0] == "4"
-          pagename = page[1]
-          markdown = Myp.media_wiki_str_to_markdown(text[0])
-          #puts "Page: #{pagename}, Text:\n#{text[0]}\n\nMarkdown:\n#{markdown}"
-          if pagename == "Death"
-            puts "Page: #{pagename}, Text:\n#{text[0]}"
-          end
-        end
-      end
-    end
-    
-    nil
+#   def self.play(file)
+#     statements = File.read(file).split(/;$/)
+#     
+#     pages = {}
+#     texts = {}
+#     last_revisions = {}
+#     
+#     statements.each do |statement|
+#       statement.lstrip!
+#       if statement.start_with?("INSERT INTO `revision`")
+#         revisions = Myp.parse_sql_insert(statement)
+#         revisions.each do |revision|
+#           last_revisions[revision[1]] = revision
+#         end
+#       elsif statement.start_with?("INSERT INTO `page`")
+#         pages.merge!(Myp.parse_sql_insert(statement, id_hash: true))
+#       elsif statement.start_with?("INSERT INTO `text`")
+#         texts.merge!(Myp.parse_sql_insert(statement, id_hash: true))
+#       end
+#     end
+#     
+#     last_revisions.each do |page_id, revision|
+#       page = pages[revision[1].to_s]
+#       text = texts[revision[2].to_s]
+#       
+#       # If text is blank, that it's probably an image, so just skip that
+#       if !text.nil?
+#         
+#         # Page namespaces:
+#         #   0: Normal page
+#         #   4: About page
+#         #   6: Upload
+#         #   2/3: User
+#         if page[0] == "0" || page[0] == "4"
+#           pagename = page[1]
+#           markdown = Myp.media_wiki_str_to_markdown(text[0])
+#           #puts "Page: #{pagename}, Text:\n#{text[0]}\n\nMarkdown:\n#{markdown}"
+#           if pagename == "Death"
+#             puts "Page: #{pagename}, Text:\n#{text[0]}"
+#           end
+#         end
+#       end
+#     end
+#     
+#     nil
+#   end
+  
+  def self.play(*args)
+    args_array = *args
+    args_array = [{ context: 1 }] + args_array 
+    self.play2(*args_array)
+  end
+  
+  def self.play2(*args)
+    job_context = args.shift
+    puts "play2: context: #{job_context}; #{args}"
   end
   
   def self.is_number?(str)

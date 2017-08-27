@@ -1,47 +1,55 @@
 class ImportJob < ApplicationJob
   def perform(*args)
-    # Use the urgent strategy because the atomic strategy would keep the feed objects in memory which might blow RAM
-    Chewy.strategy(:urgent) do
-      import = args[0]
-      exec_action = args[1]
+
+    ExecutionContext.stack do
       
-      MyplaceonlineExecutionContext.do_context(import) do
-        Rails.logger.info{"Started ImportJob import: #{import.id}, exec: #{exec_action}"}
+      job_context = args.shift
+      import_job_context(job_context)
+
+      # Use the urgent strategy because the atomic strategy would keep the feed objects in memory which might blow RAM
+      Chewy.strategy(:urgent) do
+
+        import = args[0]
+        exec_action = args[1]
         
-        if exec_action == "start" && import.import_status != Import::IMPORT_STATUS_IMPORTING
-          import.import_status = Import::IMPORT_STATUS_IMPORTING
-          append_message(import, "Worker Started")
+        MyplaceonlineExecutionContext.do_context(import) do
+          Rails.logger.info{"Started ImportJob import: #{import.id}, exec: #{exec_action}"}
           
-          begin
+          if exec_action == "start" && import.import_status != Import::IMPORT_STATUS_IMPORTING
+            import.import_status = Import::IMPORT_STATUS_IMPORTING
+            append_message(import, "Worker Started")
             
-            if !User.current_user.admin?
-              raise "Non-admin user import not supported yet. Please contact us for an exception."
-            end
-            
-            case import.import_type
-            when Import::IMPORT_TYPE_MEDIAWIKI
-              Rails.logger.info{"ImportJob mediawiki"}
+            begin
               
-              import_medawiki(import)
+              if !User.current_user.admin?
+                raise "Non-admin user import not supported yet. Please contact us for an exception."
+              end
               
-            else
-              raise "TODO"
+              case import.import_type
+              when Import::IMPORT_TYPE_MEDIAWIKI
+                Rails.logger.info{"ImportJob mediawiki"}
+                
+                import_medawiki(import)
+                
+              else
+                raise "TODO"
+              end
+
+              append_message(import, "Finished")
+
+              import.import_status = Import::IMPORT_STATUS_IMPORTED
+              import.save!
+            rescue Exception => e
+              Rails.logger.info{"ImportJob error: #{Myp.error_details(e)}"}
+              append_message(import, "Error: #{CGI::escapeHTML(e.to_s)}")
+
+              import.import_status = Import::IMPORT_STATUS_ERROR
+              import.save!
             end
-
-            append_message(import, "Finished")
-
-            import.import_status = Import::IMPORT_STATUS_IMPORTED
-            import.save!
-          rescue Exception => e
-            Rails.logger.info{"ImportJob error: #{Myp.error_details(e)}"}
-            append_message(import, "Error: #{CGI::escapeHTML(e.to_s)}")
-
-            import.import_status = Import::IMPORT_STATUS_ERROR
-            import.save!
           end
-        end
 
-        Rails.logger.info{"Finished ImportJob"}
+          Rails.logger.info{"Finished ImportJob"}
+        end
       end
     end
   end
