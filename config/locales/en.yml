@@ -496,6 +496,8 @@ en:
       map: "Map"
       make_public: "Make Public"
       made_public: "Now available publicly at <a href=\"%{link}\">%{link}</a>"
+      remove_public: "Remove Public Permissions"
+      removed_public: "Public permissions removed"
     site_contacts:
       name: "Name"
       email: "Email"

@@ -42,4 +42,12 @@ class Blog < ApplicationRecord
     end
     result
   end
+  
+  def unknown_action_permission_mapping(action)
+    if action == :page
+      Permission::ACTION_READ
+    else
+      Permission::ACTION_UPDATE
+    end
+  end
 end

@@ -612,6 +612,14 @@ class MyplaceonlineController < ApplicationController
     end
   end
   
+  def remove_public_obj_path(obj = @obj)
+    if nested
+      send(path_name + "_remove_public_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+    else
+      send(path_name + "_remove_public_path", obj)
+    end
+  end
+  
   def show_path(obj)
     if nested
       send("#{path_name}_path", obj.send(parent_model.table_name.singularize.downcase), obj)
@@ -923,24 +931,43 @@ class MyplaceonlineController < ApplicationController
     initial_checks
     set_obj
     
-    permission = Permission.where(
-      "user_id IS NULL and subject_class = :subject_class and subject_id = :subject_id",
-      subject_class: self.model.name.underscore.pluralize,
-      subject_id: @obj.id
-    ).first
-    
-    if permission.nil?
+    if !has_public_permission?
       Permission.create!(
         identity: User.current_user.current_identity,
         subject_class: self.model.name.underscore.pluralize,
         subject_id: @obj.id,
         action: Permission::ACTION_READ,
+        valid_guest_actions: self.publicly_shareable_actions.map{|x| x.to_s}.join(",")
       )
     end
 
     redirect_to(
       obj_path,
       flash: { notice: I18n.t("myplaceonline.general.made_public", link: obj_url) }
+    )
+  end
+  
+  def has_public_permission?
+    !Permission.where(
+      "user_id IS NULL and subject_class = :subject_class and subject_id = :subject_id",
+      subject_class: self.model.name.underscore.pluralize,
+      subject_id: @obj.id
+    ).first.nil?
+  end
+  
+  def remove_public
+    initial_checks
+    set_obj
+    
+    permission = Permission.where(
+      "user_id IS NULL and subject_class = :subject_class and subject_id = :subject_id",
+      subject_class: self.model.name.underscore.pluralize,
+      subject_id: @obj.id
+    ).destroy_all
+    
+    redirect_to(
+      obj_path,
+      flash: { notice: I18n.t("myplaceonline.general.removed_public", link: obj_url) }
     )
   end
   
@@ -963,7 +990,7 @@ class MyplaceonlineController < ApplicationController
         share: share,
         subject_class: self.model.name,
         subject_id: @obj.id,
-        valid_actions: self.publicly_shareable_actions.map{|x| x.to_s}.join(",")
+        valid_guest_actions: self.publicly_shareable_actions.map{|x| x.to_s}.join(",")
       )
       
       token = share.token

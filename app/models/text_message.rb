@@ -88,7 +88,7 @@ class TextMessage < ApplicationRecord
         share: share,
         subject_class: self.class.name,
         subject_id: self.id,
-        valid_actions: "shared"
+        valid_guest_actions: "shared"
       )
       
       if !content.end_with?(".", "!")

@@ -94,8 +94,8 @@ class Ability
             
             Rails.logger.debug{"Ability.authorize Found permission share #{ps}"}
             
-            if !ps.valid_actions.blank?
-              valid_guest_actions = ps.valid_actions.split(",").map{|x| x.to_sym}
+            if !ps.valid_guest_actions.blank?
+              valid_guest_actions = ps.valid_guest_actions.split(",").map{|x| x.to_sym}
               Rails.logger.debug{"Ability.authorize valid_guest_actions #{valid_guest_actions}"}
             end
             
@@ -136,10 +136,14 @@ class Ability
           query = "(user_id = ? or user_id IS NULL) and subject_class = ? and subject_id = ? and (action & #{Permission::ACTION_MANAGE} != 0"
           query = self.add_action_query_parts(action: action, query: query, subject: subject)
           query += ")"
-          permission_results = Permission.where(query, user.id, Myp.model_to_category_name(subject_class), subject.id)
-          if permission_results.length > 0
-            Rails.logger.debug{"Ability.authorize Found permissions: #{permission_results.inspect}"}
+          permission_result = Permission.where(query, user.id, Myp.model_to_category_name(subject_class), subject.id).last
+          if !permission_result.nil?
+            Rails.logger.debug{"Ability.authorize Found permissions: #{permission_result.inspect}"}
             result = true
+            if !permission_result.valid_guest_actions.blank?
+              valid_guest_actions = permission_result.valid_guest_actions.split(",").map{|x| x.to_sym}
+              Rails.logger.debug{"Ability.authorize valid_guest_actions #{valid_guest_actions}"}
+            end
           else
             Rails.logger.debug{"Ability.authorize no direct permission found"}
           end
@@ -176,20 +180,29 @@ class Ability
   end
   
   def self.add_action_query_parts(action:, query:, subject:)
+    
+    permission = Permission::ACTION_UPDATE
+    
     if action == :show
-      query += " or action & #{Permission::ACTION_READ} != 0"
+      permission = Permission::ACTION_READ
     elsif action == :edit || action == :update
-      query += " or action & #{Permission::ACTION_UPDATE} != 0"
+      permission = Permission::ACTION_UPDATE
     elsif action == :destroy
-      query += " or action & #{Permission::ACTION_DESTROY} != 0"
+      permission = Permission::ACTION_DESTROY
+    elsif subject.respond_to?("unknown_action_permission_mapping")
+      permission = subject.unknown_action_permission_mapping(action)
     elsif subject.respond_to?("permission_action")
-      permission_action = subject.permission_action(action)
-      query += " or action & #{permission_action} != 0"
+      permission = subject.permission_action(action)
     else
       # If it's any other action, it's probably custom and so just
       # assume it's an edit
-      query += " or action & #{Permission::ACTION_UPDATE} != 0"
+      permission = Permission::ACTION_UPDATE
     end
+    
+    query += " or action & #{permission} != 0"
+    
+    Rails.logger.debug{"Ability.add_action_query_parts added #{permission} for action: #{action}, subject: #{subject}"}
+    
     query
   end
 end

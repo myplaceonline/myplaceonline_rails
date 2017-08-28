@@ -18,6 +18,7 @@ def process_resources(name, context)
   context << { instance: true, link: "create_share" }
   context << { instance: true, link: "create_share_link" }
   context << { instance: true, link: "make_public" }
+  context << { instance: true, link: "remove_public" }
   context << { instance: false, link: "settings" }
 
   context.each do |context_addition|

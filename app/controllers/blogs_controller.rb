@@ -114,4 +114,8 @@ class BlogsController < MyplaceonlineController
         main_post_attributes: BlogPost.params,
       )
     end
+
+    def publicly_shareable_actions
+      [:show, :page]
+    end
 end
