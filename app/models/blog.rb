@@ -35,7 +35,7 @@ class Blog < ApplicationRecord
       if !i.nil?
         checkname = checkname[0..i-1]
       end
-      Rails.logger.debug{"Blog.identity_file_by_name comparing: #{checkname}"}
+      #Rails.logger.debug{"Blog.identity_file_by_name comparing: #{checkname}"}
       if checkname == name || checkname == name2
         result = blog_file.identity_file
       end

@@ -562,9 +562,9 @@ var myplaceonline = function(mymodule) {
     }
 
     if ($.mobile.ajaxEnabled) {
-      $(document).on('click', 'a.redirectAnchor', function(ev) {
-        var href = $( this ).attr('href');
-        if (href) {
+      $(document).on('click', 'a', function(ev) {
+        var href = $(this).attr('href');
+        if (href && !startsWith(href, "#") && ((startsWith(href, "/") && !startsWith(href, "//")) || href.indexOf("://") == -1)) {
           var i = href.indexOf("#");
           if (i != -1) {
             var hash = href.substr(i);

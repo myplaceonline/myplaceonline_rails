@@ -332,6 +332,44 @@ module ApplicationHelper
     result
   end
   
+  def replace_images(html, image_context)
+    if !html.nil?
+      i = 0
+      while true do
+        match_data = html.match(/<img src="\/blogs\/([0-9]+)\/uploads\/([^"]+)/, i)
+        if !match_data.nil?
+          blog = Blog.find(match_data[1].to_i)
+          if blog.identity_id != image_context.identity_id
+            raise "TODO"
+          end
+          name_search = match_data[2]
+          j = name_search.rindex(".")
+          if !j.nil?
+            name_search = name_search[0..j-1]
+          end
+          identity_file = blog.identity_file_by_name(name_search)
+          replacement = "<img src=\"/blogs/#{match_data[1]}/uploads/#{match_data[2]}"
+          if replacement.index("?").nil?
+            replacement << "?"
+          else
+            replacement << "&"
+          end
+          replacement << "t=#{identity_file.updated_at.to_i}"
+          token = share_token(context: identity_file, share_context: blog, valid_guest_actions: [:upload])
+          if !token.blank?
+            replacement << "&token=#{token}"
+          end
+          html = match_data.pre_match + replacement + match_data.post_match
+          i = match_data.offset(0)[0] + replacement.length + 1
+        else
+          break
+        end
+      end
+    end
+
+    html
+  end
+  
   def data_row(heading:, content:, **options)
     options = {
       content_classes: nil,
@@ -364,6 +402,8 @@ module ApplicationHelper
       max_collection_items: 25,
       show_reference: true,
       reference_url: nil,
+      markdown_process_images: false,
+      image_context: nil,
     }.merge(options)
     
     original_content = content
@@ -418,8 +458,12 @@ module ApplicationHelper
     case options[:format]
     when :html
       if options[:markdown]
+        if options[:markdown_process_images]
+          content = replace_images(content, options[:image_context])
+        end
         options[:clipboard_text] = content
-        content = Myp.markdown_to_html(content).html_safe
+        content = Myp.markdown_to_html(content)
+        content = content.html_safe
         options[:htmlencode_content] = false
         options[:content_classes] = "markdowncell #{options[:content_classes]}"
       end
@@ -700,13 +744,22 @@ module ApplicationHelper
     end
   end
   
-  def share_token(context:)
+  def share_token(context:, share_context: nil, valid_guest_actions: nil)
     
     token = params[:token]
     
     Rails.logger.debug{"ApplicationHelper.share_token: params[:token] = #{token}"}
     
     if token.blank?
+      
+      if share_context.nil?
+        share_context = context
+      end
+      
+      if !valid_guest_actions.nil?
+        valid_guest_actions = valid_guest_actions.map{|x| x.to_s}.join(",")
+      end
+      
       # If Ability.context_identity is different from the current user, then it could be, for example, a shared
       # (or nested) item which we can assume has already passed authorization checks, so we need to create a token for
       # the subsequent image request (because Ability.context_identity won't be set on the image request).
@@ -718,8 +771,8 @@ module ApplicationHelper
         # Check if we've already done this first
         existing_permission_share = PermissionShare.includes(:share).where(
           identity_id: User.current_user.current_identity_id,
-          subject_class: context.class.name,
-          subject_id: context.id
+          subject_class: share_context.class.name,
+          subject_id: share_context.id
         ).first
         
         if existing_permission_share.nil?
@@ -729,8 +782,9 @@ module ApplicationHelper
           PermissionShare.create!(
             identity_id: User.current_user.current_identity_id,
             share: share,
-            subject_class: context.class.name,
-            subject_id: context.id
+            subject_class: share_context.class.name,
+            subject_id: share_context.id,
+            valid_guest_actions: valid_guest_actions,
           )
           
           token = share.token

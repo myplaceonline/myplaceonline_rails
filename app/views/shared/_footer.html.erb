@@ -1,70 +1,72 @@
 <%# items: list %>
 
-<%
-maxitems = 6
+<% if items && items.length > 0 %>
+  <%
+  maxitems = 6
 
-# Keep it even so there aren't any blank blocks
-if items.length > maxitems && (maxitems % 2) == 0
-  maxitems = maxitems - 1
-end
-%>
+  # Keep it even so there aren't any blank blocks
+  if items.length > maxitems && (maxitems % 2) == 0
+    maxitems = maxitems - 1
+  end
+  %>
 
-<% if items.length > maxitems %>
-  <div data-role="popup" data-history="false" id="popupMoreMenu_<%= request.uuid %>">
-    <ul data-role="listview">
-      <% items.drop(maxitems).each do |item| %>
-        <li>
-          <% if item[:content].nil? %>
-            <%=
-              link_to(
-                item[:title],
-                item[:link],
-                method: item[:method],
-                data: item[:data],
-                class: "ui-btn ui-btn-icon-left ui-icon-" + item[:icon],
-                onclick: item[:onclick],
-              )
-            %>
-          <% else %>
-            <%= item[:content] %>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
+  <% if items.length > maxitems %>
+    <div data-role="popup" data-history="false" id="popupMoreMenu_<%= request.uuid %>">
+      <ul data-role="listview">
+        <% items.drop(maxitems).each do |item| %>
+          <li>
+            <% if item[:content].nil? %>
+              <%=
+                link_to(
+                  item[:title],
+                  item[:link],
+                  method: item[:method],
+                  data: item[:data],
+                  class: "ui-btn ui-btn-icon-left ui-icon-" + item[:icon],
+                  onclick: item[:onclick],
+                )
+              %>
+            <% else %>
+              <%= item[:content] %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div data-role="footer" data-position="fixed" data-tap-toggle="<%= !current_user.nil? && current_user.toggle_hide_footer ? "true" : "false" %>">
+    <div data-role="navbar">
+      <ul>
+        <% items.first(maxitems).each do |item| %>
+          <li>
+            <% if item[:content].nil? %>
+              <%=
+                link_to(
+                  item[:title],
+                  item[:link],
+                  method: item[:method],
+                  data: item[:data],
+                  "data-icon" => item[:icon],
+                  onclick: item[:onclick],
+                )
+              %>
+            <% else %>
+              <%= item[:content] %>
+            <% end %>
+          </li>
+        <% end %>
+        <% if items.length > maxitems %>
+          <li><%=
+                link_to(
+                  t("myplaceonline.general.more"),
+                  "#popupMoreMenu_" + request.uuid.to_s,
+                  "data-icon" => "grid",
+                  "data-rel" => "popup"
+                )
+              %></li>
+        <% end %>
+      </ul>
+    </div>
   </div>
 <% end %>
-
-<div data-role="footer" data-position="fixed" data-tap-toggle="<%= !current_user.nil? && current_user.toggle_hide_footer ? "true" : "false" %>">
-  <div data-role="navbar">
-    <ul>
-      <% items.first(maxitems).each do |item| %>
-        <li>
-          <% if item[:content].nil? %>
-            <%=
-              link_to(
-                item[:title],
-                item[:link],
-                method: item[:method],
-                data: item[:data],
-                "data-icon" => item[:icon],
-                onclick: item[:onclick],
-              )
-            %>
-          <% else %>
-            <%= item[:content] %>
-          <% end %>
-        </li>
-      <% end %>
-      <% if items.length > maxitems %>
-        <li><%=
-              link_to(
-                t("myplaceonline.general.more"),
-                "#popupMoreMenu_" + request.uuid.to_s,
-                "data-icon" => "grid",
-                "data-rel" => "popup"
-              )
-            %></li>
-      <% end %>
-    </ul>
-  </div>
-</div>

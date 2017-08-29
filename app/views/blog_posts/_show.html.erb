@@ -17,7 +17,7 @@ end
   <hr />
 <% end %>
 
-<%= data_row(heading: t("myplaceonline.blog_posts.post"), content: obj.post, markdown: true, wrap: false) %>
+<%= data_row(heading: t("myplaceonline.blog_posts.post"), content: obj.post, markdown: true, wrap: false, markdown_process_images: true, image_context: obj) %>
 
 <% if obj.blog_post_comments.length > 0 %>
   <div data-role="collapsible" data-collapsed="true">

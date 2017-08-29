@@ -4,28 +4,32 @@ class BlogsController < MyplaceonlineController
   end
 
   def footer_items_show
-    [
-      {
-        title: I18n.t("myplaceonline.blogs.display"),
-        link: blog_display_path(@obj),
-        icon: "eye"
-      },
-      {
-        title: I18n.t("myplaceonline.blogs.add_blog_post"),
-        link: new_blog_blog_post_path(@obj),
-        icon: "plus"
-      },
-      {
-        title: I18n.t("myplaceonline.blogs.blog_posts"),
-        link: blog_blog_posts_path(@obj),
-        icon: "bars"
-      },
-      {
-        title: I18n.t("myplaceonline.blogs.rss"),
-        link: blog_rss_path(@obj) + ".xml",
-        icon: "gear"
-      },
-    ] + super
+    if @matched_post.nil?
+      [
+        {
+          title: I18n.t("myplaceonline.blogs.display"),
+          link: blog_display_path(@obj),
+          icon: "eye"
+        },
+        {
+          title: I18n.t("myplaceonline.blogs.add_blog_post"),
+          link: new_blog_blog_post_path(@obj),
+          icon: "plus"
+        },
+        {
+          title: I18n.t("myplaceonline.blogs.blog_posts"),
+          link: blog_blog_posts_path(@obj),
+          icon: "bars"
+        },
+        {
+          title: I18n.t("myplaceonline.blogs.rss"),
+          link: blog_rss_path(@obj) + ".xml",
+          icon: "gear"
+        },
+      ] + super
+    else
+      nil
+    end
   end
   
   def display
