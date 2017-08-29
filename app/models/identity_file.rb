@@ -201,7 +201,7 @@ class IdentityFile < ApplicationRecord
   end
 
   def ensure_thumbnail
-    Rails.logger.debug{"IdentityFile ensure_thumbnail is_image: #{self.is_image?}, thumbnail_contents_nil: #{self.thumbnail_contents.nil?}, thumbnail_filesystem_path_blank: #{self.thumbnail_filesystem_path.blank?}, thumbnail_skip: #{self.thumbnail_skip}, thumbnailable: #{self.is_thumbnailable?}"}
+    Rails.logger.debug{"IdentityFile ensure_thumbnail content_type: #{self.file_content_type}, is_image: #{self.is_image?}, thumbnail_contents_nil: #{self.thumbnail_contents.nil?}, thumbnail_filesystem_path_blank: #{self.thumbnail_filesystem_path.blank?}, thumbnail_skip: #{self.thumbnail_skip}, thumbnailable: #{self.is_thumbnailable?}"}
     if self.is_image? && self.thumbnail_contents.nil? && self.thumbnail_filesystem_path.blank? && !self.thumbnail_skip && self.is_thumbnailable?
       
       Rails.logger.debug{"image_content: Generating thumbnail for #{self.id}, type #{self.file_content_type}"}
@@ -244,18 +244,27 @@ class IdentityFile < ApplicationRecord
         # Ulimit is in KB
         # Too small of a ulimit will cause errors such as:
         #   "libgomp: Thread creation failed: Resource temporarily unavailable"
+        success = false
         Open3.popen2e(%{
           ulimit -Sv 302400 && convert #{self.filesystem_path}#{index} -auto-orient -thumbnail '#{max_width}>' #{thumbnail_path}
         }) do |stdin, stdout_and_stderr, wait_thr|
           exit_status = wait_thr.value
           if exit_status != 0
-            raise "Thumbnail exit status " + exit_status.to_s + ": #{stdout_and_stderr.read}"
+            #raise "Thumbnail exit status " + exit_status.to_s + ": #{stdout_and_stderr.read}"
+            Myp.warn("Thumbnail id: #{self.id}, content_type: #{self.file_content_type}, name: #{self.file_file_name}, path: #{self.filesystem_path}, exit status " + exit_status.to_s + ": #{stdout_and_stderr.read}")
+          else
+            success = true
           end
         end
         
-        self.thumbnail_filesystem_path = thumbnail_path
-        self.thumbnail_filesystem_size = File.size(thumbnail_path)
-        self.save!
+        if success
+          self.thumbnail_filesystem_path = thumbnail_path
+          self.thumbnail_filesystem_size = File.size(thumbnail_path)
+          self.save!
+        else
+          self.thumbnail_skip = true
+          self.save!
+        end
       end
     end
   end
