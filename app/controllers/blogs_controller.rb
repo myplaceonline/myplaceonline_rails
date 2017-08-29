@@ -63,7 +63,7 @@ class BlogsController < MyplaceonlineController
   def page
     set_obj
     @matched_post = nil
-    pagename = params[:pagename].downcase
+    pagename = params[:pagename].downcase.gsub("%20", " ")
     Rails.logger.debug{"BlogsController.page pagename: #{pagename}"}
     @obj.blog_posts.each do |post|
       checkpagename = post.blog_post_title.downcase
