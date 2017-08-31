@@ -1,7 +1,5 @@
 <% content_for :heading do -%><%= Myp.website_domain.domain_name %><% end -%>
 
-<%= flashes! %>
-
 <% if !user_signed_in? %>
 
   <%
@@ -26,6 +24,8 @@
 
 <% else %>
 
+  <%= flashes! %>
+  
   <% @myplets.each do |myplet| %>
     <%= render :html => Myp.renderActionInOtherController(
                           Object.const_get(myplet.category_name.camelize + "Controller"),
