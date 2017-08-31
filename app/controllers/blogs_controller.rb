@@ -48,6 +48,8 @@ class BlogsController < MyplaceonlineController
     @title = @description = @obj.display
     @link = blog_display_url(@obj)
     @blog_posts = @obj.blog_posts
+    
+    render(action: :rss, content_type: "application/rss+xml")
   end
 
   def default_items_per_page
@@ -120,6 +122,6 @@ class BlogsController < MyplaceonlineController
     end
 
     def publicly_shareable_actions
-      [:show, :page]
+      [:show, :page, :rss]
     end
 end
