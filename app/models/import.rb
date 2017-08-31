@@ -12,9 +12,11 @@ class Import < ApplicationRecord
   end
 
   IMPORT_TYPE_MEDIAWIKI = 0
+  IMPORT_TYPE_WORDPRESS = 1
 
   IMPORT_TYPES = [
     ["myplaceonline.imports.import_types.mediawiki", IMPORT_TYPE_MEDIAWIKI],
+    ["myplaceonline.imports.import_types.wordpress", IMPORT_TYPE_WORDPRESS],
   ]
 
   IMPORT_STATUS_READY = 0

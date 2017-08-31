@@ -3645,6 +3645,7 @@ en:
       import_progress: "Import Progress"
       import_types:
         mediawiki: "MediaWiki"
+        wordpress: "Wordpress"
       pending: "Pending"
       start: "Start"
     blogs:
