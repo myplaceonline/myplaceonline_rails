@@ -32,12 +32,12 @@
   <% end %>
   <%= attribute_table_row_select(t("myplaceonline.identity_phones.phone_type"), phone.phone_type, IdentityPhone::PHONE_TYPES) %>
 <% end %>
-<% obj.all_conversations.take(5).each do |conversation| %>
-  <%= attribute_table_row_markdown(t("myplaceonline.contacts.conversation") + " (" + Myp.display_date(conversation.conversation_date, current_user) + ")", conversation.conversation) %>
-<% end %>
 <% obj.contact_identity.identity_locations.each do |identity_location| %>
   <%= attribute_table_row_reference(t("myplaceonline.identities.location"), "location_path", identity_location.location) %>
   <%= attribute_table_row_boolean(t("myplaceonline.identities.location_secondary"), identity_location.secondary) %>
+<% end %>
+<% obj.all_conversations.take(5).each do |conversation| %>
+  <%= attribute_table_row_markdown(t("myplaceonline.contacts.conversation") + " (" + Myp.display_date(conversation.conversation_date, current_user) + ")", conversation.conversation) %>
 <% end %>
 <% obj.contact_identity.identity_relationships.each do |identity_relationship| %>
   <% if !identity_relationship.relationship_type.nil? %>
