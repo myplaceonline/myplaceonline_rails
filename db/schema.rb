@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170902183957) do
+ActiveRecord::Schema.define(version: 20170904201344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -787,6 +787,7 @@ ActiveRecord::Schema.define(version: 20170902183957) do
     t.boolean "birds_chirping"
     t.boolean "near_busy_road"
     t.boolean "level_ground"
+    t.decimal "nightly_cost", precision: 10, scale: 2
     t.index ["identity_id"], name: "index_camp_locations_on_identity_id"
     t.index ["location_id"], name: "index_camp_locations_on_location_id"
     t.index ["membership_id"], name: "index_camp_locations_on_membership_id"

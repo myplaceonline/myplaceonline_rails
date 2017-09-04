@@ -62,6 +62,7 @@ class CampLocationsController < MyplaceonlineController
         :birds_chirping,
         :near_busy_road,
         :level_ground,
+        :nightly_cost,
         location_attributes: LocationsController.param_names,
         membership_attributes: MembershipsController.param_names
       )

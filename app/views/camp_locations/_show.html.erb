@@ -16,6 +16,7 @@
 <%= data_row(heading: t("myplaceonline.camp_locations.birds_chirping"), content: obj.birds_chirping) %>
 <%= data_row(heading: t("myplaceonline.camp_locations.near_busy_road"), content: obj.near_busy_road) %>
 <%= data_row(heading: t("myplaceonline.camp_locations.level_ground"), content: obj.level_ground) %>
+<%= data_row(heading: t("myplaceonline.camp_locations.nightly_cost"), content: obj.nightly_cost, currency: true) %>
 <%= data_row(heading: t("myplaceonline.camp_locations.rating"), content: obj.rating, enumeration: Myp::RATINGS) %>
 <%= data_row(heading: t("myplaceonline.camp_locations.noise_level"), content: obj.noise_level, enumeration: Myp::NOISE_LEVELS) %>
 <%= data_row(heading: t("myplaceonline.camp_locations.notes"), content: obj.notes, markdown: true) %>
