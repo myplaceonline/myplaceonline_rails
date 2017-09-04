@@ -188,7 +188,9 @@ class ExecutionContext
   end
   
   def import(hash)
-    @map.merge!(hash)
+    if !hash.nil?
+      @map.merge!(hash)
+    end
   end
   
   def self.export

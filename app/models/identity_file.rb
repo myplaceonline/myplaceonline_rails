@@ -185,7 +185,7 @@ class IdentityFile < ApplicationRecord
   end
 
   def is_thumbnailable?
-    self.file_content_type.index("x-xcf").nil? && self.file_content_type.index("vnd.microsoft.icon").nil?
+    self.file_content_type.index("x-xcf").nil? && self.file_content_type.index("vnd.microsoft.icon").nil? && self.file_content_type.index("image/x-icon").nil?
   end
   
   def is_audio?
