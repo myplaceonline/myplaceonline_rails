@@ -171,6 +171,10 @@ module ApplicationHelper
     content.to_s
   end
   
+  def display_currency(content:, format:, options:)
+    Myp.number_to_currency(content)
+  end
+  
   def display_date(content:, format:, options:)
     Myp.display_date(content, current_user)
   end
@@ -415,7 +419,11 @@ module ApplicationHelper
     # ->(content:, format:, options: ){ content.to_s }
     if options[:transform].nil?
       if content.is_a?(Numeric)
-        options[:transform] = method(:display_string)
+        if options[:currency]
+          options[:transform] = method(:display_currency)
+        else
+          options[:transform] = method(:display_string)
+        end
       elsif content.is_a?(ActiveSupport::TimeWithZone) || content.is_a?(Time) || content.is_a?(DateTime)
         options[:transform] = method(:display_time)
       elsif content.is_a?(Date)
