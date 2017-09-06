@@ -3,9 +3,9 @@
   <% if !@trip.nil? %>
     <p><%= link_to(t("myplaceonline.trips.trip"), url_for(@trip)) %>: <%= @trip.display %></p>
     <% if !@trip.location.map_url.blank? %>
-        <p><%= t("myplaceonline.trips.location") %>: <%= link_to(@trip.location.display, @trip.location.map_url) %></p>
+      <p><%= t("myplaceonline.trips.location") %>: <%= link_to(@trip.location.display, @trip.location.map_url) %></p>
     <% else %>
-        <p><%= t("myplaceonline.trips.location") %>: <%= @trip.location.display_really_simple %></p>
+      <p><%= t("myplaceonline.trips.location") %>: <%= @trip.location.display_really_simple %></p>
     <% end %>
     <% if !@trip.hotel.nil? %>
       <%
@@ -22,6 +22,9 @@
     <% end %>
     <% if !@next_trip_flight.nil? %>
       <p><%= t("myplaceonline.alerts_displays.next_flight") %>: <%= link_to(@next_trip_flight.flight.display_with_first_leg, flight_path(@next_trip_flight.flight)) %></p>
+    <% end %>
+    <% if !@trip.event.nil? %>
+      <p><%= t("myplaceonline.trips.event") %>: <%= link_to(@trip.event.display, event_path(@trip.event)) %></p>
     <% end %>
   <% end %>
 <% end %>

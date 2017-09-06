@@ -15,6 +15,8 @@ class Trip < ApplicationRecord
   
   child_properties(name: :trip_flights)
   
+  child_property(name: :event)
+
   belongs_to :identity_file
 
   child_pictures

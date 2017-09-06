@@ -125,6 +125,19 @@
     }
   %>
 <% end %>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :event,
+    existingobj: obj.event,
+    heading: t("myplaceonline.trips.event"),
+    objform: "events/form",
+    existingobjurl: "event_path",
+    searchurl: "/events.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
 <% if current_user.has_emergency_contacts? %>
   <%= myp_check_box(f, :notify_emergency_contacts, "myplaceonline.trips.notify_emergency_contacts") %>
 <% end %>

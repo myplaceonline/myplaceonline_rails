@@ -20,3 +20,4 @@
 <% obj.trip_flights.each do |wrapper| %>
   <%= attribute_table_row_reference(t("myplaceonline.trips.flight"), "flight_path", wrapper.flight) %>
 <% end %>
+<%= data_row(heading: t("myplaceonline.trips.event"), content: obj.event) %>

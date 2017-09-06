@@ -148,6 +148,7 @@ class TripsController < MyplaceonlineController
         location_attributes: LocationsController.param_names,
         trip_pictures_attributes: FilesController.multi_param_names,
         hotel_attributes: HotelsController.param_names,
+        event_attributes: EventsController.param_names,
         trip_stories_attributes: [
           :id,
           :_destroy,

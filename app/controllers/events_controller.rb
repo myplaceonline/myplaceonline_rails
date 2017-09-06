@@ -106,27 +106,32 @@ class EventsController < MyplaceonlineController
     ] + super
   end
 
+  def self.param_names
+    [
+      :id,
+      :event_name,
+      :event_time,
+      :event_end_time,
+      :notes,
+      :cost,
+      location_attributes: LocationsController.param_names,
+      repeat_attributes: Repeat.params,
+      event_pictures_attributes: FilesController.multi_param_names,
+      event_contacts_attributes: [
+        :id,
+        :_destroy,
+        contact_attributes: ContactsController.param_names
+      ],
+    ]
+  end
+
   protected
     def sorts
       ["events.event_time DESC NULLS LAST"]
     end
     
     def obj_params
-      params.require(:event).permit(
-        :event_name,
-        :event_time,
-        :event_end_time,
-        :notes,
-        :cost,
-        location_attributes: LocationsController.param_names,
-        repeat_attributes: Repeat.params,
-        event_pictures_attributes: FilesController.multi_param_names,
-        event_contacts_attributes: [
-          :id,
-          :_destroy,
-          contact_attributes: ContactsController.param_names
-        ],
-      )
+      params.require(:event).permit(EventsController.param_names)
     end
 
     def insecure
