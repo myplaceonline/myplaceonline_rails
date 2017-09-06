@@ -2505,6 +2505,7 @@ en:
       rsvp_update_title: "Event Update: %{name}"
       add_story: "Add Story"
       stories: "Stories"
+      cost: "Cost"
     stocks:
       company: "Company"
       password: "Password"

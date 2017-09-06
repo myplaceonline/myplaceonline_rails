@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170904201344) do
+ActiveRecord::Schema.define(version: 20170906015911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1870,6 +1870,7 @@ ActiveRecord::Schema.define(version: 20170904201344) do
     t.integer "location_id"
     t.datetime "archived"
     t.integer "rating"
+    t.decimal "cost", precision: 10, scale: 2
     t.index ["identity_id"], name: "index_events_on_identity_id"
     t.index ["location_id"], name: "index_events_on_location_id"
     t.index ["repeat_id"], name: "index_events_on_repeat_id"

@@ -30,6 +30,10 @@ class ImportJob < ApplicationJob
                 Rails.logger.info{"ImportJob mediawiki"}
                 
                 import_medawiki(import)
+              when Import::IMPORT_TYPE_WORDPRESS
+                Rails.logger.info{"ImportJob wordpress"}
+                
+                import_wordpress(import)
                 
               else
                 raise "TODO"
@@ -60,6 +64,145 @@ class ImportJob < ApplicationJob
   end
   
   def import_medawiki(import)
+    ActiveRecord::Base.transaction do
+      
+      if import.import_files.length == 0
+        raise "No import files found"
+      end
+      
+      blog = Blog.create!(
+        blog_name: import.import_name,
+      )
+
+      append_message(import, "Created blog [#{blog.display}](/blogs/#{blog.id})")
+      
+      # Copy the files to a temporary work directory
+      import.import_files.each do |file|
+        append_message(import, "Processing #{file.display}")
+        
+        ifile = file.identity_file
+        
+        Rails.logger.info{"ImportJob path: #{ifile.evaluated_path}"}
+        
+        # We'll process the SQL last. First we process all the files
+        storage = {
+          sqlfiles: [],
+          uploads: [],
+        }
+        
+        Myp.mktmpdir do |dir|
+          Rails.logger.info{"ImportJob temp dir: #{dir}"}
+          
+          file_name = ifile.file_file_name.gsub("/", "").gsub("..", "")
+          
+          FileUtils.cp(ifile.evaluated_path, "#{dir}/#{file_name}")
+          
+#           dir_listing = execute_command("ls -l #{dir}")
+#           Rails.logger.info{"ImportJob dir_listing: #{dir_listing}"}
+          
+          tmpfile = Pathname.new(dir).join(file_name)
+
+          Rails.logger.info{"ImportJob tmpfile: #{tmpfile}"}
+          
+          if ifile.file_content_type == "application/gzip"
+            execute_command("gunzip #{tmpfile}")
+          end
+          
+          process_directory(import, storage, dir, dir)
+
+          uploads_path = IdentityFile.uploads_path
+          
+          storage[:uploads].each do |upload|
+            uploadname = Pathname.new(upload).basename.to_s
+            newfilepath = uploads_path + IdentityFile.name_to_random(name: uploadname, prefix: "MWU")
+            FileUtils.cp(upload, newfilepath)
+            file_hash = {
+              original_filename: uploadname,
+              path: newfilepath,
+              size: File.size(newfilepath),
+              content_type: IdentityFile.infer_content_type(path: newfilepath),
+            }
+            newfile = IdentityFile.create_for_path!(file_hash: file_hash)
+            append_message(import, "Created file #{uploadname}")
+            newblogfile = BlogFile.create!(
+              identity_file: newfile
+            )
+            blog.blog_files << newblogfile
+          end
+          
+          storage[:sqlfiles].each do |sqlfile|
+            sqlfilename = sqlfile.to_s
+            if sqlfilename.index("/maintenance/").nil? && sqlfilename.index("/tests/").nil? && sqlfilename.index("/extensions/").nil?
+              append_message(import, "Processing SQL file #{sqlfile}")
+              statements = File.read(sqlfile).split(/;$/)
+              
+              pages = {}
+              texts = {}
+              last_revisions = {}
+              
+              statements.each do |statement|
+                statement.lstrip!
+                if statement.start_with?("INSERT INTO `revision`")
+                  revisions = Myp.parse_sql_insert(statement)
+                  revisions.each do |revision|
+                    last_revisions[revision[1]] = revision
+                  end
+                elsif statement.start_with?("INSERT INTO `page`")
+                  pages.merge!(Myp.parse_sql_insert(statement, id_hash: true))
+                elsif statement.start_with?("INSERT INTO `text`")
+                  texts.merge!(Myp.parse_sql_insert(statement, id_hash: true))
+                end
+              end
+              
+              last_revisions.each do |page_id, revision|
+                page = pages[revision[1].to_s]
+                text = texts[revision[2].to_s]
+                
+                # If text is blank, that it's probably an image, so just skip that
+                if !text.nil?
+                  
+                  # Page namespaces:
+                  #   0: Normal page
+                  #   4: About page
+                  #   6: Upload
+                  #   2/3: User
+                  if page[0] == "0" || page[0] == "4"
+                    
+                    # No support for redirects yet
+                    if !text[0].start_with?("#REDIRECT")
+                      pagename = page[1].gsub("_", " ")
+                      markdown = Myp.media_wiki_str_to_markdown(
+                        text[0],
+                        link_prefix: "/blogs/#{blog.id}/page/",
+                        image_prefix: "/blogs/#{blog.id}/uploads/",
+                      )
+                      
+                      blog_post = BlogPost.create!(
+                        blog_post_title: pagename,
+                        post: markdown,
+                        import_original: text[0],
+                        hide_title: true,
+                        edit_type: BlogPost::EDIT_TYPE_TEXT,
+                        last_updated_bottom: true,
+                      )
+                      
+                      append_message(import, "Imported blog post [#{pagename}](/blogs/#{blog.id}/blog_posts/#{blog_post.id})")
+                      
+                      blog.blog_posts << blog_post
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+      
+      blog.save!
+    end
+  end
+  
+  def import_wordpress(import)
     ActiveRecord::Base.transaction do
       
       if import.import_files.length == 0
