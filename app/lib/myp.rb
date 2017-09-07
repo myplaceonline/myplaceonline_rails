@@ -3075,7 +3075,7 @@ module Myp
           match_offset = match_data.offset(0)[0]
           file = match_data[1]
           file = file[file.rindex("/")+1..-1]
-          replacement = "<a href=\"" + image_prefix + file + "\" rel=\"external\">![" + file + "](" + thumbnails_prefix + file + ")</a>"
+          replacement = "<a href=\"" + image_prefix + file + "\" rel=\"external\"><img src=\"" + thumbnails_prefix + file + "\" /></a>"
           str = match_data.pre_match + replacement + match_data.post_match
           i = match_offset + replacement.length
         else
