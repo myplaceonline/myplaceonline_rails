@@ -3014,6 +3014,7 @@ module Myp
       #content_markdown = ReverseMarkdown.convert(content, unknown_tags: :pass_through, github_flavored: true)
       content_markdown = Myp.html_to_markdown(content)
       title = post[5]
+      puts "#{title}:\n#{content_markdown}"
     end
     
     nil
@@ -3104,10 +3105,14 @@ module Myp
     while true do
       match_data = str.match(/<a href="([^"]+)"[^>]*>([^<]+)<\/a>/, i)
       if !match_data.nil?
-        match_offset = match_data.offset(0)[0]
-        replacement = "[" + match_data[2] + "](" + match_data[1] + ")"
-        str = match_data.pre_match + replacement + match_data.post_match
-        i = match_offset + replacement.length
+        if match_data[0].index("rel=\"external\"").nil?
+          match_offset = match_data.offset(0)[0]
+          replacement = "[" + match_data[2] + "](" + match_data[1] + ")"
+          str = match_data.pre_match + replacement + match_data.post_match
+          i = match_offset + replacement.length
+        else
+          i = match_data.offset(0)[1]
+        end
       else
         break
       end

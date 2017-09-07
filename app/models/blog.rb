@@ -29,7 +29,8 @@ class Blog < ApplicationRecord
     name = name.downcase
     name2 = name.gsub(" ", "_")
     Rails.logger.debug{"Blog.identity_file_by_name searching for: #{name} or #{name2}"}
-    self.blog_files.each do |blog_file|
+    files = BlogFile.includes(:identity_file).where(blog_id: self.id)
+    files.each do |blog_file|
       checkname = blog_file.identity_file.file_file_name.downcase
       i = checkname.rindex(".")
       if !i.nil?
