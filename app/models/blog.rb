@@ -20,7 +20,7 @@ class Blog < ApplicationRecord
 
   child_files
 
-  child_properties(name: :blog_posts, sort: "updated_at DESC")
+  child_properties(name: :blog_posts, sort: "post_date DESC")
   
   child_property(name: :main_post, model: BlogPost)
 

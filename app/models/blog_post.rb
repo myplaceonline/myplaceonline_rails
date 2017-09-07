@@ -35,6 +35,7 @@ class BlogPost < ApplicationRecord
       :blog_post_title,
       :post,
       :edit_type,
+      :post_date,
       blog_post_comments_attributes: BlogPostComment.params,
     ]
   end

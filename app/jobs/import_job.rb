@@ -108,7 +108,15 @@ class ImportJob < ApplicationJob
             execute_command("gunzip #{tmpfile}")
           end
           
-          process_directory(import, storage, dir, dir)
+          process_directory(
+            import,
+            storage,
+            dir,
+            dir,
+            fullname_includes: ["/images/"],
+            fullname_excludes: ["/images/thumb/", "/images/archive/", "/skins/", "/extensions/", "/resources/"],
+            basename_excludes: [".htaccess", "README"]
+          )
 
           uploads_path = IdentityFile.uploads_path
           
@@ -236,9 +244,6 @@ class ImportJob < ApplicationJob
           
           FileUtils.cp(ifile.evaluated_path, "#{dir}/#{file_name}")
           
-#           dir_listing = execute_command("ls -l #{dir}")
-#           Rails.logger.info{"ImportJob dir_listing: #{dir_listing}"}
-          
           tmpfile = Pathname.new(dir).join(file_name)
 
           Rails.logger.info{"ImportJob tmpfile: #{tmpfile}"}
@@ -247,13 +252,129 @@ class ImportJob < ApplicationJob
             execute_command("gunzip #{tmpfile}")
           end
           
-          process_directory(import, storage, dir, dir)
+          process_directory(
+            import,
+            storage,
+            dir,
+            dir,
+            fullname_includes: ["wp-content/uploads"],
+            fullname_excludes: [],
+            basename_excludes: [
+              "-1038x",
+              "-300x",
+              "-1024x",
+              "-563x",
+              "-768x",
+              "-150x",
+              "-672x",
+              "-791x",
+              "-232x",
+              "-55x",
+              "-50x",
+              "-448x",
+              "-72x",
+              "-420x",
+              "-114x",
+              "-225x",
+              "-496x",
+              "-502x",
+              "-491x",
+              "-636x",
+              "-648x",
+              "-632x",
+              "-557x",
+              "-587x",
+              "-667x",
+              "-642x",
+              "-374x",
+              "-109x",
+              "-800x",
+              "-630x",
+              "-595x",
+              "-620x",
+              "-594x",
+              "-199x",
+              "-165x",
+              "-281x",
+              "-635x",
+              "-649x",
+              "-592x",
+              "-640x",
+              "-537x",
+              "-960x",
+              "-209x",
+              "-383x",
+              "-224x",
+              "-765x",
+              "-1037x",
+              "-647x",
+              "-646x",
+              "-351x",
+              "-272x",
+              "-622x",
+              "-631x",
+              "-430x",
+              "-1000x",
+              "-182x",
+              "-513x",
+              "-454x",
+              "-200x",
+              "-267x",
+              "-610x",
+              "-650x",
+              "-1031x",
+              "-578x",
+              "-492x",
+              "-487x",
+              "-490x",
+              "-413x",
+              "-240x",
+              "-562x",
+              "-561x",
+              "-486x",
+              "-591x",
+              "-624x",
+              "-277x",
+              "-625x",
+              "-623x",
+              "-493x",
+              "-600x",
+              "-616x",
+              "-488x",
+              "-495x",
+              "-422x",
+              "-494x",
+              "-259x",
+              "-602x",
+              "-608x",
+              "-214x",
+              "-548x",
+              "-489x",
+              "-291x",
+              "-664x",
+              "-656x",
+              "-603x",
+              "-598x",
+              "-625x",
+              "-661x",
+              "-575x",
+              "-641x",
+              "-146x",
+              "-1003x",
+              "-294x",
+              "-1021x",
+              "-560x",
+              "-588x",
+              "-390x",
+              "-215x",
+            ]
+          )
 
           uploads_path = IdentityFile.uploads_path
           
           storage[:uploads].each do |upload|
             uploadname = Pathname.new(upload).basename.to_s
-            newfilepath = uploads_path + IdentityFile.name_to_random(name: uploadname, prefix: "MWU")
+            newfilepath = uploads_path + IdentityFile.name_to_random(name: uploadname, prefix: "WPU")
             FileUtils.cp(upload, newfilepath)
             file_hash = {
               original_filename: uploadname,
@@ -271,67 +392,48 @@ class ImportJob < ApplicationJob
           
           storage[:sqlfiles].each do |sqlfile|
             sqlfilename = sqlfile.to_s
-            if sqlfilename.index("/maintenance/").nil? && sqlfilename.index("/tests/").nil? && sqlfilename.index("/extensions/").nil?
-              append_message(import, "Processing SQL file #{sqlfile}")
-              statements = File.read(sqlfile).split(/;$/)
-              
-              pages = {}
-              texts = {}
-              last_revisions = {}
-              
-              statements.each do |statement|
-                statement.lstrip!
-                if statement.start_with?("INSERT INTO `revision`")
-                  revisions = Myp.parse_sql_insert(statement)
-                  revisions.each do |revision|
-                    last_revisions[revision[1]] = revision
-                  end
-                elsif statement.start_with?("INSERT INTO `page`")
-                  pages.merge!(Myp.parse_sql_insert(statement, id_hash: true))
-                elsif statement.start_with?("INSERT INTO `text`")
-                  texts.merge!(Myp.parse_sql_insert(statement, id_hash: true))
-                end
-              end
-              
-              last_revisions.each do |page_id, revision|
-                page = pages[revision[1].to_s]
-                text = texts[revision[2].to_s]
-                
-                # If text is blank, that it's probably an image, so just skip that
-                if !text.nil?
-                  
-                  # Page namespaces:
-                  #   0: Normal page
-                  #   4: About page
-                  #   6: Upload
-                  #   2/3: User
-                  if page[0] == "0" || page[0] == "4"
-                    
-                    # No support for redirects yet
-                    if !text[0].start_with?("#REDIRECT")
-                      pagename = page[1].gsub("_", " ")
-                      markdown = Myp.media_wiki_str_to_markdown(
-                        text[0],
-                        link_prefix: "/blogs/#{blog.id}/page/",
-                        image_prefix: "/blogs/#{blog.id}/uploads/",
-                      )
-                      
-                      blog_post = BlogPost.create!(
-                        blog_post_title: pagename,
-                        post: markdown,
-                        import_original: text[0],
-                        hide_title: true,
-                        edit_type: BlogPost::EDIT_TYPE_TEXT,
-                        last_updated_bottom: true,
-                      )
-                      
-                      append_message(import, "Imported blog post [#{pagename}](/blogs/#{blog.id}/blog_posts/#{blog_post.id})")
-                      
-                      blog.blog_posts << blog_post
-                    end
+            append_message(import, "Processing SQL file #{sqlfile}")
+            statements = File.read(sqlfile).split(/;$/)
+            
+            posts = {}
+            
+            statements.each do |statement|
+              statement.lstrip!
+              if statement.start_with?("INSERT INTO `wp_posts`")
+                rows = Myp.parse_sql_insert(statement)
+                rows.each do |row|
+                  if row[7] == "publish" && row[20] == "post"
+                    posts[row[0]] = row
                   end
                 end
               end
+            end
+            
+            posts.each do |post_id, post|
+              date_local = Date.strptime(post[14], "%Y-%m-%d %H:%M:%S")
+              
+              pagename = post[5]
+
+              # https://github.com/xijo/reverse_markdown
+              #content_markdown = ReverseMarkdown.convert(post[4], unknown_tags: :pass_through, github_flavored: true)
+
+              markdown = Myp.html_to_markdown(
+                post[4],
+                image_prefix: "/blogs/#{blog.id}/uploads/",
+                thumbnails_prefix: "/blogs/#{blog.id}/upload_thumbnails/",
+              )
+              
+              blog_post = BlogPost.create!(
+                blog_post_title: pagename,
+                post: markdown,
+                import_original: post[4],
+                edit_type: BlogPost::EDIT_TYPE_TEXT,
+                post_date: date_local,
+              )
+              
+              append_message(import, "Imported blog post [#{pagename}](/blogs/#{blog.id}/blog_posts/#{blog_post.id})")
+              
+              blog.blog_posts << blog_post
             end
           end
         end
@@ -341,29 +443,34 @@ class ImportJob < ApplicationJob
     end
   end
   
-  def process_directory(import, storage, dir, root_path)
+  def process_directory(import, storage, dir, root_path, fullname_includes: [], fullname_excludes: [], basename_excludes: [])
     tmpfiles = execute_command("find #{dir}/ -type f").split("\n")
     
     tmpfiles.each do |f|
       fullfname = f.to_s
       fname = Pathname.new(f).basename.to_s
       
-      Rails.logger.info{"ImportJob found file: #{f}"}
-      
-      #append_message(import, "Processing #{f.to_s[root_path.length+1..-1]}")
+      Rails.logger.debug{"ImportJob found file: #{f}"}
       
       if fname.end_with?(".sql")
-        Rails.logger.info{"ImportJob sql"}
-        #append_message(import, "Found SQL file, assuming it's the MediaWiki database")
+        Rails.logger.info{"ImportJob sql #{f}"}
         storage[:sqlfiles] = storage[:sqlfiles] + [f]
       elsif fname.end_with?(".tar")
         childdir = Pathname.new(dir).join("#{fname}_expanded")
         Dir.mkdir(childdir)
         Rails.logger.info{"ImportJob made directory: #{childdir}"}
         execute_command("mv \"#{f}\" \"#{childdir}\" && cd \"#{childdir}\" && tar xvf \"#{fname}\" && rm \"#{fname}\"")
-        process_directory(import, storage, childdir, root_path)
-      elsif !fullfname.index("/images/").nil? && fullfname.index("/images/thumb/").nil? && fullfname.index("/images/archive/").nil? && fullfname.index("/skins/").nil? && fullfname.index("/extensions/").nil? && fullfname.index("/resources/").nil? && fname.index(".htaccess").nil? && fname.index("README").nil?
-        #append_message(import, "Found image upload #{f.to_s[root_path.length+1..-1]}")
+        process_directory(
+          import,
+          storage,
+          childdir,
+          root_path,
+          fullname_includes: fullname_includes,
+          fullname_excludes: fullname_excludes,
+          basename_excludes: basename_excludes,
+        )
+      elsif fullname_includes.any?{|x| !fullfname.index(x).nil? } && fullname_excludes.all?{|x| fullfname.index(x).nil? } && basename_excludes.all?{|x| fullfname.index(x).nil? }
+        Rails.logger.info{"ImportJob matched file #{f}"}
         storage[:uploads] = storage[:uploads] + [f]
       end
     end

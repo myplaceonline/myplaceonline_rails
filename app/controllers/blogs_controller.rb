@@ -62,6 +62,12 @@ class BlogsController < MyplaceonlineController
     respond_identity_file("inline", file)
   end
   
+  def upload_thumbnail
+    set_obj
+    file = @obj.identity_file_by_name(params[:uploadname])
+    respond_identity_file("inline", file, thumbnail: true)
+  end
+  
   def page
     set_obj
     @matched_post = nil

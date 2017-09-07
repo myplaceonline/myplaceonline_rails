@@ -13,7 +13,7 @@ end
 <% end %>
 
 <% if !obj.last_updated_bottom %>
-  <small><em><%= data_row(heading: t("myplaceonline.blog_posts.last_updated"), content: obj.updated_at, wrap: false, prefix_heading: true, prefix_wrapper: :span) %></em></small>
+  <small><em><%= data_row(heading: t("myplaceonline.blog_posts.last_updated"), content: obj.post_date, wrap: false, prefix_heading: true, prefix_wrapper: :span) %></em></small>
   <hr />
 <% end %>
 
@@ -32,5 +32,5 @@ end
 
 <% if obj.last_updated_bottom %>
   <hr />
-  <small><em><%= data_row(heading: t("myplaceonline.blog_posts.last_updated"), content: obj.updated_at, wrap: false, prefix_heading: true, prefix_wrapper: :span) %></em></small>
+  <small><em><%= data_row(heading: t("myplaceonline.blog_posts.last_updated"), content: obj.post_date, wrap: false, prefix_heading: true, prefix_wrapper: :span) %></em></small>
 <% end %>

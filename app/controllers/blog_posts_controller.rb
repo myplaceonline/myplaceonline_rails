@@ -46,7 +46,7 @@ class BlogPostsController < MyplaceonlineController
   end
   
   def bubble_text(obj)
-    Myp.display_datetime_short_year(obj.updated_at, User.current_user)
+    Myp.display_datetime_short_year(obj.post_date, User.current_user)
   end
 
   def show_wrap
@@ -59,7 +59,7 @@ class BlogPostsController < MyplaceonlineController
     end
 
     def sorts
-      ["blog_posts.updated_at DESC"]
+      ["blog_posts.post_date DESC"]
     end
 
     def obj_params

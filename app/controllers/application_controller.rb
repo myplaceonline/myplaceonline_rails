@@ -156,7 +156,7 @@ class ApplicationController < ActionController::Base
   protected
 
     # respond_type: [download, inline]
-    def respond_identity_file(respond_type, identity_file, filename = nil, content_type = nil)
+    def respond_identity_file(respond_type, identity_file, filename = nil, content_type = nil, thumbnail: false)
       
       send_from_memory = false
       if identity_file.filesystem_path.blank?
@@ -185,8 +185,14 @@ class ApplicationController < ActionController::Base
           content_type = identity_file.file_content_type
         end
         
+        if !thumbnail
+          path = identity_file.evaluated_path
+        else
+          path = identity_file.evaluated_thumbnail_path
+        end
+        
         send_file(
-          identity_file.evaluated_path,
+          path,
           :type => content_type,
           :filename => filename,
           :disposition => respond_type

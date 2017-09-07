@@ -2989,63 +2989,46 @@ module Myp
     result
   end
   
-#   def self.play(file)
-#     statements = File.read(file).split(/;$/)
-#     
-#     pages = {}
-#     texts = {}
-#     last_revisions = {}
-#     
-#     statements.each do |statement|
-#       statement.lstrip!
-#       if statement.start_with?("INSERT INTO `revision`")
-#         revisions = Myp.parse_sql_insert(statement)
-#         revisions.each do |revision|
-#           last_revisions[revision[1]] = revision
-#         end
-#       elsif statement.start_with?("INSERT INTO `page`")
-#         pages.merge!(Myp.parse_sql_insert(statement, id_hash: true))
-#       elsif statement.start_with?("INSERT INTO `text`")
-#         texts.merge!(Myp.parse_sql_insert(statement, id_hash: true))
-#       end
-#     end
-#     
-#     last_revisions.each do |page_id, revision|
-#       page = pages[revision[1].to_s]
-#       text = texts[revision[2].to_s]
-#       
-#       # If text is blank, that it's probably an image, so just skip that
-#       if !text.nil?
-#         
-#         # Page namespaces:
-#         #   0: Normal page
-#         #   4: About page
-#         #   6: Upload
-#         #   2/3: User
-#         if page[0] == "0" || page[0] == "4"
-#           pagename = page[1]
-#           markdown = Myp.media_wiki_str_to_markdown(text[0])
-#           #puts "Page: #{pagename}, Text:\n#{text[0]}\n\nMarkdown:\n#{markdown}"
-#           if pagename == "Death"
-#             puts "Page: #{pagename}, Text:\n#{text[0]}"
-#           end
-#         end
-#       end
-#     end
-#     
-#     nil
+  def self.play(file)
+    statements = File.read(file).split(/;$/)
+    
+    posts = {}
+    
+    statements.each do |statement|
+      statement.lstrip!
+      if statement.start_with?("INSERT INTO `wp_posts`")
+        rows = Myp.parse_sql_insert(statement)
+        rows.each do |row|
+          if row[7] == "publish" && row[20] == "post"
+            posts[row[0]] = row
+          end
+        end
+      end
+    end
+    
+    posts.each do |post_id, post|
+      date_local = Date.strptime(post[14], "%Y-%m-%d %H:%M:%S")
+      
+      content = post[4]
+      # https://github.com/xijo/reverse_markdown
+      #content_markdown = ReverseMarkdown.convert(content, unknown_tags: :pass_through, github_flavored: true)
+      content_markdown = Myp.html_to_markdown(content)
+      title = post[5]
+    end
+    
+    nil
+  end
+  
+#   def self.play(*args)
+#     args_array = *args
+#     args_array = [{ context: 1 }] + args_array 
+#     self.play2(*args_array)
 #   end
-  
-  def self.play(*args)
-    args_array = *args
-    args_array = [{ context: 1 }] + args_array 
-    self.play2(*args_array)
-  end
-  
-  def self.play2(*args)
-    job_context = args.shift
-    puts "play2: context: #{job_context}; #{args}"
-  end
+#   
+#   def self.play2(*args)
+#     job_context = args.shift
+#     puts "play2: context: #{job_context}; #{args}"
+#   end
   
   def self.is_number?(str)
     !!(str =~ /\A[-+]?[0-9]+\z/)
@@ -3064,6 +3047,114 @@ module Myp
       raise Myp::DecryptionKeyUnavailableError
     end
     r.body
+  end
+  
+  def self.html_to_markdown(str, image_prefix: "/", thumbnails_prefix: "/")
+    
+    original_str = str
+    
+    i = 0
+    while true do
+      match_data = str.match(/<blockquote>(.+?)<\/blockquote>/m, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        replacement = "> " + match_data[1].gsub("\n", "\n> ") + "\n"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/<a.*?href="([^"]+)"[^>]*><img.*?src="([^"]+)"[^>]+><\/a>/, i)
+      if !match_data.nil?
+        if !match_data[1].index("wp-content/uploads").nil?
+          match_offset = match_data.offset(0)[0]
+          file = match_data[1]
+          file = file[file.rindex("/")+1..-1]
+          replacement = "<a href=\"" + image_prefix + file + "\" rel=\"external\">![" + file + "](" + thumbnails_prefix + file + ")</a>"
+          str = match_data.pre_match + replacement + match_data.post_match
+          i = match_offset + replacement.length
+        else
+          i = match_data.offset(0)[1]
+        end
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/\[audio mp3="([^"]+)"\]\[\/audio\]/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        file = match_data[1]
+        file = file[file.rindex("/")+1..-1]
+        replacement = "<audio src=\"" + image_prefix + file + "\" preload=\"none\" controls></audio>"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/<a href="([^"]+)"[^>]*>([^<]+)<\/a>/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        replacement = "[" + match_data[2] + "](" + match_data[1] + ")"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/[ \t]*<li>([^<]+)<\/li>/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        replacement = "* " + match_data[1].strip
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/<div data-canvas-width[^>]+>([^<]+)<\/div>/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        replacement = match_data[1].strip
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/<p[^>]*>([^<]+)<\/p>/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        replacement = "\n" + match_data[1] + "\n"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length
+      else
+        break
+      end
+    end
+    
+    str = str.gsub("<ul>", "").gsub("</ul>", "").gsub("<ol>", "").gsub("</ol>", "")
+    
+    str
   end
   
   Rails.logger.info{"myplaceonline: myp.rb static initialization ended"}

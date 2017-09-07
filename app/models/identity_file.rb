@@ -156,6 +156,16 @@ class IdentityFile < ApplicationRecord
     result
   end
   
+  def evaluated_thumbnail_path
+    result = self.thumbnail_filesystem_path
+    
+    if !ENV["FILES_PREFIX"].blank? && !File.exist?(result)
+      result = ENV["FILES_PREFIX"] + result
+    end
+    
+    result
+  end
+  
   def self.uploads_path
     if ENV["PERMDIR"].blank?
       raise "PERMDIR not set"
@@ -309,6 +319,14 @@ class IdentityFile < ApplicationRecord
         result = "image/png"
       when "gif"
         result = "image/gif"
+      when "ods"
+        result = "application/vnd.oasis.opendocument.spreadsheet"
+      when "pdf"
+        result = "application/pdf"
+      when "mp3"
+        result = "audio/mpeg"
+      when "flv"
+        result = "video/x-flv"
       else
         raise "Unimplemented extension #{ext}"
       end
