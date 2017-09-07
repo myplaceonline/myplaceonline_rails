@@ -3103,6 +3103,21 @@ module Myp
     
     i = 0
     while true do
+      match_data = str.match(/\[video.*?flv="([^"]+)"\]\[\/video\]/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        file = match_data[1]
+        file = file[file.rindex("/")+1..-1]
+        replacement = "<video src=\"" + image_prefix + file + "\" preload=\"none\" controls></video>"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
       match_data = str.match(/<a href="([^"]+)"[^>]*>([^<]+)<\/a>/, i)
       if !match_data.nil?
         if match_data[0].index("rel=\"external\"").nil?
