@@ -3148,7 +3148,20 @@ module Myp
     
     i = 0
     while true do
-      match_data = str.match(/<div data-canvas-width[^>]+>([^<]+)<\/div>/, i)
+      match_data = str.match(/<div[^>]+>([^<]+)<\/div>/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        replacement = match_data[1].strip
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/<span[^>]+>([^<]+)<\/span>/, i)
       if !match_data.nil?
         match_offset = match_data.offset(0)[0]
         replacement = match_data[1].strip

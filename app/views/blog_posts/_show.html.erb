@@ -14,7 +14,7 @@ end
 
 <% if !obj.last_updated_bottom %>
   <small><em><%= data_row(heading: t("myplaceonline.blog_posts.last_updated"), content: obj.post_date, wrap: false, prefix_heading: true, prefix_wrapper: :span) %></em></small>
-  <hr />
+  <!--<hr />-->
 <% end %>
 
 <%= data_row(heading: t("myplaceonline.blog_posts.post"), content: obj.post, markdown: true, wrap: false, markdown_process_images: true, image_context: obj) %>

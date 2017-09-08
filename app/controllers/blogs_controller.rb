@@ -59,13 +59,21 @@ class BlogsController < MyplaceonlineController
   def upload
     set_obj
     file = @obj.identity_file_by_name(params[:uploadname])
-    respond_identity_file("inline", file)
+    if !file.nil?
+      respond_identity_file("inline", file)
+    else
+      head 404
+    end
   end
   
   def upload_thumbnail
     set_obj
     file = @obj.identity_file_by_name(params[:uploadname])
-    respond_identity_file("inline", file, thumbnail: true)
+    if !file.nil?
+      respond_identity_file("inline", file, thumbnail: true)
+    else
+      head 404
+    end
   end
   
   def page

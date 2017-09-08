@@ -410,7 +410,9 @@ class ImportJob < ApplicationJob
           uploads_path = IdentityFile.uploads_path
           
           storage[:uploads].each do |upload|
-            uploadname = Pathname.new(upload).basename.to_s
+            Rails.logger.debug{"ImportJob import_wordpress upload: #{upload}"}
+            upload_pathname = Pathname.new(upload)
+            uploadname = upload_pathname.parent.parent.basename.to_s + "_" + upload_pathname.basename.to_s
             newfilepath = uploads_path + IdentityFile.name_to_random(name: uploadname, prefix: "WPU")
             FileUtils.cp(upload, newfilepath)
             file_hash = {
@@ -447,7 +449,8 @@ class ImportJob < ApplicationJob
             end
             
             posts.each do |post_id, post|
-              date_local = Date.strptime(post[14], "%Y-%m-%d %H:%M:%S")
+              date_created_local = Date.strptime(post[2], "%Y-%m-%d %H:%M:%S")
+              date_modified_local = Date.strptime(post[14], "%Y-%m-%d %H:%M:%S")
               
               pagename = post[5]
 
@@ -456,8 +459,8 @@ class ImportJob < ApplicationJob
 
               markdown = Myp.html_to_markdown(
                 post[4],
-                image_prefix: "/blogs/#{blog.id}/uploads/",
-                thumbnails_prefix: "/blogs/#{blog.id}/upload_thumbnails/",
+                image_prefix: "/blogs/#{blog.id}/uploads/#{date_created_local.year}_",
+                thumbnails_prefix: "/blogs/#{blog.id}/upload_thumbnails/#{date_created_local.year}_",
               )
               
               blog_post = BlogPost.create!(
@@ -465,7 +468,7 @@ class ImportJob < ApplicationJob
                 post: markdown,
                 import_original: post[4],
                 edit_type: BlogPost::EDIT_TYPE_TEXT,
-                post_date: date_local,
+                post_date: date_created_local,
               )
               
               append_message(import, "Imported blog post [#{pagename}](/blogs/#{blog.id}/blog_posts/#{blog_post.id})")
