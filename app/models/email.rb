@@ -275,9 +275,9 @@ class Email < ApplicationRecord
     send_immediately_result = send_immediately
     Rails.logger.info{"Email processing async: #{!send_immediately_result}, email: #{self.inspect}"}
     if send_immediately_result
-      AsyncEmailJob.perform_now(self)
+      ApplicationJob.perform_sync(AsyncEmailJob, self)
     else
-      AsyncEmailJob.perform_later(self)
+      ApplicationJob.perform_async(AsyncEmailJob, self)
     end
   end
   

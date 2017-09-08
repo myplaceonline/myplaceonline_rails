@@ -3103,7 +3103,7 @@ module Myp
     
     i = 0
     while true do
-      match_data = str.match(/\[video.*?flv="([^"]+)"\]\[\/video\]/, i)
+      match_data = str.match(/\[video.*?flv="([^"]+)"[^\]]*\]\[\/video\]/, i)
       if !match_data.nil?
         match_offset = match_data.offset(0)[0]
         file = match_data[1]

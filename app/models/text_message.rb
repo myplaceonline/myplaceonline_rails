@@ -140,9 +140,9 @@ class TextMessage < ApplicationRecord
   
   def process
     if send_immediately
-      AsyncTextMessageJob.perform_now(self)
+      ApplicationJob.perform_sync(AsyncTextMessageJob, self)
     else
-      AsyncTextMessageJob.perform_later(self)
+      ApplicationJob.perform_async(AsyncTextMessageJob, self)
     end
   end
 
