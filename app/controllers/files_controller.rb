@@ -140,14 +140,16 @@ class FilesController < MyplaceonlineController
             @obj.save!
           end
         else
-          Open3.popen2e(%{
-            ulimit -Sv #{Myp.spawn_max_vsize} && mogrify -auto-orient -rotate #{degrees} #{@obj.filesystem_path}
-          }) do |stdin, stdout_and_stderr, wait_thr|
-            exit_status = wait_thr.value
-            if exit_status != 0
-              raise "Rotation exit status " + exit_status.to_s + ": #{stdout_and_stderr.read}"
-            end
-          end
+          child = Myp.spawn(
+            command: "/usr/bin/mogrify",
+            args: [
+              "#{self.filesystem_path}#{index}",
+              "-auto-orient",
+              "-rotate"
+              "#{degrees}",
+              @obj.filesystem_path,
+            ],
+          )
           
           @obj.clear_thumbnail
           @obj.save!

@@ -255,16 +255,21 @@ class IdentityFile < ApplicationRecord
         # Too small of a ulimit will cause errors such as:
         #   "libgomp: Thread creation failed: Resource temporarily unavailable"
         success = false
-        Open3.popen2e(%{
-          ulimit -Sv #{Myp.spawn_max_vsize} && convert #{self.filesystem_path}#{index} -auto-orient -thumbnail '#{max_width}>' #{thumbnail_path}
-        }) do |stdin, stdout_and_stderr, wait_thr|
-          exit_status = wait_thr.value
-          if exit_status != 0
-            #raise "Thumbnail exit status " + exit_status.to_s + ": #{stdout_and_stderr.read}"
-            Myp.warn("Thumbnail id: #{self.id}, content_type: #{self.file_content_type}, name: #{self.file_file_name}, path: #{self.filesystem_path}, exit status " + exit_status.to_s + ": #{stdout_and_stderr.read}")
-          else
-            success = true
-          end
+        child = Myp.spawn(
+          command: "/usr/bin/convert",
+          args: [
+            "#{self.filesystem_path}#{index}",
+            "-auto-orient",
+            "-thumbnail"
+            "'#{max_width}>'",
+            thumbnail_path,
+          ],
+          process_error: false
+        )
+        if child.status.exitstatus == 0
+          success = true
+        else
+          Myp.warn("Thumbnail id: #{self.id}, content_type: #{self.file_content_type}, name: #{self.file_file_name}, path: #{self.filesystem_path}, exit status #{child.status.exitstatus}, stdout: #{child.out}, stderr: #{child.err}")
         end
         
         if success

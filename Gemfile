@@ -74,3 +74,4 @@ gem "composite_primary_keys", github: "composite-primary-keys/composite_primary_
 gem "usda-nutrient-database"
 gem "activerecord-import"
 gem "reverse_markdown"
+gem "posix-spawn"
