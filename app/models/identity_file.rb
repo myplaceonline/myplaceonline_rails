@@ -255,14 +255,17 @@ class IdentityFile < ApplicationRecord
         # Too small of a ulimit will cause errors such as:
         #   "libgomp: Thread creation failed: Resource temporarily unavailable"
         success = false
+        
+        command_line = "convert #{self.filesystem_path}#{index} -auto-orient -thumbnail '#{max_width}>' #{thumbnail_path}"
+        
         child = Myp.spawn(
-          command_line: "convert #{self.filesystem_path}#{index} -auto-orient -thumbnail #{max_width}> #{thumbnail_path}",
+          command_line: command_line,
           process_error: false
         )
         if child.status.exitstatus == 0
           success = true
         else
-          Myp.warn("Thumbnail id: #{self.id}, content_type: #{self.file_content_type}, name: #{self.file_file_name}, path: #{self.filesystem_path}, exit status #{child.status.exitstatus}, stdout: #{child.out}, stderr: #{child.err}")
+          Myp.warn("Thumbnail id: #{self.id}, content_type: #{self.file_content_type}, name: #{self.file_file_name}, path: #{self.filesystem_path}, exit status #{child.status.exitstatus}, command line: #{command_line}, stdout: #{child.out}, stderr: #{child.err}")
         end
         
         if success
