@@ -260,7 +260,7 @@ class IdentityFile < ApplicationRecord
           args: [
             "#{self.filesystem_path}#{index}",
             "-auto-orient",
-            "-thumbnail"
+            "-thumbnail",
             "'#{max_width}>'",
             thumbnail_path,
           ],
