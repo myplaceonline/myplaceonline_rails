@@ -261,7 +261,7 @@ class IdentityFile < ApplicationRecord
             "#{self.filesystem_path}#{index}",
             "-auto-orient",
             "-thumbnail",
-            "'#{max_width}>'",
+            "#{max_width}>",
             thumbnail_path,
           ],
           process_error: false
