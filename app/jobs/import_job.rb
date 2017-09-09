@@ -97,15 +97,12 @@ class ImportJob < ApplicationJob
           
           FileUtils.cp(ifile.evaluated_path, "#{dir}/#{file_name}")
           
-#           dir_listing = execute_command("ls -l #{dir}")
-#           Rails.logger.info{"ImportJob dir_listing: #{dir_listing}"}
-          
           tmpfile = Pathname.new(dir).join(file_name)
 
           Rails.logger.info{"ImportJob tmpfile: #{tmpfile}"}
           
           if ifile.file_content_type == "application/gzip"
-            execute_command("gunzip #{tmpfile}")
+            execute_command(command_line: "gunzip #{tmpfile.to_s}")
           end
           
           process_directory(
@@ -250,7 +247,7 @@ class ImportJob < ApplicationJob
           Rails.logger.info{"ImportJob tmpfile: #{tmpfile}"}
           
           if ifile.file_content_type == "application/gzip"
-            execute_command("gunzip #{tmpfile}")
+            execute_command(command_line: "gunzip #{tmpfile.to_s}")
           end
           
           process_directory(
@@ -486,7 +483,7 @@ class ImportJob < ApplicationJob
   end
   
   def process_directory(import, storage, dir, root_path, fullname_includes: [], fullname_excludes: [], basename_excludes: [])
-    tmpfiles = execute_command("find #{dir}/ -type f").split("\n")
+    tmpfiles = execute_command(command_line: "find #{dir}/ -type f").split("\n")
     
     tmpfiles.each do |f|
       fullfname = f.to_s
@@ -501,7 +498,9 @@ class ImportJob < ApplicationJob
         childdir = Pathname.new(dir).join("#{fname}_expanded")
         Dir.mkdir(childdir)
         Rails.logger.info{"ImportJob made directory: #{childdir}"}
-        execute_command("mv \"#{f}\" \"#{childdir}\" && cd \"#{childdir}\" && tar xvf \"#{fname}\" && rm \"#{fname}\"")
+        
+        execute_command(command_line: "mv \"#{f}\" \"#{childdir}\" && cd \"#{childdir}\" && tar xvf \"#{fname}\" && rm \"#{fname}\"")
+        
         process_directory(
           import,
           storage,
@@ -518,17 +517,10 @@ class ImportJob < ApplicationJob
     end
   end
   
-  def execute_command(message)
-    result = ""
-    Rails.logger.info{"ImportJob executing: #{message}"}
-    Open3.popen2e(message) do |stdin, stdout_and_stderr, wait_thr|
-      result = stdout_and_stderr.read
-      exit_status = wait_thr.value
-      if exit_status != 0
-        raise "Exit status " + exit_status.to_s + ": #{result}"
-      end
-    end
-    Rails.logger.info{"ImportJob result: #{result}"}
-    result
+  def execute_command(command_line:, current_directory: nil)
+    Rails.logger.info{"ImportJob executing: #{command} #{args}"}
+    child = Myp.spawn(command_line: command_line, current_directory: current_directory)
+    Rails.logger.info{"ImportJob result: #{child.out}"}
+    child.out
   end
 end

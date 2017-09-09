@@ -256,14 +256,7 @@ class IdentityFile < ApplicationRecord
         #   "libgomp: Thread creation failed: Resource temporarily unavailable"
         success = false
         child = Myp.spawn(
-          command: "/usr/bin/convert",
-          args: [
-            "#{self.filesystem_path}#{index}",
-            "-auto-orient",
-            "-thumbnail",
-            "#{max_width}>",
-            thumbnail_path,
-          ],
+          command_line: "convert #{self.filesystem_path}#{index} -auto-orient -thumbnail #{max_width}> #{thumbnail_path}",
           process_error: false
         )
         if child.status.exitstatus == 0

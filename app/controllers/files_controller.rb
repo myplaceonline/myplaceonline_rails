@@ -141,14 +141,7 @@ class FilesController < MyplaceonlineController
           end
         else
           child = Myp.spawn(
-            command: "/usr/bin/mogrify",
-            args: [
-              "#{self.filesystem_path}#{index}",
-              "-auto-orient",
-              "-rotate",
-              "#{degrees}",
-              @obj.filesystem_path,
-            ],
+            command_line: "/usr/bin/mogrify #{self.filesystem_path}#{index} -auto-orient -rotate #{degrees} #{@obj.filesystem_path}"
           )
           
           @obj.clear_thumbnail
