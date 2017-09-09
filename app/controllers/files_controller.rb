@@ -145,7 +145,7 @@ class FilesController < MyplaceonlineController
             args: [
               "#{self.filesystem_path}#{index}",
               "-auto-orient",
-              "-rotate"
+              "-rotate",
               "#{degrees}",
               @obj.filesystem_path,
             ],

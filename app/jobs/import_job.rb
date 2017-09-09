@@ -124,6 +124,7 @@ class ImportJob < ApplicationJob
             uploadname = Pathname.new(upload).basename.to_s
             newfilepath = uploads_path + IdentityFile.name_to_random(name: uploadname, prefix: "MWU")
             FileUtils.cp(upload, newfilepath)
+            FileUtils.chmod("a=rw", newfilepath)
             file_hash = {
               original_filename: uploadname,
               path: newfilepath,
@@ -415,6 +416,7 @@ class ImportJob < ApplicationJob
             uploadname = upload_pathname.parent.parent.basename.to_s + "_" + upload_pathname.basename.to_s
             newfilepath = uploads_path + IdentityFile.name_to_random(name: uploadname, prefix: "WPU")
             FileUtils.cp(upload, newfilepath)
+            FileUtils.chmod("a=rw", newfilepath)
             file_hash = {
               original_filename: uploadname,
               path: newfilepath,
