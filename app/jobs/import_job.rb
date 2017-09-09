@@ -518,7 +518,7 @@ class ImportJob < ApplicationJob
   end
   
   def execute_command(command_line:, current_directory: nil)
-    Rails.logger.info{"ImportJob executing: #{command} #{args}"}
+    Rails.logger.info{"ImportJob executing: #{command_line} #{args}"}
     child = Myp.spawn(command_line: command_line, current_directory: current_directory)
     Rails.logger.info{"ImportJob result: #{child.out}"}
     child.out
