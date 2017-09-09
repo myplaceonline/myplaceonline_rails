@@ -19,6 +19,16 @@ module Myp
     @@default_host
   end
   
+  @@spawn_max_vsize = 302400
+  
+  if !ENV["SPAWN_MAX_VSIZE"].blank?
+    @@spawn_max_vsize = ENV["SPAWN_MAX_VSIZE"]
+  end
+  
+  def self.spawn_max_vsize
+    @@spawn_max_vsize
+  end
+  
   def self.create_email(
     name: Myp::DEFAULT_FROM_EMAIL,
     host: nil,
@@ -1011,7 +1021,7 @@ module Myp
         cpa.count += amount
         if cpa.count < 0
           if !Rails.env.test?
-            Myp.warn("Something went wrong, category count would go negative for #{category.inspect}")
+            #Myp.warn("Something went wrong, category count would go negative for #{category.inspect}")
           end
           break
         end

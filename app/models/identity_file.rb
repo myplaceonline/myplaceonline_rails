@@ -256,7 +256,7 @@ class IdentityFile < ApplicationRecord
         #   "libgomp: Thread creation failed: Resource temporarily unavailable"
         success = false
         Open3.popen2e(%{
-          ulimit -Sv 502400 && convert #{self.filesystem_path}#{index} -auto-orient -thumbnail '#{max_width}>' #{thumbnail_path}
+          ulimit -Sv #{Myp.spawn_max_vsize} && convert #{self.filesystem_path}#{index} -auto-orient -thumbnail '#{max_width}>' #{thumbnail_path}
         }) do |stdin, stdout_and_stderr, wait_thr|
           exit_status = wait_thr.value
           if exit_status != 0

@@ -141,7 +141,7 @@ class FilesController < MyplaceonlineController
           end
         else
           Open3.popen2e(%{
-            ulimit -Sv 102400 && mogrify -auto-orient -rotate #{degrees} #{@obj.filesystem_path}
+            ulimit -Sv #{Myp.spawn_max_vsize} && mogrify -auto-orient -rotate #{degrees} #{@obj.filesystem_path}
           }) do |stdin, stdout_and_stderr, wait_thr|
             exit_status = wait_thr.value
             if exit_status != 0
