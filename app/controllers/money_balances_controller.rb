@@ -89,14 +89,16 @@ class MoneyBalancesController < MyplaceonlineController
           Rails.logger.debug{"new_item: #{@new_item}, obj #{@obj.inspect}"}
           if @new_item.current_user_owns?
             to = @obj.contact
+            reply_to = @obj.identity.user.email
           else
             to = @obj.identity
+            reply_to = @obj.contact.contact_identity.one_email
           end
           body = @obj.independent_description
           if !@new_item.money_balance_item_name.blank?
             body = @new_item.money_balance_item_name + "... \n\n" + body
           end
-          to.send_email(@new_item.independent_description(false), body)
+          to.send_email(@new_item.independent_description(false), body, nil, nil, nil, reply_to)
         end
         return after_update_redirect
       end

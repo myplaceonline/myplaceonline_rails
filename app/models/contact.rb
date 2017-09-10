@@ -115,10 +115,10 @@ class Contact < ApplicationRecord
     end
   end
   
-  def send_email(subject, body, cc = nil, bcc = nil, body_plain = nil)
+  def send_email(subject, body, cc = nil, bcc = nil, body_plain = nil, reply_to = nil)
     to = contact_identity.emails
     if to.length > 0
-      Myp.send_email(to, subject, body, cc, bcc, body_plain)
+      Myp.send_email(to, subject, body, cc, bcc, body_plain, reply_to)
     end
   end
   

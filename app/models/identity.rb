@@ -272,6 +272,15 @@ class Identity < ApplicationRecord
     identity_emails.to_a.delete_if{|ie| ie.secondary }.map{|ie| ie.email }
   end
   
+  def one_email
+    result = nil
+    e = self.emails
+    if e.length > 0
+      result = e[0]
+    end
+    result
+  end
+  
   def has_email?
     self.emails.length > 0
   end
@@ -630,8 +639,8 @@ class Identity < ApplicationRecord
     )
   end
 
-  def send_email(subject, body, cc = nil, bcc = nil, body_plain = nil)
-    Myp.send_email(user.email, subject, body, cc, bcc, body_plain)
+  def send_email(subject, body, cc = nil, bcc = nil, body_plain = nil, reply_to = nil)
+    Myp.send_email(user.email, subject, body, cc, bcc, body_plain, reply_to)
   end
   
   def phone_numbers
