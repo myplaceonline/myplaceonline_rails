@@ -3035,6 +3035,7 @@ en:
       duplicate: "Duplicate"
       show_shared: "Display"
       details: " Details: "
+      content_reply: " Reply to chat with %{name}"
       link_unsubscribe_all: "Unsubscribe from all text messages from %{user}"
       link_unsubscribe_category: "Unsubscribe from %{user}'s '%{category}' text messages"
       unsubscribed_all: "Successfully unsubscribed from all text messages."
