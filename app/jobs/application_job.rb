@@ -7,7 +7,7 @@ class ApplicationJob < ActiveJob::Base
     {
       # http://edgeapi.rubyonrails.org/classes/ActiveJob/SerializationError.html
       execution_context: ExecutionContext.export.keep_if{|k,v|
-        v.is_a?(NilClass) || v.is_a?(Numeric) || v.is_a?(String) || v.is_a?(TrueClass) || v.is_a?(FalseClass) || v.is_a?(ActiveRecord::Base)
+        v.is_a?(NilClass) || v.is_a?(Numeric) || v.is_a?(String) || v.is_a?(TrueClass) || v.is_a?(FalseClass) || (v.is_a?(ActiveRecord::Base) && !v.id.nil?)
       }
     }
   end
@@ -25,6 +25,7 @@ class ApplicationJob < ActiveJob::Base
   
   def self.perform_async(job_class, *args)
     context = self.job_context
+    Rails.logger.debug{"ApplicationJob perform_async job_class: #{job_class}, args: #{args}, context: #{Myp.debug_print(context)}"}
     args_array = *args
     args_array = [context] + args_array 
     job_class.perform_later(*args_array)
@@ -32,6 +33,7 @@ class ApplicationJob < ActiveJob::Base
 
   def self.perform_sync(job_class, *args)
     context = self.job_context
+    Rails.logger.debug{"ApplicationJob perform_sync job_class: #{job_class}, args: #{args}, context: #{Myp.debug_print(context)}"}
     args_array = *args
     args_array = [context] + args_array 
     job_class.perform_now(*args_array)
