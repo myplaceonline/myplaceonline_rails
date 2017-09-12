@@ -78,8 +78,9 @@ class Ability
       # If token is a query parameter, then check the share table
       if !request.nil? && !request.query_parameters.nil?
         token = request.query_parameters["token"]
+        Rails.logger.debug{"Ability.authorize Has request and query params; token: #{token}"}
         if !token.blank?
-          Rails.logger.debug{"Ability.Found token: #{token}"}
+          Rails.logger.debug{"Ability.authorize checking PermissionShare by token"}
           ps = PermissionShare.find_by_sql(%{
             SELECT permission_shares.*
             FROM permission_shares
@@ -107,6 +108,9 @@ class Ability
           end
           
           if !result
+            
+            Rails.logger.debug{"Ability.authorize checking PermissionShareChild"}
+            
             psc = PermissionShareChild.find_by_sql(%{
               SELECT permission_share_children.*
               FROM permission_share_children
@@ -136,6 +140,7 @@ class Ability
           query = "(user_id = ? or user_id IS NULL) and subject_class = ? and subject_id = ? and (action & #{Permission::ACTION_MANAGE} != 0"
           query = self.add_action_query_parts(action: action, query: query, subject: subject)
           query += ")"
+          Rails.logger.debug{"Ability.authorize checking Permission #{query}"}
           permission_result = Permission.where(query, user.id, Myp.model_to_category_name(subject_class), subject.id).last
           if !permission_result.nil?
             Rails.logger.debug{"Ability.authorize Found permissions: #{permission_result.inspect}"}
@@ -169,7 +174,7 @@ class Ability
       end
     end
 
-    if user.guest? && valid_guest_actions.index(action).nil?
+    if result && user.guest? && valid_guest_actions.index(action).nil?
       Rails.logger.debug{"Ability.authorize Guest can only do #{valid_guest_actions} actions (tried #{action})"}
       result = false
     end

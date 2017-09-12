@@ -136,6 +136,6 @@ class BlogsController < MyplaceonlineController
     end
 
     def publicly_shareable_actions
-      [:show, :page, :rss]
+      [:show, :page, :rss, :display]
     end
 end

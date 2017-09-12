@@ -45,7 +45,7 @@ class Blog < ApplicationRecord
   end
   
   def unknown_action_permission_mapping(action)
-    if action == :page || action == :rss
+    if action == :page || action == :rss || action == :display
       Permission::ACTION_READ
     else
       Permission::ACTION_UPDATE
