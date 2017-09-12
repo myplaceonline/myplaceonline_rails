@@ -337,29 +337,31 @@ module ApplicationHelper
   end
   
   def replace_images(html, image_context)
+    Rails.logger.debug{"ApplicationHelper.replace_images: html: #{html}"}
     if !html.nil?
       i = 0
       while true do
-        match_data = html.match(/<img src="\/blogs\/([0-9]+)\/uploads\/([^"]+)/, i)
+        match_data = html.match(/<img src="\/blogs\/([0-9]+)\/(upload[^\/]+)\/([^"]+)/, i)
         if !match_data.nil?
           blog = Blog.find(match_data[1].to_i)
           if blog.identity_id != image_context.identity_id
             raise "TODO"
           end
-          name_search = match_data[2]
+          name_search = match_data[3]
+          Rails.logger.debug{"ApplicationHelper.replace_images: found blog #{blog.id}, image #{name_search}"}
           j = name_search.rindex(".")
           if !j.nil?
             name_search = name_search[0..j-1]
           end
           identity_file = blog.identity_file_by_name(name_search)
-          replacement = "<img src=\"/blogs/#{match_data[1]}/uploads/#{match_data[2]}"
+          replacement = "<img src=\"/blogs/#{match_data[1]}/#{match_data[2]}/#{match_data[3]}"
           if replacement.index("?").nil?
             replacement << "?"
           else
             replacement << "&"
           end
           replacement << "t=#{identity_file.updated_at.to_i}"
-          token = share_token(context: identity_file, share_context: blog, valid_guest_actions: [:upload])
+          token = share_token(context: identity_file, share_context: blog, valid_guest_actions: [:upload, :upload_thumbnail])
           if !token.blank?
             replacement << "&token=#{token}"
           end
@@ -370,6 +372,8 @@ module ApplicationHelper
         end
       end
     end
+
+    Rails.logger.debug{"ApplicationHelper.replace_images: finished"}
 
     html
   end

@@ -6,7 +6,7 @@ end
 
 <% if !obj.hide_title %>
   <% if link_title %>
-    <h1><%= link_to(controller.display_obj(obj), blog_blog_post_path(obj.blog, obj)) %></h1>
+    <h1><%= link_to(controller.display_obj(obj), blog_page_path(obj.blog, obj.blog_post_title)) %></h1>
   <% else %>
     <h1><%= controller.display_obj(obj) %></h1>
   <% end %>
