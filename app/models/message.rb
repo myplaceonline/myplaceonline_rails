@@ -88,7 +88,7 @@ class Message < ApplicationRecord
     
     email = Email.new(
       subject: self.subject,
-      body: self.body,
+      body: self.long_body,
       copy_self: self.copy_self,
       email_category: self.message_category,
       identity_id: self.identity_id,
