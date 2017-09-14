@@ -8,7 +8,7 @@
     perpage = controller.update_items_per_page(perpage, count)
     items_next_page_link = blog_display_path(@obj, offset: offset + perpage)
     items_previous_page_link = blog_display_path(@obj, offset: offset - perpage)
-    items_all_link = blog_display_path
+    items_all_link = blog_display_path(@obj)
     query_params_part_all = controller.items_query_params_part_all
   %>
   <% @blog_posts.each do |blog_post| %>

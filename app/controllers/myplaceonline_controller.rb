@@ -1,6 +1,7 @@
 class MyplaceonlineController < ApplicationController
   before_action :before_all_actions
   before_action :set_obj, only: [:show, :edit, :update, :destroy]
+  before_action :set_layout
   
   DEFAULT_SKIP_AUTHORIZATION_CHECK = [:index, :new, :create, :destroy_all, :settings]
   
@@ -18,6 +19,10 @@ class MyplaceonlineController < ApplicationController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK
 
   respond_to :html, :json
+  
+  def set_layout
+    self.class.layout(params[:no_layout] ? "blank" : "application")
+  end
 
   def index
     initial_checks

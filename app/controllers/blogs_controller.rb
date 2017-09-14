@@ -53,7 +53,7 @@ class BlogsController < MyplaceonlineController
   end
 
   def default_items_per_page
-    10
+    5
   end
   
   def upload

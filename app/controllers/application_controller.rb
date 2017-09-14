@@ -116,7 +116,7 @@ class ApplicationController < ActionController::Base
         MyplaceonlineExecutionContext.initialize(
           request: request,
           session: request.session,
-          user: current_user,
+          user: current_user.nil? ? User.guest : current_user,
           persistent_user_store: PersistentUserStore.new(
             cookies: cookies,
             expire_asap: expire_asap

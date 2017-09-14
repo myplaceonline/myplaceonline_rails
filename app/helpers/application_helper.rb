@@ -354,16 +354,21 @@ module ApplicationHelper
             name_search = name_search[0..j-1]
           end
           identity_file = blog.identity_file_by_name(name_search)
-          replacement = "<img src=\"/blogs/#{match_data[1]}/#{match_data[2]}/#{match_data[3]}"
-          if replacement.index("?").nil?
-            replacement << "?"
+          if !identity_file.nil?
+            replacement = "<img src=\"/blogs/#{match_data[1]}/#{match_data[2]}/#{match_data[3]}"
+            if replacement.index("?").nil?
+              replacement << "?"
+            else
+              replacement << "&"
+            end
+            replacement << "t=#{identity_file.updated_at.to_i}"
+            token = share_token(context: identity_file, share_context: blog, valid_guest_actions: [:upload, :upload_thumbnail])
+            if !token.blank?
+              replacement << "&token=#{token}"
+            end
           else
-            replacement << "&"
-          end
-          replacement << "t=#{identity_file.updated_at.to_i}"
-          token = share_token(context: identity_file, share_context: blog, valid_guest_actions: [:upload, :upload_thumbnail])
-          if !token.blank?
-            replacement << "&token=#{token}"
+            replacement = ""
+            Myp.warn("Image #{name_search} not found for blog #{blog.id}")
           end
           html = match_data.pre_match + replacement + match_data.post_match
           i = match_data.offset(0)[0] + replacement.length + 1

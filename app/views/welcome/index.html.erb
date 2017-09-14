@@ -5,6 +5,7 @@
   <%
   homepage = Myp.website_domain_homepage
   if homepage.is_a?(Hash)
+    Rails.logger.debug{"welcome index hash: #{Myp.debug_print(homepage)}"}
     MyplaceonlineExecutionContext.do_ability_identity(homepage[:obj].identity) do
   %>
       <%= render :html => Myp.renderActionInOtherController(
