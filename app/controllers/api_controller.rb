@@ -597,7 +597,7 @@ class ApiController < ApplicationController
       context_identity_id = last_text_message.from_identity_id
     end
     
-    if ["unsub", "remove"].any?{|x| transformed_body.start_with?(x)}
+    if ["unsub", "remove", "stop"].any?{|x| transformed_body.start_with?(x)}
       
       TextMessageUnsubscription.create!(
         phone_number: from,
