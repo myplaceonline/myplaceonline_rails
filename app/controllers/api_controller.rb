@@ -551,6 +551,13 @@ class ApiController < ApplicationController
   
   # https://www.twilio.com/docs/api/twiml/sms/your_response
   # Test: curl -X POST "http://localhost:3000/api/twilio_sms?Body=a&From=+11234567890"
+  #
+  # The broad flow is as follows:
+  #   User A (identity I1, phone number P1) sends a text message to identity I2 with phone number P2. This updates the
+  #   LastTextMessage table with phone_number = P2, to_identity = I2, from_identity = I1. If P2 responds to
+  #   myplaceonline with a text message (with phone number `from` = P2 below), we lookup phone_number = from in the
+  #   LastTextMessage table and set context_identity_id to the to_identity. Next we proxy on the text message to the
+  #   from_identity and upate the LastTextMessage table.
   def twilio_sms
     
     body = params["Body"]
@@ -594,7 +601,7 @@ class ApiController < ApplicationController
 
     last_text_message = LastTextMessage.where(phone_number: from).take
     if !last_text_message.nil?
-      context_identity_id = last_text_message.from_identity_id
+      context_identity_id = last_text_message.to_identity_id
     end
     
     if ["unsub", "remove", "stop"].any?{|x| transformed_body.start_with?(x)}
