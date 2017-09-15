@@ -376,6 +376,44 @@ module ApplicationHelper
           break
         end
       end
+      
+      i = 0
+      while true do
+        match_data = html.match(/<a href="\/blogs\/([0-9]+)\/(upload[^\/]+)\/([^"]+)/, i)
+        if !match_data.nil?
+          blog = Blog.find(match_data[1].to_i)
+          if blog.identity_id != image_context.identity_id
+            raise "TODO"
+          end
+          name_search = match_data[3]
+          Rails.logger.debug{"ApplicationHelper.replace_images: found blog #{blog.id}, link #{name_search}"}
+          j = name_search.rindex(".")
+          if !j.nil?
+            name_search = name_search[0..j-1]
+          end
+          identity_file = blog.identity_file_by_name(name_search)
+          if !identity_file.nil?
+            replacement = "<a href=\"/blogs/#{match_data[1]}/#{match_data[2]}/#{match_data[3]}"
+            if replacement.index("?").nil?
+              replacement << "?"
+            else
+              replacement << "&"
+            end
+            replacement << "t=#{identity_file.updated_at.to_i}"
+            token = share_token(context: identity_file, share_context: blog, valid_guest_actions: [:upload, :upload_thumbnail])
+            if !token.blank?
+              replacement << "&token=#{token}"
+            end
+          else
+            replacement = ""
+            Myp.warn("Link #{name_search} not found for blog #{blog.id}")
+          end
+          html = match_data.pre_match + replacement + match_data.post_match
+          i = match_data.offset(0)[0] + replacement.length + 1
+        else
+          break
+        end
+      end
     end
 
     Rails.logger.debug{"ApplicationHelper.replace_images: finished"}
