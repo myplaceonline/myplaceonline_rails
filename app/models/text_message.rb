@@ -94,9 +94,12 @@ class TextMessage < ApplicationRecord
       if !content.end_with?(".", "!")
         content += "."
       end
-      content += I18n.t("myplaceonline.text_messages.details") + text_message_short_url(self.id, token) + I18n.t("myplaceonline.text_messages.content_reply", name: identity.display_short)
       
-      Rails.logger.info{"Sending SMS to #{target}, content: #{content}"}
+      # TODO https://stackoverflow.com/questions/45701691/how-can-i-customize-the-web-preview-in-imessages-for-my-website
+      
+      content += I18n.t("myplaceonline.text_messages.details") + text_message_short_url(self.id, token) + I18n.t("myplaceonline.text_messages.content_reply", name: LastTextMessage.target_display(identity: identity))
+      
+      Rails.logger.info{"Sending SMS to #{target}"}
 
       Myp.send_sms(to: target, body: content)
       

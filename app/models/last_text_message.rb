@@ -23,11 +23,20 @@ class LastTextMessage < ApplicationRecord
     # update some other metadata fields that might be passed through in a proxied response text mesage.
     last_text_message.category = message_category
     if !to_identity.nil?
-      last_text_message.to_display = to_identity.display_short
+      last_text_message.to_display = LastTextMessage.target_display(identity: to_identity)
     end
     if !from_identity.nil?
-      last_text_message.from_display = from_identity.display_short
+      last_text_message.from_display = LastTextMessage.target_display(identity: from_identity)
     end
     last_text_message.save!
+  end
+  
+  def self.target_display(identity:)
+    result = identity.display_short
+    i = result.index(" ")
+    if !i.nil?
+      result = result[0..i-1]
+    end
+    result
   end
 end

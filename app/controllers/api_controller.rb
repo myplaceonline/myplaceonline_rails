@@ -612,11 +612,14 @@ class ApiController < ApplicationController
           from: from,
           from_display: "#{target}%",
         ).order("updated_at DESC").limit(1).take
+        
         if last_text_message.nil?
           mainline_processing = false
           twiml = Twilio::TwiML::MessagingResponse.new do |r|
             r.message(body: I18n.t("myplaceonline.twilio.display_not_found", name: target))
           end
+        else
+          body = body[i+1..-1]
         end
       end
     end
