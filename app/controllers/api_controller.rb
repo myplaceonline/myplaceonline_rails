@@ -616,7 +616,7 @@ class ApiController < ApplicationController
         if last_text_message.nil?
           mainline_processing = false
           twiml = Twilio::TwiML::MessagingResponse.new do |r|
-            r.message(body: I18n.t("myplaceonline.twilio.display_not_found", name: target))
+            r.message(message: I18n.t("myplaceonline.twilio.display_not_found", name: target))
           end
         else
           body = body[i+1..-1]
@@ -641,7 +641,7 @@ class ApiController < ApplicationController
         )
         
         twiml = Twilio::TwiML::MessagingResponse.new do |r|
-          r.message(body: I18n.t("myplaceonline.twilio.unsubscribed"))
+          r.message(message: I18n.t("myplaceonline.twilio.unsubscribed"))
         end
         
       elsif ["sub", "resub"].any?{|x| transformed_body.start_with?(x)}
@@ -652,7 +652,7 @@ class ApiController < ApplicationController
         ).destroy_all
         
         twiml = Twilio::TwiML::MessagingResponse.new do |r|
-          r.message(body: I18n.t("myplaceonline.twilio.resubscribed"))
+          r.message(message: I18n.t("myplaceonline.twilio.resubscribed"))
         end
         
       elsif !context_identity_id.nil? && last_text_message.from_identity.has_mobile? && last_text_message.to_identity_id != last_text_message.from_identity_id
