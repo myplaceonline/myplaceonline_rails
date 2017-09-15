@@ -30,6 +30,9 @@
     <!--[if IE]><link rel="shortcut icon" href="/api/favicon.ico"><![endif]-->
     <!--<link rel="apple-touch-icon-precomposed" href="/api/apple-touch-icon-precomposed.png">-->
     <link rel="icon" href="/api/favicon.png">
+    <% if !Myp.website_domain.feed_url.blank? %>
+      <link rel="alternate" type="application/rss+xml" title="<%= main_title %>" href="<%= Myp.website_domain.feed_url %>" />
+    <% end %>
   </head>
   <body>
     <div data-role="page" data-theme="a" data-url="<%= html_escape(Myp.original_url(request)) %>" data-uniqueid="<%= request.uuid %>">

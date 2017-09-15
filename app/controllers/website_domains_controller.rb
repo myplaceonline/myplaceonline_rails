@@ -19,6 +19,7 @@ class WebsiteDomainsController < MyplaceonlineController
         :mission_statement,
         :faq,
         :homepage_path,
+        :feed_url,
         website_attributes: WebsitesController.param_names,
         domain_host_attributes: MembershipsController.param_names,
         website_domain_ssh_keys_attributes: [

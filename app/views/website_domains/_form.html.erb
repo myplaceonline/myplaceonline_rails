@@ -177,6 +177,15 @@
   <%=
     input_field(
       form: f,
+      type: Myp::FIELD_TEXT,
+      name: :feed_url,
+      value: obj.feed_url,
+      placeholder: "myplaceonline.website_domains.feed_url",
+    )
+  %>
+  <%=
+    input_field(
+      form: f,
       type: Myp::FIELD_TEXT_AREA,
       name: :menu_links_static,
       value: obj.menu_links_static,
