@@ -3635,6 +3635,7 @@ en:
       message_received: "Message Received"
       unsubscribed: "You have been unsubscribed."
       resubscribed: "You have been resubscribed."
+      display_not_found: "Could not find any conversation you've had with someone starting with %{name}"
     beaches:
       crowded: "Crowded?"
       location: "Location"

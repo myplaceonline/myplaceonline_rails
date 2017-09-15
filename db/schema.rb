@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170915040646) do
+ActiveRecord::Schema.define(version: 20170915045659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2935,6 +2935,8 @@ ActiveRecord::Schema.define(version: 20170915040646) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "to_identity_id"
+    t.string "from_display"
+    t.string "to_display"
     t.index ["from_identity_id"], name: "index_last_text_messages_on_from_identity_id"
     t.index ["phone_number"], name: "index_last_text_messages_on_phone_number"
     t.index ["to_identity_id"], name: "index_last_text_messages_on_to_identity_id"

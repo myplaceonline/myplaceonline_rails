@@ -598,53 +598,81 @@ class ApiController < ApplicationController
     transformed_body = body.downcase.gsub(/^please/, "").strip
     
     context_identity_id = nil
-
-    last_text_message = LastTextMessage.where(phone_number: from).take
-    if !last_text_message.nil?
-      context_identity_id = last_text_message.to_identity_id
-    end
+    last_text_message = nil
+    mainline_processing = true
     
-    if ["unsub", "remove", "stop"].any?{|x| transformed_body.start_with?(x)}
-      
-      TextMessageUnsubscription.create!(
-        phone_number: from,
-        identity_id: context_identity_id,
-      )
-      
-      twiml = Twilio::TwiML::MessagingResponse.new do |r|
-        r.message(body: I18n.t("myplaceonline.twilio.unsubscribed"))
-      end
-      
-    elsif ["sub", "resub"].any?{|x| transformed_body.start_with?(x)}
-      
-      TextMessageUnsubscription.where(
-        phone_number: from,
-        identity_id: context_identity_id,
-      ).destroy_all
-      
-      twiml = Twilio::TwiML::MessagingResponse.new do |r|
-        r.message(body: I18n.t("myplaceonline.twilio.resubscribed"))
-      end
-      
-    elsif !context_identity_id.nil? && last_text_message.from_identity.has_mobile? && last_text_message.to_identity_id != last_text_message.from_identity_id
-      
-      # Pass it on to the most recent texter
-      if !body.blank?
-        if last_text_message.from_identity.send_sms(body: "#{last_text_message.to_identity.display_short}: #{body}")
-          LastTextMessage.update_ltm(
-            phone_number: last_text_message.from_identity.first_mobile_number.number,
-            message_category: last_text_message.category,
-            to_identity_id: last_text_message.from_identity_id,
-            from_identity_id: last_text_message.to_identity_id,
-          )
+    # User can target a response by display name: "@UserX Response [...]"
+    body.strip!
+    if body.start_with?("@")
+      i = body.index(" ")
+      if !i.nil?
+        target = body[1..i-1]
+        last_text_message = LastTextMessage.where(
+          "phone_number = :from AND from_display ILIKE :from_display",
+          from: from,
+          from_display: "#{target}%",
+        ).order("updated_at DESC").limit(1).take
+        if last_text_message.nil?
+          mainline_processing = false
+          twiml = Twilio::TwiML::MessagingResponse.new do |r|
+            r.message(body: I18n.t("myplaceonline.twilio.display_not_found", name: target))
+          end
         end
       end
+    end
+    
+    if mainline_processing
+      if last_text_message.nil?
+        last_text_message = LastTextMessage.where(phone_number: from).order("updated_at DESC").limit(1).take
+      end
+
+      if !last_text_message.nil?
+        context_identity_id = last_text_message.to_identity_id
+      end
       
-      twiml = Twilio::TwiML::MessagingResponse.new
-      
-    else
-      Myp.warn("SMS Received from #{from}:\n\n#{body}")
-      twiml = Twilio::TwiML::MessagingResponse.new
+      if ["unsub", "remove", "stop"].any?{|x| transformed_body.start_with?(x)}
+        
+        TextMessageUnsubscription.create!(
+          phone_number: from,
+          identity_id: context_identity_id,
+        )
+        
+        twiml = Twilio::TwiML::MessagingResponse.new do |r|
+          r.message(body: I18n.t("myplaceonline.twilio.unsubscribed"))
+        end
+        
+      elsif ["sub", "resub"].any?{|x| transformed_body.start_with?(x)}
+        
+        TextMessageUnsubscription.where(
+          phone_number: from,
+          identity_id: context_identity_id,
+        ).destroy_all
+        
+        twiml = Twilio::TwiML::MessagingResponse.new do |r|
+          r.message(body: I18n.t("myplaceonline.twilio.resubscribed"))
+        end
+        
+      elsif !context_identity_id.nil? && last_text_message.from_identity.has_mobile? && last_text_message.to_identity_id != last_text_message.from_identity_id
+        
+        # Pass it on to the most recent texter
+        if !body.blank?
+          
+          if last_text_message.from_identity.send_sms(body: "#{last_text_message.to_identity.display_short}: #{body}")
+            LastTextMessage.update_ltm(
+              phone_number: last_text_message.from_identity.first_mobile_number.number,
+              message_category: last_text_message.category,
+              to_identity: last_text_message.from_identity,
+              from_identity: last_text_message.to_identity,
+            )
+          end
+        end
+        
+        twiml = Twilio::TwiML::MessagingResponse.new
+        
+      else
+        Myp.warn("SMS Received from #{from}:\n\n#{body}")
+        twiml = Twilio::TwiML::MessagingResponse.new
+      end
     end
     
     render(body: twiml.to_s, content_type: "text/xml", layout: false)

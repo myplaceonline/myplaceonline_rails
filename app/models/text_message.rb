@@ -103,8 +103,8 @@ class TextMessage < ApplicationRecord
       LastTextMessage.update_ltm(
         phone_number: target,
         message_category: self.message_category,
-        to_identity_id: contact.nil? ? nil : contact.contact_identity_id,
-        from_identity_id: User.current_user.current_identity_id,
+        to_identity: contact.nil? ? nil : contact.contact_identity,
+        from_identity: User.current_user.current_identity,
       )
 
       if !contact.nil?
