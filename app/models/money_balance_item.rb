@@ -15,13 +15,19 @@ class MoneyBalanceItem < ApplicationRecord
   end
 
   def display_initials
-    I18n.t("myplaceonline.money_balances.money_item_display", {
-        x: amount < 0 ? money_balance.contact.display_initials : money_balance.identity.display_initials,
-        amount: Myp.number_to_currency(amount.abs),
-        time: Myp.display_time(item_time, User.current_user, :super_short_datetime_year),
-        description: Myp.ellipses_if_needed(self.money_balance_item_name, 16)
-      }
-    )
+    name = "myplaceonline.money_balances.money_item_display"
+    i18n_data = {}
+    if !self.original_amount.nil? && self.original_amount != self.amount
+      name << "_with_original"
+      i18n_data[:original_amount] = Myp.number_to_currency(self.original_amount.abs)
+    end
+    i18n_data.merge!({
+      x: amount < 0 ? money_balance.contact.display_initials : money_balance.identity.display_initials,
+      amount: Myp.number_to_currency(amount.abs),
+      time: Myp.display_time(item_time, User.current_user, :super_short_datetime_year),
+      description: Myp.ellipses_if_needed(self.money_balance_item_name, 16)
+    })
+    I18n.t(name, i18n_data)
   end
 
   def self.build(params = nil)
@@ -51,23 +57,27 @@ class MoneyBalanceItem < ApplicationRecord
   
   def independent_description(withtime = true, initials: false)
     name = withtime ? "myplaceonline.money_balances.paid" : "myplaceonline.money_balances.paid_notime"
-    if amount < 0
-      I18n.t(name, {
-          x: initials ? money_balance.contact.display_initials : money_balance.contact.display(simple: true),
-          y: initials ? money_balance.identity.display_initials : money_balance.identity.display,
-          amount: Myp.number_to_currency(amount.abs),
-          time: item_time
-        }
-      )
-    else
-      I18n.t(name, {
-          x: initials ? money_balance.identity.display_initials : money_balance.identity.display,
-          y: initials ? money_balance.contact.display_initials : money_balance.contact.display(simple: true),
-          amount: Myp.number_to_currency(amount),
-          time: item_time
-        }
-      )
+    i18n_data = {}
+    if !self.original_amount.nil? && self.original_amount != self.amount
+      name << "_with_original"
+      i18n_data[:original_amount] = Myp.number_to_currency(self.original_amount.abs)
     end
+    if amount < 0
+      i18n_data.merge!({
+        x: initials ? money_balance.contact.display_initials : money_balance.contact.display(simple: true),
+        y: initials ? money_balance.identity.display_initials : money_balance.identity.display,
+        amount: Myp.number_to_currency(amount.abs),
+        time: item_time
+      })
+    else
+      i18n_data.merge!({
+        x: initials ? money_balance.identity.display_initials : money_balance.identity.display,
+        y: initials ? money_balance.contact.display_initials : money_balance.contact.display(simple: true),
+        amount: Myp.number_to_currency(amount),
+        time: item_time
+      })
+    end
+    I18n.t(name, i18n_data)
   end
 
   def final_search_result
