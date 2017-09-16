@@ -2851,7 +2851,7 @@ en:
       menu_links_static: "Static Menu Links"
       menu_links_logged_in: "Logged-in Menu Links"
       favicon_ico_identity_file: "favicon.ico"
-      favicon_png_identity_file: "favicon.png (196x196)"
+      favicon_png_identity_file: "favicon.png (16x16)"
       default_header_icon_identity_file: "Default Header Icon (16x16)"
       hosted_details: "Hosted Details"
       new_user_welcome: "New User Welcome"

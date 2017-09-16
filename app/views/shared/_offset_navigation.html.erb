@@ -3,6 +3,9 @@
 if !defined?(category)
   category = controller.category_name
 end
+if !defined?(show_all)
+  show_all = true
+end
 %>
 
 <% if offset + perpage < count %>
@@ -15,6 +18,9 @@ end
 
 <% if count > perpage %>
   <div class="horizontal_center small">
-    <%= count %> <%= t("myplaceonline.category." + category) %>, <%= perpage %> <%= t("myplaceonline.general.perpage") %> (<%= link_to(t("myplaceonline.general.all"), items_all_link + query_params_part_all) %>)
+    <%= count %> <%= t("myplaceonline.category." + category) %>, <%= perpage %> <%= t("myplaceonline.general.perpage") %>
+    <% if show_all %>
+      (<%= link_to(t("myplaceonline.general.all"), items_all_link + query_params_part_all) %>)
+    <% end %>
   </div>
 <% end %>
