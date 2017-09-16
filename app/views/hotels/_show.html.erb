@@ -1,5 +1,8 @@
 <%= attribute_table_row_reference(t("myplaceonline.hotels.location"), "location_path", obj.location) %>
 <%= attribute_table_row(t("myplaceonline.hotels.room_number"), obj.room_number) %>
+<%= data_row(heading: t("myplaceonline.hotels.checkin_date"), content: obj.checkin_date) %>
+<%= data_row(heading: t("myplaceonline.hotels.checkout_date"), content: obj.checkout_date) %>
+<%= data_row(heading: t("myplaceonline.hotels.confirmation_number"), content: obj.confirmation_number) %>
 <%= attribute_table_row_select(t("myplaceonline.hotels.overall_rating"), obj.overall_rating, Myp::RATINGS) %>
 <%= attribute_table_row_select(t("myplaceonline.hotels.breakfast_rating"), obj.breakfast_rating, Myp::RATINGS) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
