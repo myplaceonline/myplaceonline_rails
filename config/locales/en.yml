@@ -2700,6 +2700,7 @@ en:
       checkin_date: "Check-in Date"
       checkout_date: "Check-out Date"
       confirmation_number: "Confirmation Number"
+      total_cost: "Total Cost"
     alerts_displays:
       suppress_hotel: "Suppress Hotel Alerts"
       next_flight: "Next Flight"
@@ -3009,6 +3010,9 @@ en:
       message_category: "Flight Info"
       last_leg_info: "%{name} is scheduled to arrive on %{airline} %{flight_number} at %{time} @ %{location}"
       trip_info: "Trip Information"
+      website: "Purchase Website"
+      website_confirmation_number: "Purchase Confirmation Number"
+      total_cost: "Total Cost"
     flight_legs:
       flight_leg: "Flight Leg"
       flight_number: "Flight Number"

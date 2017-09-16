@@ -43,6 +43,9 @@ class FlightsController < MyplaceonlineController
       :flight_start_date,
       :confirmation_number,
       :notes,
+      :website_confirmation_number,
+      :total_cost,
+      website_attributes: WebsitesController.param_names,
       flight_legs_attributes: [
         :id,
         :_destroy,

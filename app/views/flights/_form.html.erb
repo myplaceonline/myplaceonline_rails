@@ -1,6 +1,37 @@
 <%= myp_text_field(f, :flight_name, "myplaceonline.flights.flight_name", obj.flight_name, autofocus) %>
 <%= myp_date_field(f, :flight_start_date, "myplaceonline.flights.flight_start_date", obj.flight_start_date) %>
 <%= myp_text_field(f, :confirmation_number, "myplaceonline.flights.confirmation_number", obj.confirmation_number) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :total_cost,
+    value: obj.total_cost,
+    placeholder: "myplaceonline.flights.total_cost"
+  )
+%>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :website,
+    existingobj: obj.website,
+    heading: t("myplaceonline.flights.website"),
+    objform: "websites/form",
+    existingobjurl: "website_path",
+    searchurl: "/websites.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :website_confirmation_number,
+    value: obj.website_confirmation_number,
+    placeholder: "myplaceonline.flights.website_confirmation_number"
+  )
+%>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
 <%=
   render layout: "myplaceonline/childproperties", locals: {

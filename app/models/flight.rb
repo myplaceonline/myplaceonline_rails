@@ -5,6 +5,8 @@ class Flight < ApplicationRecord
   
   child_properties(name: :flight_legs, sort: "depart_time ASC, position ASC")
 
+  child_property(name: :website)
+
   def display
     Myp.appendstrwrap(flight_name, Myp.display_date_short_year(flight_start_date, User.current_user))
   end

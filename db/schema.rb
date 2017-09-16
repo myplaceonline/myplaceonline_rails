@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170916181113) do
+ActiveRecord::Schema.define(version: 20170916183606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2068,7 +2068,11 @@ ActiveRecord::Schema.define(version: 20170916181113) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.bigint "website_id"
+    t.string "website_confirmation_number"
+    t.decimal "total_cost", precision: 10, scale: 2
     t.index ["identity_id"], name: "index_flights_on_identity_id"
+    t.index ["website_id"], name: "index_flights_on_website_id"
   end
 
   create_table "food_files", id: :serial, force: :cascade do |t|
@@ -2439,6 +2443,7 @@ ActiveRecord::Schema.define(version: 20170916181113) do
     t.date "checkin_date"
     t.date "checkout_date"
     t.string "confirmation_number"
+    t.decimal "total_cost", precision: 10, scale: 2
     t.index ["identity_id"], name: "index_hotels_on_identity_id"
     t.index ["location_id"], name: "index_hotels_on_location_id"
   end
@@ -6271,6 +6276,7 @@ ActiveRecord::Schema.define(version: 20170916181113) do
   add_foreign_key "flight_legs", "locations", column: "arrival_location_id"
   add_foreign_key "flight_legs", "locations", column: "depart_location_id"
   add_foreign_key "flights", "identities"
+  add_foreign_key "flights", "websites"
   add_foreign_key "food_files", "foods"
   add_foreign_key "food_files", "identities"
   add_foreign_key "food_files", "identity_files"

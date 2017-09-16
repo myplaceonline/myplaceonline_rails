@@ -17,6 +17,7 @@ class HotelsController < MyplaceonlineController
       :checkin_date,
       :checkout_date,
       :confirmation_number,
+      :total_cost,
       location_attributes: LocationsController.param_names
     ]
   end
