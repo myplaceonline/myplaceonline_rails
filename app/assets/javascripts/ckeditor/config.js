@@ -3,6 +3,8 @@ Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
+// https://docs.ckeditor.com/?_escaped_fragment_=/api/CKEDITOR.config
+// https://ckeditor.com/addons/plugins/all
 CKEDITOR.editorConfig = function( config )
 {
   // Define changes to default configuration here. For example:
@@ -128,9 +130,21 @@ CKEDITOR.editorConfig = function( config )
   //  { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar' ] }
   //];
 
-  config.extraPlugins = 'markdown,codemirror,clipboard,autolink';
-  // http://stackoverflow.com/questions/2246631/how-to-disable-ckeditor-context-menu
-  config.removePlugins = 'elementspath,contextmenu,liststyle,tabletools';
+  config.tabSpaces = 4;
+  
+  // alert(CKEDITOR.config.plugins);
+  // 
+  // dialogui,dialog,about,a11yhelp,dialogadvtab,basicstyles,bidi,blockquote,button,toolbar,notification,clipboard,
+  // panelbutton,panel,floatpanel,colorbutton,colordialog,templates,menu,contextmenu,copyformatting,div,resize,
+  // elementspath,enterkey,entities,popup,filebrowser,find,fakeobjects,flash,floatingspace,listblock,richcombo,font,
+  // forms,format,horizontalrule,htmlwriter,iframe,wysiwygarea,image,indent,indentblock,indentlist,smiley,justify,
+  // menubutton,language,link,list,liststyle,magicline,maximize,newpage,pagebreak,pastetext,pastefromword,preview,print,
+  // removeformat,save,selectall,showblocks,showborders,sourcearea,specialchar,scayt,stylescombo,tab,table,tabletools,
+  // tableselection,undo,wsc
+  
+  config.extraPlugins = 'markdown,clipboard,autolink';
+  config.removePlugins = 'elementspath,contextmenu,magicline,a11yhelp';
+
   //config.startupMode = 'markdown';
   config.format_tags = 'p;h1;h2;h3;h4;h5;h6;pre';
   config.removeDialogTabs = 'link:upload;link:advanced;link:target';
