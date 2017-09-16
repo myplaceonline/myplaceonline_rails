@@ -367,6 +367,31 @@ class Trip < ApplicationRecord
     ["work", "notify_emergency_contacts"]
   end
   
+  def total_cost
+    result = nil
+    if !self.hotel.nil? && !self.hotel.total_cost.nil?
+      if result.nil?
+        result = 0
+      end
+      result += self.hotel.total_cost
+    end
+    trip_flights.each do |trip_flight|
+      if !trip_flight.flight.total_cost.nil?
+        if result.nil?
+          result = 0
+        end
+        result += trip_flight.flight.total_cost
+      end
+    end
+    if !self.event.nil? && !self.event.cost.nil?
+      if result.nil?
+        result = 0
+      end
+      result += self.event.cost
+    end
+    result
+  end
+  
   protected
   def default_url_options
     Rails.configuration.default_url_options

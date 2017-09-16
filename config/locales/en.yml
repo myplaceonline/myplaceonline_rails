@@ -1776,6 +1776,7 @@ en:
       trip_name: "Trip Name"
       end_before_start: "The end date is before the start date"
       event: "Event"
+      total_cost: "Total Cost"
     passports:
       region: "Country"
       passport_number: "Passport Number"
