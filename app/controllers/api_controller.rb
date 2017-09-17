@@ -542,7 +542,7 @@ class ApiController < ApplicationController
           raise "Website returned no content"
         end
       rescue Exception => e
-        Myp.warn("website_title error with URL: '#{link}'", e)
+        Myp.warn("website_title error with URL: '#{link}'", e, request: request)
         result[:error] = e.to_s
       end
     end
@@ -673,7 +673,7 @@ class ApiController < ApplicationController
         twiml = Twilio::TwiML::MessagingResponse.new
         
       else
-        Myp.warn("SMS Received from #{from}:\n\n#{body}")
+        Myp.warn("SMS Received from #{from}:\n\n#{body}", request: request)
         twiml = Twilio::TwiML::MessagingResponse.new
       end
     end

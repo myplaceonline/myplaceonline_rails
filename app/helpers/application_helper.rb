@@ -368,7 +368,7 @@ module ApplicationHelper
             end
           else
             replacement = ""
-            Myp.warn("Image #{name_search} not found for blog: #{blog.id}, image_context: #{image_context.inspect}")
+            Myp.warn("Image #{name_search} not found for blog: #{blog.id}, image_context: #{image_context.inspect}", request: request)
           end
           html = match_data.pre_match + replacement + match_data.post_match
           i = match_data.offset(0)[0] + replacement.length + 1
@@ -406,7 +406,7 @@ module ApplicationHelper
             end
           else
             replacement = ""
-            Myp.warn("Link #{name_search} not found for blog: #{blog.id}, image_context: #{image_context.inspect}")
+            Myp.warn("Link #{name_search} not found for blog: #{blog.id}, image_context: #{image_context.inspect}", request: request)
           end
           html = match_data.pre_match + replacement + match_data.post_match
           i = match_data.offset(0)[0] + replacement.length + 1

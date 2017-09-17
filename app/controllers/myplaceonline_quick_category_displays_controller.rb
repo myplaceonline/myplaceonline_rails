@@ -24,7 +24,7 @@ class MyplaceonlineQuickCategoryDisplaysController < MyplaceonlineController
     begin
       @usefulItemsList = Myp.highly_visited(current_user, limit: most_visited_items).first(most_visited_items)
     rescue Faraday::ConnectionFailed => e
-      Myp.warn("ElasticSearch quick category display highly_visited failed", e)
+      Myp.warn("ElasticSearch quick category display highly_visited failed", e, request: request)
       @usefulItemsError = e
     end
     if @usefulCategoryList.length == 0 && @usefulItemsList.length == 0

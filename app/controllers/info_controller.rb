@@ -45,7 +45,7 @@ class InfoController < ApplicationController
       begin
         raise "Test exception"
       rescue Exception => e
-        Myp.warn("Test server warning", e)
+        Myp.warn("Test server warning", e, request: request)
       end
     end
     redirect_to info_diagnostics_path

@@ -144,7 +144,7 @@ class ApplicationController < ActionController::Base
       begin
         Time.zone = current_user.timezone
       rescue Exception => e
-        Myp.warn("Invalid time zone #{Myp.error_details(e)}")
+        Myp.warn("Invalid time zone #{Myp.error_details(e)}", e, request: request)
       end
     end
   end

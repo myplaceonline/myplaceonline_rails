@@ -1046,7 +1046,7 @@ module Myp
     end
   end
   
-  def self.warn(message, exception = nil)
+  def self.warn(message, exception = nil, request: nil)
     subject = "Myplaceonline Warning"
     body_plain = message
     body_html = CGI::escapeHTML(message)
@@ -1056,11 +1056,13 @@ module Myp
       body_html += "\n\n<p>" + CGI::escapeHTML(error_details).gsub(/\n/, "<br />\n").gsub(/\t/, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;") + "</p>"
       #subject += " (#{exception.class})"
     end
-    if !ENV["NODENAME"].blank?
-      body_plain += "\n\nServer: #{ENV["NODENAME"]}"
-      body_html += "\n\n<p>Server: #{ENV["NODENAME"]}</p>"
-    end
+
+    request_info = Myp.get_request_info(request)
+    body_plain << request_info[:body_plain]
+    body_html << request_info[:body_html]
+
     Rails.logger.warn{"Myp.warn: #{message}"}
+    
     Myp.send_support_email_safe(subject, body_html.html_safe, body_plain)
   end
   
@@ -1590,7 +1592,20 @@ module Myp
       body_plain += "\n\n" + error_details
       body_html += "\n\n<p>" + CGI::escapeHTML(error_details).gsub(/\n/, "<br />\n").gsub(/\t/, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;") + "</p>"
     end
+    
+    request_info = Myp.get_request_info(request)
+    body_plain << request_info[:body_plain]
+    body_html << request_info[:body_html]
 
+    Rails.logger.warn{"handle_exception: " + body_plain}
+    
+    Myp.send_support_email_safe(subject, body_html.html_safe, body_plain, email: email)
+  end
+  
+  def self.get_request_info(request)
+    body_plain = ""
+    body_html = ""
+    
     if !request.nil?
       str = "Request: {" +
           "\n\tfullpath: #{request.fullpath.inspect}, " +
@@ -1621,9 +1636,10 @@ module Myp
       body_plain += "\n\nServer: #{ENV["NODENAME"]}"
     end
     
-    Rails.logger.warn{"handle_exception: " + body_plain}
-    
-    Myp.send_support_email_safe(subject, body_html.html_safe, body_plain, email: email)
+    {
+      body_plain: body_plain,
+      body_html: body_html,
+    }
   end
   
   def self.send_support_email_safe(subject, body, body_plain = nil, email: nil)
