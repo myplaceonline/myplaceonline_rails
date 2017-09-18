@@ -65,6 +65,8 @@ class TextMessage < ApplicationRecord
       content += body
     end
     
+    content = Myp.markdown_for_plain_email(content)
+    
     target = TextMessage.normalize(phone_number: target)
     
     Rails.logger.debug{"SMS process_single_target target: #{target}"}
