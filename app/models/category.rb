@@ -5,11 +5,27 @@ class Category < ApplicationRecord
   has_many :category_points_amounts
   
   def human_title
-    Category.human_title(name)
+    if @cached_human_title.nil?
+      @cached_human_title = {}
+    end
+    result = @cached_human_title[I18n.locale]
+    if result.nil?
+      result = Category.human_title(name)
+      @cached_human_title[I18n.locale] = result
+    end
+    result
   end
   
   def human_title_singular
-    Category.human_title_singular(name)
+    if @cached_human_title_singular.nil?
+      @cached_human_title_singular = {}
+    end
+    result = @cached_human_title_singular[I18n.locale]
+    if result.nil?
+      result = Category.human_title_singular(name)
+      @cached_human_title_singular[I18n.locale] = result
+    end
+    result
   end
   
   def filtertext
