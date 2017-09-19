@@ -2569,7 +2569,11 @@ module Myp
     x > y ? x : y
   end
   
-  def self.log_response_time(name:, **options, &block)
+  def self.log_threshold
+    100
+  end
+  
+  def self.log_response_time(name:, threshold: nil, **options, &block)
     start_time = Time.now
     begin
       block.call
@@ -2577,10 +2581,12 @@ module Myp
       end_time = Time.now
       diff = (end_time - start_time) * 1000.0
       
-      if !options.nil? && options.length > 0
-        Rails.logger.info{"#{name} response time in milliseconds = #{sprintf("%0.02f", diff)} context: #{options}"}
-      else
-        Rails.logger.info{"#{name} response time in milliseconds = #{sprintf("%0.02f", diff)}"}
+      if threshold.nil? || diff >= threshold
+        if !options.nil? && options.length > 0
+          Rails.logger.info{"#{name} response time in milliseconds = #{sprintf("%0.02f", diff)} context: #{options}"}
+        else
+          Rails.logger.info{"#{name} response time in milliseconds = #{sprintf("%0.02f", diff)}"}
+        end
       end
     end
   end
