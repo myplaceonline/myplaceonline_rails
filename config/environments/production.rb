@@ -105,4 +105,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = DynamicSmtpSettings.new
   config.action_mailer.raise_delivery_errors = true
+  
+  # https://stackoverflow.com/a/12003652/4135310
+  config.action_view.logger = nil
 end
