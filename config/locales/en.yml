@@ -367,6 +367,8 @@ en:
         ]]>
     general:
       email: "E-mail"
+      access_denied: "You are not authorized to access %{resource}"
+      access_denied_guest: "Please login or sign up to access this resource"
       password: "Password"
       newpassword: "New Password"
       passwordwithmin: "Password (min %{minchars} characters)"

@@ -1,3 +1,5 @@
+require 'colorize'
+
 class ApplicationController < ActionController::Base
   respond_to :html, :json
   
@@ -52,36 +54,40 @@ class ApplicationController < ActionController::Base
   end
 
   def catchall(exception)
-    Rails.logger.debug{"ApplicationController.catchall: #{exception.inspect}"}
+    Rails.logger.debug{"ApplicationController.catchall: #{exception.inspect}".red}
     if exception.is_a?(ActionView::Template::Error)
       exception = exception.cause
     end
     
     if exception.is_a?(Myp::DecryptionKeyUnavailableError)
       reentry_url = Myp.reentry_url(request)
-      Rails.logger.debug{"ApplicationController.catchall redirecting to: #{reentry_url}"}
+      Rails.logger.debug{"ApplicationController.catchall redirecting to: #{reentry_url}".red}
       respond_to do |format|
         format.html {
-          Rails.logger.debug{"ApplicationController.catchall format html"}
+          Rails.logger.debug{"ApplicationController.catchall format html".red}
           redirect_to reentry_url
         }
         format.js {
-          Rails.logger.debug{"ApplicationController.catchall format js"}
+          Rails.logger.debug{"ApplicationController.catchall format js".red}
           render js: "myplaceonline.navigate(\"#{reentry_url}\");"
         }
       end
     elsif exception.is_a?(CanCan::AccessDenied)
-      Rails.logger.debug{"ApplicationController.catchall access denied"}
-      redirect_to root_url, :alert => exception.message
+      Rails.logger.debug{"ApplicationController.catchall access denied #{exception.message}".red}
+      if User.current_user.nil? || User.current_user.guest?
+        redirect_to(new_user_session_url(redirect: request.fullpath), alert: I18n.t("myplaceonline.general.access_denied_guest"))
+      else
+        redirect_to(root_url, alert: I18n.t("myplaceonline.general.access_denied", resource: request.path))
+      end
     elsif exception.is_a?(Myp::SuddenRedirectError)
-      Rails.logger.debug{"ApplicationController.catchall sudden redirect #{exception.path}"}
+      Rails.logger.debug{"ApplicationController.catchall sudden redirect #{exception.path}".red}
       if exception.notice.blank?
         redirect_to exception.path
       else
         redirect_to exception.path, :flash => { :notice => exception.notice }
       end
     else
-      Rails.logger.debug{"ApplicationController.catchall unknown"}
+      Rails.logger.debug{"ApplicationController.catchall unknown".red}
       Myp.handle_exception(exception, session[:myp_email], request)
       if Rails.env.test?
         raise exception
