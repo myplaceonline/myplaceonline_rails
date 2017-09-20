@@ -2,6 +2,8 @@
 
 <% if !user_signed_in? %>
 
+  <%= flashes! %>
+  
   <%
   homepage = Myp.website_domain_homepage
   if homepage.is_a?(Hash)

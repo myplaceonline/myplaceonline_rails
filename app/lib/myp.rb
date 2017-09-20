@@ -5,6 +5,7 @@ require 'twilio-ruby'
 require 'rest-client'
 require 'time'
 require 'posix/spawn'
+require 'colorize'
 
 module Myp
   
@@ -2575,19 +2576,26 @@ module Myp
   
   def self.log_response_time(name:, threshold: nil, **options, &block)
     start_time = Time.now
-    Rails.logger.debug{"Myp.log_response_time #{name} started"}
+    if !options.nil? && options.length > 0
+      Rails.logger.debug{"Myp.log_response_time #{name} started context: #{options}".colorize(color: :green)}
+    else
+      Rails.logger.debug{"Myp.log_response_time #{name} started".colorize(color: :green)}
+    end
     begin
       block.call
     ensure
-      Rails.logger.debug{"Myp.log_response_time #{name} finished"}
       end_time = Time.now
       diff = (end_time - start_time) * 1000.0
       
       if threshold.nil? || diff >= threshold
+        use_color = :light_green
+        if !threshold.nil? && diff >= threshold
+          use_color = :red
+        end
         if !options.nil? && options.length > 0
-          Rails.logger.info{"Myp.log_response_time #{name} response time in milliseconds = #{sprintf("%0.02f", diff)} context: #{options}"}
+          Rails.logger.info{"Myp.log_response_time #{name} response time in milliseconds = #{sprintf("%0.02f", diff)} context: #{options}".colorize(color: use_color)}
         else
-          Rails.logger.info{"Myp.log_response_time #{name} response time in milliseconds = #{sprintf("%0.02f", diff)}"}
+          Rails.logger.info{"Myp.log_response_time #{name} response time in milliseconds = #{sprintf("%0.02f", diff)}".colorize(color: use_color)}
         end
       end
     end
