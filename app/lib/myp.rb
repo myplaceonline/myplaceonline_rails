@@ -1064,7 +1064,12 @@ module Myp
 
     Rails.logger.warn{"Myp.warn: #{message}"}
     
-    Myp.send_support_email_safe(subject, body_html.html_safe, body_plain)
+    Myp.send_support_email_safe(
+      subject,
+      body_html.html_safe,
+      body_plain,
+      request: request,
+    )
   end
   
   def self.reset_points(user)
@@ -1600,7 +1605,13 @@ module Myp
 
     Rails.logger.warn{"handle_exception: " + body_plain}
     
-    Myp.send_support_email_safe(subject, body_html.html_safe, body_plain, email: email)
+    Myp.send_support_email_safe(
+      subject,
+      body_html.html_safe,
+      body_plain,
+      email: email,
+      request: request,
+    )
   end
   
   def self.get_request_info(request)
@@ -1632,18 +1643,27 @@ module Myp
       end
     end
     
+    if ExecutionContext.available? && !User.current_user.nil?
+      body_html += "\n\n<p>User: #{User.current_user.email}, Identity: #{User.current_user.current_identity_id}</p>".html_safe
+      body_plain += "\n\nUser: #{User.current_user.email}, Identity: #{User.current_user.current_identity_id}"
+    end
+    
     if !ENV["NODENAME"].blank?
       body_html += "\n\n<p>Server: #{ENV["NODENAME"]}</p>".html_safe
       body_plain += "\n\nServer: #{ENV["NODENAME"]}"
     end
     
+    t = Time.now.utc.to_s(:full)
+    body_html += "\n\n<p>Server Time: #{t}</p>".html_safe
+    body_plain += "\n\nServer Time: #{t}"
+
     {
       body_plain: body_plain,
       body_html: body_html,
     }
   end
   
-  def self.send_support_email_safe(subject, body, body_plain = nil, email: nil)
+  def self.send_support_email_safe(subject, body_html, body_plain = nil, email: nil, request: nil, html_comment_details: false)
     begin
       from = Myp.create_email
       if !email.blank?
@@ -1655,19 +1675,24 @@ module Myp
       # Protect email servers from simple DoS
       sleep(1.0)
       
-      if ExecutionContext.available? && !User.current_user.nil?
-        if !body.blank?
-          body += "\n\n<p>User: #{User.current_user.email}</p>".html_safe
-        end
-        if !body_plain.blank?
-          body_plain += "\n\nUser: #{User.current_user.email}"
-        end
+      if body_plain.blank?
+        body_plain = Myp.html_to_markdown(body_html)
       end
       
-      UserMailer.send_support_email(from, subject, body, body_plain).deliver_now
+      request_info = Myp.get_request_info(request)
+      body_plain << request_info[:body_plain]
+      if html_comment_details
+        body_html << "\n<!--\n"
+      end
+      body_html << request_info[:body_html]
+      if html_comment_details
+        body_html << "\n-->\n"
+      end
+      
+      UserMailer.send_support_email(from, subject, body_html, body_plain).deliver_now
       
     rescue Exception => e
-      puts "Could not send email. Subject: " + subject + ", Body: " + body + ", Email Problem: " + Myp.error_details(e)
+      puts "Could not send email. Subject: " + subject + ", Body: " + body_html + ", Email Problem: " + Myp.error_details(e)
     end
   end
   
@@ -3217,10 +3242,36 @@ module Myp
     
     i = 0
     while true do
-      match_data = str.match(/<p[^>]*>([^<]+)<\/p>/, i)
+      match_data = str.match(/<p[^>]*>(.*?)<\/p>/, i)
       if !match_data.nil?
         match_offset = match_data.offset(0)[0]
-        replacement = "\n" + match_data[1] + "\n"
+        replacement = match_data[1] + "\n"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/<strong>(.*?)<\/strong>/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        replacement = "**" + match_data[1] + "**"
+        str = match_data.pre_match + replacement + match_data.post_match
+        i = match_offset + replacement.length
+      else
+        break
+      end
+    end
+    
+    i = 0
+    while true do
+      match_data = str.match(/<em>(.*?)<\/em>/, i)
+      if !match_data.nil?
+        match_offset = match_data.offset(0)[0]
+        replacement = "_" + match_data[1] + "_"
         str = match_data.pre_match + replacement + match_data.post_match
         i = match_offset + replacement.length
       else

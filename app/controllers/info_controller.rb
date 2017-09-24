@@ -66,13 +66,15 @@ class InfoController < ApplicationController
         )
       )
       if @obj.save
-        email_content = %{
-Name: #{@obj.name}
-Email: #{@obj.email}
-Body:
-#{@obj.body}
-        }
-        Myp.send_support_email_safe(@obj.subject, email_content)
+        email_prefix = "#{@obj.name} (#{@obj.email}) submitted the contact form:\n\n"
+        Myp.send_support_email_safe(
+          @obj.subject,
+          "<p>" + email_prefix + "</p>" + Myp.markdown_to_html(@obj.body),
+          email_prefix + @obj.body,
+          email: @obj.email,
+          request: request,
+          html_comment_details: true,
+        )
         redirect_to "/",
           :flash => { :notice =>
                       I18n.t("myplaceonline.contact.sent")

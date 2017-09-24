@@ -2,11 +2,10 @@
 
 <% if !user_signed_in? %>
 
-  <%= flashes! %>
-  
   <%
   homepage = Myp.website_domain_homepage
   if homepage.is_a?(Hash)
+    # Assume that the view will have flashes!
     Rails.logger.debug{"welcome index hash: #{Myp.debug_print(homepage)}"}
     MyplaceonlineExecutionContext.do_ability_identity(homepage[:obj].identity) do
   %>
@@ -20,6 +19,7 @@
     end
   else
   %>
+    <%= flashes! %>
     <%= raw(homepage) %>
   <%
   end

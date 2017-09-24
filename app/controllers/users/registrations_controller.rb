@@ -50,7 +50,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
           
           Myp.persist_password(params[:user][:password])
           
-          Myp.send_support_email_safe("New User #{resource.email}", "New User #{resource.email}")
+          Myp.send_support_email_safe(
+            "New User #{resource.email}",
+            "New User #{resource.email}",
+            request: request,
+          )
           
           if resource.active_for_authentication?
             #set_flash_message :notice, :signed_up if is_flashing_format?
