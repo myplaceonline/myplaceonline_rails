@@ -265,9 +265,4 @@ class Event < ApplicationRecord
       end
     end
   end
-
-  protected
-  def default_url_options
-    Rails.configuration.default_url_options
-  end
 end

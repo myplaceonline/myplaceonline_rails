@@ -168,9 +168,4 @@ class TextMessage < ApplicationRecord
     end
     phone_number
   end
-  
-  protected
-  def default_url_options
-    Rails.configuration.default_url_options
-  end
 end

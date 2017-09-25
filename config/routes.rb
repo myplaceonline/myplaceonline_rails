@@ -300,7 +300,8 @@ Rails.application.routes.draw do
         subresources: true,
         name: :feed_items,
         subitems: [
-          { instance: true, link: "mark_read" }
+          { instance: true, link: "mark_read" },
+          { instance: true, link: "read_and_redirect" },
         ]
       }
     ],

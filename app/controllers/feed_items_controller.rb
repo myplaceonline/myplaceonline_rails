@@ -53,6 +53,13 @@ class FeedItemsController < MyplaceonlineController
     ]
   end
   
+  def read_and_redirect
+    set_obj
+    @obj.is_read = true
+    @obj.save!
+    redirect_to @obj.full_feed_link
+  end
+  
   protected
     def insecure
       true

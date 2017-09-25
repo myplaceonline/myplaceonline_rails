@@ -103,7 +103,7 @@ class Feed < ApplicationRecord
         )
         
         if self.new_notify
-          markdown = new_feed_items.map{|x| "[#{x.full_feed_link}](#{x.full_feed_link})" }.join("\n\n")
+          markdown = new_feed_items.reverse.map{|x| "[#{x.display}](#{Rails.application.routes.url_helpers.send("feed_feed_item_read_and_redirect_url", x.feed, x, Rails.configuration.default_url_options)}) @ #{x.publication_date}" }.join("\n\n")
           body = Myp.markdown_to_html(markdown)
           body_plain = Myp.markdown_for_plain_email(markdown)
           User.current_user.current_identity.send_email(
