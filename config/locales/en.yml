@@ -258,6 +258,7 @@ en:
       diet_foods: "Diet Foods"
       boycotts: "Boycotts"
       blog_post_comments: "Comments"
+      reminders: "Reminders"
     default_domain:
       meta_description: "myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -3703,3 +3704,12 @@ en:
     boycotts:
       boycott_name: "Name"
       boycott_start: "Start Date"
+    reminders:
+      start_time: "Start"
+      reminder_threshold_amount: "Threshold Amount"
+      reminder_threshold_type: "Threshold Type"
+      expire_amount: "Expires Amount"
+      expire_type: "Expires Type"
+      repeat_amount: "Repeat Amount"
+      repeat_type: "Repeat Type"
+      max_pending: "Maximum Pending"

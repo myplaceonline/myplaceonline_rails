@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170916183606) do
+ActiveRecord::Schema.define(version: 20170926062214) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4526,6 +4526,25 @@ ActiveRecord::Schema.define(version: 20170916183606) do
     t.index ["identity_id"], name: "index_regimens_on_identity_id"
   end
 
+  create_table "reminders", force: :cascade do |t|
+    t.datetime "start_time"
+    t.integer "reminder_threshold_amount"
+    t.integer "reminder_threshold_type"
+    t.integer "expire_amount"
+    t.integer "expire_type"
+    t.integer "repeat_amount"
+    t.integer "repeat_type"
+    t.integer "max_pending"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_reminders_on_identity_id"
+  end
+
   create_table "repeats", id: :serial, force: :cascade do |t|
     t.date "start_date"
     t.integer "period_type"
@@ -6637,6 +6656,7 @@ ActiveRecord::Schema.define(version: 20170916183606) do
   add_foreign_key "regimen_items", "identities"
   add_foreign_key "regimen_items", "regimens"
   add_foreign_key "regimens", "identities"
+  add_foreign_key "reminders", "identities"
   add_foreign_key "repeats", "identities", name: "repeats_identity_id_fk"
   add_foreign_key "restaurant_pictures", "identities"
   add_foreign_key "restaurant_pictures", "identity_files"

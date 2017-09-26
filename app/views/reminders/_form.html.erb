@@ -1,0 +1,83 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATETIME,
+    name: :start_time,
+    value: obj.start_time,
+    placeholder: "myplaceonline.reminders.start_time",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_NUMBER,
+    name: :reminder_threshold_amount,
+    value: obj.reminder_threshold_amount,
+    placeholder: "myplaceonline.reminders.reminder_threshold_amount"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_NUMBER,
+    name: :reminder_threshold_type,
+    value: obj.reminder_threshold_type,
+    placeholder: "myplaceonline.reminders.reminder_threshold_type"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_NUMBER,
+    name: :expire_amount,
+    value: obj.expire_amount,
+    placeholder: "myplaceonline.reminders.expire_amount"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_NUMBER,
+    name: :expire_type,
+    value: obj.expire_type,
+    placeholder: "myplaceonline.reminders.expire_type"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_NUMBER,
+    name: :repeat_amount,
+    value: obj.repeat_amount,
+    placeholder: "myplaceonline.reminders.repeat_amount"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_NUMBER,
+    name: :repeat_type,
+    value: obj.repeat_type,
+    placeholder: "myplaceonline.reminders.repeat_type"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_NUMBER,
+    name: :max_pending,
+    value: obj.max_pending,
+    placeholder: "myplaceonline.reminders.max_pending"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+  )
+%>
