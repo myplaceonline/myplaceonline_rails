@@ -1355,9 +1355,39 @@ module ApplicationHelper
       select_options_sort: true,
       translate_select_options: true,
       text_area_rich: true,
+      on_select_target: nil,
+      on_select_target_show_values: nil,
+      on_select_target_hide_values: nil,
+      on_select_target_no_value: nil,
     }.merge(options)
     
     input_method_prefix = "_field"
+    
+    onchange = ""
+    
+    if !options[:on_select_target].nil?
+      hide = "var x = $(this).closest('p').siblings().find(\"input[id$='#{options[:on_select_target]}']\"); x.closest('p').hide(); x.focus();"
+      show = "var x = $(this).closest('p').siblings().find(\"input[id$='#{options[:on_select_target]}']\"); x.closest('p').show(); x.focus();"
+
+      onchange = "if ($(this).val() == '') {"
+      if options[:on_select_target_no_value] == :hide
+        onchange << hide
+      elsif options[:on_select_target_no_value] == :show
+        onchange << show
+      end
+
+      onchange << "} else {"
+
+        onchange << "if ($.inArray(parseInt($(this).val()), #{options[:on_select_target_show_values].to_json}) != -1) {"
+        onchange << show
+        onchange << "}"
+
+        onchange << "if ($.inArray(parseInt($(this).val()), #{options[:on_select_target_hide_values].to_json}) != -1) {"
+        onchange << hide
+        onchange << "}"
+
+      onchange << "}"
+    end
     
     if options[:type] == Myp::FIELD_NUMBER || options[:type] == Myp::FIELD_DECIMAL
       if options[:type] == Myp::FIELD_DECIMAL
@@ -1460,6 +1490,11 @@ module ApplicationHelper
       field_attributes[:prompt] = options[:placeholder]
       field_attributes[:include_blank] = !options[:value].nil?
     end
+    if !onchange.blank?
+      field_attributes[:onchange] = onchange
+    end
+    
+    Rails.logger.debug{"ApplicationHelper.input_field: field_attributes: #{Myp.debug_print(field_attributes)}"}
 
     if options[:datebox_mode].nil?
       if options[:type] == Myp::FIELD_TEXT_AREA && options[:text_area_rich]
@@ -1490,7 +1525,8 @@ module ApplicationHelper
                 options[:type].to_s,
                 name,
                 options_for_select(options[:select_options], options[:value]),
-                field_attributes
+                field_attributes,
+                field_attributes,
               )
             )
           else

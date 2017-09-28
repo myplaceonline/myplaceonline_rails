@@ -4,7 +4,8 @@ class Reminder < ApplicationRecord
 
   def self.properties
     [
-      { name: :reminder_datetime, type: ApplicationRecord::PROPERTY_TYPE_DATETIME },
+      { name: :reminder_name, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :start_time, type: ApplicationRecord::PROPERTY_TYPE_DATETIME },
       { name: :notes, type: ApplicationRecord::PROPERTY_TYPE_MARKDOWN },
       { name: :reminder_threshold_amount, type: ApplicationRecord::PROPERTY_TYPE_NUMBER },
       { name: :reminder_threshold_type, type: ApplicationRecord::PROPERTY_TYPE_NUMBER },
@@ -16,10 +17,19 @@ class Reminder < ApplicationRecord
     ]
   end
 
+  THRESHOLD_TYPE_IMMEDIATE = 0
+  THRESHOLD_TYPE_TIME_BEFORE = 1
+
+  THRESHOLD_TYPES = [
+    ["myplaceonline.reminders.reminder_threshold_types.immediate", THRESHOLD_TYPE_IMMEDIATE],
+    ["myplaceonline.reminders.reminder_threshold_types.time_before", THRESHOLD_TYPE_TIME_BEFORE],
+  ]
+
   validates :start_time, presence: true
+  validates :reminder_name, presence: true
   
   def display
-    Myp.display_datetime_short_year(start_time, User.current_user)
+    reminder_name
   end
 
   def self.build(params = nil)

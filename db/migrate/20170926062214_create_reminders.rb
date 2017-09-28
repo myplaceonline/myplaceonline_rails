@@ -2,6 +2,7 @@ class CreateReminders < ActiveRecord::Migration[5.1]
   def change
     create_table :reminders do |t|
       t.datetime :start_time
+      t.string :reminder_name
       t.integer :reminder_threshold_amount
       t.integer :reminder_threshold_type
       t.integer :expire_amount

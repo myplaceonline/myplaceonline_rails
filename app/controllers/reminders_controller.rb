@@ -11,6 +11,7 @@ class RemindersController < MyplaceonlineController
     def obj_params
       params.require(:reminder).permit(
         :start_time,
+        :reminder_name,
         :reminder_threshold_amount,
         :reminder_threshold_type,
         :expire_amount,

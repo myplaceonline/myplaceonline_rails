@@ -3705,11 +3705,15 @@ en:
       boycott_name: "Name"
       boycott_start: "Start Date"
     reminders:
-      start_time: "Start"
+      start_time: "Reminder Time"
+      reminder_name: "Name"
       reminder_threshold_amount: "Threshold Amount"
-      reminder_threshold_type: "Threshold Type"
+      reminder_threshold_type: "When to Raise the Reminder"
       expire_amount: "Expires Amount"
       expire_type: "Expires Type"
       repeat_amount: "Repeat Amount"
       repeat_type: "Repeat Type"
       max_pending: "Maximum Pending"
+      reminder_threshold_types:
+        immediate: "At the Reminder Time"
+        time_before: "Amount before the Reminder Time"

@@ -4528,6 +4528,7 @@ ActiveRecord::Schema.define(version: 20170926062214) do
 
   create_table "reminders", force: :cascade do |t|
     t.datetime "start_time"
+    t.string "reminder_name"
     t.integer "reminder_threshold_amount"
     t.integer "reminder_threshold_type"
     t.integer "expire_amount"
