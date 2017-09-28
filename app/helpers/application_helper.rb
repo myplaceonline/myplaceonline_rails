@@ -1359,15 +1359,23 @@ module ApplicationHelper
       on_select_target_show_values: nil,
       on_select_target_hide_values: nil,
       on_select_target_no_value: nil,
+      container_attributes: {
+        class: "input_container",
+      },
+      other_value: nil,
+      other_hide_if_blank: false,
+      other_hide_if_value_in: nil,
     }.merge(options)
     
+    Rails.logger.debug{"ApplicationHelper.input_field: name: #{name}, type: #{type}, options: #{Myp.debug_print(options.dup.delete_if{|x,y| x == :form})}"}
+
     input_method_prefix = "_field"
     
     onchange = ""
     
     if !options[:on_select_target].nil?
-      hide = "var x = $(this).closest('p').siblings().find(\"input[id$='#{options[:on_select_target]}']\"); x.closest('p').hide(); x.focus();"
-      show = "var x = $(this).closest('p').siblings().find(\"input[id$='#{options[:on_select_target]}']\"); x.closest('p').show(); x.focus();"
+      hide = "var x = $(this).closest('.input_container').siblings().find(\"input[id$='#{options[:on_select_target]}']\"); x.closest('.input_container').hide(); x.focus();"
+      show = "var x = $(this).closest('.input_container').siblings().find(\"input[id$='#{options[:on_select_target]}']\"); x.closest('.input_container').show(); x.focus();"
 
       onchange = "if ($(this).val() == '') {"
       if options[:on_select_target_no_value] == :hide
@@ -1387,6 +1395,16 @@ module ApplicationHelper
         onchange << "}"
 
       onchange << "}"
+    end
+
+    if options[:other_value].blank?
+      if options[:other_hide_if_blank]
+        options[:container_attributes][:style] = "display: none;"
+      end
+    elsif !options[:other_hide_if_value_in].nil?
+      if !options[:other_hide_if_value_in].index(options[:other_value]).nil?
+        options[:container_attributes][:style] = "display: none;"
+      end
     end
     
     if options[:type] == Myp::FIELD_NUMBER || options[:type] == Myp::FIELD_DECIMAL
@@ -1689,6 +1707,8 @@ module ApplicationHelper
       result = content_tag(options[:wrapper_tag], result.html_safe)
     end
     
+    result = content_tag(:div, result.html_safe, options[:container_attributes])
+
     result.html_safe
   end
   

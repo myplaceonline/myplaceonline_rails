@@ -39,6 +39,9 @@
     name: :reminder_threshold_amount,
     value: obj.reminder_threshold_amount,
     placeholder: "myplaceonline.reminders.reminder_threshold_amount",
+    other_value: obj.reminder_threshold_type,
+    other_hide_if_blank: true,
+    other_hide_if_value_in: Reminder::THRESHOLD_TYPES.map{|x| x[1]}.keep_if{|x| x == Reminder::THRESHOLD_TYPE_IMMEDIATE },
   )
 %>
 <%=
