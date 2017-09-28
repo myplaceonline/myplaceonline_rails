@@ -3716,4 +3716,6 @@ en:
       max_pending: "Maximum Pending"
       reminder_threshold_types:
         immediate: "At the Reminder Time"
-        time_before: "Amount before the Reminder Time"
+        time_before_s: "Amount before the Reminder Time (in Seconds)"
+        time_before_m: "Amount before the Reminder Time (in Minutes)"
+        time_before_h: "Amount before the Reminder Time (in Hours)"

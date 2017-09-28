@@ -25,7 +25,6 @@
     value: obj.reminder_threshold_type,
     placeholder: "myplaceonline.reminders.reminder_threshold_type",
     select_options: Reminder::THRESHOLD_TYPES,
-    select_options_sort: false,
     on_select_target: :reminder_threshold_amount,
     on_select_target_show_values: Reminder::THRESHOLD_TYPES.map{|x| x[1]}.delete_if{|x| x == Reminder::THRESHOLD_TYPE_IMMEDIATE },
     on_select_target_hide_values: Reminder::THRESHOLD_TYPES.map{|x| x[1]}.keep_if{|x| x == Reminder::THRESHOLD_TYPE_IMMEDIATE },

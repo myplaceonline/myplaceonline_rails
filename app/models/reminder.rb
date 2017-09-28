@@ -18,11 +18,15 @@ class Reminder < ApplicationRecord
   end
 
   THRESHOLD_TYPE_IMMEDIATE = 0
-  THRESHOLD_TYPE_TIME_BEFORE = 1
+  THRESHOLD_TYPE_TIME_BEFORE_S = 1
+  THRESHOLD_TYPE_TIME_BEFORE_M = 2
+  THRESHOLD_TYPE_TIME_BEFORE_H = 3
 
   THRESHOLD_TYPES = [
     ["myplaceonline.reminders.reminder_threshold_types.immediate", THRESHOLD_TYPE_IMMEDIATE],
-    ["myplaceonline.reminders.reminder_threshold_types.time_before", THRESHOLD_TYPE_TIME_BEFORE],
+    ["myplaceonline.reminders.reminder_threshold_types.time_before_s", THRESHOLD_TYPE_TIME_BEFORE_S],
+    ["myplaceonline.reminders.reminder_threshold_types.time_before_m", THRESHOLD_TYPE_TIME_BEFORE_M],
+    ["myplaceonline.reminders.reminder_threshold_types.time_before_h", THRESHOLD_TYPE_TIME_BEFORE_H],
   ]
 
   validates :start_time, presence: true
