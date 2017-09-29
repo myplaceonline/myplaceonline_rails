@@ -39,6 +39,7 @@ class Reminder < ApplicationRecord
   def self.build(params = nil)
     result = self.dobuild(params)
     result.start_time = User.current_user.time_now
+    result.reminder_threshold_type = THRESHOLD_TYPE_IMMEDIATE
     result
   end
 end

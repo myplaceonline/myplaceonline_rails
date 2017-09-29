@@ -3710,7 +3710,7 @@ en:
       reminder_threshold_amount: "Threshold Amount"
       reminder_threshold_type: "When to Raise the Reminder"
       expire_amount: "Expires Amount"
-      expire_type: "Expires Type"
+      expire_type: "Reminder Expires"
       repeat_amount: "Repeat Amount"
       repeat_type: "Repeat Type"
       max_pending: "Maximum Pending"
