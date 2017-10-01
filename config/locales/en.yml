@@ -3714,6 +3714,7 @@ en:
       repeat_amount: "Repeat Amount"
       repeat_type: "Repeat Type"
       max_pending: "Maximum Pending"
+      calendar_item: "Calendar Item"
       reminder_threshold_types:
         immediate: "At the Reminder Time"
         time_before_s: "Amount before the Reminder Time (in Seconds)"

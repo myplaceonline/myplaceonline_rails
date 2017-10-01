@@ -588,6 +588,10 @@ class Identity < ApplicationRecord
     Rails.application.routes.url_helpers.send("contact_path", calendar_item.find_model_object.contact)
   end
   
+  def main_calendar
+    self.calendars[0]
+  end
+  
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save

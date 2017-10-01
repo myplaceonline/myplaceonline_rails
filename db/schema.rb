@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170926062214) do
+ActiveRecord::Schema.define(version: 20171001035713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4543,6 +4543,8 @@ ActiveRecord::Schema.define(version: 20170926062214) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "calendar_item_id"
+    t.index ["calendar_item_id"], name: "index_reminders_on_calendar_item_id"
     t.index ["identity_id"], name: "index_reminders_on_identity_id"
   end
 
@@ -6657,6 +6659,7 @@ ActiveRecord::Schema.define(version: 20170926062214) do
   add_foreign_key "regimen_items", "identities"
   add_foreign_key "regimen_items", "regimens"
   add_foreign_key "regimens", "identities"
+  add_foreign_key "reminders", "calendar_items"
   add_foreign_key "reminders", "identities"
   add_foreign_key "repeats", "identities", name: "repeats_identity_id_fk"
   add_foreign_key "restaurant_pictures", "identities"

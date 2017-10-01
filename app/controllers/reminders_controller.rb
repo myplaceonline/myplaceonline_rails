@@ -1,4 +1,14 @@
 class RemindersController < MyplaceonlineController
+  def footer_items_show
+    super + [
+      {
+        title: I18n.t("myplaceonline.reminders.calendar_item"),
+        link: calendar_calendar_item_path(@obj.calendar_item.calendar, @obj.calendar_item),
+        icon: "calendar"
+      },
+    ]
+  end
+
   protected
     def insecure
       true

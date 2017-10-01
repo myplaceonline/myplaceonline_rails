@@ -60,6 +60,7 @@ module MyplaceonlineActiveRecordBaseConcern
       end
     end
     
+    # destroy_dependent: true
     def child_property(
       name:,
       model: nil,

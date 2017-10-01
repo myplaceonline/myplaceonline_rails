@@ -28,6 +28,68 @@ class Reminder < ApplicationRecord
     ["myplaceonline.reminders.reminder_threshold_types.time_before_m", THRESHOLD_TYPE_TIME_BEFORE_M],
     ["myplaceonline.reminders.reminder_threshold_types.time_before_h", THRESHOLD_TYPE_TIME_BEFORE_H],
   ]
+  
+  attr_accessor :is_saving
+  
+  after_commit :on_after_save, on: [:create, :update]
+  
+  def on_after_save
+    if !self.is_saving
+      
+      Rails.logger.debug{"Reminder.on_after_save #{self.id}"}
+      
+      self.is_saving = true
+      
+      if !self.calendar_item.nil?
+        c = self.calendar_item
+        self.calendar_item = nil
+        self.save!
+        
+        c.destroy!
+      end
+
+      rta = self.reminder_threshold_amount
+      
+      case self.reminder_threshold_type
+      when THRESHOLD_TYPE_IMMEDIATE
+        rtt = Myp::TIME_DURATION_SECONDS
+        rta = 0
+      when THRESHOLD_TYPE_TIME_BEFORE_S
+        rtt = Myp::TIME_DURATION_SECONDS
+      when THRESHOLD_TYPE_TIME_BEFORE_M
+        rtt = Myp::TIME_DURATION_MINUTES
+      when THRESHOLD_TYPE_TIME_BEFORE_H
+        rtt = Myp::TIME_DURATION_HOURS
+      else
+        raise "TODO"
+      end
+      
+      self.calendar_item = CalendarItem.create_calendar_item(
+        identity: self.identity,
+        calendar: self.identity.main_calendar,
+        model: self.class,
+        calendar_item_time: self.start_time,
+        reminder_threshold_amount: rta,
+        reminder_threshold_type: rtt,
+        model_id: self.id,
+        expire_amount: nil,
+        expire_type: nil,
+        repeat_amount: nil,
+        repeat_type: nil,
+        context_info: nil,
+        max_pending: nil,
+      )
+      
+      self.save!
+    end
+  end
+  
+  def self.calendar_item_display(calendar_item)
+    reminder = calendar_item.find_model_object
+    reminder.reminder_name
+  end
+  
+  child_property(name: :calendar_item, destroy_dependent: true)
 
   validates :start_time, presence: true
   validates :reminder_name, presence: true
