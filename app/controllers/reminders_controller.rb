@@ -9,6 +9,14 @@ class RemindersController < MyplaceonlineController
     ]
   end
 
+  def use_bubble?
+    true
+  end
+  
+  def bubble_text(obj)
+    Myp.display_date_short_year(obj.start_time, User.current_user)
+  end
+
   protected
     def insecure
       true

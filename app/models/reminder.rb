@@ -29,6 +29,18 @@ class Reminder < ApplicationRecord
     ["myplaceonline.reminders.reminder_threshold_types.time_before_h", THRESHOLD_TYPE_TIME_BEFORE_H],
   ]
   
+  EXPIRATION_TYPES = [
+    ["myplaceonline.reminders.expire_types.time_after_s", Myp::TIME_DURATION_SECONDS],
+    ["myplaceonline.reminders.expire_types.time_after_m", Myp::TIME_DURATION_MINUTES],
+    ["myplaceonline.reminders.expire_types.time_after_h", Myp::TIME_DURATION_HOURS],
+  ]
+  
+  REPEAT_TYPES = [
+    ["myplaceonline.reminders.repeat_types.time_after_s", Myp::TIME_DURATION_SECONDS],
+    ["myplaceonline.reminders.repeat_types.time_after_m", Myp::TIME_DURATION_MINUTES],
+    ["myplaceonline.reminders.repeat_types.time_after_h", Myp::TIME_DURATION_HOURS],
+  ]
+  
   attr_accessor :is_saving
   
   after_commit :on_after_save, on: [:create, :update]
@@ -72,12 +84,11 @@ class Reminder < ApplicationRecord
         reminder_threshold_amount: rta,
         reminder_threshold_type: rtt,
         model_id: self.id,
-        expire_amount: nil,
-        expire_type: nil,
-        repeat_amount: nil,
-        repeat_type: nil,
-        context_info: nil,
-        max_pending: nil,
+        expire_amount: self.expire_amount,
+        expire_type: self.expire_type,
+        repeat_amount: self.repeat_amount,
+        repeat_type: self.repeat_type,
+        max_pending: self.max_pending,
       )
       
       self.save!

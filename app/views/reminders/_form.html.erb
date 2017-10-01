@@ -44,6 +44,61 @@
     other_hide_if_value_in: Reminder::THRESHOLD_TYPES.map{|x| x[1]}.keep_if{|x| x == Reminder::THRESHOLD_TYPE_IMMEDIATE },
   )
 %>
+<div data-role="collapsible" data-collapsed="<%= obj.expire_amount.nil? ? "true" : "false" %>">
+  <h3><%= t("myplaceonline.reminders.expire_reminder") %></h3>
+  <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_SELECT,
+      name: :expire_type,
+      value: obj.expire_type,
+      placeholder: "myplaceonline.reminders.expire_type",
+      select_options: Reminder::EXPIRATION_TYPES,
+      select_options_sort: false,
+    )
+  %>
+  <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_NUMBER,
+      name: :expire_amount,
+      value: obj.expire_amount,
+      placeholder: "myplaceonline.reminders.expire_amount",
+    )
+  %>
+</div>
+<div data-role="collapsible" data-collapsed="<%= obj.repeat_amount.nil? ? "true" : "false" %>">
+  <h3><%= t("myplaceonline.reminders.repeat_reminder") %></h3>
+  <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_SELECT,
+      name: :repeat_type,
+      value: obj.repeat_type,
+      placeholder: "myplaceonline.reminders.repeat_type",
+      select_options: Reminder::REPEAT_TYPES,
+      select_options_sort: false,
+    )
+  %>
+  <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_NUMBER,
+      name: :repeat_amount,
+      value: obj.repeat_amount,
+      placeholder: "myplaceonline.reminders.repeat_amount",
+    )
+  %>
+  <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_NUMBER,
+      name: :max_pending,
+      value: obj.max_pending,
+      placeholder: "myplaceonline.reminders.max_pending",
+    )
+  %>
+</div>
 <%=
   input_field(
     form: f,
