@@ -1058,10 +1058,6 @@ module Myp
       #subject += " (#{exception.class})"
     end
 
-    request_info = Myp.get_request_info(request)
-    body_plain << request_info[:body_plain]
-    body_html << request_info[:body_html]
-
     Rails.logger.warn{"Myp.warn: #{message}"}
     
     Myp.send_support_email_safe(
@@ -1599,10 +1595,6 @@ module Myp
       body_html += "\n\n<p>" + CGI::escapeHTML(error_details).gsub(/\n/, "<br />\n").gsub(/\t/, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;") + "</p>"
     end
     
-    request_info = Myp.get_request_info(request)
-    body_plain << request_info[:body_plain]
-    body_html << request_info[:body_html]
-
     Rails.logger.warn{"handle_exception: " + body_plain}
     
     Myp.send_support_email_safe(
@@ -1644,22 +1636,22 @@ module Myp
     end
     
     if ExecutionContext.available? && !User.current_user.nil?
-      body_html += "\n\n<p>User: #{User.current_user.email}, Identity: #{User.current_user.current_identity_id}</p>".html_safe
+      body_html += "\n\n<p>User: #{User.current_user.email}, Identity: #{User.current_user.current_identity_id}</p>"
       body_plain += "\n\nUser: #{User.current_user.email}, Identity: #{User.current_user.current_identity_id}"
     end
     
     if !ENV["NODENAME"].blank?
-      body_html += "\n\n<p>Server: #{ENV["NODENAME"]}</p>".html_safe
+      body_html += "\n\n<p>Server: #{ENV["NODENAME"]}</p>"
       body_plain += "\n\nServer: #{ENV["NODENAME"]}"
     end
     
     t = Time.now.utc.to_s(:full)
-    body_html += "\n\n<p>Server Time: #{t}</p>".html_safe
+    body_html += "\n\n<p>Server Time: #{t}</p>"
     body_plain += "\n\nServer Time: #{t}"
 
     {
       body_plain: body_plain,
-      body_html: body_html,
+      body_html: body_html.html_safe,
     }
   end
   
