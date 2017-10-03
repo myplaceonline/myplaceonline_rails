@@ -48,8 +48,11 @@ class Reminder < ApplicationRecord
   ]
   
   REPEAT_TYPE_ONCE_PER_WEEK = -1
+  REPEAT_TYPE_TWICE_PER_WEEK = -2
   
   REPEAT_TYPES = [
+    ["myplaceonline.reminders.repeat_types.time_after_1pw", REPEAT_TYPE_ONCE_PER_WEEK],
+    ["myplaceonline.reminders.repeat_types.time_after_2pw", REPEAT_TYPE_TWICE_PER_WEEK],
     ["myplaceonline.reminders.repeat_types.time_after_s", Myp::TIME_DURATION_SECONDS],
     ["myplaceonline.reminders.repeat_types.time_after_m", Myp::TIME_DURATION_MINUTES],
     ["myplaceonline.reminders.repeat_types.time_after_h", Myp::TIME_DURATION_HOURS],
@@ -57,7 +60,6 @@ class Reminder < ApplicationRecord
     ["myplaceonline.reminders.repeat_types.time_after_w", Myp::TIME_DURATION_WEEKS],
     ["myplaceonline.reminders.repeat_types.time_after_mo", Myp::TIME_DURATION_MONTHS],
     ["myplaceonline.reminders.repeat_types.time_after_y", Myp::TIME_DURATION_YEARS],
-    ["myplaceonline.reminders.repeat_types.time_after_1pw", REPEAT_TYPE_ONCE_PER_WEEK],
   ]
   
   attr_accessor :is_saving
@@ -110,6 +112,9 @@ class Reminder < ApplicationRecord
       when REPEAT_TYPE_ONCE_PER_WEEK
         rt = Myp::TIME_DURATION_WEEKS
         ra = 1
+      when REPEAT_TYPE_TWICE_PER_WEEK
+        rt = Myp::TIME_DURATION_DAYS
+        ra = 3
       end
       
       self.calendar_item = CalendarItem.create_calendar_item(

@@ -3745,3 +3745,4 @@ en:
         time_after_mo: "Repeat the Reminder After (in Months)"
         time_after_y: "Repeat the Reminder After (in Years)"
         time_after_1pw: "Once per Week"
+        time_after_2pw: "Twice per Week"
