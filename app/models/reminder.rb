@@ -21,24 +21,43 @@ class Reminder < ApplicationRecord
   THRESHOLD_TYPE_TIME_BEFORE_S = 1
   THRESHOLD_TYPE_TIME_BEFORE_M = 2
   THRESHOLD_TYPE_TIME_BEFORE_H = 3
+  THRESHOLD_TYPE_TIME_BEFORE_D = 4
+  THRESHOLD_TYPE_TIME_BEFORE_W = 5
+  THRESHOLD_TYPE_TIME_BEFORE_MO = 6
+  THRESHOLD_TYPE_TIME_BEFORE_Y = 7
 
   THRESHOLD_TYPES = [
     ["myplaceonline.reminders.reminder_threshold_types.immediate", THRESHOLD_TYPE_IMMEDIATE],
     ["myplaceonline.reminders.reminder_threshold_types.time_before_s", THRESHOLD_TYPE_TIME_BEFORE_S],
     ["myplaceonline.reminders.reminder_threshold_types.time_before_m", THRESHOLD_TYPE_TIME_BEFORE_M],
     ["myplaceonline.reminders.reminder_threshold_types.time_before_h", THRESHOLD_TYPE_TIME_BEFORE_H],
+    ["myplaceonline.reminders.reminder_threshold_types.time_before_d", THRESHOLD_TYPE_TIME_BEFORE_D],
+    ["myplaceonline.reminders.reminder_threshold_types.time_before_w", THRESHOLD_TYPE_TIME_BEFORE_W],
+    ["myplaceonline.reminders.reminder_threshold_types.time_before_mo", THRESHOLD_TYPE_TIME_BEFORE_MO],
+    ["myplaceonline.reminders.reminder_threshold_types.time_before_y", THRESHOLD_TYPE_TIME_BEFORE_Y],
   ]
   
   EXPIRATION_TYPES = [
     ["myplaceonline.reminders.expire_types.time_after_s", Myp::TIME_DURATION_SECONDS],
     ["myplaceonline.reminders.expire_types.time_after_m", Myp::TIME_DURATION_MINUTES],
     ["myplaceonline.reminders.expire_types.time_after_h", Myp::TIME_DURATION_HOURS],
+    ["myplaceonline.reminders.expire_types.time_after_d", Myp::TIME_DURATION_DAYS],
+    ["myplaceonline.reminders.expire_types.time_after_w", Myp::TIME_DURATION_WEEKS],
+    ["myplaceonline.reminders.expire_types.time_after_mo", Myp::TIME_DURATION_MONTHS],
+    ["myplaceonline.reminders.expire_types.time_after_y", Myp::TIME_DURATION_YEARS],
   ]
+  
+  REPEAT_TYPE_ONCE_PER_WEEK = -1
   
   REPEAT_TYPES = [
     ["myplaceonline.reminders.repeat_types.time_after_s", Myp::TIME_DURATION_SECONDS],
     ["myplaceonline.reminders.repeat_types.time_after_m", Myp::TIME_DURATION_MINUTES],
     ["myplaceonline.reminders.repeat_types.time_after_h", Myp::TIME_DURATION_HOURS],
+    ["myplaceonline.reminders.repeat_types.time_after_d", Myp::TIME_DURATION_DAYS],
+    ["myplaceonline.reminders.repeat_types.time_after_w", Myp::TIME_DURATION_WEEKS],
+    ["myplaceonline.reminders.repeat_types.time_after_mo", Myp::TIME_DURATION_MONTHS],
+    ["myplaceonline.reminders.repeat_types.time_after_y", Myp::TIME_DURATION_YEARS],
+    ["myplaceonline.reminders.repeat_types.time_after_1pw", REPEAT_TYPE_ONCE_PER_WEEK],
   ]
   
   attr_accessor :is_saving
@@ -72,8 +91,25 @@ class Reminder < ApplicationRecord
         rtt = Myp::TIME_DURATION_MINUTES
       when THRESHOLD_TYPE_TIME_BEFORE_H
         rtt = Myp::TIME_DURATION_HOURS
+      when THRESHOLD_TYPE_TIME_BEFORE_D
+        rtt = Myp::TIME_DURATION_DAYS
+      when THRESHOLD_TYPE_TIME_BEFORE_W
+        rtt = Myp::TIME_DURATION_WEEKS
+      when THRESHOLD_TYPE_TIME_BEFORE_MO
+        rtt = Myp::TIME_DURATION_MONTHS
+      when THRESHOLD_TYPE_TIME_BEFORE_Y
+        rtt = Myp::TIME_DURATION_YEARS
       else
         raise "TODO"
+      end
+      
+      rt = self.repeat_type
+      ra = self.repeat_amount
+      
+      case self.repeat_type
+      when REPEAT_TYPE_ONCE_PER_WEEK
+        rt = Myp::TIME_DURATION_WEEKS
+        ra = 1
       end
       
       self.calendar_item = CalendarItem.create_calendar_item(
@@ -86,8 +122,8 @@ class Reminder < ApplicationRecord
         model_id: self.id,
         expire_amount: self.expire_amount,
         expire_type: self.expire_type,
-        repeat_amount: self.repeat_amount,
-        repeat_type: self.repeat_type,
+        repeat_amount: ra,
+        repeat_type: rt,
         max_pending: self.max_pending,
       )
       

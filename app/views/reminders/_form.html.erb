@@ -67,7 +67,7 @@
     )
   %>
 </div>
-<div data-role="collapsible" data-collapsed="<%= obj.repeat_amount.nil? ? "true" : "false" %>">
+<div data-role="collapsible" data-collapsed="<%= obj.repeat_type.nil? ? "true" : "false" %>">
   <h3><%= t("myplaceonline.reminders.repeat_reminder") %></h3>
   <%=
     input_field(
@@ -78,6 +78,10 @@
       placeholder: "myplaceonline.reminders.repeat_type",
       select_options: Reminder::REPEAT_TYPES,
       select_options_sort: false,
+      on_select_target: :repeat_amount,
+      on_select_target_show_values: Reminder::REPEAT_TYPES.map{|x| x[1]}.delete_if{|x| x < 0 },
+      on_select_target_hide_values: Reminder::REPEAT_TYPES.map{|x| x[1]}.keep_if{|x| x < 0 },
+      on_select_target_no_value: :hide,
     )
   %>
   <%=
@@ -87,17 +91,23 @@
       name: :repeat_amount,
       value: obj.repeat_amount,
       placeholder: "myplaceonline.reminders.repeat_amount",
+      other_value: obj.repeat_type,
+      other_hide_if_blank: true,
+      other_hide_if_value_in: Reminder::REPEAT_TYPES.map{|x| x[1]}.keep_if{|x| x < 0 },
     )
   %>
-  <%=
-    input_field(
-      form: f,
-      type: Myp::FIELD_NUMBER,
-      name: :max_pending,
-      value: obj.max_pending,
-      placeholder: "myplaceonline.reminders.max_pending",
-    )
-  %>
+  <div data-role="collapsible" data-collapsed="<%= obj.max_pending.nil? ? "true" : "false" %>">
+    <h3><%= t("myplaceonline.reminders.repeat_details") %></h3>
+    <%=
+      input_field(
+        form: f,
+        type: Myp::FIELD_NUMBER,
+        name: :max_pending,
+        value: obj.max_pending,
+        placeholder: "myplaceonline.reminders.max_pending",
+      )
+    %>
+  </div>
 </div>
 <%=
   input_field(

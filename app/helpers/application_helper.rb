@@ -1374,7 +1374,7 @@ module ApplicationHelper
     onchange = ""
     
     if !options[:on_select_target].nil?
-      hide = "var x = $(this).closest('.input_container').siblings().find(\"input[id$='#{options[:on_select_target]}']\"); x.closest('.input_container').hide(); x.focus();"
+      hide = "var x = $(this).closest('.input_container').siblings().find(\"input[id$='#{options[:on_select_target]}']\"); x.closest('.input_container').hide();"
       show = "var x = $(this).closest('.input_container').siblings().find(\"input[id$='#{options[:on_select_target]}']\"); x.closest('.input_container').show(); x.focus();"
 
       onchange = "if ($(this).val() == '') {"
