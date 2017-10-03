@@ -63,7 +63,7 @@ class Reminder < ApplicationRecord
       rta = self.reminder_threshold_amount
       
       case self.reminder_threshold_type
-      when THRESHOLD_TYPE_IMMEDIATE
+      when THRESHOLD_TYPE_IMMEDIATE, nil
         rtt = Myp::TIME_DURATION_SECONDS
         rta = 0
       when THRESHOLD_TYPE_TIME_BEFORE_S
