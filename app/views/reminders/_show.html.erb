@@ -3,6 +3,7 @@
 <%= data_row(heading: t("myplaceonline.reminders.reminder_threshold_type"), content: obj.reminder_threshold_type, enumeration: Reminder::THRESHOLD_TYPES) %>
 <%= data_row(heading: Myp.get_select_name(obj.reminder_threshold_type, Reminder::THRESHOLD_TYPES, default_value: nil), content: obj.reminder_threshold_amount) %>
 <%= data_row(heading: Myp.get_select_name(obj.expire_type, Reminder::EXPIRATION_TYPES, default_value: nil), content: obj.expire_amount) %>
+<%= data_row(heading: t("myplaceonline.reminders.repeat_type"), content: obj.repeat_type, enumeration: Reminder::REPEAT_TYPES) %>
 <%= data_row(heading: Myp.get_select_name(obj.repeat_type, Reminder::REPEAT_TYPES, default_value: nil), content: obj.repeat_amount) %>
 <%= data_row(heading: t("myplaceonline.reminders.max_pending"), content: obj.max_pending) %>
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
