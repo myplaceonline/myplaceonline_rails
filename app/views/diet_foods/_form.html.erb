@@ -31,3 +31,16 @@
     select_options: DietFood::FOOD_TYPES,
   )
 %>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :reminder,
+    existingobj: obj.reminder,
+    heading: t("myplaceonline.diet_foods.reminder"),
+    objform: "reminders/form",
+    existingobjurl: "reminder_path",
+    searchurl: "/reminders.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>

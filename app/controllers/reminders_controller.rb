@@ -16,6 +16,21 @@ class RemindersController < MyplaceonlineController
   def bubble_text(obj)
     Myp.display_date_short_year(obj.start_time, User.current_user)
   end
+  
+  def self.param_names
+    [
+      :start_time,
+      :reminder_name,
+      :reminder_threshold_amount,
+      :reminder_threshold_type,
+      :expire_amount,
+      :expire_type,
+      :repeat_amount,
+      :repeat_type,
+      :max_pending,
+      :notes,
+    ]
+  end
 
   protected
     def insecure
@@ -27,17 +42,6 @@ class RemindersController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:reminder).permit(
-        :start_time,
-        :reminder_name,
-        :reminder_threshold_amount,
-        :reminder_threshold_type,
-        :expire_amount,
-        :expire_type,
-        :repeat_amount,
-        :repeat_type,
-        :max_pending,
-        :notes,
-      )
+      params.require(:reminder).permit(RemindersController.param_names)
     end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171001035713) do
+ActiveRecord::Schema.define(version: 20171003213123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1415,9 +1415,11 @@ ActiveRecord::Schema.define(version: 20171001035713) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "food_type"
+    t.bigint "reminder_id"
     t.index ["diet_id"], name: "index_diet_foods_on_diet_id"
     t.index ["food_id"], name: "index_diet_foods_on_food_id"
     t.index ["identity_id"], name: "index_diet_foods_on_identity_id"
+    t.index ["reminder_id"], name: "index_diet_foods_on_reminder_id"
   end
 
   create_table "dietary_requirements", force: :cascade do |t|
@@ -6202,6 +6204,7 @@ ActiveRecord::Schema.define(version: 20171001035713) do
   add_foreign_key "diet_foods", "diets"
   add_foreign_key "diet_foods", "foods"
   add_foreign_key "diet_foods", "identities"
+  add_foreign_key "diet_foods", "reminders"
   add_foreign_key "dietary_requirements", "dietary_requirements_collections"
   add_foreign_key "dietary_requirements", "identities"
   add_foreign_key "dietary_requirements_collection_files", "dietary_requirements_collections"

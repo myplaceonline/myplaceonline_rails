@@ -32,7 +32,8 @@ class DietFood < ApplicationRecord
       :_destroy,
       :quantity,
       :food_type,
-      food_attributes: Food.params
+      food_attributes: Food.params,
+      reminder_attributes: RemindersController.param_names,
     ]
   end
 
@@ -43,4 +44,6 @@ class DietFood < ApplicationRecord
       default_quantity
     end
   end
+  
+  child_property(name: :reminder, destroy_dependent: true)
 end

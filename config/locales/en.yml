@@ -3597,6 +3597,7 @@ en:
       quantity: "Quantity"
       food_type: "Type"
       back: "Diet"
+      reminder: "Reminder"
       food_types:
         breakfast: "Breakfast"
         lunch: "Lunch"
