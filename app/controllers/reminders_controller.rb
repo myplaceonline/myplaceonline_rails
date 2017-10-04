@@ -1,12 +1,16 @@
 class RemindersController < MyplaceonlineController
   def footer_items_show
-    super + [
-      {
-        title: I18n.t("myplaceonline.reminders.calendar_item"),
-        link: calendar_calendar_item_path(@obj.calendar_item.calendar, @obj.calendar_item),
-        icon: "calendar"
-      },
-    ]
+    if !@obj.calendar_item.nil?
+      super + [
+        {
+          title: I18n.t("myplaceonline.reminders.calendar_item"),
+          link: calendar_calendar_item_path(@obj.calendar_item.calendar, @obj.calendar_item),
+          icon: "calendar"
+        },
+      ]
+    else
+      super
+    end
   end
 
   def use_bubble?
