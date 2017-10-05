@@ -1612,16 +1612,16 @@ module Myp
     
     if !request.nil?
       str = "Request: {" +
-          "\n\tfullpath: #{request.fullpath.inspect}, " +
-          "\n\tip: #{request.ip.inspect}, " +
-          "\n\tmethod: #{request.method.inspect}, " +
-          "\n\toriginal_fullpath: #{request.original_fullpath.inspect}, " +
-          "\n\toriginal_url: #{request.original_url.inspect}, " +
-          "\n\tquery_parameters: #{request.query_parameters.inspect}, " +
-          "\n\tremote_ip: #{request.remote_ip.inspect}, " +
-          "\n\trequest_method: #{request.request_method.inspect}, " +
-          "\n\tuuid: #{request.uuid.inspect}" +
-          "\n}"
+              "\n\tfullpath: #{request.fullpath}, " +
+              "\n\tip: #{request.ip}, " +
+              "\n\tmethod: #{request.method}, " +
+              "\n\toriginal_fullpath: #{request.original_fullpath}, " +
+              "\n\toriginal_url: #{request.original_url}, " +
+              "\n\tquery_parameters: #{request.query_parameters}, " +
+              "\n\tremote_ip: #{request.remote_ip}, " +
+              "\n\trequest_method: #{request.request_method}, " +
+              "\n\tuuid: #{request.uuid}" +
+            "\n}"
       
       body_plain += "\n\n" + str
       body_html += "\n\n<p>" + CGI::escapeHTML(str).gsub(/\n/, "<br />\n").gsub(/\t/, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;") + "</p>"

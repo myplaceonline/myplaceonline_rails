@@ -73,6 +73,9 @@ module Myplaceonline
           # "ORIGINAL_FULLPATH" => "/",
           # "ORIGINAL_SCRIPT_NAME" => "",
           
+          query_string = env["rack.request.query_string"]
+          parsed_query_string = Rack::Utils.parse_nested_query(query_string)
+          
           host = env["HTTP_HOST"]
           if host.nil?
             host = ""
@@ -82,6 +85,10 @@ module Myplaceonline
           end
           if host == "localhost"
             host = ""
+          end
+          
+          if !parsed_query_string["emulate_host"].blank?
+            host = parsed_query_string["emulate_host"]
           end
           
           # See also https://github.com/knu/ruby-domain_name/
@@ -96,7 +103,7 @@ module Myplaceonline
           end
           
           MyplaceonlineExecutionContext.host = host
-          MyplaceonlineExecutionContext.query_string = env["rack.request.query_string"]
+          MyplaceonlineExecutionContext.query_string = query_string
           MyplaceonlineExecutionContext.cookie_hash = env["rack.request.cookie_hash"]
           
           #Rails.logger.debug{"MyplaceonlineRack.call setting context host: #{MyplaceonlineExecutionContext.host}, query_string: #{MyplaceonlineExecutionContext.query_string}, cookie_hash: #{Myp.debug_print(MyplaceonlineExecutionContext.cookie_hash)}"}
