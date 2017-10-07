@@ -44,5 +44,42 @@ module ModelHelpersConcern extend ActiveSupport::Concern
         end
       end
     end
+    
+    # https://stackoverflow.com/a/6545198/4135310
+    def humanized_integer_accessor(*fields)
+      fields.each do |f|
+        define_method("#{f}_humanized") do
+          val = read_attribute(f)
+          val ? val.to_i.with_commas : nil
+        end
+        define_method("#{f}_humanized=") do |e|
+          write_attribute(f,e.to_s.delete(","))
+        end
+      end
+    end
+
+    def humanized_float_accessor(*fields)
+      fields.each do |f|
+        define_method("#{f}_humanized") do
+          val = read_attribute(f)
+          val ? val.to_f.with_commas : nil
+        end
+        define_method("#{f}_humanized=") do |e|
+          write_attribute(f,e.to_s.delete(","))
+        end
+      end
+    end
+
+    def humanized_money_accessor(*fields)
+      fields.each do |f|
+        define_method("#{f}_humanized") do
+          val = read_attribute(f)
+          val ? ("$" + val.to_f.with_commas) : nil
+        end
+        define_method("#{f}_humanized=") do |e|
+          write_attribute(f,e.to_s.delete(",$"))
+        end
+      end
+    end
   end
 end

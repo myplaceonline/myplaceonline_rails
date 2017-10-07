@@ -1295,7 +1295,7 @@ var myplaceonline = function(mymodule) {
   }
   
   function toFloatSafe(someVal) {
-    var result = parseFloat(someVal);
+    var result = parseFloat(someVal.replace(/,/g, ""));
     if (!isFinite(result)) {
       result = 0;
     }

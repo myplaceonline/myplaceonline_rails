@@ -8,6 +8,16 @@ class String
   def integer?
     return self =~ /\A[+-]?\d+\Z/ ? true : false
   end
+  
+  def with_commas
+    self.reverse.gsub(/\d{3}/,"\\&,").reverse.sub(/^,/,"")
+  end
+end
+
+class Numeric
+  def with_commas
+    to_s.with_commas
+  end
 end
 
 if Myp.is_web_server? || Rails.env.test?

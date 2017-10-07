@@ -1,12 +1,15 @@
 class MoneyBalanceItem < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
+  include ModelHelpersConcern
 
   belongs_to :money_balance
 
   validates :amount, presence: true
   #validates :money_balance_item_name, presence: true
   validates :item_time, presence: true
+  
+  humanized_float_accessor :original_amount
 
   attr_accessor :invert
   
@@ -21,11 +24,17 @@ class MoneyBalanceItem < ApplicationRecord
       name << "_with_original"
       i18n_data[:original_amount] = Myp.number_to_currency(self.original_amount.abs)
     end
+    if !self.money_balance_item_name.blank?
+      i18n_data.merge!({
+        description: Myp.ellipses_if_needed(self.money_balance_item_name, 16)
+      })
+    else
+      name << "_nofor"
+    end
     i18n_data.merge!({
       x: amount < 0 ? money_balance.contact.display_initials : money_balance.identity.display_initials,
       amount: Myp.number_to_currency(amount.abs),
       time: Myp.display_time(item_time, User.current_user, :super_short_datetime_year),
-      description: Myp.ellipses_if_needed(self.money_balance_item_name, 16)
     })
     I18n.t(name, i18n_data)
   end

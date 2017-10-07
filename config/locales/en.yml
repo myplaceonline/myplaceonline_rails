@@ -2598,7 +2598,9 @@ en:
       templates: "Templates"
       credit_card: "Credit Card"
       money_item_display: "%{x} paid %{amount} for %{description} @ %{time}"
+      money_item_display_nofor: "%{x} paid %{amount} @ %{time}"
       money_item_display_with_original: "%{x} paid %{amount} (of %{original_amount}) for %{description} @ %{time}"
+      money_item_display_with_original_nofor: "%{x} paid %{amount} (of %{original_amount}) @ %{time}"
     money_balance_items:
       money_balance_item_name: "Description"
       amount: "Amount (Negative Owed to Contact)"

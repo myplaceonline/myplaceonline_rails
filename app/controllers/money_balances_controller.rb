@@ -15,7 +15,8 @@ class MoneyBalancesController < MyplaceonlineController
         :original_amount,
         :item_time,
         :invert,
-        :notes
+        :notes,
+        :original_amount_humanized,
       ]
     ]
   end
@@ -32,7 +33,7 @@ class MoneyBalancesController < MyplaceonlineController
     owner_paid_str = params[:owner_paid].blank? ? "true" : params[:owner_paid]
     @owner_paid = owner_paid_str.to_bool
     @amount = params[:amount]
-    @original_amount = params[:original_amount]
+    @original_amount = params[:original_amount_humanized]
     @description = params[:description]
     @checkbox_percent100 = " checked=\"checked\""
     @checkbox_percent75 = params[:percent_default] == "0.25" ? " checked=\"checked\"" : ""
