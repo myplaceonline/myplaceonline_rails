@@ -1,6 +1,6 @@
 <%
 Rails.logger.debug{"map/display center: #{defined?(center) ? "true" : "false"}"}
-if defined?(center)
+if defined?(center) && !center.nil?
   Rails.logger.debug{"center defined #{center.inspect}"}
   center.ensure_gps
   latitude = center.latitude
@@ -24,7 +24,7 @@ if !defined?(longitude) || longitude.nil?
 end
 if !defined?(zoom) || zoom.nil?
   Rails.logger.debug{"setting default zoom"}
-  zoom = 1
+  zoom = 5
 end
 if !defined?(locations)
   locations = []
