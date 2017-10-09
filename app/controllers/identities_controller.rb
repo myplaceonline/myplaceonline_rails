@@ -11,6 +11,10 @@ class IdentitiesController < MyplaceonlineController
     raise "Unauthorized"
   end
   
+  def after_create_redirect
+    redirect_to "/"
+  end
+  
   protected
     def sorts
       ["lower(identities.name) ASC"]

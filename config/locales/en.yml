@@ -822,6 +822,7 @@ en:
       add_relationship: "Add Relationship"
       delete_relationship: "Delete Relationship"
       relationship: "Relationship"
+      add: "+ Add New"
     import:
       password: "Password (if any)"
       nofile: "No file selected"

@@ -140,7 +140,7 @@
         <% if user_signed_in? && !current_user.guest? %>
           <p style="text-align: center;">
             <%
-              identities = current_user.identities.order(:name).map{|x| [x.name, x.id] }
+              identities = current_user.identities.order(:name).map{|x| [x.name, x.id] } + [[t("myplaceonline.identities.add"), -1]]
             %>
             <%= select_tag("current_identity_id", options_for_select(identities, current_user.current_identity_id), onchange: "myplaceonline.refreshWithParam('current_identity_id', $(this).val());") %>
           </p>
