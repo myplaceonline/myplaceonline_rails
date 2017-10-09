@@ -51,6 +51,23 @@ class User < ApplicationRecord
          :confirmable, :lockable
 
   belongs_to :primary_identity, class_name: "Identity", :dependent => :destroy
+  has_many :identities, :dependent => :destroy
+  
+  def self.current_user
+    MyplaceonlineExecutionContext.user
+  end
+
+  def current_identity
+    result = MyplaceonlineExecutionContext.identity
+    if result.nil?
+      result = User.current_user.primary_identity
+    end
+    result
+  end
+  
+  def current_identity_id
+    self.current_identity.id
+  end
   
   has_many :encrypted_values, :dependent => :destroy
   
@@ -90,23 +107,17 @@ class User < ApplicationRecord
       user.transaction do
         
         # Create the identity
-        @identity = Identity.new
-        @identity.user = user
-        @identity.save!
+        new_identity = Identity.new
+        new_identity.user = user
+        new_identity.name = Identity.email_to_name(user.email)
+        new_identity.save!
         
         # Set the identity in the user
-        user.primary_identity = @identity
+        user.primary_identity = new_identity
         user.encrypt_by_default = true
         user.save!
         
-        Rails.logger.debug{"Creating contact"}
-        
-        user.primary_identity.ensure_contact!
-        
-        Rails.logger.debug{"Creating myplets"}
-        
-        # Create default myplets
-        Myplet.default_myplets(@identity)
+        new_identity.after_create
         
         Rails.logger.debug{"Creating first status reminder"}
         
@@ -124,14 +135,6 @@ class User < ApplicationRecord
       :primary_identity => primary_identity.as_json,
       :encrypted_values => encrypted_values.to_a.map{|x| x.as_json}
     })
-  end
-  
-  def self.current_user
-    MyplaceonlineExecutionContext.user
-  end
-
-  def self.current_user=(usr)
-    MyplaceonlineExecutionContext.user = usr
   end
   
   def time_now
@@ -199,14 +202,6 @@ class User < ApplicationRecord
       result = self.encryption_mode
     end
     result
-  end
-  
-  def current_identity
-    primary_identity
-  end
-  
-  def current_identity_id
-    primary_identity_id
   end
   
   protected

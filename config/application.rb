@@ -106,6 +106,14 @@ module Myplaceonline
           MyplaceonlineExecutionContext.query_string = query_string
           MyplaceonlineExecutionContext.cookie_hash = env["rack.request.cookie_hash"]
           
+          if !parsed_query_string["current_identity_id"].blank?
+            cii = parsed_query_string["current_identity_id"].to_i
+            user = env["warden"].user
+            i = user.identities.index{|x| x.id == cii}
+            user.primary_identity = user.identities[i]
+            user.save!
+          end
+          
           #Rails.logger.debug{"MyplaceonlineRack.call setting context host: #{MyplaceonlineExecutionContext.host}, query_string: #{MyplaceonlineExecutionContext.query_string}, cookie_hash: #{Myp.debug_print(MyplaceonlineExecutionContext.cookie_hash)}"}
           
           @app.call(env)

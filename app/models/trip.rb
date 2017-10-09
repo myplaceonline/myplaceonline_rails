@@ -88,10 +88,7 @@ class Trip < ApplicationRecord
         identity_files.push(trip_picture.identity_file)
       end
     end
-    begin
-      ExecutionContext.push
-      User.current_user = obj.identity.user
-      
+    MyplaceonlineExecutionContext.do_user(obj.identity.user) do
       ApplicationRecord.transaction do
         if do_zip
           Myp.mktmpdir do |dir|
@@ -171,8 +168,6 @@ class Trip < ApplicationRecord
         
         permission_share.send_email(obj)
       end
-    ensure
-      ExecutionContext.pop
     end
   end
   

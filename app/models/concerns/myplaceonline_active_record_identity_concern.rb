@@ -19,17 +19,30 @@ module MyplaceonlineActiveRecordIdentityConcern
       Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set saving #{self.inspect}"}
       
       if self.respond_to?("identity=")
+
         current_user = User.current_user
+
+        Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set current_user: #{current_user.inspect}"}
+
         if !current_user.nil?
           identity_target = Permission.current_target_identity
+          
+          Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set identity_target: #{identity_target.inspect}"}
+          
           if !self.identity_id.nil?
             if self.identity_id != identity_target.id
+              
+              Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set non-match, self.identity_id: #{self.identity_id.inspect}"}
+              
               # TODO could there be a privilege escalation here by always using action: show?
               if !Ability.authorize(identity: identity_target, subject: self, action: :show)
                 raise "Unauthorized"
               end
             end
           elsif identity_target.nil?
+            
+            Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set identity_target is nil"}
+            
             if self.id == 0
               # Special case when database is being seeded
             else
@@ -38,6 +51,8 @@ module MyplaceonlineActiveRecordIdentityConcern
             end
           else
             self.identity_id = identity_target.id
+            
+            Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set set identity_id = #{identity_target.id}"}
           end
         else
           raise "User.current_user not set"

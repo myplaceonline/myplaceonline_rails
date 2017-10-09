@@ -19,12 +19,8 @@ class CalendarItemReminder < ApplicationRecord
 
     executed = Myp.try_with_database_advisory_lock(Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS_ALL, 1) do
       User.all.each do |user|
-        begin
-          ExecutionContext.push
-          User.current_user = user
+        MyplaceonlineExecutionContext.do_user(user) do
           self.ensure_pending(user)
-        ensure
-          ExecutionContext.pop
         end
       end
     end

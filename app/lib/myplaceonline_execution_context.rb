@@ -15,6 +15,9 @@ class MyplaceonlineExecutionContext
   def self.user; self[:user]; end
   def self.user=(x); self[:user] = x; end
   
+  def self.identity; self[:identity]; end
+  def self.identity=(x); self[:identity] = x; end
+  
   def self.handle_updates?; self[:skip_handling_updates].nil?; end
 
   def self.request; self[:request]; end
@@ -99,7 +102,7 @@ class MyplaceonlineExecutionContext
   def self.do_identity(identity, &block)
     ExecutionContext.push
     begin
-      self.user = identity.user
+      self.identity = identity
       block.call
     ensure
       ExecutionContext.pop
@@ -141,6 +144,7 @@ class MyplaceonlineExecutionContext
     Rails.logger.debug{"MyplaceonlineExecutionContext.initialize user: #{user.nil? ? "nil" : user.id}"}
 
     MyplaceonlineExecutionContext.user = user
+    MyplaceonlineExecutionContext.identity = user.primary_identity
     
     if !user.nil?
       session[:myp_email] = user.email
@@ -157,6 +161,7 @@ class MyplaceonlineExecutionContext
     end
     if !identity.nil?
       result = self.user = identity.user
+      self.identity = identity
     end
     if !context.nil?
       result = self.user = context.identity.user

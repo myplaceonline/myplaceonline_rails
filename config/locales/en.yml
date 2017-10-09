@@ -795,6 +795,7 @@ en:
       non_fixed_header: "Non-Fixed Header"
       toggle_hide_footer: "Tap Hides Header & Footer"
     identities:
+      name: "Name"
       phones: "Phone Numbers"
       add_phone: "Add Phone"
       delete_phone: "Delete Phone"

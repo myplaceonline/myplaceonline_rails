@@ -20,7 +20,6 @@ class ActionController::TestCase
     @user = users(:user)
     ExecutionContext.clear
     ExecutionContext.push
-    User.current_user = @user
     MyplaceonlineExecutionContext.initialize(
       request: @request,
       session: session,

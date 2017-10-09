@@ -138,7 +138,12 @@
       <%# We give a unique id to each popup because the menu may change between requests. %>
       <div data-role="popup" data-history="false" id="menuPopup<%= request.uuid %>">
         <% if user_signed_in? && !current_user.guest? %>
-          <p style="text-align: center;"><%= current_user.email %></p>
+          <p style="text-align: center;">
+            <%
+              identities = current_user.identities.order(:name).map{|x| [x.name, x.id] }
+            %>
+            <%= select_tag("current_identity_id", options_for_select(identities, current_user.current_identity_id), onchange: "myplaceonline.refreshWithParam('current_identity_id', $(this).val());") %>
+          </p>
         <% end %>
         <ul data-role="listview">
           <li><a href="/" class="ui-btn ui-btn-icon-left ui-icon-home"><%= t("myplaceonline.menu.home") %></a></li>

@@ -64,10 +64,7 @@ class Playlist < ApplicationRecord
           
           zipdata = IO.binread(tfile.path)
           
-          begin
-            ExecutionContext.push
-            User.current_user = obj.identity.user
-            
+          MyplaceonlineExecutionContext.do_user(obj.identity.user) do
             ApplicationRecord.transaction do
               iff = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.playlists")])
               identity_file = IdentityFile.build({ folder: iff.id })
@@ -109,8 +106,6 @@ class Playlist < ApplicationRecord
               
               permission_share.send_email
             end
-          ensure
-            ExecutionContext.pop
           end
         end
       end

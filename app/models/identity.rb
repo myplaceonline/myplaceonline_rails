@@ -65,10 +65,12 @@ class Identity < ApplicationRecord
     user.nil? ? nil : Identity.email_to_name(user.email)
   end
   
+  validates :name, presence: true
+
   def ensure_contact!
     result = Contact.find_by(
-      identity_id: id,
-      contact_identity_id: id
+      identity_id: self.id,
+      contact_identity_id: self.id
     )
     if result.nil?
       ApplicationRecord.transaction do
@@ -764,5 +766,10 @@ class Identity < ApplicationRecord
   
   def parent_company
     Company.where(company_identity_id: self.id).first!
+  end
+  
+  def after_create
+    self.ensure_contact!
+    Myplet.default_myplets(self)
   end
 end

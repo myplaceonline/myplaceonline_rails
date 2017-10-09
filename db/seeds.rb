@@ -190,13 +190,12 @@ user.explicit_categories = true
 user.experimental_categories = true
 user.save(:validate => false)
 
-ExecutionContext.stack do
-
-  User.current_user = user
+MyplaceonlineExecutionContext.do_user(user) do
 
   identity = Identity.create!(
     id: User::SUPER_USER_IDENTITY_ID,
     user_id: User::SUPER_USER_ID,
+    name: "root",
   )
       
   user.primary_identity = identity

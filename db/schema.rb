@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171003213123) do
+ActiveRecord::Schema.define(version: 20171009034342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2515,6 +2515,7 @@ ActiveRecord::Schema.define(version: 20171003213123) do
     t.string "display_note"
     t.integer "identity_type"
     t.integer "blood_type"
+    t.integer "visit_count"
     t.index ["company_id"], name: "index_identities_on_company_id"
     t.index ["identity_id"], name: "index_identities_on_identity_id"
     t.index ["user_id"], name: "index_identities_on_user_id"

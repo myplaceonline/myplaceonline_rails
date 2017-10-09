@@ -1274,6 +1274,10 @@ class MyplaceonlineController < ApplicationController
         additional += " AND #{model.table_name}.#{parent_id} = #{ActiveRecord::Base.connection.quote(params[parent_id.to_sym])}"
       end
       Rails.logger.debug{"all query strict: #{strict}, additional: #{additional}"}
+      perform_all(initial_or: initial_or, additional: additional)
+    end
+    
+    def perform_all(initial_or:, additional:)
       model.includes(all_includes).joins(all_joins).where(
         "(#{model.table_name}.identity_id = ? #{initial_or}) #{additional}",
         current_user.primary_identity.id

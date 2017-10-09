@@ -73,7 +73,7 @@ class Permission < ApplicationRecord
   def self.current_target=(target)
     MyplaceonlineExecutionContext.permission_target = target
   end
-  
+
   def self.current_target_identity
     target = Permission.current_target
     if target.nil?
