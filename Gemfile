@@ -53,7 +53,7 @@ gem "elasticsearch"
 gem "elasticsearch-rails"
 gem "chewy"
 gem "curb"
-gem "twilio-ruby"
+gem "twilio-ruby", "~> 5.2.3"
 # Original gem doesn"t support Rails 5
 gem "jsTimezoneDetect-rails", github: "myplaceonline/jsTimezoneDetect-rails"
 gem "simple-rss"
