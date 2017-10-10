@@ -7,9 +7,9 @@ GIT
 
 GIT
   remote: git://github.com/composite-primary-keys/composite_primary_keys.git
-  revision: 03dc16ec61c3afbf57f062de644041665b66cf47
+  revision: d0ba96d4f44b008496cf891bfb964b54d28c1e8b
   specs:
-    composite_primary_keys (9.0.7)
+    composite_primary_keys (10.0.0)
       activerecord (~> 5.1.0)
 
 GIT
@@ -86,7 +86,7 @@ GEM
       activemodel (= 5.1.4)
       activesupport (= 5.1.4)
       arel (~> 8.0)
-    activerecord-import (0.20.1)
+    activerecord-import (0.20.2)
       activerecord (>= 3.2)
     activesupport (5.1.4)
       concurrent-ruby (~> 1.0, >= 1.0.2)
@@ -147,10 +147,10 @@ GEM
     elasticsearch-transport (5.0.4)
       faraday
       multi_json
-    erubi (1.6.1)
+    erubi (1.7.0)
     eventmachine (1.2.5)
     execjs (2.7.0)
-    factory_girl (4.8.0)
+    factory_girl (4.8.1)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.8.0)
       factory_girl (~> 4.8.0)
@@ -164,7 +164,7 @@ GEM
     github-markup (1.6.1)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
-    google-api-client (0.14.3)
+    google-api-client (0.15.0)
       addressable (~> 2.5, >= 2.5.1)
       googleauth (~> 0.5)
       httpclient (>= 2.8.1, < 3.0)
@@ -224,14 +224,14 @@ GEM
     logging (2.2.2)
       little-plugger (~> 1.1)
       multi_json (~> 1.10)
-    loofah (2.1.0)
+    loofah (2.1.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     magnific-popup-rails (1.1.0)
     mail (2.6.6)
       mime-types (>= 1.16, < 4)
     memoist (0.16.0)
-    method_source (0.8.2)
+    method_source (0.9.0)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
@@ -315,7 +315,7 @@ GEM
       rubyzip (~> 1.1, < 2.0.0)
     ruby_dep (1.5.0)
     rubyzip (1.2.1)
-    sass (3.5.1)
+    sass (3.5.2)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -355,7 +355,7 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
-    twilio-ruby (5.2.3)
+    twilio-ruby (5.3.1)
       faraday (~> 0.9)
       jwt (~> 1.5)
       libxml-ruby (>= 2.0, < 4.0)
