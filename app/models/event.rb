@@ -97,7 +97,7 @@ class Event < ApplicationRecord
   end
   
   def self.execute_share(permission_share)
-    MyplaceonlineExecutionContext.do_user(permission_share.identity.user) do
+    MyplaceonlineExecutionContext.do_full_context(permission_share.identity.user) do
       obj = Myp.find_existing_object!(permission_share.subject_class, permission_share.subject_id)
       obj.set_pictures_shareable(permission_share)
       permission_share.send_email(obj)

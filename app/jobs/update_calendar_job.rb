@@ -9,7 +9,7 @@ class UpdateCalendarJob < ApplicationJob
       Chewy.strategy(:atomic) do
         Rails.logger.debug{"Started UpdateCalendarJob"}
         user = args[0]
-        MyplaceonlineExecutionContext.do_user(user) do
+        MyplaceonlineExecutionContext.do_full_context(user) do
           CalendarItemReminder.ensure_pending(user)
         end
         Rails.logger.debug{"Finished UpdateCalendarJob"}

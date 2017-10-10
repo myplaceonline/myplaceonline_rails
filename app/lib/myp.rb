@@ -1896,7 +1896,7 @@ module Myp
 
     file = Rails.root.join('lib', 'data', 'mudf', 'mudf15q3pub_csv.csv')
 
-    MyplaceonlineExecutionContext.do_user(User.find(0)) do
+    MyplaceonlineExecutionContext.do_full_context(User.find(0)) do
 
       line_count = `wc -l "#{file.to_s}"`.strip.split(' ')[0].to_i
       puts "Entries: #{line_count}"

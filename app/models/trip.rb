@@ -88,7 +88,7 @@ class Trip < ApplicationRecord
         identity_files.push(trip_picture.identity_file)
       end
     end
-    MyplaceonlineExecutionContext.do_user(obj.identity.user) do
+    MyplaceonlineExecutionContext.do_full_context(obj.identity.user) do
       ApplicationRecord.transaction do
         if do_zip
           Myp.mktmpdir do |dir|

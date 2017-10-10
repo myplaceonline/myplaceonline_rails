@@ -11,7 +11,7 @@ class UpdateUserPasswordJob < ApplicationJob
         user = args[0]
         old_password = args[1]
         new_password = args[2]
-        MyplaceonlineExecutionContext.do_user(user) do
+        MyplaceonlineExecutionContext.do_full_context(user) do
           ApplicationRecord.transaction do
             EncryptedValue.where(user: user).each do |encrypted_value|
               decrypted = Myp.decrypt(encrypted_value, old_password)

@@ -14,7 +14,7 @@ class LoadRssFeedsJob < ApplicationJob
         Rails.logger.info{"Started LoadRssFeedsJob user: #{user.id}"}
 
         executed = Myp.try_with_database_advisory_lock(Myp::DB_LOCK_LOAD_RSS_FEEDS, user.id) do
-          MyplaceonlineExecutionContext.do_user(user) do
+          MyplaceonlineExecutionContext.do_full_context(user) do
             
             status = FeedLoadStatus.where(identity_id: user.primary_identity_id).first
             

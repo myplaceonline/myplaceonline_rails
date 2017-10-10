@@ -153,6 +153,17 @@ class MyplaceonlineExecutionContext
     MyplaceonlineExecutionContext.persistent_user_store = persistent_user_store
   end
   
+  def self.do_full_context(user, &block)
+    ExecutionContext.push
+    begin
+      self.user = user
+      self.identity = user.primary_identity
+      block.call
+    ensure
+      ExecutionContext.pop
+    end
+  end
+
   # This should mostly be used only for debugging since the context is not unset
   def self.set(user: nil, identity: nil, context: nil)
     ExecutionContext.push
