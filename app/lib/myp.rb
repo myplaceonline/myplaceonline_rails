@@ -2624,7 +2624,7 @@ module Myp
     diff > 0 && diff <= 1.days
   end
   
-  def self.debug_print(obj, depth: 0)
+  def self.debug_print(obj, depth: 0, plain: false)
     
     if obj.is_a?(ActionController::Parameters)
       obj = obj.dup.permit!.to_hash
@@ -2634,13 +2634,13 @@ module Myp
     padding_children = "\t".ljust(depth + 1, "\t")
     
     # use awesome print
-    result = padding_self + obj.ai
+    result = padding_self + obj.ai(plain: plain)
 
     if !obj.nil?
       MyplaceonlineActiveRecordBaseConcern.get_attributes_model_mappings(klass: obj.class).each do |name, model|
         child = obj.send(name)
         if !child.nil?
-          result += "\n#{padding_children}Child property: #{name}\n#{padding_children}" + Myp.debug_print(child, depth: depth + 1)
+          result += "\n#{padding_children}Child property: #{name}\n#{padding_children}" + Myp.debug_print(child, depth: depth + 1, plain: plain)
         end
       end
     end

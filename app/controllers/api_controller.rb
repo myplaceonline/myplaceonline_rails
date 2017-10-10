@@ -137,7 +137,7 @@ class ApiController < ApplicationController
       user_input = params[:user_input]
       begin
         
-        params_massaged = Myp.debug_print(params.except(:user_input))
+        params_massaged = Myp.debug_print(params.except(:user_input), plain: true)
 
         Myp.send_support_email_safe(
           "Quick Feedback",
