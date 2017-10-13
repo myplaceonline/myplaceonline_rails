@@ -8,7 +8,7 @@ class TestJob < ApplicationJob
 
       Chewy.strategy(:atomic) do
         Rails.logger.info{"Started TestJob arg1: #{args}; #{args[0]}"}
-        test = playlists_url
+        test = LinkCreator.url("playlists")
         Rails.logger.info{"test = #{test.inspect}"}
         Rails.logger.info{"Ended TestJob"}
       end
