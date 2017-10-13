@@ -4,6 +4,13 @@ class PasswordsController < MyplaceonlineController
   
   SHARE_EXPIRE = 2.days
   
+  MAX_PASSWORD_LENGTH = :max_password_length
+  USE_LOWERCASE = :use_lowercase
+  USE_UPPERCASE = :use_uppercase
+  USE_NUMBERS = :use_numbers
+  USE_SPECIAL = :use_special
+  USE_SPECIAL_ADDITIONAL = :use_special_additional
+
   skip_authorization_check :only => [:index, :new, :create, :import, :importodf]
   
   def import
@@ -317,5 +324,56 @@ class PasswordsController < MyplaceonlineController
         secret.answer = s.cell(i, colindices[answer_col]).to_s
         secret.encrypt = encrypt
       end
+    end
+    
+    def settings_fields
+      super + [
+        {
+          type: Myp::FIELD_TEXT,
+          name: MAX_PASSWORD_LENGTH,
+          value: @max_password_length,
+          placeholder: "myplaceonline.passwords.generate_password_length"
+        },
+        {
+          type: Myp::FIELD_BOOLEAN,
+          name: USE_LOWERCASE,
+          value: @use_lowercase,
+          placeholder: "myplaceonline.passwords.generate_lowercase"
+        },
+        {
+          type: Myp::FIELD_BOOLEAN,
+          name: USE_UPPERCASE,
+          value: @use_uppercase,
+          placeholder: "myplaceonline.passwords.generate_uppercase"
+        },
+        {
+          type: Myp::FIELD_BOOLEAN,
+          name: USE_NUMBERS,
+          value: @use_numbers,
+          placeholder: "myplaceonline.passwords.generate_numbers"
+        },
+        {
+          type: Myp::FIELD_BOOLEAN,
+          name: USE_SPECIAL,
+          value: @use_special,
+          placeholder: "myplaceonline.passwords.generate_special"
+        },
+        {
+          type: Myp::FIELD_BOOLEAN,
+          name: USE_SPECIAL_ADDITIONAL,
+          value: @use_special_additional,
+          placeholder: "myplaceonline.passwords.generate_special_additional"
+        },
+      ]
+    end
+
+    def load_settings_params
+      super
+      @max_password_length = settings_string(name: MAX_PASSWORD_LENGTH, default_value: nil)
+      @use_lowercase = settings_boolean(name: USE_LOWERCASE, default_value: true)
+      @use_uppercase = settings_boolean(name: USE_UPPERCASE, default_value: true)
+      @use_numbers = settings_boolean(name: USE_NUMBERS, default_value: true)
+      @use_special = settings_boolean(name: USE_SPECIAL, default_value: true)
+      @use_special_additional = settings_boolean(name: USE_SPECIAL_ADDITIONAL, default_value: true)
     end
 end

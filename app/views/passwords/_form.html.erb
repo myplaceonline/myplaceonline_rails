@@ -53,7 +53,7 @@
   <%= myp_text_field(child_fields, :question, "myplaceonline.passwords.question", childproperty.question) %>
   <%= myp_text_field(child_fields, :answer, "myplaceonline.passwords.answer", childproperty.answer, false, "random_destination") %>
   <%=
-    render partial: 'myplaceonline/generaterandom', locals: {
+    render partial: "myplaceonline/generaterandom", locals: {
       heading: t("myplaceonline.passwords.generate_answer"),
       lengthplaceholder: t("myplaceonline.passwords.generate_answer_length"),
       destination: "$(this).parents('.itemwrapper').find('.random_destination')",
