@@ -104,7 +104,7 @@ class InfoController < ApplicationController
           body_markdown = I18n.t(
             "myplaceonline.info.invite_body_markdown",
             name: User.current_user.display,
-            link: Rails.application.routes.url_helpers.send("root_url", Rails.configuration.default_url_options),
+            link: LinkCreator.url("root"),
             additional_body: @obj.invite_body,
             host: Myp.website_domain.display,
           )

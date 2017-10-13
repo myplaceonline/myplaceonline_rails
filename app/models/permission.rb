@@ -60,9 +60,9 @@ class Permission < ApplicationRecord
   
   def url
     if subject_id.nil?
-      Rails.application.routes.url_helpers.send(subject_class + "_url", Rails.configuration.default_url_options)
+      LinkCreator.url(subject_class)
     else
-      Rails.application.routes.url_helpers.send(subject_class.singularize + "_url", subject_id, Rails.configuration.default_url_options)
+      LinkCreator.url(subject_class.singularize, subject_id)
     end
   end
 

@@ -130,7 +130,7 @@ class Event < ApplicationRecord
     
     email_token = EmailToken.find_or_create_by_email(target_email)
 
-    result = "<p>#{I18n.t("myplaceonline.category.events").singularize}: " + ActionController::Base.helpers.link_to(self.display, Rails.application.routes.url_helpers.send("event_shared_url", self.id, Rails.configuration.default_url_options) + "?token=" + permission_share.share.token + "&email_token=" + email_token) + "</p>"
+    result = "<p>#{I18n.t("myplaceonline.category.events").singularize}: " + ActionController::Base.helpers.link_to(self.display, LinkCreator.url("event_shared", self.id) + "?token=" + permission_share.share.token + "&email_token=" + email_token) + "</p>"
     
     if !self.event_time.nil?
       result += "\n<p>#{I18n.t("myplaceonline.events.event_time")}: #{Myp.display_datetime(self.event_time, User.current_user)}</p>"
@@ -177,7 +177,7 @@ class Event < ApplicationRecord
 
     email_token = EmailToken.find_or_create_by_email(target_email)
 
-    result = "#{I18n.t("myplaceonline.category.events").singularize}: " + Rails.application.routes.url_helpers.send("event_shared_url", self.id, Rails.configuration.default_url_options) + "?token=" + permission_share.share.token + "&email_token=" + email_token + "\n\n"
+    result = "#{I18n.t("myplaceonline.category.events").singularize}: " + LinkCreator.url("event_shared", self.id) + "?token=" + permission_share.share.token + "&email_token=" + email_token + "\n\n"
 
     if !self.event_time.nil?
       result += "#{I18n.t("myplaceonline.events.event_time")}: #{Myp.display_datetime(self.event_time, User.current_user)}\n\n"

@@ -239,7 +239,7 @@ class PasswordsController < MyplaceonlineController
           user_id: @password_share.user.id
         )
         
-        url = Rails.application.routes.url_helpers.send("password_share_transfer_url", @password_share.id, Rails.configuration.default_url_options)
+        url = LinkCreator.url("password_share_transfer", @password_share.id)
         
         share_details = I18n.t(
           "myplaceonline.passwords.share_details",

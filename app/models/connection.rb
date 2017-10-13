@@ -36,7 +36,7 @@ class Connection < ApplicationRecord
         body_markdown = I18n.t(
           "myplaceonline.connections.connection_request_body",
           name: User.current_user.display,
-          link: Rails.application.routes.url_helpers.send("connection_accept_url", self.id, Rails.configuration.default_url_options) + "?token=" + self.connection_request_token,
+          link: LinkCreator.url("connection_accept", self.id) + "?token=" + self.connection_request_token,
           host: Myp.website_domain.display,
         )
         Myp.send_email(
