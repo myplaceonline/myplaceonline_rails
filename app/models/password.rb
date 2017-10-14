@@ -51,9 +51,13 @@ class Password < ApplicationRecord
   def display
     result = name
     if !user.blank?
-      result += " (" + user + ")"
+      if name != user
+        result += " (" + user + ")"
+      end
     elsif !email.blank?
-      result += " (" + email + ")"
+      if name != email
+        result += " (" + email + ")"
+      end
     end
     if !archived.nil?
       result += " (" + I18n.t("myplaceonline.general.archived") + ")"
