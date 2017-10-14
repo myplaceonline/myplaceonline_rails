@@ -13,10 +13,6 @@ class BusinessCardsController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["business_cards.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:business_card).permit(
         BusinessCardsController.param_names

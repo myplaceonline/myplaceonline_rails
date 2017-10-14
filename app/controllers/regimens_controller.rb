@@ -48,8 +48,14 @@ class RegimensController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(regimens.regimen_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.regimens.regimen_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(regimens.regimen_name)"]
     end
 
     def obj_params

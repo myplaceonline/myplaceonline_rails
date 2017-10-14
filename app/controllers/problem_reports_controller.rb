@@ -8,8 +8,14 @@ class ProblemReportsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(problem_reports.report_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.problem_reports.report_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(problem_reports.report_name)"]
     end
 
     def obj_params

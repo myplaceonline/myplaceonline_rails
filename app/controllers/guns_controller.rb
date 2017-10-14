@@ -4,8 +4,14 @@ class GunsController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["lower(guns.gun_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.guns.gun_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(guns.gun_name)"]
     end
 
     def obj_params

@@ -1,7 +1,13 @@
 class InviteCodesController < MyplaceonlineController
   protected
-    def sorts
-      ["lower(invite_codes.code) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.invite_codes.code"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(invite_codes.code)"]
     end
 
     def obj_params

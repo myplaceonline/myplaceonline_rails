@@ -508,6 +508,8 @@ en:
       no_results: "No Results. Create New "
       always_expand_top_used: "Always Expand Top Used"
       always_expand_favorites: "Always Expand Favorites"
+      default_sort: "Default Sort"
+      default_sort_direction: "Default Sort Direction"
     everything:
       no_results: "No Results. Create New "
     html5:

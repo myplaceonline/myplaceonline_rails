@@ -12,8 +12,18 @@ class PsychologicalEvaluationsController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["psychological_evaluations.evaluation_date DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.psychological_evaluations.evaluation_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["psychological_evaluations.evaluation_date"]
     end
 
     def obj_params

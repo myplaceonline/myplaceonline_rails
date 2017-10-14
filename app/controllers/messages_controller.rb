@@ -77,10 +77,6 @@ class MessagesController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["messages.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:message).permit(MessagesController.param_names)
     end

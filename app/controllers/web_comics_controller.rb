@@ -1,7 +1,13 @@
 class WebComicsController < MyplaceonlineController
   protected
-    def sorts
-      ["lower(web_comics.web_comic_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.web_comics.web_comic_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(web_comics.web_comic_name)"]
     end
 
     def obj_params

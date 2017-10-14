@@ -65,8 +65,18 @@ class FeedItemsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["feed_items.publication_date DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.feed_items.publication_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["feed_items.publication_date"]
     end
 
     def obj_params

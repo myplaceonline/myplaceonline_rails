@@ -49,8 +49,18 @@ class RetirementPlanAmountsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["retirement_plan_amounts.input_date DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.retirement_plan_amounts.input_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["retirement_plan_amounts.input_date"]
     end
 
     def obj_params

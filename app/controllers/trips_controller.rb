@@ -129,8 +129,18 @@ class TripsController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["trips.started DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.trips.started"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["trips.started"]
     end
 
     def insecure

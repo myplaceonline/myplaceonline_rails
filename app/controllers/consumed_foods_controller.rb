@@ -12,8 +12,18 @@ class ConsumedFoodsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["consumed_foods.consumed_food_time DESC NULLS LAST"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.consumed_foods.consumed_food_time"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["consumed_foods.consumed_food_time"]
     end
 
     def obj_params

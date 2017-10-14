@@ -8,10 +8,6 @@ class MuseumsController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["museums.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:museum).permit(
         :museum_id,
@@ -20,5 +16,23 @@ class MuseumsController < MyplaceonlineController
         location_attributes: LocationsController.param_names,
         website_attributes: WebsitesController.param_names
       )
+    end
+
+    def default_sort_columns
+      [Location.sorts]
+    end
+    
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.locations.name"), default_sort_columns[0]]
+      ]
+    end
+
+    def all_joins
+      "INNER JOIN locations ON locations.id = museums.location_id"
+    end
+
+    def all_includes
+      :location
     end
 end

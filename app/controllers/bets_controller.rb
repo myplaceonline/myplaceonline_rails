@@ -51,8 +51,22 @@ class BetsController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["bets.bet_end_date DESC NULLS FIRST"]
+    def default_sort_columns
+      ["bets.bet_end_date"]
+    end
+    
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.bets.bet_end_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sorts_additions
+      "nulls first"
+    end
+
+    def default_sort_direction
+      "desc"
     end
 
     def obj_params

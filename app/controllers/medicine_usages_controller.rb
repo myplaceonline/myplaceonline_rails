@@ -4,8 +4,18 @@ class MedicineUsagesController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["medicine_usages.usage_time DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.medicine_usages.usage_time"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["medicine_usages.usage_time"]
     end
 
     def obj_params

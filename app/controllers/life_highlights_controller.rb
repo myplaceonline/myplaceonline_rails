@@ -16,8 +16,18 @@ class LifeHighlightsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["life_highlights.life_highlight_time DESC", "lower(life_highlights.life_highlight_name) ASC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.life_highlights.life_highlight_time"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["life_highlights.life_highlight_time", "lower(life_highlights.life_highlight_name) ASC"]
     end
 
     def obj_params

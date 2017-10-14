@@ -29,8 +29,14 @@ class PassportsController < MyplaceonlineController
       end
     end
 
-    def sorts
-      ["lower(passports.region) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.passports.region"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(passports.region)"]
     end
 
     def obj_params

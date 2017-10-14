@@ -21,10 +21,6 @@ class MyreferencesController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["myreferences.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:myreference).permit(
         MyreferencesController.param_names

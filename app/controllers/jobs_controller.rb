@@ -88,8 +88,18 @@ class JobsController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["jobs.started DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.jobs.started"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["jobs.started"]
     end
 
     def obj_params

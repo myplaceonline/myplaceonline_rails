@@ -8,8 +8,14 @@ class QuestsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(quests.quest_title) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.quests.quest_title"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(quests.quest_title)"]
     end
 
     def obj_params

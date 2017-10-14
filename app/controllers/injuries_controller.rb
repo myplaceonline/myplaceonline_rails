@@ -12,8 +12,18 @@ class InjuriesController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["injuries.injury_date DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.injuries.injury_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["injuries.injury_date"]
     end
 
     def obj_params

@@ -44,10 +44,6 @@ class MediaDumpFilesController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["media_dump_files.created_at DESC"]
-    end
-
     def obj_params
       params.require(:media_dump_file).permit(
         FilesController.multi_param_names

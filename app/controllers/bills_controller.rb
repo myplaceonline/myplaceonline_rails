@@ -16,8 +16,18 @@ class BillsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["bills.bill_date DESC NULLS LAST", "lower(bills.bill_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.bills.bill_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["bills.bill_date", "lower(bills.bill_name) ASC"]
+    end
+
+    def default_sort_direction
+      "desc"
     end
 
     def obj_params

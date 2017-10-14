@@ -20,8 +20,14 @@ class CalculationsController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["lower(calculations.name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.calculations.name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(calculations.name)"]
     end
 
     def obj_params

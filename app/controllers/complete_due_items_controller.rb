@@ -1,7 +1,13 @@
 class CompleteDueItemsController < MyplaceonlineController
   
   protected
-    def sorts
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.complete_due_items.due_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
       ["complete_due_items.due_date"]
     end
 

@@ -44,8 +44,18 @@ class JobAccomplishmentsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["job_accomplishments.accomplishment_time DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.job_accomplishments.accomplishment_time"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["job_accomplishments.accomplishment_time"]
     end
 
     def obj_params

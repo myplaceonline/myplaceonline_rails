@@ -8,8 +8,14 @@ class MusicAlbumsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(music_albums.music_album_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.music_albums.music_album_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(music_albums.music_album_name)"]
     end
 
     def obj_params

@@ -40,8 +40,18 @@ class MoneyBalanceItemsController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["money_balance_items.item_time DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.money_balance_items.item_time"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["money_balance_items.item_time"]
     end
 
     def obj_params

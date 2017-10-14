@@ -4,8 +4,18 @@ class ConcertsController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["concerts.concert_date DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.concerts.concert_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["concerts.concert_date"]
     end
 
     def insecure

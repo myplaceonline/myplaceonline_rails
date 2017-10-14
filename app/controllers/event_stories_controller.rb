@@ -36,10 +36,6 @@ class EventStoriesController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["event_stories.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:event_story).permit(
         :id,

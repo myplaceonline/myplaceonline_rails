@@ -9,10 +9,6 @@ class DoctorsController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["doctors.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:doctor).permit(
         DoctorsController.param_names

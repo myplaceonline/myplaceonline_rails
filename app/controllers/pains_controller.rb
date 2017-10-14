@@ -4,8 +4,18 @@ class PainsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["pains.pain_start_time DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.pains.pain_start_time"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["pains.pain_start_time"]
     end
 
     def obj_params

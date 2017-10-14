@@ -44,10 +44,6 @@ class TripPicturesController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["trip_pictures.created_at DESC"]
-    end
-
     def obj_params
       params.require(:trip_picture).permit(
         FilesController.multi_param_names

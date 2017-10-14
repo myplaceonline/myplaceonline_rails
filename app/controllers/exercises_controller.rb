@@ -4,8 +4,18 @@ class ExercisesController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["exercises.exercise_start DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.exercises.exercise_start"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["exercises.exercise_start"]
     end
 
     def obj_params

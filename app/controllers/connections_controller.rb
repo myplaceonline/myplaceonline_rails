@@ -53,7 +53,7 @@ class ConnectionsController < MyplaceonlineController
         body_markdown = I18n.t(
           "myplaceonline.connections.connection_accepted_body",
           name: User.current_user.display,
-          link: Rails.application.routes.url_helpers.send("connection_url", @obj.id, Rails.configuration.default_url_options)
+          link: LinkCreator.url("connection", @obj.id)
         )
         
         Myp.send_email(
@@ -85,10 +85,6 @@ class ConnectionsController < MyplaceonlineController
   protected
     def insecure
       true
-    end
-
-    def sorts
-      ["connections.updated_at DESC"]
     end
 
     def obj_params

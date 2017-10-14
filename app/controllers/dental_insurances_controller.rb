@@ -21,8 +21,14 @@ class DentalInsurancesController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["lower(dental_insurances.insurance_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.dental_insurances.insurance_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(dental_insurances.insurance_name)"]
     end
 
     def obj_params

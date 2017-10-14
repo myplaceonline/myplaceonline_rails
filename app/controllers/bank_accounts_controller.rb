@@ -15,8 +15,14 @@ class BankAccountsController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["lower(bank_accounts.name) ASC"]
+    def default_sort_columns
+      ["lower(#{model.table_name}.name)"]
+    end
+    
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.bank_accounts.name"), default_sort_columns[0]]
+      ]
     end
 
     def obj_params

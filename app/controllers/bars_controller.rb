@@ -16,10 +16,6 @@ class BarsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["bars.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:bar).permit(
         :notes,

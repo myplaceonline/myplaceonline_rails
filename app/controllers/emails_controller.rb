@@ -104,10 +104,6 @@ class EmailsController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["emails.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:email).permit(EmailsController.param_names)
     end

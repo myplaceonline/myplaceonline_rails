@@ -16,8 +16,18 @@ class VaccinesController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["vaccines.vaccine_date DESC NULLS LAST", "lower(vaccines.vaccine_name) ASC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.vaccines.vaccine_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["vaccines.vaccine_date", "lower(vaccines.vaccine_name) ASC"]
     end
 
     def obj_params

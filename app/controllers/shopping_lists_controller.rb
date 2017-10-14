@@ -13,8 +13,14 @@ class ShoppingListsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(shopping_lists.shopping_list_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.shopping_lists.shopping_list_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(shopping_lists.shopping_list_name)"]
     end
 
     def obj_params

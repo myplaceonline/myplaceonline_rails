@@ -37,10 +37,6 @@ class MyplaceonlineQuickCategoryDisplaysController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["myplaceonline_quick_category_displays.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:myplaceonline_quick_category_display).permit(
         :trash

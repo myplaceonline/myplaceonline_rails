@@ -27,8 +27,14 @@ class CalculationFormsController < MyplaceonlineController
       "and is_duplicate = false"
     end
     
-    def sorts
-      ["lower(calculation_forms.name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.calculation_forms.name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(calculation_forms.name)"]
     end
 
     def obj_params

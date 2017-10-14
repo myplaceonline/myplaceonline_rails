@@ -12,8 +12,14 @@ class CompaniesController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["lower(identities.name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.identities.name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(identities.name)"]
     end
 
     def obj_params

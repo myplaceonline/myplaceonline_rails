@@ -12,8 +12,18 @@ class PaidTaxesController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["paid_taxes.paid_tax_date DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.paid_taxes.paid_tax_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["paid_taxes.paid_tax_date"]
     end
 
     def obj_params

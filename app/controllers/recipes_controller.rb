@@ -8,8 +8,14 @@ class RecipesController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(recipes.name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.recipes.name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(recipes.name)"]
     end
 
     def obj_params

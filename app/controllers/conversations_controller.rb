@@ -36,8 +36,18 @@ class ConversationsController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["conversations.conversation_date DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.conversations.conversation_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["conversations.conversation_date"]
     end
 
     def obj_params

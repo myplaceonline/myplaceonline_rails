@@ -156,15 +156,16 @@ class FeedsController < MyplaceonlineController
     ] + super
   end
   
-  def index_sorts
-    [
-      [I18n.t("myplaceonline.feeds.unread_count"), "feeds.unread_items"],
-    ] + super
-  end
-  
   protected
-    def sorts
-      ["lower(feeds.name) #{@selected_sort_direction}"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.feeds.name"), default_sort_columns[0]],
+        [I18n.t("myplaceonline.feeds.unread_count"), "feeds.unread_items"],
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(feeds.name)"]
     end
 
     def obj_params

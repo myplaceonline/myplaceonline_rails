@@ -26,8 +26,14 @@ class LocationsController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["lower(locations.name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.locations.name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(locations.name)"]
     end
 
     def obj_params

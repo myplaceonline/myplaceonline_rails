@@ -15,8 +15,14 @@ class RetirementPlansController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["lower(retirement_plans.retirement_plan_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.retirement_plans.retirement_plan_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(retirement_plans.retirement_plan_name)"]
     end
 
     def obj_params

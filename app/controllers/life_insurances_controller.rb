@@ -4,8 +4,14 @@ class LifeInsurancesController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["lower(life_insurances.insurance_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.life_insurances.insurance_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(life_insurances.insurance_name)"]
     end
 
     def obj_params

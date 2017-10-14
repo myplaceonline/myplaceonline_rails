@@ -12,8 +12,14 @@ class RewardProgramsController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["lower(reward_programs.reward_program_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.reward_programs.reward_program_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(reward_programs.reward_program_name)"]
     end
 
     def all_additional_sql(strict)

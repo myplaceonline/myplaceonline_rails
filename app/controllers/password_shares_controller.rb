@@ -36,10 +36,6 @@ class PasswordSharesController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["password_shares.created_at DESC"]
-    end
-
     def obj_params
       params.require(:password_share).permit(
         :_destroy

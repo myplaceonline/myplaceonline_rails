@@ -49,10 +49,6 @@ class CalendarItemRemindersController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["calendar_item_reminders.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:calendar_item_reminder).permit(
         :trash

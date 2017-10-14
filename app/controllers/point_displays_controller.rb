@@ -5,10 +5,6 @@ class PointDisplaysController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["point_displays.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:point_display).permit(
         :trash

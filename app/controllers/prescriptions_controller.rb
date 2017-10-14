@@ -12,8 +12,18 @@ class PrescriptionsController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["prescriptions.prescription_date DESC NULLS FIRST", "lower(prescriptions.prescription_name) ASC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.prescriptions.prescription_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["prescriptions.prescription_date", "lower(prescriptions.prescription_name) ASC"]
     end
 
     def obj_params

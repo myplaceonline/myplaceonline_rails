@@ -26,8 +26,14 @@ class ChecklistsController < MyplaceonlineController
       result
     end
     
-    def sorts
-      ["lower(checklists.checklist_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.checklists.checklist_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(checklists.checklist_name)"]
     end
 
     def obj_params

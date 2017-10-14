@@ -8,10 +8,6 @@ class CharitiesController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["charities.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:charity).permit(
         :notes,

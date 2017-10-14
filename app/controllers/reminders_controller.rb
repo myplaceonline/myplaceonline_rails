@@ -41,8 +41,18 @@ class RemindersController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["reminders.start_time DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.reminders.start_time"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["reminders.start_time"]
     end
 
     def obj_params

@@ -4,8 +4,18 @@ class SunExposuresController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["sun_exposures.exposure_start DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.sun_exposures.exposure_start"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["sun_exposures.exposure_start"]
     end
 
     def obj_params

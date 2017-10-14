@@ -1,7 +1,17 @@
 class DiaryEntriesController < MyplaceonlineController
   protected
-    def sorts
-      ["diary_entries.diary_time DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.diary_entries.diary_time"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["diary_entries.diary_time"]
     end
 
     def sensitive

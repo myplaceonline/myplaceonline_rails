@@ -16,8 +16,18 @@ class LifeGoalsController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["life_goals.long_term ASC NULLS FIRST, lower(life_goals.life_goal_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.life_goals.long_term"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["life_goals.long_term", "lower(life_goals.life_goal_name) ASC"]
+    end
+
+    def default_sorts_additions
+      "nulls first"
     end
 
     def obj_params

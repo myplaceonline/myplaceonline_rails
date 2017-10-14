@@ -44,8 +44,18 @@ class JobAwardsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["job_awards.job_award_date DESC NULLS LAST"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.job_awards.job_award_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["job_awards.job_award_date"]
     end
 
     def obj_params

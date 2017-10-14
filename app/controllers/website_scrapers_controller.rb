@@ -52,8 +52,14 @@ class WebsiteScrapersController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(website_scrapers.scraper_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.website_scrapers.scraper_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(website_scrapers.scraper_name)"]
     end
 
     def obj_params

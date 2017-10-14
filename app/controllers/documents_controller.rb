@@ -16,8 +16,18 @@ class DocumentsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["documents.document_date DESC NULLS LAST", "lower(documents.document_name) DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.documents.document_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["documents.document_date", "lower(documents.document_name) DESC"]
     end
 
     def obj_params

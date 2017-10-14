@@ -1,7 +1,17 @@
 class DentistVisitsController < MyplaceonlineController
   protected
-    def sorts
-      ["dentist_visits.visit_date DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.dentist_visits.visit_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["dentist_visits.visit_date"]
     end
 
     def obj_params

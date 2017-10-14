@@ -8,10 +8,6 @@ class GasStationsController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["gas_stations.updated_at DESC"]
-    end
-    
     def obj_params
       params.require(:gas_station).permit(
         :gas,
@@ -32,5 +28,23 @@ class GasStationsController < MyplaceonlineController
         { name: :propane_fillup },
         { name: :rv_dump_station },
       ]
+    end
+
+    def default_sort_columns
+      [Location.sorts]
+    end
+    
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.locations.name"), default_sort_columns[0]]
+      ]
+    end
+
+    def all_joins
+      "INNER JOIN locations ON locations.id = gas_stations.location_id"
+    end
+
+    def all_includes
+      :location
     end
 end

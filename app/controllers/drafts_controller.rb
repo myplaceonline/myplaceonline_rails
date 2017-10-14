@@ -14,8 +14,14 @@ class DraftsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(drafts.draft_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.drafts.draft_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(drafts.draft_name)"]
     end
 
     def obj_params

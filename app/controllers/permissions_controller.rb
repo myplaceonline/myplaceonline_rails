@@ -105,10 +105,6 @@ class PermissionsController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["permissions.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:permission).permit(
         PermissionsController.param_names

@@ -46,8 +46,14 @@ class CreditCardsController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["lower(credit_cards.name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.credit_cards.name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(credit_cards.name)"]
     end
 
     def obj_params

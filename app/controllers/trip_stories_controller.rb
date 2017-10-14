@@ -36,10 +36,6 @@ class TripStoriesController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["trip_stories.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:trip_story).permit(
         :id,

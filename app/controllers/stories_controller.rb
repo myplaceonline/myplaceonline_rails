@@ -18,8 +18,18 @@ class StoriesController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["stories.story_time DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.stories.story_time"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["stories.story_time"]
     end
 
     def obj_params

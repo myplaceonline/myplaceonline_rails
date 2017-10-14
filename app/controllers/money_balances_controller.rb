@@ -206,10 +206,6 @@ class MoneyBalancesController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["money_balances.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:money_balance).permit(
         MoneyBalancesController.param_names

@@ -14,10 +14,6 @@ class EmailAccountsController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["email_accounts.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:email_account).permit(
         EmailAccountsController.param_names
@@ -28,8 +24,14 @@ class EmailAccountsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(concat(passwords.name, passwords.user, passwords.email)) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.passwords.name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(concat(passwords.name, passwords.user, passwords.email))"]
     end
     
     def all_joins

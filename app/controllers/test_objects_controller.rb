@@ -31,9 +31,18 @@ class TestObjectsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      #["lower(test_objects.test_object_name) ASC"]
-      ["test_objects.test_object_date DESC NULLS LAST"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.test_objects.test_object_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["test_objects.test_object_date"]
     end
 
     def obj_params

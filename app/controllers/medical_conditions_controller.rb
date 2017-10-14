@@ -4,8 +4,14 @@ class MedicalConditionsController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["lower(medical_conditions.medical_condition_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.medical_conditions.medical_condition_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(medical_conditions.medical_condition_name)"]
     end
 
     def obj_params

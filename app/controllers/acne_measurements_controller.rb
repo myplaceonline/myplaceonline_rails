@@ -8,8 +8,18 @@ class AcneMeasurementsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["acne_measurements.measurement_datetime DESC"]
+    def default_sort_columns
+      ["acne_measurements.measurement_datetime"]
+    end
+    
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.acne_measurements.measurement_datetime"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_direction
+      "desc"
     end
 
     def obj_params

@@ -65,12 +65,18 @@ class FileFoldersController < MyplaceonlineController
       "and parent_folder_id is null"
     end
 
-    def sorts
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.identity_file_folders.folder_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
       FileFoldersController.sorts
     end
     
     def self.sorts
-      ["lower(identity_file_folders.folder_name) ASC"]
+      ["lower(identity_file_folders.folder_name)"]
     end
 
     def obj_params

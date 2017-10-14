@@ -31,8 +31,18 @@ class EducationsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["educations.education_end DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.educations.education_end"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["educations.education_end"]
     end
 
     def obj_params

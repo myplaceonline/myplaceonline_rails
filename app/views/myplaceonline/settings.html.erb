@@ -8,8 +8,7 @@
       input_field(
         type: field[:type],
         name: field[:name],
-        value: field[:value],
-        placeholder: field[:placeholder]
+        **field[:options]
       )
     %>
   <% end %>

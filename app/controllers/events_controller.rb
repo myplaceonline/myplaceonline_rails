@@ -126,8 +126,18 @@ class EventsController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["events.event_time DESC NULLS LAST"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.events.event_time"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["events.event_time"]
     end
     
     def obj_params

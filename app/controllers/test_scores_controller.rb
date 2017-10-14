@@ -16,8 +16,18 @@ class TestScoresController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["test_scores.test_score_date DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.test_scores.test_score_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["test_scores.test_score_date"]
     end
 
     def obj_params

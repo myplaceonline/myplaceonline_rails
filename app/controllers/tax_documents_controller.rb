@@ -16,8 +16,18 @@ class TaxDocumentsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["tax_documents.fiscal_year DESC NULLS LAST", "lower(tax_documents.tax_document_form_name) ASC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.tax_documents.fiscal_year"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["tax_documents.fiscal_year", "lower(tax_documents.tax_document_form_name) ASC"]
     end
 
     def obj_params

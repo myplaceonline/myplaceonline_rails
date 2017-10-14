@@ -40,8 +40,14 @@ class MypletsController < MyplaceonlineController
       set_category_obj
     end
     
-    def sorts
-      ["lower(myplets.title) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.myplets.title"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(myplets.title)"]
     end
 
     def obj_params

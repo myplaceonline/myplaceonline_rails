@@ -8,10 +8,6 @@ class StocksController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["stocks.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:stock).permit(
         :num_shares,

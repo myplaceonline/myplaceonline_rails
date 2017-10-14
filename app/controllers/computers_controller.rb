@@ -1,7 +1,13 @@
 class ComputersController < MyplaceonlineController
   protected
-    def sorts
-      ["lower(computers.computer_model) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.computers.computer_model"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(computers.computer_model)"]
     end
 
     def obj_params

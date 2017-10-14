@@ -4,8 +4,14 @@ class ChecksController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["lower(checks.description) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.checks.description"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(checks.description)"]
     end
 
     def obj_params

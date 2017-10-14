@@ -8,8 +8,14 @@ class SoftwareLicensesController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(software_licenses.license_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.software_licenses.license_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(software_licenses.license_name)"]
     end
 
     def obj_params

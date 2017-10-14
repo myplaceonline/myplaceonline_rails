@@ -12,8 +12,18 @@ class DriverLicensesController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["driver_licenses.driver_license_expires DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.driver_licenses.driver_license_expires"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["driver_licenses.driver_license_expires"]
     end
 
     def obj_params

@@ -1,7 +1,13 @@
 class MedicinesController < MyplaceonlineController
   protected
-    def sorts
-      ["lower(medicines.medicine_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.medicines.medicine_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(medicines.medicine_name)"]
     end
 
     def obj_params

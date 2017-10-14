@@ -1,7 +1,13 @@
 class AccomplishmentsController < MyplaceonlineController
   protected
-    def sorts
-      ["accomplishments.updated_at DESC"]
+    def default_sort_columns
+      ["lower(#{model.table_name}.name)"]
+    end
+    
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.accomplishments.name"), default_sort_columns[0]]
+      ]
     end
 
     def obj_params

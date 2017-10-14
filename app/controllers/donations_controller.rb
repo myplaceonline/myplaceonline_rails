@@ -16,8 +16,18 @@ class DonationsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["donations.donation_date DESC NULLS LAST", "lower(donations.donation_name) ASC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.donations.donation_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["donations.donation_date", "lower(donations.donation_name) ASC"]
     end
 
     def obj_params

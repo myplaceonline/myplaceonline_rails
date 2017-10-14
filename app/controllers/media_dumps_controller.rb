@@ -19,8 +19,14 @@ class MediaDumpsController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["lower(media_dumps.media_dump_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.media_dumps.media_dump_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(media_dumps.media_dump_name)"]
     end
 
     def insecure

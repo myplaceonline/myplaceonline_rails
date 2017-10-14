@@ -20,8 +20,18 @@ class CreditScoresController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["credit_scores.score_date DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.credit_scores.score_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["credit_scores.score_date"]
     end
 
     def obj_params

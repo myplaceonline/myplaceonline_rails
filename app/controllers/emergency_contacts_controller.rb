@@ -44,10 +44,6 @@ class EmergencyContactsController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["emergency_contacts.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:emergency_contact).permit(
         email_attributes: EmailsController.param_names

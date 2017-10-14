@@ -12,10 +12,6 @@ class CafesController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["cafes.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:cafe).permit(
         :notes,

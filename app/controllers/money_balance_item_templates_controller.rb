@@ -91,8 +91,14 @@ class MoneyBalanceItemTemplatesController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["money_balance_item_templates.amount ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.money_balance_item_templates.amount"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["money_balance_item_templates.amount"]
     end
 
     def obj_params

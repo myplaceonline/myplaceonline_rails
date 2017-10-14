@@ -1,7 +1,13 @@
 class ToDosController < MyplaceonlineController
   protected
-    def sorts
-      ["lower(to_dos.short_description) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.to_dos.short_description"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(to_dos.short_description)"]
     end
 
     def obj_params

@@ -44,8 +44,18 @@ class JobReviewsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["job_reviews.review_date DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.job_reviews.review_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["job_reviews.review_date"]
     end
 
     def obj_params

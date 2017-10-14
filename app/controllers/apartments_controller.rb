@@ -25,10 +25,20 @@ class ApartmentsController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["apartment_leases.start_date DESC NULLS LAST", "apartments.updated_at DESC"]
+    def default_sort_columns
+      ["apartment_leases.start_date", "apartments.updated_at DESC"]
     end
     
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.apartments.start_date"), default_sort_columns[0]]
+      ]
+    end
+
     def obj_params
       params.require(:apartment).permit(
         :notes,

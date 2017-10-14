@@ -44,10 +44,6 @@ class JobMyreferencesController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["job_myreferences.created_at DESC"]
-    end
-
     def obj_params
       params.require(:job_myreference).permit(
         myreference_attributes: MyreferencesController.param_names

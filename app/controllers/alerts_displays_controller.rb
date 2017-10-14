@@ -30,10 +30,6 @@ class AlertsDisplaysController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["alerts_displays.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:alerts_display).permit(
         AlertsDisplaysController.permit_params

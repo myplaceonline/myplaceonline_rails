@@ -4,8 +4,14 @@ class PromotionsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["promotions.expires ASC", "lower(promotions.promotion_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.promotions.expires"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["promotions.expires", "lower(promotions.promotion_name) ASC"]
     end
 
     def obj_params

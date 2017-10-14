@@ -4,8 +4,14 @@ class QuotesController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(quotes.quote_text) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.quotes.quote_text"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(quotes.quote_text)"]
     end
 
     def obj_params

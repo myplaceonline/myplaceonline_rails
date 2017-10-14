@@ -62,8 +62,18 @@ class RecreationalVehicleServicesController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["recreational_vehicle_services.date_serviced DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.recreational_vehicle_services.date_serviced"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["recreational_vehicle_services.date_serviced"]
     end
 
     def obj_params

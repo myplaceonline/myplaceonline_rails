@@ -4,8 +4,14 @@ class BoycottsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(boycotts.boycott_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.boycotts.boycott_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(boycotts.boycott_name)"]
     end
 
     def obj_params

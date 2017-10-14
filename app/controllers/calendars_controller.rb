@@ -49,10 +49,6 @@ class CalendarsController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["calendars.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:calendar).permit(permit_params)
     end

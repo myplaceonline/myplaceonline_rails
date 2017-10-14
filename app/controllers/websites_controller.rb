@@ -54,8 +54,14 @@ class WebsitesController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(websites.title) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.websites.title"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(websites.title)"]
     end
 
     def obj_params

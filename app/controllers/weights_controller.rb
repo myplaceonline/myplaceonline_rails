@@ -20,8 +20,18 @@ class WeightsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["weights.measure_date DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.weights.measure_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["weights.measure_date"]
     end
 
     def obj_params

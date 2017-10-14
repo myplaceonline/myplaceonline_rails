@@ -1,7 +1,17 @@
 class DreamsController < MyplaceonlineController
   protected
-    def sorts
-      ["dreams.dream_time DESC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.dreams.dream_time"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["dreams.dream_time"]
     end
 
     def sensitive

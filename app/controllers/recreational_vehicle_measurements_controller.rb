@@ -49,8 +49,14 @@ class RecreationalVehicleMeasurementsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(recreational_vehicle_measurements.measurement_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.recreational_vehicle_measurements.measurement_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(recreational_vehicle_measurements.measurement_name)"]
     end
 
     def obj_params

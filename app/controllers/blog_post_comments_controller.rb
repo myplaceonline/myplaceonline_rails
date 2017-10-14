@@ -56,10 +56,6 @@ class BlogPostCommentsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["blog_post_comments.created_at DESC"]
-    end
-
     def obj_params
       params.require(:blog_post_comment).permit(BlogPostComment.params)
     end

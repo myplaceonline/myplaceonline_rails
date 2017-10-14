@@ -298,8 +298,14 @@ class PasswordsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(passwords.name) ASC", "lower(passwords.user) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.passwords.name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(passwords.name)", "lower(passwords.user) ASC"]
     end
 
     def obj_params

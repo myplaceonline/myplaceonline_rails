@@ -20,9 +20,18 @@ class InsuranceCardsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      #["lower(test_objects.test_object_name) ASC"]
-      ["insurance_cards.insurance_card_end DESC NULLS LAST"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.insurance_cards.insurance_card_end"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["insurance_cards.insurance_card_end"]
     end
 
     def obj_params

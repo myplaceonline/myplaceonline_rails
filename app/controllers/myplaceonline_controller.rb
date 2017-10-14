@@ -10,6 +10,8 @@ class MyplaceonlineController < ApplicationController
   
   SETTING_ALWAYS_EXPAND_FAVORITES = :always_expand_favorites
   SETTING_ALWAYS_EXPAND_TOP_USED = :always_expand_top_used
+  SETTING_DEFAULT_SORT = :default_sort
+  SETTING_DEFAULT_SORT_DIRECTION = :default_sort_direction
   
   PARAM_OFFSET = :offset
   PARAM_PER_PAGE = :perpage
@@ -34,22 +36,6 @@ class MyplaceonlineController < ApplicationController
     @myplet = params[:myplet]
     @archived = param_bool(:archived)
 
-    @selected_sort = params[:selected_sort]
-    # Sanitize
-    if !@selected_sort.blank?
-      @selected_sort = @selected_sort.gsub(/[^a-zA-Z\._\(\)]/, "")
-    end
-    
-    @selected_sort_direction = params[:selected_sort_direction]
-    # Sanitize to the only two vaild values
-    if @selected_sort_direction.blank?
-      @selected_sort_direction = "ASC"
-    elsif @selected_sort_direction.downcase != "asc" && @selected_sort_direction.downcase != "desc"
-      @selected_sort_direction = "ASC"
-    else
-      @selected_sort_direction = @selected_sort_direction.upcase
-    end
-    
     if has_category && params[:myplet].nil?
       Myp.visit(current_user, category_name)
     end
@@ -773,24 +759,76 @@ class MyplaceonlineController < ApplicationController
   end
   
   def index_sorts
-    [
+    result = [
       [I18n.t("myplaceonline.general.visit_count"), "#{model.table_name}.visit_count"],
       [I18n.t("myplaceonline.general.created_at"), "#{model.table_name}.created_at"],
-      [I18n.t("myplaceonline.general.updated_at"), "#{model.table_name}.updated_at"]
+      [I18n.t("myplaceonline.general.updated_at"), "#{model.table_name}.updated_at"],
     ]
+    ds = additional_sorts
+    if !ds.nil?
+      result = ds + result
+    end
+    result
+  end
+  
+  def default_sort_columns
+    ["#{model.table_name}.updated_at"]
+  end
+  
+  def default_sort_direction
+    if default_sort_columns[0] == "#{model.table_name}.updated_at"
+      "desc"
+    else
+      "asc"
+    end
+  end
+  
+  def default_sorts_additions
+    "nulls last"
   end
 
-  def sorts_helper
-    if !@selected_sort.blank?
-      # Sanitized above
-      ["#{@selected_sort} #{@selected_sort_direction} nulls last"]
-    else
-      if block_given?
-        yield
-      else
-        ["updated_at #{@selected_sort_direction}"]
-      end
+  def sorts_helper(&block)
+    @selected_sort_direction = params[:selected_sort_direction]
+    
+    if @selected_sort_direction.blank?
+      @selected_sort_direction = Setting.get_value(
+        category: self.category,
+        name: SETTING_DEFAULT_SORT_DIRECTION,
+      )
     end
+    
+    if @selected_sort_direction.blank?
+      @selected_sort_direction = default_sort_direction
+    elsif @selected_sort_direction.downcase != "asc" && @selected_sort_direction.downcase != "desc"
+      @selected_sort_direction = default_sort_direction
+    else
+      @selected_sort_direction = @selected_sort_direction.downcase
+    end
+    
+    dsc = nil
+    @selected_sort = params[:selected_sort]
+    
+    if @selected_sort.blank?
+      @selected_sort = Setting.get_value(
+        category: self.category,
+        name: SETTING_DEFAULT_SORT,
+      )
+    end
+    
+    if !@selected_sort.blank?
+      @selected_sort = @selected_sort.gsub(/[^a-zA-Z\._\(\)]/, "")
+    else
+      dsc = default_sort_columns
+      @selected_sort = dsc[0]
+    end
+    
+    result = ["#{@selected_sort} #{@selected_sort_direction} #{default_sorts_additions}"]
+    
+    if !dsc.nil? && dsc.length > 1
+      result = result + dsc.drop(1)
+    end
+    
+    result
   end
 
   def footer_items_index
@@ -1093,7 +1131,7 @@ class MyplaceonlineController < ApplicationController
             params,
             field[:name]
           )
-        when Myp::FIELD_TEXT
+        when Myp::FIELD_TEXT, Myp::FIELD_SELECT
           value = params[field[:name]]
         else
           raise "TODO"
@@ -1141,6 +1179,13 @@ class MyplaceonlineController < ApplicationController
     true
   end
   
+  def sort_options
+    [
+      [t("myplaceonline.general.ascending"), "asc"],
+      [t("myplaceonline.general.descending"), "desc"],
+    ]
+  end
+  
   protected
   
     def deny_guest
@@ -1164,12 +1209,12 @@ class MyplaceonlineController < ApplicationController
       raise NotImplementedError
     end
     
-    def sorts
-      raise NotImplementedError
+    def additional_sorts
+      nil
     end
     
     def sorts_wrapper
-      sorts_helper {sorts}
+      sorts_helper {additional_sorts}
     end
     
     def sensitive
@@ -1509,14 +1554,38 @@ class MyplaceonlineController < ApplicationController
         {
           type: Myp::FIELD_BOOLEAN,
           name: SETTING_ALWAYS_EXPAND_FAVORITES,
-          value: @always_expand_favorites,
-          placeholder: "myplaceonline.categories.always_expand_favorites"
+          options: {
+            value: @always_expand_favorites,
+            placeholder: "myplaceonline.categories.always_expand_favorites",
+          }
         },
         {
           type: Myp::FIELD_BOOLEAN,
           name: SETTING_ALWAYS_EXPAND_TOP_USED,
-          value: @always_expand_top_used,
-          placeholder: "myplaceonline.categories.always_expand_top_used"
+          options: {
+            value: @always_expand_top_used,
+            placeholder: "myplaceonline.categories.always_expand_top_used",
+          }
+        },
+        {
+          type: Myp::FIELD_SELECT,
+          name: SETTING_DEFAULT_SORT,
+          options: {
+            value: @setting_default_sort,
+            placeholder: "myplaceonline.categories.default_sort",
+            select_options: index_sorts,
+            translate_select_options: false,
+          }
+        },
+        {
+          type: Myp::FIELD_SELECT,
+          name: SETTING_DEFAULT_SORT_DIRECTION,
+          options: {
+            value: @setting_default_sort_direction,
+            placeholder: "myplaceonline.categories.default_sort_direction",
+            select_options: sort_options,
+            translate_select_options: false,
+          }
         },
       ]
     end
@@ -1524,5 +1593,7 @@ class MyplaceonlineController < ApplicationController
     def load_settings_params
       @always_expand_favorites = settings_boolean(name: SETTING_ALWAYS_EXPAND_FAVORITES)
       @always_expand_top_used = settings_boolean(name: SETTING_ALWAYS_EXPAND_TOP_USED)
+      @setting_default_sort = settings_string(name: SETTING_DEFAULT_SORT)
+      @setting_default_sort_direction = settings_string(name: SETTING_DEFAULT_SORT_DIRECTION)
     end
 end

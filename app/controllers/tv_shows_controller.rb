@@ -4,8 +4,14 @@ class TvShowsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(tv_shows.tv_show_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.tv_shows.tv_show_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(tv_shows.tv_show_name)"]
     end
 
     def obj_params

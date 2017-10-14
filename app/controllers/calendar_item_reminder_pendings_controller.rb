@@ -89,10 +89,6 @@ class CalendarItemReminderPendingsController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["calendar_item_reminder_pendings.created_at"]
-    end
-
     def obj_params
       params.require(:calendar_item_reminder_pendings).permit(
         :trash

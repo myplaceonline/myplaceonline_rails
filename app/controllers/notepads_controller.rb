@@ -3,9 +3,15 @@ class NotepadsController < MyplaceonlineController
     def insecure
       true
     end
-
-    def sorts
-      ["lower(notepads.title) ASC"]
+    
+    def default_sort_columns
+      ["lower(notepads.title)"]
+    end
+    
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.notepads.title"), default_sort_columns[0]]
+      ]
     end
 
     def obj_params

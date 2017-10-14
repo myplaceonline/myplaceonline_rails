@@ -36,10 +36,6 @@ class TimingEventsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["timing_events.created_at DESC"]
-    end
-
     def obj_params
       params.require(:timing_event).permit(
         :timing_event_start,

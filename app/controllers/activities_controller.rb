@@ -14,8 +14,14 @@ class ActivitiesController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(activities.name) ASC"]
+    def default_sort_columns
+      ["lower(#{model.table_name}.name)"]
+    end
+    
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.activities.name"), default_sort_columns[0]]
+      ]
     end
 
     def obj_params

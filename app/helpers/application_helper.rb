@@ -1353,6 +1353,7 @@ module ApplicationHelper
       tooltip: nil,
       select_options: nil,
       select_options_sort: true,
+      select_include_blank: false,
       translate_select_options: true,
       text_area_rich: true,
       on_select_target: nil,
@@ -1507,6 +1508,7 @@ module ApplicationHelper
     if options[:type] == Myp::FIELD_SELECT
       field_attributes[:prompt] = options[:placeholder]
       field_attributes[:include_blank] = !options[:value].nil?
+      field_attributes[:include_blank] = options[:select_include_blank]
     end
     if !onchange.blank?
       field_attributes[:onchange] = onchange

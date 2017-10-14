@@ -39,8 +39,14 @@ class UsersController < MyplaceonlineController
       authorize! :manage, @obj
     end
 
-    def sorts
-      ["lower(users.email) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.users.email"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(users.email)"]
     end
 
     def obj_params

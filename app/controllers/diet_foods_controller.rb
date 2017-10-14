@@ -52,8 +52,14 @@ class DietFoodsController < MyplaceonlineController
       Diet
     end
 
-    def sorts
-      ["diet_foods.food_type NULLS LAST", "lower(foods.food_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.diet_foods.food_type"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["diet_foods.food_type", "lower(foods.food_name) ASC"]
     end
     
     def all_joins

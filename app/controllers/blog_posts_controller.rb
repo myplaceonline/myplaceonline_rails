@@ -58,8 +58,18 @@ class BlogPostsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["blog_posts.post_date DESC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.blog_posts.post_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["blog_posts.post_date"]
+    end
+
+    def default_sort_direction
+      "desc"
     end
 
     def obj_params

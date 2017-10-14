@@ -84,8 +84,14 @@ class RecreationalVehiclesController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["lower(recreational_vehicles.rv_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.recreational_vehicles.rv_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(recreational_vehicles.rv_name)"]
     end
 
     def obj_params

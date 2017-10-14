@@ -78,8 +78,18 @@ class FlightsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["flights.flight_start_date DESC", "lower(flights.flight_name) ASC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.flights.flight_start_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["flights.flight_start_date", "lower(flights.flight_name) ASC"]
     end
 
     def obj_params

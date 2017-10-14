@@ -8,8 +8,18 @@ class PatentsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["patents.publication_date DESC NULLS LAST", "lower(patents.patent_name) ASC"]
+    def default_sort_direction
+      "desc"
+    end
+
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.patents.publication_date"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["patents.publication_date", "lower(patents.patent_name) ASC"]
     end
 
     def obj_params

@@ -12,10 +12,6 @@ class BookStoresController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["book_stores.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:book_store).permit(
         :rating,

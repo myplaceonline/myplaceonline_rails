@@ -4,8 +4,14 @@ class TranslationsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(translations.translation_input) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.translations.translation_input"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(translations.translation_input)"]
     end
 
     def obj_params

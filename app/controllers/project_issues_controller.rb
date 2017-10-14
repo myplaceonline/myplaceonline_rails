@@ -71,8 +71,14 @@ class ProjectIssuesController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["project_issues.position ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.project_issues.position"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["project_issues.position"]
     end
 
     def obj_params

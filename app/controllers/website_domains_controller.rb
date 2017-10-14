@@ -1,7 +1,13 @@
 class WebsiteDomainsController < MyplaceonlineController
   protected
-    def sorts
-      ["lower(website_domains.domain_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.website_domains.domain_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(website_domains.domain_name)"]
     end
 
     def obj_params

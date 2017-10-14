@@ -8,10 +8,6 @@ class AwesomeListsController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["awesome_lists.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:awesome_list).permit(
         :notes,

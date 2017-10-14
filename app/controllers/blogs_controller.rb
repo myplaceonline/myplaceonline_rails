@@ -122,8 +122,14 @@ class BlogsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(blogs.blog_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.blogs.blog_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(blogs.blog_name)"]
     end
 
     def obj_params

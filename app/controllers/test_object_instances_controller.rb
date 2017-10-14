@@ -36,8 +36,14 @@ class TestObjectInstancesController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(test_object_instances.test_object_instance_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.test_object_instances.test_object_instance_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(test_object_instances.test_object_instance_name)"]
     end
 
     def obj_params

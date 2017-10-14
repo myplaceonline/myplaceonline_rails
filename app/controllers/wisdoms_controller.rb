@@ -8,8 +8,14 @@ class WisdomsController < MyplaceonlineController
       true
     end
 
-    def sorts
-      ["lower(wisdoms.name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.wisdoms.name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(wisdoms.name)"]
     end
 
     def obj_params

@@ -4,8 +4,14 @@ class PhonesController < MyplaceonlineController
   end
 
   protected
-    def sorts
-      ["lower(phones.phone_model_name) ASC"]
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.phones.phone_model_name"), default_sort_columns[0]]
+      ]
+    end
+
+    def default_sort_columns
+      ["lower(phones.phone_model_name)"]
     end
 
     def obj_params

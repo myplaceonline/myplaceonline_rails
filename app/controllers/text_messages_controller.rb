@@ -134,10 +134,6 @@ class TextMessagesController < MyplaceonlineController
   end
   
   protected
-    def sorts
-      ["text_messages.updated_at DESC"]
-    end
-
     def obj_params
       params.require(:text_message).permit(TextMessagesController.param_names)
     end
