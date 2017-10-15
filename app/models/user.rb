@@ -117,6 +117,9 @@ class User < ApplicationRecord
         user.encrypt_by_default = true
         user.save!
         
+        new_identity.update_column(:website_domain_id, Myp.website_domain.id)
+        new_identity.reload
+        
         new_identity.after_create
         
         Rails.logger.debug{"Creating first status reminder"}

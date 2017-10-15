@@ -520,7 +520,11 @@ module Myp
   
   def self.website_domain(host: nil)
     
-    result = @@all_website_domains[Myp.current_host(host: host)]
+    result = nil
+    
+    if ExecutionContext.available?
+      result = @@all_website_domains[Myp.current_host(host: host)]
+    end
     
     if result.nil?
       result = @@default_website_domain

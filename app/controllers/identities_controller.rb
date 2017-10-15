@@ -71,7 +71,10 @@ class IdentitiesController < MyplaceonlineController
       
       @obj.user_id = current_user.id
       @obj.save!
-
+      
+      @obj.update_column(:website_domain_id, Myp.website_domain.id)
+      @obj.reload
+      
       @obj.identity = @obj
       
       MyplaceonlineExecutionContext.do_identity(@obj) do

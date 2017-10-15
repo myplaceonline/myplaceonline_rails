@@ -312,6 +312,8 @@ class Identity < ApplicationRecord
   
   child_properties(name: :identity_pictures, foreign_key: "parent_identity_id")
   
+  child_property(name: :website_domain)
+  
   child_property(name: :company)
   
   def is_type_contact?
