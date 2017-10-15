@@ -111,8 +111,12 @@ module Myplaceonline
               cii = parsed_query_string["current_identity_id"].to_i
               user = env["warden"].user
               i = user.identities.index{|x| x.id == cii}
-              user.primary_identity = user.identities[i]
-              user.save!
+              if !i.nil?
+                user.primary_identity = user.identities[i]
+                user.save!
+              else
+                raise "Invalid identity"
+              end
             end
             
             #Rails.logger.debug{"MyplaceonlineRack.call setting context host: #{MyplaceonlineExecutionContext.host}, query_string: #{MyplaceonlineExecutionContext.query_string}, cookie_hash: #{Myp.debug_print(MyplaceonlineExecutionContext.cookie_hash)}"}
