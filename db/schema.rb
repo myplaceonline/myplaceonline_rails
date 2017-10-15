@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171009034342) do
+ActiveRecord::Schema.define(version: 20171015205444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2516,9 +2516,11 @@ ActiveRecord::Schema.define(version: 20171009034342) do
     t.integer "identity_type"
     t.integer "blood_type"
     t.integer "visit_count"
+    t.bigint "website_domain_id"
     t.index ["company_id"], name: "index_identities_on_company_id"
     t.index ["identity_id"], name: "index_identities_on_identity_id"
     t.index ["user_id"], name: "index_identities_on_user_id"
+    t.index ["website_domain_id"], name: "index_identities_on_website_domain_id"
   end
 
   create_table "identity_drivers_licenses", id: :serial, force: :cascade do |t|
@@ -6369,6 +6371,7 @@ ActiveRecord::Schema.define(version: 20171009034342) do
   add_foreign_key "identities", "companies"
   add_foreign_key "identities", "identities"
   add_foreign_key "identities", "users", name: "identities_user_id_fk"
+  add_foreign_key "identities", "website_domains"
   add_foreign_key "identity_drivers_licenses", "identities", column: "parent_identity_id", name: "identity_drivers_licenses_parent_identity_id_fk"
   add_foreign_key "identity_drivers_licenses", "identities", name: "identity_drivers_licenses_identity_id_fk"
   add_foreign_key "identity_drivers_licenses", "identity_files", name: "identity_drivers_licenses_identity_file_id_fk"

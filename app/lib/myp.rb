@@ -1645,6 +1645,11 @@ module Myp
       body_plain += "\n\nServer: #{ENV["NODENAME"]}"
     end
     
+    process_info = "PID: #{Process.pid}, PPID: #{Process.ppid}, UID: #{Process.uid}, GID: #{Process.gid}"
+    body_html += "\n\n<p>Process: #{process_info}</p>"
+    body_plain += "\n\nProcess: #{process_info}"
+    
+    
     t = Time.now.utc.to_s(:full)
     body_html += "\n\n<p>Server Time: #{t}</p>"
     body_plain += "\n\nServer Time: #{t}"
