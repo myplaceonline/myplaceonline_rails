@@ -1,3 +1,5 @@
+# After updating this, run bin/rake myp:dump
+
 namespace :myp do
   desc "Myplaceonline rake tasks"
   
@@ -29,8 +31,11 @@ MyplaceonlineExecutionContext.do_user(user) do
       
   Myplet.default_myplets(identity)
 
-  if ENV["SKIP_LARGE_IMPORTS"].nil?
+  if ENV["SKIP_LARGE_UNNEEDED_IMPORTS"].nil?
     Myp.import_museums
+  end
+
+  if ENV["SKIP_ZIP_CODE_IMPORTS"].nil?
     Myp.import_zip_codes
   end
 

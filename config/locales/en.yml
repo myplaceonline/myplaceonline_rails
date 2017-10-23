@@ -3439,7 +3439,7 @@ en:
     company_interactions:
       company_interaction_date: "Date"
     encryption:
-      first_encryption: "Note: If you check the box to encrypt and if you ever lose your main website password in the future, the above encrypted data will be lost forever. So, make sure your main website password is rememberable (and secure!). You can disable this warning by clicking on the top right menu, then Settings, then Security, and uncheck Encrypt By Default."
+      first_encryption: "Note: If you check the box to encrypt and if you ever lose your main website password in the future, the above encrypted data will be lost forever. So, make sure your main website password is rememberable (and secure!). This warning will only appear once. You can disable the default encryption in the top right menu, Settings, then Security, and uncheck Encrypt By Default."
     dating_profiles:
       dating_profile_name: "Name"
       about_me: "About Me"

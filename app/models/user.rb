@@ -95,8 +95,11 @@ class User < ApplicationRecord
 
   # User loaded from database
   after_initialize do |user|
+      
+    #Rails.logger.debug{"User.after_initialize #{Myp.debug_print(user)}"}
+      
     # If user.id is nil, then it's an anonymous user
-    if !user.id.nil? && primary_identity.nil?
+    if !user.id.nil? && primary_identity_id.nil?
 
       Rails.logger.debug{"Creating identity for #{user.id}"}
       
