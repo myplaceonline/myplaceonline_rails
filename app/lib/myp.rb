@@ -9,6 +9,25 @@ require 'colorize'
 
 module Myp
   
+  def self.failsafe_debug(msg)
+    #File.open("#{Dir.tmpdir}/debug.txt", "a") { |f| f.write(msg + "\n") }
+    Rails.logger.warn{msg}
+  end
+  
+  Signal.trap "USR2" do
+    # Thread might be needed because of https://bugs.ruby-lang.org/issues/7917
+    Thread.new do
+      Myp.failsafe_debug("kill -USR2 received @ #{Time.now}")
+      ObjectSpace.each_object(Thread) do |th|
+        Myp.failsafe_debug("ThreadInfo id: #{th}, name: #{th.name}, status: #{th.status}\n\t" + th.backtrace.join("\n\t"))
+      end
+    end
+  end
+
+  EXTRA_DEBUG = false
+  
+  Rails.logger.info{"Myp static initialization started"}
+  
   DEFAULT_FROM_EMAIL = "contact"
   
   @@default_host = "myplaceonline.com"
@@ -358,25 +377,39 @@ module Myp
     end
   end
   
-  Rails.logger.info{"myplaceonline: myp.rb static initialization started"}
-  
-  Rails.logger.info{"Process pid: #{Process.pid}, ppid: #{Process.ppid}, uid: #{Process.uid}, gid: #{Process.gid}, argv: #{ARGV}"}
+  Rails.logger.info{"Myp Process pid: #{Process.pid}, ppid: #{Process.ppid}, uid: #{Process.uid}, gid: #{Process.gid}, argv: #{ARGV}"}
   
   def self.prepare_website_domain_html(html:)
     i = 0
     while true do
+      if Myp::EXTRA_DEBUG
+        Rails.logger.debug{"Myp.prepare_website_domain_html iteration with i #{i}"}
+      end
       match_data = html.match(/(<img.*)src=\"([^\"]+)\"/, i)
       if !match_data.nil?
         if match_data[2].index("://").nil?
-          replacement = match_data[1] + "src=\"" + ActionController::Base.helpers.asset_path(match_data[2]) + "\""
+          if Myp::EXTRA_DEBUG
+            Rails.logger.debug{"Myp.prepare_website_domain_html relative"}
+          end
+          with_asset_path = ActionController::Base.helpers.asset_path(match_data[2])
+          if Myp::EXTRA_DEBUG
+            Rails.logger.debug{"Myp.prepare_website_domain_html asset path #{with_asset_path}"}
+          end
+          replacement = match_data[1] + "src=\"" + with_asset_path + "\""
           html = match_data.pre_match + replacement + match_data.post_match
           i = match_data.offset(0)[0] + replacement.length + 1
         else
+          if Myp::EXTRA_DEBUG
+            Rails.logger.debug{"Myp.prepare_website_domain_html absolute"}
+          end
           i = match_data.offset(0)[0] + match_data[0].length + 1
         end
       else
         break
       end
+    end
+    if Myp::EXTRA_DEBUG
+      Rails.logger.debug{"Myp.prepare_website_domain_html finished"}
     end
     html
   end
@@ -416,9 +449,9 @@ module Myp
           @@all_categories_without_explicit_without_experimental.delete(existing_category.name.to_sym)
         end
       end
-      Rails.logger.info{"Myp: Categories cached: #{@@all_categories.count}"}
+      Rails.logger.info{"Myp Categories cached: #{@@all_categories.count}"}
       if Rails.env.test?
-        puts "Myp: Categories cached: #{@@all_categories.count}"
+        puts "Myp Categories cached: #{@@all_categories.count}"
       end
       #puts "myplaceonline: Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
       
@@ -432,7 +465,9 @@ module Myp
         @@default_website_domain = nil
         @@all_website_domains.clear
         @@all_website_domain_homepages.clear
+        Rails.logger.debug{"Myp.reinitialize_in_rails_context query verified website domains"}
         WebsiteDomain.where(verified: true).each do |website_domain|
+          Rails.logger.debug{"Myp.reinitialize_in_rails_context domain id: #{website_domain.id}, name: #{website_domain.display}"}
           if !website_domain.hosts.blank?
             if website_domain.default_domain
               @@default_website_domain = website_domain
@@ -441,6 +476,10 @@ module Myp
             html = website_domain.static_homepage
 
             if !html.blank?
+              if Myp::EXTRA_DEBUG
+                Rails.logger.debug{"Myp.reinitialize_in_rails_context preparing static homepage #{html}"}
+              end
+              
               html = self.prepare_website_domain_html(html: html)
             end
             
@@ -458,9 +497,9 @@ module Myp
         # Mid-migration
       end
 
-      Rails.logger.info{"Myp: Website domains cached: #{@@all_website_domains.count}"}
+      Rails.logger.info{"Myp Website domains cached: #{@@all_website_domains.count}"}
       if Rails.env.test?
-        puts "Myp: Website domains cached: #{@@all_website_domains.count}"
+        puts "Myp Website domains cached: #{@@all_website_domains.count}"
       end
     end
   end
@@ -468,17 +507,17 @@ module Myp
   self.reinitialize
   
   if !ENV["FTS_TARGET"].blank?
-    Rails.logger.info{"Configuring full text search with #{ENV["FTS_TARGET"]}"}
+    Rails.logger.info{"Myp Configuring full text search with #{ENV["FTS_TARGET"]}"}
     Chewy.root_strategy = :active_job
     Chewy.settings = {host: ENV["FTS_TARGET"]}
   end
   
   if !ENV["TRUSTED_CLIENTS"].blank?
     @@trusted_client_ips = ENV["TRUSTED_CLIENTS"].split(";").map{|trusted_client| Socket.getaddrinfo(trusted_client, nil, :INET)[0][2] }
-    Rails.logger.info{"Trusted client IPs: #{@@trusted_client_ips} from #{ENV["TRUSTED_CLIENTS"].split(";")}"}
+    Rails.logger.info{"Myp Trusted client IPs: #{@@trusted_client_ips} from #{ENV["TRUSTED_CLIENTS"].split(";")}"}
   else
     @@trusted_client_ips = []
-    Rails.logger.info{"No trusted client IPs"}
+    Rails.logger.info{"Myp No trusted client IPs"}
   end
   
   def self.trusted_client_ips
@@ -2022,7 +2061,7 @@ module Myp
   def self.try_with_database_advisory_lock(key1, key2, &block)
     lock_successful = true
     
-    Rails.logger.debug{"try_with_database_advisory_lock enter (#{key1}, #{key2})"}
+    Rails.logger.debug{"Myp.try_with_database_advisory_lock enter (#{key1}, #{key2})"}
 
     if ApplicationRecord.connection.instance_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter)
       
@@ -2030,7 +2069,7 @@ module Myp
       # to be in a transaction, which isn't always benign
       
       lock_successful = ApplicationRecord.connection.select_value("select pg_try_advisory_lock(#{key1}, #{key2})")
-      Rails.logger.debug{"try_with_database_advisory_lock locked (#{key1}, #{key2}), result: #{lock_successful}"}
+      Rails.logger.debug{"Myp.try_with_database_advisory_lock locked (#{key1}, #{key2}), result: #{lock_successful}"}
     else
       raise "Not implemented"
     end
@@ -2042,10 +2081,10 @@ module Myp
         ApplicationRecord.connection.select_value("select pg_advisory_unlock(#{key1}, #{key2})")
       end
     else
-      Rails.logger.info{"try_with_database_advisory_lock failed to lock (#{key1}, #{key2})"}
+      Rails.logger.info{"Myp.try_with_database_advisory_lock failed to lock (#{key1}, #{key2})"}
     end
     
-    Rails.logger.debug{"try_with_database_advisory_lock unlocked (#{key1}, #{key2}), result: #{lock_successful}"}
+    Rails.logger.debug{"Myp.try_with_database_advisory_lock unlocked (#{key1}, #{key2}), result: #{lock_successful}"}
 
     lock_successful
   end
@@ -2604,9 +2643,9 @@ module Myp
   def self.log_response_time(name:, threshold: nil, **options, &block)
     start_time = Time.now
     if !options.nil? && options.length > 0
-      Rails.logger.debug{"Myp.log_response_time #{name} started context: #{options}".colorize(color: :green)}
+      Rails.logger.debug{"Myp.log_response_time #{name} started context: #{options}".colorize(color: :magenta)}
     else
-      Rails.logger.debug{"Myp.log_response_time #{name} started".colorize(color: :green)}
+      Rails.logger.debug{"Myp.log_response_time #{name} started".colorize(color: :magenta)}
     end
     begin
       block.call
@@ -2615,7 +2654,7 @@ module Myp
       diff = (end_time - start_time) * 1000.0
       
       if threshold.nil? || diff >= threshold
-        use_color = :light_green
+        use_color = :green
         if !threshold.nil? && diff >= threshold
           use_color = :red
         end
@@ -3296,5 +3335,5 @@ module Myp
     child
   end
   
-  Rails.logger.info{"myplaceonline: myp.rb static initialization ended"}
+  Rails.logger.info{"Myp static initialization ended"}
 end

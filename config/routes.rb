@@ -79,7 +79,7 @@ end
 
 Rails.application.routes.draw do
   
-  Rails.logger.debug{"Started loading routes"}
+  Rails.logger.debug{"routes.rb Started loading routes"}
   
   root "welcome#index"
 
@@ -494,7 +494,7 @@ Rails.application.routes.draw do
 
   overriden = [:users, :event_rsvps]
 
-  Rails.logger.debug{"Started processing all models"}
+  Rails.logger.debug{"routes.rb Started processing all models"}
 
   if Rails.env.development?
     models_count = Myp.models_count.to_f
@@ -511,14 +511,14 @@ Rails.application.routes.draw do
         p = (count.to_f / models_count) * 100.0
         if p > 1 && p.to_i % 10.0 == 0 && processed[p.to_i].nil?
           processed[p.to_i] = true
-          Rails.logger.debug{"routes.rb: Processing models: #{p.to_i}%"}
+          Rails.logger.debug{"routes.rb Processing models: #{p.to_i}%"}
         end
       end
       process_resources(table_name, additions[table_name.to_sym])
     end
   end
   
-  Rails.logger.debug{"Ended processing all models"}
+  Rails.logger.debug{"routes.rb Ended processing all models"}
 
   if Myp.is_web_server? || Rails.env.test?
     devise_scope :user do
@@ -557,5 +557,5 @@ Rails.application.routes.draw do
   
   mount Ckeditor::Engine => '/ckeditor'
   
-  Rails.logger.debug{"Finished loading routes"}
+  Rails.logger.debug{"routes.rb Finished loading routes"}
 end

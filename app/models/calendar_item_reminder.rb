@@ -26,14 +26,14 @@ class CalendarItemReminder < ApplicationRecord
     end
     
     if !executed
-      Rails.logger.info("ensure_pending_all_users could not lock (#{Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS_ALL}, 1)")
+      Rails.logger.info("CalendarItemReminder.ensure_pending_all_users could not lock (#{Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS_ALL}, 1)")
     end
 
-    Rails.logger.info("ensure_pending_all_users end")
+    Rails.logger.info("CalendarItemReminder.ensure_pending_all_users end")
   end
   
   def self.ensure_pending_process(user)
-    Rails.logger.debug("ensure_pending_process start #{user.id}")
+    Rails.logger.debug("CalendarItemReminder.ensure_pending_process start #{user.id}")
 
     # Check if we need to create any future repeat events
     CalendarItem
@@ -41,7 +41,7 @@ class CalendarItemReminder < ApplicationRecord
       .where("repeat_amount is not null and is_repeat is null and identity_id = ?", user.primary_identity)
       .each do |calendar_item|
         
-        Rails.logger.debug{"ensure_pending calendar_item=#{calendar_item.inspect}"}
+        Rails.logger.debug{"CalendarItemReminder.ensure_pending_process calendar_item=#{calendar_item.inspect}"}
 
         # Find the newest repeat item
         latest_repeat = CalendarItem
@@ -57,19 +57,19 @@ class CalendarItemReminder < ApplicationRecord
           .first
           
         if latest_repeat.nil?
-          Rails.logger.debug{"no repeat items found"}
+          Rails.logger.debug{"CalendarItemReminder.ensure_pending_process no repeat items found"}
           latest_repeat = calendar_item
         end
         
         # Keep creating repeat items until we hit the target
         target = Time.now + calendar_item.calendar.largest_threshold_seconds
         
-        Rails.logger.debug{"target=#{target}"}
+        Rails.logger.debug{"CalendarItemReminder.ensure_pending_process target=#{target}"}
 
         while latest_repeat.calendar_item_time < target
           timesource = latest_repeat.calendar_item_time
           
-          Rails.logger.debug{"loop processing #{timesource.inspect}"}
+          Rails.logger.debug{"CalendarItemReminder.ensure_pending_process loop processing #{timesource.inspect}"}
           
           new_time = case calendar_item.repeat_type
             when Myp::TIME_DURATION_SECONDS
@@ -101,10 +101,10 @@ class CalendarItemReminder < ApplicationRecord
                 end
               end
               if !x.nil? && x < target
-                Rails.logger.debug{"repeat nth returning #{x.inspect}"}
+                Rails.logger.debug{"CalendarItemReminder.ensure_pending_process repeat nth returning #{x.inspect}"}
                 x
               else
-                Rails.logger.debug{"repeat nth returning nil"}
+                Rails.logger.debug{"CalendarItemReminder.ensure_pending_process repeat nth returning nil"}
                 nil
               end
             else
@@ -128,16 +128,16 @@ class CalendarItemReminder < ApplicationRecord
             
             latest_repeat = repeated_calendar_item
             
-            Rails.logger.debug{"latest_repeat=#{latest_repeat.inspect}"}
+            Rails.logger.debug{"CalendarItemReminder.ensure_pending_process latest_repeat=#{latest_repeat.inspect}"}
           else
             break
           end
         end
 
-        Rails.logger.debug{"completed calendar_item"}
+        Rails.logger.debug{"CalendarItemReminder.ensure_pending_process completed calendar_item"}
     end
     
-    Rails.logger.debug{"checking calendar item reminder pendings"}
+    Rails.logger.debug{"CalendarItemReminder.ensure_pending_process checking calendar item reminder pendings"}
     
     now = Time.now
     
@@ -151,7 +151,7 @@ class CalendarItemReminder < ApplicationRecord
         
         # If for some reason the model object doesn't exist, then just destroy this reminder
         if calendar_item_reminder.calendar_item.model_id_valid?
-          Rails.logger.debug{"checking reminder=#{calendar_item_reminder.inspect}. Item: #{calendar_item_reminder.calendar_item.display}, Calendar Item: #{calendar_item_reminder.calendar_item.inspect}"}
+          Rails.logger.debug{"CalendarItemReminder.ensure_pending_process checking reminder=#{calendar_item_reminder.inspect}. Item: #{calendar_item_reminder.calendar_item.display}, Calendar Item: #{calendar_item_reminder.calendar_item.inspect}"}
           
           # Don't process a reminder that already has pendings outstanding because that means it has previously been
           # processed
@@ -159,11 +159,11 @@ class CalendarItemReminder < ApplicationRecord
             
             if !calendar_item_reminder.calendar_item.calendar_item_time.nil?
 
-              Rails.logger.debug{"calendar_item_time = #{calendar_item_reminder.calendar_item.calendar_item_time}"}
+              Rails.logger.debug{"CalendarItemReminder.ensure_pending_process calendar_item_time = #{calendar_item_reminder.calendar_item.calendar_item_time}"}
           
               if calendar_item_reminder.threshold <= now && !calendar_item_reminder.is_expired(now)
                 
-                Rails.logger.debug{"meets threshold of #{calendar_item_reminder.threshold_in_seconds.seconds}"}
+                Rails.logger.debug{"CalendarItemReminder.ensure_pending_process meets threshold of #{calendar_item_reminder.threshold_in_seconds.seconds}"}
           
                 # If there's a max_pending (often 1), then delete any pending
                 # items beyond that amount
@@ -174,14 +174,14 @@ class CalendarItemReminder < ApplicationRecord
                   identity: user.primary_identity
                 )
                 
-                Rails.logger.debug{"creating new pending reminder #{new_pending.inspect}"}
+                Rails.logger.debug{"CalendarItemReminder.ensure_pending_process creating new pending reminder #{new_pending.inspect}"}
 
                 begin
                   new_pending.save!
 
-                  Rails.logger.debug{"created new pending item #{new_pending.inspect}"}
+                  Rails.logger.debug{"CalendarItemReminder.ensure_pending_process created new pending item #{new_pending.inspect}"}
                 rescue ActiveRecord::InvalidForeignKey => ifk
-                  Rails.logger.debug{"InvalidForeignKey while trying to create new pending item, probably benign. #{ifk.inspect}"}
+                  Rails.logger.debug{"CalendarItemReminder.ensure_pending_process InvalidForeignKey while trying to create new pending item, probably benign. #{ifk.inspect}"}
                 end
                 
                 # Send any notifications about the new reminder
@@ -194,7 +194,7 @@ class CalendarItemReminder < ApplicationRecord
                     begin
                       item_obj.handle_new_reminder
                     rescue Exception => e
-                      Myp.warn("Error handling new reminder", e)
+                      Myp.warn("CalendarItemReminder.ensure_pending_process Error handling new reminder", e)
                     end
                   end
                 end
@@ -221,7 +221,7 @@ class CalendarItemReminder < ApplicationRecord
                       
                       # There's no point to keep the actual reminder around since we know there must be more recent
                       # ${max_pending} reminder(s)
-                      Rails.logger.debug{"destroying excessive reminder #{x.calendar_item_reminder.inspect}; #{x.inspect}"}
+                      Rails.logger.debug{"CalendarItemReminder.ensure_pending_process destroying excessive reminder #{x.calendar_item_reminder.inspect}; #{x.inspect}"}
                       x.calendar_item_reminder.destroy!
                     end
                   end
@@ -232,10 +232,10 @@ class CalendarItemReminder < ApplicationRecord
           
           is_expired = calendar_item_reminder.is_expired(now)
 
-          Rails.logger.debug{"is_expired = #{is_expired}"}
+          Rails.logger.debug{"CalendarItemReminder.ensure_pending_process is_expired = #{is_expired}"}
 
           if is_expired
-            Rails.logger.debug{"reminder expired, deleting #{calendar_item_reminder.calendar_item_reminder_pendings.count} pendings"}
+            Rails.logger.debug{"CalendarItemReminder.ensure_pending_process reminder expired, deleting #{calendar_item_reminder.calendar_item_reminder_pendings.count} pendings"}
             
             calendar_item_reminder.calendar_item_reminder_pendings.each do |calendar_item_reminder_pending|
               calendar_item_reminder_pending.destroy!
@@ -251,38 +251,38 @@ class CalendarItemReminder < ApplicationRecord
             else
               calendar_item_object = calendar_item_reminder.calendar_item.find_model_object
               
-              Rails.logger.debug{"checking calendar_item_object = #{calendar_item_object.inspect}"}
+              Rails.logger.debug{"CalendarItemReminder.ensure_pending_process checking calendar_item_object = #{calendar_item_object.inspect}"}
 
               if !calendar_item_object.nil? && calendar_item_object.respond_to?("handle_expired_reminder")
-                Rails.logger.debug{"calling handle_expired_reminder on object"}
+                Rails.logger.debug{"CalendarItemReminder.ensure_pending_process calling handle_expired_reminder on object"}
                 calendar_item_object.handle_expired_reminder
               end
             end
           end
         else
-          Myp.warn("Destroying invalid calendar item with identity: #{calendar_item_reminder.calendar_item.identity_id}, model_class: #{calendar_item_reminder.calendar_item.model_class}, model_id: #{calendar_item_reminder.calendar_item.model_id}")
+          Myp.warn("CalendarItemReminder.ensure_pending_process Destroying invalid calendar item with identity: #{calendar_item_reminder.calendar_item.identity_id}, model_class: #{calendar_item_reminder.calendar_item.model_class}, model_id: #{calendar_item_reminder.calendar_item.model_id}")
           calendar_item_reminder.calendar_item.destroy!
         end
         
-        Rails.logger.debug{"finshed checking reminder"}
+        Rails.logger.debug{"CalendarItemReminder.ensure_pending_process finshed checking reminder"}
     end
 
-    Rails.logger.debug("ensure_pending_process end")
+    Rails.logger.debug("CalendarItemReminder.ensure_pending_process ensure_pending_process end")
   end
   
   def self.ensure_pending(user)
     
-    Rails.logger.debug("ensure_pending start #{user.id}")
+    Rails.logger.debug("CalendarItemReminder.ensure_pending start #{user.id}")
 
     executed = Myp.try_with_database_advisory_lock(Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS, user.id) do
       ensure_pending_process(user)
     end
 
     if !executed
-      Rails.logger.info("ensure_pending could not lock (#{Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS}, #{user.id})")
+      Rails.logger.info("CalendarItemReminder.ensure_pending could not lock (#{Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS}, #{user.id})")
     end
 
-    Rails.logger.debug("ensure_pending end")
+    Rails.logger.debug("CalendarItemReminder.ensure_pending end")
   end
   
   def self.schedule_ensure_pending(user)
@@ -293,7 +293,7 @@ class CalendarItemReminder < ApplicationRecord
   MAX_NUM_MESSAGES = 3
 
   def self.send_reminder_notifications(user, pending_item)
-    Rails.logger.debug("send_reminder_notifications start #{pending_item.id}")
+    Rails.logger.debug("CalendarItemReminder.send_reminder_notifications start #{pending_item.id}")
     
     begin
 
@@ -312,7 +312,7 @@ class CalendarItemReminder < ApplicationRecord
         display: pending_item.calendar_item.display
       )
       
-      Rails.logger.debug("send_reminder_notifications message #{message}, #{link}")
+      Rails.logger.debug("alendarItemReminder.send_reminder_notifications message #{message}, #{link}")
       
       if message.length > chars_available
         message = message[0..chars_available - 1] + "..."
@@ -320,7 +320,7 @@ class CalendarItemReminder < ApplicationRecord
       
       message += " " + link
       
-      Rails.logger.debug("send_reminder_notifications final message #{message}")
+      Rails.logger.debug("alendarItemReminder.send_reminder_notifications final message #{message}")
       
       user.send_sms(message)
       
@@ -328,7 +328,7 @@ class CalendarItemReminder < ApplicationRecord
       Myp.warn("Could not process send_reminder_notifications #{user.id}, #{pending_item.id}: #{Myp.error_details(e)}")
     end
     
-    Rails.logger.debug("send_reminder_notifications end")
+    Rails.logger.debug("alendarItemReminder.send_reminder_notifications end")
   end
   
   def threshold_in_seconds
