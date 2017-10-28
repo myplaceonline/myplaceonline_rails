@@ -15,7 +15,7 @@ log4r_config:
   outputters:
   - type: DateFileOutputter
     name: datefile
-    dirname: "log"
+    dirname: "tmp"
     filename: "app_log4r_%u.log"
     level: INFO # this should match the level in the production logger
     formatter:
@@ -31,7 +31,7 @@ log4r_config:
       type        : PatternFormatter
   - type: DateFileOutputter
     name: debug_datefile
-    dirname: "log"
+    dirname: "tmp"
     filename: "app_log4r_debug_%u.log"
     level: DEBUG # this should match the level in the production logger
     formatter:
