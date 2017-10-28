@@ -32,11 +32,16 @@ class UserIndex < Chewy::Index
   
   Myp.process_models do |klass|
     string_columns = []
+    text_columns = []
     integer_columns = []
     klass.columns.each do |column|
       if column.type == :string || column.type == :text
         if klass.instance_methods.index("#{column.name}_encrypted?".to_sym).nil?
-          string_columns.push(column)
+          if column.type == :text
+            string_columns.push(column)
+          else
+            text_columns.push(column)
+          end
         end
       elsif column.type == :integer && column.name.index("_id").nil?
         integer_columns.push(column)
@@ -46,24 +51,28 @@ class UserIndex < Chewy::Index
     end
     
     # Only create a type if it has some text fields
-    if string_columns.length > 0
+    if string_columns.length > 0 || text_columns.length > 0
       
       Rails.logger.debug{"UserIndex Creating type for: #{klass.name}"}
       
       defined_type = define_type klass do
 
+        # https://www.elastic.co/guide/en/elasticsearch/reference/current/keyword.html
         # https://www.elastic.co/guide/en/elasticsearch/reference/current/string.html
-        #field :allstrings
-        
         string_columns.each do |column|
-          field column.name.to_sym
+          field(column.name.to_sym, type: "keyword")
+        end
+        
+        # https://www.elastic.co/guide/en/elasticsearch/reference/current/text.html
+        text_columns.each do |column|
+          field(column.name.to_sym, type: "text")
         end
         
         # https://www.elastic.co/guide/en/elasticsearch/reference/current/number.html
         field :identity_id, type: "integer", include_in_all: false
         
         integer_columns.each do |column|
-          field column.name.to_sym, type: "integer", include_in_all: false
+          field(column.name.to_sym, type: "integer", include_in_all: false)
         end
       end
       
