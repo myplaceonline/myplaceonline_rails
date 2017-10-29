@@ -511,6 +511,7 @@ module Myp
     # See if there's a localhost ES
     begin
       client = Elasticsearch::Client.new(request_timeout: 2)
+      client.transport.reload_connections!
       @@fts_target = "localhost:9200"
     rescue Exception => e
     end
