@@ -12,10 +12,7 @@ show_myplets = false
   
     domain = homepage[:domain]
     
-    if domain.only_homepage
-      show_myplets = true
-    else
-    
+    if !domain.only_homepage
       # Assume that the view will have flashes!
       Rails.logger.debug{"welcome index hash: #{Myp.debug_print(homepage)}"}
       MyplaceonlineExecutionContext.do_ability_identity(homepage[:obj].identity) do
