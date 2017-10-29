@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :calendar_item_reminder do
     threshold_seconds 1
 repeat_seconds 1

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :checklist_reference do
     checklist_parent nil
 checklist nil

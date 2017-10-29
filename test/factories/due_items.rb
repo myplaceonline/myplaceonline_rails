@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :due_item do
     display "MyString"
 link "MyString"

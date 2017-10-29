@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :doctor do
     contact nil
 owner nil

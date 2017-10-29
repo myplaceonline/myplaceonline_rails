@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :patent do
     patent_name "MyString"
     patent_number "MyString"

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :education_file do
     education nil
     identity_file nil

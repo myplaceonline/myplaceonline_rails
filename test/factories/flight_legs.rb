@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :flight_leg do
     flight nil
     flight_number 1

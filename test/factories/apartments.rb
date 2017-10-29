@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :apartment do
     location nil
 identity nil

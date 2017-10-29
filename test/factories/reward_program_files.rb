@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :reward_program_file do
     reward_program nil
     identity_file nil

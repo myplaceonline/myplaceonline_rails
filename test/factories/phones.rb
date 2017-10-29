@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :phone do
     phone_model_name "MyString"
 manufacturer nil

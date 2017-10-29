@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :reminder do
     start_time "2017-09-25 23:22:14"
     reminder_threshold_amount 1

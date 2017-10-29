@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :media_dump_file do
     media_dump nil
     identity_file nil

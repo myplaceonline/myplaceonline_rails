@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :job_award do
     job_award_date "2017-04-15"
     job_award_amount "9.99"

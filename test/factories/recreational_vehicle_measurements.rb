@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :recreational_vehicle_measurement do
     measurement_name "MyString"
 measurement_type 1

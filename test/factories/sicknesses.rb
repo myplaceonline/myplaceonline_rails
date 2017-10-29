@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :sickness do
     sickness_start "2017-05-20"
     sickness_end "2017-05-20"

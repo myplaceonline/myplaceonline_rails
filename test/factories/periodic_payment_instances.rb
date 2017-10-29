@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :periodic_payment_instance do
     periodic_payment nil
     payment_date "2017-01-20"

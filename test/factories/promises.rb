@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :promise do
     name "MyString"
 due "2015-01-10"

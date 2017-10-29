@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :volunteering_activity do
     volunteering_activity_name "MyString"
 notes "MyText"

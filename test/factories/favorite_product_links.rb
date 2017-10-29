@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :favorite_product_link do
     favorite_product nil
 owner nil

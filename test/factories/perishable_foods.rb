@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :perishable_food do
     food nil
     purchased "2016-10-30"

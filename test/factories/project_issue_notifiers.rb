@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :project_issue_notifier do
     contact nil
     project_issue nil

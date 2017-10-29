@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :company_interaction_file do
     company_interaction nil
     identity_file nil

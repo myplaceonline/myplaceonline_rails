@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :song do
     song_name "MyString"
 song_rating "9.99"

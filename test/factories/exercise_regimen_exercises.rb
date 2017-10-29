@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :exercise_regimen_exercise do
     exercise_regimen_exercise_name "MyString"
     notes "MyText"

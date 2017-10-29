@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :identity_location do
     location nil
   end

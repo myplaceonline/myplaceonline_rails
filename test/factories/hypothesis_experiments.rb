@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :hypothesis_experiment, :class => 'HypothesisExperiments' do
     name "MyString"
 notes "MyText"

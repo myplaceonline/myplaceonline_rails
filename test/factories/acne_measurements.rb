@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :acne_measurement do
     measurement_datetime "2015-05-05 17:06:29"
 acne_location "MyString"

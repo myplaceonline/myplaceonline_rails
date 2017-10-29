@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :website_domain_myplet do
     website_domain nil
     title "MyString"

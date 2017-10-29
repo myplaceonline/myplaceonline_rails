@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :company_interaction do
     company nil
     company_interaction_date "2017-02-04"

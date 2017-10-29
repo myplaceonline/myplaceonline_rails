@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :playlist_song do
     playlist nil
 song nil

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :memory do
     memory_name "MyString"
     memory_date "2017-02-12"

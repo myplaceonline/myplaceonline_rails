@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :website_scraper do
     scraper_name "MyString"
     website_url "MyString"

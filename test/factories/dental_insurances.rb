@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :dental_insurance do
     insurance_name "MyString"
 insurance_company nil

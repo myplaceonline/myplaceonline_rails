@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :desired_location do
     location nil
 visit_count 1

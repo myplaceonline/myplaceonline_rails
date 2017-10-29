@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :blood_pressure do
     systolic_pressure 1
 diastolic_pressure 1

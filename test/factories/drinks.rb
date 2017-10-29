@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :drink do
     identity nil
 drink_name "MyString"

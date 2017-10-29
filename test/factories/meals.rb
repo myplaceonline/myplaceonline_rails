@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :meal do
     meal_time "2015-04-24 10:37:51"
 notes "MyText"

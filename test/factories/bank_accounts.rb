@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :bank_account do
     account_number "MyString"
 account_number_encrypted nil

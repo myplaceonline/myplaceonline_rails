@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :medicine do
     medicine_name "MyString"
 dosage "9.99"

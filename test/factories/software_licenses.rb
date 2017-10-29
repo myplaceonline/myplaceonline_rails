@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :software_license do
     license_name "MyString"
     license_value "9.99"

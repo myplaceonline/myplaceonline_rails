@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :education do
     education_name "MyString"
     education_start "2016-10-02"

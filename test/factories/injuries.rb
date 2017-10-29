@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :injury do
     injury_name "MyString"
     injury_date "2017-02-19"

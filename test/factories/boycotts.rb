@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :boycott do
     boycott_name "MyString"
     boycott_start "2017-08-19"

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :money_balance do
     contact nil
 notes "MyText"

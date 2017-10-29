@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :gun_registration_file do
     gun_registration nil
     identity_file nil

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :doctor_visit do
     visit_date "2015-08-30"
 notes "MyText"

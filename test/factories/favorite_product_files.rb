@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :favorite_product_file do
     favorite_product nil
     identity_file nil

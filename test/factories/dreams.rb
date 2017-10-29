@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :dream do
     dream_name "MyString"
     dream_time "2016-09-02 16:25:08"

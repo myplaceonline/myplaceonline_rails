@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :beach do
     location nil
     crowded false

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :website_list_item do
     website_list nil
     website nil

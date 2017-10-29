@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :retirement_plan_amount_file do
     retirement_plan_amount nil
     identity_file nil

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :apartment_lease_file do
     apartment_lease nil
     identity_file nil

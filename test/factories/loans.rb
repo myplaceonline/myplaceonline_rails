@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :loan do
     lender "MyString"
 amount "9.99"

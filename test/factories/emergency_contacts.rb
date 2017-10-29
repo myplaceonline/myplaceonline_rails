@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :emergency_contact do
     email nil
 visit_count 1

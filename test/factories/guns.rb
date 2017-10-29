@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :gun do
     gun_name "MyString"
 manufacturer_name "MyString"

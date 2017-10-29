@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :happy_thing do
     happy_thing_name "MyString"
 notes "MyText"

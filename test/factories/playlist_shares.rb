@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :playlist_share do
     email false
 playlist nil

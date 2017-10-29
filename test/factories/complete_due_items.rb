@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :complete_due_item, :class => 'CompleteDueItems' do
     owner nil
 display "MyString"

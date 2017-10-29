@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :injury_file do
     injury nil
     identity_file nil

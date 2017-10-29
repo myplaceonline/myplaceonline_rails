@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :psychological_evaluation do
     psychological_evaluation_name "MyString"
     evaluation_date "2017-04-05"

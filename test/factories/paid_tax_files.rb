@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :paid_tax_file do
     paid_tax nil
     identity_file nil

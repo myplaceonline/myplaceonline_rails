@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :identity_relationship do
     contact nil
 relationship_type 1

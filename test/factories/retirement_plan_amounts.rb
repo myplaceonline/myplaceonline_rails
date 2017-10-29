@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :retirement_plan_amount do
     retirement_plan nil
     input_date "2016-10-28"

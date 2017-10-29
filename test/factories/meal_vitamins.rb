@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :meal_vitamin do
     identity nil
 meal nil

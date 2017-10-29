@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :blog do
     blog_name "MyString"
     notes "MyText"

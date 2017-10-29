@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :timing do
     timing_name "MyString"
 notes "MyText"

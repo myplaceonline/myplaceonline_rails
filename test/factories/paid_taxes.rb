@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :paid_tax do
     paid_tax_date "2017-03-12"
     donations "9.99"

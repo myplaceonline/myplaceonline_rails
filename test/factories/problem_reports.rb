@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :problem_report do
     report_name "MyString"
     notes "MyText"

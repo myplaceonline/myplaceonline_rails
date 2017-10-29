@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :myreference do
     contact nil
     notes "MyText"

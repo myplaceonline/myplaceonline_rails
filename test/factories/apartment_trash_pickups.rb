@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :apartment_trash_pickup do
     trash_type 1
 start_date "2015-10-03"

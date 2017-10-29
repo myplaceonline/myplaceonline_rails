@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :permission_share_child do
     subject_class "MyString"
 subject_id 1

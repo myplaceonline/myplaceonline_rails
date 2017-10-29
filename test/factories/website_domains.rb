@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :website_domain do
     domain_name "MyString"
 domain_url "MyString"

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :warranty do
     warranty_name "MyString"
 warranty_start "2015-07-24"

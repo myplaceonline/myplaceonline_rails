@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :calculation do
     name "MyString"
 calculation_form nil

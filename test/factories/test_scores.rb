@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :test_score do
     test_score_name "MyString"
     test_score_date "2017-01-23"

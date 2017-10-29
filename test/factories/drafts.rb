@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :draft do
     draft_name "MyString"
 notes "MyText"

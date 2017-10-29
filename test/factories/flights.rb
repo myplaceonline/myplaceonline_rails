@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :flight do
     flight_name "MyString"
     flight_date "2016-07-08"

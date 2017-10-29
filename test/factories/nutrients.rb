@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :nutrient do
     nutrient_name "MyString"
     measurement_type 1

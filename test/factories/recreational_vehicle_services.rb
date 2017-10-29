@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :recreational_vehicle_service do
     recreational_vehicle nil
     notes "MyText"

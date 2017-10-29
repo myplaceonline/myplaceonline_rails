@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :annuity do
     annuity_name "MyString"
 notes "MyText"

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :camp_location do
     location nil
 vehicle_parking false

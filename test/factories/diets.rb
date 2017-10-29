@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :diet do
     diet_name "MyString"
     dietary_requirement nil

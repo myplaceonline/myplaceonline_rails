@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :email_personalization do
     email "MyString"
 additional_text "MyText"

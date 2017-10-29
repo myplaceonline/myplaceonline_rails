@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :email_account do
     password nil
     visit_count 1

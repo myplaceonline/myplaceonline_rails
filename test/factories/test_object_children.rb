@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :test_object_child do
     test_object nil
     test_object_child_name "MyString"

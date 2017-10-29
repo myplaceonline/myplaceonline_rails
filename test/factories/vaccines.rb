@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :vaccine do
     vaccine_name "MyString"
     injection_date "2016-11-27"

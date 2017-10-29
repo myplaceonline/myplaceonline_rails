@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :passport do
     region "MyString"
 passport_number "MyString"

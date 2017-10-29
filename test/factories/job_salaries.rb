@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :job_salary do
     identity nil
 started "2015-06-05"

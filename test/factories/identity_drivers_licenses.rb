@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :identity_drivers_license do
     identifier "MyString"
 sub_region1 "MyString"

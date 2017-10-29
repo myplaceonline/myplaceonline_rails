@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :category_permission do
     action 1
     subject_class "MyString"

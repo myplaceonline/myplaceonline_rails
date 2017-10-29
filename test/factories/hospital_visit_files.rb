@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :hospital_visit_file do
     hospital_visit nil
     identity_file nil

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :gun_registration do
     location nil
 registered "2015-08-23"

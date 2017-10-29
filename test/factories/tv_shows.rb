@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :tv_show do
     tv_show_name "MyString"
 notes "MyText"

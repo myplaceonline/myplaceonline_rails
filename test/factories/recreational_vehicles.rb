@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :recreational_vehicle do
     rv_name "MyString"
 vin "MyString"

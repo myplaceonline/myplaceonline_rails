@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :blog_post_comment do
     blog_post nil
     comment "MyText"

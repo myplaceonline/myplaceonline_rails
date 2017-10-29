@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :translation do
     translation_input "MyText"
     translation_output "MyText"

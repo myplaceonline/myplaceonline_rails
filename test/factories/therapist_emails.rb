@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :therapist_email do
     therapist nil
 owner nil

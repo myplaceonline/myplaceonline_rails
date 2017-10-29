@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :music_album do
     music_album_name "MyString"
     notes "MyText"

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :concert do
     concert_date "MyString"
 concert_title "MyString"

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :donation do
     donation_name "MyString"
     donation_date "2017-01-16"

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :consumed_food do
     consumed_food_time "2017-06-25 05:28:31"
     food nil

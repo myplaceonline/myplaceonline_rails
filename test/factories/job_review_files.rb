@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :job_review_file do
     job_review nil
     identity_file nil

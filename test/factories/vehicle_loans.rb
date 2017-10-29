@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :vehicle_loan do
     lender "MyString"
 vehicle nil

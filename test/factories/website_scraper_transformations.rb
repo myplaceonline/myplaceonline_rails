@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :website_scraper_transformation do
     transformation_type 1
     transforation "MyText"

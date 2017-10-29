@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :website_domain_ssh_key do
     website_domain nil
 identity nil

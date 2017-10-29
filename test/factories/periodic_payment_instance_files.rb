@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :periodic_payment_instance_file do
     periodic_payment_instance nil
     identity_file nil

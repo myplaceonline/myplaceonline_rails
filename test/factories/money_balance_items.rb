@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :money_balance_item do
     money_balance nil
 owner nil

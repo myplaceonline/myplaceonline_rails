@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :prescription do
     prescription_name "MyString"
     prescription_date "2017-01-15"

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :concert_musical_group do
     owner nil
 concert nil

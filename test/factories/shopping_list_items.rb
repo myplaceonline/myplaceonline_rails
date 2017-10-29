@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :shopping_list_item do
     owner nil
 shopping_list nil

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :diet_food do
     diet nil
     food nil

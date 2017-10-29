@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :awesome_list do
     location nil
 notes "MyText"

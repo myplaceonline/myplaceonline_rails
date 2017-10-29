@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :museum do
     location nil
 museum_id "MyString"

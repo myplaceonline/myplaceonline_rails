@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :patent_file do
     patent nil
     identity_file nil

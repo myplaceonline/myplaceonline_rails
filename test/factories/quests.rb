@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :quest do
     quest_title "MyString"
 notes "MyText"

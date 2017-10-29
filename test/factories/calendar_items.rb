@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :calendar_item do
     calendar nil
 calendar_item_title "MyString"

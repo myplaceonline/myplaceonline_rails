@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :checklist_item do
     checklist_item_name "MyString"
 checklist nil

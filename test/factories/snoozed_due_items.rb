@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :snoozed_due_item do
     owner nil
 display "MyString"

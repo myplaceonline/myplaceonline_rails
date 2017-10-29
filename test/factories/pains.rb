@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :pain do
     pain_location "MyString"
 intensity 1

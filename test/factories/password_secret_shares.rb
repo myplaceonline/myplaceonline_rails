@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :password_secret_share do
     password_secret nil
     identity nil

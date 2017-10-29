@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :periodic_payment do
     periodic_payment_name "MyString"
 notes "MyText"

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :conversation do
     contact nil
 conversation "MyText"

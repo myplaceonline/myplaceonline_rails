@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :connection do
     user nil
     connection_status 1

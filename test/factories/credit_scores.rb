@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :credit_score do
     score_date "2015-01-11"
 score 1

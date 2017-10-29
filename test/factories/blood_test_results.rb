@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :blood_test_result do
     blood_test nil
 blood_concentration nil

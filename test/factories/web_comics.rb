@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :web_comic do
     web_comic_name "MyString"
     website nil

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :food_nutrition_information do
     serving_size "9.99"
     servings_per_container "9.99"

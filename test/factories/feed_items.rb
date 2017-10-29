@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :feed_item do
     feed_title "MyString"
     feed nil

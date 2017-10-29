@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :computer do
     computer_name "MyString"
 purchased "2015-06-16"

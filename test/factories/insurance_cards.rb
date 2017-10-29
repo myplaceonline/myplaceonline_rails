@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :insurance_card do
     insurance_card_name "MyString"
     insurance_card_start "2017-04-16"

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :import do
     import_name "MyString"
     import_type 1

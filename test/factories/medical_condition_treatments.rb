@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :medical_condition_treatment do
     identity nil
     medical_condition nil

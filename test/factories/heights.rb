@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :height do
     height_amount "9.99"
 amount_type 1

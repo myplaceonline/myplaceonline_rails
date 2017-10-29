@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :blood_concentration do
     concentration_name "MyString"
 concentration_type 1

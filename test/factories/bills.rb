@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :bill do
     bill_name "MyString"
     bill_date "2017-01-27"

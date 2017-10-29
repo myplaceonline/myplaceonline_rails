@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :quote do
     quote_text "MyText"
     quote_date "2017-01-13"

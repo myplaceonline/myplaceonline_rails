@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :retirement_plan do
     retirement_plan_name "MyString"
     retirement_plan_type 1

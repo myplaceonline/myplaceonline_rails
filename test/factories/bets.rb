@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :bet do
     bet_name "MyString"
 bet_start_date "2016-05-10"

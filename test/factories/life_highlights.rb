@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :life_highlight do
     life_highlight_time "2016-10-02 09:20:50"
     notes "MyText"

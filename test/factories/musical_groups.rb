@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :musical_group do
     musical_group_name "MyString"
 notes "MyText"

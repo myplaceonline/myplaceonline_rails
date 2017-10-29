@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :life_highlight_file do
     life_highlight nil
     identity_file nil

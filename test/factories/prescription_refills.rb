@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :prescription_refill do
     prescription nil
     refill_date "2017-01-15"

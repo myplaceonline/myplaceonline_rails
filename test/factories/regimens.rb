@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :regimen do
     regimen_name "MyString"
     notes "MyText"

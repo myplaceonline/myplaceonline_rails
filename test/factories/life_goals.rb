@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :life_goal do
     life_goal_name "MyString"
 notes "MyText"

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :driver_license do
     driver_license_identifier "MyString"
     driver_license_expires "2017-02-19"

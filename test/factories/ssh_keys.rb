@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :ssh_key do
     ssh_key_name "MyString"
 ssh_private_key "MyText"

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :heart_rate do
     beats 1
 measurement_date "2015-04-16"

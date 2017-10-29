@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :text_message do
     body "MyText"
     copy_self false

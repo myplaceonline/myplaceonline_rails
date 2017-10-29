@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :credit_score_file do
     credit_score nil
     identity_file nil

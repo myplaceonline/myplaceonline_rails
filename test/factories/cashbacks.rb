@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :cashback do
     identity nil
 cashback_percentage "9.99"

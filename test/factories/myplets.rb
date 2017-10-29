@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :myplet do
     x_coorindate 1
 y_coordinate 1

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :promotion do
     promotion_name "MyString"
 started "2015-06-13"

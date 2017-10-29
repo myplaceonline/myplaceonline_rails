@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :credit_card_cashback do
     identity nil
 credit_card nil

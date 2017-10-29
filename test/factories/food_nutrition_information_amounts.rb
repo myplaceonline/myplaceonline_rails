@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :food_nutrition_information_amount do
     amount "9.99"
     measurement_type 1

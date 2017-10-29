@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :list_item do
     name "MyString"
 list nil

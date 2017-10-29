@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :dating_profile do
     dating_profile_name "MyString"
     about_me "MyText"

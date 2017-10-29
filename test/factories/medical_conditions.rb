@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :medical_condition do
     medical_condition_name "MyString"
 notes "MyText"

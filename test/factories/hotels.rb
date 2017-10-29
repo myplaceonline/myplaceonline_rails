@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :hotel do
     location nil
 breakfast_rating 1

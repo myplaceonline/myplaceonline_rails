@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :vehicle_registration do
     vehicle nil
     registration_source "MyString"

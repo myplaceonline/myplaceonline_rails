@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :prescription_file do
     prescription nil
     identity_file nil

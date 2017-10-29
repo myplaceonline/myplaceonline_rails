@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :concert_picture do
     concert nil
 identity_file nil

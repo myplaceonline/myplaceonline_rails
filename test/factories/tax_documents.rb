@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :tax_document do
     tax_document_form_name "MyString"
     tax_document_description "MyString"

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :therapist do
     name "MyString"
 notes "MyText"
