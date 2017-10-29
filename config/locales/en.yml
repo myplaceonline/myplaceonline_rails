@@ -2875,6 +2875,7 @@ en:
       homepage_path: "Homepage Path"
       homepage_path_not_authorized: "Homepage Path Object Not Authorized"
       feed_url: "RSS/Atom Feed URL"
+      only_homepage: "Always Show Unauthenticed Homepage"
     bets:
       bet_name: "Bet Name"
       notes: "Conditions"

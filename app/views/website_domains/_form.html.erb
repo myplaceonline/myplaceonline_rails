@@ -177,6 +177,15 @@
   <%=
     input_field(
       form: f,
+      type: Myp::FIELD_BOOLEAN,
+      name: :only_homepage,
+      value: obj.only_homepage,
+      placeholder: "myplaceonline.website_domains.only_homepage"
+    )
+  %>
+  <%=
+    input_field(
+      form: f,
       type: Myp::FIELD_TEXT,
       name: :feed_url,
       value: obj.feed_url,
