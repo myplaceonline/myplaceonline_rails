@@ -1,5 +1,15 @@
 class WebsiteDomainMyplet < ApplicationRecord
+  include MyplaceonlineActiveRecordIdentityConcern
+  include AllowExistingConcern
+
   belongs_to :website_domain
-  belongs_to :category
-  belongs_to :identity
+
+  child_property(name: :category)
+  
+  validates :category, presence: true
+  validates :website_domain, presence: true
+
+  def display
+    category.display
+  end
 end

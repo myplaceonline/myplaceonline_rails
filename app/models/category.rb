@@ -4,6 +4,10 @@ class Category < ApplicationRecord
   belongs_to :parent, class_name: "Category"
   has_many :category_points_amounts
   
+  def display
+    human_title_singular
+  end
+  
   def human_title
     if @cached_human_title.nil?
       @cached_human_title = {}
