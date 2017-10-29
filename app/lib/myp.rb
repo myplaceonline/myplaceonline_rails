@@ -506,10 +506,26 @@ module Myp
   
   self.reinitialize
   
-  if !ENV["FTS_TARGET"].blank?
-    Rails.logger.info{"Myp Configuring full text search with #{ENV["FTS_TARGET"]}"}
+  @@fts_target = nil
+  if ENV["FTS_TARGET"].blank?
+    # See if there's a localhost ES
+    begin
+      client = Elasticsearch::Client.new(request_timeout: 2)
+      @@fts_target = "localhost:9200"
+    rescue Exception => e
+    end
+  else
+    @@fts_target = ENV["FTS_TARGET"]
+  end
+
+  def self.full_text_search?
+    !@@fts_target.nil?
+  end
+  
+  if !@@fts_target.blank?
+    Rails.logger.info{"Myp Configuring full text search with #{@@fts_target}"}
     Chewy.root_strategy = :active_job
-    Chewy.settings = {host: ENV["FTS_TARGET"]}
+    Chewy.settings = {host: @@fts_target}
   end
   
   if !ENV["TRUSTED_CLIENTS"].blank?
@@ -2366,10 +2382,6 @@ module Myp
 
       results
     end
-  end
-
-  def self.full_text_search?
-    !ENV["FTS_TARGET"].blank?
   end
   
   def self.append_query_parameter(url, param_name, param_value)
