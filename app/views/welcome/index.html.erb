@@ -1,21 +1,33 @@
 <% content_for :heading do -%><%= Myp.website_domain.domain_name %><% end -%>
 
+<%
+show_myplets = false
+%>
+
 <% if !user_signed_in? %>
 
   <%
   homepage = Myp.website_domain_homepage
   if homepage.is_a?(Hash)
-    # Assume that the view will have flashes!
-    Rails.logger.debug{"welcome index hash: #{Myp.debug_print(homepage)}"}
-    MyplaceonlineExecutionContext.do_ability_identity(homepage[:obj].identity) do
+  
+    domain = homepage[:domain]
+    
+    if domain.only_homepage
+      show_myplets = true
+    else
+    
+      # Assume that the view will have flashes!
+      Rails.logger.debug{"welcome index hash: #{Myp.debug_print(homepage)}"}
+      MyplaceonlineExecutionContext.do_ability_identity(homepage[:obj].identity) do
   %>
-      <%= render :html => Myp.renderActionInOtherController(
-                            homepage[:controller_class],
-                            homepage[:action],
-                            homepage[:params],
-                          ).html_safe
-      %>
+        <%= render :html => Myp.renderActionInOtherController(
+                              homepage[:controller_class],
+                              homepage[:action],
+                              homepage[:params],
+                            ).html_safe
+        %>
   <%
+      end
     end
   else
   %>
@@ -26,6 +38,14 @@
   %>
 
 <% else %>
+
+  <%
+  show_myplets = true
+  %>
+
+<% end %>
+
+<% if show_myplets %>
 
   <%= flashes! %>
   
