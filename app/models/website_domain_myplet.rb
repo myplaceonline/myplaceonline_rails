@@ -6,6 +6,8 @@ class WebsiteDomainMyplet < ApplicationRecord
 
   child_property(name: :category)
   
+  child_properties(name: :website_domain_myplet_parameters)
+
   validates :category, presence: true
   validates :website_domain, presence: true
 
@@ -23,7 +25,8 @@ class WebsiteDomainMyplet < ApplicationRecord
       :border_type,
       :position,
       :notes,
-      category_attributes: [:id]
+      category_attributes: [:id],
+      website_domain_myplet_parameters_attributes: WebsiteDomainMypletParameter.params,
     ]
   end
 end

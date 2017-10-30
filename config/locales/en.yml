@@ -2886,6 +2886,13 @@ en:
       title: "Title"
       border_type: "Border Type"
       category: "Category"
+      website_domain_myplet_parameters: "Parameters"
+      website_domain_myplet_parameter: "Parameter"
+      add_website_domain_myplet_parameter: "Add Parameter"
+      delete_website_domain_myplet_parameter: "Delete Parameter"
+    website_domain_myplet_parameters:
+      name: "Name"
+      val: "Value"
     bets:
       bet_name: "Bet Name"
       notes: "Conditions"

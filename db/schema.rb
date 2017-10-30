@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171029023204) do
+ActiveRecord::Schema.define(version: 20171030065740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -5792,6 +5792,20 @@ ActiveRecord::Schema.define(version: 20171029023204) do
     t.index ["website_id"], name: "index_web_comics_on_website_id"
   end
 
+  create_table "website_domain_myplet_parameters", force: :cascade do |t|
+    t.bigint "website_domain_myplet_id"
+    t.string "name"
+    t.string "val"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_website_domain_myplet_parameters_on_identity_id"
+    t.index ["website_domain_myplet_id"], name: "wdmp_on_wdmi"
+  end
+
   create_table "website_domain_myplets", force: :cascade do |t|
     t.bigint "website_domain_id"
     t.string "title"
@@ -6844,6 +6858,8 @@ ActiveRecord::Schema.define(version: 20171029023204) do
   add_foreign_key "web_comics", "feeds"
   add_foreign_key "web_comics", "identities"
   add_foreign_key "web_comics", "websites"
+  add_foreign_key "website_domain_myplet_parameters", "identities"
+  add_foreign_key "website_domain_myplet_parameters", "website_domain_myplets"
   add_foreign_key "website_domain_myplets", "categories"
   add_foreign_key "website_domain_myplets", "identities"
   add_foreign_key "website_domain_myplets", "website_domains"
