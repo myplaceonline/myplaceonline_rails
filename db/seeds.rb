@@ -176,7 +176,7 @@ Category.create!([
   {id: 176, name: "blogs", link: "blogs", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/blogs.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 177, name: "translations", link: "translations", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/translation_tool_tip.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil},
   {id: 178, name: "boycotts", link: "boycotts", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/cart_error.png", explicit: nil, user_type_mask: nil, experimental: true, simple: nil},
-  {id: 211, name: "reminders", link: "reminders", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/time.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
+  {id: 179, name: "reminders", link: "reminders", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/time.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil}
 ])
 
 user = User.new
@@ -203,8 +203,11 @@ MyplaceonlineExecutionContext.do_user(user) do
       
   Myplet.default_myplets(identity)
 
-  if ENV["SKIP_LARGE_IMPORTS"].nil?
+  if ENV["SKIP_LARGE_UNNEEDED_IMPORTS"].nil?
     Myp.import_museums
+  end
+
+  if ENV["SKIP_ZIP_CODE_IMPORTS"].nil?
     Myp.import_zip_codes
   end
 
