@@ -1,0 +1,26 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :title,
+    value: obj.title,
+    placeholder: "myplaceonline.website_domain_myplets.title",
+    autofocus: autofocus
+  )
+%>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :category,
+    existingobj: obj.category,
+    heading: t("myplaceonline.website_domain_myplets.category"),
+    existingobjurl: "category_path",
+    searchurl: "/categories.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    allow_new: false,
+    model: Category,
+    expanded_if_nil: true,
+    existingcollapsed: false,
+  }
+%>

@@ -246,7 +246,7 @@ module ApplicationHelper
     content_display = content.display
     options[:clipboard_text] = content_display
 
-    if content.current_user_owns?
+    if content.respond_to?("current_user_owns?") && content.current_user_owns?
       if options[:reference_url].nil?
         url = send((options[:evaluated_class_name].nil? ? content.class.name : options[:evaluated_class_name]).underscore + "_path", content)
       else

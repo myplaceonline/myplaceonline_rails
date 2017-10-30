@@ -12,4 +12,18 @@ class WebsiteDomainMyplet < ApplicationRecord
   def display
     category.display
   end
+
+  def self.params
+    [
+      :id,
+      :_destroy,
+      :title,
+      :x_coordinate,
+      :y_coordinate,
+      :border_type,
+      :position,
+      :notes,
+      category_attributes: [:id]
+    ]
+  end
 end

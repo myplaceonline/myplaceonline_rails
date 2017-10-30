@@ -27,7 +27,7 @@ class MyplaceonlineController < ApplicationController
   end
 
   def index
-    initial_checks
+    initial_checks(edit: false)
     
     if sensitive
       check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
@@ -216,6 +216,10 @@ class MyplaceonlineController < ApplicationController
   end
   
   def create
+    if !allow_add
+      raise "Unauthorized"
+    end
+    
     initial_checks
     
     Rails.logger.debug{"create"}
@@ -673,6 +677,10 @@ class MyplaceonlineController < ApplicationController
   end
   
   def allow_add
+    true
+  end
+  
+  def allow_edit
     true
   end
   
@@ -1518,7 +1526,11 @@ class MyplaceonlineController < ApplicationController
       obj
     end
     
-    def initial_checks
+    def initial_checks(edit: true)
+      if edit && !allow_edit
+        raise "Unauthorized"
+      end
+      
       deny_guest
       require_admin? && deny_nonadmin
       

@@ -18,6 +18,8 @@ class WebsiteDomain < ApplicationRecord
 
   child_property(name: :default_header_icon_identity_file, model: IdentityFile)
 
+  child_properties(name: :website_domain_myplets, sort: "position ASC")
+
   def display
     domain_name
   end

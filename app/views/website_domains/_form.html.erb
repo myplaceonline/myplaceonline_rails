@@ -291,4 +291,34 @@
       model_name: "IdentityFile",
     }
   %>
+  <%=
+    render(layout: "myplaceonline/childproperties", locals: {
+      f: f,
+      heading: t("myplaceonline.website_domains.website_domain_myplets"),
+      childpropertiesname: :website_domain_myplets,
+      childproperties: obj.website_domain_myplets,
+      deletebutton: t("myplaceonline.website_domains.delete_website_domain_myplet"),
+      addbutton: t("myplaceonline.website_domains.add_website_domain_myplet"),
+      expanded: obj.website_domain_myplets.length > 0,
+      position_field: :position,
+      itemname: t("myplaceonline.website_domains.website_domain_myplet"),
+      formjson: [
+        {
+          type: :renderpartial,
+          partial: "myplaceonline/select_or_create",
+          heading: t("myplaceonline.website_domains.website_domain_myplet"),
+          objform: "website_domain_myplets/form",
+          only_new: true,
+          edit: false,
+          autofocus: true
+        },
+        {
+          type: "position",
+          name: "position"
+        }
+      ]
+    }) do |child_fields, childproperty|
+  %>
+    <%= render partial: "website_domain_myplets/form", locals: { obj: childproperty || WebsiteDomainMyplet.build, edit: edit, autofocus: false, f: child_fields } %>
+  <% end %>
 </div>

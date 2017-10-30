@@ -259,6 +259,8 @@ en:
       boycotts: "Boycotts"
       blog_post_comments: "Comments"
       reminders: "Reminders"
+      website_domain_myplets: "Myplets"
+      categories: "Categories"
     default_domain:
       meta_description: "myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -2876,6 +2878,14 @@ en:
       homepage_path_not_authorized: "Homepage Path Object Not Authorized"
       feed_url: "RSS/Atom Feed URL"
       only_homepage: "Always Show Unauthenticed Homepage"
+      website_domain_myplets: "Myplets"
+      website_domain_myplet: "Myplet"
+      add_website_domain_myplet: "Add Myplet"
+      delete_website_domain_myplet: "Delete Myplet"
+    website_domain_myplets:
+      title: "Title"
+      border_type: "Border Type"
+      category: "Category"
     bets:
       bet_name: "Bet Name"
       notes: "Conditions"
@@ -3753,3 +3763,5 @@ en:
         time_after_y: "Repeat the Reminder After (in Years)"
         time_after_1pw: "Once per Week"
         time_after_2pw: "Twice per Week"
+    categories:
+      name: "Name"
