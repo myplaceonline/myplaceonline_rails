@@ -42,7 +42,7 @@ class CalendarItemReminder < ApplicationRecord
       .each do |calendar_item|
         
         Rails.logger.debug{"CalendarItemReminder.ensure_pending_process calendar_item=#{calendar_item.inspect}"}
-
+        
         # Find the newest repeat item
         latest_repeat = CalendarItem
           .where(
@@ -141,8 +141,9 @@ class CalendarItemReminder < ApplicationRecord
     
     now = Time.now
     
-    # Debug
-    # select i.id as item_id, i.calendar_item_time, i.is_repeat, r.id as calendar_item_reminder_id, r.threshold_amount, r.threshold_type, r.repeat_amount, r.repeat_type, r.expire_amount, r.expire_type, r.max_pending, p.id as pending_id from calendar_items i left outer join calendar_item_reminders r on i.id = r.calendar_item_id left outer join calendar_item_reminder_pendings p on p.calendar_item_reminder_id = r.id where i.model_class = 'ApartmentTrashPickup' and i.model_id = 1 order by i.calendar_item_time;
+    # Select the original calendar item (is_repeat = NULL/false) and all of its repeats:
+    #
+    # select i.id as item_id, i.calendar_id, i.calendar_item_time, i.is_repeat, r.id as calendar_item_reminder_id, r.threshold_amount, r.threshold_type, r.repeat_amount, r.repeat_type, r.expire_amount, r.expire_type, r.max_pending, p.id as pending_id from calendar_items i left outer join calendar_item_reminders r on i.id = r.calendar_item_id left outer join calendar_item_reminder_pendings p on p.calendar_item_reminder_id = r.id where i.model_class = 'ApartmentTrashPickup' and i.model_id = 1 order by i.calendar_item_time;
     
     CalendarItemReminder
       .includes(:calendar_item_reminder_pendings, :calendar_item)
@@ -312,7 +313,7 @@ class CalendarItemReminder < ApplicationRecord
         display: pending_item.calendar_item.display
       )
       
-      Rails.logger.debug("alendarItemReminder.send_reminder_notifications message #{message}, #{link}")
+      Rails.logger.debug("CalendarItemReminder.send_reminder_notifications message #{message}, #{link}")
       
       if message.length > chars_available
         message = message[0..chars_available - 1] + "..."
@@ -320,7 +321,7 @@ class CalendarItemReminder < ApplicationRecord
       
       message += " " + link
       
-      Rails.logger.debug("alendarItemReminder.send_reminder_notifications final message #{message}")
+      Rails.logger.debug("CalendarItemReminder.send_reminder_notifications final message #{message}")
       
       user.send_sms(message)
       
@@ -328,7 +329,7 @@ class CalendarItemReminder < ApplicationRecord
       Myp.warn("Could not process send_reminder_notifications #{user.id}, #{pending_item.id}: #{Myp.error_details(e)}")
     end
     
-    Rails.logger.debug("alendarItemReminder.send_reminder_notifications end")
+    Rails.logger.debug("CalendarItemReminder.send_reminder_notifications end")
   end
   
   def threshold_in_seconds
