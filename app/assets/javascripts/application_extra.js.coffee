@@ -5,7 +5,8 @@
 #= require noty/layouts/topCenter
 #= require noty/themes/default
 #= require myplaceonline_final
-#= require jquery-mobile-datebox
+#= require jtsage-datebox.min.js
+#= require jtsage-datebox.i18n.en.utf8.js
 #= require dygraph-combined
 #= require magnific-popup
 #= require ckeditor/init

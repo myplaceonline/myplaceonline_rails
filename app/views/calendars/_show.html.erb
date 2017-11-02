@@ -24,6 +24,7 @@
           }).complete(function(jqXHR, textStatus) {
             myplaceonline.hideLoading();
           });
+          return false;
         });
         $("#<%= popupid %>_snooze_datebox").datebox({
           mode: "durationbox",
@@ -51,6 +52,7 @@
           }).complete(function(jqXHR, textStatus) {
             myplaceonline.hideLoading();
           });
+          return false;
         });
         completeButton.focus();
         return false;
