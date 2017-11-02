@@ -33,7 +33,7 @@ class ContactsController < MyplaceonlineController
   
   def groups
     set_obj
-    @groups = Group.where(identity_id: User.current_user.current_identity_id).order(:group_name)
+    @groups = Group.where("identity_id = :identity_id and archived is null", identity_id: User.current_user.current_identity_id).order(:group_name)
     @contact_groups = GroupContact.where(identity_id: User.current_user.current_identity_id, contact_id: @obj.id).map{|g| g.group_id}
     
     if request.post?
