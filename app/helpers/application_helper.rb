@@ -1657,7 +1657,8 @@ module ApplicationHelper
           "data-datebox-use-modal" => "false",
           "data-datebox-use-button" => "false",
           "data-datebox-popup-position" => "window",
-          "data-datebox-close-callback" => "dateboxTimeboxClosed"
+          "data-datebox-close-callback" => "dateboxTimeboxClosed",
+          "data-datebox-click-event" => "click",
         )
         datebox_type = "calbox"
         close_callback = "dateboxCalendarClosed"
@@ -1677,6 +1678,7 @@ module ApplicationHelper
       field_attributes["data-datebox-cal-no-header"] = "true"
       field_attributes["data-datebox-close-callback"] = close_callback
       field_attributes["data-datetime-id"] = random_name
+      field_attributes["data-datebox-click-event"] = "click"
       
       # datebox or calbox
       if options[:form].nil?
@@ -1812,7 +1814,8 @@ module ApplicationHelper
           "data-datebox-use-modal" => "false",
           "data-datebox-use-button" => "false",
           "data-datebox-popup-position" => "window",
-          "data-datebox-close-callback" => "dateboxTimeboxClosed"
+          "data-datebox-close-callback" => "dateboxTimeboxClosed",
+          "data-datebox-click-event" => "click",
         )
         datebox_type = "calbox"
         close_callback = "dateboxCalendarClosed"
@@ -1842,7 +1845,8 @@ module ApplicationHelper
         "data-datebox-cal-year-pick-max" => "10",
         "data-datebox-cal-no-header" => "true",
         "data-datebox-close-callback" => close_callback,
-        "data-datetime-id" => random_name
+        "data-datetime-id" => random_name,
+        "data-datebox-click-event" => "click"
       ) + hidden_time
     ).html_safe
   end
