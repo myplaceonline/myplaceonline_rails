@@ -85,6 +85,13 @@
         <% end %>
         
       </script>
+      <% if Myp.is_initial_phonegap_request(params, session) %>
+        <style>
+        .non-phonegap {
+          display: none;
+        }
+        </style>
+      <% end %>
       <div data-role="header"<%= current_user.nil? || !current_user.non_fixed_header ? raw(" data-position=\"fixed\"") : "" %> data-tap-toggle="<%= !current_user.nil? && current_user.toggle_hide_footer ? "true" : "false" %>">
         <% header_title_cached = header_title %>
         <%
