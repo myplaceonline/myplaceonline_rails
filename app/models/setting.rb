@@ -27,20 +27,26 @@ class Setting < ApplicationRecord
   end
   
   def self.get_value(category:, name:, default_value: nil)
-    setting = self.get_setting(category: category, name: name)
-    if setting.nil?
-      default_value
+    if !category.nil?
+      setting = self.get_setting(category: category, name: name)
+      if setting.nil?
+        default_value
+      else
+        setting.setting_value
+      end
     else
-      setting.setting_value
+      nil
     end
   end
   
   def self.get_value_boolean(category:, name:, default_value: false)
-    self.get_value(category: category, name: name, default_value: default_value.to_s).to_bool
+    result = self.get_value(category: category, name: name, default_value: default_value.to_s)
+    result.nil? ? nil : result.to_bool
   end
   
   def self.get_value_integer(category:, name:, default_value: false)
-    self.get_value(category: category, name: name, default_value: default_value.to_s).to_i
+    result = self.get_value(category: category, name: name, default_value: default_value.to_s)
+    result.nil? ? nil : result.to_i
   end
   
   def self.set_value(category:, name:, value:)

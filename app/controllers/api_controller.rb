@@ -744,6 +744,11 @@ class ApiController < ApplicationController
     end
   end
 
+  # For _generaterandom callback
+  def category
+    nil
+  end
+  
   protected
     def json_error(error)
       render json: {
