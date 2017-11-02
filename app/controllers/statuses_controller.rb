@@ -1,4 +1,14 @@
 class StatusesController < MyplaceonlineController
+  def footer_items_show
+    [
+      {
+        title: I18n.t("myplaceonline.menu.home"),
+        link: root_path,
+        icon: "home"
+      },
+    ] + super
+  end
+
   protected
     def insecure
       true
