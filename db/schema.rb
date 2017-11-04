@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171030065740) do
+ActiveRecord::Schema.define(version: 20171104212909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3270,7 +3270,7 @@ ActiveRecord::Schema.define(version: 20171030065740) do
   create_table "medical_condition_treatments", id: :serial, force: :cascade do |t|
     t.integer "identity_id"
     t.integer "medical_condition_id"
-    t.date "treatment_date"
+    t.datetime "treatment_date"
     t.text "notes"
     t.string "treatment_description"
     t.integer "doctor_id"
