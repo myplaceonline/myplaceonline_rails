@@ -17,11 +17,11 @@ module AllowExistingConcern extend ActiveSupport::Concern
     def allow_existing(name:)
       define_method("#{name.to_s}_attributes=") do |attributes|
 
-        Rails.logger.debug{"allow_existing setting attributes for name: #{name}, attributes: #{attributes}, self: #{self.inspect}"}
+        Rails.logger.debug{"AllowExistingConcern.allow_existing #{self.class} setting attributes for name: #{name}, attributes: #{attributes}, self: #{self.inspect}"}
         
         self.set_property_with_attributes(name: name, attributes: attributes)
 
-        Rails.logger.debug{"allow_existing final attributes: #{attributes}"}
+        Rails.logger.debug{"AllowExistingConcern.allow_existing final attributes: #{attributes}"}
 
         super(attributes)
       end
@@ -30,20 +30,20 @@ module AllowExistingConcern extend ActiveSupport::Concern
     def allow_existing_children(name)
       define_method("#{name.to_s}_attributes=") do |attributes|
         
-        Rails.logger.debug{"allow_existing_children name: #{name}"}
+        Rails.logger.debug{"AllowExistingConcern.allow_existing_children #{self.class} name: #{name}"}
         
         self.set_properties_with_attributes(name: name, attributes: attributes)
         
-        Rails.logger.debug{"allow_existing_children before setting:"}
+        Rails.logger.debug{"AllowExistingConcern.allow_existing_children before setting:"}
         self.send("#{name.to_s}").each do |updated_child|
-          Rails.logger.debug{"allow_existing_children old child: #{Myp.debug_print(updated_child)}"}
+          Rails.logger.debug{"AllowExistingConcern.allow_existing_children old child: #{Myp.debug_print(updated_child)}"}
         end
         
         super(attributes)
 
-        Rails.logger.debug{"allow_existing_children after setting:"}
+        Rails.logger.debug{"AllowExistingConcern.allow_existing_children after setting:"}
         self.send("#{name.to_s}").each do |updated_child|
-          Rails.logger.debug{"allow_existing_children updated child: #{Myp.debug_print(updated_child)}"}
+          Rails.logger.debug{"AllowExistingConcern.allow_existing_children updated child: #{Myp.debug_print(updated_child)}"}
         end
       end
     end
@@ -56,11 +56,11 @@ module AllowExistingConcern extend ActiveSupport::Concern
     def set_property_with_attributes(name:, attributes:, update_type: AllowExistingConcern::UPDATE_TYPE_UNKNOWN)
       model = self.class.child_property_models[name]
       
-      Rails.logger.debug{"#{self.class}.set_property_with_attributes name: #{name}, model: #{model}, attributes: #{Myp.debug_print(attributes)}, self: #{self.inspect}"}
+      Rails.logger.debug{"AllowExistingConcern.set_property_with_attributes #{self.class} name: #{name}, model: #{model}, attributes: #{Myp.debug_print(attributes)}, self: #{self.inspect}"}
       
       set_property_modify_attributes(attributes: attributes)
       
-      Rails.logger.debug{"#{self.class}.set_property_with_attributes attributes: #{Myp.debug_print(attributes)}"}
+      Rails.logger.debug{"AllowExistingConcern.set_property_with_attributes attributes: #{Myp.debug_print(attributes)}"}
       
       if !attributes.nil?
         if !attributes["id"].blank?
@@ -74,7 +74,7 @@ module AllowExistingConcern extend ActiveSupport::Concern
             previous_object_id = previous_object_id.to_s
           end
           
-          Rails.logger.debug{"set_property_with_attributes previous_object_id: #{previous_object_id}, update_type: #{update_type}"}
+          Rails.logger.debug{"AllowExistingConcern.set_property_with_attributes previous_object_id: #{previous_object_id}, update_type: #{update_type}"}
           
           previous_object = PREVIOUS_OBJECT_BLANK
           if !previous_object_id.blank?
@@ -93,7 +93,7 @@ module AllowExistingConcern extend ActiveSupport::Concern
             non_id_attributes_set = true
           end
           
-          Rails.logger.debug{"set_property_with_attributes object: #{attributes["id"]}, previous: #{previous_object_id}, previous_object: #{previous_object}, non_id_attributes_set: #{non_id_attributes_set}"}
+          Rails.logger.debug{"AllowExistingConcern.set_property_with_attributes object: #{attributes["id"]}, previous: #{previous_object_id}, previous_object: #{previous_object}, non_id_attributes_set: #{non_id_attributes_set}"}
           
           case update_type
           when AllowExistingConcern::UPDATE_TYPE_UNKNOWN
@@ -101,17 +101,17 @@ module AllowExistingConcern extend ActiveSupport::Concern
             # set and create a new item
             if non_id_attributes_set
               attributes.delete_if {|innerkey, innervalue| innerkey == "id" }
-              Rails.logger.debug{"set_property_with_attributes creating new obj with attributes #{Myp.debug_print(attributes)}"}
+              Rails.logger.debug{"AllowExistingConcern.set_property_with_attributes creating new obj with attributes #{Myp.debug_print(attributes)}"}
               newobj = Myp.new_model(model)
               newobj.assign_attributes(attributes)
-              Rails.logger.debug{"set_property_with_attributes creating new obj #{Myp.debug_print(newobj)}"}
+              Rails.logger.debug{"AllowExistingConcern.set_property_with_attributes creating new obj #{Myp.debug_print(newobj)}"}
               self.send("#{name}=", newobj)
               attributes.clear
             else
               attributes.keep_if {|innerkey, innervalue| innerkey == "id" }
               # Let's go find the existing object, authorize it, and set the property on this object
               existing_obj = Myp.set_existing_object(self, name, model, attributes["id"].to_i, action: :show)
-              Rails.logger.debug{"set_property_with_attributes existing_obj: #{Myp.debug_print(existing_obj)}"}
+              Rails.logger.debug{"AllowExistingConcern.set_property_with_attributes existing_obj: #{Myp.debug_print(existing_obj)}"}
             end
           when AllowExistingConcern::UPDATE_TYPE_COMBINE
             existing_obj = Myp.set_existing_object(self, name, model, attributes["id"].to_i, action: :edit)
@@ -120,10 +120,10 @@ module AllowExistingConcern extend ActiveSupport::Concern
             existing_obj.assign_attributes(attributes)
             attributes.clear
 
-            Rails.logger.debug{"set_property_with_attributes combined existing_obj: #{Myp.debug_print(existing_obj)}"}
+            Rails.logger.debug{"AllowExistingConcern.set_property_with_attributes combined existing_obj: #{Myp.debug_print(existing_obj)}"}
           end
           
-          Rails.logger.debug{"set_property_with_attributes final attributes: #{attributes}"}
+          Rails.logger.debug{"AllowExistingConcern.set_property_with_attributes final attributes: #{attributes}"}
         else
           attributes.delete_if {|innerkey, innervalue| innerkey == "_updatetype" }
         end
@@ -131,55 +131,97 @@ module AllowExistingConcern extend ActiveSupport::Concern
     end
 
     def set_properties_with_attributes(name:, attributes:)
-      Rails.logger.debug{"set_properties_with_attributes setting attributes for name: #{name}, on self: #{self.inspect}, attributes: #{Myp.debug_print(attributes)}"}
+      Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes #{self.class} setting attributes for name: #{name}, on self: #{self.inspect}, attributes: #{Myp.debug_print(attributes)}"}
       
       model = MyplaceonlineActiveRecordBaseConcern.get_attributes_model_mapping(klass: self.class, name: name)
       
-      Rails.logger.debug{"set_properties_with_attributes model: #{model}"}
+      Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes model: #{model}"}
       
       attrs_to_delete = []
+      children_to_delete = []
       
-      Rails.logger.debug{"set_properties_with_attributes before processing:"}
+      Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes before processing:"}
       self.send("#{name.to_s}").each do |updated_child|
-        Rails.logger.debug{"set_properties_with_attributes initial child: #{Myp.debug_print(updated_child)}"}
+        Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes initial child: #{Myp.debug_print(updated_child)}"}
       end
       
       # Go through the existing collection of items to see if we should update any of them
       self.send("#{name.to_s}").each do |x|
         
-        Rails.logger.debug{"set_properties_with_attributes for name #{name} on #{x.inspect}"}
+        Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes for name #{name} on #{x.inspect}"}
         
         attributes.each do |key, value|
-          if value["_destroy"] != "1" && !value["id"].blank? && value["id"].to_i == x.id
-            Rails.logger.debug{"set_properties_with_attributes found matching attributes: #{Myp.debug_print(value)}"}
-            
-            x.class.child_property_models.each do |child, model|
-              child_attributes = value["#{child}_attributes"]
-              if !child_attributes.nil?
-                if child_attributes.keys.all?{|key| key.integer? }
-                  x.set_properties_with_attributes(name: child, attributes: child_attributes)
-                else
-                  x.set_property_with_attributes(name: child, attributes: child_attributes)
+          if !value["id"].blank? && value["id"].to_i == x.id
+            if value["_destroy"] != "1"
+              Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes found matching attributes: #{Myp.debug_print(value)}"}
+              
+              x.class.child_property_models.each do |child, model|
+                child_attributes = value["#{child}_attributes"]
+                
+                Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes checking child: #{child}, model: #{model}, child_attributes: #{Myp.debug_print(child_attributes)}"}
+                
+                if !child_attributes.nil?
+                  if child_attributes.keys.all?{|key| key.integer? }
+                    x.set_properties_with_attributes(name: child, attributes: child_attributes)
+                    
+                    Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes after setting child properties: #{Myp.debug_print(child_attributes)}"}
+                    
+                  else
+                    x.set_property_with_attributes(name: child, attributes: child_attributes)
+
+                    Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes after setting child property: #{Myp.debug_print(child_attributes)}"}
+                    
+                  end
                 end
               end
+              
+              Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes before deletion: #{Myp.debug_print(value)}"}
+              
+              value.delete_if{|key, value| key == "id" || key.end_with?("attributes")}
+              
+              Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes assigning remaining attributes: #{Myp.debug_print(value)}"}
+              
+              x.assign_attributes(value)
+              
+              # Delete this key from the attributes we pass to super because we've already updated this child,
+              # and we don't want super to munge this updates, only to add any new ones
+              attrs_to_delete << key
+            elsif value["_destroy"] == "1"
+              children_to_delete << x
+              attrs_to_delete << key
             end
-            
-            value.delete_if{|key, value| key == "id" || key.end_with?("attributes")}
-            
-            Rails.logger.debug{"set_properties_with_attributes assigning remaining attributes: #{Myp.debug_print(value)}"}
-            
-            x.assign_attributes(value)
-            
-            # Delete this key from the attributes we pass to super because we've already updated this child,
-            # and we don't want super to munge this updates, only to add any new ones
-            attrs_to_delete << key
           end
         end
+      end
+      
+      children_to_delete.each do |child_to_delete|
+        self.send("#{name.to_s}").delete(child_to_delete)
+      end
+
+      Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes after updating existing attrs: #{attributes}"}
+
+      attributes.delete_if {|innerkey, innervalue| !attrs_to_delete.find_index{|atd| atd == innerkey}.nil? }
+      attrs_to_delete.clear
+      
+      # If there are any new items to add, create them
+      attributes.each do |trash_id, new_item_attributes|
+        
+        if trash_id.integer? && new_item_attributes.is_a?(Hash)
+          new_item = model.build
+          new_item.assign_attributes(new_item_attributes)
+          
+          Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes additional item #{Myp.debug_print(new_item)}"}
+          
+          self.send("#{name.to_s}") << new_item
+          
+          attrs_to_delete << trash_id
+        end
+        
       end
 
       attributes.delete_if {|innerkey, innervalue| !attrs_to_delete.find_index{|atd| atd == innerkey}.nil? }
       
-      Rails.logger.debug{"set_properties_with_attributes final attributes #{attributes}"}
+      Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes final attributes #{attributes}"}
     end
   end
 end
