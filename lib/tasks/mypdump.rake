@@ -7,6 +7,9 @@ namespace :myp do
     SeedDump.dump(Category.all.order("id"), exclude: [:created_at, :updated_at], file: "db/seeds.rb")
     open("db/seeds.rb", "a") { |f|
       f.puts %{
+
+Myp.reinitialize
+
 user = User.new
 user.id = User::SUPER_USER_ID
 user.email = "#{ENV["ROOT_EMAIL"].blank? ? User::DEFAULT_SUPER_USER_EMAIL : ENV["ROOT_EMAIL"]}" # Generated from ENV["ROOT_EMAIL"]

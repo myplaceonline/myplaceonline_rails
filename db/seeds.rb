@@ -183,6 +183,9 @@ Category.create!([
   {id: 215, name: "calendars", link: "calendars", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/check_box_uncheck.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: true}
 ])
 
+
+Myp.reinitialize
+
 user = User.new
 user.id = User::SUPER_USER_ID
 user.email = "root@myplaceonline.com" # Generated from ENV["ROOT_EMAIL"]
