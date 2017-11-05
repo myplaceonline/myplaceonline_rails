@@ -29,8 +29,6 @@ MyplaceonlineExecutionContext.do_user(user) do
   user.primary_identity = identity
   user.save!
       
-  Myplet.default_myplets(identity)
-
   if ENV["SKIP_LARGE_UNNEEDED_IMPORTS"].nil?
     Myp.import_museums
   end
@@ -39,7 +37,12 @@ MyplaceonlineExecutionContext.do_user(user) do
     Myp.import_zip_codes
   end
 
-  Myp.create_default_website
+  website_domain = Myp.create_default_website
+  
+  identity.website_domain = website_domain
+  identity.save!
+
+  Myplet.default_myplets(identity)
 
 end
 

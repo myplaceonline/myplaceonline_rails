@@ -2764,6 +2764,8 @@ module Myp
     )
 
     Myp.create_default_website_myplets(identity_id: identity_id, website_domain: domain)
+    
+    domain
   end
   
   def self.create_default_website_myplets(identity_id:, website_domain:)

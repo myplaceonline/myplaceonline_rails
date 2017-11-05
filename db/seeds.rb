@@ -176,7 +176,11 @@ Category.create!([
   {id: 176, name: "blogs", link: "blogs", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/blogs.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 177, name: "translations", link: "translations", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/translation_tool_tip.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 178, name: "boycotts", link: "boycotts", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/cart_error.png", explicit: nil, user_type_mask: nil, experimental: true, simple: nil, internal: nil},
-  {id: 179, name: "reminders", link: "reminders", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/time.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
+  {id: 179, name: "reminders", link: "reminders", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/time.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 212, name: "point_displays", link: "point_displays", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/check_box_uncheck.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: true},
+  {id: 213, name: "myplaceonline_searches", link: "myplaceonline_searches", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/check_box_uncheck.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: true},
+  {id: 214, name: "myplaceonline_quick_category_displays", link: "myplaceonline_quick_category_displays", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/check_box_uncheck.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: true},
+  {id: 215, name: "calendars", link: "calendars", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/check_box_uncheck.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: true}
 ])
 
 user = User.new
@@ -201,8 +205,6 @@ MyplaceonlineExecutionContext.do_user(user) do
   user.primary_identity = identity
   user.save!
       
-  Myplet.default_myplets(identity)
-
   if ENV["SKIP_LARGE_UNNEEDED_IMPORTS"].nil?
     Myp.import_museums
   end
@@ -211,7 +213,12 @@ MyplaceonlineExecutionContext.do_user(user) do
     Myp.import_zip_codes
   end
 
-  Myp.create_default_website
+  website_domain = Myp.create_default_website
+  
+  identity.website_domain = website_domain
+  identity.save!
+
+  Myplet.default_myplets(identity)
 
 end
 
