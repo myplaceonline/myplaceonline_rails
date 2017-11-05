@@ -418,6 +418,7 @@ module Myp
   @@all_categories_without_explicit_without_experimental = Hash.new.with_indifferent_access
   @@all_categories_without_explicit_with_experimental = Hash.new.with_indifferent_access
   @@all_categories_without_experimental_with_explicit = Hash.new.with_indifferent_access
+  @@all_categories_with_internal = Hash.new.with_indifferent_access
   
   @@all_website_domains = Hash.new
   @@all_website_domain_homepages = Hash.new
@@ -434,7 +435,9 @@ module Myp
       Category.all.each do |existing_category|
         is_explicit = existing_category.respond_to?("explicit?") && existing_category.explicit?
         is_experimental = existing_category.respond_to?("experimental?") && existing_category.experimental?
+        is_internal = existing_category.respond_to?("internal?") && existing_category.internal?
 
+        @@all_categories_with_internal[existing_category.name.to_sym] = existing_category
         @@all_categories[existing_category.name.to_sym] = existing_category
         @@all_categories_without_explicit_with_experimental[existing_category.name.to_sym] = existing_category
         @@all_categories_without_experimental_with_explicit[existing_category.name.to_sym] = existing_category
@@ -445,6 +448,12 @@ module Myp
           @@all_categories_without_explicit_without_experimental.delete(existing_category.name.to_sym)
         end
         if is_experimental
+          @@all_categories_without_experimental_with_explicit.delete(existing_category.name.to_sym)
+          @@all_categories_without_explicit_without_experimental.delete(existing_category.name.to_sym)
+        end
+        if is_internal
+          @@all_categories.delete(existing_category.name.to_sym)
+          @@all_categories_without_explicit_with_experimental.delete(existing_category.name.to_sym)
           @@all_categories_without_experimental_with_explicit.delete(existing_category.name.to_sym)
           @@all_categories_without_explicit_without_experimental.delete(existing_category.name.to_sym)
         end
@@ -564,6 +573,10 @@ module Myp
         @@all_categories
       end
     end
+  end
+  
+  def self.all_categories
+    @@all_categories_with_internal
   end
   
   def self.current_host(host: nil)
@@ -2721,13 +2734,19 @@ module Myp
 #     end
 #   end
    
-  def self.create_default_website
+  def self.create_default_website(identity_id: nil)
+    
+    if identity_id.nil?
+      identity_id = User::SUPER_USER_IDENTITY_ID
+    end
+    
     website = Website.create!(
-      identity_id: User::SUPER_USER_IDENTITY_ID,
+      identity_id: identity_id,
       title: "Myplaceonline.com",
     )
+    
     domain = WebsiteDomain.create!(
-      identity_id: User::SUPER_USER_IDENTITY_ID,
+      identity_id: identity_id,
       domain_name: "myplaceonline",
       verified: true,
       default_domain: true,
@@ -2743,9 +2762,65 @@ module Myp
       mission_statement: Myp.parse_yaml_to_html("myplaceonline.default_domain.mission_statement"),
       faq: Myp.parse_yaml_to_html("myplaceonline.default_domain.faq"),
     )
-#     WebsiteDomainMyplet.create!(
-#       website_domain: domain,
-#     )
+
+    Myp.create_default_website_myplets(identity_id: identity_id, website_domain: domain)
+  end
+  
+  def self.create_default_website_myplets(identity_id:, website_domain:)
+    website_domain.website_domain_myplets << WebsiteDomainMyplet.create!(
+      website_domain: website_domain,
+      title: "myplaceonline.myplets.titles.point_display",
+      category: all_categories["point_displays"],
+      position: 0,
+      border_type: Myplet::BORDER_TYPE_NONE,
+      identity_id: identity_id,
+    )
+    website_domain.website_domain_myplets << WebsiteDomainMyplet.create!(
+      website_domain: website_domain,
+      title: "myplaceonline.myplets.titles.myplaceonline_search",
+      category: all_categories["myplaceonline_searches"],
+      position: 1,
+      border_type: Myplet::BORDER_TYPE_NONE,
+      identity_id: identity_id,
+    )
+    website_domain.website_domain_myplets << WebsiteDomainMyplet.create!(
+      website_domain: website_domain,
+      title: "myplaceonline.myplets.titles.myplaceonline_quick_category_display",
+      category: all_categories["myplaceonline_quick_category_displays"],
+      position: 2,
+      border_type: Myplet::BORDER_TYPE_TITLE,
+      identity_id: identity_id,
+    )
+    website_domain.website_domain_myplets << WebsiteDomainMyplet.create!(
+      website_domain: website_domain,
+      title: "myplaceonline.myplets.titles.calendar",
+      category: all_categories["calendars"],
+      position: 3,
+      border_type: Myplet::BORDER_TYPE_TITLE,
+      identity_id: identity_id,
+    )
+    myplet = WebsiteDomainMyplet.create!(
+      website_domain: website_domain,
+      title: "myplaceonline.myplets.titles.notepad",
+      category: all_categories["notepads"],
+      position: 4,
+      border_type: Myplet::BORDER_TYPE_TITLE,
+      identity_id: identity_id,
+    )
+    myplet.website_domain_myplet_parameters << WebsiteDomainMypletParameter.create!(
+      name: "title",
+      val: "myplaceonline.myplets.titles.notepad",
+      website_domain_myplet: myplet,
+      identity_id: identity_id,
+    )
+    myplet.website_domain_myplet_parameters << WebsiteDomainMypletParameter.create!(
+      name: "notepad_data",
+      val: "myplaceonline.notepads.initial_help_text",
+      website_domain_myplet: myplet,
+      identity_id: identity_id,
+    )
+    website_domain.website_domain_myplets << myplet
+    website_domain.save!
   end
   
   def self.media_wiki_str_to_markdown(str, link_prefix: "/", image_prefix: "/")

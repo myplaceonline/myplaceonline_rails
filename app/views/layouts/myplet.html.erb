@@ -1,4 +1,4 @@
-<% if @myplet.border_type == 1 && !@nocontent %>
+<% if @myplet.border_type == Myplet::BORDER_TYPE_TITLE && !@nocontent %>
   <ul data-role="listview" data-inset="true" class="myplet_border" style="padding: 5px;">
     <li data-role="list-divider" class="myplet_border_title">
       <div>
@@ -21,7 +21,7 @@
 
 <%= yield %>
 
-<% if @myplet.border_type == 1 && !@nocontent %>
+<% if @myplet.border_type == Myplet::BORDER_TYPE_TITLE && !@nocontent %>
     </li>
   </ul>
 <% end %>
