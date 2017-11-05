@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171104212909) do
+ActiveRecord::Schema.define(version: 20171105024118) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -823,6 +823,7 @@ ActiveRecord::Schema.define(version: 20171104212909) do
     t.integer "user_type_mask"
     t.boolean "experimental"
     t.boolean "simple"
+    t.boolean "internal"
     t.index ["name"], name: "index_categories_on_name", unique: true
     t.index ["parent_id"], name: "index_categories_on_parent_id"
   end

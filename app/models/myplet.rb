@@ -23,74 +23,77 @@ class Myplet < ApplicationRecord
 
   def self.default_myplets(identity)
     result = Array.new
-
-    x = PointDisplay.new
-    x.save!
-    result.push(Myplet.new({
-      title: "myplaceonline.myplets.titles.point_display",
-      y_coordinate: 0,
-      x_coordinate: 0,
-      category_name: x.class.name.underscore.pluralize,
-      category_id: x.id,
-      border_type: 0,
-      identity: identity
-    }))
-
-    x = MyplaceonlineSearch.new
-    x.save!
-    result.push(Myplet.new({
-      title: "myplaceonline.myplets.titles.myplaceonline_search",
-      y_coordinate: 1,
-      x_coordinate: 0,
-      category_name: x.class.name.underscore.pluralize,
-      category_id: x.id,
-      border_type: 0,
-      identity: identity
-    }))
-
-    x = MyplaceonlineQuickCategoryDisplay.new
-    x.save!
-    result.push(Myplet.new({
-      title: "myplaceonline.myplets.titles.myplaceonline_quick_category_display",
-      y_coordinate: 2,
-      x_coordinate: 0,
-      category_name: x.class.name.underscore.pluralize,
-      category_id: x.id,
-      border_type: 1,
-      identity: identity
-    }))
-
-    x = Calendar.new
-    x.save!
-    result.push(Myplet.new({
-      title: "myplaceonline.myplets.titles.calendar",
-      y_coordinate: 3,
-      x_coordinate: 0,
-      category_name: x.class.name.underscore.pluralize,
-      category_id: x.id,
-      border_type: 1,
-      identity: identity
-    }))
-
-    x = Notepad.new({
-      title: I18n.t("myplaceonline.myplets.titles.notepad"),
-      notepad_data: I18n.t("myplaceonline.notepads.initial_help_text")
-    })
-    x.save!
-    result.push(Myplet.new({
-      title: "myplaceonline.myplets.titles.notepad",
-      y_coordinate: 4,
-      x_coordinate: 0,
-      category_name: x.class.name.underscore.pluralize,
-      category_id: x.id,
-      border_type: 1,
-      identity: identity
-    }))
     
-    result.each do |myplet|
-      myplet.save!
+    ActiveRecord::Base.transaction do
+      
+      x = PointDisplay.new
+      x.save!
+      result.push(Myplet.new({
+        title: "myplaceonline.myplets.titles.point_display",
+        y_coordinate: 0,
+        x_coordinate: 0,
+        category_name: x.class.name.underscore.pluralize,
+        category_id: x.id,
+        border_type: 0,
+        identity: identity
+      }))
+
+      x = MyplaceonlineSearch.new
+      x.save!
+      result.push(Myplet.new({
+        title: "myplaceonline.myplets.titles.myplaceonline_search",
+        y_coordinate: 1,
+        x_coordinate: 0,
+        category_name: x.class.name.underscore.pluralize,
+        category_id: x.id,
+        border_type: 0,
+        identity: identity
+      }))
+
+      x = MyplaceonlineQuickCategoryDisplay.new
+      x.save!
+      result.push(Myplet.new({
+        title: "myplaceonline.myplets.titles.myplaceonline_quick_category_display",
+        y_coordinate: 2,
+        x_coordinate: 0,
+        category_name: x.class.name.underscore.pluralize,
+        category_id: x.id,
+        border_type: 1,
+        identity: identity
+      }))
+
+      x = Calendar.new
+      x.save!
+      result.push(Myplet.new({
+        title: "myplaceonline.myplets.titles.calendar",
+        y_coordinate: 3,
+        x_coordinate: 0,
+        category_name: x.class.name.underscore.pluralize,
+        category_id: x.id,
+        border_type: 1,
+        identity: identity
+      }))
+
+      x = Notepad.new({
+        title: I18n.t("myplaceonline.myplets.titles.notepad"),
+        notepad_data: I18n.t("myplaceonline.notepads.initial_help_text")
+      })
+      x.save!
+      result.push(Myplet.new({
+        title: "myplaceonline.myplets.titles.notepad",
+        y_coordinate: 4,
+        x_coordinate: 0,
+        category_name: x.class.name.underscore.pluralize,
+        category_id: x.id,
+        border_type: 1,
+        identity: identity
+      }))
+      
+      result.each do |myplet|
+        myplet.save!
+      end
     end
-    
+
     result
   end
   

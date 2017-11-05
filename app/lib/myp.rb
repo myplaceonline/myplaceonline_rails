@@ -2726,7 +2726,7 @@ module Myp
       identity_id: User::SUPER_USER_IDENTITY_ID,
       title: "Myplaceonline.com",
     )
-    WebsiteDomain.create!(
+    domain = WebsiteDomain.create!(
       identity_id: User::SUPER_USER_IDENTITY_ID,
       domain_name: "myplaceonline",
       verified: true,
@@ -2743,6 +2743,9 @@ module Myp
       mission_statement: Myp.parse_yaml_to_html("myplaceonline.default_domain.mission_statement"),
       faq: Myp.parse_yaml_to_html("myplaceonline.default_domain.faq"),
     )
+#     WebsiteDomainMyplet.create!(
+#       website_domain: domain,
+#     )
   end
   
   def self.media_wiki_str_to_markdown(str, link_prefix: "/", image_prefix: "/")
