@@ -9,4 +9,4 @@ before_script:
   - cp config/database.yml.travis config/database.yml
 
 script: 
-  - RAILS_ENV=test SKIP_LARGE_UNNEEDED_IMPORTS=true SKIP_ZIP_CODE_IMPORTS=true bundle exec rake db:drop db:create db:schema:load db:seed myp:reinitialize test
+  - RAILS_ENV=test SKIP_LARGE_UNNEEDED_IMPORTS=true SKIP_ZIP_CODE_IMPORTS=true bundle exec rake db:drop db:create db:schema:load myp:reinitialize db:seed myp:reinitialize test
