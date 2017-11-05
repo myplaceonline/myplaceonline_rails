@@ -426,6 +426,7 @@ module Myp
 
   # This may be called multiple times to re-initialize
   def self.reinitialize
+    Rails.logger.info{"Myp.reinitialize Initializing categories"}
     if Myp.database_exists?
       @@all_categories.clear
       @@all_categories_without_explicit_with_experimental.clear

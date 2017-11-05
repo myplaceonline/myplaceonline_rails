@@ -52,6 +52,7 @@ end
   end
 
   task :reinitialize => :environment do
+    Rails.logger.info{"mypdump.rake reinitialize"}
     Myp.reinitialize
   end
 end
