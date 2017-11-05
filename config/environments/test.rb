@@ -43,10 +43,11 @@ Rails.application.configure do
   config.active_support.test_order = :random
 
   config.default_url_options = { host: 'localhost', port: 3000 }
-  
-  config.log_formatter = ::Logger::Formatter.new
-  logger           = ActiveSupport::Logger.new(STDOUT)
-  logger.formatter = config.log_formatter
-  config.logger = ActiveSupport::TaggedLogging.new(logger)
-  config.log_level = :debug
+
+  # Uncomment the following to enable full debugging in test:
+  # config.log_formatter = ::Logger::Formatter.new
+  # logger           = ActiveSupport::Logger.new(STDOUT)
+  # logger.formatter = config.log_formatter
+  # config.logger = ActiveSupport::TaggedLogging.new(logger)
+  # config.log_level = :debug
 end

@@ -61,6 +61,14 @@ class User < ApplicationRecord
     result = MyplaceonlineExecutionContext.identity
     if result.nil?
       result = User.current_user.primary_identity
+    else
+      # Sanity check that the identity is for this user. If some code wants
+      # a contextual identity that may be different than the current user,
+      # then it should access MyplaceonlineExecutionContext.identity directly
+      # and ensure expected logic
+      if result.user_id != self.id
+        raise "Unexpected identity #{result.id} for user #{self.id}"
+      end
     end
     result
   end
