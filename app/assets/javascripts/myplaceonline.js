@@ -914,8 +914,8 @@ var myplaceonline = function(mymodule) {
       url: url,
       dataType: "script",
       success: successFunc,
-      error: function() {
-        criticalError("Could not load " + url);
+      error: function(jqXHR, textStatus, errorThrown) {
+        criticalError("Could not load " + url + " ; status: " + textStatus + ", errorThrown: " + errorThrown);
       },
       async: async
     });
