@@ -5,7 +5,7 @@ class CalendarsController < MyplaceonlineController
       @nocontent = true
     else
       if !current_user.suppresses(User::SUPPRESSION_MOBILE)
-        @mobile_number = current_user.primary_identity.first_mobile_number
+        @mobile_number = current_user.current_identity.first_mobile_number
         if !@mobile_number.nil?
           @mobile_number = @mobile_number.number
         end

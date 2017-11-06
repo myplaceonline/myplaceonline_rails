@@ -64,7 +64,7 @@ class FilesController < MyplaceonlineController
     check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
     
     @folders = Hash[IdentityFileFolder.where(
-      identity_id: current_user.primary_identity.id
+      identity_id: current_user.current_identity.id
     ).order(FileFoldersController.sorts).map{|f| [f.folder_name, f.id]}]
     
     if request.post?
@@ -278,7 +278,7 @@ class FilesController < MyplaceonlineController
     def index_pre_respond()
       if @offset == 0
         @objs2 = IdentityFileFolder.where(
-          identity_id: current_user.primary_identity.id,
+          identity_id: current_user.current_identity.id,
           parent_folder: nil
         ).order(FileFoldersController.sorts)
       end

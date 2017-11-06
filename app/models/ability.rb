@@ -7,7 +7,7 @@ class Ability
       user = User.guest
       identity = Identity.new(user: user)
     else
-      identity = user.primary_identity
+      identity = user.current_identity
     end
 
     Rails.logger.debug{"Ability.initialize user: #{user.id}"}
@@ -41,7 +41,7 @@ class Ability
     if identity.nil?
       Rails.logger.debug{"Ability.authorize no identity specified, setting to Guest"}
       user = User.guest
-      identity = User.guest.primary_identity
+      identity = User.guest.current_identity
     else
       user = identity.user
       if user.nil?

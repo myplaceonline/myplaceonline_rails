@@ -5,7 +5,7 @@ class WebsitesController < MyplaceonlineController
       @to_visit = @to_visit.to_bool
     end
     
-    @categories = ApplicationRecord.connection.execute("select distinct website_category from websites where website_category is not null and identity_id = #{current_user.primary_identity.id} order by website_category").map{|row| row["website_category"] }
+    @categories = ApplicationRecord.connection.execute("select distinct website_category from websites where website_category is not null and identity_id = #{current_user.current_identity.id} order by website_category").map{|row| row["website_category"] }
     
     @categories.each do |category|
       

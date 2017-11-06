@@ -11,7 +11,7 @@ class SwitchUserEncryptionJob < ApplicationJob
         
         user = args[0]
         password = args[1]
-        identity = user.primary_identity
+        identity = user.current_identity
 
         Rails.logger.info{"SwitchUserEncryptionJob user=#{user.inspect}, identity=#{identity.inspect}"}
         

@@ -5,7 +5,7 @@ class JobsController < MyplaceonlineController
     @jobs = all.order(sorts_wrapper).to_a.delete_if{|x| x.started.nil?}
     @educations = Myp.model_instances(
       Education,
-      current_user.primary_identity,
+      current_user.current_identity,
       orders: ["educations.education_end DESC"]
     ).to_a.delete_if{|x| x.education_end.nil?}
   end

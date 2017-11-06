@@ -333,7 +333,7 @@ class MyplaceonlineController < ApplicationController
       # If an item of this model type was created within the last few seconds
       # then just assume it was a double POST
       last_item = model
-        .where("identity_id = ?", current_user.primary_identity.id)
+        .where("identity_id = ?", current_user.current_identity.id)
         .order("created_at DESC")
         .limit(1)
         .first
@@ -1333,7 +1333,7 @@ class MyplaceonlineController < ApplicationController
     def perform_all(initial_or:, additional:)
       model.includes(all_includes).joins(all_joins).where(
         "(#{model.table_name}.identity_id = ? #{initial_or}) #{additional}",
-        current_user.primary_identity.id
+        current_user.current_identity.id
       )
     end
     
@@ -1344,7 +1344,7 @@ class MyplaceonlineController < ApplicationController
       end
       model.includes(all_includes).joins(all_joins).where(
         model.table_name + ".identity_id = ? and " + model.table_name + ".visit_count >= ? " + additional,
-        current_user.primary_identity,
+        current_user.current_identity,
         additional_items_min_visit_count
       )
     end
@@ -1360,7 +1360,7 @@ class MyplaceonlineController < ApplicationController
       end
       model.includes(all_includes).joins(all_joins).where(
         model.table_name + ".identity_id = ? and " + model.table_name + ".rating = ? " + additional,
-        current_user.primary_identity,
+        current_user.current_identity,
         Myp::MAX_RATING
       )
     end

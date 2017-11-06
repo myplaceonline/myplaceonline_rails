@@ -9,7 +9,7 @@ class CalendarItemReminderPending < ApplicationRecord
     items = CalendarItemReminderPending
       .includes(:calendar, :calendar_item)
       .where(
-        identity: user.primary_identity,
+        identity: user.current_identity,
         calendar: calendar
       )
       .order("created_at DESC").to_a

@@ -112,8 +112,7 @@ module Myplaceonline
               user = env["warden"].user
               i = user.identities.index{|x| x.id == cii}
               if !i.nil?
-                user.primary_identity = user.identities[i]
-                user.save!
+                user.change_default_identity(user.identities[i])
               else
                 raise "Invalid identity"
               end

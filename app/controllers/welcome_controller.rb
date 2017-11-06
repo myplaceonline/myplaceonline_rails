@@ -6,7 +6,7 @@ class WelcomeController < ApplicationController
     respond_to do |format|
       format.html {
         if user_signed_in?
-          @myplets = Myplet.where(identity: current_user.primary_identity).order(:x_coordinate, :y_coordinate).all
+          @myplets = Myplet.where(identity: current_user.current_identity).order(:x_coordinate, :y_coordinate).all
         end
         
         if !params[:emulate_host].blank?

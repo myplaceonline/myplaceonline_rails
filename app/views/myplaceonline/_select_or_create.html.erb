@@ -76,7 +76,7 @@ new_item_collapsible_id = random_name + "_new_item"
 # If the existing section is expanded, and no existing object is set, then collapse the existing section if there's
 # nothing to choose from
 if !existingcollapsed && !existingobj_exists_permanent && model.new.respond_to?("identity_id")
-  if model.send("where", identity_id: current_user.primary_identity_id).count == 0
+  if model.send("where", identity_id: current_user.current_identity_id).count == 0
     existingcollapsed = true
   end
 end

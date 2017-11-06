@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171105185545) do
+ActiveRecord::Schema.define(version: 20171106002009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2518,6 +2518,7 @@ ActiveRecord::Schema.define(version: 20171105185545) do
     t.integer "blood_type"
     t.integer "visit_count"
     t.bigint "website_domain_id"
+    t.boolean "website_domain_default"
     t.index ["company_id"], name: "index_identities_on_company_id"
     t.index ["identity_id"], name: "index_identities_on_identity_id"
     t.index ["user_id"], name: "index_identities_on_user_id"
@@ -5477,7 +5478,6 @@ ActiveRecord::Schema.define(version: 20171105185545) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer "primary_identity_id"
     t.string "confirmation_token", limit: 255
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
@@ -6820,7 +6820,6 @@ ActiveRecord::Schema.define(version: 20171105185545) do
   add_foreign_key "tv_shows", "contacts", column: "recommender_id"
   add_foreign_key "tv_shows", "identities"
   add_foreign_key "user_capabilities", "identities"
-  add_foreign_key "users", "identities", column: "primary_identity_id", name: "users_primary_identity_id_fk"
   add_foreign_key "vaccine_files", "identities"
   add_foreign_key "vaccine_files", "identity_files"
   add_foreign_key "vaccine_files", "vaccines"

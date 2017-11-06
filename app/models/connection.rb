@@ -56,7 +56,7 @@ class Connection < ApplicationRecord
   after_commit :on_after_destroy, on: :destroy
   
   def on_after_destroy
-    Connection.where(user_id: self.identity.user.id, identity_id: self.user.primary_identity_id).destroy_all
+    Connection.where(user_id: self.identity.user.id, identity_id: self.user.current_identity_id).destroy_all
   end
 
   def self.create_contact(email, name: nil)

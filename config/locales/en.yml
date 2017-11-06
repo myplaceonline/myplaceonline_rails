@@ -507,6 +507,7 @@ en:
       name: "Name"
       email: "Email"
     categories:
+      name: "Name"
       no_results: "No Results. Create New "
       always_expand_top_used: "Always Expand Top Used"
       always_expand_favorites: "Always Expand Favorites"
@@ -765,7 +766,7 @@ en:
       sign_in_count: "Sign-in Count"
       last_sign_in_at: "Last Sign-in Time"
       last_sign_in_ip: "Last Sign-in IP Address"
-      primary_identity_id: "Primary Identity ID"
+      current_identity_id: "Default Identity ID"
       confirmed_at: "Confirmed"
       failed_attempts: "Failed Login Attempts"
       locked_at: "Locked"
@@ -3770,5 +3771,3 @@ en:
         time_after_y: "Repeat the Reminder After (in Years)"
         time_after_1pw: "Once per Week"
         time_after_2pw: "Twice per Week"
-    categories:
-      name: "Name"

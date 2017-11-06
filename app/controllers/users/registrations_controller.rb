@@ -172,7 +172,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         if !foundcat.nil?
           cl = Object.const_get(@category.singularize)
           ApplicationRecord.transaction do
-            destroyed = cl.where(identity: current_user.primary_identity).destroy_all
+            destroyed = cl.where(identity: current_user.current_identity).destroy_all
             count = destroyed.length
             if count > 0 && foundcat[0] != "foods" && foundcat[0] != "drinks"
               Myp.modify_points(current_user, cl.name.downcase.pluralize, -1 * count, session)
@@ -322,7 +322,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
   def notifications
     check_password
-    @mobile = current_user.primary_identity.first_mobile_number
+    @mobile = current_user.current_identity.first_mobile_number
     if !@mobile.nil?
       @mobile = @mobile.number
     end
@@ -342,22 +342,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
       current_user.suppressions = suppressions
       if !@mobile.blank?
         if @original_mobile.blank?
-          current_user.primary_identity.identity_phones << IdentityPhone.new(
+          current_user.current_identity.identity_phones << IdentityPhone.new(
             number: @mobile,
             phone_type: IdentityPhone::PHONE_TYPE_CELL,
-            parent_identity: current_user.primary_identity
+            parent_identity: current_user.current_identity
           )
         else
-          identity_phone = current_user.primary_identity.identity_phones[current_user.primary_identity.identity_phones.to_a.index{|x| x.number == @original_mobile}]
+          identity_phone = current_user.current_identity.identity_phones[current_user.current_identity.identity_phones.to_a.index{|x| x.number == @original_mobile}]
           identity_phone.number = @mobile
         end
       else
         if !@original_mobile.blank?
-          identity_phone = current_user.primary_identity.identity_phones[current_user.primary_identity.identity_phones.to_a.index{|x| x.number == @original_mobile}]
-          current_user.primary_identity.identity_phones.delete(identity_phone)
+          identity_phone = current_user.current_identity.identity_phones[current_user.current_identity.identity_phones.to_a.index{|x| x.number == @original_mobile}]
+          current_user.current_identity.identity_phones.delete(identity_phone)
         end
       end
-      current_user.primary_identity.save!
+      current_user.current_identity.save!
       current_user.save!
       redirect_to(
         params[:from_homepage].blank? ? users_notifications_path : root_path,

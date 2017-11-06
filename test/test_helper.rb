@@ -29,7 +29,7 @@ class ActionController::TestCase
     MyplaceonlineExecutionContext.initialized = true
     Myp.persist_password("password")
     @user.confirm
-    @user.primary_identity.ensure_contact!
+    @user.current_identity.ensure_contact!
     sign_in @user
   end
 end
@@ -68,7 +68,7 @@ module MyplaceonlineControllerTest
     attrs = test_attributes
     if attrs.length > 0
       assert_difference(model.name + '.count') do
-        post :create, params: { model.model_name.singular.downcase => attrs.merge({ identity_id: @user.primary_identity_id }) }
+        post :create, params: { model.model_name.singular.downcase => attrs.merge({ identity_id: @user.current_identity_id }) }
       end
 
       assert_redirected_to send(model.model_name.singular.downcase + "_path", assigns(:obj))

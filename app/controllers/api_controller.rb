@@ -133,7 +133,7 @@ class ApiController < ApplicationController
   end
   
   def quickfeedback
-    if !current_user.nil? && !current_user.primary_identity.nil?
+    if !current_user.nil? && !current_user.current_identity.nil?
       user_input = params[:user_input]
       begin
         

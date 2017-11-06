@@ -24,14 +24,16 @@ class AdminSendTextMessageJob < ApplicationJob
         end
 
         User.all.each do |user|
-          user.primary_identity.identity_phones.each do |identity_phone|
-            num = identity_phone.number
-            if !num.blank? && identity_phone.accepts_sms?
-              num = IdentityPhone.for_comparison(num)
-              if send_only_to.nil? || send_only_to[num]
-                if exclude_numbers.nil? || !exclude_numbers[num]
-                  Rails.logger.info{"AdminSendTextMessageJob processing user #{user.id} @ #{num}"}
-                  admin_text_message.text_message.process_single_target(identity_phone.number)
+          user.identities.each do |identity|
+            identity.identity_phones.each do |identity_phone|
+              num = identity_phone.number
+              if !num.blank? && identity_phone.accepts_sms?
+                num = IdentityPhone.for_comparison(num)
+                if send_only_to.nil? || send_only_to[num]
+                  if exclude_numbers.nil? || !exclude_numbers[num]
+                    Rails.logger.info{"AdminSendTextMessageJob processing user #{user.id} @ #{num}"}
+                    admin_text_message.text_message.process_single_target(identity_phone.number)
+                  end
                 end
               end
             end

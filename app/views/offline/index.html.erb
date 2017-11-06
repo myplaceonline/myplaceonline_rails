@@ -78,7 +78,7 @@ myplaceonline.onPageLoad(function() {
 
       App.PasswordsRoute = Ember.Route.extend({
         model: function() {
-          return window.appsnapshot.user.primary_identity.passwords;
+          return window.appsnapshot.user.current_identity.passwords;
         }
       });
       
@@ -132,7 +132,7 @@ myplaceonline.onPageLoad(function() {
         },
         model: function(params) {
           var result = null;
-          $.each(window.appsnapshot.user.primary_identity.passwords, function(i, x) {
+          $.each(window.appsnapshot.user.current_identity.passwords, function(i, x) {
             if (x.id == params.id) {
               result = x;
               return false;

@@ -69,7 +69,7 @@ class ContactsController < MyplaceonlineController
     super + [
       {
         title: I18n.t("myplaceonline.contacts.me"),
-        link: contact_path(current_user.primary_identity.ensure_contact!),
+        link: contact_path(current_user.current_identity.ensure_contact!),
         icon: "user"
       }
     ]

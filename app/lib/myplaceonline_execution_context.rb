@@ -144,7 +144,7 @@ class MyplaceonlineExecutionContext
     Rails.logger.debug{"MyplaceonlineExecutionContext.initialize user: #{user.nil? ? "nil" : user.id}"}
 
     MyplaceonlineExecutionContext.user = user
-    MyplaceonlineExecutionContext.identity = user.primary_identity
+    MyplaceonlineExecutionContext.identity = user.domain_identity
     
     if !user.nil?
       session[:myp_email] = user.email
@@ -157,7 +157,7 @@ class MyplaceonlineExecutionContext
     ExecutionContext.push
     begin
       self.user = user
-      self.identity = user.primary_identity
+      self.identity = user.current_identity
       block.call
     ensure
       ExecutionContext.pop

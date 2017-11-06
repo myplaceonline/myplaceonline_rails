@@ -29,7 +29,6 @@ MyplaceonlineExecutionContext.do_user(user) do
     name: "root",
   )
       
-  user.primary_identity = identity
   user.save!
       
   if ENV["SKIP_LARGE_UNNEEDED_IMPORTS"].nil?

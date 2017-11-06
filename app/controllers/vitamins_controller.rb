@@ -23,7 +23,7 @@ class VitaminsController < MyplaceonlineController
     end
     
     def filter_json_index_search()
-      remove_ids = VitaminIngredient.where(identity_id: current_user.primary_identity.id).map{|vi| vi.vitamin_id}
+      remove_ids = VitaminIngredient.where(identity_id: current_user.current_identity.id).map{|vi| vi.vitamin_id}
       @objs = @objs.to_a.delete_if{|x| remove_ids.find_index(x.id) }
     end
 end

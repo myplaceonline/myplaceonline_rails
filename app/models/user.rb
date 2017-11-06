@@ -25,19 +25,13 @@ class User < ApplicationRecord
   
   SUPPRESSION_MOBILE = 1
   
+  @@guest_user = User.new(
+    id: GUEST_USER_ID,
+    email: DEFAULT_GUEST_EMAIL,
+  )
+  
   def self.guest
-    result = User.new(
-      id: GUEST_USER_ID,
-      email: DEFAULT_GUEST_EMAIL,
-      primary_identity_id: GUEST_USER_IDENTITY_ID
-    )
-    identity = Identity.new(
-      id: GUEST_USER_IDENTITY_ID,
-      user_id: GUEST_USER_ID,
-      user: result
-    )
-    result.primary_identity = identity
-    result
+    @@guest_user
   end
   
   def self.super_user
@@ -50,22 +44,33 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable
 
-  belongs_to :primary_identity, class_name: "Identity", :dependent => :destroy
   has_many :identities, :dependent => :destroy
   
   def self.current_user
     MyplaceonlineExecutionContext.user
   end
 
+  def current_identity_id
+    result = nil
+    i = self.current_identity
+    if !i.nil?
+      result = i.id
+    end
+    result
+  end
+  
   def current_identity
-    result = MyplaceonlineExecutionContext.identity
+    result = nil
+    if ExecutionContext.available?
+      result = MyplaceonlineExecutionContext.identity
+    end
     if result.nil?
-      result = User.current_user.primary_identity
+      result = self.domain_identity
     else
       # Sanity check that the identity is for this user. If some code wants
       # a contextual identity that may be different than the current user,
       # then it should access MyplaceonlineExecutionContext.identity directly
-      # and ensure expected logic
+      # and ensure related authorization logic
       if result.user_id != self.id
         raise "Unexpected identity #{result.id} for user #{self.id}"
       end
@@ -73,8 +78,30 @@ class User < ApplicationRecord
     result
   end
   
-  def current_identity_id
-    self.current_identity.id
+  def domain_identity
+    result = nil
+    if self.id != GUEST_USER_ID
+      domain_id = Myp.website_domain.id
+      identity_index = self.identities.find_index do |identity|
+        identity.website_domain_id == domain_id
+      end
+      if !identity_index.nil?
+        result = self.identities[identity_index]
+      end
+    else
+      Identity.new(
+        id: GUEST_USER_IDENTITY_ID,
+        user_id: GUEST_USER_ID,
+        user: self,
+      )
+    end
+    result
+  end
+  
+  def change_default_identity(identity)
+    domain_id = Myp.website_domain.id
+    Identity.where(user_id: self.id, website_domain_id: domain_id).update_all(website_domain_default: false)
+    Identity.where(user_id: self.id, website_domain_id: domain_id, id: identity.id).update_all(website_domain_default: true)
   end
   
   has_many :encrypted_values, :dependent => :destroy
@@ -107,14 +134,14 @@ class User < ApplicationRecord
     #Rails.logger.debug{"User.after_initialize #{Myp.debug_print(user)}"}
       
     # If user.id is nil, then it's an anonymous user
-    if !user.id.nil? && primary_identity_id.nil?
+    if !user.id.nil? && current_identity_id.nil?
 
       Rails.logger.debug{"Creating identity for #{user.id}"}
       
       ExecutionContext.root_or_push[:user] = user
       
-      # No primary identity, so we create a default one. We can also do
-      # any first-time initialization of the user here
+      # No identity for the current domain, so we create a default one. We can
+      # also do any first-time initialization of the user here
       user.transaction do
         
         # Create the identity
@@ -123,13 +150,16 @@ class User < ApplicationRecord
         new_identity.name = Identity.email_to_name(user.email)
         new_identity.save!
         
-        # Set the identity in the user
-        user.primary_identity = new_identity
         user.encrypt_by_default = true
         user.save!
         
+        # We do a direct update because this identity doesn't own the website
+        # domain object
         new_identity.update_column(:website_domain_id, Myp.website_domain.id)
         new_identity.reload
+        
+        self.change_default_identity(new_identity)
+        User.current_user.identities.reload
         
         new_identity.after_create
         
@@ -141,12 +171,12 @@ class User < ApplicationRecord
   end
   
   def total_points
-    primary_identity.points.nil? ? 0 : primary_identity.points
+    current_identity.points.nil? ? 0 : current_identity.points
   end
   
   def as_json(options={})
     super.as_json(options).merge({
-      :primary_identity => primary_identity.as_json,
+      :current_identity => current_identity.as_json,
       :encrypted_values => encrypted_values.to_a.map{|x| x.as_json}
     })
   end
@@ -191,11 +221,11 @@ class User < ApplicationRecord
   end
   
   def has_emergency_contacts?
-    primary_identity.emergency_contacts.count > 0
+    current_identity.emergency_contacts.count > 0
   end
   
   def send_sms(body)
-    self.primary_identity.identity_phones.each do |identity_phone|
+    self.current_identity.identity_phones.each do |identity_phone|
       if identity_phone.accepts_sms?
         Myp.send_sms(to: identity_phone.number, body: body)
       end

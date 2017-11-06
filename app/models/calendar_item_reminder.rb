@@ -38,7 +38,7 @@ class CalendarItemReminder < ApplicationRecord
     # Check if we need to create any future repeat events
     CalendarItem
       .includes(:calendar_item_reminders)
-      .where("repeat_amount is not null and is_repeat is null and identity_id = ?", user.primary_identity)
+      .where("repeat_amount is not null and is_repeat is null and identity_id = ?", user.current_identity)
       .each do |calendar_item|
         
         Rails.logger.debug{"CalendarItemReminder.ensure_pending_process calendar_item=#{calendar_item.inspect}"}
@@ -147,7 +147,7 @@ class CalendarItemReminder < ApplicationRecord
     
     CalendarItemReminder
       .includes(:calendar_item_reminder_pendings, :calendar_item)
-      .where(identity: user.primary_identity)
+      .where(identity: user.current_identity)
       .each do |calendar_item_reminder|
         
         # If for some reason the model object doesn't exist, then just destroy this reminder
@@ -172,7 +172,7 @@ class CalendarItemReminder < ApplicationRecord
                   calendar_item_reminder: calendar_item_reminder,
                   calendar: calendar_item_reminder.calendar_item.calendar,
                   calendar_item: calendar_item_reminder.calendar_item,
-                  identity: user.primary_identity
+                  identity: user.current_identity
                 )
                 
                 Rails.logger.debug{"CalendarItemReminder.ensure_pending_process creating new pending reminder #{new_pending.inspect}"}
@@ -208,7 +208,7 @@ class CalendarItemReminder < ApplicationRecord
                         INNER JOIN calendar_items
                           ON calendar_item_reminder_pendings.calendar_item_id = calendar_items.id
                       WHERE calendar_item_reminder_pendings.calendar_id = #{calendar_item_reminder.calendar_item.calendar.id}
-                        AND calendar_item_reminder_pendings.identity_id = #{user.primary_identity.id}
+                        AND calendar_item_reminder_pendings.identity_id = #{user.current_identity.id}
                         AND calendar_items.model_class #{Myp.sanitize_with_null_for_conditions(calendar_item_reminder.calendar_item.model_class)}
                         AND calendar_items.model_id #{Myp.sanitize_with_null_for_conditions(calendar_item_reminder.calendar_item.model_id)}
                       ORDER BY calendar_items.calendar_item_time ASC

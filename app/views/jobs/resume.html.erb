@@ -1,5 +1,5 @@
 <% content_for :heading do -%><%= t('myplaceonline.jobs.resume') %><% end -%>
-<h1><%= current_user.primary_identity.display %></h1>
+<h1><%= current_user.current_identity.display %></h1>
 <h2><%= t("myplaceonline.resume.jobs") %></h2>
 <% @jobs.each do |job| %>
   <h3><%= job.display %></h3>

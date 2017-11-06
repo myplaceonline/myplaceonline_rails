@@ -687,7 +687,7 @@ module Myp
     # Category.where(parent: nil).order(:position)
     #   .includes(:category_points_amounts)
     #   .where(category_points_amounts:
-    #     {identity: user.primary_identity}
+    #     {identity: user.current_identity}
     #   )
     #
     # However, this places the where clause at the end instead of as an addition
@@ -731,7 +731,7 @@ module Myp
       LEFT OUTER JOIN category_points_amounts
         ON category_points_amounts.category_id = categories.id
             AND category_points_amounts.identity_id = #{
-                ActiveRecord::Base.connection.quote(user.primary_identity.id)
+                ActiveRecord::Base.connection.quote(user.current_identity.id)
               }
       #{ where_clause }
       ORDER BY #{
@@ -782,7 +782,7 @@ module Myp
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
         WHERE category_points_amounts.last_visit IS NOT NULL AND #{ explicit_check } categories.parent_id IS NOT NULL AND category_points_amounts.identity_id = #{
-                ActiveRecord::Base.connection.quote(user.primary_identity.id)
+                ActiveRecord::Base.connection.quote(user.current_identity.id)
               }
         ORDER BY category_points_amounts.last_visit DESC
         LIMIT #{ recentlyVisited }
@@ -793,7 +793,7 @@ module Myp
         FROM category_points_amounts
         INNER JOIN categories ON category_points_amounts.category_id = categories.id
         WHERE category_points_amounts.visits IS NOT NULL AND #{ explicit_check } categories.parent_id IS NOT NULL AND category_points_amounts.identity_id = #{
-                ActiveRecord::Base.connection.quote(user.primary_identity.id)
+                ActiveRecord::Base.connection.quote(user.current_identity.id)
               }
         ORDER BY category_points_amounts.visits DESC
         LIMIT #{ mostVisited }
@@ -1046,7 +1046,7 @@ module Myp
       raise "Could not find category " + categoryName + " (check Myp.website_init)"
     end
     cpa = CategoryPointsAmount.find_or_create_by(
-      identity: user.primary_identity,
+      identity: user.current_identity,
       category: category
     )
     if cpa.visits.nil?
@@ -1068,19 +1068,19 @@ module Myp
   def self.modify_points(user, categoryName, amount, session = nil)
     ApplicationRecord.transaction do
       
-      if user.primary_identity.points.nil?
-        user.primary_identity.points = 0
+      if user.current_identity.points.nil?
+        user.current_identity.points = 0
       end
-      user.primary_identity.points += amount
-      if user.primary_identity.points < 0
-        user.primary_identity.points = 0
+      user.current_identity.points += amount
+      if user.current_identity.points < 0
+        user.current_identity.points = 0
       end
       
       # Don't use the normal ActiveRecord update mechanism because that
       # will fire commit hooks which for Identity will re-do calendar
       # entries
-      #user.primary_identity.save
-      ApplicationRecord.connection.update("update identities set points = #{user.primary_identity.points} where id = #{user.primary_identity.id}")
+      #user.current_identity.save
+      ApplicationRecord.connection.update("update identities set points = #{user.current_identity.points} where id = #{user.current_identity.id}")
       
       category = Myp.categories(user)[categoryName]
       if category.nil?
@@ -1089,7 +1089,7 @@ module Myp
       
       while !category.nil? do
         cpa = CategoryPointsAmount.find_or_create_by(
-          identity: user.primary_identity,
+          identity: user.current_identity,
           category: category
         )
         if cpa.count.nil?
@@ -1145,10 +1145,10 @@ module Myp
   
   def self.reset_points(user)
     ApplicationRecord.transaction do
-      user.primary_identity.points = 0
-      user.primary_identity.save
+      user.current_identity.points = 0
+      user.current_identity.save
       
-      CategoryPointsAmount.where(identity: user.primary_identity).update_all(count: 0)
+      CategoryPointsAmount.where(identity: user.current_identity).update_all(count: 0)
     end
   end
 
@@ -1369,7 +1369,7 @@ module Myp
     end
     current_user = User.current_user
     if !current_user.nil? && result.respond_to?("identity_id=")
-      result.identity_id = current_user.primary_identity.id
+      result.identity_id = current_user.current_identity.id
     end
     result
   end
@@ -2162,14 +2162,14 @@ module Myp
       
       if !search.blank?
         
-        Rails.logger.debug{"full_text_search: user: #{user.primary_identity_id}, filters: #{filters.inspect}, category: #{category}, parent_category: #{parent_category}, display_category_prefix: #{display_category_prefix}, display_category_icon: #{display_category_icon}"}
+        Rails.logger.debug{"full_text_search: user: #{user.current_identity_id}, filters: #{filters.inspect}, category: #{category}, parent_category: #{parent_category}, display_category_prefix: #{display_category_prefix}, display_category_icon: #{display_category_icon}"}
         
         if filters.size > 0
           filters = {
             bool: {
               must: 
                 filters.merge!(
-                  { identity_id: user.primary_identity_id }
+                  { identity_id: user.current_identity_id }
                 ).keys.map{|key|
                   { term: { key => filters[key] } }
                 }.to_a
@@ -2178,7 +2178,7 @@ module Myp
         else
           filters = {
             term: {
-              identity_id: user.primary_identity_id
+              identity_id: user.current_identity_id
             }
           }
         end
@@ -2359,7 +2359,7 @@ module Myp
       
       search_results = UserIndex.query({
         terms: {
-          identity_id: [user.primary_identity_id]
+          identity_id: [user.current_identity_id]
         }
       }).order(visit_count: {order: :desc, missing: :_last}).limit(limit).load.objects
       

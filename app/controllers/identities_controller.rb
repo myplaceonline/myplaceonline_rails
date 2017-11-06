@@ -83,8 +83,7 @@ class IdentitiesController < MyplaceonlineController
         end
       end
       
-      current_user.primary_identity = @obj
-      current_user.save!
+      current_user.change_default_identity(@obj)
       
       nil
     end

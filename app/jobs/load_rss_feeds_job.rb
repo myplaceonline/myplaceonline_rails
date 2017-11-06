@@ -16,7 +16,7 @@ class LoadRssFeedsJob < ApplicationJob
         executed = Myp.try_with_database_advisory_lock(Myp::DB_LOCK_LOAD_RSS_FEEDS, user.id) do
           MyplaceonlineExecutionContext.do_full_context(user) do
             
-            status = FeedLoadStatus.where(identity_id: user.primary_identity_id).first
+            status = FeedLoadStatus.where(identity_id: user.current_identity_id).first
             
             if !status.nil?
               status.items_complete = 0
@@ -27,7 +27,7 @@ class LoadRssFeedsJob < ApplicationJob
               end
               
               count = 0
-              feeds = Feed.where(identity_id: user.primary_identity_id)
+              feeds = Feed.where(identity_id: user.current_identity_id)
               
               feeds.each do |feed|
                 

@@ -13,7 +13,7 @@ class RestaurantsController < MyplaceonlineController
     @search = params[:search]
     @location = params[:location]
     if request.method == "GET"
-      loc = current_user.primary_identity.primary_location
+      loc = current_user.current_identity.primary_location
       if !loc.nil?
         @location = loc.location.address_one_line
       end

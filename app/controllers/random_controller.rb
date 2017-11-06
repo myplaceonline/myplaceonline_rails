@@ -5,7 +5,7 @@ class RandomController < MyplaceonlineController
   end
 
   def activity
-    identity = current_user.primary_identity
+    identity = current_user.current_identity
     candidates = Array.new
     any_filters = false
     @all_filters = [

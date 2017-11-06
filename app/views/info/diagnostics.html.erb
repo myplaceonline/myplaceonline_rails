@@ -39,6 +39,6 @@
 
 <% if !current_user.nil? %>
   <ul>
-    <li><%= t("myplaceonline.info.diagnostic_details.identity") %>: <%= current_user.primary_identity.id %></li>
+    <li><%= t("myplaceonline.info.diagnostic_details.identity") %>: <%= current_user.current_identity.id %></li>
   </ul>
 <% end %>
