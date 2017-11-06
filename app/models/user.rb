@@ -60,6 +60,7 @@ class User < ApplicationRecord
   end
   
   def current_identity
+    Rails.logger.debug{"User.current_identity user_id: #{self.id}"}
     result = nil
     if ExecutionContext.available?
       result = MyplaceonlineExecutionContext.identity
@@ -67,18 +68,17 @@ class User < ApplicationRecord
     if result.nil?
       result = self.domain_identity
     else
-      # Sanity check that the identity is for this user. If some code wants
-      # a contextual identity that may be different than the current user,
-      # then it should access MyplaceonlineExecutionContext.identity directly
-      # and ensure related authorization logic
       if result.user_id != self.id
-        raise "Unexpected identity #{result.id} for user #{self.id}"
+        # This can happen if an identity is emulated (e.g. website domain homepage)
+        #raise "Unexpected identity #{result.id} for user #{self.id}"
       end
     end
+    Rails.logger.debug{"User.current_identity returning: #{result.nil? ? nil : result.id}"}
     result
   end
   
   def domain_identity
+    Rails.logger.debug{"User.domain_identity user_id: #{self.id}"}
     result = nil
     if self.id != GUEST_USER_ID
       domain_id = Myp.website_domain.id
@@ -89,12 +89,13 @@ class User < ApplicationRecord
         result = self.identities[identity_index]
       end
     else
-      Identity.new(
+      result = Identity.new(
         id: GUEST_USER_IDENTITY_ID,
         user_id: GUEST_USER_ID,
         user: self,
       )
     end
+    Rails.logger.debug{"User.domain_identity returning: #{result.nil? ? nil : result.id}"}
     result
   end
   

@@ -38,6 +38,8 @@ class Ability
   def self.authorize(identity:, subject:, action: :edit, request: nil, subject_class: nil)
     result = false
     
+    Rails.logger.debug{"Ability.authorize identity: #{identity}"}
+    
     if identity.nil?
       Rails.logger.debug{"Ability.authorize no identity specified, setting to Guest"}
       user = User.guest
