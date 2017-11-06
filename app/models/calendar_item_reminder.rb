@@ -17,6 +17,7 @@ class CalendarItemReminder < ApplicationRecord
   def self.ensure_pending_all_users()
     Rails.logger.info("CalendarItemReminder.ensure_pending_all_users start")
 
+    # Error "current transaction is aborted, commands ignored until end of transaction block" is caused by a previous transaction error
     executed = Myp.try_with_database_advisory_lock(Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS_ALL, 1) do
       User.all.each do |user|
         MyplaceonlineExecutionContext.do_full_context(user) do
@@ -176,56 +177,57 @@ class CalendarItemReminder < ApplicationRecord
                 )
                 
                 Rails.logger.debug{"CalendarItemReminder.ensure_pending_process creating new pending reminder #{new_pending.inspect}"}
-
-                begin
+                
+                check_calendar_item = CalendarItem.where(id: calendar_item_reminder.calendar_item.id).take
+                if !check_calendar_item.nil?
                   new_pending.save!
 
                   Rails.logger.debug{"CalendarItemReminder.ensure_pending_process created new pending item #{new_pending.inspect}"}
-                rescue ActiveRecord::InvalidForeignKey => ifk
-                  Rails.logger.debug{"CalendarItemReminder.ensure_pending_process InvalidForeignKey while trying to create new pending item, probably benign. #{ifk.inspect}"}
-                end
-                
-                # Send any notifications about the new reminder
-                send_reminder_notifications(user, new_pending)
-                
-                item_class = calendar_item_reminder.calendar_item.find_model_class
-                if item_class.respond_to?("handle_new_reminder?")
-                  item_obj = calendar_item_reminder.calendar_item.find_model_object
-                  if !item_obj.nil?
-                    begin
-                      item_obj.handle_new_reminder
-                    rescue Exception => e
-                      Myp.warn("CalendarItemReminder.ensure_pending_process Error handling new reminder", e)
-                    end
-                  end
-                end
 
-                if !calendar_item_reminder.max_pending.nil?
-                  pendings_result = CalendarItemReminderPending.find_by_sql(
-                    %{
-                      SELECT calendar_item_reminder_pendings.*
-                      FROM calendar_item_reminder_pendings
-                        INNER JOIN calendar_items
-                          ON calendar_item_reminder_pendings.calendar_item_id = calendar_items.id
-                      WHERE calendar_item_reminder_pendings.calendar_id = #{calendar_item_reminder.calendar_item.calendar.id}
-                        AND calendar_item_reminder_pendings.identity_id = #{user.current_identity.id}
-                        AND calendar_items.model_class #{Myp.sanitize_with_null_for_conditions(calendar_item_reminder.calendar_item.model_class)}
-                        AND calendar_items.model_id #{Myp.sanitize_with_null_for_conditions(calendar_item_reminder.calendar_item.model_id)}
-                      ORDER BY calendar_items.calendar_item_time ASC
-                    }
-                  )
+                  # Send any notifications about the new reminder
+                  send_reminder_notifications(user, new_pending)
                   
-                  number_to_delete = pendings_result.count - calendar_item_reminder.max_pending
-                  
-                  if number_to_delete > 0
-                    pendings_result.first(number_to_delete).each do |x|
-                      
-                      # There's no point to keep the actual reminder around since we know there must be more recent
-                      # ${max_pending} reminder(s)
-                      Rails.logger.debug{"CalendarItemReminder.ensure_pending_process destroying excessive reminder #{x.calendar_item_reminder.inspect}; #{x.inspect}"}
-                      x.calendar_item_reminder.destroy!
+                  item_class = calendar_item_reminder.calendar_item.find_model_class
+                  if item_class.respond_to?("handle_new_reminder?")
+                    item_obj = calendar_item_reminder.calendar_item.find_model_object
+                    if !item_obj.nil?
+                      begin
+                        item_obj.handle_new_reminder
+                      rescue Exception => e
+                        Myp.warn("CalendarItemReminder.ensure_pending_process Error handling new reminder", e)
+                      end
                     end
                   end
+
+                  if !calendar_item_reminder.max_pending.nil?
+                    pendings_result = CalendarItemReminderPending.find_by_sql(
+                      %{
+                        SELECT calendar_item_reminder_pendings.*
+                        FROM calendar_item_reminder_pendings
+                          INNER JOIN calendar_items
+                            ON calendar_item_reminder_pendings.calendar_item_id = calendar_items.id
+                        WHERE calendar_item_reminder_pendings.calendar_id = #{calendar_item_reminder.calendar_item.calendar.id}
+                          AND calendar_item_reminder_pendings.identity_id = #{user.current_identity.id}
+                          AND calendar_items.model_class #{Myp.sanitize_with_null_for_conditions(calendar_item_reminder.calendar_item.model_class)}
+                          AND calendar_items.model_id #{Myp.sanitize_with_null_for_conditions(calendar_item_reminder.calendar_item.model_id)}
+                        ORDER BY calendar_items.calendar_item_time ASC
+                      }
+                    )
+                    
+                    number_to_delete = pendings_result.count - calendar_item_reminder.max_pending
+                    
+                    if number_to_delete > 0
+                      pendings_result.first(number_to_delete).each do |x|
+                        
+                        # There's no point to keep the actual reminder around since we know there must be more recent
+                        # ${max_pending} reminder(s)
+                        Rails.logger.debug{"CalendarItemReminder.ensure_pending_process destroying excessive reminder #{x.calendar_item_reminder.inspect}; #{x.inspect}"}
+                        x.calendar_item_reminder.destroy!
+                      end
+                    end
+                  end
+                else
+                  # TODO
                 end
               end
             end
@@ -265,7 +267,7 @@ class CalendarItemReminder < ApplicationRecord
           calendar_item_reminder.calendar_item.destroy!
         end
         
-        Rails.logger.debug{"CalendarItemReminder.ensure_pending_process finshed checking reminder"}
+        Rails.logger.debug{"CalendarItemReminder.ensure_pending_process finished checking reminder"}
     end
 
     Rails.logger.debug("CalendarItemReminder.ensure_pending_process ensure_pending_process end")
@@ -275,6 +277,7 @@ class CalendarItemReminder < ApplicationRecord
     
     Rails.logger.debug("CalendarItemReminder.ensure_pending start #{user.id}")
 
+    # Error "current transaction is aborted, commands ignored until end of transaction block" is caused by a previous transaction error
     executed = Myp.try_with_database_advisory_lock(Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS, user.id) do
       ensure_pending_process(user)
     end
