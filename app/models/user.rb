@@ -83,7 +83,7 @@ class User < ApplicationRecord
     if self.id != GUEST_USER_ID
       domain_id = Myp.website_domain.id
       identity_index = self.identities.find_index do |identity|
-        identity.website_domain_id == domain_id
+        identity.website_domain_id == domain_id && identity.website_domain_default
       end
       if !identity_index.nil?
         result = self.identities[identity_index]
@@ -102,6 +102,7 @@ class User < ApplicationRecord
     domain_id = Myp.website_domain.id
     Identity.where(user_id: self.id, website_domain_id: domain_id).update_all(website_domain_default: false)
     Identity.where(user_id: self.id, website_domain_id: domain_id, id: identity.id).update_all(website_domain_default: true)
+    self.identities.reload
   end
   
   has_many :encrypted_values, :dependent => :destroy
