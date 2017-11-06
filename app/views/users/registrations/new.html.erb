@@ -17,7 +17,7 @@
   <% if Myp.requires_invite_code %>
     <div>
       <%= f.label :invite_code, class: "ui-hidden-accessible" %>
-      <%= f.password_field :invite_code, class: "autofocus", autocomplete: "invite-code", placeholder: t("myplaceonline.users.invite") %>
+      <%= f.text_field :invite_code, class: "autofocus", autocomplete: "invite-code", placeholder: t("myplaceonline.users.invite") %>
     </div>
   <% end %>
 
