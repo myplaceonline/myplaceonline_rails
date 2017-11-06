@@ -626,7 +626,11 @@ var myplaceonline = function(mymodule) {
       dataType: "json",
       context: destination
     }).done(function(data, textStatus, jqXHR) {
-      this.val(data.randomString);
+      if (data.success) {
+        this.val(data.randomString);
+      } else {
+        myplaceonline.createErrorNotification(data.details);
+      }
     }).fail(function(jqXHR, textStatus, errorThrown) {
       myplaceonline.createErrorNotification("Could not execute " + url + ": " + textStatus);
     }).complete(function(jqXHR, textStatus) {

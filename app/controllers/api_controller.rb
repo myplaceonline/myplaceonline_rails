@@ -106,8 +106,18 @@ class ApiController < ApplicationController
       result[SecureRandom.random_number(result.length)] = Myp::POSSIBILITIES_NUMERIC[SecureRandom.random_number(Myp::POSSIBILITIES_NUMERIC.length)]
     end
     
+    success = true
+    details = nil
+    
+    if result.length == 0
+      success = false
+      details = "Please select some password generation options"
+    end
+    
     render json: {
-      :randomString => result
+      success: success,
+      randomString: result,
+      details: details,
     }
   end
   

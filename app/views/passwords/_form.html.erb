@@ -7,7 +7,7 @@
 %>
 <%= password_field %>
 <%=
-  render partial: 'myplaceonline/generaterandom', locals: {
+  render partial: "myplaceonline/generaterandom", locals: {
     heading: t("myplaceonline.passwords.generate_password"),
     lengthplaceholder: t("myplaceonline.passwords.generate_password_length"),
     destination: "$('##{password_field_id}')",
