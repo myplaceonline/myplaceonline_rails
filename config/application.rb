@@ -89,6 +89,7 @@ module Myplaceonline
           
           if !parsed_query_string["emulate_host"].blank?
             host = parsed_query_string["emulate_host"]
+            Rails.logger.info{"application.rb call Emulated host: #{host}"}
           end
           
           # See also https://github.com/knu/ruby-domain_name/

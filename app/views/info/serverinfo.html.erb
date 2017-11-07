@@ -3,8 +3,13 @@
 <h1><%= t('myplaceonline.info.serverinfo') %></h1>
 
 <ul>
+  <li>Website Domain: <%= Myp.website_domain.display %></li>
+  <% if !ENV["NODENAME"].blank? %>
   <li>Server: <%= ENV["NODENAME"] %></li>
+  <% end %>
+  <% if !ENV["SOURCE_REVISION"].blank? %>
   <li>Source Revision: <a href="https://github.com/myplaceonline/myplaceonline_rails/commit/<%= ENV["SOURCE_REVISION"] %>"><%= ENV["SOURCE_REVISION"] %></a></li>
+  <% end %>
 </ul>
 
 <% if !current_user.nil? && current_user.admin? %>
