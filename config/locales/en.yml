@@ -2883,7 +2883,10 @@ en:
       website_domain_myplet: "Myplet"
       add_website_domain_myplet: "Add Myplet"
       delete_website_domain_myplet: "Delete Myplet"
-      disable_ajax: "Disable AJAX"
+      ajax_config: "AJAX Configuration"
+      ajax_configs:
+        disable_always: "Always Disable"
+        disable_unauthenticated: "Disable for Guests"
     website_domain_myplets:
       title: "Title"
       border_type: "Border Type"

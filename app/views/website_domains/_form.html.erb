@@ -252,10 +252,11 @@
   <%=
     input_field(
       form: f,
-      type: Myp::FIELD_BOOLEAN,
-      name: :disable_ajax,
-      value: obj.disable_ajax,
-      placeholder: "myplaceonline.website_domains.disable_ajax"
+      type: Myp::FIELD_SELECT,
+      name: :ajax_config,
+      value: obj.ajax_config,
+      placeholder: "myplaceonline.website_domains.ajax_config",
+      select_options: WebsiteDomain::AJAX_CONFIGS,
     )
   %>
   <%=

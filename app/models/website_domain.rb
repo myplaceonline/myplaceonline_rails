@@ -2,6 +2,14 @@ class WebsiteDomain < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
+  AJAX_CONFIG_DISABLE_ALWAYS = 0
+  AJAX_CONFIG_DISABLE_UNAUTHENTICATED = 1
+
+  AJAX_CONFIGS = [
+    ["myplaceonline.website_domains.ajax_configs.disable_always", AJAX_CONFIG_DISABLE_ALWAYS],
+    ["myplaceonline.website_domains.ajax_configs.disable_unauthenticated", AJAX_CONFIG_DISABLE_UNAUTHENTICATED],
+  ]
+
   validates :domain_name, presence: true
 
   child_property(name: :website, required: true)

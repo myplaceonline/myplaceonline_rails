@@ -39,7 +39,7 @@
       <%# so here we can run any code to update HEAD %>
       <script type="text/javascript">
           myplaceonline.setDebug(false);
-        <% if Myp.website_domain.disable_ajax %>
+        <% if Myp.website_domain.ajax_config == WebsiteDomain::AJAX_CONFIG_DISABLE_ALWAYS || (Myp.website_domain.ajax_config == WebsiteDomain::AJAX_CONFIG_DISABLE_UNAUTHENTICATED && current_user.guest?) %>
           $.mobile.ajaxEnabled = false;
         <% end %>
         <% if Myp.is_initial_phonegap_request(params, session) %>

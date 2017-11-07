@@ -27,7 +27,7 @@ class WebsiteDomainsController < MyplaceonlineController
         :homepage_path,
         :feed_url,
         :only_homepage,
-        :disable_ajax,
+        :ajax_config,
         website_attributes: WebsitesController.param_names,
         domain_host_attributes: MembershipsController.param_names,
         website_domain_ssh_keys_attributes: [
