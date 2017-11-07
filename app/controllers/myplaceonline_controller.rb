@@ -1400,6 +1400,9 @@ class MyplaceonlineController < ApplicationController
         raise Myp::SuddenRedirectError.new(index_path)
       end
       
+      if Rails.env.test?
+        Thread.current[:debug] = model.to_s
+      end
       authorize! action.to_sym, @obj
       
       # If this succeeds, then set the identity context for nested authorization checks

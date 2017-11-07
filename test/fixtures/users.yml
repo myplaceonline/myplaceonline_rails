@@ -1,6 +1,3 @@
-root_user:
-  id: 0
-  email: "root@myplaceonline.com"
 user:
   email: "testuser1@myplaceonline.com"
   explicit_categories: true

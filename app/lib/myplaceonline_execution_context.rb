@@ -89,6 +89,7 @@ class MyplaceonlineExecutionContext
     end
   end
   
+  # You'll almost always want to use do_full_context instead
   def self.do_user(user, &block)
     ExecutionContext.push
     begin

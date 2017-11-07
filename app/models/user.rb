@@ -24,14 +24,12 @@ class User < ApplicationRecord
   ]
   
   SUPPRESSION_MOBILE = 1
-  
-  @@guest_user = User.new(
-    id: GUEST_USER_ID,
-    email: DEFAULT_GUEST_EMAIL,
-  )
-  
+
   def self.guest
-    @@guest_user
+    User.new(
+      id: GUEST_USER_ID,
+      email: DEFAULT_GUEST_EMAIL,
+    )
   end
   
   def self.super_user
@@ -81,12 +79,15 @@ class User < ApplicationRecord
     Rails.logger.debug{"User.domain_identity user_id: #{self.id}"}
     result = nil
     if self.id != GUEST_USER_ID
-      domain_id = Myp.website_domain.id
-      identity_index = self.identities.find_index do |identity|
-        identity.website_domain_id == domain_id && identity.website_domain_default
-      end
-      if !identity_index.nil?
-        result = self.identities[identity_index]
+      domain = Myp.website_domain
+      if !domain.nil?
+        domain_id = domain.id
+        identity_index = self.identities.find_index do |identity|
+          identity.website_domain_id == domain_id && identity.website_domain_default
+        end
+        if !identity_index.nil?
+          result = self.identities[identity_index]
+        end
       end
     else
       result = Identity.new(
@@ -132,43 +133,54 @@ class User < ApplicationRecord
 
   # User loaded from database
   after_initialize do |user|
-      
-    #Rails.logger.debug{"User.after_initialize #{Myp.debug_print(user)}"}
+    User.post_initialize(user)
+  end
+
+  def self.post_initialize(user)
       
     # If user.id is nil, then it's an anonymous user
-    if !user.id.nil? && current_identity_id.nil?
+    if !user.id.nil? && user.current_identity_id.nil?
+      
+      MyplaceonlineExecutionContext.do_user(user) do
+        Rails.logger.debug{"Creating identity for #{user.id}"}
+        
+        # No identity for the current domain, so we create a default one. We can
+        # also do any first-time initialization of the user here
+        user.transaction do
+          
+          if user.identities.count == 0
+            user.encrypt_by_default = true
+            user.save!
+          end
+          
+          # Create the identity
+          new_identity = Identity.new
+          new_identity.user = user
+          new_identity.name = Identity.email_to_name(user.email)
+          new_identity.save!
 
-      Rails.logger.debug{"Creating identity for #{user.id}"}
-      
-      ExecutionContext.root_or_push[:user] = user
-      
-      # No identity for the current domain, so we create a default one. We can
-      # also do any first-time initialization of the user here
-      user.transaction do
-        
-        # Create the identity
-        new_identity = Identity.new
-        new_identity.user = user
-        new_identity.name = Identity.email_to_name(user.email)
-        new_identity.save!
-        
-        user.encrypt_by_default = true
-        user.save!
-        
-        # We do a direct update because this identity doesn't own the website
-        # domain object
-        new_identity.update_column(:website_domain_id, Myp.website_domain.id)
-        new_identity.reload
-        
-        self.change_default_identity(new_identity)
-        User.current_user.identities.reload
-        
-        new_identity.after_create
-        
-        Rails.logger.debug{"Creating first status reminder"}
-        
-        Status.create_first_status
+          User.post_initialize_identity(user, new_identity)
+        end
       end
+
+    end
+  end
+  
+  def self.post_initialize_identity(user, identity)
+    # We do a direct update because this identity doesn't own the website
+    # domain object
+    identity.update_column(:website_domain_id, Myp.website_domain.id)
+    identity.reload
+    
+    MyplaceonlineExecutionContext.do_identity(identity) do
+      user.change_default_identity(identity)
+      user.identities.reload
+      
+      identity.after_create
+      
+      Rails.logger.debug{"Creating first status reminder"}
+      
+      Status.create_first_status
     end
   end
   

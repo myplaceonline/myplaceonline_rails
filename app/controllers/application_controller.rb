@@ -54,9 +54,15 @@ class ApplicationController < ActionController::Base
   end
 
   def catchall(exception)
-    Rails.logger.debug{"ApplicationController.catchall: #{exception.inspect}".red}
+    Rails.logger.warn{"ApplicationController.catchall: #{exception.inspect}".red}
+    
     if exception.is_a?(ActionView::Template::Error)
       exception = exception.cause
+    end
+    
+    begin
+      Rails.logger.warn{"ApplicationController.catchall exception details: #{Myp.error_details(exception)} #{Thread.current[:debug]}"}
+    rescue => e
     end
     
     if exception.is_a?(Myp::DecryptionKeyUnavailableError)

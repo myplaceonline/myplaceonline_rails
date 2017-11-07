@@ -45,9 +45,10 @@ Rails.application.configure do
   config.default_url_options = { host: 'localhost', port: 3000 }
 
   # Uncomment the following to enable full debugging in test:
-  # config.log_formatter = ::Logger::Formatter.new
-  # logger           = ActiveSupport::Logger.new(STDOUT)
-  # logger.formatter = config.log_formatter
-  # config.logger = ActiveSupport::TaggedLogging.new(logger)
-  # config.log_level = :debug
+  config.log_formatter = ::Logger::Formatter.new
+  logger           = ActiveSupport::Logger.new(STDOUT)
+  logger.formatter = config.log_formatter
+  config.logger = ActiveSupport::TaggedLogging.new(logger)
+  config.log_level = :warn
+  #config.log_level = :debug
 end

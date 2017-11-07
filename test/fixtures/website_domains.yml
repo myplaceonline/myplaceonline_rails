@@ -1,4 +1,4 @@
 website_domain:
-  identity: identity
-  domain_name: Test
+  domain_name: myplaceonline
   website: website
+  identity: identity

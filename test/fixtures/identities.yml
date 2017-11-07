@@ -1,9 +1,6 @@
-root_identity:
-  id: 0
-  user_id: 0
-
 identity:
   user: user
+  website_domain_default: true
 
 contact_identity:
   points: 0

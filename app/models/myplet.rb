@@ -19,6 +19,7 @@ class Myplet < ApplicationRecord
     if !category_name.blank? && !category_id.nil?
       cls = Object.const_get(category_name.camelize.singularize)
       if cls.where(id: category_id, identity: User.current_user.current_identity).count == 0
+        puts "Failed with #{User.current_user.inspect}  #{MyplaceonlineExecutionContext.identity.inspect}"
         errors.add(:category_id, I18n.t("myplaceonline.general.not_auhorized"))
       end
     end

@@ -48,6 +48,12 @@ module MyplaceonlineActiveRecordBaseConcern
     def self.allow_super_user_search?
       false
     end
+    
+    def to_s
+      result = super
+      result << " { id: #{self.id} }"
+      result
+    end
   end
   
   class_methods do

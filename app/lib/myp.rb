@@ -460,9 +460,6 @@ module Myp
         end
       end
       Rails.logger.info{"Myp Categories cached: #{@@all_categories.count}"}
-      if Rails.env.test?
-        puts "Myp Categories cached: #{@@all_categories.count}"
-      end
       #puts "myplaceonline: Categories: " + @@all_categories.map{|k, v| v.nil? ? "#{k} = nil" : "#{k} = #{v.id}/#{v.name.to_s}" }.inspect
       
       self.reinitialize_in_rails_context
@@ -508,9 +505,6 @@ module Myp
       end
 
       Rails.logger.info{"Myp Website domains cached: #{@@all_website_domains.count}"}
-      if Rails.env.test?
-        puts "Myp Website domains cached: #{@@all_website_domains.count}"
-      end
     end
   end
   
@@ -725,7 +719,7 @@ module Myp
       where_clause += " AND " + explicit_check
     end
     
-    Category.find_by_sql(%{
+    sql = %{
       SELECT categories.*, category_points_amounts.count as points_amount
       FROM categories
       LEFT OUTER JOIN category_points_amounts
@@ -739,7 +733,9 @@ module Myp
           "categories.name ASC" :
           "categories.position ASC, categories.name ASC"
       }
-    }).map{ |category|
+    }
+    
+    Category.find_by_sql(sql).map{ |category|
       ListItemRow.new(
         category.human_title,
         "/" + category.link,

@@ -4,20 +4,32 @@ require 'rails/test_help'
 
 class ActiveSupport::TestCase
   
-  puts "Myplaceonline tests started with #{Myp.categories.length} categories"
+  self.use_transactional_tests = true
+  
+  Rails.logger.info{"Test Helper initializing"}
+  
+  Rails.logger.info{"Myplaceonline tests started with #{Myp.categories.length} categories"}
   
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
-
-  # Add more helper methods to be used by all tests here...
+  
+  Rails.logger.info{"Fixtures loaded"}
 end
 
 class ActionController::TestCase
   include Devise::Test::ControllerHelpers
   
   def setup
+    Rails.logger.info{"Starting test for #{self.class}"}
+    Rails.application.load_seed
+    Rails.logger.info{"Finished loading seeds"}
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @user = users(:user)
+    @identity = identities(:identity)
+    MyplaceonlineExecutionContext.do_user(@user) do
+      User.post_initialize_identity(@user, @identity)
+    end
+    Rails.logger.info{"Post-initialized #{@user.inspect}"}
     ExecutionContext.clear
     ExecutionContext.push
     MyplaceonlineExecutionContext.initialize(
@@ -29,17 +41,13 @@ class ActionController::TestCase
     MyplaceonlineExecutionContext.initialized = true
     Myp.persist_password("password")
     @user.confirm
-    @user.current_identity.ensure_contact!
     sign_in @user
+    Rails.logger.info{"Setup complete"}
   end
 end
 
 module MyplaceonlineControllerTest
   extend ActiveSupport::Testing::Declarative
-  
-  def model
-    raise NotImplementedError
-  end
   
   def model
     Object.const_get(self.class.name.gsub(/ControllerTest$/, "").singularize)
