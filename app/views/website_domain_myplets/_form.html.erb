@@ -25,6 +25,16 @@
   }
 %>
 <%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_SELECT,
+    name: :border_type,
+    value: obj.border_type,
+    placeholder: "myplaceonline.website_domain_myplets.border_type",
+    select_options: Myplet::BORDER_TYPES,
+  )
+%>
+<%=
   render(layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.website_domain_myplets.website_domain_myplet_parameters"),
