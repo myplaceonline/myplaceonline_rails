@@ -44,6 +44,11 @@ class User < ApplicationRecord
 
   has_many :identities, :dependent => :destroy
   
+  def domain_identities
+    domain = Myp.website_domain
+    identities.order(:name).to_a.dup.keep_if { |x| x.website_domain.id == domain.id }
+  end
+  
   def self.current_user
     MyplaceonlineExecutionContext.user
   end

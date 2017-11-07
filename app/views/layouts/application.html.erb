@@ -39,6 +39,9 @@
       <%# so here we can run any code to update HEAD %>
       <script type="text/javascript">
           myplaceonline.setDebug(false);
+        <% if Myp.website_domain.disable_ajax %>
+          $.mobile.ajaxEnabled = false;
+        <% end %>
         <% if Myp.is_initial_phonegap_request(params, session) %>
           myplaceonline.setIsInitialPhonegapPage(true);
           myplaceonline.loadExternalScript("<%= javascript_path('application_extra') %>", false);
@@ -146,7 +149,7 @@
         <% if user_signed_in? && !current_user.guest? %>
           <p style="text-align: center;">
             <%
-              identities = current_user.identities.order(:name).map{|x| [x.name, x.id] } + [[t("myplaceonline.identities.add"), -1]]
+              identities = current_user.domain_identities.map{|x| [x.name, x.id] } + [[t("myplaceonline.identities.add"), -1]]
             %>
             <%= select_tag("current_identity_id", options_for_select(identities, current_user.current_identity_id), onchange: "myplaceonline.refreshWithParam('current_identity_id', $(this).val());") %>
           </p>

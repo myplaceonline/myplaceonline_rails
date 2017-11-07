@@ -250,6 +250,15 @@
     )
   %>
   <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_BOOLEAN,
+      name: :disable_ajax,
+      value: obj.disable_ajax,
+      placeholder: "myplaceonline.website_domains.disable_ajax"
+    )
+  %>
+  <%=
     render partial: "myplaceonline/select_or_create", locals: {
       f: f,
       name: :favicon_ico_identity_file,

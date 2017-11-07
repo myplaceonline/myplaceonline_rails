@@ -15,6 +15,14 @@ class IdentitiesController < MyplaceonlineController
     redirect_to "/"
   end
   
+  def use_bubble?
+    true
+  end
+  
+  def bubble_text(obj)
+    obj.website_domain.display
+  end
+
   protected
     def additional_sorts
       [
