@@ -35,6 +35,24 @@
   )
 %>
 <%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :singleton,
+    value: obj.singleton,
+    placeholder: "myplaceonline.website_domain_myplets.singleton"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :emulate_guest,
+    value: obj.emulate_guest,
+    placeholder: "myplaceonline.website_domain_myplets.emulate_guest"
+  )
+%>
+<%=
   render(layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.website_domain_myplets.website_domain_myplet_parameters"),

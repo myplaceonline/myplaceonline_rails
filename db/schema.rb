@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171107053350) do
+ActiveRecord::Schema.define(version: 20171107064021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -5822,6 +5822,8 @@ ActiveRecord::Schema.define(version: 20171107053350) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "singleton"
+    t.boolean "emulate_guest"
     t.index ["category_id"], name: "index_website_domain_myplets_on_category_id"
     t.index ["identity_id"], name: "index_website_domain_myplets_on_identity_id"
     t.index ["website_domain_id"], name: "index_website_domain_myplets_on_website_domain_id"

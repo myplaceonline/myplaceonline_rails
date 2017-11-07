@@ -25,6 +25,8 @@ class WebsiteDomainMyplet < ApplicationRecord
       :border_type,
       :position,
       :notes,
+      :singleton,
+      :emulate_guest,
       category_attributes: [:id],
       website_domain_myplet_parameters_attributes: WebsiteDomainMypletParameter.params,
     ]
