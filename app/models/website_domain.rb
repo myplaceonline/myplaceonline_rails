@@ -2,10 +2,12 @@ class WebsiteDomain < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
-  AJAX_CONFIG_DISABLE_ALWAYS = 0
+  AJAX_CONFIG_ENABLE_ALWAYS = 0
   AJAX_CONFIG_DISABLE_UNAUTHENTICATED = 1
+  AJAX_CONFIG_DISABLE_ALWAYS = 2
 
   AJAX_CONFIGS = [
+    ["myplaceonline.website_domains.ajax_configs.enable_always", AJAX_CONFIG_ENABLE_ALWAYS],
     ["myplaceonline.website_domains.ajax_configs.disable_always", AJAX_CONFIG_DISABLE_ALWAYS],
     ["myplaceonline.website_domains.ajax_configs.disable_unauthenticated", AJAX_CONFIG_DISABLE_UNAUTHENTICATED],
   ]

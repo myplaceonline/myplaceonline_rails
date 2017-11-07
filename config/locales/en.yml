@@ -2885,6 +2885,7 @@ en:
       delete_website_domain_myplet: "Delete Myplet"
       ajax_config: "AJAX Configuration"
       ajax_configs:
+        enable_always: "Always Enable"
         disable_always: "Always Disable"
         disable_unauthenticated: "Disable for Guests"
     website_domain_myplets:
