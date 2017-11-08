@@ -828,6 +828,7 @@ en:
       delete_relationship: "Delete Relationship"
       relationship: "Relationship"
       add: "+ Add Identity"
+      emulate: "Emulate"
     import:
       password: "Password (if any)"
       nofile: "No file selected"

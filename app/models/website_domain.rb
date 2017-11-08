@@ -70,4 +70,13 @@ class WebsiteDomain < ApplicationRecord
       false
     end
   end
+  
+  def main_domain
+    result = hosts
+    i = result.index(",")
+    if !i.nil?
+      result = result[0..i-1]
+    end
+    result
+  end
 end

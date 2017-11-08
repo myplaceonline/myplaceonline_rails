@@ -23,6 +23,21 @@ class IdentitiesController < MyplaceonlineController
     obj.website_domain.display
   end
 
+  def data_split_icon
+    Rails.env.development? ? "user" : ""
+  end
+  
+  def split_link(obj)
+    if Rails.env.development?
+      ActionController::Base.helpers.link_to(
+        I18n.t("myplaceonline.identities.emulate"),
+        root_path + "?emulate_host=" + obj.website_domain.main_domain
+      )
+    else
+      nil
+    end
+  end
+
   protected
     def additional_sorts
       [
