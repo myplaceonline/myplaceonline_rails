@@ -799,6 +799,7 @@ en:
       encryption_mode: "Encryption Mode"
       non_fixed_header: "Non-Fixed Header"
       toggle_hide_footer: "Tap Hides Header & Footer"
+      identities: "Identities"
     identities:
       name: "Name"
       phones: "Phone Numbers"
