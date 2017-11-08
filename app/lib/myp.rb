@@ -59,6 +59,10 @@ module Myp
   )
     if host.blank?
       host = MyplaceonlineExecutionContext.host
+      second_period = host.rindex(".", host.rindex(".") - 1)
+      if !second_period.nil?
+        host = host[second_period+1..-1]
+      end
     end
     result = name + "@" + host
     if display.blank?
