@@ -69,6 +69,7 @@ class MyplaceonlineController < ApplicationController
     @items_previous_page_link = items_previous_page(@offset - @perpage)
     @items_all_link = items_all_link
 
+    Rails.logger.debug{"MyplaceonlineController.index gettings @objs"}
     @objs = cached_all.offset(@offset).limit(@perpage).order(sorts_wrapper)
     
     # If the controller wants to show top items (`additional_items?` returns
@@ -795,7 +796,7 @@ class MyplaceonlineController < ApplicationController
     "nulls last"
   end
 
-  def sorts_helper(&block)
+  def sorts_helper
     @selected_sort_direction = params[:selected_sort_direction]
     
     if @selected_sort_direction.blank?
@@ -831,6 +832,8 @@ class MyplaceonlineController < ApplicationController
     end
     
     result = ["#{@selected_sort} #{@selected_sort_direction} #{default_sorts_additions}"]
+    
+    Rails.logger.debug{"MyplaceonlineController.sorts_helper sorting by #{@selected_sort} #{@selected_sort_direction} #{default_sorts_additions}"}
     
     if !dsc.nil? && dsc.length > 1
       result = result + dsc.drop(1)
@@ -1222,7 +1225,7 @@ class MyplaceonlineController < ApplicationController
     end
     
     def sorts_wrapper
-      sorts_helper {additional_sorts}
+      sorts_helper
     end
     
     def sensitive

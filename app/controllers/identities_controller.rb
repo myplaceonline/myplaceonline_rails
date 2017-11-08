@@ -41,12 +41,13 @@ class IdentitiesController < MyplaceonlineController
   protected
     def additional_sorts
       [
-        [I18n.t("myplaceonline.identities.name"), default_sort_columns[0]]
+        [I18n.t("myplaceonline.identities.website_domain_id"), default_sort_columns[0]],
+        [I18n.t("myplaceonline.identities.name"), "lower(identities.name)"]
       ]
     end
 
     def default_sort_columns
-      ["lower(identities.name)"]
+      ["identities.website_domain_id"]
     end
 
     def obj_params
@@ -56,6 +57,7 @@ class IdentitiesController < MyplaceonlineController
     end
 
     def perform_all(initial_or:, additional:)
+      Rails.logger.debug{"IdentitiesController.perform_all called with initial_or: #{initial_or}, additional: #{additional}"}
       model.includes(all_includes).joins(all_joins).where(
         "(#{model.table_name}.user_id = ? #{initial_or}) #{additional}",
         current_user.id
