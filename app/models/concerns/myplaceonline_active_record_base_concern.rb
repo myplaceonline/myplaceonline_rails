@@ -73,7 +73,8 @@ module MyplaceonlineActiveRecordBaseConcern
       allow_destroy: true,
       autosave: true,
       destroy_dependent: nil,
-      required: false
+      required: false,
+      validate: true
     )
       if model.nil?
         model = Object.const_get(name.to_s.camelize)
@@ -89,7 +90,8 @@ module MyplaceonlineActiveRecordBaseConcern
         name,
         class_name: model.name,
         autosave: autosave,
-        dependent: destroy_dependent
+        dependent: destroy_dependent,
+        validate: validate,
       )
 
       # dup the attributes so that the attributes_blank? method can call delete_if/keep_if without consequence

@@ -53,6 +53,7 @@ class IdentitiesController < MyplaceonlineController
     def obj_params
       params.require(:identity).permit(
         :name,
+        :last_name,
       )
     end
 

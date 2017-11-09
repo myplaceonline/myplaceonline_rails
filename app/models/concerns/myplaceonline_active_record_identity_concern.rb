@@ -34,8 +34,7 @@ module MyplaceonlineActiveRecordIdentityConcern
               
               Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set non-match, self.identity_id: #{self.identity_id.inspect}"}
               
-              # TODO could there be a privilege escalation here by always using action: show?
-              if !Ability.authorize(identity: identity_target, subject: self, action: :show)
+              if !Ability.authorize(identity: identity_target, subject: self, action: :update)
                 Rails.logger.info{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set unauthorized id: #{self.id}, it: #{identity_target.id}, iid: #{self.identity_id}, pct: #{Permission.current_target.inspect}, u: #{User.current_user.inspect}"}
                 raise "Unauthorized (#{self.identity_id}, #{identity_target.id})"
               end

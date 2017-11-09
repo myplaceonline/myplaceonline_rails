@@ -4,7 +4,16 @@
     type: Myp::FIELD_TEXT,
     name: :name,
     value: obj.name,
-    placeholder: "myplaceonline.identities.name",
+    placeholder: "myplaceonline.contacts.name",
     autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :last_name,
+    value: obj.last_name,
+    placeholder: "myplaceonline.contacts.last_name",
   )
 %>

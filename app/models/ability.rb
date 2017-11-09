@@ -65,7 +65,7 @@ class Ability
     # If the user owns the object, then they can do anything;
     # Otherwise, check the Shares and Permissions tables
     
-    Rails.logger.debug{"Ability.authorize checking action: #{action}, subject_class: #{subject_class}, subject: #{subject.id} with identity #{identity.id}"}
+    Rails.logger.debug{"Ability.authorize checking action: #{action}, subject_class: #{subject_class}, subject: #{subject.id} with user #{user.id}, identity #{identity.id}"}
     
     valid_guest_actions = [:show]
     
@@ -169,10 +169,15 @@ class Ability
               Rails.logger.debug{"Ability.authorize Found category permissions: #{category_permissions.inspect}"}
               result = true
             else
-              Rails.logger.debug{"Ability.authorize Returning false for user: #{user.id}, action: #{action}, category: #{Myp.model_to_category_name(subject_class)}, subject: #{subject.id}"}
+              Rails.logger.debug{"Ability.authorize category permission failed for user: #{user.id}, action: #{action}, category: #{Myp.model_to_category_name(subject_class)}, subject: #{subject.id}"}
             end
           end
         end
+      end
+      
+      if !result && !user.new_record? && !user.guest? && subject.respond_to?("user_id") && subject.user_id == user.id
+        Rails.logger.debug{"Ability.authorize Users match"}
+        result = true
       end
     end
 
