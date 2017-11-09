@@ -107,6 +107,8 @@ module Myplaceonline
           MyplaceonlineExecutionContext.query_string = query_string
           MyplaceonlineExecutionContext.cookie_hash = env["rack.request.cookie_hash"]
           
+          env["rack.session.options"][:domain] = DynamicCookieOptions.cookie_domain
+          
           if parsed_query_string["current_identity_id"] != "-1"
             if !parsed_query_string["current_identity_id"].blank?
               cii = parsed_query_string["current_identity_id"].to_i
