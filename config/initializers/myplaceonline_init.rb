@@ -21,12 +21,6 @@ class Numeric
 end
 
 if Myp.is_web_server? || Rails.env.test?
-  if Rails.env.production?
-    Myplaceonline::Application.config.session_store :cookie_store,
-        :key => "mypsession",
-        :expire_after => 30.minutes
-  end
-
   if Myp.database_exists? && !Rails.env.test?
     CalendarItemReminder.ensure_pending_all_users
   end

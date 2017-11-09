@@ -50,6 +50,15 @@ module Myp
     @@spawn_max_vsize
   end
   
+  def self.top_host
+    host = MyplaceonlineExecutionContext.host
+    second_period = host.rindex(".", host.rindex(".") - 1)
+    if !second_period.nil?
+      host = host[second_period+1..-1]
+    end
+    host
+  end
+  
   def self.create_email(
     name: Myp::DEFAULT_FROM_EMAIL,
     host: nil,
@@ -58,11 +67,7 @@ module Myp
     display_prefix_suffix: nil
   )
     if host.blank?
-      host = MyplaceonlineExecutionContext.host
-      second_period = host.rindex(".", host.rindex(".") - 1)
-      if !second_period.nil?
-        host = host[second_period+1..-1]
-      end
+      host = Myp.top_host
     end
     result = name + "@" + host
     if display.blank?

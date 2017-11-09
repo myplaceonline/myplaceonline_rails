@@ -12,12 +12,18 @@ class PersistentUserStore
     name = cookie_name(name: name)
     #Rails.logger.debug{"PersistentUserStore set name: #{name}, value: #{val}, expire_asap: #{@expire_asap}"}
     if @expire_asap
-      @cookies.encrypted[name] = val
+      @cookies.encrypted[name] = DynamicCookieOptions.create_cookie_options.merge(
+        {
+          value: val,
+        }
+      )
     else
-      @cookies.encrypted[name] = {
-        value: val,
-        expires: Myp::MAX_COOKIE_EXPIRES_DATE
-      }
+      @cookies.encrypted[name] = DynamicCookieOptions.create_cookie_options.merge(
+        {
+          value: val,
+          expires: Myp::MAX_COOKIE_EXPIRES_DATE,
+        }
+      )
     end
   end
   
@@ -30,14 +36,14 @@ class PersistentUserStore
   
   def delete(name)
     name = cookie_name(name: name)
-    @cookies.delete(name)
+    @cookies.delete(name, DynamicCookieOptions.delete_cookie_options)
     Rails.logger.debug{"PersistentUserStore deleting cookie name: #{name}"}
   end
   
   def clear
     @cookies.each do |name, value|
       if name.start_with?(COOKIE_PREFIX)
-        @cookies.delete(name)
+        @cookies.delete(name, DynamicCookieOptions.delete_cookie_options)
       end
     end
   end

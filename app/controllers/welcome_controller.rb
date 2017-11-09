@@ -11,9 +11,11 @@ class WelcomeController < ApplicationController
         
         if !params[:emulate_host].blank?
           # http://api.rubyonrails.org/classes/ActionDispatch/Cookies.html
-          cookies[:emulate_host] = {
-            value: params[:emulate_host]
-          }
+          cookies[:emulate_host] = DynamicCookieOptions.create_cookie_options.merge(
+            {
+              value: params[:emulate_host]
+            }
+          )
         end
         render :index
       }

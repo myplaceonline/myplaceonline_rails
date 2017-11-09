@@ -28,30 +28,30 @@ module Myplaceonline
     
     def call(env)
       
-      # We could load up the user from warden, but that would mean we'd do a SQL request on all requests including
-      # images, etc.
+      # Clear the contexts just in case somehow it wasn't cleared from the last request
+      ExecutionContext.clear
       
-      # user = env["warden"].user
-      
-      # Instead, we just grab the user ID from warden's cookie
-      warden_user_key = env["rack.session"]["warden.user.user.key"]
-      user_id = warden_user_key.nil? ? -1 : warden_user_key[0][0]
-      
-      # Debug
-      #awesome_print(env)
-      
-      Myp.log_response_time(
-        name: "MyplaceonlineRack.call",
-        uri: env["REQUEST_URI"],
-        request_id: env["action_dispatch.request_id"],
-        user_id: user_id
-      ) do
+      ExecutionContext.stack do
         
-        # Clear the contexts just in case somehow it wasn't cleared from the last request
-        ExecutionContext.clear
+        # We could load up the user from warden, but that would mean we'd do a SQL request on all requests including
+        # images, etc.
         
-        ExecutionContext.stack do
-          
+        # user = env["warden"].user
+        
+        # Instead, we just grab the user ID from warden's cookie
+        warden_user_key = env["rack.session"]["warden.user.user.key"]
+        user_id = warden_user_key.nil? ? -1 : warden_user_key[0][0]
+        
+        # Debug
+        #awesome_print(env)
+        
+        Myp.log_response_time(
+          name: "MyplaceonlineRack.call",
+          uri: env["REQUEST_URI"],
+          request_id: env["action_dispatch.request_id"],
+          user_id: user_id
+        ) do
+        
           # Save off any per-request info:
           
           # "SERVER_SOFTWARE" => "thin 1.7.1 codename Muffin Mode",
