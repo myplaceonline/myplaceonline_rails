@@ -203,6 +203,9 @@ class PasswordsController < MyplaceonlineController
   end
   
   def password_share
+    
+    raise "Not implemented"
+    
     set_obj
     
     if request.patch? || request.post?
@@ -283,15 +286,15 @@ class PasswordsController < MyplaceonlineController
     ]
   end
   
-  def footer_items_show
-    super + [
-      {
-        title: I18n.t("myplaceonline.general.share"),
-        link: password_password_share_path(@obj),
-        icon: "action"
-      }
-    ]
-  end
+#   def footer_items_show
+#     super + [
+#       {
+#         title: I18n.t("myplaceonline.general.share"),
+#         link: password_password_share_path(@obj),
+#         icon: "action"
+#       }
+#     ]
+#   end
   
   protected
     def sensitive
