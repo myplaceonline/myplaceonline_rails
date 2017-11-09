@@ -14,6 +14,8 @@ class DynamicCookieOptions
       if Rails.env.production?
         domain = Myp.top_host
       end
+    else
+      Rails.logger.info{"Cookie domain incalculable #{Myp.current_stack}"}
     end
     domain
   end
