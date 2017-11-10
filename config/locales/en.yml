@@ -262,11 +262,11 @@ en:
       website_domain_myplets: "Myplets"
       categories: "Categories"
     default_domain:
-      meta_description: "myplaceonline: your digital home"
+      meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
       homepage: !xml |
         <![CDATA[
-        <p class="horizontal_center">myplaceonline is your digital home. organize, <strong>harmonize</strong>, <em>maximize</em>.</p>
+        <p class="horizontal_center">Myplaceonline is your digital home.<br />organize, <strong>harmonize</strong>, <em>maximize</em>.</p>
 
         <p style="text-align: center">
           <a href="/users/sign_in" class="ui-btn ui-btn-icon-left ui-icon-user ui-btn-inline">Login</a>

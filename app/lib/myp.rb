@@ -2753,7 +2753,7 @@ module Myp
     
     domain = WebsiteDomain.create!(
       identity_id: identity_id,
-      domain_name: "myplaceonline",
+      domain_name: "Myplaceonline",
       verified: true,
       default_domain: true,
       meta_description: I18n.t("myplaceonline.default_domain.meta_description"),
