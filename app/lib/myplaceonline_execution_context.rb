@@ -156,11 +156,15 @@ class MyplaceonlineExecutionContext
     MyplaceonlineExecutionContext.persistent_user_store = persistent_user_store
   end
   
-  def self.do_full_context(user, &block)
+  def self.do_semifull_context(user, &block)
+    self.do_full_context(user, user.current_identity, &block)
+  end
+
+  def self.do_full_context(user, identity, &block)
     ExecutionContext.push
     begin
       self.user = user
-      self.identity = user.current_identity
+      self.identity = identity
       block.call
     ensure
       ExecutionContext.pop

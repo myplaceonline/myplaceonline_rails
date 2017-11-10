@@ -15,7 +15,7 @@ class SwitchUserEncryptionJob < ApplicationJob
 
         Rails.logger.info{"SwitchUserEncryptionJob user=#{user.inspect}, identity=#{identity.inspect}"}
         
-        MyplaceonlineExecutionContext.do_full_context(user) do
+        MyplaceonlineExecutionContext.do_semifull_context(user) do
           MyplaceonlineExecutionContext.persistent_user_store = InMemoryPersistentUserStore.new
           MyplaceonlineExecutionContext.persistent_user_store[:password] = password
 

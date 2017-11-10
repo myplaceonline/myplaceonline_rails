@@ -14,43 +14,45 @@ class LoadRssFeedsJob < ApplicationJob
         Rails.logger.info{"Started LoadRssFeedsJob user: #{user.id}"}
 
         executed = Myp.try_with_database_advisory_lock(Myp::DB_LOCK_LOAD_RSS_FEEDS, user.id) do
-          MyplaceonlineExecutionContext.do_full_context(user) do
-            
-            status = FeedLoadStatus.where(identity_id: user.current_identity_id).first
-            
-            if !status.nil?
-              status.items_complete = 0
-              status.items_error = 0
+          user.identities.each do |identity|
+            MyplaceonlineExecutionContext.do_full_context(user, identity) do
               
-              ApplicationRecord.transaction(requires_new: true) do
-                status.save!
-              end
+              status = FeedLoadStatus.where(identity_id: user.current_identity_id).first
               
-              count = 0
-              feeds = Feed.where(identity_id: user.current_identity_id)
-              
-              feeds.each do |feed|
-                
-                count += 1
-                
-                # We load a separate Feed object because otherwise we might put
-                # too much into memory
-                temp_feed = Feed.find(feed.id)
-                
-                Rails.logger.info{"Loading #{feed.inspect}, count: #{count}, total: #{feeds.length}"}
-                
-                begin
-                  new_items = temp_feed.load_feed
-                  Rails.logger.info{"Loaded items: #{new_items}"}
-                  
-                  status.items_complete += 1
-                rescue Exception => e
-                  Rails.logger.info{"Error loading feed: #{Myp.error_details(e)}"}
-                  status.items_error += 1
-                end
+              if !status.nil?
+                status.items_complete = 0
+                status.items_error = 0
                 
                 ApplicationRecord.transaction(requires_new: true) do
                   status.save!
+                end
+                
+                count = 0
+                feeds = Feed.where(identity_id: user.current_identity_id)
+                
+                feeds.each do |feed|
+                  
+                  count += 1
+                  
+                  # We load a separate Feed object because otherwise we might put
+                  # too much into memory
+                  temp_feed = Feed.find(feed.id)
+                  
+                  Rails.logger.info{"Loading #{feed.inspect}, count: #{count}, total: #{feeds.length}"}
+                  
+                  begin
+                    new_items = temp_feed.load_feed
+                    Rails.logger.info{"Loaded items: #{new_items}"}
+                    
+                    status.items_complete += 1
+                  rescue Exception => e
+                    Rails.logger.info{"Error loading feed: #{Myp.error_details(e)}"}
+                    status.items_error += 1
+                  end
+                  
+                  ApplicationRecord.transaction(requires_new: true) do
+                    status.save!
+                  end
                 end
               end
             end

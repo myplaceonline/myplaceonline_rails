@@ -64,7 +64,7 @@ class Playlist < ApplicationRecord
           
           zipdata = IO.binread(tfile.path)
           
-          MyplaceonlineExecutionContext.do_full_context(obj.identity.user) do
+          MyplaceonlineExecutionContext.do_semifull_context(obj.identity.user) do
             ApplicationRecord.transaction do
               iff = IdentityFileFolder.find_or_create([I18n.t("myplaceonline.category.playlists")])
               identity_file = IdentityFile.build({ folder: iff.id })

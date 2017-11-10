@@ -20,7 +20,7 @@ class CalendarItemReminder < ApplicationRecord
     # Error "current transaction is aborted, commands ignored until end of transaction block" is caused by a previous transaction error
     executed = Myp.try_with_database_advisory_lock(Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS_ALL, 1) do
       User.all.each do |user|
-        MyplaceonlineExecutionContext.do_full_context(user) do
+        MyplaceonlineExecutionContext.do_semifull_context(user) do
           self.ensure_pending(user)
         end
       end
@@ -33,13 +33,13 @@ class CalendarItemReminder < ApplicationRecord
     Rails.logger.info("CalendarItemReminder.ensure_pending_all_users end")
   end
   
-  def self.ensure_pending_process(user)
+  def self.ensure_pending_process(user, identity)
     Rails.logger.debug("CalendarItemReminder.ensure_pending_process start #{user.id}")
 
     # Check if we need to create any future repeat events
     CalendarItem
       .includes(:calendar_item_reminders)
-      .where("repeat_amount is not null and is_repeat is null and identity_id = ?", user.current_identity)
+      .where("repeat_amount is not null and is_repeat is null and identity_id = ?", identity)
       .each do |calendar_item|
         
         Rails.logger.debug{"CalendarItemReminder.ensure_pending_process calendar_item=#{calendar_item.inspect}"}
@@ -144,11 +144,11 @@ class CalendarItemReminder < ApplicationRecord
     
     # Select the original calendar item (is_repeat = NULL/false) and all of its repeats:
     #
-    # select i.id as item_id, i.calendar_id, i.calendar_item_time, i.is_repeat, r.id as calendar_item_reminder_id, r.threshold_amount, r.threshold_type, r.repeat_amount, r.repeat_type, r.expire_amount, r.expire_type, r.max_pending, p.id as pending_id from calendar_items i left outer join calendar_item_reminders r on i.id = r.calendar_item_id left outer join calendar_item_reminder_pendings p on p.calendar_item_reminder_id = r.id where i.model_class = 'ApartmentTrashPickup' and i.model_id = 1 order by i.calendar_item_time;
+    # select i.identity_id, i.id as item_id, i.calendar_id, i.calendar_item_time, i.is_repeat, r.id as reminder_id, r.threshold_amount, r.threshold_type, r.repeat_amount, r.repeat_type, r.expire_amount, r.expire_type, r.max_pending, p.id as pending_id from calendar_items i left outer join calendar_item_reminders r on i.id = r.calendar_item_id left outer join calendar_item_reminder_pendings p on p.calendar_item_reminder_id = r.id where i.model_class = 'ApartmentTrashPickup' and i.model_id = 1 order by i.calendar_item_time;
     
     CalendarItemReminder
       .includes(:calendar_item_reminder_pendings, :calendar_item)
-      .where(identity: user.current_identity)
+      .where(identity: identity)
       .each do |calendar_item_reminder|
         
         # If for some reason the model object doesn't exist, then just destroy this reminder
@@ -173,7 +173,7 @@ class CalendarItemReminder < ApplicationRecord
                   calendar_item_reminder: calendar_item_reminder,
                   calendar: calendar_item_reminder.calendar_item.calendar,
                   calendar_item: calendar_item_reminder.calendar_item,
-                  identity: user.current_identity
+                  identity: calendar_item_reminder.identity
                 )
                 
                 Rails.logger.debug{"CalendarItemReminder.ensure_pending_process creating new pending reminder #{new_pending.inspect}"}
@@ -207,7 +207,7 @@ class CalendarItemReminder < ApplicationRecord
                           INNER JOIN calendar_items
                             ON calendar_item_reminder_pendings.calendar_item_id = calendar_items.id
                         WHERE calendar_item_reminder_pendings.calendar_id = #{calendar_item_reminder.calendar_item.calendar.id}
-                          AND calendar_item_reminder_pendings.identity_id = #{user.current_identity.id}
+                          AND calendar_item_reminder_pendings.identity_id = #{identity.id}
                           AND calendar_items.model_class #{Myp.sanitize_with_null_for_conditions(calendar_item_reminder.calendar_item.model_class)}
                           AND calendar_items.model_id #{Myp.sanitize_with_null_for_conditions(calendar_item_reminder.calendar_item.model_id)}
                         ORDER BY calendar_items.calendar_item_time ASC
@@ -279,7 +279,11 @@ class CalendarItemReminder < ApplicationRecord
 
     # Error "current transaction is aborted, commands ignored until end of transaction block" is caused by a previous transaction error
     executed = Myp.try_with_database_advisory_lock(Myp::DB_LOCK_CALENDAR_ITEM_REMINDERS, user.id) do
-      ensure_pending_process(user)
+      user.identities.each do |identity|
+        MyplaceonlineExecutionContext.do_full_context(user, identity) do
+          ensure_pending_process(user, identity)
+        end
+      end
     end
 
     if !executed
