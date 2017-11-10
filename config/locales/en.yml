@@ -298,7 +298,7 @@ en:
           </div>
         </div>
         ]]>
-      new_user_welcome: "Welcome to myplaceonline! Explore the Joy, Meaning, and Order categories below to start entering data. Below that is a daily reminder to enter three things that went well to improve your happiness (you can enter your mobile number to get nightly text reminders). Finally, there's an auto-saving notepad for quick notes."
+      new_user_welcome: "Welcome to Myplaceonline! Explore the Joy, Meaning, and Order categories below to start entering data. Below that is a daily reminder to enter three things that went well to improve your happiness (you can enter your mobile number to get nightly text reminders). Finally, there's an auto-saving notepad for quick notes."
       about: !xml |
         <![CDATA[
         # About
