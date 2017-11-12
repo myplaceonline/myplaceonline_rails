@@ -95,6 +95,7 @@ module Myp
   FIELD_DECIMAL = :decimal
   FIELD_BOOLEAN = :boolean
   FIELD_SELECT = :select
+  FIELD_HIDDEN = :hidden
   
   # We want at least 128 bits of randomness, so
   # min(POSSIBILITIES_*.length)^DEFAULT_PASSWORD_LENGTH should be >= 2^128
@@ -538,8 +539,14 @@ module Myp
   
   if !@@fts_target.blank?
     Rails.logger.info{"Myp Configuring full text search with #{@@fts_target}"}
+    
     Chewy.root_strategy = :active_job
-    Chewy.settings = {host: @@fts_target}
+    
+    # https://github.com/elastic/elasticsearch-ruby/blob/master/elasticsearch-transport/lib/elasticsearch/transport/client.rb
+    Chewy.settings = {
+      host: @@fts_target,
+      request_timeout: 10,
+    }
   end
   
   if !ENV["TRUSTED_CLIENTS"].blank?

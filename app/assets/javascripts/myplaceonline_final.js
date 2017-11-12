@@ -701,6 +701,10 @@ var myplaceonline = function(mymodule) {
       html += "[" + index + "]";
     }
     html += "'>";
+    var onlyShow = itemswrapper.data("onlyshow");
+    if (!onlyShow) {
+      onlyShow = "";
+    }
     var toFocus = null;
     var i;
     var idPrefix = get_name_as_id(namePrefix);
@@ -712,6 +716,11 @@ var myplaceonline = function(mymodule) {
         itemNamePieces = item.name.split('.');
       } else {
         itemNamePieces = new Array();
+      }
+
+      var finalNamePiece = "";
+      if (itemNamePieces.length > 0) {
+        finalNamePiece = itemNamePieces[itemNamePieces.length - 1];
       }
       
       var id = idPrefix;
@@ -751,6 +760,11 @@ var myplaceonline = function(mymodule) {
       
       if (item.type == "date" || item.type == "datetime") {
         // Options should match app/helps/application_helper.rb myp_date_field
+        
+        if (onlyShow.length > 0 && onlyShow != finalNamePiece) {
+          html += "<div style='display: none'>";
+        }
+        
         var random_name = "";
         html += "<p>"
         if (item.type == "datetime") {
@@ -759,27 +773,83 @@ var myplaceonline = function(mymodule) {
         }
         html += "<input type='" + (myplaceonline.isFocusAllowed() ? "text" : "text") + "' id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' value='" + defaultValue + "' class='" + cssclasses + "' data-role='datebox' data-datebox-mode='calbox' data-datebox-override-date-format='" + (item.type == "datetime" ? DEFAULT_TIME_FORMAT : DEFAULT_DATE_FORMAT) + "' data-datebox-use-focus='true' data-datebox-use-clear-button='true' data-datebox-use-modal='false' data-datebox-cal-use-pickers='true' data-datebox-cal-year-pick-min='-100' data-datebox-cal-year-pick-max='10' data-datebox-cal-no-header='true' data-datebox-close-callback='" + (item.type == "datetime" ? "dateboxCalendarClosed" : "false") + "' data-datetime-id='" + random_name + "' />";
         html += "</p>";
+
+        if (onlyShow.length > 0 && onlyShow != finalNamePiece) {
+          html += "</div>";
+        }
       } else if (item.type == "random") {
+        if (onlyShow.length > 0 && onlyShow != finalNamePiece) {
+          html += "<div style='display: none'>";
+        }
+        
         // Duplicated in views/myplaceonline/_generaterandom.html.erb
         html += '<div data-role="collapsible"><h3>' + item.heading + '</h3><p><input type="' + (myplaceonline.isFocusAllowed() ? "number" : "text") + '" class="generate_password_length" value="" placeholder="' + item.lengthplaceholder + '" /></p><p><a href="#" class="ui-btn" onclick="myplaceonline.getRemoteString(' + item.destination + ', $(this).parents(\'div\').first().find(\'.generate_password_length\').val()); return false;">' + item.button + '</a></p></div>';
+
+        if (onlyShow.length > 0 && onlyShow != finalNamePiece) {
+          html += "</div>";
+        }
       } else if (item.type == "textarea") {
+        if (onlyShow.length > 0 && onlyShow != finalNamePiece) {
+          html += "<div style='display: none'>";
+        }
+        
         html += "<p><textarea id='" + id + "' name='" + name + "' placeholder='" + item.placeholder + "' class='" + cssclasses + "'></textarea></p>";
+
+        if (onlyShow.length > 0 && onlyShow != finalNamePiece) {
+          html += "</div>";
+        }
       } else if (item.type == "checkbox") {
+        if (onlyShow.length > 0 && onlyShow != finalNamePiece) {
+          html += "<div style='display: none'>";
+        }
+        
         html += "<p><label for='" + id + "'>" + item.placeholder + "</label><input type='checkbox' id='" + id + "' name='" + name + "' class='" + cssclasses + "' value='1' /></p>";
+
+        if (onlyShow.length > 0 && onlyShow != finalNamePiece) {
+          html += "</div>";
+        }
       } else if (item.type == "select") {
+        if (onlyShow.length > 0 && onlyShow != finalNamePiece) {
+          html += "<div style='display: none'>";
+        }
+        
         html += "<p><select id='" + id + "' name='" + name + "' class='" + cssclasses + "'><option value=''>" + item.placeholder + "</option>";
         for (var j = 0; j < item.options.length; j++) {
           html += "<option value='" + item.options[j][1] + "'>" + item.options[j][0] + "</option>";
         }
         html += "</select></p>";
+
+        if (onlyShow.length > 0 && onlyShow != finalNamePiece) {
+          html += "</div>";
+        }
       } else if (item.type == "renderpartial") {
+        if (onlyShow.length > 0 && onlyShow != finalNamePiece) {
+          html += "<div style='display: none'>";
+        }
+        
         item.namePrefix = name;
         item.id = "remote_placeholder_" + id;
         html += "<p id='" + item.id + "'>Loading...</p>";
         futures.push(item);
+
+        if (onlyShow.length > 0 && onlyShow != finalNamePiece) {
+          html += "</div>";
+        }
       } else if (item.type == "raw") {
+        if (onlyShow.length > 0 && onlyShow != finalNamePiece) {
+          html += "<div style='display: none'>";
+        }
+        
         html += item.value;
+
+        if (onlyShow.length > 0 && onlyShow != finalNamePiece) {
+          html += "</div>";
+        }
       } else {
+        if (onlyShow.length > 0 && onlyShow != finalNamePiece) {
+          html += "<div style='display: none'>";
+        }
+        
         var inputType = item.type;
         if (item.type == "position") {
           inputType = "hidden";
@@ -808,9 +878,23 @@ var myplaceonline = function(mymodule) {
           html += " multiple";
         }
         html += " /></p>";
+
+        if (onlyShow.length > 0 && onlyShow != finalNamePiece) {
+          html += "</div>";
+        }
       }
     }
+    
+    if (onlyShow.length > 0) {
+      html += "<div style='display: none'>";
+    }
+    
     html += "<p><a href='#' onclick='return myplaceonline.formRemoveItem(this);' class='ui-btn ui-btn-icon-left ui-icon-delete ui-btn-inline'>" + deletePlaceholder + "</a></p>";
+
+    if (onlyShow.length > 0) {
+      html += "</div>";
+    }
+    
     html += "</div>";
     form_add_item_set_html($(link), html, toFocus);
     if (futures.length > 0) {

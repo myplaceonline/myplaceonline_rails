@@ -261,6 +261,7 @@ en:
       reminders: "Reminders"
       website_domain_myplets: "Myplets"
       categories: "Categories"
+      dna_analyses: "DNA Analyses"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -3703,6 +3704,7 @@ en:
       import_types:
         mediawiki: "MediaWiki"
         wordpress: "Wordpress"
+        23andmedna: "23andme DNA"
       pending: "Pending"
       start: "Start"
     blogs:
@@ -3782,3 +3784,6 @@ en:
         time_after_y: "Repeat the Reminder After (in Years)"
         time_after_1pw: "Once per Week"
         time_after_2pw: "Twice per Week"
+    dna_analyses:
+      import: "Data"
+      new_intro: "To import your DNA, go to <a href=\"https://you.23andme.com/tools/data/download/\" target=\"_blank\">https://you.23andme.com/tools/data/download/</a>, click \"Submit Request\" at the bottom, follow the instructions to download a .zip file, then upload it below and click Save."

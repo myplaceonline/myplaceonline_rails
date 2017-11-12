@@ -693,6 +693,10 @@ class MyplaceonlineController < ApplicationController
     allow_add
   end
   
+  def show_edit
+    allow_edit
+  end
+  
   def show_index_footer
     true
   end
@@ -870,10 +874,17 @@ class MyplaceonlineController < ApplicationController
   
   def footer_items_show
     result = []
+    if show_edit
+      result << {
+        title: I18n.t("myplaceonline.general.edit"),
+        link: self.edit_obj_path,
+        icon: "edit"
+      }
+    end
     result << {
-      title: I18n.t("myplaceonline.general.edit"),
-      link: self.edit_obj_path,
-      icon: "edit"
+      title: I18n.t("myplaceonline.general.back_to_list"),
+      link: self.back_to_all_path,
+      icon: "back"
     }
     if @obj.respond_to?("is_archived?") && (!nested || !parent_model.is_a?(Array))
       if @obj.is_archived?
@@ -890,11 +901,6 @@ class MyplaceonlineController < ApplicationController
         }
       end
     end
-    result << {
-      title: I18n.t("myplaceonline.general.back_to_list"),
-      link: self.back_to_all_path,
-      icon: "back"
-    }
     if self.show_add
       result << {
         title: self.add_another_name,

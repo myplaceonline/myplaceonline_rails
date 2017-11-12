@@ -177,10 +177,11 @@ Category.create!([
   {id: 177, name: "translations", link: "translations", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/translation_tool_tip.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 178, name: "boycotts", link: "boycotts", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/cart_error.png", explicit: nil, user_type_mask: nil, experimental: true, simple: nil, internal: nil},
   {id: 179, name: "reminders", link: "reminders", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/time.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
-  {id: 212, name: "point_displays", link: "point_displays", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/check_box_uncheck.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: true},
-  {id: 213, name: "myplaceonline_searches", link: "myplaceonline_searches", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/check_box_uncheck.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: true},
-  {id: 214, name: "myplaceonline_quick_category_displays", link: "myplaceonline_quick_category_displays", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/check_box_uncheck.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: true},
-  {id: 215, name: "calendars", link: "calendars", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/check_box_uncheck.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: true}
+  {id: 180, name: "point_displays", link: "point_displays", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/check_box_uncheck.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: true},
+  {id: 181, name: "myplaceonline_searches", link: "myplaceonline_searches", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/check_box_uncheck.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: true},
+  {id: 182, name: "myplaceonline_quick_category_displays", link: "myplaceonline_quick_category_displays", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/check_box_uncheck.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: true},
+  {id: 183, name: "calendars", link: "calendars", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/check_box_uncheck.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: true},
+  {id: 214, name: "dna_analyses", link: "dna_analyses", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/molecule.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
 ])
 
 # Reinitialize to cache the categories created above

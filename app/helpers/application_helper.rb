@@ -1448,6 +1448,8 @@ module ApplicationHelper
       if options[:translate_select_options]
         options[:select_options] = Myp.translate_options(options[:select_options], sort: options[:select_options_sort])
       end
+    elsif options[:type] == Myp::FIELD_HIDDEN
+      options[:include_label] = false
     end
 
     if Myp.is_probably_i18n(options[:placeholder])

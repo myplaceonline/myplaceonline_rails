@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171107064021) do
+ActiveRecord::Schema.define(version: 20171112052342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1476,6 +1476,19 @@ ActiveRecord::Schema.define(version: 20171107064021) do
     t.datetime "updated_at", null: false
     t.index ["dietary_requirements_collection_id"], name: "index_diets_on_dietary_requirements_collection_id"
     t.index ["identity_id"], name: "index_diets_on_identity_id"
+  end
+
+  create_table "dna_analyses", force: :cascade do |t|
+    t.bigint "import_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_dna_analyses_on_identity_id"
+    t.index ["import_id"], name: "index_dna_analyses_on_import_id"
   end
 
   create_table "doctor_visit_files", id: :serial, force: :cascade do |t|
@@ -6255,6 +6268,8 @@ ActiveRecord::Schema.define(version: 20171107064021) do
   add_foreign_key "dietary_requirements_collections", "identities"
   add_foreign_key "diets", "dietary_requirements_collections"
   add_foreign_key "diets", "identities"
+  add_foreign_key "dna_analyses", "identities"
+  add_foreign_key "dna_analyses", "imports"
   add_foreign_key "doctor_visit_files", "doctor_visits"
   add_foreign_key "doctor_visit_files", "identities"
   add_foreign_key "doctor_visit_files", "identity_files"

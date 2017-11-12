@@ -29,6 +29,15 @@ class ImportsController < MyplaceonlineController
     end
   end
   
+  def self.param_names
+    [
+      :import_name,
+      :import_type,
+      :notes,
+      import_files_attributes: FilesController.multi_param_names,
+    ]
+  end
+  
   protected
     def insecure
       true
@@ -45,11 +54,6 @@ class ImportsController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:import).permit(
-        :import_name,
-        :import_type,
-        :notes,
-        import_files_attributes: FilesController.multi_param_names,
-      )
+      params.require(:import).permit(ImportsController.param_names)
     end
 end

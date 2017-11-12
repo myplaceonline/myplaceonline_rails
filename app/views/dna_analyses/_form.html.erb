@@ -1,0 +1,14 @@
+<p><%= raw(t("myplaceonline.dna_analyses.new_intro")) %></p>
+<%= f.fields_for :import, @obj.import do |sub_fields| %>
+  <%= input_field(form: sub_fields, type: Myp::FIELD_HIDDEN, name: :import_name, value: @obj.import.import_name) %>
+  <%= input_field(form: sub_fields, type: Myp::FIELD_HIDDEN, name: :import_type, value: @obj.import.import_type) %>
+  <%= sub_fields.fields_for :import_files, ImportFile.new do |sub_sub_fields| %>
+    <div class="itemswrapper" data-onlyshow="file_file_name">
+      <div class="itemwrapper">
+        <%= sub_sub_fields.fields_for :identity_file, IdentityFile.new do |file_fields| %>
+          <%= myp_file_field(file_fields, :file, t("myplaceonline.files.file"), IdentityFile.new, useprogress: true) %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
