@@ -53,6 +53,8 @@ class ImportJob < ApplicationJob
 
               import.import_status = Import::IMPORT_STATUS_ERROR
               import.save!
+              
+              Myp.warn("ImportJob error", e)
             end
           end
 
@@ -384,6 +386,11 @@ class ImportJob < ApplicationJob
       raise "Too many import files found"
     end
     
+    dna_analysis = DnaAnalysis.where(import_id: import.id).take!
+    dna_analysis.reference_genome = nil
+    
+    GenotypeCall.where(dna_analysis: dna_analysis).delete_all
+    
     file = import.import_files[0].identity_file
     
     append_message(import, "File content type: #{file.file_content_type}")
@@ -409,9 +416,6 @@ class ImportJob < ApplicationJob
 
       tmpfiles = execute_command(command_line: "find #{dir}/ -type f").split("\n")
       
-      super_user = User.super_user
-      super_identity = super_user.identities[0]
-      
       tmpfiles.each do |f|
         fullfname = f.to_s
         fname = Pathname.new(f).basename.to_s
@@ -421,10 +425,14 @@ class ImportJob < ApplicationJob
         if fname.end_with?(".txt")
           File.foreach(f).with_index do |line, line_num|
             #Rails.logger.debug{"ImportJob.import_23andme #{line_num}: #{line}"}
-            process_dna(line, super_user, super_identity)
+            process_dna(line, line_num, dna_analysis, import.identity_id)
           end
         end
       end
+    end
+    
+    if dna_analysis.reference_genome.nil?
+      raise "Could not find reference genome identifier"
     end
   end
   
@@ -446,13 +454,14 @@ class ImportJob < ApplicationJob
   # i701050 MT      16518   G
   #
   # Background
-  # https://www.snpedia.com/index.php/23andMe
-  # https://www.snpedia.com/index.php/Promethease
-  # https://api.23andme.com/docs/reference/#marker
-  # https://customercare.23andme.com/hc/en-us/articles/212196888-What-does-not-determined-or-not-genotyped-mean-
-  # https://en.wikipedia.org/wiki/SNP_genotyping
-  def process_dna(line, super_user, super_identity)
-    if line.length > 0 && line[0] != '#'
+  # https://customercare.23andme.com/hc/en-us/articles/115004459928-Raw-Data-Technical-Details
+  def process_dna(line, line_num, dna_analysis, identity_id)
+    if line_num < 20 && line.starts_with?("# We are using reference human assembly build")
+      line = line[46..-1]
+      line = line[0..line.index(" ")-1]
+      dna_analysis.reference_genome = "GRCh" + line
+      dna_analysis.save!
+    elsif line.length > 0 && line[0] != '#'
       pieces = line.split(" ")
       if pieces.length != 4
         raise "Unexpected line #{line} only has #{pieces.length} components"
@@ -483,6 +492,24 @@ class ImportJob < ApplicationJob
       elsif snp.position != position
         raise "Unexpected SNP position #{position} for #{snp.inspect}"
       end
+      
+      variant1 = GenotypeCall.letter_to_type(genotype[0])
+      variant2 = nil
+      if genotype.length == 2
+        variant2 = GenotypeCall.letter_to_type(genotype[1])
+      else
+        raise "Unknown genotype #{genotype} for #{line}"
+      end
+      
+      GenotypeCall.create!(
+        snp: snp,
+        variant1: variant1,
+        variant2: variant2,
+        dna_analysis: dna_analysis,
+        # https://customercare.23andme.com/hc/en-us/articles/115004459928-Raw-Data-Technical-Details#strandedness
+        orientation: GenotypeCall::ORIENTATION_POSITIVE,
+        identity_id: identity_id,
+      )
     end
   end
   

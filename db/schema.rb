@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171113032103) do
+ActiveRecord::Schema.define(version: 20171113050253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1487,6 +1487,7 @@ ActiveRecord::Schema.define(version: 20171113032103) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "reference_genome"
     t.index ["identity_id"], name: "index_dna_analyses_on_identity_id"
     t.index ["import_id"], name: "index_dna_analyses_on_import_id"
   end
@@ -2222,10 +2223,11 @@ ActiveRecord::Schema.define(version: 20171113032103) do
 
   create_table "genotype_calls", force: :cascade do |t|
     t.bigint "snp_id"
-    t.integer "allele1"
-    t.integer "allele2"
+    t.integer "variant1", limit: 2
+    t.integer "variant2", limit: 2
     t.bigint "identity_id"
     t.bigint "dna_analysis_id"
+    t.integer "orientation", limit: 2
     t.index ["dna_analysis_id"], name: "index_genotype_calls_on_dna_analysis_id"
     t.index ["identity_id"], name: "index_genotype_calls_on_identity_id"
     t.index ["snp_id"], name: "index_genotype_calls_on_snp_id"
@@ -4826,7 +4828,7 @@ ActiveRecord::Schema.define(version: 20171113032103) do
 
   create_table "snps", force: :cascade do |t|
     t.string "snp_uid"
-    t.integer "chromosome"
+    t.integer "chromosome", limit: 2
     t.integer "position"
     t.index ["snp_uid"], name: "index_snps_on_snp_uid"
   end
