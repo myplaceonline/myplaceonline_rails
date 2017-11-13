@@ -350,4 +350,12 @@ class IdentityFile < ApplicationRecord
     end
     result
   end
+  
+  def copy(destination)
+    if self.filesystem_path.blank?
+      IO.binwrite(destination, self.file.file_contents)
+    else
+      FileUtils.cp(file.evaluated_path, "#{dir}/#{file_name}")
+    end
+  end
 end

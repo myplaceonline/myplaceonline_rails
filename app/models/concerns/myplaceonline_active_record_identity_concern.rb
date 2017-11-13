@@ -16,18 +16,18 @@ module MyplaceonlineActiveRecordIdentityConcern
 
     def identity_record_set
       
-      Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set saving #{self.inspect}"}
+      #Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set saving #{self.inspect}"}
       
       if self.respond_to?("identity=")
 
         current_user = User.current_user
 
-        Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set current_user: #{current_user.inspect}"}
+        #Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set current_user: #{current_user.inspect}"}
 
         if !current_user.nil?
           identity_target = Permission.current_target_identity
           
-          Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set identity_target: #{identity_target.inspect}"}
+          #Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set identity_target: #{identity_target.inspect}"}
           
           if !self.identity_id.nil?
             if self.identity_id != identity_target.id
@@ -41,7 +41,7 @@ module MyplaceonlineActiveRecordIdentityConcern
             end
           elsif identity_target.nil?
             
-            Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set identity_target is nil"}
+            #Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set identity_target is nil"}
             
             if self.id == 0
               # Special case when database is being seeded
@@ -52,7 +52,7 @@ module MyplaceonlineActiveRecordIdentityConcern
           else
             self.identity_id = identity_target.id
             
-            Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set set identity_id = #{identity_target.id}"}
+            #Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set set identity_id = #{identity_target.id}"}
           end
         else
           raise "User.current_user not set"

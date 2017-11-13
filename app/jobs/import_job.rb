@@ -29,12 +29,16 @@ class ImportJob < ApplicationJob
               when Import::IMPORT_TYPE_MEDIAWIKI
                 Rails.logger.info{"ImportJob mediawiki"}
                 
-                import_medawiki(import)
+                import_mediawiki(import)
               when Import::IMPORT_TYPE_WORDPRESS
                 Rails.logger.info{"ImportJob wordpress"}
                 
                 import_wordpress(import)
                 
+              when Import::IMPORT_TYPE_23ANDMEDNA
+                Rails.logger.info{"ImportJob 23andme"}
+                
+                import_23andme(import)
               else
                 raise "TODO"
               end
@@ -59,11 +63,12 @@ class ImportJob < ApplicationJob
   end
   
   def append_message(import, message)
+    Rails.logger.debug{"ImportJob.append_message #{message}".green}
     import.import_progress = "#{import.import_progress}\n* _#{User.current_user.time_now}_: #{message}"
     import.save!
   end
   
-  def import_medawiki(import)
+  def import_mediawiki(import)
     ActiveRecord::Base.transaction do
       
       if import.import_files.length == 0
@@ -371,11 +376,120 @@ class ImportJob < ApplicationJob
       end
     end
   end
+
+  def import_23andme(import)
+    if import.import_files.length == 0
+      raise "No import files found"
+    elsif import.import_files.length > 1
+      raise "Too many import files found"
+    end
+    
+    file = import.import_files[0].identity_file
+    
+    append_message(import, "File content type: #{file.file_content_type}")
+    
+    if file.file_content_type != "application/zip"
+      raise "Invalid content type #{file.file_content_type}. Expecting application/zip"
+    end
+    
+    Myp.mktmpdir do |dir|
+      Rails.logger.debug{"ImportJob.import_23andme temp dir: #{dir}"}
+      
+      file_name = file.file_file_name.gsub("/", "").gsub("..", "")
+      
+      file.copy("#{dir}/#{file_name}")
+      
+      tmpfile = Pathname.new(dir).join(file_name)
+
+      Rails.logger.debug{"ImportJob.import_23andme tmpfile: #{tmpfile}"}
+      
+      execute_command(command_line: "unzip #{tmpfile.to_s}", current_directory: dir)
+      
+      FileUtils.rm("#{tmpfile.to_s}")
+
+      tmpfiles = execute_command(command_line: "find #{dir}/ -type f").split("\n")
+      
+      super_user = User.super_user
+      super_identity = super_user.identities[0]
+      
+      tmpfiles.each do |f|
+        fullfname = f.to_s
+        fname = Pathname.new(f).basename.to_s
+        
+        Rails.logger.debug{"ImportJob.import_23andme found file: #{f}"}
+        
+        if fname.end_with?(".txt")
+          File.foreach(f).with_index do |line, line_num|
+            #Rails.logger.debug{"ImportJob.import_23andme #{line_num}: #{line}"}
+            process_dna(line, super_user, super_identity)
+          end
+        end
+      end
+    end
+  end
+  
+  # Fields are TAB-separated
+  # Each line corresponds to a single SNP.  For each SNP, we provide its identifier 
+  # (an rsid or an internal id), its location on the reference human genome, and the 
+  # genotype call oriented with respect to the plus strand on the human reference sequence.
+  # We are using reference human assembly build 37 (also known as Annotation Release 104).
+  # Note that it is possible that data downloaded at different times may be different due to ongoing 
+  # improvements in our ability to call genotypes. More information about these changes can be found at:
+  # https://you.23andme.com/p/752b1b71fb97f3aa/tools/data/download/
+  # 
+  # More information on reference human assembly build 37 (aka Annotation Release 104):
+  # http://www.ncbi.nlm.nih.gov/mapview/map_search.cgi?taxid=9606
+  #
+  # Example:
+  # rsid  chromosome      position        genotype
+  # rs4477212       1       82154   AA
+  # i701050 MT      16518   G
+  #
+  # Background
+  # https://www.snpedia.com/index.php/23andMe
+  # https://www.snpedia.com/index.php/Promethease
+  # https://api.23andme.com/docs/reference/#marker
+  # https://customercare.23andme.com/hc/en-us/articles/212196888-What-does-not-determined-or-not-genotyped-mean-
+  # https://en.wikipedia.org/wiki/SNP_genotyping
+  def process_dna(line, super_user, super_identity)
+    if line.length > 0 && line[0] != '#'
+      pieces = line.split(" ")
+      if pieces.length != 4
+        raise "Unexpected line #{line} only has #{pieces.length} components"
+      end
+      uid = pieces[0]
+      chromosome = pieces[1]
+      if chromosome == "MT"
+        chromosome = -1
+      elsif chromosome == "X"
+        chromosome = -2
+      elsif chromosome == "Y"
+        chromosome = -3
+      else
+        chromosome = chromosome.to_i
+      end
+      position = pieces[2].to_i
+      genotype = pieces[3]
+      
+      snp = Snp.where(snp_uid: uid).take
+      if snp.nil?
+        snp = Snp.create!(
+          snp_uid: uid,
+          chromosome: chromosome,
+          position: position,
+        )
+      elsif snp.chromosome != chromosome
+        raise "Unexpected SNP chromosome #{chromosome} for #{snp.inspect}"
+      elsif snp.position != position
+        raise "Unexpected SNP position #{position} for #{snp.inspect}"
+      end
+    end
+  end
   
   def execute_command(command_line:, current_directory: nil)
-    Rails.logger.info{"ImportJob executing: #{command_line}"}
+    Rails.logger.debug{"ImportJob executing: #{command_line}"}
     child = Myp.spawn(command_line: command_line, current_directory: current_directory)
-    Rails.logger.info{"ImportJob result: #{child.out}"}
+    Rails.logger.debug{"ImportJob result: #{child.out}"}
     child.out
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171112052342) do
+ActiveRecord::Schema.define(version: 20171113032103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2218,6 +2218,17 @@ ActiveRecord::Schema.define(version: 20171112052342) do
     t.boolean "rv_dump_station"
     t.index ["identity_id"], name: "index_gas_stations_on_identity_id"
     t.index ["location_id"], name: "index_gas_stations_on_location_id"
+  end
+
+  create_table "genotype_calls", force: :cascade do |t|
+    t.bigint "snp_id"
+    t.integer "allele1"
+    t.integer "allele2"
+    t.bigint "identity_id"
+    t.bigint "dna_analysis_id"
+    t.index ["dna_analysis_id"], name: "index_genotype_calls_on_dna_analysis_id"
+    t.index ["identity_id"], name: "index_genotype_calls_on_identity_id"
+    t.index ["snp_id"], name: "index_genotype_calls_on_snp_id"
   end
 
   create_table "group_contacts", id: :serial, force: :cascade do |t|
@@ -4813,6 +4824,13 @@ ActiveRecord::Schema.define(version: 20171112052342) do
     t.index ["identity_id"], name: "index_snoozed_due_items_on_identity_id"
   end
 
+  create_table "snps", force: :cascade do |t|
+    t.string "snp_uid"
+    t.integer "chromosome"
+    t.integer "position"
+    t.index ["snp_uid"], name: "index_snps_on_snp_uid"
+  end
+
   create_table "software_license_files", id: :serial, force: :cascade do |t|
     t.integer "software_license_id"
     t.integer "identity_file_id"
@@ -6379,6 +6397,9 @@ ActiveRecord::Schema.define(version: 20171112052342) do
   add_foreign_key "foods", "identities", name: "foods_identity_id_fk"
   add_foreign_key "gas_stations", "identities", name: "gas_stations_identity_id_fk"
   add_foreign_key "gas_stations", "locations", name: "gas_stations_location_id_fk"
+  add_foreign_key "genotype_calls", "dna_analyses"
+  add_foreign_key "genotype_calls", "identities"
+  add_foreign_key "genotype_calls", "snps"
   add_foreign_key "group_contacts", "contacts", name: "group_contacts_contact_id_fk"
   add_foreign_key "group_contacts", "groups", name: "group_contacts_group_id_fk"
   add_foreign_key "group_contacts", "identities", name: "group_contacts_identity_id_fk"

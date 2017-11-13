@@ -273,6 +273,9 @@ Rails.application.routes.draw do
         name: :diet_foods
       },
     ],
+    dna_analyses: [
+      { instance: true, link: "rerun" }
+    ],
     due_items: [
       { instance: true, link: "complete" },
       { instance: true, link: "snooze" }

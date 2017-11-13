@@ -63,7 +63,7 @@ class User < ApplicationRecord
   end
   
   def current_identity
-    Rails.logger.debug{"User.current_identity user_id: #{self.id}"}
+    #Rails.logger.debug{"User.current_identity user_id: #{self.id}"}
     result = nil
     if ExecutionContext.available?
       result = MyplaceonlineExecutionContext.identity
@@ -76,7 +76,7 @@ class User < ApplicationRecord
         #raise "Unexpected identity #{result.id} for user #{self.id}"
       end
     end
-    Rails.logger.debug{"User.current_identity returning: #{result.nil? ? nil : result.id}"}
+    #Rails.logger.debug{"User.current_identity returning: #{result.nil? ? nil : result.id}"}
     result
   end
   

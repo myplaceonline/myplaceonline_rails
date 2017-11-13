@@ -3787,3 +3787,9 @@ en:
     dna_analyses:
       import: "Data"
       new_intro: "To import your DNA, go to <a href=\"https://you.23andme.com/tools/data/download/\" target=\"_blank\">https://you.23andme.com/tools/data/download/</a>, click \"Submit Request\" at the bottom, follow the instructions to download a .zip file, then upload it below and click Save."
+      status: "Status"
+      rerun: "Re-import"
+    snps:
+      snp_types:
+        ncbi_rs: "NCBI RS#"
+        23andme: "23andme Internal Identifier"

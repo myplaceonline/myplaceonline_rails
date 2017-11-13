@@ -6,7 +6,25 @@ class DnaAnalysesController < MyplaceonlineController
   def show_edit
     false
   end
+  
+  def rerun
+    set_obj
+    
+    @obj.import.start
+    
+    redirect_to(dna_analysis_path(@obj))
+  end
 
+  def footer_items_show
+    [
+      {
+        title: I18n.t("myplaceonline.dna_analyses.rerun"),
+        link: dna_analysis_rerun_path(@obj),
+        icon: "recycle"
+      },
+    ] + super
+  end
+  
   protected
     def sensitive
       true

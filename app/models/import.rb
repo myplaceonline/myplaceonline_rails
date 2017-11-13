@@ -51,4 +51,13 @@ class Import < ApplicationRecord
   def import_progress_display
     self.import_progress.blank? ? I18n.t("myplaceonline.imports.pending") : self.import_progress
   end
+  
+  def start
+    if self.import_status != Import::IMPORT_STATUS_WAITING_FOR_WORKER
+      self.import_status = Import::IMPORT_STATUS_WAITING_FOR_WORKER
+      self.import_progress = "* _#{User.current_user.time_now}_: Waiting for worker"
+      self.save!
+      ApplicationJob.perform(ImportJob, self, "start")
+    end
+  end
 end

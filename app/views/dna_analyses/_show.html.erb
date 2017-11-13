@@ -1,1 +1,1 @@
-<%= data_row(heading: t("myplaceonline.dna_analyses.import"), content: obj.import) %>
+<%= data_row(heading: t("myplaceonline.dna_analyses.status"), content: obj.import.import_status, enumeration: Import::IMPORT_STATUSES) %>

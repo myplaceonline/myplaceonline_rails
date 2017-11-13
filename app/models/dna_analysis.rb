@@ -15,4 +15,10 @@ class DnaAnalysis < ApplicationRecord
   end
 
   child_property(name: :import, required: true, destroy_dependent: true)
+  
+  after_commit :on_after_create, on: [:create]
+  
+  def on_after_create
+    self.import.start
+  end
 end

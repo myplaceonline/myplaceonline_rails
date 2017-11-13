@@ -51,7 +51,7 @@ class UserIndex < Chewy::Index
     end
     
     # Only create a type if it has some text fields
-    if string_columns.length > 0 || text_columns.length > 0
+    if (string_columns.length > 0 || text_columns.length > 0) && (!klass.respond_to?("searchable?") || (klass.respond_to?("searchable?") && klass.searchable?))
       
       Rails.logger.debug{"UserIndex Creating type for: #{klass.name}"}
       
