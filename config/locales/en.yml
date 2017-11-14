@@ -2893,6 +2893,8 @@ en:
         enable_always: "Always Enable"
         disable_always: "Always Disable"
         disable_unauthenticated: "Disable for Guests"
+      update_myplets: "Update Myplets"
+      updating_myplets: "Myplet updating has started"
     website_domain_myplets:
       title: "Title"
       border_type: "Border Type"
@@ -3419,6 +3421,7 @@ en:
       instance_page: "Details"
       static_page: "Details"
       details: "Details"
+      updated: "Updated"
       test_object_enums:
         a: "A"
         b: "B"

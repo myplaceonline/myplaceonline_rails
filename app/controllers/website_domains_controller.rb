@@ -1,4 +1,33 @@
 class WebsiteDomainsController < MyplaceonlineController
+  def footer_items_show
+    if @obj.verified?
+      super + [
+        {
+          title: I18n.t("myplaceonline.website_domains.update_myplets"),
+          link: website_domain_update_myplets_path(@obj),
+          icon: "recycle"
+        },
+      ]
+    else
+      super
+    end
+  end
+  
+  def update_myplets
+    set_obj
+    
+    if !@obj.verified?
+      raise "Unauthorized"
+    end
+    
+    ApplicationJob.perform(UpdateMypletsJob, @obj)
+    
+    redirect_to(
+      obj_path,
+      flash: { notice: I18n.t("myplaceonline.website_domains.updating_myplets") }
+    )
+  end
+  
   protected
     def additional_sorts
       [

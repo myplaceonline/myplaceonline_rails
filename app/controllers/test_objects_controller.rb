@@ -47,6 +47,13 @@ class TestObjectsController < MyplaceonlineController
     set_obj
     
     @details = @obj.display
+
+    if request.post?
+      redirect_to(
+        obj_path,
+        flash: { notice: I18n.t("myplaceonline.test_objects.updated") }
+      )
+    end
   end
 
   def static_page

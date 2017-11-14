@@ -14,11 +14,15 @@ class DnaAnalysis < ApplicationRecord
     import.display
   end
 
-  child_property(name: :import, required: true, destroy_dependent: true)
+  # Effectively required but we don't use `required: true` because this could
+  # be a myplet created with no child properties
+  child_property(name: :import, destroy_dependent: true)
   
-  after_commit :on_after_create, on: [:create]
+  after_commit :on_after_update, on: [:create, :update]
   
-  def on_after_create
-    self.import.start
+  def on_after_update
+    if !self.import.nil?
+      self.import.start
+    end
   end
 end

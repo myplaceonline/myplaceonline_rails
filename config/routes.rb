@@ -488,6 +488,9 @@ Rails.application.routes.draw do
         name: :vehicle_services
       }
     ],
+    website_domains: [
+      { instance: true, link: "update_myplets" },
+    ],
     website_lists: [
       { instance: true, link: "roll" }
     ],

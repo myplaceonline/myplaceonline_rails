@@ -32,30 +32,8 @@ class Myplet < ApplicationRecord
       
       identity.website_domain.website_domain_myplets.each do |myplet|
         
-        if myplet.singleton
-          new_myplet = nil
-        else
-          model_attributes = {}
-          myplet.website_domain_myplet_parameters.each do |myplet_param|
-            param_value = myplet_param.val
-            if Myp.is_probably_i18n(param_value)
-              param_value = I18n.t(param_value)
-            end
-            model_attributes[myplet_param.name] = param_value
-          end
-          
-          new_myplet = myplet.category.model.create!(model_attributes)
-        end
+        result.push(myplet.create_for_identity(identity))
         
-        result.push(Myplet.create!({
-          title: myplet.title,
-          y_coordinate: myplet.position,
-          x_coordinate: 0,
-          category_name: myplet.category.name,
-          category_id: new_myplet.nil? ? nil : new_myplet.id,
-          border_type: myplet.border_type,
-          identity: identity,
-        }))
       end
       
     end
