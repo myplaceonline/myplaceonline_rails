@@ -1203,6 +1203,10 @@ class MyplaceonlineController < ApplicationController
     ]
   end
   
+  def top_content
+    nil
+  end
+  
   protected
   
     def deny_guest

@@ -7,6 +7,15 @@
 
 <%= content_for(:abovelist) %>
 
+<%
+top_content = controller.top_content
+if !top_content.blank?
+%>
+  <%= top_content %>
+<%
+end
+%>
+
 <% if !controller.has_items %>
 
   <p><%= t("myplaceonline.general.count_no") + " " + t("myplaceonline.category." + controller.category_name) %>.

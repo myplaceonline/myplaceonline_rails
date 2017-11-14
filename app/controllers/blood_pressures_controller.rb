@@ -1,4 +1,8 @@
 class BloodPressuresController < MyplaceonlineController
+  def top_content
+    I18n.t("myplaceonline.blood_pressures.top_content").html_safe
+  end
+  
   protected
     def insecure
       true
