@@ -1,0 +1,19 @@
+<% content_for :heading do -%><%= t("myplaceonline.test_objects.instance_page") %><% end -%>
+
+<h1><%= t("myplaceonline.test_objects.instance_page") %></h1>
+
+<%= flashes! %>
+
+<%= data_row(heading: t("myplaceonline.test_objects.details"), prefix_heading: true, content: @details, wrap: false) %>
+
+<%=
+  render(partial: "shared/footer", locals: {
+    items: [
+      {
+        title: I18n.t("myplaceonline.general.back"),
+        link: controller.obj_path,
+        icon: "back"
+      },
+    ]
+  })
+%>

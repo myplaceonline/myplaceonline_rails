@@ -448,6 +448,8 @@ Rails.application.routes.draw do
       }
     ],
     test_objects: [
+      { instance: false, link: "static_page" },
+      { instance: true, link: "instance_page" },
       {
         subresources: true,
         name: :test_object_instances

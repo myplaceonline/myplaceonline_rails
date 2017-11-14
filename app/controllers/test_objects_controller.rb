@@ -1,4 +1,6 @@
 class TestObjectsController < MyplaceonlineController
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:static_page]
+
   def may_upload
     true
   end
@@ -23,7 +25,32 @@ class TestObjectsController < MyplaceonlineController
         link: test_object_test_object_instances_path(@obj),
         icon: "bars"
       },
+      {
+        title: I18n.t("myplaceonline.test_objects.instance_page"),
+        link: test_object_instance_page_path(@obj),
+        icon: "info" # http://demos.jquerymobile.com/1.4.5/icons/
+      },
     ]
+  end
+  
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t("myplaceonline.test_objects.static_page"),
+        link: test_objects_static_page_path,
+        icon: "info"
+      },
+    ]
+  end
+  
+  def instance_page
+    set_obj
+    
+    @details = @obj.display
+  end
+
+  def static_page
+    @details = all.count.to_s
   end
 
   protected

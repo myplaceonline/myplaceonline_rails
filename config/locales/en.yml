@@ -3416,6 +3416,9 @@ en:
       test_object_boolean: "Boolean"
       contact: "Contact"
       test_object_enum: "Enumeration"
+      instance_page: "Details"
+      static_page: "Details"
+      details: "Details"
       test_object_enums:
         a: "A"
         b: "B"
