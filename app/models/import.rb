@@ -53,7 +53,7 @@ class Import < ApplicationRecord
   end
   
   def start
-    if self.import_status != Import::IMPORT_STATUS_WAITING_FOR_WORKER
+    if self.import_status != Import::IMPORT_STATUS_WAITING_FOR_WORKER && self.import_status != Import::IMPORT_STATUS_IMPORTING
       self.import_status = Import::IMPORT_STATUS_WAITING_FOR_WORKER
       self.import_progress = "* _#{User.current_user.time_now}_: Waiting for worker"
       self.save!

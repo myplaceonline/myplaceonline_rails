@@ -675,9 +675,7 @@ var myplaceonline = function(mymodule) {
     formData.append($inputFileElement.attr("name"), file);
 
     // https://developer.mozilla.org/en-US/docs/Web/API/Location
-    formData.append("urlpath", window.location.pathname);
-    formData.append("urlsearch", window.location.search);
-    formData.append("urlhash", window.location.hash);
+    formData.append("urlpath", window.location.pathname == "/" ? $inputFileElement[0].form.action : window.location.pathname);
             
     if ($inputFileElement.data("position_field")) {
       formData.append("position_field", $inputFileElement.data("position_field"));

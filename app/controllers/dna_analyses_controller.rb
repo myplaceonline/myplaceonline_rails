@@ -25,6 +25,15 @@ class DnaAnalysesController < MyplaceonlineController
     ] + super
   end
   
+  def after_update_redirect
+    myplets = MyplaceonlineExecutionContext.identity.myplets.to_a
+    if myplets.index{|myplet| myplet.category_name == category.name && myplet.category_id == @obj.id }.nil?
+      super
+    else
+      redirect_to root_path
+    end
+  end
+
   protected
     def sensitive
       true
@@ -35,11 +44,19 @@ class DnaAnalysesController < MyplaceonlineController
         import_attributes: ImportsController.param_names
       )
     end
-
-    def new_prerespond
+    
+    def prerespond
       @obj.import = Import.new(
         import_name: "23andme DNA",
         import_type: Import::IMPORT_TYPE_23ANDMEDNA,
       )
+    end
+
+    def edit_prerespond
+      prerespond
+    end
+
+    def new_prerespond
+      prerespond
     end
 end

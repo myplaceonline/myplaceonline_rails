@@ -195,6 +195,7 @@ class MyplaceonlineController < ApplicationController
     if sensitive
       check_password
     end
+    @myplet = params[:myplet]
     @obj = Myp.new_model(model, params)
     set_parent
     @url = new_path
@@ -203,17 +204,27 @@ class MyplaceonlineController < ApplicationController
     else
       new_prerespond
       Rails.logger.debug{"myplaceonline_controller new: #{@obj.inspect}"}
-      respond_with(@obj)
+      
+      if !@myplet
+        respond_with(@obj)
+      else
+        render action: "new", layout: "myplet"
+      end
     end
   end
 
   def edit
     initial_checks
 
+    @myplet = params[:myplet]
     check_password
     @url = obj_path(@obj)
     edit_prerespond
-    respond_with(@obj)
+    if !@myplet
+      respond_with(@obj)
+    else
+      render action: "edit", layout: "myplet"
+    end
   end
   
   def create

@@ -263,8 +263,6 @@ class ApiController < ApplicationController
       :result => false
     }
     urlpath = params[:urlpath]
-    urlsearch = params[:urlpath]
-    urlhash = params[:urlhash]
     
     Rails.logger.debug{"newfile urlpath: #{urlpath}"}
     

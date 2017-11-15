@@ -25,4 +25,16 @@ class DnaAnalysis < ApplicationRecord
       self.import.start
     end
   end
+  
+  def self.evaluate_myplet_homepage_action?
+    true
+  end
+  
+  def myplet_homepage_action
+    if self.import.nil?
+      :edit
+    else
+      :show
+    end
+  end
 end

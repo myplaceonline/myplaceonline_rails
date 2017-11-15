@@ -459,8 +459,10 @@ class ImportJob < ApplicationJob
     if line_num < 20 && line.starts_with?("# We are using reference human assembly build")
       line = line[46..-1]
       line = line[0..line.index(" ")-1]
+      Rails.logger.debug{"ImportJob.process_dna updating reference_genome to #{line}, #{dna_analysis.import.import_status}"}
       dna_analysis.reference_genome = "GRCh" + line
       dna_analysis.save!
+      Rails.logger.debug{"ImportJob.process_dna finished save"}
     elsif line.length > 0 && line[0] != '#'
       pieces = line.split(" ")
       if pieces.length != 4

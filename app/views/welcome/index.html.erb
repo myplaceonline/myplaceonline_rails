@@ -37,7 +37,7 @@ website_domain = Myp.website_domain
   <% @myplets.each do |myplet| %>
     <%= render :html => Myp.renderActionInOtherController(
                           Object.const_get(myplet.category_name.camelize + "Controller"),
-                          myplet.category_id.nil? ? :index : :show,
+                          myplet.homepage_action,
                           {
                             id: myplet.category_id,
                             myplet: myplet
