@@ -8,5 +8,5 @@ class ImportFile < ApplicationRecord
     ]
   end
 
-  child_file(parent: :import)
+  child_file(parent: :import, destroy_dependent: true)
 end

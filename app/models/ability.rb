@@ -169,7 +169,7 @@ class Ability
               Rails.logger.debug{"Ability.authorize Found category permissions: #{category_permissions.inspect}"}
               result = true
             else
-              Rails.logger.debug{"Ability.authorize category permission failed for user: #{user.id}, action: #{action}, category: #{Myp.model_to_category_name(subject_class)}, subject: #{subject.id}"}
+              Rails.logger.debug{"Ability.authorize category permission not found for user: #{user.id}, action: #{action}, category: #{Myp.model_to_category_name(subject_class)}, subject: #{subject.id}"}
             end
           end
         end

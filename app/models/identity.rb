@@ -93,8 +93,17 @@ class Identity < ApplicationRecord
   
   belongs_to :user
   
+  # The order of these matters in the case of deletion. For example, let's say
+  # some model1 has a child_files field with a model2 that has an IdentityFile
+  # field, and if :identity_files occurs before model1 in the list below,
+  # then Rails will try to delete :identity_files before model1, and this will
+  # cause foreign reference violations because model2 still has rferences to
+  # those files.
+  has_many :genotype_calls, :dependent => :destroy
+  has_many :dna_analyses, :dependent => :destroy
   has_many :passwords, :dependent => :destroy
   has_many :identity_files, :dependent => :destroy
+  has_many :identity_file_folders, :dependent => :destroy
   has_many :category_points_amounts, :dependent => :destroy
   has_many :movies, :dependent => :destroy
   has_many :wisdoms, :dependent => :destroy
@@ -264,7 +273,6 @@ class Identity < ApplicationRecord
   has_many :translations, :dependent => :destroy
   has_many :boycotts, :dependent => :destroy
   has_many :reminders, :dependent => :destroy
-  has_many :dna_analyses, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 
