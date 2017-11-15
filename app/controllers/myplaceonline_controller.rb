@@ -1217,6 +1217,26 @@ class MyplaceonlineController < ApplicationController
   def top_content
     nil
   end
+
+  def form_menu_items(form, new:)
+    main_button = new ? new_save_text : I18n.t("myplaceonline.general.save") + " " + I18n.t("myplaceonline.category." + category_name).singularize
+    
+    result = [
+      {
+        content: form.submit(main_button, "data-icon" => "action", "data-iconpos" => "top", "style" => "background-color: green")
+      },
+    ]
+    
+    if form_menu_items_cancel?
+      result << {
+        title: I18n.t("myplaceonline.general.cancel"),
+        link: new ? index_path : obj_path,
+        icon: "back"
+      }
+    end
+    
+    result
+  end
   
   protected
   
@@ -1634,5 +1654,9 @@ class MyplaceonlineController < ApplicationController
       @always_expand_top_used = settings_boolean(name: SETTING_ALWAYS_EXPAND_TOP_USED)
       @setting_default_sort = settings_string(name: SETTING_DEFAULT_SORT)
       @setting_default_sort_direction = settings_string(name: SETTING_DEFAULT_SORT_DIRECTION)
+    end
+    
+    def form_menu_items_cancel?
+      true
     end
 end

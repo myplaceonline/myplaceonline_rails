@@ -31,7 +31,7 @@ class DnaAnalysis < ApplicationRecord
   end
   
   def myplet_homepage_action
-    if self.import.nil?
+    if self.import.nil? || self.import.import_files.count == 0
       :edit
     else
       :show

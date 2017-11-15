@@ -1,1 +1,10 @@
-<%= data_row(heading: t("myplaceonline.dna_analyses.status"), content: obj.import.import_status, enumeration: Import::IMPORT_STATUSES) %>
+<% if !@myplet %>
+  <%= data_row(heading: t("myplaceonline.dna_analyses.status"), content: obj.import.import_status, enumeration: Import::IMPORT_STATUSES) %>
+<% else %>
+  <h1><%= controller.display_obj(obj) %></h1>
+  <% if obj.import.import_status == Import::IMPORT_STATUS_IMPORTED %>
+    <%= raw(t("myplaceonline.dna_analyses.analysis1", snps: @snp_count)) %>
+  <% else %>
+    <%= data_row(heading: t("myplaceonline.dna_analyses.status"), prefix_heading: true, content: obj.import.import_status, enumeration: Import::IMPORT_STATUSES, wrap: false) %>
+  <% end %>
+<% end %>

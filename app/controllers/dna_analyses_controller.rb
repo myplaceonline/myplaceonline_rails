@@ -59,4 +59,19 @@ class DnaAnalysesController < MyplaceonlineController
     def new_prerespond
       prerespond
     end
+    
+    def before_show
+      super
+      if !@obj.import.nil? && @obj.import.import_status == Import::IMPORT_STATUS_IMPORTED
+        @snp_count = GenotypeCall.where(dna_analysis: @obj).count
+      end
+    end
+    
+    def form_menu_items_cancel?
+      if @myplet
+        false
+      else
+        super
+      end
+    end
 end

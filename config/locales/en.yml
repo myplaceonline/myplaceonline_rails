@@ -3796,6 +3796,7 @@ en:
       new_intro: "To import your DNA, go to <a href=\"https://you.23andme.com/tools/data/download/\" target=\"_blank\">https://you.23andme.com/tools/data/download/</a>, click \"Submit Request\" at the bottom, follow the instructions to download a .zip file, then upload it below and click Save."
       status: "Status"
       rerun: "Re-import"
+      analysis1: "<p>This DNA data has %{snps} Single Nucleotide Polymorphisms (SNPs).</p>"
     snps:
       snp_types:
         ncbi_rs: "NCBI RS#"

@@ -10,16 +10,7 @@
 
   <%=
     render(partial: "shared/footer", locals: {
-      items: [
-        {
-          content: f.submit(t("myplaceonline.general.save") + " " + t("myplaceonline.category." + controller.category_name).singularize, "data-icon" => "action", "data-iconpos" => "top", "style" => "background-color: green")
-        },
-        {
-          title: I18n.t("myplaceonline.general.cancel"),
-          link: controller.obj_path,
-          icon: "back"
-        },
-      ]
+      items: controller.form_menu_items(f, new: false)
     })
   %>
 
