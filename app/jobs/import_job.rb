@@ -499,7 +499,7 @@ class ImportJob < ApplicationJob
       variant2 = nil
       if genotype.length == 2
         variant2 = GenotypeCall.letter_to_type(genotype[1])
-      else
+      elsif genotype.length > 2
         raise "Unknown genotype #{genotype} for #{line}"
       end
       
