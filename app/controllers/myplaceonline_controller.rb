@@ -1437,7 +1437,7 @@ class MyplaceonlineController < ApplicationController
             handle_object_not_found(p[:id])
           end
           
-          Rails.logger.debug{"MyplaceonlineController.set_obj setting @obj: #{@obj}"}
+          Rails.logger.debug{"MyplaceonlineController.set_obj setting @obj: #{Myp.debug_print(@obj)}"}
         end
       rescue ActiveRecord::RecordNotFound => rnf
         Rails.logger.debug{"MyplaceonlineController.set_obj caught #{rnf}"}

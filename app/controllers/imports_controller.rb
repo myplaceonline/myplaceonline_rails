@@ -26,9 +26,11 @@ class ImportsController < MyplaceonlineController
   
   def self.param_names
     [
+      :id,
       :import_name,
       :import_type,
       :notes,
+      :_updatetype,
       import_files_attributes: FilesController.multi_param_names,
     ]
   end

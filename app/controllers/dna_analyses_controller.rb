@@ -46,10 +46,12 @@ class DnaAnalysesController < MyplaceonlineController
     end
     
     def prerespond
-      @obj.import = Import.new(
-        import_name: "23andme DNA",
-        import_type: Import::IMPORT_TYPE_23ANDMEDNA,
-      )
+      if @obj.import.nil? || @obj.import.id.nil?
+        @obj.import = Import.new(
+          import_name: "23andme DNA",
+          import_type: Import::IMPORT_TYPE_23ANDMEDNA,
+        )
+      end
     end
 
     def edit_prerespond
