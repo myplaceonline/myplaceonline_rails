@@ -53,6 +53,7 @@ class User < ApplicationRecord
     MyplaceonlineExecutionContext.user
   end
 
+  # This should only be called if the currently logged in user is this user
   def current_identity_id
     result = nil
     i = self.current_identity
@@ -62,6 +63,7 @@ class User < ApplicationRecord
     result
   end
   
+  # This should only be called if the currently logged in user is this user
   def current_identity
     #Rails.logger.debug{"User.current_identity user_id: #{self.id}"}
     result = nil
@@ -189,13 +191,13 @@ class User < ApplicationRecord
     end
   end
   
+  # This should only be called if the currently logged in user is this user
   def total_points
     current_identity.points.nil? ? 0 : current_identity.points
   end
   
   def as_json(options={})
     super.as_json(options).merge({
-      :current_identity => current_identity.as_json,
       :encrypted_values => encrypted_values.to_a.map{|x| x.as_json}
     })
   end
@@ -239,16 +241,9 @@ class User < ApplicationRecord
     id == GUEST_USER_ID
   end
   
+  # This should only be called if the currently logged in user is this user
   def has_emergency_contacts?
     current_identity.emergency_contacts.count > 0
-  end
-  
-  def send_sms(body)
-    self.current_identity.identity_phones.each do |identity_phone|
-      if identity_phone.accepts_sms?
-        Myp.send_sms(to: identity_phone.number, body: body)
-      end
-    end
   end
   
   def suppresses(which)
@@ -265,6 +260,26 @@ class User < ApplicationRecord
       result = self.encryption_mode
     end
     result
+  end
+  
+  def send_email?
+    self.domain_identity.send_email?
+  end
+  
+  def send_text?
+    self.domain_identity.send_text?
+  end
+  
+  def send_message(body_short_markdown, body_long_markdown, subject, reply_to: nil, cc: nil, bcc: nil)
+    self.domain_identity.send_message(body_short_markdown, body_long_markdown, subject, reply_to: reply_to, cc: cc, bcc: bcc)
+  end
+  
+  def send_email(subject, body, cc = nil, bcc = nil, body_plain = nil, reply_to = nil)
+    self.domain_identity.send_email(subject, body, cc, bcc, body_plain, reply_to)
+  end
+
+  def send_sms(body)
+    self.domain_identity.send_sms(body: body)
   end
   
   protected

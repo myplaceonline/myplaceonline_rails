@@ -12,7 +12,6 @@
   <%= attribute_table_row(t("myplaceonline.contacts.next_birthday"), Myp.time_difference_in_general_human_detailed_from_now(obj.contact_identity.next_birthday)) %>
 <% end %>
 <%= attribute_table_row_select(t("myplaceonline.contacts.contact_type"), obj.contact_type, Contact::CONTACT_TYPES) %>
-<%= data_row(heading: t("myplaceonline.contacts.contact_preference"), content: obj.contact_preference, enumeration: Contact::CONTACT_PREFERENCES) %>
 <%= attribute_table_row_select(t("myplaceonline.contacts.sex_type"), obj.contact_identity.sex_type, Contact::SEX_TYPES) %>
 <%= data_row(heading: t("myplaceonline.contacts.blood_type"), content: obj.contact_identity.blood_type, enumeration: Identity::BLOOD_TYPES) %>
 <%= attribute_table_row_markdown(t("myplaceonline.contacts.notes"), obj.contact_identity.notes) %>
@@ -36,6 +35,7 @@
   <%= attribute_table_row_reference(t("myplaceonline.identities.location"), "location_path", identity_location.location) %>
   <%= attribute_table_row_boolean(t("myplaceonline.identities.location_secondary"), identity_location.secondary) %>
 <% end %>
+<%= data_row(heading: t("myplaceonline.contacts.message_preference"), content: obj.contact_identity.message_preferences, enumeration: Identity::MESSAGE_PREFERENCES) %>
 <% obj.all_conversations.take(5).each do |conversation| %>
   <%= attribute_table_row_markdown(t("myplaceonline.contacts.conversation") + " (" + Myp.display_date(conversation.conversation_date, current_user) + ")", conversation.conversation) %>
 <% end %>

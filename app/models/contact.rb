@@ -29,14 +29,6 @@ class Contact < ApplicationRecord
     ["myplaceonline.contacts.sex_male", 1]
   ]
   
-  CONTACT_PREFERENCE_EMAIL = 0
-  CONTACT_PREFERENCE_TEXT = 1
-  
-  CONTACT_PREFERENCES = [
-    ["myplaceonline.contacts.contact_preferences.email", CONTACT_PREFERENCE_EMAIL],
-    ["myplaceonline.contacts.contact_preferences.text", CONTACT_PREFERENCE_TEXT],
-  ]
-  
   DEFAULT_CONTACT_BEST_FRIEND_THRESHOLD_SECONDS = 20.days
   DEFAULT_CONTACT_GOOD_FRIEND_THRESHOLD_SECONDS = 45.days
   DEFAULT_CONTACT_ACQUAINTANCE_THRESHOLD_SECONDS = 90.days
@@ -115,11 +107,20 @@ class Contact < ApplicationRecord
     end
   end
   
+  def send_email?
+    self.contact_identity.send_email?
+  end
+  
+  def send_text?
+    self.contact_identity.send_text?
+  end
+  
+  def send_message(body_short_markdown, body_long_markdown, subject, reply_to: nil, cc: nil, bcc: nil)
+    self.contact_identity.send_message(body_short_markdown, body_long_markdown, subject, reply_to: reply_to, cc: cc, bcc: bcc)
+  end
+  
   def send_email(subject, body, cc = nil, bcc = nil, body_plain = nil, reply_to = nil)
-    to = contact_identity.emails
-    if to.length > 0
-      Myp.send_email(to, subject, body, cc, bcc, body_plain, reply_to)
-    end
+    self.contact_identity.send_email(subject, body, cc, bcc, body_plain, reply_to)
   end
   
   def send_email_with_conversation(category, subject, body_markdown)

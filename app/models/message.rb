@@ -78,8 +78,7 @@ class Message < ApplicationRecord
   end
   
   def should_send_email?(contact:, skip_contacts:)
-    skip_contacts.index{|x| x.id == contact.id}.nil? &&
-        (contact.contact_preference == nil || contact.contact_preference == Contact::CONTACT_PREFERENCE_EMAIL)
+    skip_contacts.index{|x| x.id == contact.id}.nil? && contact.send_email?
   end
   
   def do_send_emails(skip_contacts: [])
@@ -120,8 +119,7 @@ class Message < ApplicationRecord
   end
   
   def should_send_text?(contact:, skip_contacts:)
-    skip_contacts.index{|x| x.id == contact.id}.nil? &&
-        (contact.contact_preference == nil || contact.contact_preference == Contact::CONTACT_PREFERENCE_TEXT)
+    skip_contacts.index{|x| x.id == contact.id}.nil? && contact.send_text?
   end
   
   def do_send_texts(skip_contacts: [])

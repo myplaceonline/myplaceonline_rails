@@ -212,6 +212,9 @@ module AllowExistingConcern extend ActiveSupport::Concern
           
           Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes additional item #{Myp.debug_print(new_item)}"}
           
+          # This will do an insert but we should be within a transaction in
+          # case some other validation fails
+          
           self.send("#{name.to_s}") << new_item
           
           attrs_to_delete << trash_id

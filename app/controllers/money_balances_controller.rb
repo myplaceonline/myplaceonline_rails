@@ -85,10 +85,12 @@ class MoneyBalancesController < MyplaceonlineController
     if request.patch?
       Rails.logger.debug{"Adding money balance item"}
       if do_update(check_double_post: true)
+        @is_updated = true
         Rails.logger.debug{"do_update returned true"}
-        if !@new_item.nil?
-          Rails.logger.debug{"new_item: #{@new_item}, obj #{@obj.inspect}"}
-          if @new_item.current_user_owns?
+        new_item = @obj.money_balance_items[@obj.money_balance_items.length - 1]
+        if !new_item.nil?
+          Rails.logger.debug{"new_item: #{new_item}, obj #{@obj.inspect}"}
+          if new_item.current_user_owns?
             to = @obj.contact
             reply_to = @obj.identity.user.email
           else
@@ -96,10 +98,11 @@ class MoneyBalancesController < MyplaceonlineController
             reply_to = @obj.contact.contact_identity.one_email
           end
           body = @obj.independent_description
-          if !@new_item.money_balance_item_name.blank?
-            body = @new_item.money_balance_item_name + "... \n\n" + body
+          if !new_item.money_balance_item_name.blank?
+            body = new_item.money_balance_item_name + "... \n\n" + body
           end
-          to.send_email(@new_item.independent_description(false), body, nil, nil, nil, reply_to)
+          subject = new_item.independent_description(false)
+          to.send_message(subject + ": " + new_item.money_balance_item_name, body, subject, reply_to: reply_to)
         end
         return after_update_redirect
       end
@@ -107,20 +110,14 @@ class MoneyBalancesController < MyplaceonlineController
   end
   
   def redirect_to_obj
-    if !@new_item.nil?
+    if @is_updated
+      new_item = @obj.money_balance_items[@obj.money_balance_items.length - 1]
       redirect_to obj_path,
         :flash => { :notice =>
-                    @new_item.independent_description(false)
+                    new_item.independent_description(false)
                   }
     else
       redirect_to obj_path
-    end
-  end
-
-  def do_update_before_save
-    i = @obj.money_balance_items.to_a.index{|mbi| mbi.new_record?}
-    if !i.nil?
-      @new_item = @obj.money_balance_items[i]
     end
   end
 

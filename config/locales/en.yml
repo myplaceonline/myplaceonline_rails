@@ -927,6 +927,13 @@ en:
         abplus: "AB+"
         ominus: "O-"
         oplus: "O+"
+      message_preference: "Message Preference"
+      message_preferences:
+        message_preference_none: "Suppress Messages"
+        message_preference_email: "Email"
+        message_preference_sms: "Text Message"
+        message_preference_app: "Phone Application"
+        message_preference_email_and_sms: "Email and Text Message"
     files:
       name: "Name"
       download: "Download"
@@ -2649,7 +2656,7 @@ en:
       delete_contact: "Delete Contact"
       copy_self: "Blind Carbon Copy Me"
       default_subject: "A %{subject_class} has been shared with you"
-      default_body: "Hi, %{contact} has shared the following %{subject_class} with you:"
+      default_body: "Hi, %{contact} has shared the following %{subject_class} with you: %{link}"
       shared_sucess: "An email has been sent with the share link"
       shared_sucess_async: "The email(s) will be sent with the share link in about 5 minutes"
       share_token: "Share with Contacts"

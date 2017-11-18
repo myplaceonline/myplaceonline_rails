@@ -54,6 +54,19 @@ class Identity < ApplicationRecord
     ["myplaceonline.contacts.blood_types.ominus", BLOOD_TYPE_OMINUS],
     ["myplaceonline.contacts.blood_types.oplus", BLOOD_TYPE_OPLUS],
   ]
+  
+  MESSAGE_PREFERENCE_NONE = 0
+  MESSAGE_PREFERENCE_EMAIL = 1
+  MESSAGE_PREFERENCE_SMS = 2
+  MESSAGE_PREFERENCE_APP = 4
+  
+  MESSAGE_PREFERENCES = [
+    ["myplaceonline.contacts.message_preferences.message_preference_none", MESSAGE_PREFERENCE_NONE],
+    ["myplaceonline.contacts.message_preferences.message_preference_email", MESSAGE_PREFERENCE_EMAIL],
+    ["myplaceonline.contacts.message_preferences.message_preference_sms", MESSAGE_PREFERENCE_SMS],
+    #["myplaceonline.contacts.message_preferences.message_preference_app", MESSAGE_PREFERENCE_APP],
+    ["myplaceonline.contacts.message_preferences.message_preference_email_and_sms", MESSAGE_PREFERENCE_EMAIL | MESSAGE_PREFERENCE_SMS],
+  ]
 
   has_one :contact, class_name: "Contact", foreign_key: :contact_identity_id
   
@@ -658,13 +671,46 @@ class Identity < ApplicationRecord
       context_info: Identity::CALENDAR_ITEM_CONTEXT_BIRTHDAY
     )
   end
-
+  
+  def send_email?
+    self.message_preferences.nil? || ((self.message_preferences & MESSAGE_PREFERENCE_EMAIL) != 0)
+  end
+  
+  def send_text?
+    !self.message_preferences.nil? && ((self.message_preferences & MESSAGE_PREFERENCE_SMS) != 0)
+  end
+  
+  def send_message(body_short_markdown, body_long_markdown, subject, reply_to: nil, cc: nil, bcc: nil)
+    
+    if self.send_email?
+      Rails.logger.debug{"Identity.send_message sending emails"}
+      body_long_html = Myp.markdown_to_html(body_long_markdown)
+      self.send_email(subject, body_long_html, cc, bcc, body_long_markdown, reply_to)
+    end
+    
+    if self.send_text?
+      Rails.logger.debug{"Identity.send_message sending texts"}
+      body_short_markdown = Myp.markdown_for_plain_email(body_short_markdown)
+      self.send_sms(body: body_short_markdown)
+    end
+    
+  end
+  
   def send_email(subject, body, cc = nil, bcc = nil, body_plain = nil, reply_to = nil)
-    Myp.send_email(user.email, subject, body, cc, bcc, body_plain, reply_to)
+    self.emails.each do |email|
+      Myp.send_email(email, subject, body, cc, bcc, body_plain, reply_to)
+    end
+    if !user.nil?
+      Myp.send_email(user.email, subject, body, cc, bcc, body_plain, reply_to)
+    end
   end
   
   def phone_numbers
     identity_phones.to_a.map{|ip| ip.number }
+  end
+  
+  def mobile_phone_numbers
+    identity_phones.to_a.keep_if{|ip| ip.accepts_sms? }.map{|ip| ip.number }
   end
   
   def first_mobile_number
@@ -680,12 +726,10 @@ class Identity < ApplicationRecord
   end
   
   def send_sms(body:)
-    target = self.first_mobile_number
-    if !target.nil?
-      Myp.send_sms(to: target.number, body: body)
-      true
-    else
-      false
+    result = false
+    self.mobile_phone_numbers.each do |phone_number|
+      Myp.send_sms(to: phone_number, body: body)
+      result = true
     end
   end
   
@@ -715,6 +759,7 @@ class Identity < ApplicationRecord
       :display_note,
       :identity_type,
       :blood_type,
+      :message_preferences,
       identity_phones_attributes: [
         :id,
         :number,

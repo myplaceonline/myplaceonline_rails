@@ -10,7 +10,15 @@
     }
   %>
   <%= myp_text_field_tag(:subject, "myplaceonline.permissions.subject", @subject) %>
-  <%= myp_text_area_tag(:body, "myplaceonline.permissions.body", @body) %>
+  <%=
+    input_field(
+      type: Myp::FIELD_TEXT_AREA,
+      name: :body,
+      value: @body,
+      placeholder: "myplaceonline.permissions.body",
+      collapsed: false
+    )
+  %>
   <%# myp_check_box_tag(:copy_self, "myplaceonline.permissions.copy_self", @copy_self) %>
   <%= myp_hidden_field(f, :subject_class, @permission.subject_class) %>
   <%= myp_hidden_field(f, :subject_id, @permission.subject_id) %>

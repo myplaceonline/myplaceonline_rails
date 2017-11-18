@@ -36,15 +36,19 @@ class PermissionsController < MyplaceonlineController
       save_result = @permission.save
       if save_result
         
-        content = "<p>" + ERB::Util.html_escape_once(@body) + "</p>\n\n"
-        content += "<p>" + ActionController::Base.helpers.link_to(@permission.url, @permission.url) + "</p>"
+        if !params[:subject].blank?
+          @subject = params[:subject]
+        end
+        if !params[:body].blank?
+          @body = params[:body]
+        end
         
         cc = nil
         if @copy_self
           cc = User.current_user.email
         end
-        to = [@permission.user.email]
-        Myp.send_email(to, @subject, content.html_safe, cc)
+        
+        @permission.user.send_message(@body, @body, @subject, cc: cc, reply_to: User.current_user.email)
 
         return redirect_to @permission.path,
           :flash => { :notice =>
