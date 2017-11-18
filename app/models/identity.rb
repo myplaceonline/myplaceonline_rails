@@ -829,4 +829,12 @@ class Identity < ApplicationRecord
     self.ensure_contact!
     Myplet.default_myplets(self)
   end
+  
+  def find_connection_by_user(user)
+    Connection.where(
+      identity_id: self.id,
+      connection_status: Connection::STATUS_CONNECTED,
+      user: user,
+    ).take
+  end
 end

@@ -48,7 +48,9 @@ class PermissionsController < MyplaceonlineController
           cc = User.current_user.email
         end
         
-        @permission.user.send_message(@body, @body, @subject, cc: cc, reply_to: User.current_user.email)
+        user_contact = MyplaceonlineExecutionContext.identity.find_connection_by_user(@permission.user).contact
+        
+        user_contact.send_message(@body, @body, @subject, cc: cc, reply_to: User.current_user.email)
 
         return redirect_to @permission.path,
           :flash => { :notice =>
