@@ -14,6 +14,8 @@ class Stock < ApplicationRecord
 
   child_property(name: :password)
   
+  child_files
+  
   def self.calendar_item_display(calendar_item)
     stock = calendar_item.find_model_object
     I18n.t(

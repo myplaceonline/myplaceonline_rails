@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171118012131) do
+ActiveRecord::Schema.define(version: 20171118222356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4920,6 +4920,18 @@ ActiveRecord::Schema.define(version: 20171118012131) do
     t.index ["identity_id"], name: "index_statuses_on_identity_id"
   end
 
+  create_table "stock_files", force: :cascade do |t|
+    t.bigint "stock_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_stock_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_stock_files_on_identity_id"
+    t.index ["stock_id"], name: "index_stock_files_on_stock_id"
+  end
+
   create_table "stocks", id: :serial, force: :cascade do |t|
     t.integer "company_id"
     t.integer "num_shares"
@@ -6790,6 +6802,9 @@ ActiveRecord::Schema.define(version: 20171118012131) do
   add_foreign_key "ssh_keys", "identities"
   add_foreign_key "ssh_keys", "passwords"
   add_foreign_key "statuses", "identities", name: "statuses_identity_id_fk"
+  add_foreign_key "stock_files", "identities"
+  add_foreign_key "stock_files", "identity_files"
+  add_foreign_key "stock_files", "stocks"
   add_foreign_key "stocks", "companies", name: "stocks_company_id_fk"
   add_foreign_key "stocks", "identities", name: "stocks_identity_id_fk"
   add_foreign_key "stocks", "passwords", name: "stocks_password_id_fk"
