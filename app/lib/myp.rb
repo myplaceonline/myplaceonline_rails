@@ -2363,7 +2363,7 @@ module Myp
     results
   end
   
-  def self.highly_visited(user, limit: 10, min_visit_count: 5)
+  def self.highly_visited(user, limit: 10, min_visit_count: 5, min_shared_visit_count: 20)
     Myp.log_response_time(
       name: "Myp.highly_visited"
     ) do
@@ -2382,6 +2382,8 @@ module Myp
             "_uid" => permissions.map{|p| p.subject_class.singularize + "#" + p.subject_id.to_s }.to_a
           }
         }).order(visit_count: {order: :desc, missing: :_last}).limit(limit).load.objects
+
+        permissions_results.delete_if{|x| !x.respond_to?("visit_count") || (x.respond_to?("visit_count") && (x.visit_count.nil? || x.visit_count <= min_shared_visit_count)) }
         
         search_results = search_results + permissions_results
         
