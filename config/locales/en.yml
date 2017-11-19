@@ -934,6 +934,12 @@ en:
         message_preference_sms: "Text Message"
         message_preference_app: "Phone Application"
         message_preference_email_and_sms: "Email and Text Message"
+      combine: "Combine"
+      combine_title: "Combine Contacts"
+      combine_intro: "When you select another contact and click 'Combine' below, all the properties of the source contact will be copied into the destination contact and the source contact will be archived."
+      combine_source: "Source Contact"
+      combine_destination: "Destination Contact"
+      combine_complete: "Contacts successfully combined"
     files:
       name: "Name"
       download: "Download"

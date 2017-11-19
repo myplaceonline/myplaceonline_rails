@@ -240,4 +240,10 @@ class Contact < ApplicationRecord
       context_info: Conversation::CALENDAR_ITEM_CONTEXT_CONVERSATION
     )
   end
+  
+  def combine!(source)
+    # TODO
+    Myp.warn("Combining contacts for #{User.current_user}, dest: #{self}, source: #{source}")
+    self.save!
+  end
 end

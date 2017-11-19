@@ -54,6 +54,17 @@ module MyplaceonlineActiveRecordBaseConcern
       result << " { id: #{self.id} }"
       result
     end
+    
+    def archive!
+      # Some models have after_saves that do things like recalculate
+      # calendar items, but we can just surgically update this field
+      # and skip that
+      self.update_column(:archived, Time.now)
+      
+      if self.respond_to?("on_after_destroy")
+        self.on_after_destroy
+      end
+    end
   end
   
   class_methods do

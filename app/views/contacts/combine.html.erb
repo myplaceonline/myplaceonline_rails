@@ -1,0 +1,42 @@
+<% content_for :heading do -%><%= t("myplaceonline.contacts.combine_title") %><% end -%>
+
+<h1><%= t("myplaceonline.contacts.combine_title") %></h1>
+
+<%= flashes!(@obj) %>
+
+<%= form_for @obj, url: { action: "combine" } do |f| %>
+
+  <p><%= t("myplaceonline.contacts.combine_intro") %></p>
+  <p><%= t("myplaceonline.contacts.combine_source") %>: <%= link_to(@obj.display, contact_path(@obj)) %></p>
+
+  <%=
+    render partial: "myplaceonline/select_or_create", locals: {
+      f: f,
+      name: :contact,
+      heading: t("myplaceonline.contacts.combine_destination"),
+      objform: "contacts/form",
+      existingobjurl: "contact_path",
+      searchurl: "/contacts.json?perpage=0",
+      edit: false,
+      autofocus: true,
+      allow_new: false,
+      collapsed: false,
+      force_existing: true,
+    }
+  %>
+  
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.contacts.combine"), "data-icon" => "gear", "data-iconpos" => "top", "style" => "background-color: green")
+        },
+        {
+          title: I18n.t("myplaceonline.general.cancel"),
+          link: controller.obj_path,
+          icon: "back"
+        },
+      ]
+    })
+  %>
+<% end %>

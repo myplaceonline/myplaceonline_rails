@@ -64,6 +64,26 @@ class ContactsController < MyplaceonlineController
     end
   end
   
+  def combine
+    set_obj
+    
+    destination = params.dig(:contact, :contact, :id)
+    if !destination.blank?
+      destination_contact = Contact.where(identity: MyplaceonlineExecutionContext.identity, id: destination.to_i).take!
+      if destination_contact.id != @obj.id
+        ActiveRecord::Base.transaction do
+          destination_contact.combine!(@obj)
+          
+          Connection.where(identity: MyplaceonlineExecutionContext.identity, contact: @obj).update_all(contact_id: destination_contact.id)
+          
+          @obj.archive!
+        end
+        
+        redirect_to(index_path, flash: { notice: I18n.t("myplaceonline.contacts.combine_complete") })
+      end
+    end
+  end
+  
   def footer_items_index
     super + [
       {
@@ -91,6 +111,11 @@ class ContactsController < MyplaceonlineController
         title: I18n.t("myplaceonline.contacts.conversations"),
         link: contact_conversations_path(@obj),
         icon: "phone"
+      },
+      {
+        title: I18n.t("myplaceonline.contacts.combine"),
+        link: contact_combine_path(@obj),
+        icon: "grid"
       }
     ]
   end

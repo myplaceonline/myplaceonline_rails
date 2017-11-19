@@ -254,6 +254,7 @@ Rails.application.routes.draw do
     ],
     contacts: [
       { instance: true, link: "groups" },
+      { instance: true, link: "combine" },
       {
         subresources: true,
         name: :conversations

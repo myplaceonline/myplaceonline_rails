@@ -12,7 +12,11 @@ class Connection < ApplicationRecord
   child_property(name: :contact, destroy_dependent: true)
 
   def display
-    user.display
+    if !contact.nil?
+      contact.display
+    else
+      user.display
+    end
   end
   
   validate do

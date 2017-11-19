@@ -954,14 +954,8 @@ class MyplaceonlineController < ApplicationController
   def archive(notice: I18n.t("myplaceonline.general.archived"))
     initial_checks
     set_obj
-    # Some models have after_saves that do things like recalculate
-    # calendar items, but we can just surgically update this field
-    # and skip that
-    @obj.update_column(:archived, Time.now)
     
-    if @obj.respond_to?("on_after_destroy")
-      @obj.on_after_destroy
-    end
+    @obj.archive!
     
     redirect_to index_path,
       :flash => { :notice => notice }
