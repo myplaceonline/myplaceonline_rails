@@ -27,7 +27,7 @@ class WebsiteDomainMyplet < ApplicationRecord
       :notes,
       :singleton,
       :emulate_guest,
-      :action,
+      :action_string,
       category_attributes: [:id],
       website_domain_myplet_parameters_attributes: WebsiteDomainMypletParameter.params,
     ]
@@ -57,7 +57,7 @@ class WebsiteDomainMyplet < ApplicationRecord
       category_id: new_myplet.nil? ? nil : new_myplet.id,
       border_type: self.border_type,
       identity: target_identity,
-      action: self.action,
+      action_string: self.action_string,
     })
   end
   

@@ -262,6 +262,7 @@ en:
       website_domain_myplets: "Myplets"
       categories: "Categories"
       dna_analyses: "DNA Analyses"
+      internal_contents: "Internal Contents"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"

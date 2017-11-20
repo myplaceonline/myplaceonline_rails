@@ -55,8 +55,8 @@ class Myplet < ApplicationRecord
   
   def homepage_action
     result = :show
-    if !self.action.blank?
-      result = self.action
+    if !self.action_string.blank?
+      result = self.action_string
     else
       if self.category_id.nil?
         result = :index

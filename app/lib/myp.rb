@@ -490,17 +490,7 @@ module Myp
               @@default_website_domain = website_domain
             end
             
-            html = website_domain.static_homepage
-
-            if !html.blank?
-              if Myp::EXTRA_DEBUG
-                Rails.logger.debug{"Myp.reinitialize_in_rails_context preparing static homepage #{html}"}
-              end
-              
-              html = self.prepare_website_domain_html(html: html)
-            end
-            
-            #Rails.logger.debug{"Homepage for #{website_domain.display}:\n#{html}"}
+            html = website_domain.processed_static_homepage
             
             website_domain.hosts.split(",").each do |matching_host|
               if !matching_host.blank?

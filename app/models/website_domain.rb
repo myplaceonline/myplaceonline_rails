@@ -79,4 +79,28 @@ class WebsiteDomain < ApplicationRecord
     end
     result
   end
+  
+  def processed_static_homepage
+    html = self.static_homepage
+    
+    if !html.blank?
+      if Myp::EXTRA_DEBUG
+        Rails.logger.debug{"Myp.reinitialize_in_rails_context preparing static homepage #{html}"}
+      end
+      
+      html = Myp.prepare_website_domain_html(html: html)
+    end
+    
+    #Rails.logger.debug{"Homepage for #{website_domain.display}:\n#{html}"}
+    
+    html
+  end
+
+  after_commit :on_after_update, on: [:update]
+  
+  def on_after_update
+    if self.verified && Rails.env.development?
+      Myp.reinitialize
+    end
+  end
 end
