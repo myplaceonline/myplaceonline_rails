@@ -2916,8 +2916,9 @@ en:
       website_domain_myplet_parameter: "Parameter"
       add_website_domain_myplet_parameter: "Add Parameter"
       delete_website_domain_myplet_parameter: "Delete Parameter"
-      singleton: "Show Category Index"
+      singleton: "Show Static Action"
       emulate_guest: "Show as Guest"
+      action: "Action"
     website_domain_myplet_parameters:
       name: "Name"
       val: "Value"

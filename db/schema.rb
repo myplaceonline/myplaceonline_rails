@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171120032801) do
+ActiveRecord::Schema.define(version: 20171120041153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3882,6 +3882,7 @@ ActiveRecord::Schema.define(version: 20171120032801) do
     t.datetime "archived"
     t.integer "rating"
     t.boolean "is_public"
+    t.string "action"
     t.index ["identity_id"], name: "index_myplets_on_identity_id"
   end
 
@@ -6236,6 +6237,7 @@ ActiveRecord::Schema.define(version: 20171120032801) do
     t.boolean "singleton"
     t.boolean "emulate_guest"
     t.boolean "is_public"
+    t.string "action"
     t.index ["category_id"], name: "index_website_domain_myplets_on_category_id"
     t.index ["identity_id"], name: "index_website_domain_myplets_on_identity_id"
     t.index ["website_domain_id"], name: "index_website_domain_myplets_on_website_domain_id"

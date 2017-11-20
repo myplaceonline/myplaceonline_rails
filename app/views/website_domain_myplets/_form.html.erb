@@ -53,6 +53,15 @@
   )
 %>
 <%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :action,
+    value: obj.action,
+    placeholder: "myplaceonline.website_domain_myplets.action",
+  )
+%>
+<%=
   render(layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.website_domain_myplets.website_domain_myplet_parameters"),

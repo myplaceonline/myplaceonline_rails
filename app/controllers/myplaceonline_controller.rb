@@ -1219,6 +1219,15 @@ class MyplaceonlineController < ApplicationController
     
     result
   end
+
+  def public
+    @myplet = params[:myplet]
+    if !@myplet
+      render action: "public"
+    else
+      render action: "public", layout: "myplet"
+    end
+  end
   
   protected
   

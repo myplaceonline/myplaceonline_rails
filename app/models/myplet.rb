@@ -54,16 +54,22 @@ class Myplet < ApplicationRecord
   end
   
   def homepage_action
-    if self.category_id.nil?
-      :index
+    result = :show
+    if !self.action.blank?
+      result = self.action
     else
-      model = Object.const_get(self.category_name.camelize.singularize)
-      if model.respond_to?("evaluate_myplet_homepage_action?")
-        obj = model.find(self.category_id)
-        obj.myplet_homepage_action
+      if self.category_id.nil?
+        result = :index
       else
-        :show
+        model = Object.const_get(self.category_name.camelize.singularize)
+        if model.respond_to?("evaluate_myplet_homepage_action?")
+          obj = model.find(self.category_id)
+          result = obj.myplet_homepage_action
+        else
+          result = :show
+        end
       end
     end
+    result
   end
 end
