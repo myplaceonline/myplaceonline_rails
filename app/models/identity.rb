@@ -286,6 +286,7 @@ class Identity < ApplicationRecord
   has_many :translations, :dependent => :destroy
   has_many :boycotts, :dependent => :destroy
   has_many :reminders, :dependent => :destroy
+  has_many :reputation_reports, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 
@@ -529,6 +530,7 @@ class Identity < ApplicationRecord
       :boycotts => boycotts.to_a.map{|x| x.as_json},
       :reminders => reminders.to_a.map{|x| x.as_json},
       :dna_analyses => dna_analyses.to_a.map{|x| x.as_json},
+      :reputation_reports => reputation_reports.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json},
     })
   end

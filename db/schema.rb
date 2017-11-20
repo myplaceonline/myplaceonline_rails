@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171120051723) do
+ActiveRecord::Schema.define(version: 20171120061536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4890,6 +4890,33 @@ ActiveRecord::Schema.define(version: 20171120051723) do
     t.index ["identity_id"], name: "index_repeats_on_identity_id"
   end
 
+  create_table "reputation_report_files", force: :cascade do |t|
+    t.bigint "reputation_report_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_reputation_report_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_reputation_report_files_on_identity_id"
+    t.index ["reputation_report_id"], name: "index_reputation_report_files_on_reputation_report_id"
+  end
+
+  create_table "reputation_reports", force: :cascade do |t|
+    t.string "short_description"
+    t.text "story"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "report_status"
+    t.index ["identity_id"], name: "index_reputation_reports_on_identity_id"
+  end
+
   create_table "restaurant_pictures", id: :serial, force: :cascade do |t|
     t.integer "restaurant_id"
     t.integer "identity_file_id"
@@ -7139,6 +7166,10 @@ ActiveRecord::Schema.define(version: 20171120051723) do
   add_foreign_key "reminders", "calendar_items"
   add_foreign_key "reminders", "identities"
   add_foreign_key "repeats", "identities", name: "repeats_identity_id_fk"
+  add_foreign_key "reputation_report_files", "identities"
+  add_foreign_key "reputation_report_files", "identity_files"
+  add_foreign_key "reputation_report_files", "reputation_reports"
+  add_foreign_key "reputation_reports", "identities"
   add_foreign_key "restaurant_pictures", "identities"
   add_foreign_key "restaurant_pictures", "identity_files"
   add_foreign_key "restaurant_pictures", "restaurants"

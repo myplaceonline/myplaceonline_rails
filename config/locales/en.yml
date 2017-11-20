@@ -263,6 +263,7 @@ en:
       categories: "Categories"
       dna_analyses: "DNA Analyses"
       internal_contents: "Internal Contents"
+      reputation_reports: "Reputation Reports"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -3816,3 +3817,10 @@ en:
       snp_types:
         ncbi_rs: "NCBI RS#"
         23andme: "23andme Internal Identifier"
+    reputation_reports:
+      short_description: "Short Description"
+      story: "Story"
+      report_status: "Status"
+      report_statuses:
+        pending_review: "Pending Review"
+      add_intro: "A short description, story, and details about the person or group are required, and everything else is optional."

@@ -1,0 +1,2 @@
+module ReputationReportsHelper
+end
