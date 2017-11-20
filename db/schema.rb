@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171118222356) do
+ActiveRecord::Schema.define(version: 20171120021117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4289,6 +4289,15 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.index ["identity_id"], name: "index_psychological_evaluations_on_identity_id"
   end
 
+  create_table "public_searches", force: :cascade do |t|
+    t.string "category"
+    t.bigint "identity_id"
+    t.datetime "archived"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_public_searches_on_identity_id"
+  end
+
   create_table "quest_files", id: :serial, force: :cascade do |t|
     t.integer "quest_id"
     t.integer "identity_file_id"
@@ -6719,6 +6728,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
   add_foreign_key "psychological_evaluation_files", "psychological_evaluations"
   add_foreign_key "psychological_evaluations", "contacts", column: "evaluator_id"
   add_foreign_key "psychological_evaluations", "identities"
+  add_foreign_key "public_searches", "identities"
   add_foreign_key "quest_files", "identities"
   add_foreign_key "quest_files", "identity_files"
   add_foreign_key "quest_files", "quests"

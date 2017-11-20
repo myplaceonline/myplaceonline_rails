@@ -262,6 +262,7 @@ en:
       website_domain_myplets: "Myplets"
       categories: "Categories"
       dna_analyses: "DNA Analyses"
+      public_searches: "Public Searches"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -3814,3 +3815,5 @@ en:
       snp_types:
         ncbi_rs: "NCBI RS#"
         23andme: "23andme Internal Identifier"
+    public_searches:
+      category: "Category"

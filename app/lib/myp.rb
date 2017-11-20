@@ -721,6 +721,8 @@ module Myp
     end
     where_clause += ")"
     
+    where_clause += " AND (categories.internal = 'f' OR categories.internal IS NULL)"
+    
     if !parent.nil?
       if parent == -1
         where_clause += " AND categories.parent_id IS NULL"
@@ -1053,10 +1055,12 @@ module Myp
   end
   
   def self.visit(user, categoryName)
-    category = Myp.categories(user)[categoryName]
+    category = Myp.all_categories[categoryName]
+    
     if category.nil?
-      raise "Could not find category " + categoryName + " (check Myp.website_init)"
+      raise "Could not find category " + categoryName
     end
+    
     cpa = CategoryPointsAmount.find_or_create_by(
       identity: user.current_identity,
       category: category
@@ -1094,9 +1098,9 @@ module Myp
       #user.current_identity.save
       ApplicationRecord.connection.update("update identities set points = #{user.current_identity.points} where id = #{user.current_identity.id}")
       
-      category = Myp.categories(user)[categoryName]
+      category = Myp.all_categories[categoryName]
       if category.nil?
-        raise "Could not find category " + categoryName + " (check Myp.website_init)"
+        raise "Could not find category " + categoryName
       end
       
       while !category.nil? do
