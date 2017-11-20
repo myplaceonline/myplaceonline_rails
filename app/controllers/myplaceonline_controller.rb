@@ -997,13 +997,8 @@ class MyplaceonlineController < ApplicationController
     set_obj
     
     if !has_public_permission?
-      Permission.create!(
-        identity: User.current_user.current_identity,
-        subject_class: self.model.name.underscore.pluralize,
-        subject_id: @obj.id,
-        action: Permission::ACTION_READ,
-        valid_guest_actions: self.publicly_shareable_actions.map{|x| x.to_s}.join(",")
-      )
+      @obj.is_public = true
+      @obj.save!
     end
 
     redirect_to(
@@ -1013,22 +1008,15 @@ class MyplaceonlineController < ApplicationController
   end
   
   def has_public_permission?
-    !Permission.where(
-      "user_id IS NULL and subject_class = :subject_class and subject_id = :subject_id",
-      subject_class: self.model.name.underscore.pluralize,
-      subject_id: @obj.id
-    ).first.nil?
+    @obj.is_public?
   end
   
   def remove_public
     initial_checks
     set_obj
     
-    permission = Permission.where(
-      "user_id IS NULL and subject_class = :subject_class and subject_id = :subject_id",
-      subject_class: self.model.name.underscore.pluralize,
-      subject_id: @obj.id
-    ).destroy_all
+    @obj.is_public = false
+    @obj.save!
     
     redirect_to(
       obj_path,

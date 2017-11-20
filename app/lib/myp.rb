@@ -2180,75 +2180,76 @@ module Myp
       if !search.blank?
         
         Rails.logger.debug{"full_text_search: user: #{user.current_identity_id}, filters: #{filters.inspect}, category: #{category}, parent_category: #{parent_category}, display_category_prefix: #{display_category_prefix}, display_category_icon: #{display_category_icon}, only_public: #{only_public}"}
-
+        
         if !only_public
-          if filters.size > 0
-            filters = {
-              bool: {
-                must: 
-                  filters.merge!(
-                    { identity_id: user.current_identity_id }
-                  ).keys.map{|key|
-                    { term: { key => filters[key] } }
-                  }.to_a
-              }
+          filters[:identity_id] = user.current_identity_id
+        else
+          filters[:is_public] = true
+        end
+        
+        terms = filters.map{|key, val|
+          {
+            term: {
+              key => val
             }
-          else
-            filters = {
-              term: {
-                identity_id: user.current_identity_id
-              }
+          }
+        }.to_a
+
+        if terms.size == 1
+          filters = terms[0]
+        else
+          filters = {
+            bool: {
+              must: terms
             }
-          end
-          
-          # http://stackoverflow.com/questions/37082797/elastic-search-edge-ngram-match-query-on-all-being-ignored
-          
-          if category.blank?
-            query = {
-              bool: {
-                must: {
+          }
+        end
+        
+        Rails.logger.debug{"full_text_search: filters: #{filters}"}
+
+        # http://stackoverflow.com/questions/37082797/elastic-search-edge-ngram-match-query-on-all-being-ignored
+        
+        if category.blank?
+          query = {
+            bool: {
+              must: {
+                match: {
+                  _all: search
+                }
+              },
+              filter: filters
+            }
+          }
+        else
+          query = {
+            bool: {
+              must: [
+                {
                   match: {
                     _all: search
                   }
                 },
-                filter: filters
-              }
-            }
-          else
-            query = {
-              bool: {
-                must: [
-                  {
-                    match: {
-                      _all: search
-                    }
-                  },
-                  {
-                    match: {
-                      _type: category.singularize
-                    }
+                {
+                  match: {
+                    _type: category.singularize
                   }
-                ],
-                filter: filters
-              }
+                }
+              ],
+              filter: filters
             }
-          end
-          
-          # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html
-          search_results = UserIndex.query(query).order(visit_count: {order: :desc, missing: :_last}).limit(10).load.objects
-          
-          results = Myp.process_search_results(
-            search_results,
-            parent_category,
-            original_search,
-            display_category_prefix: display_category_prefix,
-            display_category_icon: display_category_icon
-          )
-        else
-          Permission.where(
-            subject_class: category,
-          )
+          }
         end
+        
+        # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html
+        search_results = UserIndex.query(query).order(visit_count: {order: :desc, missing: :_last}).limit(10).load.objects
+        
+        results = Myp.process_search_results(
+          search_results,
+          parent_category,
+          original_search,
+          display_category_prefix: display_category_prefix,
+          display_category_icon: display_category_icon
+        )
       else
         results = []
       end

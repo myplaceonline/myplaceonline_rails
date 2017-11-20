@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171118222356) do
+ActiveRecord::Schema.define(version: 20171120032801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_accomplishments_on_identity_id"
   end
 
@@ -36,6 +37,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "position"
+    t.boolean "is_public"
     t.index ["acne_measurement_id"], name: "index_acne_measurement_pictures_on_acne_measurement_id"
     t.index ["identity_file_id"], name: "index_acne_measurement_pictures_on_identity_file_id"
     t.index ["identity_id"], name: "index_acne_measurement_pictures_on_identity_id"
@@ -53,6 +55,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_acne_measurements_on_identity_id"
   end
 
@@ -65,6 +68,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.text "notes"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_activities_on_identity_id"
   end
 
@@ -77,6 +81,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["email_id"], name: "index_admin_emails_on_email_id"
     t.index ["identity_id"], name: "index_admin_emails_on_identity_id"
   end
@@ -90,6 +95,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_admin_text_messages_on_identity_id"
     t.index ["text_message_id"], name: "index_admin_text_messages_on_text_message_id"
   end
@@ -101,6 +107,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.boolean "suppress_hotel"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_alerts_displays_on_identity_id"
   end
 
@@ -113,6 +120,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_annuities_on_identity_id"
   end
 
@@ -125,6 +133,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["apartment_lease_id"], name: "index_apartment_lease_files_on_apartment_lease_id"
     t.index ["identity_file_id"], name: "index_apartment_lease_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_apartment_lease_files_on_identity_id"
@@ -143,6 +152,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["apartment_id"], name: "index_apartment_leases_on_apartment_id"
     t.index ["identity_id"], name: "index_apartment_leases_on_identity_id"
   end
@@ -156,6 +166,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "position"
+    t.boolean "is_public"
     t.index ["apartment_id"], name: "index_apartment_pictures_on_apartment_id"
     t.index ["identity_file_id"], name: "index_apartment_pictures_on_identity_file_id"
     t.index ["identity_id"], name: "index_apartment_pictures_on_identity_id"
@@ -171,6 +182,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "repeat_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["apartment_id"], name: "index_apartment_trash_pickups_on_apartment_id"
     t.index ["identity_id"], name: "index_apartment_trash_pickups_on_identity_id"
     t.index ["repeat_id"], name: "index_apartment_trash_pickups_on_repeat_id"
@@ -186,6 +198,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_apartments_on_identity_id"
     t.index ["landlord_id"], name: "index_apartments_on_landlord_id"
     t.index ["location_id"], name: "index_apartments_on_location_id"
@@ -210,6 +223,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_awesome_lists_on_identity_id"
     t.index ["location_id"], name: "index_awesome_lists_on_location_id"
   end
@@ -231,6 +245,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "visit_count"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["account_number_encrypted_id"], name: "index_bank_accounts_on_account_number_encrypted_id"
     t.index ["company_id"], name: "index_bank_accounts_on_company_id"
     t.index ["home_address_id"], name: "index_bank_accounts_on_home_address_id"
@@ -249,6 +264,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "position"
+    t.boolean "is_public"
     t.index ["bar_id"], name: "index_bar_pictures_on_bar_id"
     t.index ["identity_file_id"], name: "index_bar_pictures_on_identity_file_id"
     t.index ["identity_id"], name: "index_bar_pictures_on_identity_id"
@@ -263,6 +279,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "archived"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_bars_on_identity_id"
     t.index ["location_id"], name: "index_bars_on_location_id"
   end
@@ -277,6 +294,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_beaches_on_identity_id"
     t.index ["location_id"], name: "index_beaches_on_location_id"
   end
@@ -289,6 +307,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["bet_id"], name: "index_bet_contacts_on_bet_id"
     t.index ["contact_id"], name: "index_bet_contacts_on_contact_id"
     t.index ["identity_id"], name: "index_bet_contacts_on_identity_id"
@@ -310,6 +329,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "rating"
     t.string "bet_currency"
     t.integer "bet_status"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_bets_on_identity_id"
   end
 
@@ -320,6 +340,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["bill_id"], name: "index_bill_files_on_bill_id"
     t.index ["identity_file_id"], name: "index_bill_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_bill_files_on_identity_id"
@@ -336,6 +357,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_bills_on_identity_id"
   end
 
@@ -346,6 +368,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["blog_id"], name: "index_blog_files_on_blog_id"
     t.index ["identity_file_id"], name: "index_blog_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_blog_files_on_identity_id"
@@ -364,6 +387,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "commenter_identity_id"
+    t.boolean "is_public"
     t.index ["blog_post_id"], name: "index_blog_post_comments_on_blog_post_id"
     t.index ["commenter_identity_id"], name: "index_blog_post_comments_on_commenter_identity_id"
     t.index ["identity_id"], name: "index_blog_post_comments_on_identity_id"
@@ -384,6 +408,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "edit_type"
     t.boolean "last_updated_bottom"
     t.datetime "post_date"
+    t.boolean "is_public"
     t.index ["blog_id"], name: "index_blog_posts_on_blog_id"
     t.index ["identity_id"], name: "index_blog_posts_on_identity_id"
   end
@@ -398,6 +423,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "main_post_id"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_blogs_on_identity_id"
     t.index ["main_post_id"], name: "index_blogs_on_main_post_id"
   end
@@ -414,6 +440,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.text "notes"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_blood_concentrations_on_identity_id"
   end
 
@@ -428,6 +455,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_blood_pressures_on_identity_id"
   end
 
@@ -440,6 +468,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["blood_test_id"], name: "index_blood_test_files_on_blood_test_id"
     t.index ["identity_file_id"], name: "index_blood_test_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_blood_test_files_on_identity_id"
@@ -455,6 +484,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "flag"
+    t.boolean "is_public"
     t.index ["blood_concentration_id"], name: "index_blood_test_results_on_blood_concentration_id"
     t.index ["blood_test_id"], name: "index_blood_test_results_on_blood_test_id"
     t.index ["identity_id"], name: "index_blood_test_results_on_identity_id"
@@ -473,6 +503,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.string "preceding_changes"
+    t.boolean "is_public"
     t.index ["doctor_id"], name: "index_blood_tests_on_doctor_id"
     t.index ["identity_id"], name: "index_blood_tests_on_identity_id"
     t.index ["location_id"], name: "index_blood_tests_on_location_id"
@@ -485,6 +516,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["book_id"], name: "index_book_files_on_book_id"
     t.index ["identity_file_id"], name: "index_book_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_book_files_on_identity_id"
@@ -499,6 +531,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "quote_id"
+    t.boolean "is_public"
     t.index ["book_id"], name: "index_book_quotes_on_book_id"
     t.index ["identity_id"], name: "index_book_quotes_on_identity_id"
     t.index ["quote_id"], name: "index_book_quotes_on_quote_id"
@@ -512,6 +545,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "archived"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_book_stores_on_identity_id"
     t.index ["location_id"], name: "index_book_stores_on_location_id"
   end
@@ -540,6 +574,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "when_discarded"
     t.integer "gift_from_id"
     t.string "book_location"
+    t.boolean "is_public"
     t.index ["borrowed_from_id"], name: "index_books_on_borrowed_from_id"
     t.index ["gift_from_id"], name: "index_books_on_gift_from_id"
     t.index ["identity_id"], name: "index_books_on_identity_id"
@@ -557,6 +592,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_boycotts_on_identity_id"
   end
 
@@ -569,6 +605,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["business_card_id"], name: "index_business_card_files_on_business_card_id"
     t.index ["identity_file_id"], name: "index_business_card_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_business_card_files_on_identity_id"
@@ -583,6 +620,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["contact_id"], name: "index_business_cards_on_contact_id"
     t.index ["identity_id"], name: "index_business_cards_on_identity_id"
   end
@@ -596,6 +634,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "archived"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_cafes_on_identity_id"
     t.index ["location_id"], name: "index_cafes_on_location_id"
   end
@@ -609,6 +648,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_calculation_elements_on_identity_id"
     t.index ["left_operand_id"], name: "index_calculation_elements_on_left_operand_id"
     t.index ["right_operand_id"], name: "index_calculation_elements_on_right_operand_id"
@@ -625,6 +665,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_calculation_forms_on_identity_id"
     t.index ["root_element_id"], name: "index_calculation_forms_on_root_element_id"
   end
@@ -639,6 +680,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["calculation_form_id"], name: "index_calculation_inputs_on_calculation_form_id"
     t.index ["identity_id"], name: "index_calculation_inputs_on_identity_id"
   end
@@ -652,6 +694,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["calculation_element_id"], name: "index_calculation_operands_on_calculation_element_id"
     t.index ["identity_id"], name: "index_calculation_operands_on_identity_id"
   end
@@ -667,6 +710,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["calculation_form_id"], name: "index_calculations_on_calculation_form_id"
     t.index ["identity_id"], name: "index_calculations_on_identity_id"
   end
@@ -680,6 +724,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "calendar_item_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["calendar_id"], name: "index_calendar_item_reminder_pendings_on_calendar_id"
     t.index ["calendar_item_id"], name: "index_calendar_item_reminder_pendings_on_calendar_item_id"
     t.index ["calendar_item_reminder_id"], name: "index_calendar_item_reminder_pendings_on_cir_id"
@@ -700,6 +745,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "max_pending"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["calendar_item_id"], name: "index_calendar_item_reminders_on_calendar_item_id"
     t.index ["identity_id"], name: "index_calendar_item_reminders_on_identity_id"
   end
@@ -720,6 +766,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.boolean "is_repeat"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["calendar_id"], name: "index_calendar_items_on_calendar_id"
     t.index ["identity_id"], name: "index_calendar_items_on_identity_id"
   end
@@ -757,6 +804,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "website_domain_registration_threshold"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_calendars_on_identity_id"
   end
 
@@ -789,6 +837,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.boolean "near_busy_road"
     t.boolean "level_ground"
     t.decimal "nightly_cost", precision: 10, scale: 2
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_camp_locations_on_identity_id"
     t.index ["location_id"], name: "index_camp_locations_on_location_id"
     t.index ["membership_id"], name: "index_camp_locations_on_membership_id"
@@ -807,6 +856,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.boolean "default_cashback"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_cashbacks_on_identity_id"
   end
 
@@ -839,6 +889,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "target_identity_id"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_category_permissions_on_identity_id"
     t.index ["target_identity_id"], name: "index_category_permissions_on_target_identity_id"
     t.index ["user_id"], name: "index_category_permissions_on_user_id"
@@ -854,6 +905,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "last_visit"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["category_id"], name: "index_category_points_amounts_on_category_id"
     t.index ["identity_id"], name: "index_category_points_amounts_on_identity_id"
   end
@@ -867,6 +919,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "archived"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_charities_on_identity_id"
     t.index ["location_id"], name: "index_charities_on_location_id"
   end
@@ -878,6 +931,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["check_id"], name: "index_check_files_on_check_id"
     t.index ["identity_file_id"], name: "index_check_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_check_files_on_identity_id"
@@ -892,6 +946,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["checklist_id"], name: "index_checklist_items_on_checklist_id"
     t.index ["identity_id"], name: "index_checklist_items_on_identity_id"
   end
@@ -905,6 +960,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["checklist_id"], name: "index_checklist_references_on_checklist_id"
     t.index ["checklist_parent_id"], name: "index_checklist_references_on_checklist_parent_id"
     t.index ["identity_id"], name: "index_checklist_references_on_identity_id"
@@ -918,6 +974,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_checklists_on_identity_id"
   end
 
@@ -936,6 +993,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["bank_account_id"], name: "index_checks_on_bank_account_id"
     t.index ["company_id"], name: "index_checks_on_company_id"
     t.index ["contact_id"], name: "index_checks_on_contact_id"
@@ -950,6 +1008,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "company_identity_id"
+    t.boolean "is_public"
     t.index ["company_identity_id"], name: "index_companies_on_company_identity_id"
     t.index ["identity_id"], name: "index_companies_on_identity_id"
   end
@@ -961,6 +1020,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["company_interaction_id"], name: "index_company_interaction_files_on_company_interaction_id"
     t.index ["identity_file_id"], name: "index_company_interaction_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_company_interaction_files_on_identity_id"
@@ -976,6 +1036,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["company_id"], name: "index_company_interactions_on_company_id"
     t.index ["identity_id"], name: "index_company_interactions_on_identity_id"
   end
@@ -993,6 +1054,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "calendar_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["calendar_id"], name: "index_complete_due_items_on_calendar_id"
     t.index ["identity_id"], name: "index_complete_due_items_on_identity_id"
   end
@@ -1006,6 +1068,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.string "username"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["computer_id"], name: "index_computer_ssh_keys_on_computer_id"
     t.index ["identity_id"], name: "index_computer_ssh_keys_on_identity_id"
     t.index ["ssh_key_id"], name: "index_computer_ssh_keys_on_ssh_key_id"
@@ -1040,6 +1103,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.string "hostname"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["administrator_id"], name: "index_computers_on_administrator_id"
     t.index ["identity_id"], name: "index_computers_on_identity_id"
     t.index ["main_user_id"], name: "index_computers_on_main_user_id"
@@ -1054,6 +1118,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["concert_id"], name: "index_concert_musical_groups_on_concert_id"
     t.index ["identity_id"], name: "index_concert_musical_groups_on_identity_id"
     t.index ["musical_group_id"], name: "index_concert_musical_groups_on_musical_group_id"
@@ -1068,6 +1133,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "position"
+    t.boolean "is_public"
     t.index ["concert_id"], name: "index_concert_pictures_on_concert_id"
     t.index ["identity_file_id"], name: "index_concert_pictures_on_identity_file_id"
     t.index ["identity_id"], name: "index_concert_pictures_on_identity_id"
@@ -1084,6 +1150,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_concerts_on_identity_id"
     t.index ["location_id"], name: "index_concerts_on_location_id"
   end
@@ -1099,6 +1166,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "contact_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["contact_id"], name: "index_connections_on_contact_id"
     t.index ["identity_id"], name: "index_connections_on_identity_id"
     t.index ["user_id"], name: "index_connections_on_user_id"
@@ -1114,6 +1182,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["food_id"], name: "index_consumed_foods_on_food_id"
     t.index ["identity_id"], name: "index_consumed_foods_on_identity_id"
   end
@@ -1127,6 +1196,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["contact_identity_id"], name: "index_contacts_on_contact_identity_id"
     t.index ["identity_id"], name: "index_contacts_on_identity_id"
   end
@@ -1138,6 +1208,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["conversation_id"], name: "index_conversation_files_on_conversation_id"
     t.index ["identity_file_id"], name: "index_conversation_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_conversation_files_on_identity_id"
@@ -1152,6 +1223,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["contact_id"], name: "index_conversations_on_contact_id"
     t.index ["identity_id"], name: "index_conversations_on_identity_id"
   end
@@ -1164,6 +1236,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["cashback_id"], name: "index_credit_card_cashbacks_on_cashback_id"
     t.index ["credit_card_id"], name: "index_credit_card_cashbacks_on_credit_card_id"
     t.index ["identity_id"], name: "index_credit_card_cashbacks_on_identity_id"
@@ -1176,6 +1249,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["credit_card_id"], name: "index_credit_card_files_on_credit_card_id"
     t.index ["identity_file_id"], name: "index_credit_card_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_credit_card_files_on_identity_id"
@@ -1204,6 +1278,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.boolean "email_reminders"
     t.integer "rating"
     t.date "start_date"
+    t.boolean "is_public"
     t.index ["address_id"], name: "index_credit_cards_on_address_id"
     t.index ["expires_encrypted_id"], name: "index_credit_cards_on_expires_encrypted_id"
     t.index ["identity_id"], name: "index_credit_cards_on_identity_id"
@@ -1220,6 +1295,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["credit_score_id"], name: "index_credit_score_files_on_credit_score_id"
     t.index ["identity_file_id"], name: "index_credit_score_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_credit_score_files_on_identity_id"
@@ -1235,6 +1311,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_credit_scores_on_identity_id"
   end
 
@@ -1246,6 +1323,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_date_locations_on_identity_id"
     t.index ["location_id"], name: "index_date_locations_on_location_id"
   end
@@ -1257,6 +1335,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["dating_profile_id"], name: "index_dating_profile_files_on_dating_profile_id"
     t.index ["identity_file_id"], name: "index_dating_profile_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_dating_profile_files_on_identity_id"
@@ -1276,6 +1355,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_dating_profiles_on_identity_id"
   end
 
@@ -1301,6 +1381,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["dental_insurance_id"], name: "index_dental_insurance_files_on_dental_insurance_id"
     t.index ["identity_file_id"], name: "index_dental_insurance_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_dental_insurance_files_on_identity_id"
@@ -1322,6 +1403,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.integer "rating"
     t.datetime "archived"
+    t.boolean "is_public"
     t.index ["doctor_id"], name: "index_dental_insurances_on_doctor_id"
     t.index ["group_company_id"], name: "index_dental_insurances_on_group_company_id"
     t.index ["identity_id"], name: "index_dental_insurances_on_identity_id"
@@ -1344,6 +1426,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["dental_insurance_id"], name: "index_dentist_visits_on_dental_insurance_id"
     t.index ["dentist_id"], name: "index_dentist_visits_on_dentist_id"
     t.index ["identity_id"], name: "index_dentist_visits_on_identity_id"
@@ -1358,6 +1441,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "website_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_desired_locations_on_identity_id"
     t.index ["location_id"], name: "index_desired_locations_on_location_id"
     t.index ["website_id"], name: "index_desired_locations_on_website_id"
@@ -1372,6 +1456,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_desired_products_on_identity_id"
   end
 
@@ -1385,6 +1470,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "archived"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_dessert_locations_on_identity_id"
     t.index ["location_id"], name: "index_dessert_locations_on_location_id"
   end
@@ -1400,6 +1486,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "entry_encrypted_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["entry_encrypted_id"], name: "index_diary_entries_on_entry_encrypted_id"
     t.index ["identity_id"], name: "index_diary_entries_on_identity_id"
   end
@@ -1416,6 +1503,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.integer "food_type"
     t.bigint "reminder_id"
+    t.boolean "is_public"
     t.index ["diet_id"], name: "index_diet_foods_on_diet_id"
     t.index ["food_id"], name: "index_diet_foods_on_food_id"
     t.index ["identity_id"], name: "index_diet_foods_on_identity_id"
@@ -1435,6 +1523,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "dietary_requirement_type"
     t.integer "dietary_requirement_context"
     t.bigint "dietary_requirements_collection_id"
+    t.boolean "is_public"
     t.index ["dietary_requirements_collection_id"], name: "dr_on_drci"
     t.index ["identity_id"], name: "index_dietary_requirements_on_identity_id"
   end
@@ -1446,6 +1535,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["dietary_requirements_collection_id"], name: "drcf_on_drc"
     t.index ["identity_file_id"], name: "index_dietary_requirements_collection_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_dietary_requirements_collection_files_on_identity_id"
@@ -1460,6 +1550,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_dietary_requirements_collections_on_identity_id"
   end
 
@@ -1473,6 +1564,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["dietary_requirements_collection_id"], name: "index_diets_on_dietary_requirements_collection_id"
     t.index ["identity_id"], name: "index_diets_on_identity_id"
   end
@@ -1487,6 +1579,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "reference_genome"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_dna_analyses_on_identity_id"
     t.index ["import_id"], name: "index_dna_analyses_on_import_id"
   end
@@ -1498,6 +1591,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["doctor_visit_id"], name: "index_doctor_visit_files_on_doctor_visit_id"
     t.index ["identity_file_id"], name: "index_doctor_visit_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_doctor_visit_files_on_identity_id"
@@ -1516,6 +1610,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["doctor_id"], name: "index_doctor_visits_on_doctor_id"
     t.index ["health_insurance_id"], name: "index_doctor_visits_on_health_insurance_id"
     t.index ["identity_id"], name: "index_doctor_visits_on_identity_id"
@@ -1530,6 +1625,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["contact_id"], name: "index_doctors_on_contact_id"
     t.index ["identity_id"], name: "index_doctors_on_identity_id"
   end
@@ -1541,6 +1637,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["document_id"], name: "index_document_files_on_document_id"
     t.index ["identity_file_id"], name: "index_document_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_document_files_on_identity_id"
@@ -1558,6 +1655,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.boolean "important"
     t.date "document_date"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_documents_on_identity_id"
   end
 
@@ -1568,6 +1666,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["donation_id"], name: "index_donation_files_on_donation_id"
     t.index ["identity_file_id"], name: "index_donation_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_donation_files_on_identity_id"
@@ -1585,6 +1684,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_donations_on_identity_id"
     t.index ["location_id"], name: "index_donations_on_location_id"
   end
@@ -1598,6 +1698,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_drafts_on_identity_id"
   end
 
@@ -1613,6 +1714,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "dream_encrypted_id_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["dream_encrypted_id"], name: "index_dreams_on_dream_encrypted_id"
     t.index ["dream_encrypted_id_id"], name: "index_dreams_on_dream_encrypted_id_id"
     t.index ["identity_id"], name: "index_dreams_on_identity_id"
@@ -1629,6 +1731,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_drinks_on_identity_id"
   end
 
@@ -1639,6 +1742,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["driver_license_id"], name: "index_driver_license_files_on_driver_license_id"
     t.index ["identity_file_id"], name: "index_driver_license_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_driver_license_files_on_identity_id"
@@ -1658,6 +1762,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "region"
+    t.boolean "is_public"
     t.index ["address_id"], name: "index_driver_licenses_on_address_id"
     t.index ["identity_id"], name: "index_driver_licenses_on_identity_id"
   end
@@ -1676,6 +1781,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "calendar_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["calendar_id"], name: "index_due_items_on_calendar_id"
     t.index ["identity_id"], name: "index_due_items_on_identity_id"
   end
@@ -1687,6 +1793,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["education_id"], name: "index_education_files_on_education_id"
     t.index ["identity_file_id"], name: "index_education_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_education_files_on_identity_id"
@@ -1709,6 +1816,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "degree_type"
     t.datetime "graduated"
     t.string "student_id"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_educations_on_identity_id"
     t.index ["location_id"], name: "index_educations_on_location_id"
   end
@@ -1721,6 +1829,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_email_accounts_on_identity_id"
     t.index ["password_id"], name: "index_email_accounts_on_password_id"
   end
@@ -1733,6 +1842,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["contact_id"], name: "index_email_contacts_on_contact_id"
     t.index ["email_id"], name: "index_email_contacts_on_email_id"
     t.index ["identity_id"], name: "index_email_contacts_on_identity_id"
@@ -1746,6 +1856,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["email_id"], name: "index_email_groups_on_email_id"
     t.index ["group_id"], name: "index_email_groups_on_group_id"
     t.index ["identity_id"], name: "index_email_groups_on_identity_id"
@@ -1761,6 +1872,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["email_id"], name: "index_email_personalizations_on_email_id"
     t.index ["identity_id"], name: "index_email_personalizations_on_identity_id"
   end
@@ -1797,6 +1909,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.boolean "personalize"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_emails_on_identity_id"
   end
 
@@ -1808,6 +1921,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["email_id"], name: "index_emergency_contacts_on_email_id"
     t.index ["identity_id"], name: "index_emergency_contacts_on_identity_id"
   end
@@ -1830,6 +1944,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["contact_id"], name: "index_event_contacts_on_contact_id"
     t.index ["event_id"], name: "index_event_contacts_on_event_id"
     t.index ["identity_id"], name: "index_event_contacts_on_identity_id"
@@ -1844,6 +1959,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["event_id"], name: "index_event_pictures_on_event_id"
     t.index ["identity_file_id"], name: "index_event_pictures_on_identity_file_id"
     t.index ["identity_id"], name: "index_event_pictures_on_identity_id"
@@ -1858,6 +1974,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["event_id"], name: "index_event_rsvps_on_event_id"
     t.index ["identity_id"], name: "index_event_rsvps_on_identity_id"
   end
@@ -1869,6 +1986,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["event_id"], name: "index_event_stories_on_event_id"
     t.index ["identity_id"], name: "index_event_stories_on_identity_id"
     t.index ["story_id"], name: "index_event_stories_on_story_id"
@@ -1888,6 +2006,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.decimal "cost", precision: 10, scale: 2
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_events_on_identity_id"
     t.index ["location_id"], name: "index_events_on_location_id"
     t.index ["repeat_id"], name: "index_events_on_repeat_id"
@@ -1902,6 +2021,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["exercise_regimen_exercise_id"], name: "eref_on_erei"
     t.index ["identity_file_id"], name: "index_exercise_regimen_exercise_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_exercise_regimen_exercise_files_on_identity_id"
@@ -1917,6 +2037,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["exercise_regimen_id"], name: "index_exercise_regimen_exercises_on_exercise_regimen_id"
     t.index ["identity_id"], name: "index_exercise_regimen_exercises_on_identity_id"
   end
@@ -1930,6 +2051,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_exercise_regimens_on_identity_id"
   end
 
@@ -1947,6 +2069,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_exercises_on_identity_id"
   end
 
@@ -1958,6 +2081,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_favorite_locations_on_identity_id"
     t.index ["location_id"], name: "index_favorite_locations_on_location_id"
   end
@@ -1971,6 +2095,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["favorite_product_id"], name: "index_favorite_product_files_on_favorite_product_id"
     t.index ["identity_file_id"], name: "index_favorite_product_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_favorite_product_files_on_identity_id"
@@ -1984,6 +2109,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["favorite_product_id"], name: "index_favorite_product_links_on_favorite_product_id"
     t.index ["identity_id"], name: "index_favorite_product_links_on_identity_id"
   end
@@ -1997,6 +2123,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_favorite_products_on_identity_id"
   end
 
@@ -2013,6 +2140,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "read"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["feed_id"], name: "index_feed_items_on_feed_id"
     t.index ["identity_id"], name: "index_feed_items_on_identity_id"
   end
@@ -2039,6 +2167,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "total_items"
     t.integer "unread_items"
     t.boolean "new_notify"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_feeds_on_identity_id"
   end
 
@@ -2066,6 +2195,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["arrival_location_id"], name: "index_flight_legs_on_arrival_location_id"
     t.index ["depart_location_id"], name: "index_flight_legs_on_depart_location_id"
     t.index ["flight_company_id"], name: "index_flight_legs_on_flight_company_id"
@@ -2087,6 +2217,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.bigint "website_id"
     t.string "website_confirmation_number"
     t.decimal "total_cost", precision: 10, scale: 2
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_flights_on_identity_id"
     t.index ["website_id"], name: "index_flights_on_website_id"
   end
@@ -2098,6 +2229,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["food_id"], name: "index_food_files_on_food_id"
     t.index ["identity_file_id"], name: "index_food_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_food_files_on_identity_id"
@@ -2112,6 +2244,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.string "usda_food_nutrient_databank_number"
     t.string "usda_weight_nutrient_databank_number"
     t.string "usda_weight_sequence_number"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_food_informations_on_identity_id"
   end
 
@@ -2123,6 +2256,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["food_id"], name: "index_food_ingredients_on_food_id"
     t.index ["identity_id"], name: "index_food_ingredients_on_identity_id"
     t.index ["parent_food_id"], name: "index_food_ingredients_on_parent_food_id"
@@ -2134,6 +2268,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_food_nutrient_informations_on_identity_id"
   end
 
@@ -2149,6 +2284,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["food_nutrition_information_id"], name: "fnia_on_fni"
     t.index ["identity_id"], name: "index_food_nutrition_information_amounts_on_identity_id"
     t.index ["nutrient_id"], name: "index_food_nutrition_information_amounts_on_nutrient_id"
@@ -2161,6 +2297,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["food_nutrition_information_id"], name: "fnif_on_fni"
     t.index ["identity_file_id"], name: "index_food_nutrition_information_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_food_nutrition_information_files_on_identity_id"
@@ -2179,6 +2316,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "serving_size_type"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_food_nutrition_informations_on_identity_id"
   end
 
@@ -2197,6 +2335,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "rating"
     t.bigint "food_nutrition_information_id"
     t.bigint "food_information_id"
+    t.boolean "is_public"
     t.index ["food_information_id"], name: "index_foods_on_food_information_id"
     t.index ["food_nutrition_information_id"], name: "index_foods_on_food_nutrition_information_id"
     t.index ["identity_id"], name: "index_foods_on_identity_id"
@@ -2216,6 +2355,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "rating"
     t.text "notes"
     t.boolean "rv_dump_station"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_gas_stations_on_identity_id"
     t.index ["location_id"], name: "index_gas_stations_on_location_id"
   end
@@ -2227,6 +2367,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.bigint "identity_id"
     t.bigint "dna_analysis_id"
     t.integer "orientation", limit: 2
+    t.boolean "is_public"
     t.index ["dna_analysis_id"], name: "index_genotype_calls_on_dna_analysis_id"
     t.index ["identity_id"], name: "index_genotype_calls_on_identity_id"
     t.index ["snp_id"], name: "index_genotype_calls_on_snp_id"
@@ -2240,6 +2381,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["contact_id"], name: "index_group_contacts_on_contact_id"
     t.index ["group_id"], name: "index_group_contacts_on_group_id"
     t.index ["identity_id"], name: "index_group_contacts_on_identity_id"
@@ -2253,6 +2395,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["group_id"], name: "index_group_references_on_group_id"
     t.index ["identity_id"], name: "index_group_references_on_identity_id"
     t.index ["parent_group_id"], name: "index_group_references_on_parent_group_id"
@@ -2267,6 +2410,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_groups_on_identity_id"
   end
 
@@ -2277,6 +2421,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["gun_id"], name: "index_gun_files_on_gun_id"
     t.index ["identity_file_id"], name: "index_gun_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_gun_files_on_identity_id"
@@ -2289,6 +2434,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["gun_registration_id"], name: "index_gun_registration_files_on_gun_registration_id"
     t.index ["identity_file_id"], name: "index_gun_registration_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_gun_registration_files_on_identity_id"
@@ -2304,6 +2450,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["gun_id"], name: "index_gun_registrations_on_gun_id"
     t.index ["identity_id"], name: "index_gun_registrations_on_identity_id"
     t.index ["location_id"], name: "index_gun_registrations_on_location_id"
@@ -2324,6 +2471,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_guns_on_identity_id"
   end
 
@@ -2336,6 +2484,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_happy_things_on_identity_id"
   end
 
@@ -2350,6 +2499,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_headaches_on_identity_id"
   end
 
@@ -2360,6 +2510,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["health_insurance_id"], name: "index_health_insurance_files_on_health_insurance_id"
     t.index ["identity_file_id"], name: "index_health_insurance_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_health_insurance_files_on_identity_id"
@@ -2381,6 +2532,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "doctor_id"
     t.integer "visit_count"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["doctor_id"], name: "index_health_insurances_on_doctor_id"
     t.index ["group_company_id"], name: "index_health_insurances_on_group_company_id"
     t.index ["identity_id"], name: "index_health_insurances_on_identity_id"
@@ -2399,6 +2551,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_heart_rates_on_identity_id"
   end
 
@@ -2413,6 +2566,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_heights_on_identity_id"
   end
 
@@ -2425,6 +2579,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_hobbies_on_identity_id"
   end
 
@@ -2435,6 +2590,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["hospital_visit_id"], name: "index_hospital_visit_files_on_hospital_visit_id"
     t.index ["identity_file_id"], name: "index_hospital_visit_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_hospital_visit_files_on_identity_id"
@@ -2452,6 +2608,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.boolean "emergency_room"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["hospital_id"], name: "index_hospital_visits_on_hospital_id"
     t.index ["identity_id"], name: "index_hospital_visits_on_identity_id"
   end
@@ -2472,6 +2629,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.date "checkout_date"
     t.string "confirmation_number"
     t.decimal "total_cost", precision: 10, scale: 2
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_hotels_on_identity_id"
     t.index ["location_id"], name: "index_hotels_on_location_id"
   end
@@ -2486,6 +2644,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_hypotheses_on_identity_id"
     t.index ["question_id"], name: "index_hypotheses_on_question_id"
   end
@@ -2501,6 +2660,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["hypothesis_id"], name: "index_hypothesis_experiments_on_hypothesis_id"
     t.index ["identity_id"], name: "index_hypothesis_experiments_on_identity_id"
   end
@@ -2514,6 +2674,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_ideas_on_identity_id"
   end
 
@@ -2545,6 +2706,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.bigint "website_domain_id"
     t.boolean "website_domain_default"
     t.integer "message_preferences"
+    t.boolean "is_public"
     t.index ["company_id"], name: "index_identities_on_company_id"
     t.index ["identity_id"], name: "index_identities_on_identity_id"
     t.index ["user_id"], name: "index_identities_on_user_id"
@@ -2563,6 +2725,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["parent_identity_id"], name: "index_identity_drivers_licenses_on_parent_identity_id"
   end
 
@@ -2575,6 +2738,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.boolean "secondary"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_identity_emails_on_identity_id"
     t.index ["parent_identity_id"], name: "index_identity_emails_on_parent_identity_id"
   end
@@ -2588,6 +2752,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_identity_file_folders_on_identity_id"
     t.index ["parent_folder_id"], name: "index_identity_file_folders_on_parent_folder_id"
   end
@@ -2613,6 +2778,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "rating"
     t.string "thumbnail_filesystem_path"
     t.integer "thumbnail_filesystem_size"
+    t.boolean "is_public"
     t.index ["encrypted_password_id"], name: "index_identity_files_on_encrypted_password_id"
     t.index ["folder_id"], name: "index_identity_files_on_folder_id"
     t.index ["identity_id"], name: "index_identity_files_on_identity_id"
@@ -2627,6 +2793,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.boolean "secondary"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_identity_locations_on_identity_id"
     t.index ["location_id"], name: "index_identity_locations_on_location_id"
     t.index ["parent_identity_id"], name: "index_identity_locations_on_parent_identity_id"
@@ -2641,6 +2808,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "phone_type"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_identity_phones_on_identity_id"
     t.index ["parent_identity_id"], name: "index_identity_phones_on_parent_identity_id"
   end
@@ -2654,6 +2822,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "position"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_identity_pictures_on_identity_file_id"
     t.index ["identity_id"], name: "index_identity_pictures_on_identity_id"
     t.index ["parent_identity_id"], name: "index_identity_pictures_on_parent_identity_id"
@@ -2668,6 +2837,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["contact_id"], name: "index_identity_relationships_on_contact_id"
     t.index ["identity_id"], name: "index_identity_relationships_on_identity_id"
     t.index ["parent_identity_id"], name: "index_identity_relationships_on_parent_identity_id"
@@ -2680,6 +2850,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_import_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_import_files_on_identity_id"
     t.index ["import_id"], name: "index_import_files_on_import_id"
@@ -2697,6 +2868,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.integer "import_status"
     t.text "import_progress"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_imports_on_identity_id"
   end
 
@@ -2711,6 +2883,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "notes"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_injuries_on_identity_id"
     t.index ["location_id"], name: "index_injuries_on_location_id"
   end
@@ -2722,6 +2895,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_injury_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_injury_files_on_identity_id"
     t.index ["injury_id"], name: "index_injury_files_on_injury_id"
@@ -2734,6 +2908,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_insurance_card_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_insurance_card_files_on_identity_id"
     t.index ["insurance_card_id"], name: "index_insurance_card_files_on_insurance_card_id"
@@ -2750,6 +2925,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_insurance_cards_on_identity_id"
   end
 
@@ -2763,6 +2939,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_invite_codes_on_identity_id"
   end
 
@@ -2782,6 +2959,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_item_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_item_files_on_identity_id"
     t.index ["item_id"], name: "index_item_files_on_item_id"
@@ -2800,6 +2978,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "expires"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_items_on_identity_id"
   end
 
@@ -2813,6 +2992,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "major"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_job_accomplishments_on_identity_id"
     t.index ["job_id"], name: "index_job_accomplishments_on_job_id"
   end
@@ -2829,6 +3009,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_job_awards_on_identity_id"
     t.index ["job_id"], name: "index_job_awards_on_job_id"
   end
@@ -2840,6 +3021,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_job_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_job_files_on_identity_id"
     t.index ["job_id"], name: "index_job_files_on_job_id"
@@ -2856,6 +3038,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["contact_id"], name: "index_job_managers_on_contact_id"
     t.index ["identity_id"], name: "index_job_managers_on_identity_id"
     t.index ["job_id"], name: "index_job_managers_on_job_id"
@@ -2869,6 +3052,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_job_myreferences_on_identity_id"
     t.index ["job_id"], name: "index_job_myreferences_on_job_id"
     t.index ["myreference_id"], name: "index_job_myreferences_on_myreference_id"
@@ -2883,6 +3067,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_job_review_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_job_review_files_on_identity_id"
     t.index ["job_review_id"], name: "index_job_review_files_on_job_review_id"
@@ -2900,6 +3085,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.text "self_evaluation"
+    t.boolean "is_public"
     t.index ["contact_id"], name: "index_job_reviews_on_contact_id"
     t.index ["identity_id"], name: "index_job_reviews_on_identity_id"
     t.index ["job_id"], name: "index_job_reviews_on_job_id"
@@ -2919,6 +3105,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.decimal "hours_per_week", precision: 10, scale: 2
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_job_salaries_on_identity_id"
     t.index ["job_id"], name: "index_job_salaries_on_job_id"
   end
@@ -2950,6 +3137,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.decimal "hours_per_week", precision: 10, scale: 2
+    t.boolean "is_public"
     t.index ["company_id"], name: "index_jobs_on_company_id"
     t.index ["identity_id"], name: "index_jobs_on_identity_id"
     t.index ["internal_address_id"], name: "index_jobs_on_internal_address_id"
@@ -2966,6 +3154,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_jokes_on_identity_id"
   end
 
@@ -2996,6 +3185,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.boolean "long_term"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_life_goals_on_identity_id"
   end
 
@@ -3006,6 +3196,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_life_highlight_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_life_highlight_files_on_identity_id"
     t.index ["life_highlight_id"], name: "index_life_highlight_files_on_life_highlight_id"
@@ -3021,6 +3212,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_life_highlights_on_identity_id"
   end
 
@@ -3031,6 +3223,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_life_insurance_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_life_insurance_files_on_identity_id"
     t.index ["life_insurance_id"], name: "index_life_insurance_files_on_life_insurance_id"
@@ -3053,6 +3246,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.decimal "cash_value", precision: 10, scale: 2
     t.integer "beneficiary_id"
     t.decimal "loan_interest_rate", precision: 10, scale: 2
+    t.boolean "is_public"
     t.index ["beneficiary_id"], name: "index_life_insurances_on_beneficiary_id"
     t.index ["company_id"], name: "index_life_insurances_on_company_id"
     t.index ["identity_id"], name: "index_life_insurances_on_identity_id"
@@ -3067,6 +3261,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_list_items_on_identity_id"
     t.index ["list_id"], name: "index_list_items_on_list_id"
   end
@@ -3079,6 +3274,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_lists_on_identity_id"
   end
 
@@ -3093,6 +3289,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_loans_on_identity_id"
   end
 
@@ -3104,6 +3301,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_location_phones_on_identity_id"
     t.index ["location_id"], name: "index_location_phones_on_location_id"
   end
@@ -3117,6 +3315,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "position"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_location_pictures_on_identity_file_id"
     t.index ["identity_id"], name: "index_location_pictures_on_identity_id"
     t.index ["location_id"], name: "index_location_pictures_on_location_id"
@@ -3142,6 +3341,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "time_from_home"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_locations_on_identity_id"
     t.index ["website_id"], name: "index_locations_on_website_id"
   end
@@ -3156,6 +3356,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "archived"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_meadows_on_identity_id"
     t.index ["location_id"], name: "index_meadows_on_location_id"
   end
@@ -3169,6 +3370,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.decimal "drink_servings", precision: 10, scale: 2
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["drink_id"], name: "index_meal_drinks_on_drink_id"
     t.index ["identity_id"], name: "index_meal_drinks_on_identity_id"
     t.index ["meal_id"], name: "index_meal_drinks_on_meal_id"
@@ -3183,6 +3385,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.decimal "food_servings", precision: 10, scale: 2
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["food_id"], name: "index_meal_foods_on_food_id"
     t.index ["identity_id"], name: "index_meal_foods_on_identity_id"
     t.index ["meal_id"], name: "index_meal_foods_on_meal_id"
@@ -3196,6 +3399,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_meal_vitamins_on_identity_id"
     t.index ["meal_id"], name: "index_meal_vitamins_on_meal_id"
     t.index ["vitamin_id"], name: "index_meal_vitamins_on_vitamin_id"
@@ -3213,6 +3417,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_meals_on_identity_id"
     t.index ["location_id"], name: "index_meals_on_location_id"
   end
@@ -3226,6 +3431,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_media_dump_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_media_dump_files_on_identity_id"
     t.index ["media_dump_id"], name: "index_media_dump_files_on_media_dump_id"
@@ -3240,6 +3446,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_media_dumps_on_identity_id"
   end
 
@@ -3250,6 +3457,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_medical_condition_evaluation_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_medical_condition_evaluation_files_on_identity_id"
     t.index ["medical_condition_evaluation_id"], name: "mcef_on_mcei"
@@ -3265,6 +3473,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_medical_condition_evaluations_on_identity_id"
     t.index ["medical_condition_id"], name: "index_medical_condition_evaluations_on_medical_condition_id"
   end
@@ -3276,6 +3485,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_medical_condition_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_medical_condition_files_on_identity_id"
     t.index ["medical_condition_id"], name: "index_medical_condition_files_on_medical_condition_id"
@@ -3291,6 +3501,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_medical_condition_instances_on_identity_id"
     t.index ["medical_condition_id"], name: "index_medical_condition_instances_on_medical_condition_id"
   end
@@ -3307,6 +3518,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "location_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["doctor_id"], name: "index_medical_condition_treatments_on_doctor_id"
     t.index ["identity_id"], name: "index_medical_condition_treatments_on_identity_id"
     t.index ["location_id"], name: "index_medical_condition_treatments_on_location_id"
@@ -3322,6 +3534,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_medical_conditions_on_identity_id"
   end
 
@@ -3333,6 +3546,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_medicine_usage_medicines_on_identity_id"
     t.index ["medicine_id"], name: "index_medicine_usage_medicines_on_medicine_id"
     t.index ["medicine_usage_id"], name: "index_medicine_usage_medicines_on_medicine_usage_id"
@@ -3348,6 +3562,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_medicine_usages_on_identity_id"
     t.index ["medicine_id"], name: "index_medicine_usages_on_medicine_id"
   end
@@ -3363,6 +3578,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_medicines_on_identity_id"
   end
 
@@ -3375,6 +3591,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_membership_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_membership_files_on_identity_id"
     t.index ["membership_id"], name: "index_membership_files_on_membership_id"
@@ -3394,6 +3611,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "password_id"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_memberships_on_identity_id"
     t.index ["password_id"], name: "index_memberships_on_password_id"
     t.index ["periodic_payment_id"], name: "index_memberships_on_periodic_payment_id"
@@ -3410,6 +3628,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "feeling"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_memories_on_identity_id"
   end
 
@@ -3420,6 +3639,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_memory_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_memory_files_on_identity_id"
     t.index ["memory_id"], name: "index_memory_files_on_memory_id"
@@ -3433,6 +3653,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["contact_id"], name: "index_message_contacts_on_contact_id"
     t.index ["identity_id"], name: "index_message_contacts_on_identity_id"
     t.index ["message_id"], name: "index_message_contacts_on_message_id"
@@ -3446,6 +3667,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["group_id"], name: "index_message_groups_on_group_id"
     t.index ["identity_id"], name: "index_message_groups_on_identity_id"
     t.index ["message_id"], name: "index_message_groups_on_message_id"
@@ -3466,6 +3688,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "rating"
     t.text "long_body"
     t.integer "send_preferences"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_messages_on_identity_id"
   end
 
@@ -3481,6 +3704,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_money_balance_item_templates_on_identity_id"
     t.index ["money_balance_id"], name: "index_money_balance_item_templates_on_money_balance_id"
   end
@@ -3497,6 +3721,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.decimal "original_amount", precision: 10, scale: 2
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_money_balance_items_on_identity_id"
     t.index ["money_balance_id"], name: "index_money_balance_items_on_money_balance_id"
   end
@@ -3510,6 +3735,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["contact_id"], name: "index_money_balances_on_contact_id"
     t.index ["identity_id"], name: "index_money_balances_on_identity_id"
   end
@@ -3523,6 +3749,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_movie_theaters_on_identity_id"
     t.index ["location_id"], name: "index_movie_theaters_on_location_id"
   end
@@ -3548,6 +3775,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "when_discarded"
     t.integer "media_type"
     t.integer "number_of_media"
+    t.boolean "is_public"
     t.index ["borrowed_from_id"], name: "index_movies_on_borrowed_from_id"
     t.index ["identity_id"], name: "index_movies_on_identity_id"
     t.index ["lent_to_id"], name: "index_movies_on_lent_to_id"
@@ -3567,6 +3795,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.string "museum_source", limit: 255
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_museums_on_identity_id"
     t.index ["location_id"], name: "index_museums_on_location_id"
     t.index ["website_id"], name: "index_museums_on_website_id"
@@ -3579,6 +3808,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_music_album_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_music_album_files_on_identity_id"
     t.index ["music_album_id"], name: "index_music_album_files_on_music_album_id"
@@ -3593,6 +3823,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_music_albums_on_identity_id"
   end
 
@@ -3609,6 +3840,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.string "musical_genre", limit: 255
     t.integer "visit_count"
     t.datetime "archived"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_musical_groups_on_identity_id"
   end
 
@@ -3620,6 +3852,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_myplaceonline_quick_category_displays_on_identity_id"
   end
 
@@ -3631,6 +3864,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_myplaceonline_searches_on_identity_id"
   end
 
@@ -3647,6 +3881,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_myplets_on_identity_id"
   end
 
@@ -3663,6 +3898,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.string "reference_relationship"
     t.decimal "years_experience", precision: 10, scale: 2
     t.boolean "can_contact"
+    t.boolean "is_public"
     t.index ["contact_id"], name: "index_myreferences_on_contact_id"
     t.index ["identity_id"], name: "index_myreferences_on_identity_id"
   end
@@ -3676,6 +3912,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_notepads_on_identity_id"
   end
 
@@ -3689,6 +3926,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_nutrients_on_identity_id"
   end
 
@@ -3699,6 +3937,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_paid_tax_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_paid_tax_files_on_identity_id"
     t.index ["paid_tax_id"], name: "index_paid_tax_files_on_paid_tax_id"
@@ -3721,6 +3960,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.string "paid_tax_description"
     t.decimal "total_taxes_paid", precision: 10, scale: 2
     t.decimal "agi", precision: 10, scale: 2
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_paid_taxes_on_identity_id"
     t.index ["password_id"], name: "index_paid_taxes_on_password_id"
   end
@@ -3737,6 +3977,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_pains_on_identity_id"
   end
 
@@ -3749,6 +3990,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "position"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_passport_pictures_on_identity_file_id"
     t.index ["identity_id"], name: "index_passport_pictures_on_identity_id"
     t.index ["passport_id"], name: "index_passport_pictures_on_passport_id"
@@ -3768,6 +4010,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.text "notes"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_passports_on_identity_id"
   end
 
@@ -3780,6 +4023,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_password_secret_shares_on_identity_id"
     t.index ["password_secret_id"], name: "index_password_secret_shares_on_password_secret_id"
     t.index ["password_share_id"], name: "index_password_secret_shares_on_password_share_id"
@@ -3795,6 +4039,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["answer_encrypted_id"], name: "index_password_secrets_on_answer_encrypted_id"
     t.index ["identity_id"], name: "index_password_secrets_on_identity_id"
     t.index ["password_id"], name: "index_password_secrets_on_password_id"
@@ -3809,6 +4054,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_password_shares_on_identity_id"
     t.index ["password_id"], name: "index_password_shares_on_password_id"
     t.index ["user_id"], name: "index_password_shares_on_user_id"
@@ -3829,6 +4075,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.string "email", limit: 255
     t.integer "visit_count"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_passwords_on_identity_id"
     t.index ["password_encrypted_id"], name: "index_passwords_on_password_encrypted_id"
   end
@@ -3840,6 +4087,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_patent_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_patent_files_on_identity_id"
     t.index ["patent_id"], name: "index_patent_files_on_patent_id"
@@ -3861,6 +4109,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_patents_on_identity_id"
   end
 
@@ -3871,6 +4120,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_periodic_payment_instance_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_periodic_payment_instance_files_on_identity_id"
     t.index ["periodic_payment_instance_id"], name: "ppif_on_ppi"
@@ -3887,6 +4137,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_periodic_payment_instances_on_identity_id"
     t.index ["periodic_payment_id"], name: "index_periodic_payment_instances_on_periodic_payment_id"
   end
@@ -3906,6 +4157,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "password_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_periodic_payments_on_identity_id"
     t.index ["password_id"], name: "index_periodic_payments_on_password_id"
   end
@@ -3923,6 +4175,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["food_id"], name: "index_perishable_foods_on_food_id"
     t.index ["identity_id"], name: "index_perishable_foods_on_identity_id"
   end
@@ -3937,6 +4190,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_permission_share_children_on_identity_id"
     t.index ["permission_share_id"], name: "index_permission_share_children_on_permission_share_id"
     t.index ["share_id"], name: "index_permission_share_children_on_share_id"
@@ -3957,6 +4211,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.string "valid_guest_actions"
+    t.boolean "is_public"
     t.index ["email_id"], name: "index_permission_shares_on_email_id"
     t.index ["identity_id"], name: "index_permission_shares_on_identity_id"
     t.index ["share_id"], name: "index_permission_shares_on_share_id"
@@ -3974,6 +4229,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.string "valid_guest_actions"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_permissions_on_identity_id"
     t.index ["user_id"], name: "index_permissions_on_user_id"
   end
@@ -3987,6 +4243,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "position"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_phone_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_phone_files_on_identity_id"
     t.index ["phone_id"], name: "index_phone_files_on_phone_id"
@@ -4025,6 +4282,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_phones_on_identity_id"
     t.index ["manufacturer_id"], name: "index_phones_on_manufacturer_id"
     t.index ["password_id"], name: "index_phones_on_password_id"
@@ -4039,6 +4297,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_picnic_locations_on_identity_id"
     t.index ["location_id"], name: "index_picnic_locations_on_location_id"
   end
@@ -4052,6 +4311,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_playlist_songs_on_identity_id"
     t.index ["playlist_id"], name: "index_playlist_songs_on_playlist_id"
     t.index ["song_id"], name: "index_playlist_songs_on_song_id"
@@ -4066,6 +4326,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_file_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_playlists_on_identity_file_id"
     t.index ["identity_id"], name: "index_playlists_on_identity_id"
   end
@@ -4078,6 +4339,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["feed_id"], name: "index_podcasts_on_feed_id"
     t.index ["identity_id"], name: "index_podcasts_on_identity_id"
   end
@@ -4093,6 +4355,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "rating"
     t.string "poem_author"
     t.string "poem_link"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_poems_on_identity_id"
   end
 
@@ -4104,6 +4367,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_point_displays_on_identity_id"
   end
 
@@ -4114,6 +4378,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_prescription_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_prescription_files_on_identity_id"
     t.index ["prescription_id"], name: "index_prescription_files_on_prescription_id"
@@ -4130,6 +4395,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_prescription_refills_on_identity_id"
     t.index ["location_id"], name: "index_prescription_refills_on_location_id"
     t.index ["prescription_id"], name: "index_prescription_refills_on_prescription_id"
@@ -4147,6 +4413,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "refill_maximum"
+    t.boolean "is_public"
     t.index ["doctor_id"], name: "index_prescriptions_on_doctor_id"
     t.index ["identity_id"], name: "index_prescriptions_on_identity_id"
   end
@@ -4160,6 +4427,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_problem_report_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_problem_report_files_on_identity_id"
     t.index ["problem_report_id"], name: "index_problem_report_files_on_problem_report_id"
@@ -4174,6 +4442,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_problem_reports_on_identity_id"
   end
 
@@ -4186,6 +4455,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_project_issue_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_project_issue_files_on_identity_id"
     t.index ["project_issue_id"], name: "index_project_issue_files_on_project_issue_id"
@@ -4199,6 +4469,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["contact_id"], name: "index_project_issue_notifiers_on_contact_id"
     t.index ["identity_id"], name: "index_project_issue_notifiers_on_identity_id"
     t.index ["project_issue_id"], name: "index_project_issue_notifiers_on_project_issue_id"
@@ -4214,6 +4485,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_project_issues_on_identity_id"
     t.index ["project_id"], name: "index_project_issues_on_project_id"
   end
@@ -4230,6 +4502,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.boolean "default_to_top"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_projects_on_identity_id"
   end
 
@@ -4243,6 +4516,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_promises_on_identity_id"
   end
 
@@ -4258,6 +4532,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_promotions_on_identity_id"
   end
 
@@ -4268,6 +4543,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_psychological_evaluation_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_psychological_evaluation_files_on_identity_id"
     t.index ["psychological_evaluation_id"], name: "table_pef_on_pef_id"
@@ -4285,6 +4561,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["evaluator_id"], name: "index_psychological_evaluations_on_evaluator_id"
     t.index ["identity_id"], name: "index_psychological_evaluations_on_identity_id"
   end
@@ -4298,6 +4575,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_quest_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_quest_files_on_identity_id"
     t.index ["quest_id"], name: "index_quest_files_on_quest_id"
@@ -4312,6 +4590,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_questions_on_identity_id"
   end
 
@@ -4324,6 +4603,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_quests_on_identity_id"
   end
 
@@ -4337,6 +4617,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "source"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_quotes_on_identity_id"
   end
 
@@ -4349,6 +4630,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "position"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_receipt_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_receipt_files_on_identity_id"
     t.index ["receipt_id"], name: "index_receipt_files_on_receipt_id"
@@ -4365,6 +4647,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_receipts_on_identity_id"
   end
 
@@ -4377,6 +4660,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "position"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_recipe_pictures_on_identity_file_id"
     t.index ["identity_id"], name: "index_recipe_pictures_on_identity_id"
     t.index ["recipe_id"], name: "index_recipe_pictures_on_recipe_id"
@@ -4392,6 +4676,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.string "recipe_category"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_recipes_on_identity_id"
   end
 
@@ -4407,6 +4692,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["company_id"], name: "index_recreational_vehicle_insurances_on_company_id"
     t.index ["identity_id"], name: "index_recreational_vehicle_insurances_on_identity_id"
     t.index ["periodic_payment_id"], name: "index_recreational_vehicle_insurances_on_periodic_payment_id"
@@ -4420,6 +4706,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_recreational_vehicle_loans_on_identity_id"
     t.index ["loan_id"], name: "index_recreational_vehicle_loans_on_loan_id"
     t.index ["recreational_vehicle_id"], name: "index_recreational_vehicle_loans_on_recreational_vehicle_id"
@@ -4438,6 +4725,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_recreational_vehicle_measurements_on_identity_id"
   end
 
@@ -4450,6 +4738,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "position"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_recreational_vehicle_pictures_on_identity_file_id"
     t.index ["identity_id"], name: "index_recreational_vehicle_pictures_on_identity_id"
     t.index ["recreational_vehicle_id"], name: "index_recreational_vehicle_pictures_on_recreational_vehicle_id"
@@ -4462,6 +4751,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_recreational_vehicle_service_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_recreational_vehicle_service_files_on_identity_id"
     t.index ["recreational_vehicle_service_id"], name: "index_rvservicefiles_rvserviceid"
@@ -4481,6 +4771,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_recreational_vehicle_services_on_identity_id"
     t.index ["recreational_vehicle_id"], name: "index_recreational_vehicle_services_on_recreational_vehicle_id"
   end
@@ -4526,6 +4817,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_recreational_vehicles_on_identity_id"
     t.index ["location_purchased_id"], name: "index_recreational_vehicles_on_location_purchased_id"
     t.index ["vehicle_id"], name: "index_recreational_vehicles_on_vehicle_id"
@@ -4542,6 +4834,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_regimen_items_on_identity_id"
     t.index ["regimen_id"], name: "index_regimen_items_on_regimen_id"
   end
@@ -4556,6 +4849,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "regimen_type"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_regimens_on_identity_id"
   end
 
@@ -4577,6 +4871,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "calendar_item_id"
+    t.boolean "is_public"
     t.index ["calendar_item_id"], name: "index_reminders_on_calendar_item_id"
     t.index ["identity_id"], name: "index_reminders_on_identity_id"
   end
@@ -4590,6 +4885,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_repeats_on_identity_id"
   end
 
@@ -4602,6 +4898,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "position"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_restaurant_pictures_on_identity_file_id"
     t.index ["identity_id"], name: "index_restaurant_pictures_on_identity_id"
     t.index ["restaurant_id"], name: "index_restaurant_pictures_on_restaurant_id"
@@ -4617,6 +4914,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.boolean "visited"
     t.datetime "archived"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_restaurants_on_identity_id"
     t.index ["location_id"], name: "index_restaurants_on_location_id"
   end
@@ -4628,6 +4926,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_retirement_plan_amount_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_retirement_plan_amount_files_on_identity_id"
     t.index ["retirement_plan_amount_id"], name: "index_retirement_plan_amount_files_on_retirement_plan_amount_id"
@@ -4643,6 +4942,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_retirement_plan_amounts_on_identity_id"
     t.index ["retirement_plan_id"], name: "index_retirement_plan_amounts_on_retirement_plan_id"
   end
@@ -4661,6 +4961,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["company_id"], name: "index_retirement_plans_on_company_id"
     t.index ["identity_id"], name: "index_retirement_plans_on_identity_id"
     t.index ["password_id"], name: "index_retirement_plans_on_password_id"
@@ -4674,6 +4975,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_reward_program_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_reward_program_files_on_identity_id"
     t.index ["reward_program_id"], name: "index_reward_program_files_on_reward_program_id"
@@ -4694,6 +4996,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_reward_programs_on_identity_id"
     t.index ["password_id"], name: "index_reward_programs_on_password_id"
   end
@@ -4705,6 +5008,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["category_id"], name: "index_settings_on_category_id"
     t.index ["identity_id"], name: "index_settings_on_identity_id"
   end
@@ -4718,6 +5022,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "max_use_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_shares_on_identity_id"
   end
 
@@ -4730,6 +5035,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_shopping_list_items_on_identity_id"
     t.index ["shopping_list_id"], name: "index_shopping_list_items_on_shopping_list_id"
   end
@@ -4742,6 +5048,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_shopping_lists_on_identity_id"
   end
 
@@ -4752,6 +5059,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_sickness_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_sickness_files_on_identity_id"
     t.index ["sickness_id"], name: "index_sickness_files_on_sickness_id"
@@ -4772,6 +5080,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_sicknesses_on_identity_id"
   end
 
@@ -4794,6 +5103,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_skin_treatments_on_identity_id"
   end
 
@@ -4806,6 +5116,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_sleep_measurements_on_identity_id"
   end
 
@@ -4822,6 +5133,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "calendar_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["calendar_id"], name: "index_snoozed_due_items_on_calendar_id"
     t.index ["identity_id"], name: "index_snoozed_due_items_on_identity_id"
   end
@@ -4840,6 +5152,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_software_license_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_software_license_files_on_identity_id"
     t.index ["software_license_id"], name: "index_software_license_files_on_software_license_id"
@@ -4857,6 +5170,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_software_licenses_on_identity_id"
   end
 
@@ -4876,6 +5190,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "musical_group_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_songs_on_identity_file_id"
     t.index ["identity_id"], name: "index_songs_on_identity_id"
     t.index ["musical_group_id"], name: "index_songs_on_musical_group_id"
@@ -4893,6 +5208,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "ssh_private_key_encrypted_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_ssh_keys_on_identity_id"
     t.index ["password_id"], name: "index_ssh_keys_on_password_id"
     t.index ["ssh_private_key_encrypted_id"], name: "index_ssh_keys_on_ssh_private_key_encrypted_id"
@@ -4917,6 +5233,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.string "stoic_duties"
     t.string "stoic_improvement"
     t.string "stoic_faults"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_statuses_on_identity_id"
   end
 
@@ -4927,6 +5244,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_stock_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_stock_files_on_identity_id"
     t.index ["stock_id"], name: "index_stock_files_on_stock_id"
@@ -4944,6 +5262,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["company_id"], name: "index_stocks_on_company_id"
     t.index ["identity_id"], name: "index_stocks_on_identity_id"
     t.index ["password_id"], name: "index_stocks_on_password_id"
@@ -4959,6 +5278,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_stories_on_identity_id"
   end
 
@@ -4971,6 +5291,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "position"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_story_pictures_on_identity_file_id"
     t.index ["identity_id"], name: "index_story_pictures_on_identity_id"
     t.index ["story_id"], name: "index_story_pictures_on_story_id"
@@ -4988,6 +5309,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_sun_exposures_on_identity_id"
   end
 
@@ -5003,6 +5325,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["doctor_id"], name: "index_surgeries_on_doctor_id"
     t.index ["hospital_id"], name: "index_surgeries_on_hospital_id"
     t.index ["identity_id"], name: "index_surgeries_on_identity_id"
@@ -5015,6 +5338,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_surgery_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_surgery_files_on_identity_id"
     t.index ["surgery_id"], name: "index_surgery_files_on_surgery_id"
@@ -5027,6 +5351,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_tax_document_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_tax_document_files_on_identity_id"
     t.index ["tax_document_id"], name: "index_tax_document_files_on_tax_document_id"
@@ -5045,6 +5370,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_tax_documents_on_identity_id"
   end
 
@@ -5059,6 +5385,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_temperatures_on_identity_id"
   end
 
@@ -5069,6 +5396,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_test_object_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_test_object_files_on_identity_id"
     t.index ["test_object_id"], name: "index_test_object_files_on_test_object_id"
@@ -5081,6 +5409,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_test_object_instance_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_test_object_instance_files_on_identity_id"
     t.index ["test_object_instance_id"], name: "index_test_object_instance_files_on_test_object_instance_id"
@@ -5096,6 +5425,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_test_object_instances_on_identity_id"
     t.index ["test_object_id"], name: "index_test_object_instances_on_test_object_id"
   end
@@ -5119,6 +5449,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.decimal "test_object_currency", precision: 10, scale: 2
     t.boolean "test_object_boolean"
     t.integer "test_object_enum"
+    t.boolean "is_public"
     t.index ["contact_id"], name: "index_test_objects_on_contact_id"
     t.index ["identity_id"], name: "index_test_objects_on_identity_id"
   end
@@ -5130,6 +5461,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_test_score_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_test_score_files_on_identity_id"
     t.index ["test_score_id"], name: "index_test_score_files_on_test_score_id"
@@ -5146,6 +5478,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "test_score", precision: 10, scale: 2
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_test_scores_on_identity_id"
   end
 
@@ -5157,6 +5490,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["contact_id"], name: "index_text_message_contacts_on_contact_id"
     t.index ["identity_id"], name: "index_text_message_contacts_on_identity_id"
     t.index ["text_message_id"], name: "index_text_message_contacts_on_text_message_id"
@@ -5170,6 +5504,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["group_id"], name: "index_text_message_groups_on_group_id"
     t.index ["identity_id"], name: "index_text_message_groups_on_identity_id"
     t.index ["text_message_id"], name: "index_text_message_groups_on_text_message_id"
@@ -5206,6 +5541,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.text "long_body"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_text_messages_on_identity_id"
   end
 
@@ -5219,6 +5555,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["contact_id"], name: "index_therapists_on_contact_id"
     t.index ["identity_id"], name: "index_therapists_on_identity_id"
   end
@@ -5234,6 +5571,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_timing_events_on_identity_id"
     t.index ["timing_id"], name: "index_timing_events_on_timing_id"
   end
@@ -5247,6 +5585,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_timings_on_identity_id"
   end
 
@@ -5260,6 +5599,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "due_time"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_to_dos_on_identity_id"
   end
 
@@ -5277,6 +5617,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_translations_on_identity_id"
   end
 
@@ -5289,6 +5630,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "position"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_trek_pictures_on_identity_file_id"
     t.index ["identity_id"], name: "index_trek_pictures_on_identity_id"
     t.index ["trek_id"], name: "index_trek_pictures_on_trek_id"
@@ -5303,6 +5645,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "archived"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_treks_on_identity_id"
     t.index ["location_id"], name: "index_treks_on_location_id"
   end
@@ -5315,6 +5658,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["flight_id"], name: "index_trip_flights_on_flight_id"
     t.index ["identity_id"], name: "index_trip_flights_on_identity_id"
     t.index ["trip_id"], name: "index_trip_flights_on_trip_id"
@@ -5329,6 +5673,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_trip_pictures_on_identity_file_id"
     t.index ["identity_id"], name: "index_trip_pictures_on_identity_id"
     t.index ["trip_id"], name: "index_trip_pictures_on_trip_id"
@@ -5342,6 +5687,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_trip_stories_on_identity_id"
     t.index ["story_id"], name: "index_trip_stories_on_story_id"
     t.index ["trip_id"], name: "index_trip_stories_on_trip_id"
@@ -5365,6 +5711,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "rating"
     t.string "trip_name"
     t.bigint "event_id"
+    t.boolean "is_public"
     t.index ["event_id"], name: "index_trips_on_event_id"
     t.index ["hotel_id"], name: "index_trips_on_hotel_id"
     t.index ["identity_file_id"], name: "index_trips_on_identity_file_id"
@@ -5385,6 +5732,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_tv_shows_on_identity_id"
     t.index ["recommender_id"], name: "index_tv_shows_on_recommender_id"
   end
@@ -5507,6 +5855,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_user_capabilities_on_identity_id"
   end
 
@@ -5570,6 +5919,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_vaccine_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_vaccine_files_on_identity_id"
     t.index ["vaccine_id"], name: "index_vaccine_files_on_vaccine_id"
@@ -5585,6 +5935,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_vaccines_on_identity_id"
   end
 
@@ -5600,6 +5951,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["company_id"], name: "index_vehicle_insurances_on_company_id"
     t.index ["identity_id"], name: "index_vehicle_insurances_on_identity_id"
     t.index ["periodic_payment_id"], name: "index_vehicle_insurances_on_periodic_payment_id"
@@ -5614,6 +5966,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_vehicle_loans_on_identity_id"
     t.index ["vehicle_id"], name: "index_vehicle_loans_on_vehicle_id"
   end
@@ -5627,6 +5980,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.integer "position"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_vehicle_pictures_on_identity_file_id"
     t.index ["identity_id"], name: "index_vehicle_pictures_on_identity_id"
     t.index ["vehicle_id"], name: "index_vehicle_pictures_on_vehicle_id"
@@ -5639,6 +5993,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_vehicle_registration_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_vehicle_registration_files_on_identity_id"
     t.index ["vehicle_registration_id"], name: "index_vehicle_registration_files_on_vehicle_registration_id"
@@ -5655,6 +6010,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_vehicle_registrations_on_identity_id"
     t.index ["vehicle_id"], name: "index_vehicle_registrations_on_vehicle_id"
   end
@@ -5666,6 +6022,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_vehicle_service_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_vehicle_service_files_on_identity_id"
     t.index ["vehicle_service_id"], name: "index_vehicle_service_files_on_vehicle_service_id"
@@ -5685,6 +6042,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "identity_id"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_vehicle_services_on_identity_id"
     t.index ["vehicle_id"], name: "index_vehicle_services_on_vehicle_id"
   end
@@ -5697,6 +6055,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_vehicle_warranties_on_identity_id"
     t.index ["vehicle_id"], name: "index_vehicle_warranties_on_vehicle_id"
     t.index ["warranty_id"], name: "index_vehicle_warranties_on_warranty_id"
@@ -5766,6 +6125,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "archived"
     t.integer "rating"
     t.decimal "bought_miles", precision: 10, scale: 2
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_vehicles_on_identity_id"
   end
 
@@ -5777,6 +6137,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_vitamin_ingredients_on_identity_id"
     t.index ["parent_vitamin_id"], name: "index_vitamin_ingredients_on_parent_vitamin_id"
     t.index ["vitamin_id"], name: "index_vitamin_ingredients_on_vitamin_id"
@@ -5793,6 +6154,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_vitamins_on_identity_id"
   end
 
@@ -5805,6 +6167,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_volunteering_activities_on_identity_id"
   end
 
@@ -5820,6 +6183,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_warranties_on_identity_id"
   end
 
@@ -5833,6 +6197,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["feed_id"], name: "index_web_comics_on_feed_id"
     t.index ["identity_id"], name: "index_web_comics_on_identity_id"
     t.index ["website_id"], name: "index_web_comics_on_website_id"
@@ -5848,6 +6213,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_website_domain_myplet_parameters_on_identity_id"
     t.index ["website_domain_myplet_id"], name: "wdmp_on_wdmi"
   end
@@ -5869,6 +6235,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.boolean "singleton"
     t.boolean "emulate_guest"
+    t.boolean "is_public"
     t.index ["category_id"], name: "index_website_domain_myplets_on_category_id"
     t.index ["identity_id"], name: "index_website_domain_myplets_on_identity_id"
     t.index ["website_domain_id"], name: "index_website_domain_myplets_on_website_domain_id"
@@ -5883,6 +6250,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_website_domain_registrations_on_identity_id"
     t.index ["periodic_payment_id"], name: "index_website_domain_registrations_on_periodic_payment_id"
     t.index ["repeat_id"], name: "index_website_domain_registrations_on_repeat_id"
@@ -5898,6 +6266,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_website_domain_ssh_keys_on_identity_id"
     t.index ["ssh_key_id"], name: "index_website_domain_ssh_keys_on_ssh_key_id"
     t.index ["website_domain_id"], name: "index_website_domain_ssh_keys_on_website_domain_id"
@@ -5934,6 +6303,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.string "feed_url"
     t.boolean "only_homepage"
     t.integer "ajax_config"
+    t.boolean "is_public"
     t.index ["default_header_icon_identity_file_id"], name: "index_website_domains_on_default_header_icon_identity_file_id"
     t.index ["domain_host_id"], name: "index_website_domains_on_domain_host_id"
     t.index ["favicon_ico_identity_file_id"], name: "index_website_domains_on_favicon_ico_identity_file_id"
@@ -5951,6 +6321,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_website_list_items_on_identity_id"
     t.index ["website_id"], name: "index_website_list_items_on_website_id"
     t.index ["website_list_id"], name: "index_website_list_items_on_website_list_id"
@@ -5967,6 +6338,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "iframe_height"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_website_lists_on_identity_id"
   end
 
@@ -5978,6 +6350,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_website_passwords_on_identity_id"
     t.index ["password_id"], name: "index_website_passwords_on_password_id"
     t.index ["website_id"], name: "index_website_passwords_on_website_id"
@@ -5993,6 +6366,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.bigint "website_scraper_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_website_scraper_transformations_on_identity_id"
     t.index ["website_scraper_id"], name: "index_website_scraper_transformations_on_website_scraper_id"
   end
@@ -6008,6 +6382,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "content_type"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_website_scrapers_on_identity_id"
   end
 
@@ -6024,6 +6399,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.string "website_category"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_websites_on_identity_id"
     t.index ["recommender_id"], name: "index_websites_on_recommender_id"
   end
@@ -6039,6 +6415,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_weights_on_identity_id"
   end
 
@@ -6051,6 +6428,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_wisdom_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_wisdom_files_on_identity_id"
     t.index ["wisdom_id"], name: "index_wisdom_files_on_wisdom_id"
@@ -6065,6 +6443,7 @@ ActiveRecord::Schema.define(version: 20171118222356) do
     t.integer "visit_count"
     t.datetime "archived"
     t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_wisdoms_on_identity_id"
   end
 

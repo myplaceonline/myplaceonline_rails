@@ -87,6 +87,11 @@ class Ability
         result = true
       end
 
+      if !result && subject.respond_to?("is_public?") && subject.is_public?
+        Rails.logger.debug{"Ability.authorize is_public true"}
+        result = true
+      end
+
       # If token is a query parameter, then check the share table
       if !result && !request.nil? && !request.query_parameters.nil?
         token = request.query_parameters["token"]

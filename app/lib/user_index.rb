@@ -70,6 +70,7 @@ class UserIndex < Chewy::Index
         
         # https://www.elastic.co/guide/en/elasticsearch/reference/current/number.html
         field :identity_id, type: "integer", include_in_all: false
+        field :is_public, type: "boolean", include_in_all: false
         
         integer_columns.each do |column|
           field(column.name.to_sym, type: "integer", include_in_all: false)
