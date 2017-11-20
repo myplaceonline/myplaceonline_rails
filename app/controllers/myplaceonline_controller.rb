@@ -3,7 +3,7 @@ class MyplaceonlineController < ApplicationController
   before_action :set_obj, only: [:show, :edit, :update, :destroy]
   before_action :set_layout
   
-  DEFAULT_SKIP_AUTHORIZATION_CHECK = [:index, :new, :create, :destroy_all, :settings]
+  DEFAULT_SKIP_AUTHORIZATION_CHECK = [:index, :new, :create, :destroy_all, :settings, :public]
   
   CHECK_PASSWORD_REQUIRED = 1
   CHECK_PASSWORD_OPTIONAL = 2

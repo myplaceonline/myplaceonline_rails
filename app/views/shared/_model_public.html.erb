@@ -1,0 +1,26 @@
+<% if !@myplet %>
+  <% content_for :heading do -%><%= t("myplaceonline.category." + controller.category_name) %><% end -%>
+  <%= flashes! %>
+<% end %>
+
+<div class="searchable_container">
+  <ul class="searchable" data-role="listview" data-inset="true" data-filter="<%= controller.show_search %>" data-split-icon="<%= controller.data_split_icon %>" data-filter-placeholder="<%= t("myplaceonline.general.search") %>">
+  </ul>
+</div>
+
+<script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.remoteDataListInitialize($(".searchable"), [
+      <% if Myp.full_text_search? %>
+        {title: "<%= t("myplaceonline.category." + controller.category_name) %>", url: "/api/search.json?display_category_prefix=false&display_category_icon=false&category=<%= controller.search_index_name %>&parent_category=<%= controller.search_parent_category %>&search_filters_model=<%= controller.search_filters_model %>&public=true"}
+      <% else %>
+        {title: "<%= t("myplaceonline.category." + controller.category_name) %>", url: "<%= send("#{controller.paths_name}_path") %>.json<%= raw(@query_params_part_all) %>", static_list: true}
+      <% end %>
+    ]);
+    var input = $(".searchable_container input");
+    myplaceonline.hookListviewEnter(input, ".searchable");
+    <% if !@myplet && controller.autofocus_search %>
+    myplaceonline.maybeFocus(input);
+    <% end %>
+  });
+</script>

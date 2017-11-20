@@ -77,8 +77,18 @@ class Ability
         Rails.logger.debug{"Ability.authorize Changing subject to: subject_class: #{subject_class}, subject: #{subject.id}"}
       end
       
+      if !result && subject.respond_to?("identity_id") && subject.identity_id == identity.id
+        Rails.logger.debug{"Ability.authorize Identities match: subject: #{subject.id}, identity: #{identity.id}"}
+        result = true
+      end
+      
+      if !result && subject.respond_to?("user_id") && subject.user_id == user.id
+        Rails.logger.debug{"Ability.authorize Users match"}
+        result = true
+      end
+
       # If token is a query parameter, then check the share table
-      if !request.nil? && !request.query_parameters.nil?
+      if !result && !request.nil? && !request.query_parameters.nil?
         token = request.query_parameters["token"]
         Rails.logger.debug{"Ability.authorize Has request and query params; token: #{token}"}
         if !token.blank?
@@ -135,49 +145,39 @@ class Ability
       end
       
       if !result && (!user.new_record? || user.guest?)
-        if subject.respond_to?("identity_id") && subject.identity_id == identity.id
-          Rails.logger.debug{"Ability.authorize Identities match: subject: #{subject.id}, identity: #{identity.id}"}
+        query = "(user_id = ? or user_id IS NULL) and subject_class = ? and subject_id = ? and (action & #{Permission::ACTION_MANAGE} != 0"
+        query = self.add_action_query_parts(action: action, query: query, subject: subject)
+        query += ")"
+        Rails.logger.debug{"Ability.authorize checking Permission #{query}"}
+        permission_result = Permission.where(query, user.id, Myp.model_to_category_name(subject_class), subject.id).last
+        if !permission_result.nil?
+          Rails.logger.debug{"Ability.authorize Found permissions: #{permission_result.inspect}"}
           result = true
+          if !permission_result.valid_guest_actions.blank?
+            valid_guest_actions = permission_result.valid_guest_actions.split(",").map{|x| x.to_sym}
+            Rails.logger.debug{"Ability.authorize valid_guest_actions #{valid_guest_actions}"}
+          end
         else
-          query = "(user_id = ? or user_id IS NULL) and subject_class = ? and subject_id = ? and (action & #{Permission::ACTION_MANAGE} != 0"
+          Rails.logger.debug{"Ability.authorize no direct permission found"}
+        end
+        
+        if !result
+          query = "(user_id = :user_id or user_id IS NULL) and subject_class = :subject_class and target_identity_id = :target_identity_id and (action & #{Permission::ACTION_MANAGE} != 0"
           query = self.add_action_query_parts(action: action, query: query, subject: subject)
           query += ")"
-          Rails.logger.debug{"Ability.authorize checking Permission #{query}"}
-          permission_result = Permission.where(query, user.id, Myp.model_to_category_name(subject_class), subject.id).last
-          if !permission_result.nil?
-            Rails.logger.debug{"Ability.authorize Found permissions: #{permission_result.inspect}"}
+          category_permissions = CategoryPermission.where(
+            query,
+            user_id: user.id,
+            subject_class: Myp.model_to_category_name(subject_class),
+            target_identity_id: subject.identity_id
+          )
+          if category_permissions.length > 0
+            Rails.logger.debug{"Ability.authorize Found category permissions: #{category_permissions.inspect}"}
             result = true
-            if !permission_result.valid_guest_actions.blank?
-              valid_guest_actions = permission_result.valid_guest_actions.split(",").map{|x| x.to_sym}
-              Rails.logger.debug{"Ability.authorize valid_guest_actions #{valid_guest_actions}"}
-            end
           else
-            Rails.logger.debug{"Ability.authorize no direct permission found"}
-          end
-          
-          if !result
-            query = "(user_id = :user_id or user_id IS NULL) and subject_class = :subject_class and target_identity_id = :target_identity_id and (action & #{Permission::ACTION_MANAGE} != 0"
-            query = self.add_action_query_parts(action: action, query: query, subject: subject)
-            query += ")"
-            category_permissions = CategoryPermission.where(
-              query,
-              user_id: user.id,
-              subject_class: Myp.model_to_category_name(subject_class),
-              target_identity_id: subject.identity_id
-            )
-            if category_permissions.length > 0
-              Rails.logger.debug{"Ability.authorize Found category permissions: #{category_permissions.inspect}"}
-              result = true
-            else
-              Rails.logger.debug{"Ability.authorize category permission not found for user: #{user.id}, action: #{action}, category: #{Myp.model_to_category_name(subject_class)}, subject: #{subject.id}"}
-            end
+            Rails.logger.debug{"Ability.authorize category permission not found for user: #{user.id}, action: #{action}, category: #{Myp.model_to_category_name(subject_class)}, subject: #{subject.id}"}
           end
         end
-      end
-      
-      if !result && !user.new_record? && !user.guest? && subject.respond_to?("user_id") && subject.user_id == user.id
-        Rails.logger.debug{"Ability.authorize Users match"}
-        result = true
       end
     end
 

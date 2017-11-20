@@ -2160,7 +2160,8 @@ module Myp
     parent_category: nil,
     display_category_prefix: true,
     display_category_icon: true,
-    filters: {}
+    filters: {},
+    only_public: false
   )
     
     Myp.log_response_time(
@@ -2178,71 +2179,76 @@ module Myp
       
       if !search.blank?
         
-        Rails.logger.debug{"full_text_search: user: #{user.current_identity_id}, filters: #{filters.inspect}, category: #{category}, parent_category: #{parent_category}, display_category_prefix: #{display_category_prefix}, display_category_icon: #{display_category_icon}"}
-        
-        if filters.size > 0
-          filters = {
-            bool: {
-              must: 
-                filters.merge!(
-                  { identity_id: user.current_identity_id }
-                ).keys.map{|key|
-                  { term: { key => filters[key] } }
-                }.to_a
+        Rails.logger.debug{"full_text_search: user: #{user.current_identity_id}, filters: #{filters.inspect}, category: #{category}, parent_category: #{parent_category}, display_category_prefix: #{display_category_prefix}, display_category_icon: #{display_category_icon}, only_public: #{only_public}"}
+
+        if !only_public
+          if filters.size > 0
+            filters = {
+              bool: {
+                must: 
+                  filters.merge!(
+                    { identity_id: user.current_identity_id }
+                  ).keys.map{|key|
+                    { term: { key => filters[key] } }
+                  }.to_a
+              }
             }
-          }
-        else
-          filters = {
-            term: {
-              identity_id: user.current_identity_id
+          else
+            filters = {
+              term: {
+                identity_id: user.current_identity_id
+              }
             }
-          }
-        end
-        
-        # http://stackoverflow.com/questions/37082797/elastic-search-edge-ngram-match-query-on-all-being-ignored
-        
-        if category.blank?
-          query = {
-            bool: {
-              must: {
-                match: {
-                  _all: search
-                }
-              },
-              filter: filters
-            }
-          }
-        else
-          query = {
-            bool: {
-              must: [
-                {
+          end
+          
+          # http://stackoverflow.com/questions/37082797/elastic-search-edge-ngram-match-query-on-all-being-ignored
+          
+          if category.blank?
+            query = {
+              bool: {
+                must: {
                   match: {
                     _all: search
                   }
                 },
-                {
-                  match: {
-                    _type: category.singularize
-                  }
-                }
-              ],
-              filter: filters
+                filter: filters
+              }
             }
-          }
+          else
+            query = {
+              bool: {
+                must: [
+                  {
+                    match: {
+                      _all: search
+                    }
+                  },
+                  {
+                    match: {
+                      _type: category.singularize
+                    }
+                  }
+                ],
+                filter: filters
+              }
+            }
+          end
+          
+          # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html
+          search_results = UserIndex.query(query).order(visit_count: {order: :desc, missing: :_last}).limit(10).load.objects
+          
+          results = Myp.process_search_results(
+            search_results,
+            parent_category,
+            original_search,
+            display_category_prefix: display_category_prefix,
+            display_category_icon: display_category_icon
+          )
+        else
+          Permission.where(
+            subject_class: category,
+          )
         end
-        
-        # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html
-        search_results = UserIndex.query(query).order(visit_count: {order: :desc, missing: :_last}).limit(10).load.objects
-        
-        results = Myp.process_search_results(
-          search_results,
-          parent_category,
-          original_search,
-          display_category_prefix: display_category_prefix,
-          display_category_icon: display_category_icon
-        )
-        
       else
         results = []
       end

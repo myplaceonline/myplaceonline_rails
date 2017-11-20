@@ -19,6 +19,7 @@ class ApiController < ApplicationController
     display_category_prefix = Myp.param_bool(params, :display_category_prefix, default_value: true)
     display_category_icon = Myp.param_bool(params, :display_category_icon, default_value: true)
     search_filters_model_name = params[:search_filters_model]
+    only_public = Myp.param_bool(params, :public, default_value: false)
     filters = {}
     if !search_filters_model_name.blank?
       search_filters_model = search_filters_model_name.constantize
@@ -33,7 +34,8 @@ class ApiController < ApplicationController
       parent_category: params[:parent_category],
       display_category_prefix: display_category_prefix,
       display_category_icon: display_category_icon,
-      filters: filters
+      filters: filters,
+      only_public: only_public,
     )
     respond_to do |format|
       format.json { render json: response }
