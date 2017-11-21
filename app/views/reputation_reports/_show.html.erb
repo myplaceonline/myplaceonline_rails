@@ -1,5 +1,6 @@
 <%= data_row(heading: t("myplaceonline.reputation_reports.short_description"), content: obj.short_description) %>
 <%= data_row(heading: t("myplaceonline.reputation_reports.report_type"), content: obj.report_type, enumeration: ReputationReport::REPORT_TYPES) %>
+<%= data_row(heading: t("myplaceonline.reputation_reports.agent"), content: obj.agent) %>
 <%= data_row(heading: t("myplaceonline.reputation_reports.story"), content: obj.story, markdown: true) %>
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
 <%= data_row(heading: t("myplaceonline.reputation_reports.report_status"), content: obj.processed_report_status, enumeration: ReputationReport::REPORT_STATUSES) %>

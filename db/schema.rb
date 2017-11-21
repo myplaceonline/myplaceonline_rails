@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171121045816) do
+ActiveRecord::Schema.define(version: 20171121060251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4929,6 +4929,8 @@ ActiveRecord::Schema.define(version: 20171121045816) do
     t.datetime "updated_at", null: false
     t.integer "report_status"
     t.integer "report_type"
+    t.bigint "agent_id"
+    t.index ["agent_id"], name: "index_reputation_reports_on_agent_id"
     t.index ["identity_id"], name: "index_reputation_reports_on_identity_id"
   end
 
@@ -7186,6 +7188,7 @@ ActiveRecord::Schema.define(version: 20171121045816) do
   add_foreign_key "reputation_report_files", "identities"
   add_foreign_key "reputation_report_files", "identity_files"
   add_foreign_key "reputation_report_files", "reputation_reports"
+  add_foreign_key "reputation_reports", "agents"
   add_foreign_key "reputation_reports", "identities"
   add_foreign_key "restaurant_pictures", "identities"
   add_foreign_key "restaurant_pictures", "identity_files"

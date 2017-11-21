@@ -3,3 +3,4 @@ reputation_report:
   short_description: Test
   story: Test
   report_type: 0
+  agent: agent

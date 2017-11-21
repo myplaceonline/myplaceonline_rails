@@ -3829,5 +3829,4 @@ en:
       report_types:
         praise: "Praise"
         shame: "Shame"
-    agents:
-      agent_identity: "Agent"
+      agent: "Person or Group"

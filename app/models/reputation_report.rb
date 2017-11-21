@@ -36,6 +36,8 @@ class ReputationReport < ApplicationRecord
 
   child_files
   
+  child_property(name: :agent, required: true)
+
   def report_status_s
     Myp.get_select_name(self.processed_report_status, REPORT_STATUSES)
   end

@@ -19,6 +19,7 @@ class ReputationReportsController < MyplaceonlineController
         :story,
         :notes,
         reputation_report_files_attributes: FilesController.multi_param_names,
+        agent_attributes: Agent.param_names,
       )
     end
 end

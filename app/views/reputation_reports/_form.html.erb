@@ -21,6 +21,20 @@
   )
 %>
 <%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :agent,
+    existingobj: obj.agent,
+    heading: t("myplaceonline.reputation_reports.agent"),
+    objform: "agents/form",
+    existingobjurl: "agent_path",
+    searchurl: "/agents.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    expanded_if_nil: true,
+  }
+%>
+<%=
   input_field(
     form: f,
     type: Myp::FIELD_TEXT_AREA,
