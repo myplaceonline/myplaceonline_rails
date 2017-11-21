@@ -1,6 +1,7 @@
 class ReputationReport < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
+  include Rails.application.routes.url_helpers
 
   def self.properties
     [
@@ -48,5 +49,21 @@ class ReputationReport < ApplicationRecord
       result = REPORT_STATUS_PENDING_REVIEW
     end
     result
+  end
+  
+  after_commit :on_after_create, on: [:create]
+
+  def on_after_create
+    link = reputation_report_url(self)
+    body_plain = "[#{link}](#{link})"
+    body_html = Myp.markdown_to_html(body_plain)
+    
+    Myp.send_support_email_safe(
+      "New Reputation Report",
+      body_html,
+      body_plain,
+      request: MyplaceonlineExecutionContext.request,
+      html_comment_details: true
+    )
   end
 end
