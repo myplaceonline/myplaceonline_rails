@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171120061536) do
+ActiveRecord::Schema.define(version: 20171121045816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,6 +98,20 @@ ActiveRecord::Schema.define(version: 20171120061536) do
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_admin_text_messages_on_identity_id"
     t.index ["text_message_id"], name: "index_admin_text_messages_on_text_message_id"
+  end
+
+  create_table "agents", force: :cascade do |t|
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "agent_identity_id"
+    t.index ["agent_identity_id"], name: "index_agents_on_agent_identity_id"
+    t.index ["identity_id"], name: "index_agents_on_identity_id"
   end
 
   create_table "alerts_displays", id: :serial, force: :cascade do |t|
@@ -4914,6 +4928,7 @@ ActiveRecord::Schema.define(version: 20171120061536) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "report_status"
+    t.integer "report_type"
     t.index ["identity_id"], name: "index_reputation_reports_on_identity_id"
   end
 
@@ -6486,6 +6501,8 @@ ActiveRecord::Schema.define(version: 20171120061536) do
   add_foreign_key "admin_emails", "identities"
   add_foreign_key "admin_text_messages", "identities"
   add_foreign_key "admin_text_messages", "text_messages"
+  add_foreign_key "agents", "identities"
+  add_foreign_key "agents", "identities", column: "agent_identity_id"
   add_foreign_key "alerts_displays", "identities"
   add_foreign_key "annuities", "identities"
   add_foreign_key "apartment_lease_files", "apartment_leases"

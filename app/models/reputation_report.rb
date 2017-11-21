@@ -18,8 +18,17 @@ class ReputationReport < ApplicationRecord
     ["myplaceonline.reputation_reports.report_statuses.pending_review", REPORT_STATUS_PENDING_REVIEW],
   ]
 
+  REPORT_TYPE_PRAISE = 0
+  REPORT_TYPE_SHAME = 1
+
+  REPORT_TYPES = [
+    ["myplaceonline.reputation_reports.report_types.praise", REPORT_TYPE_PRAISE],
+    ["myplaceonline.reputation_reports.report_types.shame", REPORT_TYPE_SHAME],
+  ]
+
   validates :short_description, presence: true
   validates :story, presence: true
+  validates :report_type, presence: true
   
   def display
     short_description

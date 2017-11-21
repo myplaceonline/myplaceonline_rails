@@ -34,6 +34,7 @@ class Identity < ApplicationRecord
   
   IDENTITY_TYPE_CONTACT = 0
   IDENTITY_TYPE_COMPANY = 1
+  IDENTITY_TYPE_AGENT = 2
   
   BLOOD_TYPE_AMINUS = 0
   BLOOD_TYPE_APLUS = 1
@@ -287,6 +288,7 @@ class Identity < ApplicationRecord
   has_many :boycotts, :dependent => :destroy
   has_many :reminders, :dependent => :destroy
   has_many :reputation_reports, :dependent => :destroy
+  has_many :agents, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 
@@ -531,6 +533,7 @@ class Identity < ApplicationRecord
       :reminders => reminders.to_a.map{|x| x.as_json},
       :dna_analyses => dna_analyses.to_a.map{|x| x.as_json},
       :reputation_reports => reputation_reports.to_a.map{|x| x.as_json},
+      :agents => agents.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json},
     })
   end

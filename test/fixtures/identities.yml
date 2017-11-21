@@ -7,3 +7,6 @@ contact_identity:
 
 company_identity:
   points: 0
+
+agent_identity:
+  points: 0

@@ -183,7 +183,8 @@ Category.create!([
   {id: 183, name: "calendars", link: "calendars", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/check_box_uncheck.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: true},
   {id: 214, name: "dna_analyses", link: "dna_analyses", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/molecule.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 224, name: "internal_contents", link: "internal_contents", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/check_box_uncheck.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: true, internal: true},
-  {id: 225, name: "reputation_reports", link: "reputation_reports", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/lighthouse.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
+  {id: 225, name: "reputation_reports", link: "reputation_reports", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/lighthouse.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 226, name: "agents", link: "agents", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/account_menu.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
 ])
 
 # Reinitialize to cache the categories created above

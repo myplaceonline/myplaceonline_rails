@@ -1,0 +1,22 @@
+<%= f.fields_for(:agent_identity, obj.agent_identity) do |identity_fields| %>
+
+  <%=
+    input_field(
+      form: identity_fields,
+      type: Myp::FIELD_HIDDEN,
+      name: :_updatetype,
+      value: AllowExistingConcern::UPDATE_TYPE_COMBINE.to_s
+    )
+  %>
+  <%=
+    input_field(
+      form: identity_fields,
+      type: Myp::FIELD_TEXT,
+      name: :name,
+      value: obj.agent_identity.name,
+      placeholder: "myplaceonline.contacts.name",
+      autofocus: autofocus
+    )
+  %>
+
+<% end %>

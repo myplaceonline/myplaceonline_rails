@@ -13,6 +13,16 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_SELECT,
+    name: :report_type,
+    value: obj.report_type,
+    placeholder: "myplaceonline.reputation_reports.report_type",
+    select_options: ReputationReport::REPORT_TYPES,
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :story,
     value: obj.story,

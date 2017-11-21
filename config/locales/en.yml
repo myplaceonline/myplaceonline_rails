@@ -264,6 +264,7 @@ en:
       dna_analyses: "DNA Analyses"
       internal_contents: "Internal Contents"
       reputation_reports: "Reputation Reports"
+      agents: "Agents"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -3823,4 +3824,10 @@ en:
       report_status: "Status"
       report_statuses:
         pending_review: "Pending Review"
-      add_intro: "A short description, story, and details about the person or group are required, and everything else is optional."
+      add_intro: "A short description and story about the person or group are required, and everything else is optional."
+      report_type: "Type"
+      report_types:
+        praise: "Praise"
+        shame: "Shame"
+    agents:
+      agent_identity: "Agent"

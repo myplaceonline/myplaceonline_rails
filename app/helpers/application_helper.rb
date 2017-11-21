@@ -1551,6 +1551,11 @@ module ApplicationHelper
                 field_attributes,
               )
             )
+          elsif options[:type] == Myp::FIELD_HIDDEN
+            result = Myp.appendstr(
+              result,
+              options[:form].hidden_field(name, value: options[:value])
+            )
           else
             result = Myp.appendstr(
               result,
@@ -1577,6 +1582,11 @@ module ApplicationHelper
                 options_for_select(options[:select_options], options[:value]),
                 field_attributes
               )
+            )
+          elsif options[:type] == Myp::FIELD_HIDDEN
+            result = Myp.appendstr(
+              result,
+              hidden_field_tag(name, value: options[:value])
             )
           else
             result = Myp.appendstr(

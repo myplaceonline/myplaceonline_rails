@@ -15,6 +15,7 @@ class ReputationReportsController < MyplaceonlineController
     def obj_params
       params.require(:reputation_report).permit(
         :short_description,
+        :report_type,
         :story,
         :notes,
         reputation_report_files_attributes: FilesController.multi_param_names,
