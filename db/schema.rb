@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171121060251) do
+ActiveRecord::Schema.define(version: 20171122043153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6287,6 +6287,17 @@ ActiveRecord::Schema.define(version: 20171121060251) do
     t.index ["website_domain_id"], name: "index_website_domain_myplets_on_website_domain_id"
   end
 
+  create_table "website_domain_properties", force: :cascade do |t|
+    t.bigint "website_domain_id"
+    t.string "property_key"
+    t.text "property_value"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_website_domain_properties_on_identity_id"
+    t.index ["website_domain_id"], name: "index_website_domain_properties_on_website_domain_id"
+  end
+
   create_table "website_domain_registrations", id: :serial, force: :cascade do |t|
     t.integer "website_domain_id"
     t.integer "repeat_id"
@@ -7351,6 +7362,8 @@ ActiveRecord::Schema.define(version: 20171121060251) do
   add_foreign_key "website_domain_myplets", "categories"
   add_foreign_key "website_domain_myplets", "identities"
   add_foreign_key "website_domain_myplets", "website_domains"
+  add_foreign_key "website_domain_properties", "identities"
+  add_foreign_key "website_domain_properties", "website_domains"
   add_foreign_key "website_domain_registrations", "identities"
   add_foreign_key "website_domain_registrations", "periodic_payments"
   add_foreign_key "website_domain_registrations", "repeats"

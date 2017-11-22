@@ -265,6 +265,7 @@ en:
       internal_contents: "Internal Contents"
       reputation_reports: "Reputation Reports"
       agents: "Agents"
+      website_domain_properties: "Website Domain Properties"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -2911,6 +2912,10 @@ en:
         disable_unauthenticated: "Disable for Guests"
       update_myplets: "Update Myplets"
       updating_myplets: "Myplet updating has started"
+      properties: "Properties"
+      property: "Property"
+      add_property: "Add Property"
+      delete_property: "Delete Property"
     website_domain_myplets:
       title: "Title"
       border_type: "Border Type"
@@ -3830,3 +3835,6 @@ en:
         praise: "Praise"
         shame: "Shame"
       agent: "Person or Group"
+    website_domain_properties:
+      property_key: "Key"
+      property_value: "Value"

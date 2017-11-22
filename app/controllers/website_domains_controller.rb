@@ -75,6 +75,7 @@ class WebsiteDomainsController < MyplaceonlineController
         favicon_png_identity_file_attributes: FilesController.param_names,
         default_header_icon_identity_file_attributes: FilesController.param_names,
         website_domain_myplets_attributes: WebsiteDomainMyplet.params,
+        website_domain_properties_attributes: WebsiteDomainProperty.params,
       )
     end
 end

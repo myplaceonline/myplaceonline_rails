@@ -30,6 +30,8 @@ class WebsiteDomain < ApplicationRecord
 
   child_properties(name: :website_domain_myplets, sort: "position ASC")
 
+  child_properties(name: :website_domain_properties, sort: "property_key ASC")
+
   def display
     domain_name
   end

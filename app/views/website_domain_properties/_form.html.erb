@@ -1,0 +1,20 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :property_key,
+    value: obj.property_key,
+    placeholder: "myplaceonline.website_domain_properties.property_key",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :property_value,
+    value: obj.property_value,
+    placeholder: "myplaceonline.website_domain_properties.property_value",
+    collapsed: false,
+  )
+%>
