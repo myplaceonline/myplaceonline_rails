@@ -3829,7 +3829,6 @@ en:
       report_status: "Status"
       report_statuses:
         pending_review: "Pending Review"
-      add_intro: "A short description and story about the person or group are required, and everything else is optional."
       report_type: "Type"
       report_types:
         praise: "Praise"

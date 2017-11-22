@@ -671,6 +671,16 @@ module Myp
     end
     result
   end
+  
+  def self.website_domain_property(key)
+    result = nil
+    website_domain = Myp.website_domain
+    property = website_domain.website_domain_properties.find{|x| x.property_key == key}
+    if !property.nil?
+      result = property.property_value
+    end
+    result
+  end
 
   # Return a list of ListItemRow objects.
   # Assumes user is logged in.
