@@ -682,7 +682,7 @@ class Identity < ApplicationRecord
   end
   
   def send_text?
-    !self.message_preferences.nil? && ((self.message_preferences & MESSAGE_PREFERENCE_SMS) != 0)
+    self.message_preferences.nil? || ((self.message_preferences & MESSAGE_PREFERENCE_SMS) != 0)
   end
   
   def send_message(body_short_markdown, body_long_markdown, subject, reply_to: nil, cc: nil, bcc: nil)
