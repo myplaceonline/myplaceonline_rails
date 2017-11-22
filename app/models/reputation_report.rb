@@ -54,20 +54,27 @@ class ReputationReport < ApplicationRecord
   after_commit :on_after_create, on: [:create]
 
   def on_after_create
-    link = reputation_report_url(self)
-    body_plain = "[#{link}](#{link})"
-    body_html = Myp.markdown_to_html(body_plain)
     
-    Myp.send_support_email_safe(
-      "New Reputation Report",
-      body_html,
-      body_plain,
-      request: MyplaceonlineExecutionContext.request,
-      html_comment_details: true
-    )
+    if self.report_status.nil?
+      link = reputation_report_url(self)
+      body_plain = "[#{link}](#{link})"
+      body_html = Myp.markdown_to_html(body_plain)
+      
+      Myp.send_support_email_safe(
+        "New Reputation Report",
+        body_html,
+        body_plain,
+        request: MyplaceonlineExecutionContext.request,
+        html_comment_details: true
+      )
+    end
   end
   
   def read_only?
+    true
+  end
+  
+  def allow_admin?
     true
   end
 end

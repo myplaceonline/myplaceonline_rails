@@ -92,6 +92,11 @@ class Ability
         result = true
       end
 
+      if !result && user.admin? && subject.respond_to?("allow_admin?") && subject.allow_admin?
+        Rails.logger.debug{"Ability.authorize allowing admin"}
+        result = true
+      end
+
       # If token is a query parameter, then check the share table
       if !result && !request.nil? && !request.query_parameters.nil?
         token = request.query_parameters["token"]
@@ -191,7 +196,7 @@ class Ability
       result = false
     end
     
-    if result && action != :show && subject.respond_to?("read_only?") && subject.read_only?
+    if result && action != :show && subject.respond_to?("read_only?") && subject.read_only? && !user.admin?
       Rails.logger.debug{"Ability.authorize subject readonly"}
       result = false
     end
