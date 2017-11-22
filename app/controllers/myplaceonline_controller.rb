@@ -693,6 +693,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def allow_edit
+    
     true
   end
   
@@ -706,6 +707,14 @@ class MyplaceonlineController < ApplicationController
   
   def show_edit
     allow_edit
+  end
+  
+  def obj_locked?
+    result = false
+    if @obj.respond_to?("read_only?") && @obj.read_only?
+      result = true
+    end
+    result
   end
   
   def show_index_footer
@@ -885,7 +894,7 @@ class MyplaceonlineController < ApplicationController
   
   def footer_items_show
     result = []
-    if show_edit
+    if show_edit && !obj_locked?
       result << {
         title: I18n.t("myplaceonline.general.edit"),
         link: self.edit_obj_path,
@@ -897,7 +906,7 @@ class MyplaceonlineController < ApplicationController
       link: self.back_to_all_path,
       icon: "back"
     }
-    if @obj.respond_to?("is_archived?") && (!nested || !parent_model.is_a?(Array))
+    if @obj.respond_to?("is_archived?") && (!nested || !parent_model.is_a?(Array)) && !obj_locked?
       if @obj.is_archived?
         result << {
           title: I18n.t("myplaceonline.general.unarchive"),
@@ -919,14 +928,14 @@ class MyplaceonlineController < ApplicationController
         icon: "plus"
       }
     end
-    if self.show_share
+    if self.show_share && !obj_locked?
       result << {
         title: I18n.t("myplaceonline.general.share"),
         link: self.share_obj_path,
         icon: "action"
       }
     end
-    if @obj.respond_to?("rating") && (!nested || !parent_model.is_a?(Array))
+    if @obj.respond_to?("rating") && (!nested || !parent_model.is_a?(Array)) && !obj_locked?
       if @obj.rating.nil? || @obj.rating < Myp::MAX_RATING
         result << {
           title: I18n.t("myplaceonline.general.favorite"),
@@ -941,13 +950,15 @@ class MyplaceonlineController < ApplicationController
         }
       end
     end
-    result << {
-      title: I18n.t('myplaceonline.general.delete'),
-      link: self.obj_path,
-      icon: "delete",
-      method: :delete,
-      data: { confirm: 'Are you sure?' }
-    }
+    if !obj_locked?
+      result << {
+        title: I18n.t('myplaceonline.general.delete'),
+        link: self.obj_path,
+        icon: "delete",
+        method: :delete,
+        data: { confirm: 'Are you sure?' }
+      }
+    end
     result
   end
   

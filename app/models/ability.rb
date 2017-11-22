@@ -190,6 +190,11 @@ class Ability
       Rails.logger.debug{"Ability.authorize Guest can only do #{valid_guest_actions} actions (tried #{action})"}
       result = false
     end
+    
+    if result && action != :show && subject.respond_to?("read_only?") && subject.read_only?
+      Rails.logger.debug{"Ability.authorize subject readonly"}
+      result = false
+    end
 
     Rails.logger.debug{"Ability.authorize returning #{result} for user #{user.id}, subject #{subject.inspect}"}
     

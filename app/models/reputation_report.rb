@@ -66,4 +66,8 @@ class ReputationReport < ApplicationRecord
       html_comment_details: true
     )
   end
+  
+  def read_only?
+    true
+  end
 end
