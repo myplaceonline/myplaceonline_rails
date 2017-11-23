@@ -23,6 +23,7 @@ class AdminController < ApplicationController
   end
   
   def ensure_pending_all_users
+    Rails.logger.info{"AdminController ensure_pending_all_users"}
     CalendarItemReminder.ensure_pending_all_users
     render(json: { success: true })
   end
@@ -44,6 +45,7 @@ class AdminController < ApplicationController
   end
 
   def execute_command
+    Rails.logger.info{"AdminController execute_command #{params[:command]}"}
     if request.post?
       @command = params[:command]
       ApplicationJob.perform(AdminExecuteCommandJob, @command)
@@ -53,6 +55,8 @@ class AdminController < ApplicationController
   def index; end
 
   def send_email
+    Rails.logger.info{"AdminController send_email"}
+    
     @admin_email = AdminEmail.new(
       email: Email.new(
                email_category: I18n.t("myplaceonline.admin.send_email.default_category", host: Myp.website_domain.display),
@@ -81,6 +85,8 @@ class AdminController < ApplicationController
   end
   
   def send_text_message
+    Rails.logger.info{"AdminController send_text_message"}
+    
     @admin_text_message = AdminTextMessage.new(
       text_message: TextMessage.new(
                message_category: I18n.t("myplaceonline.admin.send_text_message.default_category", host: Myp.website_domain.display)
@@ -108,6 +114,8 @@ class AdminController < ApplicationController
   end
   
   def send_direct_email
+    Rails.logger.info{"AdminController send_direct_email"}
+    
     @from = params[:from]
     @to = params[:to]
     @cc = params[:cc]
@@ -152,6 +160,8 @@ class AdminController < ApplicationController
   end
   
   def send_direct_text_message
+    Rails.logger.info{"AdminController send_direct_text_message"}
+    
     @to = params[:to]
     @body = params[:body]
     
@@ -173,6 +183,8 @@ class AdminController < ApplicationController
   end
   
   def gc
+    Rails.logger.info{"AdminController gc"}
+    
     GC.start
     sleep(5.0)
     redirect_to admin_path,
@@ -180,6 +192,8 @@ class AdminController < ApplicationController
   end
   
   def reinitialize
+    Rails.logger.info{"AdminController reinitialize"}
+    
     Myp.reinitialize
     render(json: { success: true })
   end
