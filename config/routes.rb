@@ -123,6 +123,7 @@ Rails.application.routes.draw do
     admin/create_test_job
     admin/create_test_error_job
     admin/gc
+    admin/reinitialize
     search/show
     info/credits
     info/diagnostics

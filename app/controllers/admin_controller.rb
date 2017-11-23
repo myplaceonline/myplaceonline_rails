@@ -178,4 +178,9 @@ class AdminController < ApplicationController
     redirect_to admin_path,
           :flash => { :notice => I18n.t("myplaceonline.admin.gc_collected") }
   end
+  
+  def reinitialize
+    Myp.reinitialize
+    render(json: { success: true })
+  end
 end
