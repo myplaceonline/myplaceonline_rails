@@ -531,12 +531,15 @@ Rails.application.routes.draw do
   
   Rails.logger.debug{"routes.rb Ended processing all models"}
 
+  # GET /resource/password/edit?reset_password_token=abcdef
   if Myp.is_web_server? || Rails.env.test?
     devise_scope :user do
       match 'users/reenter', :to => 'users/sessions#reenter', via: [:get, :post]
       post 'users/sign_up', :to => 'users/registrations#new'
       get 'users/delete', :to => 'users/registrations#delete'
       match 'users/password/change', :to => 'users/registrations#changepassword', via: [:get, :put]
+      match 'users/password/edit', :to => 'users/passwords#edit', via: [:get]
+      match 'users/password/edit', :to => 'users/passwords#update', via: [:put]
       match 'users/changeemail', :to => 'users/registrations#changeemail', via: [:get, :put]
       match 'users/notifications', :to => 'users/registrations#notifications', via: [:get, :post]
       match 'users/resetpoints', :to => 'users/registrations#resetpoints', via: [:get, :post]

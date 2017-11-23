@@ -743,6 +743,7 @@ en:
       security_settings_saved: "Security settings saved."
       encrypt_by_default: "Encrypt By Default"
       encrypt_warning: "Warning: If using encryption and you lose your password, you cannot decrypt the value."
+      forgot_warning: "Warning: You have some data encrypted with your current password. If you reset the password, that data will be lost. Try remembering your old password and trying to log in again. If you can't remember, then go ahead and reset your password but the encrypted data will be lost (if this is the case, sorry, but you were warned the first time data was encrypted and there is a check box not to encrypt and a default preference to disable enryption by default)."
       export: "Export"
       exportdescription: "This utility exports all of your data into a JavaScript Object Notation (JSON) downloadable file."
       offline: "Offline"

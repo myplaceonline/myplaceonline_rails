@@ -1,6 +1,16 @@
 <% content_for :heading do -%><%= t("myplaceonline.users.changepassword") %><% end -%>
 <h1><%= t("myplaceonline.users.changepassword") %></h1>
 
+<%
+reset_password_token = Devise.token_generator.digest(resource, :reset_password_token, params[:reset_password_token])
+user = User.where(reset_password_token: reset_password_token).take
+if EncryptedValue.where(user: user).count > 0
+%>
+  <p class="important"><%= t("myplaceonline.users.forgot_warning") %></p>
+<%
+end
+%>
+
 <%= form_for(resource, as: resource_name, url: edit_user_password_path, html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
   <div style="display:none">
