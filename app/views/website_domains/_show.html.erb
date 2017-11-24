@@ -18,6 +18,7 @@
 <%= data_row(heading: t("myplaceonline.website_domains.about"), content: obj.about, markdown: true) %>
 <%= data_row(heading: t("myplaceonline.website_domains.mission_statement"), content: obj.mission_statement, markdown: true) %>
 <%= data_row(heading: t("myplaceonline.website_domains.faq"), content: obj.faq, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.website_domains.allow_public"), content: obj.allow_public) %>
 <%= data_row(heading: t("myplaceonline.website_domains.ajax_config"), content: obj.ajax_config, enumeration: WebsiteDomain::AJAX_CONFIGS) %>
 <%= data_row(heading: t("myplaceonline.website_domains.favicon_ico_identity_file"), content: obj.favicon_ico_identity_file, evaluated_class_name: "File") %>
 <%= data_row(heading: t("myplaceonline.website_domains.favicon_png_identity_file"), content: obj.favicon_png_identity_file, evaluated_class_name: "File") %>

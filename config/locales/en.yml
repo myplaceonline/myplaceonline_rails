@@ -2717,6 +2717,7 @@ en:
       code: "Code"
       current_uses: "Current Uses"
       max_uses: "Maximum Uses"
+      website_domain: "Website Domain"
     happy_things:
       happy_thing_name: "Name"
       reminder: "Next Happy Thing %{name} %{delta}"
@@ -2917,6 +2918,7 @@ en:
       property: "Property"
       add_property: "Add Property"
       delete_property: "Delete Property"
+      allow_public: "Allow Public Access without Invite Code"
     website_domain_myplets:
       title: "Title"
       border_type: "Border Type"

@@ -1,6 +1,8 @@
 class InviteCode < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
+  child_property(name: :website_domain)
+  
   validates :code, presence: true
   validates :max_uses, presence: true
   
@@ -16,8 +18,9 @@ class InviteCode < ApplicationRecord
   
   def self.get_code(code)
     InviteCode.where(
-      "lower(code) = ? and current_uses < max_uses",
-      code.downcase
+      "LOWER(code) = ? AND current_uses < max_uses AND (website_domain_id IS NULL OR website_domain_id = ?)",
+      code.downcase,
+      Myp.website_domain
     ).first
   end
   

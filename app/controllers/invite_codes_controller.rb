@@ -14,7 +14,8 @@ class InviteCodesController < MyplaceonlineController
       params.require(:invite_code).permit(
         :code,
         :current_uses,
-        :max_uses
+        :max_uses,
+        website_domain_attributes: [:id],
       )
     end
 

@@ -1,3 +1,19 @@
 <%= myp_text_field(f, :code, "myplaceonline.invite_codes.code", obj.code, autofocus) %>
 <%= myp_number_field(f, :max_uses, "myplaceonline.invite_codes.max_uses", obj.max_uses) %>
 <%= myp_number_field(f, :current_uses, "myplaceonline.invite_codes.current_uses", obj.current_uses) %>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :website_domain,
+    existingobj: obj.website_domain,
+    heading: t("myplaceonline.invite_codes.website_domain"),
+    existingobjurl: "website_domain_path",
+    searchurl: "/website_domains.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    allow_new: false,
+    model: WebsiteDomain,
+    expanded_if_nil: true,
+    existingcollapsed: false,
+  }
+%>

@@ -50,6 +50,23 @@
   items_all_link = feed_path
   query_params_part_all = controller.items_query_params_part_all
   %>
+  <% if total_count > count %>
+    <p>
+    <%=
+      raw(
+        t(
+          "myplaceonline.feeds.items_hidden",
+          count: total_count - count,
+          items_link: link_to(
+            I18n.t("myplaceonline.feeds.feed_items"),
+            feed_feed_items_path(obj)
+          )
+        )
+      )
+    %>
+    </p>
+  <% end %>
+
   <ul data-role="listview" data-inset="true">
     <% items.offset(offset).limit(perpage).each do |item| %>
       <li>
@@ -80,20 +97,4 @@
       items_all_link: items_all_link
     }
   %>
-  <% if total_count > count %>
-    <p>
-    <%=
-      raw(
-        t(
-          "myplaceonline.feeds.items_hidden",
-          count: total_count - count,
-          items_link: link_to(
-            I18n.t("myplaceonline.feeds.feed_items"),
-            feed_feed_items_path(obj)
-          )
-        )
-      )
-    %>
-    </p>
-  <% end %>
 <% end %>

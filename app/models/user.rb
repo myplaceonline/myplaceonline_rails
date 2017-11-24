@@ -121,7 +121,7 @@ class User < ApplicationRecord
   validates_each :invite_code, :on => :create do |record, attr, value|
     if Myp.requires_invite_code
       if !InviteCode.valid_code?(value)
-        record.errors.add attr, I18n.t("myplaceonline.users.invite_invalid")
+        record.errors.add(attr, I18n.t("myplaceonline.users.invite_invalid"))
       end
     end
   end

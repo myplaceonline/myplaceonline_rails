@@ -252,6 +252,15 @@
   <%=
     input_field(
       form: f,
+      type: Myp::FIELD_BOOLEAN,
+      name: :allow_public,
+      value: obj.allow_public,
+      placeholder: "myplaceonline.website_domains.allow_public"
+    )
+  %>
+  <%=
+    input_field(
+      form: f,
       type: Myp::FIELD_SELECT,
       name: :ajax_config,
       value: obj.ajax_config,

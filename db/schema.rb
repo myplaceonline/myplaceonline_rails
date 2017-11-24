@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171122050737) do
+ActiveRecord::Schema.define(version: 20171124183842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2954,7 +2954,9 @@ ActiveRecord::Schema.define(version: 20171122050737) do
     t.datetime "archived"
     t.integer "rating"
     t.boolean "is_public"
+    t.bigint "website_domain_id"
     t.index ["identity_id"], name: "index_invite_codes_on_identity_id"
+    t.index ["website_domain_id"], name: "index_invite_codes_on_website_domain_id"
   end
 
   create_table "invites", id: :serial, force: :cascade do |t|
@@ -6362,6 +6364,7 @@ ActiveRecord::Schema.define(version: 20171122050737) do
     t.boolean "only_homepage"
     t.integer "ajax_config"
     t.boolean "is_public"
+    t.boolean "allow_public"
     t.index ["default_header_icon_identity_file_id"], name: "index_website_domains_on_default_header_icon_identity_file_id"
     t.index ["domain_host_id"], name: "index_website_domains_on_domain_host_id"
     t.index ["favicon_ico_identity_file_id"], name: "index_website_domains_on_favicon_ico_identity_file_id"
@@ -6935,6 +6938,7 @@ ActiveRecord::Schema.define(version: 20171122050737) do
   add_foreign_key "insurance_card_files", "insurance_cards"
   add_foreign_key "insurance_cards", "identities"
   add_foreign_key "invite_codes", "identities"
+  add_foreign_key "invite_codes", "website_domains"
   add_foreign_key "invites", "users"
   add_foreign_key "item_files", "identities"
   add_foreign_key "item_files", "identity_files"
