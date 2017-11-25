@@ -1,4 +1,12 @@
 class InviteCodesController < MyplaceonlineController
+  def use_bubble?
+    true
+  end
+  
+  def bubble_text(obj)
+    obj.website_domain.nil? ? nil : obj.website_domain.display
+  end
+
   protected
     def additional_sorts
       [

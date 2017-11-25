@@ -54,18 +54,18 @@ class Ability
     
     subject_class ||= subject.class
 
-    Rails.logger.debug{"Ability.authorize user: #{user.inspect}"}
-    Rails.logger.debug{"Ability.authorize identity: #{identity.inspect}"}
+    Rails.logger.debug{"Ability.authorize user: #{user}"}
+    Rails.logger.debug{"Ability.authorize identity: #{identity}"}
 
     if !Ability.context_identity.nil?
       identity = Ability.context_identity
-      Rails.logger.debug{"Ability.authorize identity from thread: #{identity.id}"}
+      Rails.logger.debug{"Ability.authorize identity from thread: #{identity}"}
     end
     
     # If the user owns the object, then they can do anything;
     # Otherwise, check the Shares and Permissions tables
     
-    Rails.logger.debug{"Ability.authorize checking action: #{action}, subject_class: #{subject_class}, subject: #{subject.id} with user #{user.id}, identity #{identity.id}"}
+    Rails.logger.debug{"Ability.authorize checking action: #{action}, subject_class: #{subject_class}, subject: #{subject} with user #{user}, identity #{identity}"}
     
     valid_guest_actions = [:show]
     
@@ -74,11 +74,11 @@ class Ability
       if subject.respond_to?("permission_check_target")
         subject = subject.permission_check_target
         subject_class = subject.class
-        Rails.logger.debug{"Ability.authorize Changing subject to: subject_class: #{subject_class}, subject: #{subject.id}"}
+        Rails.logger.debug{"Ability.authorize Changing subject to: subject_class: #{subject_class}, subject: #{subject}"}
       end
       
       if !result && subject.respond_to?("identity_id") && subject.identity_id == identity.id
-        Rails.logger.debug{"Ability.authorize Identities match: subject: #{subject.id}, identity: #{identity.id}"}
+        Rails.logger.debug{"Ability.authorize Identities match: subject: #{subject.id}, identity: #{identity}"}
         result = true
       end
       
