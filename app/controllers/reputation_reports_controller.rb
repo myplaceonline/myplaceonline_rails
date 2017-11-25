@@ -12,6 +12,12 @@ class ReputationReportsController < MyplaceonlineController
   end
 
   protected
+    def deny_guest
+      if current_user.guest?
+        raise Myp::SuddenRedirectError.new(new_registration_path(User.new), I18n.t("myplaceonline.users.please_sign_up"))
+      end
+    end
+
     def obj_params
       params.require(:reputation_report).permit(
         :short_description,

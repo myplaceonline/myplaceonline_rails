@@ -807,6 +807,7 @@ en:
       non_fixed_header: "Non-Fixed Header"
       toggle_hide_footer: "Tap Hides Header & Footer"
       identities: "Identities"
+      please_sign_up: "Please sign up first."
     identities:
       name: "Name"
       phones: "Phone Numbers"
