@@ -87,10 +87,17 @@ class ApplicationController < ActionController::Base
       end
     elsif exception.is_a?(Myp::SuddenRedirectError)
       Rails.logger.debug{"ApplicationController.catchall sudden redirect #{exception.path}".red}
+      
+      new_path = exception.path
+      
+      if !request.params[:emulate_host].blank?
+        new_path << "?emulate_host=" + request.params[:emulate_host]
+      end
+      
       if exception.notice.blank?
-        redirect_to exception.path
+        redirect_to(new_path)
       else
-        redirect_to exception.path, :flash => { :notice => exception.notice }
+        redirect_to(new_path, :flash => { :notice => exception.notice })
       end
     else
       Rails.logger.debug{"ApplicationController.catchall unknown".red}
@@ -145,6 +152,15 @@ class ApplicationController < ActionController::Base
         cookies["SERVERID"] = DynamicCookieOptions.create_cookie_options.merge(
           {
             value: ENV["NODENAME"].gsub(/\..*$/, "")
+          }
+        )
+      end
+      
+      if !params[:emulate_host].blank?
+        # http://api.rubyonrails.org/classes/ActionDispatch/Cookies.html
+        cookies[:emulate_host] = DynamicCookieOptions.create_cookie_options.merge(
+          {
+            value: params[:emulate_host]
           }
         )
       end

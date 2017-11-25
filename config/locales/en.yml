@@ -266,6 +266,7 @@ en:
       reputation_reports: "Reputation Reports"
       agents: "Agents"
       website_domain_properties: "Website Domain Properties"
+      entered_invite_codes: "Invite Codes"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -3840,3 +3841,7 @@ en:
     website_domain_properties:
       property_key: "Key"
       property_value: "Value"
+    entered_invite_codes:
+      code: "Code"
+      not_valid: "is not valid"
+      code_required: "This website requires an invite code to continue. Please enter it below."

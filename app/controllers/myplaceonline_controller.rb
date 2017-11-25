@@ -285,7 +285,7 @@ class MyplaceonlineController < ApplicationController
         
         if save_result
           
-          Rails.logger.debug{"Parent: #{@parent.inspect}, current owns? #{@obj.current_user_owns?}"}
+          Rails.logger.debug{"Parent: #{@parent.inspect}"}
           
           if !@parent.nil? && !@obj.current_user_owns?
             existing_permission = Permission.where(
@@ -345,7 +345,7 @@ class MyplaceonlineController < ApplicationController
       # If an item of this model type was created within the last few seconds
       # then just assume it was a double POST
       last_item = model
-        .where("identity_id = ?", current_user.current_identity.id)
+        .where("#{context_column} = ?", context_value)
         .order("created_at DESC")
         .limit(1)
         .first
@@ -1376,10 +1376,18 @@ class MyplaceonlineController < ApplicationController
       perform_all(initial_or: initial_or, additional: additional)
     end
     
+    def context_column
+      "identity_id"
+    end
+    
+    def context_value
+      current_user.current_identity.id
+    end
+    
     def perform_all(initial_or:, additional:)
       model.includes(all_includes).joins(all_joins).where(
-        "(#{model.table_name}.identity_id = ? #{initial_or}) #{additional}",
-        current_user.current_identity.id
+        "(#{model.table_name}.#{context_column} = ? #{initial_or}) #{additional}",
+        context_value
       )
     end
     
@@ -1389,8 +1397,8 @@ class MyplaceonlineController < ApplicationController
         additional = ""
       end
       model.includes(all_includes).joins(all_joins).where(
-        model.table_name + ".identity_id = ? and " + model.table_name + ".visit_count >= ? " + additional,
-        current_user.current_identity,
+        model.table_name + ".#{context_column} = ? and " + model.table_name + ".visit_count >= ? " + additional,
+        context_value,
         additional_items_min_visit_count
       )
     end
@@ -1405,8 +1413,8 @@ class MyplaceonlineController < ApplicationController
         additional = ""
       end
       model.includes(all_includes).joins(all_joins).where(
-        model.table_name + ".identity_id = ? and " + model.table_name + ".rating = ? " + additional,
-        current_user.current_identity,
+        model.table_name + ".#{context_column} = ? and " + model.table_name + ".rating = ? " + additional,
+        context_value,
         Myp::MAX_RATING
       )
     end
@@ -1451,9 +1459,11 @@ class MyplaceonlineController < ApplicationController
       end
       authorize! action.to_sym, @obj
       
-      # If this succeeds, then set the identity context for nested authorization checks
-      Rails.logger.debug{"MyplaceonlineController.set_obj setting Ability.context_identity = #{@obj.identity_id}"}
-      Ability.context_identity = @obj.identity
+      if @obj.respond_to?("identity_id")        
+        # If this succeeds, then set the identity context for nested authorization checks
+        Rails.logger.debug{"MyplaceonlineController.set_obj setting Ability.context_identity = #{@obj.identity_id}"}
+        Ability.context_identity = @obj.identity
+      end
     end
     
     def handle_object_not_found(id)

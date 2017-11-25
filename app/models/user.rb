@@ -75,7 +75,6 @@ class User < ApplicationRecord
     else
       if result.user_id != self.id
         # This can happen if an identity is emulated (e.g. website domain homepage)
-        #raise "Unexpected identity #{result.id} for user #{self.id}"
       end
     end
     #Rails.logger.debug{"User.current_identity returning: #{result.nil? ? nil : result.id}"}
@@ -83,7 +82,6 @@ class User < ApplicationRecord
   end
   
   def domain_identity
-    Rails.logger.debug{"User.domain_identity user_id: #{self.id}"}
     result = nil
     if self.id != GUEST_USER_ID
       domain = Myp.website_domain
@@ -103,7 +101,6 @@ class User < ApplicationRecord
         user: self,
       )
     end
-    Rails.logger.debug{"User.domain_identity returning: #{result.nil? ? nil : result.id}"}
     result
   end
   
@@ -149,24 +146,52 @@ class User < ApplicationRecord
     if !user.id.nil? && user.current_identity_id.nil?
       
       MyplaceonlineExecutionContext.do_user(user) do
-        Rails.logger.debug{"Creating identity for #{user.id}"}
+        # If the domain requires an invite code, then redirect
+        website_domain = Myp.website_domain
         
-        # No identity for the current domain, so we create a default one. We can
-        # also do any first-time initialization of the user here
-        user.transaction do
+        create_identity = true
+        
+        if Myp.requires_invite_code && !website_domain.allow_public?
+          Rails.logger.debug{"Domain requires invite code for user #{user}"}
           
-          if user.identities.count == 0
-            user.encrypt_by_default = true
-            user.save!
-          end
-          
-          # Create the identity
-          new_identity = Identity.new
-          new_identity.user = user
-          new_identity.name = Identity.email_to_name(user.email)
-          new_identity.save!
+          code = EnteredInviteCode.where(user: user, website_domain: website_domain).take
 
-          User.post_initialize_identity(user, new_identity)
+          Rails.logger.debug{"User has code: #{code}"}
+
+          if code.nil?
+            if !MyplaceonlineExecutionContext.request_uri.nil? && !MyplaceonlineExecutionContext.request_uri.starts_with?("/entered_invite_codes/")
+              
+              Rails.logger.debug{"Asking for code from: #{MyplaceonlineExecutionContext.request_uri}"}
+              
+              raise Myp::SuddenRedirectError.new("/entered_invite_codes/new", I18n.t("myplaceonline.entered_invite_codes.code_required"))
+            else
+              create_identity = false
+            end
+          else
+            code.destroy!
+          end
+        end
+
+        if create_identity
+          Rails.logger.debug{"Creating identity for #{user.id}"}
+          
+          # No identity for the current domain, so we create a default one. We can
+          # also do any first-time initialization of the user here
+          user.transaction do
+            
+            if user.identities.count == 0
+              user.encrypt_by_default = true
+              user.save!
+            end
+            
+            # Create the identity
+            new_identity = Identity.new
+            new_identity.user = user
+            new_identity.name = Identity.email_to_name(user.email)
+            new_identity.save!
+
+            User.post_initialize_identity(user, new_identity)
+          end
         end
       end
 

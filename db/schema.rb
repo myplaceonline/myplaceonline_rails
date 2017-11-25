@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171124183842) do
+ActiveRecord::Schema.define(version: 20171125024235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1948,6 +1948,15 @@ ActiveRecord::Schema.define(version: 20171124183842) do
     t.datetime "updated_at"
     t.integer "encryption_type"
     t.index ["user_id"], name: "index_encrypted_values_on_user_id"
+  end
+
+  create_table "entered_invite_codes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "website_domain_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_entered_invite_codes_on_user_id"
+    t.index ["website_domain_id"], name: "index_entered_invite_codes_on_website_domain_id"
   end
 
   create_table "event_contacts", id: :serial, force: :cascade do |t|
@@ -6793,6 +6802,8 @@ ActiveRecord::Schema.define(version: 20171124183842) do
   add_foreign_key "emergency_contacts", "emails"
   add_foreign_key "emergency_contacts", "identities"
   add_foreign_key "encrypted_values", "users", name: "encrypted_values_user_id_fk"
+  add_foreign_key "entered_invite_codes", "users"
+  add_foreign_key "entered_invite_codes", "website_domains"
   add_foreign_key "event_contacts", "contacts"
   add_foreign_key "event_contacts", "events"
   add_foreign_key "event_contacts", "identities"

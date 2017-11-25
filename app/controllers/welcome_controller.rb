@@ -9,14 +9,6 @@ class WelcomeController < ApplicationController
           @myplets = Myplet.where(identity: current_user.current_identity).order(:x_coordinate, :y_coordinate).all
         end
         
-        if !params[:emulate_host].blank?
-          # http://api.rubyonrails.org/classes/ActionDispatch/Cookies.html
-          cookies[:emulate_host] = DynamicCookieOptions.create_cookie_options.merge(
-            {
-              value: params[:emulate_host]
-            }
-          )
-        end
         render :index
       }
       format.xml {

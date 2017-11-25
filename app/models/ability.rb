@@ -5,12 +5,12 @@ class Ability
     if user.nil?
       Rails.logger.debug{"Ability.initialize no user, setting to Guest"}
       user = User.guest
-      identity = Identity.new(user: user)
+      identity = User.guest.current_identity
     else
       identity = user.current_identity
     end
 
-    Rails.logger.debug{"Ability.initialize user: #{user.id}"}
+    Rails.logger.debug{"Ability.initialize user: #{user}, identity: #{identity}"}
 
     if !Ability.context_identity.nil?
       identity = Ability.context_identity
@@ -18,7 +18,14 @@ class Ability
     end
     
     can do |action, subject_class, subject|
-      Ability.authorize(identity: identity, subject: subject, action: action, request: request, subject_class: subject_class)
+      Ability.authorize(
+        identity: identity,
+        subject: subject,
+        action: action,
+        request: request,
+        subject_class: subject_class,
+        non_identity_user: user,
+      )
     end
     
     if user.admin?
@@ -35,15 +42,19 @@ class Ability
     MyplaceonlineExecutionContext.ability_context_identity = identity
   end
   
-  def self.authorize(identity:, subject:, action: :edit, request: nil, subject_class: nil)
+  def self.authorize(identity:, subject:, action: :edit, request: nil, subject_class: nil, non_identity_user: nil)
     result = false
     
     Rails.logger.debug{"Ability.authorize identity: #{identity}"}
     
     if identity.nil?
-      Rails.logger.debug{"Ability.authorize no identity specified, setting to Guest"}
-      user = User.guest
-      identity = User.guest.current_identity
+      if subject.respond_to?("identity_id")
+        Rails.logger.debug{"Ability.authorize no identity specified, setting to Guest"}
+        user = User.guest
+        identity = User.guest.current_identity
+      else
+        user = non_identity_user
+      end
     else
       user = identity.user
       if user.nil?

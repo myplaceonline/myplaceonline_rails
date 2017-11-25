@@ -23,6 +23,9 @@ class MyplaceonlineExecutionContext
   def self.request; self[:request]; end
   def self.request=(x); self[:request] = x; end
 
+  def self.request_uri; self[:request_uri]; end
+  def self.request_uri=(x); self[:request_uri] = x; end
+
   def self.ability_context_identity; self[:ability_context_identity]; end
   def self.ability_context_identity=(x); self[:ability_context_identity] = x; end
 

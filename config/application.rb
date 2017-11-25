@@ -42,6 +42,8 @@ module Myplaceonline
         warden_user_key = env["rack.session"]["warden.user.user.key"]
         user_id = warden_user_key.nil? ? -1 : warden_user_key[0][0]
         
+        MyplaceonlineExecutionContext.request_uri = env["REQUEST_URI"]
+        
         # Debug
         #awesome_print(env)
         
