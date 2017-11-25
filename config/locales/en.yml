@@ -2599,6 +2599,7 @@ en:
       picture: "Picture"
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
+      rooftop: "Rooftop"
     treks:
       location: "Location"
       rating: "Rating"

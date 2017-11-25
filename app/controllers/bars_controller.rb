@@ -20,6 +20,7 @@ class BarsController < MyplaceonlineController
       params.require(:bar).permit(
         :notes,
         :rating,
+        :rooftop,
         location_attributes: LocationsController.param_names,
         bar_pictures_attributes: FilesController.multi_param_names
       )

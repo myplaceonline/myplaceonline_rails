@@ -13,6 +13,15 @@
   }
 %>
 <%= myp_select(f, :rating, "myplaceonline.bars.rating", Myp.translate_options(Myp::RATINGS), obj.rating) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :rooftop,
+    value: obj.rooftop,
+    placeholder: "myplaceonline.bars.rooftop"
+  )
+%>
 <%= myp_text_area_markdown(f, :notes, "myplaceonline.bars.notes", obj.notes) %>
 <%=
   render partial: "myplaceonline/pictures_form", locals: {
