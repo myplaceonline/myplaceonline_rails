@@ -22,7 +22,7 @@ gem "paperclip"
 gem "paperclip_database", github: "myplaceonline/paperclip_database"
 gem "rubyzip"
 gem "cancancan"
-gem "zeroclipboard-rails"
+gem "zeroclipboard-rails", github: "myplaceonline/zeroclipboard-rails"
 gem "noty-rails"
 gem "eventmachine"
 gem "letter_opener", :group => :development
