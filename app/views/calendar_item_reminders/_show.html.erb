@@ -6,3 +6,4 @@
 <%= attribute_table_row(t("myplaceonline.calendar_item_reminders.expire_amount"), obj.expire_amount) %>
 <%= attribute_table_row(t("myplaceonline.calendar_item_reminders.expire_type"), obj.expire_type) %>
 <%= attribute_table_row(t("myplaceonline.calendar_item_reminders.max_pending"), obj.max_pending) %>
+<%= data_row(heading: t("myplaceonline.calendar_item_reminders.pending"), content: obj.calendar_item_reminder_pendings) %>

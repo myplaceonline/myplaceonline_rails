@@ -177,13 +177,19 @@ class CalendarItem < ApplicationRecord
     Rails.logger.debug{"CalendarItem.destroy_calendar_items exit"}
   end
   
-  def all_calendar_items
-    CalendarItem.where(
+  def all_calendar_items(with_pending: false)
+    result = CalendarItem.where(
       identity_id: self.identity_id,
       model_class: self.model_class,
       model_id: self.model_id,
       context_info: self.context_info
     ).order("calendar_item_time ASC")
+    
+    if with_pending
+      result.to_a.delete_if{|x| x.calendar_item_reminders.reduce{|y, z| y.calendar_item_reminder_pendings.count + z.calendar_item_reminder_pendings } == 0 }
+    end
+    
+    result
   end
   
   # max_pending: The maximum number of concurrently outstanding reminders for

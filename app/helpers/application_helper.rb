@@ -303,7 +303,13 @@ module ApplicationHelper
       ).html_safe
     else
       
-      content.last(options[:max_collection_items]).each do |item|
+      if !options[:max_collection_items].nil? && options[:max_collection_items] > 0 && content.length > options[:max_collection_items]
+        content_list = content.last(options[:max_collection_items])
+      else
+        content_list = content
+      end
+      
+      content_list.each do |item|
         
         Rails.logger.debug{"ApplicationHelper.display_collection: item: #{item}, path: #{path}, heading: #{options[:heading]}"}
         
@@ -482,7 +488,7 @@ module ApplicationHelper
         options[:transform] = method(:display_boolean)
       elsif content.is_a?(ApplicationRecord)
         options[:transform] = method(:display_reference)
-      elsif content.is_a?(ActiveRecord::Associations::CollectionProxy) || content.is_a?(ActiveRecord::Relation)
+      elsif content.is_a?(ActiveRecord::Associations::CollectionProxy) || content.is_a?(ActiveRecord::Relation) || content.is_a?(Array)
         options[:transform] = method(:display_collection)
       end
     elsif options[:transform].is_a?(Symbol)

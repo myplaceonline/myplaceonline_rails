@@ -8,7 +8,7 @@ class CalendarItemReminder < ApplicationRecord
   
   belongs_to :calendar_item
 
-  has_many :calendar_item_reminder_pendings, :dependent => :destroy
+  child_properties(name: :calendar_item_reminder_pendings, sort: "created_at ASC")
   
   def display
     Myp.display_datetime(calendar_item.calendar_item_time, User.current_user)
@@ -138,9 +138,9 @@ class CalendarItemReminder < ApplicationRecord
         Rails.logger.debug{"CalendarItemReminder.ensure_pending_process completed calendar_item"}
     end
     
-    Rails.logger.debug{"CalendarItemReminder.ensure_pending_process checking calendar item reminder pendings"}
-    
     now = Time.now
+
+    Rails.logger.debug{"CalendarItemReminder.ensure_pending_process checking calendar item reminder pendings, now: #{now}"}
     
     # Select the original calendar item (is_repeat = NULL/false) and all of its repeats:
     #
@@ -162,10 +162,12 @@ class CalendarItemReminder < ApplicationRecord
             if !calendar_item_reminder.calendar_item.calendar_item_time.nil?
 
               Rails.logger.debug{"CalendarItemReminder.ensure_pending_process calendar_item_time = #{calendar_item_reminder.calendar_item.calendar_item_time}"}
+              
+              cirt = calendar_item_reminder.threshold
           
-              if calendar_item_reminder.threshold <= now && !calendar_item_reminder.is_expired(now)
+              if cirt <= now && !calendar_item_reminder.is_expired(now)
                 
-                Rails.logger.debug{"CalendarItemReminder.ensure_pending_process meets threshold of #{calendar_item_reminder.threshold_in_seconds.seconds}"}
+                Rails.logger.debug{"CalendarItemReminder.ensure_pending_process meets threshold of #{calendar_item_reminder.threshold_in_seconds.seconds} seconds from #{cirt}, now: #{now}"}
           
                 # If there's a max_pending (often 1), then delete any pending
                 # items beyond that amount

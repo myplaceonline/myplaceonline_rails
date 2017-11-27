@@ -7,4 +7,4 @@
 <%= data_row(heading: Myp.get_select_name(obj.repeat_type, Reminder::REPEAT_TYPES, default_value: nil), content: obj.repeat_amount) %>
 <%= data_row(heading: t("myplaceonline.reminders.max_pending"), content: obj.max_pending) %>
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
-<%= data_row(heading: t("myplaceonline.reminders.calendar_item"), content: obj.calendar_item.all_calendar_items, max_collection_items: obj.max_pending.nil? ? 10 : obj.max_pending, show_exceeded_max_collection_items_warning: false) %>
+<%= data_row(heading: t("myplaceonline.reminders.calendar_item"), content: obj.calendar_item.all_calendar_items(with_pending: true), max_collection_items: obj.max_pending.nil? ? 10 : obj.max_pending) %>

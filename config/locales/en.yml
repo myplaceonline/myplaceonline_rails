@@ -2828,11 +2828,13 @@ en:
       calendar: "Calendar"
       calendar_item_time: "Date/Time"
       calendar_item_reminders: "Reminders"
+      calendar_item_reminder: "Reminder"
     calendar_item_reminders:
       calendar_item: "Item"
       text_message: "Reminder (%{time}): %{display}"
       calendar_item_reminder_pendings: "Pending Items"
       threshold: "Threshold"
+      pending: "Pending Reminder"
     calendar_item_reminder_pendings:
       calendar_item_reminder: "Item"
       display: "Pending Reminder"
