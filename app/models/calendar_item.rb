@@ -1,9 +1,12 @@
+# If a CalendarItem repeats, then there is the "primary" CalendarItem
+# (is_repeat = false) and then an individual CalendarItem for each repeat
+# after the original (is_repeat = true).
 class CalendarItem < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   
   belongs_to :calendar
 
-  has_many :calendar_item_reminders, :dependent => :destroy
+  child_properties(name: :calendar_item_reminders, sort: "created_at ASC")
   
   def display
     if @cached_display.nil?
@@ -11,6 +14,23 @@ class CalendarItem < ApplicationRecord
       @cached_display = model.calendar_item_display(self)
     end
     @cached_display
+  end
+  
+  before_destroy :on_before_destroy
+  
+  def on_before_destroy
+    if !self.is_repeat?
+      # If this is the "primary" CalendarItem (see class description), then
+      # we presume we want to delete all repeat CalendarItems
+      
+      CalendarItem.destroy_calendar_items(
+        self.identity,
+        self.find_model_class,
+        model_id: self.model_id,
+        context_info: self.context_info,
+        skip_id: self.id,
+      )
+    end
   end
   
   def link
@@ -140,18 +160,30 @@ class CalendarItem < ApplicationRecord
   
   # Note that the default context_info of nil means that any items with
   # a non-NULL context_info will not be destroyed
-  def self.destroy_calendar_items(identity, model, model_id: nil, context_info: nil)
-    Rails.logger.debug{"CalendarItem.destroy_calendar_items entry identity: #{identity.id}, model: #{model.name}, model_id: #{model_id}, context_info: #{context_info}"}
+  def self.destroy_calendar_items(identity, model, model_id: nil, context_info: nil, skip_id: nil)
+    Rails.logger.debug{"CalendarItem.destroy_calendar_items entry identity: #{identity.id}, model: #{model.name}, model_id: #{model_id}, context_info: #{context_info}, skip_id: #{skip_id}"}
     CalendarItem.where(
       identity: identity,
       model_class: model.name,
       model_id: model_id,
       context_info: context_info
     ).each do |calendar_item|
-      Rails.logger.debug{"CalendarItem.destroy_calendar_items item #{calendar_item.inspect}"}
-      calendar_item.destroy!
+      
+      if skip_id.nil? || calendar_item.id != skip_id
+        Rails.logger.debug{"CalendarItem.destroy_calendar_items item #{calendar_item.inspect}"}
+        calendar_item.destroy!
+      end
     end
     Rails.logger.debug{"CalendarItem.destroy_calendar_items exit"}
+  end
+  
+  def all_calendar_items
+    CalendarItem.where(
+      identity_id: self.identity_id,
+      model_class: self.model_class,
+      model_id: self.model_id,
+      context_info: self.context_info
+    ).order("calendar_item_time ASC")
   end
   
   # max_pending: The maximum number of concurrently outstanding reminders for
@@ -194,6 +226,8 @@ class CalendarItem < ApplicationRecord
       
       calendar_item.save!
       
+      Rails.logger.debug{"CalendarItem.create_calendar_item new item: #{calendar_item}"}
+      
       calendar_item_reminder = CalendarItemReminder.new(
         identity: identity,
         calendar_item: calendar_item,
@@ -205,6 +239,8 @@ class CalendarItem < ApplicationRecord
       )
       
       calendar_item_reminder.save!
+      
+      Rails.logger.debug{"CalendarItem.create_calendar_item new reminder: #{calendar_item_reminder}"}
       
       CalendarItemReminder.schedule_ensure_pending(identity.user)
       

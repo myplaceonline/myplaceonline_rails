@@ -3793,6 +3793,7 @@ en:
       expire_reminder: "Reminder Expiration"
       repeat_reminder: "Repeat Reminder"
       repeat_details: "Advanced Options"
+      calendar_item: "Calendar Item"
       reminder_threshold_types:
         immediate: "At the Reminder Time"
         time_before_s: "Amount before the Reminder Time (in Seconds)"
@@ -3848,3 +3849,5 @@ en:
       code: "Code"
       not_valid: "is not valid"
       code_required: "This website requires an invite code to continue. Please enter it below."
+    application_helper:
+      additional_items: "%{count} additional items not shown."

@@ -64,12 +64,30 @@ class Reminder < ApplicationRecord
   
   attr_accessor :is_saving
   
+  # There's one "primary" CalendarItem (see CalendarItem class description)
+  # and then potential repeats
+  child_property(name: :calendar_item, destroy_dependent: true)
+
+  validates :start_time, presence: true
+  validates :reminder_name, presence: true
+  
+  def display
+    reminder_name
+  end
+
+  def self.build(params = nil)
+    result = self.dobuild(params)
+    #result.start_time = User.current_user.time_now
+    #result.reminder_threshold_type = THRESHOLD_TYPE_IMMEDIATE
+    result
+  end
+
   after_commit :on_after_save, on: [:create, :update]
   
   def on_after_save
     if !self.is_saving
       
-      Rails.logger.debug{"Reminder.on_after_save #{self.id}"}
+      Rails.logger.debug{"Reminder.on_after_save #{self}"}
       
       self.is_saving = true
       
@@ -78,6 +96,8 @@ class Reminder < ApplicationRecord
         self.calendar_item = nil
         self.save!
         
+        Rails.logger.debug{"Reminder.on_after_save destroying existing calendar item #{c}"}
+      
         c.destroy!
       end
 
@@ -132,6 +152,8 @@ class Reminder < ApplicationRecord
         max_pending: self.max_pending,
       )
       
+      Rails.logger.debug{"Reminder.on_after_save created new calendar item #{self.calendar_item}"}
+      
       self.save!
     end
   end
@@ -139,21 +161,5 @@ class Reminder < ApplicationRecord
   def self.calendar_item_display(calendar_item)
     reminder = calendar_item.find_model_object
     reminder.reminder_name
-  end
-  
-  child_property(name: :calendar_item, destroy_dependent: true)
-
-  validates :start_time, presence: true
-  validates :reminder_name, presence: true
-  
-  def display
-    reminder_name
-  end
-
-  def self.build(params = nil)
-    result = self.dobuild(params)
-    #result.start_time = User.current_user.time_now
-    #result.reminder_threshold_type = THRESHOLD_TYPE_IMMEDIATE
-    result
   end
 end

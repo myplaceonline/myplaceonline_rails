@@ -176,7 +176,7 @@ class CalendarItemReminder < ApplicationRecord
                   identity: calendar_item_reminder.identity
                 )
                 
-                Rails.logger.debug{"CalendarItemReminder.ensure_pending_process creating new pending reminder #{new_pending.inspect}"}
+                Rails.logger.debug{"CalendarItemReminder.ensure_pending_process creating new pending reminder #{new_pending.inspect}; #{new_pending.calendar_item.inspect}"}
                 
                 check_calendar_item = CalendarItem.where(id: calendar_item_reminder.calendar_item.id).take
                 if !check_calendar_item.nil?
@@ -217,17 +217,25 @@ class CalendarItemReminder < ApplicationRecord
                         }
                       )
                       
+                      # pendings_result.each do |pr|
+                      #   Rails.logger.debug{"CalendarItemReminder.ensure_pending_process checking max_pending for pending: #{pr.inspect}"}
+                      # end
+                      
+                      Rails.logger.debug{"CalendarItemReminder.ensure_pending_process max_pending: #{calendar_item_reminder.max_pending}, existing pendings: #{pendings_result.count}"}
+                      
                       number_to_delete = pendings_result.count - calendar_item_reminder.max_pending
                       
                       if number_to_delete > 0
                         pendings_result.first(number_to_delete).each do |x|
+
+                          Rails.logger.debug{"CalendarItemReminder.ensure_pending_process destroying excessive reminder #{x.calendar_item_reminder.inspect}; #{x.inspect}; #{x.calendar_item.inspect}"}
                           
-                          # There's no point to keep the actual reminder around since we know there must be more recent
-                          # ${max_pending} reminder(s)
-                          Rails.logger.debug{"CalendarItemReminder.ensure_pending_process destroying excessive reminder #{x.calendar_item_reminder.inspect}; #{x.inspect}"}
-                          x.calendar_item_reminder.destroy!
+                          x.destroy!
                         end
                       end
+
+                      Rails.logger.debug{"CalendarItemReminder.ensure_pending_process destroyed #{number_to_delete} pendings"}
+                      
                     end
                   else
                     Myp.warn("Couldn't find CalendarItemReminder #{calendar_item_reminder.id} for #{new_pending.inspect}")
@@ -244,7 +252,10 @@ class CalendarItemReminder < ApplicationRecord
           Rails.logger.debug{"CalendarItemReminder.ensure_pending_process is_expired = #{is_expired}"}
 
           if is_expired
-            Rails.logger.debug{"CalendarItemReminder.ensure_pending_process reminder expired, deleting #{calendar_item_reminder.calendar_item_reminder_pendings.count} pendings"}
+            
+            if calendar_item_reminder.calendar_item_reminder_pendings.count > 0
+              Rails.logger.debug{"CalendarItemReminder.ensure_pending_process reminder expired, deleting #{calendar_item_reminder.calendar_item_reminder_pendings.count} pendings"}
+            end
             
             calendar_item_reminder.calendar_item_reminder_pendings.each do |calendar_item_reminder_pending|
               calendar_item_reminder_pending.destroy!
@@ -254,7 +265,7 @@ class CalendarItemReminder < ApplicationRecord
             if calendar_item_reminder.calendar_item.model_id.nil?
               calendar_item_class = calendar_item_reminder.calendar_item.find_model_class
               if calendar_item_class.respond_to?("handle_expired_reminder")
-                Rails.logger.debug{"calling handle_expired_reminder on class"}
+                Rails.logger.debug{"CalendarItemReminder.ensure_pending_process calling handle_expired_reminder on class"}
                 calendar_item_class.handle_expired_reminder
               end
             else

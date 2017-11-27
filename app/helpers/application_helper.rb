@@ -290,6 +290,9 @@ module ApplicationHelper
     result = ""
     path = content.class.to_s
     path = path[0..path.index("::")-1].underscore.pluralize
+    
+    Rails.logger.debug{"ApplicationHelper.display_collection: path: #{path}, content: #{content}, length: #{content.length}"}
+
     if path.end_with?("_files")
       result = render(
         partial: "myplaceonline/pictures",
@@ -300,37 +303,36 @@ module ApplicationHelper
       ).html_safe
     else
       
-      if content.length <= options[:max_collection_items]
-        content.each do |item|
-          
-          Rails.logger.debug{"ApplicationHelper.display_collection: item: #{item}, path: #{path}, heading: #{options[:heading]}"}
-          
-          child_html = render(partial: "#{path}/show", locals: { obj: item }).html_safe
-          child_html = <<-HTML
-            <tr>
-              <td>#{CGI::escapeHTML(options[:heading])}</td>
-              <td colspan="2">
-                <div data-role="collapsible" data-collapsed="#{!options[:expanded]}">
-                  <h3>#{item.display}</h3>
-                  #{data_table_start(format: format)}
-                  #{child_html}
-                  #{data_table_end(format: format)}
-                </div>
-              </td>
-            </tr>
-          HTML
-          result += child_html.html_safe
-        end
-      else
-#         else_html = <<-HTML
-#           <tr>
-#             <td>#{CGI::escapeHTML(options[:heading])}</td>
-#             <td colspan="2">
-#               link to items
-#             </td>
-#           </tr>
-#         HTML
-#         result += else_html.html_safe
+      content.last(options[:max_collection_items]).each do |item|
+        
+        Rails.logger.debug{"ApplicationHelper.display_collection: item: #{item}, path: #{path}, heading: #{options[:heading]}"}
+        
+        child_html = render(partial: "#{path}/show", locals: { obj: item }).html_safe
+        child_html = <<-HTML
+          <tr>
+            <td>#{CGI::escapeHTML(options[:heading])}</td>
+            <td colspan="2">
+              <div data-role="collapsible" data-collapsed="#{!options[:expanded]}">
+                <h3>#{item.display}</h3>
+                #{data_table_start(format: format)}
+                #{child_html}
+                #{data_table_end(format: format)}
+              </div>
+            </td>
+          </tr>
+        HTML
+        result += child_html.html_safe
+      end
+      if content.length > options[:max_collection_items] && options[:show_exceeded_max_collection_items_warning]
+        child_html = <<-HTML
+          <tr>
+            <td>#{CGI::escapeHTML(options[:heading])}</td>
+            <td colspan="2">
+              #{I18n.t("myplaceonline.application_helper.additional_items", count: content.length - options[:max_collection_items])}
+            </td>
+          </tr>
+        HTML
+        result += child_html.html_safe
       end
     end
     result
@@ -451,6 +453,7 @@ module ApplicationHelper
       non_wrap_container: :p,
       evaluated_class_name: nil,
       max_collection_items: 25,
+      show_exceeded_max_collection_items_warning: true,
       show_reference: true,
       reference_url: nil,
       markdown_process_images: false,
@@ -479,7 +482,7 @@ module ApplicationHelper
         options[:transform] = method(:display_boolean)
       elsif content.is_a?(ApplicationRecord)
         options[:transform] = method(:display_reference)
-      elsif content.is_a?(ActiveRecord::Associations::CollectionProxy)
+      elsif content.is_a?(ActiveRecord::Associations::CollectionProxy) || content.is_a?(ActiveRecord::Relation)
         options[:transform] = method(:display_collection)
       end
     elsif options[:transform].is_a?(Symbol)
