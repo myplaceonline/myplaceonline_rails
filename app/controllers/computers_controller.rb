@@ -34,6 +34,7 @@ class ComputersController < MyplaceonlineController
         manufacturer_attributes: Company.param_names,
         administrator_attributes: PasswordsController.param_names,
         main_user_attributes: PasswordsController.param_names,
+        hard_drive_password_attributes: PasswordsController.param_names,
         computer_ssh_keys_attributes: [
           :id,
           :_destroy,

@@ -14,6 +14,7 @@
 <%= attribute_table_row_markdown(t("myplaceonline.computers.notes"), obj.notes) %>
 <%= attribute_table_row_reference(t("myplaceonline.computers.administrator"), "password_path", obj.administrator) %>
 <%= attribute_table_row_reference(t("myplaceonline.computers.main_user"), "password_path", obj.main_user) %>
+<%= data_row(heading: t("myplaceonline.computers.hard_drive_password"), content: obj.hard_drive_password) %>
 <%= attribute_table_row_dimensions(t("myplaceonline.computers.width"), obj.width, obj.dimensions_type) %>
 <%= attribute_table_row_dimensions(t("myplaceonline.computers.height"), obj.height, obj.dimensions_type) %>
 <%= attribute_table_row_dimensions(t("myplaceonline.computers.depth"), obj.depth, obj.dimensions_type) %>

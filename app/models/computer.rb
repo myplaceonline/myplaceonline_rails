@@ -19,6 +19,8 @@ class Computer < ApplicationRecord
   
   child_property(name: :main_user, model: Password)
 
+  child_property(name: :hard_drive_password, model: Password)
+
   child_properties(name: :computer_ssh_keys)
 
   def self.skip_check_attributes

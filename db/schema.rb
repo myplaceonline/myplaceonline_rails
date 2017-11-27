@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171125215648) do
+ActiveRecord::Schema.define(version: 20171127182415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1119,7 +1119,9 @@ ActiveRecord::Schema.define(version: 20171125215648) do
     t.datetime "archived"
     t.integer "rating"
     t.boolean "is_public"
+    t.bigint "hard_drive_password_id"
     t.index ["administrator_id"], name: "index_computers_on_administrator_id"
+    t.index ["hard_drive_password_id"], name: "index_computers_on_hard_drive_password_id"
     t.index ["identity_id"], name: "index_computers_on_identity_id"
     t.index ["main_user_id"], name: "index_computers_on_main_user_id"
     t.index ["manufacturer_id"], name: "index_computers_on_manufacturer_id"
@@ -6676,6 +6678,7 @@ ActiveRecord::Schema.define(version: 20171125215648) do
   add_foreign_key "computers", "companies", column: "manufacturer_id", name: "computers_manufacturer_id_fk"
   add_foreign_key "computers", "identities", name: "computers_identity_id_fk"
   add_foreign_key "computers", "passwords", column: "administrator_id", name: "computers_administrator_id_fk"
+  add_foreign_key "computers", "passwords", column: "hard_drive_password_id"
   add_foreign_key "computers", "passwords", column: "main_user_id", name: "computers_main_user_id_fk"
   add_foreign_key "concert_musical_groups", "concerts", name: "concert_musical_groups_concert_id_fk"
   add_foreign_key "concert_musical_groups", "identities", name: "concert_musical_groups_identity_id_fk"

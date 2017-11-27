@@ -50,6 +50,19 @@
     autofocus: false
   }
 %>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :hard_drive_password,
+    existingobj: obj.hard_drive_password,
+    heading: t("myplaceonline.computers.hard_drive_password"),
+    objform: "passwords/form",
+    existingobjurl: "password_path",
+    searchurl: "/passwords.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
 <%= myp_select(f, :dimensions_type, "myplaceonline.computers.dimensions_type", Myp.translate_options(Myp::DIMENSIONS), obj.dimensions_type) %>
 <%= myp_decimal_field(f, :width, "myplaceonline.computers.width", obj.width) %>
 <%= myp_decimal_field(f, :height, "myplaceonline.computers.height", obj.height) %>
