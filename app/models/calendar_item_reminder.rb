@@ -138,7 +138,8 @@ class CalendarItemReminder < ApplicationRecord
         Rails.logger.debug{"CalendarItemReminder.ensure_pending_process completed calendar_item"}
     end
     
-    now = Time.now
+    # All dates in the DB are UTC
+    now = Time.now.utc
 
     Rails.logger.debug{"CalendarItemReminder.ensure_pending_process checking calendar item reminder pendings, now: #{now}"}
     
@@ -155,6 +156,10 @@ class CalendarItemReminder < ApplicationRecord
         if calendar_item_reminder.calendar_item.model_id_valid?
           Rails.logger.debug{"CalendarItemReminder.ensure_pending_process checking reminder=#{calendar_item_reminder.inspect}. Item: #{calendar_item_reminder.calendar_item.display}, Calendar Item: #{calendar_item_reminder.calendar_item.inspect}"}
           
+          is_expired = calendar_item_reminder.is_expired(now)
+
+          Rails.logger.debug{"CalendarItemReminder.ensure_pending_process is_expired = #{is_expired}"}
+
           # Don't process a reminder that already has pendings outstanding because that means it has previously been
           # processed
           if calendar_item_reminder.calendar_item_reminder_pendings.count == 0
@@ -165,16 +170,17 @@ class CalendarItemReminder < ApplicationRecord
               
               cirt = calendar_item_reminder.threshold
           
+              # A reminder pops if the current date is >= the reminder time
               if cirt <= now && !calendar_item_reminder.is_expired(now)
                 
-                Rails.logger.debug{"CalendarItemReminder.ensure_pending_process meets threshold of #{calendar_item_reminder.threshold_in_seconds.seconds} seconds from #{cirt}, now: #{now}"}
+                Rails.logger.debug{"CalendarItemReminder.ensure_pending_process meets threshold of #{calendar_item_reminder.threshold_in_seconds.seconds} seconds from #{cirt}; #{cirt.utc} UTC, now: #{now} UTC"}
           
                 # If there's a max_pending (often 1), then delete any pending
                 # items beyond that amount
                 new_pending = CalendarItemReminderPending.new(
-                  calendar_item_reminder: calendar_item_reminder,
                   calendar: calendar_item_reminder.calendar_item.calendar,
                   calendar_item: calendar_item_reminder.calendar_item,
+                  calendar_item_reminder: calendar_item_reminder,
                   identity: calendar_item_reminder.identity
                 )
                 
@@ -249,10 +255,6 @@ class CalendarItemReminder < ApplicationRecord
             end
           end
           
-          is_expired = calendar_item_reminder.is_expired(now)
-
-          Rails.logger.debug{"CalendarItemReminder.ensure_pending_process is_expired = #{is_expired}"}
-
           if is_expired
             
             if calendar_item_reminder.calendar_item_reminder_pendings.count > 0
@@ -389,6 +391,7 @@ class CalendarItemReminder < ApplicationRecord
         result = true
       end
     end
+    Rails.logger.debug("CalendarItemReminder.is_expired result: #{result}")
     result
   end
   
