@@ -9,4 +9,7 @@
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
 <% if !obj.calendar_item.nil? %>
   <%= data_row(heading: t("myplaceonline.reminders.calendar_item"), content: obj.calendar_item.all_calendar_items(with_pending: true), max_collection_items: obj.max_pending.nil? ? 10 : obj.max_pending) %>
+  <% if !obj.calendar_item.next_calendar_item.nil? %>
+    <%= data_row(heading: t("myplaceonline.reminders.next_calendar_item"), content: [obj.calendar_item.next_calendar_item]) %>
+  <% end %>
 <% end %>

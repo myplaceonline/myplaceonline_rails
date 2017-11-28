@@ -3796,6 +3796,7 @@ en:
       repeat_reminder: "Repeat Reminder"
       repeat_details: "Advanced Options"
       calendar_item: "Calendar Item with Pending Reminder"
+      next_calendar_item: "Next Reminder"
       reminder_threshold_types:
         immediate: "At the Reminder Time"
         time_before_s: "Amount before the Reminder Time (in Seconds)"

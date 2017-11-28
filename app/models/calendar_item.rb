@@ -192,6 +192,41 @@ class CalendarItem < ApplicationRecord
     result
   end
   
+  def next_calendar_item
+    result = CalendarItem.where(
+      identity_id: self.identity_id,
+      model_class: self.model_class,
+      model_id: self.model_id,
+      context_info: self.context_info
+    ).order("calendar_item_time ASC").to_a
+    
+    state = 0
+    i = 0
+    while i < result.length
+      
+      pendings = result[i].calendar_item_reminders.map{|y| y.calendar_item_reminder_pendings.count }.reduce{|z1, z2| z1+z2 }
+      
+      case state
+      when 0
+        if pendings > 0
+          state = 1
+        end
+      when 1
+        if pendings == 0
+          break
+        end
+      end
+      
+      i = i + 1
+    end
+    
+    if i < result.length
+      result[i]
+    else
+      nil
+    end
+  end
+  
   # max_pending: The maximum number of concurrently outstanding reminders for
   #              this item. This is often used with a value of 1 with a
   #              repeating item for which there should only ever be a single
