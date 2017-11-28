@@ -320,7 +320,7 @@ module ApplicationHelper
       else
         
         if !options[:max_collection_items].nil? && options[:max_collection_items] > 0 && content.length > options[:max_collection_items]
-          content_list = content.last(options[:max_collection_items])
+          content_list = content.first(options[:max_collection_items])
         else
           content_list = content
         end
