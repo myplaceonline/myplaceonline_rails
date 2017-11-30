@@ -246,23 +246,6 @@ module ApplicationHelper
     content_display = content.display
     options[:clipboard_text] = content_display
 
-    if content.respond_to?("current_user_owns?") && content.current_user_owns?
-      if options[:reference_url].nil?
-        url = send((options[:evaluated_class_name].nil? ? content.class.name : options[:evaluated_class_name]).underscore + "_path", content)
-      else
-        url = options[:reference_url]
-      end
-      result = display_url(
-        content: url,
-        format: :html,
-        options: {
-          url_innercontent: content_display
-        }
-      )
-    else
-      result = CGI::escapeHTML(content_display).html_safe
-    end
-    
     if options[:show_reference]
       begin
         if ExecutionContext.push_marker(:nest_count) <= ExecutionContext.get(:max_nest, default: 1)
@@ -271,12 +254,39 @@ module ApplicationHelper
             id: content.id,
             locals: {
               nested_show: true,
-              nested_expanded: options[:expanded]
+              nested_expanded: options[:expanded],
+              nested_cell: !options[:show_reference_as_content],
             }
           )
         end
       ensure
         ExecutionContext.pop_marker(:nest_count)
+      end
+    end
+
+    if options[:reference_display_heading]
+      if content.respond_to?("current_user_owns?") && content.current_user_owns?
+        if options[:reference_url].nil?
+          url = send((options[:evaluated_class_name].nil? ? content.class.name : options[:evaluated_class_name]).underscore + "_path", content)
+        else
+          url = options[:reference_url]
+        end
+        result = display_url(
+          content: url,
+          format: :html,
+          options: {
+            url_innercontent: content_display
+          }
+        )
+      else
+        result = CGI::escapeHTML(content_display).html_safe
+      end
+    else
+      if options[:show_reference_as_content] && !options[:second_row].blank?
+        result = options[:second_row]
+        options[:second_row] = nil
+      else
+        result = "&nbsp;"
       end
     end
     
@@ -309,7 +319,7 @@ module ApplicationHelper
       
       Rails.logger.debug{"ApplicationHelper.display_collection: path: #{path}, content: #{content}, length: #{content.length}"}
 
-      if path.end_with?("_files")
+      if path.end_with?("_files") || path.end_with?("_pictures")
         result = render(
           partial: "myplaceonline/pictures",
           locals: {
@@ -460,6 +470,7 @@ module ApplicationHelper
       url_external_target_blank: false,
       url_linkclasses: nil,
       url_clipboard: nil,
+      show_clipboard_button: true,
       url_innercontent: nil,
       htmlencode_content: true,
       htmlencode_heading: false,
@@ -479,10 +490,17 @@ module ApplicationHelper
       max_collection_items: 25,
       show_exceeded_max_collection_items_warning: true,
       show_reference: true,
+      show_reference_as_content: false,
       reference_url: nil,
       markdown_process_images: false,
       image_context: nil,
+      reference_display_heading: true,
     }.merge(options)
+    
+    data_display_options = ExecutionContext[:data_display_options]
+    if !data_display_options.nil?
+      options = options.merge(data_display_options)
+    end
     
     original_content = content
     
@@ -549,7 +567,7 @@ module ApplicationHelper
         options[:htmlencode_content] = false
         options[:content_classes] = "markdowncell #{options[:content_classes]}"
       end
-      if !options[:clipboard_text].blank?
+      if !options[:clipboard_text].blank? && options[:show_clipboard_button]
         link_options = Hash.new
         link_options[:href] = "#"
         link_options[:class] = "ui-btn ui-icon-action ui-btn-icon-notext nomargin clipboardable"

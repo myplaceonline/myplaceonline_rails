@@ -26,7 +26,8 @@ class Contact < ApplicationRecord
   
   SEX_TYPES = [
     ["myplaceonline.contacts.sex_female", 0],
-    ["myplaceonline.contacts.sex_male", 1]
+    ["myplaceonline.contacts.sex_male", 1],
+    ["myplaceonline.contacts.sex_other", 2],
   ]
   
   DEFAULT_CONTACT_BEST_FRIEND_THRESHOLD_SECONDS = 20.days

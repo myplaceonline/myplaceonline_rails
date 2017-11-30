@@ -16,4 +16,8 @@ class IdentityLocation < ApplicationRecord
   def self.skip_check_attributes
     ["secondary"]
   end
+  
+  def display
+    location.display
+  end
 end

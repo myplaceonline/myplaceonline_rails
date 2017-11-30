@@ -917,6 +917,7 @@ en:
       cat: "Cat"
       sex_male: "Male"
       sex_female: "Female"
+      sex_other: "Other"
       extra: "Extra Fields"
       company: "Work"
       groups: "Groups"

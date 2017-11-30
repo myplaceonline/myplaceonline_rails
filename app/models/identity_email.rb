@@ -17,4 +17,8 @@ class IdentityEmail < ApplicationRecord
   def self.skip_check_attributes
     ["secondary"]
   end
+  
+  def display
+    email
+  end
 end

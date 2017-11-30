@@ -169,6 +169,7 @@ class MyplaceonlineController < ApplicationController
     @no_layout = params[:no_layout]
     @nested_show = params[:nested_show]
     @nested_expanded = params[:nested_expanded]
+    @nested_cell = params[:nested_cell]
     before_show
     @myplet = params[:myplet]
     if @nested_show || @no_layout

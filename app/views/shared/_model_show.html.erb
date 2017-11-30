@@ -19,11 +19,13 @@ locals = { obj: @obj }.merge(locals)
       <%= flashes!(@obj) %>
     <% end %>
   <% else %>
-    <tr>
-      <td>&nbsp;</td>
-      <td>
-        <div data-role="collapsible" data-collapsed="<%= @nested_expanded ? "false" : "true" %>">
-          <h3><%= controller.display_obj(@obj) %></h3>
+    <% if @nested_cell %>
+      <tr>
+        <td>&nbsp;</td>
+        <td>
+    <% end %>
+          <div data-role="collapsible" data-collapsed="<%= @nested_expanded ? "false" : "true" %>">
+            <h3><%= controller.display_obj(@obj) %></h3>
   <% end %>
 
   <% if !@nested_show %>
@@ -62,10 +64,12 @@ locals = { obj: @obj }.merge(locals)
   <% end %>
 
   <% if @nested_show %>
-        </div>
-      </td>
-      <td>&nbsp;</td>
-    </tr>
+          </div>
+    <% if @nested_cell %>
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+    <% end %>
   <% end %>
 <% else %>
   <%= render partial: controller.paths_name + "/show", locals: locals %>

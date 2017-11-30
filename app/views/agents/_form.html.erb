@@ -18,5 +18,186 @@
       autofocus: autofocus
     )
   %>
+  <%=
+    input_field(
+      form: identity_fields,
+      type: Myp::FIELD_TEXT,
+      name: :middle_name,
+      value: obj.agent_identity.middle_name,
+      placeholder: "myplaceonline.contacts.middle_name",
+    )
+  %>
+  <%=
+    input_field(
+      form: identity_fields,
+      type: Myp::FIELD_TEXT,
+      name: :last_name,
+      value: obj.agent_identity.last_name,
+      placeholder: "myplaceonline.contacts.last_name",
+    )
+  %>
+  <%=
+    input_field(
+      form: identity_fields,
+      type: Myp::FIELD_TEXT,
+      name: :nickname,
+      value: obj.agent_identity.nickname,
+      placeholder: "myplaceonline.contacts.nickname",
+    )
+  %>
+  <%=
+    input_field(
+      form: identity_fields,
+      type: Myp::FIELD_DATE,
+      name: :birthday,
+      value: obj.agent_identity.birthday,
+      placeholder: "myplaceonline.contacts.birthday",
+    )
+  %>
+  <%=
+    input_field(
+      form: identity_fields,
+      type: Myp::FIELD_SELECT,
+      name: :sex_type,
+      value: obj.agent_identity.sex_type,
+      placeholder: "myplaceonline.contacts.sex_type",
+      select_options: Contact::SEX_TYPES,
+    )
+  %>
+  <%=
+    render(layout: "myplaceonline/childproperties", locals: {
+      f: identity_fields,
+      heading: t("myplaceonline.identities.emails"),
+      childpropertiesname: :identity_emails,
+      childproperties: obj.agent_identity.identity_emails,
+      deletebutton: t("myplaceonline.identities.delete_email"),
+      addbutton: t("myplaceonline.identities.add_email"),
+      expanded: obj.agent_identity.identity_emails.length > 0,
+      formjson: [
+        {
+          type: "text",
+          name: "email",
+          placeholder: t("myplaceonline.identities.email"),
+          autofocus: true,
+        }
+      ]
+    }) do |child_fields, childproperty|
+  %>
+    <%=
+      input_field(
+        form: child_fields,
+        type: Myp::FIELD_TEXT,
+        name: :email,
+        value: childproperty.email,
+        placeholder: "myplaceonline.identities.email",
+      )
+    %>
+  <% end %>
 
+  <%=
+    render(layout: "myplaceonline/childproperties", locals: {
+      f: identity_fields,
+      heading: t("myplaceonline.identities.phones"),
+      childpropertiesname: :identity_phones,
+      childproperties: obj.agent_identity.identity_phones,
+      deletebutton: t("myplaceonline.identities.delete_phone"),
+      addbutton: t("myplaceonline.identities.add_phone"),
+      expanded: obj.agent_identity.identity_phones.length > 0,
+      formjson: [
+        {
+          type: "text",
+          name: "number",
+          placeholder: t("myplaceonline.identities.phone"),
+          autofocus: true
+        },
+        {
+          type: "select",
+          name: "phone_type",
+          options: IdentityPhone::PHONE_TYPES.map{|x,y| [I18n.t(x),y]}.as_json,
+          placeholder: t("myplaceonline.identity_phones.phone_type")
+        }
+      ]
+    }) do |child_fields, childproperty|
+  %>
+    <%=
+      input_field(
+        form: child_fields,
+        type: Myp::FIELD_TEXT,
+        name: :number,
+        value: childproperty.number,
+        placeholder: "myplaceonline.identities.phone",
+      )
+    %>
+    <%=
+      input_field(
+        form: f,
+        type: Myp::FIELD_SELECT,
+        name: :phone_type,
+        value: childproperty.phone_type,
+        placeholder: "myplaceonline.identity_phones.phone_type",
+        select_options: IdentityPhone::PHONE_TYPES,
+      )
+    %>
+  <% end %>
+
+  <%=
+    render(layout: "myplaceonline/childproperties", locals: {
+      f: identity_fields,
+      heading: t("myplaceonline.identities.locations"),
+      childpropertiesname: :identity_locations,
+      childproperties: obj.agent_identity.identity_locations,
+      deletebutton: t("myplaceonline.identities.delete_location"),
+      addbutton: t("myplaceonline.identities.add_location"),
+      expanded: obj.agent_identity.identity_locations.length > 0,
+      formjson: [
+        {
+          type: :renderpartial,
+          name: :location_attributes,
+          partial: "myplaceonline/select_or_create",
+          heading: t("myplaceonline.identities.location"),
+          objform: "locations/form",
+          existingobjurl: "location_path",
+          searchurl: "/locations.json?perpage=0",
+          edit: false,
+          autofocus: true
+        },
+      ]
+    }) do |child_fields, childproperty|
+  %>
+    <%=
+      render partial: "myplaceonline/select_or_create", locals: {
+        f: child_fields,
+        name: :location_attributes,
+        existingobj: childproperty.location,
+        heading: t("myplaceonline.identities.location"),
+        objform: "locations/form",
+        existingobjurl: "location_path",
+        searchurl: "/locations.json?perpage=0",
+        edit: edit,
+        autofocus: false
+      }
+    %>
+  <% end %>
+  
+  <%=
+    render partial: "myplaceonline/pictures_form", locals: {
+      f: identity_fields,
+      obj: obj.agent_identity,
+      pictures_field: :identity_pictures
+    }
+  %>
+  
+  <%=
+    render partial: "myplaceonline/select_or_create", locals: {
+      f: identity_fields,
+      name: :company,
+      existingobj: obj.agent_identity.company,
+      heading: t("myplaceonline.contacts.company"),
+      objform: "companies/form",
+      existingobjurl: "company_path",
+      searchurl: "/companies.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
 <% end %>
