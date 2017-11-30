@@ -25,6 +25,8 @@ class EmergencyContact < ApplicationRecord
     
     category = Myp.instance_to_category(obj)
     
+    Rails.logger.debug{"EmergencyContact.send_contact category: #{category}"}
+
     verb = "myplaceonline.emergency_contacts.verb_created"
     if obj.respond_to?("emergency_contact_create_verb")
       verb = obj.emergency_contact_create_verb
@@ -34,7 +36,7 @@ class EmergencyContact < ApplicationRecord
       is_new ? "myplaceonline.emergency_contacts.subject_new" : "myplaceonline.emergency_contacts.subject_edit",
       {
         contact: identity.display_short,
-        subject: category.human_title_singular + subject_append,
+        subject: "#{category.human_title_singular}#{subject_append}",
         verb: I18n.t(verb)
       }
     )

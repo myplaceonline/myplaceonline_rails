@@ -352,19 +352,26 @@ class Trip < ApplicationRecord
   def notify_emergency_contacts_complete
     identity.emergency_contacts.each do |emergency_contact|
       Rails.logger.debug{"Emergency contact #{emergency_contact.inspect}"}
+      
+      body_short_markdown = I18n.t(
+        "myplaceonline.trips.emergency_contact_email_trip_completed",
+        {
+          contact: identity.display_short,
+          location: location.display(use_full_region_name: true)
+        }
+      )
+      body_long_markdown = body_short_markdown
+      
       emergency_contact.send_contact(
         false,
         self,
-        I18n.t("myplaceonline.trips.emergency_contact_email_trip_completed",
-          {
-            contact: identity.display_short,
-            location: location.display(use_full_region_name: true)
-          }
-        ),
+        body_short_markdown,
+        body_long_markdown,
         I18n.t(
           "myplaceonline.trips.emergency_contact_email_trip_completed_subject_append",
           city: location.display_city
-        )
+        ),
+        suppress_sms_prefix: true,
       )
     end
   end
