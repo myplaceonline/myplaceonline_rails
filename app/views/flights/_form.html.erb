@@ -60,7 +60,8 @@
         existingobjurl: "company_path",
         searchurl: "/companies.json?perpage=0",
         edit: false,
-        autofocus: false
+        autofocus: false,
+        existingcollapsed: false,
       },
       {
         type: 'datetime',
@@ -81,7 +82,8 @@
         existingobjurl: "location_path",
         searchurl: "/locations.json?perpage=0",
         edit: false,
-        autofocus: false
+        autofocus: false,
+        collapsed: true,
       },
       {
         type: 'datetime',
@@ -102,7 +104,8 @@
         existingobjurl: "location_path",
         searchurl: "/locations.json?perpage=0",
         edit: false,
-        autofocus: false
+        autofocus: false,
+        collapsed: true,
       },
       {
         type: 'text',
@@ -127,7 +130,8 @@
       existingobjurl: "company_path",
       searchurl: "/companies.json?perpage=0",
       edit: edit,
-      autofocus: false
+      autofocus: false,
+      existingcollapsed: false,
     }
   %>
   <%= myp_datetime_field(child_fields, :depart_time, "myplaceonline.flight_legs.depart_time", childproperty.depart_time) %>
@@ -142,7 +146,8 @@
       existingobjurl: "location_path",
       searchurl: "/locations.json?perpage=0",
       edit: edit,
-      autofocus: false
+      autofocus: false,
+      collapsed: childproperty.depart_location.nil?,
     }
   %>
   <%= myp_datetime_field(child_fields, :arrive_time, "myplaceonline.flight_legs.arrive_time", childproperty.arrive_time) %>
@@ -157,7 +162,8 @@
       existingobjurl: "location_path",
       searchurl: "/locations.json?perpage=0",
       edit: edit,
-      autofocus: false
+      autofocus: false,
+      collapsed: childproperty.arrival_location.nil?,
     }
   %>
   <%= myp_text_field(child_fields, :seat_number, "myplaceonline.flight_legs.seat_number", childproperty.seat_number) %>

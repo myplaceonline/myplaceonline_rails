@@ -215,18 +215,19 @@ class Location < ApplicationRecord
     result
   end
   
-  def map_url
-    result = self.map_link_component
+  def map_url(prefer_human_readable: false)
+    result = self.map_link_component(prefer_human_readable: prefer_human_readable)
     if !result.blank?
       result = "https://www.google.com/maps/place/" + ERB::Util.url_encode(result)
     end
     result
   end
   
-  def map_link_component
-    if !latitude.blank? && !longitude.blank?
+  def map_link_component(prefer_human_readable: false)
+    if !latitude.blank? && !longitude.blank? && !prefer_human_readable
       result = latitude.to_s + "," + longitude.to_s
     else
+      # The Google Maps "/place/" link doesn't like addresses with a human name in front
       result = address_one_line(false, address_details: false)
     end
   end

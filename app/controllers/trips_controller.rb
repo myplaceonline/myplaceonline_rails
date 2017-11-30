@@ -155,6 +155,7 @@ class TripsController < MyplaceonlineController
         :work,
         :trip_name,
         :notify_emergency_contacts,
+        :hide_trip_name,
         location_attributes: LocationsController.param_names,
         trip_pictures_attributes: FilesController.multi_param_names,
         hotel_attributes: HotelsController.param_names,

@@ -93,7 +93,7 @@
     childproperties: obj.trip_flights,
     deletebutton: t("myplaceonline.trips.delete_flight"),
     addbutton: t("myplaceonline.trips.add_flight"),
-    expanded: false,
+    expanded: obj.trip_flights.length > 0,
     formjson: [
       {
         type: :renderpartial,
@@ -105,7 +105,6 @@
         searchurl: "/flights.json?perpage=0",
         edit: edit,
         autofocus: true,
-        force_existing: true,
         simpleform: true
       }
     ]
@@ -141,3 +140,12 @@
 <% if current_user.has_emergency_contacts? %>
   <%= myp_check_box(f, :notify_emergency_contacts, "myplaceonline.trips.notify_emergency_contacts") %>
 <% end %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :hide_trip_name,
+    value: obj.hide_trip_name,
+    placeholder: "myplaceonline.trips.hide_trip_name"
+  )
+%>
