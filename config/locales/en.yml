@@ -1798,6 +1798,7 @@ en:
       emergency_contact_email_new: "planned"
       emergency_contact_email_updated: "updated"
       emergency_contact_email: "%{contact} %{verb} a trip to %{location} from %{start_date} until %{end_date}.\n\nMap: [%{map}](%{map})"
+      emergency_contact_sms: "%{contact} %{verb} a trip to %{location} from %{start_date} until %{end_date}."
       emergency_contact_email_trip_completed: "%{contact} is back from the trip to %{location}."
       emergency_contact_email_trip_completed_subject_append: ": Back from %{city}"
       click_pics: "Click the link at the top for the option to see pictures at full size."

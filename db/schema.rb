@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171130200517) do
+ActiveRecord::Schema.define(version: 20171130214043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3717,6 +3717,7 @@ ActiveRecord::Schema.define(version: 20171130200517) do
     t.text "long_body"
     t.integer "send_preferences"
     t.boolean "is_public"
+    t.boolean "suppress_prefix"
     t.index ["identity_id"], name: "index_messages_on_identity_id"
   end
 
@@ -5601,6 +5602,7 @@ ActiveRecord::Schema.define(version: 20171130200517) do
     t.integer "rating"
     t.text "long_body"
     t.boolean "is_public"
+    t.boolean "suppress_prefix"
     t.index ["identity_id"], name: "index_text_messages_on_identity_id"
   end
 

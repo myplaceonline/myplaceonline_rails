@@ -119,13 +119,15 @@ class Contact < ApplicationRecord
     self.contact_identity.send_message(body_short_markdown, body_long_markdown, subject, reply_to: reply_to, cc: cc, bcc: bcc)
   end
   
-  def send_message_with_conversation(body_short_markdown, body_long_markdown, subject, message_category)
+  def send_message_with_conversation(body_short_markdown, body_long_markdown, subject, message_category, suppress_sms_prefix: false)
     message = Message.new
     message.body = body_short_markdown
     message.long_body = body_long_markdown
     message.message_category = message_category
-    message.send_preferences = Message::SEND_PREFERENCE_DEFAULT
+    message.send_preferences = Message::SEND_PREFERENCE_EMAIL_AND_TEXT
     message.message_contacts << MessageContact.new(contact: self)
+    message.suppress_prefix = suppress_sms_prefix
+    message.subject = subject
     message.save!
     message.process
   end

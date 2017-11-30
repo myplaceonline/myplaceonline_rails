@@ -61,7 +61,11 @@ class TextMessage < ApplicationRecord
   def process_single_target(target, content = nil, contact = nil)
 
     if content.nil?
-      content = "#{identity.display_short} #{I18n.t("myplaceonline.emails.subject_shared")}: "
+      if self.suppress_prefix?
+        content = ""
+      else
+        content = "#{identity.display_short} #{I18n.t("myplaceonline.emails.subject_shared")}: "
+      end
       content += body
     end
     

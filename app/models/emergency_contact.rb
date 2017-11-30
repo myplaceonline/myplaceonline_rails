@@ -17,30 +17,33 @@ class EmergencyContact < ApplicationRecord
     result
   end
   
-  def send_contact(is_new, obj, description, subject_append = nil)
-    cat = Myp.instance_to_category(obj).human_title_singular
-    e = email.dup
-    email.email_contacts.each do |email_contact|
-      e.email_contacts << email_contact.dup
+  def send_contact(is_new, obj, body_short_markdown, body_long_markdown, subject_append = nil, suppress_sms_prefix: false)
+    
+    if self.email.email_groups.length > 0
+      raise "Not implemented"
     end
-    email.email_groups.each do |email_group|
-      e.email_groups << email_group.dup
-    end
-    e_verb = "myplaceonline.emergency_contacts.verb_created"
+    
+    category = Myp.instance_to_category(obj)
+    
+    verb = "myplaceonline.emergency_contacts.verb_created"
     if obj.respond_to?("emergency_contact_create_verb")
-      e_verb = obj.emergency_contact_create_verb
+      verb = obj.emergency_contact_create_verb
     end
-    e.subject = I18n.t(
+    
+    subject = I18n.t(
       is_new ? "myplaceonline.emergency_contacts.subject_new" : "myplaceonline.emergency_contacts.subject_edit",
       {
         contact: identity.display_short,
-        subject: cat + subject_append,
-        verb: I18n.t(e_verb)
+        subject: category.human_title_singular + subject_append,
+        verb: I18n.t(verb)
       }
     )
-    e.body = description
-    e.body += "\n\n" + I18n.t("myplaceonline.emergency_contacts.why_contacted")
-    e.save!
-    e.process
+    
+    body_long_markdown += "\n\n" + I18n.t("myplaceonline.emergency_contacts.why_contacted")
+    
+    self.email.email_contacts.each do |email_contact|
+      email_contact.contact.send_message_with_conversation(body_short_markdown, body_long_markdown, subject, category.human_title, suppress_sms_prefix: suppress_sms_prefix)
+    end
+
   end
 end

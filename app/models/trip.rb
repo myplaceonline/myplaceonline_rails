@@ -276,9 +276,12 @@ class Trip < ApplicationRecord
             location_display = self.trip_name
           end
           location_display = Myp.appendstr(location_display, location.display_city, " @ ")
-          location_display = Myp.appendstrwrap(location_display, location.name)
           
-          body_markdown = I18n.t("myplaceonline.trips.emergency_contact_email",
+          if location.name != self.trip_name || self.hide_trip_name
+            location_display = Myp.appendstrwrap(location_display, location.name)
+          end
+          
+          body_long_markdown = I18n.t("myplaceonline.trips.emergency_contact_email",
             {
               contact: identity.display_short,
               location: location_display,
@@ -289,13 +292,23 @@ class Trip < ApplicationRecord
             }
           )
           
+          body_short_markdown = I18n.t("myplaceonline.trips.emergency_contact_sms",
+            {
+              contact: identity.display_short,
+              location: location_display,
+              start_date: Myp.display_date_short_year(started, User.current_user),
+              end_date: ended.nil? ? I18n.t("myplaceonline.general.unknown") : Myp.display_date_short_year(ended, User.current_user),
+              verb: is_new ? I18n.t("myplaceonline.trips.emergency_contact_email_new") : I18n.t("myplaceonline.trips.emergency_contact_email_updated")
+            }
+          )
+          
           tfs = self.trip_flights.to_a
           tfs.sort_by!{|x| x.flight.flight_start_date }
           now = User.current_user.date_now
           tfs = tfs.delete_if{|x| x.flight.flight_start_date < now}
           
           if tfs.length > 0
-            body_markdown += "\n\n#{I18n.t("myplaceonline.trips.flights")}:\n\n"
+            body_long_markdown += "\n\n#{I18n.t("myplaceonline.trips.flights")}:\n\n"
           end
           
           first = true
@@ -303,22 +316,24 @@ class Trip < ApplicationRecord
             if first
               first = false
             else
-              body_markdown += "\n"
+              body_long_markdown += "\n"
             end
-            body_markdown += "* #{trip_flight.display}"
+            body_long_markdown += "* #{trip_flight.display}"
             trip_flight.flight.flight_legs.each do |leg|
-              body_markdown += " (" + leg.display + ")"
+              body_long_markdown += " (" + leg.display + ")"
             end
           end
           
           emergency_contact.send_contact(
             is_new,
             self,
-            body_markdown,
+            body_short_markdown,
+            body_long_markdown,
             I18n.t(
               "myplaceonline.trips.emergency_contact_subject_append",
               city: location.display_city
-            )
+            ),
+            suppress_sms_prefix: true
           )
         end
         
