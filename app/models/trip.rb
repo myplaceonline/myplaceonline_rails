@@ -391,7 +391,7 @@ class Trip < ApplicationRecord
   end
 
   def self.skip_check_attributes
-    ["work", "notify_emergency_contacts"]
+    ["work", "notify_emergency_contacts", "hide_trip_name"]
   end
   
   def total_cost
