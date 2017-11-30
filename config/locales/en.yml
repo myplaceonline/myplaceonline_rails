@@ -1812,7 +1812,7 @@ en:
       end_before_start: "The end date is before the start date"
       event: "Event"
       total_cost: "Total Cost"
-      hide_trip_name: "Hide Trip Name from Messages"
+      hide_trip_name: "Hide trip name from contact messages"
     passports:
       region: "Country"
       passport_number: "Passport Number"
