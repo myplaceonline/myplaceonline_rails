@@ -125,7 +125,7 @@ class Contact < ApplicationRecord
     message.body = body_short_markdown
     message.long_body = body_long_markdown
     message.message_category = message_category
-    message.send_preferences = Message::SEND_PREFERENCE_EMAIL_AND_TEXT
+    message.send_preferences = Message::SEND_PREFERENCE_EMAIL_OR_TEXT_PREFER_TEXT
     message.message_contacts << MessageContact.new(contact: self)
     message.suppress_prefix = suppress_sms_prefix
     message.subject = subject
