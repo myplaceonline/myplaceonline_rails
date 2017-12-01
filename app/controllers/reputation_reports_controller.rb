@@ -11,6 +11,35 @@ class ReputationReportsController < MyplaceonlineController
     obj.report_status_s
   end
 
+  def footer_items_show
+    result = super
+    if @obj.allow_admin? && User.current_user.admin?
+      result << {
+        title: I18n.t("myplaceonline.reputation_reports.contact_reporter"),
+        link: reputation_report_contact_reporter_path(@obj),
+        icon: "plus"
+      }
+    end
+    result
+  end
+  
+  def contact_reporter
+    set_obj
+    
+    @subject = params[:subject]
+    @message = params[:message]
+    
+    if request.post?
+      
+      @obj.identity.send_message(@message, @message, @subject, reply_to: User.current_user.email, bcc: User.current_user.email)
+      
+      redirect_to(
+        obj_path,
+        flash: { notice: I18n.t("myplaceonline.reputation_reports.reporter_contacted") }
+      )
+    end
+  end
+
   protected
     def deny_guest
       if current_user.guest?

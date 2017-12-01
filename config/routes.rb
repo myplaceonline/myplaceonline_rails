@@ -442,6 +442,9 @@ Rails.application.routes.draw do
       { instance: true, link: "reset" },
       { instance: true, link: "complete_item" }
     ],
+    reputation_reports: [
+      { instance: true, link: "contact_reporter" },
+    ],
     restaurants: [
       { instance: false, link: "random" }
     ],

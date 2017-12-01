@@ -3850,6 +3850,10 @@ en:
         praise: "Praise"
         shame: "Shame"
       agent: "Person or Group"
+      contact_reporter: "Contact Reporter"
+      reporter_contacted: "Reporter contacted"
+      message: "Message"
+      subject: "Subject"
     website_domain_properties:
       property_key: "Key"
       property_value: "Value"

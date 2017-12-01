@@ -71,7 +71,11 @@ class ReputationReport < ApplicationRecord
   end
   
   def read_only?
-    true
+    result = true
+    if User.current_user.admin?
+      result = false
+    end
+    result
   end
   
   def allow_admin?
