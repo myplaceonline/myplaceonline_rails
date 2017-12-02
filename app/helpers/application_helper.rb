@@ -1044,7 +1044,9 @@ module ApplicationHelper
               :show,
               {
                 id: ref.id,
-                nested_show: true
+                nested_show: true,
+                nested_expanded: false,
+                nested_cell: true,
               }
             ).html_safe
           result += render_result
