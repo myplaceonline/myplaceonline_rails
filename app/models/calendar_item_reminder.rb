@@ -184,33 +184,65 @@ class CalendarItemReminder < ApplicationRecord
                   identity: calendar_item_reminder.identity
                 )
                 
-                Rails.logger.debug{"CalendarItemReminder.ensure_pending_process creating new pending reminder #{new_pending.inspect}; #{new_pending.calendar_item.inspect}"}
-                
                 check_calendar_item = CalendarItem.where(id: calendar_item_reminder.calendar_item.id).take
                 if !check_calendar_item.nil?
                   
                   check_calendar_item_reminder = CalendarItemReminder.where(id: calendar_item_reminder.id).take
                   if !check_calendar_item_reminder.nil?
-                    new_pending.save!
-
-                    Rails.logger.debug{"CalendarItemReminder.ensure_pending_process created new pending item #{new_pending.inspect}"}
-
-                    # Send any notifications about the new reminder
-                    send_reminder_notifications(user, new_pending)
                     
-                    item_class = calendar_item_reminder.calendar_item.find_model_class
-                    if item_class.respond_to?("handle_new_reminder?")
-                      item_obj = calendar_item_reminder.calendar_item.find_model_object
-                      if !item_obj.nil?
-                        begin
-                          item_obj.handle_new_reminder
-                        rescue Exception => e
-                          Myp.warn("CalendarItemReminder.ensure_pending_process Error handling new reminder", e)
+                    Rails.logger.debug{"CalendarItemReminder.ensure_pending_process potentially creating new pending reminder #{new_pending.inspect} ; #{new_pending.calendar_item.display} ; #{new_pending.calendar_item.inspect}"}
+                    
+                    can_save = true
+                
+                    if !calendar_item_reminder.max_pending.nil?
+                      pendings_after = CalendarItemReminderPending.find_by_sql(
+                        %{
+                          SELECT calendar_item_reminder_pendings.*
+                          FROM calendar_item_reminder_pendings
+                            INNER JOIN calendar_items
+                              ON calendar_item_reminder_pendings.calendar_item_id = calendar_items.id
+                          WHERE calendar_item_reminder_pendings.calendar_id = #{calendar_item_reminder.calendar_item.calendar.id}
+                            AND calendar_item_reminder_pendings.identity_id = #{identity.id}
+                            AND calendar_items.model_class #{Myp.sanitize_with_null_for_conditions(calendar_item_reminder.calendar_item.model_class)}
+                            AND calendar_items.model_id #{Myp.sanitize_with_null_for_conditions(calendar_item_reminder.calendar_item.model_id)}
+                            AND calendar_items.calendar_item_time > '#{calendar_item_reminder.calendar_item.calendar_item_time.to_s(:db)}'
+                          ORDER BY calendar_items.calendar_item_time ASC
+                        }
+                      )
+                      
+                      pendings_after_count = pendings_after.count
+                      
+                      Rails.logger.debug{"CalendarItemReminder.ensure_pending_process pendings_after_count: #{pendings_after_count}"}
+                      
+                      if pendings_after_count >= calendar_item_reminder.max_pending
+                        can_save = false
+                        Rails.logger.debug{"CalendarItemReminder.ensure_pending_process no need to save this pending"}
+                      end
+                    end
+                    
+                    if can_save
+                      new_pending.save!
+
+                      Rails.logger.debug{"CalendarItemReminder.ensure_pending_process created new pending item #{new_pending.inspect}"}
+
+                      # Send any notifications about the new reminder
+                      send_reminder_notifications(user, new_pending)
+                      
+                      item_class = calendar_item_reminder.calendar_item.find_model_class
+                      if item_class.respond_to?("handle_new_reminder?")
+                        item_obj = calendar_item_reminder.calendar_item.find_model_object
+                        if !item_obj.nil?
+                          begin
+                            item_obj.handle_new_reminder
+                          rescue Exception => e
+                            Myp.warn("CalendarItemReminder.ensure_pending_process Error handling new reminder", e)
+                          end
                         end
                       end
                     end
 
                     if !calendar_item_reminder.max_pending.nil?
+                      
                       pendings_result = CalendarItemReminderPending.find_by_sql(
                         %{
                           SELECT calendar_item_reminder_pendings.*
@@ -224,16 +256,21 @@ class CalendarItemReminder < ApplicationRecord
                           ORDER BY calendar_items.calendar_item_time ASC
                         }
                       )
-                      
-                      # pendings_result.each do |pr|
-                      #   Rails.logger.debug{"CalendarItemReminder.ensure_pending_process checking max_pending for pending: #{pr.inspect}"}
-                      # end
-                      
+
                       Rails.logger.debug{"CalendarItemReminder.ensure_pending_process max_pending: #{calendar_item_reminder.max_pending}, existing pendings: #{pendings_result.count}"}
+                      
+                      pendings_result.each do |pr|
+                        Rails.logger.debug{"CalendarItemReminder.ensure_pending_process checking can_save for pending: #{pr.inspect} ; #{pr.calendar_item_reminder.inspect} ; #{pr.calendar_item.inspect}"}
+                      end
                       
                       number_to_delete = pendings_result.count - calendar_item_reminder.max_pending
                       
                       if number_to_delete > 0
+                        
+                        pendings_result.each do |pr|
+                          Rails.logger.debug{"CalendarItemReminder.ensure_pending_process checking max_pending for pending: #{pr.inspect} ; #{pr.calendar_item_reminder.inspect} ; #{pr.calendar_item.inspect}"}
+                        end
+                        
                         pendings_result.first(number_to_delete).each do |x|
 
                           Rails.logger.debug{"CalendarItemReminder.ensure_pending_process destroying excessive reminder #{x.calendar_item_reminder.inspect}; #{x.inspect}; #{x.calendar_item.inspect}"}
