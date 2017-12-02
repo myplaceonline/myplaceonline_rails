@@ -118,12 +118,10 @@ function location_gps_success<%= random_name %>(location) {
     autofocus: false
   }
 %>
-<% if !nested %>
-  <%=
-    render partial: "myplaceonline/pictures_form", locals: {
-      f: f,
-      obj: obj,
-      pictures_field: :location_pictures
-    }
-  %>
-<% end %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    pictures_field: :location_pictures
+  }
+%>
