@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171202230558) do
+ActiveRecord::Schema.define(version: 20171202232117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3385,8 +3385,10 @@ ActiveRecord::Schema.define(version: 20171202230558) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.boolean "is_public"
+    t.bigint "trek_id"
     t.index ["identity_id"], name: "index_meadows_on_identity_id"
     t.index ["location_id"], name: "index_meadows_on_location_id"
+    t.index ["trek_id"], name: "index_meadows_on_trek_id"
   end
 
   create_table "meal_drinks", id: :serial, force: :cascade do |t|
@@ -7018,6 +7020,7 @@ ActiveRecord::Schema.define(version: 20171202230558) do
   add_foreign_key "locations", "websites"
   add_foreign_key "meadows", "identities"
   add_foreign_key "meadows", "locations"
+  add_foreign_key "meadows", "treks"
   add_foreign_key "meal_drinks", "drinks", name: "meal_drinks_drink_id_fk"
   add_foreign_key "meal_drinks", "identities", name: "meal_drinks_identity_id_fk"
   add_foreign_key "meal_drinks", "meals", name: "meal_drinks_meal_id_fk"

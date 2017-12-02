@@ -1,15 +1,15 @@
 <%=
   render partial: "myplaceonline/select_or_create", locals: {
     f: f,
-    name: :location,
-    existingobj: obj.location,
-    heading: t("myplaceonline.meadows.location"),
-    objform: "locations/form",
-    existingobjurl: "location_path",
-    searchurl: "/locations.json?perpage=0",
+    name: :trek,
+    existingobj: obj.trek,
+    heading: t("myplaceonline.meadows.trek"),
+    objform: "treks/form",
+    existingobjurl: "trek_path",
+    searchurl: "/treks.json?perpage=0",
     edit: edit,
-    autofocus: true,
-    expanded_if_nil: true
+    autofocus: false,
+    expanded_if_nil: true,
   }
 %>
 <%= myp_select(f, :rating, "myplaceonline.meadows.rating", Myp.translate_options(Myp::RATINGS), obj.rating) %>

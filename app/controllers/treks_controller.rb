@@ -10,21 +10,14 @@ class TreksController < MyplaceonlineController
   def search_parent_category
     category_name.singularize
   end
-
+  
   protected
     def insecure
       true
     end
 
     def obj_params
-      params.require(:trek).permit(
-        :notes,
-        :rating,
-        location_attributes: LocationsController.param_names,
-        end_location_attributes: LocationsController.param_names,
-        parking_location_attributes: LocationsController.param_names,
-        trek_pictures_attributes: FilesController.multi_param_names,
-      )
+      params.require(:trek).permit(Trek.param_names)
     end
 
     def default_sort_columns

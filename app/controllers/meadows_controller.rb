@@ -8,7 +8,7 @@ class MeadowsController < MyplaceonlineController
   end
 
   def search_index_name
-    Location.table_name
+    Trek.table_name
   end
 
   def search_parent_category
@@ -34,7 +34,7 @@ class MeadowsController < MyplaceonlineController
         :notes,
         :visited,
         :rating,
-        location_attributes: LocationsController.param_names
+        trek_attributes: Trek.param_names
       )
     end
 
@@ -44,23 +44,5 @@ class MeadowsController < MyplaceonlineController
       else
         nil
       end
-    end
-
-    def default_sort_columns
-      [Location.sorts]
-    end
-    
-    def additional_sorts
-      [
-        [I18n.t("myplaceonline.locations.name"), default_sort_columns[0]]
-      ]
-    end
-
-    def all_joins
-      "INNER JOIN locations ON locations.id = meadows.location_id"
-    end
-
-    def all_includes
-      :location
     end
 end

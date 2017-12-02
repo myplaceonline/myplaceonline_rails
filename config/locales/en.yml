@@ -3030,7 +3030,7 @@ en:
     trip_stories:
       trip: "Trip"
     meadows:
-      location: "Location"
+      trek: "Hike to Meadow"
       rating: "Rating"
       notes: "Notes"
       visited: "Visited"

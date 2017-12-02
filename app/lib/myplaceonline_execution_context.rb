@@ -119,6 +119,7 @@ class MyplaceonlineExecutionContext
     ExecutionContext.push
     begin
       self.user = context.identity.user
+      self.identity = context.identity
       block.call
     ensure
       ExecutionContext.pop
