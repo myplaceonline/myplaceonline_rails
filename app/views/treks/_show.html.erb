@@ -1,6 +1,6 @@
-<%= data_row(heading: t("myplaceonline.treks.location"), content: obj.location) %>
-<%= data_row(heading: t("myplaceonline.treks.end_location"), content: obj.end_location) %>
-<%= data_row(heading: t("myplaceonline.treks.parking_location"), content: obj.parking_location) %>
+<%= data_row(heading: t("myplaceonline.treks.location"), content: obj.location, expanded: true) %>
+<%= data_row(heading: t("myplaceonline.treks.end_location"), content: obj.end_location, expanded: true) %>
+<%= data_row(heading: t("myplaceonline.treks.parking_location"), content: obj.parking_location, expanded: true) %>
 <%= attribute_table_row_select t("myplaceonline.treks.rating"), obj.rating, Myp::RATINGS %>
 <%= attribute_table_row_markdown(t("myplaceonline.treks.notes"), obj.notes) %>
 <%=
