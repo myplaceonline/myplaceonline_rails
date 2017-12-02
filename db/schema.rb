@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171130214043) do
+ActiveRecord::Schema.define(version: 20171202230558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -5707,8 +5707,12 @@ ActiveRecord::Schema.define(version: 20171130214043) do
     t.datetime "updated_at", null: false
     t.datetime "archived"
     t.boolean "is_public"
+    t.bigint "parking_location_id"
+    t.bigint "end_location_id"
+    t.index ["end_location_id"], name: "index_treks_on_end_location_id"
     t.index ["identity_id"], name: "index_treks_on_identity_id"
     t.index ["location_id"], name: "index_treks_on_location_id"
+    t.index ["parking_location_id"], name: "index_treks_on_parking_location_id"
   end
 
   create_table "trip_flights", id: :serial, force: :cascade do |t|
@@ -7325,6 +7329,8 @@ ActiveRecord::Schema.define(version: 20171130214043) do
   add_foreign_key "trek_pictures", "treks"
   add_foreign_key "treks", "identities"
   add_foreign_key "treks", "locations"
+  add_foreign_key "treks", "locations", column: "end_location_id"
+  add_foreign_key "treks", "locations", column: "parking_location_id"
   add_foreign_key "trip_flights", "flights"
   add_foreign_key "trip_flights", "identities"
   add_foreign_key "trip_flights", "trips"

@@ -2606,7 +2606,9 @@ en:
       delete_picture: "Delete Picture"
       rooftop: "Rooftop"
     treks:
-      location: "Location"
+      location: "Start Location"
+      end_location: "End Location"
+      parking_location: "Parking Location"
       rating: "Rating"
       notes: "Notes"
       pictures: "Pictures"

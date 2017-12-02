@@ -21,7 +21,9 @@ class TreksController < MyplaceonlineController
         :notes,
         :rating,
         location_attributes: LocationsController.param_names,
-        trek_pictures_attributes: FilesController.multi_param_names
+        end_location_attributes: LocationsController.param_names,
+        parking_location_attributes: LocationsController.param_names,
+        trek_pictures_attributes: FilesController.multi_param_names,
       )
     end
 
