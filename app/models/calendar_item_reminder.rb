@@ -322,7 +322,7 @@ class CalendarItemReminder < ApplicationRecord
   MAX_NUM_MESSAGES = 3
 
   def self.send_reminder_notifications(user, pending_item)
-    Rails.logger.debug("CalendarItemReminder.send_reminder_notifications start #{pending_item.id}")
+    Rails.logger.info("CalendarItemReminder.send_reminder_notifications notifying #{user} for #{pending_item}")
     
     begin
 
