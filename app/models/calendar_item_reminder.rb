@@ -205,7 +205,7 @@ class CalendarItemReminder < ApplicationRecord
                             AND calendar_item_reminder_pendings.identity_id = #{identity.id}
                             AND calendar_items.model_class #{Myp.sanitize_with_null_for_conditions(calendar_item_reminder.calendar_item.model_class)}
                             AND calendar_items.model_id #{Myp.sanitize_with_null_for_conditions(calendar_item_reminder.calendar_item.model_id)}
-                            AND calendar_items.calendar_item_time > '#{calendar_item_reminder.calendar_item.calendar_item_time.to_s(:db)}'
+                            AND calendar_items.calendar_item_time >= '#{calendar_item_reminder.calendar_item.calendar_item_time.to_s(:db)}'
                           ORDER BY calendar_items.calendar_item_time ASC
                         }
                       )

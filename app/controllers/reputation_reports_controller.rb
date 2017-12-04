@@ -57,4 +57,8 @@ class ReputationReportsController < MyplaceonlineController
         agent_attributes: Agent.param_names,
       )
     end
+
+    def admin_sees_all?
+      true
+    end
 end

@@ -79,7 +79,7 @@ class ApplicationController < ActionController::Base
         }
       end
     elsif exception.is_a?(CanCan::AccessDenied)
-      Rails.logger.debug{"ApplicationController.catchall access denied #{exception.message}".red}
+      Rails.logger.debug{"ApplicationController.catchall access denied #{exception.message} for #{User.current_user.inspect}".red}
       if User.current_user.nil? || User.current_user.guest?
         redirect_to(new_user_session_url(redirect: request.fullpath), alert: I18n.t("myplaceonline.general.access_denied_guest"))
       else
@@ -119,6 +119,14 @@ class ApplicationController < ActionController::Base
     Rails.logger.debug{"ApplicationController.around_request entry. Referer: #{request.referer}"}
     
     Rails.logger.debug{"ApplicationController.around_request params: #{Myp.debug_print(params.to_unsafe_hash)}"}
+    
+    # If current_user is not set in the execution context stack, then we set it
+    # once without a stack frame because it might be needed in the exception
+    # handler. The whole execution context is reset at the beginning of every
+    # request.
+    if MyplaceonlineExecutionContext.user.nil?
+      MyplaceonlineExecutionContext.user = current_user.nil? ? User.guest : current_user
+    end
     
     # This method is called once per controller, and multiple controllers might render within a single request.
     ExecutionContext.stack do

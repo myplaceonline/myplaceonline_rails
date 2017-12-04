@@ -34,14 +34,6 @@ class CategoriesController < MyplaceonlineController
       ]
     end
 
-    def all(strict: false)
-      Category.all
-    end
-    
-    def set_obj
-      @obj = model.find_by(id: params[:id])
-    end
-
     def additional_items?
       false
     end
@@ -50,4 +42,7 @@ class CategoriesController < MyplaceonlineController
       false
     end
 
+    def nonadmin_sees_all?
+      true
+    end
 end

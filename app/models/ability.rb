@@ -182,7 +182,7 @@ class Ability
           Rails.logger.debug{"Ability.authorize no direct permission found"}
         end
         
-        if !result
+        if !result && subject.respond_to?("identity_id")
           query = "(user_id = :user_id or user_id IS NULL) and subject_class = :subject_class and target_identity_id = :target_identity_id and (action & #{Permission::ACTION_MANAGE} != 0"
           query = self.add_action_query_parts(action: action, query: query, subject: subject)
           query += ")"

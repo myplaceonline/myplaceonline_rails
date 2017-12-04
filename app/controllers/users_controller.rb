@@ -29,16 +29,6 @@ class UsersController < MyplaceonlineController
   end
 
   protected
-    def all(strict: false)
-      authorize! :manage, User
-      User.all
-    end
-    
-    def set_obj
-      @obj = model.find_by(id: params[:id])
-      authorize! :manage, @obj
-    end
-
     def additional_sorts
       [
         [I18n.t("myplaceonline.users.email"), default_sort_columns[0]]
@@ -61,6 +51,10 @@ class UsersController < MyplaceonlineController
     end
 
     def requires_admin
+      true
+    end
+    
+    def admin_sees_all?
       true
     end
 end
