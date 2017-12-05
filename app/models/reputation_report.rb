@@ -14,9 +14,11 @@ class ReputationReport < ApplicationRecord
   end
 
   REPORT_STATUS_PENDING_REVIEW = 0
+  REPORT_STATUS_PENDING_PAYMENT_FROM_USER = 1
 
   REPORT_STATUSES = [
     ["myplaceonline.reputation_reports.report_statuses.pending_review", REPORT_STATUS_PENDING_REVIEW],
+    ["myplaceonline.reputation_reports.report_statuses.pending_payment_from_user", REPORT_STATUS_PENDING_PAYMENT_FROM_USER],
   ]
 
   REPORT_TYPE_PRAISE = 0

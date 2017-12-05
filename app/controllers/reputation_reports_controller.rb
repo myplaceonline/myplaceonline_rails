@@ -17,7 +17,12 @@ class ReputationReportsController < MyplaceonlineController
       result << {
         title: I18n.t("myplaceonline.reputation_reports.contact_reporter"),
         link: reputation_report_contact_reporter_path(@obj),
-        icon: "plus"
+        icon: "phone"
+      }
+      result << {
+        title: I18n.t("myplaceonline.reputation_reports.propose_price"),
+        link: reputation_report_propose_price_path(@obj),
+        icon: "action"
       }
     end
     result
@@ -32,6 +37,42 @@ class ReputationReportsController < MyplaceonlineController
     if request.post?
       
       @obj.identity.send_message(@message, @message, @subject, reply_to: User.current_user.email, bcc: User.current_user.email)
+      
+      redirect_to(
+        obj_path,
+        flash: { notice: I18n.t("myplaceonline.reputation_reports.reporter_contacted") }
+      )
+    end
+  end
+  
+  def propose_price
+    set_obj
+    
+    @price = params[:price]
+    @message = params[:message]
+    
+    if request.post?
+      
+      subject = I18n.t(
+        "myplaceonline.reputation_reports.propose_price_subject",
+        type: Myp.get_select_name(@obj.report_type, ReputationReport::REPORT_TYPES),
+        name: @obj.agent.display,
+      )
+      
+      #link = new_trip_trip_story_path(@obj)
+      link = root_url
+      
+      message = I18n.t(
+        "myplaceonline.reputation_reports.propose_price_body",
+        name: @obj.agent.display,
+        cost: @price,
+        details: @message,
+        link: link,
+      )
+      
+      @obj.identity.send_message(message, message, subject, reply_to: User.current_user.email, bcc: User.current_user.email)
+      @obj.report_status = ReputationReport::REPORT_STATUS_PENDING_PAYMENT_FROM_USER
+      @obj.save!
       
       redirect_to(
         obj_path,
