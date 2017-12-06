@@ -204,16 +204,19 @@ class CalendarItem < ApplicationRecord
     i = 0
     while i < result.length
       
+      # How many pending reminders are there for this calendar item
       pendings = result[i].calendar_item_reminders.map{|y| y.calendar_item_reminder_pendings.count }.reduce{|z1, z2| z1+z2 }
       
-      case state
-      when 0
-        if pendings > 0
-          state = 1
-        end
-      when 1
-        if pendings == 0
-          break
+      if !pendings.nil?
+        case state
+        when 0
+          if pendings > 0
+            state = 1
+          end
+        when 1
+          if pendings == 0
+            break
+          end
         end
       end
       
