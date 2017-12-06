@@ -57,8 +57,6 @@ class PeriodicPayment < ApplicationRecord
       result = Date.new(today.year, today.month)
     elsif date_period == Myp::PERIOD_YEARLY || date_period == Myp::PERIOD_SIX_MONTHS
       result = Date.new(today.year)
-    else
-      raise "TODO"
     end
     if !result.nil?
       while result < today
@@ -68,8 +66,6 @@ class PeriodicPayment < ApplicationRecord
           result = result.advance(years: 1)
         elsif date_period == Myp::PERIOD_SIX_MONTHS
           result = result.advance(months: 6)
-        else
-          raise "TODO"
         end
       end
     end
