@@ -10,16 +10,20 @@ class PeriodicPaymentsController < MyplaceonlineController
     @weekly_food = 0
     @tax_percentage = 30
     @weekly_misc = 0
+    @monthly_misc = 0
     @weekly_transportation = 0
+    
     all.each do |x|
       if !x.payment_amount.nil?
         if Myp.includes_today?(x.started, x.ended)
-          if x.date_period == 0
+          if x.date_period == Myp::PERIOD_MONTHLY
             @total += x.payment_amount
-          elsif x.date_period == 1
+          elsif x.date_period == Myp::PERIOD_YEARLY
             @total += x.payment_amount / 12
-          elsif x.date_period == 2
+          elsif x.date_period == Myp::PERIOD_SIX_MONTHS
             @total += x.payment_amount / 6
+          else
+            raise "TODO"
           end
         end
       end
@@ -28,9 +32,10 @@ class PeriodicPaymentsController < MyplaceonlineController
       @weekly_food = params[:weekly_food].to_i
       @tax_percentage = params[:tax_percentage].to_i
       @weekly_misc = params[:weekly_misc].to_i
+      @monthly_misc = params[:monthly_misc].to_i
       @weekly_transportation = params[:weekly_transportation].to_i
     end
-    @total += (@weekly_food * 4) + (@weekly_misc * 4) + (@weekly_transportation * 4)
+    @total += (@weekly_food * 4) + (@weekly_misc * 4) + (@weekly_transportation * 4) + @monthly_misc
     @yearly_total = @total * 12
     
     # after_tax = salary * (1 - tax)
@@ -71,7 +76,8 @@ class PeriodicPaymentsController < MyplaceonlineController
   protected
     def additional_sorts
       [
-        [I18n.t("myplaceonline.periodic_payments.periodic_payment_name"), default_sort_columns[0]]
+        [I18n.t("myplaceonline.periodic_payments.periodic_payment_name"), default_sort_columns[0]],
+        [I18n.t("myplaceonline.periodic_payments.payment_amount"), "#{model.table_name}.payment_amount"],
       ]
     end
 

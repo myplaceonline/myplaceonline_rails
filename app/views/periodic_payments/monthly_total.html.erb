@@ -1,11 +1,11 @@
-<% content_for :heading do -%><%= t('myplaceonline.periodic_payments.monthly_total') %><% end -%>
-<h1><%= t('myplaceonline.periodic_payments.monthly_total') %></h1>
+<% content_for :heading do -%><%= t("myplaceonline.periodic_payments.monthly_total") %><% end -%>
+<h1><%= t("myplaceonline.periodic_payments.monthly_total") %></h1>
 
 <%= flashes! %>
 
-<p><b><%= t('myplaceonline.periodic_payments.monthly_total') %>:</b> <%= Myp.number_to_currency(@total) %></p>
-<p><b><%= t('myplaceonline.periodic_payments.yearly_total') %>:</b> <%= Myp.number_to_currency(@yearly_total) %></p>
-<p><b><%= t('myplaceonline.periodic_payments.yearly_salary_needed_pretax') %>:</b> <%= Myp.number_to_currency(@yearly_salary_needed_pretax) %></p>
+<p><b><%= t("myplaceonline.periodic_payments.monthly_total") %>:</b> <%= Myp.number_to_currency(@total) %></p>
+<p><b><%= t("myplaceonline.periodic_payments.yearly_total") %>:</b> <%= Myp.number_to_currency(@yearly_total) %></p>
+<p><b><%= t("myplaceonline.periodic_payments.yearly_salary_needed_pretax") %>:</b> <%= Myp.number_to_currency(@yearly_salary_needed_pretax) %></p>
 
 <%= form_tag periodic_payments_monthly_total_path, method: :get do %>
 
@@ -16,6 +16,7 @@
   <%= myp_text_field_tag(:weekly_food, t("myplaceonline.periodic_payments.weekly_food_expenses"), @weekly_food) %>
   <%= myp_text_field_tag(:weekly_transportation, t("myplaceonline.periodic_payments.weekly_transportation"), @weekly_transportation) %>
   <%= myp_text_field_tag(:weekly_misc, t("myplaceonline.periodic_payments.weekly_misc"), @weekly_misc) %>
+  <%= myp_text_field_tag(:monthly_misc, t("myplaceonline.periodic_payments.monthly_misc"), @monthly_misc) %>
   <%= myp_text_field_tag(:tax_percentage, t("myplaceonline.periodic_payments.tax_percentage"), @tax_percentage) %>
 
   <%=

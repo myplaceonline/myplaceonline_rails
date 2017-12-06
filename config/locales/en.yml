@@ -1692,6 +1692,7 @@ en:
       tax_percentage: "Tax Percentage"
       yearly_salary_needed_pretax: "Salary Needed (Pre-tax)"
       weekly_misc: "Weekly Miscellaneous Expenses"
+      monthly_misc: "Monthly Miscellaneous Expenses"
       weekly_transportation: "Weekly Transportation Expenses"
       instances: "Payment Instances"
       instance: "Payment Instance"

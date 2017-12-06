@@ -13,16 +13,31 @@ class PeriodicPayment < ApplicationRecord
   def display
     result = periodic_payment_name
     if !payment_amount.nil?
-      result += " (" + Myp.number_to_currency(payment_amount)
+      result += " ("
+      
       if !date_period.nil?
-        result += " " + Myp.get_select_name(date_period, Myp::PERIODS)
+        
+        # Always show monthly first for easier side-by-side comparison
+        if date_period == Myp::PERIOD_MONTHLY
+          result += Myp.number_to_currency(payment_amount) + " " + Myp.get_select_name(Myp::PERIOD_MONTHLY, Myp::PERIODS)
+        elsif date_period == Myp::PERIOD_YEARLY
+          result += Myp.number_to_currency(payment_amount / 12.0) + " " + Myp.get_select_name(Myp::PERIOD_MONTHLY, Myp::PERIODS)
+        elsif date_period == Myp::PERIOD_SIX_MONTHS
+          result += Myp.number_to_currency(payment_amount / 6.0) + " " + Myp.get_select_name(Myp::PERIOD_MONTHLY, Myp::PERIODS)
+        else
+          raise "TODO"
+        end
+        
+        # For non-monthly, also show the original amount
+        if date_period != Myp::PERIOD_MONTHLY
+          result += "; " + Myp.number_to_currency(payment_amount) + " " + Myp.get_select_name(date_period, Myp::PERIODS)
+        end
+      else
+        result += Myp.number_to_currency(payment_amount)
       end
-      if date_period == 1
-        result += ", " + Myp.number_to_currency(payment_amount / 12) + " " + Myp.get_select_name(0, Myp::PERIODS)
-      elsif date_period == 2
-        result += ", " + Myp.number_to_currency(payment_amount / 6) + " " + Myp.get_select_name(0, Myp::PERIODS)
-      end
+      
       result += ")"
+      
       if !ended.nil? && Date.today > ended
         result += " (Ended " + Myp.display_date_short(ended, User.current_user) + ")"
       end
@@ -38,19 +53,23 @@ class PeriodicPayment < ApplicationRecord
     today = Date.today
     if !started.nil?
       result = started
-    elsif date_period == 0
+    elsif date_period == Myp::PERIOD_MONTHLY
       result = Date.new(today.year, today.month)
-    elsif date_period == 1 || date_period == 2
+    elsif date_period == Myp::PERIOD_YEARLY || date_period == Myp::PERIOD_SIX_MONTHS
       result = Date.new(today.year)
+    else
+      raise "TODO"
     end
     if !result.nil?
       while result < today
-        if date_period == 0
+        if date_period == Myp::PERIOD_MONTHLY
           result = result.advance(months: 1)
-        elsif date_period == 1
+        elsif date_period == Myp::PERIOD_YEARLY
           result = result.advance(years: 1)
-        elsif date_period == 2
+        elsif date_period == Myp::PERIOD_SIX_MONTHS
           result = result.advance(months: 6)
+        else
+          raise "TODO"
         end
       end
     end

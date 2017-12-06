@@ -186,12 +186,16 @@ module Myp
     ["myplaceonline.temperatures.fahrenheit", 0],
     ["myplaceonline.temperatures.celcius", 1]
   ]
+  
+  PERIOD_MONTHLY = 0
+  PERIOD_YEARLY = 1
+  PERIOD_SIX_MONTHS = 2
 
   # DueItem.due_periodic_payments  
   PERIODS = [
-    ["myplaceonline.periods.monthly", 0],
-    ["myplaceonline.periods.yearly", 1],
-    ["myplaceonline.periods.six_months", 2]
+    ["myplaceonline.periods.monthly", PERIOD_MONTHLY],
+    ["myplaceonline.periods.yearly", PERIOD_YEARLY],
+    ["myplaceonline.periods.six_months", PERIOD_SIX_MONTHS],
   ]
   
   MAX_RATING = 5
