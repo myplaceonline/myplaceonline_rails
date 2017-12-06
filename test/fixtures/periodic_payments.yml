@@ -1,3 +1,5 @@
 periodic_payment:
   identity: identity
   periodic_payment_name: Test
+  payment_amount: 1
+  date_period: 0
