@@ -1,16 +1,19 @@
 class RemindersController < MyplaceonlineController
   def footer_items_show
+    result = super
     if !@obj.calendar_item.nil?
-      super + [
-        {
-          title: I18n.t("myplaceonline.reminders.calendar_item"),
-          link: calendar_calendar_item_path(@obj.calendar_item.calendar, @obj.calendar_item),
-          icon: "calendar"
-        },
-      ]
-    else
-      super
+      result << {
+        title: I18n.t("myplaceonline.reminders.calendar_item"),
+        link: calendar_calendar_item_path(@obj.calendar_item.calendar, @obj.calendar_item),
+        icon: "calendar"
+      }
     end
+    result << {
+      title: I18n.t("myplaceonline.reminders.refresh"),
+      link: reminder_refresh_path(@obj),
+      icon: "refresh"
+    }
+    result
   end
 
   def use_bubble?
@@ -34,6 +37,15 @@ class RemindersController < MyplaceonlineController
       :max_pending,
       :notes,
     ]
+  end
+  
+  def refresh
+    set_obj
+    @obj.on_after_save
+    redirect_to(
+      obj_path,
+      flash: { notice: I18n.t("myplaceonline.reminders.refreshed") }
+    )
   end
 
   protected

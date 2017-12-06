@@ -442,6 +442,9 @@ Rails.application.routes.draw do
       { instance: true, link: "reset" },
       { instance: true, link: "complete_item" }
     ],
+    reminders: [
+      { instance: true, link: "refresh" },
+    ],
     reputation_reports: [
       { instance: true, link: "contact_reporter" },
       { instance: true, link: "propose_price" },
