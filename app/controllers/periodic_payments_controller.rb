@@ -22,8 +22,6 @@ class PeriodicPaymentsController < MyplaceonlineController
             @total += x.payment_amount / 12
           elsif x.date_period == Myp::PERIOD_SIX_MONTHS
             @total += x.payment_amount / 6
-          else
-            raise "TODO"
           end
         end
       end

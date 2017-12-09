@@ -1,3 +1,6 @@
+<% if !obj.current_user_owns? %>
+  <%= data_row(heading: t("myplaceonline.reputation_reports.user"), content: obj.identity.user) %>
+<% end %>
 <%
 ExecutionContext.stack(data_display_options: { show_clipboard_button: false, reference_display_heading: false, show_reference_as_content: true }) do
 %>

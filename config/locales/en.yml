@@ -3983,6 +3983,7 @@ en:
       price: "Price"
       propose_price_subject: "Proposed Price to investigate %{type} for %{name}"
       propose_price_body: "We propose a price of %{cost} to investigate your report on %{name}. Click the following link to pay and start the investigation:\n\n[%{link}](%{link})\n\n%{details}"
+      user: "User"
     website_domain_properties:
       property_key: "Key"
       property_value: "Value"
