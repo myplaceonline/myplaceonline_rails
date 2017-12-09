@@ -104,8 +104,13 @@ var myplaceonline = function(mymodule) {
 
   $(document).on("click", "#mainbutton", function(eventData) {
     if (eventData && eventData.shiftKey) {
-      $("#mainButtonPopup").popup("open");
-      myplaceonline.maybeFocus("#mainButtonPopup_search_container input");
+      try {
+        $("#mainButtonPopup").popup("open");
+        myplaceonline.maybeFocus("#mainButtonPopup_search_container input");
+      } catch (e) {
+        // Error: cannot call methods on popup prior to initialization; attempted to call method 'open'
+        alert("The page didn't load yet. Please try again.");
+      }
       return false;
     } else if (eventData && eventData.ctrlKey) {
       myplaceonline.navigate("/");
