@@ -373,9 +373,18 @@ var myplaceonline = function(mymodule) {
         if (this.value.length > 0 || url != "/") {
           var searchList = $(listIdentifier + " li:not(.ui-screen-hidden)").filter(":not(.ui-li-divider)");
           if (searchList.size() > 0) {
-            e.preventDefault();
             var child = searchList.filter(":first");
-            myplaceonline.navigate(child.children("a").attr("href"));
+            if (child.length) {
+              var childLink = child.children("a:first");
+              if (childLink.length) {
+                var childLinkHref = childLink.attr("href");
+                if (childLinkHref && childLinkHref.length > 0) {
+                  e.preventDefault();
+                  myplaceonline.navigate(childLinkHref);
+                  return false;
+                }
+              }
+            }
           }
         }
       }
