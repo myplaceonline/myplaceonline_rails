@@ -169,10 +169,6 @@ class MoneyBalancesController < MyplaceonlineController
     end
   end
 
-  def show_add
-    false
-  end
-
   def share_permissions
     [Permission::ACTION_READ, Permission::ACTION_UPDATE]
   end
