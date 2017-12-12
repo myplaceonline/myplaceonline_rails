@@ -41,7 +41,9 @@ class ApplicationJob < ActiveJob::Base
 
   # http://edgeguides.rubyonrails.org/active_job_basics.html#exceptions
   rescue_from(StandardError) do |exception|
-    Myp.handle_exception(exception, nil, nil, "ActiveJob Failure: #{self.class.name}")
+    ExecutionContext.stack do
+      Myp.handle_exception(exception, nil, nil, "ActiveJob Failure: #{self.class.name}")
+    end
   end
   
   def import_job_context(job_context)
