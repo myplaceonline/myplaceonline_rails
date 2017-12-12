@@ -18,6 +18,16 @@ class WelcomeController < ApplicationController
           raise "No feed found"
         end
       }
+      format.json {
+        website_domain = Myp.website_domain
+        render(
+          json: {
+            title: website_domain.domain_name,
+            description: website_domain.meta_description,
+            keywords: website_domain.meta_keywords,
+          }
+        )
+      }
     end
   end
 end
