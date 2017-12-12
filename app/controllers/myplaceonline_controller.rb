@@ -839,6 +839,14 @@ class MyplaceonlineController < ApplicationController
       @selected_sort_direction = @selected_sort_direction.downcase
     end
     
+    if Myp.param_bool(params, :reverse, default_value: false)
+      if @selected_sort_direction.downcase == "asc"
+        @selected_sort_direction = "desc"
+      else
+        @selected_sort_direction = "asc"
+      end
+    end
+    
     dsc = nil
     @selected_sort = params[:selected_sort]
     

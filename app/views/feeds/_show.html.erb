@@ -38,7 +38,11 @@
   </script>
 
   <%
-  items = obj.unread_feed_items
+  if Myp.param_bool(params, :reverse, default_value: false)
+    items = obj.unread_feed_items.reorder("publication_date ASC")
+  else
+    items = obj.unread_feed_items
+  end
   offset = controller.items_offset
   perpage = controller.items_per_page
   count = items.count
