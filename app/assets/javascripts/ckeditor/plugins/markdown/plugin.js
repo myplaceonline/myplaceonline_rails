@@ -56,10 +56,24 @@
                 // Convert to Markdown and Fill the textarea.
                 if (typeof(toMarkdown) == 'undefined') {
                     CKEDITOR.scriptLoader.load(rootPath + 'js/to-markdown.js', function() {
-                        editable.setData(toMarkdown(htmlData));
+                        try {
+                          editable.setData(toMarkdown(htmlData));
+                        } catch (e) {
+                          if (myplaceonline) {
+                            myplaceonline.sendDebug("Error calling toMarkdown for " + htmlData, true, e);
+                            alert("Error processing text. We've been notified of the problem. Please refresh and try again until we fix it.");
+                          }
+                        }
                     });
                 } else {
-                    editable.setData(toMarkdown(htmlData));
+                    try {
+                      editable.setData(toMarkdown(htmlData));
+                    } catch (e) {
+                      if (myplaceonline) {
+                        myplaceonline.sendDebug("Error calling toMarkdown for " + htmlData, true, e);
+                        alert("Error processing text. We've been notified of the problem. Please refresh and try again until we fix it.");
+                      }
+                    }
                 }
 
                 if (typeof (CodeMirror) == 'undefined' || typeof (CodeMirror.modes.gfm) == 'undefined') {

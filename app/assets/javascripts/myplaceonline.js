@@ -133,8 +133,8 @@ var myplaceonline = function(mymodule) {
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack
       stackTrace = new Error().stack;
       
-      if (errorObj) {
-        stackTrace += "\n\nOriginal stack:\n" + errorObj.stack;
+      if (errorObj && errorObj.stack) {
+        stackTrace = errorObj.stack + "\n\nsendDebug stack:\n" + stackTrace;
       }
     }
     if (myplaceonline.checkSendDebug) {

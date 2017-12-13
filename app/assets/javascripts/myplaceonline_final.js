@@ -1456,7 +1456,7 @@ var myplaceonline = function(mymodule) {
       }
     }
     if (result) {
-      if (debugsSent > 5) {
+      if (debugsSent >= 3) {
         result = false;
       } else {
         debugsSent++;
