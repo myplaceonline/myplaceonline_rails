@@ -1446,6 +1446,9 @@ var myplaceonline = function(mymodule) {
       
       // https://github.com/zeroclipboard/zeroclipboard/issues/661
       blacklist.push("Bad NPObject as private data!");
+
+      // https://github.com/zeroclipboard/zeroclipboard/issues/676
+      blacklist.push("Error calling method on NPObject!");
       
       for (var i = 0; i < blacklist.length; i++) {
         var checkItem = blacklist[i];
