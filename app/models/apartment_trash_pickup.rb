@@ -1,7 +1,9 @@
 class ApartmentTrashPickup < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
-  DEFAULT_TRASH_PICKUP_THRESHOLD_SECONDS = 2.days
+  # The reminder time is midnight on the specified day, which usually means
+  # the trash needs to be put out the night before
+  DEFAULT_TRASH_PICKUP_THRESHOLD_SECONDS = 5.hours
 
   TRASH_TYPES = [
     ["myplaceonline.trash.type_general", 0],

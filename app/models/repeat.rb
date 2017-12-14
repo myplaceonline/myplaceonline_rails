@@ -11,11 +11,12 @@ class Repeat < ApplicationRecord
 
   def next_instance
     # Start at the start date, and keep adding the period until we're >= today
-    result = start_date
-    today = Date.today
+    u = User.current_user
+    result = u.in_time_zone(start_date)
+    today = u.date_now
     if period_type >= 3 && period_type <= 9
       cwday = period_type - 2
-      result = Date.new(today.year, today.month)
+      result = u.in_time_zone(Date.new(today.year, today.month))
       while true
         if result.cwday == cwday
           result += ((period - 1) * 7).day
@@ -24,8 +25,8 @@ class Repeat < ApplicationRecord
         result += 1.day
       end
       if result < today
-        next_month = Date.new(today.year, today.month) + 6.weeks
-        result = Date.new(next_month.year, next_month.month)
+        next_month = u.in_time_zone(Date.new(today.year, today.month)) + 6.weeks
+        result = u.in_time_zone(Date.new(next_month.year, next_month.month))
         while true
           if result.cwday == cwday
             result += ((period - 1) * 7).day
