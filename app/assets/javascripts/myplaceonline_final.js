@@ -1493,6 +1493,7 @@ var myplaceonline = function(mymodule) {
     }
   }
   
+  // https://stackoverflow.com/a/7390612/4135310
   function toType(obj) {
     return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
   }

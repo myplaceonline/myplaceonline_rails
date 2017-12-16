@@ -1,5 +1,16 @@
 <% content_for :heading do -%><%= t("myplaceonline.info.diagnostics") %><% end -%>
 
+<script>
+function testMarkdown(html) {
+  try {
+    var markdown = toMarkdown(html);
+    alert("Converted Successfully: " + markdown);
+  } catch (e) {
+    alert("Error: " + e);
+  }
+}
+</script>
+
 <ul data-role="listview" data-inset="true">
   <li><a href="#" onclick="myplaceonline.setDebug(true); myplaceonline.alertHTML(); return false;">Show HTML</a></li>
   <li><a href="#" onclick="myplaceonline.setDebug(true); myplaceonline.consoleDir($.mobile.path.documentUrl); myplaceonline.showDebugConsole(); if (myplaceonline.scrollY) { myplaceonline.scrollY($('#debugConsole').offset().top); } else { alert('Scroll to the bottom'); }; return false;">Show Debug Console</a></li>
@@ -35,6 +46,7 @@
       <%= t("myplaceonline.info.jqm.title") %>
     <% end %>
   </li>
+  <li><a href="#" onclick='testMarkdown("&lt;p&gt;First line&lt;/p&gt;\n&lt;p&gt;Second line&lt;/p&gt;\n"); return false;'>Test Markdown Conversion</a></li>
 </ul>
 
 <% if !current_user.nil? %>
