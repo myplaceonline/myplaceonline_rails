@@ -63,6 +63,7 @@
                             myplaceonline.sendDebug("Error converting to markdown in plugin for " + htmlData, true, e);
                             alert("Error processing text. We've been notified of the problem. Please save your content elsewhere, refresh, and try again until we fix it.");
                           }
+                          throw e;
                         }
                     });
                 } else {
@@ -73,6 +74,7 @@
                         myplaceonline.sendDebug("Error converting to markdown in plugin for " + htmlData, true, e);
                         alert("Error processing text. We've been notified of the problem. Please save your content elsewhere, refresh, and try again until we fix it.");
                       }
+                      throw e;
                     }
                 }
 

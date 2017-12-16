@@ -1483,14 +1483,14 @@ var myplaceonline = function(mymodule) {
   }
   
   function mypToMarkdown(html) {
-    var result = "";
     try {
-      result = toMarkdown(html);
+      var result = toMarkdown(html);
+      return result;
     } catch (e) {
       myplaceonline.sendDebug("Error converting to markdown for " + html, true, e);
       alert("Error processing text. We've been notified of the problem. Please save your content elsewhere, refresh, and try again until we fix it.");
+      throw e;
     }
-    return result;
   }
   
   // Public API
