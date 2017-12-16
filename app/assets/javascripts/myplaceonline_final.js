@@ -1493,6 +1493,10 @@ var myplaceonline = function(mymodule) {
     }
   }
   
+  function toType(obj) {
+    return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
+  }
+  
   // Public API
   mymodule.hookListviewSearch = hookListviewSearch;
   mymodule.hookListviewEnter = hookListviewEnter;
@@ -1529,6 +1533,7 @@ var myplaceonline = function(mymodule) {
   mymodule.checkSendDebug = checkSendDebug;
   mymodule.transformTrim = transformTrim;
   mymodule.toMarkdown = mypToMarkdown;
+  mymodule.toType = toType;
   
   myplaceonline.onPageLoad(function() {
     if (ZeroClipboard) {

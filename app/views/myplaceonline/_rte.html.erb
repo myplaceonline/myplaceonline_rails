@@ -43,7 +43,13 @@ myplaceonline.onPageLoad(function() {
         },
         change: function(ev) {
           if (ev.editor.fully_initialized) {
-            var markedDownData = myplaceonline.toMarkdown(ev.editor.getData());
+            // getData returns a string of HTML
+            var data = ev.editor.getData();
+            
+            myplaceonline.consoleLog("Updating rte: " + data);
+            
+            var markedDownData = myplaceonline.toMarkdown(data);
+
             <% if !hidden_field_name.nil? %>
               $("#<%= rte_hidden_field_id %>").attr("value", markedDownData);
             <% else %>

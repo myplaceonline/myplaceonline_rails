@@ -181,7 +181,7 @@ class ApiController < ApplicationController
     body_markdown = "Message: " + params[:message].to_s + "\n\n" + "Stack: " + params[:stack].to_s
     
     Myp.send_support_email_safe(
-      "Browser Error",
+      "Application Error",
       Myp.markdown_to_html(body_markdown.gsub("\n", "<br />\n")).html_safe,
       body_markdown,
       request: request,
