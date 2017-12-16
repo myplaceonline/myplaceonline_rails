@@ -1482,6 +1482,17 @@ var myplaceonline = function(mymodule) {
     return result;
   }
   
+  function mypToMarkdown(html) {
+    var result = "";
+    try {
+      result = toMarkdown(html);
+    } catch (e) {
+      myplaceonline.sendDebug("Error converting to markdown for " + html, true, e);
+      alert("Error processing text. We've been notified of the problem. Please save your content elsewhere, refresh, and try again until we fix it.");
+    }
+    return result;
+  }
+  
   // Public API
   mymodule.hookListviewSearch = hookListviewSearch;
   mymodule.hookListviewEnter = hookListviewEnter;
@@ -1517,6 +1528,7 @@ var myplaceonline = function(mymodule) {
   mymodule.completeCheckboxHiding = completeCheckboxHiding;
   mymodule.checkSendDebug = checkSendDebug;
   mymodule.transformTrim = transformTrim;
+  mymodule.toMarkdown = mypToMarkdown;
   
   myplaceonline.onPageLoad(function() {
     if (ZeroClipboard) {

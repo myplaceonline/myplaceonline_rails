@@ -60,8 +60,8 @@
                           editable.setData(toMarkdown(htmlData));
                         } catch (e) {
                           if (myplaceonline) {
-                            myplaceonline.sendDebug("Error calling toMarkdown for " + htmlData, true, e);
-                            alert("Error processing text. We've been notified of the problem. Please refresh and try again until we fix it.");
+                            myplaceonline.sendDebug("Error converting to markdown in plugin for " + htmlData, true, e);
+                            alert("Error processing text. We've been notified of the problem. Please save your content elsewhere, refresh, and try again until we fix it.");
                           }
                         }
                     });
@@ -70,8 +70,8 @@
                       editable.setData(toMarkdown(htmlData));
                     } catch (e) {
                       if (myplaceonline) {
-                        myplaceonline.sendDebug("Error calling toMarkdown for " + htmlData, true, e);
-                        alert("Error processing text. We've been notified of the problem. Please refresh and try again until we fix it.");
+                        myplaceonline.sendDebug("Error converting to markdown in plugin for " + htmlData, true, e);
+                        alert("Error processing text. We've been notified of the problem. Please save your content elsewhere, refresh, and try again until we fix it.");
                       }
                     }
                 }
