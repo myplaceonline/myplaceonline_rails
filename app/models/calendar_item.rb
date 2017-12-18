@@ -16,23 +16,6 @@ class CalendarItem < ApplicationRecord
     @cached_display
   end
   
-  before_destroy :on_before_destroy
-  
-  def on_before_destroy
-    if !self.is_repeat?
-      # If this is the "primary" CalendarItem (see class description), then
-      # we presume we want to delete all repeat CalendarItems
-      
-      CalendarItem.destroy_calendar_items(
-        self.identity,
-        self.find_model_class,
-        model_id: self.model_id,
-        context_info: self.context_info,
-        skip_id: self.id,
-      )
-    end
-  end
-  
   def link
     model = Object.const_get(model_class)
     if model.respond_to?("calendar_item_link")
@@ -158,10 +141,33 @@ class CalendarItem < ApplicationRecord
     end
   end
   
+  before_destroy :on_before_destroy
+  
+  def on_before_destroy
+    Rails.logger.debug{"CalendarItem.on_before_destroy #{self}, repeat: #{self.is_repeat?}"}
+    
+    if !self.is_repeat?
+      # If this is the "primary" CalendarItem (see class description), then
+      # we presume we want to delete all repeat CalendarItems
+      
+      CalendarItem.destroy_calendar_items(
+        self.identity,
+        self.find_model_class,
+        model_id: self.model_id,
+        context_info: self.context_info,
+        skip_id: self.id,
+        only_repeats: true,
+      )
+    end
+
+    Rails.logger.debug{"CalendarItem.on_before_destroy finished"}
+  end
+  
   # Note that the default context_info of nil means that any items with
   # a non-NULL context_info will not be destroyed
-  def self.destroy_calendar_items(identity, model, model_id: nil, context_info: nil, skip_id: nil)
+  def self.destroy_calendar_items(identity, model, model_id: nil, context_info: nil, skip_id: nil, only_repeats: false)
     Rails.logger.debug{"CalendarItem.destroy_calendar_items entry identity: #{identity.id}, model: #{model.name}, model_id: #{model_id}, context_info: #{context_info}, skip_id: #{skip_id}"}
+    
     CalendarItem.where(
       identity: identity,
       model_class: model.name,
@@ -170,10 +176,14 @@ class CalendarItem < ApplicationRecord
     ).each do |calendar_item|
       
       if skip_id.nil? || calendar_item.id != skip_id
-        Rails.logger.debug{"CalendarItem.destroy_calendar_items item #{calendar_item.inspect}"}
-        calendar_item.destroy!
+        if !only_repeats || (only_repeats && calendar_item.is_repeat?)
+          Rails.logger.debug{"CalendarItem.destroy_calendar_items item #{calendar_item.inspect}"}
+          calendar_item.destroy!
+        end
       end
+      
     end
+    
     Rails.logger.debug{"CalendarItem.destroy_calendar_items exit"}
   end
   

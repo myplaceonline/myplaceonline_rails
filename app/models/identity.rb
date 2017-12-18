@@ -628,6 +628,9 @@ class Identity < ApplicationRecord
   
   def on_after_save
     if ExecutionContext.count > 0 && MyplaceonlineExecutionContext.handle_updates? && !User.current_user.current_identity.nil?
+      
+      Rails.logger.debug{"Identity.on_after_save #{self}"}
+      
       ApplicationRecord.transaction do
         on_after_destroy
         if !birthday.nil?
