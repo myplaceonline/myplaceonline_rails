@@ -59,33 +59,6 @@ myplaceonline.onPageLoad(function() {
               myplaceonline.notepadChanged('#<%= rte_container_id %>', '<%= non_hidden_url %>', '<%= t("myplaceonline.general.pending_save") %>', '<%= t("myplaceonline.general.saving") %>', '<%= t("myplaceonline.general.saved") %>', markedDownData);
             <% end %>
           }
-        },
-        afterInsertHtml: function(ev) {
-          debugEditor("afterInsertHtml", ev);
-        },
-        afterPaste: function(ev) {
-          debugEditor("afterPaste", ev);
-        },
-        afterSetData: function(ev) {
-          debugEditor("afterSetData", ev);
-        },
-        focus: function(ev) {
-          debugEditor("focus", ev);
-        },
-        insertElement: function(ev) {
-          debugEditor("insertElement", ev);
-        },
-        insertHtml: function(ev) {
-          debugEditor("insertHtml", ev);
-        },
-        insertText: function(ev) {
-          debugEditor("insertText", ev);
-        },
-        key: function(ev) {
-          debugEditor("key", ev);
-        },
-        setData: function(ev) {
-          debugEditor("setData", ev);
         }
       }
     }
