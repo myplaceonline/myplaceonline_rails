@@ -1552,7 +1552,7 @@ module ApplicationHelper
       field_attributes[:step] = options[:step]
     end
     if options[:type] == Myp::FIELD_BOOLEAN
-      field_attributes[:data] = { enhanced: "true" }
+      field_attributes[:data] = { enhanced: "true", corners: "false" }
     end
     if options[:type] == Myp::FIELD_SELECT
       field_attributes[:prompt] = options[:placeholder]
