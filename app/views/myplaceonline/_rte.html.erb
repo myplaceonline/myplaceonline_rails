@@ -19,6 +19,11 @@ end
   <%= rte_hidden_field %>
 <% end %>
 <script type="text/javascript">
+function debugEditor(eventName, evt) {
+  myplaceonline.consoleLog("CKEDITOR: event: " + eventName);
+  myplaceonline.consoleLog("CKEDITOR: data: " + evt.editor.getData());
+}
+
 myplaceonline.onPageLoad(function() {
   // See config.js for default configuration
   CKEDITOR.replace(
@@ -46,8 +51,6 @@ myplaceonline.onPageLoad(function() {
             // getData returns a string of HTML
             var data = ev.editor.getData();
             
-            myplaceonline.consoleLog("Updating rte: " + data);
-            
             var markedDownData = myplaceonline.toMarkdown(data);
 
             <% if !hidden_field_name.nil? %>
@@ -56,6 +59,33 @@ myplaceonline.onPageLoad(function() {
               myplaceonline.notepadChanged('#<%= rte_container_id %>', '<%= non_hidden_url %>', '<%= t("myplaceonline.general.pending_save") %>', '<%= t("myplaceonline.general.saving") %>', '<%= t("myplaceonline.general.saved") %>', markedDownData);
             <% end %>
           }
+        },
+        afterInsertHtml: function(ev) {
+          debugEditor("afterInsertHtml", ev);
+        },
+        afterPaste: function(ev) {
+          debugEditor("afterPaste", ev);
+        },
+        afterSetData: function(ev) {
+          debugEditor("afterSetData", ev);
+        },
+        focus: function(ev) {
+          debugEditor("focus", ev);
+        },
+        insertElement: function(ev) {
+          debugEditor("insertElement", ev);
+        },
+        insertHtml: function(ev) {
+          debugEditor("insertHtml", ev);
+        },
+        insertText: function(ev) {
+          debugEditor("insertText", ev);
+        },
+        key: function(ev) {
+          debugEditor("key", ev);
+        },
+        setData: function(ev) {
+          debugEditor("setData", ev);
         }
       }
     }
