@@ -1537,7 +1537,7 @@ module ApplicationHelper
       field_attributes[:step] = options[:step]
     end
     if options[:type] == Myp::FIELD_BOOLEAN
-      field_attributes[:data] = { enhanced: "true", corners: "false" }
+      #field_attributes[:data] = { enhanced: "true", corners: "false" }
     end
     if options[:type] == Myp::FIELD_SELECT
       field_attributes[:prompt] = options[:placeholder]
@@ -1753,12 +1753,12 @@ module ApplicationHelper
       # https://www.w3.org/TR/html401/interact/forms.html#h-17.9.1
       # Instead we use the explicitly enhanced form as per ("Providing pre-rendered markup"):
       # http://api.jquerymobile.com/checkboxradio/
-      label_classes = Myp.appendstr(label_classes, "ui-btn ui-btn-inherit ui-btn-icon-left")
+      #label_classes = Myp.appendstr(label_classes, "ui-btn ui-btn-inherit ui-btn-icon-left")
       
       if options[:value]
-        label_classes = Myp.appendstr(label_classes, "ui-checkbox-on")
+        #label_classes = Myp.appendstr(label_classes, "ui-checkbox-on")
       else
-        label_classes = Myp.appendstr(label_classes, "ui-checkbox-off")
+        #label_classes = Myp.appendstr(label_classes, "ui-checkbox-off")
       end
       
       if options[:form].nil?
@@ -1775,7 +1775,8 @@ module ApplicationHelper
     end
 
     if options[:type] == Myp::FIELD_BOOLEAN
-      result = content_tag(:div, result.html_safe, class: "ui-checkbox")
+      # class: "ui-checkbox"
+      result = content_tag(:div, result.html_safe, class: "")
     elsif !options[:wrapper_tag].nil?
       result = content_tag(options[:wrapper_tag], result.html_safe)
     end
