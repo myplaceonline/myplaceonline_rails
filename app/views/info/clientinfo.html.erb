@@ -2,10 +2,19 @@
 
 <h1><%= t('myplaceonline.info.clientinfo') %></h1>
 
-<p>Browser object:</p>
-<ul>
-  <li>iOS: <%= MyplaceonlineExecutionContext.browser.platform.ios? %></li>
-</ul>
+<%
+browser = MyplaceonlineExecutionContext.browser
+if !browser.nil?
+%>
+
+  <p>Browser object:</p>
+  <ul>
+    <li>iOS: <%= MyplaceonlineExecutionContext.browser.platform.ios? %></li>
+  </ul>
+
+<%
+end
+%>
 
 <% if !current_user.nil? && current_user.admin? %>
 <% end %>
