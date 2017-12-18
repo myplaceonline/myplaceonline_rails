@@ -110,10 +110,14 @@ function bfsOrder(node) {
 
   while (inqueue.length > 0) {
     elem = inqueue.shift();
-    outqueue.push(elem);
-    children = elem.childNodes;
-    for (i = 0 ; i < children.length; i++) {
-      if (children[i].nodeType === 1) { inqueue.push(children[i]); }
+    if (elem) {
+      outqueue.push(elem);
+      children = elem.childNodes;
+      if (children) {
+        for (i = 0 ; i < children.length; i++) {
+          if (children[i] && children[i].nodeType === 1) { inqueue.push(children[i]); }
+        }
+      }
     }
   }
   outqueue.shift();
