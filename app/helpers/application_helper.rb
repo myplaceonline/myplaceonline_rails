@@ -1586,7 +1586,7 @@ module ApplicationHelper
             field_attributes[:value] = "1"
             field_attributes[:name] = options[:form].object_name + "[#{name}]"
             field_attributes[:id] = field_attributes[:name].gsub("\[", "_").gsub("\]", "")
-            if options[:value]
+            if options[:value] || options[:form].object.send(name.to_s)
               field_attributes[:checked] = "checked"
             end
             field_attributes[:placeholder] = nil
