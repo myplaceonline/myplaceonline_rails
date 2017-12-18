@@ -1568,9 +1568,32 @@ module ApplicationHelper
       else
         if !options[:form].nil?
           if options[:type] == Myp::FIELD_BOOLEAN
+            
+            # We emulate how Rails creates a checkbox because otherwise
+            # JQueryMobile gets screwed up. The way this is done is a hidden
+            # input field with the current value followed by a checkbox input
+            # field with the value it will have if checked. If the checkbox
+            # input is not checked, it's not sent by the browser, but the old
+            # value will be.
+            
+            field_attributes[:type] = :checkbox
+            field_attributes[:value] = "1"
+            field_attributes[:name] = options[:form].object_name + "[#{name}]"
+            field_attributes[:id] = field_attributes[:name].gsub("\[", "_").gsub("\]", "")
+            if options[:value]
+              field_attributes[:checked] = "checked"
+            end
+            field_attributes[:placeholder] = nil
+            
             result = Myp.appendstr(
               result,
-              options[:form].check_box(name, field_attributes)
+              tag(:input, { type: :hidden, name: field_attributes[:name], value: "0" }) +
+                content_tag(
+                  :label,
+                  tag(:input, field_attributes) + options[:placeholder],
+                  class: label_classes,
+                  title: options[:tooltip]
+                )
             )
           elsif options[:type] == Myp::FIELD_SELECT
             result = Myp.appendstr(
@@ -1600,10 +1623,23 @@ module ApplicationHelper
           end
         else
           if options[:type] == Myp::FIELD_BOOLEAN
-            Rails.logger.debug{"ApplicationHelper.input_field: non-form boolean, value: #{(options[:value] ? true : false)}"}
+            field_attributes[:type] = :checkbox
+            field_attributes[:value] = "1"
+            field_attributes[:name] = name
+            field_attributes[:id] = name
+            if options[:value]
+              field_attributes[:checked] = "checked"
+            end
+            field_attributes[:placeholder] = nil
+
             result = Myp.appendstr(
               result,
-              check_box_tag(name, "true", (options[:value] ? true : false), field_attributes)
+              tag(:input, { type: :hidden, name: name, value: "0" }) + content_tag(
+                :label,
+                tag(:input, field_attributes) + options[:placeholder],
+                class: label_classes,
+                title: options[:tooltip]
+              )
             )
           elsif options[:type] == Myp::FIELD_SELECT
             result = Myp.appendstr(
@@ -1747,37 +1783,7 @@ module ApplicationHelper
       end
     end
     
-    if options[:type] == Myp::FIELD_BOOLEAN && options[:include_label]
-      # Rails creates two input elements for a checkbox which means we can't use
-      # the trick to wrap a checkbox with a label as per:
-      # https://www.w3.org/TR/html401/interact/forms.html#h-17.9.1
-      # Instead we use the explicitly enhanced form as per ("Providing pre-rendered markup"):
-      # http://api.jquerymobile.com/checkboxradio/
-      #label_classes = Myp.appendstr(label_classes, "ui-btn ui-btn-inherit ui-btn-icon-left")
-      
-      if options[:value]
-        #label_classes = Myp.appendstr(label_classes, "ui-checkbox-on")
-      else
-        #label_classes = Myp.appendstr(label_classes, "ui-checkbox-off")
-      end
-      
-      if options[:form].nil?
-        result = Myp.appendstr(
-          result,
-          label_tag(name, options[:placeholder], class: label_classes, title: options[:tooltip])
-        )
-      else
-        result = Myp.appendstr(
-          result,
-          options[:form].label(name, options[:placeholder], class: label_classes, title: options[:tooltip])
-        )
-      end
-    end
-
-    if options[:type] == Myp::FIELD_BOOLEAN
-      # class: "ui-checkbox"
-      result = content_tag(:div, result.html_safe, class: "")
-    elsif !options[:wrapper_tag].nil?
+    if !options[:wrapper_tag].nil?
       result = content_tag(options[:wrapper_tag], result.html_safe)
     end
     
@@ -1983,27 +1989,29 @@ module ApplicationHelper
   # Instead we use the explicitly enhanced form as per ("Providing pre-rendered markup"):
   # http://api.jquerymobile.com/checkboxradio/
   def myp_check_box(form, name, placeholder, autofocus = false, input_classes = nil, title: nil)
-    if Myp.is_probably_i18n(placeholder)
-      placeholder = I18n.t(placeholder)
-    end
-    content_tag(
-      :div,
-      form.label(name, placeholder, title: title, class: "ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off") +
-      form.check_box(name, class: myp_field_classes(autofocus, input_classes), data: { enhanced: "true" }),
-      class: "ui-checkbox"
-    ).html_safe
+    input_field(
+      form: form,
+      name: name,
+      type: Myp::FIELD_BOOLEAN,
+      placeholder: placeholder,
+      field_classes: input_classes,
+      tooltip: title,
+      autofocus: autofocus,
+    )
   end
   
-  def myp_check_box_tag(name, placeholder, checked, autofocus = false, input_classes = nil, onclick = "")
-    if Myp.is_probably_i18n(placeholder)
-      placeholder = I18n.t(placeholder)
-    end
-    content_tag(
-      :div,
-      label_tag(name, placeholder, class: "ui-btn ui-btn-inherit ui-btn-icon-left ui-checkbox-off") +
-      check_box_tag(name, true, checked, class: myp_field_classes(autofocus, input_classes), data: { enhanced: "true" }, onclick: onclick),
-      class: "ui-checkbox"
-    ).html_safe
+  def myp_check_box_tag(name, placeholder, checked, autofocus = false, input_classes = nil, onclick = nil)
+    input_field(
+      name: name,
+      type: Myp::FIELD_BOOLEAN,
+      placeholder: placeholder,
+      field_classes: input_classes,
+      autofocus: autofocus,
+      value: checked,
+      field_attributes: {
+        onclick: onclick
+      }
+    )
   end
   
   def default_region
