@@ -7,7 +7,11 @@
   data_row(
     heading: t("myplaceonline.passwords.password"),
     content: decrypted_password,
-    background_highlight: true
+    background_highlight: true,
+    content_wrapper: :pre,
+    content_wrapper_attributes: {
+      style: "padding: 0; margin: 0; font-size: x-large;"
+    }
   )
 %>
 <%= data_row(heading: t("myplaceonline.passwords.user"), content: obj.user) %>

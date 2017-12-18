@@ -495,6 +495,8 @@ module ApplicationHelper
       markdown_process_images: false,
       image_context: nil,
       reference_display_heading: true,
+      content_wrapper: nil,
+      content_wrapper_attributes: {},
     }.merge(options)
     
     data_display_options = ExecutionContext[:data_display_options]
@@ -598,6 +600,10 @@ module ApplicationHelper
       
       if options[:warning] && original_content.is_a?(TrueClass)
         options[:content_classes] = "bgwarning #{options[:content_classes]}"
+      end
+      
+      if !options[:content_wrapper].nil?
+        content = content_tag(options[:content_wrapper], content, options[:content_wrapper_attributes])
       end
       
       if options[:wrap]
@@ -1571,10 +1577,10 @@ module ApplicationHelper
             
             # We emulate how Rails creates a checkbox because otherwise
             # JQueryMobile gets screwed up. The way this is done is a hidden
-            # input field with the current value followed by a checkbox input
+            # input field with the 0 value followed by a checkbox input
             # field with the value it will have if checked. If the checkbox
-            # input is not checked, it's not sent by the browser, but the old
-            # value will be.
+            # input is not checked, it's not sent by the browser, so the 0
+            # value will take.
             
             field_attributes[:type] = :checkbox
             field_attributes[:value] = "1"
@@ -1623,6 +1629,9 @@ module ApplicationHelper
           end
         else
           if options[:type] == Myp::FIELD_BOOLEAN
+            
+            # See comment on checkboxes above
+            
             field_attributes[:type] = :checkbox
             field_attributes[:value] = "1"
             field_attributes[:name] = name
