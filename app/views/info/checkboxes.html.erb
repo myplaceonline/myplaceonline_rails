@@ -42,3 +42,14 @@
 <%= form_for User.new do |f| %>
   <%= myp_check_box(f, :invite_code, "checkbox7") %>
 <% end %>
+
+<hr />
+
+<%= input_field(name: "checkbox8", type: Myp::FIELD_BOOLEAN, placeholder: "checkbox8") %>
+
+<hr />
+
+<%= form_for User.new do |f| %>
+  <%= input_field(name: :invite_code, type: Myp::FIELD_BOOLEAN, form: f, placeholder: "checkbox9", value: "true") %>
+<% end %>
+
