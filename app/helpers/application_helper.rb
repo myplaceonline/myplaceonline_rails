@@ -1505,24 +1505,9 @@ module ApplicationHelper
     
     result = nil
     
-    if options[:include_label]
-      if options[:type] != Myp::FIELD_BOOLEAN
-        # We only want to show the label if value is blank and there's no tooltip
-        label_classes = (options[:value].blank? && options[:tooltip].blank?) ? "ui-hidden-accessible" : "form_field_label"
-      else
-        # Rails creates two input elements for a checkbox which means we can't use
-        # the trick to wrap a checkbox with a label as per:
-        # https://www.w3.org/TR/html401/interact/forms.html#h-17.9.1
-        # Instead we use the explicitly enhanced form as per ("Providing pre-rendered markup"):
-        # http://api.jquerymobile.com/checkboxradio/
-        label_classes = Myp.appendstr(label_classes, "ui-btn ui-btn-inherit ui-btn-icon-left")
-        
-        if options[:value]
-          label_classes = Myp.appendstr(label_classes, "ui-checkbox-on")
-        else
-          label_classes = Myp.appendstr(label_classes, "ui-checkbox-off")
-        end
-      end
+    if options[:include_label] && options[:type] != Myp::FIELD_BOOLEAN
+      # We only want to show the label if value is blank and there's no tooltip
+      label_classes = (options[:value].blank? && options[:tooltip].blank?) ? "ui-hidden-accessible" : "form_field_label"
       
       if options[:form].nil?
         result = Myp.appendstr(
@@ -1762,11 +1747,36 @@ module ApplicationHelper
       end
     end
     
-    if options[:type] == Myp::FIELD_BOOLEAN
-      result = content_tag(:div, result.html_safe, class: "ui-checkbox")
+    if options[:type] == Myp::FIELD_BOOLEAN && options[:include_label]
+      # Rails creates two input elements for a checkbox which means we can't use
+      # the trick to wrap a checkbox with a label as per:
+      # https://www.w3.org/TR/html401/interact/forms.html#h-17.9.1
+      # Instead we use the explicitly enhanced form as per ("Providing pre-rendered markup"):
+      # http://api.jquerymobile.com/checkboxradio/
+      label_classes = Myp.appendstr(label_classes, "ui-btn ui-btn-inherit ui-btn-icon-left")
+      
+      if options[:value]
+        label_classes = Myp.appendstr(label_classes, "ui-checkbox-on")
+      else
+        label_classes = Myp.appendstr(label_classes, "ui-checkbox-off")
+      end
+      
+      if options[:form].nil?
+        result = Myp.appendstr(
+          result,
+          label_tag(name, options[:placeholder], class: label_classes, title: options[:tooltip])
+        )
+      else
+        result = Myp.appendstr(
+          result,
+          options[:form].label(name, options[:placeholder], class: label_classes, title: options[:tooltip])
+        )
+      end
     end
 
-    if !options[:wrapper_tag].nil?
+    if options[:type] == Myp::FIELD_BOOLEAN
+      result = content_tag(:div, result.html_safe, class: "ui-checkbox")
+    elsif !options[:wrapper_tag].nil?
       result = content_tag(options[:wrapper_tag], result.html_safe)
     end
     
