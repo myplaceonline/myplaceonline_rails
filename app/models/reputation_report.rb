@@ -73,7 +73,7 @@ class ReputationReport < ApplicationRecord
   end
   
   def read_only?
-    result = true
+    result = self.report_status.nil? || self.report_status == REPORT_STATUS_PENDING_REVIEW
     if User.current_user.admin?
       result = false
     end

@@ -1,5 +1,5 @@
 <%= data_row(heading: t("myplaceonline.website_domain_myplets.title"), content: obj.title) %>
-<%= data_row(heading: t("myplaceonline.website_domain_myplets.category"), content: obj.category) %>
+<%= data_row(heading: t("myplaceonline.website_domain_myplets.category"), content: obj.category.display) %>
 <%= data_row(heading: t("myplaceonline.website_domain_myplets.border_type"), content: obj.border_type, enumeration: Myplet::BORDER_TYPES) %>
 <%= data_row(heading: t("myplaceonline.website_domain_myplets.singleton"), content: obj.singleton) %>
 <%= data_row(heading: t("myplaceonline.website_domain_myplets.emulate_guest"), content: obj.emulate_guest) %>
