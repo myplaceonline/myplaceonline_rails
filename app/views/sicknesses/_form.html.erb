@@ -64,6 +64,15 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :sore_throat,
+    value: obj.sore_throat,
+    placeholder: "myplaceonline.sicknesses.sore_throat"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,

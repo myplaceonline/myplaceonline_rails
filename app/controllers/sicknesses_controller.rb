@@ -31,6 +31,7 @@ class SicknessesController < MyplaceonlineController
         :throwing_up,
         :fever,
         :runny_nose,
+        :sore_throat,
         :notes,
         sickness_files_attributes: FilesController.multi_param_names
       )
