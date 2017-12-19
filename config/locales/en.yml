@@ -3996,6 +3996,7 @@ en:
     application_helper:
       additional_items: "%{count} additional items not shown."
     site_invoices:
+      invoice_description: "Description"
       invoice_time: "Invoice Date/Time"
       invoice_amount: "Amount"
       invoice_status: "Status"

@@ -6,7 +6,7 @@ class SiteInvoicesController < MyplaceonlineController
   end
   
   def bubble_text(obj)
-    Myp.get_select_name(self.invoice_status, SiteInvoice::INVOICE_STATUSES)
+    Myp.get_select_name(obj.invoice_status, SiteInvoice::INVOICE_STATUSES)
   end
 
   protected

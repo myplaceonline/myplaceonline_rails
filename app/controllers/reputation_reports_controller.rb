@@ -59,8 +59,17 @@ class ReputationReportsController < MyplaceonlineController
         name: @obj.agent.display,
       )
       
-      #link = new_trip_trip_story_path(@obj)
-      link = root_url
+      site_invoice = SiteInvoice.create!(
+        invoice_description: subject,
+        invoice_time: User.current_user.time_now,
+        invoice_amount: @price,
+        invoice_status: SiteInvoice::INVOICE_STATUS_PENDING,
+        model_class: model.name,
+        model_id: @obj.id,
+        identity_id: @obj.identity_id,
+      )
+      
+      link = site_invoice_url(site_invoice)
       
       message = I18n.t(
         "myplaceonline.reputation_reports.propose_price_body",
