@@ -130,14 +130,16 @@ function bfsOrder(node) {
 
 function getContent(node) {
   var text = '';
-  for (var i = 0; i < node.childNodes.length; i++) {
-    if (node.childNodes[i].nodeType === 1) {
-      text += node.childNodes[i]._replacement;
+  if (node) {
+    for (var i = 0; i < node.childNodes.length; i++) {
+      if (node.childNodes[i] && node.childNodes[i].nodeType === 1) {
+        text += node.childNodes[i]._replacement;
+      }
+      else if (node.childNodes[i] && node.childNodes[i].nodeType === 3) {
+        text += node.childNodes[i].data;
+      }
+      else { continue; }
     }
-    else if (node.childNodes[i].nodeType === 3) {
-      text += node.childNodes[i].data;
-    }
-    else { continue; }
   }
   return text;
 }
