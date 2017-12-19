@@ -603,7 +603,7 @@ module ApplicationHelper
       end
       
       if !options[:content_wrapper].nil?
-        content = content_tag(options[:content_wrapper], content, options[:content_wrapper_attributes])
+        content = content_tag(options[:content_wrapper], content.html_safe, options[:content_wrapper_attributes])
       end
       
       if options[:wrap]
