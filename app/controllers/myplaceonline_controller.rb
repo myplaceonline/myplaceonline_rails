@@ -712,7 +712,7 @@ class MyplaceonlineController < ApplicationController
   
   def obj_locked?
     result = false
-    if @obj.respond_to?("read_only?") && @obj.read_only?
+    if @obj.respond_to?("read_only?") && @obj.read_only?(action: nil)
       result = true
     end
     result

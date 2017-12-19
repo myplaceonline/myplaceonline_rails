@@ -72,7 +72,7 @@ class ReputationReport < ApplicationRecord
     end
   end
   
-  def read_only?
+  def read_only?(action: nil)
     result = false
     
     if !self.report_status.nil? || self.report_status == REPORT_STATUS_PENDING_PAYMENT_FROM_USER

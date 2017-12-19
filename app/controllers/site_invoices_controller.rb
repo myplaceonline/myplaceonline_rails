@@ -1,6 +1,4 @@
 class SiteInvoicesController < MyplaceonlineController
-  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:static_page]
-
   def use_bubble?
     true
   end
@@ -9,6 +7,28 @@ class SiteInvoicesController < MyplaceonlineController
     Myp.get_select_name(obj.invoice_status, SiteInvoice::INVOICE_STATUSES)
   end
 
+  def pay
+    set_obj
+    
+    if request.post?
+      
+      redirect_to(
+        obj_path,
+        #flash: { notice: I18n.t("myplaceonline.reputation_reports.reporter_contacted") }
+      )
+    end
+  end
+
+  def footer_items_show
+    [
+      {
+        title: I18n.t("myplaceonline.site_invoices.pay"),
+        link: site_invoice_pay_path(@obj),
+        icon: "shop"
+      },
+    ] + super
+  end
+  
   protected
     def default_sort_direction
       "desc"

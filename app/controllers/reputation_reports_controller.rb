@@ -69,7 +69,7 @@ class ReputationReportsController < MyplaceonlineController
         identity_id: @obj.identity_id,
       )
       
-      link = site_invoice_url(site_invoice)
+      link = site_invoice_pay_url(site_invoice)
       
       message = I18n.t(
         "myplaceonline.reputation_reports.propose_price_body",

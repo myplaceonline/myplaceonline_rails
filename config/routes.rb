@@ -458,6 +458,9 @@ Rails.application.routes.draw do
         name: :retirement_plan_amounts
       }
     ],
+    site_invoices: [
+      { instance: true, link: "pay" },
+    ],
     test_objects: [
       { instance: false, link: "static_page" },
       { instance: true, link: "instance_page" },

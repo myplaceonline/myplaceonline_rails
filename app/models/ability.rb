@@ -207,7 +207,7 @@ class Ability
       result = false
     end
     
-    if result && action != :show && subject.respond_to?("read_only?") && subject.read_only? && !user.admin? && !Rails.env.test?
+    if result && action != :show && subject.respond_to?("read_only?") && subject.read_only?(action: action) && !user.admin? && !Rails.env.test?
       Rails.logger.debug{"Ability.authorize subject readonly"}
       result = false
     end

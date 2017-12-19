@@ -1,0 +1,33 @@
+<% content_for :heading do -%><%= t("myplaceonline.site_invoices.pay") %><% end -%>
+
+<h1><%= t("myplaceonline.site_invoices.pay") %></h1>
+
+<%= flashes! %>
+
+<%= data_row(heading: t("myplaceonline.site_invoices.invoice_description"), prefix_heading: true, content: @obj.invoice_description, wrap: false) %>
+<%= data_row(heading: t("myplaceonline.site_invoices.invoice_amount"), prefix_heading: true, content: @obj.invoice_amount, wrap: false, currency: true) %>
+
+<p><%= t("myplaceonline.site_invoices.choose_payment") %></p>
+
+<ul data-role="listview" data-inset="true">
+  <li>
+    <%= link_to(root_path) do %>
+      <%= image_tag("FatCow_Icons16x16/paypal_fulllogo.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.site_invoices.pay_types.paypal") %>
+    <% end %>
+  </li>
+</ul>
+
+<%= form_tag(site_invoice_pay_path(@obj), method: :post) do %>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: controller.obj_path,
+          icon: "back"
+        },
+      ]
+    })
+  %>
+<% end %>

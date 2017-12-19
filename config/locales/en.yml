@@ -4002,6 +4002,10 @@ en:
       invoice_status: "Status"
       model_class: "Model Class"
       model_id: "Model ID"
+      pay: "Pay"
+      choose_payment: "Choose a form of payment:"
       invoice_statuses:
         pending: "Pending"
         paid: "Paid"
+      pay_types:
+        paypal: "PayPal"

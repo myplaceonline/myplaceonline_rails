@@ -31,9 +31,13 @@ class SiteInvoice < ApplicationRecord
     Myp.appendstrwrap(self.invoice_description, Myp.number_to_currency(invoice_amount))
   end
 
-  def read_only?
-    result = true
-    
+  def read_only?(action: nil)
+    case action
+    when :pay
+      result = false
+    else
+      result = true
+    end
     result
   end
 end
