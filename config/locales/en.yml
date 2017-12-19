@@ -4008,4 +4008,5 @@ en:
         pending: "Pending"
         paid: "Paid"
       pay_types:
-        paypal: "PayPal"
+        paypal: "PayPal (including Credit Cards)"
+        other: "Other (Bitcoin, etc.)"
