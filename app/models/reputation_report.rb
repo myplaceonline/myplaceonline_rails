@@ -25,8 +25,8 @@ class ReputationReport < ApplicationRecord
   REPORT_TYPE_SHAME = 1
 
   REPORT_TYPES = [
-    ["myplaceonline.reputation_reports.report_types.praise", REPORT_TYPE_PRAISE],
     ["myplaceonline.reputation_reports.report_types.shame", REPORT_TYPE_SHAME],
+    ["myplaceonline.reputation_reports.report_types.praise", REPORT_TYPE_PRAISE],
   ]
 
   validates :short_description, presence: true
@@ -73,10 +73,16 @@ class ReputationReport < ApplicationRecord
   end
   
   def read_only?
-    result = self.report_status.nil? || self.report_status == REPORT_STATUS_PENDING_REVIEW
+    result = false
+    
+    if !self.report_status.nil? || self.report_status == REPORT_STATUS_PENDING_PAYMENT_FROM_USER
+      result = true
+    end
+    
     if User.current_user.admin?
       result = false
     end
+    
     result
   end
   

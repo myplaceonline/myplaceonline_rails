@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171219035425) do
+ActiveRecord::Schema.define(version: 20171219051456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -5154,6 +5154,23 @@ ActiveRecord::Schema.define(version: 20171219035425) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "site_invoices", force: :cascade do |t|
+    t.datetime "invoice_time"
+    t.decimal "invoice_amount", precision: 10, scale: 2
+    t.string "model_class"
+    t.integer "model_id"
+    t.integer "invoice_status"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_site_invoices_on_identity_id"
+  end
+
   create_table "skin_treatments", id: :serial, force: :cascade do |t|
     t.datetime "treatment_time"
     t.string "treatment_activity", limit: 255
@@ -7258,6 +7275,7 @@ ActiveRecord::Schema.define(version: 20171219035425) do
   add_foreign_key "sickness_files", "identity_files"
   add_foreign_key "sickness_files", "sicknesses"
   add_foreign_key "sicknesses", "identities"
+  add_foreign_key "site_invoices", "identities"
   add_foreign_key "skin_treatments", "identities", name: "skin_treatments_identity_id_fk"
   add_foreign_key "sleep_measurements", "identities", name: "sleep_measurements_identity_id_fk"
   add_foreign_key "snoozed_due_items", "calendars", name: "snoozed_due_items_calendar_id_fk"

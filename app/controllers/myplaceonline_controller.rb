@@ -915,7 +915,7 @@ class MyplaceonlineController < ApplicationController
       link: self.back_to_all_path,
       icon: "back"
     }
-    if @obj.respond_to?("is_archived?") && (!nested || !parent_model.is_a?(Array)) && !obj_locked?
+    if @obj.respond_to?("is_archived?") && (!nested || !parent_model.is_a?(Array)) && !obj_locked? && self.show_archive_button
       if @obj.is_archived?
         result << {
           title: I18n.t("myplaceonline.general.unarchive"),
@@ -944,7 +944,7 @@ class MyplaceonlineController < ApplicationController
         icon: "action"
       }
     end
-    if @obj.respond_to?("rating") && (!nested || !parent_model.is_a?(Array)) && !obj_locked?
+    if @obj.respond_to?("rating") && (!nested || !parent_model.is_a?(Array)) && !obj_locked? && self.show_favorite_button
       if @obj.rating.nil? || @obj.rating < Myp::MAX_RATING
         result << {
           title: I18n.t("myplaceonline.general.favorite"),
@@ -1094,6 +1094,14 @@ class MyplaceonlineController < ApplicationController
   end
   
   def show_favorites
+    true
+  end
+  
+  def show_favorite_button
+    true
+  end
+  
+  def show_archive_button
     true
   end
   

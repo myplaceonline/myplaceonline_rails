@@ -1,0 +1,2 @@
+module SiteInvoicesHelper
+end

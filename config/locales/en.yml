@@ -267,6 +267,7 @@ en:
       agents: "Agents"
       website_domain_properties: "Website Domain Properties"
       entered_invite_codes: "Invite Codes"
+      site_invoices: "Site Invoices"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -3994,3 +3995,12 @@ en:
       code_required: "This website requires an invite code to continue. Please enter it below."
     application_helper:
       additional_items: "%{count} additional items not shown."
+    site_invoices:
+      invoice_time: "Invoice Date/Time"
+      invoice_amount: "Amount"
+      invoice_status: "Status"
+      model_class: "Model Class"
+      model_id: "Model ID"
+      invoice_statuses:
+        pending: "Pending"
+        paid: "Paid"

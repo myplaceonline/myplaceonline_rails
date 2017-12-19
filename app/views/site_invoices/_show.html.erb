@@ -1,0 +1,6 @@
+<%= data_row(heading: t("myplaceonline.site_invoices.invoice_time"), content: obj.invoice_time) %>
+<%= data_row(heading: t("myplaceonline.site_invoices.invoice_amount"), content: obj.invoice_amount, currency: true) %>
+<%= data_row(heading: t("myplaceonline.site_invoices.invoice_status"), content: obj.invoice_status, enumeration: SiteInvoice::INVOICE_STATUSES) %>
+<%= data_row(heading: t("myplaceonline.site_invoices.model_class"), content: obj.model_class) %>
+<%= data_row(heading: t("myplaceonline.site_invoices.model_id"), content: obj.model_id) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>

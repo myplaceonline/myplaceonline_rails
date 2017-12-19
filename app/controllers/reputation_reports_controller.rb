@@ -81,6 +81,30 @@ class ReputationReportsController < MyplaceonlineController
     end
   end
 
+  def show_share
+    false
+  end
+  
+  def show_favorites
+    false
+  end
+  
+  def show_additional
+    false
+  end
+
+  def show_favorite_button
+    false
+  end
+
+  def show_archive_button
+    false
+  end
+  
+  def index_settings_link?
+    false
+  end
+  
   protected
     def deny_guest
       if current_user.guest?
