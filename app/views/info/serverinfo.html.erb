@@ -4,6 +4,7 @@
 
 <ul>
   <li>Website Domain: <%= Myp.website_domain.display %></li>
+  <li>Root URL: <%= Myp.root_url %></li>
   <% if !ENV["NODENAME"].blank? %>
   <li>Server: <%= ENV["NODENAME"] %></li>
   <% end %>

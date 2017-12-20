@@ -1,4 +1,5 @@
 class ReputationReportsController < MyplaceonlineController
+
   def may_upload
     true
   end
@@ -59,6 +60,12 @@ class ReputationReportsController < MyplaceonlineController
         name: @obj.agent.display,
       )
       
+      first_charge = nil
+      
+      if @obj.report_type == ReputationReport::REPORT_TYPE_SHAME
+        first_charge = @price * 0.5
+      end
+      
       site_invoice = SiteInvoice.create!(
         invoice_description: subject,
         invoice_time: User.current_user.time_now,
@@ -67,6 +74,7 @@ class ReputationReportsController < MyplaceonlineController
         model_class: model.name,
         model_id: @obj.id,
         identity_id: @obj.identity_id,
+        first_charge: first_charge,
       )
       
       link = site_invoice_pay_url(site_invoice)

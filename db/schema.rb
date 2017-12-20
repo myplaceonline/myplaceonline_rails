@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171219054303) do
+ActiveRecord::Schema.define(version: 20171220063811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4143,6 +4143,14 @@ ActiveRecord::Schema.define(version: 20171219054303) do
     t.index ["identity_id"], name: "index_patents_on_identity_id"
   end
 
+  create_table "paypal_web_profiles", force: :cascade do |t|
+    t.bigint "website_domain_id"
+    t.string "profile_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["website_domain_id"], name: "index_paypal_web_profiles_on_website_domain_id"
+  end
+
   create_table "periodic_payment_instance_files", id: :serial, force: :cascade do |t|
     t.integer "periodic_payment_instance_id"
     t.integer "identity_file_id"
@@ -5169,6 +5177,7 @@ ActiveRecord::Schema.define(version: 20171219054303) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "invoice_description"
+    t.decimal "first_charge", precision: 10, scale: 2
     t.index ["identity_id"], name: "index_site_invoices_on_identity_id"
   end
 
@@ -7141,6 +7150,7 @@ ActiveRecord::Schema.define(version: 20171219054303) do
   add_foreign_key "patent_files", "identity_files"
   add_foreign_key "patent_files", "patents"
   add_foreign_key "patents", "identities"
+  add_foreign_key "paypal_web_profiles", "website_domains"
   add_foreign_key "periodic_payment_instance_files", "identities"
   add_foreign_key "periodic_payment_instance_files", "identity_files"
   add_foreign_key "periodic_payment_instance_files", "periodic_payment_instances"

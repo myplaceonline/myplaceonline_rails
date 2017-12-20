@@ -21,6 +21,8 @@ class SiteInvoice < ApplicationRecord
     ["myplaceonline.site_invoices.invoice_statuses.pending", INVOICE_STATUS_PENDING],
     ["myplaceonline.site_invoices.invoice_statuses.paid", INVOICE_STATUS_PAID],
   ]
+  
+  PAYMENT_TYPE_PAYPAL = 0
 
   validates :invoice_description, presence: true
   validates :invoice_time, presence: true
@@ -37,6 +39,14 @@ class SiteInvoice < ApplicationRecord
       result = false
     else
       result = true
+    end
+    result
+  end
+  
+  def next_charge
+    result = self.invoice_amount
+    if !self.first_charge.nil?
+      result = self.first_charge
     end
     result
   end

@@ -1,4 +1,8 @@
+require "paypal-sdk-rest"
+
 class SiteInvoicesController < MyplaceonlineController
+  include PayPal::SDK::REST
+
   def use_bubble?
     true
   end
@@ -10,12 +14,79 @@ class SiteInvoicesController < MyplaceonlineController
   def pay
     set_obj
     
-    if request.post?
+    if params[:payment_type] == SiteInvoice::PAYMENT_TYPE_PAYPAL.to_s
       
-      redirect_to(
-        obj_path,
-        #flash: { notice: I18n.t("myplaceonline.reputation_reports.reporter_contacted") }
-      )
+      website_domain = Myp.website_domain
+      
+      paypal_web_profile = PaypalWebProfile.where(website_domain: website_domain).take
+      
+      if paypal_web_profile.nil?
+        web_profile = WebProfile.new({
+          name: website_domain.display,
+          presentation: {
+            brand_name: website_domain.display,
+            logo_image: "#{Myp.root_url}/api/header_icon.png",
+            locale_code: "US"
+          },
+          input_fields: {
+            allow_note: true,
+            no_shipping: 1
+          }
+        })
+        if web_profile.create
+          
+          if web_profile.error["name"] == "VALIDATION_ERROR"
+            web_profile = WebProfile.get_list.find{|x| x.name == website_domain.display}
+          end
+          
+          paypal_web_profile = PaypalWebProfile.create!(
+            website_domain_id: website_domain.id,
+            profile_id: web_profile.id
+          )
+        else
+          raise web_profile.error
+        end
+      end
+      
+      payment = Payment.new({
+        intent: "sale",
+        payer: {
+          payment_method: "paypal"
+        },
+        experience_profile_id: paypal_web_profile.profile_id,
+        redirect_urls: {
+          return_url: Myp.root_url,
+          cancel_url: site_invoice_pay_url(@obj)
+        },
+        transactions: [
+          {
+            item_list: {
+              items: [
+                {
+                  name: @obj.display,
+                  sku: @obj.id,
+                  price: @obj.next_charge.to_s,
+                  currency: "USD",
+                  quantity: 1
+                }
+              ]
+            },
+            amount: {
+              total: @obj.next_charge.to_s,
+              currency: "USD"
+            },
+            description: @obj.display
+          }
+        ]
+      })
+      
+      if payment.create
+        redirect_to(
+          payment.links.find{|x| x.method == "REDIRECT"}.href
+        )
+      else
+        raise payment.error
+      end
     end
   end
 

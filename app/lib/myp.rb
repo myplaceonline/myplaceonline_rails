@@ -1963,7 +1963,7 @@ module Myp
   def self.root_url
     Rails.application.routes.url_helpers.root_url(
       protocol: Rails.configuration.default_url_options[:protocol],
-      host: Rails.configuration.default_url_options[:host],
+      host: Rails.env.production? ? Myp.website_domain.main_domain : Rails.configuration.default_url_options[:host],
       port: Rails.configuration.default_url_options[:port]
     ).chomp('/')
   end
