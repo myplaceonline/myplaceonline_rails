@@ -66,4 +66,16 @@ class SiteInvoice < ApplicationRecord
   def paid?
     self.remaining == 0
   end
+  
+  def find_model_class
+    Object.const_get(self.model_class)
+  end
+  
+  def find_model_object
+    if !self.model_id.nil?
+      find_model_class.find(self.model_id.to_i)
+    else
+      nil
+    end
+  end
 end

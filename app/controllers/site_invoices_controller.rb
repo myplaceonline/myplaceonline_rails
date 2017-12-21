@@ -116,9 +116,16 @@ class SiteInvoicesController < MyplaceonlineController
       end
       @obj.payment_notes = @obj.payment_notes + User.current_user.time_now.to_s + "\n" + payment.inspect + "\n"
       @obj.save!
+      
+      redirect_path = obj_path
+      model_obj = @obj.find_model_object
+      if !model_obj.nil? && model_obj.respond_to?("paid")
+        paid_result = model_obj.paid(@obj)
+        redirect_path = paid_result[:redirect_path]
+      end
 
       redirect_to(
-        obj_path,
+        redirect_path,
         flash: {
           notice: I18n.t("myplaceonline.site_invoices.paid", amount: Myp.number_to_currency(total_paid))
         }

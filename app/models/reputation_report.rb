@@ -89,4 +89,10 @@ class ReputationReport < ApplicationRecord
   def allow_admin?
     true
   end
+  
+  def paid(site_invoice)
+    {
+      redirect_path: reputation_report_path(self)
+    }
+  end
 end
