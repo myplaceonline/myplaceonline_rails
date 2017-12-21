@@ -5,22 +5,26 @@
 <%= flashes! %>
 
 <%= data_row(heading: t("myplaceonline.site_invoices.invoice_description"), prefix_heading: true, content: @obj.invoice_description, wrap: false) %>
-<%= data_row(heading: t("myplaceonline.site_invoices.invoice_amount"), prefix_heading: true, content: @obj.invoice_amount, wrap: false, currency: true) %>
+<%= data_row(heading: t("myplaceonline.site_invoices.remaining"), prefix_heading: true, content: @obj.remaining, wrap: false, currency: true) %>
 
 <% if !@obj.first_charge.nil? %>
-  <%= data_row(heading: t("myplaceonline.site_invoices.first_charge"), prefix_heading: true, content: @obj.first_charge, wrap: false, currency: true) %>
+  <%= data_row(heading: t("myplaceonline.site_invoices.first_charge"), prefix_heading: true, content: @obj.next_charge, wrap: false, currency: true) %>
 <% end %>
 
-<p><%= t("myplaceonline.site_invoices.choose_payment") %></p>
+<% if !@obj.paid? %>
+  <hr />
+  
+  <p><%= t("myplaceonline.site_invoices.choose_payment") %></p>
 
-<ul data-role="listview" data-inset="true">
-  <li>
-    <%= link_to(site_invoice_pay_path(@obj, payment_type: SiteInvoice::PAYMENT_TYPE_PAYPAL), data: { ajax: false }) do %>
-      <%= image_tag("FatCow_Icons16x16/paypal_fulllogo.png", size: "16x16", class: "ui-li-icon") %>
-      <%= t("myplaceonline.site_invoices.pay_types.paypal") %>
-    <% end %>
-  </li>
-</ul>
+  <ul data-role="listview" data-inset="true">
+    <li>
+      <%= link_to(site_invoice_pay_path(@obj, payment_type: SiteInvoice::PAYMENT_TYPE_PAYPAL), class: "externallink", data: { ajax: false }) do %>
+        <%= image_tag("FatCow_Icons16x16/paypal_fulllogo.png", size: "16x16", class: "ui-li-icon") %>
+        <%= t("myplaceonline.site_invoices.pay_types.paypal") %>
+      <% end %>
+    </li>
+  </ul>
+<% end %>
 
 <%= form_tag(site_invoice_pay_path(@obj), method: :post) do %>
   <%=

@@ -63,7 +63,7 @@ class ReputationReportsController < MyplaceonlineController
       first_charge = nil
       
       if @obj.report_type == ReputationReport::REPORT_TYPE_SHAME
-        first_charge = @price * 0.5
+        first_charge = @price.to_f * 0.5
       end
       
       site_invoice = SiteInvoice.create!(

@@ -4004,6 +4004,7 @@ en:
       model_class: "Model Class"
       model_id: "Model ID"
       pay: "Pay"
+      remaining: "Remaining"
       choose_payment: "Choose a form of payment:"
       invoice_statuses:
         pending: "Pending"
@@ -4011,3 +4012,4 @@ en:
       pay_types:
         paypal: "PayPal (including Credit Cards)"
         other: "Other (Bitcoin, etc.)"
+      paid: "Successfully paid %{amount}"

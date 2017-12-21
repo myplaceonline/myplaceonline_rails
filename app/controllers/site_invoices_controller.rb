@@ -23,11 +23,15 @@ class SiteInvoicesController < MyplaceonlineController
       if paypal_web_profile.nil?
         web_profile = WebProfile.new({
           name: website_domain.display,
+
+          # https://developer.paypal.com/docs/api/payment-experience/#definition-presentation
           presentation: {
             brand_name: website_domain.display,
             logo_image: "#{Myp.root_url}/api/header_icon.png",
             locale_code: "US"
           },
+
+          # https://developer.paypal.com/docs/api/payment-experience/#definition-input_fields
           input_fields: {
             allow_note: true,
             no_shipping: 1
@@ -48,6 +52,7 @@ class SiteInvoicesController < MyplaceonlineController
         end
       end
       
+      # https://developer.paypal.com/docs/api/payments/#definition-payment
       payment = Payment.new({
         intent: "sale",
         payer: {
@@ -55,13 +60,16 @@ class SiteInvoicesController < MyplaceonlineController
         },
         experience_profile_id: paypal_web_profile.profile_id,
         redirect_urls: {
-          return_url: Myp.root_url,
+          return_url: site_invoice_paypal_complete_url(@obj),
           cancel_url: site_invoice_pay_url(@obj)
         },
         transactions: [
+          # https://developer.paypal.com/docs/api/payments/#definition-transaction
           {
+            reference_id: @obj.id.to_s,
             item_list: {
               items: [
+                # https://developer.paypal.com/docs/api/payments/#definition-item
                 {
                   name: @obj.display,
                   sku: @obj.id,
@@ -75,7 +83,7 @@ class SiteInvoicesController < MyplaceonlineController
               total: @obj.next_charge.to_s,
               currency: "USD"
             },
-            description: @obj.display
+            description: @obj.display,
           }
         ]
       })
@@ -87,6 +95,36 @@ class SiteInvoicesController < MyplaceonlineController
       else
         raise payment.error
       end
+    end
+  end
+
+  def paypal_complete
+    set_obj
+
+    # https://developer.paypal.com/docs/integration/direct/payments/paypal-payments/
+    payerID = params[:PayerID]
+    payment_id = params[:paymentId]
+    payment = Payment.find(payment_id)
+    if payment.execute(payer_id: payerID)
+      total_paid = payment.transactions[0].amount.total.to_f
+      if @obj.total_paid.nil?
+        @obj.total_paid = 0.0
+      end
+      @obj.total_paid = @obj.total_paid + total_paid
+      if @obj.payment_notes.nil?
+        @obj.payment_notes = ""
+      end
+      @obj.payment_notes = @obj.payment_notes + User.current_user.time_now.to_s + "\n" + payment.inspect + "\n"
+      @obj.save!
+
+      redirect_to(
+        obj_path,
+        flash: {
+          notice: I18n.t("myplaceonline.site_invoices.paid", amount: Myp.number_to_currency(total_paid))
+        }
+      )
+    else
+      raise "Could not complete PayPal transaction"
     end
   end
 

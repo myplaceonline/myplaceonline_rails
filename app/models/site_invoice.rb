@@ -35,7 +35,7 @@ class SiteInvoice < ApplicationRecord
 
   def read_only?(action: nil)
     case action
-    when :pay
+    when :pay, :paypal_complete
       result = false
     else
       result = true
@@ -45,9 +45,25 @@ class SiteInvoice < ApplicationRecord
   
   def next_charge
     result = self.invoice_amount
-    if !self.first_charge.nil?
-      result = self.first_charge
+    if self.total_paid.nil?
+      if !self.first_charge.nil?
+        result = self.first_charge
+      end
+    else
+      result = result - self.total_paid
     end
     result
+  end
+  
+  def remaining
+    result = self.invoice_amount
+    if !self.total_paid.nil?
+      result = result - self.total_paid
+    end
+    result
+  end
+  
+  def paid?
+    self.remaining == 0
   end
 end
