@@ -264,7 +264,12 @@ var myplaceonline = function(mymodule) {
   }
 
   function criticalError(msg, errorObj) {
-    msg = "Application Error. Please copy and report the following details to " + contact_email + ": " + msg;
+    msg = "Application Error. The details have been reported to us and we'll investigate. Details: " + msg;
+    
+    if (errorObj && errorObj.message) {
+      msg += " (" + errorObj.message + ")";
+    }
+    
     consoleLog(msg);
     if (debug && errorObj && errorObj.stack) {
       consoleLog(errorObj.stack);

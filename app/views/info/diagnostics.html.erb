@@ -16,6 +16,7 @@ function testMarkdown(html) {
   <li><a href="#" onclick="myplaceonline.setDebug(true); myplaceonline.consoleDir($.mobile.path.documentUrl); myplaceonline.showDebugConsole(); if (myplaceonline.scrollY) { myplaceonline.scrollY($('#debugConsole').offset().top); } else { alert('Scroll to the bottom'); }; return false;">Show Debug Console</a></li>
   <li><a href="#" onclick="myplaceonline.createSuccessNotification('Test'); return false;">Test Noty</a></li>
   <li><a href="#" onclick="alert('Expect no response, but debug is sent.');myplaceonline.foo(); return false;">Test Javascript Exception</a></li>
+  <li><a href="#" onclick="try { myplaceonline.foo(); } catch (e) { myplaceonline.criticalError('Test Javascript Catch', e); } return false;">Test Javascript Catch</a></li>
   <li>
     <%= link_to(info_diagnostics_serverinfo_path) do %>
       <%= t("myplaceonline.info.serverinfo") %>
