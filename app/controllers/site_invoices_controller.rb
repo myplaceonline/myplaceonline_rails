@@ -39,7 +39,7 @@ class SiteInvoicesController < MyplaceonlineController
         })
         if web_profile.create
           
-          if web_profile.error["name"] == "VALIDATION_ERROR"
+          if !web_profile.error.nil? && web_profile.error["name"] == "VALIDATION_ERROR"
             web_profile = WebProfile.get_list.find{|x| x.name == website_domain.display}
           end
           
