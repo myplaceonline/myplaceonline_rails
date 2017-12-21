@@ -184,16 +184,22 @@ class MyplaceonlineController < ApplicationController
   
   def new
     
+    Rails.logger.info{"MyplaceonlineController.new called with user: #{User.current_user}"}
+    
     if !allow_add
       raise "Unauthorized"
     end
     
+    Rails.logger.info{"MyplaceonlineController.new performing initial checks"}
+
     initial_checks
     
     if !insecure
+      Rails.logger.info{"MyplaceonlineController.new secure: checking password"}
       check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
     end
     if sensitive
+      Rails.logger.info{"MyplaceonlineController.new sensitive: checking password"}
       check_password
     end
     @myplet = params[:myplet]

@@ -8,10 +8,6 @@ class EnteredInviteCodesController < MyplaceonlineController
   end
   
   protected
-    def insecure
-      true
-    end
-    
     def obj_params
       params.require(:entered_invite_code).permit(
         :code,
