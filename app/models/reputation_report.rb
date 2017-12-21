@@ -15,10 +15,12 @@ class ReputationReport < ApplicationRecord
 
   REPORT_STATUS_PENDING_REVIEW = 0
   REPORT_STATUS_PENDING_PAYMENT_FROM_USER = 1
+  REPORT_STATUS_SITE_INVESTIGATING = 2
 
   REPORT_STATUSES = [
     ["myplaceonline.reputation_reports.report_statuses.pending_review", REPORT_STATUS_PENDING_REVIEW],
     ["myplaceonline.reputation_reports.report_statuses.pending_payment_from_user", REPORT_STATUS_PENDING_PAYMENT_FROM_USER],
+    ["myplaceonline.reputation_reports.report_statuses.site_investigating", REPORT_STATUS_SITE_INVESTIGATING],
   ]
 
   REPORT_TYPE_PRAISE = 0
@@ -75,8 +77,12 @@ class ReputationReport < ApplicationRecord
   def read_only?(action: nil)
     result = false
     
-    if !self.report_status.nil? || self.report_status == REPORT_STATUS_PENDING_PAYMENT_FROM_USER
-      result = true
+    if !self.report_status.nil? || self.report_status == REPORT_STATUS_PENDING_PAYMENT_FROM_USER ||
+        self.report_status == REPORT_STATUS_SITE_INVESTIGATING
+       
+      if action != :request_status
+        result = true
+      end
     end
     
     if User.current_user.admin?
@@ -91,6 +97,24 @@ class ReputationReport < ApplicationRecord
   end
   
   def paid(site_invoice)
+    
+    if self.report_status == ReputationReport::REPORT_STATUS_PENDING_PAYMENT_FROM_USER
+      self.report_status = ReputationReport::REPORT_STATUS_SITE_INVESTIGATING
+      self.save!
+
+      link = reputation_report_url(self)
+      body_plain = "[#{link}](#{link})"
+      body_html = Myp.markdown_to_html(body_plain)
+      
+      Myp.send_support_email_safe(
+        "Reputation Report Paid",
+        body_html,
+        body_plain,
+        request: MyplaceonlineExecutionContext.request,
+        html_comment_details: true
+      )
+    end
+    
     {
       redirect_path: reputation_report_path(self)
     }

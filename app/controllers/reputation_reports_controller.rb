@@ -13,7 +13,7 @@ class ReputationReportsController < MyplaceonlineController
   end
 
   def footer_items_show
-    result = super
+    result = []
     if @obj.allow_admin? && User.current_user.admin?
       result << {
         title: I18n.t("myplaceonline.reputation_reports.contact_reporter"),
@@ -26,7 +26,16 @@ class ReputationReportsController < MyplaceonlineController
         icon: "action"
       }
     end
-    result
+    
+    if @obj.current_user_owns?
+      result << {
+        title: I18n.t("myplaceonline.reputation_reports.request_status"),
+        link: reputation_report_request_status_path(@obj),
+        icon: "info"
+      }
+    end
+    
+    result + super
   end
   
   def contact_reporter
@@ -96,6 +105,27 @@ class ReputationReportsController < MyplaceonlineController
         flash: { notice: I18n.t("myplaceonline.reputation_reports.reporter_contacted") }
       )
     end
+  end
+  
+  def request_status
+    set_obj
+    
+    link = reputation_report_url(@obj)
+    body_plain = "[#{link}](#{link})"
+    body_html = Myp.markdown_to_html(body_plain)
+    
+    Myp.send_support_email_safe(
+      "Reputation Report Status Request",
+      body_html,
+      body_plain,
+      request: MyplaceonlineExecutionContext.request,
+      html_comment_details: true
+    )
+    
+    redirect_to(
+      obj_path,
+      flash: { notice: I18n.t("myplaceonline.reputation_reports.status_requested") }
+    )
   end
 
   def show_share
