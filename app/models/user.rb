@@ -137,76 +137,80 @@ class User < ApplicationRecord
 
   # User loaded from database
   after_initialize do |user|
-    User.post_initialize(user)
+    user.post_initialize
   end
 
-  def self.post_initialize(user)
-      
-    # If user.id is nil, then it's an anonymous user
-    if !user.id.nil? && user.current_identity_id.nil?
-      
-      MyplaceonlineExecutionContext.do_user(user) do
+  def post_initialize
+    if self.needs_identity?
+      MyplaceonlineExecutionContext.do_user(self) do
         # If the domain requires an invite code, then redirect
         website_domain = Myp.website_domain
         
-        create_identity = true
+        create_identity = self.check_invite_code(website_domain, false)
         
-        if Myp.requires_invite_code && !website_domain.allow_public?
-          Rails.logger.debug{"Domain requires invite code for user #{user}"}
-          
-          code = EnteredInviteCode.where(user: user, website_domain: website_domain).take
-
-          Rails.logger.debug{"User has code: #{code}"}
-
-          if code.nil?
-            if !MyplaceonlineExecutionContext.request_uri.nil? && !MyplaceonlineExecutionContext.request_uri.starts_with?("/entered_invite_codes/")
-              
-              Rails.logger.debug{"Asking for code from: #{MyplaceonlineExecutionContext.request_uri}"}
-              
-              raise Myp::SuddenRedirectError.new("/entered_invite_codes/new", I18n.t("myplaceonline.entered_invite_codes.code_required"))
-            else
-              create_identity = false
-            end
-          else
-            code.destroy!
-          end
-        end
-
         if create_identity
-          Rails.logger.debug{"Creating identity for #{user.id}"}
+          Rails.logger.debug{"Creating identity for #{self.id}"}
           
           # No identity for the current domain, so we create a default one. We can
           # also do any first-time initialization of the user here
-          user.transaction do
+          self.transaction do
             
-            if user.identities.count == 0
-              user.encrypt_by_default = true
-              user.save!
+            if self.identities.count == 0
+              self.encrypt_by_default = true
+              self.save!
             end
             
             # Create the identity
             new_identity = Identity.new
-            new_identity.user = user
-            new_identity.name = Identity.email_to_name(user.email)
+            new_identity.user = self
+            new_identity.name = Identity.email_to_name(self.email)
             new_identity.save!
 
-            User.post_initialize_identity(user, new_identity)
+            self.post_initialize_identity(new_identity)
           end
         end
       end
-
     end
   end
   
-  def self.post_initialize_identity(user, identity)
+  def needs_identity?
+    !self.id.nil? && self.current_identity_id.nil?
+  end
+  
+  def check_invite_code(website_domain, redirect)
+    create_identity = true
+    
+    if Myp.requires_invite_code && !website_domain.allow_public?
+      Rails.logger.debug{"Domain requires invite code for user #{self}"}
+      
+      code = EnteredInviteCode.where(user: self, website_domain: website_domain).take
+
+      Rails.logger.debug{"User has code: #{code}"}
+
+      if code.nil?
+        create_identity = false
+        if !MyplaceonlineExecutionContext.request_uri.nil? && !MyplaceonlineExecutionContext.request_uri.starts_with?("/entered_invite_codes/")
+          if redirect
+            raise Myp::SuddenRedirectError.new("/entered_invite_codes/new", I18n.t("myplaceonline.entered_invite_codes.code_required"))
+          end
+        end
+      else
+        code.destroy!
+      end
+    end
+    
+    create_identity
+  end
+  
+  def post_initialize_identity(identity)
     # We do a direct update because this identity doesn't own the website
     # domain object
     identity.update_column(:website_domain_id, Myp.website_domain.id)
     identity.reload
     
     MyplaceonlineExecutionContext.do_identity(identity) do
-      user.change_default_identity(identity)
-      user.identities.reload
+      self.change_default_identity(identity)
+      self.identities.reload
       
       identity.after_create
       

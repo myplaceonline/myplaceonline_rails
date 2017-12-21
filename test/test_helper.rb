@@ -27,7 +27,7 @@ class ActionController::TestCase
     @user = users(:user)
     @identity = identities(:identity)
     MyplaceonlineExecutionContext.do_user(@user) do
-      User.post_initialize_identity(@user, @identity)
+      @user.post_initialize_identity(@identity)
     end
     Rails.logger.info{"Post-initialized #{@user.inspect}"}
     ExecutionContext.clear

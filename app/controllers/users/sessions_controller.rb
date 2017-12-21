@@ -28,6 +28,11 @@ class Users::SessionsController < Devise::SessionsController
     
     #set_flash_message(:notice, :signed_in) if is_flashing_format?
     sign_in(resource_name, resource)
+    
+    if resource.needs_identity?
+      resource.check_invite_code(Myp.website_domain, true)
+    end
+    
     yield resource if block_given?
     if params[:redirect].blank?
       logged_in_path = after_sign_in_path_for(resource)

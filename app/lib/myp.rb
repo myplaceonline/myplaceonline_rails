@@ -1949,7 +1949,8 @@ module Myp
   end
   
   def self.requires_invite_code
-    Rails.env.production? && !Myp.website_domain.allow_public?
+    #Rails.env.production? && !Myp.website_domain.allow_public?
+    true
   end
   
   def self.sanitize_with_null_for_conditions(val)
