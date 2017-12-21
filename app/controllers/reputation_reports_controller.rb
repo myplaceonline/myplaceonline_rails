@@ -91,7 +91,7 @@ class ReputationReportsController < MyplaceonlineController
       message = I18n.t(
         "myplaceonline.reputation_reports.propose_price_body",
         name: @obj.agent.display,
-        cost: @price,
+        cost: Myp.number_to_currency(@price),
         details: @message,
         link: link,
       )
