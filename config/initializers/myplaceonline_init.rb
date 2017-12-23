@@ -1,3 +1,9 @@
+class Object
+  def is_true?
+    self == true || self.is_a?(TrueClass) || self == "1" || self == "true"
+  end
+end
+
 class String
   def to_bool
     return true if self == true || self =~ (/^(true|t|yes|y|1)$/i)
