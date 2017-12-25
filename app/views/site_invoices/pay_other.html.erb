@@ -8,12 +8,12 @@
 
 <ul>
   <li>
-    <%= t("myplaceonline.site_invoices.other_bitcoin", bitcoin_address: Myp.bitcoin_address(html: true)) %><br /><br />
-    <%= raw(t("myplaceonline.site_invoices.other_bitcoin_after")) %>
-  </li>
-  <li>
     <%= t("myplaceonline.site_invoices.other_address") %><br /><br />
     <%= raw(Myp.mailing_address(html: true)) %>
+  </li>
+  <li>
+    <%= t("myplaceonline.site_invoices.other_bitcoin", bitcoin_address: Myp.bitcoin_address(html: true)) %><br /><br />
+    <%= raw(t("myplaceonline.site_invoices.other_bitcoin_after")) %>
   </li>
 </ul>
 
