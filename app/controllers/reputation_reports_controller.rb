@@ -139,6 +139,14 @@ class ReputationReportsController < MyplaceonlineController
   def show_additional
     false
   end
+  
+  def show_add
+    false
+  end
+
+  def show_back_to_list
+    false
+  end
 
   def show_favorite_button
     false

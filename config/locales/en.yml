@@ -4020,5 +4020,5 @@ en:
       paid: "Successfully paid %{amount}"
       other_intro: "We accept these other types of payments:"
       other_bitcoin: "We accept Bitcoin at the following address: %{bitcoin_address}"
-      other_bitcoin_after: "When the amount due has entered the blockchain, please contact us using our <a href=\"/info/contact\">contact page</a>."
+      other_bitcoin_after: "After submitting the transfer, please contact us using our <a href=\"/info/contact\">contact page</a> and include any transaction details so that we can follow it until it enters the blockchain."
       other_address: "We accept checks at the following address:"

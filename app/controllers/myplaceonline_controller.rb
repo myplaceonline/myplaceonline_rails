@@ -708,6 +708,10 @@ class MyplaceonlineController < ApplicationController
     allow_add
   end
   
+  def show_back_to_list
+    true
+  end
+  
   def show_index_add
     allow_add
   end
@@ -916,11 +920,13 @@ class MyplaceonlineController < ApplicationController
         icon: "edit"
       }
     end
-    result << {
-      title: I18n.t("myplaceonline.general.back_to_list"),
-      link: self.back_to_all_path,
-      icon: "back"
-    }
+    if self.show_back_to_list
+      result << {
+        title: I18n.t("myplaceonline.general.back_to_list"),
+        link: self.back_to_all_path,
+        icon: "back"
+      }
+    end
     if @obj.respond_to?("is_archived?") && (!nested || !parent_model.is_a?(Array)) && !obj_locked? && self.show_archive_button
       if @obj.is_archived?
         result << {
