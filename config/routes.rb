@@ -461,6 +461,7 @@ Rails.application.routes.draw do
     ],
     site_invoices: [
       { instance: true, link: "pay" },
+      { instance: true, link: "pay_other" },
       { instance: true, link: "paypal_complete" },
     ],
     test_objects: [

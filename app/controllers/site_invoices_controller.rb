@@ -97,6 +97,10 @@ class SiteInvoicesController < MyplaceonlineController
       end
     end
   end
+  
+  def pay_other
+    set_obj
+  end
 
   def paypal_complete
     set_obj

@@ -676,8 +676,8 @@ module Myp
     result
   end
   
-  def self.website_domain_property(key)
-    result = nil
+  def self.website_domain_property(key, default_value: nil)
+    result = default_value
     website_domain = Myp.website_domain
     property = website_domain.website_domain_properties.find{|x| x.property_key == key}
     if !property.nil?
@@ -3457,6 +3457,14 @@ module Myp
       raise "Error #{child.status.exitstatus} spawning #{command_line}, stdout: #{child.out}, stderr: #{child.err}"
     end
     child
+  end
+  
+  def self.mailing_address(html: false)
+    Myp.website_domain_property("mailing_address", default_value: I18n.t("myplaceonline.general.mailing_address_unavailable"))
+  end
+  
+  def self.bitcoin_address(html: false)
+    Myp.website_domain_property("bitcoin_address", default_value: I18n.t("myplaceonline.general.bitcoin_address_unavailable"))
   end
   
   Rails.logger.info{"Myp static initialization ended"}

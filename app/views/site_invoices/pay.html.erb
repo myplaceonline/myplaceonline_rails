@@ -23,6 +23,12 @@
         <%= t("myplaceonline.site_invoices.pay_types.paypal") %>
       <% end %>
     </li>
+    <li>
+      <%= link_to(site_invoice_pay_other_path(@obj)) do %>
+        <%= image_tag("FatCow_Icons16x16/echeck.png", size: "16x16", class: "ui-li-icon") %>
+        <%= t("myplaceonline.site_invoices.pay_types.other") %>
+      <% end %>
+    </li>
   </ul>
 <% end %>
 

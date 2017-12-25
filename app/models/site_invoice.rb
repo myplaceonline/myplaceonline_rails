@@ -35,7 +35,7 @@ class SiteInvoice < ApplicationRecord
 
   def read_only?(action: nil)
     case action
-    when :pay, :paypal_complete
+    when :pay, :paypal_complete, :pay_other
       result = false
     else
       result = true

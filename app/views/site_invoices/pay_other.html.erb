@@ -1,0 +1,21 @@
+<% content_for :heading do -%><%= t("myplaceonline.site_invoices.pay_types.other") %><% end -%>
+
+<h1><%= t("myplaceonline.site_invoices.pay_types.other") %></h1>
+
+<%= flashes! %>
+
+<%= raw(t("myplaceonline.site_invoices.other_intro_html", bitcoin_address: Myp.bitcoin_address(html: true), mailing_address: Myp.mailing_address(html: true))) %>
+
+<%= form_tag(site_invoice_pay_path(@obj), method: :post) do %>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: site_invoice_pay_path(@obj),
+          icon: "back"
+        },
+      ]
+    })
+  %>
+<% end %>

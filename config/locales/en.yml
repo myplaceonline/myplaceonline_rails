@@ -510,6 +510,8 @@ en:
       made_public: "Now available publicly at <a href=\"%{link}\">%{link}</a>"
       remove_public: "Remove Public Permissions"
       removed_public: "Public permissions removed"
+      bitcoin_address_unavailable: "Bitcoin Address Unavailable"
+      mailing_address_unavailable: "Mailing Address Unavailable"
     site_contacts:
       name: "Name"
       email: "Email"
@@ -4014,5 +4016,6 @@ en:
         paid: "Paid"
       pay_types:
         paypal: "PayPal (including Credit Cards)"
-        other: "Other (Bitcoin, etc.)"
+        other: "Other (Check, Bitcoin, etc.)"
       paid: "Successfully paid %{amount}"
+      other_intro_html: "<ul><li>We accept Bitcoin at the following address: %{bitcoin_address}<br /><br />When the Bitcoin has cleared, please contact us using our <a href=\"/info/contact\">contact page</a>.</li><li>We accept checks at the following address:<br /><br />%{mailing_address}</li></ul>"
