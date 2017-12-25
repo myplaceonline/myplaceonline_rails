@@ -3460,11 +3460,16 @@ module Myp
   end
   
   def self.mailing_address(html: false)
-    Myp.website_domain_property("mailing_address", default_value: I18n.t("myplaceonline.general.mailing_address_unavailable"))
+    result = Myp.website_domain_property("mailing_address", default_value: I18n.t("myplaceonline.general.mailing_address_unavailable"))
+    if html
+      result = result.gsub("\n", "<br />\n")
+    end
+    result
   end
   
   def self.bitcoin_address(html: false)
-    Myp.website_domain_property("bitcoin_address", default_value: I18n.t("myplaceonline.general.bitcoin_address_unavailable"))
+    result = Myp.website_domain_property("bitcoin_address", default_value: I18n.t("myplaceonline.general.bitcoin_address_unavailable"))
+    result
   end
   
   Rails.logger.info{"Myp static initialization ended"}

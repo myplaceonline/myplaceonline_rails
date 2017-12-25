@@ -4018,4 +4018,7 @@ en:
         paypal: "PayPal (including Credit Cards)"
         other: "Other (Check, Bitcoin, etc.)"
       paid: "Successfully paid %{amount}"
-      other_intro_html: "<ul><li>We accept Bitcoin at the following address: %{bitcoin_address}<br /><br />When the Bitcoin has cleared, please contact us using our <a href=\"/info/contact\">contact page</a>.</li><li>We accept checks at the following address:<br /><br />%{mailing_address}</li></ul>"
+      other_intro: "We accept these other types of payments:"
+      other_bitcoin: "We accept Bitcoin at the following address: %{bitcoin_address}"
+      other_bitcoin_after: "When the Bitcoin has cleared, please contact us using our <a href=\"/info/contact\">contact page</a>."
+      other_address: "We accept checks at the following address:"

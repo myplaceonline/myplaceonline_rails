@@ -4,7 +4,18 @@
 
 <%= flashes! %>
 
-<%= raw(t("myplaceonline.site_invoices.other_intro_html", bitcoin_address: Myp.bitcoin_address(html: true), mailing_address: Myp.mailing_address(html: true))) %>
+<p><%= t("myplaceonline.site_invoices.other_intro") %></p>
+
+<ul>
+  <li>
+    <%= t("myplaceonline.site_invoices.other_bitcoin", bitcoin_address: Myp.bitcoin_address(html: true)) %><br /><br />
+    <%= raw(t("myplaceonline.site_invoices.other_bitcoin_after")) %>
+  </li>
+  <li>
+    <%= t("myplaceonline.site_invoices.other_address") %><br /><br />
+    <%= raw(Myp.mailing_address(html: true)) %>
+  </li>
+</ul>
 
 <%= form_tag(site_invoice_pay_path(@obj), method: :post) do %>
   <%=
