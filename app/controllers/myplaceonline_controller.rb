@@ -163,6 +163,7 @@ class MyplaceonlineController < ApplicationController
   end
 
   def show
+    deny_readonly_nonhtml
     if sensitive
       check_password
     end
@@ -1283,6 +1284,12 @@ class MyplaceonlineController < ApplicationController
     
     def deny_nonadmin
       if !current_user.admin?
+        raise CanCan::AccessDenied
+      end
+    end
+    
+    def deny_readonly_nonhtml
+      if !request.format.html? && !Ability.authorize(identity: User.current_user.domain_identity, subject: @obj, action: :edit, request: request)
         raise CanCan::AccessDenied
       end
     end

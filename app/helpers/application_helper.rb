@@ -470,7 +470,7 @@ module ApplicationHelper
       url_external_target_blank: false,
       url_linkclasses: nil,
       url_clipboard: nil,
-      show_clipboard_button: true,
+      show_clipboard_button: !User.current_user.guest?,
       url_innercontent: nil,
       htmlencode_content: true,
       htmlencode_heading: false,
