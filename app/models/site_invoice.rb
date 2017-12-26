@@ -68,7 +68,7 @@ class SiteInvoice < ApplicationRecord
   end
   
   def paid?
-    self.remaining == 0
+    self.remaining <= 0
   end
   
   def find_model_class

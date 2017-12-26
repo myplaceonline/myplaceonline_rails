@@ -265,7 +265,7 @@ module ApplicationHelper
     end
 
     if options[:reference_display_heading]
-      if content.respond_to?("current_user_owns?") && content.current_user_owns?
+      if (content.respond_to?("current_user_owns?") && content.current_user_owns?) || (User.current_user.admin? && options[:admin_details])
         if options[:reference_url].nil?
           url = send((options[:evaluated_class_name].nil? ? content.class.name : options[:evaluated_class_name]).underscore + "_path", content)
         else
@@ -497,6 +497,7 @@ module ApplicationHelper
       reference_display_heading: true,
       content_wrapper: nil,
       content_wrapper_attributes: {},
+      admin_details: false,
     }.merge(options)
     
     data_display_options = ExecutionContext[:data_display_options]

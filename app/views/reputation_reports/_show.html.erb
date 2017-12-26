@@ -2,7 +2,7 @@
   <%= data_row(heading: t("myplaceonline.reputation_reports.user"), content: obj.identity.user) %>
 <% end %>
 <%
-ExecutionContext.stack(data_display_options: { show_clipboard_button: false, reference_display_heading: false, show_reference_as_content: true }) do
+ExecutionContext.stack(data_display_options: { show_clipboard_button: false, reference_display_heading: User.current_user.admin?, show_reference_as_content: !User.current_user.admin?, admin_details: true }) do
 %>
   <%= data_row(heading: t("myplaceonline.reputation_reports.report_status"), content: obj.processed_report_status, enumeration: ReputationReport::REPORT_STATUSES, background_highlight: true) %>
   <%= data_row(heading: t("myplaceonline.reputation_reports.short_description"), content: obj.short_description) %>
