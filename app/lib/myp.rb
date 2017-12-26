@@ -2270,12 +2270,17 @@ module Myp
     if !parent_category.blank?
       parent_category_class = Object.const_get(Myp.category_to_model_name(parent_category))
       
+      Rails.logger.debug{"search_result parent_category class: #{parent_category_class}"}
+      
       search_results = search_results.map do |search_result|
         if parent_category_class.respond_to?("search_join")
           new_search_result = parent_category_class.joins(parent_category_class.search_join).where(parent_category_class.search_join.to_s.pluralize.to_sym => { parent_category_class.search_join_where => search_result.id } ).first
+        elsif parent_category_class.respond_to?("search_id_column")
+          new_search_result = parent_category_class.where(parent_category_class.search_id_column.to_s => search_result.id).first
         else
           new_search_result = parent_category_class.where(search_result.class.table_name.singularize + "_id" => search_result.id).first
         end
+        Rails.logger.debug{"search_result remapped for parent_category to: #{search_result.inspect}"}
         if !new_search_result.nil?
           new_search_result
         else

@@ -37,13 +37,27 @@ class ReputationReportsController < MyplaceonlineController
           icon: "shop"
         }
       end
+      
+      if !@obj.report_status.nil? && @obj.report_status == ReputationReport::REPORT_STATUS_SITE_INVESTIGATING
+        result << {
+          title: I18n.t("myplaceonline.reputation_reports.initial_decision"),
+          link: reputation_report_initial_decision_path(@obj),
+          icon: "action"
+        }
+      else
+        result << {
+          title: I18n.t("myplaceonline.reputation_reports.update_status"),
+          link: reputation_report_update_status_path(@obj),
+          icon: "check"
+        }
+      end
     end
     
     if @obj.current_user_owns?
       
       if @obj.waiting_for_payment?
         
-        if !invoice.nil?
+        if !invoice.nil? && !invoice.paid?
           result << {
             title: I18n.t("myplaceonline.site_invoices.pay"),
             link: site_invoice_pay_path(invoice),
@@ -57,6 +71,14 @@ class ReputationReportsController < MyplaceonlineController
         link: reputation_report_request_status_path(@obj),
         icon: "info"
       }
+      
+      if !@obj.report_status.nil? && @obj.report_status == ReputationReport::REPORT_STATUS_PENDING_INITIAL_DECISION_REVIEW
+        result << {
+          title: I18n.t("myplaceonline.reputation_reports.review"),
+          link: reputation_report_review_path(@obj),
+          icon: "search"
+        }
+      end
     end
     
     result + super
@@ -64,13 +86,14 @@ class ReputationReportsController < MyplaceonlineController
   
   def contact_reporter
     set_obj
+    deny_nonadmin
     
     @subject = params[:subject]
     @message = params[:message]
     
     if request.post?
       
-      @obj.identity.send_message(@message, @message, @subject, reply_to: User.current_user.email, bcc: User.current_user.email)
+      @obj.send_reporter_message(subject: @subject, body_short_markdown: @message, body_long_markdown: @message)
       
       redirect_to(
         obj_path,
@@ -81,6 +104,7 @@ class ReputationReportsController < MyplaceonlineController
   
   def propose_price
     set_obj
+    deny_nonadmin
     
     @price = params[:price]
     @message = params[:message]
@@ -120,10 +144,11 @@ class ReputationReportsController < MyplaceonlineController
         link: link,
       )
       
-      @obj.identity.send_message(message, message, subject, reply_to: User.current_user.email, bcc: User.current_user.email)
       @obj.report_status = ReputationReport::REPORT_STATUS_PENDING_PAYMENT_FROM_USER
       @obj.save!
       
+      @obj.send_reporter_message(subject: subject, body_short_markdown: message, body_long_markdown: message)
+
       redirect_to(
         obj_path,
         flash: { notice: I18n.t("myplaceonline.reputation_reports.reporter_contacted") }
@@ -135,16 +160,7 @@ class ReputationReportsController < MyplaceonlineController
     set_obj
     
     link = reputation_report_url(@obj)
-    body_plain = "[#{link}](#{link})"
-    body_html = Myp.markdown_to_html(body_plain)
-    
-    Myp.send_support_email_safe(
-      "Reputation Report Status Request",
-      body_html,
-      body_plain,
-      request: MyplaceonlineExecutionContext.request,
-      html_comment_details: true
-    )
+    @obj.send_admin_message(subject: "Reputation Report Status Request", body_markdown: "[#{link}](#{link})")
     
     redirect_to(
       obj_path,
@@ -152,6 +168,77 @@ class ReputationReportsController < MyplaceonlineController
     )
   end
 
+  def update_status
+    set_obj
+    deny_nonadmin
+    
+    if request.post?
+      @obj.report_status = params[:new_status]
+      @obj.save!
+      
+      redirect_to_obj
+    end
+  end
+  
+  def initial_decision
+    set_obj
+    deny_nonadmin
+    
+    if request.post?
+      
+      approved = Myp.param_bool(params, :approved)
+      @message = params[:message]
+      
+      @obj.report_status = ReputationReport::REPORT_STATUS_PENDING_INITIAL_DECISION_REVIEW
+      @obj.save!
+      
+      link = reputation_report_review_url(@obj)
+      subject = I18n.t(
+        "myplaceonline.reputation_reports.initial_decision_subject",
+        type: Myp.get_select_name(@obj.report_type, ReputationReport::REPORT_TYPES),
+        name: @obj.agent.display,
+      )
+      message = I18n.t(
+        approved ? "myplaceonline.reputation_reports.initial_decision_yes" : "myplaceonline.reputation_reports.initial_decision_no",
+        type: Myp.get_select_name(@obj.report_type, ReputationReport::REPORT_TYPES),
+        name: @obj.agent.display,
+        link: link,
+        details: @message,
+      )
+      
+      @obj.send_reporter_message(
+        subject: subject,
+        body_short_markdown: message,
+        body_long_markdown: message
+      )
+      
+      redirect_to_obj
+    end
+  end
+  
+  def review
+    set_obj
+    
+    if request.post?
+      proposed_changes = params[:proposed_changes]
+      if !proposed_changes.blank?
+        link = reputation_report_url(@obj)
+        @obj.send_admin_message(subject: "Reputation Report Proposed Changes", body_markdown: "Proposed Changes for [#{link}](#{link}):\n\n#{proposed_changes}")
+      end
+      
+      invoice = @obj.get_site_invoice
+      if !invoice.nil? && !invoice.paid?
+        @obj.report_status = ReputationReport::REPORT_STATUS_PENDING_FINAL_PAYMENT_FROM_USER
+        @obj.save!
+        
+        redirect_to site_invoice_pay_path(invoice)
+      else
+        @obj.publish
+        redirect_to_obj
+      end
+    end
+  end
+  
   def show_share
     false
   end

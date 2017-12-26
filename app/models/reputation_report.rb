@@ -16,11 +16,17 @@ class ReputationReport < ApplicationRecord
   REPORT_STATUS_PENDING_REVIEW = 0
   REPORT_STATUS_PENDING_PAYMENT_FROM_USER = 1
   REPORT_STATUS_SITE_INVESTIGATING = 2
+  REPORT_STATUS_PENDING_INITIAL_DECISION_REVIEW = 3
+  REPORT_STATUS_PUBLISHED = 4
+  REPORT_STATUS_PENDING_FINAL_PAYMENT_FROM_USER = 5
 
   REPORT_STATUSES = [
     ["myplaceonline.reputation_reports.report_statuses.pending_review", REPORT_STATUS_PENDING_REVIEW],
     ["myplaceonline.reputation_reports.report_statuses.pending_payment_from_user", REPORT_STATUS_PENDING_PAYMENT_FROM_USER],
     ["myplaceonline.reputation_reports.report_statuses.site_investigating", REPORT_STATUS_SITE_INVESTIGATING],
+    ["myplaceonline.reputation_reports.report_statuses.pending_initial_decision_review", REPORT_STATUS_PENDING_INITIAL_DECISION_REVIEW],
+    ["myplaceonline.reputation_reports.report_statuses.published", REPORT_STATUS_PUBLISHED],
+    ["myplaceonline.reputation_reports.report_statuses.pending_final_payment_from_user", REPORT_STATUS_PENDING_FINAL_PAYMENT_FROM_USER],
   ]
 
   REPORT_TYPE_PRAISE = 0
@@ -61,28 +67,23 @@ class ReputationReport < ApplicationRecord
     
     if self.report_status.nil?
       link = reputation_report_url(self)
-      body_plain = "[#{link}](#{link})"
-      body_html = Myp.markdown_to_html(body_plain)
-      
-      Myp.send_support_email_safe(
-        "New Reputation Report",
-        body_html,
-        body_plain,
-        request: MyplaceonlineExecutionContext.request,
-        html_comment_details: true
-      )
+      self.send_admin_message(subject: "New Reputation Report", body_markdown: "[#{link}](#{link})")
     end
   end
   
   def read_only?(action: nil)
-    result = false
+    result = true
     
-    if !self.report_status.nil? || self.report_status == REPORT_STATUS_PENDING_PAYMENT_FROM_USER ||
-        self.report_status == REPORT_STATUS_SITE_INVESTIGATING
-       
-      if action != :request_status
-        result = true
+    if !self.report_status.nil?
+      
+      if action == :request_status
+        result = false
       end
+      
+      if self.report_status == REPORT_STATUS_PENDING_INITIAL_DECISION_REVIEW && action == :review
+        result = false
+      end
+      
     end
     
     if User.current_user.admin?
@@ -105,18 +106,11 @@ class ReputationReport < ApplicationRecord
     if self.report_status == ReputationReport::REPORT_STATUS_PENDING_PAYMENT_FROM_USER
       self.report_status = ReputationReport::REPORT_STATUS_SITE_INVESTIGATING
       self.save!
-
-      link = reputation_report_url(self)
-      body_plain = "[#{link}](#{link})"
-      body_html = Myp.markdown_to_html(body_plain)
       
-      Myp.send_support_email_safe(
-        "Reputation Report Paid",
-        body_html,
-        body_plain,
-        request: MyplaceonlineExecutionContext.request,
-        html_comment_details: true
-      )
+      link = reputation_report_url(self)
+      self.send_admin_message(subject: "Reputation Report Paid", body_markdown: "[#{link}](#{link})")
+    elsif self.report_status == ReputationReport::REPORT_STATUS_PENDING_FINAL_PAYMENT_FROM_USER
+      self.publish
     end
     
     {
@@ -126,5 +120,45 @@ class ReputationReport < ApplicationRecord
   
   def get_site_invoice
     SiteInvoice.where(model_class: self.model_name.name, model_id: self.id).take
+  end
+  
+  def send_reporter_message(subject:, body_short_markdown:, body_long_markdown:)
+    long_signature = Myp.website_domain_property("long_signature")
+    if !long_signature.blank?
+      body_long_markdown += long_signature
+    end
+    short_signature = Myp.website_domain_property("short_signature")
+    if !short_signature.blank?
+      body_short_markdown += short_signature
+    end
+    self.identity.send_message(body_short_markdown, body_long_markdown, subject, bcc: User.current_user.email)
+  end
+  
+  def send_admin_message(subject:, body_markdown:)
+    body_html = Myp.markdown_to_html(body_markdown)
+    Myp.send_support_email_safe(
+      subject,
+      body_html,
+      body_markdown,
+      request: MyplaceonlineExecutionContext.request,
+      html_comment_details: true
+    )
+  end
+  
+  def publish
+    link = reputation_report_url(self)
+    self.send_admin_message(subject: "Reputation Report Fully Paid and Published", body_markdown: "[#{link}](#{link})")
+    
+    ActiveRecord::Base.transaction do
+      self.report_status = ReputationReport::REPORT_STATUS_PUBLISHED
+      self.is_public = true
+      self.save!
+      
+      self.agent.is_public = true
+      self.agent.save!
+      
+      self.agent.agent_identity.is_public = true
+      self.agent.agent_identity.save!
+    end
   end
 end

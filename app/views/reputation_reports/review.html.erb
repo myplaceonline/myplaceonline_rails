@@ -1,0 +1,44 @@
+<% content_for :heading do -%><%= t("myplaceonline.reputation_reports.review") %><% end -%>
+
+<h1><%= t("myplaceonline.reputation_reports.review") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag(reputation_report_review_path(@obj), method: :post) do %>
+
+  <p><%= t("myplaceonline.reputation_reports.review_intro") %></p>
+  
+  <hr />
+
+  <hr />
+
+  <%=
+    input_field(
+      type: Myp::FIELD_TEXT_AREA,
+      name: :proposed_changes,
+      placeholder: "myplaceonline.reputation_reports.proposed_changes",
+      collapsed: true,
+    )
+  %>
+
+  <script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+  </script>
+
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.reputation_reports.approve"), "data-icon" => "check", "data-iconpos" => "top", style: "background-color: green")
+        },
+        {
+          title: I18n.t("myplaceonline.general.cancel"),
+          link: controller.obj_path,
+          icon: "delete"
+        },
+      ]
+    })
+  %>
+<% end %>

@@ -696,12 +696,11 @@ class MyplaceonlineController < ApplicationController
   end
   
   def allow_add
-    true
+    !User.current_user.guest?
   end
   
   def allow_edit
-    
-    true
+    !User.current_user.guest?
   end
   
   def show_add
@@ -709,7 +708,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def show_back_to_list
-    true
+    !User.current_user.guest?
   end
   
   def show_index_add
@@ -789,7 +788,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def show_share
-    !nested
+    !nested && !User.current_user.guest?
   end
   
   def self.check_password(user, session, level: MyplaceonlineController::CHECK_PASSWORD_REQUIRED)
@@ -971,7 +970,7 @@ class MyplaceonlineController < ApplicationController
         }
       end
     end
-    if !obj_locked?
+    if !obj_locked? && show_delete
       result << {
         title: I18n.t('myplaceonline.general.delete'),
         link: self.obj_path,
@@ -1106,15 +1105,19 @@ class MyplaceonlineController < ApplicationController
   end
   
   def show_favorites
-    true
+    !User.current_user.guest?
   end
   
   def show_favorite_button
-    true
+    !User.current_user.guest?
   end
   
   def show_archive_button
-    true
+    !User.current_user.guest?
+  end
+  
+  def show_delete
+    !User.current_user.guest?
   end
   
   def show_additional

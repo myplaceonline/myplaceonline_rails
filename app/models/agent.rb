@@ -52,4 +52,8 @@ class Agent < ApplicationRecord
   def self.search_filters
     { identity_type: Identity::IDENTITY_TYPE_AGENT }
   end
+  
+  def self.search_id_column
+    :agent_identity_id
+  end
 end

@@ -98,7 +98,7 @@ class Ability
         result = true
       end
 
-      if !result && subject.respond_to?("is_public?") && subject.is_public?
+      if !result && subject.respond_to?("is_public?") && subject.is_public? && !valid_guest_actions.index(action).nil?
         Rails.logger.debug{"Ability.authorize is_public true"}
         result = true
       end

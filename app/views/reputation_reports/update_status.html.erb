@@ -1,0 +1,39 @@
+<% content_for :heading do -%><%= t("myplaceonline.reputation_reports.update_status") %><% end -%>
+
+<h1><%= t("myplaceonline.reputation_reports.update_status") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag(reputation_report_update_status_path(@obj), method: :post) do %>
+
+  <%=
+    input_field(
+      type: Myp::FIELD_SELECT,
+      name: :new_status,
+      placeholder: "myplaceonline.reputation_reports.new_status",
+      select_options: ReputationReport::REPORT_STATUSES,
+      autofocus: true,
+    )
+  %>
+
+  <script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+  </script>
+
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.general.submit"), "data-icon" => "action", "data-iconpos" => "top", style: "background-color: green")
+        },
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: controller.obj_path,
+          icon: "back"
+        },
+      ]
+    })
+  %>
+<% end %>
