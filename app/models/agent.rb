@@ -56,4 +56,23 @@ class Agent < ApplicationRecord
   def self.search_id_column
     :agent_identity_id
   end
+
+  def read_only?(action: nil)
+    result = false
+    
+    reputation_report = ReputationReport.where(agent_id: self.id).take
+    if !reputation_report.nil?
+      result = reputation_report.read_only?(action: action)
+    end
+    
+    result
+  end
+
+  def allow_admin?
+    if !ReputationReport.where(agent_id: self.id).take.nil?
+      true
+    else
+      false
+    end
+  end
 end
