@@ -224,17 +224,22 @@ class ReputationReportsController < MyplaceonlineController
       if !proposed_changes.blank?
         link = reputation_report_url(@obj)
         @obj.send_admin_message(subject: "Reputation Report Proposed Changes", body_markdown: "Proposed Changes for [#{link}](#{link}):\n\n#{proposed_changes}")
-      end
-      
-      invoice = @obj.get_site_invoice
-      if !invoice.nil? && !invoice.paid?
-        @obj.report_status = ReputationReport::REPORT_STATUS_PENDING_FINAL_PAYMENT_FROM_USER
+        
+        @obj.report_status = ReputationReport::REPORT_STATUS_SITE_INVESTIGATING
         @obj.save!
         
-        redirect_to site_invoice_pay_path(invoice)
-      else
-        @obj.publish
         redirect_to_obj
+      else
+        invoice = @obj.get_site_invoice
+        if !invoice.nil? && !invoice.paid?
+          @obj.report_status = ReputationReport::REPORT_STATUS_PENDING_FINAL_PAYMENT_FROM_USER
+          @obj.save!
+          
+          redirect_to site_invoice_pay_path(invoice)
+        else
+          @obj.publish
+          redirect_to_obj
+        end
       end
     end
   end
