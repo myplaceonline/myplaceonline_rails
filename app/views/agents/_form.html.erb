@@ -14,35 +14,8 @@
       type: Myp::FIELD_TEXT,
       name: :name,
       value: obj.agent_identity.name,
-      placeholder: "myplaceonline.contacts.name",
+      placeholder: "myplaceonline.agents.name",
       autofocus: autofocus
-    )
-  %>
-  <%=
-    input_field(
-      form: identity_fields,
-      type: Myp::FIELD_TEXT,
-      name: :middle_name,
-      value: obj.agent_identity.middle_name,
-      placeholder: "myplaceonline.contacts.middle_name",
-    )
-  %>
-  <%=
-    input_field(
-      form: identity_fields,
-      type: Myp::FIELD_TEXT,
-      name: :last_name,
-      value: obj.agent_identity.last_name,
-      placeholder: "myplaceonline.contacts.last_name",
-    )
-  %>
-  <%=
-    input_field(
-      form: identity_fields,
-      type: Myp::FIELD_TEXT,
-      name: :nickname,
-      value: obj.agent_identity.nickname,
-      placeholder: "myplaceonline.contacts.nickname",
     )
   %>
   <%=

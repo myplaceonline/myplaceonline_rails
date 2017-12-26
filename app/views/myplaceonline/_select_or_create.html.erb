@@ -69,6 +69,9 @@ end
 if !defined?(noresultsfunc)
   noresultsfunc = "null"
 end
+if !defined?(show_new_collapsible)
+  show_new_collapsible = true
+end
 
 random_name = SecureRandom.hex(10)
 new_item_collapsible_id = random_name + "_new_item"
@@ -174,7 +177,7 @@ Rails.logger.debug{"select_or_create context: #{f.object_name}[#{name}], collaps
       </div>
     <% end %>
     <% if allow_new %>
-      <div id="<%= new_item_collapsible_id %>" data-role="collapsible" data-collapsed="<%= !existingcollapsed %>">
+      <% if show_new_collapsible %><div id="<%= new_item_collapsible_id %>" data-role="collapsible" data-collapsed="<%= !existingcollapsed %>"><% end %>
         <%
           if existingobj_exists_permanent
             # There's an existing object selected, so don't fill in the form with those attributes but instead create
@@ -187,7 +190,7 @@ Rails.logger.debug{"select_or_create context: #{f.object_name}[#{name}], collaps
           if ExecutionContext.push_marker(:select_or_create_stack) < 5
         %>
             <%= f.fields_for name, existingobj do |sub_fields| %>
-              <h3><%= (edit ? t("myplaceonline.general.replace_with_new") : t("myplaceonline.general.new")) + " " + heading %></h3>
+              <% if show_new_collapsible %><h3><%= (edit ? t("myplaceonline.general.replace_with_new") : t("myplaceonline.general.new")) + " " + heading %></h3><% end %>
               <%= render partial: objform + ".html", locals: { f: sub_fields, obj: existingobj, edit: false, autofocus: autofocus, nested: true, simpleform: simpleform } %>
               <%
               if autofocus && !collapsed && existingcollapsed
@@ -205,7 +208,7 @@ Rails.logger.debug{"select_or_create context: #{f.object_name}[#{name}], collaps
           ExecutionContext.pop_marker(:select_or_create_stack)
         end
         %>
-      </div>
+      <% if show_new_collapsible %></div><% end %>
     <% end %>
   </div>
 </div>

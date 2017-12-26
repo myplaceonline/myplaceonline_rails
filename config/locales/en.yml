@@ -4025,3 +4025,7 @@ en:
       other_address: "We accept checks at the following address:"
       mark_paid: "Mark Paid"
       marked_paid: "Marked Paid"
+    agent_identities:
+      name: "Person or Group Name"
+    agents:
+      name: "Name"

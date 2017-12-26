@@ -30,23 +30,26 @@ class ReputationReportsController < MyplaceonlineController
           link: reputation_report_propose_price_path(@obj),
           icon: "action"
         }
+      else
+        result << {
+          title: I18n.t("myplaceonline.reputation_reports.invoice"),
+          link: site_invoice_path(invoice),
+          icon: "shop"
+        }
       end
-      
-      result << {
-        title: I18n.t("myplaceonline.reputation_reports.invoice"),
-        link: site_invoice_path(invoice),
-        icon: "shop"
-      }
     end
     
     if @obj.current_user_owns?
       
       if @obj.waiting_for_payment?
-        result << {
-          title: I18n.t("myplaceonline.site_invoices.pay"),
-          link: site_invoice_pay_path(invoice),
-          icon: "shop"
-        }
+        
+        if !invoice.nil?
+          result << {
+            title: I18n.t("myplaceonline.site_invoices.pay"),
+            link: site_invoice_pay_path(invoice),
+            icon: "shop"
+          }
+        end
       end
       
       result << {
