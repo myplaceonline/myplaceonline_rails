@@ -119,13 +119,20 @@ class SiteInvoicesController < MyplaceonlineController
         @obj.payment_notes = ""
       end
       @obj.payment_notes = @obj.payment_notes + User.current_user.time_now.to_s + "\n" + payment.inspect + "\n"
+      if @obj.remaining <= 0
+        @obj.invoice_status = SiteInvoice::INVOICE_STATUS_PAID
+      end
       @obj.save!
       
       redirect_path = obj_path
+      model_paid_result = self.model_paid
+      if !model_paid_result.nil?
+        redirect_path = model_paid_result[:redirect_path]
+      end
       model_obj = @obj.find_model_object
       if !model_obj.nil? && model_obj.respond_to?("paid")
         paid_result = model_obj.paid(@obj)
-        redirect_path = paid_result[:redirect_path]
+        
       end
 
       redirect_to(
@@ -138,15 +145,47 @@ class SiteInvoicesController < MyplaceonlineController
       raise "Could not complete PayPal transaction"
     end
   end
+  
+  def model_paid
+    model_obj = @obj.find_model_object
+    if !model_obj.nil? && model_obj.respond_to?("paid")
+      model_obj.paid(@obj)
+    else
+      nil
+    end
+  end
+  
+  def mark_paid
+    set_obj
+    deny_nonadmin
+    
+    @obj.total_paid = @obj.invoice_amount
+    @obj.invoice_status = SiteInvoice::INVOICE_STATUS_PAID
+    @obj.save!
+    
+    self.model_paid
+    
+    redirect_to(obj_path, flash: { notice: I18n.t("myplaceonline.site_invoices.marked_paid") })
+  end
 
   def footer_items_show
-    [
-      {
-        title: I18n.t("myplaceonline.site_invoices.pay"),
-        link: site_invoice_pay_path(@obj),
-        icon: "shop"
-      },
-    ] + super
+    result = []
+    
+    result << {
+      title: I18n.t("myplaceonline.site_invoices.pay"),
+      link: site_invoice_pay_path(@obj),
+      icon: "shop"
+    }
+    
+    if User.current_user.admin?
+      result << {
+        title: I18n.t("myplaceonline.site_invoices.mark_paid"),
+        link: site_invoice_mark_paid_path(@obj),
+        icon: "check"
+      }
+    end
+    
+    result + super
   end
   
   protected

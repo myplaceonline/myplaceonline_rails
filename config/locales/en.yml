@@ -3991,6 +3991,7 @@ en:
       user: "User"
       request_status: "Request Status"
       status_requested: "We'll respond to your status request soon"
+      invoice: "Invoice"
     website_domain_properties:
       property_key: "Key"
       property_value: "Value"
@@ -4022,3 +4023,5 @@ en:
       other_bitcoin: "We accept Bitcoin at the following address: %{bitcoin_address}"
       other_bitcoin_after: "After submitting the transfer, please contact us using our <a href=\"/info/contact\">contact page</a> and include any transaction details so that we can follow it until it enters the blockchain."
       other_address: "We accept checks at the following address:"
+      mark_paid: "Mark Paid"
+      marked_paid: "Marked Paid"

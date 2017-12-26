@@ -14,20 +14,41 @@ class ReputationReportsController < MyplaceonlineController
 
   def footer_items_show
     result = []
+    
+    invoice = @obj.get_site_invoice
+    
     if @obj.allow_admin? && User.current_user.admin?
       result << {
         title: I18n.t("myplaceonline.reputation_reports.contact_reporter"),
         link: reputation_report_contact_reporter_path(@obj),
         icon: "phone"
       }
+      
+      if invoice.nil?
+        result << {
+          title: I18n.t("myplaceonline.reputation_reports.propose_price"),
+          link: reputation_report_propose_price_path(@obj),
+          icon: "action"
+        }
+      end
+      
       result << {
-        title: I18n.t("myplaceonline.reputation_reports.propose_price"),
-        link: reputation_report_propose_price_path(@obj),
-        icon: "action"
+        title: I18n.t("myplaceonline.reputation_reports.invoice"),
+        link: site_invoice_path(invoice),
+        icon: "shop"
       }
     end
     
     if @obj.current_user_owns?
+      
+      if @obj.waiting_for_payment?
+        result << {
+          title: I18n.t("myplaceonline.site_invoices.pay"),
+          link: site_invoice_pay_path(invoice),
+          icon: "shop"
+        }
+      end
+      
       result << {
         title: I18n.t("myplaceonline.reputation_reports.request_status"),
         link: reputation_report_request_status_path(@obj),

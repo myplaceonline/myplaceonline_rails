@@ -463,6 +463,7 @@ Rails.application.routes.draw do
       { instance: true, link: "pay" },
       { instance: true, link: "pay_other" },
       { instance: true, link: "paypal_complete" },
+      { instance: true, link: "mark_paid" },
     ],
     test_objects: [
       { instance: false, link: "static_page" },

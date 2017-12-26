@@ -96,6 +96,10 @@ class ReputationReport < ApplicationRecord
     true
   end
   
+  def waiting_for_payment?
+    !self.report_status.nil? && self.report_status == REPORT_STATUS_PENDING_PAYMENT_FROM_USER
+  end
+  
   def paid(site_invoice)
     
     if self.report_status == ReputationReport::REPORT_STATUS_PENDING_PAYMENT_FROM_USER
@@ -118,5 +122,9 @@ class ReputationReport < ApplicationRecord
     {
       redirect_path: reputation_report_path(self)
     }
+  end
+  
+  def get_site_invoice
+    SiteInvoice.where(model_class: self.model_name.name, model_id: self.id).take
   end
 end

@@ -43,6 +43,10 @@ class SiteInvoice < ApplicationRecord
     result
   end
   
+  def allow_admin?
+    true
+  end
+
   def next_charge
     result = self.invoice_amount
     if self.total_paid.nil?
