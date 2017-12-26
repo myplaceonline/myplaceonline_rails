@@ -3461,6 +3461,10 @@ module Myp
   
   def self.mailing_address(html: false)
     result = Myp.website_domain_property("mailing_address", default_value: I18n.t("myplaceonline.general.mailing_address_unavailable"))
+    if !result.blank? && !ENV["MAILING_ADDRESS"].blank?
+      result = ENV["MAILING_ADDRESS"]
+    end
+
     if html
       result = result.gsub("\n", "<br />\n")
     end
@@ -3469,6 +3473,9 @@ module Myp
   
   def self.bitcoin_address(html: false)
     result = Myp.website_domain_property("bitcoin_address", default_value: I18n.t("myplaceonline.general.bitcoin_address_unavailable"))
+    if !result.blank? && !ENV["BITCOIN_ADDRESS"].blank?
+      result = ENV["BITCOIN_ADDRESS"]
+    end
     result
   end
   
