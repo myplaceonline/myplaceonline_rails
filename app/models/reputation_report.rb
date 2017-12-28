@@ -19,6 +19,7 @@ class ReputationReport < ApplicationRecord
   REPORT_STATUS_PENDING_INITIAL_DECISION_REVIEW = 3
   REPORT_STATUS_PUBLISHED = 4
   REPORT_STATUS_PENDING_FINAL_PAYMENT_FROM_USER = 5
+  REPORT_STATUS_UNPUBLISHED = 6
 
   REPORT_STATUSES = [
     ["myplaceonline.reputation_reports.report_statuses.pending_review", REPORT_STATUS_PENDING_REVIEW],
@@ -27,6 +28,7 @@ class ReputationReport < ApplicationRecord
     ["myplaceonline.reputation_reports.report_statuses.pending_initial_decision_review", REPORT_STATUS_PENDING_INITIAL_DECISION_REVIEW],
     ["myplaceonline.reputation_reports.report_statuses.published", REPORT_STATUS_PUBLISHED],
     ["myplaceonline.reputation_reports.report_statuses.pending_final_payment_from_user", REPORT_STATUS_PENDING_FINAL_PAYMENT_FROM_USER],
+    ["myplaceonline.reputation_reports.report_statuses.unpublished", REPORT_STATUS_UNPUBLISHED],
   ]
 
   REPORT_TYPE_PRAISE = 0
@@ -149,16 +151,30 @@ class ReputationReport < ApplicationRecord
     link = reputation_report_url(self)
     self.send_admin_message(subject: "Reputation Report Fully Paid and Published", body_markdown: "[#{link}](#{link})")
     
+    self.change_permissions(true)
+  end
+  
+  def unpublish
+    self.change_permissions(false)
+  end
+  
+  def change_permissions(is_public)
     ActiveRecord::Base.transaction do
-      self.report_status = ReputationReport::REPORT_STATUS_PUBLISHED
-      self.is_public = true
+      if is_public
+        self.report_status = ReputationReport::REPORT_STATUS_PUBLISHED
+      else
+        self.report_status = ReputationReport::REPORT_STATUS_UNPUBLISHED
+      end
+      self.is_public = is_public
       self.save!
-      
-      self.agent.is_public = true
-      self.agent.save!
-      
-      self.agent.agent_identity.is_public = true
-      self.agent.agent_identity.save!
+
+      if is_public || (!is_public && self.agent.public_reputation_reports.count == 0)
+        self.agent.is_public = is_public
+        self.agent.save!
+        
+        self.agent.agent_identity.is_public = is_public
+        self.agent.agent_identity.save!
+      end
     end
   end
 end

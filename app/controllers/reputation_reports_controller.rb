@@ -51,6 +51,14 @@ class ReputationReportsController < MyplaceonlineController
           icon: "check"
         }
       end
+      
+      if !@obj.report_status.nil? && @obj.report_status == ReputationReport::REPORT_STATUS_PUBLISHED
+        result << {
+          title: I18n.t("myplaceonline.reputation_reports.unpublish"),
+          link: reputation_report_unpublish_path(@obj),
+          icon: "back"
+        }
+      end
     end
     
     if @obj.current_user_owns?
@@ -244,6 +252,13 @@ class ReputationReportsController < MyplaceonlineController
     end
   end
   
+  def unpublish
+    set_obj
+    
+    @obj.unpublish
+    redirect_to_obj
+  end
+  
   def show_share
     false
   end
@@ -261,7 +276,7 @@ class ReputationReportsController < MyplaceonlineController
   end
 
   def show_back_to_list
-    false
+    User.current_user.admin?
   end
 
   def show_favorite_button

@@ -452,6 +452,7 @@ Rails.application.routes.draw do
       { instance: true, link: "update_status" },
       { instance: true, link: "initial_decision" },
       { instance: true, link: "review" },
+      { instance: true, link: "unpublish" },
     ],
     restaurants: [
       { instance: false, link: "random" }

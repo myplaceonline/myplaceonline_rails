@@ -3978,6 +3978,7 @@ en:
         pending_initial_decision_review: "Pending Decision Review by Reporter"
         pending_final_payment_from_user: "Approved. Pending Final Payment by Reporter"
         published: "Published"
+        unpublished: "Unpublished"
       report_type: "Type"
       report_types:
         praise: "Praise"
@@ -4006,6 +4007,7 @@ en:
       review: "Review"
       review_intro: "We reviewed your report and our decision is that it will be made public. Review what will be made public below, enter any proposed changes at the bottom, and click Approve:"
       approve: "Approve"
+      unpublish: "Unpublish"
     website_domain_properties:
       property_key: "Key"
       property_value: "Value"

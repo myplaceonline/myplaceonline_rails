@@ -75,4 +75,8 @@ class Agent < ApplicationRecord
       false
     end
   end
+  
+  def public_reputation_reports
+    ReputationReport.where(agent_id: self.id, is_public: true)
+  end
 end
