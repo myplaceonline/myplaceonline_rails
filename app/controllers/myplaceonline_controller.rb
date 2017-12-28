@@ -27,7 +27,7 @@ class MyplaceonlineController < ApplicationController
   end
 
   def index
-    initial_checks(edit: false)
+    initial_checks(edit: false, require_logged_in: false)
     
     if sensitive
       check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
@@ -36,7 +36,7 @@ class MyplaceonlineController < ApplicationController
     @myplet = params[:myplet]
     @archived = param_bool(:archived)
 
-    if has_category && params[:myplet].nil?
+    if has_category && params[:myplet].nil? && !current_user.guest?
       Myp.visit(current_user, category_name)
     end
     
@@ -729,7 +729,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def show_index_footer
-    true
+    !User.current_user.guest?
   end
   
   def how_many_top_items
@@ -780,6 +780,10 @@ class MyplaceonlineController < ApplicationController
     nil
   end
   
+  def search_public?
+    current_user.guest?
+  end
+  
   def share_permissions
     [Permission::ACTION_READ]
   end
@@ -803,11 +807,15 @@ class MyplaceonlineController < ApplicationController
   end
   
   def index_sorts
-    result = [
-      [I18n.t("myplaceonline.general.visit_count"), "#{model.table_name}.visit_count"],
-      [I18n.t("myplaceonline.general.created_at"), "#{model.table_name}.created_at"],
-      [I18n.t("myplaceonline.general.updated_at"), "#{model.table_name}.updated_at"],
-    ]
+    result = []
+
+    result << [I18n.t("myplaceonline.general.created_at"), "#{model.table_name}.created_at"]
+    result << [I18n.t("myplaceonline.general.updated_at"), "#{model.table_name}.updated_at"]
+    
+    if !current_user.guest?
+      result << [I18n.t("myplaceonline.general.visit_count"), "#{model.table_name}.visit_count"]
+    end
+
     ds = additional_sorts
     if !ds.nil?
       result = ds + result
@@ -901,7 +909,7 @@ class MyplaceonlineController < ApplicationController
         icon: "delete"
       }
     end
-    if self.index_settings_link?
+    if self.index_settings_link? && !current_user.guest?
       result << {
         title: I18n.t("myplaceonline.general.settings"),
         link: self.settings_path,
@@ -1086,12 +1094,15 @@ class MyplaceonlineController < ApplicationController
   end
   
   def index_filters
-    result = [
-      {
+    result = []
+    
+    if !current_user.guest?
+      result << {
         :name => :archived,
         :display => "myplaceonline.general.archived"
       }
-    ]
+    end
+    
     simple_index_filters.each do |simple_index_filter|
       result << {
         :name => simple_index_filter[:name],
@@ -1440,10 +1451,17 @@ class MyplaceonlineController < ApplicationController
     end
     
     def perform_all(initial_or:, additional:)
-      model.includes(all_includes).joins(all_joins).where(
-        "(#{model.table_name}.#{context_column} = ? #{initial_or}) #{additional}",
-        context_value
-      )
+      if !current_user.guest?
+        model.includes(all_includes).joins(all_joins).where(
+          "(#{model.table_name}.#{context_column} = ? #{initial_or}) #{additional}",
+          context_value
+        )
+      else
+        model.includes(all_includes).joins(all_joins).where(
+          "(#{model.table_name}.is_public = ? #{initial_or}) #{additional}",
+          true
+        )
+      end
     end
     
     def additional_items(strict: false)
@@ -1646,12 +1664,12 @@ class MyplaceonlineController < ApplicationController
       obj
     end
     
-    def initial_checks(edit: true)
+    def initial_checks(edit: true, require_logged_in: true)
       if edit && !allow_edit
         raise "Unauthorized"
       end
       
-      deny_guest
+      require_logged_in && deny_guest
       require_admin? && deny_nonadmin
       
       required_capabilities.each do |capability|

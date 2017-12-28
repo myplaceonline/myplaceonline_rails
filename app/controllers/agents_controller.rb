@@ -15,6 +15,14 @@ class AgentsController < MyplaceonlineController
     @obj.display
   end
 
+  def search_index_name
+    Identity.table_name
+  end
+  
+  def search_parent_category
+    Agent.name
+  end
+  
   protected
     def insecure
       true
