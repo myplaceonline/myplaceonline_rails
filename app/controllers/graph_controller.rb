@@ -2,7 +2,7 @@ class GraphController < MyplaceonlineController
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:display, :source_values]
 
   def display
-    if params[:hideform] == "true"
+    if params[:hideform].is_true?
       @hideform = true
     end
     categories = Myp.categories(User.current_user)

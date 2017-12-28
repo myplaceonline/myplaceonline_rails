@@ -99,7 +99,7 @@ class PasswordsController < MyplaceonlineController
       end
       last_row = last_row.to_i
       imported_count = 0
-      @encrypt = params[:encrypt] == "true"
+      @encrypt = params[:encrypt].is_true?
       
       inputs = [
                 :password_column, :service_name_column, :user_name_column,

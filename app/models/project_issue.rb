@@ -24,7 +24,7 @@ class ProjectIssue < ApplicationRecord
   def on_after_create
     if MyplaceonlineExecutionContext.handle_updates?
       if position.nil?
-        if self.top == "1"
+        if self.top.is_true?
           self.project.set_positions(top_id: self.id)
         else
           self.project.set_positions

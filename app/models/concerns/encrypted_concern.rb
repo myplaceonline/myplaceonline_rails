@@ -43,7 +43,7 @@ module EncryptedConcern extend ActiveSupport::Concern
         is_changed = self.send("#{name}_changed?")
         Rails.logger.debug{"EncryptedConcern '#{name}_finalize' called, encrypt: #{encrypt}, changed: #{is_changed}, self.encrypt: #{self.encrypt}"}
         if is_changed || (self.send("#{name}_encrypted?") && !self.encrypt) || (!self.send("#{name}_encrypted?") && self.encrypt)
-          do_encrypt = encrypt || self[:encrypt] == true || (self.respond_to?("encrypt") && (self.encrypt == "1" || self.encrypt == true))
+          do_encrypt = encrypt || self[:encrypt] == true || (self.respond_to?("encrypt") && self.encrypt.is_true?)
           Rails.logger.debug{"EncryptedConcern #{name}_finalize do_encrypt: #{do_encrypt}"}
           if do_encrypt
             new_encrypted_value = Myp.encrypt_with_user_password!(

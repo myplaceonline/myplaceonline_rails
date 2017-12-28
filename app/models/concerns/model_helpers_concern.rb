@@ -2,7 +2,7 @@ module ModelHelpersConcern extend ActiveSupport::Concern
   class_methods do
     def boolean_time_transfer(boolean_field_name, time_field_name)
       define_method("#{boolean_field_name}=") do |newvalue|
-        if newvalue == "1" || newvalue == true
+        if newvalue.is_true?
           self.send("#{time_field_name}=", Time.now)
         else
           self.send("#{time_field_name}=", nil)
@@ -26,7 +26,7 @@ module ModelHelpersConcern extend ActiveSupport::Concern
           if curvalue.nil?
             curvalue = 0
           end
-          if newvalue == "1"
+          if newvalue.is_true?
             curvalue |= bit_value.to_i
             self.send("#{storage_field_name}=", curvalue)
           else

@@ -186,7 +186,7 @@ module AllowExistingConcern extend ActiveSupport::Concern
               # Delete this key from the attributes we pass to super because we've already updated this child,
               # and we don't want super to munge this updates, only to add any new ones
               attrs_to_delete << key
-            elsif value["_destroy"] == "1"
+            elsif value["_destroy"].is_true?
               children_to_delete << x
               attrs_to_delete << key
             end

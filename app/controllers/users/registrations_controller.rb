@@ -454,7 +454,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @encrypt = current_user.encrypt_by_default
     Rails.logger.debug{"setting default encrypt to #{@encrypt}"}
     if !params[:encrypt].nil?
-      @encrypt = params[:encrypt] == "1" || params[:encrypt] == "true"
+      @encrypt = params[:encrypt].is_true?
       Rails.logger.debug{"submitted encrypt setting of #{@encrypt}"}
     end
     filename = "myplaceonline_export_" + DateTime.now.strftime("%Y%m%d-%H%M%S%z") + ".json"
