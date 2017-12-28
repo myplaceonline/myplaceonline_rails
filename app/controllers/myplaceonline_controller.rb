@@ -187,13 +187,13 @@ class MyplaceonlineController < ApplicationController
     
     Rails.logger.info{"MyplaceonlineController.new called with user: #{User.current_user}"}
     
+    initial_checks
+
     if !allow_add
       raise "Unauthorized"
     end
     
     Rails.logger.info{"MyplaceonlineController.new performing initial checks"}
-
-    initial_checks
     
     if !insecure
       Rails.logger.info{"MyplaceonlineController.new secure: checking password"}
