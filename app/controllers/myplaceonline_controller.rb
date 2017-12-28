@@ -171,8 +171,8 @@ class MyplaceonlineController < ApplicationController
     @nested_show = params[:nested_show]
     @nested_expanded = params[:nested_expanded]
     @nested_cell = params[:nested_cell]
-    before_show
     @myplet = params[:myplet]
+    before_show
     if @nested_show || @no_layout
       render action: "show", layout: "blank"
     elsif !@myplet
@@ -1271,6 +1271,18 @@ class MyplaceonlineController < ApplicationController
     else
       render action: "public", layout: "myplet"
     end
+  end
+  
+  def before_show_view
+    false
+  end
+  
+  def use_custom_heading
+    false
+  end
+  
+  def custom_heading
+    nil
   end
   
   protected

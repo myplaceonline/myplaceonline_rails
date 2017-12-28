@@ -1,0 +1,15 @@
+<p>
+  <%=
+    t(
+      "myplaceonline.agents.reputation_reports_summary",
+      shame: (@shames == 1 ? t("myplaceonline.general.is") : t("myplaceonline.general.are")) + " #{ActionController::Base.helpers.pluralize(@shames, t("myplaceonline.agents.report"))}",
+      praise: "#{ActionController::Base.helpers.pluralize(@praises, t("myplaceonline.agents.report"))}",
+      display: obj.display
+    )
+  %>
+</p>
+<% @reputation_reports.each do |reputation_report| %>
+  <div data-role="collapsible" data-collapsed="false">
+    <h3><%= reputation_report.report_type_s %></h3>
+  </div>
+<% end %>

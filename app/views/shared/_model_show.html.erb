@@ -8,7 +8,7 @@ locals = { obj: @obj }.merge(locals)
 <% if !@myplet %>
   <% if !@nested_show %>
     <% if !@myplet %>
-      <% content_for :heading do -%><%= page_heading(@obj, controller, prefix_category: controller.heading_prefix_category) %><% end -%>
+      <% content_for :heading do -%><%= controller.use_custom_heading ? controller.custom_heading : page_heading(@obj, controller, prefix_category: controller.heading_prefix_category) %><% end -%>
     <% end %>
 
     <% if controller.show_wrap %>
@@ -28,10 +28,8 @@ locals = { obj: @obj }.merge(locals)
             <h3><%= controller.display_obj(@obj) %></h3>
   <% end %>
 
-  <% if !@nested_show %>
-    <% if !@myplet %>
-      <%= content_for(:beforetable) %>
-    <% end %>
+  <% if !@nested_show && !@myplet && controller.before_show_view %>
+    <%= render partial: controller.paths_form_name + "/before_show", locals: locals %>
   <% end %>
 
     <% if controller.show_wrap %>

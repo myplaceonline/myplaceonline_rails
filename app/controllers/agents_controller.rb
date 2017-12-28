@@ -3,6 +3,18 @@ class AgentsController < MyplaceonlineController
     true
   end
 
+  def before_show_view
+    true
+  end
+
+  def use_custom_heading
+    true
+  end
+  
+  def custom_heading
+    @obj.display
+  end
+
   protected
     def insecure
       true
@@ -10,5 +22,11 @@ class AgentsController < MyplaceonlineController
 
     def obj_params
       params.require(:agent).permit(Agent.param_names)
+    end
+    
+    def before_show
+      @reputation_reports = @obj.public_reputation_reports
+      @praises = @reputation_reports.count{|x| x.report_type == ReputationReport::REPORT_TYPE_PRAISE}
+      @shames = @reputation_reports.count{|x| x.report_type == ReputationReport::REPORT_TYPE_SHAME}
     end
 end

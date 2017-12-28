@@ -176,5 +176,30 @@ class ReputationReport < ApplicationRecord
         self.agent.agent_identity.save!
       end
     end
+    
+    if is_public
+      link = agent_alias_url(self.agent)
+      subject = I18n.t(
+        "myplaceonline.reputation_reports.published_subject",
+        type: self.report_type_s,
+        name: self.agent.display,
+      )
+      message = I18n.t(
+        "myplaceonline.reputation_reports.published",
+        type: self.report_type_s,
+        name: self.agent.display,
+        link: link,
+      )
+      
+      self.send_reporter_message(
+        subject: subject,
+        body_short_markdown: message,
+        body_long_markdown: message
+      )
+    end
+  end
+  
+  def report_type_s
+    Myp.get_select_name(self.report_type, REPORT_TYPES)
   end
 end

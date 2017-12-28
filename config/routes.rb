@@ -199,6 +199,8 @@ Rails.application.routes.draw do
   match 'blogs/:id/upload_thumbnails/*uploadname', :to => 'blogs#upload_thumbnail', via: [:get], as: "blog_upload_thumbnail"
   match 'blogs/:id/page/*pagename', :to => 'blogs#page', via: [:get], as: "blog_page"
 
+  match 'person_or_group/:id', :to => 'agents#show', via: [:get], as: "agent_alias"
+
   additions = {
     beaches: [
       { instance: false, link: "map" }

@@ -512,6 +512,8 @@ en:
       removed_public: "Public permissions removed"
       bitcoin_address_unavailable: "Bitcoin Address Unavailable"
       mailing_address_unavailable: "Mailing Address Unavailable"
+      is: "is"
+      are: "are"
     site_contacts:
       name: "Name"
       email: "Email"
@@ -4008,6 +4010,8 @@ en:
       review_intro: "We reviewed your report and our decision is that it will be made public. Review what will be made public below, enter any proposed changes at the bottom, and click Approve:"
       approve: "Approve"
       unpublish: "Unpublish"
+      published_subject: "Report of %{type} for %{name} published!"
+      published: "Your report of %{type} for %{name} is now available publicly:\n\n[%{link}](%{link})\n\nThe report is now available for indexing by search engines. You may also share this link with others."
     website_domain_properties:
       property_key: "Key"
       property_value: "Value"
@@ -4045,3 +4049,5 @@ en:
       name: "Person or Group Name"
     agents:
       name: "Name"
+      report: "report"
+      reputation_reports_summary: "There %{shame} of shame and %{praise} of praise for %{display}:"
