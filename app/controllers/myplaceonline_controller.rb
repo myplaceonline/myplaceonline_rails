@@ -1665,12 +1665,13 @@ class MyplaceonlineController < ApplicationController
     end
     
     def initial_checks(edit: true, require_logged_in: true)
+      require_logged_in && deny_guest
+
+      require_admin? && deny_nonadmin
+
       if edit && !allow_edit
         raise "Unauthorized"
       end
-      
-      require_logged_in && deny_guest
-      require_admin? && deny_nonadmin
       
       required_capabilities.each do |capability|
         if !UserCapability.has_capability?(identity: User.current_user.current_identity, capability: capability)
