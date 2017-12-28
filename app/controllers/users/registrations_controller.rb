@@ -25,6 +25,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_permitted_parameters
   
   def new
+    flash.clear
     @agree_terms = params[:agree_terms]
     @tz = params[:tz]
     if request.post?
@@ -41,12 +42,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
       
       Rails.logger.info{"new resource: #{resource.inspect}"}
       
-      if @agree_terms == "true"
+      if @agree_terms.is_true?
         resource_saved = resource.save
         yield resource if block_given?
         if resource_saved
-          
-          flash.clear
           
           Myp.persist_password(params[:user][:password])
           

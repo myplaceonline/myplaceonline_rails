@@ -1637,7 +1637,7 @@ module ApplicationHelper
             field_attributes[:value] = "1"
             field_attributes[:name] = name
             field_attributes[:id] = name
-            if options[:value]
+            if options[:value].is_true?
               field_attributes[:checked] = "checked"
             end
             field_attributes[:placeholder] = nil
