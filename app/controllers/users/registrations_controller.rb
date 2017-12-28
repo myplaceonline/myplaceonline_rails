@@ -25,10 +25,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_permitted_parameters
   
   def new
-    flash.clear
     @agree_terms = params[:agree_terms]
     @tz = params[:tz]
     if request.post?
+      flash.clear
       build_resource(sign_up_params)
       if !@tz.blank?
         t = ActiveSupport::TimeZone[@tz]
