@@ -71,6 +71,12 @@ class ReputationReportsController < MyplaceonlineController
         link: reputation_report_reputation_report_messages_path(@obj),
         icon: "bars"
       }
+
+      result << {
+        title: I18n.t("myplaceonline.reputation_reports.ensure_agent_contact"),
+        link: reputation_report_ensure_agent_contact_path(@obj),
+        icon: "user"
+      }
     end
     
     if @obj.current_user_owns?
@@ -309,6 +315,32 @@ class ReputationReportsController < MyplaceonlineController
   
   def index_settings_link?
     false
+  end
+  
+  def ensure_agent_contact
+    set_obj
+    deny_nonadmin
+    
+    if Contact.where(contact_identity_id: @obj.agent.agent_identity_id).take.nil?
+      ActiveRecord::Base.transaction do
+        contact = Contact.create!(
+          identity: @obj.identity,
+          contact_identity_id: @obj.agent.agent_identity_id,
+        )
+        
+        Rails.logger.debug{"ReputationReportsController.ensure_agent_contact contact: #{contact.inspect}"}
+        
+        Permission.create!(
+          action: Permission::ACTION_MANAGE,
+          subject_class: Contact.name.underscore.pluralize,
+          subject_id: contact.id,
+          identity_id: User.current_user.domain_identity,
+          user_id: User.current_user.id,
+        )
+      end
+    end
+    
+    redirect_to_obj
   end
   
   protected

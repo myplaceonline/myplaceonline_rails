@@ -455,6 +455,7 @@ Rails.application.routes.draw do
       { instance: true, link: "initial_decision" },
       { instance: true, link: "review" },
       { instance: true, link: "unpublish" },
+      { instance: true, link: "ensure_agent_contact" },
       {
         subresources: true,
         name: :reputation_report_messages

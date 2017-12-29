@@ -41,7 +41,7 @@ class Permission < ApplicationRecord
   child_property(name: :user)
 
   validate do
-    if !subject_id.nil? && Myp.find_existing_object(Myp.category_to_model_name(subject_class), subject_id).nil?
+    if !subject_id.nil? && Myp.find_existing_object(Myp.category_to_model_name(subject_class), subject_id, !User.current_user.admin?).nil?
       errors.add(:subject_id, I18n.t("myplaceonline.permissions.invalid_id"))
     end
   end

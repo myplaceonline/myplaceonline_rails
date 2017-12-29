@@ -4017,6 +4017,7 @@ en:
       messages: "Messages"
       add_message: "Add Message"
       administrative_contact: "Administrative Contact"
+      ensure_agent_contact: "Ensure Contact"
     website_domain_properties:
       property_key: "Key"
       property_value: "Value"
