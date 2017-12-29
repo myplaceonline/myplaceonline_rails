@@ -135,7 +135,34 @@ class ReputationReport < ApplicationRecord
     if !short_signature.blank?
       body_short_markdown += short_signature
     end
-    self.identity.send_message(body_short_markdown, body_long_markdown, subject, bcc: User.current_user.email)
+    
+    ActiveRecord::Base.transaction do
+      
+      message = Message.create!(
+        identity: self.identity,
+        body: body_short_markdown,
+        long_body: body_long_markdown,
+        send_preferences: Message::SEND_PREFERENCE_DEFAULT,
+        message_category: I18n.t("myplaceonline.reputation_reports.administrative_contact"),
+        subject: subject,
+        message_contacts: [
+          MessageContact.new(
+            identity: self.identity,
+            contact: self.identity.ensure_contact!,
+          )
+        ]
+      )
+      
+      ReputationReportMessage.create!(
+        identity: self.identity,
+        reputation_report: self,
+        message: message,
+      )
+      
+      message.process
+    end
+    
+    #self.identity.send_message(body_short_markdown, body_long_markdown, subject, bcc: User.current_user.email)
   end
   
   def send_admin_message(subject:, body_markdown:)

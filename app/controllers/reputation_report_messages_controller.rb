@@ -33,12 +33,30 @@ class ReputationReportMessagesController < MyplaceonlineController
   
   def after_update_redirect
     @obj.message.process
+    ensure_permissions
     super
   end
   
   def after_create_redirect
     @obj.message.process
+    ensure_permissions
     super
+  end
+  
+  def ensure_permissions
+    if User.current_user.admin?
+      @obj.message.message_contacts.each do |message_contact|
+        if Permission.where(subject_class: Contact.name.underscore.pluralize, subject_id: message_contact.contact.id).take.nil?
+          Permission.create!(
+            action: Permission::ACTION_MANAGE,
+            subject_class: Contact.name.underscore.pluralize,
+            subject_id: message_contact.contact.id,
+            identity_id: User.current_user.domain_identity,
+            user_id: User.current_user.id,
+          )
+        end
+      end
+    end
   end
   
   def use_bubble?
@@ -50,6 +68,10 @@ class ReputationReportMessagesController < MyplaceonlineController
   end
 
   def show_index_add
+    User.current_user.admin?
+  end
+
+  def show_add
     User.current_user.admin?
   end
 

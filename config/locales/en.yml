@@ -4016,6 +4016,7 @@ en:
       message: "Message"
       messages: "Messages"
       add_message: "Add Message"
+      administrative_contact: "Administrative Contact"
     website_domain_properties:
       property_key: "Key"
       property_value: "Value"

@@ -98,6 +98,15 @@ class Identity < ApplicationRecord
         result.save!
       end
     end
+    
+    if !user.nil? && self.identity_emails.count == 0
+      IdentityEmail.create!(
+        parent_identity_id: self.id,
+        identity_id: self.id,
+        email: user.email,
+      )
+    end
+    
     result
   end
   
