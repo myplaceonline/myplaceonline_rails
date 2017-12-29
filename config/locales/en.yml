@@ -268,6 +268,7 @@ en:
       website_domain_properties: "Website Domain Properties"
       entered_invite_codes: "Invite Codes"
       site_invoices: "Site Invoices"
+      reputation_report_messages: "Messages"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -4012,6 +4013,9 @@ en:
       unpublish: "Unpublish"
       published_subject: "Report of %{type} for %{name} published!"
       published: "Your report of %{type} for %{name} is now available publicly:\n\n[%{link}](%{link})\n\nThe report is now available for indexing by search engines. You may also share this link with others."
+      message: "Message"
+      messages: "Messages"
+      add_message: "Add Message"
     website_domain_properties:
       property_key: "Key"
       property_value: "Value"
@@ -4051,3 +4055,6 @@ en:
       name: "Name"
       report: "report"
       reputation_reports_summary: "There %{shame} of shame and %{praise} of praise for %{display}:"
+    reputation_report_messages:
+      message: "Message"
+      back: "Report"

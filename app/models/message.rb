@@ -45,35 +45,37 @@ class Message < ApplicationRecord
   end
   
   def process
-    case self.send_preferences
-    when SEND_PREFERENCE_EMAIL_OR_TEXT_PREFER_EMAIL
-      Rails.logger.debug{"Message.process e_or_t_email"}
-      contacts_found = self.do_send_emails
-      Rails.logger.debug{"Message.process emails found: #{contacts_found.length}"}
-      contacts_found = self.do_send_texts(skip_contacts: contacts_found)
-      Rails.logger.debug{"Message.process texts found: #{contacts_found.length}"}
-    when SEND_PREFERENCE_EMAIL_OR_TEXT_PREFER_TEXT
-      Rails.logger.debug{"Message.process e_or_t_t"}
-      contacts_found = self.do_send_texts
-      Rails.logger.debug{"Message.process texts found: #{contacts_found.length}"}
-      contacts_found = self.do_send_emails(skip_contacts: contacts_found)
-      Rails.logger.debug{"Message.process emails found: #{contacts_found.length}"}
-    when SEND_PREFERENCE_EMAIL_AND_TEXT
-      Rails.logger.debug{"Message.process e_and_t"}
-      contacts_found = self.do_send_emails
-      Rails.logger.debug{"Message.process emails found: #{contacts_found.length}"}
-      contacts_found = self.do_send_texts
-      Rails.logger.debug{"Message.process texts found: #{contacts_found.length}"}
-    when SEND_PREFERENCE_EMAIL
-      Rails.logger.debug{"Message.process e"}
-      contacts_found = self.do_send_emails
-      Rails.logger.debug{"Message.process emails found: #{contacts_found.length}"}
-    when SEND_PREFERENCE_TEXT
-      Rails.logger.debug{"Message.process t"}
-      contacts_found = self.do_send_texts
-      Rails.logger.debug{"Message.process texts found: #{contacts_found.length}"}
-    else
-      raise "TODO"
+    if !self.draft
+      case self.send_preferences
+      when SEND_PREFERENCE_EMAIL_OR_TEXT_PREFER_EMAIL
+        Rails.logger.debug{"Message.process e_or_t_email"}
+        contacts_found = self.do_send_emails
+        Rails.logger.debug{"Message.process emails found: #{contacts_found.length}"}
+        contacts_found = self.do_send_texts(skip_contacts: contacts_found)
+        Rails.logger.debug{"Message.process texts found: #{contacts_found.length}"}
+      when SEND_PREFERENCE_EMAIL_OR_TEXT_PREFER_TEXT
+        Rails.logger.debug{"Message.process e_or_t_t"}
+        contacts_found = self.do_send_texts
+        Rails.logger.debug{"Message.process texts found: #{contacts_found.length}"}
+        contacts_found = self.do_send_emails(skip_contacts: contacts_found)
+        Rails.logger.debug{"Message.process emails found: #{contacts_found.length}"}
+      when SEND_PREFERENCE_EMAIL_AND_TEXT
+        Rails.logger.debug{"Message.process e_and_t"}
+        contacts_found = self.do_send_emails
+        Rails.logger.debug{"Message.process emails found: #{contacts_found.length}"}
+        contacts_found = self.do_send_texts
+        Rails.logger.debug{"Message.process texts found: #{contacts_found.length}"}
+      when SEND_PREFERENCE_EMAIL
+        Rails.logger.debug{"Message.process e"}
+        contacts_found = self.do_send_emails
+        Rails.logger.debug{"Message.process emails found: #{contacts_found.length}"}
+      when SEND_PREFERENCE_TEXT
+        Rails.logger.debug{"Message.process t"}
+        contacts_found = self.do_send_texts
+        Rails.logger.debug{"Message.process texts found: #{contacts_found.length}"}
+      else
+        raise "TODO"
+      end
     end
   end
   

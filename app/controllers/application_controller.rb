@@ -61,7 +61,7 @@ class ApplicationController < ActionController::Base
     end
     
     begin
-      Rails.logger.warn{"ApplicationController.catchall exception details: #{Myp.error_details(exception)} #{Thread.current[:debug]}"}
+      Rails.logger.warn{"ApplicationController.catchall exception details: #{Myp.error_details(exception)}"}
     rescue => e
     end
     

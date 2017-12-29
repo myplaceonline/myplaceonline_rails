@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171221025508) do
+ActiveRecord::Schema.define(version: 20171229033634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4939,6 +4939,19 @@ ActiveRecord::Schema.define(version: 20171221025508) do
     t.index ["reputation_report_id"], name: "index_reputation_report_files_on_reputation_report_id"
   end
 
+  create_table "reputation_report_messages", force: :cascade do |t|
+    t.bigint "reputation_report_id"
+    t.bigint "message_id"
+    t.bigint "identity_id"
+    t.datetime "archived"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_reputation_report_messages_on_identity_id"
+    t.index ["message_id"], name: "index_reputation_report_messages_on_message_id"
+    t.index ["reputation_report_id"], name: "index_reputation_report_messages_on_reputation_report_id"
+  end
+
   create_table "reputation_reports", force: :cascade do |t|
     t.string "short_description"
     t.text "story"
@@ -7257,6 +7270,9 @@ ActiveRecord::Schema.define(version: 20171221025508) do
   add_foreign_key "reputation_report_files", "identities"
   add_foreign_key "reputation_report_files", "identity_files"
   add_foreign_key "reputation_report_files", "reputation_reports"
+  add_foreign_key "reputation_report_messages", "identities"
+  add_foreign_key "reputation_report_messages", "messages"
+  add_foreign_key "reputation_report_messages", "reputation_reports"
   add_foreign_key "reputation_reports", "agents"
   add_foreign_key "reputation_reports", "identities"
   add_foreign_key "restaurant_pictures", "identities"

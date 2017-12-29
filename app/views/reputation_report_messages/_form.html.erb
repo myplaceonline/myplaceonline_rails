@@ -1,0 +1,14 @@
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :message,
+    existingobj: obj.message,
+    heading: t("myplaceonline.reputation_reports.message"),
+    objform: "messages/form",
+    existingobjurl: "message_path",
+    searchurl: "/messages.json?perpage=0",
+    edit: edit,
+    autofocus: autofocus,
+    expanded_if_nil: true,
+  }
+%>

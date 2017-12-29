@@ -159,6 +159,7 @@ class MyplaceonlineController < ApplicationController
     if nested
       parent_id = parent_model_last.table_name.singularize.downcase + "_id"
       @parent = Myp.find_existing_object(parent_model_last, params[parent_id], false)
+      Rails.logger.debug{"MyplaceonlineController.set_parent parent: #{@parent.inspect}"}
     end
   end
 
@@ -1421,25 +1422,21 @@ class MyplaceonlineController < ApplicationController
 
     # strict: true allows getting all items (usually for a total count)
     def all(strict: false)
-      if (current_user.admin? && self.admin_sees_all?) || self.nonadmin_sees_all?
-        model.all.includes(all_includes).joins(all_joins)
-      else
-        initial_or = ""
-        can_read_others = find_explicit_items
-        if !can_read_others.blank?
-          initial_or = " or #{model.table_name}.id in (#{can_read_others.join(",")})"
-        end
-        additional = all_additional_sql(strict)
-        if additional.nil?
-          additional = ""
-        end
-        if nested
-          parent_id = parent_model_last.table_name.singularize.downcase + "_id"
-          additional += " AND #{model.table_name}.#{parent_id} = #{ActiveRecord::Base.connection.quote(params[parent_id.to_sym])}"
-        end
-        Rails.logger.debug{"all query strict: #{strict}, additional: #{additional}"}
-        perform_all(initial_or: initial_or, additional: additional)
+      initial_or = ""
+      can_read_others = find_explicit_items
+      if !can_read_others.blank?
+        initial_or = " or #{model.table_name}.id in (#{can_read_others.join(",")})"
       end
+      additional = all_additional_sql(strict)
+      if additional.nil?
+        additional = ""
+      end
+      if nested
+        parent_id = parent_model_last.table_name.singularize.downcase + "_id"
+        additional += " AND #{model.table_name}.#{parent_id} = #{ActiveRecord::Base.connection.quote(params[parent_id.to_sym])}"
+      end
+      Rails.logger.debug{"all query strict: #{strict}, additional: #{additional}"}
+      perform_all(initial_or: initial_or, additional: additional)
     end
     
     def context_column
@@ -1451,15 +1448,19 @@ class MyplaceonlineController < ApplicationController
     end
     
     def perform_all(initial_or:, additional:)
-      if !current_user.guest?
-        model.includes(all_includes).joins(all_joins).where(
-          "(#{model.table_name}.#{context_column} = ? #{initial_or}) #{additional}",
-          context_value
-        )
-      else
+      if current_user.guest?
         model.includes(all_includes).joins(all_joins).where(
           "(#{model.table_name}.is_public = ? #{initial_or}) #{additional}",
           true
+        )
+      elsif (current_user.admin? && self.admin_sees_all?) || self.nonadmin_sees_all?
+        model.includes(all_includes).joins(all_joins).where(
+          "(true #{initial_or}) #{additional}"
+        )
+      else
+        model.includes(all_includes).joins(all_joins).where(
+          "(#{model.table_name}.#{context_column} = ? #{initial_or}) #{additional}",
+          context_value
         )
       end
     end
@@ -1502,40 +1503,31 @@ class MyplaceonlineController < ApplicationController
         action = action_name
       end
 
-      if (current_user.admin? && self.admin_sees_all?) || self.nonadmin_sees_all?
-        @obj = model.find_by(id: params[:id])
-      else
-        
-        # First lookup, then authorize
-        begin
-          if nested
-            parent_id = parent_model_last.table_name.singularize.downcase + "_id"
-            Rails.logger.debug{"MyplaceonlineController.set_obj parent_id: #{parent_id}, param: #{p[parent_id]}"}
-            if !p[parent_id].nil?
-              @parent = Myp.find_existing_object(parent_model_last, p[parent_id], false)
-              Rails.logger.debug{"MyplaceonlineController.set_obj parent: #{@parent.inspect}"}
-              @obj = model.where("id = ? and #{parent_id} = ?", p[:id].to_i, p[parent_id.to_sym].to_i).take!
-            end
+      # First lookup, then authorize
+      begin
+        if nested
+          parent_id = parent_model_last.table_name.singularize.downcase + "_id"
+          Rails.logger.debug{"MyplaceonlineController.set_obj parent_id: #{parent_id}, param: #{p[parent_id]}"}
+          if !p[parent_id].nil?
+            @parent = Myp.find_existing_object(parent_model_last, p[parent_id], false)
+            Rails.logger.debug{"MyplaceonlineController.set_obj parent: #{@parent.inspect}"}
+            @obj = model.where("id = ? and #{parent_id} = ?", p[:id].to_i, p[parent_id.to_sym].to_i).take!
           end
-          if @obj.nil? || override_existing
-            @obj = model.where(id: p[:id].to_i).order(nil).limit(1).first
-            
-            if @obj.nil?
-              handle_object_not_found(p[:id])
-            end
-            
-            Rails.logger.debug{"MyplaceonlineController.set_obj setting @obj: #{@obj}"}
+        end
+        if @obj.nil? || override_existing
+          @obj = model.where(id: p[:id].to_i).order(nil).limit(1).first
+          
+          if @obj.nil?
+            handle_object_not_found(p[:id])
           end
-        rescue ActiveRecord::RecordNotFound => rnf
-          Rails.logger.debug{"MyplaceonlineController.set_obj caught #{rnf}"}
-          raise Myp::SuddenRedirectError.new(index_path)
+          
+          Rails.logger.debug{"MyplaceonlineController.set_obj setting @obj: #{@obj}"}
         end
-        
-        if Rails.env.test?
-          Thread.current[:debug] = model.to_s
-        end
+      rescue ActiveRecord::RecordNotFound => rnf
+        Rails.logger.debug{"MyplaceonlineController.set_obj caught #{rnf}"}
+        raise Myp::SuddenRedirectError.new(index_path)
       end
-
+      
       authorize! action.to_sym, @obj
       
       if @obj.respond_to?("identity_id")        

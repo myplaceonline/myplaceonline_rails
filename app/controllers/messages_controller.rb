@@ -24,16 +24,12 @@ class MessagesController < MyplaceonlineController
   end
   
   def after_update_redirect
-    if !@obj.draft
-      @obj.process
-    end
+    @obj.process
     super
   end
   
   def after_create_redirect
-    if !@obj.draft
-      @obj.process
-    end
+    @obj.process
     super
   end
   

@@ -455,6 +455,10 @@ Rails.application.routes.draw do
       { instance: true, link: "initial_decision" },
       { instance: true, link: "review" },
       { instance: true, link: "unpublish" },
+      {
+        subresources: true,
+        name: :reputation_report_messages
+      },
     ],
     restaurants: [
       { instance: false, link: "random" }

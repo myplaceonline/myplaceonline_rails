@@ -59,6 +59,18 @@ class ReputationReportsController < MyplaceonlineController
           icon: "back"
         }
       end
+      
+      result << {
+        title: I18n.t("myplaceonline.reputation_reports.add_message"),
+        link: new_reputation_report_reputation_report_message_path(@obj),
+        icon: "plus"
+      }
+      
+      result << {
+        title: I18n.t("myplaceonline.reputation_reports.messages"),
+        link: reputation_report_reputation_report_messages_path(@obj),
+        icon: "bars"
+      }
     end
     
     if @obj.current_user_owns?
@@ -85,6 +97,14 @@ class ReputationReportsController < MyplaceonlineController
           title: I18n.t("myplaceonline.reputation_reports.review"),
           link: reputation_report_review_path(@obj),
           icon: "search"
+        }
+      end
+      
+      if @obj.reputation_report_messages.count > 0
+        result << {
+          title: I18n.t("myplaceonline.reputation_reports.messages"),
+          link: reputation_report_reputation_report_messages_path(@obj),
+          icon: "bars"
         }
       end
     end

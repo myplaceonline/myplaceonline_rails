@@ -50,6 +50,8 @@ class ReputationReport < ApplicationRecord
   child_files
   
   child_property(name: :agent, required: true)
+  
+  child_properties(name: :reputation_report_messages, sort: "updated_at DESC")
 
   def report_status_s
     Myp.get_select_name(self.processed_report_status, REPORT_STATUSES)
