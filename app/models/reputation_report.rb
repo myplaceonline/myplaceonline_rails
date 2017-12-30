@@ -88,6 +88,12 @@ class ReputationReport < ApplicationRecord
         result = false
       end
       
+      if self.report_status == REPORT_STATUS_PENDING_REVIEW
+        result = false
+      end
+
+    else
+      result = false
     end
     
     if User.current_user.admin?
@@ -275,5 +281,15 @@ class ReputationReport < ApplicationRecord
       end
     end
     contact
+  end
+
+  def self.skip_check_attributes
+    ["allow_mediation"]
+  end
+
+  def self.build(params = nil)
+    result = self.dobuild(params)
+    result.allow_mediation = true
+    result
   end
 end

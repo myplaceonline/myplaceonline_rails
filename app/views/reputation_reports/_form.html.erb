@@ -76,3 +76,12 @@
     collapsed: obj.notes.blank?
   )
 %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :allow_mediation,
+    value: obj.allow_mediation,
+    placeholder: "myplaceonline.reputation_reports.allow_mediation"
+  )
+%>

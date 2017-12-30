@@ -3997,6 +3997,7 @@ en:
       contact_accused: "Contact Accused"
       reporter_contacted: "Reporter contacted"
       accused_contacted: "Accused contacted"
+      allow_mediation: "Allow Mediation"
       message: "Message"
       subject: "Subject"
       propose_price: "Propose Price"

@@ -362,6 +362,7 @@ class ReputationReportsController < MyplaceonlineController
         :report_type,
         :story,
         :notes,
+        :allow_mediation,
         reputation_report_files_attributes: FilesController.multi_param_names,
         agent_attributes: Agent.param_names,
       )
