@@ -111,13 +111,13 @@ class ReputationReportsController < MyplaceonlineController
         }
       end
       
-      if @obj.reputation_report_messages.count > 0
-        result << {
-          title: I18n.t("myplaceonline.reputation_reports.messages"),
-          link: reputation_report_reputation_report_messages_path(@obj),
-          icon: "bars"
-        }
-      end
+#       if @obj.reputation_report_messages.count > 0
+#         result << {
+#           title: I18n.t("myplaceonline.reputation_reports.messages"),
+#           link: reputation_report_reputation_report_messages_path(@obj),
+#           icon: "bars"
+#         }
+#       end
     end
     
     result + super

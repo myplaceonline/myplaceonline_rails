@@ -15,12 +15,15 @@ class ReputationReportMessage < ApplicationRecord
   belongs_to :reputation_report
 
   child_property(name: :message, required: true)
+  
+  child_files
 
   def self.params
     [
       :id,
       :_destroy,
-      message_attributes: MessagesController.param_names
+      message_attributes: MessagesController.param_names,
+      reputation_report_message_files_attributes: FilesController.multi_param_names,
     ]
   end
 

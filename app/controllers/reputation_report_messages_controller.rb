@@ -31,17 +31,19 @@ class ReputationReportMessagesController < MyplaceonlineController
     ] + super
   end
   
-  def after_update_redirect
-    @obj.message.process
-    ensure_permissions
-    super
-  end
-  
   def after_create_redirect
     @obj.message.process
     ensure_permissions
     super
   end
+
+# We don't resend messages on update because the common use case is to 
+# edit a message and add files (e.g. screenshots)  
+#   def after_update_redirect
+#     @obj.message.process
+#     ensure_permissions
+#     super
+#   end
   
   def ensure_permissions
     if User.current_user.admin?
@@ -75,6 +77,10 @@ class ReputationReportMessagesController < MyplaceonlineController
     User.current_user.admin?
   end
 
+  def may_upload
+    true
+  end
+  
   protected
     def insecure
       true
