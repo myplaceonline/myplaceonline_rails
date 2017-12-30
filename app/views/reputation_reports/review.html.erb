@@ -9,6 +9,8 @@
   <p><%= t("myplaceonline.reputation_reports.review_intro") %></p>
   
   <hr />
+  
+  <%= data_row(heading: t("myplaceonline.reputation_reports.public_story"), content: @obj.public_story, markdown: true, wrap: false) %>
 
   <hr />
 
@@ -32,6 +34,9 @@
       items: [
         {
           content: submit_tag(t("myplaceonline.reputation_reports.approve"), "data-icon" => "check", "data-iconpos" => "top", style: "background-color: green")
+        },
+        {
+          content: submit_tag(t("myplaceonline.reputation_reports.propose_changes"), "data-icon" => "edit", "data-iconpos" => "top")
         },
         {
           title: I18n.t("myplaceonline.general.cancel"),

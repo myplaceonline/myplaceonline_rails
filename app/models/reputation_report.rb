@@ -113,6 +113,7 @@ class ReputationReport < ApplicationRecord
   
   def paid(site_invoice)
     
+    message = nil
     if self.report_status == ReputationReport::REPORT_STATUS_PENDING_PAYMENT_FROM_USER
       self.report_status = ReputationReport::REPORT_STATUS_SITE_INVESTIGATING
       self.save!
@@ -121,10 +122,12 @@ class ReputationReport < ApplicationRecord
       self.send_admin_message(subject: "Reputation Report Paid", body_markdown: "[#{link}](#{link})")
     elsif self.report_status == ReputationReport::REPORT_STATUS_PENDING_FINAL_PAYMENT_FROM_USER
       self.publish
+      message = I18n.t("myplaceonline.reputation_reports.approved_message")
     end
     
     {
-      redirect_path: reputation_report_path(self)
+      redirect_path: reputation_report_path(self),
+      message: message,
     }
   end
   

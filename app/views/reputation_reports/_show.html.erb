@@ -5,6 +5,10 @@
 ExecutionContext.stack(data_display_options: { show_clipboard_button: false, reference_display_heading: User.current_user.admin?, show_reference_as_content: !User.current_user.admin?, admin_details: true }) do
 %>
   <%= data_row(heading: t("myplaceonline.reputation_reports.report_status"), content: obj.processed_report_status, enumeration: ReputationReport::REPORT_STATUSES, background_highlight: true) %>
+  <% if obj.processed_report_status == ReputationReport::REPORT_STATUS_PUBLISHED %>
+    <%= data_row(heading: t("myplaceonline.reputation_reports.pulic_link"), content: agent_url(obj.agent), url: true) %>
+  <% end %>
+  <%= data_row(heading: t("myplaceonline.reputation_reports.public_story"), content: obj.public_story, markdown: true) %>
   <%= data_row(heading: t("myplaceonline.reputation_reports.short_description"), content: obj.short_description) %>
   <%= data_row(heading: t("myplaceonline.reputation_reports.report_type"), content: obj.report_type, enumeration: ReputationReport::REPORT_TYPES) %>
   <%= data_row(heading: t("myplaceonline.reputation_reports.agent"), content: obj.agent, expanded: true) %>

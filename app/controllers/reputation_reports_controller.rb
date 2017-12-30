@@ -285,7 +285,7 @@ class ReputationReportsController < MyplaceonlineController
         @obj.report_status = ReputationReport::REPORT_STATUS_SITE_INVESTIGATING
         @obj.save!
         
-        redirect_to_obj
+        redirect_to(obj_path, flash: { notice: I18n.t("myplaceonline.reputation_reports.proposed_changes_submitted") })
       else
         invoice = @obj.get_site_invoice
         if !invoice.nil? && !invoice.paid?
@@ -295,7 +295,7 @@ class ReputationReportsController < MyplaceonlineController
           redirect_to site_invoice_pay_path(invoice)
         else
           @obj.publish
-          redirect_to_obj
+          redirect_to(obj_path, flash: { notice: I18n.t("myplaceonline.reputation_reports.approved_message") })
         end
       end
     end
@@ -323,7 +323,7 @@ class ReputationReportsController < MyplaceonlineController
   def show_add
     false
   end
-
+  
   def show_back_to_list
     User.current_user.admin?
   end
@@ -363,6 +363,7 @@ class ReputationReportsController < MyplaceonlineController
         :story,
         :notes,
         :allow_mediation,
+        :public_story,
         reputation_report_files_attributes: FilesController.multi_param_names,
         agent_attributes: Agent.param_names,
       )

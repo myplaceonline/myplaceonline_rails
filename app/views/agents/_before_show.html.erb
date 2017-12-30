@@ -11,5 +11,7 @@
 <% @reputation_reports.each do |reputation_report| %>
   <div data-role="collapsible" data-collapsed="false">
     <h3><%= reputation_report.report_type_s %></h3>
+    <%= data_row(heading: t("myplaceonline.reputation_reports.public_story"), content: reputation_report.public_story, markdown: true, wrap: false) %>
+    <small><%= data_row(heading: t("myplaceonline.general.updated_at"), content: reputation_report.updated_at, wrap: false) %></small>
   </div>
 <% end %>

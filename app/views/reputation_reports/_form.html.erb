@@ -50,22 +50,24 @@
   }
 %>
 <p><%= t("myplaceonline.reputation_reports.agent_help") %></p>
-<%=
-  render partial: "myplaceonline/select_or_create", locals: {
-    f: f,
-    name: :agent,
-    existingobj: obj.agent,
-    heading: t("myplaceonline.reputation_reports.agent"),
-    objform: "agents/form",
-    existingobjurl: "agent_path",
-    searchurl: "/agents.json?perpage=0",
-    edit: edit,
-    autofocus: false,
-    expanded_if_nil: true,
-    only_new: true,
-    show_new_collapsible: false,
-  }
-%>
+<% if !edit %>
+  <%=
+    render partial: "myplaceonline/select_or_create", locals: {
+      f: f,
+      name: :agent,
+      existingobj: obj.agent,
+      heading: t("myplaceonline.reputation_reports.agent"),
+      objform: "agents/form",
+      existingobjurl: "agent_path",
+      searchurl: "/agents.json?perpage=0",
+      edit: edit,
+      autofocus: false,
+      expanded_if_nil: true,
+      only_new: true,
+      show_new_collapsible: false,
+    }
+  %>
+<% end %>
 <%=
   input_field(
     form: f,
@@ -83,5 +85,15 @@
     name: :allow_mediation,
     value: obj.allow_mediation,
     placeholder: "myplaceonline.reputation_reports.allow_mediation"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :public_story,
+    value: obj.public_story,
+    placeholder: "myplaceonline.reputation_reports.public_story",
+    collapsed: false,
   )
 %>

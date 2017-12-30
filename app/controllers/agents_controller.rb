@@ -23,6 +23,14 @@ class AgentsController < MyplaceonlineController
     Agent.name
   end
   
+  def show_add
+    false
+  end
+  
+  def show_back_to_list
+    false
+  end
+  
   protected
     def insecure
       true

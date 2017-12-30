@@ -124,21 +124,24 @@ class SiteInvoicesController < MyplaceonlineController
       end
       @obj.save!
       
+      message = I18n.t("myplaceonline.site_invoices.paid", amount: Myp.number_to_currency(total_paid))
       redirect_path = obj_path
       model_paid_result = self.model_paid
       if !model_paid_result.nil?
         redirect_path = model_paid_result[:redirect_path]
+        if !model_paid_result[:message].blank?
+          message = model_paid_result[:message]
+        end
       end
       model_obj = @obj.find_model_object
       if !model_obj.nil? && model_obj.respond_to?("paid")
         paid_result = model_obj.paid(@obj)
-        
       end
 
       redirect_to(
         redirect_path,
         flash: {
-          notice: I18n.t("myplaceonline.site_invoices.paid", amount: Myp.number_to_currency(total_paid))
+          notice: message
         }
       )
     else
