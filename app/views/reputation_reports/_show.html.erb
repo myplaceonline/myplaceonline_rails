@@ -6,7 +6,7 @@ ExecutionContext.stack(data_display_options: { show_clipboard_button: false, ref
 %>
   <%= data_row(heading: t("myplaceonline.reputation_reports.report_status"), content: obj.processed_report_status, enumeration: ReputationReport::REPORT_STATUSES, background_highlight: true) %>
   <% if obj.processed_report_status == ReputationReport::REPORT_STATUS_PUBLISHED %>
-    <%= data_row(heading: t("myplaceonline.reputation_reports.pulic_link"), content: agent_url(obj.agent), url: true) %>
+    <%= data_row(heading: t("myplaceonline.reputation_reports.public_link"), content: agent_url(obj.agent), url: true) %>
   <% end %>
   <%= data_row(heading: t("myplaceonline.reputation_reports.public_story"), content: obj.public_story, markdown: true) %>
   <%= data_row(heading: t("myplaceonline.reputation_reports.short_description"), content: obj.short_description) %>
@@ -16,6 +16,9 @@ ExecutionContext.stack(data_display_options: { show_clipboard_button: false, ref
   <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
   <%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.reputation_report_files) %>
   <%= data_row(heading: t("myplaceonline.reputation_reports.allow_mediation"), content: obj.allow_mediation) %>
+  <% if current_user.admin? %>
+    <%= data_row(heading: t("myplaceonline.reputation_reports.mediation_link"), content: obj.public_mediation_link, url: true) %>
+  <% end %>
 <%
 end
 %>

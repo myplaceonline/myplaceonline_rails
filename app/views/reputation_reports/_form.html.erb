@@ -87,13 +87,15 @@
     placeholder: "myplaceonline.reputation_reports.allow_mediation"
   )
 %>
-<%=
-  input_field(
-    form: f,
-    type: Myp::FIELD_TEXT_AREA,
-    name: :public_story,
-    value: obj.public_story,
-    placeholder: "myplaceonline.reputation_reports.public_story",
-    collapsed: false,
-  )
-%>
+<% if current_user.admin? %>
+  <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_TEXT_AREA,
+      name: :public_story,
+      value: obj.public_story,
+      placeholder: "myplaceonline.reputation_reports.public_story",
+      collapsed: false,
+    )
+  %>
+<% end %>

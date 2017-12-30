@@ -1,0 +1,39 @@
+<% content_for :heading do -%><%= t("myplaceonline.reputation_reports.mediation") %><% end -%>
+
+<h1><%= t("myplaceonline.reputation_reports.mediation") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag(reputation_report_mediation_path(@obj, token: params[:token]), method: :post) do %>
+
+  <p><%= t("myplaceonline.reputation_reports.mediation_intro") %></p>
+  
+  <hr />
+  
+  <%= data_row(heading: t("myplaceonline.reputation_reports.mediation"), content: @obj.mediation, markdown: true, wrap: false) %>
+
+  <%=
+    input_field(
+      type: Myp::FIELD_TEXT_AREA,
+      name: :comment,
+      placeholder: "myplaceonline.reputation_reports.comment",
+      collapsed: false,
+    )
+  %>
+
+  <script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+  </script>
+
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.general.submit"), "data-icon" => "check", "data-iconpos" => "top", style: "background-color: green")
+        },
+      ]
+    })
+  %>
+<% end %>

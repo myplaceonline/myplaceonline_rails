@@ -111,6 +111,7 @@ class ReputationReportsController < MyplaceonlineController
         }
       end
       
+      # Doesn't support read permissions on message attachments yet
 #       if @obj.reputation_report_messages.count > 0
 #         result << {
 #           title: I18n.t("myplaceonline.reputation_reports.messages"),
@@ -118,6 +119,14 @@ class ReputationReportsController < MyplaceonlineController
 #           icon: "bars"
 #         }
 #       end
+    end
+    
+    if @obj.report_type == ReputationReport::REPORT_TYPE_SHAME && @obj.allow_mediation? && !@obj.report_status.nil? && @obj.report_status == ReputationReport::REPORT_STATUS_SITE_INVESTIGATING
+      result << {
+        title: I18n.t("myplaceonline.reputation_reports.mediation"),
+        link: reputation_report_mediation_path(@obj),
+        icon: "comment"
+      }
     end
     
     result + super
@@ -347,6 +356,99 @@ class ReputationReportsController < MyplaceonlineController
     @obj.ensure_agent_contact
     
     redirect_to_obj
+  end
+  
+  def mediation
+    set_obj
+    
+    if request.post?
+      @comment = params[:comment]
+      
+      if !@comment.blank?
+        
+        if @obj.current_user_owns?
+          type = "mediation_reporter"
+        elsif User.current_user.admin?
+          type = "mediator"
+        else
+          type = "mediation_accused"
+        end
+        
+        @obj.mediation = "**#{I18n.t("myplaceonline.reputation_reports." + type)}** @ _#{User.current_user.time_now}_:\n\n#{@comment}<hr />\n\n#{@obj.mediation}"
+        MyplaceonlineExecutionContext.do_context(@obj) do
+          @obj.save!
+
+          private_link = reputation_report_mediation_url(@obj)
+          public_link = @obj.public_mediation_link
+          
+          subject = I18n.t(
+            "myplaceonline.reputation_reports.mediation_updated_subject",
+          )
+          
+          body_long_markdown_private = I18n.t(
+            "myplaceonline.reputation_reports.mediation_updated_body_long",
+            type: I18n.t("myplaceonline.reputation_reports." + type),
+            comment: @comment,
+            link: private_link,
+          )
+          
+          body_long_markdown_public = I18n.t(
+            "myplaceonline.reputation_reports.mediation_updated_body_long",
+            type: I18n.t("myplaceonline.reputation_reports." + type),
+            comment: @comment,
+            link: public_link,
+          )
+          
+          body_short_markdown_private = I18n.t(
+            "myplaceonline.reputation_reports.mediation_updated_body_short",
+            link: private_link,
+          )
+          
+          body_short_markdown_public = I18n.t(
+            "myplaceonline.reputation_reports.mediation_updated_body_short",
+            link: public_link,
+          )
+          
+          if @obj.current_user_owns?
+            @obj.send_admin_message(
+              subject: subject,
+              body_markdown: body_long_markdown_private,
+            )
+            @obj.send_accused_message(
+              subject: subject,
+              body_short_markdown: body_short_markdown_public,
+              body_long_markdown: body_long_markdown_public
+            )
+          elsif User.current_user.admin?
+            @obj.send_reporter_message(
+              subject: subject,
+              body_short_markdown: body_short_markdown_private,
+              body_long_markdown: body_long_markdown_private
+            )
+            @obj.send_accused_message(
+              subject: subject,
+              body_short_markdown: body_short_markdown_public,
+              body_long_markdown: body_long_markdown_public
+            )
+          else
+            @obj.send_admin_message(
+              subject: subject,
+              body_markdown: body_long_markdown_private,
+            )
+            @obj.send_reporter_message(
+              subject: subject,
+              body_short_markdown: body_short_markdown_private,
+              body_long_markdown: body_long_markdown_private
+            )
+          end
+        end
+
+        @comment = ""
+        flash[:error] = t("myplaceonline.reputation_reports.comment_submitted")
+      else
+        flash[:error] = t("myplaceonline.reputation_reports.no_comment")
+      end
+    end
   end
   
   protected
