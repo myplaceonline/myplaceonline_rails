@@ -18,7 +18,7 @@
       autofocus: autofocus
     )
   %>
-  <%=
+  <%#
     input_field(
       form: identity_fields,
       type: Myp::FIELD_DATE,
@@ -27,7 +27,7 @@
       placeholder: "myplaceonline.contacts.birthday",
     )
   %>
-  <%=
+  <%#
     input_field(
       form: identity_fields,
       type: Myp::FIELD_SELECT,
@@ -45,7 +45,7 @@
       childproperties: obj.agent_identity.identity_emails,
       deletebutton: t("myplaceonline.identities.delete_email"),
       addbutton: t("myplaceonline.identities.add_email"),
-      expanded: obj.agent_identity.identity_emails.length > 0,
+      expanded: true,
       formjson: [
         {
           type: "text",
@@ -75,7 +75,7 @@
       childproperties: obj.agent_identity.identity_phones,
       deletebutton: t("myplaceonline.identities.delete_phone"),
       addbutton: t("myplaceonline.identities.add_phone"),
-      expanded: obj.agent_identity.identity_phones.length > 0,
+      expanded: true,
       formjson: [
         {
           type: "text",
@@ -113,6 +113,16 @@
     %>
   <% end %>
 
+  <%=
+    input_field(
+      form: identity_fields,
+      type: Myp::FIELD_TEXT_AREA,
+      name: :notes,
+      value: obj.agent_identity.notes,
+      placeholder: "myplaceonline.general.notes",
+      collapsed: false
+    )
+  %>
   <%=
     render(layout: "myplaceonline/childproperties", locals: {
       f: identity_fields,

@@ -1,14 +1,6 @@
 <%= raw(Myp.website_domain_property("reputation_report.form")) %>
 
-<%=
-  input_field(
-    form: f,
-    type: Myp::FIELD_TEXT,
-    name: :short_description,
-    value: obj.short_description,
-    placeholder: "myplaceonline.reputation_reports.short_description",
-  )
-%>
+<p><%= t("myplaceonline.reputation_reports.report_type_help") %></p>
 <%=
   input_field(
     form: f,
@@ -18,8 +10,46 @@
     placeholder: "myplaceonline.reputation_reports.report_type",
     select_options: ReputationReport::REPORT_TYPES,
     select_options_sort: false,
+    select_include_blank: false,
   )
 %>
+<p><%= t("myplaceonline.reputation_reports.short_description_help") %></p>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :short_description,
+    value: obj.short_description,
+    placeholder: "myplaceonline.reputation_reports.short_description",
+  )
+%>
+<p><%= t("myplaceonline.reputation_reports.story_help") %></p>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :story,
+    value: obj.story,
+    placeholder: "myplaceonline.reputation_reports.story",
+    collapsed: false
+  )
+%>
+<p><%= t("myplaceonline.reputation_reports.files_help") %></p>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :reputation_report_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file",
+    expanded: true,
+  }
+%>
+<p><%= t("myplaceonline.reputation_reports.agent_help") %></p>
 <%=
   render partial: "myplaceonline/select_or_create", locals: {
     f: f,
@@ -40,32 +70,9 @@
   input_field(
     form: f,
     type: Myp::FIELD_TEXT_AREA,
-    name: :story,
-    value: obj.story,
-    placeholder: "myplaceonline.reputation_reports.story",
-    collapsed: false
-  )
-%>
-<%=
-  input_field(
-    form: f,
-    type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,
     placeholder: "myplaceonline.general.notes",
     collapsed: obj.notes.blank?
   )
-%>
-<%=
-  render partial: "myplaceonline/pictures_form", locals: {
-    f: f,
-    obj: obj,
-    position_field: :position,
-    pictures_field: :reputation_report_files,
-    item_placeholder: "myplaceonline.identity_files.file",
-    heading: "myplaceonline.identity_files.files",
-    addbutton: "myplaceonline.identity_files.add_file",
-    addbutton_multi: "myplaceonline.identity_files.add_files",
-    deletebutton: "myplaceonline.identity_files.delete_file"
-  }
 %>
