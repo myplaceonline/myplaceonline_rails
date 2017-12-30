@@ -99,4 +99,16 @@ class ReputationReportMessagesController < MyplaceonlineController
     def admin_sees_all?
       true
     end
+
+    def build_new_model
+      @obj.message = Message.build
+
+      long_signature = Myp.website_domain_property("long_signature")
+      short_signature = Myp.website_domain_property("short_signature")
+      if !long_signature.blank? || !short_signature.blank?
+        @obj.message.body = " (" + long_signature + ")"
+        @obj.message.long_body = "\n\n" + long_signature
+        @obj.message.suppress_signature = true
+      end
+    end
 end

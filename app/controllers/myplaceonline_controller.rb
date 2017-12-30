@@ -206,6 +206,7 @@ class MyplaceonlineController < ApplicationController
     end
     @myplet = params[:myplet]
     @obj = Myp.new_model(model, params)
+    build_new_model
     set_parent
     @url = new_path
     if request.post?
@@ -1750,5 +1751,8 @@ class MyplaceonlineController < ApplicationController
     
     def nonadmin_sees_all?
       false
+    end
+    
+    def build_new_model
     end
 end
