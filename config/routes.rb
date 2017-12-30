@@ -449,6 +449,7 @@ Rails.application.routes.draw do
     ],
     reputation_reports: [
       { instance: true, link: "contact_reporter" },
+      { instance: true, link: "contact_accused" },
       { instance: true, link: "propose_price" },
       { instance: true, link: "request_status" },
       { instance: true, link: "update_status" },

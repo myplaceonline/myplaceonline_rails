@@ -131,21 +131,23 @@ class Email < ApplicationRecord
           final_content = target_obj.replace_email_html(final_content, target, contact, permission_share)
         end
         
-        final_content += "\n<p>\n--<br />\n"
-        if user_display_short != user_email
-          final_content += "#{user_display_short}<br />\n"
+        if !self.suppress_signature?
+          final_content += "\n<p>\n--<br />\n"
+          if user_display_short != user_email
+            final_content += "#{user_display_short}<br />\n"
+          end
+
+          # Noticed some weird behavior in some responses from some people with the mailto
+          # link being evaluated in their client as <javascript:_e(%7B%7D,'cvml','${EMAIL}');>
+          # Since there's no need to have a mailto link anyway, remove it
+          #final_content += "<a href=\"mailto:#{user_email}\">#{user_email}</a>"
+          final_content += "#{user_email}"
+          
+          if identity.phone_numbers.count > 0
+            final_content += identity.identity_phones.to_a.delete_if{|x| !x.worth_to_display?}.map{|p| "\n<br />#{p.context_info}: <a href=\"tel:#{p.number}\">#{p.number}</a>"}.join("")
+          end
+          final_content += "\n</p>\n\n"
         end
-        
-        # Noticed some weird behavior in some responses from some people with the mailto
-        # link being evaluated in their client as <javascript:_e(%7B%7D,'cvml','${EMAIL}');>
-        # Since there's no need to have a mailto link anyway, remove it
-        #final_content += "<a href=\"mailto:#{user_email}\">#{user_email}</a>"
-        final_content += "#{user_email}"
-        
-        if identity.phone_numbers.count > 0
-          final_content += identity.identity_phones.to_a.delete_if{|x| !x.worth_to_display?}.map{|p| "\n<br />#{p.context_info}: <a href=\"tel:#{p.number}\">#{p.number}</a>"}.join("")
-        end
-        final_content += "\n</p>\n\n"
 
         final_content += "<hr />\n"
         final_content += "<p>#{I18n.t("myplaceonline.unsubscribe.reply_hint", respond_to: user_display)}</p>\n"
@@ -172,13 +174,15 @@ class Email < ApplicationRecord
           end
         end
         
-        final_content_plain += "--\n"
-        if user_display_short != user_email
-          final_content_plain += "#{user_display_short}\n"
-        end
-        final_content_plain += "#{user_email}\n"
-        if identity.phone_numbers.count > 0
-          final_content_plain += identity.identity_phones.to_a.delete_if{|x| !x.worth_to_display?}.map{|p| "#{p.context_info}: #{p.number}\n"}.join("")
+        if !self.suppress_signature?
+          final_content_plain += "--\n"
+          if user_display_short != user_email
+            final_content_plain += "#{user_display_short}\n"
+          end
+          final_content_plain += "#{user_email}\n"
+          if identity.phone_numbers.count > 0
+            final_content_plain += identity.identity_phones.to_a.delete_if{|x| !x.worth_to_display?}.map{|p| "#{p.context_info}: #{p.number}\n"}.join("")
+          end
         end
 
         final_content_plain += "\n==\n\n"
@@ -340,6 +344,6 @@ class Email < ApplicationRecord
   end
 
   def self.skip_check_attributes
-    ["personalize", "draft", "use_bcc", "copy_self"]
+    ["personalize", "draft", "use_bcc", "copy_self", "suppress_signature"]
   end
 end

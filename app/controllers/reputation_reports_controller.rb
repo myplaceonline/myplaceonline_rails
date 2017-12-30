@@ -23,6 +23,11 @@ class ReputationReportsController < MyplaceonlineController
         link: reputation_report_contact_reporter_path(@obj),
         icon: "phone"
       }
+      result << {
+        title: I18n.t("myplaceonline.reputation_reports.contact_accused"),
+        link: reputation_report_contact_accused_path(@obj),
+        icon: "phone"
+      }
       
       if invoice.nil?
         result << {
@@ -132,6 +137,24 @@ class ReputationReportsController < MyplaceonlineController
       redirect_to(
         obj_path,
         flash: { notice: I18n.t("myplaceonline.reputation_reports.reporter_contacted") }
+      )
+    end
+  end
+  
+  def contact_accused
+    set_obj
+    deny_nonadmin
+    
+    @subject = params[:subject]
+    @message = params[:message]
+    
+    if request.post?
+      
+      @obj.send_accused_message(subject: @subject, body_short_markdown: @message, body_long_markdown: @message)
+      
+      redirect_to(
+        obj_path,
+        flash: { notice: I18n.t("myplaceonline.reputation_reports.accused_contacted") }
       )
     end
   end
@@ -321,24 +344,7 @@ class ReputationReportsController < MyplaceonlineController
     set_obj
     deny_nonadmin
     
-    if Contact.where(contact_identity_id: @obj.agent.agent_identity_id).take.nil?
-      ActiveRecord::Base.transaction do
-        contact = Contact.create!(
-          identity: @obj.identity,
-          contact_identity_id: @obj.agent.agent_identity_id,
-        )
-        
-        Rails.logger.debug{"ReputationReportsController.ensure_agent_contact contact: #{contact.inspect}"}
-        
-        Permission.create!(
-          action: Permission::ACTION_MANAGE,
-          subject_class: Contact.name.underscore.pluralize,
-          subject_id: contact.id,
-          identity_id: User.current_user.domain_identity,
-          user_id: User.current_user.id,
-        )
-      end
-    end
+    @obj.ensure_agent_contact
     
     redirect_to_obj
   end

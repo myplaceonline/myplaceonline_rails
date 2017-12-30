@@ -127,13 +127,36 @@ class ReputationReport < ApplicationRecord
   end
   
   def send_reporter_message(subject:, body_short_markdown:, body_long_markdown:)
+    send_from_admin_message(
+      contact: self.identity.ensure_contact!,
+      subject: subject,
+      body_short_markdown: body_short_markdown,
+      body_long_markdown: body_long_markdown
+    )
+  end
+  
+  def send_accused_message(subject:, body_short_markdown:, body_long_markdown:)
+    send_from_admin_message(
+      contact: self.ensure_agent_contact,
+      subject: subject,
+      body_short_markdown: body_short_markdown,
+      body_long_markdown: body_long_markdown
+    )
+  end
+  
+  def send_from_admin_message(contact:, subject:, body_short_markdown:, body_long_markdown:)
+    suppress_signature = false
+
     long_signature = Myp.website_domain_property("long_signature")
     if !long_signature.blank?
-      body_long_markdown += long_signature
+      body_long_markdown += "\n\n" + long_signature
+      suppress_signature = true
     end
+
     short_signature = Myp.website_domain_property("short_signature")
     if !short_signature.blank?
-      body_short_markdown += short_signature
+      body_short_markdown += " (" + short_signature + ")"
+      suppress_signature = true
     end
     
     ActiveRecord::Base.transaction do
@@ -145,10 +168,11 @@ class ReputationReport < ApplicationRecord
         send_preferences: Message::SEND_PREFERENCE_DEFAULT,
         message_category: I18n.t("myplaceonline.reputation_reports.administrative_contact"),
         subject: subject,
+        suppress_signature: suppress_signature,
         message_contacts: [
           MessageContact.new(
             identity: self.identity,
-            contact: self.identity.ensure_contact!,
+            contact: contact,
           )
         ]
       )
@@ -230,5 +254,26 @@ class ReputationReport < ApplicationRecord
   
   def report_type_s
     Myp.get_select_name(self.report_type, REPORT_TYPES)
+  end
+
+  def ensure_agent_contact
+    contact = Contact.where(contact_identity_id: self.agent.agent_identity_id).take
+    if contact.nil?
+      ActiveRecord::Base.transaction do
+        contact = Contact.create!(
+          identity: self.identity,
+          contact_identity_id: self.agent.agent_identity_id,
+        )
+        
+        Permission.create!(
+          action: Permission::ACTION_MANAGE,
+          subject_class: Contact.name.underscore.pluralize,
+          subject_id: contact.id,
+          identity_id: User.current_user.domain_identity,
+          user_id: User.current_user.id,
+        )
+      end
+    end
+    contact
   end
 end

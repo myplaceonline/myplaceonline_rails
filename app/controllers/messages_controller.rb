@@ -10,6 +10,7 @@ class MessagesController < MyplaceonlineController
       :message_category,
       :draft,
       :send_preferences,
+      :suppress_signature,
       message_contacts_attributes: [
         :id,
         :_destroy,

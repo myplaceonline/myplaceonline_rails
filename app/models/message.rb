@@ -94,7 +94,8 @@ class Message < ApplicationRecord
       email_category: self.message_category,
       identity_id: self.identity_id,
       draft: self.draft,
-      personalize: self.personalize
+      personalize: self.personalize,
+      suppress_signature: self.suppress_signature,
     )
     self.message_contacts.each do |x|
       if x.contact.has_email? && should_send_email?(contact: x.contact, skip_contacts: skip_contacts)
@@ -163,7 +164,7 @@ class Message < ApplicationRecord
   end
 
   def self.skip_check_attributes
-    ["draft", "copy_self"]
+    ["draft", "copy_self", "suppress_signature"]
   end
   
   def send_immediately

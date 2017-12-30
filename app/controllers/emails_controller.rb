@@ -10,6 +10,7 @@ class EmailsController < MyplaceonlineController
       :use_bcc,
       :draft,
       :personalize,
+      :suppress_signature,
       email_contacts_attributes: [
         :id,
         :_destroy,

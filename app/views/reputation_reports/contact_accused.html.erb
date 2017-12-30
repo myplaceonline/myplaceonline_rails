@@ -1,0 +1,48 @@
+<% content_for :heading do -%><%= t("myplaceonline.reputation_reports.contact_accused") %><% end -%>
+
+<h1><%= t("myplaceonline.reputation_reports.contact_accused") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag(reputation_report_contact_accused_path(@obj), method: :post) do %>
+
+  <%=
+    input_field(
+      type: Myp::FIELD_TEXT,
+      name: :subject,
+      value: @subject,
+      placeholder: "myplaceonline.reputation_reports.subject",
+      autofocus: true
+    )
+  %>
+  <%=
+    input_field(
+      type: Myp::FIELD_TEXT_AREA,
+      name: :message,
+      value: @message,
+      placeholder: "myplaceonline.reputation_reports.message",
+      collapsed: false
+    )
+  %>
+
+  <script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+  </script>
+
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.general.submit"), "data-icon" => "action", "data-iconpos" => "top", style: "background-color: green")
+        },
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: controller.obj_path,
+          icon: "back"
+        },
+      ]
+    })
+  %>
+<% end %>
