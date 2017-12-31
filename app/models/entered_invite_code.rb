@@ -5,6 +5,7 @@ class EnteredInviteCode < ApplicationRecord
   belongs_to :website_domain
 
   attr_accessor :code
+  attr_accessor :internal
   
   before_create :set_info
   
@@ -14,8 +15,10 @@ class EnteredInviteCode < ApplicationRecord
   
   def set_info
     
-    self.user = User.current_user
-    self.website_domain = Myp.website_domain
+    if self.internal.nil?
+      self.user = User.current_user
+      self.website_domain = Myp.website_domain
+    end
     
     true
   end

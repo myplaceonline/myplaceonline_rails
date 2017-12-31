@@ -123,6 +123,23 @@ class User < ApplicationRecord
     end
   end
   
+  after_commit :on_after_create, on: [:create]
+  
+  def on_after_create
+    if Myp.requires_invite_code && !invite_code.nil? # Users can be created outside the web process
+      InviteCode.increment_code(invite_code)
+      
+      # Save off the entered invite code for post_initialize
+      entered_invite_code = EnteredInviteCode.new(
+        user_id: self.id,
+        website_domain_id: Myp.website_domain.id,
+      )
+      entered_invite_code.internal = true
+      entered_invite_code.code = self.invite_code
+      entered_invite_code.save!
+    end
+  end
+  
   def admin?
     if !user_type.nil? && (user_type & 1) != 0
       true
@@ -258,14 +275,6 @@ class User < ApplicationRecord
     result
   end
 
-  after_commit :on_after_create, on: [:create]
-  
-  def on_after_create
-    if Myp.requires_invite_code && !invite_code.nil? # Users can be created outside the web process
-      InviteCode.increment_code(invite_code)
-    end
-  end
-  
   def guest?
     id == GUEST_USER_ID
   end
