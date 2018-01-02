@@ -4044,6 +4044,7 @@ en:
       mediation_updated_body_long: "The following comment has been added by %{type}:\n\n%{comment}\n\nTo respond, go here: [%{link}](%{link})"
       mediation_updated_body_short: "A comment has been added to this mediation: %{link}"
       comment_submitted: "Your comment has been added and the other parties have been notified. You'll be notified if they respond."
+      signature_will_be_added: "If available, website signature will be appended at the bottom of the message."
     website_domain_properties:
       property_key: "Key"
       property_value: "Value"
