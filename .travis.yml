@@ -9,4 +9,4 @@ before_script:
   - cp config/database.yml.travis config/database.yml
 
 script: 
-  - RAILS_ENV=test SKIP_LARGE_UNNEEDED_IMPORTS=true SKIP_ZIP_CODE_IMPORTS=true travis_wait bundle exec rake db:test:prepare test
+  - RAILS_ENV=test SKIP_LARGE_UNNEEDED_IMPORTS=true SKIP_ZIP_CODE_IMPORTS=true travis_wait 30 bundle exec rake db:test:prepare test
