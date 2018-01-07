@@ -1,5 +1,15 @@
 <%= myp_text_field(f, :project_name, "myplaceonline.projects.project_name", obj.project_name, autofocus) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
 <%= myp_date_field(f, :start_date, "myplaceonline.projects.start_date", obj.start_date) %>
 <%= myp_date_field(f, :end_date, "myplaceonline.projects.end_date", obj.end_date) %>
 <%= myp_check_box(f, :default_to_top, "myplaceonline.projects.default_to_top", obj.default_to_top) %>

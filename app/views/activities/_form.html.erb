@@ -1,2 +1,12 @@
 <%= myp_text_field(f, :name, "myplaceonline.activities.name", obj.name, true) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.activities.notes", obj.notes, collapsed: false) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: false,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>

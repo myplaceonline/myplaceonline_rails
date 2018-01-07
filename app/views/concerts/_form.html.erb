@@ -1,6 +1,16 @@
 <%= myp_text_field(f, :concert_title, "myplaceonline.concerts.concert_title", obj.concert_title, autofocus) %>
 <%= myp_date_field(f, :concert_date, "myplaceonline.concerts.concert_date", obj.concert_date) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.concerts.notes", obj.notes) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
 <%=
   render partial: "myplaceonline/select_or_create", locals: {
     f: f,

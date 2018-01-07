@@ -2,4 +2,14 @@
 <%= myp_date_field(f, :goal_started, "myplaceonline.life_goals.goal_started", obj.goal_started) %>
 <%= myp_date_field(f, :goal_ended, "myplaceonline.life_goals.goal_ended", obj.goal_ended) %>
 <%= myp_check_box(f, :long_term, "myplaceonline.life_goals.long_term") %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.life_goals.notes", obj.notes, collapsed: false) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>

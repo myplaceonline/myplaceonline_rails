@@ -17,4 +17,14 @@
 <%= myp_text_field(f, :reference_relationship, "myplaceonline.myreferences.reference_relationship", obj.reference_relationship) %>
 <%= myp_decimal_field(f, :years_experience, "myplaceonline.myreferences.years_experience", obj.years_experience) %>
 <%= myp_check_box(f, :can_contact, "myplaceonline.myreferences.can_contact") %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>

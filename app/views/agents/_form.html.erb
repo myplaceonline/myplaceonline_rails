@@ -118,9 +118,10 @@
       form: identity_fields,
       type: Myp::FIELD_TEXT_AREA,
       name: :notes,
-      value: obj.agent_identity.notes,
+      value: obj.notes,
       placeholder: "myplaceonline.general.notes",
-      collapsed: false
+      collapsed: obj.notes.blank?,
+      placeholder_suffix: I18n.t("myplaceonline.agents.notes"),
     )
   %>
   <%=

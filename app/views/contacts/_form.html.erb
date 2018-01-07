@@ -236,7 +236,17 @@
       }
     %>
 
-    <%= myp_text_area_markdown(identity_fields, :notes, "myplaceonline.contacts.notes", obj.contact_identity.notes) %>
+    <%=
+      input_field(
+        form: identity_fields,
+        type: Myp::FIELD_TEXT_AREA,
+        name: :notes,
+        value: obj.contact_identity.notes,
+        placeholder: "myplaceonline.general.notes",
+        collapsed: obj.contact_identity.notes.blank?,
+        placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+      )
+    %>
 
     <div data-role="collapsible" data-collapsed="true">
       <h3><%= t("myplaceonline.contacts.extra") %></h3>

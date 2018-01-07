@@ -1,5 +1,15 @@
 <%= myp_text_field(f, :medical_condition_name, "myplaceonline.medical_conditions.medical_condition_name", obj.medical_condition_name, autofocus) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.medical_conditions.notes", obj.notes) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
 <%=
   render layout: "myplaceonline/childproperties", locals: {
     f: f,
@@ -31,7 +41,16 @@
 %>
   <%= myp_date_field(child_fields, :condition_start, "myplaceonline.medical_condition_instances.condition_start", childproperty.condition_start) %>
   <%= myp_date_field(child_fields, :condition_end, "myplaceonline.medical_condition_instances.condition_end", childproperty.condition_end) %>
-  <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.medical_condition_instances.notes", childproperty.notes) %>
+  <%=
+    input_field(
+      form: child_fields,
+      type: Myp::FIELD_TEXT_AREA,
+      name: :notes,
+      value: childproperty.notes,
+      placeholder: "myplaceonline.general.notes",
+      collapsed: childproperty.notes.blank?,
+    )
+  %>
 <% end %>
 <%=
   render layout: "myplaceonline/childproperties", locals: {
@@ -91,7 +110,16 @@
 %>
   <%= myp_datetime_field(child_fields, :treatment_date, "myplaceonline.medical_condition_treatments.treatment_date", childproperty.treatment_date) %>
   <%= myp_text_field(child_fields, :condition_end, "myplaceonline.medical_condition_treatments.treatment_description", childproperty.treatment_description) %>
-  <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.general.notes", childproperty.notes) %>
+  <%=
+    input_field(
+      form: child_fields,
+      type: Myp::FIELD_TEXT_AREA,
+      name: :notes,
+      value: childproperty.notes,
+      placeholder: "myplaceonline.general.notes",
+      collapsed: childproperty.notes.blank?,
+    )
+  %>
   <%=
     render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,

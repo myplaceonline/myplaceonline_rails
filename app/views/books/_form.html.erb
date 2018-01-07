@@ -5,7 +5,17 @@
 <%= myp_text_field(f, :isbn, "myplaceonline.books.isbn", obj.isbn) %>
 <%= myp_check_box(f, :is_read, "myplaceonline.books.is_read") %>
 <%= myp_date_field(f, :acquired, "myplaceonline.books.acquired", obj.acquired) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.books.notes", obj.notes) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
 <%= myp_text_area_markdown(f, :review, "myplaceonline.books.review", obj.review) %>
 <%= myp_check_box(f, :is_discarded, "myplaceonline.books.is_discarded") %>
 <%= myp_text_field(f, :book_location, "myplaceonline.books.book_location", obj.book_location, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>

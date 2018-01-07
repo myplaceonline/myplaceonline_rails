@@ -23,5 +23,15 @@ end
   <%= myp_text_field(myreference_fields, :reference_relationship, "myplaceonline.myreferences.reference_relationship", obj.myreference.reference_relationship) %>
   <%= myp_decimal_field(myreference_fields, :years_experience, "myplaceonline.myreferences.years_experience", obj.myreference.years_experience) %>
   <%= myp_check_box(myreference_fields, :can_contact, "myplaceonline.myreferences.can_contact") %>
-  <%= myp_text_area_markdown(myreference_fields, :notes, "myplaceonline.general.notes", obj.myreference.notes) %>
+  <%=
+    input_field(
+      form: myreference_fields,
+      type: Myp::FIELD_TEXT_AREA,
+      name: :notes,
+      value: obj.myreference.notes,
+      placeholder: "myplaceonline.general.notes",
+      collapsed: obj.myreference.notes.blank?,
+      placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+    )
+  %>
 <% end %>

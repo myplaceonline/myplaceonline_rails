@@ -5,7 +5,17 @@
 <%= myp_text_field(f, :year, "myplaceonline.recreational_vehicles.year", obj.year) %>
 <%= myp_date_field(f, :owned_start, "myplaceonline.recreational_vehicles.owned_start", obj.owned_start) %>
 <%= myp_date_field(f, :owned_end, "myplaceonline.recreational_vehicles.owned_end", obj.owned_end) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.recreational_vehicles.notes", obj.notes) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
 <%= myp_decimal_field(f, :price, "myplaceonline.recreational_vehicles.price", obj.price) %>
 <%= myp_decimal_field(f, :msrp, "myplaceonline.recreational_vehicles.msrp", obj.msrp) %>
 <%= myp_date_field(f, :purchased, "myplaceonline.recreational_vehicles.purchased", obj.purchased) %>
@@ -76,7 +86,16 @@
 %>
   <%= myp_text_field(child_fields, :insurance_name, "myplaceonline.recreational_vehicle_insurances.insurance_name", childproperty.insurance_name) %>
   <%= myp_date_field(child_fields, :started, "myplaceonline.recreational_vehicle_insurances.started", childproperty.started) %>
-  <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.recreational_vehicle_insurances.notes", childproperty.notes) %>
+  <%=
+    input_field(
+      form: child_fields,
+      type: Myp::FIELD_TEXT_AREA,
+      name: :notes,
+      value: childproperty.notes,
+      placeholder: "myplaceonline.general.notes",
+      collapsed: childproperty.notes.blank?,
+    )
+  %>
   <%=
     render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,

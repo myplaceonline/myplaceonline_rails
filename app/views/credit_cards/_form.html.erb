@@ -7,7 +7,17 @@
 <%= myp_text_field(f, :pin, "myplaceonline.credit_cards.pin", obj.pin) %>
 <%= render(partial: "myplaceonline/encrypt_fields", locals: { f: f }) %>
 <%= myp_decimal_field(f, :total_credit, "myplaceonline.credit_cards.total_credit", obj.total_credit) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.credit_cards.notes", obj.notes) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
 <%= myp_check_box(f, :email_reminders, "myplaceonline.credit_cards.email_reminders") %>
 <%=
   render partial: "myplaceonline/select_or_create", locals: {
@@ -93,7 +103,16 @@
     <%= myp_date_field(inner_child_fields, :start_date, "myplaceonline.cashback.start_date", childproperty.cashback.start_date) %>
     <%= myp_date_field(inner_child_fields, :end_date, "myplaceonline.cashback.end_date", childproperty.cashback.end_date) %>
     <%= myp_decimal_field(inner_child_fields, :yearly_maximum, "myplaceonline.cashback.yearly_maximum", childproperty.cashback.yearly_maximum) %>
-    <%= myp_text_area_markdown(inner_child_fields, :notes, "myplaceonline.cashback.notes", childproperty.cashback.notes) %>
+    <%=
+      input_field(
+        form: inner_child_fields,
+        type: Myp::FIELD_TEXT_AREA,
+        name: :notes,
+        value: childproperty.cashback.notes,
+        placeholder: "myplaceonline.general.notes",
+        collapsed: childproperty.cashback.notes.blank?,
+      )
+    %>
   <% end %>
 <% end %>
 <%=

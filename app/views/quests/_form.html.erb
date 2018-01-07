@@ -1,5 +1,15 @@
 <%= myp_text_field(f, :quest_title, "myplaceonline.quests.quest_title", obj.quest_title, autofocus) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes, collapsed: false) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
 <%=
   render partial: "myplaceonline/pictures_form", locals: {
     f: f,

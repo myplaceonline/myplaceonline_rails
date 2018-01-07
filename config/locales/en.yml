@@ -697,7 +697,6 @@ en:
       password_col_required: "The password column is required."
       service_name_col_required: "The service name column is required."
       url: "Website"
-      notes: "Notes"
       account_number: "Account Number"
       question: "Question"
       answer: "Answer"
@@ -876,7 +875,6 @@ en:
       delete_file: "Delete File/Picture"
     to_dos:
       short_description: "Short Description"
-      notes: "Notes"
       due_time: "Due"
       upcoming: "To Do %{name} %{delta}"
     contacts:
@@ -888,7 +886,6 @@ en:
       nickname: "Nick Name"
       birthday: "Birthday"
       age: "Age"
-      notes: "Notes"
       me: "Me"
       sex_type: "Sex"
       conversation: "Conversation"
@@ -961,7 +958,6 @@ en:
       size_bytes: "Size (bytes)"
       file: "File"
       none: "No File Specified"
-      notes: "Notes"
       content_type: "Content Type"
       inline_image: "Thumbnail"
       add_file: "Add File"
@@ -1024,7 +1020,6 @@ en:
       map: "Map"
       map_directions_from_home: "Directions (from Home)"
       full_address: "Full Address"
-      notes: "Notes"
       latitude: "Latitude"
       longitude: "Longitude"
       latitude_longitude: "Latitude/Longitude"
@@ -1037,7 +1032,6 @@ en:
       looked_up_postal_code: "Found %{sub_region2}, %{sub_region1} from %{postal_code}"
     activities:
       name: "Name"
-      notes: "Notes"
     apartments:
       location: "Address"
       landlord: "Landlord"
@@ -1051,7 +1045,6 @@ en:
       moveout_fee: "Move-out Fee"
       deposit: "Deposit"
       terminate_by: "Terminate By"
-      notes: "Notes"
       pictures: "Pictures"
       picture: "Picture"
       add_picture: "Add Picture"
@@ -1088,7 +1081,6 @@ en:
       name: "Membership Name"
       start_date: "Start Date"
       end_date: "End Date"
-      notes: "Notes"
       periodic_payment: "Periodic Payment"
       membership_identifier: "Number/Identifier"
       files: "Files/Pictures"
@@ -1120,7 +1112,6 @@ en:
       security_code: "Security Code/CVV"
       password: "Password"
       pin: "ATM PIN"
-      notes: "Notes"
       address: "Billing Address"
       card_type: "Card Type"
       visa: "Visa"
@@ -1147,7 +1138,6 @@ en:
       company: "Bank"
     ideas:
       name: "Idea Name"
-      idea: "Notes"
     lists:
       name: "List Name"
       items: "Items"
@@ -1183,7 +1173,6 @@ en:
       original_calculation_form: "Original Form"
     vehicles:
       name: "Vehicle Name"
-      notes: "Notes"
       owned_start: "Owned Start"
       owned_end: "Owned End"
       vin: "VIN"
@@ -1279,7 +1268,6 @@ en:
       company: "Company"
       started: "Started"
       periodic_payment: "Periodic Payment"
-      notes: "Notes"
     recreational_vehicle_insurances:
       insurance_name: "Name"
       insurances: "Insurances"
@@ -1289,7 +1277,6 @@ en:
       company: "Company"
       started: "Started"
       periodic_payment: "Periodic Payment"
-      notes: "Notes"
     loans:
       heading: "Loans"
       loan: "Loan"
@@ -1310,23 +1297,19 @@ en:
       service_location: "Service Location"
       cost: "Cost"
       miles: "Miles"
-      notes: "Notes"
       vehicle: "Vehicle"
     questions:
       name: "Question"
-      notes: "Notes"
       hypotheses: "Hypotheses"
       add_hypothesis: "Add Hypothesis"
       delete_hypothesis: "Delete Hypothesis"
     hypothesis:
       hypothesis: "Hypothesis"
       name: "Hypothesis"
-      notes: "Notes"
       experiments: "Experiments"
     hypothesis_experiments:
       experiment: "Experiment"
       name: "Experiment"
-      notes: "Notes"
       started: "Started"
       ended: "Ended"
       add: "Add Experiment"
@@ -1381,13 +1364,11 @@ en:
       calculate: "Calculate Inches"
     meals:
       meal_time: "Time"
-      notes: "Notes"
       price: "Price"
       calories: "Calories"
       location: "Location"
     recreational_vehicles:
       rv_name: "RV Name"
-      notes: "Notes"
       owned_start: "Owned Start"
       owned_end: "Owned End"
       vin: "VIN"
@@ -1438,7 +1419,6 @@ en:
       width: "Width"
       height: "Height"
       depth: "Depth"
-      notes: "Notes"
       recreational_vehicle: "RV"
     cashback:
       heading: "Cashback"
@@ -1447,7 +1427,6 @@ en:
       start_date: "Start Date"
       end_date: "End Date"
       yearly_maximum: "Yearly Maximum"
-      notes: "Notes"
       default_applies_to: "Everything"
       add: "Add Cashback"
       delete: "Delete Cashback"
@@ -1458,7 +1437,6 @@ en:
       food_name: "Name"
       price: "Price"
       calories: "Calories"
-      notes: "Notes"
       add: "Add Food"
       delete: "Delete Food"
       ingredients: "Ingredients"
@@ -1482,7 +1460,6 @@ en:
       drink_name: "Name"
       price: "Price"
       calories: "Calories"
-      notes: "Notes"
       add: "Add Drink"
       delete: "Delete Drink"
       servings: "Servings"
@@ -1492,7 +1469,6 @@ en:
       vitamin_name: "Name"
       amount_type: "Amount Type"
       vitamin_amount: "Amount"
-      notes: "Notes"
       add: "Add Vitamin"
       delete: "Delete Vitamin"
       test: "Test"
@@ -1518,7 +1494,6 @@ en:
       exercise_end: "End Date/Time"
       exercise_duration: "Duration"
       exercise_activity: "Activity"
-      notes: "Notes"
       situps: "Situps"
       pushups: "Pushups"
       last_exercise: "Last Exercise %{delta}"
@@ -1531,14 +1506,12 @@ en:
       sunscreen_type: "Sunscreen Type"
     medicine_usages:
       usage_time: "Time"
-      usage_notes: "Notes"
     medicines:
       heading: "Medicines"
       medicine: "Medicine"
       medicine_name: "Name"
       dosage: "Dosage"
       dosage_type: "Dosage Type"
-      notes: "Notes"
       add: "Add Medicine"
       delete: "Delete Medicine"
     file_folders:
@@ -1553,7 +1526,6 @@ en:
       pain_end_time: "Ended"
       pain_location: "Location"
       intensity: "Intensity"
-      notes: "Notes"
     intensities:
       one: "1 (Low)"
       two: "2"
@@ -1573,7 +1545,6 @@ en:
     blood_tests:
       fast_started: "Fast Started"
       test_time: "Test Time"
-      notes: "Notes"
       result: "Result"
       results: "Results"
       add: "Add Result"
@@ -1634,7 +1605,6 @@ en:
       checklist_item_name: "Name"
     medical_conditions:
       medical_condition_name: "Name"
-      notes: "Notes"
       instances: "Instances"
       instance: "Instance"
       add: "Add Instance"
@@ -1650,7 +1620,6 @@ en:
     medical_condition_instances:
       condition_start: "Start"
       condition_end: "End"
-      notes: "Notes"
     medical_condition_treatments:
       treatment_date: "Date"
       treatment_description: "Description"
@@ -1658,7 +1627,6 @@ en:
       location: "Location"
     life_goals:
       life_goal_name: "Goal"
-      notes: "Notes"
       goal_started: "Start"
       goal_ended: "End"
       long_term: "Long Term"
@@ -1680,7 +1648,6 @@ en:
       treatment_location: "Location"
     periodic_payments:
       periodic_payment_name: "Name"
-      notes: "Notes"
       started: "Started"
       ended: "Ended"
       date_period: "Period Type"
@@ -1708,7 +1675,6 @@ en:
       job_title: "Job Title"
       started: "Started"
       ended: "Ended"
-      notes: "Notes"
       company: "Company"
       manager_contact: "Manager"
       job_salaries: "Salaries"
@@ -1764,7 +1730,6 @@ en:
     job_salaries:
       started: "Started"
       ended: "Ended"
-      notes: "Notes"
       salary: "Salary"
       salary_period: "Salary Period"
       salary_yearly: "Yearly Salary (Pre-Tax)"
@@ -1785,7 +1750,6 @@ en:
       trip: "Trip"
       started: "Start"
       ended: "End"
-      notes: "Notes"
       location: "Location"
       work: "Work"
       pictures: "Pictures"
@@ -1867,7 +1831,6 @@ en:
       search: "Search"
       location: "Location"
       rating: "Rating"
-      notes: "Notes"
       submit: "Roll"
       pictures: "Pictures"
       picture: "Picture"
@@ -1880,7 +1843,6 @@ en:
       started: "Started"
       expires: "Expires"
       promotion_amount: "Amount"
-      notes: "Notes"
       expires_soon: "Promotion: %{promotion_name} for %{promotion_amount} %{expires_when}"
     reward_programs:
       reward_program_name: "Reward Program Name"
@@ -1888,7 +1850,6 @@ en:
       reward_program_status: "Current Status"
       started: "Started"
       ended: "Ends"
-      notes: "Notes"
       password: "Password"
       type_hotel: "Hotel"
       type_plane: "Airplane"
@@ -1906,7 +1867,6 @@ en:
       num_cores_per_cpu: "CPU Cores Per Socket"
       hyperthreaded: "Hyperthreaded"
       max_cpu_speed: "Maximum CPU Speed (GHz)"
-      notes: "Notes"
       manufacturer: "Manufacturer"
       administrator: "Administrator/Root User"
       main_user: "Main User"
@@ -1927,7 +1887,6 @@ en:
       insurance_name: "Name"
       insurance_amount: "Amount"
       started: "Started"
-      notes: "Notes"
       life_insurance_type: "Type"
       company: "Company"
       periodic_payment: "Periodic Payment"
@@ -1957,7 +1916,6 @@ en:
       five: "5 (Highest)"
     camp_locations:
       location: "Location"
-      notes: "Notes"
       rating: "Rating"
       vehicle_parking: "Vehicle Parking"
       free: "Free"
@@ -1993,14 +1951,12 @@ en:
       max_bullets: "Maximum Bullets"
       price: "Price"
       purchased: "Purchased"
-      notes: "Notes"
       registrations: "Gun Registrations"
       registration: "Gun Registration"
       add_registration: "Add Gun Registration"
       delete_registration: "Delete Gun Registration"
     desired_products:
       product_name: "Name"
-      notes: "Notes"
     page_transitions:
       none: "None"
       fade: "Fade"
@@ -2029,7 +1985,6 @@ en:
       is_read: "Have Read?"
       is_owned: "Owned?"
       is_discarded: "Discarded?"
-      notes: "Notes"
       when_read: "Date Read"
       recommender: "Recommender"
       review: "Review"
@@ -2068,10 +2023,8 @@ en:
       warranty_start: "Start"
       warranty_end: "End"
       warranty_condition: "Conditions"
-      notes: "Notes"
     favorite_products:
       product_name: "Name"
-      notes: "Notes"
       links: "Links"
       link: "Link"
       add_link: "Add Link"
@@ -2085,7 +2038,6 @@ en:
       therapist: "Therapist"
     health_insurances:
       insurance_name: "Name"
-      notes: "Notes"
       insurance_company: "Insurance Company"
       group_company: "Company Payer"
       periodic_payment: "Periodic Payment"
@@ -2114,7 +2066,6 @@ en:
       type_endocrinologist: "Endocrinologist"
     dental_insurances:
       insurance_name: "Name"
-      notes: "Notes"
       insurance_company: "Insurance Company"
       group_company: "Company Payer"
       periodic_payment: "Periodic Payment"
@@ -2129,7 +2080,6 @@ en:
       delete_file: "Delete File/Picture"
     hobbies:
       hobby_name: "Name"
-      notes: "Notes"
     poems:
       poem_name: "Name"
       poem: "Poem"
@@ -2137,7 +2087,6 @@ en:
       poem_link: "Link"
     musical_groups:
       musical_group_name: "Name"
-      notes: "Notes"
       is_listened_to: "Listened"
       rating: "Rating"
       awesome: "Awesome"
@@ -2158,7 +2107,6 @@ en:
       paid: "Paid"
       cleaning: "Cleaning"
       dentist: "Dentist"
-      notes: "Notes"
       dental_insurance: "Dental Insurance"
       no_cleaning_for: "Next Dental Cleaning %{delta}"
       next_cleaning: "No Dental Cleanings"
@@ -2167,7 +2115,6 @@ en:
       paid: "Paid"
       physical: "Physical"
       doctor: "Doctor"
-      notes: "Notes"
       health_insurance: "Health Insurance"
       next_physical: "Next Health Physical %{delta}"
       no_physicals: "No Health Physicals"
@@ -2246,7 +2193,6 @@ en:
     concerts:
       concert_date: "Date"
       concert_title: "Description"
-      notes: "Notes"
       location: "Location"
       musical_group: "Musical Group"
       musical_groups: "Musical Groups"
@@ -2440,7 +2386,6 @@ en:
       ]]>
     groups:
       group_name: "Name"
-      notes: "Notes"
       contact: "Contact"
       contacts: "Contacts"
       add_contact: "Add Contact"
@@ -2538,7 +2483,6 @@ en:
       gsm: "Supports GSM Networks"
       front_camera_megapixels: "Front Camera Megapixels"
       back_camera_megapixels: "Rear Camera Megapixels"
-      notes: "Notes"
       manufacturer: "Manufacturer"
       password: "Password"
       operating_system_android: "Android"
@@ -2643,7 +2587,6 @@ en:
       event_name: "Name"
       event_time: "Start Date/Time"
       event_end_time: "End Date/Time"
-      notes: "Notes"
       location: "Location"
       map: "Map"
       upcoming: "Event: %{name} %{delta}"
@@ -2678,13 +2621,11 @@ en:
       password: "Password"
       num_shares: "Number of Shares"
       vest_date: "Vest Date"
-      notes: "Notes"
       until_vest: "Until Vested"
       upcoming: "Stocks %{name} vest %{delta}"
     museums:
       museum_id: "Museum Identifier"
       museum_type: "Type"
-      notes: "Notes"
       location: "Location"
       website: "Website"
     museum_types:
@@ -2725,7 +2666,6 @@ en:
     bars:
       location: "Location"
       rating: "Rating"
-      notes: "Notes"
       pictures: "Pictures"
       picture: "Picture"
       add_picture: "Add Picture"
@@ -2736,7 +2676,6 @@ en:
       end_location: "End Location"
       parking_location: "Parking Location"
       rating: "Rating"
-      notes: "Notes"
       pictures: "Pictures"
       picture: "Picture"
       add_picture: "Add Picture"
@@ -2812,7 +2751,6 @@ en:
       receipt_name: "Name"
       receipt_time: "Date/Time"
       amount: "Amount"
-      notes: "Notes"
       files: "Files"
       file: "File"
       add_file: "Add File"
@@ -2828,7 +2766,6 @@ en:
     dessert_locations:
       location: "Location"
       rating: "Rating"
-      notes: "Notes"
       visited: "Visited"
       not_visited: "Not Visited"
     desired_locations:
@@ -2836,7 +2773,6 @@ en:
     money_balance_item_templates:
       amount: "Amount"
       original_amount: "Original Amount"
-      notes: "Notes"
       money_balance_item_name: "Description"
       money_balance: "Money Balance"
       add_i_paid: "Add I Paid Template"
@@ -2847,7 +2783,6 @@ en:
       rating: "Rating"
     volunteering_activities:
       volunteering_activity_name: "Name"
-      notes: "Notes"
     invite_codes:
       code: "Code"
       current_uses: "Current Uses"
@@ -2950,11 +2885,9 @@ en:
     cafes:
       location: "Location"
       rating: "Rating"
-      notes: "Notes"
     charities:
       location: "Location"
       rating: "Rating"
-      notes: "Notes"
     calendar_items:
       calendar: "Calendar"
       calendar_item_time: "Date/Time"
@@ -3158,7 +3091,6 @@ en:
     meadows:
       trek: "Hike to Meadow"
       rating: "Rating"
-      notes: "Notes"
       visited: "Visited"
       not_visited: "Not Visited"
     web_comics:
@@ -3463,12 +3395,10 @@ en:
       date_serviced: "Date Serviced"
       service_location: "Service Location"
       cost: "Cost"
-      notes: "Notes"
       recreational_vehicle: "RV"
     retirement_plans:
       retirement_plan_name: "Name"
       started: "Started"
-      notes: "Notes"
       retirement_plan_type: "Type"
       company: "Company"
       periodic_payment: "Periodic Payment"
@@ -4045,6 +3975,7 @@ en:
       mediation_updated_body_short: "A comment has been added to this mediation: %{link}"
       comment_submitted: "Your comment has been added and the other parties have been notified. You'll be notified if they respond."
       signature_will_be_added: "If available, website signature will be appended at the bottom of the message."
+      notes: "Other Reputation Report Notes"
     website_domain_properties:
       property_key: "Key"
       property_value: "Value"
@@ -4084,6 +4015,7 @@ en:
       name: "Name"
       report: "report"
       reputation_reports_summary: "There %{shame} of shame and %{praise} of praise for %{display}:"
+      notes: "on Person or Group"
     reputation_report_messages:
       message: "Message"
       back: "Report"

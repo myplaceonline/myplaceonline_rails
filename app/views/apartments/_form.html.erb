@@ -25,7 +25,17 @@
     autofocus: false
   }
 %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.apartments.notes", obj.notes) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
 <%=
   render(layout: "myplaceonline/childproperties", locals: {
     f: f,
@@ -123,7 +133,16 @@
   }) do |child_fields, childproperty|
 %>
   <%= myp_select(child_fields, :trash_type, "myplaceonline.apartments.trash_type", Myp.translate_options(ApartmentTrashPickup::TRASH_TYPES), childproperty.trash_type) %>
-  <%= myp_text_area(child_fields, :notes, "myplaceonline.general.notes", childproperty.notes) %>
+  <%=
+    input_field(
+      form: child_fields,
+      type: Myp::FIELD_TEXT_AREA,
+      name: :notes,
+      value: childproperty.notes,
+      placeholder: "myplaceonline.general.notes",
+      collapsed: childproperty.notes.blank?,
+    )
+  %>
   <%=
     render partial: 'myplaceonline/create', locals: {
       f: child_fields,

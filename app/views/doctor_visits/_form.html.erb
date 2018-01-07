@@ -1,7 +1,17 @@
 <%= myp_date_field(f, :visit_date, "myplaceonline.doctor_visits.visit_date", obj.visit_date) %>
 <%= myp_decimal_field(f, :paid, "myplaceonline.doctor_visits.paid", obj.paid) %>
 <%= myp_check_box(f, :physical, "myplaceonline.doctor_visits.physical") %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.doctor_visits.notes", obj.notes) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
 <%=
   render partial: "myplaceonline/select_or_create", locals: {
     f: f,

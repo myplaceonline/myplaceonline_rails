@@ -4,7 +4,17 @@
 <%= myp_date_field(f, :started, "myplaceonline.reward_programs.started", obj.started) %>
 <%= myp_date_field(f, :ended, "myplaceonline.reward_programs.ended", obj.ended) %>
 <%= myp_select(f, :program_type, "myplaceonline.reward_programs.program_type", Myp.translate_options(RewardProgram::REWARD_PROGRAM_TYPES), obj.program_type) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.reward_programs.notes", obj.notes) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
 <%=
   render partial: "myplaceonline/select_or_create", locals: {
     f: f,

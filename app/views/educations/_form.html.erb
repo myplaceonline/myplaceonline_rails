@@ -6,7 +6,17 @@
 <%= myp_decimal_field(f, :gpa, "myplaceonline.educations.gpa", obj.gpa, false, nil, "0.001") %>
 <%= myp_text_field(f, :student_id, "myplaceonline.educations.student_id", obj.student_id) %>
 <%= myp_check_box(f, :is_graduated, "myplaceonline.educations.graduated") %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
 <%=
   render partial: "myplaceonline/select_or_create", locals: {
     f: f,

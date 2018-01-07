@@ -2,7 +2,17 @@
 <%= myp_date_field(f, :date_serviced, "myplaceonline.recreational_vehicle_services.date_serviced", obj.date_serviced) %>
 <%= myp_text_field(f, :service_location, "myplaceonline.recreational_vehicle_services.service_location", obj.service_location, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
 <%= myp_text_field(f, :cost, "myplaceonline.recreational_vehicle_services.cost", obj.cost) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.recreational_vehicle_services.notes", obj.notes) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
 <%=
   render partial: "myplaceonline/pictures_form", locals: {
     f: f,

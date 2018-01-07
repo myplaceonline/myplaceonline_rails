@@ -16,6 +16,16 @@
   </fieldset>
 </div>
 
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.money_balance_item_templates.notes", obj.notes) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
 <%= myp_hidden_field(f, :invert, @owner_paid ? false : true) %>
 <%= myp_hidden_field_tag(:owner_paid, @owner_paid) %>

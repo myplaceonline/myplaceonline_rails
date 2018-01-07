@@ -3,7 +3,16 @@
     <p><%= image_content(obj.identity_file) %></p>
     <%= myp_file_field(file_fields, :file, "myplaceonline.pictures.picture", obj.identity_file.file) %>
     <%= myp_text_field(file_fields, :file_file_name, "myplaceonline.files.file_file_name", obj.identity_file.file_file_name) %>
-    <%= myp_text_area_markdown(file_fields, :notes, "myplaceonline.general.notes", obj.identity_file.notes) %>
+    <%=
+      input_field(
+        form: file_fields,
+        type: Myp::FIELD_TEXT_AREA,
+        name: :notes,
+        value: obj.identity_file.notes,
+        placeholder: "myplaceonline.general.notes",
+        collapsed: obj.identity_file.notes.blank?,
+      )
+    %>
     <%= myp_hidden_field(file_fields, :_updatetype, AllowExistingConcern::UPDATE_TYPE_COMBINE.to_s) %>
   <% end %>
 <% else %>
@@ -11,7 +20,16 @@
   <%= f.fields_for :identity_file, obj.identity_file do |file_fields| %>
     <%= myp_file_field(file_fields, :file, "myplaceonline.pictures.picture", obj.identity_file.file) %>
     <%= myp_text_field(file_fields, :file_file_name, "myplaceonline.files.file_file_name", obj.identity_file.file_file_name) %>
-    <%= myp_text_area_markdown(file_fields, :notes, "myplaceonline.general.notes", obj.identity_file.notes) %>
+    <%=
+      input_field(
+        form: file_fields,
+        type: Myp::FIELD_TEXT_AREA,
+        name: :notes,
+        value: obj.identity_file.notes,
+        placeholder: "myplaceonline.general.notes",
+        collapsed: obj.identity_file.notes.blank?,
+      )
+    %>
     <%= myp_hidden_field(file_fields, :_updatetype, AllowExistingConcern::UPDATE_TYPE_COMBINE.to_s) %>
   <% end %>
 <% end %>

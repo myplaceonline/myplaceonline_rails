@@ -1420,6 +1420,8 @@ module ApplicationHelper
       other_value: nil,
       other_hide_if_blank: false,
       other_hide_if_value_in: nil,
+      placeholder_prefix: nil,
+      placeholder_suffix: nil,
     }.merge(options)
     
     Rails.logger.debug{"ApplicationHelper.input_field: name: #{name}, type: #{type}, options: #{Myp.debug_print(options.dup.delete_if{|x,y| x == :form})}"}
@@ -1510,6 +1512,13 @@ module ApplicationHelper
       options[:placeholder] = I18n.t(options[:placeholder])
     end
     
+    if !options[:placeholder_prefix].blank?
+      options[:placeholder] = "#{options[:placeholder_prefix]} #{options[:placeholder]}"
+    end
+    if !options[:placeholder_suffix].blank?
+      options[:placeholder] = "#{options[:placeholder]} #{options[:placeholder_suffix]}"
+    end
+
     result = nil
     
     if options[:include_label] && options[:type] != Myp::FIELD_BOOLEAN

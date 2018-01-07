@@ -12,7 +12,17 @@
 <%= myp_text_field(f, :license_plate, "myplaceonline.vehicles.license_plate", obj.license_plate) %>
 <%= myp_region_field(f, :region, "myplaceonline.general.region", obj.region) %>
 <%= myp_subregion_field(f, :sub_region1, "myplaceonline.general.sub_region1", obj.region, obj.sub_region1) %>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.vehicles.notes", obj.notes) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
 <%=
   render layout: "myplaceonline/childproperties", locals: {
     f: f,
@@ -113,7 +123,16 @@
 %>
   <%= myp_text_field(child_fields, :insurance_name, "myplaceonline.vehicle_insurances.insurance_name", childproperty.insurance_name) %>
   <%= myp_date_field(child_fields, :started, "myplaceonline.vehicle_insurances.started", childproperty.started) %>
-  <%= myp_text_area_markdown(child_fields, :notes, "myplaceonline.vehicle_insurances.notes", childproperty.notes) %>
+  <%=
+    input_field(
+      form: child_fields,
+      type: Myp::FIELD_TEXT_AREA,
+      name: :notes,
+      value: childproperty.notes,
+      placeholder: "myplaceonline.general.notes",
+      collapsed: childproperty.notes.blank?,
+    )
+  %>
   <%=
     render partial: "myplaceonline/select_or_create", locals: {
       f: child_fields,

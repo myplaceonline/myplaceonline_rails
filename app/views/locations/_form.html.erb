@@ -83,7 +83,17 @@ function location_gps_success<%= random_name %>(location) {
 </script>
 
 <a href="#" onclick="return myplaceonline.requestGPS2(location_gps_success<%= random_name %>);" class="ui-btn"><%= t("myplaceonline.locations.request_gps") %></a>
-<%= myp_text_area_markdown(f, :notes, "myplaceonline.locations.notes", obj.notes) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
 <%=
   render layout: "myplaceonline/childproperties", locals: {
     f: f,

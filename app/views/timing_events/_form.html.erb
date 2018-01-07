@@ -3,5 +3,15 @@
   <button onclick="$(this).parents('div').first().find('.start').datebox('setTheDate', new Date()); return false;"><%= t("myplaceonline.timing_events.timing_event_start_now") %></button>
   <%= myp_datetime_field(f, :timing_event_end, "myplaceonline.timing_events.timing_event_end", obj.timing_event_end, false, "end") %>
   <button onclick="$(this).parents('div').first().find('.end').datebox('setTheDate', new Date()); return false;"><%= t("myplaceonline.timing_events.timing_event_end_now") %></button>
-  <%= myp_text_area_markdown(f, :notes, "myplaceonline.general.notes", obj.notes) %>
+  <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_TEXT_AREA,
+      name: :notes,
+      value: obj.notes,
+      placeholder: "myplaceonline.general.notes",
+      collapsed: obj.notes.blank?,
+      placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+    )
+  %>
 </div>
