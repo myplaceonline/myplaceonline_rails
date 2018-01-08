@@ -64,25 +64,30 @@ module Myp
     host: nil,
     display: nil,
     display_prefix: nil,
-    display_prefix_suffix: nil
+    display_prefix_suffix: nil,
+    email_only: false
   )
     if host.blank?
       host = Myp.top_host
     end
     result = name + "@" + host
-    if display.blank?
-      display = host.camelize
+    
+    if !email_only
+      if display.blank?
+        display = host.camelize
+      end
+      if !display_prefix.blank? && !display_prefix_suffix.blank?
+        display_prefix = display_prefix + " " + display_prefix_suffix
+      end
+      if !display.blank? && !display_prefix.blank?
+        result = display_prefix.gsub(/[<@>]/, "") + " " + display.gsub(/[<@>]/, "") + " <" + result + ">"
+      elsif !display.blank?
+        result = display.gsub(/[<@>]/, "") + " <" + result + ">"
+      elsif !display_prefix.blank?
+        result = display_prefix.gsub(/[<@>]/, "") + " <" + result + ">"
+      end
     end
-    if !display_prefix.blank? && !display_prefix_suffix.blank?
-      display_prefix = display_prefix + " " + display_prefix_suffix
-    end
-    if !display.blank? && !display_prefix.blank?
-      result = display_prefix.gsub(/[<@>]/, "") + " " + display.gsub(/[<@>]/, "") + " <" + result + ">"
-    elsif !display.blank?
-      result = display.gsub(/[<@>]/, "") + " <" + result + ">"
-    elsif !display_prefix.blank?
-      result = display_prefix.gsub(/[<@>]/, "") + " <" + result + ">"
-    end
+    
     result
   end
   

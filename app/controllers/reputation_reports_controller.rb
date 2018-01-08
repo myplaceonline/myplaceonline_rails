@@ -18,6 +18,9 @@ class ReputationReportsController < MyplaceonlineController
     invoice = @obj.get_site_invoice
     
     if @obj.allow_admin? && User.current_user.admin?
+      
+      @obj.ensure_agent_contact
+      
       result << {
         title: I18n.t("myplaceonline.reputation_reports.contact_reporter"),
         link: reputation_report_contact_reporter_path(@obj),
@@ -71,11 +74,11 @@ class ReputationReportsController < MyplaceonlineController
         icon: "bars"
       }
 
-      result << {
-        title: I18n.t("myplaceonline.reputation_reports.ensure_agent_contact"),
-        link: reputation_report_ensure_agent_contact_path(@obj),
-        icon: "user"
-      }
+#       result << {
+#         title: I18n.t("myplaceonline.reputation_reports.ensure_agent_contact"),
+#         link: reputation_report_ensure_agent_contact_path(@obj),
+#         icon: "user"
+#       }
       
       result << {
         title: I18n.t("myplaceonline.reputation_reports.update_status"),
@@ -386,6 +389,12 @@ class ReputationReportsController < MyplaceonlineController
         end
         
         @obj.mediation = "**#{I18n.t("myplaceonline.reputation_reports." + type)}** @ _#{User.current_user.time_now}_:\n\n#{@comment}<hr />\n\n#{@obj.mediation}"
+        
+        current_user_owns = @obj.current_user_owns?
+        cu = MyplaceonlineExecutionContext.user
+        admin_user = User.where(email: Myp.create_email(email_only: true)).take!
+        admin_identity = admin_user.domain_identity
+        
         MyplaceonlineExecutionContext.do_context(@obj) do
           @obj.save!
 
@@ -420,41 +429,44 @@ class ReputationReportsController < MyplaceonlineController
             link: public_link,
           )
           
-          if @obj.current_user_owns?
-            @obj.send_admin_message(
-              subject: subject,
-              body_markdown: body_long_markdown_private,
-            )
-            @obj.send_accused_message(
-              subject: subject,
-              body_short_markdown: body_short_markdown_public,
-              body_long_markdown: body_long_markdown_public
-            )
-          elsif User.current_user.admin?
-            @obj.send_reporter_message(
-              subject: subject,
-              body_short_markdown: body_short_markdown_private,
-              body_long_markdown: body_long_markdown_private
-            )
-            @obj.send_accused_message(
-              subject: subject,
-              body_short_markdown: body_short_markdown_public,
-              body_long_markdown: body_long_markdown_public
-            )
-          else
-            @obj.send_admin_message(
-              subject: subject,
-              body_markdown: body_long_markdown_private,
-            )
-            @obj.send_reporter_message(
-              subject: subject,
-              body_short_markdown: body_short_markdown_private,
-              body_long_markdown: body_long_markdown_private
-            )
+          MyplaceonlineExecutionContext.do_full_context(admin_user, admin_identity) do
+            if cu.admin?
+              @obj.send_reporter_message(
+                subject: subject,
+                body_short_markdown: body_short_markdown_private,
+                body_long_markdown: body_long_markdown_private
+              )
+              @obj.send_accused_message(
+                subject: subject,
+                body_short_markdown: body_short_markdown_public,
+                body_long_markdown: body_long_markdown_public
+              )
+            elsif current_user_owns
+              @obj.send_admin_message(
+                subject: subject,
+                body_markdown: body_long_markdown_private,
+              )
+              @obj.send_accused_message(
+                subject: subject,
+                body_short_markdown: body_short_markdown_public,
+                body_long_markdown: body_long_markdown_public
+              )
+            else
+              @obj.send_admin_message(
+                subject: subject,
+                body_markdown: body_long_markdown_private,
+              )
+              @obj.send_reporter_message(
+                subject: subject,
+                body_short_markdown: body_short_markdown_private,
+                body_long_markdown: body_long_markdown_private
+              )
+            end
           end
         end
 
         @comment = ""
+        
         flash[:error] = t("myplaceonline.reputation_reports.comment_submitted")
       else
         flash[:error] = t("myplaceonline.reputation_reports.no_comment")
