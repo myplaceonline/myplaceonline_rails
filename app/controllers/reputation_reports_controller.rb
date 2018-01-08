@@ -376,6 +376,10 @@ class ReputationReportsController < MyplaceonlineController
     redirect_to_obj
   end
   
+  def accusations
+    set_obj
+  end
+  
   def mediation
     set_obj
     
@@ -493,6 +497,7 @@ class ReputationReportsController < MyplaceonlineController
         :notes,
         :allow_mediation,
         :public_story,
+        :accused_story,
         reputation_report_files_attributes: FilesController.multi_param_names,
         agent_attributes: Agent.param_names,
       )

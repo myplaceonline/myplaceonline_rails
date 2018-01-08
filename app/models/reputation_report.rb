@@ -80,7 +80,7 @@ class ReputationReport < ApplicationRecord
     
     if !self.report_status.nil?
       
-      if action == :request_status || action == :mediation
+      if action == :request_status || action == :mediation || action == :accusations
         result = false
       end
       
@@ -301,7 +301,8 @@ class ReputationReport < ApplicationRecord
   def public_mediation_link
     existing_permission_share = PermissionShare.includes(:share).where(
       subject_class: self.class.name,
-      subject_id: self.id
+      subject_id: self.id,
+      valid_guest_actions: "mediation",
     ).first
     
     if existing_permission_share.nil?
@@ -321,5 +322,31 @@ class ReputationReport < ApplicationRecord
       token = existing_permission_share.share.token
     end
     reputation_report_mediation_url(self, token: token)
+  end
+
+  def public_accusations_link
+    existing_permission_share = PermissionShare.includes(:share).where(
+      subject_class: self.class.name,
+      subject_id: self.id,
+      valid_guest_actions: "accusations",
+    ).first
+    
+    if existing_permission_share.nil?
+      share = Share.build_share(owner_identity: self.identity)
+      share.save!
+      
+      PermissionShare.create!(
+        identity_id: self.identity_id,
+        share: share,
+        subject_class: self.class.name,
+        subject_id: self.id,
+        valid_guest_actions: "accusations",
+      )
+      
+      token = share.token
+    else
+      token = existing_permission_share.share.token
+    end
+    reputation_report_accusations_url(self, token: token)
   end
 end

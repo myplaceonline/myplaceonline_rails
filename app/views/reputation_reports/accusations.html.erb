@@ -1,0 +1,10 @@
+<% content_for :heading do -%><%= t("myplaceonline.reputation_reports.accusations") %><% end -%>
+
+<h1><%= t("myplaceonline.reputation_reports.accusations") %></h1>
+
+<p><%= t("myplaceonline.reputation_reports.accusations_intro") %></p>
+
+<hr />
+
+<%= data_row(heading: t("myplaceonline.reputation_reports.accusations"), content: @obj.accused_story, markdown: true, wrap: false) %>
+

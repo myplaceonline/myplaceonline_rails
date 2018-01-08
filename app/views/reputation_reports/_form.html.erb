@@ -92,6 +92,16 @@
     input_field(
       form: f,
       type: Myp::FIELD_TEXT_AREA,
+      name: :accused_story,
+      value: obj.accused_story,
+      placeholder: "myplaceonline.reputation_reports.accused_story",
+      collapsed: false,
+    )
+  %>
+  <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_TEXT_AREA,
       name: :public_story,
       value: obj.public_story,
       placeholder: "myplaceonline.reputation_reports.public_story",

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180108020504) do
+ActiveRecord::Schema.define(version: 20180108031726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4987,6 +4987,7 @@ ActiveRecord::Schema.define(version: 20180108020504) do
     t.boolean "allow_mediation"
     t.text "public_story"
     t.text "mediation"
+    t.text "accused_story"
     t.index ["agent_id"], name: "index_reputation_reports_on_agent_id"
     t.index ["identity_id"], name: "index_reputation_reports_on_identity_id"
   end

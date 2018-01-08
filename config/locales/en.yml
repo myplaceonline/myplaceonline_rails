@@ -3981,6 +3981,10 @@ en:
       signature_will_be_added: "If available, website signature will be appended at the bottom of the message."
       notes: "Other Reputation Report Notes"
       no_public_story: "No Public Story specified"
+      accused_story: "Story for Accused to See"
+      accusations: "Public Accusations Link"
+      accusations: "Accusations"
+      accusations_intro: "Below are the accusations against you:"
     website_domain_properties:
       property_key: "Key"
       property_value: "Value"

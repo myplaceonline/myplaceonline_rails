@@ -458,6 +458,7 @@ Rails.application.routes.draw do
       { instance: true, link: "unpublish" },
       { instance: true, link: "ensure_agent_contact" },
       { instance: true, link: "mediation" },
+      { instance: true, link: "accusations" },
       {
         subresources: true,
         name: :reputation_report_messages
