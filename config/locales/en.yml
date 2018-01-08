@@ -3980,6 +3980,7 @@ en:
       comment_submitted: "Your comment has been added and the other parties have been notified. You'll be notified if they respond."
       signature_will_be_added: "If available, website signature will be appended at the bottom of the message."
       notes: "Other Reputation Report Notes"
+      no_public_story: "No Public Story specified"
     website_domain_properties:
       property_key: "Key"
       property_value: "Value"

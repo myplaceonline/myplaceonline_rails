@@ -264,6 +264,10 @@ class ReputationReportsController < MyplaceonlineController
     set_obj
     deny_nonadmin
     
+    if @obj.public_story.blank?
+      redirect_to(obj_path, flash: { notice: I18n.t("myplaceonline.reputation_reports.no_public_story") })
+    end
+    
     if request.post?
       
       approved = Myp.param_bool(params, :approved)
