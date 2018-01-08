@@ -269,6 +269,7 @@ en:
       entered_invite_codes: "Invite Codes"
       site_invoices: "Site Invoices"
       reputation_report_messages: "Messages"
+      company_interactions: "Company Interactions"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -3939,6 +3940,7 @@ en:
       status_requested: "We'll respond to your status request soon"
       invoice: "Invoice"
       update_status: "Update Status"
+      update_status_intro: "To unpublish, use the Unpublish link instead."
       new_status: "New Status"
       initial_decision: "Initial Decision"
       approved: "Approved"
@@ -4016,6 +4018,7 @@ en:
       report: "report"
       reputation_reports_summary: "There %{shame} of shame and %{praise} of praise for %{display}:"
       notes: "on Person or Group"
+      heading: "Pictures of Person or Group"
     reputation_report_messages:
       message: "Message"
       back: "Report"

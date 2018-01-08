@@ -4,6 +4,8 @@
 
 <%= flashes! %>
 
+<p><%= t("myplaceonline.reputation_reports.update_status_intro") %></p>
+
 <%= form_tag(reputation_report_update_status_path(@obj), method: :post) do %>
 
   <%=

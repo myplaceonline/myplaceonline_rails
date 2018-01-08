@@ -49,12 +49,6 @@ class ReputationReportsController < MyplaceonlineController
           link: reputation_report_initial_decision_path(@obj),
           icon: "action"
         }
-      else
-        result << {
-          title: I18n.t("myplaceonline.reputation_reports.update_status"),
-          link: reputation_report_update_status_path(@obj),
-          icon: "check"
-        }
       end
       
       if !@obj.report_status.nil? && @obj.report_status == ReputationReport::REPORT_STATUS_PUBLISHED
@@ -81,6 +75,12 @@ class ReputationReportsController < MyplaceonlineController
         title: I18n.t("myplaceonline.reputation_reports.ensure_agent_contact"),
         link: reputation_report_ensure_agent_contact_path(@obj),
         icon: "user"
+      }
+      
+      result << {
+        title: I18n.t("myplaceonline.reputation_reports.update_status"),
+        link: reputation_report_update_status_path(@obj),
+        icon: "check"
       }
     end
     
@@ -334,7 +334,7 @@ class ReputationReportsController < MyplaceonlineController
   end
   
   def show_back_to_list
-    User.current_user.admin?
+    !User.current_user.guest?
   end
 
   def show_favorite_button

@@ -252,11 +252,11 @@ module ApplicationHelper
           options[:second_row] = show_reference(
             controller: Object.const_get(options[:controller_name]),
             id: content.id,
-            locals: {
+            locals: options[:reference_locals].merge({
               nested_show: true,
               nested_expanded: options[:expanded],
               nested_cell: !options[:show_reference_as_content],
-            }
+            })
           )
         end
       ensure
@@ -498,6 +498,7 @@ module ApplicationHelper
       content_wrapper: nil,
       content_wrapper_attributes: {},
       admin_details: false,
+      reference_locals: {},
     }.merge(options)
     
     data_display_options = ExecutionContext[:data_display_options]

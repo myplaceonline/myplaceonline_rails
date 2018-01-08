@@ -143,7 +143,8 @@
           existingobjurl: "location_path",
           searchurl: "/locations.json?perpage=0",
           edit: false,
-          autofocus: true
+          autofocus: true,
+          simple: true,
         },
       ]
     }) do |child_fields, childproperty|
@@ -158,7 +159,8 @@
         existingobjurl: "location_path",
         searchurl: "/locations.json?perpage=0",
         edit: edit,
-        autofocus: false
+        autofocus: false,
+        simple: true,
       }
     %>
   <% end %>
@@ -167,7 +169,8 @@
     render partial: "myplaceonline/pictures_form", locals: {
       f: identity_fields,
       obj: obj.agent_identity,
-      pictures_field: :identity_pictures
+      pictures_field: :identity_pictures,
+      heading: t("myplaceonline.agents.heading"),
     }
   %>
   
@@ -181,7 +184,8 @@
       existingobjurl: "company_path",
       searchurl: "/companies.json?perpage=0",
       edit: edit,
-      autofocus: false
+      autofocus: false,
+      simpleform: true,
     }
   %>
 <% end %>

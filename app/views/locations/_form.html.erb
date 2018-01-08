@@ -1,4 +1,10 @@
 <% nested ||= false %>
+<%
+if !defined?(simple)
+  simple = Myp.param_bool(params, :simple)
+end
+%>
+
 <%= myp_text_field(f, :name, "myplaceonline.locations.name", obj.name) %>
 <%= myp_text_field(f, :address1, "myplaceonline.locations.address1", obj.address1, autofocus) %>
 <%= myp_text_field(f, :address2, "myplaceonline.locations.address2", obj.address2) %>
@@ -94,44 +100,46 @@ function location_gps_success<%= random_name %>(location) {
     placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
   )
 %>
-<%=
-  render layout: "myplaceonline/childproperties", locals: {
-    f: f,
-    heading: t("myplaceonline.locations.phones"),
-    childpropertiesname: :location_phones,
-    childproperties: obj.location_phones,
-    deletebutton: t("myplaceonline.locations.delete_phone"),
-    addbutton: t("myplaceonline.locations.add_phone"),
-    expanded: obj.location_phones.length > 0,
-    formjson: [
-      {
-        type: 'text',
-        name: 'number',
-        placeholder: t("myplaceonline.locations.phone"),
-        autofocus: true
-      }
-    ]
-  } do |child_fields, childproperty|
-%>
-  <%= myp_text_field(child_fields, :number, "myplaceonline.locations.phone", childproperty.number) %>
+<% if !simple %>
+  <%=
+    render layout: "myplaceonline/childproperties", locals: {
+      f: f,
+      heading: t("myplaceonline.locations.phones"),
+      childpropertiesname: :location_phones,
+      childproperties: obj.location_phones,
+      deletebutton: t("myplaceonline.locations.delete_phone"),
+      addbutton: t("myplaceonline.locations.add_phone"),
+      expanded: obj.location_phones.length > 0,
+      formjson: [
+        {
+          type: 'text',
+          name: 'number',
+          placeholder: t("myplaceonline.locations.phone"),
+          autofocus: true
+        }
+      ]
+    } do |child_fields, childproperty|
+  %>
+    <%= myp_text_field(child_fields, :number, "myplaceonline.locations.phone", childproperty.number) %>
+  <% end %>
+  <%=
+    render partial: "myplaceonline/select_or_create", locals: {
+      f: f,
+      name: :website,
+      existingobj: obj.website,
+      heading: t("myplaceonline.locations.website"),
+      objform: "websites/form",
+      existingobjurl: "website_path",
+      searchurl: "/websites.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
+  <%=
+    render partial: "myplaceonline/pictures_form", locals: {
+      f: f,
+      obj: obj,
+      pictures_field: :location_pictures
+    }
+  %>
 <% end %>
-<%=
-  render partial: "myplaceonline/select_or_create", locals: {
-    f: f,
-    name: :website,
-    existingobj: obj.website,
-    heading: t("myplaceonline.locations.website"),
-    objform: "websites/form",
-    existingobjurl: "website_path",
-    searchurl: "/websites.json?perpage=0",
-    edit: edit,
-    autofocus: false
-  }
-%>
-<%=
-  render partial: "myplaceonline/pictures_form", locals: {
-    f: f,
-    obj: obj,
-    pictures_field: :location_pictures
-  }
-%>

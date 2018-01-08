@@ -193,6 +193,7 @@ class FilesController < MyplaceonlineController
       :file,
       :file_file_name,
       :notes,
+      :_destroy,
       folder_attributes: [ :id ]
     ]
   end
