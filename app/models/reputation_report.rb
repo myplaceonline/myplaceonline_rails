@@ -175,9 +175,11 @@ class ReputationReport < ApplicationRecord
         body: body_short_markdown,
         long_body: body_long_markdown,
         send_preferences: Message::SEND_PREFERENCE_DEFAULT,
-        message_category: I18n.t("myplaceonline.reputation_reports.administrative_contact"),
+        message_category: Myp.website_domain.display,
         subject: subject,
         suppress_signature: suppress_signature,
+        reply_to: User.current_user.domain_identity.user.email,
+        suppress_context_info: true,
         message_contacts: [
           MessageContact.new(
             identity: self.identity,

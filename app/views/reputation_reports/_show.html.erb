@@ -11,10 +11,10 @@ ExecutionContext.stack(data_display_options: { show_clipboard_button: false, ref
   <%= data_row(heading: t("myplaceonline.reputation_reports.public_story"), content: obj.public_story, markdown: true) %>
   <%= data_row(heading: t("myplaceonline.reputation_reports.short_description"), content: obj.short_description) %>
   <%= data_row(heading: t("myplaceonline.reputation_reports.report_type"), content: obj.report_type, enumeration: ReputationReport::REPORT_TYPES) %>
-  <%= data_row(heading: t("myplaceonline.reputation_reports.agent"), content: obj.agent, expanded: true, reference_locals: { fullshow: true }) %>
   <%= data_row(heading: t("myplaceonline.reputation_reports.story"), content: obj.story, markdown: true) %>
-  <%= data_row(heading: t("myplaceonline.reputation_reports.notes"), content: obj.notes, markdown: true) %>
   <%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.reputation_report_files) %>
+  <%= data_row(heading: t("myplaceonline.reputation_reports.agent"), content: obj.agent, expanded: true, reference_locals: { fullshow: true }) %>
+  <%= data_row(heading: t("myplaceonline.reputation_reports.notes"), content: obj.notes, markdown: true) %>
   <%= data_row(heading: t("myplaceonline.reputation_reports.allow_mediation"), content: obj.allow_mediation) %>
   <% if current_user.admin? %>
     <%= data_row(heading: t("myplaceonline.reputation_reports.mediation_link"), content: obj.public_mediation_link, url: true) %>

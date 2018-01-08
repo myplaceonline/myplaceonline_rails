@@ -151,8 +151,13 @@ class Email < ApplicationRecord
 
         final_content += "<hr />\n"
         final_content += "<p>#{I18n.t("myplaceonline.unsubscribe.reply_hint", respond_to: user_display)}</p>\n"
-        final_content += "<p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category), unsubscribe_category_link)}</p>\n"
-        final_content += "<p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display), unsubscribe_all_link)}</p>"
+
+        if self.suppress_context_info?
+          final_content += "<p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category_generic", category: email_category), unsubscribe_category_link)}</p>\n"
+        else
+          final_content += "<p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category), unsubscribe_category_link)}</p>\n"
+          final_content += "<p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display), unsubscribe_all_link)}</p>"
+        end
         
         final_content_plain = content_plain + "\n\n"
 
@@ -187,8 +192,13 @@ class Email < ApplicationRecord
 
         final_content_plain += "\n==\n\n"
         final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.reply_hint", respond_to: user_display)}\n\n"
-        final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category)}: #{unsubscribe_category_link}\n\n"
-        final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display)}: #{unsubscribe_all_link}"
+        
+        if self.suppress_context_info?
+          final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category_generic", category: email_category)}: #{unsubscribe_category_link}\n\n"
+        else
+          final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_category", user: user_display, category: email_category)}: #{unsubscribe_category_link}\n\n"
+          final_content_plain += "#{I18n.t("myplaceonline.unsubscribe.link_unsubscribe_all", user: user_display)}: #{unsubscribe_all_link}"
+        end
         
         if !contact.nil?
           final_content = final_content.gsub("%{name}", contact.contact_identity.display_short)
@@ -196,6 +206,16 @@ class Email < ApplicationRecord
         end
         
         Rails.logger.info{"Sending email to #{target}"}
+        
+        reply_to = identity.user.email
+        if !self.reply_to.blank?
+          reply_to = self.reply_to
+        end
+        
+        from_prefix = user_display_short
+        if self.suppress_context_info?
+          from_prefix = nil
+        end
 
         Myp.send_email(
           to_hash.keys,
@@ -204,8 +224,8 @@ class Email < ApplicationRecord
           cc_hash.keys,
           bcc_hash.keys,
           final_content_plain,
-          identity.user.email,
-          from_prefix: user_display_short
+          reply_to,
+          from_prefix: from_prefix
         )
         
         if !contact.nil?

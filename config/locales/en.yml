@@ -2866,6 +2866,7 @@ en:
       unsubscribed_category: "Successfully unsubscribed from %{category} posts."
       link_unsubscribe_all: "Unsubscribe from all emails from %{user}"
       link_unsubscribe_category: "Unsubscribe from %{user}'s '%{category}' emails"
+      link_unsubscribe_category_generic: "Unsubscribe from '%{category}' emails"
     drafts:
       draft_name: "Name"
       email: "Email"
@@ -3922,7 +3923,7 @@ en:
       report_type_help: "Select if this is a story of Shame or Praise:"
       story_help: "Provide your story with as many details as possible (attach any evidence/pictures at the bottom):"
       agent_help: "Provide details of the person or group so that we can try to contact them such as email, phone, etc.:"
-      files_help: "Attach any files or pictures of evidence:"
+      files_help: "Optional: Attach any files or pictures of evidence:"
       agent: "Person or Group"
       contact_reporter: "Contact Reporter"
       contact_accused: "Contact Accused"

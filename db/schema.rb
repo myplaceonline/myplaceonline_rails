@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171231194624) do
+ActiveRecord::Schema.define(version: 20180108020504) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1928,6 +1928,8 @@ ActiveRecord::Schema.define(version: 20171231194624) do
     t.integer "rating"
     t.boolean "is_public"
     t.boolean "suppress_signature"
+    t.string "reply_to"
+    t.boolean "suppress_context_info"
     t.index ["identity_id"], name: "index_emails_on_identity_id"
   end
 
@@ -3720,6 +3722,8 @@ ActiveRecord::Schema.define(version: 20171231194624) do
     t.boolean "is_public"
     t.boolean "suppress_prefix"
     t.boolean "suppress_signature"
+    t.string "reply_to"
+    t.boolean "suppress_context_info"
     t.index ["identity_id"], name: "index_messages_on_identity_id"
   end
 

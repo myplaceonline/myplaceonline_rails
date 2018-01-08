@@ -96,6 +96,8 @@ class Message < ApplicationRecord
       draft: self.draft,
       personalize: self.personalize,
       suppress_signature: self.suppress_signature,
+      reply_to: self.reply_to,
+      suppress_context_info: self.suppress_context_info,
     )
     self.message_contacts.each do |x|
       if x.contact.has_email? && should_send_email?(contact: x.contact, skip_contacts: skip_contacts)
