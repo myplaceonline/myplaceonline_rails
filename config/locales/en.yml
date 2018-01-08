@@ -3936,6 +3936,7 @@ en:
       price: "Price"
       propose_price_subject: "Price to investigate %{type} for %{name}"
       propose_price_body: "We propose a price of %{cost} to investigate your report on %{name}. Click the following link to start the investigation:\n\n[%{link}](%{link})\n\n%{details}"
+      propose_price_body2: "We propose a price of %{cost} to investigate your report on %{name}. The amount due now is %{cost2}. Click the following link to start the investigation:\n\n[%{link}](%{link})\n\n%{details}"
       user: "User"
       request_status: "Request Status"
       status_requested: "We'll respond to your status request soon"

@@ -202,13 +202,24 @@ class ReputationReportsController < MyplaceonlineController
       
       link = site_invoice_pay_url(site_invoice)
       
-      message = I18n.t(
-        "myplaceonline.reputation_reports.propose_price_body",
-        name: @obj.agent.display,
-        cost: Myp.number_to_currency(@price),
-        details: @message,
-        link: link,
-      )
+      if @obj.report_type == ReputationReport::REPORT_TYPE_SHAME
+        message = I18n.t(
+          "myplaceonline.reputation_reports.propose_price_body2",
+          name: @obj.agent.display,
+          cost: Myp.number_to_currency(@price),
+          cost2: Myp.number_to_currency(first_charge),
+          details: @message,
+          link: link,
+        )
+      else
+        message = I18n.t(
+          "myplaceonline.reputation_reports.propose_price_body",
+          name: @obj.agent.display,
+          cost: Myp.number_to_currency(@price),
+          details: @message,
+          link: link,
+        )
+      end
       
       @obj.report_status = ReputationReport::REPORT_STATUS_PENDING_PAYMENT_FROM_USER
       @obj.save!
