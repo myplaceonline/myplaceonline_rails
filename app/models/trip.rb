@@ -425,7 +425,7 @@ class Trip < ApplicationRecord
       result += self.hotel.total_cost
     end
     trip_flights.each do |trip_flight|
-      if !trip_flight.flight.total_cost.nil?
+      if !trip_flight.flight.nil? && !trip_flight.flight.total_cost.nil?
         if result.nil?
           result = 0
         end
