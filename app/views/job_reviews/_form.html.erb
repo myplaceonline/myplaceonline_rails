@@ -8,7 +8,7 @@
     value: obj.notes,
     placeholder: "myplaceonline.job_reviews.notes",
     collapsed: obj.notes.blank?,
-    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+    placeholder_prefix: I18n.t("myplaceonline.category.job_reviews").singularize,
   )
 %>
 <%= myp_text_area_markdown(f, :self_evaluation, "myplaceonline.job_reviews.self_evaluation", obj.self_evaluation) %>
