@@ -38,7 +38,7 @@ class ContactsController < MyplaceonlineController
     if request.post?
       @groups.each do |group|
         is_in_group = !@contact_groups.index(group.id).nil?
-        if params["group" + group.id.to_s]
+        if params["group" + group.id.to_s].is_true?
           if is_in_group
             # Nothing to do, already in group
           else
