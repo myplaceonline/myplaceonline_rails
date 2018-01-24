@@ -2,7 +2,8 @@ source "https://rubygems.org"
 
 gem "rake"
 gem "rails", ">= 5.1"
-gem "pg"
+# https://stackoverflow.com/a/48196438/4135310
+gem "pg", "~> 0.21"
 gem "sass-rails"
 gem "uglifier"
 gem "coffee-rails"
