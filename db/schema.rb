@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180108031726) do
+ActiveRecord::Schema.define(version: 20180126231335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1072,6 +1072,32 @@ ActiveRecord::Schema.define(version: 20180108031726) do
     t.boolean "is_public"
     t.index ["calendar_id"], name: "index_complete_due_items_on_calendar_id"
     t.index ["identity_id"], name: "index_complete_due_items_on_identity_id"
+  end
+
+  create_table "computer_environment_files", force: :cascade do |t|
+    t.bigint "computer_environment_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["computer_environment_id"], name: "index_computer_environment_files_on_computer_environment_id"
+    t.index ["identity_file_id"], name: "index_computer_environment_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_computer_environment_files_on_identity_id"
+  end
+
+  create_table "computer_environments", force: :cascade do |t|
+    t.string "computer_environment_name"
+    t.integer "computer_environment_type"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_computer_environments_on_identity_id"
   end
 
   create_table "computer_ssh_keys", id: :serial, force: :cascade do |t|
@@ -6745,6 +6771,10 @@ ActiveRecord::Schema.define(version: 20180108031726) do
   add_foreign_key "company_interactions", "identities"
   add_foreign_key "complete_due_items", "calendars", name: "complete_due_items_calendar_id_fk"
   add_foreign_key "complete_due_items", "identities", name: "complete_due_items_identity_id_fk"
+  add_foreign_key "computer_environment_files", "computer_environments"
+  add_foreign_key "computer_environment_files", "identities"
+  add_foreign_key "computer_environment_files", "identity_files"
+  add_foreign_key "computer_environments", "identities"
   add_foreign_key "computer_ssh_keys", "computers"
   add_foreign_key "computer_ssh_keys", "identities"
   add_foreign_key "computer_ssh_keys", "ssh_keys"

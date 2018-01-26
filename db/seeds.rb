@@ -185,7 +185,8 @@ Category.create!([
   {id: 185, name: "internal_contents", link: "internal_contents", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/check_box_uncheck.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: true, internal: true},
   {id: 186, name: "reputation_reports", link: "reputation_reports", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/lighthouse.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 187, name: "agents", link: "agents", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/account_menu.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
-  {id: 220, name: "site_invoices", link: "site_invoices", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/receipt_invoice.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: true}
+  {id: 188, name: "site_invoices", link: "site_invoices", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/receipt_invoice.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: true},
+  {id: 221, name: "computer_environments", link: "computer_environments", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/server.png", explicit: nil, user_type_mask: nil, experimental: true, simple: nil, internal: nil}
 ])
 
 # Reinitialize to cache the categories created above

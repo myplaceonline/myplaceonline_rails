@@ -1,0 +1,4 @@
+<%= data_row(heading: t("myplaceonline.computer_environments.computer_environment_name"), content: obj.computer_environment_name) %>
+<%= data_row(heading: t("myplaceonline.computer_environments.computer_environment_type"), content: obj.computer_environment_type, enumeration: ComputerEnvironment::COMPUTER_ENVIRONMENT_TYPES) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.computer_environment_files) %>
