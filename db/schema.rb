@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180126231335) do
+ActiveRecord::Schema.define(version: 20180126235104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1074,6 +1074,18 @@ ActiveRecord::Schema.define(version: 20180126231335) do
     t.index ["identity_id"], name: "index_complete_due_items_on_identity_id"
   end
 
+  create_table "computer_environment_addresses", force: :cascade do |t|
+    t.bigint "computer_environment_id"
+    t.string "host_name"
+    t.string "ip_address"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["computer_environment_id"], name: "index_computer_environment_addresses_on_computer_environment_id"
+    t.index ["identity_id"], name: "index_computer_environment_addresses_on_identity_id"
+  end
+
   create_table "computer_environment_files", force: :cascade do |t|
     t.bigint "computer_environment_id"
     t.bigint "identity_file_id"
@@ -1084,6 +1096,18 @@ ActiveRecord::Schema.define(version: 20180126231335) do
     t.index ["computer_environment_id"], name: "index_computer_environment_files_on_computer_environment_id"
     t.index ["identity_file_id"], name: "index_computer_environment_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_computer_environment_files_on_identity_id"
+  end
+
+  create_table "computer_environment_passwords", force: :cascade do |t|
+    t.bigint "computer_environment_id"
+    t.bigint "password_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["computer_environment_id"], name: "index_computer_environment_passwords_on_computer_environment_id"
+    t.index ["identity_id"], name: "index_computer_environment_passwords_on_identity_id"
+    t.index ["password_id"], name: "index_computer_environment_passwords_on_password_id"
   end
 
   create_table "computer_environments", force: :cascade do |t|
@@ -6771,9 +6795,14 @@ ActiveRecord::Schema.define(version: 20180126231335) do
   add_foreign_key "company_interactions", "identities"
   add_foreign_key "complete_due_items", "calendars", name: "complete_due_items_calendar_id_fk"
   add_foreign_key "complete_due_items", "identities", name: "complete_due_items_identity_id_fk"
+  add_foreign_key "computer_environment_addresses", "computer_environments"
+  add_foreign_key "computer_environment_addresses", "identities"
   add_foreign_key "computer_environment_files", "computer_environments"
   add_foreign_key "computer_environment_files", "identities"
   add_foreign_key "computer_environment_files", "identity_files"
+  add_foreign_key "computer_environment_passwords", "computer_environments"
+  add_foreign_key "computer_environment_passwords", "identities"
+  add_foreign_key "computer_environment_passwords", "passwords"
   add_foreign_key "computer_environments", "identities"
   add_foreign_key "computer_ssh_keys", "computers"
   add_foreign_key "computer_ssh_keys", "identities"

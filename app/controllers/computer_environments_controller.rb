@@ -29,6 +29,8 @@ class ComputerEnvironmentsController < MyplaceonlineController
         :computer_environment_name,
         :computer_environment_type,
         :notes,
+        computer_environment_addresses_attributes: ComputerEnvironmentAddress.params,
+        computer_environment_passwords_attributes: ComputerEnvironmentPassword.params,
       )
     end
 end

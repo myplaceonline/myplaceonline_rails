@@ -32,4 +32,8 @@ class ComputerEnvironment < ApplicationRecord
   end
 
   child_files
+
+  child_properties(name: :computer_environment_addresses, sort: "host_name ASC")
+
+  child_properties(name: :computer_environment_passwords)
 end

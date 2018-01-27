@@ -19,6 +19,93 @@
   )
 %>
 <%=
+  render(layout: "myplaceonline/childproperties", locals: {
+    f: f,
+    heading: t("myplaceonline.computer_environments.addresses"),
+    childpropertiesname: :computer_environment_addresses,
+    childproperties: obj.computer_environment_addresses,
+    deletebutton: t("myplaceonline.computer_environments.delete_address"),
+    addbutton: t("myplaceonline.computer_environments.add_address"),
+    expanded: obj.computer_environment_addresses.length > 0,
+    position_field: :position,
+    itemname: t("myplaceonline.computer_environments.address"),
+    formjson: [
+      {
+        type: "text",
+        name: "host_name",
+        placeholder: t("myplaceonline.computer_environment_addresses.host_name"),
+        autofocus: true
+      },
+      {
+        type: "text",
+        name: "ip_address",
+        placeholder: t("myplaceonline.computer_environment_addresses.ip_address"),
+      },
+      {
+        type: "position",
+        name: "position"
+      }
+    ]
+  }) do |child_fields, childproperty|
+%>
+  <%=
+    input_field(
+      form: child_fields,
+      type: Myp::FIELD_TEXT,
+      name: :host_name,
+      value: childproperty.host_name,
+      placeholder: "myplaceonline.computer_environment_addresses.host_name",
+    )
+  %>
+  <%=
+    input_field(
+      form: child_fields,
+      type: Myp::FIELD_TEXT,
+      name: :ip_address,
+      value: childproperty.ip_address,
+      placeholder: "myplaceonline.computer_environment_addresses.ip_address",
+    )
+  %>
+<% end %>
+<%=
+  render layout: "myplaceonline/childproperties", locals: {
+    f: f,
+    heading: t("myplaceonline.computer_environments.passwords"),
+    childpropertiesname: :computer_environment_passwords,
+    childproperties: obj.computer_environment_passwords,
+    deletebutton: t("myplaceonline.computer_environments.delete_password"),
+    addbutton: t("myplaceonline.computer_environments.add_password"),
+    expanded: obj.computer_environment_passwords.length > 0,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :password_attributes,
+        partial: "myplaceonline/select_or_create",
+        heading: t("myplaceonline.computer_environments.password"),
+        objform: "passwords/form",
+        existingobjurl: "password_path",
+        searchurl: "/passwords.json?perpage=0",
+        edit: false,
+        autofocus: true
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%=
+    render partial: "myplaceonline/select_or_create", locals: {
+      f: child_fields,
+      name: :password_attributes,
+      existingobj: childproperty.password,
+      heading: t("myplaceonline.computer_environments.password"),
+      objform: "passwords/form",
+      existingobjurl: "password_path",
+      searchurl: "/passwords.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
+<% end %>
+<%=
   input_field(
     form: f,
     type: Myp::FIELD_TEXT_AREA,

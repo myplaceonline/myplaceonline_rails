@@ -1,4 +1,10 @@
 <%= data_row(heading: t("myplaceonline.computer_environments.computer_environment_name"), content: obj.computer_environment_name) %>
 <%= data_row(heading: t("myplaceonline.computer_environments.computer_environment_type"), content: obj.computer_environment_type, enumeration: ComputerEnvironment::COMPUTER_ENVIRONMENT_TYPES) %>
+<% obj.computer_environment_addresses.each do |x| %>
+  <%= table_row_heading(t("myplaceonline.computer_environments.address")) %>
+  <%= data_row(heading: t("myplaceonline.computer_environment_addresses.host_name"), content: x.host_name) %>
+  <%= data_row(heading: t("myplaceonline.computer_environment_addresses.ip_address"), content: x.ip_address) %>
+<% end %>
+<%= data_row(heading: t("myplaceonline.computer_environments.password"), content: obj.computer_environment_passwords) %>
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
 <%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.computer_environment_files) %>
