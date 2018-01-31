@@ -13,7 +13,7 @@ class Trip < ApplicationRecord
 
   child_properties(name: :trip_stories)
   
-  child_properties(name: :trip_flights)
+  child_properties(name: :trip_flights, has_many_lambda: lambda { joins(:flight).order("flights.flight_start_date ASC NULLS LAST") })
   
   child_property(name: :event)
 
