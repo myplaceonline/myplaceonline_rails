@@ -1,5 +1,5 @@
 class CreditCardsController < MyplaceonlineController
-  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:listcashback, :total_credit, :main]
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:listcashback, :total_credit]
 
   def listcashback
     @cashbacks = CreditCardCashback.where(identity_id: current_user.current_identity.id).sort{ |x, y| y.cashback.cashback_percentage <=> x.cashback.cashback_percentage }.keep_if{|c| c.expiration_includes_today?}
@@ -41,10 +41,6 @@ class CreditCardsController < MyplaceonlineController
     true
   end
 
-  def main
-    redirect_to(credit_card_path(self.all.order("visit_count DESC").limit(1).take!))
-  end
-  
   protected
     def additional_sorts
       [
