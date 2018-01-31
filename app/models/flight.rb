@@ -79,4 +79,18 @@ class Flight < ApplicationRecord
       model_id: self.id,
     )
   end
+
+  def self.calendar_item_display(calendar_item)
+    flight = calendar_item.find_model_object
+    I18n.t(
+      "myplaceonline.flights.checkin",
+      name: flight.display,
+      delta: Myp.time_delta(flight.flight_start_date)
+    )
+  end
+  
+  def self.calendar_item_link(calendar_item)
+    flight = calendar_item.find_model_object
+    "/flights/#{flight.id}"
+  end
 end

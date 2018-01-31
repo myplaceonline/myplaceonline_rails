@@ -2,6 +2,10 @@ class Object
   def is_true?
     self == true || self.is_a?(TrueClass) || self == "1" || self == "true"
   end
+  
+  def is_false?
+    !self.is_true?
+  end
 end
 
 class String

@@ -131,7 +131,7 @@ module AllowExistingConcern extend ActiveSupport::Concern
     end
 
     def set_properties_with_attributes(name:, attributes:)
-      Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes #{self.class} setting attributes for name: #{name}, on self: #{self.inspect}, attributes: #{Myp.debug_print(attributes)}"}
+      Rails.logger.debug{"AllowExistingConcern. #{self.class} setting attributes for name: #{name}, on self: #{self.inspect}, attributes: #{Myp.debug_print(attributes)}"}
       
       model = MyplaceonlineActiveRecordBaseConcern.get_attributes_model_mapping(klass: self.class, name: name)
       
@@ -150,13 +150,13 @@ module AllowExistingConcern extend ActiveSupport::Concern
         
         Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes for name #{name} on #{x.inspect}"}
         
-        attributes.each do |key, value|
-          if !value["id"].blank? && value["id"].to_i == x.id
-            if value["_destroy"] != "1"
-              Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes found matching attributes: #{Myp.debug_print(value)}"}
+        attributes.each do |key, value_hash|
+          if !value_hash["id"].blank? && value_hash["id"].to_i == x.id
+            if value_hash["_destroy"] != "1"
+              Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes found matching attributes: #{Myp.debug_print(value_hash)}"}
               
               x.class.child_property_models.each do |child, model|
-                child_attributes = value["#{child}_attributes"]
+                child_attributes = value_hash["#{child}_attributes"]
                 
                 Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes checking child: #{child}, model: #{model}, child_attributes: #{Myp.debug_print(child_attributes)}"}
                 
@@ -175,27 +175,33 @@ module AllowExistingConcern extend ActiveSupport::Concern
                 end
               end
               
-              Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes before deletion: #{Myp.debug_print(value)}"}
+              Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes before deletion: #{Myp.debug_print(value_hash)}"}
               
-              value.delete_if{|key, value| key == "id" || key.end_with?("attributes")}
+              value_hash.delete_if{|value_hash_key, value_hash_value| value_hash_key == "id" || value_hash_key.end_with?("attributes")}
               
-              Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes assigning remaining attributes: #{Myp.debug_print(value)}"}
+              Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes assigning remaining attributes: #{Myp.debug_print(value_hash)}"}
               
-              x.assign_attributes(value)
+              x.assign_attributes(value_hash)
               
               # Delete this key from the attributes we pass to super because we've already updated this child,
               # and we don't want super to munge this updates, only to add any new ones
               attrs_to_delete << key
-            elsif value["_destroy"].is_true?
+            elsif value_hash["_destroy"].is_true?
               children_to_delete << x
               attrs_to_delete << key
+              
+              Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes queue destroy: #{Myp.debug_print(value_hash)}"}
             end
           end
         end
       end
       
       children_to_delete.each do |child_to_delete|
+        
+        Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes delete: #{Myp.debug_print(child_to_delete)}"}
+        
         self.send("#{name.to_s}").delete(child_to_delete)
+        
       end
 
       Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes after updating existing attrs: #{attributes}"}
@@ -203,19 +209,25 @@ module AllowExistingConcern extend ActiveSupport::Concern
       attributes.delete_if {|innerkey, innervalue| !attrs_to_delete.find_index{|atd| atd == innerkey}.nil? }
       attrs_to_delete.clear
       
+      Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes after clearing: #{attributes}"}
+
       # If there are any new items to add, create them
       attributes.each do |trash_id, new_item_attributes|
         
+        Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes remaining item #{trash_id} : #{Myp.debug_print(new_item_attributes)}"}
+
         if trash_id.integer? && new_item_attributes.is_a?(Hash)
-          new_item = model.build
-          new_item.assign_attributes(new_item_attributes)
-          
-          Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes additional item #{Myp.debug_print(new_item)}"}
-          
-          # This will do an insert but we should be within a transaction in
-          # case some other validation fails
-          
-          self.send("#{name.to_s}") << new_item
+          if new_item_attributes["_destroy"].is_false?
+            new_item = model.build
+            new_item.assign_attributes(new_item_attributes)
+            
+            Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes additional item #{Myp.debug_print(new_item)}"}
+            
+            # This will do an insert but we should be within a transaction in
+            # case some other validation fails
+            
+            self.send("#{name.to_s}") << new_item
+          end
           
           attrs_to_delete << trash_id
         end

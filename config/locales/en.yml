@@ -3153,6 +3153,7 @@ en:
       website: "Purchase Website"
       website_confirmation_number: "Purchase Confirmation Number"
       total_cost: "Total Cost"
+      checkin: "Flight %{name} leaves in %{delta} and is ready for online checkin (and perhaps seat selection)"
     flight_legs:
       flight_leg: "Flight Leg"
       flight_number: "Flight Number"
