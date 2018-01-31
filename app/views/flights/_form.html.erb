@@ -1,5 +1,13 @@
 <%= myp_text_field(f, :flight_name, "myplaceonline.flights.flight_name", obj.flight_name, autofocus) %>
-<%= myp_date_field(f, :flight_start_date, "myplaceonline.flights.flight_start_date", obj.flight_start_date) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATETIME,
+    name: :flight_start_date,
+    value: obj.flight_start_date,
+    placeholder: "myplaceonline.flights.flight_start_date"
+  )
+%>
 <%= myp_text_field(f, :confirmation_number, "myplaceonline.flights.confirmation_number", obj.confirmation_number) %>
 <%=
   input_field(
@@ -8,6 +16,15 @@
     name: :total_cost,
     value: obj.total_cost,
     placeholder: "myplaceonline.flights.total_cost"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :website_confirmation_number,
+    value: obj.website_confirmation_number,
+    placeholder: "myplaceonline.flights.website_confirmation_number"
   )
 %>
 <%=
@@ -22,15 +39,6 @@
     edit: edit,
     autofocus: false
   }
-%>
-<%=
-  input_field(
-    form: f,
-    type: Myp::FIELD_TEXT,
-    name: :website_confirmation_number,
-    value: obj.website_confirmation_number,
-    placeholder: "myplaceonline.flights.website_confirmation_number"
-  )
 %>
 <%=
   input_field(
