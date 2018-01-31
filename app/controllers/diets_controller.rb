@@ -1,7 +1,5 @@
 class DietsController < MyplaceonlineController
   
-  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:main]
-
   DEFAULT_EVALUATION_DAYS = 1
   
   DEFAULT_EVALUATION_DAYS_NAME = :default_evaluation_days
@@ -223,10 +221,6 @@ class DietsController < MyplaceonlineController
       
       redirect_to(obj_path, notice: I18n.t("myplaceonline.diets.consumed_items", count: foods_consumed))
     end
-  end
-  
-  def main
-    redirect_to(diet_path(self.all.take(1)))
   end
   
   protected

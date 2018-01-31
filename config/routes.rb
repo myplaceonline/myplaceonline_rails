@@ -20,6 +20,7 @@ def process_resources(name, context)
   context << { instance: true, link: "make_public" }
   context << { instance: true, link: "remove_public" }
   context << { instance: false, link: "public" }
+  context << { instance: false, link: "most_visited" }
   context << { instance: false, link: "settings" }
 
   context.each do |context_addition|
@@ -268,12 +269,10 @@ Rails.application.routes.draw do
     credit_cards: [
       { instance: false, link: "total_credit" },
       { instance: false, link: "listcashback" },
-      { instance: false, link: "main" },
     ],
     diets: [
       { instance: true, link: "evaluate" },
       { instance: true, link: "consume" },
-      { instance: false, link: "main" },
       {
         subresources: true,
         name: :diet_foods

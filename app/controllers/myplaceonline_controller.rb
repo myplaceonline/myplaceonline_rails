@@ -3,7 +3,7 @@ class MyplaceonlineController < ApplicationController
   before_action :set_obj, only: [:show, :edit, :update, :destroy]
   before_action :set_layout
   
-  DEFAULT_SKIP_AUTHORIZATION_CHECK = [:index, :new, :create, :destroy_all, :settings, :public]
+  DEFAULT_SKIP_AUTHORIZATION_CHECK = [:index, :new, :create, :destroy_all, :settings, :public, :most_visited]
   
   CHECK_PASSWORD_REQUIRED = 1
   CHECK_PASSWORD_OPTIONAL = 2
@@ -1298,6 +1298,15 @@ class MyplaceonlineController < ApplicationController
     nil
   end
   
+  def most_visited
+    result = self.all.order("visit_count DESC").limit(1).take
+    if !result.nil?
+      redirect_to(obj_path(result))
+    else
+      redirect_to(index_path)
+    end
+  end
+
   protected
   
     def deny_guest

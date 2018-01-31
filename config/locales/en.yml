@@ -517,6 +517,7 @@ en:
       mailing_address_unavailable: "Mailing Address Unavailable"
       is: "is"
       are: "are"
+      most_visited: "Most Visited"
     site_contacts:
       name: "Name"
       email: "Email"
@@ -1129,7 +1130,6 @@ en:
       add_file: "Add File/Picture"
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
-      most_used: "Most Visited"
     bank_accounts:
       name: "Name"
       account_number: "Account Number"
@@ -3731,7 +3731,6 @@ en:
       consumed_items: "Consumed %{count} Items"
       add_day: "+ Day"
       minus_day: "- Day"
-      main: "Main Diet"
       evaluate_choose: "Choose the start date and the number of days to evaluate before that day (inclusive):"
       evaluate_start: "Start Day"
       evaluating: "Evaluating between %{start_time} and %{end_time}"

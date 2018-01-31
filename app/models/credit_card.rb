@@ -106,13 +106,12 @@ class CreditCard < ApplicationRecord
     ["encrypt", "email_reminders"]
   end
 
-
   def self.category_split_button_link
-    Rails.application.routes.url_helpers.send("credit_cards_main_path")
+    Rails.application.routes.url_helpers.send("#{self.table_name}_most_visited_path")
   end
   
   def self.category_split_button_title
-    I18n.t("myplaceonline.credit_cards.most_used")
+    I18n.t("myplaceonline.general.most_visited")
   end
 
   def self.category_split_button_icon
