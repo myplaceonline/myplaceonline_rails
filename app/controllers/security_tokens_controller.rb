@@ -8,6 +8,7 @@ class SecurityTokensController < MyplaceonlineController
       params.require(:security_token).permit(
         :security_token_value,
         :notes,
+        :available_uses,
       )
     end
 end

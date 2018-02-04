@@ -18,4 +18,8 @@ class InMemoryPersistentUserStore
   def clear
     @holder.clear
   end
+  
+  def items
+    @holder
+  end
 end

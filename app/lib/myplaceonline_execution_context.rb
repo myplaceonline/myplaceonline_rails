@@ -157,7 +157,14 @@ class MyplaceonlineExecutionContext
       session[:myp_email] = user.email
     end
 
+    transfer_user_info = {}
+    if !MyplaceonlineExecutionContext.persistent_user_store.nil?
+      transfer_user_info = MyplaceonlineExecutionContext.persistent_user_store.items
+    end
     MyplaceonlineExecutionContext.persistent_user_store = persistent_user_store
+    transfer_user_info.each do |k, v|
+      MyplaceonlineExecutionContext.persistent_user_store[k] = v
+    end
   end
   
   def self.do_semifull_context(user, &block)

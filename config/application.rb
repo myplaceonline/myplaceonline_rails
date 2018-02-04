@@ -28,6 +28,8 @@ module Myplaceonline
     
     def call(env)
       
+      Rails.logger.debug{"application.rb call processing request"}
+      
       # Clear the contexts just in case somehow it wasn't cleared from the last request
       ExecutionContext.clear
       
@@ -40,11 +42,26 @@ module Myplaceonline
         security_token = parsed_query_string["security_token"]
         
         if !security_token.blank?
+          
+          Rails.logger.debug{"application.rb call security_token: #{security_token}"}
+          
           token_user = nil
+          token_password = nil
           
           tokens = SecurityToken.where(security_token_value: security_token).to_a
           if tokens.length == 1
-            token_user = tokens[0].identity.user
+            token = tokens[0]
+            token_user = token.identity.user
+            token_password = token.password
+            
+            if !token.available_uses.nil?
+              token.available_uses = token.available_uses - 1
+              if token.available_uses <= 0
+                token.destroy!
+              else
+                token.save!
+              end
+            end
           elsif tokens.length > 1
             raise "Not implemented"
           end
@@ -52,6 +69,10 @@ module Myplaceonline
           if !token_user.nil?
             scope = Devise::Mapping.find_scope!(:user)
             env["warden"].set_user(token_user, { scope: scope })
+            if !token_password.blank?
+              MyplaceonlineExecutionContext.persistent_user_store = InMemoryPersistentUserStore.new
+              Myp.persist_password(token_password)
+            end
           end
         end
         
