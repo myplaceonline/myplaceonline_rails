@@ -56,10 +56,12 @@ module Myplaceonline
             
             if !token.available_uses.nil?
               token.available_uses = token.available_uses - 1
-              if token.available_uses <= 0
-                token.destroy!
-              else
-                token.save!
+              MyplaceonlineExecutionContext.do_full_context(token_user, token.identity) do
+                if token.available_uses <= 0
+                  token.destroy!
+                else
+                  token.save!
+                end
               end
             end
           elsif tokens.length > 1
