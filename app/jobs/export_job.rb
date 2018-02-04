@@ -32,7 +32,13 @@ class ExportJob < ApplicationJob
               append_message(export, "Finished")
 
               export.export_status = Export::EXPORT_STATUS_EXPORTED
+              
+              token = export.security_token
+              
+              export.security_token = nil
               export.save!
+              
+              token.destroy!
             rescue Exception => e
               Rails.logger.info{"ExportJob error: #{Myp.error_details(e)}"}
               append_message(export, "Error: #{CGI::escapeHTML(e.to_s)}")

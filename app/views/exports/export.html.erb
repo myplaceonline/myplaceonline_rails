@@ -7,23 +7,28 @@
 <%= data_row(heading: t("myplaceonline.exports.export_progress"), content: @obj.export_progress_display, markdown: true, wrap: false, prefix_heading: true, skip_blank_content: false) %>
 
 <%=
+  items = [
+    {
+      title: I18n.t("myplaceonline.exports.refresh"),
+      link: export_export_path(@obj),
+      icon: "refresh"
+    },
+    {
+      title: I18n.t("myplaceonline.general.back"),
+      link: controller.obj_path,
+      icon: "back"
+    },
+  ]
+
+  if @obj.export_status != Export::EXPORT_STATUS_EXPORTED
+    items = [{
+      title: I18n.t("myplaceonline.exports.start"),
+      link: export_export_path(@obj) + "?exec=start",
+      icon: "check"
+    }] + items
+  end
+  
   render(partial: "shared/footer", locals: {
-    items: [
-      {
-        title: I18n.t("myplaceonline.exports.refresh"),
-        link: export_export_path(@obj),
-        icon: "refresh"
-      },
-      {
-        title: I18n.t("myplaceonline.exports.start"),
-        link: export_export_path(@obj) + "?exec=start",
-        icon: "check"
-      },
-      {
-        title: I18n.t("myplaceonline.general.back"),
-        link: controller.obj_path,
-        icon: "back"
-      },
-    ]
+    items: items
   })
 %>
