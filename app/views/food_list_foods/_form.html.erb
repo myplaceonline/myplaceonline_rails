@@ -1,0 +1,14 @@
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :food,
+    existingobj: obj.food,
+    heading: t("myplaceonline.food_list_foods.food"),
+    objform: "foods/form",
+    existingobjurl: "food_path",
+    searchurl: "/foods.json?perpage=0",
+    edit: edit,
+    autofocus: autofocus,
+    expanded_if_nil: true
+  }
+%>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180131003108) do
+ActiveRecord::Schema.define(version: 20180204015901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2339,6 +2339,34 @@ ActiveRecord::Schema.define(version: 20180131003108) do
     t.index ["food_id"], name: "index_food_ingredients_on_food_id"
     t.index ["identity_id"], name: "index_food_ingredients_on_identity_id"
     t.index ["parent_food_id"], name: "index_food_ingredients_on_parent_food_id"
+  end
+
+  create_table "food_list_foods", force: :cascade do |t|
+    t.bigint "food_id"
+    t.bigint "food_list_id"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.integer "position"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["food_id"], name: "index_food_list_foods_on_food_id"
+    t.index ["food_list_id"], name: "index_food_list_foods_on_food_list_id"
+    t.index ["identity_id"], name: "index_food_list_foods_on_identity_id"
+  end
+
+  create_table "food_lists", force: :cascade do |t|
+    t.string "food_list_name"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_food_lists_on_identity_id"
   end
 
   create_table "food_nutrient_informations", force: :cascade do |t|
@@ -6987,6 +7015,10 @@ ActiveRecord::Schema.define(version: 20180131003108) do
   add_foreign_key "food_ingredients", "foods", column: "parent_food_id", name: "food_ingredients_parent_food_id_fk"
   add_foreign_key "food_ingredients", "foods", name: "food_ingredients_food_id_fk"
   add_foreign_key "food_ingredients", "identities", name: "food_ingredients_identity_id_fk"
+  add_foreign_key "food_list_foods", "food_lists"
+  add_foreign_key "food_list_foods", "foods"
+  add_foreign_key "food_list_foods", "identities"
+  add_foreign_key "food_lists", "identities"
   add_foreign_key "food_nutrient_informations", "identities"
   add_foreign_key "food_nutrition_information_amounts", "food_nutrition_informations"
   add_foreign_key "food_nutrition_information_amounts", "identities"

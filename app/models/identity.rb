@@ -300,6 +300,7 @@ class Identity < ApplicationRecord
   has_many :agents, :dependent => :destroy
   has_many :site_invoices, :dependent => :destroy
   has_many :computer_environments, :dependent => :destroy
+  has_many :food_lists, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 
@@ -547,6 +548,7 @@ class Identity < ApplicationRecord
       :agents => agents.to_a.map{|x| x.as_json},
       :site_invoices => site_invoices.to_a.map{|x| x.as_json},
       :computer_environments => computer_environments.to_a.map{|x| x.as_json},
+      :food_lists => food_lists.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json},
     })
   end

@@ -1,0 +1,2 @@
+module FoodListsHelper
+end

@@ -313,6 +313,12 @@ Rails.application.routes.draw do
         ]
       }
     ],
+    food_lists: [
+      {
+        subresources: true,
+        name: :food_list_foods
+      },
+    ],
     flights: [
       { instance: true, link: "send_info" }
     ],
