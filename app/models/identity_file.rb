@@ -328,6 +328,8 @@ class IdentityFile < ApplicationRecord
         result = "audio/mpeg"
       when "flv"
         result = "video/x-flv"
+      when "zip"
+        result = "application/zip"
       else
         raise "Unimplemented extension #{ext}"
       end

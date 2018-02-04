@@ -35,10 +35,11 @@ class ExportJob < ApplicationJob
               
               token = export.security_token
               
-              export.security_token = nil
+              #export.security_token = nil
+              
               export.save!
               
-              token.destroy!
+              #token.destroy!
             rescue Exception => e
               Rails.logger.info{"ExportJob error: #{Myp.error_details(e)}"}
               append_message(export, "Error: #{CGI::escapeHTML(e.to_s)}")
@@ -78,17 +79,37 @@ class ExportJob < ApplicationJob
       
       Rails.logger.debug{"ExportJob uploads_path: #{path}, outfile: #{outfile}"}
       
+      append_message(export, "Exporting website...")
+
       execute_command(command_line: "curl --silent --output #{outfile} #{path}", current_directory: dir)
       
+      append_message(export, "Export complete. Zipping files...")
+
       output_name = "export_#{User.current_user.time_now.strftime("%Y%m%dT%H%M%S")}_"
+      output_name = IdentityFile.name_to_random(name: ".zip", prefix: output_name)
       
-      output_zip = uploads_path + IdentityFile.name_to_random(name: ".zip", prefix: output_name)
+      output_zip = uploads_path + output_name
 
       Rails.logger.debug{"ExportJob output_zip: #{output_zip}"}
       
       stdout = execute_command(command_line: "zip -r #{output_zip} *", current_directory: dir)
 
       Rails.logger.debug{"ExportJob stdout: #{stdout}"}
+      
+      FileUtils.chmod("a=rw", output_zip)
+      
+      file_hash = {
+        original_filename: output_name,
+        path: output_zip,
+        size: File.size(output_zip),
+        content_type: IdentityFile.infer_content_type(path: output_zip),
+      }
+      newfile = IdentityFile.create_for_path!(file_hash: file_hash)
+      append_message(export, "Created downloadable zip: #{output_name}")
+      newwrappedfile = ExportFile.create!(
+        identity_file: newfile
+      )
+      export.export_files << newwrappedfile
     end
   end
   

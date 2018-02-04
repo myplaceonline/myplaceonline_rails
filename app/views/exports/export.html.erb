@@ -20,7 +20,7 @@
     },
   ]
 
-  if @obj.export_status != Export::EXPORT_STATUS_EXPORTED
+  if true #@obj.export_status != Export::EXPORT_STATUS_EXPORTED
     items = [{
       title: I18n.t("myplaceonline.exports.start"),
       link: export_export_path(@obj) + "?exec=start",
