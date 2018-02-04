@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180204015901) do
+ActiveRecord::Schema.define(version: 20180204050859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -5182,6 +5182,19 @@ ActiveRecord::Schema.define(version: 20180204015901) do
     t.index ["password_id"], name: "index_reward_programs_on_password_id"
   end
 
+  create_table "security_tokens", force: :cascade do |t|
+    t.string "security_token_value"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_security_tokens_on_identity_id"
+  end
+
   create_table "settings", force: :cascade do |t|
     t.string "setting_name"
     t.string "setting_value"
@@ -7411,6 +7424,7 @@ ActiveRecord::Schema.define(version: 20180204015901) do
   add_foreign_key "reward_program_files", "reward_programs"
   add_foreign_key "reward_programs", "identities", name: "reward_programs_identity_id_fk"
   add_foreign_key "reward_programs", "passwords", name: "reward_programs_password_id_fk"
+  add_foreign_key "security_tokens", "identities"
   add_foreign_key "settings", "categories"
   add_foreign_key "settings", "identities"
   add_foreign_key "shares", "identities", name: "shares_identity_id_fk"

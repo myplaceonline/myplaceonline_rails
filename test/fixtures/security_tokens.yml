@@ -1,0 +1,3 @@
+security_token:
+  identity: identity
+  security_token_value: Test

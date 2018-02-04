@@ -273,6 +273,7 @@ en:
       computer_environments: "Computer Environments"
       food_lists: "Food Lists"
       food_list_foods: "Foods"
+      security_tokens: "Security Tokens"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -4062,3 +4063,5 @@ en:
     food_list_foods:
       food: "Food"
       food_list: "Food List"
+    security_tokens:
+      security_token_value: "Token Value"
