@@ -73,7 +73,7 @@ class ExportJob < ApplicationJob
       
       processed_links = { "/": true }
       
-      scrape(export, dir, processed_links)
+      scrape(export, dir, "/", processed_links)
       
       append_message(export, "Export complete. Zipping files...")
 
@@ -105,8 +105,8 @@ class ExportJob < ApplicationJob
     end
   end
   
-  def scrape(export, dir, processed_links)
-    path = "#{export.parameter}/?security_token=#{export.security_token.security_token_value}"
+  def scrape(export, dir, link, processed_links)
+    path = "#{export.parameter}#{link}?security_token=#{export.security_token.security_token_value}"
     suffix = ".html"
     outname = "index"
     outname = outname.gsub(/[^a-zA-Z0-9,_\-]/, "")

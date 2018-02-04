@@ -168,8 +168,8 @@ module Myplaceonline
             user_agent = env["HTTP_USER_AGENT"]
             if !user_agent.blank?
               user_agent = user_agent.downcase
-              if user_agent.include?("curl") || user_agent.include?("wget")
-                MyplaceonlineExecutionContext.noscript = true
+              if user_agent.include?("myplaceonline bot (read-only)")
+                MyplaceonlineExecutionContext.offline = true
               end
             end
             

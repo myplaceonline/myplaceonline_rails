@@ -31,7 +31,7 @@ myplaceonline.onPageLoad(function() {
       static_list: true,
       preloaded_list: <%= raw(Myp.categories_for_current_user(current_user, nil, true).to_json) %>
     }
-    <% if Myp.full_text_search? && !MyplaceonlineExecutionContext.noscript? %>
+    <% if Myp.full_text_search? && !MyplaceonlineExecutionContext.offline? %>
     , {
         title: "<%= t("myplaceonline.general.everything") %>",
         url: "/api/search.json",

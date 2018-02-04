@@ -138,7 +138,7 @@ end
 
 <% end %>
 
-<% if controller.show_add_button && @myplet %>
+<% if controller.show_add_button && @myplet && !MyplaceonlineExecutionContext.offline? %>
   <p><%= link_to(t("myplaceonline.general.add") + " " + t("myplaceonline.category." + controller.category_name).singularize, controller.new_path, "class" => "ui-btn") %></p>
 <% end %>
 

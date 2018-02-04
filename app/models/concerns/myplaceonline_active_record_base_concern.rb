@@ -270,15 +270,15 @@ module MyplaceonlineActiveRecordBaseConcern
     end
     
     def category_split_button_link
-      "/" + self.table_name + "/new"
+      MyplaceonlineExecutionContext.offline? ? nil : "/" + self.table_name + "/new"
     end
     
     def category_split_button_title
-      I18n.t("myplaceonline.general.add")
+      MyplaceonlineExecutionContext.offline? ? nil : I18n.t("myplaceonline.general.add")
     end
     
     def category_split_button_icon
-      "plus"
+      MyplaceonlineExecutionContext.offline? ? nil : "plus"
     end
   end
 

@@ -4,60 +4,62 @@
     
     <% popupid = "due" + request.uuid.to_s + "_" + obj.id.to_s %>
 
-    <script type="text/javascript">
-      function due_item_popup(source, title, complete_link, snooze_link) {
-        var p = $("#<%= popupid %>");
-        p.popup("open");
-        $("#<%= popupid %>_title").html(title);
-        completeButton = $("#<%= popupid %>_complete");
-        completeButton.unbind('click').click(function(){
-          myplaceonline.showLoading();
-          $.ajax({
-            url: complete_link,
-            method: "POST",
-            dataType: "json"
-          }).done(function(data, textStatus, jqXHR) {
-            p.popup("close");
-            $(source).parent().remove();
-          }).fail(function(jqXHR, textStatus, errorThrown) {
-            myplaceonline.createErrorNotification("Could not execute " + complete_link + ": " + textStatus);
-          }).complete(function(jqXHR, textStatus) {
-            myplaceonline.hideLoading();
+    <% if !MyplaceonlineExecutionContext.offline? %>
+      <script type="text/javascript">
+        function due_item_popup(source, title, complete_link, snooze_link) {
+          var p = $("#<%= popupid %>");
+          p.popup("open");
+          $("#<%= popupid %>_title").html(title);
+          completeButton = $("#<%= popupid %>_complete");
+          completeButton.unbind('click').click(function(){
+            myplaceonline.showLoading();
+            $.ajax({
+              url: complete_link,
+              method: "POST",
+              dataType: "json"
+            }).done(function(data, textStatus, jqXHR) {
+              p.popup("close");
+              $(source).parent().remove();
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+              myplaceonline.createErrorNotification("Could not execute " + complete_link + ": " + textStatus);
+            }).complete(function(jqXHR, textStatus) {
+              myplaceonline.hideLoading();
+            });
+            return false;
           });
-          return false;
-        });
-        $("#<%= popupid %>_snooze_datebox").datebox({
-          mode: "durationbox",
-          useInline: true,
-          useButton: false,
-          hideInput: true,
-          useImmediate: true,
-          useSetButton: false,
-          defaultValue: 0,
-          overrideDurationOrder: ["d", "h", "i"],
-          overrideDurationFormat: "%Dd, %Dl:%DM:%DS",
-          minDur: <%= CalendarItemReminder::MINIMUM_DURATION_SECONDS %>
-        });
-        $("#<%= popupid %>_snooze").unbind('click').click(function(){
-          myplaceonline.showLoading();
-          $.ajax({
-            url: snooze_link + "?duration=" + encodeURIComponent($("#<%= popupid %>_snooze_datebox").val()),
-            method: "POST",
-            dataType: "json"
-          }).done(function(data, textStatus, jqXHR) {
-            p.popup("close");
-            $(source).parent().remove();
-          }).fail(function(jqXHR, textStatus, errorThrown) {
-            myplaceonline.createErrorNotification("Could not execute " + snooze_link + ": " + textStatus);
-          }).complete(function(jqXHR, textStatus) {
-            myplaceonline.hideLoading();
+          $("#<%= popupid %>_snooze_datebox").datebox({
+            mode: "durationbox",
+            useInline: true,
+            useButton: false,
+            hideInput: true,
+            useImmediate: true,
+            useSetButton: false,
+            defaultValue: 0,
+            overrideDurationOrder: ["d", "h", "i"],
+            overrideDurationFormat: "%Dd, %Dl:%DM:%DS",
+            minDur: <%= CalendarItemReminder::MINIMUM_DURATION_SECONDS %>
           });
+          $("#<%= popupid %>_snooze").unbind('click').click(function(){
+            myplaceonline.showLoading();
+            $.ajax({
+              url: snooze_link + "?duration=" + encodeURIComponent($("#<%= popupid %>_snooze_datebox").val()),
+              method: "POST",
+              dataType: "json"
+            }).done(function(data, textStatus, jqXHR) {
+              p.popup("close");
+              $(source).parent().remove();
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+              myplaceonline.createErrorNotification("Could not execute " + snooze_link + ": " + textStatus);
+            }).complete(function(jqXHR, textStatus) {
+              myplaceonline.hideLoading();
+            });
+            return false;
+          });
+          completeButton.focus();
           return false;
-        });
-        completeButton.focus();
-        return false;
-      }
-    </script>
+        }
+      </script>
+    <% end %>
 
     <ul data-role="listview" data-inset="true" data-split-icon="gear">
       <% @calendar_item_reminder_pendings.each do |calendar_item_reminder_pending| %>
@@ -67,37 +69,41 @@
           <% else %>
             <a href="<%= calendar_item_reminder_pending.calendar_item.link %>"><%= calendar_item_reminder_pending.calendar_item.display %> <span class="ui-li-count"><%= calendar_item_reminder_pending.calendar_item.short_date %></span></a>
           <% end %>
-          <a href="#" onclick="return due_item_popup(this, '<%= calendar_item_reminder_pending.calendar_item.display.gsub("'", "") %>', '<%= calendar_item_reminder_pending_complete_path(calendar_item_reminder_pending) %>', '<%= calendar_item_reminder_pending_snooze_path(calendar_item_reminder_pending) %>');"><%= calendar_item_reminder_pending.calendar_item.display %></a>
+          <% if !MyplaceonlineExecutionContext.offline? %>
+            <a href="#" onclick="return due_item_popup(this, '<%= calendar_item_reminder_pending.calendar_item.display.gsub("'", "") %>', '<%= calendar_item_reminder_pending_complete_path(calendar_item_reminder_pending) %>', '<%= calendar_item_reminder_pending_snooze_path(calendar_item_reminder_pending) %>');"><%= calendar_item_reminder_pending.calendar_item.display %></a>
+          <% end %>
         </li>
       <% end %>
     </ul>
-      
-    <%# min-width for the done and snooze buttons to not show ellipses %>
-    <div data-role="popup" id="<%= popupid %>" class="ui-content" data-history="false" style="min-width: 350px;">
-      <a href="#" data-rel="back" data-role="button" data-icon="delete" data-iconpos="notext" class="ui-btn-right"><%= t("myplaceonline.general.close") %></a>
-      <h3 id="<%= popupid %>_title">Title</h3>
-      <a id="<%= popupid %>_complete" href="#" data-role="button" data-icon="check"><%= t("myplaceonline.due_items.complete") %></a>
-      <div data-role="collapsible" data-collapsed="true" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
-        <h3><%= t("myplaceonline.due_items.snooze") %></h3>
-        <div class="ui-field-contain">
-          <input id="<%= popupid %>_snooze_datebox" type="text" value="<%= CalendarItemReminder::DEFAULT_SNOOZE_TEXT %>" />
+
+    <% if !MyplaceonlineExecutionContext.offline? %>
+      <%# min-width for the done and snooze buttons to not show ellipses %>
+      <div data-role="popup" id="<%= popupid %>" class="ui-content" data-history="false" style="min-width: 350px;">
+        <a href="#" data-rel="back" data-role="button" data-icon="delete" data-iconpos="notext" class="ui-btn-right"><%= t("myplaceonline.general.close") %></a>
+        <h3 id="<%= popupid %>_title">Title</h3>
+        <a id="<%= popupid %>_complete" href="#" data-role="button" data-icon="check"><%= t("myplaceonline.due_items.complete") %></a>
+        <div data-role="collapsible" data-collapsed="true" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+          <h3><%= t("myplaceonline.due_items.snooze") %></h3>
+          <div class="ui-field-contain">
+            <input id="<%= popupid %>_snooze_datebox" type="text" value="<%= CalendarItemReminder::DEFAULT_SNOOZE_TEXT %>" />
+          </div>
+          <a id="<%= popupid %>_snooze" href="#" data-role="button" data-icon="clock"><%= t("myplaceonline.due_items.snooze") %></a>
         </div>
-        <a id="<%= popupid %>_snooze" href="#" data-role="button" data-icon="clock"><%= t("myplaceonline.due_items.snooze") %></a>
       </div>
-    </div>
-    
-    <% if !current_user.suppresses(User::SUPPRESSION_MOBILE) && @mobile_number.blank? %>
-      <hr />
-      <p style="margin-top: 15px; margin-bottom: 0;"><%= raw(t("myplaceonline.calendars.notifications_mobile_info", hide_link: link_to(t("myplaceonline.calendars.notifications_mobile_info_hide"), users_notifications_path(notifications_mobile_suppress_reminder: "true", commit: "true", from_homepage: "true")))) %></p>
-      <%= form_tag(users_notifications_path, method: :get) do %>
-        <div class="ui-grid-a ui-responsive">
-          <div class="ui-block-a">
-            <%= myp_text_field_tag(:mobile, nil, @mobile_number, false, "ui-mini horizontalpad10px", wrapper_classes: "horizontalpad10px", force_label_hidden: true) %>
+      
+      <% if !current_user.suppresses(User::SUPPRESSION_MOBILE) && @mobile_number.blank? %>
+        <hr />
+        <p style="margin-top: 15px; margin-bottom: 0;"><%= raw(t("myplaceonline.calendars.notifications_mobile_info", hide_link: link_to(t("myplaceonline.calendars.notifications_mobile_info_hide"), users_notifications_path(notifications_mobile_suppress_reminder: "true", commit: "true", from_homepage: "true")))) %></p>
+        <%= form_tag(users_notifications_path, method: :get) do %>
+          <div class="ui-grid-a ui-responsive">
+            <div class="ui-block-a">
+              <%= myp_text_field_tag(:mobile, nil, @mobile_number, false, "ui-mini horizontalpad10px", wrapper_classes: "horizontalpad10px", force_label_hidden: true) %>
+            </div>
+            <div class="ui-block-b">
+              <%= submit_tag(t("myplaceonline.calendars.save_mobile"), "data-icon" => "check", "data-mini" => "true", "class" => "ui-btn") %>
+            </div>
           </div>
-          <div class="ui-block-b">
-            <%= submit_tag(t("myplaceonline.calendars.save_mobile"), "data-icon" => "check", "data-mini" => "true", "class" => "ui-btn") %>
-          </div>
-        </div>
+        <% end %>
       <% end %>
     <% end %>
 

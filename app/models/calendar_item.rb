@@ -22,7 +22,11 @@ class CalendarItem < ApplicationRecord
       model.calendar_item_link(self)
     else
       if model_id.nil?
-        "/" + model_class.pluralize.underscore + "/new"
+        if MyplaceonlineExecutionContext.offline?
+          nil
+        else
+          "/" + model_class.pluralize.underscore + "/new"
+        end
       else
         "/" + model_class.pluralize.underscore + "/" + model_id.to_s
       end

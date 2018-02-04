@@ -831,8 +831,8 @@ module Myp
         cpa.category_parent_id,
         Category.filtertext(cpa.category_name, cpa.category_additional_filtertext),
         cpa.category_icon,
-        cpa.category_simple ? nil : "/" + cpa.category_link + "/new",
-        cpa.category_simple ? nil : I18n.t("myplaceonline.general.add")
+        cpa.category_simple || MyplaceonlineExecutionContext.offline? ? nil : "/" + cpa.category_link + "/new",
+        cpa.category_simple || MyplaceonlineExecutionContext.offline? ? nil : I18n.t("myplaceonline.general.add")
       )
     }
   end

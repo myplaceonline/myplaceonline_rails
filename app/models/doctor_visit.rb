@@ -20,7 +20,6 @@ class DoctorVisit < ApplicationRecord
     result.visit_date = DateTime.now
     result
   end
-
   
   def self.calendar_item_display(calendar_item)
     if calendar_item.calendar_item_time.nil?
