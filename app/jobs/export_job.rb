@@ -71,17 +71,9 @@ class ExportJob < ApplicationJob
 
       Rails.logger.debug{"ExportJob uploads_path: #{uploads_path}"}
       
-      path = "#{export.parameter}/?security_token=#{export.security_token.security_token_value}"
-      suffix = ".html"
-      outname = "index"
-      outname = outname.gsub(/[^a-zA-Z0-9,_\-]/, "")
-      outfile = Pathname.new(dir).join(outname + suffix).to_s
+      processed_links = { "/": true }
       
-      Rails.logger.debug{"ExportJob uploads_path: #{path}, outfile: #{outfile}"}
-      
-      append_message(export, "Exporting website...")
-
-      execute_command(command_line: "curl --silent --output #{outfile} #{path}", current_directory: dir)
+      scrape(export, dir, processed_links)
       
       append_message(export, "Export complete. Zipping files...")
 
@@ -110,6 +102,48 @@ class ExportJob < ApplicationJob
         identity_file: newfile
       )
       export.export_files << newwrappedfile
+    end
+  end
+  
+  def scrape(export, dir, processed_links)
+    path = "#{export.parameter}/?security_token=#{export.security_token.security_token_value}"
+    suffix = ".html"
+    outname = "index"
+    outname = outname.gsub(/[^a-zA-Z0-9,_\-]/, "")
+    outfile = Pathname.new(dir).join(outname + suffix).to_s
+    
+    Rails.logger.debug{"ExportJob scrape path: #{path}, outfile: #{outfile}"}
+    
+    append_message(export, "Exporting website...")
+
+    execute_command(command_line: "curl --silent --output #{outfile} --user-agent 'Myplaceonline Bot (Read-Only)' #{path}", current_directory: dir)
+    
+    data = File.read(outfile)
+
+    i = 0
+    while true do
+      match_data = data.match(/href="([^"]+)"/, i)
+      if !match_data.nil?
+        link = match_data[1]
+        
+        if link.start_with?("/")
+          x = link.index("?")
+          if !x.nil?
+            link = link[0..x-1]
+          end
+          
+          if !processed_links.has_key?(link)
+            processed_links[link] = true
+            
+            Rails.logger.debug{"ExportJob scrape link: #{link}"}
+          end
+          
+        end
+        
+        i = match_data.offset(0)[1]
+      else
+        break
+      end
     end
   end
   
