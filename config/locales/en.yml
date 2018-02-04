@@ -274,6 +274,7 @@ en:
       food_lists: "Food Lists"
       food_list_foods: "Foods"
       security_tokens: "Security Tokens"
+      exports: "Exports"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -4065,3 +4066,20 @@ en:
       food_list: "Food List"
     security_tokens:
       security_token_value: "Token Value"
+    exports:
+      export_name: "Name"
+      export_type: "Type"
+      export_status: "Status"
+      export: "Export"
+      refresh: "Refresh"
+      export_statuses:
+        ready: "Ready"
+        exporting: "Exporting"
+        exported: "Exported"
+        error: "Error"
+        waiting_for_worker: "Waiting for Worker"
+      export_progress: "Export Progress"
+      export_types:
+        everything: "Everything"
+      pending: "Pending"
+      start: "Start"

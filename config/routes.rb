@@ -298,6 +298,9 @@ Rails.application.routes.draw do
         name: :event_stories
       }
     ],
+    exports: [
+      { instance: true, link: "export" }
+    ],
     feeds: [
       { instance: false, link: "all_items" },
       { instance: false, link: "load_all" },

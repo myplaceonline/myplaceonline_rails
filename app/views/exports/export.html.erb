@@ -1,0 +1,29 @@
+<% content_for :heading do -%><%= t("myplaceonline.exports.export") %><% end -%>
+<h1><%= t("myplaceonline.exports.export") %></h1>
+
+<%= flashes!(@obj) %>
+
+<%= data_row(heading: t("myplaceonline.exports.export_status"), content: @obj.export_status_display, wrap: false, prefix_heading: true, enumeration: Export::EXPORT_STATUSES, skip_blank_content: false) %>
+<%= data_row(heading: t("myplaceonline.exports.export_progress"), content: @obj.export_progress_display, markdown: true, wrap: false, prefix_heading: true, skip_blank_content: false) %>
+
+<%=
+  render(partial: "shared/footer", locals: {
+    items: [
+      {
+        title: I18n.t("myplaceonline.exports.refresh"),
+        link: export_export_path(@obj),
+        icon: "refresh"
+      },
+      {
+        title: I18n.t("myplaceonline.exports.start"),
+        link: export_export_path(@obj) + "?exec=start",
+        icon: "check"
+      },
+      {
+        title: I18n.t("myplaceonline.general.back"),
+        link: controller.obj_path,
+        icon: "back"
+      },
+    ]
+  })
+%>

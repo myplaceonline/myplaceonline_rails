@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180204061751) do
+ActiveRecord::Schema.define(version: 20180204075824) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2150,6 +2150,34 @@ ActiveRecord::Schema.define(version: 20180204061751) do
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_exercises_on_identity_id"
+  end
+
+  create_table "export_files", force: :cascade do |t|
+    t.bigint "export_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["export_id"], name: "index_export_files_on_export_id"
+    t.index ["identity_file_id"], name: "index_export_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_export_files_on_identity_id"
+  end
+
+  create_table "exports", force: :cascade do |t|
+    t.string "export_name"
+    t.integer "export_type"
+    t.integer "export_status"
+    t.text "export_progress"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_exports_on_identity_id"
   end
 
   create_table "favorite_locations", id: :serial, force: :cascade do |t|
@@ -7004,6 +7032,10 @@ ActiveRecord::Schema.define(version: 20180204061751) do
   add_foreign_key "exercise_regimen_exercises", "identities"
   add_foreign_key "exercise_regimens", "identities"
   add_foreign_key "exercises", "identities", name: "exercises_identity_id_fk"
+  add_foreign_key "export_files", "exports"
+  add_foreign_key "export_files", "identities"
+  add_foreign_key "export_files", "identity_files"
+  add_foreign_key "exports", "identities"
   add_foreign_key "favorite_locations", "identities"
   add_foreign_key "favorite_locations", "locations"
   add_foreign_key "favorite_product_files", "favorite_products"

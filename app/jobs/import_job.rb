@@ -6,7 +6,6 @@ class ImportJob < ApplicationJob
       job_context = args.shift
       import_job_context(job_context)
 
-      # Use the urgent strategy because the atomic strategy would keep the feed objects in memory which might blow RAM
       Chewy.strategy(:urgent) do
 
         import = args[0]
