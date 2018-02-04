@@ -575,6 +575,7 @@ en:
       help: "Help"
       upload: "Upload"
       tips: "Tips"
+      hello_world: "Hello World"
       tips_content: !xml |
         <![CDATA[
         # Tips

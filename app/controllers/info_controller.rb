@@ -5,6 +5,9 @@ class InfoController < ApplicationController
   skip_authorization_check
   skip_before_action :verify_authenticity_token, only: [:upload]
   
+  def hello_world
+  end
+  
   def index; end
   def credits; end
   def diagnostics; end

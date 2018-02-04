@@ -22,10 +22,12 @@
     <meta name="Country" content="US">
     <meta name="Robots" content="index,follow">
     <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag("application", media: "all") %>
-    <%= stylesheet_link_tag("print", media: "print") %>
-    <%= javascript_include_tag("application") %>
-    <%= javascript_include_tag("application_extra") %>
+    <% if !MyplaceonlineExecutionContext.noscript? %>
+      <%= stylesheet_link_tag("application", media: "all") %>
+      <%= stylesheet_link_tag("print", media: "print") %>
+      <%= javascript_include_tag("application") %>
+      <%= javascript_include_tag("application_extra") %>
+    <% end %>
     <!--[if IE]><link rel="shortcut icon" href="/api/favicon.ico"><![endif]-->
     <!--<link rel="apple-touch-icon-precomposed" href="/api/apple-touch-icon-precomposed.png">-->
     <link rel="icon" href="/api/favicon.png">
@@ -35,80 +37,82 @@
   </head>
   <body>
     <div data-role="page" data-theme="a" data-url="<%= html_escape(Myp.original_url(request)) %>" data-uniqueid="<%= request.uuid %>">
-      <%# When JQM makes an AJAX requests, it replaces the existing content DIV but anything in HEAD is discarded %>
-      <%# so here we can run any code to update HEAD %>
-      <script type="text/javascript">
-          myplaceonline.setDebug(false);
-        <% if Myp.website_domain.ajax_config == WebsiteDomain::AJAX_CONFIG_DISABLE_ALWAYS || (Myp.website_domain.ajax_config == WebsiteDomain::AJAX_CONFIG_DISABLE_UNAUTHENTICATED && (current_user.nil? || current_user.guest?)) %>
-          $.mobile.ajaxEnabled = false;
-        <% end %>
-        <% if Myp.is_initial_phonegap_request(params, session) %>
-          myplaceonline.setIsInitialPhonegapPage(true);
-          myplaceonline.loadExternalScript("<%= javascript_path('application_extra') %>", false);
-          myplaceonline.loadExternalCss("<%= path_to_stylesheet('application') %>");
-        <% else %>
-          myplaceonline.setIsInitialPhonegapPage(false);
-        <% end %>
-        
-        <% if !current_user.nil? %>
-          <% if !current_user.page_transition.blank? %>
-            $.mobile.defaultPageTransition = "<%= Myp.page_transition_value_to_jqm(current_user.page_transition) %>";
+      <% if !MyplaceonlineExecutionContext.noscript? %>
+        <%# When JQM makes an AJAX requests, it replaces the existing content DIV but anything in HEAD is discarded %>
+        <%# so here we can run any code to update HEAD %>
+        <script type="text/javascript">
+            myplaceonline.setDebug(false);
+          <% if Myp.website_domain.ajax_config == WebsiteDomain::AJAX_CONFIG_DISABLE_ALWAYS || (Myp.website_domain.ajax_config == WebsiteDomain::AJAX_CONFIG_DISABLE_UNAUTHENTICATED && (current_user.nil? || current_user.guest?)) %>
+            $.mobile.ajaxEnabled = false;
           <% end %>
-          <% if !current_user.clipboard_integration.blank? %>
-            myplaceonline.setClipboardIntegration(<%= current_user.clipboard_integration %>);
+          <% if Myp.is_initial_phonegap_request(params, session) %>
+            myplaceonline.setIsInitialPhonegapPage(true);
+            myplaceonline.loadExternalScript("<%= javascript_path('application_extra') %>", false);
+            myplaceonline.loadExternalCss("<%= path_to_stylesheet('application') %>");
+          <% else %>
+            myplaceonline.setIsInitialPhonegapPage(false);
           <% end %>
-          <% if current_user.always_autofocus %>
-            myplaceonline.setFocusAllowed(true);
-          <% end %>
-          <% if current_user.always_enable_debug %>
-            myplaceonline.setDebug(true);
-          <% end %>
-        <% end %>
-        
-        // Shift+Left Click middle header icon for category search popup
-        myplaceonline.onPageLoad(function() {
-          myplaceonline.remoteDataListInitialize($("#mainButtonPopup_search_list"), [
-            {title: "<%= t("myplaceonline.general.categories") %>", url: "/api/categories.json", static_list: true}
-            <% if Myp.full_text_search? %>
-            , {title: "<%= t("myplaceonline.general.everything") %>", url: "/api/search.json"}
+          
+          <% if !current_user.nil? %>
+            <% if !current_user.page_transition.blank? %>
+              $.mobile.defaultPageTransition = "<%= Myp.page_transition_value_to_jqm(current_user.page_transition) %>";
             <% end %>
-          ]);
-          myplaceonline.hookListviewEnter($("#mainButtonPopup_search_container input"), "#mainButtonPopup_search_list");
-        });
-        
-        if (myplaceonline.setCsrfToken) {
-          myplaceonline.setCsrfToken('<%= form_authenticity_token %>');
-        } else {
-          alert("Myplaceonline failed to load correctly. Please let us know at contact@myplaceonline.com what events led up to this and restart the application.");
-        }
-        
-        <% if Rails.env.development? %>
-          myplaceonline.setBaseUrl("<%= "http://#{Rails.configuration.default_url_options[:host]}:#{Rails.configuration.default_url_options[:port]}/" %>");
-        <% end %>
-        
-      </script>
-      <style>
-        <% if Myp.is_initial_phonegap_request(params, session) %>
-          .non-phonegap {
-            display: none;
+            <% if !current_user.clipboard_integration.blank? %>
+              myplaceonline.setClipboardIntegration(<%= current_user.clipboard_integration %>);
+            <% end %>
+            <% if current_user.always_autofocus %>
+              myplaceonline.setFocusAllowed(true);
+            <% end %>
+            <% if current_user.always_enable_debug %>
+              myplaceonline.setDebug(true);
+            <% end %>
+          <% end %>
+          
+          // Shift+Left Click middle header icon for category search popup
+          myplaceonline.onPageLoad(function() {
+            myplaceonline.remoteDataListInitialize($("#mainButtonPopup_search_list"), [
+              {title: "<%= t("myplaceonline.general.categories") %>", url: "/api/categories.json", static_list: true}
+              <% if Myp.full_text_search? %>
+              , {title: "<%= t("myplaceonline.general.everything") %>", url: "/api/search.json"}
+              <% end %>
+            ]);
+            myplaceonline.hookListviewEnter($("#mainButtonPopup_search_container input"), "#mainButtonPopup_search_list");
+          });
+          
+          if (myplaceonline.setCsrfToken) {
+            myplaceonline.setCsrfToken('<%= form_authenticity_token %>');
+          } else {
+            alert("Myplaceonline failed to load correctly. Please let us know at contact@myplaceonline.com what events led up to this and restart the application.");
           }
-        <% end %>
-        <% if !current_user.nil? %>
-          .guest {
-            display: none;
-          }
-          .loggedin {
-            display: inherit;
-          }
-        <% else %>
-          .guest {
-            display: inherit;
-          }
-          .loggedin {
-            display: none;
-          }
-        <% end %>
-      </style>
+          
+          <% if Rails.env.development? %>
+            myplaceonline.setBaseUrl("<%= "http://#{Rails.configuration.default_url_options[:host]}:#{Rails.configuration.default_url_options[:port]}/" %>");
+          <% end %>
+          
+        </script>
+        <style>
+          <% if Myp.is_initial_phonegap_request(params, session) %>
+            .non-phonegap {
+              display: none;
+            }
+          <% end %>
+          <% if !current_user.nil? %>
+            .guest {
+              display: none;
+            }
+            .loggedin {
+              display: inherit;
+            }
+          <% else %>
+            .guest {
+              display: inherit;
+            }
+            .loggedin {
+              display: none;
+            }
+          <% end %>
+        </style>
+      <% end %>
       <div data-role="header"<%= current_user.nil? || !current_user.non_fixed_header ? raw(" data-position=\"fixed\"") : "" %> data-tap-toggle="<%= !current_user.nil? && current_user.toggle_hide_footer ? "true" : "false" %>">
         <% header_title_cached = header_title %>
         <%

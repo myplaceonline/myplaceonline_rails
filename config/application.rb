@@ -123,6 +123,14 @@ module Myplaceonline
               end
             end
             
+            user_agent = env["HTTP_USER_AGENT"]
+            if !user_agent.blank?
+              user_agent = user_agent.downcase
+              if user_agent.include?("curl") || user_agent.include?("wget")
+                MyplaceonlineExecutionContext.noscript = true
+              end
+            end
+            
             #Rails.logger.debug{"MyplaceonlineRack.call setting context host: #{MyplaceonlineExecutionContext.host}, query_string: #{MyplaceonlineExecutionContext.query_string}, cookie_hash: #{Myp.debug_print(MyplaceonlineExecutionContext.cookie_hash)}"}
             
             @app.call(env)

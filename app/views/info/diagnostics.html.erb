@@ -12,6 +12,11 @@ function testMarkdown(html) {
 </script>
 
 <ul data-role="listview" data-inset="true">
+  <li>
+    <%= link_to(info_diagnostics_hello_world_path) do %>
+      <%= t("myplaceonline.info.hello_world") %>
+    <% end %>
+  </li>
   <li><a href="#" onclick="myplaceonline.setDebug(true); myplaceonline.alertHTML(); return false;">Show HTML</a></li>
   <li><a href="#" onclick="myplaceonline.setDebug(true); myplaceonline.consoleDir($.mobile.path.documentUrl); myplaceonline.showDebugConsole(); if (myplaceonline.scrollY) { myplaceonline.scrollY($('#debugConsole').offset().top); } else { alert('Scroll to the bottom'); }; return false;">Show Debug Console</a></li>
   <li><a href="#" onclick="myplaceonline.createSuccessNotification('Test'); return false;">Test Noty</a></li>

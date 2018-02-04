@@ -190,4 +190,15 @@ class MyplaceonlineExecutionContext
     end
     result
   end
+
+  def self.noscript; self[:noscript]; end
+  def self.noscript=(x); self[:noscript] = x; end
+  def self.noscript?
+    result = false
+    sa = self.noscript
+    if !sa.nil? && sa.is_true?
+      result = true
+    end
+    result
+  end
 end
