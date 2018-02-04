@@ -33,6 +33,28 @@ module Myplaceonline
       
       ExecutionContext.stack do
         
+        query_string = env["rack.request.query_string"]
+        parsed_query_string = Rack::Utils.parse_nested_query(query_string)
+        
+        # If the request comes in with a security token, then log that user in
+        security_token = parsed_query_string["security_token"]
+        
+        if !security_token.blank?
+          token_user = nil
+          
+          tokens = SecurityToken.where(security_token_value: security_token).to_a
+          if tokens.length == 1
+            token_user = tokens[0].identity.user
+          elsif tokens.length > 1
+            raise "Not implemented"
+          end
+          
+          if !token_user.nil?
+            scope = Devise::Mapping.find_scope!(:user)
+            env["warden"].set_user(token_user, { scope: scope })
+          end
+        end
+        
         # We could load up the user from warden, but that would mean we'd do a SQL request on all requests including
         # images, etc.
         
@@ -74,9 +96,6 @@ module Myplaceonline
           # "REMOTE_ADDR" => "127.0.0.1",
           # "ORIGINAL_FULLPATH" => "/",
           # "ORIGINAL_SCRIPT_NAME" => "",
-          
-          query_string = env["rack.request.query_string"]
-          parsed_query_string = Rack::Utils.parse_nested_query(query_string)
           
           host = env["HTTP_HOST"]
           if host.nil?

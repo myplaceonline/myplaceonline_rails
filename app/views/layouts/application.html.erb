@@ -208,4 +208,13 @@
 <% if MyplaceonlineExecutionContext.noscript? %>
   <!-- The output has been customized based on a User-Agent that we expect will want simplified output. -->
 <% end %>
+  <!--
+    Diagnostics:
+    {
+      host: "<%= MyplaceonlineExecutionContext.host %>",
+      request_id: "<%= request.uuid %>",
+      user: <%= x = MyplaceonlineExecutionContext.user; x.nil? ? -1 : x.id %>,
+      identity: <%= x = MyplaceonlineExecutionContext.identity; x.nil? ? -1 : x.id %>
+    }
+  -->
 </html>
