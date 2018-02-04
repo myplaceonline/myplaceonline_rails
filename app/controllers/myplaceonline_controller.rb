@@ -699,11 +699,11 @@ class MyplaceonlineController < ApplicationController
   end
   
   def allow_add
-    !User.current_user.guest?
+    !User.current_user.guest? && !MyplaceonlineExecutionContext.offline?
   end
   
   def allow_edit
-    !User.current_user.guest?
+    !User.current_user.guest? && !MyplaceonlineExecutionContext.offline?
   end
   
   def show_add
@@ -767,7 +767,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def index_settings_link?
-    has_category
+    has_category && !MyplaceonlineExecutionContext.offline?
   end
   
   def search_index_name
@@ -795,7 +795,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def show_share
-    !nested && !User.current_user.guest?
+    !nested && !User.current_user.guest? && !MyplaceonlineExecutionContext.offline?
   end
   
   def self.check_password(user, session, level: MyplaceonlineController::CHECK_PASSWORD_REQUIRED)
@@ -1115,7 +1115,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def show_search
-    true
+    !MyplaceonlineExecutionContext.offline?
   end
   
   def show_favorites
@@ -1123,15 +1123,15 @@ class MyplaceonlineController < ApplicationController
   end
   
   def show_favorite_button
-    !User.current_user.guest?
+    !User.current_user.guest? && !MyplaceonlineExecutionContext.offline?
   end
   
   def show_archive_button
-    !User.current_user.guest?
+    !User.current_user.guest? && !MyplaceonlineExecutionContext.offline?
   end
   
   def show_delete
-    !User.current_user.guest?
+    !User.current_user.guest? && !MyplaceonlineExecutionContext.offline?
   end
   
   def show_additional
@@ -1139,7 +1139,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def show_add_button
-    @myplet
+    @myplet && !MyplaceonlineExecutionContext.offline?
   end
   
   def myplet_title_linked?
