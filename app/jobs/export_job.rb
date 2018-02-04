@@ -57,6 +57,33 @@ class ExportJob < ApplicationJob
   end
   
   def export_everything(export)
+    Myp.mktmpdir do |dir|
+      Rails.logger.debug{"ExportJob temp dir: #{dir}, parameter: #{export.parameter}"}
+      
+      uploads_path = IdentityFile.uploads_path
+
+      Rails.logger.debug{"ExportJob uploads_path: #{uploads_path}"}
+      
+      path = "#{export.parameter}/?security_token=#{export.security_token.security_token_value}"
+      suffix = ".html"
+      outname = "index"
+      outname = outname.gsub(/[^a-zA-Z0-9,_\-]/, "")
+      outfile = Pathname.new(dir).join(outname + suffix).to_s
+      
+      Rails.logger.debug{"ExportJob uploads_path: #{path}, outfile: #{outfile}"}
+      
+      execute_command(command_line: "curl --silent --output #{outfile} #{path}", current_directory: dir)
+      
+      output_name = "export_#{User.current_user.time_now.strftime("%Y%m%dT%H%M%S")}_"
+      
+      output_zip = uploads_path + IdentityFile.name_to_random(name: ".zip", prefix: output_name)
+
+      Rails.logger.debug{"ExportJob output_zip: #{output_zip}"}
+      
+      stdout = execute_command(command_line: "zip -r #{output_zip} *", current_directory: dir)
+
+      Rails.logger.debug{"ExportJob stdout: #{stdout}"}
+    end
   end
   
   def execute_command(command_line:, current_directory: nil)

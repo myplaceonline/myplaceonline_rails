@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180204075824) do
+ActiveRecord::Schema.define(version: 20180204112823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2177,7 +2177,10 @@ ActiveRecord::Schema.define(version: 20180204075824) do
     t.bigint "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "security_token_id"
+    t.string "parameter"
     t.index ["identity_id"], name: "index_exports_on_identity_id"
+    t.index ["security_token_id"], name: "index_exports_on_security_token_id"
   end
 
   create_table "favorite_locations", id: :serial, force: :cascade do |t|
@@ -7036,6 +7039,7 @@ ActiveRecord::Schema.define(version: 20180204075824) do
   add_foreign_key "export_files", "identities"
   add_foreign_key "export_files", "identity_files"
   add_foreign_key "exports", "identities"
+  add_foreign_key "exports", "security_tokens"
   add_foreign_key "favorite_locations", "identities"
   add_foreign_key "favorite_locations", "locations"
   add_foreign_key "favorite_product_files", "favorite_products"

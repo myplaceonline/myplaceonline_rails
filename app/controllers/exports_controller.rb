@@ -36,7 +36,7 @@ class ExportsController < MyplaceonlineController
   end
   
   protected
-    def insecure
+    def sensitive
       true
     end
 

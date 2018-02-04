@@ -14,4 +14,10 @@ class SecurityToken < ApplicationRecord
   def display
     self.security_token_value
   end
+
+  def self.build(params = nil)
+    result = self.dobuild(params)
+    result.security_token_value = SecureRandom.uuid
+    result
+  end
 end

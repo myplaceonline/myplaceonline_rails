@@ -40,6 +40,8 @@ class Export < ApplicationRecord
 
   child_files
   
+  child_property(name: :security_token)
+
   def export_status_display
     self.export_status.nil? ? EXPORT_STATUS_READY : self.export_status
   end
@@ -53,7 +55,24 @@ class Export < ApplicationRecord
       self.export_status = Export::EXPORT_STATUS_WAITING_FOR_WORKER
       self.export_progress = "* _#{User.current_user.time_now}_: Waiting for worker"
       self.save!
-      ApplicationJob.perform(ExportJob, self, "start")
+      
+      # Always perform async because sync execution of curl doesn't work
+      
+      ApplicationJob.perform_async(ExportJob, self, "start")
+      #ApplicationJob.perform(ExportJob, self, "start")
     end
+  end
+
+  before_create :do_before_create
+  
+  def do_before_create
+    token = SecurityToken.build
+    token.password = Myp.get_current_user_password!
+    token.save!
+
+    self.parameter = Myp.root_url
+    self.security_token_id = token.id
+    
+    true
   end
 end
