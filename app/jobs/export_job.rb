@@ -72,10 +72,11 @@ class ExportJob < ApplicationJob
       Rails.logger.debug{"ExportJob uploads_path: #{uploads_path}"}
       
       processed_links = { "/": true }
+      directories_made = {}
       
       append_message(export, "Exporting website...")
       
-      scrape(export, dir, "/", processed_links)
+      scrape(export, dir, "/", processed_links, directories_made)
       
       append_message(export, "Export complete. Zipping files...")
 
@@ -107,7 +108,7 @@ class ExportJob < ApplicationJob
     end
   end
   
-  def scrape(export, dir, link, processed_links)
+  def scrape(export, dir, link, processed_links, directories_made)
     path = "#{export.parameter}#{link}?security_token=#{export.security_token.security_token_value}"
     
     append_message(export, "Downloading #{link}")
@@ -133,7 +134,10 @@ class ExportJob < ApplicationJob
       while i < link_pieces.length - 1
         link_piece = link_pieces[i]
         target_dir = target_dir.join(link_piece)
-        Dir.mkdir(target_dir.to_s)
+        if !directories_made.has_key?(target_dir.to_s)
+          Dir.mkdir(target_dir.to_s)
+          directories_made[target_dir.to_s] = true
+        end
         Rails.logger.debug{"ExportJob scrape link_piece: #{link_piece}"}
         i = i + 1
       end
@@ -143,7 +147,7 @@ class ExportJob < ApplicationJob
     
     Rails.logger.debug{"ExportJob scrape path: #{path}, outfile: #{outfile}"}
 
-    execute_command(command_line: "curl --silent --output #{outfile} --user-agent 'Myplaceonline Bot (Read-Only)' #{path}", current_directory: dir)
+    execute_command(command_line: "curl --silent --output #{outfile} --user-agent 'Myplaceonline Bot (Read-Only)' #{path}", current_directory: target_dir.to_s)
     
     if suffix == "" || suffix == ".html"
       data = File.read(outfile)
@@ -169,7 +173,7 @@ class ExportJob < ApplicationJob
             if !processed_links.has_key?(new_link)
               processed_links[new_link] = true
               
-              scrape(export, dir, new_link, processed_links)
+              scrape(export, dir, new_link, processed_links, directories_made)
               
               Rails.logger.debug{"ExportJob scrape new_link: #{new_link}"}
             end
