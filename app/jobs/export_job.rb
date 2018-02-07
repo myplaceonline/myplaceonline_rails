@@ -72,11 +72,10 @@ class ExportJob < ApplicationJob
       Rails.logger.debug{"ExportJob uploads_path: #{uploads_path}"}
       
       processed_links = { "/": true }
-      directories_made = {}
       
       append_message(export, "Exporting website...")
       
-      scrape(export, dir, "/", processed_links, directories_made)
+      scrape(export, dir, "/", processed_links)
       
       append_message(export, "Export complete. Zipping files...")
 
@@ -108,46 +107,67 @@ class ExportJob < ApplicationJob
     end
   end
   
-  def scrape(export, dir, link, processed_links, directories_made)
+  def clean_filename(name)
+    # Only allow certain characters and filter all others
+    name.gsub(/[^a-zA-Z0-9,_\- ]/, "")
+  end
+  
+  def clean_link(name)
+    name.gsub(/['"\\`\n]/, "")
+  end
+  
+  def scrape(export, dir, link, processed_links)
     path = "#{export.parameter}#{link}?security_token=#{export.security_token.security_token_value}"
     
-    append_message(export, "Downloading #{link}")
+    target_dir = Pathname.new(dir)
+    
+    #append_message(export, "Downloading #{link}")
     
     if link == "/"
       suffix = ".html"
       outname = "index"
     else
+      
+      # Extract the last component of the path
+      
       suffix = ""
       outname = link[link.rindex("/")+1..-1]
       if !outname.index(".").nil?
         suffix = outname[outname.index(".")..-1]
+        outname = outname[0..outname.index(".")-1]
       end
     end
-    
-    outname = outname.gsub(/[^a-zA-Z0-9,_\-]/, "")
-    
-    target_dir = Pathname.new(dir)
     
     link_pieces = link.split("/")
     if link_pieces.length > 2
       i = 1
       while i < link_pieces.length - 1
-        link_piece = link_pieces[i]
+        link_piece = clean_filename(link_pieces[i])
         target_dir = target_dir.join(link_piece)
-        if !directories_made.has_key?(target_dir.to_s)
+        if !Dir.exists?(target_dir.to_s)
           Dir.mkdir(target_dir.to_s)
-          directories_made[target_dir.to_s] = true
         end
         Rails.logger.debug{"ExportJob scrape link_piece: #{link_piece}"}
         i = i + 1
       end
     end
+    
+    outname = clean_filename(outname)
+
+    if suffix == ""
+      target_dir = target_dir.join(outname)
+      if !Dir.exists?(target_dir.to_s)
+        Dir.mkdir(target_dir.to_s)
+      end
+      outname = "index"
+      suffix = ".html"
+    end
 
     outfile = target_dir.join(outname + suffix).to_s
     
-    Rails.logger.debug{"ExportJob scrape path: #{path}, outfile: #{outfile}"}
+    Rails.logger.debug{"ExportJob downloading path: #{path}, outfile: #{outfile}"}
 
-    execute_command(command_line: "curl --silent --output #{outfile} --user-agent 'Myplaceonline Bot (Read-Only)' #{path}", current_directory: target_dir.to_s)
+    execute_command(command_line: "curl --silent --output '#{outfile}' --user-agent 'Myplaceonline Bot (Read-Only)' '#{clean_link(path)}'", current_directory: dir)
     
     if suffix == "" || suffix == ".html"
       data = File.read(outfile)
@@ -173,7 +193,7 @@ class ExportJob < ApplicationJob
             if !processed_links.has_key?(new_link)
               processed_links[new_link] = true
               
-              scrape(export, dir, new_link, processed_links, directories_made)
+              scrape(export, dir, new_link, processed_links)
               
               Rails.logger.debug{"ExportJob scrape new_link: #{new_link}"}
             end
