@@ -83,23 +83,29 @@ class PerishableFoodsController < MyplaceonlineController
   end
 
   def footer_items_show
-    [
-      {
+    result = []
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.perishable_foods.consume_one"),
         link: perishable_food_consume_one_path(@obj),
         icon: "check"
-      },
-      {
+      }
+      
+      result << {
         title: I18n.t("myplaceonline.perishable_foods.consume_all"),
         link: perishable_food_consume_all_path(@obj),
         icon: "bullets"
-      },
-      {
+      }
+      
+      result << {
         title: I18n.t("myplaceonline.perishable_foods.move"),
         link: perishable_food_move_path(@obj),
         icon: "navigation"
       }
-    ] + super
+    end
+    
+    result + super
   end
   
   def use_bubble?

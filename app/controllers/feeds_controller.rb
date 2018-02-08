@@ -102,38 +102,48 @@ class FeedsController < MyplaceonlineController
   end
   
   def footer_items_index
-    super + [
-      {
+    result = super
+
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.feeds.load_all"),
         link: feeds_load_all_path,
         icon: "refresh"
-      },
-      {
+      }
+      
+      result << {
         title: I18n.t("myplaceonline.feeds.random_feed"),
         link: feeds_random_path,
         icon: "gear"
-      },
-      {
-        title: I18n.t("myplaceonline.feeds.all_items"),
-        link: feeds_all_items_path,
-        icon: "bars"
       }
-    ]
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.feeds.all_items"),
+      link: feeds_all_items_path,
+      icon: "bars"
+    }
+
+    result
   end
   
   def footer_items_show
-    [
-      {
+    result = []
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.feeds.random_feed"),
         link: feeds_random_path,
         icon: "gear"
-      },
-      {
+      }
+      
+      result << {
         title: I18n.t("myplaceonline.feeds.load"),
         link: feed_load_path(@obj),
         icon: "refresh"
-      },
-      {
+      }
+      
+      result << {
         title: I18n.t("myplaceonline.feeds.mark_page_read"),
         link:
           feed_mark_page_read_path(
@@ -142,18 +152,22 @@ class FeedsController < MyplaceonlineController
             MyplaceonlineController::PARAM_PER_PAGE => params[MyplaceonlineController::PARAM_PER_PAGE]
           ),
         icon: "check"
-      },
-      {
+      }
+      
+      result << {
         title: I18n.t("myplaceonline.feeds.mark_all_read"),
         link: feed_mark_all_read_path(@obj),
         icon: "check"
-      },
-      {
-        title: I18n.t("myplaceonline.feeds.feed_items"),
-        link: feed_feed_items_path(@obj),
-        icon: "bars"
-      },
-    ] + super
+      }
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.feeds.feed_items"),
+      link: feed_feed_items_path(@obj),
+      icon: "bars"
+    }
+    
+    result + super
   end
   
   protected

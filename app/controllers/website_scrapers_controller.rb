@@ -1,18 +1,26 @@
 class WebsiteScrapersController < MyplaceonlineController
   def footer_items_show
-    [
-      {
+    result = []
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.website_scrapers.scrape"),
         link: add_token(website_scraper_scrape_path(@obj)),
         icon: "action"
       }
-    ] + super + [
-      {
+    end
+    
+    result = result + super
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.website_scrapers.test"),
         link: website_scraper_test_path(@obj),
         icon: "action"
       }
-    ]
+    end
+    
+    result
   end
   
   def scrape

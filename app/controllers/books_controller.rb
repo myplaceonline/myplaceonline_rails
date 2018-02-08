@@ -27,13 +27,17 @@ class BooksController < MyplaceonlineController
   end
   
   def footer_items_show
-    super + [
-      {
+    result = super
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.books.discard"),
         link: book_discard_path(@obj),
         icon: "navigation"
-      },
-    ]
+      }
+    end
+    
+    result
   end
   
   def may_upload

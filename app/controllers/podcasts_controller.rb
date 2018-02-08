@@ -26,33 +26,43 @@ class PodcastsController < MyplaceonlineController
   end
   
   def footer_items_index
-    super + [
-      {
-        title: I18n.t('myplaceonline.feeds.load_all'),
+    result = super
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
+        title: I18n.t("myplaceonline.feeds.load_all"),
         link: podcasts_load_all_path,
         icon: "refresh"
       }
-    ]
+    end
+    
+    result
   end
   
   def footer_items_show
-    super + [
-      {
-        title: I18n.t('myplaceonline.feeds.feed_items'),
-        link: feed_feed_items_path(@obj.feed),
-        icon: "bars"
-      },
-      {
-        title: I18n.t('myplaceonline.feeds.load'),
+    result = super
+    
+    result << {
+      title: I18n.t("myplaceonline.feeds.feed_items"),
+      link: feed_feed_items_path(@obj.feed),
+      icon: "bars"
+    }
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
+        title: I18n.t("myplaceonline.feeds.load"),
         link: podcast_load_path(@obj),
         icon: "refresh"
-      },
-      {
-        title: I18n.t('myplaceonline.feeds.mark_all_read'),
+      }
+      
+      result << {
+        title: I18n.t("myplaceonline.feeds.mark_all_read"),
         link: podcast_mark_all_read_path(@obj),
         icon: "check"
       }
-    ]
+    end
+    
+    result
   end
 
   def load

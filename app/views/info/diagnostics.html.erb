@@ -32,7 +32,7 @@ function testMarkdown(html) {
       <%= t("myplaceonline.info.clientinfo") %>
     <% end %>
   </li>
-  <% if !current_user.nil? && current_user.admin? %>
+  <% if !current_user.nil? && current_user.admin? && !MyplaceonlineExecutionContext.offline? %>
     <li><%= link_to("Raise Server Exception", info_raise_server_exception_path) %></li>
     <li><%= link_to("Raise Server Warning", info_raise_server_warning_path) %></li>
     <li><%= link_to("Long Request (5s)", info_sleep_time_path(duration: 5)) %></li>

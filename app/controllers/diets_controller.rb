@@ -5,28 +5,35 @@ class DietsController < MyplaceonlineController
   DEFAULT_EVALUATION_DAYS_NAME = :default_evaluation_days
   
   def footer_items_show
-    [
-      {
-        title: I18n.t("myplaceonline.diets.evaluate"),
-        link: diet_evaluate_path(@obj),
-        icon: "search"
-      },
-      {
+    result = []
+    
+    result << {
+      title: I18n.t("myplaceonline.diets.evaluate"),
+      link: diet_evaluate_path(@obj),
+      icon: "search"
+    }
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.diets.consume"),
         link: diet_consume_path(@obj),
         icon: "check"
-      },
-      {
-        title: I18n.t("myplaceonline.diets.add_food"),
-        link: new_diet_diet_food_path(@obj),
-        icon: "plus"
-      },
-      {
-        title: I18n.t("myplaceonline.diets.foods"),
-        link: diet_diet_foods_path(@obj),
-        icon: "bars"
-      },
-    ] + super
+      }
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.diets.add_food"),
+      link: new_diet_diet_food_path(@obj),
+      icon: "plus"
+    }
+    
+    result << {
+      title: I18n.t("myplaceonline.diets.foods"),
+      link: diet_diet_foods_path(@obj),
+      icon: "bars"
+    }
+    
+    result + super
   end
 
   def evaluate

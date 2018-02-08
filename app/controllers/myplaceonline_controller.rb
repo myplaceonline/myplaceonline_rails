@@ -904,7 +904,7 @@ class MyplaceonlineController < ApplicationController
         icon: "plus"
       }
     end
-    if self.index_destroy_all_link?
+    if self.index_destroy_all_link? && !MyplaceonlineExecutionContext.offline?
       result << {
         title: I18n.t("myplaceonline.general.delete_all"),
         link: self.destroy_all_path,
@@ -937,7 +937,7 @@ class MyplaceonlineController < ApplicationController
         icon: "back"
       }
     end
-    if @obj.respond_to?("is_archived?") && (!nested || !parent_model.is_a?(Array)) && !obj_locked? && self.show_archive_button
+    if @obj.respond_to?("is_archived?") && (!nested || !parent_model.is_a?(Array)) && !obj_locked? && self.show_archive_button && !MyplaceonlineExecutionContext.offline?
       if @obj.is_archived?
         result << {
           title: I18n.t("myplaceonline.general.unarchive"),
@@ -983,11 +983,11 @@ class MyplaceonlineController < ApplicationController
     end
     if !obj_locked? && show_delete
       result << {
-        title: I18n.t('myplaceonline.general.delete'),
+        title: I18n.t("myplaceonline.general.delete"),
         link: self.obj_path,
         icon: "delete",
         method: :delete,
-        data: { confirm: 'Are you sure?' }
+        data: { confirm: "Are you sure?" }
       }
     end
     result
@@ -1260,11 +1260,13 @@ class MyplaceonlineController < ApplicationController
   def form_menu_items(form, new:)
     main_button = new ? new_save_text : I18n.t("myplaceonline.general.save") + " " + I18n.t("myplaceonline.category." + category_name).singularize
     
-    result = [
-      {
+    result = []
+
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         content: form.submit(main_button, "data-icon" => "action", "data-iconpos" => "top", "style" => "background-color: green")
-      },
-    ]
+      }
+    end
     
     if form_menu_items_cancel?
       result << {

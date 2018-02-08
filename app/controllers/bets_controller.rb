@@ -22,28 +22,37 @@ class BetsController < MyplaceonlineController
   end
   
   def footer_items_show
-    super + [
-      {
+    
+    result = super
+
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.bets.bet_statuses.i_won_not_paid"),
         link: bet_update_status_path(@obj, status: Bet::BET_STATUS_I_WON_NOT_PAID.to_s),
         icon: "eye"
-      },
-      {
+      }
+      
+      result << {
         title: I18n.t("myplaceonline.bets.bet_statuses.i_won_paid"),
         link: bet_update_status_path(@obj, status: Bet::BET_STATUS_I_WON_PAID.to_s),
         icon: "eye"
-      },
-      {
+      }
+      
+      result << {
         title: I18n.t("myplaceonline.bets.bet_statuses.other_won_not_paid"),
         link: bet_update_status_path(@obj, status: Bet::BET_STATUS_OTHER_WON_NOT_PAID.to_s),
         icon: "user"
-      },
-      {
+      }
+      
+      result << {
         title: I18n.t("myplaceonline.bets.bet_statuses.other_won_paid"),
         link: bet_update_status_path(@obj, status: Bet::BET_STATUS_OTHER_WON_PAID.to_s),
         icon: "user"
-      },
-    ]
+      }
+    end
+    
+    result
+    
   end
 
   def show_created_updated

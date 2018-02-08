@@ -12,10 +12,14 @@ class ProjectIssuesController < MyplaceonlineController
   end
   
   def split_link(obj)
-    ActionController::Base.helpers.link_to(
-      I18n.t("myplaceonline.project_issues.move_top"),
-      project_project_issue_movetop_path(obj.project, obj)
-    )
+    if !MyplaceonlineExecutionContext.offline?
+      ActionController::Base.helpers.link_to(
+        I18n.t("myplaceonline.project_issues.move_top"),
+        project_project_issue_movetop_path(obj.project, obj)
+      )
+    else
+      nil
+    end
   end
   
   def movetop
@@ -49,7 +53,7 @@ class ProjectIssuesController < MyplaceonlineController
   def footer_items_index
     super + [
       {
-        title: I18n.t('myplaceonline.project_issues.project'),
+        title: I18n.t("myplaceonline.project_issues.project"),
         link: project_path(@parent),
         icon: "back"
       }
@@ -59,7 +63,7 @@ class ProjectIssuesController < MyplaceonlineController
   def footer_items_show
     [
       {
-        title: I18n.t('myplaceonline.project_issues.project'),
+        title: I18n.t("myplaceonline.project_issues.project"),
         link: project_path(@obj.project),
         icon: "back"
       }

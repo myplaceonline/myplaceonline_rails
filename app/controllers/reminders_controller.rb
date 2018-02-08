@@ -1,6 +1,7 @@
 class RemindersController < MyplaceonlineController
   def footer_items_show
     result = super
+    
     if !@obj.calendar_item.nil?
       result << {
         title: I18n.t("myplaceonline.reminders.calendar_item"),
@@ -8,11 +9,15 @@ class RemindersController < MyplaceonlineController
         icon: "calendar"
       }
     end
-    result << {
-      title: I18n.t("myplaceonline.reminders.refresh"),
-      link: reminder_refresh_path(@obj),
-      icon: "refresh"
-    }
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
+        title: I18n.t("myplaceonline.reminders.refresh"),
+        link: reminder_refresh_path(@obj),
+        icon: "refresh"
+      }
+    end
+    
     result
   end
 

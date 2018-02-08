@@ -16,13 +16,15 @@ class DnaAnalysesController < MyplaceonlineController
   end
 
   def footer_items_show
-    [
-      {
+    result = super
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.dna_analyses.rerun"),
         link: dna_analysis_rerun_path(@obj),
         icon: "recycle"
-      },
-    ] + super
+      }
+    end
+    result
   end
   
   def after_update_redirect

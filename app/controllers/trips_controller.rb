@@ -47,40 +47,50 @@ class TripsController < MyplaceonlineController
   end
 
   def footer_items_show
-    result = super + [
-      {
+    result = super
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.general.share"),
         link: trip_share_path(@obj),
         icon: "action"
-      },
-      {
-        title: I18n.t("myplaceonline.trips.show_shared"),
-        link: trip_shared_path(@obj),
-        icon: "search"
-      },
-      {
-        title: I18n.t("myplaceonline.trips.pictures"),
-        link: trip_trip_pictures_path(@obj),
-        icon: "grid"
-      },
-      {
+      }
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.trips.show_shared"),
+      link: trip_shared_path(@obj),
+      icon: "search"
+    }
+    
+    result << {
+      title: I18n.t("myplaceonline.trips.pictures"),
+      link: trip_trip_pictures_path(@obj),
+      icon: "grid"
+    }
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.trips.add_picture"),
         link: new_trip_trip_picture_path(@obj),
         icon: "plus"
-      },
-      {
+      }
+      
+      result << {
         title: I18n.t("myplaceonline.trips.add_story"),
         link: new_trip_trip_story_path(@obj),
         icon: "plus"
       }
-    ]
-    if !@obj.explicitly_completed
+    end
+    
+    if !@obj.explicitly_completed && !MyplaceonlineExecutionContext.offline?
       result << {
         title: I18n.t("myplaceonline.trips.complete"),
         link: trip_complete_path(@obj),
         icon: "check"
       }
     end
+    
     result
   end
   

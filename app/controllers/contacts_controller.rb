@@ -95,29 +95,39 @@ class ContactsController < MyplaceonlineController
   end
   
   def footer_items_show
-    [
-      {
+    result = []
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.contacts.add_conversation"),
         link: new_contact_conversation_path(@obj),
         icon: "comment"
-      },
-      {
-        title: I18n.t("myplaceonline.contacts.groups"),
-        link: contact_groups_path(@obj),
-        icon: "user"
       }
-    ] + super + [
-      {
-        title: I18n.t("myplaceonline.contacts.conversations"),
-        link: contact_conversations_path(@obj),
-        icon: "phone"
-      },
-      {
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.contacts.groups"),
+      link: contact_groups_path(@obj),
+      icon: "user"
+    }
+    
+    result = result + super
+    
+    result << {
+      title: I18n.t("myplaceonline.contacts.conversations"),
+      link: contact_conversations_path(@obj),
+      icon: "phone"
+    }
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.contacts.combine"),
         link: contact_combine_path(@obj),
         icon: "grid"
       }
-    ]
+    end
+    
+    result
   end
   
   protected

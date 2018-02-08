@@ -17,7 +17,7 @@ class ReputationReportsController < MyplaceonlineController
     
     invoice = @obj.get_site_invoice
     
-    if @obj.allow_admin? && User.current_user.admin?
+    if @obj.allow_admin? && User.current_user.admin? && !MyplaceonlineExecutionContext.offline?
       
       @obj.ensure_agent_contact
       

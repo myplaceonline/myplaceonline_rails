@@ -4,13 +4,16 @@
 
 <ul data-role="listview" data-inset="true">
   <li><%= link_to(t("myplaceonline.admin.users"), users_path) %></li>
-  <li><%= link_to(t("myplaceonline.admin.send_email.title"), admin_send_email_path) %></li>
-  <li><%= link_to(t("myplaceonline.admin.send_text_message.title"), admin_send_text_message_path) %></li>
   <li><%= link_to(t("myplaceonline.admin.invite_codes"), invite_codes_path) %></li>
-  <li><%= link_to(t("myplaceonline.admin.gc"), admin_gc_path) %></li>
-  <li><%= link_to(t("myplaceonline.admin.create_test_job"), admin_create_test_job_path) %></li>
-  <li><%= link_to(t("myplaceonline.admin.create_test_error_job"), admin_create_test_error_job_path) %></li>
-  <li><%= link_to(t("myplaceonline.admin.send_direct_email.title"), admin_send_direct_email_path) %></li>
-  <li><%= link_to(t("myplaceonline.admin.send_direct_text_message.title"), admin_send_direct_text_message_path) %></li>
-  <li><%= link_to(t("myplaceonline.admin.execute_command"), admin_execute_command_path) %></li>
+  
+  <% if !MyplaceonlineExecutionContext.offline? %>
+    <li><%= link_to(t("myplaceonline.admin.send_email.title"), admin_send_email_path) %></li>
+    <li><%= link_to(t("myplaceonline.admin.send_text_message.title"), admin_send_text_message_path) %></li>
+    <li><%= link_to(t("myplaceonline.admin.gc"), admin_gc_path) %></li>
+    <li><%= link_to(t("myplaceonline.admin.create_test_job"), admin_create_test_job_path) %></li>
+    <li><%= link_to(t("myplaceonline.admin.create_test_error_job"), admin_create_test_error_job_path) %></li>
+    <li><%= link_to(t("myplaceonline.admin.send_direct_email.title"), admin_send_direct_email_path) %></li>
+    <li><%= link_to(t("myplaceonline.admin.send_direct_text_message.title"), admin_send_direct_text_message_path) %></li>
+    <li><%= link_to(t("myplaceonline.admin.execute_command"), admin_execute_command_path) %></li>
+  <% end %>
 </ul>

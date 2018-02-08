@@ -130,6 +130,10 @@ class ExportJob < ApplicationJob
       
       # Extract the last component of the path
       
+      if link.end_with?("/")
+        link = link + "index.html"
+      end
+      
       suffix = ""
       outname = link[link.rindex("/")+1..-1]
       if !outname.index(".").nil?
@@ -169,16 +173,22 @@ class ExportJob < ApplicationJob
 
     execute_command(command_line: "curl --silent --output '#{outfile}' --user-agent 'Myplaceonline Bot (Read-Only)' '#{clean_link(path)}'", current_directory: dir)
     
-    if suffix == "" || suffix == ".html"
+    mime_type = IO.popen(["file", "--brief", "--mime-type", outfile], &:read).chomp
+    
+    if mime_type == "text/html"
       data = File.read(outfile)
 
       i = 0
       while true do
-        match_data = data.match(/href="([^"]+)"/, i)
+        match_data = data.match(/(src|href)="([^"]+)"/, i)
         if !match_data.nil?
-          new_link = match_data[1]
+          new_link = match_data[2]
           
-          if new_link.start_with?("/")
+          if new_link.start_with?(export.parameter)
+            new_link = new_link[export.parameter.length..-1]
+          end
+          
+          if new_link.start_with?("/") && !new_link.start_with?("//")
             
             x = new_link.index("?")
             if !x.nil?
@@ -193,9 +203,9 @@ class ExportJob < ApplicationJob
             if !processed_links.has_key?(new_link)
               processed_links[new_link] = true
               
-              scrape(export, dir, new_link, processed_links)
-              
               Rails.logger.debug{"ExportJob scrape new_link: #{new_link}"}
+
+              scrape(export, dir, new_link, processed_links)
             end
             
           end

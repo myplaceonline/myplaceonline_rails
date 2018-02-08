@@ -64,13 +64,17 @@ class FlightsController < MyplaceonlineController
   end
 
   def footer_items_show
-    super + [
-      {
+    result = super
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.flights.send_info"),
         link: flight_send_info_path(@obj),
         icon: "action"
       }
-    ]
+    end
+    
+    result
   end
   
   protected

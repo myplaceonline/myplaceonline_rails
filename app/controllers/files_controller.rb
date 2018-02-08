@@ -208,42 +208,52 @@ class FilesController < MyplaceonlineController
   end
 
   def footer_items_index
-    super + [
-      {
+    
+    result = super
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t('myplaceonline.file_folders.add'),
         link: new_file_folder_path,
         icon: "plus"
       }
-    ]
+    end
+    
+    result
   end
   
   def footer_items_show
-    result = super + [
-      {
+    result = super
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.files.rotateclock90"),
         link: file_rotate_path(@obj, degrees: 90),
         icon: "forward"
-      },
-      {
+      }
+      
+      result << {
         title: I18n.t("myplaceonline.files.rotatecounterclock90"),
         link: file_rotate_path(@obj, degrees: -90),
         icon: "back"
-      },
-      {
+      }
+      
+      result << {
         title: I18n.t("myplaceonline.files.rotate180"),
         link: file_rotate_path(@obj, degrees: 180),
         icon: "gear"
-      },
-      {
+      }
+      
+      result << {
         title: I18n.t("myplaceonline.files.move"),
         link: file_move_path(@obj),
         icon: "arrow-r"
       }
-    ]
+    end
     
     if !@obj.folder.nil?
       result << {
-        title: I18n.t('myplaceonline.files.folder'),
+        title: I18n.t("myplaceonline.files.folder"),
         link: file_folder_path(@obj.folder),
         icon: "back"
       }
