@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180204112823) do
+ActiveRecord::Schema.define(version: 20180209202046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2901,7 +2901,7 @@ ActiveRecord::Schema.define(version: 20180204112823) do
     t.datetime "updated_at"
     t.string "file_file_name", limit: 255
     t.string "file_content_type", limit: 255
-    t.integer "file_file_size"
+    t.bigint "file_file_size"
     t.datetime "file_updated_at"
     t.integer "encrypted_password_id"
     t.text "notes"

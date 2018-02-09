@@ -178,9 +178,11 @@ class ExportJob < ApplicationJob
     if mime_type == "text/html"
       data = File.read(outfile)
 
+      changed = false
+      
       i = 0
       while true do
-        match_data = data.match(/(src|href)="([^"]+)"/, i)
+        match_data = data.match(/(src|href)="([^"]+)/, i)
         if !match_data.nil?
           new_link = match_data[2]
           
@@ -190,6 +192,9 @@ class ExportJob < ApplicationJob
           
           if new_link.start_with?("/") && !new_link.start_with?("//")
             
+            replacement = "#{match_data[1]}=\"#{new_link[1..-1]}"
+
+            # Remove non-URL components for scrape lookup
             x = new_link.index("?")
             if !x.nil?
               new_link = new_link[0..x-1]
@@ -208,12 +213,20 @@ class ExportJob < ApplicationJob
               scrape(export, dir, new_link, processed_links)
             end
             
+            data = match_data.pre_match + replacement + match_data.post_match
+            i = match_data.offset(0)[0] + replacement.length + 1
+            
+            changed = true
+          else
+            i = match_data.offset(0)[1]
           end
-          
-          i = match_data.offset(0)[1]
         else
           break
         end
+      end
+      
+      if changed
+        IO.write(outfile, data)
       end
     end
   end
