@@ -46,7 +46,7 @@ class User < ApplicationRecord
   
   def domain_identities
     domain = Myp.website_domain
-    identities.order(:name).to_a.dup.keep_if { |x| x.website_domain.id == domain.id }
+    identities.order(:name).to_a.dup.keep_if { |x| x.website_domain_id == domain.id }
   end
   
   def self.current_user
