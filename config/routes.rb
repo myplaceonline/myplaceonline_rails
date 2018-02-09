@@ -328,7 +328,8 @@ Rails.application.routes.draw do
     ],
     groups: [
       { instance: true, link: "email_list" },
-      { instance: true, link: "missing_list" }
+      { instance: true, link: "missing_list" },
+      { instance: true, link: "empty" },
     ],
     identity_file_folders: [
       {

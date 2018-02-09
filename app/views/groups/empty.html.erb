@@ -1,0 +1,24 @@
+<% content_for :heading do -%><%= t("myplaceonline.groups.empty") %><% end -%>
+
+<h1><%= t("myplaceonline.groups.empty") %></h1>
+
+<%= flashes! %>
+
+<p><%= t("myplaceonline.groups.empty_intro", count: @count) %></p>
+
+<%= form_tag(group_empty_path(@obj), method: :post) do %>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.groups.empty"), "data-icon" => "action", "data-iconpos" => "top", style: "background-color: green")
+        },
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: controller.obj_path,
+          icon: "back"
+        },
+      ]
+    })
+  %>
+<% end %>

@@ -1,6 +1,4 @@
 class GroupsController < MyplaceonlineController
-  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:email_list, :missing_list]
-
   def email_list
     set_obj
     
@@ -57,6 +55,20 @@ class GroupsController < MyplaceonlineController
     
   end
   
+  def empty
+    set_obj
+    
+    if request.post?
+      
+      @obj.group_contacts.destroy_all
+      @obj.group_references.destroy_all
+      
+      redirect_to(group_path(@obj), notice: I18n.t("myplaceonline.groups.emptied"))
+    else
+      @count = @obj.all_contacts.count
+    end
+  end
+  
   def self.param_names
     [
       :id,
@@ -88,15 +100,20 @@ class GroupsController < MyplaceonlineController
   def footer_items_show
     super + [
       {
-        title: I18n.t('myplaceonline.groups.email_list'),
+        title: I18n.t("myplaceonline.groups.email_list"),
         link: group_email_list_path(@obj),
         icon: "bars"
       },
       {
-        title: I18n.t('myplaceonline.groups.missing'),
+        title: I18n.t("myplaceonline.groups.missing"),
         link: group_missing_list_path(@obj),
         icon: "search"
-      }
+      },
+      {
+        title: I18n.t("myplaceonline.groups.empty"),
+        link: group_empty_path(@obj),
+        icon: "forbidden"
+      },
     ]
   end
   

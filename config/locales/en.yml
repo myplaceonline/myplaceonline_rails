@@ -2407,6 +2407,9 @@ en:
       missing: "Missing"
       contact: "Contact"
       added_contacts: "Added %{count} contacts"
+      empty: "Empty"
+      empty_intro: "Click Empty to clear %{count} contacts from this group."
+      emptied: "Group Emptied"
     terms: !xml |
       <![CDATA[
       
