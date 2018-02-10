@@ -65,6 +65,7 @@
           <% end %>
         <% end %>
         
+        <% if !MyplaceonlineExecutionContext.offline? %>
         // Shift+Left Click middle header icon for category search popup
         myplaceonline.onPageLoad(function() {
           myplaceonline.remoteDataListInitialize($("#mainButtonPopup_search_list"), [
@@ -75,6 +76,7 @@
           ]);
           myplaceonline.hookListviewEnter($("#mainButtonPopup_search_container input"), "#mainButtonPopup_search_list");
         });
+        <% end %>
         
         if (myplaceonline.setCsrfToken) {
           myplaceonline.setCsrfToken('<%= form_authenticity_token %>');
@@ -166,10 +168,14 @@
       <div data-role="popup" data-history="false" id="menuPopup<%= request.uuid %>">
         <% if user_signed_in? && !current_user.guest? %>
           <p style="text-align: center;">
-            <%
-              identities = current_user.domain_identities.map{|x| [x.name, x.id] } + [[t("myplaceonline.identities.add"), -1]]
-            %>
-            <%= select_tag("current_identity_id", options_for_select(identities, current_user.current_identity_id), onchange: "myplaceonline.refreshWithParam('current_identity_id', $(this).val());") %>
+            <% if !MyplaceonlineExecutionContext.offline? %>
+              <%
+                identities = current_user.domain_identities.map{|x| [x.name, x.id] } + [[t("myplaceonline.identities.add"), -1]]
+              %>
+              <%= select_tag("current_identity_id", options_for_select(identities, current_user.current_identity_id), onchange: "myplaceonline.refreshWithParam('current_identity_id', $(this).val());") %>
+            <% else %>
+              <%= current_user.current_identity.name %>
+            <% end %>
           </p>
         <% end %>
         <ul data-role="listview">
@@ -195,12 +201,14 @@
           <% end %>
         </ul>
       </div>
-      <div data-role="popup" data-history="false" id="mainButtonPopup">
-        <div id="mainButtonPopup_search_container">
-          <ul id="mainButtonPopup_search_list" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="<%= t("myplaceonline.search.search_categories") %>" data-split-icon="plus">
-          </ul>
+      <% if !MyplaceonlineExecutionContext.offline? %>
+        <div data-role="popup" data-history="false" id="mainButtonPopup">
+          <div id="mainButtonPopup_search_container">
+            <ul id="mainButtonPopup_search_list" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="<%= t("myplaceonline.search.search_categories") %>" data-split-icon="plus">
+            </ul>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
   </body>
 <% if MyplaceonlineExecutionContext.offline? %>

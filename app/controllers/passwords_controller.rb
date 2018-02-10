@@ -277,13 +277,17 @@ class PasswordsController < MyplaceonlineController
   end
 
   def footer_items_index
-    super + [
-      {
+    result = super
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.general.import"),
         link: passwords_import_path,
         icon: "bars"
       }
-    ]
+    end
+    
+    result
   end
   
 #   def footer_items_show

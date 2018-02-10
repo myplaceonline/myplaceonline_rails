@@ -192,7 +192,23 @@ class ExportJob < ApplicationJob
           
           if new_link.start_with?("/") && !new_link.start_with?("//")
             
-            replacement = "#{match_data[1]}=\"#{new_link[1..-1]}"
+            # Remove the leading / because all links need to be relative
+            # on the local filesystem
+            local_link = new_link[1..-1]
+            
+            # Add parent relative components if needed
+            if link_pieces.length > 2
+              (1..link_pieces.length).each do |i|
+                local_link = "../" + local_link
+              end
+            end
+            
+            # If it's an HTML page, then we need to add /index.html
+            if suffix == ".html"
+              local_link = local_link + "/index.html"
+            end
+            
+            replacement = "#{match_data[1]}=\"#{local_link}"
 
             # Remove non-URL components for scrape lookup
             x = new_link.index("?")

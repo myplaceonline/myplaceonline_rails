@@ -3196,7 +3196,7 @@ en:
       subject_shared: "shared"
       duplicate: "Duplicate"
       show_shared: "Display"
-      details: " Details: "
+      details: " ; Details: "
       content_reply: " (Reply to chat with @%{name} or STOP to unsubscribe.)"
       link_unsubscribe_all: "Unsubscribe from all text messages from %{user}"
       link_unsubscribe_category: "Unsubscribe from %{user}'s '%{category}' text messages"

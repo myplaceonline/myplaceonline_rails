@@ -173,6 +173,10 @@ module Myplaceonline
               end
             end
             
+            if parsed_query_string["display_offline"].is_true?
+              MyplaceonlineExecutionContext.offline = true
+            end
+            
             #Rails.logger.debug{"MyplaceonlineRack.call setting context host: #{MyplaceonlineExecutionContext.host}, query_string: #{MyplaceonlineExecutionContext.query_string}, cookie_hash: #{Myp.debug_print(MyplaceonlineExecutionContext.cookie_hash)}"}
             
             @app.call(env)

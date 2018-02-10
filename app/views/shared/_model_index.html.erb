@@ -145,16 +145,18 @@ end
 <%= yielded %>
 
 <% if !@myplet %>
-  <%=
-    render partial: 'myplaceonline/filter_select', locals: {
-      filters: controller.index_filters
-    }
-  %>
-  <%=
-    render partial: 'myplaceonline/sort_items', locals: {
-      options: controller.index_sorts
-    }
-  %>
+  <% if !MyplaceonlineExecutionContext.offline? %>
+    <%=
+      render partial: 'myplaceonline/filter_select', locals: {
+        filters: controller.index_filters
+      }
+    %>
+    <%=
+      render partial: 'myplaceonline/sort_items', locals: {
+        options: controller.index_sorts
+      }
+    %>
+  <% end %>
   <% content_for :footer do -%>
     <% if controller.show_index_footer %>
       <%=

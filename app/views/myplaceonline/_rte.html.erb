@@ -1,67 +1,72 @@
 <%# (f: form, markdown_data: string, hidden_field_name: name symbol, non_hidden_url) %>
-<%
-rte_container = text_area_tag("rte" + SecureRandom.hex(10))
-rte_container_id = extract_id(rte_container)
-if !hidden_field_name.nil?
-  if !f.nil?
-    rte_hidden_field = f.hidden_field(hidden_field_name)
-  else
-    rte_hidden_field = hidden_field_tag(hidden_field_name)
+
+<% if !MyplaceonlineExecutionContext.offline? %>
+  <%
+  rte_container = text_area_tag("rte" + SecureRandom.hex(10))
+  rte_container_id = extract_id(rte_container)
+  if !hidden_field_name.nil?
+    if !f.nil?
+      rte_hidden_field = f.hidden_field(hidden_field_name)
+    else
+      rte_hidden_field = hidden_field_tag(hidden_field_name)
+    end
+    rte_hidden_field_id = extract_id(rte_hidden_field)
   end
-  rte_hidden_field_id = extract_id(rte_hidden_field)
-end
-if !defined?(autofocus)
-  autofocus = false
-end
-%>
-<%= rte_container %>
-<% if !hidden_field_name.nil? %>
-  <%= rte_hidden_field %>
-<% end %>
-<script type="text/javascript">
-function debugEditor(eventName, evt) {
-  myplaceonline.consoleLog("CKEDITOR: event: " + eventName);
-  myplaceonline.consoleLog("CKEDITOR: data: " + evt.editor.getData());
-}
+  if !defined?(autofocus)
+    autofocus = false
+  end
+  %>
+  <%= rte_container %>
+  <% if !hidden_field_name.nil? %>
+    <%= rte_hidden_field %>
+  <% end %>
+  <script type="text/javascript">
+  function debugEditor(eventName, evt) {
+    myplaceonline.consoleLog("CKEDITOR: event: " + eventName);
+    myplaceonline.consoleLog("CKEDITOR: data: " + evt.editor.getData());
+  }
 
-myplaceonline.onPageLoad(function() {
-  // See config.js for default configuration
-  CKEDITOR.replace(
-    '<%= rte_container_id %>',
-    {
-      startupFocus: <%= autofocus %>,
-      on: {
-        instanceReady: function(ev) {
-          var initial_data = <%= raw((markdown_data.nil? ? "" : markdown_data).to_json) %>;
-          ev.editor.setData(
-            marked(initial_data, {
-              langPrefix: 'language-',
-              breaks: true,
-              sanitize: true
-            }),
-            {
-              callback: function(ev) {
-                this.fully_initialized = true;
+  myplaceonline.onPageLoad(function() {
+    // See config.js for default configuration
+    CKEDITOR.replace(
+      '<%= rte_container_id %>',
+      {
+        startupFocus: <%= autofocus %>,
+        on: {
+          instanceReady: function(ev) {
+            var initial_data = <%= raw((markdown_data.nil? ? "" : markdown_data).to_json) %>;
+            ev.editor.setData(
+              marked(initial_data, {
+                langPrefix: 'language-',
+                breaks: true,
+                sanitize: true
+              }),
+              {
+                callback: function(ev) {
+                  this.fully_initialized = true;
+                }
               }
-            }
-          );
-        },
-        change: function(ev) {
-          if (ev.editor.fully_initialized) {
-            // getData returns a string of HTML
-            var data = ev.editor.getData();
-            
-            var markedDownData = myplaceonline.toMarkdown(data);
+            );
+          },
+          change: function(ev) {
+            if (ev.editor.fully_initialized) {
+              // getData returns a string of HTML
+              var data = ev.editor.getData();
+              
+              var markedDownData = myplaceonline.toMarkdown(data);
 
-            <% if !hidden_field_name.nil? %>
-              $("#<%= rte_hidden_field_id %>").attr("value", markedDownData);
-            <% else %>
-              myplaceonline.notepadChanged('#<%= rte_container_id %>', '<%= non_hidden_url %>', '<%= t("myplaceonline.general.pending_save") %>', '<%= t("myplaceonline.general.saving") %>', '<%= t("myplaceonline.general.saved") %>', markedDownData);
-            <% end %>
+              <% if !hidden_field_name.nil? %>
+                $("#<%= rte_hidden_field_id %>").attr("value", markedDownData);
+              <% else %>
+                myplaceonline.notepadChanged('#<%= rte_container_id %>', '<%= non_hidden_url %>', '<%= t("myplaceonline.general.pending_save") %>', '<%= t("myplaceonline.general.saving") %>', '<%= t("myplaceonline.general.saved") %>', markedDownData);
+              <% end %>
+            }
           }
         }
       }
-    }
-  );
-});
-</script>
+    );
+  });
+  </script>
+<% else %>
+  <%= raw(Myp.markdown_to_html(markdown_data)) %>
+<% end %>

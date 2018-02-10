@@ -97,9 +97,11 @@ class TextMessage < ApplicationRecord
         valid_guest_actions: "shared"
       )
       
-      if !content.end_with?(".", "!")
-        content += "."
-      end
+      # Content might end with a link, so never add a period
+      
+      # if !content.end_with?(".", "!")
+      #   content += "."
+      # end
       
       # TODO https://stackoverflow.com/questions/45701691/how-can-i-customize-the-web-preview-in-imessages-for-my-website
       
