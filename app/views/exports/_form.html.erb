@@ -21,6 +21,25 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_SELECT,
+    name: :compression_type,
+    value: obj.compression_type,
+    placeholder: "myplaceonline.exports.compression_type",
+    select_options: Export::COMPRESSION_TYPES,
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :encrypt_output,
+    value: obj.encrypt_output,
+    placeholder: "myplaceonline.exports.encrypt_output"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,
@@ -29,16 +48,18 @@
     placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
   )
 %>
-<%=
-  render partial: "myplaceonline/pictures_form", locals: {
-    f: f,
-    obj: obj,
-    position_field: :position,
-    pictures_field: :export_files,
-    item_placeholder: "myplaceonline.identity_files.file",
-    heading: "myplaceonline.identity_files.files",
-    addbutton: "myplaceonline.identity_files.add_file",
-    addbutton_multi: "myplaceonline.identity_files.add_files",
-    deletebutton: "myplaceonline.identity_files.delete_file"
-  }
-%>
+<% if !obj.id.nil? %>
+  <%=
+    render partial: "myplaceonline/pictures_form", locals: {
+      f: f,
+      obj: obj,
+      position_field: :position,
+      pictures_field: :export_files,
+      item_placeholder: "myplaceonline.identity_files.file",
+      heading: "myplaceonline.identity_files.files",
+      addbutton: "myplaceonline.identity_files.add_file",
+      addbutton_multi: "myplaceonline.identity_files.add_files",
+      deletebutton: "myplaceonline.identity_files.delete_file"
+    }
+  %>
+<% end %>

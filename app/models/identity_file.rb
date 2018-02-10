@@ -300,10 +300,14 @@ class IdentityFile < ApplicationRecord
   
   def on_after_destroy
     if !self.filesystem_path.blank?
-      File.delete(self.filesystem_path)
+      if File.exist?(self.filesystem_path)
+        File.delete(self.filesystem_path)
+      end
     end
     if !self.thumbnail_filesystem_path.blank?
-      File.delete(self.thumbnail_filesystem_path)
+      if File.exist?(self.thumbnail_filesystem_path)
+        File.delete(self.thumbnail_filesystem_path)
+      end
     end
   end
   

@@ -77,29 +77,75 @@ class ExportJob < ApplicationJob
       
       scrape(export, dir, "/", processed_links)
       
-      append_message(export, "Export complete. Zipping files...")
-
+      append_message(export, "Export complete. Compressing files...")
+      
       output_name = "export_#{User.current_user.time_now.strftime("%Y%m%dT%H%M%S")}_"
-      output_name = IdentityFile.name_to_random(name: ".zip", prefix: output_name)
       
-      output_zip = uploads_path + output_name
+      extension = ""
+      case export.compression_type
+      when Export::COMPRESSION_TYPE_ZIP
+        extension = ".zip"
+      when Export::COMPRESSION_TYPE_TAR_GZ
+        extension = ".tar.gz"
+      else
+        raise "Unknown compression type #{export.compression_type}"
+      end
+      
+      output_name = IdentityFile.name_to_random(name: extension, prefix: output_name)
+      
+      output_path = uploads_path + output_name
 
-      Rails.logger.debug{"ExportJob output_zip: #{output_zip}"}
+      Rails.logger.debug{"ExportJob output_path: #{output_path}"}
       
-      stdout = execute_command(command_line: "zip -r #{output_zip} *", current_directory: dir)
+      case export.compression_type
+      when Export::COMPRESSION_TYPE_ZIP
+        stdout = execute_command(command_line: "zip -r #{output_path} *", current_directory: dir)
+      when Export::COMPRESSION_TYPE_TAR_GZ
+        stdout = execute_command(command_line: "tar czvf #{output_path} *", current_directory: dir)
+      else
+        raise "Unknown compression type #{export.compression_type}"
+      end
 
       Rails.logger.debug{"ExportJob stdout: #{stdout}"}
       
-      FileUtils.chmod("a=rw", output_zip)
+      FileUtils.chmod("a=rw", output_path)
+      
+      if export.encrypt_output?
+        
+        new_output_path = output_path + ".gpg"
+        
+        gpgbin = "/usr/bin/gpg"
+        command = "#{gpgbin} --batch --passphrase-fd 0 --yes --homedir /tmp " +
+          "--no-use-agent --s2k-mode 3 --s2k-count 65536 " +
+          "--force-mdc --cipher-algo AES256 --s2k-digest-algo #{OpenSSL::Digest::SHA512.new.name} " +
+          "-o #{new_output_path} --symmetric #{output_path}"
+        
+        Open3.popen3(command) do |stdin, stdout, stderr, wait_thr|
+          stdin.write(export.security_token.password)
+          stdin.close_write
+          exit_status = wait_thr.value
+          if exit_status != 0
+            raise "Exit status " + exit_status.to_s
+          end
+        end
+        
+        FileUtils.chmod("a=rw", new_output_path)
+        
+        # Delete the original file
+        File.delete(output_path)
+        
+        output_path = new_output_path
+        output_name = output_name + ".gpg"
+      end
       
       file_hash = {
         original_filename: output_name,
-        path: output_zip,
-        size: File.size(output_zip),
-        content_type: IdentityFile.infer_content_type(path: output_zip),
+        path: output_path,
+        size: File.size(output_path),
+        content_type: IdentityFile.infer_content_type(path: output_path),
       }
       newfile = IdentityFile.create_for_path!(file_hash: file_hash)
-      append_message(export, "Created downloadable zip: #{output_name}")
+      append_message(export, "Created downloadable file: #{output_name}")
       newwrappedfile = ExportFile.create!(
         identity_file: newfile
       )
@@ -197,14 +243,15 @@ class ExportJob < ApplicationJob
             local_link = new_link[1..-1]
             
             # Add parent relative components if needed
-            if link_pieces.length > 2
-              (1..link_pieces.length).each do |i|
+            if link_pieces.length >= 2
+              (1..link_pieces.length - 1).each do |i|
                 local_link = "../" + local_link
               end
             end
             
             # If it's an HTML page, then we need to add /index.html
-            if suffix == ".html"
+            new_link_last_piece = new_link[new_link.rindex("/")+1..-1]
+            if new_link_last_piece.index(".").nil? || new_link_last_piece.end_with?(".html")
               local_link = local_link + "/index.html"
             end
             

@@ -4086,3 +4086,8 @@ en:
         everything: "Everything"
       pending: "Pending"
       start: "Start"
+      compression_type: "Storage Type"
+      compression_types:
+        zip: ".zip"
+        tar_gz: ".tar.gz"
+      encrypt_output: "Encrypt Storage"

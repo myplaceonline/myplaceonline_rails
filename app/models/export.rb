@@ -30,6 +30,14 @@ class Export < ApplicationRecord
     ["myplaceonline.exports.export_statuses.error", EXPORT_STATUS_ERROR],
     ["myplaceonline.exports.export_statuses.waiting_for_worker", EXPORT_STATUS_WAITING_FOR_WORKER],
   ]
+  
+  COMPRESSION_TYPE_ZIP = 0
+  COMPRESSION_TYPE_TAR_GZ = 1
+  
+  COMPRESSION_TYPES = [
+    ["myplaceonline.exports.compression_types.zip", COMPRESSION_TYPE_ZIP],
+    ["myplaceonline.exports.compression_types.tar_gz", COMPRESSION_TYPE_TAR_GZ],
+  ]
 
   validates :export_name, presence: true
   validates :export_type, presence: true
@@ -74,5 +82,13 @@ class Export < ApplicationRecord
     self.security_token_id = token.id
     
     true
+  end
+  
+  def self.build(params = nil)
+    result = self.dobuild(params)
+    result.export_type = EXPORT_TYPE_EVERYTHING
+    result.compression_type = COMPRESSION_TYPE_ZIP
+    result.encrypt_output = true
+    result
   end
 end

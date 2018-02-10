@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180209202046) do
+ActiveRecord::Schema.define(version: 20180210102624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2179,6 +2179,8 @@ ActiveRecord::Schema.define(version: 20180209202046) do
     t.datetime "updated_at", null: false
     t.bigint "security_token_id"
     t.string "parameter"
+    t.boolean "encrypt_output"
+    t.integer "compression_type"
     t.index ["identity_id"], name: "index_exports_on_identity_id"
     t.index ["security_token_id"], name: "index_exports_on_security_token_id"
   end

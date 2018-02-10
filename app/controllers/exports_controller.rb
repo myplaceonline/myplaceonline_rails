@@ -31,8 +31,14 @@ class ExportsController < MyplaceonlineController
       :export_type,
       :notes,
       :_updatetype,
+      :compression_type,
+      :encrypt_output,
       export_files_attributes: FilesController.multi_param_names,
     ]
+  end
+  
+  def after_create_redirect
+    redirect_to export_export_path(@obj)
   end
   
   protected
