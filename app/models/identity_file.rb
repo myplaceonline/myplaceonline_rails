@@ -334,6 +334,10 @@ class IdentityFile < ApplicationRecord
         result = "video/x-flv"
       when "zip"
         result = "application/zip"
+      when "gpg"
+        result = "application/pgp-encrypted"
+      when "gz"
+        result = "application/gzip"
       else
         raise "Unimplemented extension #{ext}"
       end
@@ -363,5 +367,14 @@ class IdentityFile < ApplicationRecord
     else
       FileUtils.cp(self.evaluated_path, destination_file_name)
     end
+  end
+  
+  def name_path
+    Rails.application.routes.url_helpers.send(
+      "file_download_name_path",
+      self,
+      self.urlname,
+      t: self.updated_at.to_i,
+    )
   end
 end

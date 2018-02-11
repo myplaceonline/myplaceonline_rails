@@ -73,7 +73,7 @@ class ExportJob < ApplicationJob
       
       processed_links = { "/": true }
       
-      append_message(export, "Exporting website...")
+      append_message(export, "Exporting website. This may take hours or days...")
       
       scrape(export, dir, "/", processed_links)
       
@@ -120,6 +120,8 @@ class ExportJob < ApplicationJob
           "--force-mdc --cipher-algo AES256 --s2k-digest-algo #{OpenSSL::Digest::SHA512.new.name} " +
           "-o #{new_output_path} --symmetric #{output_path}"
         
+        append_message(export, "Compression complete. Encrypting files...")
+        
         Open3.popen3(command) do |stdin, stdout, stderr, wait_thr|
           stdin.write(export.security_token.password)
           stdin.close_write
@@ -134,6 +136,8 @@ class ExportJob < ApplicationJob
         # Delete the original file
         File.delete(output_path)
         
+        append_message(export, "Encryption complete. Use the free [gpg](https://gnupg.org/download/index.html) program to decrypt: gpg --output #{output_name.gsub(/_/, "\\_")} --decrypt #{output_name.gsub(/_/, "\\_")}.pgp")
+
         output_path = new_output_path
         output_name = output_name + ".gpg"
       end
@@ -145,7 +149,7 @@ class ExportJob < ApplicationJob
         content_type: IdentityFile.infer_content_type(path: output_path),
       }
       newfile = IdentityFile.create_for_path!(file_hash: file_hash)
-      append_message(export, "Created downloadable file: #{output_name}")
+      append_message(export, "Created downloadable file: #{output_name.gsub(/_/, "\\_")}")
       newwrappedfile = ExportFile.create!(
         identity_file: newfile
       )

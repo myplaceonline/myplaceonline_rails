@@ -143,8 +143,11 @@
           <a href="/" data-icon="home" data-iconpos="notext" title="<%= t("myplaceonline.menu.home") %>"><%= t("myplaceonline.menu.home") %></a>
         <% end %>
         <h1><%= link_to(header_link, id: "mainbutton", title: header_title_cached) do image_tag(header_icon, alt: header_title_cached) end %>&nbsp;<%= link_to(request.original_fullpath, class: "hidden_link") do main_title end %></h1>
+        <%# Popups do not work on file: local because of data-url which is needed %>
         <%# We give a unique id to each popup because the menu may be different. %>
-        <a href="#menuPopup<%= request.uuid %>" data-icon="bars" class="ui-btn-right" data-rel="popup" data-iconpos="notext" title="<%= t("myplaceonline.menu.name") %>" id="headerMenuPopup"><%= t("myplaceonline.menu.name") %></a>
+        <% if !MyplaceonlineExecutionContext.offline? %>
+          <a href="#menuPopup<%= request.uuid %>" data-icon="bars" class="ui-btn-right" data-rel="popup" data-iconpos="notext" title="<%= t("myplaceonline.menu.name") %>" id="headerMenuPopup"><%= t("myplaceonline.menu.name") %></a>
+        <% end %>
       </div>
       <div id="main_content" role="main" class="ui-content">
       
@@ -164,43 +167,45 @@
         
       </div>
       <%= yield(:footer) %>
-      <%# We give a unique id to each popup because the menu may change between requests. %>
-      <div data-role="popup" data-history="false" id="menuPopup<%= request.uuid %>">
-        <% if user_signed_in? && !current_user.guest? %>
-          <p style="text-align: center;">
-            <% if !MyplaceonlineExecutionContext.offline? %>
-              <%
-                identities = current_user.domain_identities.map{|x| [x.name, x.id] } + [[t("myplaceonline.identities.add"), -1]]
-              %>
-              <%= select_tag("current_identity_id", options_for_select(identities, current_user.current_identity_id), onchange: "myplaceonline.refreshWithParam('current_identity_id', $(this).val());") %>
-            <% else %>
-              <%= current_user.current_identity.name %>
-            <% end %>
-          </p>
-        <% end %>
-        <ul data-role="listview">
-          <li><a href="/" class="ui-btn ui-btn-icon-left ui-icon-home"><%= t("myplaceonline.menu.home") %></a></li>
-          <% if user_signed_in? %>
-            <% if !current_user.guest? %>
+      <% if !MyplaceonlineExecutionContext.offline? %>
+        <%# We give a unique id to each popup because the menu may change between requests. %>
+        <div data-role="popup" data-history="false" id="menuPopup<%= request.uuid %>">
+          <% if user_signed_in? && !current_user.guest? %>
+            <p style="text-align: center;">
               <% if !MyplaceonlineExecutionContext.offline? %>
-                <li><%= link_to(t("myplaceonline.buttons.edituser"), edit_user_registration_path, class: "ui-btn ui-btn-icon-left ui-icon-user") %></li>
-                <li><a href="#" class="ui-btn ui-btn-icon-left ui-icon-phone" onclick="myplaceonline.quickFeedback('<%= t("myplaceonline.general.quick_feedback") %>'); $('#menuPopup<%= request.uuid %>').popup('close'); return false;"><%= t("myplaceonline.menu.feedback") %></a></li>
+                <%
+                  identities = current_user.domain_identities.map{|x| [x.name, x.id] } + [[t("myplaceonline.identities.add"), -1]]
+                %>
+                <%= select_tag("current_identity_id", options_for_select(identities, current_user.current_identity_id), onchange: "myplaceonline.refreshWithParam('current_identity_id', $(this).val());") %>
+              <% else %>
+                <%= current_user.current_identity.name %>
+              <% end %>
+            </p>
+          <% end %>
+          <ul data-role="listview">
+            <li><a href="/" class="ui-btn ui-btn-icon-left ui-icon-home"><%= t("myplaceonline.menu.home") %></a></li>
+            <% if user_signed_in? %>
+              <% if !current_user.guest? %>
+                <% if !MyplaceonlineExecutionContext.offline? %>
+                  <li><%= link_to(t("myplaceonline.buttons.edituser"), edit_user_registration_path, class: "ui-btn ui-btn-icon-left ui-icon-user") %></li>
+                  <li><a href="#" class="ui-btn ui-btn-icon-left ui-icon-phone" onclick="myplaceonline.quickFeedback('<%= t("myplaceonline.general.quick_feedback") %>'); $('#menuPopup<%= request.uuid %>').popup('close'); return false;"><%= t("myplaceonline.menu.feedback") %></a></li>
+                <% end %>
+              <% else %>
+                <li><%= link_to(t("myplaceonline.buttons.signin"), new_user_session_path, class: "ui-btn ui-btn-icon-left ui-icon-power") %></li>
+                <li><%= link_to(t("myplaceonline.buttons.signup"), new_user_registration_path, class: "ui-btn ui-btn-icon-left ui-icon-user") %></li>
+              <% end %>
+              <li><a href="/info" class="ui-btn ui-btn-icon-left ui-icon-info"><%= t("myplaceonline.info.title") %></a></li>
+              <% if !current_user.guest? && !MyplaceonlineExecutionContext.offline? %>
+                <li><%= link_to(t("myplaceonline.buttons.logout"), destroy_user_session_path, method: :delete, class: "ui-btn ui-btn-icon-left ui-icon-power") %></li>
               <% end %>
             <% else %>
               <li><%= link_to(t("myplaceonline.buttons.signin"), new_user_session_path, class: "ui-btn ui-btn-icon-left ui-icon-power") %></li>
               <li><%= link_to(t("myplaceonline.buttons.signup"), new_user_registration_path, class: "ui-btn ui-btn-icon-left ui-icon-user") %></li>
+              <li><a href="/info" class="ui-btn ui-btn-icon-left ui-icon-info"><%= t("myplaceonline.info.title") %></a></li>
             <% end %>
-            <li><a href="/info" class="ui-btn ui-btn-icon-left ui-icon-info"><%= t("myplaceonline.info.title") %></a></li>
-            <% if !current_user.guest? && !MyplaceonlineExecutionContext.offline? %>
-              <li><%= link_to(t("myplaceonline.buttons.logout"), destroy_user_session_path, method: :delete, class: "ui-btn ui-btn-icon-left ui-icon-power") %></li>
-            <% end %>
-          <% else %>
-            <li><%= link_to(t("myplaceonline.buttons.signin"), new_user_session_path, class: "ui-btn ui-btn-icon-left ui-icon-power") %></li>
-            <li><%= link_to(t("myplaceonline.buttons.signup"), new_user_registration_path, class: "ui-btn ui-btn-icon-left ui-icon-user") %></li>
-            <li><a href="/info" class="ui-btn ui-btn-icon-left ui-icon-info"><%= t("myplaceonline.info.title") %></a></li>
-          <% end %>
-        </ul>
-      </div>
+          </ul>
+        </div>
+      <% end %>
       <% if !MyplaceonlineExecutionContext.offline? %>
         <div data-role="popup" data-history="false" id="mainButtonPopup">
           <div id="mainButtonPopup_search_container">

@@ -1537,7 +1537,7 @@ var myplaceonline = function(mymodule) {
   mymodule.toType = toType;
   
   myplaceonline.onPageLoad(function() {
-    if (ZeroClipboard) {
+    if (typeof ZeroClipboard !== 'undefined') {
       ZeroClipboard.on("error", function(e) {
         myplaceonline.consoleLog("ZeroClipboard error: " + e);
         //if (Error) {
