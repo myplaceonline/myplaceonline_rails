@@ -38,6 +38,7 @@ class ExportsController < MyplaceonlineController
   end
   
   def after_create_redirect
+    @obj.start
     redirect_to export_export_path(@obj)
   end
   

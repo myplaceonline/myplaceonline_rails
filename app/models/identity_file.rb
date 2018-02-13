@@ -369,7 +369,7 @@ class IdentityFile < ApplicationRecord
     end
   end
   
-  def name_path
+  def download_name_path
     Rails.application.routes.url_helpers.send(
       "file_download_name_path",
       self,

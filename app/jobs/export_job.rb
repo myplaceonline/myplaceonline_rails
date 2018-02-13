@@ -73,7 +73,7 @@ class ExportJob < ApplicationJob
       
       processed_links = { "/": true }
       
-      append_message(export, "Exporting website. This may take hours or days...")
+      append_message(export, "Exporting website. This may take hours or days. Refresh this page to check the status.")
       
       scrape(export, dir, "/", processed_links)
       
@@ -91,7 +91,7 @@ class ExportJob < ApplicationJob
         raise "Unknown compression type #{export.compression_type}"
       end
       
-      output_name = IdentityFile.name_to_random(name: extension, prefix: output_name)
+      output_name = IdentityFile.name_to_random(name: "", prefix: output_name, extension: extension)
       
       output_path = uploads_path + output_name
 
@@ -155,7 +155,7 @@ class ExportJob < ApplicationJob
         content_type: IdentityFile.infer_content_type(path: output_path),
       }
       newfile = IdentityFile.create_for_path!(file_hash: file_hash)
-      append_message(export, "Created downloadable file: #{output_name.gsub(/_/, "\\_")}")
+      append_message(export, "Created downloadable file: [#{output_name.gsub(/_/, "\\_")}](#{newfile.download_name_path})")
       newwrappedfile = ExportFile.create!(
         identity_file: newfile
       )
@@ -170,6 +170,22 @@ class ExportJob < ApplicationJob
   
   def clean_command_line(str)
     str.gsub(/['"\\`\n$]/, "")
+  end
+  
+  def supports_symlinks(compression_type)
+    compression_type == Export::COMPRESSION_TYPE_TAR_GZ
+  end
+  
+  def try_symlink_path(outfile)
+    result = nil
+    if outfile.include?("/files/")
+      if outfile.include?("/view/")
+        result = outfile.sub(/\/view\//, "/download/")
+      elsif outfile.include?("/download/")
+        result = outfile.sub(/\/download\//, "/view/")
+      end
+    end
+    result
   end
   
   def scrape(export, dir, link, processed_links)
@@ -226,80 +242,102 @@ class ExportJob < ApplicationJob
     outfile = target_dir.join(outname + suffix).to_s
     
     Rails.logger.debug{"ExportJob downloading path: #{path}, outfile: #{outfile}"}
-
-    execute_command(command_line: "curl --silent --output '#{outfile}' --user-agent 'Myplaceonline Bot (Read-Only)' '#{clean_command_line(path)}'", current_directory: dir)
     
-    mime_type = IO.popen(["file", "--brief", "--mime-type", outfile], &:read).chomp
+    needs_download = true
     
-    if mime_type == "text/html"
-      data = File.read(outfile)
-
-      changed = false
-      
-      i = 0
-      while true do
-        match_data = data.match(/(src|href)="([^"]+)/, i)
-        if !match_data.nil?
-          new_link = match_data[2]
+    if supports_symlinks(export.compression_type)
+      existing_path = try_symlink_path(outfile)
+      if !existing_path.nil?
+        if File.exist?(existing_path)
+          Rails.logger.debug{"ExportJob symlinking to #{existing_path}"}
           
-          if new_link.start_with?(export.parameter)
-            new_link = new_link[export.parameter.length..-1]
+          if outfile.include?("/view/")
+            execute_command(command_line: "ln -s '../download/#{clean_command_line(outname + suffix)}'", current_directory: target_dir.to_s)
+          elsif outfile.include?("/download/")
+            execute_command(command_line: "ln -s '../view/#{clean_command_line(outname + suffix)}'", current_directory: target_dir.to_s)
           end
           
-          if new_link.start_with?("/") && !new_link.start_with?("//")
-            
-            # Remove the leading / because all links need to be relative
-            # on the local filesystem
-            local_link = new_link[1..-1]
-            
-            # Add parent relative components if needed
-            if link_pieces.length >= 2
-              (1..link_pieces.length - 1).each do |i|
-                local_link = "../" + local_link
-              end
-            end
-            
-            # If it's an HTML page, then we need to add /index.html
-            new_link_last_piece = new_link[new_link.rindex("/")+1..-1]
-            if new_link_last_piece.index(".").nil? || new_link_last_piece.end_with?(".html")
-              local_link = local_link + "/index.html"
-            end
-            
-            replacement = "#{match_data[1]}=\"#{local_link}"
-
-            # Remove non-URL components for scrape lookup
-            x = new_link.index("?")
-            if !x.nil?
-              new_link = new_link[0..x-1]
-            end
-            
-            x = new_link.index("#")
-            if !x.nil?
-              new_link = new_link[0..x-1]
-            end
-            
-            if !processed_links.has_key?(new_link)
-              processed_links[new_link] = true
-              
-              Rails.logger.debug{"ExportJob scrape new_link: #{new_link}"}
-
-              scrape(export, dir, new_link, processed_links)
-            end
-            
-            data = match_data.pre_match + replacement + match_data.post_match
-            i = match_data.offset(0)[0] + replacement.length + 1
-            
-            changed = true
-          else
-            i = match_data.offset(0)[1]
-          end
-        else
-          break
+          needs_download = false
         end
       end
+    end
+    
+    if needs_download
       
-      if changed
-        IO.write(outfile, data)
+      execute_command(command_line: "curl --silent --output '#{outfile}' --user-agent 'Myplaceonline Bot (Read-Only)' '#{clean_command_line(path)}'", current_directory: dir)
+      
+      mime_type = IO.popen(["file", "--brief", "--mime-type", outfile], &:read).chomp
+      
+      if mime_type == "text/html"
+        data = File.read(outfile)
+
+        changed = false
+        
+        i = 0
+        while true do
+          match_data = data.match(/(src|href)="([^"]+)/, i)
+          if !match_data.nil?
+            new_link = match_data[2]
+            
+            if new_link.start_with?(export.parameter)
+              new_link = new_link[export.parameter.length..-1]
+            end
+            
+            if new_link.start_with?("/") && !new_link.start_with?("//")
+              
+              # Remove the leading / because all links need to be relative
+              # on the local filesystem
+              local_link = new_link[1..-1]
+              
+              # Add parent relative components if needed
+              if link_pieces.length >= 2
+                (1..link_pieces.length - 1).each do |i|
+                  local_link = "../" + local_link
+                end
+              end
+              
+              # If it's an HTML page, then we need to add /index.html
+              new_link_last_piece = new_link[new_link.rindex("/")+1..-1]
+              if new_link_last_piece.index(".").nil? || new_link_last_piece.end_with?(".html")
+                local_link = local_link + "/index.html"
+              end
+              
+              replacement = "#{match_data[1]}=\"#{local_link}"
+
+              # Remove non-URL components for scrape lookup
+              x = new_link.index("?")
+              if !x.nil?
+                new_link = new_link[0..x-1]
+              end
+              
+              x = new_link.index("#")
+              if !x.nil?
+                new_link = new_link[0..x-1]
+              end
+              
+              if !processed_links.has_key?(new_link)
+                processed_links[new_link] = true
+                
+                Rails.logger.debug{"ExportJob scrape new_link: #{new_link}"}
+
+                scrape(export, dir, new_link, processed_links)
+              end
+              
+              data = match_data.pre_match + replacement + match_data.post_match
+              i = match_data.offset(0)[0] + replacement.length + 1
+              
+              changed = true
+            else
+              i = match_data.offset(0)[1]
+            end
+          else
+            break
+          end
+        end
+        
+        if changed
+          IO.write(outfile, data)
+        end
       end
     end
   end

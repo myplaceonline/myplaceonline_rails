@@ -95,10 +95,14 @@ class FeedsController < MyplaceonlineController
   end
   
   def split_link(obj)
-    ActionController::Base.helpers.link_to(
-      I18n.t("myplaceonline.feeds.load"),
-      feed_load_path(obj)
-    )
+    if !MyplaceonlineExecutionContext.offline?
+      ActionController::Base.helpers.link_to(
+        I18n.t("myplaceonline.feeds.load"),
+        feed_load_path(obj)
+      )
+    else
+      nil
+    end
   end
   
   def footer_items_index

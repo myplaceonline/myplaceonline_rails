@@ -4090,4 +4090,4 @@ en:
       compression_types:
         zip: ".zip"
         tar_gz: ".tar.gz"
-      encrypt_output: "Encrypt Storage"
+      encrypt_output: "Encrypt"

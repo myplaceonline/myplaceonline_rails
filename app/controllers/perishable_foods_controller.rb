@@ -121,10 +121,14 @@ class PerishableFoodsController < MyplaceonlineController
   end
   
   def split_link(obj)
-    ActionController::Base.helpers.link_to(
-      I18n.t("myplaceonline.perishable_foods.consume_one"),
-      perishable_food_consume_one_path(obj)
-    )
+    if !MyplaceonlineExecutionContext.offline?
+      ActionController::Base.helpers.link_to(
+        I18n.t("myplaceonline.perishable_foods.consume_one"),
+        perishable_food_consume_one_path(obj)
+      )
+    else
+      nil
+    end
   end
   
   def index_sorts
