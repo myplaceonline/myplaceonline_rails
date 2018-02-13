@@ -78,7 +78,6 @@ class Export < ApplicationRecord
     token.password = Myp.get_current_user_password!
     token.save!
 
-    self.parameter = Myp.root_url
     self.security_token_id = token.id
     
     true

@@ -65,7 +65,7 @@ class ExportJob < ApplicationJob
   
   def export_everything(export)
     Myp.mktmpdir do |dir|
-      Rails.logger.debug{"ExportJob temp dir: #{dir}"}
+      Rails.logger.info{"ExportJob temp dir: #{dir}"}
       
       dir_path = Pathname.new(dir)
       
