@@ -99,7 +99,13 @@ class ExportJob < ApplicationJob
       
       case export.compression_type
       when Export::COMPRESSION_TYPE_ZIP
-        stdout = execute_command(command_line: "zip -r #{output_path} *", current_directory: dir)
+        
+        if export.encrypt_output?
+          stdout = execute_command(command_line: "zip --encrypt --password \"#{clean_command_line(export.security_token.password)}\" -r #{output_path} *", current_directory: dir)
+        else
+          stdout = execute_command(command_line: "zip -r #{output_path} *", current_directory: dir)
+        end
+        
       when Export::COMPRESSION_TYPE_TAR_GZ
         stdout = execute_command(command_line: "tar czvf #{output_path} *", current_directory: dir)
       else
@@ -110,7 +116,7 @@ class ExportJob < ApplicationJob
       
       FileUtils.chmod("a=rw", output_path)
       
-      if export.encrypt_output?
+      if export.encrypt_output? && export.compression_type != Export::COMPRESSION_TYPE_ZIP
         
         new_output_path = output_path + ".gpg"
         
@@ -162,8 +168,8 @@ class ExportJob < ApplicationJob
     name.gsub(/[^a-zA-Z0-9,_\- ]/, "")
   end
   
-  def clean_link(name)
-    name.gsub(/['"\\`\n]/, "")
+  def clean_command_line(str)
+    str.gsub(/['"\\`\n$]/, "")
   end
   
   def scrape(export, dir, link, processed_links)
@@ -221,7 +227,7 @@ class ExportJob < ApplicationJob
     
     Rails.logger.debug{"ExportJob downloading path: #{path}, outfile: #{outfile}"}
 
-    execute_command(command_line: "curl --silent --output '#{outfile}' --user-agent 'Myplaceonline Bot (Read-Only)' '#{clean_link(path)}'", current_directory: dir)
+    execute_command(command_line: "curl --silent --output '#{outfile}' --user-agent 'Myplaceonline Bot (Read-Only)' '#{clean_command_line(path)}'", current_directory: dir)
     
     mime_type = IO.popen(["file", "--brief", "--mime-type", outfile], &:read).chomp
     
