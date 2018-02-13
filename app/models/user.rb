@@ -87,8 +87,18 @@ class User < ApplicationRecord
       domain = Myp.website_domain
       if !domain.nil?
         domain_id = domain.id
-        identity_index = self.identities.find_index do |identity|
-          identity.website_domain_id == domain_id && identity.website_domain_default
+        temp_identity_id = nil
+        if ExecutionContext.available?
+          temp_identity_id = MyplaceonlineExecutionContext[:temp_identity_id]
+        end
+        if temp_identity_id.nil?
+          identity_index = self.identities.find_index do |identity|
+            identity.website_domain_id == domain_id && identity.website_domain_default
+          end
+        else
+          identity_index = self.identities.find_index do |identity|
+            identity.website_domain_id == domain_id && identity.id == temp_identity_id
+          end
         end
         if !identity_index.nil?
           result = self.identities[identity_index]

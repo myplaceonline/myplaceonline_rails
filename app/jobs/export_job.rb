@@ -35,11 +35,11 @@ class ExportJob < ApplicationJob
               
               token = export.security_token
               
-              #export.security_token = nil
+              export.security_token = nil
               
               export.save!
               
-              #token.destroy!
+              token.destroy!
             rescue Exception => e
               Rails.logger.info{"ExportJob error: #{Myp.error_details(e)}"}
               append_message(export, "Error: #{CGI::escapeHTML(e.to_s)}")
@@ -65,17 +65,41 @@ class ExportJob < ApplicationJob
   
   def export_everything(export)
     Myp.mktmpdir do |dir|
-      Rails.logger.debug{"ExportJob temp dir: #{dir}, parameter: #{export.parameter}"}
+      Rails.logger.debug{"ExportJob temp dir: #{dir}"}
+      
+      dir_path = Pathname.new(dir)
       
       uploads_path = IdentityFile.uploads_path
 
       Rails.logger.debug{"ExportJob uploads_path: #{uploads_path}"}
-      
-      processed_links = { "/": true }
-      
       append_message(export, "Exporting website. This may take hours or days. Refresh this page to check the status.")
       
-      scrape(export, dir, "/", processed_links)
+      export.identity.user.identities.each do |i|
+        website_domain_name = clean_filename(i.website_domain.display)
+        domain_dir = dir_path.join(website_domain_name)
+        if !Dir.exists?(domain_dir.to_s)
+          Dir.mkdir(domain_dir.to_s)
+        end
+        
+        identity_name = clean_filename(i.display)
+        identity_dir = domain_dir.join(identity_name)
+        if Dir.exists?(identity_dir.to_s)
+          identity_dir = domain_dir.join(i.id.to_s)
+          Dir.mkdir(identity_dir.to_s)
+        else
+          Dir.mkdir(identity_dir.to_s)
+        end
+        
+        urlprefix = Rails.application.routes.url_helpers.root_url(
+          protocol: Rails.configuration.default_url_options[:protocol],
+          host: Rails.env.production? ? i.website_domain.main_domain : Rails.configuration.default_url_options[:host],
+          port: Rails.configuration.default_url_options[:port]
+        ).chomp("/")
+        
+        Rails.logger.debug{"ExportJob scraping identity: #{i.id}, domain: #{urlprefix}"}
+        
+        scrape(export, urlprefix, identity_dir.to_s, "/", i, { "/": true })
+      end
       
       append_message(export, "Export complete. Compressing files...")
       
@@ -188,12 +212,14 @@ class ExportJob < ApplicationJob
     result
   end
   
-  def scrape(export, dir, link, processed_links)
-    path = "#{export.parameter}#{link}?security_token=#{export.security_token.security_token_value}"
+  def scrape(export, urlprefix, dir, link, identity, processed_links)
+    path = "#{urlprefix}#{link}?security_token=#{export.security_token.security_token_value}&temp_identity_id=#{identity.id}"
+    
+    if !Rails.env.production?
+      path = "#{path}&emulate_host=#{identity.website_domain.main_domain}"
+    end
     
     target_dir = Pathname.new(dir)
-    
-    #append_message(export, "Downloading #{link}")
     
     if link == "/"
       suffix = ".html"
@@ -279,8 +305,8 @@ class ExportJob < ApplicationJob
           if !match_data.nil?
             new_link = match_data[2]
             
-            if new_link.start_with?(export.parameter)
-              new_link = new_link[export.parameter.length..-1]
+            if new_link.start_with?(urlprefix)
+              new_link = new_link[urlprefix.length..-1]
             end
             
             if new_link.start_with?("/") && !new_link.start_with?("//")
@@ -292,7 +318,11 @@ class ExportJob < ApplicationJob
               # Add parent relative components if needed
               if link_pieces.length >= 2
                 (1..link_pieces.length - 1).each do |i|
-                  local_link = "../" + local_link
+                  if local_link.start_with?("/")
+                    local_link = ".." + local_link
+                  else
+                    local_link = "../" + local_link
+                  end
                 end
               end
               
@@ -320,7 +350,7 @@ class ExportJob < ApplicationJob
                 
                 Rails.logger.debug{"ExportJob scrape new_link: #{new_link}"}
 
-                scrape(export, dir, new_link, processed_links)
+                scrape(export, urlprefix, dir, new_link, identity, processed_links)
               end
               
               data = match_data.pre_match + replacement + match_data.post_match

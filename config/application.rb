@@ -165,6 +165,17 @@ module Myplaceonline
               end
             end
             
+            if !parsed_query_string["temp_identity_id"].blank?
+              tii = parsed_query_string["temp_identity_id"].to_i
+              user = env["warden"].user
+              i = user.identities.index{|x| x.id == tii}
+              if !i.nil?
+                MyplaceonlineExecutionContext[:temp_identity_id] = tii
+              else
+                raise "Invalid identity"
+              end
+            end
+
             user_agent = env["HTTP_USER_AGENT"]
             if !user_agent.blank?
               user_agent = user_agent.downcase

@@ -4,13 +4,16 @@ class ExportsController < MyplaceonlineController
   end
 
   def footer_items_show
-    [
-      {
+    result = []
+    # The security token is deleted upon completion, so we can't re-run
+    if @obj.export_status != Export::EXPORT_STATUS_EXPORTED
+      result << {
         title: I18n.t("myplaceonline.exports.export"),
         link: export_export_path(@obj),
         icon: "gear"
-      },
-    ] + super
+      }
+    end
+    result + super
   end
   
   def export
