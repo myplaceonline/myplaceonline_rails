@@ -197,8 +197,12 @@ class Contact < ApplicationRecord
   end
   
   def self.calendar_item_link(calendar_item)
-    contact = calendar_item.find_model_object
-    "/contacts/#{contact.id}/conversations/new"
+    if !MyplaceonlineExecutionContext.offline?
+      contact = calendar_item.find_model_object
+      "/contacts/#{contact.id}/conversations/new"
+    else
+      nil
+    end
   end
 
   after_commit :on_after_save, on: [:create, :update]

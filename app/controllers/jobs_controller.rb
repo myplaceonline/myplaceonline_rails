@@ -23,58 +23,79 @@ class JobsController < MyplaceonlineController
   end
     
   def footer_items_show
-    super + [
-      {
+    result = super
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.jobs.add_salary"),
         link: new_job_job_salary_path(@obj),
         icon: "plus"
-      },
-      {
-        title: I18n.t("myplaceonline.jobs.job_salaries"),
-        link: job_job_salaries_path(@obj),
-        icon: "bars"
-      },
-      {
+      }
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.jobs.job_salaries"),
+      link: job_job_salaries_path(@obj),
+      icon: "bars"
+    }
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.jobs.add_review"),
         link: new_job_job_review_path(@obj),
         icon: "plus"
-      },
-      {
-        title: I18n.t("myplaceonline.jobs.reviews"),
-        link: job_job_reviews_path(@obj),
-        icon: "bars"
-      },
-      {
+      }
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.jobs.reviews"),
+      link: job_job_reviews_path(@obj),
+      icon: "bars"
+    }
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.jobs.add_myreference"),
         link: new_job_job_myreference_path(@obj),
         icon: "plus"
-      },
-      {
-        title: I18n.t("myplaceonline.jobs.myreferences"),
-        link: job_job_myreferences_path(@obj),
-        icon: "bars"
-      },
-      {
+      }
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.jobs.myreferences"),
+      link: job_job_myreferences_path(@obj),
+      icon: "bars"
+    }
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.jobs.add_accomplishment"),
         link: new_job_job_accomplishment_path(@obj),
         icon: "plus"
-      },
-      {
-        title: I18n.t("myplaceonline.jobs.accomplishments"),
-        link: job_job_accomplishments_path(@obj),
-        icon: "bars"
-      },
-      {
+      }
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.jobs.accomplishments"),
+      link: job_job_accomplishments_path(@obj),
+      icon: "bars"
+    }
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.jobs.add_award"),
         link: new_job_job_award_path(@obj),
         icon: "plus"
-      },
-      {
-        title: I18n.t("myplaceonline.jobs.awards"),
-        link: job_job_awards_path(@obj),
-        icon: "bars"
-      },
-    ]
+      }
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.jobs.awards"),
+      link: job_job_awards_path(@obj),
+      icon: "bars"
+    }
+    
+    result
   end
 
   def footer_items_index

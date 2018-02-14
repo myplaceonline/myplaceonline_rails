@@ -14,23 +14,29 @@ class TestObjectsController < MyplaceonlineController
   end
 
   def footer_items_show
-    super + [
-      {
+    result = super
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.test_objects.add_instance"),
         link: new_test_object_test_object_instance_path(@obj),
         icon: "plus"
-      },
-      {
-        title: I18n.t("myplaceonline.test_objects.instances"),
-        link: test_object_test_object_instances_path(@obj),
-        icon: "bars"
-      },
-      {
-        title: I18n.t("myplaceonline.test_objects.instance_page"),
-        link: test_object_instance_page_path(@obj),
-        icon: "info" # http://demos.jquerymobile.com/1.4.5/icons/
-      },
-    ]
+      }
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.test_objects.instances"),
+      link: test_object_test_object_instances_path(@obj),
+      icon: "bars"
+    }
+    
+    result << {
+      title: I18n.t("myplaceonline.test_objects.instance_page"),
+      link: test_object_instance_page_path(@obj),
+      icon: "info" # http://demos.jquerymobile.com/1.4.5/icons/
+    }
+    
+    result
   end
   
   def footer_items_index

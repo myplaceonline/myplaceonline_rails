@@ -26,7 +26,11 @@ class Project < ApplicationRecord
   end
   
   def action_link
-    Rails.application.routes.url_helpers.send("new_project_project_issue_path", self)
+    if !MyplaceonlineExecutionContext.offline?
+      Rails.application.routes.url_helpers.send("new_project_project_issue_path", self)
+    else
+      nil
+    end
   end
   
   def action_link_title

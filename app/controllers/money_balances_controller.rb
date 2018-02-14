@@ -174,28 +174,35 @@ class MoneyBalancesController < MyplaceonlineController
   end
 
   def footer_items_show
-    [
-      {
-        title: I18n.t('myplaceonline.money_balances.i_paid'),
+    result = []
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
+        title: I18n.t("myplaceonline.money_balances.i_paid"),
         link: money_balance_add_path(@obj, owner_paid: @obj.current_user_owns? ? "true" : "false"),
         icon: "eye"
-      },
-      {
-        title: I18n.t('myplaceonline.money_balances.other_paid', { other: self.other_display }),
+      }
+      
+      result << {
+        title: I18n.t("myplaceonline.money_balances.other_paid", { other: self.other_display }),
         link: money_balance_add_path(@obj, owner_paid: @obj.current_user_owns? ? "false" : "true"),
         icon: "user"
-      },
-      {
-        title: I18n.t('myplaceonline.money_balances.money_balance_items'),
-        link: money_balance_money_balance_items_path(@obj),
-        icon: "bars"
-      },
-      {
-        title: I18n.t('myplaceonline.money_balances.templates'),
-        link: money_balance_money_balance_item_templates_path(@obj),
-        icon: "recycle"
       }
-    ] + super
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.money_balances.money_balance_items"),
+      link: money_balance_money_balance_items_path(@obj),
+      icon: "bars"
+    }
+    
+    result << {
+      title: I18n.t("myplaceonline.money_balances.templates"),
+      link: money_balance_money_balance_item_templates_path(@obj),
+      icon: "recycle"
+    }
+    
+    result + super
   end
   
   protected

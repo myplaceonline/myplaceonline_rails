@@ -86,7 +86,11 @@ class Food < ApplicationRecord
   end
 
   def action_link
-    Rails.application.routes.url_helpers.send("new_consumed_food_path", food_id: self.id)
+    if !MyplaceonlineExecutionContext.offline?
+      Rails.application.routes.url_helpers.send("new_consumed_food_path", food_id: self.id)
+    else
+      nil
+    end
   end
   
   def action_link_title

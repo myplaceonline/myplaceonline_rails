@@ -21,7 +21,11 @@ class Diet < ApplicationRecord
   child_properties(name: :diet_foods, has_many_lambda: lambda { joins(:food).order(["diet_foods.food_type NULLS LAST", "lower(foods.food_name) ASC"]) })
 
   def action_link
-    Rails.application.routes.url_helpers.send("diet_consume_path", self)
+    if !MyplaceonlineExecutionContext.offline?
+      Rails.application.routes.url_helpers.send("diet_consume_path", self)
+    else
+      nil
+    end
   end
   
   def action_link_title

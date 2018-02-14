@@ -82,28 +82,37 @@ class EventsController < MyplaceonlineController
   end
 
   def footer_items_show
-    [
-      {
+    result = []
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.general.share"),
         link: event_share_path(@obj),
         icon: "action"
-      },
-      {
-        title: I18n.t("myplaceonline.events.show_shared"),
-        link: event_shared_path(@obj),
-        icon: "search"
-      },
-      {
+      }
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.events.show_shared"),
+      link: event_shared_path(@obj),
+      icon: "search"
+    }
+
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.events.add_story"),
         link: new_event_event_story_path(@obj),
         icon: "plus"
-      },
-      {
-        title: I18n.t("myplaceonline.events.stories"),
-        link: event_event_stories_path(@obj),
-        icon: "bullets"
-      },
-    ] + super
+      }
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.events.stories"),
+      link: event_event_stories_path(@obj),
+      icon: "bullets"
+    }
+    
+    result + super
   end
 
   def self.param_names

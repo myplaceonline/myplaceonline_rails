@@ -19,13 +19,13 @@ class DietsController < MyplaceonlineController
         link: diet_consume_path(@obj),
         icon: "check"
       }
+      
+      result << {
+        title: I18n.t("myplaceonline.diets.add_food"),
+        link: new_diet_diet_food_path(@obj),
+        icon: "plus"
+      }
     end
-    
-    result << {
-      title: I18n.t("myplaceonline.diets.add_food"),
-      link: new_diet_diet_food_path(@obj),
-      icon: "plus"
-    }
     
     result << {
       title: I18n.t("myplaceonline.diets.foods"),

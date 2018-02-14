@@ -100,11 +100,13 @@ class ReputationReportsController < MyplaceonlineController
         end
       end
       
-      result << {
-        title: I18n.t("myplaceonline.reputation_reports.request_status"),
-        link: reputation_report_request_status_path(@obj),
-        icon: "info"
-      }
+      if !MyplaceonlineExecutionContext.offline?
+        result << {
+          title: I18n.t("myplaceonline.reputation_reports.request_status"),
+          link: reputation_report_request_status_path(@obj),
+          icon: "info"
+        }
+      end
       
       if !@obj.report_status.nil? && @obj.report_status == ReputationReport::REPORT_STATUS_PENDING_INITIAL_DECISION_REVIEW
         result << {

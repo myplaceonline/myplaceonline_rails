@@ -1,17 +1,22 @@
 class FoodListsController < MyplaceonlineController
   def footer_items_show
-    super + [
-      {
+    result = super
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.food_lists.add_food"),
         link: new_food_list_food_list_food_path(@obj),
         icon: "plus"
-      },
-      {
-        title: I18n.t("myplaceonline.food_lists.foods"),
-        link: food_list_food_list_foods_path(@obj),
-        icon: "bars"
-      },
-    ]
+      }
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.food_lists.foods"),
+      link: food_list_food_list_foods_path(@obj),
+      icon: "bars"
+    }
+    
+    result
   end
   
   protected

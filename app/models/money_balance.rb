@@ -48,7 +48,11 @@ class MoneyBalance < ApplicationRecord
   end
   
   def action_link
-    Rails.application.routes.url_helpers.send("money_balance_add_path", self, owner_paid: self.current_user_owns? ? "true" : "false")
+    if !MyplaceonlineExecutionContext.offline?
+      Rails.application.routes.url_helpers.send("money_balance_add_path", self, owner_paid: self.current_user_owns? ? "true" : "false")
+    else
+      nil
+    end
   end
   
   def action_link_title

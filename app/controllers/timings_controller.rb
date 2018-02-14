@@ -4,18 +4,23 @@ class TimingsController < MyplaceonlineController
   end
   
   def footer_items_show
-    [
-      {
-        title: I18n.t('myplaceonline.timings.add_timing_event'),
+    result = []
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
+        title: I18n.t("myplaceonline.timings.add_timing_event"),
         link: new_timing_timing_event_path(@obj),
         icon: "plus"
-      },
-      {
-        title: I18n.t('myplaceonline.timings.timing_events'),
-        link: timing_timing_events_path(@obj),
-        icon: "bars"
-      },
-    ] + super
+      }
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.timings.timing_events"),
+      link: timing_timing_events_path(@obj),
+      icon: "bars"
+    }
+    
+    result + super
   end
   
   def use_bubble?

@@ -4,18 +4,23 @@ class VehiclesController < MyplaceonlineController
   end
 
   def footer_items_show
-    super + [
-      {
+    result = super
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.vehicles.add_vehicle_service"),
         link: new_vehicle_vehicle_service_path(@obj),
         icon: "plus"
-      },
-      {
-        title: I18n.t("myplaceonline.vehicles.vehicle_services"),
-        link: vehicle_vehicle_services_path(@obj),
-        icon: "bars"
-      },
-    ]
+      }
+    end
+
+    result << {
+      title: I18n.t("myplaceonline.vehicles.vehicle_services"),
+      link: vehicle_vehicle_services_path(@obj),
+      icon: "bars"
+    }
+    
+    result
   end
   
   def use_bubble?

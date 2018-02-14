@@ -33,18 +33,23 @@ class ProjectsController < MyplaceonlineController
   end
 
   def footer_items_show
-    [
-      {
+    result = []
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.projects.project_issue_add"),
         link: new_project_project_issue_path(@obj),
         icon: "plus"
-      },
-      {
-        title: I18n.t("myplaceonline.projects.project_issues"),
-        link: project_project_issues_path(@obj),
-        icon: "bars"
       }
-    ] + super
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.projects.project_issues"),
+      link: project_project_issues_path(@obj),
+      icon: "bars"
+    }
+    
+    result + super
   end
   
   protected
