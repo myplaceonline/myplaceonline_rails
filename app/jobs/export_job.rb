@@ -292,7 +292,7 @@ class ExportJob < ApplicationJob
       
       execute_command(command_line: "curl --silent --output '#{outfile}' --user-agent 'Myplaceonline Bot (Read-Only)' '#{clean_command_line(path)}'", current_directory: dir)
       
-      mime_type = IO.popen(["file", "--brief", "--mime-type", outfile], &:read).chomp
+      mime_type = FileMagic.new(FileMagic::MAGIC_MIME).file(outfile, true)
       
       if mime_type == "text/html"
         data = File.read(outfile)
