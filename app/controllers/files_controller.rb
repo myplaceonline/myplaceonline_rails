@@ -125,7 +125,7 @@ class FilesController < MyplaceonlineController
           
           Myp.tmpfile("file" + @obj.id.to_s + "_", "") do |tfile|
 
-            Rails.logger.debug{"FilesController.rotate: temp file: #{tfile}"}
+            Rails.logger.debug{"FilesController.rotate: temp file: #{tfile.path}"}
             
             image.background_color = "none"
             image.rotate!(degrees)
@@ -150,7 +150,11 @@ class FilesController < MyplaceonlineController
             )
             
             @obj.clear_thumbnail
+            
+            Rails.logger.debug{"FilesController.rotate: cleared thumbnail"}
+            
             @obj.file = uploaded_file
+            
             @obj.save!
             
             Rails.logger.debug{"FilesController.rotate: updated file with #{uploaded_file.inspect}"}

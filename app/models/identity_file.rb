@@ -204,13 +204,15 @@ class IdentityFile < ApplicationRecord
   
   def has_file?
     
-    if !self.filesystem_path.blank? && File.exist?(self.filesystem_path)
-      true
-    elsif !self.file.nil? && !self.file.file_contents.nil?
-      true
-    end
+    # In the case of the DB-backed file, we don't want to do too much of a check
+    # inspecting the file because that will load the bytes into memory and may
+    # not be needed
+    result = (!self.file.nil? && self.file.exists?) || !self.filesystem_path.blank?
     
-    false
+    Rails.logger.debug{"IdentityFile.has_file?: #{result}"}
+    
+    result
+    
   end
 
   def is_image?
@@ -244,27 +246,35 @@ class IdentityFile < ApplicationRecord
       max_width = 400
       
       if self.filesystem_path.blank?
-        image = Magick::Image::from_blob(self.get_file_contents)
         
-        Rails.logger.debug{"image_content: Loaded image"}
+        fc = self.get_file_contents
         
-        image = image.first
-        
-        Rails.logger.debug{"image_content: Acquired first image cols #{image.columns}"}
-        
-        if image.columns > max_width
-          Rails.logger.debug{"image_content: Requires thumbnailing"}
-          image.resize_to_fit!(max_width)
-          blob = image.to_blob
-          self.thumbnail_contents = blob
-          self.thumbnail_size_bytes = blob.length
-          self.save!
-          Rails.logger.debug{"image_content: Saved thumbnail"}
-        else
-          Rails.logger.debug{"image_content: Thumbnail not required"}
-          self.thumbnail_skip = true
-          self.save!
+        if !fc.nil? && fc.length > 0
+          Rails.logger.debug{"image_content: file contents: #{fc.inspect}"}
+          
+          image = Magick::Image::from_blob(fc)
+          
+          Rails.logger.debug{"image_content: Loaded image"}
+          
+          image = image.first
+          
+          Rails.logger.debug{"image_content: Acquired first image cols #{image.columns}"}
+          
+          if image.columns > max_width
+            Rails.logger.debug{"image_content: Requires thumbnailing"}
+            image.resize_to_fit!(max_width)
+            blob = image.to_blob
+            self.thumbnail_contents = blob
+            self.thumbnail_size_bytes = blob.length
+            self.save!
+            Rails.logger.debug{"image_content: Saved thumbnail"}
+          else
+            Rails.logger.debug{"image_content: Thumbnail not required"}
+            self.thumbnail_skip = true
+            self.save!
+          end
         end
+        
       else
         thumbnail_path = self.filesystem_path + "t"
         index = ""
