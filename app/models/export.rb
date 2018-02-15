@@ -48,7 +48,7 @@ class Export < ApplicationRecord
 
   child_files
   
-  child_property(name: :security_token)
+  child_property(name: :security_token, destroy_dependent: true)
 
   def export_status_display
     self.export_status.nil? ? EXPORT_STATUS_READY : self.export_status

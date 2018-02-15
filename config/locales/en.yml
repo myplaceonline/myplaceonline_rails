@@ -1145,6 +1145,7 @@ en:
       company: "Bank"
     ideas:
       name: "Idea Name"
+      idea: "Idea"
     lists:
       name: "List Name"
       items: "Items"

@@ -98,7 +98,18 @@ class ExportJob < ApplicationJob
         
         Rails.logger.debug{"ExportJob scraping identity: #{i.id}, domain: #{urlprefix}"}
         
-        scrape(export, urlprefix, identity_dir.to_s, "/", i, { "/": true }, "")
+        processed_links = { "/": true }
+        process = [
+          {
+            dir: identity_dir.to_s,
+            link: "/",
+            path: "",
+          }
+        ]
+        while process.length > 0
+          to_scrape = process.pop
+          scrape(export, urlprefix, to_scrape[:dir], to_scrape[:link], i, processed_links, to_scrape[:path], process)
+        end
       end
       
       append_message(export, "Export complete. Compressing files...")
@@ -212,7 +223,7 @@ class ExportJob < ApplicationJob
     result
   end
   
-  def scrape(export, urlprefix, dir, link, identity, processed_links, referer)
+  def scrape(export, urlprefix, dir, link, identity, processed_links, referer, process)
     path = "#{urlprefix}#{link}?security_token=#{export.security_token.security_token_value}&temp_identity_id=#{identity.id}"
     
     if !Rails.env.production?
@@ -350,7 +361,11 @@ class ExportJob < ApplicationJob
                 
                 Rails.logger.debug{"ExportJob scrape new_link: #{new_link}"}
 
-                scrape(export, urlprefix, dir, new_link, identity, processed_links, path)
+                process.push({
+                  dir: dir,
+                  link: new_link,
+                  path: path,
+                })
               end
               
               data = match_data.pre_match + replacement + match_data.post_match
