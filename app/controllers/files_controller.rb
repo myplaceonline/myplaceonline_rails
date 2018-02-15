@@ -113,12 +113,24 @@ class FilesController < MyplaceonlineController
       degrees = degrees_str.to_i
       if degrees >= -360 && degrees <= 360
         
+        Rails.logger.debug{"FilesController.rotate: degrees: #{degrees}"}
+        
         if @obj.filesystem_path.blank?
+          
+          Rails.logger.debug{"FilesController.rotate: no filesystem_path"}
+          
           image = Magick::Image.from_blob(@obj.get_file_contents).first
           
+          Rails.logger.debug{"FilesController.rotate: loaded image: #{image.inspect}"}
+          
           Myp.tmpfile("file" + @obj.id.to_s + "_", "") do |tfile|
+
+            Rails.logger.debug{"FilesController.rotate: temp file: #{tfile}"}
+            
             image.background_color = "none"
             image.rotate!(degrees)
+            
+            Rails.logger.debug{"FilesController.rotate: completed rotation"}
             
             # Reset any EXIF orientation data when rotating
             if image.respond_to?("orientation=")
@@ -129,6 +141,8 @@ class FilesController < MyplaceonlineController
             
             tfile.flush
             
+            Rails.logger.debug{"FilesController.rotate: wrote to temporary file size: #{File.size(tfile)}"}
+            
             uploaded_file = ActionDispatch::Http::UploadedFile.new(
               tempfile: tfile,
               filename: @obj.file_file_name,
@@ -138,8 +152,13 @@ class FilesController < MyplaceonlineController
             @obj.clear_thumbnail
             @obj.file = uploaded_file
             @obj.save!
+            
+            Rails.logger.debug{"FilesController.rotate: updated file with #{uploaded_file.inspect}"}
           end
         else
+          
+          Rails.logger.debug{"FilesController.rotate: filesystem_path: #{@obj.filesystem_path}"}
+          
           child = Myp.spawn(
             command_line: "/usr/bin/mogrify #{self.filesystem_path}#{index} -auto-orient -rotate #{degrees} #{@obj.filesystem_path}"
           )

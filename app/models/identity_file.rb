@@ -131,18 +131,34 @@ class IdentityFile < ApplicationRecord
   end
   
   def get_file_contents
-    Rails.logger.info{"get_file_contents: Request for full image contents id #{self.id}"}
+    
+    Rails.logger.debug{"IdentityFile.get_file_contents: Request for full image contents id #{self.id}"}
+    
     result = nil
+    
     if self.has_file?
+      
+      Rails.logger.debug{"IdentityFile.get_file_contents: has file"}
+      
       if self.filesystem_path.blank?
+
+        Rails.logger.debug{"IdentityFile.get_file_contents: file: #{self.file.inspect}"}
+
         result = self.file.file_contents
+        
       else
+        
         path = evaluated_path
 
+        Rails.logger.debug{"IdentityFile.get_file_contents: filesystem_path #{path}"}
+
         result = IO.binread(path)
+        
       end
     end
-    Rails.logger.info{"get_file_contents: Returning #{ result.nil? ? 0 : result.length }"}
+    
+    Rails.logger.debug{"IdentityFile.get_file_contents: Returning #{ result.nil? ? 0 : result.length }"}
+    
     result
   end
   
@@ -187,7 +203,14 @@ class IdentityFile < ApplicationRecord
   end
   
   def has_file?
-    (!self.file.nil? && self.file.exists?) || !self.filesystem_path.blank?
+    
+    if !self.filesystem_path.blank? && File.exist?(self.filesystem_path)
+      true
+    elsif !self.file.nil? && !self.file.file_contents.nil?
+      true
+    end
+    
+    false
   end
 
   def is_image?
@@ -209,10 +232,12 @@ class IdentityFile < ApplicationRecord
   def has_thumbnail?
     !self.thumbnail_skip && (!self.thumbnail_contents.nil? || !self.thumbnail_filesystem_path.blank?)
   end
-
+  
   def ensure_thumbnail
+    
     Rails.logger.debug{"IdentityFile ensure_thumbnail content_type: #{self.file_content_type}, is_image: #{self.is_image?}, thumbnail_contents_nil: #{self.thumbnail_contents.nil?}, thumbnail_filesystem_path_blank: #{self.thumbnail_filesystem_path.blank?}, thumbnail_skip: #{self.thumbnail_skip}, thumbnailable: #{self.is_thumbnailable?}"}
-    if self.is_image? && self.thumbnail_contents.nil? && self.thumbnail_filesystem_path.blank? && !self.thumbnail_skip && self.is_thumbnailable?
+    
+    if self.is_image? && self.thumbnail_contents.nil? && self.thumbnail_filesystem_path.blank? && !self.thumbnail_skip && self.is_thumbnailable? && self.has_file?
       
       Rails.logger.debug{"image_content: Generating thumbnail for #{self.id}, type #{self.file_content_type}"}
       
