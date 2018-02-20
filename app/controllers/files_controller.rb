@@ -249,23 +249,26 @@ class FilesController < MyplaceonlineController
     result = super
     
     if !MyplaceonlineExecutionContext.offline?
-      result << {
-        title: I18n.t("myplaceonline.files.rotateclock90"),
-        link: file_rotate_path(@obj, degrees: 90),
-        icon: "forward"
-      }
       
-      result << {
-        title: I18n.t("myplaceonline.files.rotatecounterclock90"),
-        link: file_rotate_path(@obj, degrees: -90),
-        icon: "back"
-      }
-      
-      result << {
-        title: I18n.t("myplaceonline.files.rotate180"),
-        link: file_rotate_path(@obj, degrees: 180),
-        icon: "gear"
-      }
+      if current_user.admin?
+        result << {
+          title: I18n.t("myplaceonline.files.rotateclock90"),
+          link: file_rotate_path(@obj, degrees: 90),
+          icon: "forward"
+        }
+        
+        result << {
+          title: I18n.t("myplaceonline.files.rotatecounterclock90"),
+          link: file_rotate_path(@obj, degrees: -90),
+          icon: "back"
+        }
+        
+        result << {
+          title: I18n.t("myplaceonline.files.rotate180"),
+          link: file_rotate_path(@obj, degrees: 180),
+          icon: "gear"
+        }
+      end
       
       result << {
         title: I18n.t("myplaceonline.files.move"),

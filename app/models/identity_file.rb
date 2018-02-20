@@ -18,6 +18,8 @@ class IdentityFile < ApplicationRecord
     ]
   end
   
+  attr_accessor :_updatetype
+  
   SIZE_THRESHOLD_FILESYSTEM = 1048576 * 10
 
   # Unclear why but in some situations validations don't get called, so use do_before* instead
