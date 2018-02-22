@@ -1043,8 +1043,13 @@ module Myp
       cipher: cipher,
       serializer: SimpleSerializer.new
     )
-    
-    result = crypt.decrypt_and_verify(encrypted_value.val)
+
+    begin
+      result = crypt.decrypt_and_verify(encrypted_value.val)
+    rescue => e
+      Rails.logger.error{"Myp.decrypt exception key length: #{ key.nil? ? -1 : key.length }"}
+      raise e
+    end
     
     if !result.nil?
       result.force_encoding("utf-8")
