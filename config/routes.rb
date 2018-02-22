@@ -137,6 +137,7 @@ Rails.application.routes.draw do
     info/privacy
     info/terms
     info/mission_statement
+    info/clear_cookies
     internal_content/static_homepage
     test/test1
     test/test2

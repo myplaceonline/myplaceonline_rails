@@ -48,8 +48,16 @@ class PersistentUserStore
     end
   end
   
+  def items
+    @cookies
+  end
+  
   private
     def cookie_name(name:)
-      "#{COOKIE_PREFIX}_#{name}".to_sym
+      if name.start_with?(COOKIE_PREFIX)
+        name.to_sym
+      else
+        "#{COOKIE_PREFIX}_#{name}".to_sym
+      end
     end
 end

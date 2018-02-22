@@ -604,6 +604,7 @@ en:
         title: "JQueryMobile"
       mission_statement:
         title: "Mission Statement"
+      cookies_clear: "Cleared %{num} cookies"
     help:
       title: "Help"
       features: "Features"

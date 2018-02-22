@@ -1,6 +1,13 @@
-<% content_for :heading do -%><%= t('myplaceonline.info.clientinfo') %><% end -%>
+<% content_for :heading do -%><%= t("myplaceonline.info.clientinfo") %><% end -%>
 
-<h1><%= t('myplaceonline.info.clientinfo') %></h1>
+<h1><%= t("myplaceonline.info.clientinfo") %></h1>
+
+<p>Cookies:</p>
+<ul>
+<% MyplaceonlineExecutionContext.persistent_user_store.items.each do |cookie| %>
+  <li><%= cookie[0] %><br /><br /><%= cookie[1] %></li>
+<% end %>
+</ul>
 
 <%
 browser = MyplaceonlineExecutionContext.browser
@@ -18,3 +25,15 @@ end
 
 <% if !current_user.nil? && current_user.admin? %>
 <% end %>
+
+<%=
+  render(partial: "shared/footer", locals: {
+    items: [
+      {
+        title: I18n.t("myplaceonline.general.back"),
+        link: info_diagnostics_path,
+        icon: "back"
+      },
+    ]
+  })
+%>

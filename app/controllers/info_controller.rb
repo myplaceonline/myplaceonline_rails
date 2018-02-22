@@ -170,4 +170,12 @@ class InfoController < ApplicationController
   def privacy
     @content = Myp.parse_yaml_to_html("myplaceonline.privacy_policy").gsub("${HOST}", Myp.website_domain.display)
   end
+
+  def clear_cookies
+    cookie_names = MyplaceonlineExecutionContext.persistent_user_store.items.map{|x| x[0]}
+    cookie_names.each do |cookie_name|
+      MyplaceonlineExecutionContext.persistent_user_store.delete(cookie_name)
+    end
+    redirect_to(root_path, flash: { notice: I18n.t("myplaceonline.info.cookies_clear", num: cookie_names.size) })
+  end
 end
