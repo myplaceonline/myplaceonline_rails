@@ -1,8 +1,6 @@
 class SwitchUserEncryptionJob < ApplicationJob
   def perform(*args)
-    
-    ExecutionContext.push do
-      
+    ExecutionContext.stack do
       job_context = args.shift
       import_job_context(job_context)
       
@@ -13,7 +11,7 @@ class SwitchUserEncryptionJob < ApplicationJob
         password = args[1]
         identity = user.current_identity
 
-        Rails.logger.info{"SwitchUserEncryptionJob user=#{user.inspect}, identity=#{identity.inspect}"}
+        Rails.logger.debug{"SwitchUserEncryptionJob user=#{user.inspect}, identity=#{identity.inspect}"}
         
         MyplaceonlineExecutionContext.do_semifull_context(user) do
           MyplaceonlineExecutionContext.persistent_user_store = InMemoryPersistentUserStore.new
