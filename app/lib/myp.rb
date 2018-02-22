@@ -943,7 +943,6 @@ module Myp
   end
   
   def self.persist_password(password)
-    Rails.logger.info{"Myp.persist_password length: #{password.nil? ? -1 : password.length}"}
     MyplaceonlineExecutionContext.persistent_user_store[:password] = password
     if !User.current_user.nil? && User.current_user.pending_encryption_switch?
       ApplicationJob.perform(SwitchUserEncryptionJob, User.current_user, password)
@@ -1045,12 +1044,11 @@ module Myp
       serializer: SimpleSerializer.new
     )
 
-    begin
+    #begin
       result = crypt.decrypt_and_verify(encrypted_value.val)
-    rescue => e
-      Rails.logger.error{"Myp.decrypt exception key length: #{ key.nil? ? -1 : key.length }"}
-      raise e
-    end
+    #rescue ActiveSupport::MessageVerifier::InvalidSignature => e
+    #  raise "Invalid password for decryption"
+    #end
     
     if !result.nil?
       result.force_encoding("utf-8")

@@ -140,7 +140,7 @@ class ApplicationController < ActionController::Base
 
         request = instance_variable_get(:@_request)
         
-        Rails.logger.info{"ApplicationController.around_request initializing"}
+        Rails.logger.debug{"ApplicationController.around_request initializing"}
         
         MyplaceonlineExecutionContext.initialize(
           request: request,
