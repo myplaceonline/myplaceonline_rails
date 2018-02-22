@@ -134,7 +134,7 @@ class ApplicationController < ActionController::Base
       # Once per request, save off some stuff into thread local storage
       if !MyplaceonlineExecutionContext.initialized
         expire_asap = true
-        if !current_user.nil? && current_user.minimize_password_checks
+        if !current_user.nil? && current_user.minimize_password_checks?
           expire_asap = false
         end
 
