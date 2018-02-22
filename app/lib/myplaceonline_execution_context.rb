@@ -163,6 +163,7 @@ class MyplaceonlineExecutionContext
     end
     MyplaceonlineExecutionContext.persistent_user_store = persistent_user_store
     transfer_user_info.each do |k, v|
+      Rails.logger.info{"MyplaceonlineExecutionContext.initialize initialize transferring #{k}"}
       MyplaceonlineExecutionContext.persistent_user_store[k] = v
     end
   end
