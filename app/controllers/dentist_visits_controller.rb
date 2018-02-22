@@ -21,6 +21,7 @@ class DentistVisitsController < MyplaceonlineController
         :paid,
         :cleaning,
         :notes,
+        :xrays_taken,
         dentist_attributes: DoctorsController.param_names,
         dental_insurance_attributes: DentalInsurancesController.param_names
       )

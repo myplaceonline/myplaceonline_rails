@@ -5,6 +5,15 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :xrays_taken,
+    value: obj.xrays_taken,
+    placeholder: "myplaceonline.dentist_visits.xrays_taken"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,

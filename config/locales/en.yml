@@ -2118,6 +2118,7 @@ en:
       dental_insurance: "Dental Insurance"
       no_cleaning_for: "Next Dental Cleaning %{delta}"
       next_cleaning: "No Dental Cleanings"
+      xrays_taken: "X-rays taken?"
     doctor_visits:
       visit_date: "Date"
       paid: "Paid"
