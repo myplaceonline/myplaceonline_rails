@@ -54,7 +54,7 @@ class PersistentUserStore
   
   private
     def cookie_name(name:)
-      if name.start_with?(COOKIE_PREFIX)
+      if name.to_s.start_with?(COOKIE_PREFIX)
         name.to_sym
       else
         "#{COOKIE_PREFIX}_#{name}".to_sym
