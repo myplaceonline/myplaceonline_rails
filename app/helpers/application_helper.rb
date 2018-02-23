@@ -1423,6 +1423,9 @@ module ApplicationHelper
       other_hide_if_value_in: nil,
       placeholder_prefix: nil,
       placeholder_suffix: nil,
+      autocapitalize: nil,
+      autocomplete: nil,
+      spellcheck: nil,
     }.merge(options)
     
     Rails.logger.debug{"ApplicationHelper.input_field: name: #{name}, type: #{type}, options: #{Myp.debug_print(options.dup.delete_if{|x,y| x == :form})}"}
@@ -1519,7 +1522,7 @@ module ApplicationHelper
     if !options[:placeholder_suffix].blank?
       options[:placeholder] = "#{options[:placeholder]} #{options[:placeholder_suffix]}"
     end
-
+    
     result = nil
     
     if options[:include_label] && options[:type] != Myp::FIELD_BOOLEAN
@@ -1563,6 +1566,30 @@ module ApplicationHelper
     end
     if !onchange.blank?
       field_attributes[:onchange] = onchange
+    end
+    if !options[:autocapitalize].nil?
+      # https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#attr-autocapitalize
+      if options[:autocapitalize]
+        field_attributes[:autocapitalize] = "sentences"
+      else
+        field_attributes[:autocapitalize] = "none"
+      end
+    end
+    if !options[:autocomplete].nil?
+      # https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#attr-autocomplete
+      if options[:autocomplete]
+        field_attributes[:autocomplete] = "on"
+      else
+        field_attributes[:autocomplete] = "off"
+      end
+    end
+    if !options[:spellcheck].nil?
+      # https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/spellcheck
+      if options[:spellcheck]
+        field_attributes[:spellcheck] = "true"
+      else
+        field_attributes[:spellcheck] = "false"
+      end
     end
     
     Rails.logger.debug{"ApplicationHelper.input_field: field_attributes: #{Myp.debug_print(field_attributes)}"}

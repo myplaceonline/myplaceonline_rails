@@ -2,7 +2,16 @@
 <%= myp_text_field(f, :user, "myplaceonline.passwords.user", obj.user) %>
 <%= myp_text_field(f, :email, "myplaceonline.passwords.email", obj.email) %>
 <%
-  password_field = myp_text_field(f, :password, "myplaceonline.passwords.password", obj.password, false, nil, false)
+  password_field = input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :password,
+    value: obj.password,
+    placeholder: "myplaceonline.passwords.password",
+    autocapitalize: false,
+    autocomplete: false,
+    spellcheck: false,
+  )
   password_field_id = extract_id(password_field)
 %>
 <%= password_field %>

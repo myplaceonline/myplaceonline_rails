@@ -1692,6 +1692,11 @@ module Myp
       body_html += "<p>User: #{email}</p>".html_safe
       body_plain += "User: #{email}"
     end
+    
+    if !request.nil?
+      body_html += "\n\n<p>Request: #{request.original_url}</p>".html_safe
+      body_plain += "\n\nRequest: #{request.original_url}"
+    end
 
     if !exception.nil?
       error_details = Myp.error_details(exception)
