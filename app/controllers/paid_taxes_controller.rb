@@ -8,10 +8,18 @@ class PaidTaxesController < MyplaceonlineController
   end
   
   def bubble_text(obj)
-    Myp.display_date_month_year_simple(obj.paid_tax_date, User.current_user)
+    if !obj.total_taxes_paid.nil?
+      "#{Myp.number_to_currency(obj.total_taxes_paid)}"
+    else
+      nil
+    end
   end
 
   protected
+    def sensitive
+      true
+    end
+
     def default_sort_direction
       "desc"
     end

@@ -2,11 +2,10 @@ class PaidTax < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
-  validates :paid_tax_date, presence: true
-  validates :paid_tax_description, presence: true
+  validates :fiscal_year, presence: true
   
   def display
-    paid_tax_description
+    "#{fiscal_year}"
   end
 
   child_files

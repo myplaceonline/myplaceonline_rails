@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180224195229) do
+ActiveRecord::Schema.define(version: 20180224200843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4106,7 +4106,6 @@ ActiveRecord::Schema.define(version: 20180224195229) do
     t.integer "identity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "paid_tax_description"
     t.decimal "total_taxes_paid", precision: 10, scale: 2
     t.decimal "agi", precision: 10, scale: 2
     t.boolean "is_public"
