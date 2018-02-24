@@ -3641,6 +3641,10 @@ en:
       federal_taxes: "Federal Taxes Paid"
       state_taxes: "State Taxes Paid"
       local_taxes: "Local Taxes Paid"
+      totals: "Totals"
+      total_taxes_paid: "Total Taxes Paid"
+      total_agi: "Total Adjusted Gross Income"
+      total_percent: "Total Tax Percent"
     encryption_modes:
       aes_256_cbc: "AES-256-CBC"
       aes_256-gcm: "AES-256-GCM"

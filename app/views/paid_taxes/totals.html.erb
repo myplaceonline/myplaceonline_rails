@@ -1,0 +1,21 @@
+<% content_for :heading do -%><%= t("myplaceonline.paid_taxes.totals") %><% end -%>
+
+<h1><%= t("myplaceonline.paid_taxes.totals") %></h1>
+
+<%= flashes! %>
+
+<%= data_row(heading: t("myplaceonline.paid_taxes.total_agi"), prefix_heading: true, content: Myp.number_to_currency(@total_agi), wrap: false) %>
+<%= data_row(heading: t("myplaceonline.paid_taxes.total_taxes_paid"), prefix_heading: true, content: Myp.number_to_currency(@total_taxes), wrap: false) %>
+<%= data_row(heading: t("myplaceonline.paid_taxes.total_percent"), prefix_heading: true, content: @percent_paid, wrap: false) %>
+
+<%=
+  render(partial: "shared/footer", locals: {
+    items: [
+      {
+        title: I18n.t("myplaceonline.general.back"),
+        link: controller.index_path,
+        icon: "back"
+      },
+    ]
+  })
+%>

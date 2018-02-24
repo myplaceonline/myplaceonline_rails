@@ -400,6 +400,9 @@ Rails.application.routes.draw do
         name: :money_balance_items
       }
     ],
+    paid_taxes: [
+      { instance: false, link: "totals" },
+    ],
     password_shares: [
       { instance: true, link: "transfer" }
     ],
