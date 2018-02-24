@@ -7,7 +7,7 @@
 <%= data_row(heading: t("myplaceonline.paid_taxes.total_agi"), prefix_heading: true, content: Myp.number_to_currency(@total_agi), wrap: false) %>
 <%= data_row(heading: t("myplaceonline.paid_taxes.total_taxes_paid"), prefix_heading: true, content: Myp.number_to_currency(@total_taxes), wrap: false) %>
 <%= data_row(heading: t("myplaceonline.paid_taxes.total_percent"), prefix_heading: true, content: @percent_paid, wrap: false) %>
-<%= data_row(heading: t("myplaceonline.paid_taxes.total_donations"), prefix_heading: true, content: @total_donations, wrap: false) %>
+<%= data_row(heading: t("myplaceonline.paid_taxes.total_donations"), prefix_heading: true, content: Myp.number_to_currency(@total_donations), wrap: false) %>
 <%= data_row(heading: t("myplaceonline.paid_taxes.total_donations_percent"), prefix_heading: true, content: @total_donations_percent, wrap: false) %>
 
 <%=
