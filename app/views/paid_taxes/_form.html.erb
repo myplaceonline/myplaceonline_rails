@@ -1,10 +1,10 @@
 <%=
   input_field(
     form: f,
-    type: Myp::FIELD_DATE,
-    name: :paid_tax_date,
-    value: obj.paid_tax_date,
-    placeholder: "myplaceonline.paid_taxes.paid_tax_date",
+    type: Myp::FIELD_NUMBER,
+    name: :fiscal_year,
+    value: obj.fiscal_year,
+    placeholder: "myplaceonline.paid_taxes.fiscal_year",
     autofocus: autofocus
   )
 %>
@@ -20,10 +20,46 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_DATE,
+    name: :paid_tax_date,
+    value: obj.paid_tax_date,
+    placeholder: "myplaceonline.paid_taxes.paid_tax_date",
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_DECIMAL,
     name: :total_taxes_paid,
     value: obj.total_taxes_paid,
     placeholder: "myplaceonline.paid_taxes.total_taxes_paid"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :federal_taxes,
+    value: obj.federal_taxes,
+    placeholder: "myplaceonline.paid_taxes.federal_taxes"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :state_taxes,
+    value: obj.state_taxes,
+    placeholder: "myplaceonline.paid_taxes.state_taxes"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :local_taxes,
+    value: obj.local_taxes,
+    placeholder: "myplaceonline.paid_taxes.local_taxes"
   )
 %>
 <%=

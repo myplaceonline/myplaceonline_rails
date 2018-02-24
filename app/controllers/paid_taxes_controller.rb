@@ -37,6 +37,10 @@ class PaidTaxesController < MyplaceonlineController
         :service_fee,
         :notes,
         :agi,
+        :fiscal_year,
+        :federal_taxes,
+        :state_taxes,
+        :local_taxes,
         paid_tax_files_attributes: FilesController.multi_param_names,
         password_attributes: PasswordsController.param_names
       )

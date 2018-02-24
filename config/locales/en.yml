@@ -3627,7 +3627,7 @@ en:
       emergency_room: "Emergency Room"
       hospital: "Hospital"
     paid_taxes:
-      paid_tax_date: "Date"
+      paid_tax_date: "Date Paid"
       donations: "Donations"
       federal_refund: "Federal Refund"
       state_refund: "State Refund"
@@ -3637,6 +3637,10 @@ en:
       total_taxes_paid: "Total Taxes Paid"
       agi: "Adjusted Gross Income"
       agi_tooltip: "1040 line 37; 1040EZ line 4; 1040A line 21"
+      fiscal_year: "Fiscal Year"
+      federal_taxes: "Federal Taxes Paid"
+      state_taxes: "State Taxes Paid"
+      local_taxes: "Local Taxes Paid"
     encryption_modes:
       aes_256_cbc: "AES-256-CBC"
       aes_256-gcm: "AES-256-GCM"
