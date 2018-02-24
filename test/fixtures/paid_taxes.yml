@@ -1,4 +1,3 @@
 paid_tax:
   identity: identity
-  paid_tax_description: Test
-  paid_tax_date: 2018-01-01
+  fiscal_year: 2000
