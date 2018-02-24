@@ -4,6 +4,6 @@ class PaidTaxesControllerTest < ActionController::TestCase
   include MyplaceonlineControllerTest
   
   def test_attributes
-    { paid_tax_description: "test", paid_tax_date: Date.today }
+    { fiscal_year: 2001 }
   end
 end
