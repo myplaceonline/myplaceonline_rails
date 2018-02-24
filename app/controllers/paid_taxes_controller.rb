@@ -24,16 +24,21 @@ class PaidTaxesController < MyplaceonlineController
     @total_taxes = 0
     @total_agi = 0
     @percent_paid = 0
+    @total_donations = 0
     
     all.each do |paid_tax|
       if !paid_tax.total_taxes_paid.nil? && !paid_tax.agi.nil?
         @total_taxes = @total_taxes + paid_tax.total_taxes_paid
         @total_agi = @total_agi + paid_tax.agi
       end
+      if !paid_tax.donations.nil?
+        @total_donations = @total_donations + paid_tax.donations
+      end
     end
     
     if @total_agi > 0
       @percent_paid = "#{Myp.decimal_to_s(value: (@total_taxes / @total_agi) * 100.0)}%"
+      @total_donations_percent = "#{Myp.decimal_to_s(value: (@total_donations / (@total_agi - @total_taxes)) * 100.0)}%"
     end
   end
   
