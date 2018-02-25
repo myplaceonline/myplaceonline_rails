@@ -389,8 +389,14 @@ class ExportJob < ApplicationJob
   
   def execute_command(command_line:, current_directory: nil)
     Rails.logger.debug{"ExportJob executing: #{command_line}"}
-    child = Myp.spawn(command_line: command_line, current_directory: current_directory)
+    
+    # We don't process errors because there could be all sorts of things lying
+    # around like files that think they have data but don't exist, thus
+    # returning 0 bytes and curl fails with code 18, etc.
+    child = Myp.spawn(command_line: command_line, current_directory: current_directory, process_error: false)
+    
     Rails.logger.debug{"ExportJob result: #{child.out}"}
+    
     child.out
   end
 end
