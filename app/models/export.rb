@@ -85,6 +85,7 @@ class Export < ApplicationRecord
   
   def self.build(params = nil)
     result = self.dobuild(params)
+    result.export_name = DateTime.now.strftime("%B %-d %Y")
     result.export_type = EXPORT_TYPE_EVERYTHING
     result.compression_type = COMPRESSION_TYPE_ZIP
     result.encrypt_output = true
