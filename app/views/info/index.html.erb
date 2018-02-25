@@ -7,12 +7,14 @@
       <%= t("myplaceonline.info.about") %> <%= Myp.website_domain.display %>
     <% end %>
   </li>
-  <li>
-    <%= link_to(info_contact_path) do %>
-      <%= image_tag("famfamfam/email.png", size: "16x16", class: "ui-li-icon") %>
-      <%= t("myplaceonline.info.contact") %>
-    <% end %>
-  </li>
+  <% if !MyplaceonlineExecutionContext.offline? %>
+    <li>
+      <%= link_to(info_contact_path) do %>
+        <%= image_tag("famfamfam/email.png", size: "16x16", class: "ui-li-icon") %>
+        <%= t("myplaceonline.info.contact") %>
+      <% end %>
+    </li>
+  <% end %>
   <li>
     <%= link_to(info_privacy_path) do %>
       <%= image_tag("FatCow_Icons16x16/private.png", size: "16x16", class: "ui-li-icon") %>
@@ -43,12 +45,14 @@
       <%= t("myplaceonline.info.help") %>
     <% end %>
   </li>
-  <li>
-    <%= link_to(info_tips_path) do %>
-      <%= image_tag("FatCow_Icons16x16/magic_wand_2.png", size: "16x16", class: "ui-li-icon") %>
-      <%= t("myplaceonline.info.tips") %>
-    <% end %>
-  </li>
+  <% if !MyplaceonlineExecutionContext.offline? %>
+    <li>
+      <%= link_to(info_tips_path) do %>
+        <%= image_tag("FatCow_Icons16x16/magic_wand_2.png", size: "16x16", class: "ui-li-icon") %>
+        <%= t("myplaceonline.info.tips") %>
+      <% end %>
+    </li>
+  <% end %>
   <li>
     <%= link_to(info_credits_path) do %>
       <%= image_tag("famfamfam/heart.png", size: "16x16", class: "ui-li-icon") %>
@@ -63,12 +67,14 @@
     <% end %>
   </li>
   -->
+  <% if !MyplaceonlineExecutionContext.offline? %>
   <li>
     <%= link_to("https://build.phonegap.com/apps/1133885/share", :data => { :ajax => false }) do %>
       <%= image_tag("FatCow_Icons16x16/apple_corp.png", size: "16x16", class: "ui-li-icon") %>
       <%= t("myplaceonline.info.phonegap") %>
     <% end %>
   </li>
+  <% end %>
   <% if !current_user.nil? && current_user.admin? %>
     <li>
       <%= link_to(admin_path) do %>

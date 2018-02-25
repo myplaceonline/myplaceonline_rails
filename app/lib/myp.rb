@@ -3468,9 +3468,9 @@ module Myp
     str
   end
   
-  def self.spawn(command_line:, process_error: true, current_directory: nil)
+  def self.spawn(command_line:, process_error: true, current_directory: nil, input: nil)
     # https://github.com/rtomayko/posix-spawn
-    child = POSIX::Spawn::Child.new(command_line, chdir: current_directory)
+    child = POSIX::Spawn::Child.new(command_line, chdir: current_directory, input: input)
     # child.out, child.err, child.status (Process::Status)
     if process_error && child.status.exitstatus != 0
       raise "Error #{child.status.exitstatus} spawning #{command_line}, stdout: #{child.out}, stderr: #{child.err}"

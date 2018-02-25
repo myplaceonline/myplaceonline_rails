@@ -163,21 +163,14 @@ class ExportJob < ApplicationJob
         
         append_message(export, "Compression complete. Encrypting files...")
         
-        Open3.popen3(command) do |stdin, stdout, stderr, wait_thr|
-          stdin.write(export.security_token.password)
-          stdin.close_write
-          exit_status = wait_thr.value
-          if exit_status != 0
-            raise "Exit status " + exit_status.to_s
-          end
-        end
+        stdout = execute_command(command_line: command, current_directory: dir, input: export.security_token.password)
         
         FileUtils.chmod("a=rw", new_output_path)
         
         # Delete the original file
         File.delete(output_path)
         
-        append_message(export, "Encryption complete. Use the free [gpg](https://gnupg.org/download/index.html) program to decrypt: gpg --output #{output_name.gsub(/_/, "\\_")} --decrypt #{output_name.gsub(/_/, "\\_")}.pgp")
+        append_message(export, "Encryption complete. Use the free [gpg](https://gnupg.org/download/index.html) program to decrypt: gpg --output #{output_name.gsub(/_/, "\\_")} --decrypt #{output_name.gsub(/_/, "\\_")}.gpg")
 
         output_path = new_output_path
         output_name = output_name + ".gpg"
@@ -190,7 +183,7 @@ class ExportJob < ApplicationJob
         content_type: IdentityFile.infer_content_type(path: output_path),
       }
       newfile = IdentityFile.create_for_path!(file_hash: file_hash)
-      append_message(export, "Created downloadable file: [#{output_name.gsub(/_/, "\\_")}](#{newfile.download_name_path})")
+      append_message(export, "Created downloadable file: <a href=\"#{newfile.download_name_path}\" class=\"externallink\" data-ajax=\"false\">#{output_name.gsub(/_/, "\\_")}</a>")
       newwrappedfile = ExportFile.create!(
         identity_file: newfile
       )
@@ -387,13 +380,13 @@ class ExportJob < ApplicationJob
     end
   end
   
-  def execute_command(command_line:, current_directory: nil)
+  def execute_command(command_line:, current_directory: nil, input: nil)
     Rails.logger.debug{"ExportJob executing: #{command_line}"}
     
     # We don't process errors because there could be all sorts of things lying
     # around like files that think they have data but don't exist, thus
     # returning 0 bytes and curl fails with code 18, etc.
-    child = Myp.spawn(command_line: command_line, current_directory: current_directory, process_error: false)
+    child = Myp.spawn(command_line: command_line, current_directory: current_directory, process_error: false, input: input)
     
     Rails.logger.debug{"ExportJob result: #{child.out}"}
     
