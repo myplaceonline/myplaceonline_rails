@@ -206,6 +206,10 @@ module MyplaceonlineActiveRecordBaseConcern
           put_file_in_folder(self, folders)
         end
       end
+      
+      define_singleton_method(:skip_check_attributes) do
+        ["position"]
+      end
 
       after_commit :update_file_folders, on: [:create, :update]
     end

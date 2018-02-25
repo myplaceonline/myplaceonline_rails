@@ -217,7 +217,7 @@ module AllowExistingConcern extend ActiveSupport::Concern
         Rails.logger.debug{"AllowExistingConcern.set_properties_with_attributes remaining item #{trash_id} : #{Myp.debug_print(new_item_attributes)}"}
 
         if trash_id.integer? && new_item_attributes.is_a?(Hash)
-          if new_item_attributes["_destroy"].is_false?
+          if new_item_attributes["_destroy"].is_false? && !model.attributes_blank?(attributes: new_item_attributes)
             new_item = model.build
             new_item.assign_attributes(new_item_attributes)
             
