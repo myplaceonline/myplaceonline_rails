@@ -46,6 +46,17 @@ GIT
       railties (>= 4)
 
 GIT
+  remote: git://github.com/myplaceonline/paperclip.git
+  revision: 7ed9ec13cbac992c4894080d18764a13ffac8bf9
+  specs:
+    paperclip (5.2.1)
+      activemodel (>= 4.2.0)
+      activesupport (>= 4.2.0)
+      cocaine (~> 0.5.5)
+      mime-types
+      mimemagic (~> 0.3.0)
+
+GIT
   remote: git://github.com/myplaceonline/paperclip_database.git
   revision: 6e0d688470ef2e1d40beaa4749fb145863384343
   specs:
@@ -172,7 +183,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
-    ffi (1.9.21)
+    ffi (1.9.22)
     geocoder (1.4.5)
     github-markup (2.0.0)
     globalid (0.4.1)
@@ -263,12 +274,6 @@ GEM
     open_uri_redirections (0.2.1)
     orm_adapter (0.5.0)
     os (0.9.6)
-    paperclip (5.2.1)
-      activemodel (>= 4.2.0)
-      activesupport (>= 4.2.0)
-      cocaine (~> 0.5.5)
-      mime-types
-      mimemagic (~> 0.3.0)
     paypal-sdk-rest (1.7.2)
       multi_json (~> 1.0)
       xml-simple
@@ -450,7 +455,7 @@ DEPENDENCIES
   nokogiri
   noty-rails
   open_uri_redirections
-  paperclip
+  paperclip!
   paperclip_database!
   paypal-sdk-rest
   pg (~> 0.21)

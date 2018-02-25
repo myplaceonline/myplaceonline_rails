@@ -18,7 +18,7 @@ gem "devise"
 gem "thin"
 gem "roo"
 gem "remotipart"
-gem "paperclip"
+gem "paperclip", github: "myplaceonline/paperclip"
 # Original gem doesn't support Rails 5
 gem "paperclip_database", github: "myplaceonline/paperclip_database"
 gem "rubyzip"
