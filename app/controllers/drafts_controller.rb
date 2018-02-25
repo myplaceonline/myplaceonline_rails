@@ -1,12 +1,16 @@
 class DraftsController < MyplaceonlineController
   def footer_items_show
-    super + [
-      {
+    result = super
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.drafts.email"),
         link: new_email_path(email_source_class: @obj.class.name, email_source_id: @obj.id, email_source_body_field: :notes),
         icon: "action"
       }
-    ]
+    end
+    
+    result
   end
   
   protected

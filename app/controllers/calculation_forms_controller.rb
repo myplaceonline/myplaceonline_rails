@@ -12,15 +12,15 @@ class CalculationFormsController < MyplaceonlineController
     ]
   end
 
-  def footer_items_show
-    super + [
-      {
-        title: I18n.t("myplaceonline.calculation_forms.add_calculation"),
-        link: new_calculation_path(@obj.id),
-        icon: "bars"
-      }
-    ]
-  end
+#   def footer_items_show
+#     super + [
+#       {
+#         title: I18n.t("myplaceonline.calculation_forms.add_calculation"),
+#         link: new_calculation_path(@obj.id),
+#         icon: "bars"
+#       }
+#     ]
+#   end
   
   protected
     def all_additional_sql(strict)

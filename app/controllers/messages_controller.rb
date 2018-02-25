@@ -55,13 +55,17 @@ class MessagesController < MyplaceonlineController
   end
 
   def footer_items_show
-    super + [
-      {
+    result = super
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.messages.duplicate"),
         link: new_message_path(duplicate: @obj.id),
         icon: "plus"
       }
-    ]
+    end
+    
+    result
   end
   
   def index_filters
