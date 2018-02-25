@@ -40,17 +40,21 @@ class FileFoldersController < MyplaceonlineController
   end
 
   def footer_items_show
-    result = [
-      {
-        title: I18n.t('myplaceonline.files.add_file'),
+    result = []
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
+        title: I18n.t("myplaceonline.files.add_file"),
         link: new_file_path(folder: @obj.id),
         icon: "plus"
       }
-    ] + super
+    end
+    
+    result = result + super
     
     if !@obj.parent_folder.nil?
       result << {
-        title: I18n.t('myplaceonline.file_folders.parent_folder'),
+        title: I18n.t("myplaceonline.file_folders.parent_folder"),
         link: file_folder_path(@obj.parent_folder),
         icon: "back"
       }
