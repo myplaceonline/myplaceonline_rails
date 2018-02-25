@@ -39,4 +39,8 @@ class BlogPost < ApplicationRecord
       blog_post_comments_attributes: BlogPostComment.params,
     ]
   end
+
+  def ideal_path
+    "/blogs/#{self.blog.id}/blog_posts/#{self.id}"
+  end
 end

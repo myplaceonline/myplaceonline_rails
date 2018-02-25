@@ -198,29 +198,50 @@ class ApplicationController < ActionController::Base
     # respond_type: [download, inline]
     def respond_identity_file(respond_type, identity_file, filename = nil, content_type = nil, thumbnail: false)
       
-      send_from_memory = false
-      if identity_file.filesystem_path.blank?
-        send_from_memory = true
-      else
-        if !File.exist?(identity_file.evaluated_path)
-          send_from_memory = true
-        end
+      send_from_memory = true
+      
+      if !identity_file.filesystem_path.blank? && !thumbnail
+        send_from_memory = false
+      elsif !identity_file.thumbnail_filesystem_path.blank? && thumbnail
+        send_from_memory = false
+        
+        # If the file doesn't exist, don't fall back to memory since it's
+        # probably not there. Not sure why this code was put in in the first
+        # place.
+        
+        # else
+        #   if !File.exist?(identity_file.evaluated_path)
+        #     send_from_memory = true
+        #   end
       end
       
       if send_from_memory
         Rails.logger.debug{"ApplicationController.respond_identity_file: #{identity_file.id} Not on the filesystem"}
-        respond_data(
-          respond_type,
-          identity_file.get_file_contents,
-          identity_file.file_file_size,
-          identity_file.file_file_name,
-          identity_file.file_content_type
-        )
+        
+        if !thumbnail
+          respond_data(
+            respond_type,
+            identity_file.get_file_contents,
+            identity_file.file_file_size,
+            identity_file.file_file_name,
+            identity_file.file_content_type
+          )
+        else
+          respond_data(
+            respond_type,
+            identity_file.thumbnail_contents,
+            identity_file.thumbnail_size_bytes,
+            identity_file.file_file_name,
+            identity_file.file_content_type
+          )
+        end
       else
         Rails.logger.debug{"ApplicationController.respond_identity_file: Sending from #{identity_file.filesystem_path}"}
+        
         if filename.nil?
           filename = identity_file.file_file_name
         end
+        
         if content_type.nil?
           content_type = identity_file.file_content_type
         end
@@ -231,12 +252,17 @@ class ApplicationController < ActionController::Base
           path = identity_file.evaluated_thumbnail_path
         end
         
-        send_file(
-          path,
-          :type => content_type,
-          :filename => filename,
-          :disposition => respond_type
-        )
+        if File.exist?(path)
+          send_file(
+            path,
+            type: content_type,
+            filename: filename,
+            disposition: respond_type,
+          )
+        else
+          Rails.logger.debug{"ApplicationController.respond_identity_file: Sending 404 for #{path}"}
+          head 404
+        end
       end
     end
     
@@ -245,9 +271,9 @@ class ApplicationController < ActionController::Base
       response.headers["Content-Length"] = data_bytes.to_s
       send_data(
         data,
-        :type => content_type,
-        :filename => filename,
-        :disposition => respond_type
+        type: content_type,
+        filename: filename,
+        disposition: respond_type,
       )
     end
 

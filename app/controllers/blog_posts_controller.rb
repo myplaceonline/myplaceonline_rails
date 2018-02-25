@@ -22,23 +22,29 @@ class BlogPostsController < MyplaceonlineController
   end
   
   def footer_items_show
-    [
-      {
-        title: I18n.t("myplaceonline.blog_posts.back"),
-        link: blog_path(@obj.blog),
-        icon: "back"
-      },
-      {
+    result = []
+    
+    result << {
+      title: I18n.t("myplaceonline.blog_posts.back"),
+      link: blog_path(@obj.blog),
+      icon: "back"
+    }
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.blog_posts.add_comment"),
         link: new_blog_blog_post_blog_post_comment_path(@obj.blog, @obj),
         icon: "plus"
-      },
-      {
-        title: I18n.t("myplaceonline.blog_posts.comments"),
-        link: blog_blog_post_blog_post_comments_path(@obj.blog, @obj),
-        icon: "bars"
-      },
-    ] + super
+      }
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.blog_posts.comments"),
+      link: blog_blog_post_blog_post_comments_path(@obj.blog, @obj),
+      icon: "bars"
+    }
+    
+    result + super
   end
 
   def use_bubble?

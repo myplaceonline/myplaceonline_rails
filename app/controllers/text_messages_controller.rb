@@ -57,18 +57,23 @@ class TextMessagesController < MyplaceonlineController
   end
 
   def footer_items_show
-    super + [
-      {
+    result = super
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.text_messages.duplicate"),
         link: new_text_message_path(duplicate: @obj.id),
         icon: "plus"
-      },
-      {
-        title: I18n.t("myplaceonline.trips.show_shared"),
-        link: text_message_shared_path(@obj),
-        icon: "search"
-      },
-    ]
+      }
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.trips.show_shared"),
+      link: text_message_shared_path(@obj),
+      icon: "search"
+    }
+    
+    result
   end
   
   def index_filters

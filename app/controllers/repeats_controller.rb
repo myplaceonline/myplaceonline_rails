@@ -7,4 +7,8 @@ class RepeatsController < MyplaceonlineController
         :period
       )
     end
+
+    def has_category
+      false
+    end
 end

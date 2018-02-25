@@ -86,13 +86,17 @@ class EmailsController < MyplaceonlineController
   end
 
   def footer_items_show
-    super + [
-      {
+    result = super
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.emails.duplicate"),
         link: new_email_path(duplicate: @obj.id),
         icon: "plus"
       }
-    ]
+    end
+    
+    result
   end
   
   def index_filters

@@ -37,21 +37,10 @@ class FilesController < MyplaceonlineController
     authorize! :show, @obj
     if !@obj.thumbnail_contents.nil?
       Rails.logger.debug{"FilesController.thumbnail: found thumbnail_contents #{@obj.thumbnail_size_bytes}"}
-      respond_data("inline", @obj.thumbnail_contents, @obj.thumbnail_size_bytes, @obj.file_file_name, @obj.file_content_type)
+      respond_identity_file("inline", @obj, thumbnail: true)
     elsif !@obj.thumbnail_filesystem_path.blank?
-      
-      thumbnail_path = @obj.thumbnail_filesystem_path
-      
-      if !ENV["FILES_PREFIX"].blank? && !File.exist?(thumbnail_path)
-        thumbnail_path = ENV["FILES_PREFIX"] + thumbnail_path
-      end
-      
-      send_file(
-        thumbnail_path,
-        :type => @obj.file_content_type,
-        :filename => @obj.file_file_name,
-        :disposition => "inline"
-      )
+      Rails.logger.debug{"FilesController.thumbnail: found thumbnail_filesystem_path #{@obj.thumbnail_filesystem_path}"}
+      respond_identity_file("inline", @obj, thumbnail: true)
     else
       Rails.logger.debug{"FilesController.thumbnail: no thumbnail, sending whole image"}
       respond_identity_file("inline", @obj)

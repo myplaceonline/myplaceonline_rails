@@ -18,7 +18,7 @@ class Repeat < ApplicationRecord
       cwday = period_type - 2
       result = u.in_time_zone(Date.new(today.year, today.month))
       while true
-        if result.cwday == cwday
+        if result.to_datetime.cwday == cwday
           result += ((period - 1) * 7).day
           break
         end
@@ -28,7 +28,7 @@ class Repeat < ApplicationRecord
         next_month = u.in_time_zone(Date.new(today.year, today.month)) + 6.weeks
         result = u.in_time_zone(Date.new(next_month.year, next_month.month))
         while true
-          if result.cwday == cwday
+          if result.to_datetime.cwday == cwday
             result += ((period - 1) * 7).day
             break
           end

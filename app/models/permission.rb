@@ -47,7 +47,13 @@ class Permission < ApplicationRecord
   end
   
   def category_display
-    Category.where(name: subject_class).take!.human_title
+    cat = Category.where(name: subject_class).take
+    
+    if !cat.nil?
+      cat.human_title
+    else
+      nil
+    end
   end
   
   def path

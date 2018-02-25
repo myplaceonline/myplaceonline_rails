@@ -275,6 +275,7 @@ en:
       food_list_foods: "Foods"
       security_tokens: "Security Tokens"
       exports: "Exports"
+      apartment_leases: "Apartment Leases"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -554,11 +555,6 @@ en:
       name: "Menu"
       home: "Home"
       feedback: "Quick Feedback"
-    welcome:
-      due: "Due"
-      notepad: "Notepad"
-      search: "Search"
-      recentlyused: "Recently or Frequently Used"
     info:
       title: "Information"
       apk: "Android Test Application APK"
