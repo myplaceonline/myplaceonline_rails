@@ -7,11 +7,19 @@ class ExportsController < MyplaceonlineController
     result = []
     # The security token is deleted upon completion, so we can't re-run
     if @obj.export_status != Export::EXPORT_STATUS_EXPORTED
-      result << {
-        title: I18n.t("myplaceonline.exports.export"),
-        link: export_export_path(@obj),
-        icon: "gear"
-      }
+      if @obj.export_status == Export::EXPORT_STATUS_READY
+        result << {
+          title: I18n.t("myplaceonline.exports.export"),
+          link: export_export_path(@obj),
+          icon: "gear"
+        }
+      else
+        result << {
+          title: I18n.t("myplaceonline.exports.export_status"),
+          link: export_export_path(@obj),
+          icon: "gear"
+        }
+      end
     end
     result + super
   end
@@ -42,7 +50,7 @@ class ExportsController < MyplaceonlineController
   
   def after_create_redirect
     @obj.start
-    redirect_to export_export_path(@obj)
+    super
   end
   
   protected

@@ -40,6 +40,14 @@ class ExportJob < ApplicationJob
               export.save!
               
               token.destroy!
+              
+              export.identity.send_email(
+                I18n.t("myplaceonline.exports.finished_subject"),
+                Myp.markdown_to_html(export.export_progress),
+                nil,
+                nil,
+                export.export_progress,
+              )
             rescue Exception => e
               Rails.logger.info{"ExportJob error: #{Myp.error_details(e)}"}
               append_message(export, "Error: #{CGI::escapeHTML(e.to_s)}")
@@ -183,7 +191,7 @@ class ExportJob < ApplicationJob
         content_type: IdentityFile.infer_content_type(path: output_path),
       }
       newfile = IdentityFile.create_for_path!(file_hash: file_hash)
-      append_message(export, "Created downloadable file: <a href=\"#{newfile.download_name_path}\" class=\"externallink\" data-ajax=\"false\">#{output_name.gsub(/_/, "\\_")}</a>")
+      append_message(export, "Created downloadable file: <a href=\"#{newfile.download_name_path(url: true)}\" class=\"externallink\" data-ajax=\"false\">#{output_name.gsub(/_/, "\\_")}</a>")
       newwrappedfile = ExportFile.create!(
         identity_file: newfile
       )

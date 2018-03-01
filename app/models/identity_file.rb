@@ -406,12 +406,15 @@ class IdentityFile < ApplicationRecord
     end
   end
   
-  def download_name_path
+  def download_name_path(url: false)
     Rails.application.routes.url_helpers.send(
-      "file_download_name_path",
+      url ? "file_download_name_url" : "file_download_name_path",
       self,
       self.urlname,
       t: self.updated_at.to_i,
+      protocol: Rails.configuration.default_url_options[:protocol],
+      host: Rails.env.production? ? Myp.website_domain.main_domain : Rails.configuration.default_url_options[:host],
+      port: Rails.configuration.default_url_options[:port]
     )
   end
 end

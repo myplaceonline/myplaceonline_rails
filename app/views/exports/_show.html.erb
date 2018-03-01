@@ -1,5 +1,6 @@
 <%= data_row(heading: t("myplaceonline.exports.export_name"), content: obj.export_name) %>
 <%= data_row(heading: t("myplaceonline.exports.export_type"), content: obj.export_type, enumeration: Export::EXPORT_TYPES) %>
+<%= data_row(heading: t("myplaceonline.exports.export_status"), content: obj.export_status, enumeration: Export::EXPORT_STATUSES) %>
 <%= data_row(heading: t("myplaceonline.exports.compression_type"), content: obj.compression_type, enumeration: Export::COMPRESSION_TYPES) %>
 <%= data_row(heading: t("myplaceonline.exports.encrypt_output"), content: obj.encrypt_output) %>
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>

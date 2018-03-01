@@ -606,6 +606,8 @@ en:
       features: "Features"
       highlights: "Feature Highlights"
       no_help: "No help for this category yet"
+      unknown_category: "Unknown category %{name}"
+      category_unspecified: "Category not specified"
       category_trips: !xml |
         <![CDATA[
         ## Sharing
@@ -4100,3 +4102,4 @@ en:
         zip: ".zip"
         tar_gz: ".tar.gz"
       encrypt_output: "Encrypt"
+      finished_subject: "Export Finished"

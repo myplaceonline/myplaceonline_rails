@@ -32,7 +32,7 @@
   <% end %>
   <%
       subfolders = obj.subfolders
-      if subfolders.size > 0
+      if obj.show? && subfolders.size > 0
     %>
         <div class="searchable_container">
           <ul class="searchable" data-role="listview" data-inset="true">

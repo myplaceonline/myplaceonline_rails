@@ -113,6 +113,10 @@ class MyplaceonlineController < ApplicationController
       if !current_user.items_per_page.nil?
         result = current_user.items_per_page.to_i
       end
+      
+      if MyplaceonlineExecutionContext.offline?
+        result = 0
+      end
     else
       result = params[PARAM_PER_PAGE].to_i
     end

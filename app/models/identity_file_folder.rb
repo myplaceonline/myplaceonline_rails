@@ -76,4 +76,15 @@ class IdentityFileFolder < ApplicationRecord
     end
     result
   end
+  
+  def show?
+    result = true
+    if MyplaceonlineExecutionContext.offline?
+      check_name = self.display
+      if check_name == "Exports"
+        result = false
+      end
+    end
+    result
+  end
 end

@@ -37,7 +37,9 @@ class Conversation < ApplicationRecord
   after_commit :on_after_destroy, on: :destroy
   
   def on_after_destroy
-    contact.on_after_destroy
+    if !self.contact.nil?
+      self.contact.on_after_destroy
+    end
   end
 
   def final_search_result
