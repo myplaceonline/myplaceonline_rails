@@ -6,3 +6,4 @@
 <% obj.group_references.each do |wrapper| %>
   <%= attribute_table_row_reference(t("myplaceonline.groups.group_reference"), "group_path", wrapper.group) %>
 <% end %>
+<%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.group_files) %>

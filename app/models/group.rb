@@ -7,6 +7,8 @@ class Group < ApplicationRecord
   child_properties(name: :group_contacts)
 
   child_properties(name: :group_references, foreign_key: "parent_group_id")
+  
+  child_files
 
   def display
     group_name

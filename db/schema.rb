@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180224200843) do
+ActiveRecord::Schema.define(version: 20180301014611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2527,6 +2527,19 @@ ActiveRecord::Schema.define(version: 20180224200843) do
     t.index ["contact_id"], name: "index_group_contacts_on_contact_id"
     t.index ["group_id"], name: "index_group_contacts_on_group_id"
     t.index ["identity_id"], name: "index_group_contacts_on_identity_id"
+  end
+
+  create_table "group_files", force: :cascade do |t|
+    t.bigint "group_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_group_files_on_group_id"
+    t.index ["identity_file_id"], name: "index_group_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_group_files_on_identity_id"
   end
 
   create_table "group_references", id: :serial, force: :cascade do |t|
@@ -7098,6 +7111,9 @@ ActiveRecord::Schema.define(version: 20180224200843) do
   add_foreign_key "group_contacts", "contacts", name: "group_contacts_contact_id_fk"
   add_foreign_key "group_contacts", "groups", name: "group_contacts_group_id_fk"
   add_foreign_key "group_contacts", "identities", name: "group_contacts_identity_id_fk"
+  add_foreign_key "group_files", "groups"
+  add_foreign_key "group_files", "identities"
+  add_foreign_key "group_files", "identity_files"
   add_foreign_key "group_references", "groups"
   add_foreign_key "group_references", "groups", column: "parent_group_id"
   add_foreign_key "group_references", "identities"

@@ -69,6 +69,10 @@ class GroupsController < MyplaceonlineController
     end
   end
   
+  def may_upload
+    true
+  end
+
   def self.param_names
     [
       :id,
@@ -93,7 +97,8 @@ class GroupsController < MyplaceonlineController
             contact_attributes: ContactsController.param_names
           ]
         ]
-      ]
+      ],
+      group_files_attributes: FilesController.multi_param_names,
     ]
   end
 
