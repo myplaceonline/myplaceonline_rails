@@ -38,9 +38,9 @@ class UserIndex < Chewy::Index
       if column.type == :string || column.type == :text
         if klass.instance_methods.index("#{column.name}_encrypted?".to_sym).nil?
           if column.type == :text
-            string_columns.push(column)
-          else
             text_columns.push(column)
+          else
+            string_columns.push(column)
           end
         end
       elsif column.type == :integer && column.name.index("_id").nil?
