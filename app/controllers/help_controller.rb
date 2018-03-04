@@ -12,9 +12,12 @@ class HelpController < ApplicationController
   end
 
   def category
+    @title = I18n.t("myplaceonline.help.category_unspecified")
+    @content = I18n.t("myplaceonline.help.category_unspecified")
     if !params[:name].blank?
       @category = Myp.categories[params[:name]]
       if !@category.nil?
+        @title = @category.human_title
         @content = I18n.t("myplaceonline.help.category_#{@category.name}")
         if @content.blank? || @content.start_with?("translation missing")
           @content = I18n.t("myplaceonline.help.no_help")
@@ -24,10 +27,7 @@ class HelpController < ApplicationController
           @content = @content.gsub(r) {|m| ActionController::Base.helpers.image_tag("#{$1}", class: "help_image")}
           @content = @content.html_safe
         end
-      else
-        @content = I18n.t("myplaceonline.help.category_unspecified")
       end
-    else
     end
   end
 end

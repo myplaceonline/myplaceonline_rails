@@ -65,7 +65,7 @@ class UserIndex < Chewy::Index
         
         # https://www.elastic.co/guide/en/elasticsearch/reference/current/text.html
         text_columns.each do |column|
-          field(column.name.to_sym, type: "keyword")
+          field(column.name.to_sym, type: "text")
         end
         
         # https://www.elastic.co/guide/en/elasticsearch/reference/current/number.html
