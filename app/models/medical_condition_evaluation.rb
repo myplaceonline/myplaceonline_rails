@@ -24,6 +24,7 @@ class MedicalConditionEvaluation < ApplicationRecord
   child_files
 
   child_property(name: :location)
+  child_property(name: :doctor)
 
   def file_folders_parent
     :medical_condition

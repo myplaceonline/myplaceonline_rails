@@ -33,6 +33,19 @@
   }
 %>
 <%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :doctor,
+    existingobj: obj.doctor,
+    heading: t("myplaceonline.medical_condition_evaluations.doctor"),
+    objform: "doctors/form",
+    existingobjurl: "doctor_path",
+    searchurl: "/doctors.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%=
   render partial: "myplaceonline/pictures_form", locals: {
     f: f,
     obj: obj,

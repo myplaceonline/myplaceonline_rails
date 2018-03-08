@@ -3482,6 +3482,7 @@ en:
     medical_condition_evaluations:
       evaluation_datetime: "Date"
       location: "Location"
+      doctor: "Doctor"
     identity_files:
       files: "Files/Pictures"
       file: "File/Picture"

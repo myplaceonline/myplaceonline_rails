@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180308174219) do
+ActiveRecord::Schema.define(version: 20180308180911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3632,6 +3632,8 @@ ActiveRecord::Schema.define(version: 20180308174219) do
     t.datetime "updated_at", null: false
     t.boolean "is_public"
     t.bigint "location_id"
+    t.bigint "doctor_id"
+    t.index ["doctor_id"], name: "index_medical_condition_evaluations_on_doctor_id"
     t.index ["identity_id"], name: "index_medical_condition_evaluations_on_identity_id"
     t.index ["location_id"], name: "index_medical_condition_evaluations_on_location_id"
     t.index ["medical_condition_id"], name: "index_medical_condition_evaluations_on_medical_condition_id"
@@ -7272,6 +7274,7 @@ ActiveRecord::Schema.define(version: 20180308174219) do
   add_foreign_key "medical_condition_evaluation_files", "identities"
   add_foreign_key "medical_condition_evaluation_files", "identity_files"
   add_foreign_key "medical_condition_evaluation_files", "medical_condition_evaluations"
+  add_foreign_key "medical_condition_evaluations", "doctors"
   add_foreign_key "medical_condition_evaluations", "identities"
   add_foreign_key "medical_condition_evaluations", "locations"
   add_foreign_key "medical_condition_evaluations", "medical_conditions"
