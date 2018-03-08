@@ -17,7 +17,8 @@ class MedicalConditionEvaluation < ApplicationRecord
       :evaluation_datetime,
       :notes,
       medical_condition_evaluation_files_attributes: FilesController.multi_param_names,
-      location_attributes: LocationsController.param_names
+      location_attributes: LocationsController.param_names,
+      doctor_attributes: DoctorsController.param_names,
     ]
   end
 
