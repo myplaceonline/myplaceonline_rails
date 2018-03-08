@@ -3481,6 +3481,7 @@ en:
       source: "Source"
     medical_condition_evaluations:
       evaluation_datetime: "Date"
+      location: "Location"
     identity_files:
       files: "Files/Pictures"
       file: "File/Picture"

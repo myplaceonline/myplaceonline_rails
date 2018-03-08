@@ -16,8 +16,21 @@
     value: obj.notes,
     placeholder: "myplaceonline.general.notes",
     collapsed: obj.notes.blank?,
-    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+    placeholder_prefix: I18n.t("myplaceonline.category.medical_condition_evaluations").singularize,
   )
+%>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :location,
+    existingobj: obj.location,
+    heading: t("myplaceonline.medical_condition_evaluations.location"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
 %>
 <%=
   render partial: "myplaceonline/pictures_form", locals: {

@@ -1,5 +1,6 @@
 <%= data_row(heading: t("myplaceonline.medical_condition_evaluations.evaluation_datetime"), content: obj.evaluation_datetime) %>
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.medical_condition_evaluations.location"), content: obj.location) %>
 <%=
   render partial: "myplaceonline/pictures", locals: {
     pics: obj.medical_condition_evaluation_files,
