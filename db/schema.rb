@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180308180911) do
+ActiveRecord::Schema.define(version: 20180310191640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -5151,6 +5151,7 @@ ActiveRecord::Schema.define(version: 20180308180911) do
     t.boolean "visited"
     t.datetime "archived"
     t.boolean "is_public"
+    t.boolean "ethical_meat"
     t.index ["identity_id"], name: "index_restaurants_on_identity_id"
     t.index ["location_id"], name: "index_restaurants_on_location_id"
   end

@@ -78,6 +78,7 @@ class RestaurantsController < MyplaceonlineController
         :notes,
         :visited,
         :rating,
+        :ethical_meat,
         location_attributes: LocationsController.param_names,
         restaurant_pictures_attributes: FilesController.multi_param_names
       )

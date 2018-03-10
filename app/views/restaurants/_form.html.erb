@@ -17,6 +17,15 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :ethical_meat,
+    value: obj.ethical_meat,
+    placeholder: "myplaceonline.restaurants.ethical_meat"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,
