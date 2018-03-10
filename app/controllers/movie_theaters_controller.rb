@@ -31,4 +31,8 @@ class MovieTheatersController < MyplaceonlineController
     def all_includes
       :location
     end
+
+    def show_map?
+      true
+    end
 end

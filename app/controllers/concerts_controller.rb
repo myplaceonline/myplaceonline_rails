@@ -36,4 +36,8 @@ class ConcertsController < MyplaceonlineController
         concert_pictures_attributes: FilesController.multi_param_names
       )
     end
+
+    def show_map?
+      true
+    end
 end

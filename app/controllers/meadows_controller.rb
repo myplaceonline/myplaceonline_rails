@@ -45,4 +45,8 @@ class MeadowsController < MyplaceonlineController
         nil
       end
     end
+
+    def show_map?
+      true
+    end
 end

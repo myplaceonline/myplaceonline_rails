@@ -3,7 +3,7 @@ class MyplaceonlineController < ApplicationController
   before_action :set_obj, only: [:show, :edit, :update, :destroy]
   before_action :set_layout
   
-  DEFAULT_SKIP_AUTHORIZATION_CHECK = [:index, :new, :create, :destroy_all, :settings, :public, :most_visited]
+  DEFAULT_SKIP_AUTHORIZATION_CHECK = [:index, :new, :create, :destroy_all, :settings, :public, :most_visited, :map]
   
   CHECK_PASSWORD_REQUIRED = 1
   CHECK_PASSWORD_OPTIONAL = 2
@@ -922,6 +922,9 @@ class MyplaceonlineController < ApplicationController
         icon: "gear"
       }
     end
+    if self.show_map?
+      result << map_link
+    end
     result
   end
   
@@ -1313,6 +1316,33 @@ class MyplaceonlineController < ApplicationController
     end
   end
 
+  def map
+    @locations = self.map_locations.map{ |x|
+      result = nil
+      if x.respond_to?(self.location_field)
+        loc = x.send(self.location_field)
+        if !loc.nil? && loc.ensure_gps
+          label = nil
+                                       
+          if self.map_driving_time? && loc.estimate_driving_time && loc.time_from_home < 86400
+            label = (loc.time_from_home/60.0).ceil.to_s
+          end
+          
+          popupHtml = "<p>#{ActionController::Base.helpers.link_to(x.display, obj_path(x))}</p><p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.maps.full_map"), loc.map_url(prefer_human_readable: true), target: "_blank", class: "externallink")}</p>"
+          
+          result = MapLocation.new(
+            latitude: loc.latitude,
+            longitude: loc.longitude,
+            label: label,
+            tooltip: x.display,
+            popupHtml: popupHtml
+          )
+        end
+      end
+      result
+    }.compact
+  end
+  
   protected
   
     def deny_guest
@@ -1769,5 +1799,29 @@ class MyplaceonlineController < ApplicationController
     end
     
     def build_new_model
+    end
+    
+    def map_locations
+      self.all
+    end
+    
+    def map_driving_time?
+      true
+    end
+    
+    def location_field
+      :location
+    end
+    
+    def map_link
+      {
+        title: I18n.t("myplaceonline.maps.map"),
+        link: index_path + "/map",
+        icon: "navigation"
+      }
+    end
+    
+    def show_map?
+      false
     end
 end

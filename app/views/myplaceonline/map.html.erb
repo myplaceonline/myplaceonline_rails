@@ -1,14 +1,15 @@
-<% content_for :heading do -%><%= t("myplaceonline.general.map") %><% end -%>
+<% content_for :heading do -%><%= t("myplaceonline.maps.map") %><% end -%>
 
 <%= flashes! %>
 
 <%=
   render partial: "map/display", locals: {
+    center: User.current_user.current_identity.primary_location,
     locations: @locations
   }
 %>
 
-<%= form_tag(trips_map_path, method: :get) do %>
+<%= form_tag(request.fullpath, method: :get) do %>
 
   <%=
     render(partial: "shared/footer", locals: {

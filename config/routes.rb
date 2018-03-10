@@ -22,6 +22,7 @@ def process_resources(name, context)
   context << { instance: false, link: "public" }
   context << { instance: false, link: "most_visited" }
   context << { instance: false, link: "settings" }
+  context << { instance: false, link: "map" }
 
   context.each do |context_addition|
     if !context_addition[:instance].nil?
@@ -205,9 +206,6 @@ Rails.application.routes.draw do
   match 'person_or_group/:id', :to => 'agents#show', via: [:get], as: "agent_alias"
 
   additions = {
-    beaches: [
-      { instance: false, link: "map" }
-    ],
     bets: [
       { instance: true, link: "update_status" }
     ],
@@ -234,9 +232,6 @@ Rails.application.routes.draw do
     calendar_item_reminder_pendings: [
       { instance: true, link: "complete" },
       { instance: true, link: "snooze" }
-    ],
-    camp_locations: [
-      { instance: false, link: "map" }
     ],
     calendars: [
       {
@@ -512,7 +507,6 @@ Rails.application.routes.draw do
       }
     ],
     trips: [
-      { instance: false, link: "map" },
       { instance: true, link: "share" },
       { instance: true, link: "shared" },
       { instance: true, link: "complete" },

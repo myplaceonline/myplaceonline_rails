@@ -156,4 +156,8 @@ class EventsController < MyplaceonlineController
     def insecure
       true
     end
+
+    def show_map?
+      true
+    end
 end

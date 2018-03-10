@@ -32,4 +32,8 @@ class DesiredLocationsController < MyplaceonlineController
         website_attributes: WebsitesController.param_names
       )
     end
+
+    def show_map?
+      true
+    end
 end

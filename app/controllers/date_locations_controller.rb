@@ -31,4 +31,8 @@ class DateLocationsController < MyplaceonlineController
         location_attributes: LocationsController.param_names
       )
     end
+
+    def show_map?
+      true
+    end
 end

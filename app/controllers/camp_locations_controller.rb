@@ -9,36 +9,6 @@ class CampLocationsController < MyplaceonlineController
     category_name.singularize
   end
 
-  def footer_items_index
-    super + [
-      {
-        title: I18n.t("myplaceonline.maps.map"),
-        link: camp_locations_map_path,
-        icon: "navigation"
-      }
-    ]
-  end
-  
-  def map
-    @locations = self.all.map{ |x|
-      if x.location.ensure_gps
-        label = nil
-        if x.location.estimate_driving_time && x.location.time_from_home < 86400
-          label = (x.location.time_from_home/60.0).ceil.to_s
-        end
-        MapLocation.new(
-          latitude: x.location.latitude,
-          longitude: x.location.longitude,
-          label: label,
-          tooltip: x.display,
-          popupHtml: ActionController::Base.helpers.link_to(x.display, x.location.map_url, target: "_blank")
-        )
-      else
-        nil
-      end
-    }.compact
-  end
-  
   protected
     def obj_params
       params.require(:camp_location).permit(
@@ -84,5 +54,9 @@ class CampLocationsController < MyplaceonlineController
 
     def all_includes
       :location
+    end
+
+    def show_map?
+      true
     end
 end

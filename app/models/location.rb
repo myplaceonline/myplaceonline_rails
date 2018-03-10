@@ -224,7 +224,7 @@ class Location < ApplicationRecord
   end
   
   def map_link_component(prefer_human_readable: false)
-    if !latitude.blank? && !longitude.blank? && !prefer_human_readable
+    if !latitude.blank? && !longitude.blank? && (!prefer_human_readable || self.address1.blank?)
       result = latitude.to_s + "," + longitude.to_s
     else
       # The Google Maps "/place/" link doesn't like addresses with a human name in front

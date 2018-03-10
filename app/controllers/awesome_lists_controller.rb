@@ -15,4 +15,8 @@ class AwesomeListsController < MyplaceonlineController
         awesome_list_items_attributes: [:id, :_destroy, :item_name]
       )
     end
+
+    def show_map?
+      true
+    end
 end

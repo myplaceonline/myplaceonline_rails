@@ -81,4 +81,8 @@ class ApartmentsController < MyplaceonlineController
     def all_includes
       :apartment_leases
     end
+
+    def show_map?
+      true
+    end
 end

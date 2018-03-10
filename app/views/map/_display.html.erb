@@ -73,7 +73,18 @@ end
           content: location.popupHtml
         });
         marker.addListener("click", function() {
-          infoWindow.open(map, marker);
+          var closing = false;
+          if (window.globalInfoWindow != null) {
+            window.globalInfoWindow.close();
+            if (window.globalInfoWindow == infoWindow) {
+              closing = true;
+              window.globalInfoWindow = null;
+            }
+          }
+          if (!closing) {
+            infoWindow.open(map, marker);
+            window.globalInfoWindow = infoWindow;
+          }
         });
       }
       return marker;

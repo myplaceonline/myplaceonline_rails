@@ -56,4 +56,8 @@ class DessertLocationsController < MyplaceonlineController
         { name: :not_visited, column: :visited, inverted: true }
       ]
     end
+
+    def show_map?
+      true
+    end
 end

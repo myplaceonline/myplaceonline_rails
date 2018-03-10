@@ -1,5 +1,5 @@
 class RestaurantsController < MyplaceonlineController
-  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:random]
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:random, :map]
 
   def index
     @not_visited = params[:not_visited]
@@ -42,13 +42,21 @@ class RestaurantsController < MyplaceonlineController
   end
 
   def footer_items_index
-    super + [
-      {
-        title: I18n.t('myplaceonline.random.restaurant'),
-        link: random_activity_path(:filter_restaurants => "1"),
-        icon: "search"
-      }
-    ]
+    result = super
+    
+    result << {
+      title: I18n.t("myplaceonline.maps.map"),
+      link: restaurants_map_path,
+      icon: "navigation"
+    }
+    
+    result << {
+      title: I18n.t("myplaceonline.random.restaurant"),
+      link: random_activity_path(:filter_restaurants => "1"),
+      icon: "search"
+    }
+
+    result
   end
   
   def index_filters
