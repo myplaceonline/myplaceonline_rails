@@ -12,6 +12,12 @@
 <%= form_tag(request.fullpath, method: :get) do %>
 
   <%=
+    render partial: "myplaceonline/filter_select", locals: {
+      filters: controller.index_filters
+    }
+  %>
+  
+  <%=
     render(partial: "shared/footer", locals: {
       items: [
         {

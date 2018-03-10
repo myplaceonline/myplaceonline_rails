@@ -15,15 +15,6 @@ class MeadowsController < MyplaceonlineController
     category_name.singularize
   end
   
-  def index_filters
-    super + [
-      {
-        :name => :not_visited,
-        :display => "myplaceonline.meadows.not_visited"
-      }
-    ]
-  end
-
   protected
     def insecure
       true
@@ -38,15 +29,13 @@ class MeadowsController < MyplaceonlineController
       )
     end
 
-    def all_additional_sql(strict)
-      if @not_visited && !strict
-        "and (visited is null or visited = false)"
-      else
-        nil
-      end
-    end
-
     def show_map?
       true
+    end
+
+    def simple_index_filters
+      [
+        { name: :not_visited, column: :visited, inverted: true },
+      ]
     end
 end

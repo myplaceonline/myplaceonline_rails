@@ -147,12 +147,12 @@ end
 <% if !@myplet %>
   <% if !MyplaceonlineExecutionContext.offline? %>
     <%=
-      render partial: 'myplaceonline/filter_select', locals: {
+      render partial: "myplaceonline/filter_select", locals: {
         filters: controller.index_filters
       }
     %>
     <%=
-      render partial: 'myplaceonline/sort_items', locals: {
+      render partial: "myplaceonline/sort_items", locals: {
         options: controller.index_sorts
       }
     %>

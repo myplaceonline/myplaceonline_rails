@@ -59,15 +59,6 @@ class RestaurantsController < MyplaceonlineController
     result
   end
   
-  def index_filters
-    super + [
-      {
-        :name => :not_visited,
-        :display => "myplaceonline.restaurants.not_visited"
-      }
-    ]
-  end
-
   protected
     def insecure
       true
@@ -82,14 +73,6 @@ class RestaurantsController < MyplaceonlineController
         location_attributes: LocationsController.param_names,
         restaurant_pictures_attributes: FilesController.multi_param_names
       )
-    end
-
-    def all_additional_sql(strict)
-      if @not_visited && !strict
-        "and (visited is null or visited = false)"
-      else
-        nil
-      end
     end
 
     def default_sort_columns
@@ -108,5 +91,12 @@ class RestaurantsController < MyplaceonlineController
 
     def all_includes
       :location
+    end
+
+    def simple_index_filters
+      [
+        { name: :ethical_meat },
+        { name: :not_visited, column: :visited, inverted: true },
+      ]
     end
 end

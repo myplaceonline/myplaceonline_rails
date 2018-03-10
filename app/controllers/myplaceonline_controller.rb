@@ -45,23 +45,14 @@ class MyplaceonlineController < ApplicationController
     @perpage = items_per_page
     
     set_parent
-    
-    simple_index_filters.each do |simple_index_filter|
-      instance_variable_set("@#{simple_index_filter[:name].to_s}", param_bool(simple_index_filter[:name]))
-    end
+
+    process_filters
     
     @count_all = all(strict: true).count
     cached_all = all
     @count = cached_all.count
-    
-    # Special case: If the request is for a vanilla index page (no filters), then check if there are any items that are
-    # filtered. If not, then don't bother even showing the filter section. This is to avoid the most common case of 0
-    # archived items
-    @filtered_count = -1
-    filters = index_filters
-    if filters.length == 1 && filters[0][:name] == :archived && request.query_parameters.length == 0 && @count_all == @count
-      @filtered_count = 0
-    end
+
+    prepare_filtered_count
     
     @perpage = update_items_per_page(@perpage, @count)
     
@@ -96,6 +87,23 @@ class MyplaceonlineController < ApplicationController
     else
       indexmyplet
       render action: "index", layout: "myplet"
+    end
+  end
+
+  def process_filters
+    simple_index_filters.each do |simple_index_filter|
+      instance_variable_set("@#{simple_index_filter[:name].to_s}", param_bool(simple_index_filter[:name]))
+    end
+  end
+  
+  def prepare_filtered_count
+    # Special case: If the request is for a vanilla index page (no filters), then check if there are any items that are
+    # filtered. If not, then don't bother even showing the filter section. This is to avoid the most common case of 0
+    # archived items
+    @filtered_count = -1
+    filters = index_filters
+    if filters.length == 1 && filters[0][:name] == :archived && request.query_parameters.length == 0 && @count_all == @count
+      @filtered_count = 0
     end
   end
 
@@ -922,7 +930,7 @@ class MyplaceonlineController < ApplicationController
         icon: "gear"
       }
     end
-    if self.show_map?
+    if self.show_map? && !MyplaceonlineExecutionContext.offline?
       result << map_link
     end
     result
@@ -1317,7 +1325,13 @@ class MyplaceonlineController < ApplicationController
   end
 
   def map
-    @locations = self.map_locations.map{ |x|
+    process_filters
+    
+    items = self.map_items
+    
+    @count_all = items.count
+    
+    @locations = items.map{ |x|
       result = nil
       if x.respond_to?(self.location_field)
         loc = x.send(self.location_field)
@@ -1341,6 +1355,10 @@ class MyplaceonlineController < ApplicationController
       end
       result
     }.compact
+    
+    @count = @locations.count
+    
+    prepare_filtered_count
   end
   
   def category_display
@@ -1404,6 +1422,7 @@ class MyplaceonlineController < ApplicationController
     
     def all_additional_sql(strict)
       result = nil
+      Rails.logger.debug{"all_additional_sql strict: #{strict}"}
       if !strict
         if check_archived && (@archived.blank? || !@archived)
           result = Myp.appendstr(result, "#{model.table_name}.archived is null", nil, " and (", ")")
@@ -1415,12 +1434,15 @@ class MyplaceonlineController < ApplicationController
             colname = simple_index_filter[:column].to_s
           end
           
+          Rails.logger.debug{"all_additional_sql simple_index_filter: #{colname}"}
+          
           if instance_variable_get("@#{simple_index_filter[:name].to_s}")
             if !simple_index_filter[:inverted]
               sql = "#{model.table_name}.#{colname} = true"
             else
               sql = "#{model.table_name}.#{colname} is null or #{model.table_name}.#{colname} = false"
             end
+            Rails.logger.debug{"all_additional_sql sql: #{sql}"}
             result = Myp.appendstr(
               result,
               sql,
@@ -1805,7 +1827,7 @@ class MyplaceonlineController < ApplicationController
     def build_new_model
     end
     
-    def map_locations
+    def map_items
       self.all
     end
     
