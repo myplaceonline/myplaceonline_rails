@@ -1343,6 +1343,10 @@ class MyplaceonlineController < ApplicationController
     }.compact
   end
   
+  def category_display
+    I18n.t("myplaceonline.category." + self.category_name)
+  end
+  
   protected
   
     def deny_guest
