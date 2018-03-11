@@ -56,32 +56,40 @@ class InfoController < ApplicationController
   
   def contact
     @obj = SiteContact.new
-    if !params[:subject].blank?
-      @obj.subject = params[:subject]
-    end
     if request.post?
       @obj = SiteContact.new(
         params.require(:site_contact).permit(
           :name,
           :email,
           :subject,
-          :body
+          :body,
         )
       )
+      
+      body = @obj.body
+      if body.nil?
+        body = ""
+      end
+      @obj.body = body.strip
+      
       if @obj.save
         email_prefix = "#{@obj.name} (#{@obj.email}) submitted the contact form:\n\n"
+        
         Myp.send_support_email_safe(
           @obj.subject,
-          "<p>" + email_prefix + "</p>" + Myp.markdown_to_html(@obj.body),
-          email_prefix + @obj.body,
+          "<p>" + email_prefix + "</p>" + Myp.markdown_to_html(body),
+          email_prefix + body,
           email: @obj.email,
           request: request,
           html_comment_details: true,
         )
-        redirect_to "/",
-          :flash => { :notice =>
-                      I18n.t("myplaceonline.contact.sent")
-                    }
+        
+        redirect_to(
+          "/",
+          flash: {
+            notice: I18n.t("myplaceonline.contact.sent")
+          }
+        )
       end
     end
   end

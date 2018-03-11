@@ -526,6 +526,8 @@ en:
     site_contacts:
       name: "Name"
       email: "Email"
+      subject: "Subject"
+      body: "Body"
     categories:
       name: "Name"
       no_results: "No Results. Create New "
@@ -596,6 +598,11 @@ en:
       invite_sent: "Your invite has been sent."
       invite_intro: "This will send an email invite to this person. You may enter a personalized message."
       invite_duplicate: "You may only invite an email address once."
+      contact_email: "Your E-mail Address"
+      contact_name: "Your Name"
+      contact_intro: "Your message will be sent to"
+      contact_subject_missing: "Please provide a subject."
+      contact_body_missing: "Please provide a message body."
       jqm:
         title: "JQueryMobile"
       mission_statement:
