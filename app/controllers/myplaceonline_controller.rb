@@ -625,6 +625,14 @@ class MyplaceonlineController < ApplicationController
     end
   end
   
+  def move_identity_obj_path(obj = @obj)
+    if nested
+      send(path_name + "_move_identity_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+    else
+      send(path_name + "_move_identity_path", obj)
+    end
+  end
+  
   def share_link_obj_path(obj = @obj)
     if nested
       send(path_name + "_create_share_link_path", obj.send(parent_model.table_name.singularize.downcase), obj)
@@ -720,6 +728,10 @@ class MyplaceonlineController < ApplicationController
   
   def show_add
     allow_add
+  end
+  
+  def show_move_identity
+    !User.current_user.guest? && !MyplaceonlineExecutionContext.offline? && current_user.domain_identities.count > 1
   end
   
   def show_back_to_list
@@ -1005,6 +1017,13 @@ class MyplaceonlineController < ApplicationController
         data: { confirm: "Are you sure?" }
       }
     end
+    if self.show_move_identity
+      result << {
+        title: I18n.t("myplaceonline.general.move_identity"),
+        link: self.move_identity_obj_path,
+        icon: "user"
+      }
+    end
     result
   end
   
@@ -1047,6 +1066,24 @@ class MyplaceonlineController < ApplicationController
     set_obj
     
     @connections_link = permissions_share_path + "?" + Permission.permission_params(self.category_name, @obj.id, self.share_permissions).to_query
+  end
+  
+  def move_identity
+    initial_checks
+    set_obj
+    
+    if request.post?
+      
+      target_identity_id = params["target_identity_id"].to_i
+      target_identity = current_user.domain_identities.find{|x| x.id == target_identity_id}
+      if !target_identity.nil?
+        @obj.update_column(:identity_id, target_identity_id)
+        redirect_to(
+          index_path,
+          flash: { notice: I18n.t("myplaceonline.general.moved_identity") }
+        )
+      end
+    end
   end
   
   def make_public

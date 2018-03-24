@@ -97,7 +97,7 @@ CKEDITOR.editorConfig = function( config )
   // Toolbar groups configuration.
   config.toolbar = [
     [ 'Bold', 'Italic' ],
-    [ 'NumberedList', 'BulletedList' ],
+    [ 'NumberedList', 'BulletedList', 'HorizontalRule' ],
     [ 'Outdent', 'Indent'],
     [ 'Blockquote', 'Link', 'Unlink' ],
     [ 'Format' ],

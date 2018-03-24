@@ -1,0 +1,32 @@
+<% content_for :heading do -%><%= t("myplaceonline.general.move_identity") %><% end -%>
+
+<h1><%= t("myplaceonline.general.move_identity") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag(request.fullpath, method: :post) do %>
+
+  <%=
+    select_tag(
+      "target_identity_id",
+      options_for_select(
+        current_user.domain_identities.dup.delete_if{|x| x.id == current_user.current_identity_id }.map{|x| [x.name, x.id] }
+      )
+    )
+  %>
+
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.general.move_identity"), "data-icon" => "action", "data-iconpos" => "top", style: "background-color: green")
+        },
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: controller.obj_path,
+          icon: "back"
+        },
+      ]
+    })
+  %>
+<% end %>

@@ -523,6 +523,8 @@ en:
       is: "is"
       are: "are"
       most_visited: "Most Visited"
+      move_identity: "Change Identity"
+      moved_identity: "Identity changed"
     site_contacts:
       name: "Name"
       email: "Email"
