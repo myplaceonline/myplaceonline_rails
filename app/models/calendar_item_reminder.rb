@@ -400,22 +400,22 @@ class CalendarItemReminder < ApplicationRecord
   def threshold_in_seconds
     if self.threshold_amount.nil?
       0
-    elsif threshold_type.nil? # assume seconds
+    elsif self.threshold_type.nil? # assume seconds
       self.threshold_amount
-    elsif threshold_type == Myp::TIME_DURATION_SECONDS
+    elsif self.threshold_type == Myp::TIME_DURATION_SECONDS
       self.threshold_amount
-    elsif threshold_type == Myp::TIME_DURATION_MINUTES
+    elsif self.threshold_type == Myp::TIME_DURATION_MINUTES
       self.threshold_amount * 60
-    elsif threshold_type == Myp::TIME_DURATION_HOURS
+    elsif self.threshold_type == Myp::TIME_DURATION_HOURS
       self.threshold_amount * 60 * 60
-    elsif threshold_type == Myp::TIME_DURATION_DAYS
+    elsif self.threshold_type == Myp::TIME_DURATION_DAYS
       self.threshold_amount * 60 * 60 * 24
-    elsif threshold_type == Myp::TIME_DURATION_WEEKS
+    elsif self.threshold_type == Myp::TIME_DURATION_WEEKS
       self.threshold_amount * 60 * 60 * 24 * 7
-    elsif threshold_type == Myp::TIME_DURATION_MONTHS
-      self.threshold_amount * 60 * 60 * 24 * 7 * 30
-    elsif threshold_type == Myp::TIME_DURATION_YEARS
-      self.threshold_amount * 60 * 60 * 24 * 7 * 30 * 365
+    elsif self.threshold_type == Myp::TIME_DURATION_MONTHS
+      self.threshold_amount * 60 * 60 * 24 * 7 * 4.35
+    elsif self.threshold_type == Myp::TIME_DURATION_YEARS
+      self.threshold_amount * 60 * 60 * 24 * 7 * 4.35 * 12
     else
       raise "TODO (#{self.id}; #{self.threshold_amount}; #{self.threshold_type})"
     end
