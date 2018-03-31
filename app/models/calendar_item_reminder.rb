@@ -405,7 +405,7 @@ class CalendarItemReminder < ApplicationRecord
     elsif threshold_type == Myp::TIME_DURATION_SECONDS
       threshold_amount
     else
-      raise "TODO"
+      raise "TODO (#{self.id}; #{self.threshold_amount}; #{self.threshold_type})"
     end
   end
   
@@ -417,7 +417,7 @@ class CalendarItemReminder < ApplicationRecord
     elsif expire_type == Myp::TIME_DURATION_SECONDS
       expire_amount
     else
-      raise "TODO"
+      raise "TODO (#{self.id}; #{self.expire_amount}; #{self.expire_type})"
     end
   end
   
