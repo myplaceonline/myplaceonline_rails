@@ -398,12 +398,24 @@ class CalendarItemReminder < ApplicationRecord
   end
   
   def threshold_in_seconds
-    if threshold_amount.nil?
+    if self.threshold_amount.nil?
       0
     elsif threshold_type.nil? # assume seconds
-      threshold_amount
+      self.threshold_amount
     elsif threshold_type == Myp::TIME_DURATION_SECONDS
-      threshold_amount
+      self.threshold_amount
+    elsif threshold_type == Myp::TIME_DURATION_MINUTES
+      self.threshold_amount * 60
+    elsif threshold_type == Myp::TIME_DURATION_HOURS
+      self.threshold_amount * 60 * 60
+    elsif threshold_type == Myp::TIME_DURATION_DAYS
+      self.threshold_amount * 60 * 60 * 24
+    elsif threshold_type == Myp::TIME_DURATION_WEEKS
+      self.threshold_amount * 60 * 60 * 24 * 7
+    elsif threshold_type == Myp::TIME_DURATION_MONTHS
+      self.threshold_amount * 60 * 60 * 24 * 7 * 30
+    elsif threshold_type == Myp::TIME_DURATION_YEARS
+      self.threshold_amount * 60 * 60 * 24 * 7 * 30 * 365
     else
       raise "TODO (#{self.id}; #{self.threshold_amount}; #{self.threshold_type})"
     end
