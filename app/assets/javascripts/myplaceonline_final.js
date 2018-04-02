@@ -27,7 +27,12 @@ var myplaceonline = function(mymodule) {
   var debugsSent = 0;
   
   $.noty.defaults.timeout = 3000;
-  $.noty.defaults.layout = 'topCenter';
+  $.noty.defaults.layout = "topCenter";
+  $.noty.defaults.callback = {
+    onShow: function() {
+      $(this.options.layout.container.selector).css({ "margin-top": "15px" });
+    }
+  };
   
   $.ajaxPrefilter(function(options, originalOptions, xhr) {
     // "For AJAX requests other than GETs, extract the “csrf-token” from the
