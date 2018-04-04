@@ -259,8 +259,10 @@ class DietsController < MyplaceonlineController
         {
           type: Myp::FIELD_TEXT,
           name: DEFAULT_EVALUATION_DAYS_NAME,
-          value: @default_evaluation_days,
-          placeholder: "myplaceonline.diets.default_evaluation_days"
+          options: {
+            value: @default_evaluation_days,
+            placeholder: "myplaceonline.diets.default_evaluation_days",
+          },
         },
       ]
     end

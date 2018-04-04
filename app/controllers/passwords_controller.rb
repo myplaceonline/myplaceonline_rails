@@ -344,38 +344,50 @@ class PasswordsController < MyplaceonlineController
         {
           type: Myp::FIELD_TEXT,
           name: MAX_PASSWORD_LENGTH,
-          value: @max_password_length,
-          placeholder: "myplaceonline.passwords.generate_password_length"
+          options: {
+            value: @max_password_length,
+            placeholder: "myplaceonline.passwords.generate_password_length",
+          },
         },
         {
           type: Myp::FIELD_BOOLEAN,
           name: USE_LOWERCASE,
-          value: @use_lowercase,
-          placeholder: "myplaceonline.passwords.generate_lowercase"
+          options: {
+            value: @use_lowercase,
+            placeholder: "myplaceonline.passwords.generate_lowercase",
+          },
         },
         {
           type: Myp::FIELD_BOOLEAN,
           name: USE_UPPERCASE,
-          value: @use_uppercase,
-          placeholder: "myplaceonline.passwords.generate_uppercase"
+          options: {
+            value: @use_uppercase,
+            placeholder: "myplaceonline.passwords.generate_uppercase",
+          },
         },
         {
           type: Myp::FIELD_BOOLEAN,
           name: USE_NUMBERS,
-          value: @use_numbers,
-          placeholder: "myplaceonline.passwords.generate_numbers"
+          options: {
+            value: @use_numbers,
+            placeholder: "myplaceonline.passwords.generate_numbers",
+          },
         },
         {
           type: Myp::FIELD_BOOLEAN,
           name: USE_SPECIAL,
-          value: @use_special,
-          placeholder: "myplaceonline.passwords.generate_special"
+          options: {
+            value: @use_special,
+            placeholder: "myplaceonline.passwords.generate_special",
+          },
         },
         {
           type: Myp::FIELD_BOOLEAN,
           name: USE_SPECIAL_ADDITIONAL,
-          value: @use_special_additional,
-          placeholder: "myplaceonline.passwords.generate_special_additional"
+          options: {
+            value: @use_special_additional,
+            placeholder: "myplaceonline.passwords.generate_special_additional",
+          },
         },
       ]
     end
