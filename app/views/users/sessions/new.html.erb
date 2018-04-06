@@ -1,4 +1,4 @@
-<% content_for :heading do -%><%= t('myplaceonline.general.login') %><% end -%>
+<% content_for :heading do -%><%= t("myplaceonline.general.login") %><% end -%>
 <h1><%= t("myplaceonline.general.login") %></h1>
 <%= flashes! %>
 <% if flash.nil? || flash.to_hash["alert"].nil? || flash.to_hash["alert"].index("You have to confirm").nil? %>
@@ -22,7 +22,7 @@
       <div><%= f.check_box :remember_me %> <%= f.label :remember_me, t("myplaceonline.general.remember") %></div>
     <% end -%>
     
-    <%= hidden_field_tag(:redirect, params[:redirect]) %>
+    <%= hidden_field_tag(:redirect, @redirect) %>
 
     <div><%= f.submit t("myplaceonline.general.login") %></div>
     <script type="text/javascript">

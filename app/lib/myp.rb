@@ -1182,11 +1182,12 @@ module Myp
   end
 
   def self.reentry_url(request)
-    if request.query_parameters.length == 0
-      "/users/reenter?redirect=" + URI.encode(request.path)
-    else
-      "/users/reenter?redirect=" + URI.encode(request.path + "?" + request.query_parameters.to_a.map{|x| x[0].to_s + "=" + x[1].to_s }.join("&"))
-    end
+    "/users/reenter?redirect=" + self.encoded_fullpath(request)
+  end
+  
+  def self.encoded_fullpath(request)
+    # https://stackoverflow.com/a/39645048/4135310
+    URI.encode(request.fullpath, /\W/)
   end
   
   def self.error_details(error)

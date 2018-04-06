@@ -81,7 +81,9 @@ class ApplicationController < ActionController::Base
     elsif exception.is_a?(CanCan::AccessDenied)
       Rails.logger.debug{"ApplicationController.catchall access denied #{exception.message} for #{User.current_user.inspect}".red}
       if User.current_user.nil? || User.current_user.guest?
-        redirect_to(new_user_session_url(redirect: request.fullpath), alert: I18n.t("myplaceonline.general.access_denied_guest"))
+        reentry_url = Myp.encoded_fullpath(request)
+        Rails.logger.debug{"ApplicationController.catchall redirecting to #{reentry_url}".red}
+        redirect_to(new_user_session_url(redirect: reentry_url), alert: I18n.t("myplaceonline.general.access_denied_guest"))
       else
         redirect_to(root_url, alert: I18n.t("myplaceonline.general.access_denied", resource: request.path))
       end
