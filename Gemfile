@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 gem "rake"
-gem "rails", ">= 5.1"
+gem "rails", ">=5.1.5", "<5.1.6"
 # https://stackoverflow.com/a/48196438/4135310
 gem "pg", "~> 0.21"
 gem "sass-rails"

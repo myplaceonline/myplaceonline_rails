@@ -7,17 +7,17 @@ GIT
 
 GIT
   remote: git://github.com/collectiveidea/delayed_job.git
-  revision: c7a42fb78dc538de46024eb36b31e72916ff21a0
+  revision: f31546a369564c8ca12e89c4adbada8b966a28ec
   specs:
-    delayed_job (4.1.4)
-      activesupport (>= 3.0, < 5.2)
+    delayed_job (4.1.5)
+      activesupport (>= 3.0, < 5.3)
 
 GIT
   remote: git://github.com/collectiveidea/delayed_job_active_record.git
-  revision: a98dbace006a24a1291de0602600849c8ef97c9c
+  revision: d88265244b3eb600388bbcc8cd42ed8952f24a8c
   specs:
-    delayed_job_active_record (4.1.2)
-      activerecord (>= 3.0, < 5.2)
+    delayed_job_active_record (4.1.3)
+      activerecord (>= 3.0, < 5.3)
       delayed_job (>= 3.0, < 5)
 
 GIT
@@ -30,7 +30,7 @@ GIT
 
 GIT
   remote: git://github.com/galetahub/ckeditor.git
-  revision: 115a50628baceeac5cc37363db082e3f5ba03c76
+  revision: dc2cef2c2c3358124ebd86ca2ef2335cc898b41f
   specs:
     ckeditor (4.2.4)
       orm_adapter (~> 0.5.0)
@@ -118,7 +118,7 @@ GEM
     browser (2.5.3)
     builder (3.2.3)
     calculus (0.2.0)
-    cancancan (2.1.3)
+    cancancan (2.2.0)
     carmen (1.0.2)
       activesupport (>= 3.0.0)
     carmen-rails (1.0.1)
@@ -134,7 +134,7 @@ GEM
     coffee-script-source (1.12.2)
     colorize (0.8.1)
     concurrent-ruby (1.0.5)
-    crass (1.0.3)
+    crass (1.0.4)
     curb (0.9.4)
     daemons (1.2.6)
     declarative (0.0.10)
@@ -146,27 +146,27 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
-    domain_name (0.5.20170404)
+    domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
-    elasticsearch (6.0.1)
-      elasticsearch-api (= 6.0.1)
-      elasticsearch-transport (= 6.0.1)
-    elasticsearch-api (6.0.1)
+    elasticsearch (6.0.2)
+      elasticsearch-api (= 6.0.2)
+      elasticsearch-transport (= 6.0.2)
+    elasticsearch-api (6.0.2)
       multi_json
     elasticsearch-dsl (0.1.5)
     elasticsearch-rails (5.0.2)
-    elasticsearch-transport (6.0.1)
+    elasticsearch-transport (6.0.2)
       faraday
       multi_json
     erubi (1.7.1)
-    eventmachine (1.2.5)
+    eventmachine (1.2.6)
     execjs (2.7.0)
     factory_bot (4.8.2)
       activesupport (>= 3.0.0)
     factory_bot_rails (4.8.2)
       factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
-    faraday (0.14.0)
+    faraday (0.15.0)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
@@ -175,7 +175,7 @@ GEM
     github-markup (2.0.0)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
-    google-api-client (0.19.8)
+    google-api-client (0.20.1)
       addressable (~> 2.5, >= 2.5.1)
       googleauth (>= 0.5, < 0.7.0)
       httpclient (>= 2.8.1, < 3.0)
@@ -194,10 +194,10 @@ GEM
       http (~> 3.0, >= 3.0.0)
       nokogiri (~> 1.7, >= 1.7.1)
     htmlentities (4.3.4)
-    http (3.0.0)
+    http (3.3.0)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
-      http-form_data (>= 2.0.0.pre.pre2, < 3)
+      http-form_data (~> 2.0)
       http_parser.rb (~> 0.6.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
@@ -213,7 +213,7 @@ GEM
       multi_json (>= 1.2)
     jquery-easing-rails (0.0.2)
       railties (>= 3.1.0)
-    jquery-rails (4.3.1)
+    jquery-rails (4.3.3)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
@@ -254,7 +254,7 @@ GEM
     multi_json (1.13.1)
     multipart-post (2.0.0)
     netrc (0.11.0)
-    nio4r (2.3.0)
+    nio4r (2.3.1)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     noty-rails (2.3.8)
@@ -271,11 +271,11 @@ GEM
       multi_json (~> 1.0)
       xml-simple
     pg (0.21.0)
-    pkg-config (1.2.9)
+    pkg-config (1.3.1)
     posix-spawn (0.3.13)
     public_suffix (3.0.2)
-    rack (2.0.4)
-    rack-test (0.8.3)
+    rack (2.0.5)
+    rack-test (1.0.0)
       rack (>= 1.0, < 3)
     rails (5.1.5)
       actioncable (= 5.1.5)
@@ -296,8 +296,8 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.0.3)
-      loofah (~> 2.0)
+    rails-html-sanitizer (1.0.4)
+      loofah (~> 2.2, >= 2.2.2)
     railties (5.1.5)
       actionpack (= 5.1.5)
       activesupport (= 5.1.5)
@@ -308,9 +308,9 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
-    rdoc (6.0.2)
+    rdoc (6.0.3)
     redcarpet (3.4.0)
-    remotipart (1.3.1)
+    remotipart (1.4.2)
     representable (3.0.4)
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
@@ -323,7 +323,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     retriable (3.1.1)
-    reverse_markdown (1.0.5)
+    reverse_markdown (1.1.0)
       nokogiri
     rmagick (2.16.0)
     roo (2.7.1)
@@ -332,7 +332,7 @@ GEM
     ruby-filemagic (0.7.2)
     ruby_dep (1.5.0)
     rubyzip (1.2.1)
-    sass (3.5.5)
+    sass (3.5.6)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -345,7 +345,7 @@ GEM
       tilt (>= 1.1, < 3)
     sdoc (1.0.0)
       rdoc (>= 5.0)
-    seed_dump (3.2.4)
+    seed_dump (3.3.0)
       activerecord (>= 4)
       activesupport (>= 4)
     signet (0.8.1)
@@ -353,7 +353,7 @@ GEM
       faraday (~> 0.9)
       jwt (>= 1.5, < 3.0)
       multi_json (~> 1.10)
-    simple-rss (1.3.1)
+    simple-rss (1.3.3)
     simple_oauth (0.3.1)
     spring (2.0.2)
       activesupport (>= 4.2)
@@ -380,7 +380,7 @@ GEM
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uber (0.1.0)
-    uglifier (4.1.8)
+    uglifier (4.1.10)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
@@ -456,7 +456,7 @@ DEPENDENCIES
   pg (~> 0.21)
   pkg-config
   posix-spawn
-  rails (>= 5.1)
+  rails (>= 5.1.5, < 5.1.6)
   rails-controller-testing
   rake
   redcarpet
