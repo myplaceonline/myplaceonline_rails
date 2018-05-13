@@ -4,11 +4,13 @@
     type: Myp::FIELD_TEXT,
     name: :name,
     value: obj.name,
-    placeholder: "myplaceonline.contacts.name",
+    placeholder: "myplaceonline.identities.name",
     autofocus: autofocus
   )
 %>
-<%=
+
+<%# We only show the first name anyway in the drop down list %>
+<%#
   input_field(
     form: f,
     type: Myp::FIELD_TEXT,

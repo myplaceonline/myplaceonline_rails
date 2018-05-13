@@ -2410,25 +2410,29 @@ module Myp
         }
       }).order(visit_count: {order: :desc, missing: :_last}).limit(limit).load.objects
       
-      permissions = Permission.where(user_id: user.id)
-      if permissions.length > 0
-        permissions_results = UserIndex.query({
-          terms: {
-            "_uid" => permissions.map{|p| p.subject_class.singularize + "#" + p.subject_id.to_s }.to_a
-          }
-        }).order(visit_count: {order: :desc, missing: :_last}).limit(limit).load.objects
+      # Add in items that this user has permission to, but only
+      # if this isn't a brand new identity with few items in the UserIndex
+      if search_results.size > 10
+        permissions = Permission.where(user_id: user.id)
+        if permissions.length > 0
+          permissions_results = UserIndex.query({
+            terms: {
+              "_uid" => permissions.map{|p| p.subject_class.singularize + "#" + p.subject_id.to_s }.to_a
+            }
+          }).order(visit_count: {order: :desc, missing: :_last}).limit(limit).load.objects
 
-        permissions_results.delete_if{|x| !x.respond_to?("visit_count") || (x.respond_to?("visit_count") && (x.visit_count.nil? || x.visit_count <= min_shared_visit_count)) }
-        
-        search_results = search_results + permissions_results
-        
-        search_results.sort! do |sr1, sr2|
-          x1 = sr1.respond_to?("visit_count") && !sr1.visit_count.nil? ? sr1.visit_count : 0
-          x2 = sr2.respond_to?("visit_count") && !sr2.visit_count.nil? ? sr2.visit_count : 0
-          x2 <=> x1
+          permissions_results.delete_if{|x| !x.respond_to?("visit_count") || (x.respond_to?("visit_count") && (x.visit_count.nil? || x.visit_count <= min_shared_visit_count)) }
+          
+          search_results = search_results + permissions_results
+          
+          search_results.sort! do |sr1, sr2|
+            x1 = sr1.respond_to?("visit_count") && !sr1.visit_count.nil? ? sr1.visit_count : 0
+            x2 = sr2.respond_to?("visit_count") && !sr2.visit_count.nil? ? sr2.visit_count : 0
+            x2 <=> x1
+          end
+          
+          Rails.logger.debug{"highly_visited permissions_results: #{permissions_results.inspect}"}
         end
-        
-        Rails.logger.debug{"highly_visited permissions_results: #{permissions_results.inspect}"}
       end
       
       search_results.delete_if{|x| x.respond_to?("show_highly_visited?") && !x.show_highly_visited? }
