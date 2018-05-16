@@ -41,8 +41,9 @@ $("#<%= extract_id(postal_code_field) %>").on("input propertychange paste", func
     queryCount++;
     $this.data("queryCount", queryCount);
     myplaceonline.showLoading();
-    $.get({
+    $.ajax({
       url: myplaceonline.createUrl("/api/postal_code_search"),
+      method: "GET",
       dataType: "json",
       context: {
         postal_code_field: $this,
