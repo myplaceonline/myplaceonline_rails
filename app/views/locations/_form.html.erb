@@ -42,7 +42,7 @@ $("#<%= extract_id(postal_code_field) %>").on("input propertychange paste", func
     $this.data("queryCount", queryCount);
     myplaceonline.showLoading();
     $.get({
-      url: "/api/postal_code_search",
+      url: myplaceonline.createUrl("/api/postal_code_search"),
       dataType: "json",
       context: {
         postal_code_field: $this,
@@ -63,6 +63,7 @@ $("#<%= extract_id(postal_code_field) %>").on("input propertychange paste", func
       }
     }).fail(function(jqXHR, textStatus, errorThrown) {
       myplaceonline.createErrorNotification("Could not find details for postal code " + postal_code + ": " + textStatus);
+      myplaceonline.sendDebug("Error searching for zip code: " + textStatus, true, errorThrown);
     }).complete(function(jqXHR, textStatus) {
       myplaceonline.hideLoading();
     });

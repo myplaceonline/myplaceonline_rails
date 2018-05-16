@@ -1503,6 +1503,13 @@ var myplaceonline = function(mymodule) {
     return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
   }
   
+  function createUrl(relativeUrl) {
+    if (myplaceonline.isInPhoneGap()) {
+      relativeUrl = app.base_url + relativeUrl;
+    }
+    return relativeUrl;
+  }
+  
   // Public API
   mymodule.hookListviewSearch = hookListviewSearch;
   mymodule.hookListviewEnter = hookListviewEnter;
@@ -1540,6 +1547,7 @@ var myplaceonline = function(mymodule) {
   mymodule.transformTrim = transformTrim;
   mymodule.toMarkdown = mypToMarkdown;
   mymodule.toType = toType;
+  mymodule.createUrl = createUrl;
   
   myplaceonline.onPageLoad(function() {
     if (typeof ZeroClipboard !== 'undefined') {

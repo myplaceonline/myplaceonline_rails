@@ -1230,7 +1230,7 @@ var myplaceonline = function(mymodule) {
   };
   
   mymodule.isInPhoneGap = function() {
-    return inPhoneGap
+    return inPhoneGap;
   };
   
   mymodule.setIsInitialPhonegapPage = function(newvalue) {
