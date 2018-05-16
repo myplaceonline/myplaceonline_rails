@@ -62,8 +62,7 @@ $("#<%= extract_id(postal_code_field) %>").on("input propertychange paste", func
         myplaceonline.createSuccessNotification(data.looked_up_postal_code);
       }
     }).fail(function(jqXHR, textStatus, errorThrown) {
-      myplaceonline.createErrorNotification("Could not find details for postal code " + postal_code + ": " + textStatus);
-      myplaceonline.sendDebug("Error searching for zip code: " + textStatus, true, errorThrown);
+      myplaceonline.handleAjaxFailure(jqXHR, textStatus, errorThrown, "Could not find details for postal code " + postal_code, myplaceonline.createUrl("/api/postal_code_search"));
     }).complete(function(jqXHR, textStatus) {
       myplaceonline.hideLoading();
     });

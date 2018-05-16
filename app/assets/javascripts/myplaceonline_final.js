@@ -1510,6 +1510,16 @@ var myplaceonline = function(mymodule) {
     return relativeUrl;
   }
   
+  function handleAjaxFailure(jqXHR, textStatus, errorThrown, errorPrefix, url) {
+    if (jqXHR.status == 0 && !jqXHR.responseText) {
+      alert("Could not communicate with server. This could be caused by:\n* Internet connection problem\n* Server is under maintenance\n\nPlease try again or report the error to " + contact_email);
+    } else {
+      myplaceonline.createErrorNotification(errorPrefix + ": " + textStatus);
+      
+      myplaceonline.sendDebug("AJAX failure: URL: " + url + ", Status: " + jqXHR.status + ", Error: " + errorPrefix + ": " + textStatus + ", Response: " + jqXHR.responseText + ", Ready State: " + jqXHR.readyState + ", Response XML: " + jqXHR.responseXML, true, errorThrown);
+    }
+  }
+  
   // Public API
   mymodule.hookListviewSearch = hookListviewSearch;
   mymodule.hookListviewEnter = hookListviewEnter;
@@ -1548,6 +1558,7 @@ var myplaceonline = function(mymodule) {
   mymodule.toMarkdown = mypToMarkdown;
   mymodule.toType = toType;
   mymodule.createUrl = createUrl;
+  mymodule.handleAjaxFailure = handleAjaxFailure;
   
   myplaceonline.onPageLoad(function() {
     if (typeof ZeroClipboard !== 'undefined') {
