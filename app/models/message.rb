@@ -1,11 +1,6 @@
 class Message < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
-  validates :body, presence: true
-  validates :long_body, presence: true
-  validates :message_category, presence: true
-  validates :send_preferences, presence: true
-
   child_properties(name: :message_contacts)
 
   child_properties(name: :message_groups)
@@ -33,11 +28,20 @@ class Message < ApplicationRecord
   validate do
     if !draft && message_contacts.length == 0 && message_groups.length == 0
       errors.add(:message_contacts, I18n.t("myplaceonline.permissions.requires_contacts"))
-    elsif !draft && self.send_emails? && self.subject.blank?
+    end
+    if !draft && self.send_emails? && self.subject.blank?
       errors.add(:subject, I18n.t("myplaceonline.messages.subject_required_for_email"))
+    end
+    if !draft && self.long_body.blank?
+      self.long_body = self.body
     end
   end
   
+  validates :body, presence: true
+  validates :long_body, presence: true
+  validates :message_category, presence: true
+  validates :send_preferences, presence: true
+
   def self.build(params = nil)
     result = self.dobuild(params)
     result.send_preferences = SEND_PREFERENCE_DEFAULT

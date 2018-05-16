@@ -1,5 +1,7 @@
 <% content_for :heading do -%><%= t("myplaceonline.text_messages.body") %><% end -%>
-<%= data_row(heading: t("myplaceonline.text_messages.body"), content: @obj.body, markdown: true, wrap: false, prefix_heading: true) %>
+<% if @obj.body != @obj.long_body %>
+  <%= data_row(heading: t("myplaceonline.text_messages.body"), content: @obj.body, markdown: true, wrap: false, prefix_heading: true) %>
+<% end %>
 <%= data_row(heading: t("myplaceonline.text_messages.long_body_shared"), content: @obj.long_body, markdown: true, wrap: false, prefix_heading: true) %>
 <%= data_row(heading: t("myplaceonline.text_messages.from"), content: @from, wrap: false, prefix_heading: true, htmlencode_content: false) %>
 <% if !@token.nil? %>
