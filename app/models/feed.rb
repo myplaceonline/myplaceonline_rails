@@ -103,7 +103,11 @@ class Feed < ApplicationRecord
         )
         
         if self.new_notify
+          
           markdown = new_feed_items.reverse.map{|x| "[#{x.display}](#{LinkCreator.url("feed_feed_item_read_and_redirect", x.feed, x)}) @ #{x.publication_date}" }.join("\n\n")
+          
+          markdown = "#{markdown}\n\n- - -\n\n#{I18n.t("myplaceonline.category.feeds").singularize}: [#{LinkCreator.url("feed", self)}](#{LinkCreator.url("feed", self)})\n\n#{I18n.t("myplaceonline.feeds.raw_feed").singularize}: [#{url}](#{url})"
+          
           body = Myp.markdown_to_html(markdown)
           body_plain = Myp.markdown_for_plain_email(markdown)
           User.current_user.current_identity.send_email(

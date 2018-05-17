@@ -174,6 +174,10 @@ class FeedsController < MyplaceonlineController
     result + super
   end
   
+  def before_show_view
+    true
+  end
+
   protected
     def additional_sorts
       [

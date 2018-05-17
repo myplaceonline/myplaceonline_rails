@@ -1015,6 +1015,7 @@ en:
       all_items: "All Items"
       new_notify: "Notify for New Items"
       notify_new_items_subject: "New Feed Items for %{name}"
+      raw_feed: "Raw Feed"
     feed_items:
       feed_title: "Title"
       feed_link: "Link"
