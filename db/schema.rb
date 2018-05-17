@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180517015040) do
+ActiveRecord::Schema.define(version: 20180517020417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6465,6 +6465,43 @@ ActiveRecord::Schema.define(version: 20180517015040) do
     t.index ["wallet_id"], name: "index_wallet_files_on_wallet_id"
   end
 
+  create_table "wallet_transaction_files", force: :cascade do |t|
+    t.bigint "wallet_transaction_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_wallet_transaction_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_wallet_transaction_files_on_identity_id"
+    t.index ["wallet_transaction_id"], name: "index_wallet_transaction_files_on_wallet_transaction_id"
+  end
+
+  create_table "wallet_transactions", force: :cascade do |t|
+    t.bigint "wallet_id"
+    t.decimal "transaction_amount", precision: 10, scale: 2
+    t.datetime "transaction_time"
+    t.string "short_description"
+    t.string "transaction_identifier"
+    t.bigint "contact_id"
+    t.integer "exchange_currency"
+    t.decimal "exchange_rate", precision: 10, scale: 2
+    t.decimal "fee", precision: 10, scale: 2
+    t.decimal "exchanged_amount", precision: 10, scale: 2
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contact_id"], name: "index_wallet_transactions_on_contact_id"
+    t.index ["identity_id"], name: "index_wallet_transactions_on_identity_id"
+    t.index ["wallet_id"], name: "index_wallet_transactions_on_wallet_id"
+  end
+
   create_table "wallets", force: :cascade do |t|
     t.string "wallet_name"
     t.integer "currency_type"
@@ -7662,6 +7699,12 @@ ActiveRecord::Schema.define(version: 20180517015040) do
   add_foreign_key "wallet_files", "identities"
   add_foreign_key "wallet_files", "identity_files"
   add_foreign_key "wallet_files", "wallets"
+  add_foreign_key "wallet_transaction_files", "identities"
+  add_foreign_key "wallet_transaction_files", "identity_files"
+  add_foreign_key "wallet_transaction_files", "wallet_transactions"
+  add_foreign_key "wallet_transactions", "contacts"
+  add_foreign_key "wallet_transactions", "identities"
+  add_foreign_key "wallet_transactions", "wallets"
   add_foreign_key "wallets", "identities"
   add_foreign_key "wallets", "passwords"
   add_foreign_key "warranties", "identities", name: "warranties_identity_id_fk"

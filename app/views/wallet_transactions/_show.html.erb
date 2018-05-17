@@ -1,0 +1,11 @@
+<%= data_row(heading: t("myplaceonline.wallet_transactions.transaction_amount"), content: obj.transaction_amount) %>
+<%= data_row(heading: t("myplaceonline.wallet_transactions.transaction_time"), content: obj.transaction_time) %>
+<%= data_row(heading: t("myplaceonline.wallet_transactions.short_description"), content: obj.short_description) %>
+<%= data_row(heading: t("myplaceonline.wallet_transactions.transaction_identifier"), content: obj.transaction_identifier) %>
+<%= data_row(heading: t("myplaceonline.wallet_transactions.exchange_currency"), content: obj.exchange_currency, enumeration: Wallet::CURRENCY_TYPES) %>
+<%= data_row(heading: t("myplaceonline.wallet_transactions.exchange_rate"), content: obj.exchange_rate) %>
+<%= data_row(heading: t("myplaceonline.wallet_transactions.fee"), content: obj.fee) %>
+<%= data_row(heading: t("myplaceonline.wallet_transactions.exchanged_amount"), content: obj.exchanged_amount) %>
+<%= data_row(heading: t("myplaceonline.wallet_transactions.contact"), content: obj.contact) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.wallet_transaction_files) %>

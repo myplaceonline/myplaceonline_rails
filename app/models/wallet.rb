@@ -10,6 +10,7 @@ class Wallet < ApplicationRecord
       { name: :currency_type, type: ApplicationRecord::PROPERTY_TYPE_SELECT },
       { name: :password, type: ApplicationRecord::PROPERTY_TYPE_CHILD },
       { name: :wallet_files, type: ApplicationRecord::PROPERTY_TYPE_FILES },
+      { name: :wallet_transactions, type: ApplicationRecord::PROPERTY_TYPE_CHILDREN },
     ]
   end
 
@@ -48,9 +49,20 @@ class Wallet < ApplicationRecord
 
   child_property(name: :password)
   
+  child_properties(name: :wallet_transactions, sort: "created_at DESC")
+
   def self.build(params = nil)
     result = self.dobuild(params)
     result.balance = 0
     result
+  end
+  
+  def update_balance
+    total = 0
+    self.wallet_transactions.each do |wt|
+      total = total + wt.transaction_amount
+    end
+    self.balance = total
+    self.save!
   end
 end

@@ -12,8 +12,18 @@ class WalletsController < MyplaceonlineController
   end
 
   def footer_items_show
-    result = super
-    result
+    result = []
+
+    if !MyplaceonlineExecutionContext.offline?
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.wallets.transactions"),
+      link: wallet_wallet_transactions_path(@obj),
+      icon: "bars"
+    }
+    
+    result + super
   end
   
   protected
@@ -43,6 +53,7 @@ class WalletsController < MyplaceonlineController
         :currency_type,
         wallet_files_attributes: FilesController.multi_param_names,
         password_attributes: PasswordsController.param_names,
+        wallet_transactions_attributes: WalletTransaction.params,
       )
     end
 end

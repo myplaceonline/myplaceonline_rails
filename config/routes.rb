@@ -83,6 +83,7 @@ end
 
 Rails.application.routes.draw do
   
+  resources :wallet_transactions
   Rails.logger.debug{"routes.rb Started loading routes"}
   
   root "welcome#index"
@@ -528,6 +529,12 @@ Rails.application.routes.draw do
         subresources: true,
         name: :vehicle_services
       }
+    ],
+    wallets: [
+      {
+        subresources: true,
+        name: :wallet_transactions
+      },
     ],
     website_domains: [
       { instance: true, link: "update_myplets" },

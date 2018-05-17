@@ -1,0 +1,112 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :transaction_amount,
+    value: obj.transaction_amount,
+    placeholder: "myplaceonline.wallet_transactions.transaction_amount",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATETIME,
+    name: :transaction_time,
+    value: obj.transaction_time,
+    placeholder: "myplaceonline.wallet_transactions.transaction_time"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :short_description,
+    value: obj.short_description,
+    placeholder: "myplaceonline.wallet_transactions.short_description"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :transaction_identifier,
+    value: obj.transaction_identifier,
+    placeholder: "myplaceonline.wallet_transactions.transaction_identifier"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_SELECT,
+    name: :exchange_currency,
+    value: obj.exchange_currency,
+    placeholder: "myplaceonline.wallet_transactions.exchange_currency",
+    select_options: Wallet::CURRENCY_TYPES,
+    select_options_sort: false,
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :exchange_rate,
+    value: obj.exchange_rate,
+    placeholder: "myplaceonline.wallet_transactions.exchange_rate"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :fee,
+    value: obj.fee,
+    placeholder: "myplaceonline.wallet_transactions.fee",
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :exchanged_amount,
+    value: obj.exchanged_amount,
+    placeholder: "myplaceonline.wallet_transactions.exchanged_amount",
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: I18n.t("myplaceonline.category.wallet_transactions").singularize,
+  )
+%>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :contact,
+    existingobj: obj.contact,
+    heading: t("myplaceonline.wallet_transactions.contact"),
+    objform: "contacts/form",
+    existingobjurl: "contact_path",
+    searchurl: "/contacts.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :wallet_transaction_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>

@@ -277,6 +277,7 @@ en:
       exports: "Exports"
       apartment_leases: "Apartment Leases"
       wallets: "Wallets"
+      wallet_transactions: "Transactions"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -4122,6 +4123,7 @@ en:
       currency_type: "Currency"
       balance: "Balance"
       password: "Password"
+      transactions: "Transactions"
       currency_types:
         us_dollars: "U.S. Dollars ($)"
         euros: "Euros (€)"
@@ -4133,3 +4135,14 @@ en:
         bitcoin: "Bitcoin (₿)"
         ethereum: "Ethereum (ETH)"
         bitcoin_cash: "Bitcoin Cash (BCH)"
+    wallet_transactions:
+      wallet: "Wallet"
+      transaction_amount: "Amount"
+      transaction_time: "Time"
+      short_description: "Short Description"
+      transaction_identifier: "Transaction Identifier"
+      contact: "Contact"
+      exchange_currency: "Exchange Currency"
+      exchange_rate: "Exchange Rate"
+      fee: "Fee"
+      exchanged_amount: "Exchanged Amount"
