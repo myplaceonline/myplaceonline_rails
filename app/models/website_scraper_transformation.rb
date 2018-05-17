@@ -38,6 +38,8 @@ class WebsiteScraperTransformation < ApplicationRecord
   end
   
   def execute_transform(str)
+    Rails.logger.debug{"WebsiteScraperTransformation.execute_transform Incoming type: #{self.transformation_type}, str: #{str}"}
+
     case self.transformation_type
     when WebsiteScraperTransformation::TRANSFORMATION_EXTRACT1
       r = Regexp.new(self.transformation, Regexp::EXTENDED | Regexp::MULTILINE)
@@ -65,6 +67,9 @@ class WebsiteScraperTransformation < ApplicationRecord
     else
       raise "TODO"
     end
+
+    Rails.logger.debug{"WebsiteScraperTransformation.execute_transform Outgoing str: #{str}"}
+
     str
   end
 end
