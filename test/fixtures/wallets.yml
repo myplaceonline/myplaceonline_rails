@@ -1,0 +1,4 @@
+wallet:
+  identity: identity
+  wallet_name: Test
+  balance: 0

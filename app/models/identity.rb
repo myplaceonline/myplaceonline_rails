@@ -303,6 +303,7 @@ class Identity < ApplicationRecord
   has_many :food_lists, :dependent => :destroy
   has_many :security_tokens, :dependent => :destroy
   has_many :exports, :dependent => :destroy
+  has_many :wallets, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 

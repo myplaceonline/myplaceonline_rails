@@ -1,0 +1,6 @@
+<%= data_row(heading: t("myplaceonline.wallets.wallet_name"), content: obj.wallet_name) %>
+<%= data_row(heading: t("myplaceonline.wallets.balance"), content: obj.balance) %>
+<%= data_row(heading: t("myplaceonline.wallets.currency_type"), content: obj.currency_type, enumeration: Wallet::CURRENCY_TYPES) %>
+<%= data_row(heading: t("myplaceonline.wallets.password"), content: obj.password) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.wallet_files) %>

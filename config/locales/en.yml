@@ -276,6 +276,7 @@ en:
       security_tokens: "Security Tokens"
       exports: "Exports"
       apartment_leases: "Apartment Leases"
+      wallets: "Wallets"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -4116,3 +4117,19 @@ en:
         tar_gz: ".tar.gz"
       encrypt_output: "Encrypt"
       finished_subject: "Export Finished"
+    wallets:
+      wallet_name: "Wallet Name"
+      currency_type: "Currency"
+      balance: "Balance"
+      password: "Password"
+      currency_types:
+        us_dollars: "U.S. Dollars ($)"
+        euros: "Euros (€)"
+        pounds: "Pounds (£)"
+        yen: "Yen (¥)"
+        canadian_dollars: "Canadian Dollars (C$)"
+        renminbi: "Renminbi (元)"
+        francs: "Francs (Fr)"
+        bitcoin: "Bitcoin (₿)"
+        ethereum: "Ethereum (ETH)"
+        bitcoin_cash: "Bitcoin Cash (BCH)"

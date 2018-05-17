@@ -1,0 +1,67 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :wallet_name,
+    value: obj.wallet_name,
+    placeholder: "myplaceonline.wallets.wallet_name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :balance,
+    value: obj.balance,
+    placeholder: "myplaceonline.wallets.balance"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_SELECT,
+    name: :currency_type,
+    value: obj.currency_type,
+    placeholder: "myplaceonline.wallets.currency_type",
+    select_options: Wallet::CURRENCY_TYPES,
+    select_options_sort: false,
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :password,
+    existingobj: obj.password,
+    heading: t("myplaceonline.wallets.password"),
+    objform: "passwords/form",
+    existingobjurl: "password_path",
+    searchurl: "/passwords.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :wallet_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>

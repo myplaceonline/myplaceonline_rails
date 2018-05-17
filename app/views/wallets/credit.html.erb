@@ -1,0 +1,24 @@
+<% content_for :heading do -%><%= t("myplaceonline.test_objects.instance_page") %><% end -%>
+
+<h1><%= t("myplaceonline.test_objects.instance_page") %></h1>
+
+<%= flashes! %>
+
+<%= data_row(heading: t("myplaceonline.test_objects.details"), prefix_heading: true, content: @details, wrap: false) %>
+
+<%= form_tag(test_object_instance_page_path(@obj), method: :post) do %>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.general.update"), "data-icon" => "action", "data-iconpos" => "top", style: "background-color: green")
+        },
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: controller.obj_path,
+          icon: "back"
+        },
+      ]
+    })
+  %>
+<% end %>
