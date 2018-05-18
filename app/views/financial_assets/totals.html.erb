@@ -7,6 +7,7 @@
 <%= data_row(heading: t("myplaceonline.financial_assets.totals"), prefix_heading: true, content: @total, wrap: false) %>
 
 <% if @breakdown.count > 0 %>
+  <hr />
   <ul>
   <% @breakdown.each do |key, value| %>
     <li>
