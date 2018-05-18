@@ -5,7 +5,8 @@ class CalendarItemReminderPendingsController < MyplaceonlineController
   def complete
     set_obj
     ApplicationRecord.transaction do
-      @obj.calendar_item_reminder.destroy!
+      @obj.archive!
+      #@obj.calendar_item_reminder.destroy!
     end
     render json: {
       result: true

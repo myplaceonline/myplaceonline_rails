@@ -294,12 +294,12 @@ class CalendarItemReminder < ApplicationRecord
           
           if is_expired
             
-            if calendar_item_reminder.calendar_item_reminder_pendings.count > 0
-              Rails.logger.debug{"CalendarItemReminder.ensure_pending_process reminder expired, deleting #{calendar_item_reminder.calendar_item_reminder_pendings.count} pendings"}
+            if calendar_item_reminder.calendar_item_reminder_pendings_unarchived.count > 0
+              Rails.logger.debug{"CalendarItemReminder.ensure_pending_process reminder expired, deleting #{calendar_item_reminder.calendar_item_reminder_pendings_unarchived.count} pendings"}
             end
             
-            calendar_item_reminder.calendar_item_reminder_pendings.each do |calendar_item_reminder_pending|
-              calendar_item_reminder_pending.destroy!
+            calendar_item_reminder.calendar_item_reminder_pendings_unarchived.each do |calendar_item_reminder_pending|
+              calendar_item_reminder_pending.archive!
             end
             
             # The model might want a callback on expiration
@@ -446,5 +446,9 @@ class CalendarItemReminder < ApplicationRecord
   
   def threshold
     self.calendar_item.calendar_item_time - self.threshold_in_seconds.seconds
+  end
+  
+  def calendar_item_reminder_pendings_unarchived
+    self.calendar_item_reminder_pendings.to_a.delete_if{|x| x.archived?}
   end
 end

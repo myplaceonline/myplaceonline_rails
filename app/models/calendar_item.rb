@@ -200,7 +200,7 @@ class CalendarItem < ApplicationRecord
     ).order("calendar_item_time ASC")
     
     if with_pending
-      result = result.to_a.delete_if{|x| x.calendar_item_reminders.map{|y| y.calendar_item_reminder_pendings.count }.reduce{|z1, z2| z1+z2 } == 0 }
+      result = result.to_a.delete_if{|x| x.calendar_item_reminders.map{|y| y.calendar_item_reminder_pendings_unarchived.count }.reduce{|z1, z2| z1+z2 } == 0 }
     end
     
     result

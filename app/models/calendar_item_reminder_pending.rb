@@ -24,6 +24,7 @@ class CalendarItemReminderPending < ApplicationRecord
         x.calendar_item.calendar_item_time <=> y.calendar_item.calendar_item_time
       end
     end
+    items = items.delete_if{|x| x.archived?}
     items
   end
 
