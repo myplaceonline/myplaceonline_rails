@@ -62,6 +62,8 @@ class Event < ApplicationRecord
               reminder_threshold_amount: (calendar.event_threshold_seconds || DEFAULT_EVENT_THRESHOLD_SECONDS),
               reminder_threshold_type: Calendar::DEFAULT_REMINDER_TYPE,
               model_id: id,
+              expire_amount: 1.days.seconds.to_i,
+              expire_type: Calendar::DEFAULT_REMINDER_TYPE,
             )
           end
         end

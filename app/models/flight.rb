@@ -64,6 +64,8 @@ class Flight < ApplicationRecord
             calendar_item_time: self.flight_start_date,
             reminder_threshold_amount: self.earliest_checkin_time.seconds,
             reminder_threshold_type: Calendar::DEFAULT_REMINDER_TYPE,
+            expire_amount: 1.days.seconds.to_i,
+            expire_type: Calendar::DEFAULT_REMINDER_TYPE,
           )
         end
       end
