@@ -6,4 +6,7 @@
 <%= attribute_table_row_boolean(t("myplaceonline.permissions.action_create"), obj.actionbit4) %>
 <%= attribute_table_row_boolean(t("myplaceonline.permissions.action_update"), obj.actionbit8) %>
 <%= attribute_table_row_boolean(t("myplaceonline.permissions.action_destroy"), obj.actionbit16) %>
-<%= attribute_table_row_url(t("myplaceonline.permissions.link"), obj.path) %>
+<% if !MyplaceonlineExecutionContext.offline? %>
+  <%= attribute_table_row_url(t("myplaceonline.permissions.link"), obj.path) %>
+<% end %>
+
