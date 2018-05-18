@@ -25,8 +25,19 @@ class FinancialAssetsController < MyplaceonlineController
   
   def totals
     total = 0
-    all.each do |asset|
+    @breakdown = {}
+    self.all.order("asset_location ASC").each do |asset|
       total = total + asset.asset_value
+      loc = asset.asset_location
+      if loc.blank?
+        loc = ""
+      end
+      items = @breakdown[loc]
+      if items.nil?
+        items = []
+      end
+      items << asset
+      @breakdown[loc] = items
     end
     @total = Myp.decimal_to_s(value: total)
   end

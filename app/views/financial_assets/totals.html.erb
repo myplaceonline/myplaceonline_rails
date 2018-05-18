@@ -6,6 +6,21 @@
 
 <%= data_row(heading: t("myplaceonline.financial_assets.totals"), prefix_heading: true, content: @total, wrap: false) %>
 
+<% if @breakdown.count > 0 %>
+  <ul>
+  <% @breakdown.each do |key, value| %>
+    <li>
+      <%= key %><br />
+      <ul>
+        <% value.each do |asset| %>
+          <li><%= asset.asset_name %> = <%= asset.asset_value %></li>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
+  </ul>
+<% end %>
+
 <%=
   render(partial: "shared/footer", locals: {
     items: [
