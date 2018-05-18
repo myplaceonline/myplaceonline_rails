@@ -51,9 +51,9 @@ class WebsiteScraperTransformation < ApplicationRecord
       
       matches = matches.map do |match|
         
-        Rails.logger.info{"WebsiteScraperTransformation.execute_transform match: #{match.inspect}"}
+        Rails.logger.debug{"WebsiteScraperTransformation.execute_transform match: #{match}"}
         
-        named_captures = match.named_captures
+        named_captures = Myp.get_named_captures(match)
         
         item = "\n<item>\n"
         

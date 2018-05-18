@@ -3508,5 +3508,14 @@ module Myp
     result
   end
   
+  def self.get_named_captures(match_data)
+    # The named_captures method is only available in Ruby 2.4
+    result = {}
+    match_data.names.each do |name|
+      result[name] = match_data[name]
+    end
+    result
+  end
+  
   Rails.logger.info{"Myp static initialization ended"}
 end
