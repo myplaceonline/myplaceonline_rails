@@ -1685,7 +1685,7 @@ module Myp
     }.to_a.map{|kv| "#{kv[0]}: #{kv[1]}"}.join("\n\t")
   end
   
-  def self.handle_exception(exception, email = nil, request = nil, subject = "User Exception")
+  def self.handle_exception(exception, email = nil, request = nil, subject = "User Exception", additional_details: nil)
     body_plain = ""
     body_html = ""
     
@@ -1703,6 +1703,11 @@ module Myp
       error_details = Myp.error_details(exception)
       body_plain += "\n\n" + error_details
       body_html += "\n\n<p>" + CGI::escapeHTML(error_details).gsub(/\n/, "<br />\n").gsub(/\t/, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;") + "</p>"
+    end
+    
+    if !additional_details.blank?
+      body_plain += "\n\nAdditional Details: " + additional_details
+      body_html += "\n\n<p>Additional Details: " + CGI::escapeHTML(additional_details).gsub(/\n/, "<br />\n") + "</p>"
     end
     
     Rails.logger.warn{"handle_exception: " + body_plain}

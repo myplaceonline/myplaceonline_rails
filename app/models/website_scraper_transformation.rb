@@ -38,28 +38,70 @@ class WebsiteScraperTransformation < ApplicationRecord
   end
   
   def execute_transform(str)
-    Rails.logger.debug{"WebsiteScraperTransformation.execute_transform Incoming type: #{self.transformation_type}, str: #{str}"}
+    #Rails.logger.debug{"WebsiteScraperTransformation.execute_transform Incoming type: #{self.transformation_type}, str: #{str}"}
 
     case self.transformation_type
     when WebsiteScraperTransformation::TRANSFORMATION_EXTRACT1
       r = Regexp.new(self.transformation, Regexp::EXTENDED | Regexp::MULTILINE)
-      Rails.logger.debug{"WebsiteScraperTransformation.execute_transform regex: #{r}"}
+      
+      #Rails.logger.debug{"WebsiteScraperTransformation.execute_transform regex: #{r}"}
+      
+      # Return all matches by calling String.scan and the applying the map to each match
       matches = str.to_enum(:scan, r).map { Regexp.last_match }
+      
       matches = matches.map do |match|
+        
         #Rails.logger.debug{"WebsiteScraperTransformation.execute_transform match: #{match}"}
-        link = match[:link]
-        title = match[:title]
-        dateyyyymmdd = match[:dateyyyymmdd]
-        date = Date.strptime(dateyyyymmdd, "%Y/%m/%d")
-%{
-<item>
-  <title>#{title}</title>
-  <link>#{link}</link>
-  <pubDate>#{date.rfc822}</pubDate>
-</item>
-}
+        
+        named_captures = match.named_captures
+        
+        item = "\n<item>\n"
+        
+        foundlink = false
+        
+        begin
+          title = named_captures["title"]
+          if !title.blank?
+            item << "  <title>#{title.strip}</title>\n"
+          end
+          
+          link = named_captures["link"]
+          if !link.blank?
+            item << "  <link>#{link.strip}</link>\n"
+            foundlink = true
+          end
+          
+          dtstr = named_captures["dateyyyymmdd"]
+          if !dtstr.blank?
+            date = Date.strptime(dtstr.strip, "%Y/%m/%d")
+            item << "  <pubDate>#{date.rfc822}</pubDate>\n"
+          end
+          
+          dtstr = named_captures["datedaymdatt"]
+          if !dtstr.blank?
+            date = DateTime.strptime(dtstr.strip, "%A, %B %d at %I:%M %p")
+            item << "  <pubDate>#{date.rfc822}</pubDate>\n"
+          end
+        rescue Exception => e
+          item << "  <title>Error processing transformation</title>\n"
+          Myp.handle_exception(e, additional_details: named_captures.to_s)
+        end
+        
+        if !foundlink
+          item << "  <link>#{self.website_scraper.website_url}</link>\n"
+        end
+        
+        item << "</item>"
+
+        #Rails.logger.debug{"WebsiteScraperTransformation.execute_transform item: #{item}"}
+        
+        item
       end
-      str = matches.join("\n")
+      
+      #Rails.logger.debug{"WebsiteScraperTransformation.execute_transform found #{matches.length} matches: #{matches}"}
+      
+      str = matches.join("\n") + "\n"
+      
     when WebsiteScraperTransformation::TRANSFORMATION_PREPEND
       str = self.transformation + str
     when WebsiteScraperTransformation::TRANSFORMATION_APPEND
@@ -68,7 +110,7 @@ class WebsiteScraperTransformation < ApplicationRecord
       raise "TODO"
     end
 
-    Rails.logger.debug{"WebsiteScraperTransformation.execute_transform Outgoing str: #{str}"}
+    #Rails.logger.debug{"WebsiteScraperTransformation.execute_transform Outgoing str: #{str}"}
 
     str
   end
