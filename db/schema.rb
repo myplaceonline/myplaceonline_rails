@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180517232215) do
+ActiveRecord::Schema.define(version: 20180518154718) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2290,6 +2290,35 @@ ActiveRecord::Schema.define(version: 20180517232215) do
     t.string "style", limit: 255
     t.binary "file_contents"
     t.integer "visit_count"
+  end
+
+  create_table "financial_asset_files", force: :cascade do |t|
+    t.bigint "financial_asset_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["financial_asset_id"], name: "index_financial_asset_files_on_financial_asset_id"
+    t.index ["identity_file_id"], name: "index_financial_asset_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_financial_asset_files_on_identity_id"
+  end
+
+  create_table "financial_assets", force: :cascade do |t|
+    t.string "asset_name"
+    t.decimal "asset_value", precision: 10, scale: 2
+    t.string "asset_location"
+    t.datetime "asset_received"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_financial_assets_on_identity_id"
   end
 
   create_table "flight_legs", id: :serial, force: :cascade do |t|
@@ -7144,6 +7173,10 @@ ActiveRecord::Schema.define(version: 20180517232215) do
   add_foreign_key "feed_items", "identities"
   add_foreign_key "feed_load_statuses", "identities"
   add_foreign_key "feeds", "identities", name: "feeds_identity_id_fk"
+  add_foreign_key "financial_asset_files", "financial_assets"
+  add_foreign_key "financial_asset_files", "identities"
+  add_foreign_key "financial_asset_files", "identity_files"
+  add_foreign_key "financial_assets", "identities"
   add_foreign_key "flight_legs", "companies", column: "flight_company_id"
   add_foreign_key "flight_legs", "flights"
   add_foreign_key "flight_legs", "identities"

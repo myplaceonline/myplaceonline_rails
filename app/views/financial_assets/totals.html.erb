@@ -1,0 +1,19 @@
+<% content_for :heading do -%><%= t("myplaceonline.financial_assets.totals") %><% end -%>
+
+<h1><%= t("myplaceonline.financial_assets.totals") %></h1>
+
+<%= flashes! %>
+
+<%= data_row(heading: t("myplaceonline.financial_assets.totals"), prefix_heading: true, content: @total, wrap: false) %>
+
+<%=
+  render(partial: "shared/footer", locals: {
+    items: [
+      {
+        title: I18n.t("myplaceonline.general.back"),
+        link: controller.index_path,
+        icon: "back"
+      },
+    ]
+  })
+%>
