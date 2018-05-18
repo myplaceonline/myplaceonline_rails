@@ -75,7 +75,7 @@ class WebsiteScraperTransformation < ApplicationRecord
             else
               uniqueLink << "?"
             end
-            uniqueLink << "muuid=#{title.hash}"
+            uniqueLink << "muuid=#{Digest::SHA1.hexdigest(title)}"
             item << "  <link>#{uniqueLink}</link>\n"
           end
           
