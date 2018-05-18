@@ -13,4 +13,18 @@ class Loan < ApplicationRecord
       :monthly_payment,
     ]
   end
+
+  def final_search_result
+    result = nil
+    result = VehicleLoan.where(loan_id: self.id).take
+    if !result.nil?
+      result = result.vehicle
+    else
+      result = RecreationalVehicleLoan.where(loan_id: self.id).take
+      if !result.nil?
+        result = result.recreational_vehicle
+      end
+    end
+    result
+  end
 end
