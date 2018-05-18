@@ -216,20 +216,36 @@ class Location < ApplicationRecord
   end
   
   def map_url(prefer_human_readable: false)
-    result = self.map_link_component(prefer_human_readable: prefer_human_readable)
+    result = self.map_link_component(prefer_human_readable: prefer_human_readable, latlong_include_place: true, handle_encoding: true)
     if !result.blank?
-      result = "https://www.google.com/maps/place/" + ERB::Util.url_encode(result)
+      result = "https://www.google.com/maps/place/" + result
     end
     result
   end
   
-  def map_link_component(prefer_human_readable: false)
+  # zoom_level: https://developers.google.com/maps/documentation/javascript/tutorial#zoom-levels
+  def map_link_component(prefer_human_readable: false, latlong_include_place: false, zoom_level: 17, handle_encoding: false)
     if !latitude.blank? && !longitude.blank? && (!prefer_human_readable || self.address1.blank?)
       result = latitude.to_s + "," + longitude.to_s
+      if latlong_include_place
+        one_liner = address_one_line(false, address_details: false)
+        if !one_liner.blank?
+          if handle_encoding
+            result = "#{ERB::Util.url_encode(one_liner)}/@#{result},#{zoom_level}z"
+            handle_encoding = false
+          else
+            result = "#{one_liner}/@#{result},#{zoom_level}z"
+          end
+        end
+      end
     else
       # The Google Maps "/place/" link doesn't like addresses with a human name in front
       result = address_one_line(false, address_details: false)
     end
+    if handle_encoding
+      result = ERB::Util.url_encode(result)
+    end
+    result
   end
   
   def map_directions_url(source_location: nil, destination_location: nil)
@@ -288,32 +304,37 @@ class Location < ApplicationRecord
     if self.time_from_home.nil? && self.current_user_owns?
       location = User.current_user.current_identity.primary_location
       if !location.nil?
-        client = GoogleClient.new(key: ENV["GOOGLE_MAPS_API_SERVER_KEY"], response_format: :json, read_timeout: 5)
-        # https://developers.google.com/maps/documentation/directions/intro
-        directions = Directions.new(client)
-
-        Rails.logger.debug{"Directions Origin: #{location.map_link_component}, Destination: #{self.map_link_component}"}
-
-        result = directions.query(
-          origin: location.map_link_component,
-          destination: self.map_link_component,
-          mode: "driving",
-          departure_time: Time.now,
-          alternatives: false
-        )
-
-        Rails.logger.debug{"Directions Result: #{Myp.debug_print(result)}"}
         
-        if result.length > 0
-          # "For routes that contain no waypoints, the route will consist of a single "leg,""
-          # https://developers.google.com/maps/documentation/directions/intro#Legs
-          duration = result[0]["legs"][0]["duration_in_traffic"]
-          if duration.nil?
-            duration = result[0]["legs"][0]["duration"]
+        mlc = location.map_link_component
+        
+        if !mlc.blank?
+          client = GoogleClient.new(key: ENV["GOOGLE_MAPS_API_SERVER_KEY"], response_format: :json, read_timeout: 5)
+          # https://developers.google.com/maps/documentation/directions/intro
+          directions = Directions.new(client)
+
+          Rails.logger.debug{"Directions Origin: #{mlc}, Destination: #{self.map_link_component}"}
+
+          result = directions.query(
+            origin: mlc,
+            destination: self.map_link_component,
+            mode: "driving",
+            departure_time: Time.now,
+            alternatives: false
+          )
+
+          Rails.logger.debug{"Directions Result: #{Myp.debug_print(result)}"}
+          
+          if result.length > 0
+            # "For routes that contain no waypoints, the route will consist of a single "leg,""
+            # https://developers.google.com/maps/documentation/directions/intro#Legs
+            duration = result[0]["legs"][0]["duration_in_traffic"]
+            if duration.nil?
+              duration = result[0]["legs"][0]["duration"]
+            end
+            # value indicates the duration in seconds.
+            self.time_from_home = duration["value"]
+            self.save!
           end
-          # value indicates the duration in seconds.
-          self.time_from_home = duration["value"]
-          self.save!
         end
       end
     end

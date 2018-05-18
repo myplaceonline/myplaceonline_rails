@@ -2624,6 +2624,7 @@ module Myp
         "phone_number = ? and category is null and identity_id is null",
         TextMessage.normalize(phone_number: to)
       ).first.nil?
+        sleep(1.0)
         @@twilio_client.messages.create(
           from: from,
           to: to,
