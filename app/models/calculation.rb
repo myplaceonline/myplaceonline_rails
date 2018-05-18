@@ -38,7 +38,11 @@ class Calculation < ApplicationRecord
   
   def evaluate
     if !calculation_form.nil?
-      create_cal.evaluate(calculation_form.equation).to_s
+      begin
+        create_cal.evaluate(calculation_form.equation).to_s
+      rescue Dentaku::ParseError => e
+        "Error: #{e}"
+      end
     else
       nil
     end
