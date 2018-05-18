@@ -51,7 +51,7 @@ class WebsiteScraperTransformation < ApplicationRecord
       
       matches = matches.map do |match|
         
-        Rails.logger.debug{"WebsiteScraperTransformation.execute_transform match: #{match}"}
+        Rails.logger.info{"WebsiteScraperTransformation.execute_transform match: #{match.inspect}"}
         
         named_captures = match.named_captures
         

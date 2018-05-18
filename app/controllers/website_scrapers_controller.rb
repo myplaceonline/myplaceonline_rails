@@ -52,7 +52,8 @@ class WebsiteScrapersController < MyplaceonlineController
           @raw_response = @raw_response.gsub(/\n/, "\n<br />")
         end
       rescue => e
-        flash[:error] = t("myplaceonline.website_scrapers.scrape_error", message: e.to_s)
+        @raw_response = t("myplaceonline.website_scrapers.scrape_error", message: e.to_s)
+        Myp.handle_exception(e)
       end
     end
     
