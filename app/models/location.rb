@@ -65,6 +65,7 @@ class Location < ApplicationRecord
     result = Myp.appendstr(result, address1, ", ")
     result = Myp.appendstr(result, sub_region2, ", ")
     result = Myp.appendstr(result, sub_region1, ", ")
+    result = Myp.appendstr(result, postal_code, " ")
     # If all we have is a region but we have lat/long,
     # then use that and assume the region is indeterminate
     if result.blank? && address2.blank? && address3.blank? && !latitude.blank? && !longitude.blank?
