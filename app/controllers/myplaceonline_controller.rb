@@ -36,8 +36,8 @@ class MyplaceonlineController < ApplicationController
     @myplet = params[:myplet]
     @archived = param_bool(:archived)
 
-    if has_category && params[:myplet].nil? && !current_user.guest?
-      Myp.visit(current_user, category_name)
+    if has_category && params[:myplet].nil? && !User.current_user.guest?
+      Myp.visit(User.current_user, category_name)
     end
     
     @offset = items_offset
@@ -118,8 +118,8 @@ class MyplaceonlineController < ApplicationController
   def items_per_page
     if params[PARAM_PER_PAGE].nil?
       result = default_items_per_page
-      if !current_user.items_per_page.nil?
-        result = current_user.items_per_page.to_i
+      if !User.current_user.items_per_page.nil?
+        result = User.current_user.items_per_page.to_i
       end
       
       if MyplaceonlineExecutionContext.offline?
@@ -329,7 +329,7 @@ class MyplaceonlineController < ApplicationController
             end
           end
           if has_category
-            Myp.add_point(current_user, category_name, session)
+            Myp.add_point(User.current_user, category_name, session)
           end
           after_create_result = after_create
           if !after_create_result.nil?
@@ -422,14 +422,14 @@ class MyplaceonlineController < ApplicationController
   end
   
   def after_create_redirect
-    Rails.logger.debug{"after_create_redirect after_new_item: #{current_user.after_new_item}"}
+    Rails.logger.debug{"after_create_redirect after_new_item: #{User.current_user.after_new_item}"}
     respond_to do |format|
       format.html {
-        if current_user.after_new_item.nil? || current_user.after_new_item == Myp::AFTER_NEW_ITEM_SHOW_ITEM
+        if User.current_user.after_new_item.nil? || User.current_user.after_new_item == Myp::AFTER_NEW_ITEM_SHOW_ITEM
           redirect_to_obj
-        elsif current_user.after_new_item == Myp::AFTER_NEW_ITEM_SHOW_LIST
+        elsif User.current_user.after_new_item == Myp::AFTER_NEW_ITEM_SHOW_LIST
           redirect_to index_path
-        elsif current_user.after_new_item == Myp::AFTER_NEW_ITEM_ANOTHER_ITEM
+        elsif User.current_user.after_new_item == Myp::AFTER_NEW_ITEM_ANOTHER_ITEM
           redirect_to new_path
         else
           raise "TODO"
@@ -460,7 +460,7 @@ class MyplaceonlineController < ApplicationController
     ApplicationRecord.transaction do
       obj_to_destroy.destroy
       if has_category
-        Myp.subtract_point(current_user, category_name, session)
+        Myp.subtract_point(User.current_user, category_name, session)
       end
     end
 
@@ -477,7 +477,7 @@ class MyplaceonlineController < ApplicationController
         authorize! :destroy, obj
         obj.destroy
         if has_category
-          Myp.subtract_point(current_user, category_name, session)
+          Myp.subtract_point(User.current_user, category_name, session)
         end
       end
     end
@@ -763,7 +763,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def show_created_updated
-    current_user.show_timestamps
+    User.current_user.show_timestamps
   end
   
   def form_path
@@ -807,7 +807,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def search_public?
-    current_user.guest?
+    User.current_user.guest?
   end
   
   def share_permissions
@@ -838,7 +838,7 @@ class MyplaceonlineController < ApplicationController
     result << [I18n.t("myplaceonline.general.created_at"), "#{model.table_name}.created_at"]
     result << [I18n.t("myplaceonline.general.updated_at"), "#{model.table_name}.updated_at"]
     
-    if !current_user.guest?
+    if !User.current_user.guest?
       result << [I18n.t("myplaceonline.general.visit_count"), "#{model.table_name}.visit_count"]
     end
 
@@ -935,7 +935,7 @@ class MyplaceonlineController < ApplicationController
         icon: "delete"
       }
     end
-    if self.index_settings_link? && !current_user.guest?
+    if self.index_settings_link? && !User.current_user.guest?
       result << {
         title: I18n.t("myplaceonline.general.settings"),
         link: self.settings_path,
@@ -1075,7 +1075,7 @@ class MyplaceonlineController < ApplicationController
     if request.post?
       
       target_identity_id = params["target_identity_id"].to_i
-      target_identity = current_user.domain_identities.find{|x| x.id == target_identity_id}
+      target_identity = User.current_user.domain_identities.find{|x| x.id == target_identity_id}
       if !target_identity.nil?
         @obj.update_column(:identity_id, target_identity_id)
         redirect_to(
@@ -1150,7 +1150,7 @@ class MyplaceonlineController < ApplicationController
   def index_filters
     result = []
     
-    if !current_user.guest?
+    if !User.current_user.guest?
       result << {
         :name => :archived,
         :display => "myplaceonline.general.archived"
@@ -1402,17 +1402,21 @@ class MyplaceonlineController < ApplicationController
     I18n.t("myplaceonline.category." + self.category_name)
   end
   
+  def all_items
+    self.all
+  end
+  
   protected
   
     def deny_guest
-      if current_user.guest?
+      if User.current_user.guest?
         Rails.logger.debug{"Denying guest access"}
         raise CanCan::AccessDenied
       end
     end
     
     def deny_nonadmin
-      if !current_user.admin?
+      if !User.current_user.admin?
         raise CanCan::AccessDenied
       end
     end
@@ -1448,7 +1452,7 @@ class MyplaceonlineController < ApplicationController
     end
     
     def before_all_actions
-      if requires_admin && !current_user.admin?
+      if requires_admin && !User.current_user.admin?
         raise CanCan::AccessDenied
       end
     end
@@ -1524,7 +1528,7 @@ class MyplaceonlineController < ApplicationController
     def find_explicit_items
       Permission.where(
         "user_id = ? and subject_class = ? and (action & #{Permission::ACTION_MANAGE} != 0 or action & #{Permission::ACTION_READ} != 0)",
-        current_user.id,
+        User.current_user.id,
         category_name
       ).to_a.map{|p| p.subject_id}
     end
@@ -1553,16 +1557,16 @@ class MyplaceonlineController < ApplicationController
     end
     
     def context_value
-      current_user.current_identity.id
+      User.current_user.current_identity.id
     end
     
     def perform_all(initial_or:, additional:)
-      if current_user.guest?
+      if User.current_user.guest?
         model.includes(all_includes).joins(all_joins).where(
           "(#{model.table_name}.is_public = ? #{initial_or}) #{additional}",
           true
         )
-      elsif (current_user.admin? && self.admin_sees_all?) || self.nonadmin_sees_all?
+      elsif (User.current_user.admin? && self.admin_sees_all?) || self.nonadmin_sees_all?
         model.includes(all_includes).joins(all_joins).where(
           "(true #{initial_or}) #{additional}"
         )

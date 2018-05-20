@@ -65,4 +65,18 @@ class Wallet < ApplicationRecord
     self.balance = total
     self.save!
   end
+  
+  def estimate_balance_in_primary_currency
+    c = self.currency_type
+    if c.nil?
+      c = CURRENCY_US_DOLLARS
+    end
+    case c
+    when CURRENCY_US_DOLLARS
+      self.balance
+    else
+      Myp.warn("Currency estimation unavailable for #{self.id}")
+      raise "Currency estimation unavailable for #{Myp.get_select_name(c, CURRENCY_TYPES)}"
+    end
+  end
 end

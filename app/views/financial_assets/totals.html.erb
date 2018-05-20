@@ -1,10 +1,8 @@
-<% content_for :heading do -%><%= t("myplaceonline.financial_assets.totals") %><% end -%>
+<% content_for :heading do -%><%= t("myplaceonline.financial_assets.asset_totals") %><% end -%>
 
-<h1><%= t("myplaceonline.financial_assets.totals") %></h1>
+<h1><%= t("myplaceonline.financial_assets.asset_totals") %></h1>
 
 <%= flashes! %>
-
-<%= data_row(heading: t("myplaceonline.financial_assets.totals"), prefix_heading: true, content: @total, wrap: false) %>
 
 <% if @breakdown.count > 0 %>
   <hr />
@@ -21,6 +19,48 @@
   <% end %>
   </ul>
 <% end %>
+
+<p><%= t("myplaceonline.financial_assets.asset_totals") %>: <b><%= Myp.number_to_currency(@total) %></b></p>
+
+<hr />
+
+<%
+c = LifeInsurancesController.new
+additional = 0
+c.all_items.each do |x|
+  if !x.cash_value.nil?
+    additional = additional + x.cash_value
+  end
+end
+@total = @total + additional
+if additional > 0
+%>
+  <p><%= t("myplaceonline.financial_assets.life_insurance_cash_assets") %>: <b><%= Myp.number_to_currency(additional) %></b></p>
+<% end %>
+
+<%
+additional = 0
+begin
+  c = WalletsController.new
+  c.all_items.each do |x|
+    additional = additional + x.estimate_balance_in_primary_currency
+  end
+rescue Exception => e
+%>
+  <p><%= t("myplaceonline.financial_assets.wallet_assets") %> <%= t("myplaceonline.financial_assets.error") %>: <%= e.to_s %></p>
+<%
+end
+@total = @total + additional
+if additional > 0
+%>
+  <p><%= t("myplaceonline.financial_assets.wallet_assets") %>: <b><%= Myp.number_to_currency(additional) %></b></p>
+<%
+end
+%>
+
+<hr />
+
+<p><%= t("myplaceonline.financial_assets.final_total") %>: <b><%= Myp.number_to_currency(@total) %></b></p>
 
 <%=
   render(partial: "shared/footer", locals: {

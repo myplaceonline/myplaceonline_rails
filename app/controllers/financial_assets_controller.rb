@@ -16,7 +16,7 @@ class FinancialAssetsController < MyplaceonlineController
   def footer_items_index
     super + [
       {
-        title: I18n.t("myplaceonline.financial_assets.totals"),
+        title: I18n.t("myplaceonline.financial_assets.final_total"),
         link: financial_assets_totals_path,
         icon: "info"
       },
@@ -30,7 +30,7 @@ class FinancialAssetsController < MyplaceonlineController
       total = total + asset.asset_value
       loc = asset.asset_location
       if loc.blank?
-        loc = ""
+        loc = I18n.t("myplaceonline.financial_assets.no_location")
       end
       items = @breakdown[loc]
       if items.nil?
@@ -39,7 +39,7 @@ class FinancialAssetsController < MyplaceonlineController
       items << asset
       @breakdown[loc] = items
     end
-    @total = Myp.decimal_to_s(value: total)
+    @total = total
   end
 
   protected
