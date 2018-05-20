@@ -4154,6 +4154,8 @@ en:
         bitcoin: "Bitcoin (₿)"
         ethereum: "Ethereum (ETH)"
         bitcoin_cash: "Bitcoin Cash (BCH)"
+        gold: "Gold"
+        silver: "Silver"
     wallet_transactions:
       wallet: "Wallet"
       transaction_amount: "Amount"

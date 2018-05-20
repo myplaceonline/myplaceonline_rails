@@ -552,12 +552,13 @@ var myplaceonline = function(mymodule) {
         
       $ul.data("previousSearch", value);
       
-      if (previousSearch == value) {
+      // Already done in JQM
+      /*if (previousSearch == value) {
         
         myplaceonline.consoleLog("remoteDataList returning without action");
         
         return;
-      }
+      }*/
       
       if (value.length > 0) {
         

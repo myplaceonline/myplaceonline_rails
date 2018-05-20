@@ -24,6 +24,8 @@ class Wallet < ApplicationRecord
   CURRENCY_BITCOIN = 7
   CURRENCY_ETHEREUM = 8
   CURRENCY_BITCOIN_CASH = 9
+  CURRENCY_GOLD = 10
+  CURRENCY_SILVER = 11
 
   CURRENCY_TYPES = [
     ["myplaceonline.wallets.currency_types.us_dollars", CURRENCY_US_DOLLARS],
@@ -36,6 +38,8 @@ class Wallet < ApplicationRecord
     ["myplaceonline.wallets.currency_types.bitcoin", CURRENCY_BITCOIN],
     ["myplaceonline.wallets.currency_types.ethereum", CURRENCY_ETHEREUM],
     ["myplaceonline.wallets.currency_types.bitcoin_cash", CURRENCY_BITCOIN_CASH],
+    ["myplaceonline.wallets.currency_types.gold", CURRENCY_GOLD],
+    ["myplaceonline.wallets.currency_types.silver", CURRENCY_SILVER],
   ]
 
   validates :wallet_name, presence: true
