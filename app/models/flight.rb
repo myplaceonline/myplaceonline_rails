@@ -15,7 +15,16 @@ class Flight < ApplicationRecord
     if flight_legs.length == 0
       display
     else
-      Myp.appendstrwrap(flight_name, Myp.display_datetime_short_year(flight_legs[0].depart_time, User.current_user))
+      result = Myp.appendstrwrap(flight_name, Myp.display_datetime_short_year(flight_legs[0].depart_time, User.current_user))
+      x = self.transport_time
+      if !x.nil?
+        result = Myp.appendstr(result, I18n.t("myplaceonline.flights.alert_transport") + " @ " + Myp.display_time(x, User.current_user, :short_time), ", ")
+      end
+      x = self.start_time
+      if !x.nil?
+        result = Myp.appendstr(result, I18n.t("myplaceonline.flights.alert_start") + " @ " + Myp.display_time(x, User.current_user, :short_time), ", ")
+      end
+      result
     end
   end
   
@@ -94,5 +103,93 @@ class Flight < ApplicationRecord
   def self.calendar_item_link(calendar_item)
     flight = calendar_item.find_model_object
     "/flights/#{flight.id}"
+  end
+  
+  def main_timings
+    [
+      {
+        name: "myplaceonline.flights.timing_names.transportation",
+        time: 30.minutes,
+      },
+      {
+        name: "myplaceonline.flights.timing_names.transportation_buffer",
+        time: 15.minutes,
+      },
+      {
+        name: "myplaceonline.flights.timing_names.checkin",
+        time: 15.minutes,
+      },
+      {
+        name: "myplaceonline.flights.timing_names.security",
+        time: 15.minutes,
+      },
+      {
+        name: "myplaceonline.flights.timing_names.board",
+        time: 45.minutes,
+      },
+      {
+        name: "myplaceonline.flights.timing_names.airport_buffer",
+        time: 15.minutes,
+      },
+    ]
+  end
+  
+  def main_timing
+    total = 0.seconds
+    self.main_timings.each do |x|
+      total = total + x[:time]
+    end
+    total
+  end
+  
+  def prepare_timings
+    [
+      {
+        name: "myplaceonline.flights.timing_names.shower",
+        time: 15.minutes,
+      },
+      {
+        name: "myplaceonline.flights.timing_names.eat",
+        time: 15.minutes,
+      },
+      {
+        name: "myplaceonline.flights.timing_names.brush_teeth",
+        time: 5.minutes,
+      },
+      {
+        name: "myplaceonline.flights.timing_names.pack",
+        time: 30.minutes,
+      },
+      {
+        name: "myplaceonline.flights.timing_names.prepare_buffer",
+        time: 15.minutes,
+      },
+    ]
+  end
+  
+  def prepare_timing
+    total = 0.seconds
+    self.main_timings.each do |x|
+      total = total + x[:time]
+    end
+    total
+  end
+  
+  def transport_time
+    x = self.first_flight_leg
+    if !x.nil? && !x.depart_time.nil?
+      x.depart_time - main_timing
+    else
+      nil
+    end
+  end
+  
+  def start_time
+    x = self.first_flight_leg
+    if !x.nil? && !x.depart_time.nil?
+      x.depart_time - main_timing - prepare_timing
+    else
+      nil
+    end
   end
 end

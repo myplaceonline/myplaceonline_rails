@@ -1,0 +1,36 @@
+<% content_for :heading do -%><%= t("myplaceonline.flights.timings") %><% end -%>
+
+<h1><%= t("myplaceonline.flights.timings") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag(flight_timings_path(@obj), method: :post) do %>
+
+  <%
+  t = @obj.first_flight_leg.depart_time
+  %>
+  <p><%= t("myplaceonline.flight_legs.depart_time") %>: <%= Myp.display_datetime(t, User.current_user) %></p>
+
+  <ul>
+    <% (@obj.main_timings.reverse + @obj.prepare_timings.reverse).each do |x| %>
+      <%
+      t = t - x[:time]
+      %>
+      <li><%= t(x[:name]) %> ~= <%= t(Myp.seconds_to_time_in_general_human_detailed_hms(x[:time].seconds)) %> @ <%= Myp.display_time(t, User.current_user, :short_time) %></li>
+    <% end %>
+  </ul>
+  
+  <p><%= t("myplaceonline.flights.last_timing") %>: <%= Myp.display_datetime(t, User.current_user) %></p>
+
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: controller.obj_path,
+          icon: "back"
+        },
+      ]
+    })
+  %>
+<% end %>

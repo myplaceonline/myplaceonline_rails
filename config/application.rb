@@ -304,6 +304,8 @@ module Myplaceonline
     Date::DATE_FORMATS[:dygraph] = "%Y-%m-%d"
     Time::DATE_FORMATS[:dygraph] = "%Y-%m-%d %H:%M:%S"
     
+    Time::DATE_FORMATS[:short_time] = "%l:%M %p"
+
     if !ENV["TWILIO_AUTH"].blank?
       config.middleware.use(Rack::TwilioWebhookAuthentication, ENV["TWILIO_AUTH"], "/api/twilio")
     end

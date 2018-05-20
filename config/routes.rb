@@ -324,7 +324,8 @@ Rails.application.routes.draw do
       },
     ],
     flights: [
-      { instance: true, link: "send_info" }
+      { instance: true, link: "send_info" },
+      { instance: true, link: "timings" }
     ],
     groups: [
       { instance: true, link: "email_list" },

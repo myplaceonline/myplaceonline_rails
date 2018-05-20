@@ -64,7 +64,7 @@ class FlightsController < MyplaceonlineController
   end
 
   def footer_items_show
-    result = super
+    result = []
     
     if !MyplaceonlineExecutionContext.offline?
       result << {
@@ -74,7 +74,17 @@ class FlightsController < MyplaceonlineController
       }
     end
     
-    result
+    result << {
+      title: I18n.t("myplaceonline.flights.timings"),
+      link: flight_timings_path(@obj),
+      icon: "info"
+    }
+    
+    result + super
+  end
+  
+  def timings
+    set_obj
   end
   
   protected
