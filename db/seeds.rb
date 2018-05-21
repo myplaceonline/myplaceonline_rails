@@ -191,7 +191,7 @@ Category.create!([
   {id: 191, name: "security_tokens", link: "security_tokens", position: 0, parent_id: 1, additional_filtertext: "api", icon: "FatCow_Icons16x16/security.png", explicit: nil, user_type_mask: nil, experimental: true, simple: nil, internal: nil},
   {id: 192, name: "exports", link: "exports", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/saved_exports.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 224, name: "wallets", link: "wallets", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/wallet.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
-  {id: 225, name: "assets", link: "assets", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/moneybox.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
+  {id: 230, name: "financial_assets", link: "financial_assets", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/moneybox.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
 ])
 
 # Reinitialize to cache the categories created above
