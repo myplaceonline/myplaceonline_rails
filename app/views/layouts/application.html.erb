@@ -84,9 +84,7 @@
           alert("Myplaceonline failed to load correctly. Please let us know at contact@myplaceonline.com what events led up to this and restart the application.");
         }
         
-        <% if Rails.env.development? %>
-          myplaceonline.setBaseUrl("<%= "http://#{Rails.configuration.default_url_options[:host]}:#{Rails.configuration.default_url_options[:port]}/" %>");
-        <% end %>
+        myplaceonline.setBaseUrl("<%= Myp.root_url %>/");
         
       </script>
       <style>

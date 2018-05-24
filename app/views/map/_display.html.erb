@@ -36,7 +36,7 @@ end
   myplaceonline.onPageLoad(function() {
     $("#map").height($(window).height() * .7);
     myplaceonline.loadExternalScript(
-      "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js",
+      myplaceonline.createUrl("<%= javascript_path("markerclusterer.js") %>"), // https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js
       true,
       function() {
         myplaceonline.loadExternalScript(
