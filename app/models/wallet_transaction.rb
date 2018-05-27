@@ -23,7 +23,7 @@ class WalletTransaction < ApplicationRecord
   validates :transaction_amount, presence: true
   
   def display
-    Myp.decimal_to_s(value: self.transaction_amount)
+    self.transaction_amount.to_s
   end
   
   def self.params

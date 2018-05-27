@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180518154718) do
+ActiveRecord::Schema.define(version: 20180527183402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6509,15 +6509,15 @@ ActiveRecord::Schema.define(version: 20180518154718) do
 
   create_table "wallet_transactions", force: :cascade do |t|
     t.bigint "wallet_id"
-    t.decimal "transaction_amount", precision: 10, scale: 2
+    t.decimal "transaction_amount", precision: 20, scale: 8
     t.datetime "transaction_time"
     t.string "short_description"
     t.string "transaction_identifier"
     t.bigint "contact_id"
     t.integer "exchange_currency"
-    t.decimal "exchange_rate", precision: 10, scale: 2
-    t.decimal "fee", precision: 10, scale: 2
-    t.decimal "exchanged_amount", precision: 10, scale: 2
+    t.decimal "exchange_rate", precision: 20, scale: 8
+    t.decimal "fee", precision: 20, scale: 8
+    t.decimal "exchanged_amount", precision: 20, scale: 8
     t.text "notes"
     t.integer "visit_count"
     t.datetime "archived"
@@ -6534,7 +6534,7 @@ ActiveRecord::Schema.define(version: 20180518154718) do
   create_table "wallets", force: :cascade do |t|
     t.string "wallet_name"
     t.integer "currency_type"
-    t.decimal "balance", precision: 10, scale: 2
+    t.decimal "balance", precision: 20, scale: 8
     t.bigint "password_id"
     t.text "notes"
     t.integer "visit_count"
