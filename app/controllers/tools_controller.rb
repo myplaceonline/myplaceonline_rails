@@ -1,5 +1,5 @@
 class ToolsController < MyplaceonlineController
-  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:gps, :urlencode]
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:gps, :urlencode, :urldecode]
   
   def index
   end
@@ -12,6 +12,14 @@ class ToolsController < MyplaceonlineController
     @encoded = ""
     if !@toencode.blank?
       @encoded = URI.encode(@toencode, /\W/)
+    end
+  end
+  
+  def urldecode
+    @todecode = params[:todecode]
+    @decoded = ""
+    if !@todecode.blank?
+      @decoded = URI.decode(@todecode)
     end
   end
 end

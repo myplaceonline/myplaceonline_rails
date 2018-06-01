@@ -2245,6 +2245,9 @@ en:
       urlencode: "URL Encoding"
       toencode: "What to encode"
       urlencoded: "URL-Encoded"
+      urldecode: "URL Decoding"
+      todecode: "What to decode"
+      urldecoded: "URL-Decoded"
       
     # wget https://automattic.com/privacy/
     # sudo npm install -g to-markdown-cli

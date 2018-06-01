@@ -1,0 +1,41 @@
+<% content_for :heading do -%><%= t("myplaceonline.tools.urldecode") %><% end -%>
+
+<h1><%= t("myplaceonline.tools.urldecode") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag(tools_urldecode_path, method: :get) do %>
+
+  <%=
+    input_field(
+      type: Myp::FIELD_TEXT,
+      name: :todecode,
+      value: @todecode,
+      placeholder: "myplaceonline.tools.todecode",
+      autofocus: true
+    )
+  %>
+
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.general.submit"), "data-icon" => "action", "data-iconpos" => "top", style: "background-color: green")
+        },
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: tools_path,
+          icon: "back"
+        },
+      ]
+    })
+  %>
+<% end %>
+
+<%= data_row(heading: t("myplaceonline.tools.urldecoded"), prefix_heading: true, content: @decoded, wrap: false) %>
+
+<script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+</script>
