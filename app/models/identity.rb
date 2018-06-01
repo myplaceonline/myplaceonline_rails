@@ -305,6 +305,7 @@ class Identity < ApplicationRecord
   has_many :exports, :dependent => :destroy
   has_many :wallets, :dependent => :destroy
   has_many :financial_assets, :dependent => :destroy
+  has_many :boondockings, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 
@@ -555,6 +556,7 @@ class Identity < ApplicationRecord
       :food_lists => food_lists.to_a.map{|x| x.as_json},
       :security_tokens => security_tokens.to_a.map{|x| x.as_json},
       :exports => exports.to_a.map{|x| x.as_json},
+      :boondockings => boondockings.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json},
     })
   end

@@ -162,6 +162,7 @@ Rails.application.routes.draw do
 
   routes_get_post(%w(
     tools/gps
+    tools/urlencode
     random/activity
     info/contact
     info/invite

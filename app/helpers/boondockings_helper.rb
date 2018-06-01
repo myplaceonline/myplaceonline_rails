@@ -1,0 +1,2 @@
+module BoondockingsHelper
+end

@@ -8,34 +8,39 @@ class CampLocationsController < MyplaceonlineController
   def search_parent_category
     category_name.singularize
   end
+  
+  def self.param_names
+    [
+      :id,
+      :notes,
+      :rating,
+      :vehicle_parking,
+      :free,
+      :sewage,
+      :fresh_water,
+      :electricity,
+      :internet,
+      :trash,
+      :shower,
+      :bathroom,
+      :noise_level,
+      :overnight_allowed,
+      :boondocking,
+      :cell_phone_reception,
+      :cell_phone_data,
+      :chance_high_wind,
+      :birds_chirping,
+      :near_busy_road,
+      :level_ground,
+      :nightly_cost,
+      location_attributes: LocationsController.param_names,
+      membership_attributes: MembershipsController.param_names
+    ]
+  end
 
   protected
     def obj_params
-      params.require(:camp_location).permit(
-        :notes,
-        :rating,
-        :vehicle_parking,
-        :free,
-        :sewage,
-        :fresh_water,
-        :electricity,
-        :internet,
-        :trash,
-        :shower,
-        :bathroom,
-        :noise_level,
-        :overnight_allowed,
-        :boondocking,
-        :cell_phone_reception,
-        :cell_phone_data,
-        :chance_high_wind,
-        :birds_chirping,
-        :near_busy_road,
-        :level_ground,
-        :nightly_cost,
-        location_attributes: LocationsController.param_names,
-        membership_attributes: MembershipsController.param_names
-      )
+      params.require(:camp_location).permit(CampLocationsController.param_names)
     end
 
     def default_sort_columns

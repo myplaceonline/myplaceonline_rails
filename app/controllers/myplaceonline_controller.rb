@@ -60,7 +60,7 @@ class MyplaceonlineController < ApplicationController
     @items_previous_page_link = items_previous_page(@offset - @perpage)
     @items_all_link = items_all_link
 
-    Rails.logger.debug{"MyplaceonlineController.index gettings @objs"}
+    Rails.logger.debug{"MyplaceonlineController.index getting @objs"}
     @objs = cached_all.offset(@offset).limit(@perpage).order(sorts_wrapper)
     
     # If the controller wants to show top items (`additional_items?` returns
@@ -1370,8 +1370,8 @@ class MyplaceonlineController < ApplicationController
     
     @locations = items.map{ |x|
       result = nil
-      if x.respond_to?(self.location_field)
-        loc = x.send(self.location_field)
+      if self.has_location?(x)
+        loc = self.get_map_location(x)
         if !loc.nil? && loc.ensure_gps
           label = nil
                                        
@@ -1394,6 +1394,8 @@ class MyplaceonlineController < ApplicationController
     }.compact
     
     @count = @locations.count
+    
+    Rails.logger.debug{"MyplaceonlineController.map items: #{@count}"}
     
     prepare_filtered_count
   end
@@ -1890,5 +1892,13 @@ class MyplaceonlineController < ApplicationController
     
     def show_map?
       false
+    end
+    
+    def has_location?(item)
+      item.respond_to?(self.location_field)
+    end
+    
+    def get_map_location(item)
+      item.send(self.location_field)
     end
 end

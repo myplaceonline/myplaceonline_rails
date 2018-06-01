@@ -280,6 +280,7 @@ en:
       wallet_transactions: "Transactions"
       loans: "Loans"
       financial_assets: "Financial Assets"
+      boondockings: "Boondockings"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -2241,6 +2242,9 @@ en:
       longitude: "Longitude"
       geolocation_unavailable: "Geolocation support unavailable"
       copy_to_clipboard: "Copy Coordinates to Clipboard"
+      urlencode: "URL Encoding"
+      toencode: "What to encode"
+      urlencoded: "URL-Encoded"
       
     # wget https://automattic.com/privacy/
     # sudo npm install -g to-markdown-cli
@@ -4178,3 +4182,5 @@ en:
       wallet_assets: "Wallet Assets"
       error: "Calculation Error"
       no_location: "No Location"
+    boondockings:
+      camp_location: "Camp Location"

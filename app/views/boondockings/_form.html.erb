@@ -1,0 +1,14 @@
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :camp_location,
+    existingobj: obj.camp_location,
+    heading: t("myplaceonline.boondockings.camp_location"),
+    objform: "camp_locations/form",
+    existingobjurl: "camp_location_path",
+    searchurl: "/camp_locations.json?perpage=0",
+    edit: edit,
+    autofocus: autofocus,
+    collapsed: false,
+  }
+%>
