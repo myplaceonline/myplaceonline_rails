@@ -103,7 +103,6 @@ $("#<%= extract_id(name_field) %>,#<%= extract_id(address1_field) %>").on("input
     if (zip.length == 5) {
       $("#<%= extract_id(postal_code_field) %>").val(zip);
       
-      // TODO how to raise propertychange
       $("#<%= extract_id(postal_code_field) %>").trigger("propertychange");
       
       // Now truncate
