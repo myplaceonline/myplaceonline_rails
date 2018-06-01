@@ -5,16 +5,20 @@ if !defined?(simple)
 end
 %>
 
-<%= myp_text_field(f, :name, "myplaceonline.locations.name", obj.name) %>
-<%= myp_text_field(f, :address1, "myplaceonline.locations.address1", obj.address1, autofocus) %>
-<%= myp_text_field(f, :address2, "myplaceonline.locations.address2", obj.address2) %>
-<%= myp_text_field(f, :address3, "myplaceonline.locations.address3", obj.address3) %>
 <%
+  name_field = myp_text_field(f, :name, "myplaceonline.locations.name", obj.name)
+  address1_field = myp_text_field(f, :address1, "myplaceonline.locations.address1", obj.address1, autofocus)
+  address2_field = myp_text_field(f, :address2, "myplaceonline.locations.address2", obj.address2)
+  address3_field = myp_text_field(f, :address3, "myplaceonline.locations.address3", obj.address3)
   region_field = myp_region_field(f, :region, "myplaceonline.general.region", obj.region)
   postal_code_field = myp_text_field(f, :postal_code, "myplaceonline.locations.postal_code", obj.postal_code)
   sub_region2_field = myp_text_field(f, :sub_region2, "myplaceonline.general.sub_region2", obj.sub_region2)
   sub_region1_field = myp_subregion_field(f, :sub_region1, "myplaceonline.general.sub_region1", obj.region, obj.sub_region1)
 %>
+<%= name_field %>
+<%= address1_field %>
+<%= address2_field %>
+<%= address3_field %>
 <%= region_field %>
 <%= postal_code_field %>
 <%= sub_region2_field %>
@@ -87,6 +91,34 @@ function location_gps_success<%= random_name %>(location) {
   $("#<%= extract_id(longitude_field) %>").val(location.coords.longitude);
   myplaceonline.createSuccessNotification("GPS coordinates updated");
 }
+
+$("#<%= extract_id(name_field) %>,#<%= extract_id(address1_field) %>").on("input propertychange paste", function(x) {
+  var $this = $(this);
+  var val = $this.val();
+  
+  // If the value contains a zip code, then do a lookup on that, and truncate the regions
+  var match = val.match(/(\d+)\s*$/);
+  if (match) {
+    var zip = match[1];
+    if (zip.length == 5) {
+      $("#<%= extract_id(postal_code_field) %>").val(zip);
+      
+      // TODO how to raise propertychange
+      $("#<%= extract_id(postal_code_field) %>").trigger("propertychange");
+      
+      // Now truncate
+      var match2 = val.match(/^(.*?)\s*,\s*[^,]+,\s*[^\d]+\d+\s*$/);
+      if (match2) {
+        $this.val(match2[1]);
+      } else {
+        var match3 = val.match(/^([^,]+),\s*[^\d]+\d+\s*$/);
+        if (match3) {
+          $this.val(match3[1]);
+        }
+      }
+    }
+  }
+});
 </script>
 
 <a href="#" onclick="return myplaceonline.requestGPS2(location_gps_success<%= random_name %>);" class="ui-btn"><%= t("myplaceonline.locations.request_gps") %></a>
