@@ -66,6 +66,7 @@ class BetsController < MyplaceonlineController
     @won = @all_bets.dup.keep_if{|x| x.bet_status == Bet::BET_STATUS_I_WON_PAID || x.bet_status == Bet::BET_STATUS_I_WON_NOT_PAID}
     @lost = @all_bets.dup.keep_if{|x| x.bet_status == Bet::BET_STATUS_OTHER_WON_PAID || x.bet_status == Bet::BET_STATUS_OTHER_WON_NOT_PAID}
     @draws = @all_bets.dup.keep_if{|x| x.bet_status == Bet::BET_STATUS_NOBODY_WON}
+    @pending = @all_bets.dup.keep_if{|x| x.bet_status == Bet::BET_STATUS_PENDING}
   end
 
   def footer_items_index

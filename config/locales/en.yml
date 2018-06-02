@@ -3081,7 +3081,8 @@ en:
       won_count: "Won"
       lost_count: "Lost"
       draw_count: "Draws"
-      win_percent: "Win Percentage"
+      pending: "Pending"
+      win_percent: "Win Percentage (excluding Draws)"
       bet_with: " with %{contacts}"
       bet_for: " for %{amount}"
     admin:
