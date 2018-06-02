@@ -499,6 +499,7 @@ module ApplicationHelper
       content_wrapper_attributes: {},
       admin_details: false,
       reference_locals: {},
+      percentage: false,
     }.merge(options)
     
     data_display_options = ExecutionContext[:data_display_options]
@@ -555,6 +556,10 @@ module ApplicationHelper
       else
         content = ""
       end
+    end
+    
+    if options[:percentage] && !content.blank?
+      content << "%"
     end
     
     options[:clipboard_text] ||= content

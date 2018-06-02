@@ -1,4 +1,6 @@
 class BetsController < MyplaceonlineController
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:history]
+
   def use_bubble?
     true
   end
@@ -57,6 +59,23 @@ class BetsController < MyplaceonlineController
 
   def show_created_updated
     true
+  end
+  
+  def history
+    @all_bets = self.all(strict: true).order("bets.bet_end_date DESC NULLS LAST").to_a
+    @won = @all_bets.dup.keep_if{|x| x.bet_status == Bet::BET_STATUS_I_WON_PAID || x.bet_status == Bet::BET_STATUS_I_WON_NOT_PAID}
+    @lost = @all_bets.dup.keep_if{|x| x.bet_status == Bet::BET_STATUS_OTHER_WON_PAID || x.bet_status == Bet::BET_STATUS_OTHER_WON_NOT_PAID}
+    @draws = @all_bets.dup.keep_if{|x| x.bet_status == Bet::BET_STATUS_NOBODY_WON}
+  end
+
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t("myplaceonline.bets.history"),
+        link: bets_history_path,
+        icon: "info"
+      },
+    ]
   end
   
   protected

@@ -210,7 +210,8 @@ Rails.application.routes.draw do
 
   additions = {
     bets: [
-      { instance: true, link: "update_status" }
+      { instance: true, link: "update_status" },
+      { instance: false, link: "history" },
     ],
     books: [
       { instance: true, link: "discard" },

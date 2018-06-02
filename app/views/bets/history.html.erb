@@ -1,0 +1,87 @@
+<% content_for :heading do -%><%= t("myplaceonline.bets.history") %><% end -%>
+
+<h1><%= t("myplaceonline.bets.history") %></h1>
+
+<%= flashes! %>
+
+<%= data_row(heading: t("myplaceonline.bets.total_bets"), prefix_heading: true, content: @won.count + @lost.count + @draws.count, wrap: false) %>
+      
+<%= data_row(heading: t("myplaceonline.bets.won_count"), prefix_heading: true, content: @won.count, wrap: false) %>
+      
+<%= data_row(heading: t("myplaceonline.bets.lost_count"), prefix_heading: true, content: @lost.count, wrap: false) %>
+      
+<%= data_row(heading: t("myplaceonline.bets.draw_count"), prefix_heading: true, content: @draws.count, wrap: false) %>
+      
+<%= data_row(heading: t("myplaceonline.bets.win_percent"), prefix_heading: true, content: Myp.decimal_to_s(value: (@won.count.to_f / (@won.count.to_f + @lost.count.to_f + @draws.count.to_f)) * 100.0), wrap: false, percentage: true) %>
+
+<b><%= t("myplaceonline.bets.won") %></b>
+<ul>
+  <%
+  @won.each do |bet|
+  %>
+    <li>
+      <%= link_to(bet.display, bet) %>
+      <% if bet.bet_contacts.count > 0 %>
+        <%= t("myplaceonline.bets.bet_with", contacts: bet.bet_contacts.map{|x| x.contact.display}.join(", ")) %>
+      <% end %>
+      <%= t("myplaceonline.bets.bet_for", amount: bet.bet_amount_with_currency(append_ratio: true)) %>
+    </li>
+  <%
+  end
+  %>
+  <% if @won.count == 0 %>
+    <li><%= t("myplaceonline.general.none") %></li>
+  <% end %>
+</ul>
+
+<b><%= t("myplaceonline.bets.lost") %></b>
+<ul>
+  <%
+  @lost.each do |bet|
+  %>
+    <li>
+      <%= link_to(bet.display, bet) %>
+      <% if bet.bet_contacts.count > 0 %>
+        <%= t("myplaceonline.bets.bet_with", contacts: bet.bet_contacts.map{|x| x.contact.display}.join(", ")) %>
+      <% end %>
+      <%= t("myplaceonline.bets.bet_for", amount: bet.bet_amount_with_currency(append_ratio: true)) %>
+    </li>
+  <%
+  end
+  %>
+  <% if @lost.count == 0 %>
+    <li><%= t("myplaceonline.general.none") %></li>
+  <% end %>
+</ul>
+
+<b><%= t("myplaceonline.bets.draws") %></b>
+<ul>
+  <%
+  @draws.each do |bet|
+  %>
+    <li>
+      <%= link_to(bet.display, bet) %>
+      <% if bet.bet_contacts.count > 0 %>
+        <%= t("myplaceonline.bets.bet_with", contacts: bet.bet_contacts.map{|x| x.contact.display}.join(", ")) %>
+      <% end %>
+      <%= t("myplaceonline.bets.bet_for", amount: bet.bet_amount_with_currency(append_ratio: true)) %>
+    </li>
+  <%
+  end
+  %>
+  <% if @draws.count == 0 %>
+    <li><%= t("myplaceonline.general.none") %></li>
+  <% end %>
+</ul>
+
+<%=
+  render(partial: "shared/footer", locals: {
+    items: [
+      {
+        title: I18n.t("myplaceonline.general.back"),
+        link: controller.index_path,
+        icon: "back"
+      },
+    ]
+  })
+%>
