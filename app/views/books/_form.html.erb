@@ -44,7 +44,8 @@
     searchurl: "/contacts.json?perpage=0",
     edit: edit,
     autofocus: false,
-    force_existing: true
+    force_existing: true,
+    allow_clear: true,
   }
 %>
 <%= myp_date_field(f, :lent_date, "myplaceonline.books.lent_date", obj.lent_date) %>
@@ -59,7 +60,8 @@
     searchurl: "/contacts.json?perpage=0",
     edit: edit,
     autofocus: false,
-    force_existing: true
+    force_existing: true,
+    allow_clear: true,
   }
 %>
 <%= myp_date_field(f, :borrowed_date, "myplaceonline.books.borrowed_date", obj.borrowed_date) %>
@@ -108,7 +110,8 @@
     searchurl: "/contacts.json?perpage=0",
     edit: edit,
     autofocus: false,
-    force_existing: true
+    force_existing: true,
+    allow_clear: true,
   }
 %>
 <%=
