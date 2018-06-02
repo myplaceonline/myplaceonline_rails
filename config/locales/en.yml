@@ -531,6 +531,8 @@ en:
       move_identity: "Change Identity"
       moved_identity: "Identity changed"
       none: "None"
+      clear: "Clear"
+      set_cleared: "Set Cleared"
     site_contacts:
       name: "Name"
       email: "Email"
