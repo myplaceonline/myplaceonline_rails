@@ -1456,6 +1456,14 @@ var myplaceonline = function(mymodule) {
       // https://github.com/zeroclipboard/zeroclipboard/issues/676
       blacklist.push("Error calling method on NPObject!");
       
+      // Seems to happen when CKEditor is loading and user navigates away. Stack:
+      // d@https://myplaceonline.com/assets/application_extra-f8446fb91c0259c83dc5ce1b5bb575d85b7d12c1c3bea82849e94b396f29139b.js:8230:46
+      // f@https://myplaceonline.com/assets/application_extra-f8446fb91c0259c83dc5ce1b5bb575d85b7d12c1c3bea82849e94b396f29139b.js:8231:175
+      // C@https://myplaceonline.com/assets/application_extra-f8446fb91c0259c83dc5ce1b5bb575d85b7d12c1c3bea82849e94b396f29139b.js:8231:332
+      // w@https://myplaceonline.com/assets/application_extra-f8446fb91c0259c83dc5ce1b5bb575d85b7d12c1c3bea82849e94b396f29139b.js:8231:412
+      // A/f.$.onerror@https://myplaceonline.com/assets/application_extra-f8446fb91c0259c83dc5ce1b5bb575d85b7d12c1c3bea82849e94b396f29139b.js:8232:363
+      blacklist.push("TypeError: c[a] is undefined");
+      
       for (var i = 0; i < blacklist.length; i++) {
         var checkItem = blacklist[i];
         if (errorObjStack.indexOf(checkItem) != -1 || message.indexOf(checkItem) != -1 || stackTrace.indexOf(checkItem) != -1) {
