@@ -151,3 +151,35 @@
     placeholder: "myplaceonline.trips.hide_trip_name"
   )
 %>
+<% if !obj.new_record? %>
+  <div data-role="collapsible" data-collapsed="true">
+    <h3><%= t("myplaceonline.trips.final_costs") %></h3>
+    <%=
+      input_field(
+        form: f,
+        type: Myp::FIELD_DECIMAL,
+        name: :final_costs_transportation,
+        value: obj.final_costs_transportation,
+        placeholder: "myplaceonline.trips.final_costs_transportation"
+      )
+    %>
+    <%=
+      input_field(
+        form: f,
+        type: Myp::FIELD_DECIMAL,
+        name: :final_costs_food,
+        value: obj.final_costs_food,
+        placeholder: "myplaceonline.trips.final_costs_food"
+      )
+    %>
+    <%=
+      input_field(
+        form: f,
+        type: Myp::FIELD_DECIMAL,
+        name: :final_costs_additional,
+        value: obj.final_costs_additional,
+        placeholder: "myplaceonline.trips.final_costs_additional"
+      )
+    %>
+  </div>
+<% end %>

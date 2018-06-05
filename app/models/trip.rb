@@ -440,4 +440,27 @@ class Trip < ApplicationRecord
     end
     result
   end
+  
+  def final_costs
+    result = 0
+    x = self.total_cost
+    if !x.nil?
+      result += x
+    end
+    if !self.final_costs_transportation.nil?
+      result += self.final_costs_transportation
+    end
+    if !self.final_costs_food.nil?
+      result += self.final_costs_food
+    end
+    if !self.final_costs_additional.nil?
+      result += self.final_costs_additional
+    end
+    
+    if result > 0
+      result
+    else
+      nil
+    end
+  end
 end

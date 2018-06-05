@@ -21,5 +21,6 @@
   <%= attribute_table_row_reference(t("myplaceonline.trips.flight"), "flight_path", wrapper.flight) %>
 <% end %>
 <%= data_row(heading: t("myplaceonline.trips.event"), content: obj.event) %>
-<%= data_row(heading: t("myplaceonline.trips.total_cost"), content: obj.total_cost, currency: true) %>
 <%= data_row(heading: t("myplaceonline.trips.hide_trip_name"), content: obj.hide_trip_name) %>
+<%= data_row(heading: t("myplaceonline.trips.total_cost"), content: obj.total_cost, currency: true) %>
+<%= data_row(heading: t("myplaceonline.trips.final_costs"), content: obj.final_costs, currency: true) %>

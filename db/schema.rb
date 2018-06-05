@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180601220200) do
+ActiveRecord::Schema.define(version: 20180605012944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6035,6 +6035,9 @@ ActiveRecord::Schema.define(version: 20180601220200) do
     t.bigint "event_id"
     t.boolean "is_public"
     t.boolean "hide_trip_name"
+    t.decimal "final_costs_additional", precision: 10, scale: 2
+    t.decimal "final_costs_transportation", precision: 10, scale: 2
+    t.decimal "final_costs_food", precision: 10, scale: 2
     t.index ["event_id"], name: "index_trips_on_event_id"
     t.index ["hotel_id"], name: "index_trips_on_hotel_id"
     t.index ["identity_file_id"], name: "index_trips_on_identity_file_id"

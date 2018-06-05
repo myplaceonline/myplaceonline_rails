@@ -1811,6 +1811,10 @@ en:
       event: "Event"
       total_cost: "Total Cost"
       hide_trip_name: "Hide trip name from contact messages"
+      final_costs: "Final costs"
+      final_costs_transportation: "Final costs (additional)"
+      final_costs_food: "Final costs (food)"
+      final_costs_additional: "Final costs (transportation)"
     passports:
       region: "Country"
       passport_number: "Passport Number"
