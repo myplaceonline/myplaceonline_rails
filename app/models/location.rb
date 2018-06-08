@@ -228,7 +228,8 @@ class Location < ApplicationRecord
   def map_link_component(prefer_human_readable: false, latlong_include_place: false, zoom_level: 17, handle_encoding: false)
     if !latitude.blank? && !longitude.blank? && (!prefer_human_readable || self.address1.blank?)
       result = latitude.to_s + "," + longitude.to_s
-      if latlong_include_place
+      # When the place is just, for example, US, Google maps isn't smart enough and tries to lookup "US" and overrides the latlong
+      if false && latlong_include_place
         one_liner = address_one_line(false, address_details: false)
         if !one_liner.blank?
           if handle_encoding
