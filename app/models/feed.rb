@@ -10,6 +10,7 @@ class Feed < ApplicationRecord
   myplaceonline_validates_uniqueness_of :url
   
   child_properties(name: :feed_items, sort: "publication_date DESC")
+  child_property(name: :password)
   
   def unread_feed_items
     feed_items.where("read is null")
@@ -20,13 +21,19 @@ class Feed < ApplicationRecord
   end
   
   def load_feed
-    Rails.logger.debug{"Loading feed for #{self.id}"}
-    response = Myp.http_get(url: url)
-    Rails.logger.debug{"Feed response:\n#{response}"}
-    rss = SimpleRSS.parse(response[:body])
     new_items = 0
+    
+    Rails.logger.debug{"Loading feed for #{self.id}"}
+    
+    response = Myp.http_get(url: url, basic_auth_password: self.password)
+    
+    Rails.logger.debug{"Feed response:\n#{response}"}
+    
+    rss = SimpleRSS.parse(response[:body])
+    
     new_feed_items = []
     all_feed_items = feed_items.to_a
+    
     ApplicationRecord.transaction do
       rss.items.each do |item|
         Rails.logger.debug{"Processing #{item.inspect}"}

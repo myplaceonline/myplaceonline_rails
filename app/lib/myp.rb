@@ -1,11 +1,12 @@
-require 'i18n'
-require 'fileutils'
-require 'github/markup'
-require 'twilio-ruby'
-require 'rest-client'
-require 'time'
-require 'posix/spawn'
-require 'colorize'
+require "i18n"
+require "fileutils"
+require "github/markup"
+require "twilio-ruby"
+require "rest-client"
+require "time"
+require "posix/spawn"
+require "colorize"
+require "base64"
 
 module Myp
   
@@ -947,6 +948,10 @@ module Myp
     if !User.current_user.nil? && User.current_user.pending_encryption_switch?
       ApplicationJob.perform(SwitchUserEncryptionJob, User.current_user, password)
     end
+  end
+  
+  def self.has_current_user_password?
+    !MyplaceonlineExecutionContext.persistent_user_store[:password].nil?
   end
   
   def self.get_current_user_password!
@@ -2473,17 +2478,34 @@ module Myp
     !str.blank? && !str.first(100).index("<?xml").nil?
   end
   
-  def self.raw_http_get(url:)
+  def self.raw_http_get(url:, basic_auth_password: nil)
     Rails.logger.info{"Myp.raw_http_get #{url}"}
+    
+    headers = {
+      "User-Agent" => "myplaceonline.com V1.0 (https://myplaceonline.com/)"
+    }
+    
+    if !basic_auth_password.nil?
+      
+      user_password = ""
+      if !basic_auth_password.user.blank?
+        user_password = basic_auth_password.user
+      else
+        user_password = basic_auth_password.email
+      end
+      user_password << ":"
+      user_password << basic_auth_password.password
+      
+      headers["Authorization"] = "Basic #{Base64.strict_encode64(user_password)}"
+    end
+    
     RestClient::Request.execute(
       method: :get,
       url: url,
       read_timeout: 15,
       open_timeout: 5,
       max_redirects: 5,
-      headers: {
-        "User-Agent" => "myplaceonline.com V1.0 (https://myplaceonline.com/)"
-      }
+      headers: headers,
     )
   end
   
@@ -2492,7 +2514,7 @@ module Myp
   #    body: string; HTTP body
   #    raw_response: object; underlying response from client library
   #  }
-  def self.http_get(url:, try_https: false)
+  def self.http_get(url:, try_https: false, basic_auth_password: nil)
     Myp.log_response_time(
       name: "Myp.http_get",
       url: url
@@ -2519,12 +2541,12 @@ module Myp
       end
 
       begin
-        response = Myp.raw_http_get(url: url)
+        response = Myp.raw_http_get(url: url, basic_auth_password: basic_auth_password)
       rescue => e
         if addedhttps
           Rails.logger.info{"Re-trying vanilla HTTP due to #{e.to_s}"}
           url = "http" + url[5..-1]
-          response = Myp.raw_http_get(url: url)
+          response = Myp.raw_http_get(url: url, basic_auth_password: basic_auth_password)
         else
           raise e
         end

@@ -17,7 +17,8 @@ class FeedsController < MyplaceonlineController
       :_destroy,
       :name,
       :url,
-      :new_notify
+      :new_notify,
+      password_attributes: PasswordsController.param_names
     ]
   end
 

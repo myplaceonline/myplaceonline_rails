@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180608031536) do
+ActiveRecord::Schema.define(version: 20180608164544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2296,7 +2296,9 @@ ActiveRecord::Schema.define(version: 20180608031536) do
     t.integer "unread_items"
     t.boolean "new_notify"
     t.boolean "is_public"
+    t.bigint "password_id"
     t.index ["identity_id"], name: "index_feeds_on_identity_id"
+    t.index ["password_id"], name: "index_feeds_on_password_id"
   end
 
   create_table "files", id: :serial, force: :cascade do |t|
@@ -7196,6 +7198,7 @@ ActiveRecord::Schema.define(version: 20180608031536) do
   add_foreign_key "feed_items", "identities"
   add_foreign_key "feed_load_statuses", "identities"
   add_foreign_key "feeds", "identities", name: "feeds_identity_id_fk"
+  add_foreign_key "feeds", "passwords"
   add_foreign_key "financial_asset_files", "financial_assets"
   add_foreign_key "financial_asset_files", "identities"
   add_foreign_key "financial_asset_files", "identity_files"

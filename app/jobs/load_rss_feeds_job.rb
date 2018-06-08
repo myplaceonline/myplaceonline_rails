@@ -41,7 +41,14 @@ class LoadRssFeedsJob < ApplicationJob
                   Rails.logger.info{"Loading #{feed.inspect}, count: #{count}, total: #{feeds.length}"}
                   
                   begin
-                    new_items = temp_feed.load_feed
+                    
+                    if temp_feed.password.nil? || !temp_feed.password.password_encrypted?
+                      new_items = temp_feed.load_feed
+                    else
+                      # Encrypted password so we can't use it
+                      Myp.warn("Feed #{feed.id} password can't be decrypted")
+                    end
+                    
                     Rails.logger.info{"Loaded items: #{new_items}"}
                     
                     status.items_complete += 1
