@@ -195,6 +195,7 @@ Rails.application.routes.draw do
 
   match 'files/:id/view/*imagename', :to => 'files#view', via: [:get], as: "file_view_name"
   match 'files/:id/thumbnail/*imagename', :to => 'files#thumbnail', via: [:get], as: "file_thumbnail_name"
+  match 'files/:id/thumbnail2/*imagename', :to => 'files#thumbnail2', via: [:get], as: "file_thumbnail2_name"
   match 'files/:id/download/*imagename', :to => 'files#download', via: [:get], as: "file_download_name"
 
   match 'favicon.ico', :to => 'api#favicon_ico', via: [:get]
@@ -354,6 +355,7 @@ Rails.application.routes.draw do
       { instance: true, link: "move" },
       { instance: true, link: "view" },
       { instance: true, link: "thumbnail" },
+      { instance: true, link: "thumbnail2" },
       { instance: true, link: "download" }
     ],
     imports: [

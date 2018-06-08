@@ -4,7 +4,7 @@
 
   <% random_name = "slideshow-" + SecureRandom.hex(10) %>
   
-  <% if pics.length > 1 %>
+  <% if pics.length >= 1 %>
     <%= attribute_table_row_span(link_to(t("myplaceonline.pictures.slideshow"), "#", class: "ui-btn", id: random_name)) %>
   <% end %>
   
@@ -32,7 +32,7 @@
     <%= attribute_table_row_span(link_to(t("myplaceonline.pictures.remaining_pictures", count: pics.length - piclimit), send(limitwithlink, limitobj), class: "ui-btn")) %>
   <% end %>
   
-  <% if pics.length > 1 %>
+  <% if pics.length >= 1 %>
     <%=
       render partial: 'myplaceonline/picture_slideshow', locals: {
         pics: pics.map{|p| p.identity_file},

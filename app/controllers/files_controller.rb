@@ -1,9 +1,6 @@
 require "open3"
 
 class FilesController < MyplaceonlineController
-  #skip_authorization_check :only => [:download, :view, :thumbnail]
-  #skip_before_action :do_authenticate_user, :only => [:download, :view, :thumbnail]
-
   def path_name
     "file"
   end
@@ -35,6 +32,9 @@ class FilesController < MyplaceonlineController
   def thumbnail
     @obj = model.find_by(id: params[:id])
     authorize! :show, @obj
+    
+    @obj.ensure_thumbnail
+    
     if !@obj.thumbnail_contents.nil?
       Rails.logger.debug{"FilesController.thumbnail: found thumbnail_contents #{@obj.thumbnail_size_bytes}"}
       respond_identity_file("inline", @obj, thumbnail: true)
@@ -43,6 +43,24 @@ class FilesController < MyplaceonlineController
       respond_identity_file("inline", @obj, thumbnail: true)
     else
       Rails.logger.debug{"FilesController.thumbnail: no thumbnail, sending whole image"}
+      respond_identity_file("inline", @obj)
+    end
+  end
+  
+  def thumbnail2
+    @obj = model.find_by(id: params[:id])
+    authorize! :show, @obj
+    
+    @obj.ensure_thumbnail2
+    
+    if !@obj.thumbnail2_contents.nil?
+      Rails.logger.debug{"FilesController.thumbnail2: found thumbnail2_contents #{@obj.thumbnail2_size_bytes}"}
+      respond_identity_file("inline", @obj, thumbnail2: true)
+    elsif !@obj.thumbnail2_filesystem_path.blank?
+      Rails.logger.debug{"FilesController.thumbnail2: found thumbnail2_filesystem_path #{@obj.thumbnail2_filesystem_path}"}
+      respond_identity_file("inline", @obj, thumbnail2: true)
+    else
+      Rails.logger.debug{"FilesController.thumbnail2: no thumbnail, sending whole image"}
       respond_identity_file("inline", @obj)
     end
   end

@@ -198,11 +198,11 @@ class ApplicationController < ActionController::Base
   protected
 
     # respond_type: [download, inline]
-    def respond_identity_file(respond_type, identity_file, filename = nil, content_type = nil, thumbnail: false)
+    def respond_identity_file(respond_type, identity_file, filename = nil, content_type = nil, thumbnail: false, thumbnail2: false)
       
       send_from_memory = true
       
-      if !identity_file.filesystem_path.blank? && !thumbnail
+      if !identity_file.filesystem_path.blank? && !thumbnail && !thumbnail2
         send_from_memory = false
       elsif !identity_file.thumbnail_filesystem_path.blank? && thumbnail
         send_from_memory = false
@@ -215,24 +215,34 @@ class ApplicationController < ActionController::Base
         #   if !File.exist?(identity_file.evaluated_path)
         #     send_from_memory = true
         #   end
+      elsif !identity_file.thumbnail2_filesystem_path.blank? && thumbnail2
+        send_from_memory = false
       end
       
       if send_from_memory
         Rails.logger.debug{"ApplicationController.respond_identity_file: #{identity_file.id} Not on the filesystem"}
         
-        if !thumbnail
+        if thumbnail
           respond_data(
             respond_type,
-            identity_file.get_file_contents,
-            identity_file.file_file_size,
+            identity_file.thumbnail_contents,
+            identity_file.thumbnail_size_bytes,
+            identity_file.file_file_name,
+            identity_file.file_content_type
+          )
+        elsif thumbnail2
+          respond_data(
+            respond_type,
+            identity_file.thumbnail2_contents,
+            identity_file.thumbnail2_size_bytes,
             identity_file.file_file_name,
             identity_file.file_content_type
           )
         else
           respond_data(
             respond_type,
-            identity_file.thumbnail_contents,
-            identity_file.thumbnail_size_bytes,
+            identity_file.get_file_contents,
+            identity_file.file_file_size,
             identity_file.file_file_name,
             identity_file.file_content_type
           )
@@ -248,10 +258,14 @@ class ApplicationController < ActionController::Base
           content_type = identity_file.file_content_type
         end
         
-        if !thumbnail
-          path = identity_file.evaluated_path
-        else
+        if thumbnail
+          identity_file.ensure_thumbnail
           path = identity_file.evaluated_thumbnail_path
+        elsif thumbnail2
+          identity_file.ensure_thumbnail2
+          path = identity_file.evaluated_thumbnail2_path
+        else
+          path = identity_file.evaluated_path
         end
         
         if File.exist?(path)

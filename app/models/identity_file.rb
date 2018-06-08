@@ -21,6 +21,9 @@ class IdentityFile < ApplicationRecord
   attr_accessor :_updatetype
   
   SIZE_THRESHOLD_FILESYSTEM = 1048576 * 10
+  
+  THUMBNAIL1_MAX_WIDTH = 400
+  THUMBNAIL2_MAX_WIDTH = 800
 
   # Unclear why but in some situations validations don't get called, so use do_before* instead
   #validate do
@@ -93,14 +96,22 @@ class IdentityFile < ApplicationRecord
   def clear_thumbnail
     self.thumbnail_contents = nil
     self.thumbnail_size_bytes = nil
+    self.thumbnail2_contents = nil
+    self.thumbnail2_size_bytes = nil
     self.thumbnail_skip = nil
     
     if !self.thumbnail_filesystem_path.blank?
       File.delete(self.thumbnail_filesystem_path)
     end
     
+    if !self.thumbnail2_filesystem_path.blank?
+      File.delete(self.thumbnail2_filesystem_path)
+    end
+    
     self.thumbnail_filesystem_path = nil
     self.thumbnail_filesystem_size = nil
+    self.thumbnail2_filesystem_path = nil
+    self.thumbnail2_filesystem_size = nil
   end
   
   def self.build(params = nil)
@@ -119,7 +130,8 @@ class IdentityFile < ApplicationRecord
 
   def as_json(options={})
     super.as_json(options).merge({
-      "thumbnail_contents" => thumbnail_contents.nil? ? nil : ::Base64.strict_encode64(thumbnail_contents)
+      "thumbnail_contents" => thumbnail_contents.nil? ? nil : ::Base64.strict_encode64(thumbnail_contents),
+      "thumbnail2_contents" => thumbnail2_contents.nil? ? nil : ::Base64.strict_encode64(thumbnail2_contents),
     })
   end
   
@@ -184,6 +196,16 @@ class IdentityFile < ApplicationRecord
     result
   end
   
+  def evaluated_thumbnail2_path
+    result = self.thumbnail2_filesystem_path
+    
+    if !ENV["FILES_PREFIX"].blank? && !File.exist?(result)
+      result = ENV["FILES_PREFIX"] + result
+    end
+    
+    result
+  end
+  
   def self.uploads_path
     if ENV["PERMDIR"].blank?
       raise "PERMDIR not set"
@@ -237,48 +259,58 @@ class IdentityFile < ApplicationRecord
     !self.thumbnail_skip && (!self.thumbnail_contents.nil? || !self.thumbnail_filesystem_path.blank?)
   end
   
-  def ensure_thumbnail
+  def ensure_thumbnail(max_width: THUMBNAIL1_MAX_WIDTH)
     
-    Rails.logger.debug{"IdentityFile ensure_thumbnail content_type: #{self.file_content_type}, is_image: #{self.is_image?}, thumbnail_contents_nil: #{self.thumbnail_contents.nil?}, thumbnail_filesystem_path_blank: #{self.thumbnail_filesystem_path.blank?}, thumbnail_skip: #{self.thumbnail_skip}, thumbnailable: #{self.is_thumbnailable?}"}
+    thumbnail_property = ""
+    thumbnail_file_suffix = ""
     
-    if self.is_image? && self.thumbnail_contents.nil? && self.thumbnail_filesystem_path.blank? && !self.thumbnail_skip && self.is_thumbnailable? && self.has_file?
+    case max_width
+    when THUMBNAIL1_MAX_WIDTH
+      thumbnail_property = "thumbnail"
+      thumbnail_file_suffix = "t"
+    else
+      thumbnail_property = "thumbnail2"
+      thumbnail_file_suffix = "t2"
+    end
+    
+    Rails.logger.debug{"IdentityFile.ensure_thumbnail: thumbnail_property: #{thumbnail_property}, #{self.thumbnail_skip}, #{self.has_file?}"}
+    
+    if self.is_image? && self.send("#{thumbnail_property}_contents").nil? && self.send("#{thumbnail_property}_filesystem_path").blank? && !self.thumbnail_skip && self.is_thumbnailable? && self.has_file?
       
-      Rails.logger.debug{"image_content: Generating thumbnail for #{self.id}, type #{self.file_content_type}"}
-      
-      max_width = 400
+      Rails.logger.debug{"IdentityFile.ensure_thumbnail: Generating #{thumbnail_property} for #{self.id}, type #{self.file_content_type}"}
       
       if self.filesystem_path.blank?
         
         fc = self.get_file_contents
         
         if !fc.nil? && fc.length > 0
-          Rails.logger.debug{"image_content: file contents: #{fc.inspect}"}
-          
           image = Magick::Image::from_blob(fc)
           
-          Rails.logger.debug{"image_content: Loaded image"}
+          Rails.logger.debug{"IdentityFile.ensure_thumbnail: Loaded image"}
           
           image = image.first
           
-          Rails.logger.debug{"image_content: Acquired first image cols #{image.columns}"}
+          Rails.logger.debug{"IdentityFile.ensure_thumbnail: Acquired first image cols #{image.columns}"}
           
           if image.columns > max_width
-            Rails.logger.debug{"image_content: Requires thumbnailing"}
+            Rails.logger.debug{"IdentityFile.ensure_thumbnail: Requires thumbnailing"}
             image.resize_to_fit!(max_width)
             blob = image.to_blob
-            self.thumbnail_contents = blob
-            self.thumbnail_size_bytes = blob.length
+            self.send("#{thumbnail_property}_contents=", blob)
+            self.send("#{thumbnail_property}_size_bytes=", blob.length)
             self.save!
-            Rails.logger.debug{"image_content: Saved thumbnail"}
+            Rails.logger.debug{"IdentityFile.ensure_thumbnail: Saved thumbnail"}
           else
-            Rails.logger.debug{"image_content: Thumbnail not required"}
+            Rails.logger.debug{"IdentityFile.ensure_thumbnail: Thumbnail not required"}
             self.thumbnail_skip = true
             self.save!
           end
         end
         
       else
-        thumbnail_path = self.filesystem_path + "t"
+        Rails.logger.debug{"IdentityFile.ensure_thumbnail: creating thumbnail on disk"}
+        
+        thumbnail_path = self.evaluated_path + thumbnail_file_suffix
         index = ""
         if !self.file_content_type.index("gif").nil? || !self.file_content_type.index("webm").nil?
           index = "[0]"
@@ -293,7 +325,7 @@ class IdentityFile < ApplicationRecord
         #   "libgomp: Thread creation failed: Resource temporarily unavailable"
         success = false
         
-        command_line = "convert #{self.filesystem_path}#{index} -auto-orient -thumbnail '#{max_width}>' #{thumbnail_path}"
+        command_line = "convert #{self.evaluated_path}#{index} -auto-orient -thumbnail '#{max_width}>' #{thumbnail_path}"
         
         child = Myp.spawn(
           command_line: command_line,
@@ -302,12 +334,12 @@ class IdentityFile < ApplicationRecord
         if child.status.exitstatus == 0
           success = true
         else
-          Myp.warn("Thumbnail id: #{self.id}, content_type: #{self.file_content_type}, name: #{self.file_file_name}, path: #{self.filesystem_path}, exit status #{child.status.exitstatus}, command line: #{command_line}, stdout: #{child.out}, stderr: #{child.err}")
+          Myp.warn("Thumbnail id: #{self.id}, content_type: #{self.file_content_type}, name: #{self.file_file_name}, path: #{self.evaluated_path}, exit status #{child.status.exitstatus}, command line: #{command_line}, stdout: #{child.out}, stderr: #{child.err}")
         end
         
         if success
-          self.thumbnail_filesystem_path = thumbnail_path
-          self.thumbnail_filesystem_size = File.size(thumbnail_path)
+          self.send("#{thumbnail_property}_filesystem_path=", thumbnail_path)
+          self.send("#{thumbnail_property}_filesystem_size=", File.size(thumbnail_path))
           self.save!
         else
           self.thumbnail_skip = true
@@ -315,6 +347,10 @@ class IdentityFile < ApplicationRecord
         end
       end
     end
+  end
+  
+  def ensure_thumbnail2(max_width: THUMBNAIL2_MAX_WIDTH)
+    self.ensure_thumbnail(max_width: max_width)
   end
   
   def self.create_for_path!(file_hash:)
@@ -344,6 +380,11 @@ class IdentityFile < ApplicationRecord
     if !self.thumbnail_filesystem_path.blank?
       if File.exist?(self.thumbnail_filesystem_path)
         File.delete(self.thumbnail_filesystem_path)
+      end
+    end
+    if !self.thumbnail2_filesystem_path.blank?
+      if File.exist?(self.thumbnail2_filesystem_path)
+        File.delete(self.thumbnail2_filesystem_path)
       end
     end
   end

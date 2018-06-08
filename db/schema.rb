@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180605012944) do
+ActiveRecord::Schema.define(version: 20180608031536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2977,6 +2977,10 @@ ActiveRecord::Schema.define(version: 20180605012944) do
     t.string "thumbnail_filesystem_path"
     t.integer "thumbnail_filesystem_size"
     t.boolean "is_public"
+    t.binary "thumbnail2_contents"
+    t.integer "thumbnail2_size_bytes"
+    t.string "thumbnail2_filesystem_path"
+    t.integer "thumbnail2_filesystem_size"
     t.index ["encrypted_password_id"], name: "index_identity_files_on_encrypted_password_id"
     t.index ["folder_id"], name: "index_identity_files_on_folder_id"
     t.index ["identity_id"], name: "index_identity_files_on_identity_id"
