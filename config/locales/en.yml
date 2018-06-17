@@ -2713,6 +2713,7 @@ en:
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
       rooftop: "Rooftop"
+      secretive: "Speakeasy/Secretive"
     treks:
       location: "Start Location"
       end_location: "End Location"

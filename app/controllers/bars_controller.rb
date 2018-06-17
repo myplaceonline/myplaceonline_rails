@@ -21,6 +21,7 @@ class BarsController < MyplaceonlineController
         :notes,
         :rating,
         :rooftop,
+        :secretive,
         location_attributes: LocationsController.param_names,
         bar_pictures_attributes: FilesController.multi_param_names
       )
@@ -28,5 +29,30 @@ class BarsController < MyplaceonlineController
 
     def show_map?
       true
+    end
+
+    def default_sort_columns
+      [Location.sorts]
+    end
+    
+    def additional_sorts
+      [
+        [I18n.t("myplaceonline.locations.name"), default_sort_columns[0]]
+      ]
+    end
+
+    def all_joins
+      "INNER JOIN locations ON locations.id = bars.location_id"
+    end
+
+    def all_includes
+      :location
+    end
+
+    def simple_index_filters
+      [
+        { name: :rooftop },
+        { name: :secretive },
+      ]
     end
 end

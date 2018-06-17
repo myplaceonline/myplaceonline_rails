@@ -25,6 +25,15 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :secretive,
+    value: obj.secretive,
+    placeholder: "myplaceonline.bars.secretive"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,

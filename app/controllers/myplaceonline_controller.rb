@@ -1381,12 +1381,45 @@ class MyplaceonlineController < ApplicationController
           
           popupHtml = "<p>#{ActionController::Base.helpers.link_to(x.display, obj_path(x))}</p><p>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.maps.full_map"), loc.map_url(prefer_human_readable: true), target: "_blank", class: "externallink")}</p>"
           
+          dotless = true
+          icon = "red"
+          labelColor = "#ffffff"
+          
+          if x.respond_to?("rating") && !x.rating.nil?
+            case x.rating
+            when 0
+              icon = "white"
+              labelColor = "#000000"
+            when 1
+              icon = "grey"
+              labelColor = "#000000"
+            when 2
+              icon = "yellow"
+              labelColor = "#000000"
+            when 3
+              icon = "red"
+              labelColor = "#ffffff"
+            when 4
+              icon = "blue"
+              labelColor = "#ffffff"
+            when 5
+              icon = "green"
+              labelColor = "#ffffff"
+            end
+          end
+          
+          if dotless
+            icon << "_dotless"
+          end
+          
           result = MapLocation.new(
             latitude: loc.latitude,
             longitude: loc.longitude,
             label: label,
             tooltip: x.display,
-            popupHtml: popupHtml
+            popupHtml: popupHtml,
+            icon: icon,
+            labelColor: labelColor,
           )
         end
       end
