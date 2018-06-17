@@ -306,6 +306,7 @@ class Identity < ApplicationRecord
   has_many :wallets, :dependent => :destroy
   has_many :financial_assets, :dependent => :destroy
   has_many :boondockings, :dependent => :destroy
+  has_many :allergies, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 

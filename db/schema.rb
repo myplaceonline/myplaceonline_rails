@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180608164544) do
+ActiveRecord::Schema.define(version: 20180617214323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,34 @@ ActiveRecord::Schema.define(version: 20180608164544) do
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_alerts_displays_on_identity_id"
+  end
+
+  create_table "allergies", force: :cascade do |t|
+    t.string "allergy_description"
+    t.date "started"
+    t.date "ended"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_allergies_on_identity_id"
+  end
+
+  create_table "allergy_files", force: :cascade do |t|
+    t.bigint "allergy_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["allergy_id"], name: "index_allergy_files_on_allergy_id"
+    t.index ["identity_file_id"], name: "index_allergy_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_allergy_files_on_identity_id"
   end
 
   create_table "annuities", id: :serial, force: :cascade do |t|
@@ -6874,6 +6902,10 @@ ActiveRecord::Schema.define(version: 20180608164544) do
   add_foreign_key "agents", "identities"
   add_foreign_key "agents", "identities", column: "agent_identity_id"
   add_foreign_key "alerts_displays", "identities"
+  add_foreign_key "allergies", "identities"
+  add_foreign_key "allergy_files", "allergies"
+  add_foreign_key "allergy_files", "identities"
+  add_foreign_key "allergy_files", "identity_files"
   add_foreign_key "annuities", "identities"
   add_foreign_key "apartment_lease_files", "apartment_leases"
   add_foreign_key "apartment_lease_files", "identities"

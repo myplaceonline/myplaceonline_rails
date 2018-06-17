@@ -281,6 +281,7 @@ en:
       loans: "Loans"
       financial_assets: "Financial Assets"
       boondockings: "Boondockings"
+      allergies: "Allergies"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -4207,3 +4208,7 @@ en:
       no_location: "No Location"
     boondockings:
       camp_location: "Camp Location"
+    allergies:
+      allergy_description: "Description"
+      started: "Started"
+      ended: "Ended"
