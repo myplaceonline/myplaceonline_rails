@@ -1384,6 +1384,7 @@ class MyplaceonlineController < ApplicationController
           dotless = true
           icon = "red"
           labelColor = "#ffffff"
+          ontop = false
           
           if x.respond_to?("rating") && !x.rating.nil?
             case x.rating
@@ -1405,6 +1406,7 @@ class MyplaceonlineController < ApplicationController
             when 5
               icon = "green"
               labelColor = "#ffffff"
+              ontop = true
             end
           end
           
@@ -1420,6 +1422,7 @@ class MyplaceonlineController < ApplicationController
             popupHtml: popupHtml,
             icon: icon,
             labelColor: labelColor,
+            ontop: ontop,
           )
         end
       end

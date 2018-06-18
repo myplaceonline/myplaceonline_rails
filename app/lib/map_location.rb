@@ -1,5 +1,5 @@
 class MapLocation
-  def initialize(latitude:, longitude:, label: nil, tooltip: nil, popupHtml: nil, icon: nil, labelColor: nil)
+  def initialize(latitude:, longitude:, label: nil, tooltip: nil, popupHtml: nil, icon: nil, labelColor: nil, ontop: false)
     @latitude = latitude
     @longitude = longitude
     @label = label
@@ -7,6 +7,7 @@ class MapLocation
     @popupHtml = popupHtml
     @icon = icon
     @labelColor = labelColor
+    @ontop = ontop
   end
   
   def as_json(options={})
@@ -16,7 +17,7 @@ class MapLocation
       final_icon = ActionController::Base.helpers.image_path("google/#{final_icon}.png")
     end
     
-    {
+    result = {
       position: {
         lat: @latitude.to_f,
         lng: @longitude.to_f
@@ -27,5 +28,11 @@ class MapLocation
       iconUrl: final_icon,
       labelColor: @labelColor,
     }
+    
+    if @ontop
+      result[:zIndex] = -1
+    end
+    
+    result
   end
 end
