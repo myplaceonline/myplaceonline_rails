@@ -250,15 +250,26 @@ class Location < ApplicationRecord
     result
   end
   
-  def map_directions_url(source_location: nil, destination_location: nil)
+  def map_directions_url(source_location: nil, destination_location: nil, from_current_location: false, to_current_location: false, autostart: false)
     result = self.map_link_component
     if !result.blank?
+      
+      # https://developers.google.com/maps/documentation/urls/guide
+      
       if !source_location.nil?
         result = "https://www.google.com/maps/dir/" + ERB::Util.url_encode(source_location.map_link_component) + "/" + ERB::Util.url_encode(result)
       elsif !destination_location.nil?
         result = "https://www.google.com/maps/dir/" + ERB::Util.url_encode(result) + "/" + ERB::Util.url_encode(destination_location.map_link_component)
+      elsif from_current_location
+        result = "https://www.google.com/maps/dir/" + ERB::Util.url_encode("Current Location") + "/" + ERB::Util.url_encode(result)
+      elsif to_current_location
+        result = "https://www.google.com/maps/dir/" + ERB::Util.url_encode(result) + "/" + ERB::Util.url_encode("Current Location")
       else
         result = nil
+      end
+      
+      if !result.blank? && autostart
+        result << "?dir_action=navigate"
       end
     end
     result

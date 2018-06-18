@@ -3739,6 +3739,7 @@ en:
     maps:
       map: "Map"
       full_map: "Full Map"
+      directions: "Directions"
     user_capabilities:
       capability: "Capability"
       capability_screen_scraper: "Screen Scraper"
