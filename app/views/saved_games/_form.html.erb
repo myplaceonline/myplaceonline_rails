@@ -1,0 +1,56 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :game_name,
+    value: obj.game_name,
+    placeholder: "myplaceonline.saved_games.game_name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATETIME,
+    name: :game_time,
+    value: obj.game_time,
+    placeholder: "myplaceonline.saved_games.game_time"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :contact,
+    existingobj: obj.contact,
+    heading: t("myplaceonline.saved_games.contact"),
+    objform: "contacts/form",
+    existingobjurl: "contact_path",
+    searchurl: "/contacts.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :saved_game_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>

@@ -190,10 +190,11 @@ Category.create!([
   {id: 190, name: "food_lists", link: "food_lists", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/text_list_numbers.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 191, name: "security_tokens", link: "security_tokens", position: 0, parent_id: 1, additional_filtertext: "api", icon: "FatCow_Icons16x16/security.png", explicit: nil, user_type_mask: nil, experimental: true, simple: nil, internal: nil},
   {id: 192, name: "exports", link: "exports", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/saved_exports.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
-  {id: 224, name: "wallets", link: "wallets", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/wallet.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
-  {id: 230, name: "financial_assets", link: "financial_assets", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/moneybox.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
-  {id: 231, name: "boondockings", link: "boondockings", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/tree_red.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
-  {id: 232, name: "allergies", link: "allergies", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/emotion_sweat.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
+  {id: 193, name: "wallets", link: "wallets", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/wallet.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 194, name: "financial_assets", link: "financial_assets", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/moneybox.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 195, name: "boondockings", link: "boondockings", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/tree_red.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 196, name: "allergies", link: "allergies", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/emotion_sweat.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 229, name: "saved_games", link: "saved_games", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/layer_save.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
 ])
 
 # Reinitialize to cache the categories created above

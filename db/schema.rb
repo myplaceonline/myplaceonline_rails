@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180617215331) do
+ActiveRecord::Schema.define(version: 20180703041929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -5316,6 +5316,35 @@ ActiveRecord::Schema.define(version: 20180617215331) do
     t.index ["password_id"], name: "index_reward_programs_on_password_id"
   end
 
+  create_table "saved_game_files", force: :cascade do |t|
+    t.bigint "saved_game_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_saved_game_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_saved_game_files_on_identity_id"
+    t.index ["saved_game_id"], name: "index_saved_game_files_on_saved_game_id"
+  end
+
+  create_table "saved_games", force: :cascade do |t|
+    t.string "game_name"
+    t.datetime "game_time"
+    t.bigint "contact_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contact_id"], name: "index_saved_games_on_contact_id"
+    t.index ["identity_id"], name: "index_saved_games_on_identity_id"
+  end
+
   create_table "security_tokens", force: :cascade do |t|
     t.string "security_token_value"
     t.text "notes"
@@ -7651,6 +7680,11 @@ ActiveRecord::Schema.define(version: 20180617215331) do
   add_foreign_key "reward_program_files", "reward_programs"
   add_foreign_key "reward_programs", "identities", name: "reward_programs_identity_id_fk"
   add_foreign_key "reward_programs", "passwords", name: "reward_programs_password_id_fk"
+  add_foreign_key "saved_game_files", "identities"
+  add_foreign_key "saved_game_files", "identity_files"
+  add_foreign_key "saved_game_files", "saved_games"
+  add_foreign_key "saved_games", "contacts"
+  add_foreign_key "saved_games", "identities"
   add_foreign_key "security_tokens", "identities"
   add_foreign_key "settings", "categories"
   add_foreign_key "settings", "identities"

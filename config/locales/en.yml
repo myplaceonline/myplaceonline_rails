@@ -282,6 +282,7 @@ en:
       financial_assets: "Financial Assets"
       boondockings: "Boondockings"
       allergies: "Allergies"
+      saved_games: "Saved Games"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -4214,3 +4215,7 @@ en:
       allergy_description: "Description"
       started: "Started"
       ended: "Ended"
+    saved_games:
+      game_name: "Game Name"
+      game_time: "Last Played"
+      contact: "Played With"
