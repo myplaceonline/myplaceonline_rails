@@ -41,7 +41,8 @@ class IdentityFileFolder < ApplicationRecord
         elsif folders.length == 1
           parent = folders[0]
         else
-          raise "TODO"
+          parent = folders[0]
+          Myp.warn("Multiple folders somehow: name: #{name}, identity: #{User.current_user.current_identity_id}")
         end
       else
         folders = IdentityFileFolder.where(
@@ -56,7 +57,8 @@ class IdentityFileFolder < ApplicationRecord
         elsif folders.length == 1
           parent = folders[0]
         else
-          raise "TODO"
+          parent = folders[0]
+          Myp.warn("Multiple folders somehow: name: #{name}, identity: #{User.current_user.current_identity_id}")
         end
       end
     end
