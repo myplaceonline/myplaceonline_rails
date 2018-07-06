@@ -20,7 +20,7 @@ class Apartment < ApplicationRecord
   child_pictures
 
   def display
-    location.display
+    location.address_one_line
   end
 
   def self.build(params = nil)
