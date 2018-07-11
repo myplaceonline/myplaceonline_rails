@@ -193,10 +193,19 @@ module ApplicationHelper
   
   def display_url(content:, format:, options:)
     if !content.blank?
+      # Handle malformed links
+      if !content.start_with?("/") && !content.include?(":/")
+        content = "http://" + content
+      end
+      
+      if !content.start_with?("/") && !content.include?(".")
+        content << ".com/"
+      end
+
       if options[:url_innercontent].blank?
         options[:url_innercontent] = content
       end
-
+      
       url_options = Hash.new
       url_options[:href] = content
       url_options[:class] = ""
