@@ -45,6 +45,15 @@ class Flight < ApplicationRecord
       nil
     end
   end
+  
+  def first_flight_start
+    ffl = self.first_flight_leg
+    if !ffl.nil?
+      ffl.depart_time
+    else
+      self.flight_start_date
+    end
+  end
 
   def trip_info_url
     if !self.confirmation_number.blank?

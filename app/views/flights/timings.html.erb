@@ -7,7 +7,7 @@
 <%= form_tag(flight_timings_path(@obj), method: :post) do %>
 
   <%
-  t = @obj.first_flight_leg.depart_time
+  t = @obj.first_flight_start
   %>
   <p><%= t("myplaceonline.flight_legs.depart_time") %>: <%= Myp.display_datetime(t, User.current_user) %></p>
 
