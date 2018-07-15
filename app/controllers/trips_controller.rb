@@ -45,7 +45,26 @@ class TripsController < MyplaceonlineController
   end
 
   def footer_items_show
-    result = super
+    result = []
+    
+    if !@obj.explicitly_completed && !MyplaceonlineExecutionContext.offline?
+      
+      if !@obj.started?
+        result << {
+          title: I18n.t("myplaceonline.trips.leaving"),
+          link: trip_leaving_path(@obj),
+          icon: "navigation"
+        }
+      end
+      
+      result << {
+        title: I18n.t("myplaceonline.trips.complete"),
+        link: trip_complete_path(@obj),
+        icon: "check"
+      }
+    end
+    
+    result = result + super
     
     if !MyplaceonlineExecutionContext.offline?
       result << {
@@ -81,14 +100,6 @@ class TripsController < MyplaceonlineController
       }
     end
     
-    if !@obj.explicitly_completed && !MyplaceonlineExecutionContext.offline?
-      result << {
-        title: I18n.t("myplaceonline.trips.complete"),
-        link: trip_complete_path(@obj),
-        icon: "check"
-      }
-    end
-    
     result
   end
   
@@ -104,8 +115,21 @@ class TripsController < MyplaceonlineController
       if @notify_emergency_contacts
         @obj.notify_emergency_contacts_complete
       end
-      redirect_to trip_path(@obj),
-        :flash => { :notice => I18n.t("myplaceonline.trips.trip_completed") }
+      redirect_to(
+        trip_path(@obj),
+        flash: { notice: I18n.t("myplaceonline.trips.trip_completed") }
+      )
+    end
+  end
+  
+  def leaving
+    set_obj
+    if request.post?
+      @obj.send_to_emergency_contacts(false, leaving: true, override_notify: true)
+      redirect_to(
+        trip_path(@obj),
+        flash: { notice: I18n.t("myplaceonline.trips.leaving_message") }
+      )
     end
   end
   

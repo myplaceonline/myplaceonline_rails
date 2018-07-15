@@ -1797,6 +1797,8 @@ en:
       notify_emergency_contacts: "Notify Emergency Contacts"
       emergency_contact_email_new: "planned"
       emergency_contact_email_updated: "updated"
+      emergency_contact_email_leaving: "is leaving for"
+      emergency_contact_email_leaving_subject: "Notice: %{contact} is leaving to %{location}"
       emergency_contact_email: "%{contact} %{verb} a trip to %{location} from %{start_date} until %{end_date}.\n\nMap: [%{map}](%{map})"
       emergency_contact_sms: "%{contact} %{verb} a trip to %{location} from %{start_date} until %{end_date}."
       emergency_contact_email_trip_completed: "%{contact} is back from the trip to %{location}."
@@ -1818,6 +1820,9 @@ en:
       final_costs_transportation: "Final costs (additional)"
       final_costs_food: "Final costs (food)"
       final_costs_additional: "Final costs (transportation)"
+      leaving: "Leaving"
+      leaving_intro: "Click the Leaving button below to send trip information to emergency contacts."
+      leaving_message: "Leaving message(s) sent"
     passports:
       region: "Country"
       passport_number: "Passport Number"

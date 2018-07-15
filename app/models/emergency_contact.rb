@@ -17,7 +17,7 @@ class EmergencyContact < ApplicationRecord
     result
   end
   
-  def send_contact(is_new, obj, body_short_markdown, body_long_markdown, subject_append = nil, suppress_sms_prefix: false)
+  def send_contact(is_new, obj, body_short_markdown, body_long_markdown, subject_append = nil, suppress_sms_prefix: false, subject: nil)
     
     if self.email.email_groups.length > 0
       raise "Not implemented"
@@ -32,14 +32,16 @@ class EmergencyContact < ApplicationRecord
       verb = obj.emergency_contact_create_verb
     end
     
-    subject = I18n.t(
-      is_new ? "myplaceonline.emergency_contacts.subject_new" : "myplaceonline.emergency_contacts.subject_edit",
-      {
-        contact: identity.display_short,
-        subject: "#{category.human_title_singular}#{subject_append}",
-        verb: I18n.t(verb)
-      }
-    )
+    if subject.nil?
+      subject = I18n.t(
+        is_new ? "myplaceonline.emergency_contacts.subject_new" : "myplaceonline.emergency_contacts.subject_edit",
+        {
+          contact: identity.display_short,
+          subject: "#{category.human_title_singular}#{subject_append}",
+          verb: I18n.t(verb)
+        }
+      )
+    end
     
     body_long_markdown += "\n\n" + I18n.t("myplaceonline.emergency_contacts.why_contacted")
     

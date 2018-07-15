@@ -264,9 +264,9 @@ class Trip < ApplicationRecord
     send_to_emergency_contacts(false)
   end
   
-  def send_to_emergency_contacts(is_new)
+  def send_to_emergency_contacts(is_new, leaving: false, override_notify: false)
     if MyplaceonlineExecutionContext.handle_updates?
-      if notify_emergency_contacts
+      if override_notify || self.notify_emergency_contacts
         identity.emergency_contacts.each do |emergency_contact|
           
           Rails.logger.debug{"Emergency contact #{emergency_contact.inspect}"}
@@ -281,6 +281,23 @@ class Trip < ApplicationRecord
             location_display = Myp.appendstrwrap(location_display, location.name)
           end
           
+          subject = nil
+          verb = nil
+          if leaving
+            verb = I18n.t("myplaceonline.trips.emergency_contact_email_leaving")
+            subject = I18n.t(
+              "myplaceonline.trips.emergency_contact_email_leaving_subject",
+              contact: identity.display_short,
+              location: location_display,
+            )
+          else
+            if is_new
+              verb = I18n.t("myplaceonline.trips.emergency_contact_email_new")
+            else
+              verb = I18n.t("myplaceonline.trips.emergency_contact_email_updated")
+            end
+          end
+          
           body_long_markdown = I18n.t("myplaceonline.trips.emergency_contact_email",
             {
               contact: identity.display_short,
@@ -288,7 +305,7 @@ class Trip < ApplicationRecord
               start_date: Myp.display_date_short_year(started, User.current_user),
               end_date: ended.nil? ? I18n.t("myplaceonline.general.unknown") : Myp.display_date_short_year(ended, User.current_user),
               map: location.map_url(prefer_human_readable: true),
-              verb: is_new ? I18n.t("myplaceonline.trips.emergency_contact_email_new") : I18n.t("myplaceonline.trips.emergency_contact_email_updated")
+              verb: verb
             }
           )
           
@@ -298,7 +315,7 @@ class Trip < ApplicationRecord
               location: location_display,
               start_date: Myp.display_date_short_year(started, User.current_user),
               end_date: ended.nil? ? I18n.t("myplaceonline.general.unknown") : Myp.display_date_short_year(ended, User.current_user),
-              verb: is_new ? I18n.t("myplaceonline.trips.emergency_contact_email_new") : I18n.t("myplaceonline.trips.emergency_contact_email_updated")
+              verb: verb
             }
           )
           
@@ -333,7 +350,8 @@ class Trip < ApplicationRecord
               "myplaceonline.trips.emergency_contact_subject_append",
               city: location.display_city
             ),
-            suppress_sms_prefix: true
+            suppress_sms_prefix: true,
+            subject: subject,
           )
         end
         
@@ -396,6 +414,25 @@ class Trip < ApplicationRecord
     result = !self.started.nil? && !self.ended.nil? && now >= User.current_user.in_time_zone(self.started) && now <= User.current_user.in_time_zone(self.ended, end_of_day: true)
 
     Rails.logger.debug{"trip active?: #{result}"}
+
+    result
+  end
+  
+  def started?
+    now = User.current_user.time_now
+    
+    check = self.started
+    
+    ntf = self.next_trip_flight
+    if !ntf.nil? && !ntf.flight.nil? && !ntf.flight.first_flight_start.nil?
+      check = ntf.flight.first_flight_start
+    end
+
+    Rails.logger.debug{"trip started?: check: #{check}"}
+
+    result = !check.nil? && now >= User.current_user.in_time_zone(check)
+
+    Rails.logger.debug{"trip started?: #{result}"}
 
     result
   end

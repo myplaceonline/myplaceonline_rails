@@ -1,0 +1,23 @@
+<% content_for :heading do -%><%= t("myplaceonline.trips.leaving") %><% end -%>
+<h1><%= t("myplaceonline.trips.leaving") %></h1>
+
+<%= flashes!(@obj) %>
+
+<p><%= t("myplaceonline.trips.leaving_intro") %></p>
+
+<%= form_tag do %>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.trips.leaving"), "data-icon" => "action", "data-iconpos" => "top", "style" => "background-color: green")
+        },
+        {
+          title: I18n.t("myplaceonline.general.cancel"),
+          link: controller.obj_path,
+          icon: "back"
+        },
+      ]
+    })
+  %>
+<% end %>

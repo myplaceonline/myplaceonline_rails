@@ -520,6 +520,7 @@ Rails.application.routes.draw do
       { instance: true, link: "share" },
       { instance: true, link: "shared" },
       { instance: true, link: "complete" },
+      { instance: true, link: "leaving" },
       {
         subresources: true,
         name: :trip_pictures,
