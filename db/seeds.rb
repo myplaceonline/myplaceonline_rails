@@ -194,7 +194,9 @@ Category.create!([
   {id: 194, name: "financial_assets", link: "financial_assets", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/moneybox.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 195, name: "boondockings", link: "boondockings", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/tree_red.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 196, name: "allergies", link: "allergies", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/emotion_sweat.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
-  {id: 229, name: "saved_games", link: "saved_games", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/layer_save.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
+  {id: 229, name: "saved_games", link: "saved_games", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/layer_save.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 230, name: "drinks", link: "drinks", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/glass_of_wine_empty.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 231, name: "research_papers", link: "research_papers", position: 0, parent_id: 3, additional_filtertext: nil, icon: "FatCow_Icons16x16/research.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
 ])
 
 # Reinitialize to cache the categories created above

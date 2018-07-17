@@ -1,0 +1,14 @@
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :document,
+    existingobj: obj.document,
+    heading: t("myplaceonline.research_papers.document"),
+    objform: "documents/form",
+    existingobjurl: "document_path",
+    searchurl: "/documents.json?perpage=0",
+    edit: edit,
+    autofocus: autofocus,
+    expanded_if_nil: true,
+  }
+%>

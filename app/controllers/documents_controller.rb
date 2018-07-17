@@ -10,6 +10,17 @@ class DocumentsController < MyplaceonlineController
   def bubble_text(obj)
     Myp.display_date_short_year(obj.document_date, User.current_user)
   end
+  
+  def self.param_names
+    [
+      :document_name,
+      :document_category,
+      :notes,
+      :important,
+      :document_date,
+      document_files_attributes: FilesController.multi_param_names
+    ]
+  end
 
   protected
     def insecure
@@ -31,13 +42,6 @@ class DocumentsController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:document).permit(
-        :document_name,
-        :document_category,
-        :notes,
-        :important,
-        :document_date,
-        document_files_attributes: FilesController.multi_param_names
-      )
+      params.require(:document).permit(DocumentsController.param_names)
     end
 end

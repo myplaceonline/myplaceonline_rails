@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180711010750) do
+ActiveRecord::Schema.define(version: 20180717230736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -5203,6 +5203,20 @@ ActiveRecord::Schema.define(version: 20180711010750) do
     t.index ["identity_id"], name: "index_reputation_reports_on_identity_id"
   end
 
+  create_table "research_papers", force: :cascade do |t|
+    t.bigint "document_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_id"], name: "index_research_papers_on_document_id"
+    t.index ["identity_id"], name: "index_research_papers_on_identity_id"
+  end
+
   create_table "restaurant_pictures", id: :serial, force: :cascade do |t|
     t.integer "restaurant_id"
     t.integer "identity_file_id"
@@ -7661,6 +7675,8 @@ ActiveRecord::Schema.define(version: 20180711010750) do
   add_foreign_key "reputation_report_messages", "reputation_reports"
   add_foreign_key "reputation_reports", "agents"
   add_foreign_key "reputation_reports", "identities"
+  add_foreign_key "research_papers", "documents"
+  add_foreign_key "research_papers", "identities"
   add_foreign_key "restaurant_pictures", "identities"
   add_foreign_key "restaurant_pictures", "identity_files"
   add_foreign_key "restaurant_pictures", "restaurants"

@@ -283,6 +283,7 @@ en:
       boondockings: "Boondockings"
       allergies: "Allergies"
       saved_games: "Saved Games"
+      research_papers: "Research Papers"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -4224,3 +4225,5 @@ en:
       game_name: "Game Name"
       game_time: "Last Played"
       contact: "Played With"
+    research_papers:
+      document: "Document"
