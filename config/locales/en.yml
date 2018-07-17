@@ -3457,6 +3457,7 @@ en:
       delete_file: "Delete File/Picture"
       important: "Important"
       document_date: "Date"
+      coauthors: "Co-authors"
     vehicle_services:
       files: "Files/Pictures"
       file: "File/Picture"

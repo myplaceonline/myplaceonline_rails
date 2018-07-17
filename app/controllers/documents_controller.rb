@@ -18,7 +18,8 @@ class DocumentsController < MyplaceonlineController
       :notes,
       :important,
       :document_date,
-      document_files_attributes: FilesController.multi_param_names
+      :coauthors,
+      document_files_attributes: FilesController.multi_param_names,
     ]
   end
 

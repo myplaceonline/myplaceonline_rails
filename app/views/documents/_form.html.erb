@@ -1,5 +1,14 @@
 <%= myp_text_field(f, :document_name, "myplaceonline.documents.document_name", obj.document_name, autofocus) %>
 <%= myp_date_field(f, :document_date, "myplaceonline.documents.document_date", obj.document_date) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :coauthors,
+    value: obj.coauthors,
+    placeholder: "myplaceonline.documents.coauthors",
+  )
+%>
 <%= myp_text_field(f, :document_category, "myplaceonline.documents.document_category", obj.document_category, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
 <%= myp_check_box(f, :important, "myplaceonline.documents.important") %>
 <%=
