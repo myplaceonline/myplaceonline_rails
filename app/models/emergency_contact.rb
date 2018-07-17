@@ -4,7 +4,7 @@ class EmergencyContact < ApplicationRecord
   child_property(name: :email, required: true)
 
   def display
-    email.all_targets.values.to_a.map{|x| x.display }.join(", ")
+    email.all_targets(include_phones: true).values.to_a.uniq.map{|x| x.display }.join(", ")
   end
 
   def self.build(params = nil)

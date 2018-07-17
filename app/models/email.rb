@@ -24,17 +24,22 @@ class Email < ApplicationRecord
     end
   end
   
-  def all_targets
+  def all_targets(include_phones: false)
     targets = {}
 
     email_contacts.each do |email_contact|
       email_contact.contact.contact_identity.emails.each do |identity_email|
         targets[identity_email] = email_contact.contact
       end
+      if include_phones
+        email_contact.contact.contact_identity.mobile_phone_numbers.each do |identity_phone|
+          targets[identity_phone] = email_contact.contact
+        end
+      end
     end
 
     email_groups.each do |email_group|
-      process_group(targets, email_group.group)
+      process_group(targets, email_group.group, include_phones: include_phones)
     end
     
     targets
@@ -243,10 +248,15 @@ class Email < ApplicationRecord
     end
   end
   
-  def process_group(to_hash, group)
+  def process_group(to_hash, group, include_phones: false)
     group.group_contacts.each do |group_contact|
       group_contact.contact.contact_identity.emails.each do |identity_email|
         to_hash[identity_email] = group_contact.contact
+      end
+      if include_phones
+        group_contact.contact.contact_identity.mobile_phone_numbers.each do |identity_phone|
+          to_hash[identity_phone] = group_contact.contact
+        end
       end
     end
     group.group_references.each do |group_reference|
