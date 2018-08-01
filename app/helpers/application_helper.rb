@@ -198,7 +198,7 @@ module ApplicationHelper
         content = "http://" + content
       end
       
-      if !content.start_with?("/") && !content.include?(".")
+      if !content.start_with?("/") && !content.include?(".") && !content.include?("http://localhost/") && !content.include?("http://localhost:")
         content << ".com/"
       end
 
