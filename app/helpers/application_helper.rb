@@ -872,7 +872,7 @@ module ApplicationHelper
     
     Rails.logger.debug{"ApplicationHelper.share_token: params[:token] = #{token}"}
     
-    if token.blank?
+    if token.blank? || (!token.blank? && User.current_user.guest?)
       
       if share_context.nil?
         share_context = context
