@@ -10,6 +10,8 @@ class PeriodicPayment < ApplicationRecord
   
   child_property(name: :password)
   
+  child_files
+
   def display
     result = periodic_payment_name
     if !payment_amount.nil?

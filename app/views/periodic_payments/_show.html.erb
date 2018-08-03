@@ -11,3 +11,4 @@
   <%= table_row_heading(t("myplaceonline.periodic_payments.instance")) %>
   <%= render partial: "periodic_payment_instances/show", locals: { obj: x } %>
 <% end %>
+<%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.periodic_payment_files) %>

@@ -57,7 +57,8 @@ class PeriodicPaymentsController < MyplaceonlineController
       :payment_amount,
       :suppress_reminder,
       password_attributes: PasswordsController.param_names,
-      periodic_payment_instances_attributes: PeriodicPaymentInstance.params
+      periodic_payment_instances_attributes: PeriodicPaymentInstance.params,
+      periodic_payment_files_attributes: FilesController.multi_param_names,
     ]
   end
 

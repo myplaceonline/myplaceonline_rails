@@ -52,3 +52,16 @@
 %>
   <%= render partial: "periodic_payment_instances/form", locals: { obj: childproperty || PeriodicPaymentInstance.build, edit: edit, autofocus: false, f: child_fields } %>
 <% end %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :periodic_payment_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>
