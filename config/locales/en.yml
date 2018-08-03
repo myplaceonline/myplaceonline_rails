@@ -284,6 +284,7 @@ en:
       allergies: "Allergies"
       saved_games: "Saved Games"
       research_papers: "Research Papers"
+      presents: "Presents"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -4228,3 +4229,9 @@ en:
       contact: "Played With"
     research_papers:
       document: "Document"
+    presents:
+      present_name: "Present"
+      present_given: "Date Given"
+      present_purchased: "Date Purchased"
+      present_amount: "Value"
+      contact: "Contact"

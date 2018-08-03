@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180717232345) do
+ActiveRecord::Schema.define(version: 20180803011544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4674,6 +4674,37 @@ ActiveRecord::Schema.define(version: 20180717232345) do
     t.index ["identity_id"], name: "index_prescriptions_on_identity_id"
   end
 
+  create_table "present_files", force: :cascade do |t|
+    t.bigint "present_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_present_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_present_files_on_identity_id"
+    t.index ["present_id"], name: "index_present_files_on_present_id"
+  end
+
+  create_table "presents", force: :cascade do |t|
+    t.string "present_name"
+    t.date "present_given"
+    t.date "present_purchased"
+    t.decimal "present_amount", precision: 10, scale: 2
+    t.bigint "contact_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contact_id"], name: "index_presents_on_contact_id"
+    t.index ["identity_id"], name: "index_presents_on_identity_id"
+  end
+
   create_table "problem_report_files", id: :serial, force: :cascade do |t|
     t.integer "problem_report_id"
     t.integer "identity_file_id"
@@ -7606,6 +7637,11 @@ ActiveRecord::Schema.define(version: 20180717232345) do
   add_foreign_key "prescription_refills", "prescriptions"
   add_foreign_key "prescriptions", "contacts", column: "doctor_id"
   add_foreign_key "prescriptions", "identities"
+  add_foreign_key "present_files", "identities"
+  add_foreign_key "present_files", "identity_files"
+  add_foreign_key "present_files", "presents"
+  add_foreign_key "presents", "contacts"
+  add_foreign_key "presents", "identities"
   add_foreign_key "problem_report_files", "identities"
   add_foreign_key "problem_report_files", "identity_files"
   add_foreign_key "problem_report_files", "problem_reports"
