@@ -1024,10 +1024,13 @@ var myplaceonline = function(mymodule) {
     }
   }
 
-  function createSuccessNotification(message, timeout) {
+  function createSuccessNotification(message, timeout, encodeHTML) {
     if (noty) {
       if (!timeout) {
         timeout = 4000;
+      }
+      if (encodeHTML) {
+        message = encodeEntities(message);
       }
       noty({text: message, layout: 'topCenter', type: 'success', timeout: timeout});
     } else {
@@ -1035,10 +1038,13 @@ var myplaceonline = function(mymodule) {
     }
   }
 
-  function createErrorNotification(message, duration, timeout) {
+  function createErrorNotification(message, timeout, encodeHTML) {
     if (noty) {
       if (!timeout) {
         timeout = 4000;
+      }
+      if (encodeHTML) {
+        message = encodeEntities(message);
       }
       noty({text: message, layout: 'topCenter', type: 'error', timeout: timeout});
     } else {
@@ -1106,7 +1112,7 @@ var myplaceonline = function(mymodule) {
     if (window.cordova && cordova.plugins && cordova.plugins.clipboard) {
       $("[data-clipboard-text]").click( function(e) {
         cordova.plugins.clipboard.copy($(this).data("clipboard-text"));
-        createSuccessNotification("Copied '" + $(this).data("clipboard-text") + "' to clipboard.");
+        createSuccessNotification("Copied '" + $(this).data("clipboard-text") + "' to clipboard.", null, true);
         return $(this).data("clipboard-clickthrough") == "yes" ? true : false;
       });
     } else {
@@ -1117,13 +1123,13 @@ var myplaceonline = function(mymodule) {
         var clipboard = new ZeroClipboard(objects);
         clipboard.on("ready", function(readyEvent) {
           clipboard.on("aftercopy", function(event) {
-            createSuccessNotification("Copied '" + event.data["text/plain"] + "' to clipboard.");
+            createSuccessNotification("Copied '" + event.data["text/plain"] + "' to clipboard.", null, true);
           });
         });
       } else if (clipboard_integration == 2) {
         $("[data-clipboard-text]").click( function(e) {
           window.ffclipboard.setText($(this).data("clipboard-text"));
-          createSuccessNotification("Copied '" + $(this).data("clipboard-text") + "' to clipboard.");
+          createSuccessNotification("Copied '" + $(this).data("clipboard-text") + "' to clipboard.", null, true);
           return $(this).data("clipboard-clickthrough") == "yes" ? true : false;
         });
       }
