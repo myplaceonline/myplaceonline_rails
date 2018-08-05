@@ -1,0 +1,40 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :quiz_question,
+    value: obj.quiz_question,
+    placeholder: "myplaceonline.quiz_items.quiz_question",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :quiz_answer,
+    value: obj.quiz_answer,
+    placeholder: "myplaceonline.quiz_items.quiz_answer",
+    collapsed: false,
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :link,
+    value: obj.link,
+    placeholder: "myplaceonline.quiz_items.link",
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: I18n.t("myplaceonline.category.quiz_items").singularize,
+  )
+%>

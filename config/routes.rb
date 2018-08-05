@@ -449,6 +449,16 @@ Rails.application.routes.draw do
         ]
       }
     ],
+    quizzes: [
+      { instance: true, link: "start" },
+      {
+        subresources: true,
+        name: :quiz_items,
+        subitems: [
+          { instance: true, link: "quiz_show" }
+        ]
+      },
+    ],
     recreational_vehicles: [
       {
         subresources: true,

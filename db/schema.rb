@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180803015140) do
+ActiveRecord::Schema.define(version: 20180805214258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4907,6 +4907,36 @@ ActiveRecord::Schema.define(version: 20180803015140) do
     t.index ["identity_id"], name: "index_quests_on_identity_id"
   end
 
+  create_table "quiz_items", force: :cascade do |t|
+    t.bigint "quiz_id"
+    t.string "quiz_question"
+    t.text "quiz_answer"
+    t.string "link"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_quiz_items_on_identity_id"
+    t.index ["quiz_id"], name: "index_quiz_items_on_quiz_id"
+  end
+
+  create_table "quizzes", force: :cascade do |t|
+    t.string "quiz_name"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_quizzes_on_identity_id"
+  end
+
   create_table "quotes", id: :serial, force: :cascade do |t|
     t.text "quote_text"
     t.date "quote_date"
@@ -7683,6 +7713,9 @@ ActiveRecord::Schema.define(version: 20180803015140) do
   add_foreign_key "quest_files", "quests"
   add_foreign_key "questions", "identities", name: "questions_identity_id_fk"
   add_foreign_key "quests", "identities"
+  add_foreign_key "quiz_items", "identities"
+  add_foreign_key "quiz_items", "quizzes"
+  add_foreign_key "quizzes", "identities"
   add_foreign_key "quotes", "identities"
   add_foreign_key "receipt_files", "identities"
   add_foreign_key "receipt_files", "identity_files"

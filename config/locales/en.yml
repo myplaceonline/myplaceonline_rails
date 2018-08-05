@@ -285,6 +285,8 @@ en:
       saved_games: "Saved Games"
       research_papers: "Research Papers"
       presents: "Presents"
+      quizzes: "Quizzes"
+      quiz_items: "Quiz Items"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
       meta_keywords: "myplaceonline, joy, meaning, order, online, helper, assistant, digital, home"
@@ -4235,3 +4237,15 @@ en:
       present_purchased: "Date Purchased"
       present_amount: "Value"
       contact: "Contact"
+    quizzes:
+      quiz_name: "Name"
+      add_quiz_item: "Add Quiz Item"
+      quiz_items: "Quiz Items"
+      start: "Start"
+    quiz_items:
+      quiz_question: "Question"
+      quiz_answer: "Answer"
+      link: "Link"
+      back: "Quiz"
+      quiz_show: "Quiz Question"
+      next_question: "Next"
