@@ -17,7 +17,7 @@ class QuizItem < ApplicationRecord
   validates :quiz_answer, presence: true
   
   def display
-    Myp.ellipses_if_needed(quiz_question, 16)
+    self.quiz_question
   end
   
   def self.params
