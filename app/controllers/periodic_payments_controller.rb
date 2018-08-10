@@ -89,4 +89,15 @@ class PeriodicPaymentsController < MyplaceonlineController
         PeriodicPaymentsController.param_names
       )
     end
+
+    def all_additional_sql(strict)
+      result = super(strict)
+      if !strict
+        if result.nil?
+          result = ""
+        end
+        result += " and (ended is null or ended > current_date)"
+      end
+      result
+    end
 end
