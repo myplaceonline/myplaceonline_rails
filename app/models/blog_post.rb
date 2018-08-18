@@ -43,4 +43,20 @@ class BlogPost < ApplicationRecord
   def ideal_path
     "/blogs/#{self.blog.id}/blog_posts/#{self.id}"
   end
+  
+  def computed_date
+    result = self.post_date
+    if result.nil?
+      result = self.updated_at
+    end
+    if result.nil?
+      result = self.created_at
+    end
+    
+    if !result.nil? && result.utc == result.utc.midnight
+      result = result.to_date
+    end
+    
+    result
+  end
 end
