@@ -1656,6 +1656,12 @@ module ApplicationHelper
           elsif options[:type] == Myp::FIELD_SELECT
             result = Myp.appendstr(
               result,
+              
+              # https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-select
+              # select(method, choices = nil, options = {}, html_options = {}, &block) 
+              
+              # https://api.rubyonrails.org/classes/ActionView/Helpers/FormOptionsHelper.html#method-i-select
+              
               options[:form].send(
                 options[:type].to_s,
                 name,
@@ -1705,6 +1711,12 @@ module ApplicationHelper
           elsif options[:type] == Myp::FIELD_SELECT
             result = Myp.appendstr(
               result,
+              
+              # https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html#method-i-select_tag
+              # select_tag(name, option_tags = nil, options = {})
+              
+              # The selected option, if any, is options[:value]
+              
               send(
                 options[:type].to_s + "_tag",
                 name,

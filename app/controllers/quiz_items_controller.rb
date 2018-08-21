@@ -59,8 +59,13 @@ class QuizItemsController < MyplaceonlineController
   def copy
     set_obj
     
-    @options = @obj.copy_targets
-                   .map{|quiz| [quiz.quiz_name, quiz.id]}
+    copy_targets = @obj.copy_targets
+    
+    @quizzes = copy_targets.map{|quiz| [quiz.quiz_name, quiz.id]}
+    @selected_quiz = nil
+    if copy_targets.length == 1
+      @selected_quiz = copy_targets[0].id
+    end
 
     if request.post?
       target = params[:target]

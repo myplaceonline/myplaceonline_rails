@@ -7,9 +7,10 @@
       type: Myp::FIELD_SELECT,
       name: :target,
       placeholder: "myplaceonline.quiz_items.copy_target",
-      select_options: @options,
+      select_options: @quizzes,
       autofocus: true,
       translate_select_options: false,
+      value: @selected_quiz,
     )
   %>
 
