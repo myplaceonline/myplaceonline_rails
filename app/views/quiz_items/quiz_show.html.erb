@@ -27,6 +27,11 @@
         link: quiz_path(@obj.quiz),
         icon: "back",
       },
+      {
+        title: t("myplaceonline.quiz_items.copy"),
+        link: quiz_quiz_item_copy_path(@obj.quiz),
+        icon: "tag",
+      },
     ]
   })
 %>

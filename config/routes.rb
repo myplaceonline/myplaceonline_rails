@@ -455,7 +455,8 @@ Rails.application.routes.draw do
         subresources: true,
         name: :quiz_items,
         subitems: [
-          { instance: true, link: "quiz_show" }
+          { instance: true, link: "quiz_show" },
+          { instance: true, link: "copy" }
         ]
       },
     ],

@@ -4249,3 +4249,5 @@ en:
       back: "Quiz"
       quiz_show: "Quiz Question"
       next_question: "Next"
+      copy: "Copy"
+      copy_target: "Quiz"

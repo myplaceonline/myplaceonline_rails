@@ -22,7 +22,7 @@ class QuizzesController < MyplaceonlineController
       icon: "bars"
     }
     
-    result
+    result + super
   end
   
   def start

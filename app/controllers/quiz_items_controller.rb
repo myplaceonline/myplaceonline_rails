@@ -27,12 +27,46 @@ class QuizItemsController < MyplaceonlineController
         title: I18n.t("myplaceonline.quiz_items.back"),
         link: quiz_path(@obj.quiz),
         icon: "back"
+      },
+      {
+        title: I18n.t("myplaceonline.quiz_items.copy"),
+        link: quiz_quiz_item_copy_path(@parent, @obj),
+        icon: "tag"
       }
     ] + super
   end
   
   def quiz_show
     set_obj
+  end
+  
+  def copy
+    set_obj
+    
+    @options = Quiz.where("identity_id = :identity_id and archived is null", identity_id: @obj.identity_id)
+                   .dup.to_a
+                   .delete_if{|quiz| quiz.id == @obj.quiz.id}
+                   .map{|quiz| [quiz.quiz_name, quiz.id]}
+
+    if request.post?
+      target = params[:target]
+      if !target.blank?
+        target_quiz = Quiz.find(params[:target].to_i)
+        if Ability.authorize(identity: User.current_user.domain_identity, subject: target_quiz, action: :edit, request: request)
+          QuizItem.create!(
+            identity_id: User.current_user.domain_identity,
+            quiz: target_quiz,
+            quiz_question: @obj.quiz_question,
+            quiz_answer: @obj.quiz_answer,
+            link: @obj.link,
+            notes: @obj.notes,
+          )
+          redirect_to(
+            quiz_start_path(@obj.quiz),
+          )
+        end
+      end
+    end
   end
   
   protected

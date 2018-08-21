@@ -1,0 +1,41 @@
+<% content_for :heading do -%><%= t("myplaceonline.quiz_items.copy") %><% end -%>
+
+<%= form_tag(quiz_quiz_item_copy_path(@obj.quiz, @obj), method: :post) do %>
+
+  <%=
+    input_field(
+      type: Myp::FIELD_SELECT,
+      name: :target,
+      placeholder: "myplaceonline.quiz_items.copy_target",
+      select_options: @options,
+      autofocus: true,
+      translate_select_options: false,
+    )
+  %>
+
+  <script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+  </script>
+
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.quiz_items.copy"), "data-icon" => "action", "data-iconpos" => "top", style: "background-color: green")
+        },
+        {
+          title: t("myplaceonline.category.quiz_items").singularize,
+          link: controller.obj_path,
+          icon: "search",
+        },
+        {
+          title: t("myplaceonline.category.quizzes").singularize,
+          link: quiz_path(@obj.quiz),
+          icon: "back",
+        },
+      ]
+    })
+  %>
+<% end %>
