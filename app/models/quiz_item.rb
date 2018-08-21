@@ -30,4 +30,26 @@ class QuizItem < ApplicationRecord
       :notes,
     ]
   end
+  
+  def copy_targets
+    Quiz.where("identity_id = :identity_id and archived is null", identity_id: self.identity_id)
+        .dup.to_a
+        .delete_if{|quiz| quiz.id == self.quiz.id}
+  end
+  
+  def copyable?
+    targets = self.copy_targets
+    
+    result = targets.length > 0
+    
+    targets.each do |target|
+      target.quiz_items.each do |target_item|
+        if target_item.quiz_question == self.quiz_question
+          result = false
+        end
+      end
+    end
+    
+    result
+  end
 end

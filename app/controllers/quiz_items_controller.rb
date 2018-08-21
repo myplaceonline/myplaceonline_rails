@@ -17,23 +17,39 @@ class QuizItemsController < MyplaceonlineController
         title: I18n.t("myplaceonline.quiz_items.back"),
         link: quiz_path(@parent),
         icon: "back"
-      }
+      },
+      {
+        title: I18n.t("myplaceonline.quizzes.start"),
+        link: quiz_start_path(@parent),
+        icon: "navigation"
+      },
     ]
   end
   
   def footer_items_show
-    [
-      {
-        title: I18n.t("myplaceonline.quiz_items.back"),
-        link: quiz_path(@obj.quiz),
-        icon: "back"
-      },
-      {
+    result = []
+    
+    result << {
+      title: I18n.t("myplaceonline.quiz_items.back"),
+      link: quiz_path(@obj.quiz),
+      icon: "back"
+    }
+    
+    if @obj.copyable?
+      result << {
         title: I18n.t("myplaceonline.quiz_items.copy"),
         link: quiz_quiz_item_copy_path(@parent, @obj),
         icon: "tag"
       }
-    ] + super
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.quizzes.start"),
+      link: quiz_start_path(@obj.quiz),
+      icon: "navigation"
+    }
+    
+    result + super
   end
   
   def quiz_show
@@ -43,9 +59,7 @@ class QuizItemsController < MyplaceonlineController
   def copy
     set_obj
     
-    @options = Quiz.where("identity_id = :identity_id and archived is null", identity_id: @obj.identity_id)
-                   .dup.to_a
-                   .delete_if{|quiz| quiz.id == @obj.quiz.id}
+    @options = @obj.copy_targets
                    .map{|quiz| [quiz.quiz_name, quiz.id]}
 
     if request.post?

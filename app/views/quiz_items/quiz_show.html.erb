@@ -9,29 +9,34 @@
 </div>
 
 <%=
+  footer_items = [
+    {
+      title: t("myplaceonline.quiz_items.next_question"),
+      link: quiz_quiz_item_quiz_show_path(@obj.quiz, @obj.quiz.next_random_question(previous_question: @obj)),
+      icon: "arrow-r",
+      style: "background-color: green",
+    },
+    {
+      title: t("myplaceonline.category.quiz_items").singularize,
+      link: controller.obj_path,
+      icon: "search",
+    },
+    {
+      title: t("myplaceonline.category.quizzes").singularize,
+      link: quiz_path(@obj.quiz),
+      icon: "back",
+    },
+  ]
+  
+  if @obj.copyable?
+    footer_items << {
+      title: t("myplaceonline.quiz_items.copy"),
+      link: quiz_quiz_item_copy_path(@obj.quiz),
+      icon: "tag",
+    }
+  end
+
   render(partial: "shared/footer", locals: {
-    items: [
-      {
-        title: t("myplaceonline.quiz_items.next_question"),
-        link: quiz_quiz_item_quiz_show_path(@obj.quiz, @obj.quiz.next_random_question(previous_question: @obj)),
-        icon: "arrow-r",
-        style: "background-color: green",
-      },
-      {
-        title: t("myplaceonline.category.quiz_items").singularize,
-        link: controller.obj_path,
-        icon: "search",
-      },
-      {
-        title: t("myplaceonline.category.quizzes").singularize,
-        link: quiz_path(@obj.quiz),
-        icon: "back",
-      },
-      {
-        title: t("myplaceonline.quiz_items.copy"),
-        link: quiz_quiz_item_copy_path(@obj.quiz),
-        icon: "tag",
-      },
-    ]
+    items: footer_items
   })
 %>

@@ -31,6 +31,17 @@ class QuizzesController < MyplaceonlineController
     redirect_to(quiz_quiz_item_quiz_show_path(@obj, @obj.next_random_question))
   end
 
+  def data_split_icon
+    "navigation"
+  end
+  
+  def split_link(obj)
+    ActionController::Base.helpers.link_to(
+      I18n.t("myplaceonline.quizzes.start"),
+      quiz_start_path(obj)
+    )
+  end
+  
   protected
     def insecure
       true
