@@ -5,9 +5,8 @@
 <div data-role="collapsible">
   <h3><%= t("myplaceonline.quiz_items.quiz_answer") %></h3>
   <%= data_row(heading: t("myplaceonline.quiz_items.quiz_answer"), prefix_heading: false, content: @obj.quiz_answer, wrap: false, markdown: true) %>
+  <%= data_row(heading: t("myplaceonline.quiz_items.link"), prefix_heading: true, content: @obj.link, wrap: false, url: true, url_external_target_blank: true) %>
 </div>
-
-<%= data_row(heading: t("myplaceonline.quiz_items.link"), prefix_heading: true, content: @obj.link, wrap: false, url: true, url_external_target_blank: true) %>
 
 <%=
   render(partial: "shared/footer", locals: {
