@@ -44,6 +44,12 @@ class QuizItemsController < MyplaceonlineController
     end
     
     result << {
+      title: I18n.t("myplaceonline.quiz_items.cut"),
+      link: quiz_quiz_item_cut_path(@parent, @obj),
+      icon: "recycle"
+    }
+    
+    result << {
       title: I18n.t("myplaceonline.quizzes.start"),
       link: quiz_start_path(@obj.quiz),
       icon: "navigation"
@@ -80,6 +86,39 @@ class QuizItemsController < MyplaceonlineController
             link: @obj.link,
             notes: @obj.notes,
           )
+          redirect_to(
+            quiz_start_path(@obj.quiz),
+          )
+        end
+      end
+    end
+  end
+  
+  def cut
+    set_obj
+    
+    cut_targets = @obj.copy_targets
+    
+    @quizzes = cut_targets.map{|quiz| [quiz.quiz_name, quiz.id]}
+    @selected_quiz = nil
+    if cut_targets.length == 1
+      @selected_quiz = cut_targets[0].id
+    end
+
+    if request.post?
+      target = params[:target]
+      if !target.blank?
+        target_quiz = Quiz.find(params[:target].to_i)
+        if Ability.authorize(identity: User.current_user.domain_identity, subject: target_quiz, action: :edit, request: request)
+          QuizItem.create!(
+            identity_id: User.current_user.domain_identity,
+            quiz: target_quiz,
+            quiz_question: @obj.quiz_question,
+            quiz_answer: @obj.quiz_answer,
+            link: @obj.link,
+            notes: @obj.notes,
+          )
+          @obj.destroy!
           redirect_to(
             quiz_start_path(@obj.quiz),
           )

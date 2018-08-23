@@ -4251,3 +4251,5 @@ en:
       next_question: "Next"
       copy: "Copy"
       copy_target: "Quiz"
+      cut: "Cut"
+      cut_target: "Quiz"

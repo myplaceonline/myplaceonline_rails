@@ -36,6 +36,12 @@
     }
   end
 
+  footer_items << {
+    title: t("myplaceonline.quiz_items.cut"),
+    link: quiz_quiz_item_cut_path(@obj.quiz),
+    icon: "recycle",
+  }
+  
   render(partial: "shared/footer", locals: {
     items: footer_items
   })
