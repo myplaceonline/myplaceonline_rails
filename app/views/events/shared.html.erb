@@ -46,7 +46,7 @@
   <p><%= link_to(t("myplaceonline.pictures.slideshow"), "#", class: "ui-btn ui-btn-inline", id: random_name) %></p>
   <%=
     render partial: 'myplaceonline/picture_slideshow', locals: {
-      pics: @obj.event_pictures.map{|x| x.identity_file},
+      pics: IdentityFile.validated(@obj.event_pictures.map{|x| x.identity_file}),
       random_name: random_name
     }
   %>

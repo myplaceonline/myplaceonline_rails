@@ -12,7 +12,7 @@
             <%= attribute_table_row_span(link_to(t("myplaceonline.pictures.slideshow"), "#", class: "ui-btn", id: random_name)) %>
             <%=
               render partial: 'myplaceonline/picture_slideshow', locals: {
-                pics: files,
+                pics: IdentityFile.validated(files),
                 random_name: random_name
               }
             %>

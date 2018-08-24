@@ -458,4 +458,12 @@ class IdentityFile < ApplicationRecord
       port: Rails.configuration.default_url_options[:port]
     )
   end
+  
+  def self.validated(pics)
+    if pics.nil?
+      nil
+    else
+      pics.delete_if{|x| x.urlname.blank? }
+    end
+  end
 end

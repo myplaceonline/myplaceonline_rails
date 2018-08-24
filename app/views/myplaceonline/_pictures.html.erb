@@ -35,7 +35,7 @@
   <% if pics.length >= 1 %>
     <%=
       render partial: 'myplaceonline/picture_slideshow', locals: {
-        pics: pics.map{|p| p.identity_file},
+        pics: IdentityFile.validated(pics.map{|p| p.identity_file}),
         random_name: random_name
       }
     %>
