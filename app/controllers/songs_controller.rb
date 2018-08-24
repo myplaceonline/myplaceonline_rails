@@ -13,12 +13,7 @@ class SongsController < MyplaceonlineController
       :secret,
       :awesome,
       musical_group_attributes: MusicalGroup.params,
-      identity_file_attributes: [
-        :id,
-        :_destroy,
-        :file,
-        :notes
-      ]
+      identity_file_attributes: FilesController.param_names
     ]
   end
 

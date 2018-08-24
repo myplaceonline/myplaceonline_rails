@@ -827,11 +827,7 @@ class Identity < ApplicationRecord
         :region,
         :sub_region1,
         :_destroy,
-        identity_file_attributes: [
-          :id,
-          :file,
-          :_destroy
-        ]
+        identity_file_attributes: FilesController.param_names
       ],
       identity_relationships_attributes: [
         :id,
@@ -848,11 +844,7 @@ class Identity < ApplicationRecord
       identity_pictures_attributes: [
         :id,
         :_destroy,
-        identity_file_attributes: [
-          :id,
-          :file,
-          :notes
-        ]
+        identity_file_attributes: FilesController.param_names
       ]
     ], include_company) {[
       company_attributes: Company.param_names(include_website: include_website)

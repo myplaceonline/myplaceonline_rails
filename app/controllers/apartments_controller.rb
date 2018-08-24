@@ -65,11 +65,7 @@ class ApartmentsController < MyplaceonlineController
         apartment_pictures_attributes: [
           :id,
           :_destroy,
-          identity_file_attributes: [
-            :id,
-            :file,
-            :notes
-          ]
+          identity_file_attributes: FilesController.param_names
         ]
       )
     end
