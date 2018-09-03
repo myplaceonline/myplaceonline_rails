@@ -1256,7 +1256,7 @@ var myplaceonline = function(mymodule) {
   };
   
   mymodule.setBaseUrl = function(newvalue) {
-    if (newvalue.startsWith("http://localhost")) {
+    if (startsWith(newvalue, "http://localhost")) {
       baseurl = newvalue;
     }
   }

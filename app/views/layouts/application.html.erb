@@ -68,13 +68,15 @@
         <% if !MyplaceonlineExecutionContext.offline? %>
         // Shift+Left Click middle header icon for category search popup
         myplaceonline.onPageLoad(function() {
-          myplaceonline.remoteDataListInitialize($("#mainButtonPopup_search_list"), [
-            {title: "<%= t("myplaceonline.general.categories") %>", url: "/api/categories.json", static_list: true}
-            <% if Myp.full_text_search? && !MyplaceonlineExecutionContext.offline? %>
-            , {title: "<%= t("myplaceonline.general.everything") %>", url: "/api/search.json"}
-            <% end %>
-          ]);
-          myplaceonline.hookListviewEnter($("#mainButtonPopup_search_container input"), "#mainButtonPopup_search_list");
+          if (myplaceonline.remoteDataListInitialize) {
+            myplaceonline.remoteDataListInitialize($("#mainButtonPopup_search_list"), [
+              {title: "<%= t("myplaceonline.general.categories") %>", url: "/api/categories.json", static_list: true}
+              <% if Myp.full_text_search? && !MyplaceonlineExecutionContext.offline? %>
+              , {title: "<%= t("myplaceonline.general.everything") %>", url: "/api/search.json"}
+              <% end %>
+            ]);
+            myplaceonline.hookListviewEnter($("#mainButtonPopup_search_container input"), "#mainButtonPopup_search_list");
+          }
         });
         <% end %>
         

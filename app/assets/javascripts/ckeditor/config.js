@@ -143,7 +143,10 @@ CKEDITOR.editorConfig = function( config )
   // tableselection,undo,wsc
   
   config.extraPlugins = 'markdown,clipboard,autolink';
-  config.removePlugins = 'elementspath,contextmenu,magicline,a11yhelp';
+  
+  // https://stackoverflow.com/a/45414100/4135310
+  config.removePlugins = 'elementspath,contextmenu,magicline,a11yhelp,liststyle,tabletools,tableselection';
+  config.disableNativeSpellChecker = false;
 
   //config.startupMode = 'markdown';
   config.format_tags = 'p;h1;h2;h3;h4;h5;h6;pre';
