@@ -451,6 +451,7 @@ Rails.application.routes.draw do
     ],
     quizzes: [
       { instance: true, link: "start" },
+      { instance: true, link: "autogenerate" },
       {
         subresources: true,
         name: :quiz_items,
