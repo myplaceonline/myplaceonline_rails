@@ -83,8 +83,19 @@ class Quiz < ApplicationRecord
         parent = link.parent
         while !parent.nil?
           if parent.name == "p" || parent.name == "li"
-            answer = link.parent.inner_html
-            sibling = link.parent.previous_sibling
+            answer = parent.inner_html
+            
+            if parent.name == "li"
+              parent = parent.parent
+              while !parent.nil?
+                if parent.name == "ol" && parent.parent.name != "li"
+                  break
+                end
+                parent = parent.parent
+              end
+            end
+            
+            sibling = parent.previous_sibling
             while !sibling.nil?
               if sibling.name.start_with?("h")
                 h_id = sibling["id"]
