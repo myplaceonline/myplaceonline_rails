@@ -8,6 +8,7 @@ class Quiz < ApplicationRecord
       { name: :notes, type: ApplicationRecord::PROPERTY_TYPE_MARKDOWN },
       { name: :quiz_items, type: ApplicationRecord::PROPERTY_TYPE_CHILDREN },
       { name: :autolink, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :autogenerate_context, type: ApplicationRecord::PROPERTY_TYPE_STRING },
     ]
   end
 
@@ -46,6 +47,25 @@ class Quiz < ApplicationRecord
     doc = Nokogiri::HTML(html[:body]) do |config|
       # https://www.nokogiri.org/tutorials/parsing_an_html_xml_document.html
       config.huge.noerror.noblanks.noent
+    end
+    
+    if !self.autogenerate_context.blank?
+      newdoc = Nokogiri::HTML::Document.parse("<html />")
+      root = newdoc.root
+      subset = doc.xpath(self.autogenerate_context)
+      if subset.count > 0
+        subset = subset[0]
+        root << subset.dup
+        sibling = subset.next_sibling
+        while !sibling.nil?
+          if sibling.name == subset.name
+            break
+          end
+          root << sibling.dup
+          sibling = sibling.next_sibling
+        end
+        doc = newdoc
+      end
     end
     
     # https://www.nokogiri.org/tutorials/searching_a_xml_html_document.html

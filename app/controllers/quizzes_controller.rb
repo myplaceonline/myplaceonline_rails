@@ -87,6 +87,7 @@ class QuizzesController < MyplaceonlineController
         :quiz_name,
         :notes,
         :autolink,
+        :autogenerate_context,
       )
     end
 end
