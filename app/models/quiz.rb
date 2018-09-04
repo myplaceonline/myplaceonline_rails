@@ -77,18 +77,22 @@ class Quiz < ApplicationRecord
       # https://www.rubydoc.info/github/sparklemotion/nokogiri/Nokogiri/XML/Element
       links.each do |link|
         
+        Rails.logger.debug{"Processing #{link}"}
+        
         context_link = nil
         answer = link.inner_html
         
         parent = link.parent
         while !parent.nil?
-          if parent.name == "p" || parent.name == "li"
+          if parent.name == "p" || parent.name == "li" || parent.name == "div"
             answer = parent.inner_html
             
             if parent.name == "li"
               parent = parent.parent
               while !parent.nil?
-                if parent.name == "ol" && parent.parent.name != "li"
+                if (parent.name == "ol" || parent.name == "ul") && parent.parent.name != "li"
+                  break
+                elsif parent.parent.document?
                   break
                 end
                 parent = parent.parent
