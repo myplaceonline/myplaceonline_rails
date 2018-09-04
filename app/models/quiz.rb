@@ -79,19 +79,25 @@ class Quiz < ApplicationRecord
         
         context_link = nil
         answer = link.inner_html
-        if link.parent.name == "p"
-          answer = link.parent.inner_html
-          sibling = link.parent.previous_sibling
-          while !sibling.nil?
-            if sibling.name.start_with?("h")
-              h_id = sibling["id"]
-              if !h_id.blank?
-                context_link = self.autolink + "#" + h_id
-                break
+        
+        parent = link.parent
+        while !parent.nil?
+          if parent.name == "p" || parent.name == "li"
+            answer = link.parent.inner_html
+            sibling = link.parent.previous_sibling
+            while !sibling.nil?
+              if sibling.name.start_with?("h")
+                h_id = sibling["id"]
+                if !h_id.blank?
+                  context_link = self.autolink + "#" + h_id
+                  break
+                end
               end
+              sibling = sibling.previous_sibling
             end
-            sibling = sibling.previous_sibling
+            break
           end
+          parent = parent.parent
         end
         
         self.quiz_items << QuizItem.new(
