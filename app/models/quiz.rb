@@ -71,7 +71,15 @@ class Quiz < ApplicationRecord
     # https://www.nokogiri.org/tutorials/searching_a_xml_html_document.html
     links = doc.xpath("//a")
     
+    results = {
+      new_items: 0,
+      old_items: 0,
+    }
+    
     ActiveRecord::Base.transaction do
+      
+      results[:old_items] = self.quiz_items.count
+      
       self.quiz_items.destroy_all
       
       # https://www.rubydoc.info/github/sparklemotion/nokogiri/Nokogiri/XML/Element
@@ -123,9 +131,13 @@ class Quiz < ApplicationRecord
           link: context_link,
           notes: nil,
         )
+        
+        results[:new_items] = results[:new_items] + 1
       end
       
       self.save!
     end
+    
+    results
   end
 end
