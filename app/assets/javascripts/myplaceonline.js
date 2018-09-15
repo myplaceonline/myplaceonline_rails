@@ -28,7 +28,7 @@ var myplaceonline = function(mymodule) {
   var maxjsonobj = 200;
   var heightPadding = 41;
   var debug = false;
-  var loadedScripts = [];
+  var loadedResources = [];
   var onetimeFunctions = [];
   var jserrors = 0;
   var holderrors = "";
@@ -893,8 +893,8 @@ var myplaceonline = function(mymodule) {
   function loadExternalScript(url, async, successFunc, multiple) {
     consoleLog("loadExternalScript: url " + url + ", async " + async + ", multiple " + multiple);
     if (!multiple) {
-      for (var i in loadedScripts) {
-        if (loadedScripts[i] == url) {
+      for (var i in loadedResources) {
+        if (loadedResources[i] == url) {
           consoleLog("loadExternalScript: script already loaded");
           if (successFunc) {
             successFunc();
@@ -903,7 +903,7 @@ var myplaceonline = function(mymodule) {
         }
       }
     }
-    loadedScripts.push(url);
+    loadedResources.push(url);
     return $.ajax({
       url: url,
       dataType: "script",
@@ -918,13 +918,14 @@ var myplaceonline = function(mymodule) {
   function loadExternalCss(url, multiple) {
     consoleLog("loadExternalCss: url " + url + ", multiple " + multiple);
     if (!multiple) {
-      for (var i in loadedScripts) {
-        if (loadedScripts[i] == url) {
+      for (var i in loadedResources) {
+        if (loadedResources[i] == url) {
           return false;
         }
       }
     }
     $('head').append('<link rel="stylesheet" href="' + url + '" type="text/css" />');
+    loadedResources.push(url);
     return true;
   }
 

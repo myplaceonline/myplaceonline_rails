@@ -20,4 +20,5 @@ Rails.application.config.assets.precompile += %w(
   *.css
   ckeditor/*
   markerclusterer.js
+  dygraph.js
 )

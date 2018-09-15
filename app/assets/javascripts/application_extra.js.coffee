@@ -7,7 +7,6 @@
 #= require myplaceonline_final
 #= require jtsage-datebox.min.js
 #= require jtsage-datebox.i18n.en.utf8.js
-#= require dygraph-combined
 #= require magnific-popup
 #= require ckeditor/init
 #= require ckeditor/config

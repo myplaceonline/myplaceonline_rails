@@ -24,13 +24,20 @@
   <div id="graphdiv" style="width: 100%"></div>
   <script type="text/javascript">
     myplaceonline.onPageLoad(function() {
-      myplaceonline.maybeFocus(".autofocus");
-      var g = new Dygraph(
-        document.getElementById("graphdiv"),
+      myplaceonline.loadExternalCss(myplaceonline.createUrl("<%= stylesheet_path("dygraph.css") %>"));
+      myplaceonline.loadExternalScript(
+        myplaceonline.createUrl("<%= javascript_path("dygraph.js") %>"),
+        true,
+        function() {
+          myplaceonline.maybeFocus(".autofocus");
+          var g = new Dygraph(
+            document.getElementById("graphdiv"),
 
-        // CSV or path to a CSV file.
-        <%= @graphdata.to_json.html_safe %>
+            // CSV or path to a CSV file.
+            <%= @graphdata.to_json.html_safe %>
 
+          );
+        }
       );
     });
   </script>
