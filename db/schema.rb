@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180904045741) do
+ActiveRecord::Schema.define(version: 20180918001901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -639,6 +639,19 @@ ActiveRecord::Schema.define(version: 20180904045741) do
     t.datetime "updated_at", null: false
     t.index ["camp_location_id"], name: "index_boondockings_on_camp_location_id"
     t.index ["identity_id"], name: "index_boondockings_on_identity_id"
+  end
+
+  create_table "boycott_files", force: :cascade do |t|
+    t.bigint "boycott_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["boycott_id"], name: "index_boycott_files_on_boycott_id"
+    t.index ["identity_file_id"], name: "index_boycott_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_boycott_files_on_identity_id"
   end
 
   create_table "boycotts", force: :cascade do |t|
@@ -7105,6 +7118,9 @@ ActiveRecord::Schema.define(version: 20180904045741) do
   add_foreign_key "books", "identities", name: "books_identity_id_fk"
   add_foreign_key "boondockings", "camp_locations"
   add_foreign_key "boondockings", "identities"
+  add_foreign_key "boycott_files", "boycotts"
+  add_foreign_key "boycott_files", "identities"
+  add_foreign_key "boycott_files", "identity_files"
   add_foreign_key "boycotts", "identities"
   add_foreign_key "business_card_files", "business_cards"
   add_foreign_key "business_card_files", "identities"

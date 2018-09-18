@@ -1,4 +1,8 @@
 class BoycottsController < MyplaceonlineController
+  def may_upload
+    true
+  end
+
   protected
     def insecure
       true
@@ -19,6 +23,7 @@ class BoycottsController < MyplaceonlineController
         :boycott_name,
         :boycott_start,
         :notes,
+        boycott_files_attributes: FilesController.multi_param_names
       )
     end
 end
