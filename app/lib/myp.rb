@@ -105,6 +105,7 @@ module Myp
   
   # We want at least 128 bits of randomness, so
   # min(POSSIBILITIES_*.length)^DEFAULT_PASSWORD_LENGTH should be >= 2^128
+  # If changing this, change en.yml myplaceonline.passwords.generate_password_length
   DEFAULT_PASSWORD_LENGTH = 22
   
   # Avoid 1, l, o, O, 0, | characters to avoid ambiguity
@@ -973,10 +974,25 @@ module Myp
   
   def self.map_cipher(encryption_mode)
     case encryption_mode
-    when Myp::ENCRYPTION_MODE_AES_256_GCM
+    when Myp::ENCRYPTION_MODE_AES_128_GCM
       result = "aes-128-gcm"
     when Myp::ENCRYPTION_MODE_AES_256_CBC
       result = "aes-256-cbc"
+    else
+      raise "TODO"
+    end
+    result
+  end
+  
+  def self.cipher_key_length(encryption_mode)
+    # https://github.com/digitalbazaar/forge/issues/207
+    #cipher_key_length = OpenSSL::Cipher.new(cipher).key_len
+
+    case encryption_mode
+    when Myp::ENCRYPTION_MODE_AES_128_GCM
+      result = 16
+    when Myp::ENCRYPTION_MODE_AES_256_CBC
+      result = 32
     else
       raise "TODO"
     end
@@ -999,8 +1015,7 @@ module Myp
     
     cipher = Myp.map_cipher(value.encryption_type)
     
-    # https://github.com/digitalbazaar/forge/issues/207
-    cipher_key_length = OpenSSL::Cipher.new(cipher).key_len
+    cipher_key_length = Myp.cipher_key_length(value.encryption_type)
     
     # OpenSSL only uses an 8 byte salt: https://www.openssl.org/docs/crypto/EVP_BytesToKey.html
     # "The standard recommends a salt length of at least [8 bytes]." (http://en.wikipedia.org/wiki/PBKDF2)
@@ -1039,7 +1054,7 @@ module Myp
   def self.decrypt(encrypted_value, key)
     cipher = Myp.map_cipher(encrypted_value.encryption_type)
     
-    cipher_key_length = OpenSSL::Cipher.new(cipher).key_len
+    cipher_key_length = Myp.cipher_key_length(encrypted_value.encryption_type)
     
     generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(encrypted_value.salt, cipher_key_length)
     
@@ -1587,14 +1602,13 @@ module Myp
     end
   end
   
-  ENCRYPTION_MODE_AES_256_GCM = 0
+  ENCRYPTION_MODE_AES_128_GCM = 0
   ENCRYPTION_MODE_AES_256_CBC = 1
   
-  # TODO http://stackoverflow.com/questions/42774930/how-do-i-use-aes-128-gcm-encryption-in-rails
-  ENCRYPTION_MODE_DEFAULT = ENCRYPTION_MODE_AES_256_CBC
+  ENCRYPTION_MODE_DEFAULT = ENCRYPTION_MODE_AES_128_GCM
   
   ENCRYPTION_MODES = [
-    # ["myplaceonline.encryption_modes.aes_256_gcm", ENCRYPTION_MODE_AES_256_GCM],
+    ["myplaceonline.encryption_modes.aes_128_gcm", ENCRYPTION_MODE_AES_128_GCM],
     ["myplaceonline.encryption_modes.aes_256_cbc", ENCRYPTION_MODE_AES_256_CBC],
   ]
   
