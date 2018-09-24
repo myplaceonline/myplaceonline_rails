@@ -21,10 +21,13 @@ class Quiz < ApplicationRecord
   end
   
   def next_random_question(previous_question: nil)
-    result = self.quiz_items[rand(self.quiz_items.count)]
+    targets = self.quiz_items.unignored
+    Rails.logger.debug{"Quiz.next_random_question: targets = #{targets.count}"}
+    result = targets[rand(targets.count)]
     if !previous_question.nil? && result == previous_question
-      result = self.quiz_items[rand(self.quiz_items.count)]
+      result = targets[rand(targets.count)]
     end
+    Rails.logger.debug{"Quiz.next_random_question: #{result}"}
     result
   end
 
@@ -76,9 +79,16 @@ class Quiz < ApplicationRecord
       old_items: 0,
     }
     
+    ignored = {}
+    
     ActiveRecord::Base.transaction do
       
       results[:old_items] = self.quiz_items.count
+      
+      # Save off any ignored items
+      self.quiz_items.ignored.each do |ignored_item|
+        ignored[ignored_item.quiz_question] = true
+      end
       
       self.quiz_items.destroy_all
       
@@ -91,7 +101,7 @@ class Quiz < ApplicationRecord
         answer = link.inner_html
         
         parent = link.parent
-        while !parent.nil?
+        while !parent.nil? && !parent.document?
           if parent.name == "p" || parent.name == "li" || parent.name == "div"
             answer = parent.inner_html
             
@@ -123,13 +133,17 @@ class Quiz < ApplicationRecord
           parent = parent.parent
         end
         
+        title = I18n.t("myplaceonline.quizzes.autogenerate_question", question: Myp.capitalize_first_letter(link.inner_html))
+        Rails.logger.debug{"Title: #{title}"}
+        
         self.quiz_items << QuizItem.new(
           identity_id: User.current_user.domain_identity,
           quiz: self,
-          quiz_question: I18n.t("myplaceonline.quizzes.autogenerate_question", question: link.inner_html.titleize),
+          quiz_question: title,
           quiz_answer: Myp.html_to_markdown(answer),
           link: context_link,
           notes: nil,
+          ignore: ignored.has_key?(title)
         )
         
         results[:new_items] = results[:new_items] + 1

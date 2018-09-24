@@ -3554,5 +3554,12 @@ module Myp
     result
   end
   
+  def self.capitalize_first_letter(str)
+    if !str.nil?
+      str = str[0].capitalize + str[1..-1]
+    end
+    str
+  end
+  
   Rails.logger.info{"Myp static initialization ended"}
 end

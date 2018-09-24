@@ -4258,3 +4258,5 @@ en:
       copy_target: "Quiz"
       cut: "Cut"
       cut_target: "Quiz"
+      ignore: "Ignore"
+      ignored: "Question Ignored"

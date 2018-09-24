@@ -127,6 +127,20 @@ class QuizItemsController < MyplaceonlineController
     end
   end
   
+  def ignore
+    set_obj
+    
+    @obj.ignore = true
+    @obj.save!
+    
+    redirect_to(
+      quiz_start_path(@obj.quiz),
+      
+      # No value in a flash because the quiz start will do an immediate redirect and the flash will be lost
+      #flash: { notice: I18n.t("myplaceonline.quiz_items.ignored") }
+    )
+  end
+  
   protected
     def insecure
       true

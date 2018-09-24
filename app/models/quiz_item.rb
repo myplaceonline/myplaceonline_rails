@@ -16,6 +16,9 @@ class QuizItem < ApplicationRecord
   validates :quiz_question, presence: true
   validates :quiz_answer, presence: true
   
+  scope :ignored, -> { where(ignore: true) }
+  scope :unignored, -> { where("(ignore is null or ignore = ?)", false) }
+  
   def display
     self.quiz_question
   end
@@ -28,6 +31,7 @@ class QuizItem < ApplicationRecord
       :quiz_answer,
       :link,
       :notes,
+      :ignore,
     ]
   end
   

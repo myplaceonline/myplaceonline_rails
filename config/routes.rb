@@ -459,6 +459,7 @@ Rails.application.routes.draw do
           { instance: true, link: "quiz_show" },
           { instance: true, link: "copy" },
           { instance: true, link: "cut" },
+          { instance: true, link: "ignore" },
         ]
       },
     ],
