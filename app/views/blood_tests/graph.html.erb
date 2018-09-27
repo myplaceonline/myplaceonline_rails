@@ -1,5 +1,5 @@
-<% content_for :heading do -%><%= t('myplaceonline.blood_tests.graph') %><% end -%>
-<h1><%= t('myplaceonline.blood_tests.graph') %></h1>
+<% content_for :heading do -%><%= t("myplaceonline.blood_tests.graph") %><% end -%>
+<h1><%= t("myplaceonline.blood_tests.graph") %></h1>
 
 <%= flashes! %>
 
@@ -29,6 +29,14 @@
         );
       });
     </script>
+    
+    <% if @concentration_results.size > 0 %>
+      <ul>
+        <% @concentration_results.reverse.each do |result| %>
+          <li><%= Myp.decimal_to_s(value: result[:concentration], truncate_zeros: false) %> - <%= link_to(result[:blood_test].display, blood_test_path(result[:blood_test])) %></li>
+        <% end %>
+      </ul>
+    <% end %>
   <% end %>
   
   <%=

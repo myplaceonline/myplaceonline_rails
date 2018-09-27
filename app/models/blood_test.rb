@@ -16,4 +16,8 @@ class BloodTest < ApplicationRecord
   child_property(name: :doctor)
 
   child_files
+  
+  def blood_concentration(concentration_id)
+    self.blood_test_results.where(blood_concentration_id: concentration_id).first
+  end
 end
