@@ -11,7 +11,7 @@ class PasswordsController < MyplaceonlineController
   USE_SPECIAL = :use_special
   USE_SPECIAL_ADDITIONAL = :use_special_additional
 
-  skip_authorization_check :only => [:index, :new, :create, :import, :importodf]
+  skip_authorization_check :only => [:index, :new, :create, :import, :importodf, :list]
   
   def import
   end
@@ -286,6 +286,12 @@ class PasswordsController < MyplaceonlineController
         icon: "bars"
       }
     end
+
+#     result << {
+#       title: I18n.t("myplaceonline.passwords.list"),
+#       link: passwords_list_path,
+#       icon: "bullets"
+#     }
     
     result
   end
@@ -299,6 +305,12 @@ class PasswordsController < MyplaceonlineController
 #       }
 #     ]
 #   end
+  
+  def list
+    check_password
+    
+    @passwords = self.all
+  end
   
   protected
     def sensitive

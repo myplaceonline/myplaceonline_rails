@@ -1,0 +1,23 @@
+<% content_for :heading do -%><%= t("myplaceonline.passwords.list") %><% end -%>
+
+<h1><%= t("myplaceonline.passwords.list") %></h1>
+
+<%= flashes! %>
+
+<ol>
+<% @passwords.each do |password| %>
+  <li><%= link_to(password.display, password_path(password)) %>: <%= "#{password.password}" %></li>
+<% end %>
+</ol>
+
+<%=
+  render(partial: "shared/footer", locals: {
+    items: [
+      {
+        title: I18n.t("myplaceonline.general.back"),
+        link: controller.index_path,
+        icon: "back"
+      },
+    ]
+  })
+%>

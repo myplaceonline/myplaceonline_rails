@@ -414,6 +414,7 @@ Rails.application.routes.draw do
     passwords: [
       { instance: true, link: "password_share" },
       { instance: false, link: "import" },
+      { instance: false, link: "list" },
     ],
     periodic_payments: [
       { instance: false, link: "monthly_total" }
