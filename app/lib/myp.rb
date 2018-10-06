@@ -613,6 +613,22 @@ module Myp
     
     result
   end
+  
+  def self.website_domains
+    @@all_website_domains
+  end
+  
+  def self.email_to_host(email:)
+    email.strip.gsub(/[<>"]/, "").gsub(/.*@/, "")
+  end
+  
+  def self.is_supported_host?(host:)
+    
+    # Downcase the host and remove any port from the domain we're checking
+    host = host.downcase.gsub(/:\d+$/, "")
+    
+    host == "localhost" || Myp.website_domains.keys.any?{|domain| host.end_with?(domain) }
+  end
 
   def self.website_domain_homepage(host: nil)
     host = Myp.current_host(host: host)
@@ -1705,6 +1721,8 @@ module Myp
   end
   
   def self.handle_exception(exception, email = nil, request = nil, subject = "User Exception", additional_details: nil)
+    Rails.logger.debug{"Myp.handle_exception"}
+    
     body_plain = ""
     body_html = ""
     
@@ -1794,7 +1812,12 @@ module Myp
     }
   end
   
+  # This is used to send emails to administrators of domains hosted by this website; therefore,
+  # it suppresses any emails to unknown domains
   def self.send_support_email_safe(subject, body_html, body_plain = nil, email: nil, request: nil, html_comment_details: false)
+    
+    Rails.logger.debug{"Myp.send_support_email_safe subject: #{subject}, email: #{email}"}
+    
     begin
       from = Myp.create_email
       if !email.blank?
@@ -1820,7 +1843,15 @@ module Myp
         body_html << "\n-->\n"
       end
       
-      UserMailer.send_support_email(from, subject, body_html, body_plain).deliver_now
+      to = Myp.create_email
+      
+      # Now check if the to address is valid
+      if Myp.is_supported_host?(host: Myp.email_to_host(email: to))
+        UserMailer.send_support_email(from, to, subject, body_html, body_plain).deliver_now
+      else
+        # Maybe somebody trying to use this mechanism to send malicious emails
+        Rails.logger.debug{"Myp.send_support_email_safe suppressing email to : #{to}"}
+      end
       
     rescue Exception => e
       puts "Could not send email. Subject: " + subject + ", Body: " + body_html + ", Email Problem: " + Myp.error_details(e)

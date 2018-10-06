@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  def send_support_email(from, subject, content, content_plain = nil, reply_to: nil)
+  def send_support_email(from, to, subject, content, content_plain = nil, reply_to: nil)
     @from = from
     @content = content
     if !content_plain.nil?
@@ -7,11 +7,10 @@ class UserMailer < ActionMailer::Base
     else
       @content_plain = @content
     end
-    support = Myp.create_email
     if reply_to.blank?
       reply_to = @from
     end
-    mail(from: support, to: support, subject: subject, reply_to: reply_to)
+    mail(from: to, to: to, subject: subject, reply_to: reply_to)
   end
   
   def send_email(to, subject, content, cc = nil, bcc = nil, content_plain = nil, reply_to = nil, from_prefix: nil)
