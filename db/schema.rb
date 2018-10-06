@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180924013000) do
+ActiveRecord::Schema.define(version: 20181006054747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1845,6 +1845,34 @@ ActiveRecord::Schema.define(version: 20180924013000) do
     t.index ["dream_encrypted_id"], name: "index_dreams_on_dream_encrypted_id"
     t.index ["dream_encrypted_id_id"], name: "index_dreams_on_dream_encrypted_id_id"
     t.index ["identity_id"], name: "index_dreams_on_identity_id"
+  end
+
+  create_table "drink_list_drinks", force: :cascade do |t|
+    t.bigint "drink_list_id"
+    t.bigint "drink_id"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["drink_id"], name: "index_drink_list_drinks_on_drink_id"
+    t.index ["drink_list_id"], name: "index_drink_list_drinks_on_drink_list_id"
+    t.index ["identity_id"], name: "index_drink_list_drinks_on_identity_id"
+  end
+
+  create_table "drink_lists", force: :cascade do |t|
+    t.string "drink_list_name"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_drink_lists_on_identity_id"
   end
 
   create_table "drinks", id: :serial, force: :cascade do |t|
@@ -7300,6 +7328,10 @@ ActiveRecord::Schema.define(version: 20180924013000) do
   add_foreign_key "drafts", "identities"
   add_foreign_key "dreams", "encrypted_values", column: "dream_encrypted_id"
   add_foreign_key "dreams", "identities"
+  add_foreign_key "drink_list_drinks", "drink_lists"
+  add_foreign_key "drink_list_drinks", "drinks"
+  add_foreign_key "drink_list_drinks", "identities"
+  add_foreign_key "drink_lists", "identities"
   add_foreign_key "drinks", "identities", name: "drinks_identity_id_fk"
   add_foreign_key "driver_license_files", "driver_licenses"
   add_foreign_key "driver_license_files", "identities"

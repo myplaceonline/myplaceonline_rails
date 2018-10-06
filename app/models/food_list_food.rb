@@ -20,7 +20,6 @@ class FoodListFood < ApplicationRecord
     [
       :id,
       :_destroy,
-      :test_object_instance_name,
       food_attributes: Food.params
     ]
   end

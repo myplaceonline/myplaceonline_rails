@@ -83,6 +83,7 @@ end
 
 Rails.application.routes.draw do
   
+  resources :drink_lists
   Rails.logger.debug{"routes.rb Started loading routes"}
   
   root "welcome#index"
@@ -282,6 +283,12 @@ Rails.application.routes.draw do
     ],
     dna_analyses: [
       { instance: true, link: "rerun" }
+    ],
+    drink_lists: [
+      {
+        subresources: true,
+        name: :drink_list_drinks
+      },
     ],
     due_items: [
       { instance: true, link: "complete" },

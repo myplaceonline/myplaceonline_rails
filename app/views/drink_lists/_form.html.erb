@@ -1,0 +1,45 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :drink_list_name,
+    value: obj.drink_list_name,
+    placeholder: "myplaceonline.drink_lists.drink_list_name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
+<%=
+  render(layout: "myplaceonline/childproperties", locals: {
+    f: f,
+    heading: t("myplaceonline.drink_lists.drinks"),
+    childpropertiesname: :drink_list_drinks,
+    childproperties: obj.drink_list_drinks,
+    deletebutton: t("myplaceonline.drink_lists.delete_drink"),
+    addbutton: t("myplaceonline.drink_lists.add_drink"),
+    expanded: true,
+    formjson: [
+      {
+        type: :renderpartial,
+        partial: "myplaceonline/select_or_create",
+        heading: t("myplaceonline.drink_lists.drink"),
+        objform: "drink_list_drinks/form",
+        only_new: true,
+        edit: false,
+        autofocus: true
+      }
+    ]
+  }) do |child_fields, childproperty|
+%>
+  <%= render partial: "drink_list_drinks/form", locals: { obj: childproperty || DrinkListDrink.build, edit: edit, autofocus: false, f: child_fields } %>
+<% end %>

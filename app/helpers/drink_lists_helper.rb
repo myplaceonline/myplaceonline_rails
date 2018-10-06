@@ -1,0 +1,2 @@
+module DrinkListsHelper
+end
