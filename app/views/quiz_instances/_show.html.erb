@@ -8,4 +8,8 @@
   <%= data_row(heading: t("myplaceonline.quiz_instances.questions"), content: obj.total_questions) %>
   <%= data_row(heading: t("myplaceonline.quiz_instances.correct_percent"), content: obj.correct_answers_percent, percentage: true) %>
   <%= data_row(heading: t("myplaceonline.quiz_instances.duration"), content: Myp.time_difference_in_general_human_detailed(TimeDifference.between(obj.start_time, obj.end_time).in_general)) %>
+  
+  <% if !obj.incorrect_questions.blank? %>
+    <%= obj.incorrect_questions.split(" ").map{|id| data_row(heading: t("myplaceonline.quiz_instances.incorrect_answer"), content: QuizItem.find(id.to_i)) }.join("\n").html_safe %>
+  <% end %>
 <% end %>

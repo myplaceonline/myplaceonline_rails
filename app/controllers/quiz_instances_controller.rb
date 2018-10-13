@@ -82,15 +82,17 @@ class QuizInstancesController < MyplaceonlineController
     if !@choice.blank?
       
       @obj.last_question = @question
-      @obj.save!
       
       if @choice == @question.correct_choice.to_s
         if @obj.correct.nil?
           @obj.correct = 0
         end
         @obj.correct = @obj.correct + 1
-        @obj.save!
+      else
+        @obj.incorrect_questions = Myp.appendstr(@obj.incorrect_questions, @question.id.to_s)
       end
+      
+      @obj.save!
       
       # Check if there are no more questions
       last_question_index = sorted_questions.index{|check| check.id == @question.id}
@@ -114,6 +116,7 @@ class QuizInstancesController < MyplaceonlineController
     @obj.last_question = nil
     @obj.correct = nil
     @obj.end_time = nil
+    @obj.incorrect_questions = nil
     @obj.save!
     
     redirect_to(quiz_quiz_instance_go_path(@obj.quiz, @obj))

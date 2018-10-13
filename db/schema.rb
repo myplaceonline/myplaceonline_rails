@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181013160533) do
+ActiveRecord::Schema.define(version: 20181013170947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4964,6 +4964,7 @@ ActiveRecord::Schema.define(version: 20181013160533) do
     t.datetime "updated_at", null: false
     t.bigint "last_question_id"
     t.integer "correct"
+    t.string "incorrect_questions"
     t.index ["identity_id"], name: "index_quiz_instances_on_identity_id"
     t.index ["last_question_id"], name: "index_quiz_instances_on_last_question_id"
     t.index ["quiz_id"], name: "index_quiz_instances_on_quiz_id"

@@ -60,4 +60,8 @@ class QuizItem < ApplicationRecord
     
     result
   end
+  
+  def parent_context
+    self.quiz
+  end
 end

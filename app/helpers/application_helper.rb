@@ -255,7 +255,7 @@ module ApplicationHelper
     content_display = content.display
     options[:clipboard_text] = content_display
 
-    if options[:show_reference]
+    if options[:show_reference] && !content.respond_to?("parent_context")
       begin
         if ExecutionContext.push_marker(:nest_count) <= ExecutionContext.get(:max_nest, default: 1)
           options[:second_row] = show_reference(
@@ -276,7 +276,11 @@ module ApplicationHelper
     if options[:reference_display_heading]
       if (content.respond_to?("current_user_owns?") && content.current_user_owns?) || (User.current_user.admin? && options[:admin_details])
         if options[:reference_url].nil?
-          url = send((options[:evaluated_class_name].nil? ? content.class.name : options[:evaluated_class_name]).underscore + "_path", content)
+          if content.respond_to?("parent_context")
+            url = send(content.parent_context.class.name.underscore + "_" + content.class.name.underscore + "_path", content.parent_context, content)
+          else
+            url = send((options[:evaluated_class_name].nil? ? content.class.name : options[:evaluated_class_name]).underscore + "_path", content)
+          end
         else
           url = options[:reference_url]
         end
