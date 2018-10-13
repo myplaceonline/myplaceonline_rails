@@ -10,6 +10,15 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_TEXT,
+    name: :description,
+    value: obj.description,
+    placeholder: "myplaceonline.quiz_instances.description"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_DATETIME,
     name: :end_time,
     value: obj.end_time,

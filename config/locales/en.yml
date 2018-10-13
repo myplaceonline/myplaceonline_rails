@@ -4281,6 +4281,7 @@ en:
       questions: "Total Questions"
       correct_percent: "Percentage Correct"
       incorrect_answer: "Incorrect Answer"
+      description: "Short Description"
       orderbys:
         creation_date: "Question Creation Date"
     drink_lists:

@@ -6,6 +6,7 @@ class QuizInstance < ApplicationRecord
     [
       { name: :start_time, type: ApplicationRecord::PROPERTY_TYPE_DATETIME },
       { name: :end_time, type: ApplicationRecord::PROPERTY_TYPE_DATETIME },
+      { name: :description, type: ApplicationRecord::PROPERTY_TYPE_STRING },
       { name: :notes, type: ApplicationRecord::PROPERTY_TYPE_MARKDOWN },
       { name: :orderby, type: ApplicationRecord::PROPERTY_TYPE_SELECT },
     ]
@@ -24,7 +25,11 @@ class QuizInstance < ApplicationRecord
   child_property(name: :last_question, model: QuizItem)
   
   def display
-    Myp.display_datetime(self.start_time, User.current_user)
+    result = self.description.blank? ? Myp.display_datetime(self.start_time, User.current_user) : self.description
+    if self.is_finished?
+      result = Myp.appendstrwrap(result, "#{self.correct_answers_percent}%")
+    end
+    result
   end
   
   def self.params
@@ -32,6 +37,7 @@ class QuizInstance < ApplicationRecord
       :id,
       :_destroy,
       :start_time,
+      :description,
       :end_time,
       :orderby,
       :notes,
@@ -58,5 +64,9 @@ class QuizInstance < ApplicationRecord
   
   def correct_answers_percent
     ((self.total_correct_answers.to_f / self.total_questions.to_f) * 100.0).floor
+  end
+  
+  def is_finished?
+    !self.end_time.nil?
   end
 end

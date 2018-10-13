@@ -1,4 +1,5 @@
 <%= data_row(heading: t("myplaceonline.quiz_instances.start_time"), content: obj.start_time) %>
+<%= data_row(heading: t("myplaceonline.quiz_instances.description"), content: obj.description) %>
 <%= data_row(heading: t("myplaceonline.quiz_instances.end_time"), content: obj.end_time) %>
 <%= data_row(heading: t("myplaceonline.quiz_instances.orderby"), content: obj.orderby, enumeration: QuizInstance::ORDERBY) %>
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>

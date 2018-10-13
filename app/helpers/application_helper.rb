@@ -772,7 +772,7 @@ module ApplicationHelper
     !identity_file.nil? && identity_file.has_thumbnail?
   end
   
-  def image_content(identity_file, link_to_original = true, useParams: true)
+  def image_content(identity_file, link_to_original = true, useParams: true, useThumbnail: true)
     
     token = share_token(context: identity_file)
     
@@ -781,7 +781,7 @@ module ApplicationHelper
       
       # Include a unique query parameter all the time because the thumbnail
       # may have been updated
-      if has_thumbnail(identity_file)
+      if useThumbnail && has_thumbnail(identity_file)
         if useParams
           content =
               image_tag(

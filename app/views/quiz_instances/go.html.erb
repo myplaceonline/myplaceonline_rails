@@ -7,7 +7,7 @@
   <%= data_row(heading: t("myplaceonline.quiz_items.quiz_question"), prefix_heading: true, content: @question.quiz_question, wrap: false) %>
 
   <% @question.quiz_item_files.each do |pic| %>
-    <p><%= image_content(pic.identity_file, true) %></p>
+    <p><%= image_content(pic.identity_file, true, useThumbnail: false) %></p>
   <% end %>
 
   <%=
