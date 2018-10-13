@@ -1,0 +1,11 @@
+<%= data_row(heading: t("myplaceonline.quiz_instances.start_time"), content: obj.start_time) %>
+<%= data_row(heading: t("myplaceonline.quiz_instances.end_time"), content: obj.end_time) %>
+<%= data_row(heading: t("myplaceonline.quiz_instances.orderby"), content: obj.orderby, enumeration: QuizInstance::ORDERBY) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+
+<% if !obj.end_time.nil? %>
+  <%= data_row(heading: t("myplaceonline.quiz_instances.correct"), content: obj.total_correct_answers) %>
+  <%= data_row(heading: t("myplaceonline.quiz_instances.questions"), content: obj.total_questions) %>
+  <%= data_row(heading: t("myplaceonline.quiz_instances.correct_percent"), content: obj.correct_answers_percent, percentage: true) %>
+  <%= data_row(heading: t("myplaceonline.quiz_instances.duration"), content: Myp.time_difference_in_general_human_detailed(TimeDifference.between(obj.start_time, obj.end_time).in_general)) %>
+<% end %>

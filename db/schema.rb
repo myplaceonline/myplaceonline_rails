@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181013060254) do
+ActiveRecord::Schema.define(version: 20181013160533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4949,6 +4949,26 @@ ActiveRecord::Schema.define(version: 20181013060254) do
     t.index ["identity_id"], name: "index_quests_on_identity_id"
   end
 
+  create_table "quiz_instances", force: :cascade do |t|
+    t.bigint "quiz_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer "orderby"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "last_question_id"
+    t.integer "correct"
+    t.index ["identity_id"], name: "index_quiz_instances_on_identity_id"
+    t.index ["last_question_id"], name: "index_quiz_instances_on_last_question_id"
+    t.index ["quiz_id"], name: "index_quiz_instances_on_quiz_id"
+  end
+
   create_table "quiz_item_files", force: :cascade do |t|
     t.bigint "quiz_item_id"
     t.bigint "identity_file_id"
@@ -7780,6 +7800,9 @@ ActiveRecord::Schema.define(version: 20181013060254) do
   add_foreign_key "quest_files", "quests"
   add_foreign_key "questions", "identities", name: "questions_identity_id_fk"
   add_foreign_key "quests", "identities"
+  add_foreign_key "quiz_instances", "identities"
+  add_foreign_key "quiz_instances", "quiz_items", column: "last_question_id"
+  add_foreign_key "quiz_instances", "quizzes"
   add_foreign_key "quiz_item_files", "identities"
   add_foreign_key "quiz_item_files", "identity_files"
   add_foreign_key "quiz_item_files", "quiz_items"

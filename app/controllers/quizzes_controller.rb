@@ -30,6 +30,12 @@ class QuizzesController < MyplaceonlineController
       }
     end
     
+    result << {
+      title: I18n.t("myplaceonline.quizzes.quiz_instances"),
+      link: quiz_quiz_instances_path(@obj),
+      icon: "bars"
+    }
+
     result + super
   end
   

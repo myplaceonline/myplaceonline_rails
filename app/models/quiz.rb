@@ -15,6 +15,8 @@ class Quiz < ApplicationRecord
 
   child_properties(name: :quiz_items, sort: "created_at ASC")
 
+  child_properties(name: :quiz_instances, sort: "start_time DESC")
+
   validates :quiz_name, presence: true
   
   def display

@@ -83,7 +83,6 @@ end
 
 Rails.application.routes.draw do
   
-  resources :drink_lists
   Rails.logger.debug{"routes.rb Started loading routes"}
   
   root "welcome#index"
@@ -468,6 +467,14 @@ Rails.application.routes.draw do
           { instance: true, link: "copy" },
           { instance: true, link: "cut" },
           { instance: true, link: "ignore" },
+        ]
+      },
+      {
+        subresources: true,
+        name: :quiz_instances,
+        subitems: [
+          { instance: true, link: "go" },
+          { instance: true, link: "restart" },
         ]
       },
     ],

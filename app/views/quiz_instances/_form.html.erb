@@ -1,0 +1,39 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATETIME,
+    name: :start_time,
+    value: obj.start_time,
+    placeholder: "myplaceonline.quiz_instances.start_time"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATETIME,
+    name: :end_time,
+    value: obj.end_time,
+    placeholder: "myplaceonline.quiz_instances.end_time"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_SELECT,
+    name: :orderby,
+    value: obj.orderby,
+    placeholder: "myplaceonline.quiz_instances.orderby",
+    select_options: QuizInstance::ORDERBY,
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: I18n.t("myplaceonline.category.quiz_instances").singularize,
+  )
+%>

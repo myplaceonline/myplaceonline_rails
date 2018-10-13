@@ -215,6 +215,7 @@ en:
       psychological_evaluations: "Psychological Evaluations"
       questions: "Questions"
       quests: "Quests"
+      quiz_instances: "Quiz Instances"
       quiz_items: "Quiz Items"
       quizzes: "Quizzes"
       quotes: "Quotes"
@@ -4252,6 +4253,7 @@ en:
       autogenerate_question: "%{question}"
       autogenerate_context: "Autogeneration Website Subset CSS Selector"
       choices: "Multiple Choice Answers"
+      quiz_instances: "Instances"
     quiz_items:
       quiz_question: "Question"
       quiz_answer: "Answer"
@@ -4267,6 +4269,19 @@ en:
       ignored: "Question Ignored"
       correct_choice: "Correct Choice"
       incorrect_answer: "Incorrect Answer"
+    quiz_instances:
+      start_time: "Start Time"
+      end_time: "End Time"
+      orderby: "Order By"
+      go: "Go"
+      restart: "Restart"
+      back: "Quiz"
+      duration: "Duration"
+      correct: "Total Correct"
+      questions: "Total Questions"
+      correct_percent: "Percentage Correct"
+      orderbys:
+        creation_date: "Question Creation Date"
     drink_lists:
       drink_list_name: "Name"
       drinks: "Drinks"
