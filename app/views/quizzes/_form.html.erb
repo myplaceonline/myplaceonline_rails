@@ -19,21 +19,33 @@
     placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
   )
 %>
-<%=
-  input_field(
-    form: f,
-    type: Myp::FIELD_TEXT,
-    name: :autolink,
-    value: obj.autolink,
-    placeholder: "myplaceonline.quizzes.autolink",
-  )
-%>
-<%=
-  input_field(
-    form: f,
-    type: Myp::FIELD_TEXT,
-    name: :autogenerate_context,
-    value: obj.autogenerate_context,
-    placeholder: "myplaceonline.quizzes.autogenerate_context",
-  )
-%>
+<div data-role="collapsible" data-collapsed="true">
+  <h3><%= t("myplaceonline.general.advanced") %></h3>
+  <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_TEXT,
+      name: :autolink,
+      value: obj.autolink,
+      placeholder: "myplaceonline.quizzes.autolink",
+    )
+  %>
+  <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_TEXT,
+      name: :autogenerate_context,
+      value: obj.autogenerate_context,
+      placeholder: "myplaceonline.quizzes.autogenerate_context",
+    )
+  %>
+  <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_NUMBER,
+      name: :choices,
+      value: obj.choices,
+      placeholder: "myplaceonline.quizzes.choices"
+    )
+  %>
+</div>

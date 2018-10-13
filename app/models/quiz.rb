@@ -9,6 +9,7 @@ class Quiz < ApplicationRecord
       { name: :quiz_items, type: ApplicationRecord::PROPERTY_TYPE_CHILDREN },
       { name: :autolink, type: ApplicationRecord::PROPERTY_TYPE_STRING },
       { name: :autogenerate_context, type: ApplicationRecord::PROPERTY_TYPE_STRING },
+      { name: :choices, type: ApplicationRecord::PROPERTY_TYPE_NUMBER },
     ]
   end
 
@@ -153,5 +154,16 @@ class Quiz < ApplicationRecord
     end
     
     results
+  end
+  
+  def available_choices
+    result = nil
+    if !self.choices.nil? && self.choices > 0
+      result = []
+      (1..self.choices).each do |choice|
+        result.push([(64 + choice).chr, choice])
+      end
+    end
+    result
   end
 end

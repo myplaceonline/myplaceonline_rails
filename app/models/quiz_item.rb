@@ -8,13 +8,15 @@ class QuizItem < ApplicationRecord
       { name: :quiz_answer, type: ApplicationRecord::PROPERTY_TYPE_STRING },
       { name: :link, type: ApplicationRecord::PROPERTY_TYPE_STRING },
       { name: :notes, type: ApplicationRecord::PROPERTY_TYPE_MARKDOWN },
+      { name: :correct_choice, type: ApplicationRecord::PROPERTY_TYPE_NUMBER },
     ]
   end
 
   belongs_to :quiz
   
   validates :quiz_question, presence: true
-  validates :quiz_answer, presence: true
+  
+  child_files
   
   scope :ignored, -> { where(ignore: true) }
   scope :unignored, -> { where("(ignore is null or ignore = ?)", false) }
@@ -32,6 +34,8 @@ class QuizItem < ApplicationRecord
       :link,
       :notes,
       :ignore,
+      :correct_choice,
+      quiz_item_files_attributes: FilesController.multi_param_names,
     ]
   end
   

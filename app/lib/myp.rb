@@ -101,6 +101,7 @@ module Myp
   FIELD_DECIMAL = :decimal
   FIELD_BOOLEAN = :boolean
   FIELD_SELECT = :select
+  FIELD_RADIO = :radio
   FIELD_HIDDEN = :hidden
   
   # We want at least 128 bits of randomness, so
@@ -1440,11 +1441,11 @@ module Myp
     result
   end
   
-  def self.get_select_name(val, select_values, default_value: nil)
+  def self.get_select_name(val, select_values, default_value: nil, translate: true)
     if !val.nil?
       found = select_values.find{|x| x[1] == val}
       if !found.nil?
-        I18n.t(found[0])
+        translate ? I18n.t(found[0]) : found[0]
       else
         default_value
       end

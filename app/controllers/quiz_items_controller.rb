@@ -1,4 +1,8 @@
 class QuizItemsController < MyplaceonlineController
+  def may_upload
+    true
+  end
+
   def path_name
     "quiz_quiz_item"
   end
@@ -60,6 +64,18 @@ class QuizItemsController < MyplaceonlineController
   
   def quiz_show
     set_obj
+    
+    @choice = params[:choice]
+    
+    if !@choice.blank? && !@obj.correct_choice.blank?
+      if @choice == @obj.correct_choice.to_s
+        redirect_to(
+          quiz_quiz_item_quiz_show_path(@obj.quiz, @obj.quiz.next_random_question),
+        )
+      else
+        flash.now[:error] = I18n.t("myplaceonline.quiz_items.incorrect_answer")
+      end
+    end
   end
   
   def copy
@@ -85,6 +101,7 @@ class QuizItemsController < MyplaceonlineController
             quiz_answer: @obj.quiz_answer,
             link: @obj.link,
             notes: @obj.notes,
+            correct_choice: @obj.correct_choice,
           )
           redirect_to(
             quiz_start_path(@obj.quiz),
@@ -117,6 +134,7 @@ class QuizItemsController < MyplaceonlineController
             quiz_answer: @obj.quiz_answer,
             link: @obj.link,
             notes: @obj.notes,
+            correct_choice: @obj.correct_choice,
           )
           @obj.destroy!
           redirect_to(

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181006054747) do
+ActiveRecord::Schema.define(version: 20181013060254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4949,6 +4949,19 @@ ActiveRecord::Schema.define(version: 20181006054747) do
     t.index ["identity_id"], name: "index_quests_on_identity_id"
   end
 
+  create_table "quiz_item_files", force: :cascade do |t|
+    t.bigint "quiz_item_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_quiz_item_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_quiz_item_files_on_identity_id"
+    t.index ["quiz_item_id"], name: "index_quiz_item_files_on_quiz_item_id"
+  end
+
   create_table "quiz_items", force: :cascade do |t|
     t.bigint "quiz_id"
     t.string "quiz_question"
@@ -4963,6 +4976,7 @@ ActiveRecord::Schema.define(version: 20181006054747) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "ignore"
+    t.integer "correct_choice"
     t.index ["identity_id"], name: "index_quiz_items_on_identity_id"
     t.index ["quiz_id"], name: "index_quiz_items_on_quiz_id"
   end
@@ -4979,6 +4993,7 @@ ActiveRecord::Schema.define(version: 20181006054747) do
     t.datetime "updated_at", null: false
     t.string "autolink"
     t.string "autogenerate_context"
+    t.integer "choices"
     t.index ["identity_id"], name: "index_quizzes_on_identity_id"
   end
 
@@ -7765,6 +7780,9 @@ ActiveRecord::Schema.define(version: 20181006054747) do
   add_foreign_key "quest_files", "quests"
   add_foreign_key "questions", "identities", name: "questions_identity_id_fk"
   add_foreign_key "quests", "identities"
+  add_foreign_key "quiz_item_files", "identities"
+  add_foreign_key "quiz_item_files", "identity_files"
+  add_foreign_key "quiz_item_files", "quiz_items"
   add_foreign_key "quiz_items", "identities"
   add_foreign_key "quiz_items", "quizzes"
   add_foreign_key "quizzes", "identities"

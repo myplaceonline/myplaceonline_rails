@@ -489,6 +489,7 @@ module ApplicationHelper
       currency: false,
       tooltip: nil,
       enumeration: nil,
+      enumeration_translate: true,
       expanded: false,
       max_nest: nil, # default: 1
       prefix_heading: false,
@@ -519,7 +520,7 @@ module ApplicationHelper
     original_content = content
     
     if !options[:enumeration].nil?
-      content = Myp.get_select_name(content, options[:enumeration])
+      content = Myp.get_select_name(content, options[:enumeration], translate: options[:enumeration_translate])
     end
     
     # ->(content:, format:, options: ){ content.to_s }
@@ -1403,6 +1404,16 @@ module ApplicationHelper
     ).html_safe
   end
   
+  def compare_values_as_strings(value1, value2)
+    if value1.nil? && value2.nil?
+      true
+    elsif value1.nil? || value2.nil?
+      false
+    else
+      value1.to_s == value2.to_s
+    end
+  end
+  
   def input_field(name:, type:, **options)
     options = {
       wrapper_tag: :p,
@@ -1424,6 +1435,8 @@ module ApplicationHelper
       select_options_sort: true,
       select_include_blank: true,
       translate_select_options: true,
+      radio_options: nil,
+      translate_radio_options: true,
       text_area_rich: true,
       on_select_target: nil,
       on_select_target_show_values: nil,
@@ -1522,6 +1535,10 @@ module ApplicationHelper
       if options[:translate_select_options]
         options[:select_options] = Myp.translate_options(options[:select_options], sort: options[:select_options_sort])
       end
+    elsif options[:type] == Myp::FIELD_RADIO
+      if options[:translate_radio_options]
+        options[:radio_options] = Myp.translate_options(options[:radio_options], sort: false)
+      end
     elsif options[:type] == Myp::FIELD_HIDDEN
       options[:include_label] = false
     end
@@ -1539,7 +1556,7 @@ module ApplicationHelper
     
     result = nil
     
-    if options[:include_label] && options[:type] != Myp::FIELD_BOOLEAN
+    if options[:include_label] && options[:type] != Myp::FIELD_BOOLEAN && options[:type] != Myp::FIELD_RADIO
       # We only want to show the label if value is blank and there's no tooltip
       label_classes = (options[:value].blank? && options[:tooltip].blank?) ? "ui-hidden-accessible" : "form_field_label"
       
@@ -1670,6 +1687,32 @@ module ApplicationHelper
                 field_attributes,
               )
             )
+          elsif options[:type] == Myp::FIELD_RADIO
+            result = Myp.appendstr(
+              result,
+              
+              # https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-radio_button
+              # radio_button(object_name, method, tag_value, options = {}) 
+              
+              content_tag(
+                :fieldset,
+                content_tag(
+                  :legend,
+                  options[:placeholder],
+                  class: "form_field_label"
+                ).html_safe +
+                  options[:radio_options].map{|option|
+                    options[:form].send(
+                      "radio_button",
+                      name,
+                      option[1],
+                      checked: compare_values_as_strings(option[1], options[:value]),
+                    ).html_safe +
+                      options[:form].label(name, option[0], value: option[1].to_s).html_safe
+                  }.join("\n").html_safe,
+                "data-role" => "controlgroup"
+              )
+            )
           elsif options[:type] == Myp::FIELD_HIDDEN
             result = Myp.appendstr(
               result,
@@ -1722,6 +1765,32 @@ module ApplicationHelper
                 name,
                 options_for_select(options[:select_options], options[:value]),
                 field_attributes
+              )
+            )
+          elsif options[:type] == Myp::FIELD_RADIO
+            result = Myp.appendstr(
+              result,
+              
+              # https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html#method-i-radio_button_tag
+              # radio_button_tag(name, value, checked = false, options = {})
+              
+              content_tag(
+                :fieldset,
+                content_tag(
+                  :legend,
+                  options[:placeholder],
+                  class: "form_field_label"
+                ).html_safe +
+                  options[:radio_options].map{|option|
+                    send(
+                      "radio_button_tag",
+                      name,
+                      option[1],
+                      compare_values_as_strings(option[1], options[:value]),
+                    ).html_safe +
+                      label_tag("#{name}_#{option[1]}", option[0]).html_safe
+                  }.join("\n").html_safe,
+                "data-role" => "controlgroup"
               )
             )
           elsif options[:type] == Myp::FIELD_HIDDEN
