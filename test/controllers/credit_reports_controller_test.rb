@@ -4,6 +4,6 @@ class CreditReportsControllerTest < ActionController::TestCase
   include MyplaceonlineControllerTest
   
   def test_attributes
-    { credit_report_description: "test", credit_report_date: Date.today }
+    { credit_report_description: "test", credit_reporting_agency: 1 }
   end
 end
