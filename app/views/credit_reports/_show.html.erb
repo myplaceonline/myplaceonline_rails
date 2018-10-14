@@ -1,0 +1,6 @@
+<%= data_row(heading: t("myplaceonline.credit_reports.credit_report_date"), content: obj.credit_report_date) %>
+<%= data_row(heading: t("myplaceonline.credit_reports.credit_report_description"), content: obj.credit_report_description) %>
+<%= data_row(heading: t("myplaceonline.credit_reports.annual_free_report"), content: obj.annual_free_report) %>
+<%= data_row(heading: t("myplaceonline.credit_reports.credit_reporting_agency"), content: obj.credit_reporting_agency, enumeration: CreditReport::AGENCIES) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.credit_report_files) %>

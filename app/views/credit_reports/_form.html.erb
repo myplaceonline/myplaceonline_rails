@@ -1,0 +1,61 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATE,
+    name: :credit_report_date,
+    value: obj.credit_report_date,
+    placeholder: "myplaceonline.credit_reports.credit_report_date"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_SELECT,
+    name: :credit_reporting_agency,
+    value: obj.credit_reporting_agency,
+    placeholder: "myplaceonline.credit_reports.credit_reporting_agency",
+    select_options: CreditReport::AGENCIES,
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :credit_report_description,
+    value: obj.credit_report_description,
+    placeholder: "myplaceonline.credit_reports.credit_report_description"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :annual_free_report,
+    value: obj.annual_free_report,
+    placeholder: "myplaceonline.credit_reports.annual_free_report"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :credit_report_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>

@@ -73,6 +73,7 @@ en:
       contacts: "Contacts"
       conversations: "Conversations"
       credit_cards: "Credit Cards"
+      credit_reports: "Credit Reports"
       credit_scores: "Credit Scores"
       date_locations: "Date Locations"
       dating_profiles: "Dating Profiles"
@@ -4293,3 +4294,13 @@ en:
     drink_list_drinks:
       drink: "Drink"
       drink_list: "Drink List"
+    credit_reports:
+      credit_report_date: "Date"
+      credit_reporting_agency: "Agency"
+      credit_report_description: "Description"
+      annual_free_report: "Annual Free Report"
+      introduction: "Free credit reports may be requested annually at <a href='https://annualcreditreport.com/'>https://annualcreditreport.com/</a>"
+      agencies:
+        equifax: "Equifax"
+        experian: "Experian"
+        transunion: "TransUnion"

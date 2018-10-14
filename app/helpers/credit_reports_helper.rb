@@ -1,0 +1,2 @@
+module CreditReportsHelper
+end

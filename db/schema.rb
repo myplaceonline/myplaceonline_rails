@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181013224854) do
+ActiveRecord::Schema.define(version: 20181014032747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1411,6 +1411,35 @@ ActiveRecord::Schema.define(version: 20181013224854) do
     t.index ["password_id"], name: "index_credit_cards_on_password_id"
     t.index ["pin_encrypted_id"], name: "index_credit_cards_on_pin_encrypted_id"
     t.index ["security_code_encrypted_id"], name: "index_credit_cards_on_security_code_encrypted_id"
+  end
+
+  create_table "credit_report_files", force: :cascade do |t|
+    t.bigint "credit_report_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["credit_report_id"], name: "index_credit_report_files_on_credit_report_id"
+    t.index ["identity_file_id"], name: "index_credit_report_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_credit_report_files_on_identity_id"
+  end
+
+  create_table "credit_reports", force: :cascade do |t|
+    t.date "credit_report_date"
+    t.integer "credit_reporting_agency"
+    t.string "credit_report_description"
+    t.boolean "annual_free_report"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_credit_reports_on_identity_id"
   end
 
   create_table "credit_score_files", id: :serial, force: :cascade do |t|
@@ -7301,6 +7330,10 @@ ActiveRecord::Schema.define(version: 20181013224854) do
   add_foreign_key "credit_cards", "identities", name: "credit_cards_identity_id_fk"
   add_foreign_key "credit_cards", "locations", column: "address_id", name: "credit_cards_address_id_fk"
   add_foreign_key "credit_cards", "passwords", name: "credit_cards_password_id_fk"
+  add_foreign_key "credit_report_files", "credit_reports"
+  add_foreign_key "credit_report_files", "identities"
+  add_foreign_key "credit_report_files", "identity_files"
+  add_foreign_key "credit_reports", "identities"
   add_foreign_key "credit_score_files", "credit_scores"
   add_foreign_key "credit_score_files", "identities"
   add_foreign_key "credit_score_files", "identity_files"
