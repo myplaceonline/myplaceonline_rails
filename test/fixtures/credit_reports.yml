@@ -1,4 +1,4 @@
-test_object:
+credit_report:
   identity: identity
   credit_report_date: 2018-01-01
   credit_report_description: Test
