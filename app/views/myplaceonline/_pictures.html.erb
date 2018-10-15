@@ -2,7 +2,12 @@
 
 <% if !pics.nil? && pics.length > 0 %>
 
-  <% random_name = "slideshow-" + SecureRandom.hex(10) %>
+  <%
+    random_name = "slideshow-" + SecureRandom.hex(10)
+    if !defined?(expanded)
+      expanded = false
+    end
+  %>
   
   <% if pics.length >= 1 %>
     <%= attribute_table_row_span(link_to(t("myplaceonline.pictures.slideshow"), "#", class: "ui-btn", id: random_name)) %>
@@ -24,7 +29,7 @@
     <% elsif pic.identity_file.is_video? %>
       <%= attribute_table_row_file_video(t(placeholder), pic.identity_file) %>
     <% else %>
-      <%= attribute_table_row_image(t(placeholder), pic.identity_file) %>
+      <%= attribute_table_row_image(t(placeholder), pic.identity_file, useThumbnail: !expanded) %>
     <% end %>
   <% end %>
 

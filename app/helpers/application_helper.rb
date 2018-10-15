@@ -337,7 +337,8 @@ module ApplicationHelper
           partial: "myplaceonline/pictures",
           locals: {
             pics: content,
-            placeholder: options[:heading]
+            placeholder: options[:heading],
+            expanded: options[:expanded],
           }
         ).html_safe
       else
@@ -924,8 +925,8 @@ module ApplicationHelper
     token
   end
   
-  def attribute_table_row_image(name, identity_file, link_to_original = true)
-    content = image_content(identity_file, link_to_original)
+  def attribute_table_row_image(name, identity_file, link_to_original = true, useThumbnail: true)
+    content = image_content(identity_file, link_to_original, useThumbnail: useThumbnail)
     
     token = share_token(context: identity_file)
     
