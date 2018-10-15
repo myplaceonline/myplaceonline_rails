@@ -107,6 +107,10 @@ class QuizInstancesController < MyplaceonlineController
         # Go to the next question
         redirect_to(quiz_quiz_instance_go_path(@obj.quiz, @obj))
       end
+    else
+      if request.post? || request.patch?
+        flash.now[:error] = I18n.t("myplaceonline.quiz_instances.no_answer")
+      end
     end
   end
   

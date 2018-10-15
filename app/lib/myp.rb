@@ -1334,39 +1334,47 @@ module Myp
     Myp.time_difference_in_general_human(diff.in_general)
   end
   
-  def self.time_difference_in_general_human(diff)
+  def self.time_difference_in_general_human(diff, include_details: false)
     result = ""
-    if diff[:years] > 0
-      result += ActionController::Base.helpers.pluralize(diff[:years], "year")
-    end
-    if diff[:months] > 0
-      if result.length > 0
-        result += ", "
+    
+    if diff.values.reduce(:+) == 0
+      # If the difference is 0, show some static text
+      result += I18n.t("myplaceonline.general.today")
+    else
+      if diff[:years] > 0
+        result += ActionController::Base.helpers.pluralize(diff[:years], "year")
       end
-      result += ActionController::Base.helpers.pluralize(diff[:months], "month")
-    end
-    if diff[:weeks] > 0
-      if result.length > 0
-        result += ", "
+      if diff[:months] > 0
+        if result.length > 0
+          result += ", "
+        end
+        result += ActionController::Base.helpers.pluralize(diff[:months], "month")
       end
-      result += ActionController::Base.helpers.pluralize(diff[:weeks], "week")
-    end
-    if diff[:days] > 0
-      if result.length > 0
-        result += ", "
+      if diff[:weeks] > 0
+        if result.length > 0
+          result += ", "
+        end
+        result += ActionController::Base.helpers.pluralize(diff[:weeks], "week")
       end
-      result += ActionController::Base.helpers.pluralize(diff[:days], "day")
-    end
-    if result.length == 0
-      if diff.values.reduce(:+) == 0
-        result += I18n.t("myplaceonline.general.today")
-      elsif diff[:hours] > 0
+      if diff[:days] > 0
+        if result.length > 0
+          result += ", "
+        end
+        result += ActionController::Base.helpers.pluralize(diff[:days], "day")
+      end
+      
+      # If it's less than a day, show any hours unless we'll be including
+      # all that later
+      if result.blank? && diff[:hours] > 0 && !include_details
         result += ActionController::Base.helpers.pluralize(diff[:hours], "hour")
       end
+      
+      # If it's less than an hour, show details in minutes
+      if include_details || result.blank?
+        result = Myp.time_difference_in_general_human_detailed_hms(diff, result)
+      end
     end
-    if result.blank?
-      result = time_difference_in_general_human_detailed_hms(diff, result)
-    end
+    
     result
   end
   
@@ -1375,9 +1383,7 @@ module Myp
   end
   
   def self.time_difference_in_general_human_detailed(diff)
-    result = Myp.time_difference_in_general_human(diff)
-    result = Myp.time_difference_in_general_human_detailed_hms(diff, result)
-    result
+    Myp.time_difference_in_general_human(diff, include_details: true)
   end
   
   def self.seconds_to_time_in_general_human_detailed_hms(seconds)

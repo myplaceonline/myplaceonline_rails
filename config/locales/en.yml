@@ -4279,9 +4279,11 @@ en:
       back: "Quiz"
       duration: "Duration"
       correct: "Total Correct"
+      incorrect: "Total Incorrect"
       questions: "Total Questions"
       correct_percent: "Percentage Correct"
       incorrect_answer: "Incorrect Answer"
+      no_answer: "No Answer Selected"
       description: "Short Description"
       orderbys:
         creation_date: "Question Creation Date"

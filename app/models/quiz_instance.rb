@@ -62,8 +62,17 @@ class QuizInstance < ApplicationRecord
     self.quiz.quiz_items.count
   end
   
+  def total_incorrect_answers
+    self.total_questions - self.total_correct_answers
+  end
+  
   def correct_answers_percent
-    ((self.total_correct_answers.to_f / self.total_questions.to_f) * 100.0).floor
+    result = ((self.total_correct_answers.to_f / self.total_questions.to_f) * 100.0).floor
+    if result > 100
+      # If questions get deleted
+      result = 100
+    end
+    result
   end
   
   def is_finished?
