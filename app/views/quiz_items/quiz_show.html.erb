@@ -4,7 +4,7 @@
 
 <%= form_tag(quiz_quiz_item_quiz_show_path(@obj.quiz, @obj), method: :post) do %>
 
-  <%= data_row(heading: t("myplaceonline.quiz_items.quiz_question"), prefix_heading: true, content: @obj.quiz_question, wrap: false) %>
+  <%= data_row(heading: t("myplaceonline.quiz_items.quiz_question"), prefix_heading: true, content: @obj.quiz_question, wrap: false, htmlencode_content: false) %>
 
   <% @obj.quiz_item_files.each do |pic| %>
     <p><%= image_content(pic.identity_file, true) %></p>

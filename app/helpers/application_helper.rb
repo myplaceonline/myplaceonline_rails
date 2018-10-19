@@ -632,16 +632,16 @@ module ApplicationHelper
         html = <<-HTML
           <tr>
             <td>#{content_tag(:span, heading, class: "tooltipable", title: options[:tooltip])}</td>
-            <td class="#{options[:content_classes]}">#{content}</td>
+            <td class="#{options[:content_classes]}">#{content.html_safe}</td>
             <td style="padding: 0.2em; vertical-align: top;">#{options[:secondary_content]}</td>
           </tr>
         HTML
       else
         if options[:prefix_heading]
           if options[:prefix_wrapper].nil?
-            html = heading + options[:prefix_separator] + content
+            html = heading.html_safe + options[:prefix_separator] + content.html_safe
           else
-            html = content_tag(options[:prefix_wrapper], heading + options[:prefix_separator]) + content
+            html = content_tag(options[:prefix_wrapper], heading.html_safe + options[:prefix_separator]) + content.html_safe
           end
         else
           html = content
