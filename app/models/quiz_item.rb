@@ -16,13 +16,19 @@ class QuizItem < ApplicationRecord
   
   validates :quiz_question, presence: true
   
+  validate do
+    if !self.quiz.nil? && !self.quiz.choices.blank? && self.correct_choice.blank?
+      errors.add(:correct_choice, I18n.t("myplaceonline.general.non_blank"))
+    end
+  end
+  
   child_files
   
   scope :ignored, -> { where(ignore: true) }
   scope :unignored, -> { where("(ignore is null or ignore = ?)", false) }
   
   def display
-    self.quiz_question
+    Myp.ellipses_if_needed(self.quiz_question, 32)
   end
   
   def self.params

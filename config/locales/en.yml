@@ -4270,6 +4270,7 @@ en:
       ignored: "Question Ignored"
       correct_choice: "Correct Choice"
       incorrect_answer: "Incorrect Answer"
+      correct_choice_blank: "Correct Choice must be specified"
     quiz_instances:
       start_time: "Start Time"
       end_time: "End Time"

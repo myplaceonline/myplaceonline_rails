@@ -1,11 +1,12 @@
 <%=
   input_field(
     form: f,
-    type: Myp::FIELD_TEXT,
+    type: Myp::FIELD_TEXT_AREA,
     name: :quiz_question,
     value: obj.quiz_question,
     placeholder: "myplaceonline.quiz_items.quiz_question",
-    autofocus: autofocus
+    collapsed: false,
+    autofocus: autofocus,
   )
 %>
 <%=
