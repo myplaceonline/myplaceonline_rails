@@ -475,6 +475,7 @@ Rails.application.routes.draw do
         subitems: [
           { instance: true, link: "go" },
           { instance: true, link: "restart" },
+          { instance: true, link: "reset_end" },
         ]
       },
     ],

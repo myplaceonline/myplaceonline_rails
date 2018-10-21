@@ -53,6 +53,15 @@ class QuizInstancesController < MyplaceonlineController
     result + super
   end
   
+  def reset_end
+    set_obj
+    
+    @obj.end_time = nil
+    @obj.save!
+    
+    redirect_to(quiz_quiz_instance_go_path(@obj.quiz, @obj))
+  end
+  
   def go
     set_obj
     
