@@ -285,6 +285,7 @@ en:
       web_comics: "Web Comics"
       website_domain_myplets: "Myplets"
       website_domain_properties: "Website Domain Properties"
+      website_domain_ssh_keys: "Website Domain SSH Keys"
       website_domains: "Website Domains"
       website_lists: "Website Lists"
       website_scrapers: "Website Scrapers"

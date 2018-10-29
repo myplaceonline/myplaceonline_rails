@@ -9,4 +9,8 @@ class WebsiteDomainSshKey < ApplicationRecord
   end
 
   child_property(name: :ssh_key)
+
+  def final_search_result
+    self.website_domain
+  end
 end
