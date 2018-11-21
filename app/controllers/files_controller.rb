@@ -171,7 +171,7 @@ class FilesController < MyplaceonlineController
           Rails.logger.debug{"FilesController.rotate: filesystem_path: #{@obj.filesystem_path}"}
           
           child = Myp.spawn(
-            command_line: "/usr/bin/mogrify #{obj.filesystem_path}#{index} -auto-orient -rotate #{degrees} #{@obj.filesystem_path}"
+            command_line: "/usr/bin/mogrify -auto-orient -rotate #{degrees} #{@obj.filesystem_path}"
           )
           
           @obj.clear_thumbnail
