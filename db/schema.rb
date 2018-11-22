@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181014032747) do
+ActiveRecord::Schema.define(version: 20181122133127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -469,6 +469,7 @@ ActiveRecord::Schema.define(version: 20181014032747) do
     t.datetime "updated_at", null: false
     t.bigint "main_post_id"
     t.boolean "is_public"
+    t.boolean "reverse"
     t.index ["identity_id"], name: "index_blogs_on_identity_id"
     t.index ["main_post_id"], name: "index_blogs_on_main_post_id"
   end

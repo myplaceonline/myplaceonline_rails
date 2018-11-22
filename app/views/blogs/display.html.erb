@@ -1,10 +1,11 @@
 <% content_for :heading do -%><%= @obj.display %><% end -%>
+<% content_for :rsslink do -%><%= blog_rss_path(@obj) %><% end -%>
 
 <% if @obj.main_post.nil? %>
   <%
     offset = controller.items_offset
     perpage = controller.items_per_page
-    count = @obj.blog_posts.count
+    count = @blog_posts.count
     perpage = controller.update_items_per_page(perpage, count)
     items_next_page_link = blog_display_path(@obj, offset: offset + perpage)
     items_previous_page_link = blog_display_path(@obj, offset: offset - perpage)

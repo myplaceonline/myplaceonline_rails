@@ -387,6 +387,12 @@ module ApplicationHelper
   end
   
   def replace_images(html, image_context)
+    
+    # We only have to check that the identity of the blog matches the
+    # image_context because we assume that if this method is being
+    # called that authorization has already been performed on the
+    # blog
+    
     Rails.logger.debug{"ApplicationHelper.replace_images: html: #{html}"}
     if !html.nil?
       i = 0
@@ -394,8 +400,8 @@ module ApplicationHelper
         match_data = html.match(/<img src="\/blogs\/([0-9]+)\/(upload[^\/]+)\/([^"]+)/, i)
         if !match_data.nil?
           blog = Blog.find(match_data[1].to_i)
-          if blog.identity_id != image_context.identity_id
-            raise "TODO"
+          if image_context.identity_id != blog.identity_id
+            raise CanCan::AccessDenied.new("Not authorized")
           end
           name_search = match_data[3]
           Rails.logger.debug{"ApplicationHelper.replace_images: found blog #{blog.id}, image #{name_search}"}
@@ -432,8 +438,8 @@ module ApplicationHelper
         match_data = html.match(/<a href="\/blogs\/([0-9]+)\/(upload[^\/]+)\/([^"]+)/, i)
         if !match_data.nil?
           blog = Blog.find(match_data[1].to_i)
-          if blog.identity_id != image_context.identity_id
-            raise "TODO"
+          if image_context.identity_id != blog.identity_id
+            raise CanCan::AccessDenied.new("Not authorized")
           end
           name_search = match_data[3]
           Rails.logger.debug{"ApplicationHelper.replace_images: found blog #{blog.id}, link #{name_search}"}
@@ -454,6 +460,48 @@ module ApplicationHelper
             if !token.blank?
               replacement << "&token=#{token}"
             end
+          else
+            replacement = ""
+            Myp.warn("Link #{name_search} not found for blog: #{blog.id}, image_context: #{image_context.inspect}", request: request)
+          end
+          html = match_data.pre_match + replacement + match_data.post_match
+          i = match_data.offset(0)[0] + replacement.length + 1
+        else
+          break
+        end
+      end
+
+      
+      i = 0
+      while true do
+        match_data = html.match(/!\[[^\]]+\]\(\/blogs\/([0-9]+)\/(upload[^\/]+)\/([^\)]+)\)/, i)
+        if !match_data.nil?
+          blog = Blog.find(match_data[1].to_i)
+          if image_context.identity_id != blog.identity_id
+            raise CanCan::AccessDenied.new("Not authorized")
+          end
+          name_search = match_data[3]
+          Rails.logger.debug{"ApplicationHelper.replace_images: found blog #{blog.id}, link #{name_search}"}
+          j = name_search.rindex(".")
+          if !j.nil?
+            name_search = name_search[0..j-1]
+          end
+          identity_file = blog.identity_file_by_name(name_search)
+          if !identity_file.nil?
+            replacement = "<a href=\"/blogs/#{match_data[1]}/#{match_data[2]}/#{match_data[3]}"
+            remainder = ""
+            if replacement.index("?").nil?
+              remainder << "?"
+            else
+              remainder << "&"
+            end
+            remainder << "t=#{identity_file.updated_at.to_i}"
+            token = share_token(context: identity_file, share_context: blog, valid_guest_actions: [:upload, :upload_thumbnail])
+            if !token.blank?
+              remainder << "&token=#{token}"
+            end
+            replacement << remainder
+            replacement << "\"><img src=\"/blogs/#{match_data[1]}/#{match_data[2]}/#{match_data[3]}#{remainder}\" /></a>"
           else
             replacement = ""
             Myp.warn("Link #{name_search} not found for blog: #{blog.id}, image_context: #{image_context.inspect}", request: request)

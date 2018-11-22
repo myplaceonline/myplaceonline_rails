@@ -9,7 +9,7 @@
     <item>
       <title><%= blog_post.display %></title>
       <link><%= blog_page_url(@obj, blog_post.display) %></link>
-      <pubDate><%= blog_post.updated_at.rfc822 %></pubDate>
+      <pubDate><%= blog_post.computed_date.rfc822 %></pubDate>
     </item>
   <% end %>
 </rss>

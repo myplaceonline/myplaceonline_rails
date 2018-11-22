@@ -20,9 +20,17 @@ class Blog < ApplicationRecord
 
   child_files
 
-  child_properties(name: :blog_posts, sort: "post_date DESC")
+  child_properties(name: :blog_posts, sort: nil)
   
   child_property(name: :main_post, model: BlogPost)
+  
+  def sorted_blog_posts
+    if self.reverse
+      self.blog_posts.order("post_date ASC NULLS LAST")
+    else
+      self.blog_posts.order("post_date DESC NULLS LAST")
+    end
+  end
 
   def identity_file_by_name(name)
     result = nil
@@ -50,5 +58,9 @@ class Blog < ApplicationRecord
     else
       Permission::ACTION_UPDATE
     end
+  end
+  
+  def public_actions
+    [:display, :page, :rss]
   end
 end

@@ -19,3 +19,12 @@
     text_area_rich: obj.edit_type == BlogPost::EDIT_TYPE_TEXT ? false : true,
   )
 %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATETIME,
+    name: :post_date,
+    value: obj.post_date,
+    placeholder: "myplaceonline.blog_posts.post_date"
+  )
+%>

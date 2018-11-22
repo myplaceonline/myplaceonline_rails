@@ -35,6 +35,15 @@
   }
 %>
 <%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :reverse,
+    value: obj.reverse,
+    placeholder: "myplaceonline.blogs.reverse"
+  )
+%>
+<%#
   render partial: "myplaceonline/pictures_form", locals: {
     f: f,
     obj: obj,

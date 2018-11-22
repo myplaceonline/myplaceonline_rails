@@ -44,9 +44,9 @@ class BlogsController < MyplaceonlineController
 
     offset = Myp.param_integer(params, MyplaceonlineController::PARAM_OFFSET, default_value: 0)
     perpage = Myp.param_integer(params, MyplaceonlineController::PARAM_PER_PAGE, default_value: default_items_per_page)
-    perpage = update_items_per_page(perpage, @obj.blog_posts.count)
+    perpage = update_items_per_page(perpage, @obj.sorted_blog_posts.count)
     
-    @blog_posts = @obj.blog_posts.offset(offset).limit(perpage)
+    @blog_posts = @obj.sorted_blog_posts.offset(offset).limit(perpage)
   end
   
   def rss
@@ -54,7 +54,7 @@ class BlogsController < MyplaceonlineController
     
     @title = @description = @obj.display
     @link = blog_display_url(@obj)
-    @blog_posts = @obj.blog_posts
+    @blog_posts = @obj.sorted_blog_posts
     
     render(action: :rss, content_type: "application/rss+xml")
   end
@@ -88,7 +88,7 @@ class BlogsController < MyplaceonlineController
     @matched_post = nil
     pagename = params[:pagename].downcase.gsub("%20", " ")
     Rails.logger.debug{"BlogsController.page pagename: #{pagename}"}
-    @obj.blog_posts.each do |post|
+    @obj.sorted_blog_posts.each do |post|
       checkpagename = post.blog_post_title.downcase
       Rails.logger.debug{"BlogsController.page checkpagename: #{checkpagename}"}
       if checkpagename == pagename
@@ -143,6 +143,7 @@ class BlogsController < MyplaceonlineController
       params.require(:blog).permit(
         :blog_name,
         :notes,
+        :reverse,
         blog_files_attributes: FilesController.multi_param_names,
         main_post_attributes: BlogPost.params,
       )

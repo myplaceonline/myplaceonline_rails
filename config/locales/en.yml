@@ -3921,6 +3921,7 @@ en:
       display: "Display"
       main_post: "Main Post"
       rss: "RSS"
+      reverse: "Reverse Posts"
     blog_posts:
       blog_post_title: "Title"
       post: "Post"
@@ -3931,6 +3932,7 @@ en:
       show_comments: "%{num} Comments"
       about_comment: "By %{name} on %{date}"
       edit_type: "Edit Type"
+      post_date: "Post Date"
       edit_types:
         default: "Default"
         text: "Text"
