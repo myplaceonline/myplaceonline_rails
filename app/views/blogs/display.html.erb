@@ -5,7 +5,7 @@
   <%
     offset = controller.items_offset
     perpage = controller.items_per_page
-    count = @blog_posts.count
+    count = @obj.blog_posts.count
     perpage = controller.update_items_per_page(perpage, count)
     items_next_page_link = blog_display_path(@obj, offset: offset + perpage)
     items_previous_page_link = blog_display_path(@obj, offset: offset - perpage)
