@@ -27,7 +27,7 @@ class TestScoresController < MyplaceonlineController
     end
 
     def default_sort_columns
-      ["test_scores.test_score_date"]
+      ["test_scores.test_score_date", "lower(test_scores.test_score_name)"]
     end
 
     def obj_params
