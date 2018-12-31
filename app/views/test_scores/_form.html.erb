@@ -29,6 +29,15 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_NUMBER,
+    name: :percentile,
+    value: obj.percentile,
+    placeholder: "myplaceonline.test_scores.percentile"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,

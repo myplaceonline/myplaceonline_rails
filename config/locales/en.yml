@@ -3628,6 +3628,7 @@ en:
       test_score_name: "Name"
       test_score_date: "Date"
       test_score: "Score"
+      percentile: "Percentile"
     after_new_item:
       show_item: "Show Item"
       show_list: "Back to List"

@@ -1,6 +1,7 @@
 <%= data_row(heading: t("myplaceonline.test_scores.test_score_name"), content: obj.test_score_name) %>
 <%= data_row(heading: t("myplaceonline.test_scores.test_score"), content: obj.test_score) %>
 <%= data_row(heading: t("myplaceonline.test_scores.test_score_date"), content: obj.test_score_date) %>
+<%= data_row(heading: t("myplaceonline.test_scores.percentile"), content: obj.percentile) %>
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
 <%=
   render partial: "myplaceonline/pictures", locals: {

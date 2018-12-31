@@ -36,6 +36,7 @@ class TestScoresController < MyplaceonlineController
         :test_score_date,
         :test_score,
         :notes,
+        :percentile,
         test_score_files_attributes: FilesController.multi_param_names
       )
     end
