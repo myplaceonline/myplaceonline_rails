@@ -1143,6 +1143,9 @@ var myplaceonline = function(mymodule) {
 
   function getBorderTitle(context) {
     var result = context.html();
+    if (!result) {
+      result = "";
+    }
     result = result.replace(/ \(.*\)/g, "");
     return result;
   }
