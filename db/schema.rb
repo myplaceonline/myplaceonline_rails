@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181231043222) do
+ActiveRecord::Schema.define(version: 20181231234957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -244,6 +244,35 @@ ActiveRecord::Schema.define(version: 20181231043222) do
     t.index ["identity_id"], name: "index_apartments_on_identity_id"
     t.index ["landlord_id"], name: "index_apartments_on_landlord_id"
     t.index ["location_id"], name: "index_apartments_on_location_id"
+  end
+
+  create_table "art_files", force: :cascade do |t|
+    t.bigint "art_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["art_id"], name: "index_art_files_on_art_id"
+    t.index ["identity_file_id"], name: "index_art_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_art_files_on_identity_id"
+  end
+
+  create_table "arts", force: :cascade do |t|
+    t.string "art_name"
+    t.string "art_source"
+    t.date "art_date"
+    t.string "art_link"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_arts_on_identity_id"
   end
 
   create_table "awesome_list_items", id: :serial, force: :cascade do |t|
@@ -7153,6 +7182,10 @@ ActiveRecord::Schema.define(version: 20181231043222) do
   add_foreign_key "apartments", "contacts", column: "landlord_id", name: "apartments_landlord_id_fk"
   add_foreign_key "apartments", "identities", name: "apartments_identity_id_fk"
   add_foreign_key "apartments", "locations", name: "apartments_location_id_fk"
+  add_foreign_key "art_files", "arts"
+  add_foreign_key "art_files", "identities"
+  add_foreign_key "art_files", "identity_files"
+  add_foreign_key "arts", "identities"
   add_foreign_key "awesome_list_items", "awesome_lists"
   add_foreign_key "awesome_list_items", "identities"
   add_foreign_key "awesome_lists", "identities"

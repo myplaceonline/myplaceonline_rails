@@ -32,6 +32,7 @@ en:
       annuities: "Annuities"
       apartment_leases: "Apartment Leases"
       apartments: "Apartments"
+      arts: "Arts"
       awesome_lists: "Awesome Lists"
       bank_accounts: "Bank Accounts"
       bars: "Bars"
@@ -4311,3 +4312,8 @@ en:
         equifax: "Equifax"
         experian: "Experian"
         transunion: "TransUnion"
+    arts:
+      art_name: "Name"
+      art_source: "Creator(s)"
+      art_link: "Link"
+
