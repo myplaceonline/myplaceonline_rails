@@ -534,39 +534,41 @@ module Myp
         
         category_homepage = self.parse_yaml_to_html("myplaceonline.default_domain.category_homepage")
         
-        Rails.logger.debug{"Myp.reinitialize_in_rails_context started loading dynamic domains"}
-        # Now add all categories as subdomains
-        @@all_categories.each do |category_name, category|
-          title = category.human_title
-          host = category.link + "." + @@default_website_domain.hosts
-          dynamic_domain = WebsiteDomain.new({
-            domain_name: title,
-            verified: true,
-            meta_description: title,
-            meta_keywords: title,
-            hosts: host,
-            static_homepage: category_homepage.gsub("%{title}", title),
-            homepage_path: "/#{category.link}",
-            about: title,
-            mission_statement: title,
-            faq: title,
-            only_homepage: true,
-            allow_public: true,
-            website_domain_myplets: [
-#               WebsiteDomainMyplet.new({
-#                 title: title,
-#                 category: category,
-#                 category_id: category.id,
-#                 border_type: Myplet::BORDER_TYPE_NONE,
-#                 position: 1,
-#                 singleton: true,
-#               })
-            ]
-          })
-          @@all_website_domains[host] = dynamic_domain
+        if !Rails.env.test?
+          Rails.logger.debug{"Myp.reinitialize_in_rails_context started loading dynamic domains"}
+          # Now add all categories as subdomains
+          @@all_categories.each do |category_name, category|
+            title = category.human_title
+            host = category.link + "." + @@default_website_domain.hosts
+            dynamic_domain = WebsiteDomain.new({
+              domain_name: title,
+              verified: true,
+              meta_description: title,
+              meta_keywords: title,
+              hosts: host,
+              static_homepage: category_homepage.gsub("%{title}", title),
+              homepage_path: "/#{category.link}",
+              about: title,
+              mission_statement: title,
+              faq: title,
+              only_homepage: true,
+              allow_public: true,
+              website_domain_myplets: [
+#             WebsiteDomainMyplet.new({
+#               title: title,
+#               category: category,
+#               category_id: category.id,
+#               border_type: Myplet::BORDER_TYPE_NONE,
+#               position: 1,
+#               singleton: true,
+#             })
+              ]
+            })
+            @@all_website_domains[host] = dynamic_domain
+          end
+          Rails.logger.debug{"Myp.reinitialize_in_rails_context finished loading dynamic domains"}
         end
-        Rails.logger.debug{"Myp.reinitialize_in_rails_context finished loading dynamic domains"}
-        
+                  
       rescue ActiveRecord::StatementInvalid
         # Mid-migration
       end
