@@ -55,18 +55,27 @@ class Users::RegistrationsController < Devise::RegistrationsController
             request: request,
           )
           
+          flashes = {}
+          if !Myp.website_domain.welcome_message_blank?
+            flashes[:notice] = Myp.website_domain.welcome_message
+          end
+          
           if resource.active_for_authentication?
             #set_flash_message :notice, :signed_up if is_flashing_format?
             sign_up(resource_name, resource)
             #respond_with resource, location: after_sign_up_path_for(resource)
-            redirect_to after_sign_up_path_for(resource),
-              :flash => { :notice => Myp.website_domain.new_user_welcome }
+            redirect_to(
+              after_sign_up_path_for(resource),
+              flash: flashes
+            )
           else
             set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_flashing_format?
             expire_data_after_sign_in!
             #respond_with resource, location: after_inactive_sign_up_path_for(resource)
-            redirect_to after_inactive_sign_up_path_for(resource),
-              :flash => { :notice => Myp.website_domain.new_user_welcome }
+            redirect_to(
+              after_inactive_sign_up_path_for(resource),
+              flash: flashes
+            )
           end
         else
           clean_up_passwords resource

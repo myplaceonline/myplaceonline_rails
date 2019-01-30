@@ -436,6 +436,25 @@ module Myp
     html
   end
   
+  def self.markdown_to_html(markdown)
+    if !markdown.nil?
+      GitHub::Markup.render_s(GitHub::Markups::MARKUP_MARKDOWN, markdown)
+    else
+      nil
+    end
+  end
+  
+  def self.parse_yaml_to_html(id)
+    str = I18n.t(id)
+    xml = Nokogiri::XML("<xml>#{str}</xml>")
+    cdata = xml.root.xpath("//xml").children.find{|e| e.cdata?}
+    if !cdata.nil?
+      markdown_to_html(cdata.text.strip)
+    else
+      raise "nil CDATA for #{xml}"
+    end
+  end
+
   @@all_categories = Hash.new.with_indifferent_access
   @@all_categories_without_explicit_without_experimental = Hash.new.with_indifferent_access
   @@all_categories_without_explicit_with_experimental = Hash.new.with_indifferent_access
@@ -512,6 +531,42 @@ module Myp
             end
           end
         end
+        
+        category_homepage = self.parse_yaml_to_html("myplaceonline.default_domain.category_homepage")
+        
+        Rails.logger.debug{"Myp.reinitialize_in_rails_context started loading dynamic domains"}
+        # Now add all categories as subdomains
+        @@all_categories.each do |category_name, category|
+          title = category.human_title
+          host = category.link + "." + @@default_website_domain.hosts
+          dynamic_domain = WebsiteDomain.new({
+            domain_name: title,
+            verified: true,
+            meta_description: title,
+            meta_keywords: title,
+            hosts: host,
+            static_homepage: category_homepage.gsub("%{title}", title),
+            homepage_path: "/#{category.link}",
+            about: title,
+            mission_statement: title,
+            faq: title,
+            only_homepage: true,
+            allow_public: true,
+            website_domain_myplets: [
+#               WebsiteDomainMyplet.new({
+#                 title: title,
+#                 category: category,
+#                 category_id: category.id,
+#                 border_type: Myplet::BORDER_TYPE_NONE,
+#                 position: 1,
+#                 singleton: true,
+#               })
+            ]
+          })
+          @@all_website_domains[host] = dynamic_domain
+        end
+        Rails.logger.debug{"Myp.reinitialize_in_rails_context finished loading dynamic domains"}
+        
       rescue ActiveRecord::StatementInvalid
         # Mid-migration
       end
@@ -630,6 +685,10 @@ module Myp
     
     host == "localhost" || Myp.website_domains.keys.any?{|domain| host.end_with?(domain) }
   end
+  
+  def self.website_domain_homepages
+    @@all_website_domain_homepages
+  end
 
   def self.website_domain_homepage(host: nil)
     host = Myp.current_host(host: host)
@@ -645,30 +704,36 @@ module Myp
         save_id = nil
         action = nil
         last_controller = nil
-        while i >= 0
-          piece = pieces[i]
-          if Myp.is_number?(piece)
-            if params.length == 0
-              params["id"] = piece
-            else
-              save_id = piece
-            end
-          else
-            Rails.logger.debug{"Myp.website_domain_homepage piece: #{piece}, params: #{params.length}"}
-            if last_controller.nil? && params.length == 1
-              last_controller = piece
-            else
-              if !save_id.nil?
-                params[piece.singularize + "_id"] = save_id
-                save_id = nil
+        if pieces.length == 2 && pieces[0] == ""
+          last_controller = pieces[1]
+          action = :index
+          params[:dynamic_homepage] = true
+        else
+          while i >= 0
+            piece = pieces[i]
+            if Myp.is_number?(piece)
+              if params.length == 0
+                params["id"] = piece
               else
-                if action.nil?
-                  action = piece.to_sym
+                save_id = piece
+              end
+            else
+              Rails.logger.debug{"Myp.website_domain_homepage piece: #{piece}, params: #{params.length}"}
+              if last_controller.nil? && params.length == 1
+                last_controller = piece
+              else
+                if !save_id.nil?
+                  params[piece.singularize + "_id"] = save_id
+                  save_id = nil
+                else
+                  if action.nil?
+                    action = piece.to_sym
+                  end
                 end
               end
             end
+            i = i - 1
           end
-          i = i - 1
         end
         if action.blank?
           action = :show
@@ -676,7 +741,7 @@ module Myp
         params[:no_layout] = true
         controller_class = Object.const_get(last_controller.camelize + "Controller")
         Rails.logger.debug{"Myp.website_domain_homepage rendering controller: #{controller_class}, action: #{action}, params: #{params.inspect}"}
-        obj = Object.const_get(last_controller.camelize.singularize).send("find", params["id"])
+        obj = params["id"].blank? ? nil : Object.const_get(last_controller.camelize.singularize).send("find", params["id"])
         
         if website_domain.homepage_path_cached
           MyplaceonlineExecutionContext.do_ability_identity(obj.identity) do
@@ -914,14 +979,6 @@ module Myp
       @splitLinkButton
     end
   end
-
-  def self.markdown_to_html(markdown)
-    if !markdown.nil?
-      GitHub::Markup.render_s(GitHub::Markups::MARKUP_MARKDOWN, markdown)
-    else
-      nil
-    end
-  end
   
   def self.markdown_for_plain_email(markdown)
     if !markdown.nil?
@@ -943,17 +1000,6 @@ module Myp
       markdown
     else
       nil
-    end
-  end
-  
-  def self.parse_yaml_to_html(id)
-    str = I18n.t(id)
-    xml = Nokogiri::XML("<xml>#{str}</xml>")
-    cdata = xml.root.xpath("//xml").children.find{|e| e.cdata?}
-    if !cdata.nil?
-      markdown_to_html(cdata.text.strip)
-    else
-      raise "nil CDATA for #{xml}"
     end
   end
   

@@ -35,6 +35,8 @@ class MyplaceonlineController < ApplicationController
     
     @myplet = params[:myplet]
     @archived = param_bool(:archived)
+    @dynamic_homepage = params[:dynamic_homepage]
+    Rails.logger.debug{"MyplaceonlineController.index @myplet: #{@myplet}, @dynamic_homepage: #{@dynamic_homepage}"}
 
     if has_category && params[:myplet].nil? && !User.current_user.guest?
       Myp.visit(User.current_user, category_name)

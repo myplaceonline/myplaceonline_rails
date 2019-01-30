@@ -105,4 +105,12 @@ class WebsiteDomain < ApplicationRecord
       Myp.reinitialize
     end
   end
+  
+  def welcome_message_blank?
+    self.new_user_welcome.blank?
+  end
+  
+  def welcome_message
+    self.new_user_welcome.blank? ? I18n.t("myplaceonline.default_domain.category_welcome") : self.new_user_welcome
+  end
 end

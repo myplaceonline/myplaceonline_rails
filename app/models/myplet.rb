@@ -28,14 +28,16 @@ class Myplet < ApplicationRecord
   def self.default_myplets(identity)
     result = Array.new
     
-    ActiveRecord::Base.transaction do
-      
-      identity.website_domain.website_domain_myplets.each do |myplet|
+    if !identity.website_domain.nil?
+      ActiveRecord::Base.transaction do
         
-        result.push(myplet.create_for_identity(identity))
+        identity.website_domain.website_domain_myplets.each do |myplet|
+          
+          result.push(myplet.create_for_identity(identity))
+          
+        end
         
       end
-      
     end
 
     result

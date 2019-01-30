@@ -157,7 +157,7 @@ end
       }
     %>
   <% end %>
-  <% content_for :footer do -%>
+  <% if @dynamic_homepage %>
     <% if controller.show_index_footer %>
       <%=
         render(partial: "shared/footer", locals: {
@@ -165,5 +165,15 @@ end
         })
       %>
     <% end %>
-  <% end -%>
+  <% else %>
+    <% content_for :footer do -%>
+      <% if controller.show_index_footer %>
+        <%=
+          render(partial: "shared/footer", locals: {
+            items: controller.footer_items_index
+          })
+        %>
+      <% end %>
+    <% end -%>
+  <% end %>
 <% end %>

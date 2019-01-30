@@ -12,16 +12,35 @@ website_domain = Myp.website_domain
   
     # Assume that the view will have flashes!
     Rails.logger.debug{"welcome index hash: #{Myp.debug_print(homepage)}"}
-    MyplaceonlineExecutionContext.do_ability_identity(homepage[:obj].identity) do
+    if homepage[:obj].nil?
   %>
-      <%= render :html => Myp.renderActionInOtherController(
-                            homepage[:controller_class],
-                            homepage[:action],
-                            homepage[:params],
-                          ).html_safe
+      <%=
+        render(
+          html: Myp.renderActionInOtherController(
+                  homepage[:controller_class],
+                  homepage[:action],
+                  homepage[:params],
+                ).html_safe
+        )
       %>
   <%
+    else
+      MyplaceonlineExecutionContext.do_ability_identity(homepage[:obj].identity) do
+  %>
+        <%=
+          render(
+            html: Myp.renderActionInOtherController(
+                    homepage[:controller_class],
+                    homepage[:action],
+                    homepage[:params],
+                  ).html_safe
+          )
+        %>
+  <%
+      end
     end
+  %>
+  <%
   else
   %>
     <%= flashes! %>
