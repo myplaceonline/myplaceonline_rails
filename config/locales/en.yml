@@ -409,6 +409,7 @@ en:
           <a href="/users/sign_up" class="ui-btn ui-btn-icon-left ui-icon-power ui-btn-inline">Join</a>
         </p>
         ]]>
+      category_welcome: "Welcome"
     general:
       email: "E-mail"
       access_denied: "You are not authorized to access %{resource}"

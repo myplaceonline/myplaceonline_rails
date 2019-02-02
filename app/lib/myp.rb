@@ -539,7 +539,7 @@ module Myp
           # Now add all categories as subdomains
           @@all_categories.each do |category_name, category|
             title = category.human_title
-            host = category.link + "." + @@default_website_domain.hosts
+            host = category.link + "." + @@default_website_domain.main_domain
             dynamic_domain = WebsiteDomain.new({
               domain_name: title,
               verified: true,
