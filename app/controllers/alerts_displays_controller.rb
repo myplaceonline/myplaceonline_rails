@@ -12,6 +12,7 @@ class AlertsDisplaysController < MyplaceonlineController
     @trip = Trip.where(
       %{
         identity_id = ? AND
+        archived is NULL AND
         started IS NOT NULL AND
         ended IS NOT NULL AND
         ? >= started AND

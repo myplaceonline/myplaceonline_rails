@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181231234957) do
+ActiveRecord::Schema.define(version: 20190215203021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1210,6 +1210,19 @@ ActiveRecord::Schema.define(version: 20181231234957) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_computer_environments_on_identity_id"
+  end
+
+  create_table "computer_files", force: :cascade do |t|
+    t.bigint "computer_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["computer_id"], name: "index_computer_files_on_computer_id"
+    t.index ["identity_file_id"], name: "index_computer_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_computer_files_on_identity_id"
   end
 
   create_table "computer_ssh_keys", id: :serial, force: :cascade do |t|
@@ -7324,6 +7337,9 @@ ActiveRecord::Schema.define(version: 20181231234957) do
   add_foreign_key "computer_environment_passwords", "identities"
   add_foreign_key "computer_environment_passwords", "passwords"
   add_foreign_key "computer_environments", "identities"
+  add_foreign_key "computer_files", "computers"
+  add_foreign_key "computer_files", "identities"
+  add_foreign_key "computer_files", "identity_files"
   add_foreign_key "computer_ssh_keys", "computers"
   add_foreign_key "computer_ssh_keys", "identities"
   add_foreign_key "computer_ssh_keys", "ssh_keys"

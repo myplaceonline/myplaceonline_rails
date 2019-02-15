@@ -1,4 +1,8 @@
 class ComputersController < MyplaceonlineController
+  def may_upload
+    true
+  end
+
   protected
     def additional_sorts
       [
@@ -40,7 +44,8 @@ class ComputersController < MyplaceonlineController
           :_destroy,
           :username,
           ssh_key_attributes: SshKeysController.param_names
-        ]
+        ],
+        computer_files_attributes: FilesController.multi_param_names
       )
     end
 end

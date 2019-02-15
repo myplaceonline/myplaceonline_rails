@@ -23,6 +23,8 @@ class Computer < ApplicationRecord
 
   child_properties(name: :computer_ssh_keys)
 
+  child_files
+  
   def self.skip_check_attributes
     ["hyperthreaded"]
   end
