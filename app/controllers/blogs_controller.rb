@@ -56,7 +56,7 @@ class BlogsController < MyplaceonlineController
     @link = blog_display_url(@obj)
     @blog_posts = @obj.sorted_blog_posts
     
-    render(action: :rss, content_type: "application/rss+xml")
+    render(action: :rss, content_type: "application/rss+xml", :formats => [:xml])
   end
 
   def default_items_per_page

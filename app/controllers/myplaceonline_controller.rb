@@ -20,7 +20,7 @@ class MyplaceonlineController < ApplicationController
   
   skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK
 
-  respond_to :html, :json
+  respond_to :html, :json, :xml
   
   def set_layout
     self.class.layout(params[:no_layout] ? "blank" : "application")
