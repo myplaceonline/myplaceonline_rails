@@ -9,7 +9,10 @@ before_script:
   - cp config/database.yml.travis config/database.yml
 
 before_install:
-  - sudo apt-get install -y imagemagick libmagickwand-dev ruby-dev gcc libffi-dev make
+  - sudo apt-get install -y imagemagick libmagickwand-dev
+  
+after_script:
+  - cat /home/travis/build/myplaceonline/myplaceonline_rails/vendor/bundle/ruby/2.3.0/extensions/x86_64-linux/2.3.0/rmagick-3.0.0/mkmf.log
 
 addons:
   apt:

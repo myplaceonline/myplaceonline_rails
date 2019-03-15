@@ -386,6 +386,19 @@ module ApplicationHelper
     result
   end
   
+  def markdown_post_process(markdown)
+    #[https://www.youtube.com/watch?v=CMxwqZVL9L4](https://www.youtube.com/watch?v=CMxwqZVL9L4)
+    if !markdown.blank? && markdown[0] == "[" && !markdown.index("](").nil?
+      potential_video = markdown[1..markdown.index("](")-1]
+      if potential_video.start_with?("https://www.youtube.com/watch?v=")
+        if markdown == "[" + potential_video + "](" + potential_video + ")"
+          markdown = "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/" + potential_video[potential_video.index("=")+1..-1] + "\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>\n\n" + markdown
+        end
+      end
+    end
+    return markdown
+  end
+  
   def replace_images(html, image_context)
     
     # We only have to check that the identity of the blog matches the
@@ -556,6 +569,7 @@ module ApplicationHelper
       show_reference_as_content: false,
       reference_url: nil,
       markdown_process_images: false,
+      markdown_post_process: false,
       image_context: nil,
       reference_display_heading: true,
       content_wrapper: nil,
@@ -632,6 +646,9 @@ module ApplicationHelper
       if options[:markdown]
         if options[:markdown_process_images]
           content = replace_images(content, options[:image_context])
+        end
+        if options[:markdown_post_process]
+          content = markdown_post_process(content)
         end
         options[:clipboard_text] = content
         content = Myp.markdown_to_html(content)
