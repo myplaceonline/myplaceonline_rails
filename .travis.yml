@@ -1,4 +1,6 @@
 # https://docs.travis-ci.com/user/job-lifecycle
+# Ubuntu Xenial 16.04 is needed for the latest version of ImageMagick
+dist: xenial
 language: ruby
 sudo: false
 
@@ -16,6 +18,9 @@ addons:
   apt:
     update: true
 
+# "If before_install, install or before_script returns a non-zero exit code, the build is errored and stops immediately."
+# This means failure during install don't allow us to do post-mortem;
+# instead, we perform the install manually in the script.
 install: true
 
 script:
