@@ -1,16 +1,19 @@
 language: ruby
 sudo: false
 
-# http://docs.travis-ci.com/user/ci-environment/#Ruby-%28aka-common%29-VM-images
+# https://docs.travis-ci.com/user/languages/ruby/
 rvm:
   - 2.3
 
 before_script:
   - cp config/database.yml.travis config/database.yml
 
+before_install:
+  - sudo apt-get install -y imagemagick libmagickwand-dev
+
 addons:
-  apt_packages:
-    libmagickwand-dev
+  apt:
+    update: true
 
 script: 
   - RAILS_ENV=test SKIP_LARGE_UNNEEDED_IMPORTS=true SKIP_ZIP_CODE_IMPORTS=true travis_wait 120 bundle exec rake db:test:prepare test
