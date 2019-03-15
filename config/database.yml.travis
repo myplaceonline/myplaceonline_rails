@@ -1,15 +1,6 @@
-default: &default
+test
   adapter: postgresql
   encoding: unicode
   pool: 5
-  database: myplaceonline_<%= Rails.env %>
+  database: myplaceonline_test
   username: postgres
-
-development:
-  <<: *default
-
-test:
-  <<: *default
-
-production:
-  <<: *default

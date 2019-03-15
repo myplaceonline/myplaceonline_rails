@@ -8,6 +8,10 @@ sudo: false
 rvm:
   - 2.3
 
+# https://docs.travis-ci.com/user/database-setup/
+services:
+  - postgresql
+  
 before_script:
   - cp config/database.yml.travis config/database.yml
 
