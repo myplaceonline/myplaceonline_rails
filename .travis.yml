@@ -9,7 +9,7 @@ before_script:
   - cp config/database.yml.travis config/database.yml
 
 before_install:
-  - sudo apt-get install -y imagemagick libmagickwand-dev libmagic-dev
+  - sudo apt-get install -y imagemagick libmagickwand-dev ruby-dev gcc libffi-dev make
 
 addons:
   apt:
