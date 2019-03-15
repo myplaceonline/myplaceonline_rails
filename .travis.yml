@@ -10,7 +10,7 @@ before_script:
 
 addons:
   apt_packages:
-    libmagic-dev
+    libmagickwand-dev
 
 script: 
   - RAILS_ENV=test SKIP_LARGE_UNNEEDED_IMPORTS=true SKIP_ZIP_CODE_IMPORTS=true travis_wait 120 bundle exec rake db:test:prepare test
