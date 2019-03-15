@@ -2852,9 +2852,9 @@ module Myp
   def self.log_response_time(name:, threshold: nil, **options, &block)
     start_time = Time.now
     if !options.nil? && options.length > 0
-      Rails.logger.debug{"Myp.log_response_time #{name} started context: #{options}".colorize(color: :magenta)}
+      Rails.logger.debug{"Myp.log_response_time #{name} started context: #{options}".colorize(color: :purple)}
     else
-      Rails.logger.debug{"Myp.log_response_time #{name} started".colorize(color: :magenta)}
+      Rails.logger.debug{"Myp.log_response_time #{name} started".colorize(color: :purple)}
     end
     begin
       block.call

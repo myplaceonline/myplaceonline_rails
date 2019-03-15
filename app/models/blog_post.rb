@@ -59,4 +59,10 @@ class BlogPost < ApplicationRecord
     
     result
   end
+  
+  def self.build(params = nil)
+    result = self.dobuild(params)
+    result.post_date = User.current_user.time_now
+    result
+  end
 end
