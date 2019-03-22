@@ -1532,6 +1532,23 @@ var myplaceonline = function(mymodule) {
     }
   }
   
+  function deleteAllCookies() {
+    var cookies = document.cookie.split("; ");
+    for (var c = 0; c < cookies.length; c++) {
+      var d = window.location.hostname.split(".");
+      while (d.length > 0) {
+        var cookieBase = encodeURIComponent(cookies[c].split(";")[0].split("=")[0]) + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; domain=' + d.join('.') + ' ;path=';
+        var p = location.pathname.split('/');
+        document.cookie = cookieBase + '/';
+        while (p.length > 0) {
+          document.cookie = cookieBase + p.join('/');
+          p.pop();
+        };
+        d.shift();
+      }
+    }
+  }
+  
   // Public API
   mymodule.hookListviewSearch = hookListviewSearch;
   mymodule.hookListviewEnter = hookListviewEnter;
@@ -1571,6 +1588,7 @@ var myplaceonline = function(mymodule) {
   mymodule.toType = toType;
   mymodule.createUrl = createUrl;
   mymodule.handleAjaxFailure = handleAjaxFailure;
+  mymodule.deleteAllCookies = deleteAllCookies;
   
   myplaceonline.onPageLoad(function() {
     if (typeof ZeroClipboard !== 'undefined') {

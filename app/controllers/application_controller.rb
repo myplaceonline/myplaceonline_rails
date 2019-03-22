@@ -195,6 +195,10 @@ class ApplicationController < ActionController::Base
     MyplaceonlineController.check_password(current_user, session, level: level)
   end
   
+  def after_sign_out_path_for(resource)
+    root_url + "?logged_out=true"
+  end
+
   protected
 
     # respond_type: [download, inline]

@@ -92,6 +92,13 @@
           alert("Myplaceonline failed to load correctly. Please let us know at contact@myplaceonline.com what events led up to this and restart the application.");
         }
         
+        if (window.location.search.indexOf("logged_out=true") != -1) {
+          if (myplaceonline.deleteAllCookies) {
+            myplaceonline.deleteAllCookies();
+            myplaceonline.consoleLog("Tried to delete all cookies");
+          }
+        }
+        
         myplaceonline.setBaseUrl("<%= Myp.root_url %>/");
         
       </script>
