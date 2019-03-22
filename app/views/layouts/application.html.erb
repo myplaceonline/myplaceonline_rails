@@ -211,6 +211,9 @@
               <li><%= link_to(t("myplaceonline.buttons.signup"), new_user_registration_path, class: "ui-btn ui-btn-icon-left ui-icon-user") %></li>
               <li><a href="/info" class="ui-btn ui-btn-icon-left ui-icon-info"><%= t("myplaceonline.info.title") %></a></li>
             <% end %>
+            <% if !rsslink.blank? %>
+              <li><%= link_to(t("myplaceonline.feed_items.feed"), rsslink, class: "ui-btn ui-btn-icon-left ui-icon-bullets") %></li>
+            <% end %>
           </ul>
         </div>
       <% end %>
