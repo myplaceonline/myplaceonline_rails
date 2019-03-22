@@ -4,12 +4,12 @@
     <title><%= @title %></title>
     <description><%= @description %></description>
     <link><%= @link %></link>
+    <% @blog_posts.each do |blog_post| %>
+      <item>
+        <title><%= blog_post.display %></title>
+        <link><%= blog_page_url(@obj, blog_post.display) %></link>
+        <pubDate><%= blog_post.computed_date.rfc822 %></pubDate>
+      </item>
+    <% end %>
   </channel>
-  <% @blog_posts.each do |blog_post| %>
-    <item>
-      <title><%= blog_post.display %></title>
-      <link><%= blog_page_url(@obj, blog_post.display) %></link>
-      <pubDate><%= blog_post.computed_date.rfc822 %></pubDate>
-    </item>
-  <% end %>
 </rss>
