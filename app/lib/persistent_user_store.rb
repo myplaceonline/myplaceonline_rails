@@ -37,6 +37,10 @@ class PersistentUserStore
   def delete(name)
     name = cookie_name(name: name)
     @cookies.delete(name, DynamicCookieOptions.delete_cookie_options)
+
+    # For Phonegap, the Set-Cookie with a domain doesn't fully clear out the cookies
+    @cookies.delete(name)
+
     Rails.logger.debug{"PersistentUserStore deleting cookie name: #{name}"}
   end
   
@@ -44,6 +48,9 @@ class PersistentUserStore
     @cookies.each do |name, value|
       if name.start_with?(COOKIE_PREFIX)
         @cookies.delete(name, DynamicCookieOptions.delete_cookie_options)
+
+        # For Phonegap, the Set-Cookie with a domain doesn't fully clear out the cookies
+        @cookies.delete(name)
       end
     end
   end
