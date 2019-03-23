@@ -534,7 +534,7 @@ module Myp
         
         category_homepage = self.parse_yaml_to_html("myplaceonline.default_domain.category_homepage")
         
-        if !Rails.env.test?
+        if !Rails.env.test? && !@@default_website_domain.nil?
           Rails.logger.debug{"Myp.reinitialize_in_rails_context started loading dynamic domains"}
           # Now add all categories as subdomains
           @@all_categories.each do |category_name, category|
