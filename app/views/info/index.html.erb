@@ -59,21 +59,21 @@
       <%= t("myplaceonline.info.credits") %>
     <% end %>
   </li>
-  <!--
-  <li>
-    <%= link_to("https://build.phonegap.com/apps/1133885/download/android/", :data => { :ajax => false }) do %>
-      <%= image_tag("android16x16.png", size: "16x16", class: "ui-li-icon") %>
-      <%= t("myplaceonline.info.apk") %>
-    <% end %>
-  </li>
-  -->
   <% if !MyplaceonlineExecutionContext.offline? %>
-  <li>
-    <%= link_to("https://build.phonegap.com/apps/1133885/share", :data => { :ajax => false }) do %>
-      <%= image_tag("FatCow_Icons16x16/apple_corp.png", size: "16x16", class: "ui-li-icon") %>
-      <%= t("myplaceonline.info.phonegap") %>
-    <% end %>
-  </li>
+    <!-- Recent versions of Android don't allow installation from online link
+    <li>
+      <%= link_to("https://build.phonegap.com/apps/1133885/download/android/", :data => { :ajax => false }) do %>
+        <%= image_tag("android16x16.png", size: "16x16", class: "ui-li-icon") %>
+        <%= t("myplaceonline.info.apk") %>
+      <% end %>
+    </li>
+    <li>
+      <%= link_to("https://build.phonegap.com/apps/1133885/share", :data => { :ajax => false }) do %>
+        <%= image_tag("FatCow_Icons16x16/apple_corp.png", size: "16x16", class: "ui-li-icon") %>
+        <%= t("myplaceonline.info.phonegap") %>
+      <% end %>
+    </li>
+    -->
   <% end %>
   <% if !current_user.nil? && current_user.admin? %>
     <li>

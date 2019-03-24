@@ -480,7 +480,7 @@ var myplaceonline = function(mymodule) {
                 }
                 ft.upload(
                   fileURI,
-                  encodeURI(app.base_url + "/api/newfile2"),
+                  encodeURI(app.base_url + "/api/newfile2"), // Must be newfile instead of newfile2 for phonegap
                   function(result) {
                     $uploading.remove();
                     var resultObj = jQuery.parseJSON(result.response);
@@ -691,7 +691,7 @@ var myplaceonline = function(mymodule) {
 
     var jqxhr = $.ajax({
       type: "POST",
-      url: "/api/newfile2",
+      url: "/api/newfile2", // Must be newfile instead of newfile2 for phonegap
       data: formData,
       timeout: 0,
       context: filecontext,
