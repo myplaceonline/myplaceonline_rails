@@ -95,7 +95,9 @@
         if (window.location.search.indexOf("logged_out=true") != -1) {
           if (myplaceonline.deleteAllCookies) {
             myplaceonline.deleteAllCookies();
-            myplaceonline.consoleLog("Tried to delete all cookies");
+            if (myplaceonline.isInPhoneGap()) {
+              myplaceonline.navigate("/?phonegap=true");
+            }
           }
         }
         
