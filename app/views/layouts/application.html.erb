@@ -83,6 +83,14 @@
             ]);
             myplaceonline.hookListviewEnter($("#mainButtonPopup_search_container input"), "#mainButtonPopup_search_list");
           }
+          if (window.location.search.indexOf("logged_out=true") != -1) {
+            if (myplaceonline.deleteAllCookies) {
+              myplaceonline.deleteAllCookies();
+              if (myplaceonline.isInPhoneGap()) {
+                myplaceonline.navigate("/");
+              }
+            }
+          }
         });
         <% end %>
         
@@ -90,15 +98,6 @@
           myplaceonline.setCsrfToken('<%= form_authenticity_token %>');
         } else {
           alert("Myplaceonline failed to load correctly. Please let us know at contact@myplaceonline.com what events led up to this and restart the application.");
-        }
-        
-        if (window.location.search.indexOf("logged_out=true") != -1) {
-          if (myplaceonline.deleteAllCookies) {
-            myplaceonline.deleteAllCookies();
-            if (myplaceonline.isInPhoneGap()) {
-              myplaceonline.navigate("/?phonegap=true");
-            }
-          }
         }
         
         myplaceonline.setBaseUrl("<%= Myp.root_url %>/");

@@ -1533,8 +1533,8 @@ var myplaceonline = function(mymodule) {
   }
   
   function deleteAllCookies() {
-    if (cookieMaster) {
-      cookieMaster.clearCookies(
+    if (window.cookieMaster) {
+      window.cookieMaster.clearCookies(
         function() {
           myplaceonline.consoleLog("Cookies have been cleared");
         },
