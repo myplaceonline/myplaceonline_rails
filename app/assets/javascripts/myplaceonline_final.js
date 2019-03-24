@@ -1536,7 +1536,6 @@ var myplaceonline = function(mymodule) {
     if (cookieMaster) {
       cookieMaster.clearCookies(
         function() {
-          alert("CLEARED");
           myplaceonline.consoleLog("Cookies have been cleared");
         },
         function() {
