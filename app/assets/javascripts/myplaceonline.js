@@ -393,6 +393,16 @@ var myplaceonline = function(mymodule) {
     }
   }
   
+  function getUploadLink() {
+    // Must be newfile instead of newfile2 for phonegap
+    // See nginx.conf.template
+    if (myplaceonline.isInPhoneGap()) {
+      return "/api/newfile";
+    } else {
+      return "/api/newfile2";
+    }
+  }
+  
   // http://api.jquerymobile.com/global-config/
   $(document).on("mobileinit.myp", function() {
     consoleLog("mobileinit.myp");
@@ -480,7 +490,7 @@ var myplaceonline = function(mymodule) {
                 }
                 ft.upload(
                   fileURI,
-                  encodeURI(app.base_url + "/api/newfile2"), // Must be newfile instead of newfile2 for phonegap
+                  encodeURI(app.base_url + myplaceonline.getUploadLink()),
                   function(result) {
                     $uploading.remove();
                     var resultObj = jQuery.parseJSON(result.response);
@@ -691,7 +701,7 @@ var myplaceonline = function(mymodule) {
 
     var jqxhr = $.ajax({
       type: "POST",
-      url: "/api/newfile2", // Must be newfile instead of newfile2 for phonegap
+      url: myplaceonline.getUploadLink(),
       data: formData,
       timeout: 0,
       context: filecontext,
@@ -1215,6 +1225,7 @@ var myplaceonline = function(mymodule) {
   mymodule.encodeEntities = encodeEntities;
   mymodule.prepareNewContent = prepareNewContent;
   mymodule.getCurrentRelativePathAndQuery = getCurrentRelativePathAndQuery;
+  mymodule.getUploadLink = getUploadLink;
 
   mymodule.isFocusAllowed = function() {
     return allowFocusPlaceholder;
