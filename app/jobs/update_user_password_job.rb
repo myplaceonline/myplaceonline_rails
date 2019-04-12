@@ -13,20 +13,32 @@ class UpdateUserPasswordJob < ApplicationJob
 
         Rails.logger.debug{"Started UpdateUserPasswordJob old_password: #{old_password}, new_password: #{new_password}"}
 
-        user.identities.each do |identity|
-          MyplaceonlineExecutionContext.do_full_context(user, identity) do
-            begin
-              ApplicationRecord.transaction do
+        ApplicationRecord.transaction do
+          user.identities.each do |identity|
+            MyplaceonlineExecutionContext.do_full_context(user, identity) do
+              failed = []
+              begin
+                count = 0
                 EncryptedValue.where(user: user).each do |encrypted_value|
-                  decrypted = Myp.decrypt(encrypted_value, old_password)
-                  Myp.encrypt_value(user, decrypted, new_password, encrypted_value)
-                  encrypted_value.save!
+                  begin
+                    decrypted = Myp.decrypt(encrypted_value, old_password)
+                    Myp.encrypt_value(user, decrypted, new_password, encrypted_value)
+                    encrypted_value.save!
+                  rescue => e1
+                    failed << e1
+                  end
+                  count = count + 1
                 end
+                if failed.length > 0
+                  raise Myp::ExceptionList.new(failed)
+                end
+                Rails.logger.debug{"UpdateUserPasswordJob updated #{count} encrypted values"}
+              rescue => e2
+                # If there's an exception, then we need to undo the password
+                # change and notify the user
+                Rails.logger.debug{"UpdateUserPasswordJob failed #{failed.length}"}
+                self.throw_with_contexts(e2)
               end
-            rescue => e
-              # If there's an exception, then we need to undo the password
-              # change and notify the user
-              self.throw_with_contexts(e)
             end
           end
         end

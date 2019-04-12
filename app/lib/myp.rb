@@ -1318,6 +1318,50 @@ module Myp
   class EncryptedValueUnavailableError < StandardError; end
   class SessionUnavailableError < StandardError; end
   class CannotFindNestedAttribute < StandardError; end
+    
+  class WrappedException < StandardError
+    attr_accessor :inner_exception
+    attr_accessor :data
+    
+    def initialize(inner_exception, data = nil)
+      @inner_exception = inner_exception
+      @data = data
+    end
+    
+    def inner_exception
+      return @inner_exception
+    end
+    
+    def data
+      return @data
+    end
+    
+    def to_s
+      "#{@inner_exception} #{@data}"
+    end
+  end
+
+  class ExceptionList < StandardError
+    attr_accessor :inner_exceptions
+    attr_accessor :data
+    
+    def initialize(inner_exceptions, data = nil)
+      @inner_exceptions = inner_exceptions
+      @data = data
+    end
+    
+    def inner_exceptions
+      return @inner_exceptions
+    end
+    
+    def data
+      return @data
+    end
+    
+    def to_s
+      "#{@inner_exceptions} #{@data}"
+    end
+  end
 
   class SimpleSerializer
     def dump(value)
