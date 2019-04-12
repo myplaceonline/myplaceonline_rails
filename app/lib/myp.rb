@@ -1116,6 +1116,28 @@ module Myp
     self.decrypt(encrypted_value, self.get_current_user_password!)
   end
   
+  class DecryptionException < StandardError
+    attr_accessor :e
+    attr_accessor :encrypted_value
+    
+    def initialize(e, encrypted_value)
+      @e = e
+      @encrypted_value = encrypted_value
+    end
+    
+    def inner_exception
+      return @e
+    end
+    
+    def encrypted_value
+      return @encrypted_value
+    end
+    
+    def to_s
+      "#{@e} #{@encrypted_value}"
+    end
+  end
+  
   def self.decrypt(encrypted_value, key)
     cipher = Myp.map_cipher(encrypted_value.encryption_type)
     
@@ -1129,11 +1151,11 @@ module Myp
       serializer: SimpleSerializer.new
     )
 
-    #begin
+    begin
       result = crypt.decrypt_and_verify(encrypted_value.val)
-    #rescue ActiveSupport::MessageVerifier::InvalidSignature => e
-    #  raise "Invalid password for decryption"
-    #end
+    rescue => e
+      raise DecryptionException.new(e, encrypted_value)
+    end
     
     if !result.nil?
       result.force_encoding("utf-8")
