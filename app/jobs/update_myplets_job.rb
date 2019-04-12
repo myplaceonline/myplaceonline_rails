@@ -1,5 +1,5 @@
 class UpdateMypletsJob < ApplicationJob
-  def perform(*args)
+  def do_perform(*args)
     
     Rails.logger.info{"Started UpdateMypletsJob args: #{args}"}
     

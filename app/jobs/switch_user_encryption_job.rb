@@ -1,5 +1,5 @@
 class SwitchUserEncryptionJob < ApplicationJob
-  def perform(*args)
+  def do_perform(*args)
     ExecutionContext.stack do
       job_context = args.shift
       import_job_context(job_context)

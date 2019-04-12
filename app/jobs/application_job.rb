@@ -38,11 +38,55 @@ class ApplicationJob < ActiveJob::Base
     args_array = [context] + args_array 
     job_class.perform_now(*args_array)
   end
+  
+  def perform(*args)
+    ExecutionContext.stack do
+      do_perform(*args)
+    end
+  end
+  
+  class ExceptionWithExecutionContexts < StandardError
+    attr_accessor :user
+    attr_accessor :e
+    
+    def initialize(e)
+      @e = e
+      @user = MyplaceonlineExecutionContext.user
+    end
+    
+    def inner_exception
+      return @e
+    end
+    
+    def user
+      return @user
+    end
+  end
+  
+  def throw_with_contexts(e)
+    raise ExceptionWithExecutionContexts.new(e)
+  end
+  
+  def do_perform(*args)
+    raise "Abstract method requires implementation"
+  end
 
   # http://edgeguides.rubyonrails.org/active_job_basics.html#exceptions
   rescue_from(StandardError) do |exception|
     ExecutionContext.stack do
-      Myp.handle_exception(exception, nil, nil, "ActiveJob Failure: #{self.class.name}")
+      
+      email = nil
+
+      if exception.is_a?(ExceptionWithExecutionContexts)
+        user = exception.user()
+        exception = exception.inner_exception()
+        
+        if !user.nil?
+          email = user.email
+        end
+      end
+      
+      Myp.handle_exception(exception, email, nil, "ActiveJob Failure: #{self.class.name}")
     end
   end
   

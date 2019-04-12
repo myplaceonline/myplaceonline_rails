@@ -60,6 +60,10 @@ class ExecutionContext
     end
   end
   
+  def self.all_current_contexts
+    Thread.current[:execution_contexts]
+  end
+  
   def self.[](name)
     execution_contexts = Thread.current[:execution_contexts]
     #Rails.logger.debug{"ExecutionContext.[] name: #{name}"}
@@ -193,9 +197,11 @@ class ExecutionContext
     end
   end
   
-  def self.export
+  def self.export(execution_contexts: nil)
     result = {}
-    execution_contexts = Thread.current[:execution_contexts]
+    if execution_contexts.nil?
+      execution_contexts = Thread.current[:execution_contexts]
+    end
     if !execution_contexts.nil?
       i = 0
       while i < execution_contexts.length

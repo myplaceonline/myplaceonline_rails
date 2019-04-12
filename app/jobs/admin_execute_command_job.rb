@@ -1,5 +1,5 @@
 class AdminExecuteCommandJob < ApplicationJob
-  def perform(*args)
+  def do_perform(*args)
     
     ExecutionContext.stack do
 
