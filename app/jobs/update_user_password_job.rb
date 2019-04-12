@@ -34,7 +34,7 @@ class UpdateUserPasswordJob < ApplicationJob
                 end
                 Rails.logger.debug{"UpdateUserPasswordJob updated #{count} encrypted values"}
               rescue => e2
-                # If there's an exception, then we need to undo the password
+                # TODO If there's an exception, then we need to undo the password
                 # change and notify the user
                 Rails.logger.debug{"UpdateUserPasswordJob failed #{failed.length}"}
                 self.throw_with_contexts(e2)
