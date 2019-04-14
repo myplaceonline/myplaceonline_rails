@@ -189,6 +189,7 @@ Rails.application.routes.draw do
   get 'info/diagnostics/checkboxes', :to => 'info#checkboxes'
   get 'info/diagnostics/serverinfo', :to => 'info#serverinfo'
   get 'info/diagnostics/clientinfo', :to => 'info#clientinfo'
+  match 'info/diagnostics/decrypt', :to => 'info#decrypt', via: [:get, :post]
   get 'info/diagnostics/hello_world', :to => 'info#hello_world'
   get 'info/diagnostics/jqm', :to => 'info#jqm'
   get 'badges/42', :to => 'badges#n42'

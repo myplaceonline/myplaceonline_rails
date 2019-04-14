@@ -21,6 +21,23 @@ class InfoController < ApplicationController
     @browser = ap(MyplaceonlineExecutionContext.browser, html: true)
   end
   
+  def decrypt
+    id = params[:id]
+    #password = params[:password]
+    
+    if request.post?
+      begin
+        encrypted_value = EncryptedValue.where(id: id, user: User.current_user).take!
+        decrypted = Myp.decrypt_with_user_password!(encrypted_value)
+        flash[:error] = "Decrypted successfully: #{decrypted}"
+        Rails.logger.info{"DiagnosticsInfo success id: #{id}, user: #{User.current_user.id}"}
+      rescue => e
+        flash[:error] = "Error: #{e}"
+        Rails.logger.info{"DiagnosticsInfo error id: #{id}, e: #{e}"}
+      end
+    end
+  end
+  
   def checkboxes; end
 
   def sleep_time

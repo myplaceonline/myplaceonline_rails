@@ -641,6 +641,9 @@ en:
       mission_statement:
         title: "Mission Statement"
       cookies_clear: "Cleared %{num} cookies"
+      decrypt: "Decrypt"
+      decrypt_id: "Encrypted Value Identifier"
+      decrypt_password: "Password"
     help:
       title: "Help"
       features: "Features"

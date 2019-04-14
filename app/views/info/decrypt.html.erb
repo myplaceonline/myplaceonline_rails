@@ -1,0 +1,48 @@
+<% content_for :heading do -%><%= t("myplaceonline.info.decrypt") %><% end -%>
+
+<h1><%= t("myplaceonline.info.decrypt") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag(info_diagnostics_decrypt_path, method: :post) do %>
+
+  <%=
+    input_field(
+      type: Myp::FIELD_NUMBER,
+      name: :id,
+      placeholder: "myplaceonline.info.decrypt_id",
+      autofocus: true,
+    )
+  %>
+
+  <%#
+    input_field(
+      type: Myp::FIELD_PASSWORD,
+      name: :password,
+      placeholder: "myplaceonline.info.decrypt_password",
+      autocomplete: false,
+    )
+  %>
+
+  <script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+  </script>
+
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.general.submit"), "data-icon" => "check", "data-iconpos" => "top", style: "background-color: green")
+        },
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: info_diagnostics_path,
+          icon: "back"
+        },
+      ]
+    })
+  %>
+
+<% end %>
