@@ -1,3 +1,4 @@
+# No pre-authorization on these API calls. Use `authorize! :edit, obj` if needed.
 class ApiController < ApplicationController
   include Rails.application.routes.url_helpers
 
@@ -458,62 +459,6 @@ class ApiController < ApplicationController
     render json: result
   end
   
-  def create_newfile_result(newfile, params, newfilewrapper: nil, singular: false, singularNamePrefix: "")
-    items = [
-      {
-        type: "raw",
-        value: "<p>" + MyplaceonlineController.helpers.image_tag(file_thumbnail_name_path(newfile, newfile.urlname, t: newfile.updated_at.to_i), alt: newfile.display, title: newfile.display, class: "fit") + "</p>"
-      },
-      {
-        type: "text",
-        name: "identity_file_attributes.file_file_name",
-        placeholder: t("myplaceonline.files.file_file_name"),
-        value: newfile.file_file_name
-      },
-      {
-        type: "textarea",
-        name: "identity_file_attributes.notes",
-        placeholder: t("myplaceonline.general.notes"),
-        value: newfile.notes
-      },
-      {
-        type: "hidden",
-        name: "identity_file_attributes.id",
-        value: newfile.id.to_s
-      },
-      {
-        type: "hidden",
-        name: "identity_file_attributes._updatetype",
-        value: AllowExistingConcern::UPDATE_TYPE_COMBINE.to_s
-      }
-    ]
-    
-    if params[:position_field]
-      items.push({
-        type: "position",
-        name: params[:position_field]
-      })
-    end
-    
-    if !newfilewrapper.nil?
-      items.push({
-        type: "hidden",
-        name: "id",
-        value: newfilewrapper.id.to_s
-      })
-    end
-
-    {
-      result: true,
-      deletePlaceholder: I18n.t("myplaceonline.general.delete"),
-      successNotification: I18n.t("myplaceonline.files.file_success", name: newfile.file_file_name),
-      items: items,
-      singular: singular,
-      id: newfile.id,
-      singularNamePrefix: singularNamePrefix,
-    }
-  end
-  
   def newitem
     redirect_to params[:newitemcategory] + "?prefill=" + params[:q]
   end
@@ -759,11 +704,86 @@ class ApiController < ApplicationController
     nil
   end
   
+  def login_or_register
+    result = false
+    
+    email = params[:email]
+    password = params[:password]
+    
+    if !email.blank? && !password.blank?
+      user = User.where(email: email).take
+      
+      if user.nil?
+      else
+      end
+    end
+    
+    render json: {
+      result: result,
+    }
+  end
+  
   protected
     def json_error(error)
       render json: {
         success: false,
         error: error
+      }
+    end
+    
+    def create_newfile_result(newfile, params, newfilewrapper: nil, singular: false, singularNamePrefix: "")
+      items = [
+        {
+          type: "raw",
+          value: "<p>" + MyplaceonlineController.helpers.image_tag(file_thumbnail_name_path(newfile, newfile.urlname, t: newfile.updated_at.to_i), alt: newfile.display, title: newfile.display, class: "fit") + "</p>"
+        },
+        {
+          type: "text",
+          name: "identity_file_attributes.file_file_name",
+          placeholder: t("myplaceonline.files.file_file_name"),
+          value: newfile.file_file_name
+        },
+        {
+          type: "textarea",
+          name: "identity_file_attributes.notes",
+          placeholder: t("myplaceonline.general.notes"),
+          value: newfile.notes
+        },
+        {
+          type: "hidden",
+          name: "identity_file_attributes.id",
+          value: newfile.id.to_s
+        },
+        {
+          type: "hidden",
+          name: "identity_file_attributes._updatetype",
+          value: AllowExistingConcern::UPDATE_TYPE_COMBINE.to_s
+        }
+      ]
+      
+      if params[:position_field]
+        items.push({
+          type: "position",
+          name: params[:position_field]
+        })
+      end
+      
+      if !newfilewrapper.nil?
+        items.push({
+          type: "hidden",
+          name: "id",
+          value: newfilewrapper.id.to_s
+        })
+      end
+
+      {
+        result: true,
+        deletePlaceholder: I18n.t("myplaceonline.general.delete"),
+        successNotification: I18n.t("myplaceonline.files.file_success", name: newfile.file_file_name),
+        items: items,
+        singular: singular,
+        id: newfile.id,
+        singularNamePrefix: singularNamePrefix,
       }
     end
 end

@@ -85,6 +85,9 @@ Rails.application.routes.draw do
   
   Rails.logger.debug{"routes.rb Started loading routes"}
   
+  use_doorkeeper
+  use_doorkeeper_openid_connect
+
   root "welcome#index"
 
   routes_index(%w(
@@ -121,6 +124,7 @@ Rails.application.routes.draw do
     api/newitem
     api/postal_code_search
     api/distinct_values
+    api/login_or_register
     admin/test
     admin/ensure_pending_all_users
     admin/create_test_job
@@ -145,6 +149,7 @@ Rails.application.routes.draw do
     test/test2
     test/throw
     test/hello_world
+    test_api/hello_world
     users/allusers
     help/features
     help/highlights

@@ -35,12 +35,22 @@ class User < ApplicationRecord
   def self.super_user
     User.find(SUPER_USER_ID)
   end
+  
+  has_many :access_grants,
+           class_name: 'Doorkeeper::AccessGrant',
+           foreign_key: :resource_owner_id,
+           dependent: :destroy # or :delete_all if you don't need callbacks
+
+  has_many :access_tokens,
+           class_name: 'Doorkeeper::AccessToken',
+           foreign_key: :resource_owner_id,
+           dependent: :destroy # or :delete_all if you don't need callbacks
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :lockable
+         :confirmable, :lockable, :doorkeeper
 
   has_many :identities, :dependent => :destroy
   
@@ -176,7 +186,7 @@ class User < ApplicationRecord
         create_identity = self.check_invite_code(website_domain, false)
         
         if create_identity
-          Rails.logger.debug{"Creating identity for #{self.id}"}
+          ::Rails.logger.debug{"Creating identity for #{self.id}"}
           
           # No identity for the current domain, so we create a default one. We can
           # also do any first-time initialization of the user here
@@ -208,11 +218,11 @@ class User < ApplicationRecord
     create_identity = true
     
     if Myp.requires_invite_code && !website_domain.allow_public?
-      Rails.logger.debug{"Domain requires invite code for user #{self}"}
+      ::Rails.logger.debug{"Domain requires invite code for user #{self}"}
       
       code = EnteredInviteCode.where(user: self, website_domain: website_domain).take
 
-      Rails.logger.debug{"User has code: #{code}"}
+      ::Rails.logger.debug{"User has code: #{code}"}
 
       if code.nil?
         create_identity = false
@@ -241,7 +251,7 @@ class User < ApplicationRecord
       
       identity.after_create
       
-      Rails.logger.debug{"Creating first status reminder"}
+      ::Rails.logger.debug{"Creating first status reminder"}
       
       Status.create_first_status
     end
@@ -332,6 +342,6 @@ class User < ApplicationRecord
   
   protected
     def confirmation_required?
-      Rails.env.production?
+      ::Rails.env.production?
     end
 end

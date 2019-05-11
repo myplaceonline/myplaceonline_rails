@@ -20,6 +20,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  world:
+    jp:
+      official_name: "Japan"
   myplaceonline:
     email: "E-mail"
     category:

@@ -1,6 +1,9 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
+  
+  Devise::Doorkeeper.configure_devise(config)
+  
   # The following doesn't need to be set; it's taken from secret_key_base
   # https://github.com/plataformatec/devise/blob/v3.2.3/CHANGELOG.md#323
   # The secret key used by Devise. Devise uses this key to generate
@@ -80,6 +83,7 @@ Devise.setup do |config|
   # may want to disable generating routes to Devise's sessions controller by
   # passing skip: :sessions to `devise_for` in your config/routes.rb
   config.skip_session_storage = [:http_auth]
+  config.skip_session_storage << :doorkeeper
 
   # By default, Devise cleans up the CSRF token on authentication to
   # avoid CSRF token fixation attacks. This means that, when using AJAX

@@ -2645,7 +2645,7 @@ module Myp
     !str.blank? && !str.first(100).index("<?xml").nil?
   end
   
-  def self.raw_http_get(url:, basic_auth_password: nil)
+  def self.raw_http_get(url:, basic_auth_password: nil, bearer_token: nil)
     Rails.logger.info{"Myp.raw_http_get #{url}"}
     
     headers = {
@@ -2666,6 +2666,10 @@ module Myp
       headers["Authorization"] = "Basic #{Base64.strict_encode64(user_password)}"
     end
     
+    if !bearer_token.nil?
+      headers["Authorization"] = "Bearer #{bearer_token}"
+    end
+    
     RestClient::Request.execute(
       method: :get,
       url: url,
@@ -2681,7 +2685,7 @@ module Myp
   #    body: string; HTTP body
   #    raw_response: object; underlying response from client library
   #  }
-  def self.http_get(url:, try_https: false, basic_auth_password: nil)
+  def self.http_get(url:, try_https: false, basic_auth_password: nil, bearer_token: nil)
     Myp.log_response_time(
       name: "Myp.http_get",
       url: url
@@ -2708,12 +2712,12 @@ module Myp
       end
 
       begin
-        response = Myp.raw_http_get(url: url, basic_auth_password: basic_auth_password)
+        response = Myp.raw_http_get(url: url, basic_auth_password: basic_auth_password, bearer_token: bearer_token)
       rescue => e
         if addedhttps
           Rails.logger.info{"Re-trying vanilla HTTP due to #{e.to_s}"}
           url = "http" + url[5..-1]
-          response = Myp.raw_http_get(url: url, basic_auth_password: basic_auth_password)
+          response = Myp.raw_http_get(url: url, basic_auth_password: basic_auth_password, bearer_token: bearer_token)
         else
           raise e
         end
