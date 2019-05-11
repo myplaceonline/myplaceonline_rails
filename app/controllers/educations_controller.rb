@@ -41,6 +41,10 @@ class EducationsController < MyplaceonlineController
       ]
     end
 
+    def default_sorts_additions
+      "nulls first"
+    end
+
     def default_sort_columns
       ["educations.education_end"]
     end
