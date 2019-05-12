@@ -1113,6 +1113,10 @@ en:
       next_pickup: "Next Pickup"
       trash_pickup_reminder: "%{trash_type} Pickup %{delta}"
       apartment_leases: "Apartment Leases"
+      total_square_footage: "Total Square Footage"
+      master_bedroom_square_footage: "Master Bedroom Square Footage"
+      bedrooms: "Bedrooms"
+      bathrooms: "Bathrooms"
     apartment_leases:
       files: "Files/Pictures"
       file: "File/Picture"

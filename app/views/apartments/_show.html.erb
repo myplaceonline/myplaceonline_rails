@@ -2,6 +2,10 @@
 <% if !obj.landlord.nil? %>
   <%= attribute_table_row_reference(t("myplaceonline.apartments.landlord"), "contact_path", obj.landlord) %>
 <% end %>
+<%= data_row(heading: t("myplaceonline.apartments.bedrooms"), content: obj.bedrooms) %>
+<%= data_row(heading: t("myplaceonline.apartments.bathrooms"), content: obj.bathrooms) %>
+<%= data_row(heading: t("myplaceonline.apartments.total_square_footage"), content: obj.total_square_footage) %>
+<%= data_row(heading: t("myplaceonline.apartments.master_bedroom_square_footage"), content: obj.master_bedroom_square_footage) %>
 <%= attribute_table_row_markdown(t("myplaceonline.apartments.notes"), obj.notes) %>
 <% obj.apartment_leases.each do |lease| %>
   

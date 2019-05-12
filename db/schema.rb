@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190511154201) do
+ActiveRecord::Schema.define(version: 20190512105946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -241,6 +241,10 @@ ActiveRecord::Schema.define(version: 20190511154201) do
     t.datetime "archived"
     t.integer "rating"
     t.boolean "is_public"
+    t.integer "total_square_footage"
+    t.integer "master_bedroom_square_footage"
+    t.decimal "bedrooms", precision: 10, scale: 2
+    t.decimal "bathrooms", precision: 10, scale: 2
     t.index ["identity_id"], name: "index_apartments_on_identity_id"
     t.index ["landlord_id"], name: "index_apartments_on_landlord_id"
     t.index ["location_id"], name: "index_apartments_on_location_id"

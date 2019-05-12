@@ -28,6 +28,42 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :bedrooms,
+    value: obj.bedrooms,
+    placeholder: "myplaceonline.apartments.bedrooms"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :bathrooms,
+    value: obj.bathrooms,
+    placeholder: "myplaceonline.apartments.bathrooms"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_NUMBER,
+    name: :total_square_footage,
+    value: obj.total_square_footage,
+    placeholder: "myplaceonline.apartments.total_square_footage"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_NUMBER,
+    name: :master_bedroom_square_footage,
+    value: obj.master_bedroom_square_footage,
+    placeholder: "myplaceonline.apartments.master_bedroom_square_footage"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,
