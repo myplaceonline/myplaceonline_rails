@@ -60,6 +60,11 @@ function testMarkdown(html) {
       <%= t("myplaceonline.info.decrypt") %>
     <% end %>
   </li>
+  <li>
+    <%= link_to(info_diagnostics_dovecot_password_path) do %>
+      <%= t("myplaceonline.info.dovecot_password") %>
+    <% end %>
+  </li>
 </ul>
 
 <% if !current_user.nil? %>

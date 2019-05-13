@@ -647,6 +647,7 @@ en:
       decrypt: "Decrypt"
       decrypt_id: "Encrypted Value Identifier"
       decrypt_password: "Password"
+      dovecot_password: "Generate Dovecot Password"
     help:
       title: "Help"
       features: "Features"

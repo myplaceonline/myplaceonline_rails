@@ -38,6 +38,19 @@ class InfoController < ApplicationController
     end
   end
   
+  def dovecot_password
+    password = params[:password]
+    
+    if request.post?
+      begin
+        p = Myp.spawn(command_line: "doveadm pw -s SHA512-CRYPT", process_error: true, input: password + "\n" + password + "\n")
+        flash[:error] = "Success: #{p.out}"
+      rescue => e
+        flash[:error] = "Error: #{e}"
+      end
+    end
+  end
+  
   def checkboxes; end
 
   def sleep_time

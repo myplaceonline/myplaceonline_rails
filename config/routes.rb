@@ -195,6 +195,7 @@ Rails.application.routes.draw do
   get 'info/diagnostics/serverinfo', :to => 'info#serverinfo'
   get 'info/diagnostics/clientinfo', :to => 'info#clientinfo'
   match 'info/diagnostics/decrypt', :to => 'info#decrypt', via: [:get, :post]
+  match 'info/diagnostics/dovecot_password', :to => 'info#dovecot_password', via: [:get, :post]
   get 'info/diagnostics/hello_world', :to => 'info#hello_world'
   get 'info/diagnostics/jqm', :to => 'info#jqm'
   get 'badges/42', :to => 'badges#n42'
