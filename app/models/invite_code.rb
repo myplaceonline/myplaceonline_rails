@@ -17,6 +17,9 @@ class InviteCode < ApplicationRecord
   end
   
   def self.get_code(code)
+    if code.nil?
+      code = ""
+    end
     InviteCode.where(
       "LOWER(code) = ? AND current_uses < max_uses AND (website_domain_id IS NULL OR website_domain_id = ?)",
       code.downcase,

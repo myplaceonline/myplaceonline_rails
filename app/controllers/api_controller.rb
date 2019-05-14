@@ -709,12 +709,13 @@ class ApiController < ApplicationController
     
     email = params[:email]
     password = params[:password]
+    invite_code = params[:invite_code]
     
     if !email.blank? && !password.blank?
       user = User.where(email: email).take
       
       if user.nil?
-        u = User.new(email: email, password: password, password_confirmation: password)
+        u = User.new(email: email, password: password, password_confirmation: password, invite_code: invite_code)
         result = u.save
         if result
         else
