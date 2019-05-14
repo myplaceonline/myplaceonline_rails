@@ -714,6 +714,12 @@ class ApiController < ApplicationController
       user = User.where(email: email).take
       
       if user.nil?
+        u = User.new(email: email, password: password, password_confirmation: password)
+        result = u.save
+        if result
+        else
+          puts u.errors
+        end
       else
       end
     end
