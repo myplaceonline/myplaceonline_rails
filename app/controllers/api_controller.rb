@@ -705,29 +705,79 @@ class ApiController < ApplicationController
   end
   
   def login_or_register
+    status = 200
     result = false
+    messages = []
+    token = nil
+    refresh_token = nil
     
     email = params[:email]
     password = params[:password]
     invite_code = params[:invite_code]
     
-    if !email.blank? && !password.blank?
-      user = User.where(email: email).take
-      
-      if user.nil?
-        u = User.new(email: email, password: password, password_confirmation: password, invite_code: invite_code)
-        result = u.save
+    user = User.where(email: email).take
+    
+    # Register a new user
+    if user.nil?
+      if Myp.requires_invite_code && invite_code.blank?
+        # Registration without an invite code
+        result = false
+        status = 401
+        messages = [I18n.t("myplaceonline.general.requires_invite_code_short")]
+      else
+        user = User.new(email: email, password: password, password_confirmation: password, invite_code: invite_code)
+        result = user.save
         if result
+          authorization_result = get_oauth_token(user)
+          if !authorization_result.is_a?(Doorkeeper::OAuth::ErrorResponse)
+            token = authorization_result.token.token
+            refresh_token = authorization_result.token.refresh_token
+            result = true
+            status = 200
+            messages = [I18n.t("myplaceonline.general.new_user_created")]
+          else
+            result = false
+            status = 403
+            messages = [authorization_result.description]
+          end
         else
-          puts u.errors
+          # Error creating the user for some reason (e.g. password too short)
+          result = false
+          status = 403
+          messages = user.errors.full_messages
+        end
+      end
+    else
+      # Log in an existing user
+      if user.valid_password?(password)
+        if user.active_for_authentication?
+          authorization_result = get_oauth_token(user)
+          token = authorization_result.token.token
+          refresh_token = authorization_result.token.refresh_token
+          result = true
+          status = 200
+          messages = [I18n.t("myplaceonline.general.login_successful")]
+        else
+          result = false
+          status = 403
+          messages = [I18n.t("myplaceonline.users.pending_confirmation")]
         end
       else
+        result = false
+        status = 403
+        messages = [I18n.t("myplaceonline.errors.invalidpassword")]
       end
     end
     
-    render json: {
-      result: result,
-    }
+    render(
+      json: {
+        result: result,
+        messages: messages,
+        token: token,
+        refresh_token: refresh_token,
+      },
+      status: status,
+    )
   end
   
   protected
@@ -792,5 +842,13 @@ class ApiController < ApplicationController
         id: newfile.id,
         singularNamePrefix: singularNamePrefix,
       }
+    end
+    
+    def get_oauth_token(user)
+        app = Doorkeeper::Application.where(name: "Internal").take!
+        client = Doorkeeper::OAuth::Client::Credentials.new(app.uid, app.secret)
+        authenticated_app = Doorkeeper::OAuth::Client.authenticate(client)
+        authorization_result = Doorkeeper::OAuth::PasswordAccessTokenRequest.new(Doorkeeper.configuration, authenticated_app, user).authorize()
+        return authorization_result
     end
 end

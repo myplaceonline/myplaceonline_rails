@@ -3,5 +3,5 @@ if Rails.env.development?
   ActiveRecordQueryTrace.ignore_cached_queries = true
   ActiveRecordQueryTrace.lines = 5
   ActiveRecordQueryTrace.colorize = :blue
-  ActiveRecordQueryTrace.level = :app
+  ActiveRecordQueryTrace.level = :app # :full
 end
