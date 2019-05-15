@@ -124,7 +124,6 @@ Rails.application.routes.draw do
     api/newitem
     api/postal_code_search
     api/distinct_values
-    api/login_or_register
     admin/test
     admin/ensure_pending_all_users
     admin/create_test_job
@@ -163,6 +162,7 @@ Rails.application.routes.draw do
     api/quickfeedback
     api/newfile
     api/twilio_sms
+    api/login_or_register
   ))
 
   routes_get_post(%w(

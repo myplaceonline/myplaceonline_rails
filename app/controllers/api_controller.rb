@@ -5,7 +5,7 @@ class ApiController < ApplicationController
   skip_authorization_check
 
   # Only applies for POST methods (http://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html#method-i-protect_from_forgery)
-  skip_before_action :verify_authenticity_token, only: [:debug, :twilio_sms]
+  skip_before_action :verify_authenticity_token, only: [:debug, :twilio_sms, :login_or_register]
   
   def index
   end
@@ -704,6 +704,7 @@ class ApiController < ApplicationController
     nil
   end
   
+  # curl --header "Content-Type: application/json" --request POST --data '{"email": "email", "password": "password"}' http://localhost:3000/api/login_or_register
   def login_or_register
     status = 200
     result = false
