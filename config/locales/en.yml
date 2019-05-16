@@ -194,6 +194,7 @@ en:
       order: "Order"
       paid_taxes: "Paid Taxes"
       pains: "Pains"
+      parking_locations: "Parking Locations"
       passports: "Passports"
       password_shares: "Password Shares"
       passwords: "Passwords"
@@ -4341,4 +4342,5 @@ en:
       art_name: "Name"
       art_source: "Creator(s)"
       art_link: "Link"
-
+    parking_locations:
+      location: "Location"

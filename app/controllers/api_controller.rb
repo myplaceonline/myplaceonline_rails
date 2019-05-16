@@ -734,7 +734,7 @@ class ApiController < ApplicationController
             token = authorization_result.token.token
             refresh_token = authorization_result.token.refresh_token
             result = true
-            status = 200
+            status = 201
             messages = [I18n.t("myplaceonline.general.new_user_created")]
           else
             result = false

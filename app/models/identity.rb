@@ -314,6 +314,7 @@ class Identity < ApplicationRecord
   has_many :drink_lists, :dependent => :destroy
   has_many :credit_reports, :dependent => :destroy
   has_many :arts, :dependent => :destroy
+  has_many :parking_locations, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 
@@ -572,6 +573,7 @@ class Identity < ApplicationRecord
       :drink_lists => drink_lists.to_a.map{|x| x.as_json},
       :credit_reports => credit_reports.to_a.map{|x| x.as_json},
       :arts => arts.to_a.map{|x| x.as_json},
+      :parking_locations => parking_locations.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json},
     })
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190512105946) do
+ActiveRecord::Schema.define(version: 20190516060351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4394,6 +4394,20 @@ ActiveRecord::Schema.define(version: 20190512105946) do
     t.index ["identity_id"], name: "index_pains_on_identity_id"
   end
 
+  create_table "parking_locations", force: :cascade do |t|
+    t.bigint "location_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_parking_locations_on_identity_id"
+    t.index ["location_id"], name: "index_parking_locations_on_location_id"
+  end
+
   create_table "passport_pictures", id: :serial, force: :cascade do |t|
     t.integer "passport_id"
     t.integer "identity_file_id"
@@ -7847,6 +7861,8 @@ ActiveRecord::Schema.define(version: 20190512105946) do
   add_foreign_key "paid_taxes", "identities"
   add_foreign_key "paid_taxes", "passwords"
   add_foreign_key "pains", "identities", name: "pains_identity_id_fk"
+  add_foreign_key "parking_locations", "identities"
+  add_foreign_key "parking_locations", "locations"
   add_foreign_key "passport_pictures", "identities", name: "passport_pictures_identity_id_fk"
   add_foreign_key "passport_pictures", "identity_files", name: "passport_pictures_identity_file_id_fk"
   add_foreign_key "passport_pictures", "passports", name: "passport_pictures_passport_id_fk"
