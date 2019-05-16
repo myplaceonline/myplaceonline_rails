@@ -761,7 +761,7 @@ class ApiController < ApplicationController
           messages = [I18n.t("myplaceonline.general.login_successful")]
         else
           result = false
-          status = 404
+          status = 409
           messages = [I18n.t("myplaceonline.users.pending_confirmation")]
         end
       else
@@ -773,6 +773,7 @@ class ApiController < ApplicationController
     
     render(
       json: {
+        status: status,
         result: result,
         messages: messages,
         token: token,
