@@ -737,6 +737,7 @@ class ApiController < ApplicationController
             status = 201
             messages = [I18n.t("myplaceonline.general.new_user_created")]
           else
+            # Unclear why this would happen as we just created the user
             result = false
             status = 403
             messages = [authorization_result.description]
@@ -760,12 +761,12 @@ class ApiController < ApplicationController
           messages = [I18n.t("myplaceonline.general.login_successful")]
         else
           result = false
-          status = 403
+          status = 404
           messages = [I18n.t("myplaceonline.users.pending_confirmation")]
         end
       else
         result = false
-        status = 403
+        status = 404
         messages = [I18n.t("myplaceonline.errors.invalidpassword")]
       end
     end
