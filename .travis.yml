@@ -6,7 +6,7 @@ sudo: false
 
 # https://docs.travis-ci.com/user/languages/ruby/
 rvm:
-  - 2.3
+  - 2.4
 
 # https://docs.travis-ci.com/user/database-setup/
 services:
