@@ -716,58 +716,68 @@ class ApiController < ApplicationController
     password = params[:password]
     invite_code = params[:invite_code]
     
-    user = User.where(email: email).take
-    
-    # Register a new user
-    if user.nil?
-      if Myp.requires_invite_code && invite_code.blank?
-        # Registration without an invite code
-        result = false
-        status = 401
-        messages = [I18n.t("myplaceonline.general.requires_invite_code_short")]
+    if email.blank?
+      result = false
+      status = 404
+      messages = [I18n.t("myplaceonline.errors.noemail")]
+    elsif password.blank?
+      result = false
+      status = 404
+      messages = [I18n.t("myplaceonline.errors.nopassword")]
+    else
+      user = User.where(email: email).take
+      
+      # Register a new user
+      if user.nil?
+        if Myp.requires_invite_code && invite_code.blank?
+          # Registration without an invite code
+          result = false
+          status = 401
+          messages = [I18n.t("myplaceonline.general.requires_invite_code_short")]
+        else
+          user = User.new(email: email, password: password, password_confirmation: password, invite_code: invite_code)
+          result = user.save
+          if result
+            authorization_result = get_oauth_token(user)
+            if !authorization_result.is_a?(Doorkeeper::OAuth::ErrorResponse)
+              token = authorization_result.token.token
+              refresh_token = authorization_result.token.refresh_token
+              result = true
+              status = 201
+              messages = [I18n.t("myplaceonline.general.new_user_created")]
+            else
+              # Unclear why this would happen as we just created the user
+              result = false
+              status = 403
+              messages = [authorization_result.description]
+            end
+          else
+            # Error creating the user for some reason (e.g. password too short)
+            result = false
+            status = 403
+            messages = user.errors.full_messages
+          end
+        end
       else
-        user = User.new(email: email, password: password, password_confirmation: password, invite_code: invite_code)
-        result = user.save
-        if result
-          authorization_result = get_oauth_token(user)
-          if !authorization_result.is_a?(Doorkeeper::OAuth::ErrorResponse)
+        # Log in an existing user
+        if user.valid_password?(password)
+          if user.active_for_authentication?
+            authorization_result = get_oauth_token(user)
             token = authorization_result.token.token
             refresh_token = authorization_result.token.refresh_token
             result = true
-            status = 201
-            messages = [I18n.t("myplaceonline.general.new_user_created")]
+            status = 200
+            messages = [I18n.t("myplaceonline.general.login_successful")]
           else
-            # Unclear why this would happen as we just created the user
             result = false
-            status = 403
-            messages = [authorization_result.description]
+            status = 409
+            messages = [I18n.t("myplaceonline.users.pending_confirmation")]
           end
         else
-          # Error creating the user for some reason (e.g. password too short)
           result = false
-          status = 403
-          messages = user.errors.full_messages
+          status = 404
+          messages = [I18n.t("myplaceonline.errors.invalidpassword")]
         end
-      end
-    else
-      # Log in an existing user
-      if user.valid_password?(password)
-        if user.active_for_authentication?
-          authorization_result = get_oauth_token(user)
-          token = authorization_result.token.token
-          refresh_token = authorization_result.token.refresh_token
-          result = true
-          status = 200
-          messages = [I18n.t("myplaceonline.general.login_successful")]
-        else
-          result = false
-          status = 409
-          messages = [I18n.t("myplaceonline.users.pending_confirmation")]
-        end
-      else
-        result = false
-        status = 404
-        messages = [I18n.t("myplaceonline.errors.invalidpassword")]
       end
     end
     

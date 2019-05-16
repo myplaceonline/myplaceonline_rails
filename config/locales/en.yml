@@ -588,6 +588,8 @@ en:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
       invalidpassword: "Invalid password"
+      noemail: "Please enter your email"
+      nopassword: "Please enter your password"
     buttons:
       signin: "Login"
       signup: "Join"
