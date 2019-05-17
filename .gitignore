@@ -35,3 +35,6 @@ config/database.yml
 
 /storage
 /public/assets/
+
+/engines
+Gemfile_engines.lock

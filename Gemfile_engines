@@ -1,0 +1,7 @@
+eval_gemfile("Gemfile")
+
+group :custom, optional: true do
+  Dir["engines/**"].each do |engine|
+    gem File.basename(engine), path: engine
+  end
+end
