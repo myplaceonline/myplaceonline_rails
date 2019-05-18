@@ -39,3 +39,4 @@ config/database.yml
 /engines
 Gemfile_engines.lock
 
+/engines_config
