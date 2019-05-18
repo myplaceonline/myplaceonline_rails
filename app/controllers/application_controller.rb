@@ -83,9 +83,9 @@ class ApplicationController < ActionController::Base
       if User.current_user.nil? || User.current_user.guest?
         reentry_url = Myp.encoded_fullpath(request)
         Rails.logger.debug{"ApplicationController.catchall redirecting to #{reentry_url}".red}
-        redirect_to(new_user_session_url(redirect: reentry_url), alert: I18n.t("myplaceonline.general.access_denied_guest"))
+        redirect_to(main_app.new_user_session_url(redirect: reentry_url), alert: I18n.t("myplaceonline.general.access_denied_guest"))
       else
-        redirect_to(root_url, alert: I18n.t("myplaceonline.general.access_denied", resource: request.path))
+        redirect_to(main_app.root_url, alert: I18n.t("myplaceonline.general.access_denied", resource: request.path))
       end
     elsif exception.is_a?(Myp::SuddenRedirectError)
       Rails.logger.debug{"ApplicationController.catchall sudden redirect #{exception.path}".red}
