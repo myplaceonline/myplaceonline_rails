@@ -1462,7 +1462,8 @@ class MyplaceonlineController < ApplicationController
     end
     
     def deny_readonly_nonhtml
-      if !request.format.html? && !Ability.authorize(identity: User.current_user.domain_identity, subject: @obj, action: :edit, request: request)
+      if !request.format.html? && request.format.to_s != "*/*" && !Ability.authorize(identity: User.current_user.domain_identity, subject: @obj, action: :edit, request: request)
+        Rails.logger.debug{"Denying #{request.format.inspect}"}
         raise CanCan::AccessDenied
       end
     end
