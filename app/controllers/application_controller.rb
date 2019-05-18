@@ -83,7 +83,21 @@ class ApplicationController < ActionController::Base
       if User.current_user.nil? || User.current_user.guest?
         reentry_url = Myp.encoded_fullpath(request)
         Rails.logger.debug{"ApplicationController.catchall redirecting to #{reentry_url}".red}
-        redirect_to(main_app.new_user_session_url(redirect: reentry_url), alert: I18n.t("myplaceonline.general.access_denied_guest"))
+        respond_to do |format|
+          # curl -H "Accept: application/json"
+          format.any(:js, :json) {
+            render(
+              json: {
+                status: I18n.t("myplaceonline.general.access_denied_guest"),
+                location: main_app.new_user_session_url(redirect: reentry_url),
+              },
+              status: 403,
+            )
+          }
+          format.all {
+            redirect_to(main_app.new_user_session_url(redirect: reentry_url), alert: I18n.t("myplaceonline.general.access_denied_guest"))
+          }
+        end
       else
         redirect_to(main_app.root_url, alert: I18n.t("myplaceonline.general.access_denied", resource: request.path))
       end
