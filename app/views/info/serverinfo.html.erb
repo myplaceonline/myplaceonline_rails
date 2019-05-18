@@ -11,6 +11,7 @@
   <% if !ENV["SOURCE_REVISION"].blank? %>
   <li>Source Revision: <a href="https://github.com/myplaceonline/myplaceonline_rails/commit/<%= ENV["SOURCE_REVISION"] %>"><%= ENV["SOURCE_REVISION"] %></a></li>
   <% end %>
+  <li>Engines: <%= Rails::Engine.subclasses %></li>
 </ul>
 
 <% if !current_user.nil? && current_user.admin? %>
@@ -22,3 +23,4 @@
   </ul>
   <% end %>
 <% end %>
+
