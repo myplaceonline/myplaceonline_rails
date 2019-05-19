@@ -5,7 +5,7 @@ class ApiController < ApplicationController
   skip_authorization_check
 
   # Only applies for POST methods (http://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html#method-i-protect_from_forgery)
-  skip_before_action :verify_authenticity_token, only: [:debug, :twilio_sms, :login_or_register]
+  skip_before_action :verify_authenticity_token, only: [:debug, :twilio_sms, :login_or_register, :refresh_token]
   
   def index
   end
@@ -711,6 +711,7 @@ class ApiController < ApplicationController
     messages = []
     token = nil
     refresh_token = nil
+    expires_in = nil
     
     email = params[:email]
     password = params[:password]
@@ -740,16 +741,17 @@ class ApiController < ApplicationController
           if result
             authorization_result = get_oauth_token(user)
             if !authorization_result.is_a?(Doorkeeper::OAuth::ErrorResponse)
-              token = authorization_result.token.token
-              refresh_token = authorization_result.token.refresh_token
+              token = authorization_result.token.plaintext_token
+              refresh_token = authorization_result.token.plaintext_refresh_token
+              expires_in = authorization_result.token.expires_in_seconds
               result = true
               status = 201
-              messages = [I18n.t("myplaceonline.general.new_user_created")]
+              messages = [I18n.t("myplaceonline.general.new_user_created") + " #{DateTime.now}"]
             else
               # Unclear why this would happen as we just created the user
               result = false
               status = 403
-              messages = [authorization_result.description]
+              messages = [authorization_result.description + " #{authorization_result.name.to_s}"]
             end
           else
             # Error creating the user for some reason (e.g. password too short)
@@ -763,11 +765,12 @@ class ApiController < ApplicationController
         if user.valid_password?(password)
           if user.active_for_authentication?
             authorization_result = get_oauth_token(user)
-            token = authorization_result.token.token
-            refresh_token = authorization_result.token.refresh_token
+            token = authorization_result.token.plaintext_token
+            refresh_token = authorization_result.token.plaintext_refresh_token
+            expires_in = authorization_result.token.expires_in_seconds
             result = true
             status = 200
-            messages = [I18n.t("myplaceonline.general.login_successful")]
+            messages = [I18n.t("myplaceonline.general.login_successful") + " #{DateTime.now}"]
           else
             result = false
             status = 409
@@ -788,6 +791,46 @@ class ApiController < ApplicationController
         messages: messages,
         token: token,
         refresh_token: refresh_token,
+        expires_in: expires_in,
+      },
+      status: status,
+    )
+  end
+  
+  def refresh_token
+    status = 403
+    result = false
+    messages = []
+    token = nil
+    refresh_token = nil
+    expires_in = nil
+    
+    incoming_token = params[:refresh_token]
+    if !incoming_token.blank?
+      refresh_result = get_oauth_refresh_token(incoming_token)
+      if !refresh_result.is_a?(Doorkeeper::OAuth::ErrorResponse)
+        result = true
+        status = 200
+        token = refresh_result.token.plaintext_token
+        refresh_token = refresh_result.token.plaintext_refresh_token
+        expires_in = refresh_result.token.expires_in_seconds
+        messages = [I18n.t("myplaceonline.general.login_successful") + " #{DateTime.now}"]
+      else
+        result = false
+        status = 403
+        Rails.logger.debug{"refresh_token error: #{refresh_result.description} #{refresh_result.name.to_s}"}
+        messages = [refresh_result.description + " #{refresh_result.name.to_s}"]
+      end
+    end
+    
+    render(
+      json: {
+        status: status,
+        result: result,
+        messages: messages,
+        token: token,
+        refresh_token: refresh_token,
+        expires_in: expires_in,
       },
       status: status,
     )
@@ -858,10 +901,19 @@ class ApiController < ApplicationController
     end
     
     def get_oauth_token(user)
-        app = Doorkeeper::Application.where(name: "Internal").take!
-        client = Doorkeeper::OAuth::Client::Credentials.new(app.uid, app.secret)
-        authenticated_app = Doorkeeper::OAuth::Client.authenticate(client)
-        authorization_result = Doorkeeper::OAuth::PasswordAccessTokenRequest.new(Doorkeeper.configuration, authenticated_app, user).authorize()
-        return authorization_result
+      app = Doorkeeper::Application.where(name: "Internal").take!
+      client = Doorkeeper::OAuth::Client::Credentials.new(app.uid, app.secret)
+      authenticated_app = Doorkeeper::OAuth::Client.authenticate(client)
+      authorization_result = Doorkeeper::OAuth::PasswordAccessTokenRequest.new(Doorkeeper.configuration, authenticated_app, user).authorize()
+      return authorization_result
+    end
+    
+    def get_oauth_refresh_token(refreshToken)
+      accessToken = Doorkeeper::AccessToken.by_refresh_token(refreshToken)
+      Rails.logger.debug{"get_oauth_refresh_token accessToken: #{accessToken.inspect}"}
+      app = Doorkeeper::Application.where(name: "Internal").take!
+      client = Doorkeeper::OAuth::Client::Credentials.new(app.uid, app.secret)
+      authorization_result = Doorkeeper::OAuth::RefreshTokenRequest.new(Doorkeeper.configuration, accessToken, client).authorize()
+      return authorization_result
     end
 end
