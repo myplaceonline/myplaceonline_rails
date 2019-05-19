@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190516060351) do
+ActiveRecord::Schema.define(version: 20190519190052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3055,6 +3055,8 @@ ActiveRecord::Schema.define(version: 20190516060351) do
     t.boolean "website_domain_default"
     t.integer "message_preferences"
     t.boolean "is_public"
+    t.string "current_city"
+    t.integer "explicit_age"
     t.index ["company_id"], name: "index_identities_on_company_id"
     t.index ["identity_id"], name: "index_identities_on_identity_id"
     t.index ["user_id"], name: "index_identities_on_user_id"

@@ -786,6 +786,7 @@ en:
     users:
       invite: "Invite Code"
       invite_invalid: "invalid"
+      invite_invalid_detailed: "Invalid invite code"
       reenterpassword: "Re-enter Password"
       resendconfirmation: "Resend confirmation instructions"
       pending_confirmation: "Check your email to confirm your account before continuing."

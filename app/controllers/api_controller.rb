@@ -862,7 +862,7 @@ class ApiController < ApplicationController
       else
         result = false
         status = 403
-        messages = [I18n.t("myplaceonline.users.invite_invalid")]
+        messages = [I18n.t("myplaceonline.users.invite_invalid_detailed")]
       end
     end
     
