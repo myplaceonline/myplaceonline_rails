@@ -99,7 +99,21 @@ class ApplicationController < ActionController::Base
           }
         end
       else
-        redirect_to(main_app.root_url, alert: I18n.t("myplaceonline.general.access_denied", resource: request.path))
+        respond_to do |format|
+          # curl -H "Accept: application/json"
+          format.any(:js, :json) {
+            render(
+              json: {
+                status: I18n.t("myplaceonline.general.access_denied", resource: request.path),
+                location: main_app.root_url,
+              },
+              status: 403,
+            )
+          }
+          format.all {
+            redirect_to(main_app.root_url, alert: I18n.t("myplaceonline.general.access_denied", resource: request.path))
+          }
+        end
       end
     elsif exception.is_a?(Myp::SuddenRedirectError)
       Rails.logger.debug{"ApplicationController.catchall sudden redirect #{exception.path}".red}
