@@ -5,7 +5,7 @@ class ApiController < ApplicationController
   skip_authorization_check
 
   # Only applies for POST methods (http://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html#method-i-protect_from_forgery)
-  skip_before_action :verify_authenticity_token, only: [:debug, :twilio_sms, :login_or_register, :refresh_token]
+  skip_before_action :verify_authenticity_token, only: [:debug, :twilio_sms, :login_or_register, :refresh_token, :enter_invite_code]
   
   def index
   end
@@ -831,6 +831,34 @@ class ApiController < ApplicationController
         token: token,
         refresh_token: refresh_token,
         expires_in: expires_in,
+      },
+      status: status,
+    )
+  end
+  
+  def enter_invite_code
+    authorize! :edit, current_user
+
+    status = 403
+    result = false
+    messages = []
+    
+    invite_code = params[:invite_code]
+    
+    if Myp.requires_invite_code
+      if InviteCode.valid_code?(value)
+      else
+        result = false
+        status = 403
+        messages = [I18n.t("myplaceonline.users.invite_invalid")]
+      end
+    end
+    
+    render(
+      json: {
+        status: status,
+        result: result,
+        messages: messages,
       },
       status: status,
     )

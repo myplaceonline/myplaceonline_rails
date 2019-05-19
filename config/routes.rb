@@ -153,6 +153,7 @@ Rails.application.routes.draw do
     help/features
     help/highlights
     help/category
+    api/enter_invite_code
   ))
 
   routes_post(%w(
