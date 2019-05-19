@@ -846,7 +846,19 @@ class ApiController < ApplicationController
     invite_code = params[:invite_code]
     
     if Myp.requires_invite_code
-      if InviteCode.valid_code?(value)
+      if InviteCode.valid_code?(invite_code)
+        
+        EnteredInviteCode.create!(
+          user: current_user,
+          website_domain: Myp.website_domain,
+          code: invite_code,
+          internal: true,
+        )
+        
+        current_user.post_initialize
+
+        result = true
+        status = 200
       else
         result = false
         status = 403
