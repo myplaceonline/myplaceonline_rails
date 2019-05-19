@@ -93,6 +93,11 @@ class Ability
         result = true
       end
       
+      if !result && !user.nil? && subject_class == User && subject.id == user.id
+        Rails.logger.debug{"Ability.authorize authorizing self user"}
+        result = true
+      end
+      
       if !result && subject.respond_to?("user_id") && subject.user_id == user.id
         Rails.logger.debug{"Ability.authorize Users match"}
         result = true
