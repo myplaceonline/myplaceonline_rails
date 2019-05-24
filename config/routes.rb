@@ -165,6 +165,7 @@ Rails.application.routes.draw do
     api/twilio_sms
     api/login_or_register
     api/refresh_token
+    api/add_identity
   ))
 
   routes_get_post(%w(
