@@ -877,6 +877,8 @@ en:
       identities: "Identities"
       please_sign_up: "Please sign up first."
       identity_name_blank: "Name is required"
+      identity_id_blank: "Identity is required"
+      invalid_identity_id: "Invalid identity"
     identities:
       name: "Name"
       phones: "Phone Numbers"

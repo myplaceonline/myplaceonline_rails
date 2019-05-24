@@ -5,7 +5,7 @@ class ApiController < ApplicationController
   skip_authorization_check
 
   # Only applies for POST methods (http://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html#method-i-protect_from_forgery)
-  skip_before_action :verify_authenticity_token, only: [:debug, :twilio_sms, :login_or_register, :refresh_token, :enter_invite_code, :add_identity]
+  skip_before_action :verify_authenticity_token, only: [:debug, :twilio_sms, :login_or_register, :refresh_token, :enter_invite_code, :add_identity, :change_identity]
   
   def index
   end
@@ -901,6 +901,43 @@ class ApiController < ApplicationController
       result = false
       status = 500
       messages = [I18n.t("myplaceonline.users.identity_name_blank")]
+    end
+    
+    render(
+      json: {
+        status: status,
+        result: result,
+        messages: messages,
+      },
+      status: status,
+    )
+  end
+  
+  def change_identity
+    authorize! :edit, current_user
+
+    status = 500
+    result = false
+    messages = []
+    
+    new_identity = params[:new_identity]
+    
+    if !new_identity.blank?
+      new_identity_id = new_identity.to_i
+      i = current_user.identities.index{|x| x.id == new_identity_id}
+      if !i.nil?
+        current_user.change_default_identity(current_user.identities[i])
+        result = true
+        status = 200
+      else
+        result = false
+        status = 500
+        messages = [I18n.t("myplaceonline.users.invalid_identity_id")]
+      end
+    else
+      result = false
+      status = 500
+      messages = [I18n.t("myplaceonline.users.identity_id_blank")]
     end
     
     render(
