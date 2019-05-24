@@ -893,7 +893,7 @@ class ApiController < ApplicationController
         website_domain_id: Myp.website_domain.id,
       )
       
-      user.change_default_identity(new_identity)
+      current_user.change_default_identity(new_identity)
       
       result = true
       status = 200
