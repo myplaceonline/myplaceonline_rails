@@ -876,6 +876,43 @@ class ApiController < ApplicationController
     )
   end
   
+  def add_identity
+    authorize! :edit, current_user
+
+    status = 500
+    result = false
+    messages = []
+    
+    name = params[:name]
+    
+    if !name.blank?
+      
+      new_identity = Identity.create!(
+        user_id: current_user.id,
+        name: name,
+        website_domain_id: Myp.website_domain.id,
+      )
+      
+      user.change_default_identity(new_identity)
+      
+      result = true
+      status = 200
+    else
+      result = false
+      status = 500
+      messages = [I18n.t("myplaceonline.users.identity_name_blank")]
+    end
+    
+    render(
+      json: {
+        status: status,
+        result: result,
+        messages: messages,
+      },
+      status: status,
+    )
+  end
+  
   protected
     def json_error(error)
       render json: {

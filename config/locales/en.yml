@@ -876,6 +876,7 @@ en:
       toggle_hide_footer: "Tap Hides Header & Footer"
       identities: "Identities"
       please_sign_up: "Please sign up first."
+      identity_name_blank: "Name is required"
     identities:
       name: "Name"
       phones: "Phone Numbers"
