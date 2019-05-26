@@ -963,12 +963,16 @@ class ApiController < ApplicationController
       identity_id = identity.to_i
       i = current_user.identities.index{|x| x.id == identity_id}
       if !i.nil?
-        identity_to_delete = current_user.identities[i]
-        if current_user.identities.size > 1
-          j = current_user.identities.index{|x| x.id != identity_id}
-          current_user.change_default_identity(current_user.identities[j])
+        ActiveRecord::Base.transaction do
+          identity_to_delete = current_user.identities[i]
+          if current_user.identities.size > 1
+            j = current_user.identities.index{|x| x.id != identity_id}
+            current_user.change_default_identity(current_user.identities[j])
+          end
+          ExecutionContext.stack(allow_identity_delete: true) do
+            identity_to_delete.destroy!
+          end
         end
-        identity_to_delete.destroy!
         result = true
         status = 200
       else
