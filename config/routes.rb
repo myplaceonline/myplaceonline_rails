@@ -167,6 +167,7 @@ Rails.application.routes.draw do
     api/refresh_token
     api/add_identity
     api/change_identity
+    api/delete_identity
   ))
 
   routes_get_post(%w(
