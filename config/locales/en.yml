@@ -745,6 +745,9 @@ en:
     api:
       title: "API"
       randomString: "Generate a random string of characters between 1 and 512 characters (?length, default %{default_length}), from the set of characters: %{chars}"
+      invalid_old_password: "Invalid current password"
+      blank_old_password: "Old password not specified"
+      blank_new_password: "New password not specified"
     passwords:
       name: "Service Name"
       user: "User ID"
