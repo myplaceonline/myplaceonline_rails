@@ -965,13 +965,17 @@ class ApiController < ApplicationController
       if !i.nil?
         ActiveRecord::Base.transaction do
           identity_to_delete = current_user.identities[i]
+          new_main_identity = nil
+          new_main_identity_id = nil
           if current_user.identities.size > 1
             j = current_user.identities.index{|x| x.id != identity_id}
-            current_user.change_default_identity(current_user.identities[j])
+            new_main_identity = current_user.identities[j]
+            new_main_identity_id = new_main_identity.id
+            current_user.change_default_identity(new_main_identity)
           end
           ExecutionContext.stack(allow_identity_delete: true) do
-            # The identity might point to itself
-            identity_to_delete.update_columns(identity_id: nil)
+            # This identity may have created other identities
+            Identity.where(identity_id: identity_to_delete.id).update_all(identity_id: new_main_identity_id)
             
             identity_to_delete.destroy!
           end
