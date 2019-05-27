@@ -1068,12 +1068,25 @@ class ApiController < ApplicationController
     messages = []
     
     new_email = params[:email]
+    password = params[:password]
     
     if !new_email.blank?
-      current_user.email = new_email
-      current_user.save!
-      result = true
-      status = 200
+      if !password.blank?
+        if current_user.valid_password?(old_password)
+          current_user.email = new_email
+          current_user.save!
+          result = true
+          status = 200
+        else
+          result = false
+          status = 500
+          messages = [I18n.t("myplaceonline.api.invalid_password")]
+        end
+      else
+        result = false
+        status = 500
+        messages = [I18n.t("myplaceonline.api.blank_password")]
+      end
     else
       result = false
       status = 500

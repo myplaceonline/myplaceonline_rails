@@ -749,6 +749,8 @@ en:
       blank_old_password: "Old password not specified"
       blank_new_password: "New password not specified"
       blank_new_email: "New email not specified"
+      blank_password: "Password not specified"
+      invalid_password: "Invalid password"
     passwords:
       name: "Service Name"
       user: "User ID"
