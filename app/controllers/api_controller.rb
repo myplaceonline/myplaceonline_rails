@@ -1028,7 +1028,7 @@ class ApiController < ApplicationController
     
     if !old_password.blank?
       if !new_password.blank?
-        if current_user.authenticate(old_password)
+        if current_user.valid_password?(old_password)
           current_user.password = new_password
           current_user.password_confirmation = new_password
           current_user.save!
