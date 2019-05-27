@@ -970,6 +970,9 @@ class ApiController < ApplicationController
             current_user.change_default_identity(current_user.identities[j])
           end
           ExecutionContext.stack(allow_identity_delete: true) do
+            # The identity might point to itself
+            identity_to_delete.update_columns(identity_id: nil)
+            
             identity_to_delete.destroy!
           end
         end
