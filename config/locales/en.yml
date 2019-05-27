@@ -488,6 +488,7 @@ en:
       unknown: "Unknown"
       points: "Points"
       quick_feedback: "Enter some quick feedback and it will be emailed to us and reviewed:"
+      quick_feedback_none: "No message specified"
       pounds: "Pounds (lb)"
       inches: "Inches (in)"
       meters: "Meters (m)"

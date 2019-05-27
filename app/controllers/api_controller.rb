@@ -5,7 +5,7 @@ class ApiController < ApplicationController
   skip_authorization_check
 
   # Only applies for POST methods (http://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html#method-i-protect_from_forgery)
-  skip_before_action :verify_authenticity_token, only: [:debug, :twilio_sms, :login_or_register, :refresh_token, :enter_invite_code, :add_identity, :change_identity, :delete_identity]
+  skip_before_action :verify_authenticity_token, only: [:debug, :twilio_sms, :login_or_register, :refresh_token, :enter_invite_code, :add_identity, :change_identity, :delete_identity, :quickfeedback]
   
   def index
   end
@@ -166,13 +166,14 @@ class ApiController < ApplicationController
         }
       rescue Exception => e
         render json: {
-          :result => true,
+          :result => false,
           :error => e.to_s
         }
       end
     else
       render json: {
-        :result => false
+        :result => false,
+        :error => I19n.t("myplaceonline.general.quick_feedback_none"),
       }
     end
   end
