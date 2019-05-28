@@ -719,7 +719,7 @@ class ApiController < ApplicationController
   
   # curl --header "Content-Type: application/json" --request POST --data '{"email": "email", "password": "password"}' http://localhost:3000/api/login_or_register
   def login_or_register
-    status = 200
+    status = 500
     result = false
     messages = []
     token = nil
@@ -732,11 +732,11 @@ class ApiController < ApplicationController
     
     if email.blank?
       result = false
-      status = 404
+      status = 500
       messages = [I18n.t("myplaceonline.errors.noemail")]
     elsif password.blank?
       result = false
-      status = 404
+      status = 500
       messages = [I18n.t("myplaceonline.errors.nopassword")]
     else
       user = User.where(email: email).take
