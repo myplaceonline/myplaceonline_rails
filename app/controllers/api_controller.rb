@@ -17,6 +17,7 @@ class ApiController < ApplicationController
     :quickfeedback,
     :update_password,
     :update_email,
+    :forgot_password,
   ]
   
   def index
@@ -1091,6 +1092,41 @@ class ApiController < ApplicationController
       result = false
       status = 500
       messages = [I18n.t("myplaceonline.api.blank_new_email")]
+    end
+    
+    render(
+      json: {
+        status: status,
+        result: result,
+        messages: messages,
+      },
+      status: status,
+    )
+  end
+  
+  def forgot_password
+    status = 500
+    result = false
+    messages = []
+    
+    email = params[:email]
+    
+    if !email.blank?
+      user = User.where(email: email).take
+      if !user.nil?
+        user.send_reset_password_instructions
+        result = true
+        status = 200
+        messages = [I18n.t("myplaceonline.api.password_reset_sent")]
+      else
+        result = false
+        status = 500
+        messages = [I18n.t("myplaceonline.api.email_not_found")]
+      end
+    else
+      result = false
+      status = 500
+      messages = [I18n.t("myplaceonline.api.blank_email")]
     end
     
     render(

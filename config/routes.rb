@@ -170,6 +170,7 @@ Rails.application.routes.draw do
     api/delete_identity
     api/update_password
     api/update_email
+    api/forgot_password
   ))
 
   routes_get_post(%w(

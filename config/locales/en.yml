@@ -751,6 +751,9 @@ en:
       blank_new_email: "New email not specified"
       blank_password: "Password not specified"
       invalid_password: "Invalid password"
+      blank_email: "Email not specified"
+      email_not_found: "Email not found"
+      password_reset_sent: "Password reset instructions sent. Check your email."
     passwords:
       name: "Service Name"
       user: "User ID"
