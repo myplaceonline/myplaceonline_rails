@@ -1072,7 +1072,7 @@ class ApiController < ApplicationController
     
     if !new_email.blank?
       if !password.blank?
-        if current_user.valid_password?(old_password)
+        if current_user.valid_password?(password)
           current_user.email = new_email
           current_user.save!
           result = true
