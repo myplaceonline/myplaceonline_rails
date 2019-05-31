@@ -27,15 +27,11 @@ class Setting < ApplicationRecord
   end
   
   def self.get_value(category:, name:, default_value: nil)
-    if !category.nil?
-      setting = self.get_setting(category: category, name: name)
-      if setting.nil?
-        default_value
-      else
-        setting.setting_value
-      end
+    setting = self.get_setting(category: category, name: name)
+    if setting.nil?
+      default_value
     else
-      nil
+      setting.setting_value
     end
   end
   

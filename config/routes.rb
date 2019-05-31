@@ -171,6 +171,7 @@ Rails.application.routes.draw do
     api/update_password
     api/update_email
     api/forgot_password
+    api/update_settings
   ))
 
   routes_get_post(%w(

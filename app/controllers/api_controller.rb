@@ -18,6 +18,7 @@ class ApiController < ApplicationController
     :update_password,
     :update_email,
     :forgot_password,
+    :update_settings,
   ]
   
   def index
@@ -1127,6 +1128,37 @@ class ApiController < ApplicationController
       result = false
       status = 500
       messages = [I18n.t("myplaceonline.api.blank_email")]
+    end
+    
+    render(
+      json: {
+        status: status,
+        result: result,
+        messages: messages,
+      },
+      status: status,
+    )
+  end
+  
+  def update_settings
+    status = 500
+    result = false
+    messages = []
+    
+    settings = params[:settings]
+    
+    if !settings.blank?
+      ActiveRecord::Base.transaction do
+        settings.each do |k,v|
+          Setting.set_value(category: nil, name: k, value: v)
+        end
+      end
+      result = true
+      status = 200
+    else
+      # Ok to not set anything
+      result = true
+      status = 200
     end
     
     render(
