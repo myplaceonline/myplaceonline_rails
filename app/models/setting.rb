@@ -16,7 +16,7 @@ class Setting < ApplicationRecord
     "#{self.setting_name}=#{self.setting_value}"
   end
 
-  child_property(name: :category, required: true)
+  child_property(name: :category)
   
   def self.get_setting(category:, name:)
     Setting.where(
