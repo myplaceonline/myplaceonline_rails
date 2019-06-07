@@ -203,20 +203,20 @@
             <% if user_signed_in? %>
               <% if !current_user.guest? %>
                 <% if !MyplaceonlineExecutionContext.offline? %>
-                  <li><%= link_to(t("myplaceonline.buttons.edituser"), edit_user_registration_path, class: "ui-btn ui-btn-icon-left ui-icon-user") %></li>
+                  <li><%= link_to(t("myplaceonline.buttons.edituser"), main_app.edit_user_registration_path, class: "ui-btn ui-btn-icon-left ui-icon-user") %></li>
                   <li><a href="#" class="ui-btn ui-btn-icon-left ui-icon-phone" onclick="myplaceonline.quickFeedback('<%= t("myplaceonline.general.quick_feedback") %>'); $('#menuPopup<%= request.uuid %>').popup('close'); return false;"><%= t("myplaceonline.menu.feedback") %></a></li>
                 <% end %>
               <% else %>
-                <li><%= link_to(t("myplaceonline.buttons.signin"), new_user_session_path, class: "ui-btn ui-btn-icon-left ui-icon-power") %></li>
-                <li><%= link_to(t("myplaceonline.buttons.signup"), new_user_registration_path, class: "ui-btn ui-btn-icon-left ui-icon-user") %></li>
+                <li><%= link_to(t("myplaceonline.buttons.signin"), main_app.new_user_session_path, class: "ui-btn ui-btn-icon-left ui-icon-power") %></li>
+                <li><%= link_to(t("myplaceonline.buttons.signup"), main_app.new_user_registration_path, class: "ui-btn ui-btn-icon-left ui-icon-user") %></li>
               <% end %>
               <li><a href="/info" class="ui-btn ui-btn-icon-left ui-icon-info"><%= t("myplaceonline.info.title") %></a></li>
               <% if !current_user.guest? && !MyplaceonlineExecutionContext.offline? %>
-                <li><%= link_to(t("myplaceonline.buttons.logout"), destroy_user_session_path, method: :delete, class: "ui-btn ui-btn-icon-left ui-icon-power") %></li>
+                <li><%= link_to(t("myplaceonline.buttons.logout"), main_app.destroy_user_session_path, method: :delete, class: "ui-btn ui-btn-icon-left ui-icon-power") %></li>
               <% end %>
             <% else %>
-              <li><%= link_to(t("myplaceonline.buttons.signin"), new_user_session_path, class: "ui-btn ui-btn-icon-left ui-icon-power") %></li>
-              <li><%= link_to(t("myplaceonline.buttons.signup"), new_user_registration_path, class: "ui-btn ui-btn-icon-left ui-icon-user") %></li>
+              <li><%= link_to(t("myplaceonline.buttons.signin"), main_app.new_user_session_path, class: "ui-btn ui-btn-icon-left ui-icon-power") %></li>
+              <li><%= link_to(t("myplaceonline.buttons.signup"), main_app.new_user_registration_path, class: "ui-btn ui-btn-icon-left ui-icon-user") %></li>
               <li><a href="/info" class="ui-btn ui-btn-icon-left ui-icon-info"><%= t("myplaceonline.info.title") %></a></li>
             <% end %>
             <% if !rsslink.blank? %>

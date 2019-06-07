@@ -158,15 +158,15 @@ class MyplaceonlineController < ApplicationController
   end
   
   def items_next_page(offset)
-    send("#{paths_name}_path", PARAM_OFFSET => offset)
+    get_link_target.send("#{paths_name}_path", PARAM_OFFSET => offset)
   end
   
   def items_previous_page(offset)
-    send("#{paths_name}_path", PARAM_OFFSET => offset)
+    get_link_target.send("#{paths_name}_path", PARAM_OFFSET => offset)
   end
   
   def items_all_link
-    send("#{paths_name}_path")
+    get_link_target.send("#{paths_name}_path")
   end
   
   def set_parent
@@ -495,7 +495,11 @@ class MyplaceonlineController < ApplicationController
   end
 
   def path_name
-    model.model_name.singular.to_s.downcase
+    if !model.model_name.to_s.include?("::")
+      model.model_name.singular.to_s.downcase
+    else
+      model.model_name.to_s.split("::")[1].singularize.downcase
+    end
   end
   
   def paths_name
@@ -515,7 +519,11 @@ class MyplaceonlineController < ApplicationController
   end
   
   def category_name
-    model.table_name
+    if !model.name.include?("::")
+      model.table_name
+    else
+      model.table_name[model.name.split("::")[0].underscore.length+1..-1]
+    end
   end
     
   def display_obj(obj)
@@ -555,136 +563,144 @@ class MyplaceonlineController < ApplicationController
     Object.const_get(self.class.name.gsub(/Controller$/, "").singularize)
   end
   
+  def get_link_target
+    if !model.model_name.to_s.include?("::")
+      return main_app
+    else
+      return send(model.model_name.to_s.split("::")[0].underscore.downcase)
+    end
+  end
+  
   def index_path
     if nested
-      send(paths_name + "_path", @parent)
+      get_link_target.send(paths_name + "_path", @parent)
     else
-      send(paths_name + "_path")
+      get_link_target.send(paths_name + "_path")
     end
   end
   
   def obj_path(obj = @obj)
     if nested
-      send(path_name + "_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+      get_link_target.send(path_name + "_path", obj.send(parent_model.table_name.singularize.downcase), obj)
     else
-      send(path_name + "_path", obj)
+      get_link_target.send(path_name + "_path", obj)
     end
   end
   
   def obj_url(obj = @obj)
     if nested
-      send(path_name + "_url", obj.send(parent_model.table_name.singularize.downcase), obj)
+      get_link_target.send(path_name + "_url", obj.send(parent_model.table_name.singularize.downcase), obj)
     else
-      send(path_name + "_url", obj)
+      get_link_target.send(path_name + "_url", obj)
     end
   end
   
   def edit_obj_path(obj = @obj)
     if nested
-      send("edit_" + path_name + "_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+      get_link_target.send("edit_" + path_name + "_path", obj.send(parent_model.table_name.singularize.downcase), obj)
     else
-      send("edit_" + path_name + "_path", obj)
+      get_link_target.send("edit_" + path_name + "_path", obj)
     end
   end
   
   def archive_obj_path(obj = @obj)
     if nested
-      send(path_name + "_archive_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+      get_link_target.send(path_name + "_archive_path", obj.send(parent_model.table_name.singularize.downcase), obj)
     else
-      send(path_name + "_archive_path", obj)
+      get_link_target.send(path_name + "_archive_path", obj)
     end
   end
   
   def unarchive_obj_path(obj = @obj)
     if nested
-      send(path_name + "_unarchive_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+      get_link_target.send(path_name + "_unarchive_path", obj.send(parent_model.table_name.singularize.downcase), obj)
     else
-      send(path_name + "_unarchive_path", obj)
+      get_link_target.send(path_name + "_unarchive_path", obj)
     end
   end
   
   def favorite_obj_path(obj = @obj)
     if nested
-      send(path_name + "_favorite_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+      get_link_target.send(path_name + "_favorite_path", obj.send(parent_model.table_name.singularize.downcase), obj)
     else
-      send(path_name + "_favorite_path", obj)
+      get_link_target.send(path_name + "_favorite_path", obj)
     end
   end
   
   def unfavorite_obj_path(obj = @obj)
     if nested
-      send(path_name + "_unfavorite_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+      get_link_target.send(path_name + "_unfavorite_path", obj.send(parent_model.table_name.singularize.downcase), obj)
     else
-      send(path_name + "_unfavorite_path", obj)
+      get_link_target.send(path_name + "_unfavorite_path", obj)
     end
   end
   
   def share_obj_path(obj = @obj)
     if nested
-      send(path_name + "_create_share_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+      get_link_target.send(path_name + "_create_share_path", obj.send(parent_model.table_name.singularize.downcase), obj)
     else
-      send(path_name + "_create_share_path", obj)
+      get_link_target.send(path_name + "_create_share_path", obj)
     end
   end
   
   def move_identity_obj_path(obj = @obj)
     if nested
-      send(path_name + "_move_identity_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+      get_link_target.send(path_name + "_move_identity_path", obj.send(parent_model.table_name.singularize.downcase), obj)
     else
-      send(path_name + "_move_identity_path", obj)
+      get_link_target.send(path_name + "_move_identity_path", obj)
     end
   end
   
   def share_link_obj_path(obj = @obj)
     if nested
-      send(path_name + "_create_share_link_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+      get_link_target.send(path_name + "_create_share_link_path", obj.send(parent_model.table_name.singularize.downcase), obj)
     else
-      send(path_name + "_create_share_link_path", obj)
+      get_link_target.send(path_name + "_create_share_link_path", obj)
     end
   end
   
   def make_public_obj_path(obj = @obj)
     if nested
-      send(path_name + "_make_public_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+      get_link_target.send(path_name + "_make_public_path", obj.send(parent_model.table_name.singularize.downcase), obj)
     else
-      send(path_name + "_make_public_path", obj)
+      get_link_target.send(path_name + "_make_public_path", obj)
     end
   end
   
   def remove_public_obj_path(obj = @obj)
     if nested
-      send(path_name + "_remove_public_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+      get_link_target.send(path_name + "_remove_public_path", obj.send(parent_model.table_name.singularize.downcase), obj)
     else
-      send(path_name + "_remove_public_path", obj)
+      get_link_target.send(path_name + "_remove_public_path", obj)
     end
   end
   
   def show_path(obj)
     if nested
-      send("#{path_name}_path", obj.send(parent_model.table_name.singularize.downcase), obj)
+      get_link_target.send("#{path_name}_path", obj.send(parent_model.table_name.singularize.downcase), obj)
     else
-      send("#{path_name}_path", obj)
+      get_link_target.send("#{path_name}_path", obj)
     end
   end
   
   def new_path(context = nil)
     if nested
-      send("new_" + path_name + "_path", @parent)
+      get_link_target.send("new_" + path_name + "_path", @parent)
     else
-      send("new_" + path_name + "_path")
+      get_link_target.send("new_" + path_name + "_path")
     end
   end
   
   def settings_path()
-    send("#{paths_name}_settings_path")
+    get_link_target.send("#{paths_name}_settings_path")
   end
   
   def destroy_all_path(context = nil)
     if nested
       set_parent
-      send("#{path_name.pluralize}_destroy_all_path", @parent)
+      get_link_target.send("#{path_name.pluralize}_destroy_all_path", @parent)
     else
-      send("#{path_name.pluralize}_destroy_all_path")
+      get_link_target.send("#{path_name.pluralize}_destroy_all_path")
     end
   end
   
@@ -705,7 +721,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def back_to_all_name
-    I18n.t("myplaceonline.category." + category_name)
+    category.nil? ? I18n.t("myplaceonline.category." + category_name) : category.human_title
   end
   
   def back_to_all_path
@@ -773,7 +789,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def new_title
-    I18n.t("myplaceonline.general.add") + " " + I18n.t("myplaceonline.category." + category_name).singularize
+    I18n.t("myplaceonline.general.add") + " " + (category.nil? ? I18n.t("myplaceonline.category." + category_name).singularize : category.human_title_singular)
   end
   
   def data_split_icon
@@ -785,7 +801,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def new_save_text
-    I18n.t("myplaceonline.general.save") + " " + I18n.t("myplaceonline.category." + category_name).singularize
+    I18n.t("myplaceonline.general.save") + " " + (category.nil? ? I18n.t("myplaceonline.category." + category_name).singularize : category.human_title_singular)
   end
   
   def index_destroy_all_link?
@@ -925,7 +941,7 @@ class MyplaceonlineController < ApplicationController
     result = []
     if self.show_index_add
       result << {
-        title: I18n.t("myplaceonline.general.add") + " " + t("myplaceonline.category." + self.category_name).singularize,
+        title: I18n.t("myplaceonline.general.add") + " " + (category.nil? ? I18n.t("myplaceonline.category." + category_name).singularize : category.human_title_singular),
         link: self.new_path,
         icon: "plus"
       }
@@ -1312,7 +1328,7 @@ class MyplaceonlineController < ApplicationController
   end
 
   def form_menu_items(form, new:)
-    main_button = new ? new_save_text : I18n.t("myplaceonline.general.save") + " " + I18n.t("myplaceonline.category." + category_name).singularize
+    main_button = new ? new_save_text : I18n.t("myplaceonline.general.save") + " " + (category.nil? ? I18n.t("myplaceonline.category." + category_name).singularize : category.human_title_singular)
     
     result = []
 
@@ -1439,7 +1455,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def category_display
-    I18n.t("myplaceonline.category." + self.category_name)
+    category.nil? ? I18n.t("myplaceonline.category." + self.category_name) : category.human_title
   end
   
   def all_items
