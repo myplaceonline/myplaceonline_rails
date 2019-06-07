@@ -40,3 +40,5 @@ config/database.yml
 Gemfile_engines.lock
 
 /engines_config
+
+db/migrate/*.drom_match.rb

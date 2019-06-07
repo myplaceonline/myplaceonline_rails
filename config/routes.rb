@@ -1,86 +1,3 @@
-# Most of the models follow a certain pattern, so a big chunk of the code here
-# is iterating through all models and creating `resources` and related items for each one
-# based on a pattern.
-
-def process_resources(name, context)
-  resources_as = name.to_s
-  resources_path = name.to_s
-  resources_controller = name.to_s
-  
-  if context.nil?
-    context = []
-  end
-  
-  context << { instance: true, link: "archive" }
-  context << { instance: true, link: "unarchive" }
-  context << { instance: true, link: "favorite" }
-  context << { instance: true, link: "unfavorite" }
-  context << { instance: true, link: "create_share" }
-  context << { instance: true, link: "create_share_link" }
-  context << { instance: true, link: "make_public" }
-  context << { instance: true, link: "remove_public" }
-  context << { instance: true, link: "move_identity" }
-  context << { instance: false, link: "public" }
-  context << { instance: false, link: "most_visited" }
-  context << { instance: false, link: "settings" }
-  context << { instance: false, link: "map" }
-
-  context.each do |context_addition|
-    if !context_addition[:instance].nil?
-      if context_addition[:instance]
-        match "#{resources_path}/:id/#{context_addition[:link]}", :to => "#{resources_controller}##{context_addition[:link]}", via: [:get, :post, :patch], as: "#{resources_as.to_s.singularize}_#{context_addition[:link]}"
-      else
-        match "#{resources_path}/#{context_addition[:link]}", :to => "#{resources_controller}##{context_addition[:link]}", via: [:get, :post], as: "#{resources_as}_#{context_addition[:link]}"
-      end
-    elsif !context_addition[:resourcesinfo].nil?
-      if !context_addition[:as].nil?
-        resources_as = context_addition[:as]
-      end
-      if !context_addition[:path].nil?
-        resources_path = context_addition[:path]
-      end
-      if !context_addition[:controller].nil?
-        resources_controller = context_addition[:controller]
-      end
-    end
-  end
-  
-  resources name.to_sym, :as => resources_as, :path => resources_path, :controller => resources_controller do
-    context.each do |context_addition|
-      if !context_addition[:subresources].nil?
-        process_resources(context_addition[:name], context_addition[:subitems])
-      end
-    end
-  end
-  
-  post "#{resources_as}/new"
-end
-
-def routes_index(items)
-  items.each do |item|
-    match "#{item}/index", via: [:get, :post]
-    match "#{item}", via: [:get, :post], :to => "#{item}#index"
-  end
-end
-
-def routes_get(items)
-  items.each do |item|
-    get item
-  end
-end
-
-def routes_post(items)
-  items.each do |item|
-    post item
-  end
-end
-
-def routes_get_post(items)
-  items.each do |item|
-    match "#{item}", via: [:get, :post]
-  end
-end
-
 Rails.application.routes.draw do
   
   Rails.logger.debug{"routes.rb Started loading routes"}
@@ -90,7 +7,7 @@ Rails.application.routes.draw do
 
   root "welcome#index"
 
-  routes_index(%w(
+  RouteHelpers.routes_index(self, %w(
     admin
     api
     finance
@@ -109,7 +26,7 @@ Rails.application.routes.draw do
     unsubscribe
   ))
   
-  routes_get(%w(
+  RouteHelpers.routes_get(self, %w(
     welcome/index
     graph/source_values
     graph/display
@@ -156,7 +73,7 @@ Rails.application.routes.draw do
     api/enter_invite_code
   ))
 
-  routes_post(%w(
+  RouteHelpers.routes_post(self, %w(
     file_folders/new
     api/debug
     api/renderpartial
@@ -174,7 +91,7 @@ Rails.application.routes.draw do
     api/update_settings
   ))
 
-  routes_get_post(%w(
+  RouteHelpers.routes_get_post(self, %w(
     tools/gps
     tools/urlencode
     tools/urldecode
@@ -625,7 +542,7 @@ Rails.application.routes.draw do
           Rails.logger.debug{"routes.rb Processing models: #{p.to_i}%"}
         end
       end
-      process_resources(table_name, additions[table_name.to_sym])
+      RouteHelpers.process_resources(self, table_name, additions[table_name.to_sym])
     end
   end
   
@@ -667,7 +584,7 @@ Rails.application.routes.draw do
     }
   end
 
-  process_resources(:users, additions[:users])
+  RouteHelpers.process_resources(self, :users, additions[:users])
   
   mount Ckeditor::Engine => '/ckeditor'
   

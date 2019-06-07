@@ -911,12 +911,12 @@ module Myp
     })
     .uniq{ |cpa| cpa.category_id }.map{ |cpa|
       ListItemRow.new(
-        Category.human_title(cpa.category_name),
+        Category.human_title(cpa.category_name, cpa.category_link),
         "/" + cpa.category_link,
         cpa.count.nil? ? 0 : cpa.count,
         cpa.category_id,
         cpa.category_parent_id,
-        Category.filtertext(cpa.category_name, cpa.category_additional_filtertext),
+        Category.filtertext(cpa.category_name, cpa.category_link, cpa.category_additional_filtertext),
         cpa.category_icon,
         cpa.category_simple || MyplaceonlineExecutionContext.offline? ? nil : "/" + cpa.category_link + "/new",
         cpa.category_simple || MyplaceonlineExecutionContext.offline? ? nil : I18n.t("myplaceonline.general.add")
