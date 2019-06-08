@@ -41,4 +41,5 @@ Gemfile_engines.lock
 
 /engines_config
 
+db/schema.rb
 db/migrate/*.drom_match.rb
