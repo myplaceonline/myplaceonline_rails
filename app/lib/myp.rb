@@ -2301,6 +2301,7 @@ module Myp
   DB_LOCK_CALENDAR_ITEM_REMINDERS_ALL = 1
   DB_LOCK_CALENDAR_ITEM_REMINDERS = 2
   DB_LOCK_LOAD_RSS_FEEDS = 3
+  DB_LOCK_ENGINE_1 = 4
   
   def self.try_with_database_advisory_lock(key1, key2, &block)
     lock_successful = true
