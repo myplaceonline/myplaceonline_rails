@@ -58,7 +58,7 @@ module ApplicationHelper
     obj_display = controller.display_obj(obj)
     
     if prefix_category || obj_display.blank?
-      result = I18n.t("myplaceonline.category.#{controller.category_name}").singularize
+      result = controller.category_display.singularize
     end
     
     if !obj_display.blank?
