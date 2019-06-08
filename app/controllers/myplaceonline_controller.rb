@@ -493,7 +493,7 @@ class MyplaceonlineController < ApplicationController
           :flash => { :notice => I18n.t("myplaceonline.general.all_deleted") }
     end
   end
-
+  
   def path_name
     if !model.model_name.to_s.include?("::")
       model.model_name.singular.to_s.downcase
@@ -507,7 +507,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def paths_form_name
-    model.model_name.singular.to_s.downcase.pluralize
+    engine_link_prefix + paths_name
   end
   
   def second_path_name
@@ -516,6 +516,14 @@ class MyplaceonlineController < ApplicationController
   
   def category
     Myp.categories[self.category_name.to_sym]
+  end
+  
+  def engine_link_prefix
+    if !model.model_name.to_s.include?("::")
+      return ""
+    else
+      return model.model_name.to_s.split("::")[0].underscore.downcase + "/"
+    end
   end
   
   def category_name
@@ -785,7 +793,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def form_path
-    paths_name + "/form"
+    engine_link_prefix + paths_name + "/form"
   end
   
   def new_title
