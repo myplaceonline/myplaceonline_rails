@@ -507,7 +507,12 @@ class MyplaceonlineController < ApplicationController
   end
   
   def paths_form_name
-    engine_link_prefix + paths_name
+    # Can't refactor this to use paths_name because of nested controllers
+    if !model.model_name.to_s.include?("::")
+      engine_link_prefix + model.model_name.singular.to_s.downcase.pluralize
+    else
+      engine_link_prefix + model.model_name.to_s.split("::")[1].downcase.pluralize
+    end
   end
   
   def second_path_name
