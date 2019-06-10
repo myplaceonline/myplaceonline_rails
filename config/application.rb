@@ -132,7 +132,7 @@ module Myplaceonline
           if !host.index(':').nil?
             host = host.gsub(/:\d+$/, "")
           end
-          if host == "localhost"
+          if host == "localhost" || host == "127.0.0.1"
             host = ""
           end
           
