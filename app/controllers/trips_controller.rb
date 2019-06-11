@@ -100,6 +100,12 @@ class TripsController < MyplaceonlineController
       }
     end
     
+    result << {
+      title: I18n.t("myplaceonline.trips.stories"),
+      link: trip_trip_stories_path(@obj),
+      icon: "bars"
+    }
+    
     result
   end
   
