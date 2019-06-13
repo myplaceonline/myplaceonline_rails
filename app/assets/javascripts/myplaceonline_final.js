@@ -17,6 +17,7 @@
 
 var myplaceonline = function(mymodule) {
   
+  var VERSION = 1;
   var DEFAULT_DATE_FORMAT = "%A, %b %d, %Y";
   var DEFAULT_TIME_FORMAT = "%A, %b %d, %Y %-l:%M:%S %p";
   var JQM_DATEBOX_TIMEBOX_FORMAT = "%I:%M %p"
