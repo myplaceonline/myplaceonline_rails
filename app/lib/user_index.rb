@@ -79,7 +79,7 @@ class UserIndex < Chewy::Index
       
       @indices[klass.name] = defined_type
       
-      klass.update_index("user#" + klass.name.underscore.downcase, :self)
+      klass.update_index("user#" + klass.name.demodulize.underscore.downcase, :self)
     else
       Rails.logger.debug{"UserIndex Skipping #{klass.name}"}
     end
