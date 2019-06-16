@@ -32,6 +32,9 @@ class MyplaceonlineExecutionContext
   def self.permission_target; self[:permission_target]; end
   def self.permission_target=(x); self[:permission_target] = x; end
 
+  def self.allow_cross_identity; self[:allow_cross_identity]; end
+  def self.allow_cross_identity=(x); self[:allow_cross_identity] = x; end
+
   def self.persistent_user_store; self[:persistent_user_store]; end
   def self.persistent_user_store=(x); self[:persistent_user_store] = x; end
 
@@ -88,6 +91,16 @@ class MyplaceonlineExecutionContext
     ExecutionContext.push
     begin
       self.permission_target = target
+      block.call
+    ensure
+      ExecutionContext.pop
+    end
+  end
+
+  def self.do_allow_cross_identity(other_identity, &block)
+    ExecutionContext.push
+    begin
+      self.allow_cross_identity = other_identity
       block.call
     ensure
       ExecutionContext.pop
