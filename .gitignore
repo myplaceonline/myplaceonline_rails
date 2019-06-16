@@ -43,3 +43,7 @@ Gemfile_engines.lock
 
 db/schema.rb
 db/migrate/*.drom_match.rb
+
+node_modules/
+yarn.lock
+
