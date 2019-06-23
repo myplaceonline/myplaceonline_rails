@@ -1,6 +1,7 @@
 require 'rest-client'
 require 'open-uri'
 require 'open_uri_redirections'
+require 'rss'
 
 class Feed < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
@@ -29,7 +30,10 @@ class Feed < ApplicationRecord
     
     Rails.logger.debug{"Feed response:\n#{response}"}
     
-    rss = SimpleRSS.parse(response[:body])
+    # https://ruby-doc.org/stdlib-2.6.3/libdoc/rss/rdoc/RSS.html
+    rss = RSS::Parser.parse(response[:body])
+    
+    #rss = SimpleRSS.parse(response[:body])
     
     new_feed_items = []
     all_feed_items = feed_items.to_a
@@ -38,36 +42,56 @@ class Feed < ApplicationRecord
       rss.items.each do |item|
         Rails.logger.debug{"Processing #{item.inspect}"}
         
-        feed_link = item.link
-        if feed_link.blank?
-          feed_link = item.feed_link
+        feed_link = nil
+        if !item.enclosure.nil?
+          feed_link = item.enclosure.url
         end
+        if feed_link.nil?
+          feed_link = item.link
+        end
+        #if feed_link.blank?
+        #  feed_link = item.feed_link
+        #end
         if feed_link.blank?
-          if !URI.regexp.match(item.guid).nil?
-            feed_link = item.guid
+#           if !URI.regexp.match(item.guid).nil?
+#             feed_link = item.guid
+#           end
+          if !item.guid.nil?
+            if !URI.regexp.match(item.guid.content).nil?
+              feed_link = item.guid.content
+            end
           end
         end
           
         date = item.pubDate
-        if date.blank?
-          date = item.published
-        end
+#         if date.blank?
+#           date = item.published
+#         end
         if date.blank?
           date = item.dc_date
         end
-        if date.blank?
-          date = item.updated
-        end
-        if date.blank?
-          date = item.modified
-        end
-        if date.blank?
-          date = item.expirationDate
-        end
+#         if date.blank?
+#           date = item.updated
+#         end
+#         if date.blank?
+#           date = item.modified
+#         end
+#         if date.blank?
+#           date = item.expirationDate
+#         end
         
-        guid = item.guid
-        if guid.blank?
-          guid = item.id
+        guid = nil
+        if !item.guid.nil?
+          guid = item.guid.content
+        end
+#         if guid.blank?
+#           guid = item.id
+#         end
+        if guid.nil?
+          guid = feed_link
+        end
+        if guid.nil? && !date.nil?
+          guid = date.to_s
         end
 
         existing_item = all_feed_items.index do |existing_item|
