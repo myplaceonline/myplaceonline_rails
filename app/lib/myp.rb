@@ -107,7 +107,6 @@ module Myp
   
   # We want at least 128 bits of randomness, so
   # min(POSSIBILITIES_*.length)^DEFAULT_PASSWORD_LENGTH should be >= 2^128
-  # If changing this, change en.yml myplaceonline.passwords.generate_password_length
   DEFAULT_PASSWORD_LENGTH = 22
   
   # Avoid 1, l, o, O, 0, | characters to avoid ambiguity

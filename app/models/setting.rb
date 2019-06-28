@@ -42,7 +42,7 @@ class Setting < ApplicationRecord
   
   def self.get_value_integer(category:, name:, default_value: -1)
     result = self.get_value(category: category, name: name, default_value: default_value.to_s)
-    result.nil? ? default_value : result.to_i
+    result.blank? ? default_value : result.to_i
   end
   
   def self.set_value(category:, name:, value:)

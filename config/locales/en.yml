@@ -772,7 +772,7 @@ en:
       answer: "Answer"
       generate_password: "Generate Password"
       generate_password_button: "Generate Random Password"
-      generate_password_length: "Maximum Password Length (Default 22)"
+      generate_password_length: "Maximum Password Length"
       generate_answer: "Generate Answer"
       generate_answer_button: "Generate Random Answer"
       generate_answer_length: "Answer Length (Optional)"

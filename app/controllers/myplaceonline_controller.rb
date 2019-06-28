@@ -1250,11 +1250,14 @@ class MyplaceonlineController < ApplicationController
     )
   end
   
-  def settings_string(name:, default_value: nil)
+  def settings_string(name:, default_value: nil, settings_category: nil)
     result = params[name]
     if result.blank?
+      if settings_category.nil?
+        settings_category = self.category
+      end
       result = Setting.get_value(
-        category: self.category,
+        category: settings_category,
         name: name,
         default_value: default_value
       )
