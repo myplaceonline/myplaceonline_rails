@@ -287,6 +287,24 @@
           <%= myp_file_field(file_fields, :file, "myplaceonline.identities.license_picture", childproperty.identity_file || IdentityFile.new) %>
         <% end %>
       <% end %>
+      <%=
+        input_field(
+          form: identity_fields,
+          type: Myp::FIELD_TEXT,
+          name: :mens_shirt_neck_size,
+          value: obj.contact_identity.mens_shirt_neck_size,
+          placeholder: "myplaceonline.identities.mens_shirt_neck_size"
+        )
+      %>
+      <%=
+        input_field(
+          form: identity_fields,
+          type: Myp::FIELD_TEXT,
+          name: :mens_shirt_sleeve_length,
+          value: obj.contact_identity.mens_shirt_sleeve_length,
+          placeholder: "myplaceonline.identities.mens_shirt_sleeve_length"
+        )
+      %>
     </div>
   <% end %>
 

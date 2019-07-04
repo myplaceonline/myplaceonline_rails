@@ -54,6 +54,8 @@
   <%= attribute_table_row(t("myplaceonline.general.sub_region1"), identity_drivers_license.sub_region1) %>
   <%= attribute_table_row_image(t("myplaceonline.identities.license_picture"), identity_drivers_license.identity_file) %>
 <% end %>
+<%= data_row(heading: t("myplaceonline.identities.mens_shirt_neck_size"), content: obj.contact_identity.mens_shirt_neck_size) %>
+<%= data_row(heading: t("myplaceonline.identities.mens_shirt_sleeve_length"), content: obj.contact_identity.mens_shirt_sleeve_length) %>
 <%=
   render partial: "myplaceonline/pictures", locals: {
       pics: obj.contact_identity.identity_pictures,

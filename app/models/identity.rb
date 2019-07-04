@@ -810,6 +810,8 @@ class Identity < ApplicationRecord
       :identity_type,
       :blood_type,
       :message_preferences,
+      :mens_shirt_neck_size,
+      :mens_shirt_sleeve_length,
       identity_phones_attributes: [
         :id,
         :number,

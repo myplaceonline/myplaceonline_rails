@@ -920,6 +920,8 @@ en:
       add: "+ Add Identity"
       emulate: "Emulate"
       website_domain_id: "Website Domain"
+      mens_shirt_neck_size: "Men's Shirt Neck Size"
+      mens_shirt_sleeve_length: "Men's Shirt Sleeve Length"
     import:
       password: "Password (if any)"
       nofile: "No file selected"
