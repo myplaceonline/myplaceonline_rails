@@ -2,9 +2,11 @@ class ProjectIssueFile < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
 
-  belongs_to :project_issue
+  def self.properties
+    [
+      { name: :identity_file, type: ApplicationRecord::PROPERTY_TYPE_CHILD }
+    ]
+  end
 
-  validates :identity_file, presence: true
-
-  child_property(name: :identity_file)
+  child_file(parent: :project_issue)
 end
