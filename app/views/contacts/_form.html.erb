@@ -305,6 +305,24 @@
           placeholder: "myplaceonline.identities.mens_shirt_sleeve_length"
         )
       %>
+      <%=
+        input_field(
+          form: identity_fields,
+          type: Myp::FIELD_TEXT,
+          name: :jacket_size,
+          value: obj.contact_identity.jacket_size,
+          placeholder: "myplaceonline.identities.jacket_size"
+        )
+      %>
+      <%=
+        input_field(
+          form: identity_fields,
+          type: Myp::FIELD_TEXT,
+          name: :shoe_size,
+          value: obj.contact_identity.shoe_size,
+          placeholder: "myplaceonline.identities.shoe_size"
+        )
+      %>
     </div>
   <% end %>
 

@@ -922,6 +922,8 @@ en:
       website_domain_id: "Website Domain"
       mens_shirt_neck_size: "Men's Shirt Neck Size"
       mens_shirt_sleeve_length: "Men's Shirt Sleeve Length"
+      jacket_size: "Jacket Size"
+      shoe_size: "Shoe Size"
     import:
       password: "Password (if any)"
       nofile: "No file selected"
