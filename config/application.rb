@@ -46,6 +46,8 @@ module Myplaceonline
         # If the request comes in with a security token, then log that user in
         security_token = parsed_query_string["security_token"]
         
+        Rails.logger.debug{"application.rb parsed_query_string: #{parsed_query_string}"}
+        
         if !security_token.blank?
           
           Rails.logger.debug{"application.rb call security_token: #{security_token}"}

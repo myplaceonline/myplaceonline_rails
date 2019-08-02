@@ -56,11 +56,8 @@ class MyplaceonlineExecutionContext
     # Check if the host is emulated
     query_string = self.query_string
     if !query_string.nil?
-      ehi = query_string.index("emulate_host=")
-      if !ehi.nil?
-        result = query_string[ehi+13..-1]
-        #Rails.logger.debug{"MyplaceonlineExecutionContext.host Emulated host from query: #{result}"}
-      end
+      parsed_query_string = Rack::Utils.parse_nested_query(query_string)
+      result = parsed_query_string["emulate_host"]
     end
     
     if result.blank?

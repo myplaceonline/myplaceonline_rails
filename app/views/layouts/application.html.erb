@@ -125,46 +125,48 @@
           }
         <% end %>
       </style>
-      <div data-role="header"<%= current_user.nil? || !current_user.non_fixed_header ? raw(" data-position=\"fixed\"") : "" %> data-tap-toggle="<%= !current_user.nil? && current_user.toggle_hide_footer ? "true" : "false" %>">
-        <% header_title_cached = header_title %>
-        <%
-        button_type = 0
-        if Myp.is_initial_phonegap_request(params, session)
-          button_type = 1
-        elsif Myp.is_phonegap_request(params, session) && Myp.is_ios
-          #button_type = 2
-          # No back button on iOS, but if we just use a naïve browser back
-          # button, it is not like the type of back button iOS users expect
-          button_type = 3
-        elsif Myp.is_phonegap_request(params, session)
-          button_type = 3
-        else
-          button_type = 3
-        end
-        if !current_user.nil? && !current_user.top_left_icon.nil?
-          if current_user.top_left_icon == 0
+      <% if params[:noheader].blank? %>
+        <div data-role="header"<%= current_user.nil? || !current_user.non_fixed_header ? raw(" data-position=\"fixed\"") : "" %> data-tap-toggle="<%= !current_user.nil? && current_user.toggle_hide_footer ? "true" : "false" %>" class="topheader">
+          <% header_title_cached = header_title %>
+          <%
+          button_type = 0
+          if Myp.is_initial_phonegap_request(params, session)
+            button_type = 1
+          elsif Myp.is_phonegap_request(params, session) && Myp.is_ios
+            #button_type = 2
+            # No back button on iOS, but if we just use a naïve browser back
+            # button, it is not like the type of back button iOS users expect
             button_type = 3
-          elsif current_user.top_left_icon == 1
-            button_type = 2
+          elsif Myp.is_phonegap_request(params, session)
+            button_type = 3
+          else
+            button_type = 3
           end
-        end
-        %>
-        <% if button_type == 1 %>
-          <%# No button on the initial homepage request %>
-        <% elsif button_type == 2 %>
-          <a href="/" data-icon="carat-l" data-rel="back"><%= t("myplaceonline.general.back") %></a>
-        <% elsif button_type == 3 %>
-          <a href="/" data-icon="home" data-iconpos="notext" title="<%= t("myplaceonline.menu.home") %>"><%= t("myplaceonline.menu.home") %></a>
-        <% end %>
-        <h1><%= link_to(header_link, id: "mainbutton", title: header_title_cached) do image_tag(header_icon, alt: header_title_cached) end %>&nbsp;<%= link_to(request.original_fullpath, class: "hidden_link") do main_title end %></h1>
-        <%# Popups do not work on file: local because of data-url which is needed %>
-        <%# We give a unique id to each popup because the menu may be different. %>
-        <% if !MyplaceonlineExecutionContext.offline? %>
-          <a href="#menuPopup<%= request.uuid %>" data-icon="bars" class="ui-btn-right" data-rel="popup" data-iconpos="notext" title="<%= t("myplaceonline.menu.name") %>" id="headerMenuPopup"><%= t("myplaceonline.menu.name") %></a>
-        <% else %>
-          <a href="<%= info_path %>" data-icon="info" class="ui-btn-right" data-iconpos="notext" title="<%= t("myplaceonline.info.title") %>"><%= t("myplaceonline.info.title") %></a>
-        <% end %>
-      </div>
+          if !current_user.nil? && !current_user.top_left_icon.nil?
+            if current_user.top_left_icon == 0
+              button_type = 3
+            elsif current_user.top_left_icon == 1
+              button_type = 2
+            end
+          end
+          %>
+          <% if button_type == 1 %>
+            <%# No button on the initial homepage request %>
+          <% elsif button_type == 2 %>
+            <a href="/" data-icon="carat-l" data-rel="back"><%= t("myplaceonline.general.back") %></a>
+          <% elsif button_type == 3 %>
+            <a href="/" data-icon="home" data-iconpos="notext" title="<%= t("myplaceonline.menu.home") %>"><%= t("myplaceonline.menu.home") %></a>
+          <% end %>
+          <h1><%= link_to(header_link, id: "mainbutton", title: header_title_cached) do image_tag(header_icon, alt: header_title_cached) end %>&nbsp;<%= link_to(request.original_fullpath, class: "hidden_link") do main_title end %></h1>
+          <%# Popups do not work on file: local because of data-url which is needed %>
+          <%# We give a unique id to each popup because the menu may be different. %>
+          <% if !MyplaceonlineExecutionContext.offline? %>
+            <a href="#menuPopup<%= request.uuid %>" data-icon="bars" class="ui-btn-right" data-rel="popup" data-iconpos="notext" title="<%= t("myplaceonline.menu.name") %>" id="headerMenuPopup"><%= t("myplaceonline.menu.name") %></a>
+          <% else %>
+            <a href="<%= info_path %>" data-icon="info" class="ui-btn-right" data-iconpos="notext" title="<%= t("myplaceonline.info.title") %>"><%= t("myplaceonline.info.title") %></a>
+          <% end %>
+        </div>
+      <% end %>
       <div id="main_content" role="main" class="ui-content">
       
         <%= yield %>
