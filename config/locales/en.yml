@@ -282,6 +282,7 @@ en:
       vehicle_registrations: "Vehicle Registrations"
       vehicle_services: "Vehicle Services"
       vehicles: "Vehicles"
+      videos: "Videos"
       vitamins: "Vitamins"
       volunteering_activities: "Volunteering Activities"
       wallet_transactions: "Transactions"
@@ -4364,3 +4365,10 @@ en:
       art_link: "Link"
     parking_locations:
       location: "Location"
+    videos:
+      video_name: "Name"
+      video_link: "Link"
+      stopped_watching_time: "Stopped Watching Time"
+      restart_link: "Restart Link"
+      finished: "Finished Watching"
+      unfinished: "Unfinished"

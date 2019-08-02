@@ -1,0 +1,7 @@
+<%= data_row(heading: t("myplaceonline.videos.video_name"), content: obj.video_name) %>
+<%= data_row(heading: t("myplaceonline.videos.video_link"), content: obj.video_link, url: true, url_external: true, url_external_target_blank: true) %>
+<%= data_row(heading: t("myplaceonline.videos.stopped_watching_time"), content: obj.stopped_watching_time) %>
+<%= data_row(heading: t("myplaceonline.videos.restart_link"), content: obj.restart_link, url: true, url_external: true, url_external_target_blank: true) %>
+<%= data_row(heading: t("myplaceonline.videos.finished"), content: obj.finished) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.video_files) %>

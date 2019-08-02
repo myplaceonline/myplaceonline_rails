@@ -315,6 +315,7 @@ class Identity < ApplicationRecord
   has_many :credit_reports, :dependent => :destroy
   has_many :arts, :dependent => :destroy
   has_many :parking_locations, :dependent => :destroy
+  has_many :videos, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 
