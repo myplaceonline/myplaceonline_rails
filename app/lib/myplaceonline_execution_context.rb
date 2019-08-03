@@ -53,11 +53,12 @@ class MyplaceonlineExecutionContext
       #Rails.logger.debug{"MyplaceonlineExecutionContext.host Emulated host from cookie: #{result}"}
     end
 
-    # Check if the host is emulated
-    query_string = self.query_string
-    if !query_string.nil?
-      parsed_query_string = Rack::Utils.parse_nested_query(query_string)
-      result = parsed_query_string["emulate_host"]
+    if result.blank?
+      query_string = self.query_string
+      if !query_string.nil?
+        parsed_query_string = Rack::Utils.parse_nested_query(query_string)
+        result = parsed_query_string["emulate_host"]
+      end
     end
     
     if result.blank?
