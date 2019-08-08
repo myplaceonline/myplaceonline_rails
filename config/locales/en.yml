@@ -925,6 +925,8 @@ en:
       mens_shirt_sleeve_length: "Men's Shirt Sleeve Length"
       jacket_size: "Jacket Size"
       shoe_size: "Shoe Size"
+      belt_size: "Belt Size"
+      tshirt_size: "T-Shirt Size"
     import:
       password: "Password (if any)"
       nofile: "No file selected"

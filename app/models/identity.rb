@@ -815,6 +815,8 @@ class Identity < ApplicationRecord
       :mens_shirt_sleeve_length,
       :jacket_size,
       :shoe_size,
+      :belt_size,
+      :tshirt_size,
       identity_phones_attributes: [
         :id,
         :number,
