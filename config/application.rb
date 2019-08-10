@@ -292,11 +292,11 @@ module Myplaceonline
     Time::DATE_FORMATS[:month_year] = "%B %Y (%m/%y)"
     Time::DATE_FORMATS[:month_year_simple] = "%B %Y"
     Time::DATE_FORMATS[:simple_date] = Myplaceonline::DEFAULT_DATE_FORMAT
-    Time::DATE_FORMATS[:short_date] = "%b %d"
-    Time::DATE_FORMATS[:short_date_year] = "%b %d, %Y"
-    Time::DATE_FORMATS[:short_datetime] = "%b %d %l:%M%p"
-    Time::DATE_FORMATS[:short_datetime_year] = "%b %d %Y, %l:%M%p"
-    Time::DATE_FORMATS[:super_short_datetime_year] = "%a %b %d %l:%M%p %Y"
+    Time::DATE_FORMATS[:short_date] = "%b %e"
+    Time::DATE_FORMATS[:short_date_year] = "%b %e, %Y"
+    Time::DATE_FORMATS[:short_datetime] = "%b %e %l:%M%p"
+    Time::DATE_FORMATS[:short_datetime_year] = "%b %e %Y, %l:%M%p"
+    Time::DATE_FORMATS[:super_short_datetime_year] = "%a %b %e %l:%M%p %Y"
     Time::DATE_FORMATS[:full] = "%FT%T%:z"
     Date::DATE_FORMATS[:just_year] = "%Y"
     
