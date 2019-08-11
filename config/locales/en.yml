@@ -927,6 +927,8 @@ en:
       shoe_size: "Shoe Size"
       belt_size: "Belt Size"
       tshirt_size: "T-Shirt Size"
+      pants_waist: "Pants Waist"
+      pants_length: "Pants Length"
     import:
       password: "Password (if any)"
       nofile: "No file selected"

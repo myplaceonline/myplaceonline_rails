@@ -60,6 +60,8 @@
 <%= data_row(heading: t("myplaceonline.identities.shoe_size"), content: obj.contact_identity.shoe_size) %>
 <%= data_row(heading: t("myplaceonline.identities.belt_size"), content: obj.contact_identity.belt_size) %>
 <%= data_row(heading: t("myplaceonline.identities.tshirt_size"), content: obj.contact_identity.tshirt_size) %>
+<%= data_row(heading: t("myplaceonline.identities.pants_waist"), content: obj.contact_identity.pants_waist) %>
+<%= data_row(heading: t("myplaceonline.identities.pants_length"), content: obj.contact_identity.pants_length) %>
 <%=
   render partial: "myplaceonline/pictures", locals: {
       pics: obj.contact_identity.identity_pictures,
