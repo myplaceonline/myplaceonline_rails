@@ -352,7 +352,10 @@ class IdentityFile < ApplicationRecord
   def ensure_thumbnail2(max_width: THUMBNAIL2_MAX_WIDTH)
     self.ensure_thumbnail(max_width: max_width)
   end
-  
+
+  # This method is safe to call from anywhere because
+  # the before_create of this class will check that the
+  # path is safe
   def self.create_for_path!(file_hash:)
     #   "file" => {
     #     "original_filename"=>"helloworld.txt",
