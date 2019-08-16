@@ -19,6 +19,7 @@ class ApiController < ApplicationController
     :update_email,
     :forgot_password,
     :update_settings,
+    :set_child_file,
   ]
   
   def index
@@ -472,6 +473,45 @@ class ApiController < ApplicationController
     end
     
     render json: result
+  end
+  
+  # Testing:
+  # curl --request POST -F "identity_file[file]=@file.jpg" -F "class=ParentClass" -F "id=1" "http://localhost:3000/api/set_child_file?security_token=${TOKEN}&emulate_host=${HOST}"
+  def set_child_file
+    result = {
+      code: 500,
+      identity_file_id: nil,
+    }
+    
+    c = params[:class]
+    if !c.blank?
+      id = params[:id]
+      if !id.blank?
+        obj = Myp.find_existing_object(c, id, false)
+        if !obj.nil?
+          authorize! :edit, obj
+          if !params[:identity_file].nil?
+            ActiveRecord::Base.transaction do
+              if params[:identity_file][:file].is_a?(ActionDispatch::Http::UploadedFile)
+                newfile = IdentityFile.create!(params.require(:identity_file).permit(FilesController.param_names))
+              else
+                newfile = IdentityFile.create_for_path!(file_hash: params[:identity_file][:file])
+              end
+              obj.identity_file = newfile
+              obj.save!
+
+              result[:code] = 200
+              result[:identity_file_id] = newfile.id
+            end
+          end
+        end
+      end
+    end
+    
+    render(
+      json: result,
+      status: result[:code],
+    )
   end
   
   def newitem

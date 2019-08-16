@@ -171,17 +171,17 @@
       
         <%= yield %>
         
-        <% if !session[:points_flash].nil? && session[:points_flash] > 0 %>
-          <script type="text/javascript">
-            myplaceonline.onPageLoad(function() {
-              <%= raw("myplaceonline.createSuccessNotification('" + t("myplaceonline.points.gotsome", amount: ActionController::Base.helpers.pluralize(session[:points_flash], t("myplaceonline.points.point"))) + "');") %>
-              <% if current_user.enable_sounds %>
-                <%= raw("myplaceonline.playSound('" + root_path + "bubble_gum_pop-Natalie_Wendt-772662403.wav');") %>
-              <% end %>
-            });
-          </script>
-          <% session[:points_flash] = nil %>
-        <% end %>
+        <%# if !session[:points_flash].nil? && session[:points_flash] > 0 %>
+          <%#<script type="text/javascript">%>
+            <%#myplaceonline.onPageLoad(function() {%>
+              <%# raw("myplaceonline.createSuccessNotification('" + t("myplaceonline.points.gotsome", amount: ActionController::Base.helpers.pluralize(session[:points_flash], t("myplaceonline.points.point"))) + "');") %>
+              <%# if current_user.enable_sounds %>
+                <%# raw("myplaceonline.playSound('" + root_path + "bubble_gum_pop-Natalie_Wendt-772662403.wav');") %>
+              <%# end %>
+            <%#});%>
+          <%#</script>%>
+          <%# session[:points_flash] = nil %>
+        <%# end %>
         
       </div>
       <%= yield(:footer) %>

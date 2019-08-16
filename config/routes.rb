@@ -89,6 +89,7 @@ Rails.application.routes.draw do
     api/update_email
     api/forgot_password
     api/update_settings
+    api/set_child_file
   ))
 
   RouteHelpers.routes_get_post(self, %w(
