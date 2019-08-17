@@ -364,6 +364,21 @@ class IdentityFile < ApplicationRecord
     #     "md5"=>"e59ff97941044f85df5297e1c302d260",
     #     "size"=>"12"
     #   }
+    
+    # Potential attempt at accessing incorrect files
+    if !File.exist?(file_hash[:path])
+      Myp.warn("Attempt to create IdentityFile without underlying file: #{file_hash[:path]}, identity: #{MyplaceonlineExecutionContext.identity}, original_filename: #{file_hash[:original_filename]}")
+      raise "File does not exist"
+    end
+    
+    # Somebody could guess file names to try to download them,
+    # so given that nginx will generate a random filename,
+    # first check the file doesn't already exist
+    if !IdentityFile.where(filesystem_path: file_hash[:path]).take.nil?
+      Myp.warn("Attempt to create IdentityFile pointing to existing file: #{file_hash[:path]}, identity: #{MyplaceonlineExecutionContext.identity}, original_filename: #{file_hash[:original_filename]}")
+      raise "Unauthorized"
+    end
+    
     IdentityFile.create!(
       file_file_name: file_hash[:original_filename],
       file_content_type: file_hash[:content_type],
