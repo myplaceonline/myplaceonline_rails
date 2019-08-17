@@ -115,6 +115,7 @@ Rails.application.routes.draw do
   match 'passwords/import/odf/:id/step1', :to => 'passwords#importodf1', via: [:get, :post], :as => "passwords_import_odf1"
   match 'passwords/import/odf/:id/step2', :to => 'passwords#importodf2', via: [:get, :post], :as => "passwords_import_odf2"
   match 'api/newfile2', :to => 'api#newfile', via: [:get, :post], :as => "api_newfile2"
+  match 'api/set_child_file2', :to => 'api#set_child_file', via: [:get, :post], :as => "api_set_child_file2"
 
   match 'passwords/import/odf/:id/step3', :to => 'passwords#importodf3', via: [:get, :post], :as => "passwords_import_odf3"
 
