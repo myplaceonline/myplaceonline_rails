@@ -802,6 +802,12 @@ class ApiController < ApplicationController
               result = true
               status = 201
               messages = [I18n.t("myplaceonline.general.new_user_created") + " #{DateTime.now}"]
+              
+              Myp.send_support_email_safe(
+                "New User #{user.email}",
+                "New User #{user.email}",
+                request: request,
+              )
             else
               # Unclear why this would happen as we just created the user
               result = false

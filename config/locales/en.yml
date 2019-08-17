@@ -25,6 +25,8 @@ en:
       official_name: "Japan"
   myplaceonline:
     email: "E-mail"
+    mail:
+      confirmation_subject: "Welcome to %{name}! Please confirm your email"
     category:
       accomplishments: "Accomplishments"
       acne_measurements: "Acne Measurements"

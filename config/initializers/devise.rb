@@ -18,7 +18,7 @@ Devise.setup do |config|
   config.mailer_sender = ENV["MAIL_FROM"].nil? ? "REPLACEME@myplaceonline.com" : ENV["MAIL_FROM"]
 
   # Configure the class responsible to send e-mails.
-  # config.mailer = 'Devise::Mailer'
+  config.mailer = 'DeviseMailer'
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
