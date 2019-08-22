@@ -191,6 +191,7 @@ en:
       myplets: "Myplets"
       myreferences: "References"
       notepads: "Notepads"
+      notifications: "Notifications"
       nutrients: "Nutrients"
       obscure: "Obscure"
       order: "Order"
@@ -4378,3 +4379,11 @@ en:
       restart_link: "Restart Link"
       finished: "Finished Watching"
       unfinished: "Unfinished"
+    notifications:
+      notification_subject: "Subject"
+      notification_text: "Notification"
+      notification_type: "Type"
+      notification_types:
+        email: "Email"
+        sms: "Phone Text"
+        app: "Phone Application"

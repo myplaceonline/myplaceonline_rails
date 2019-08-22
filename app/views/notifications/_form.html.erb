@@ -1,0 +1,40 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :notification_subject,
+    value: obj.notification_subject,
+    placeholder: "myplaceonline.notifications.notification_subject",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notification_text,
+    value: obj.notification_text,
+    placeholder: "myplaceonline.notifications.notification_text",
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_SELECT,
+    name: :notification_type,
+    value: obj.notification_type,
+    placeholder: "myplaceonline.notifications.notification_type",
+    select_options: Notification::NOTIFICATION_TYPES,
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>

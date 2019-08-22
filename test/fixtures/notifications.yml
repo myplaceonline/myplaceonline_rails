@@ -1,0 +1,5 @@
+notification:
+  identity: identity
+  notification_subject: Test
+  notification_text: Test
+  notification_type: 0
