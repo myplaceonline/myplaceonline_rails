@@ -23,6 +23,7 @@ class NotificationsController < MyplaceonlineController
         :notification_subject,
         :notification_text,
         :notification_type,
+        :notification_category,
         :notes,
       )
     end

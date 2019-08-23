@@ -30,6 +30,15 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_TEXT,
+    name: :notification_category,
+    value: obj.notification_category,
+    placeholder: "myplaceonline.notifications.notification_category",
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,

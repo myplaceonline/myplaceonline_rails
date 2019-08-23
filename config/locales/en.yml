@@ -4383,6 +4383,7 @@ en:
       notification_subject: "Subject"
       notification_text: "Notification"
       notification_type: "Type"
+      notification_category: "Category"
       notification_types:
         email: "Email"
         sms: "Phone Text"
