@@ -1,0 +1,4 @@
+<%= data_row(heading: t("myplaceonline.notifications.notification_type"), content: obj.notification_type, enumeration: Notification::NOTIFICATION_TYPES) %>
+<%= data_row(heading: t("myplaceonline.notifications.notification_category"), content: obj.notification_category) %>
+<%= data_row(heading: t("myplaceonline.notification_preferences.notifications_enabled"), content: obj.notifications_enabled) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>

@@ -191,6 +191,7 @@ en:
       myplets: "Myplets"
       myreferences: "References"
       notepads: "Notepads"
+      notification_preferences: "Notification Preferences"
       notifications: "Notifications"
       nutrients: "Nutrients"
       obscure: "Obscure"
@@ -4388,3 +4389,5 @@ en:
         email: "Email"
         sms: "Phone Text"
         app: "Phone Application"
+    notification_preferences:
+      notifications_enabled: "Enabled"
