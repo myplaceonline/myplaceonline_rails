@@ -1226,7 +1226,7 @@ class ApiController < ApplicationController
     settings = params[:settings]
     
     if !settings.blank?
-      NotificationPreference.update_settings(settings)
+      NotificationPreference.update_settings(current_user.current_identity, settings)
       result = true
       status = 200
     else
