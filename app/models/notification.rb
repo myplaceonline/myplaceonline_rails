@@ -48,38 +48,44 @@ class Notification < ApplicationRecord
     
     ::Rails.logger.debug{"Notification.try_send_notifications identity: #{identity}"}
     
-    some_sent = some_sent || Notification.try_send_notification(
-      identity,
-      Notification::NOTIFICATION_TYPE_EMAIL,
-      notification_category,
-      subject,
-      body_short_markdown,
-      body_long_markdown,
-      max_notifications: max_notifications,
-      exponential_backoff: exponential_backoff
-    )
+    if Notification.try_send_notification(
+          identity,
+          Notification::NOTIFICATION_TYPE_EMAIL,
+          notification_category,
+          subject,
+          body_short_markdown,
+          body_long_markdown,
+          max_notifications: max_notifications,
+          exponential_backoff: exponential_backoff
+        )
+      some_sent = true
+    end
 
-    some_sent = some_sent || Notification.try_send_notification(
-      identity,
-      Notification::NOTIFICATION_TYPE_SMS,
-      notification_category,
-      subject,
-      body_short_markdown,
-      body_long_markdown,
-      max_notifications: max_notifications,
-      exponential_backoff: exponential_backoff
-    )
+    if Notification.try_send_notification(
+        identity,
+        Notification::NOTIFICATION_TYPE_SMS,
+        notification_category,
+        subject,
+        body_short_markdown,
+        body_long_markdown,
+        max_notifications: max_notifications,
+        exponential_backoff: exponential_backoff
+      )
+      some_sent = true
+    end
 
-    some_sent = some_sent || Notification.try_send_notification(
-      identity,
-      Notification::NOTIFICATION_TYPE_APP,
-      notification_category,
-      subject,
-      body_short_markdown,
-      body_long_markdown,
-      max_notifications: max_notifications,
-      exponential_backoff: exponential_backoff
-    )
+    if Notification.try_send_notification(
+        identity,
+        Notification::NOTIFICATION_TYPE_APP,
+        notification_category,
+        subject,
+        body_short_markdown,
+        body_long_markdown,
+        max_notifications: max_notifications,
+        exponential_backoff: exponential_backoff
+      )
+      some_sent = true
+    end
 
     ::Rails.logger.debug{"Notification.try_send_notifications some_sent: #{some_sent}"}
 
@@ -97,7 +103,7 @@ class Notification < ApplicationRecord
         exponential_backoff: false
       )
     
-    ::Rails.logger.debug{"Notification.try_send_notification identity: #{identity}"}
+    ::Rails.logger.debug{"Notification.try_send_notification identity: #{identity}, type: #{notification_type}"}
 
     if NotificationPreference.can_send_notification?(identity, notification_type, notification_category)
       
@@ -138,7 +144,9 @@ class Notification < ApplicationRecord
           ::Rails.logger.debug{"Notification.try_send_notification sending sms"}
           identity.send_sms(body: body_short_markdown)
         when NOTIFICATION_TYPE_APP
-          raise "TODO #{notification_type}"
+          text = body_short_markdown
+          body_short_markdown = Myp.markdown_for_plain_email(body_short_markdown)
+          ::Rails.logger.debug{"Notification.try_send_notification sending app"}
         else
           raise "TODO #{notification_type}"
         end
