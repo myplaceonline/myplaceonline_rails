@@ -20,6 +20,7 @@ class ApiController < ApplicationController
     :forgot_password,
     :update_settings,
     :set_child_file,
+    :update_notification_settings,
   ]
   
   def index
@@ -1199,6 +1200,33 @@ class ApiController < ApplicationController
           Setting.set_value(category: nil, name: k, value: v)
         end
       end
+      result = true
+      status = 200
+    else
+      # Ok to not set anything
+      result = true
+      status = 200
+    end
+    
+    render(
+      json: {
+        status: status,
+        result: result,
+        messages: messages,
+      },
+      status: status,
+    )
+  end
+  
+  def update_notification_settings
+    status = 500
+    result = false
+    messages = []
+    
+    settings = params[:settings]
+    
+    if !settings.blank?
+      NotificationPreference.update_settings(settings)
       result = true
       status = 200
     else

@@ -29,7 +29,69 @@ class Notification < ApplicationRecord
     self.notification_subject
   end
   
-  def self.try_send_notification(identity, notification_type, notification_category, subject, body_short_markdown, body_long_markdown, max_notifications = nil)
+  def ready_for_another?
+    # Exponential backoff of notifications
+    return DateTime.now.utc > self.updated_at + (2 ** self.count).days
+  end
+  
+  def self.try_send_notifications(
+        identity,
+        notification_category,
+        subject,
+        body_short_markdown,
+        body_long_markdown,
+        max_notifications: nil,
+        exponential_backoff: false
+      )
+    
+    some_sent = false
+    
+    some_sent = some_sent || Notification.try_send_notification(
+      identity,
+      Notification::NOTIFICATION_TYPE_EMAIL,
+      notification_category,
+      subject,
+      body_short_markdown,
+      body_long_markdown,
+      max_notifications: max_notifications,
+      exponential_backoff: exponential_backoff
+    )
+
+    some_sent = some_sent || Notification.try_send_notification(
+      identity,
+      Notification::NOTIFICATION_TYPE_SMS,
+      notification_category,
+      subject,
+      body_short_markdown,
+      body_long_markdown,
+      max_notifications: max_notifications,
+      exponential_backoff: exponential_backoff
+    )
+
+    some_sent = some_sent || Notification.try_send_notification(
+      identity,
+      Notification::NOTIFICATION_TYPE_APP,
+      notification_category,
+      subject,
+      body_short_markdown,
+      body_long_markdown,
+      max_notifications: max_notifications,
+      exponential_backoff: exponential_backoff
+    )
+
+    return some_sent
+  end
+  
+  def self.try_send_notification(
+        identity,
+        notification_type,
+        notification_category,
+        subject,
+        body_short_markdown,
+        body_long_markdown,
+        max_notifications: nil,
+        exponential_backoff: false
+      )
     
     if NotificationPreference.can_send_notification?(identity, notification_type, notification_category)
       
@@ -45,7 +107,15 @@ class Notification < ApplicationRecord
         count = notification.count
       end
       
-      if max_notifications.nil? || count < max_notifications
+      send_notification = (max_notifications.nil? || count < max_notifications)
+      
+      if send_notification && exponential_backoff && !notification.nil?
+        if !notification.ready_for_another?
+          send_notification = false
+        end
+      end
+      
+      if send_notification
         
         case notification_type
         when NOTIFICATION_TYPE_EMAIL
@@ -82,6 +152,58 @@ class Notification < ApplicationRecord
       end
     else
       return false
+    end
+  end
+  
+  def self.try_send_notification_with_context(
+        identity,
+        notification_type,
+        notification_category,
+        subject,
+        body_short_markdown,
+        body_long_markdown,
+        max_notifications: nil,
+        exponential_backoff: false
+      )
+    MyplaceonlineExecutionContext.do_permission_target(identity) do
+      MyplaceonlineExecutionContext.do_allow_cross_identity(identity) do
+        return
+          Notification.try_send_notification(
+            identity,
+            notification_type,
+            notification_category,
+            subject,
+            body_short_markdown,
+            body_long_markdown,
+            max_notifications: max_notifications,
+            exponential_backoff: exponential_backoff
+          )
+      end
+    end
+  end
+  
+  def self.try_send_notifications_with_context(
+        identity,
+        notification_category,
+        subject,
+        body_short_markdown,
+        body_long_markdown,
+        max_notifications: nil,
+        exponential_backoff: false
+      )
+    MyplaceonlineExecutionContext.do_permission_target(identity) do
+      MyplaceonlineExecutionContext.do_allow_cross_identity(identity) do
+        return
+          Notification.try_send_notifications(
+            identity,
+            notification_category,
+            subject,
+            body_short_markdown,
+            body_long_markdown,
+            max_notifications: max_notifications,
+            exponential_backoff: exponential_backoff
+          )
+      end
     end
   end
 end

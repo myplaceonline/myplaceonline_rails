@@ -21,4 +21,30 @@ class NotificationPreference < ApplicationRecord
     preference = NotificationPreference.where(identity: identity, notification_type: notification_type, notification_category: notification_category).take
     return preference.nil? || preference.notifications_enabled?
   end
+  
+  def self.update_settings(settings)
+    ActiveRecord::Base.transaction do
+      settings.each do |notification_category, settings_by_type|
+        settings_by_type.each do |notification_type, notifications_enabled|
+          preference = NotificationPreference.where(
+            identity: current_user.current_identity,
+            notification_type: notification_type.to_i,
+            notification_category: notification_category,
+          ).take
+          
+          if preference.nil?
+            NotificationPreference.create!(
+              identity: current_user.current_identity,
+              notification_type: notification_type.to_i,
+              notification_category: notification_category,
+              notifications_enabled: notifications_enabled,
+            )
+          else
+            preference.notifications_enabled = notifications_enabled
+            preference.save!
+          end
+        end
+      end
+    end
+  end
 end
