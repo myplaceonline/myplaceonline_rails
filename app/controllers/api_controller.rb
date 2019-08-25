@@ -955,6 +955,9 @@ class ApiController < ApplicationController
         website_domain_id: Myp.website_domain.id,
       )
       
+      new_identity.identity_id = new_identity.id
+      new_identity.save!
+      
       current_user.change_default_identity(new_identity)
       
       result = true

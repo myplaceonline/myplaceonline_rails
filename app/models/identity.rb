@@ -714,6 +714,20 @@ class Identity < ApplicationRecord
     end
   end
   
+  @@destroy_callbacks = []
+  
+  def self.register_destroy_callback(destroy_callback)
+    @@destroy_callbacks.push(destroy_callback)
+  end
+  
+  before_destroy :on_before_destroy
+  
+  def on_before_destroy
+    @@destroy_callbacks.each do |destroy_callback|
+      destroy_callback.call(self)
+    end
+  end
+  
   after_commit :on_after_destroy, on: :destroy
   
   def on_after_destroy
