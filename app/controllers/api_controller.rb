@@ -21,6 +21,7 @@ class ApiController < ApplicationController
     :update_settings,
     :set_child_file,
     :update_notification_settings,
+    :registerPushNotifications,
   ]
   
   def index
@@ -1234,6 +1235,41 @@ class ApiController < ApplicationController
       status = 200
     else
       # Ok to not set anything
+      result = true
+      status = 200
+    end
+    
+    render(
+      json: {
+        status: status,
+        result: result,
+        messages: messages,
+      },
+      status: status,
+    )
+  end
+  
+  def registerPushNotifications
+    status = 500
+    result = false
+    messages = []
+    
+    token = params[:token]
+    platform = params[:platform]
+    
+    if !token.blank?
+      
+      if NotificationRegistration.where(user: current_user, token: token).take.nil?
+        NotificationRegistration.create!(
+          user: current_user,
+          token: token,
+          platform: platform,
+        )
+      end
+      
+      result = true
+      status = 200
+    else
       result = true
       status = 200
     end

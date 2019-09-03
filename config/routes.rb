@@ -91,6 +91,7 @@ Rails.application.routes.draw do
     api/update_settings
     api/update_notification_settings
     api/set_child_file
+    api/registerPushNotifications
   ))
 
   RouteHelpers.routes_get_post(self, %w(

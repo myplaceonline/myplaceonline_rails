@@ -132,6 +132,7 @@ class User < ApplicationRecord
   end
   
   has_many :encrypted_values, :dependent => :destroy
+  has_many :notification_registrations, :dependent => :destroy
   
   attr_accessor :invite_code
   
