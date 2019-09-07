@@ -40,6 +40,7 @@ class Notification < ApplicationRecord
         subject,
         body_short_markdown,
         body_long_markdown,
+        body_app_markdown,
         max_notifications: nil,
         exponential_backoff: false
       )
@@ -55,6 +56,7 @@ class Notification < ApplicationRecord
           subject,
           body_short_markdown,
           body_long_markdown,
+          body_app_markdown,
           max_notifications: max_notifications,
           exponential_backoff: exponential_backoff
         )
@@ -68,6 +70,7 @@ class Notification < ApplicationRecord
         subject,
         body_short_markdown,
         body_long_markdown,
+        body_app_markdown,
         max_notifications: max_notifications,
         exponential_backoff: exponential_backoff
       )
@@ -81,6 +84,7 @@ class Notification < ApplicationRecord
         subject,
         body_short_markdown,
         body_long_markdown,
+        body_app_markdown,
         max_notifications: max_notifications,
         exponential_backoff: exponential_backoff
       )
@@ -99,6 +103,7 @@ class Notification < ApplicationRecord
         subject,
         body_short_markdown,
         body_long_markdown,
+        body_app_markdown,
         max_notifications: nil,
         exponential_backoff: false
       )
@@ -144,9 +149,26 @@ class Notification < ApplicationRecord
           ::Rails.logger.debug{"Notification.try_send_notification sending sms"}
           identity.send_sms(body: body_short_markdown)
         when NOTIFICATION_TYPE_APP
-          text = body_short_markdown
-          body_short_markdown = Myp.markdown_for_plain_email(body_short_markdown)
-          ::Rails.logger.debug{"Notification.try_send_notification sending app"}
+          text = body_app_markdown
+          body_app_markdown = Myp.markdown_for_plain_email(body_app_markdown)
+          
+          # https://docs.expo.io/versions/latest/guides/push-notifications/#message-format
+          notifications = NotificationRegistration.where(user_id: identity.user_id).map do |notification_registration|
+            {
+              to: notification_registration.token,
+              body: body_app_markdown,
+              sound: "default",
+              badge: 0,
+            }
+          end
+          
+          if notifications.length > 0
+            client = Exponent::Push::Client.new(gzip: false)
+            client.publish(notifications)
+          end
+          
+          ::Rails.logger.debug{"Notification.try_send_notification sending app: #{Myp.debug_print(notifications)}"}
+          
         else
           raise "TODO #{notification_type}"
         end
@@ -183,6 +205,7 @@ class Notification < ApplicationRecord
         subject,
         body_short_markdown,
         body_long_markdown,
+        body_app_markdown,
         max_notifications: nil,
         exponential_backoff: false
       )
@@ -195,6 +218,7 @@ class Notification < ApplicationRecord
                 subject,
                 body_short_markdown,
                 body_long_markdown,
+                body_app_markdown,
                 max_notifications: max_notifications,
                 exponential_backoff: exponential_backoff
               )
@@ -208,6 +232,7 @@ class Notification < ApplicationRecord
         subject,
         body_short_markdown,
         body_long_markdown,
+        body_app_markdown,
         max_notifications: nil,
         exponential_backoff: false
       )
@@ -219,6 +244,7 @@ class Notification < ApplicationRecord
                 subject,
                 body_short_markdown,
                 body_long_markdown,
+                body_app_markdown,
                 max_notifications: max_notifications,
                 exponential_backoff: exponential_backoff
               )

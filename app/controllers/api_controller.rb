@@ -1253,6 +1253,7 @@ class ApiController < ApplicationController
     status = 500
     result = false
     messages = []
+    notification_registrations = []
     
     token = params[:token]
     platform = params[:platform]
@@ -1267,6 +1268,8 @@ class ApiController < ApplicationController
         )
       end
       
+      notification_registrations = ::NotificationRegistration.where(user: current_user).to_a
+
       result = true
       status = 200
     else
@@ -1279,6 +1282,7 @@ class ApiController < ApplicationController
         status: status,
         result: result,
         messages: messages,
+        notification_registrations: notification_registrations,
       },
       status: status,
     )
