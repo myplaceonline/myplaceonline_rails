@@ -1,0 +1,38 @@
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :location,
+    existingobj: obj.location,
+    heading: t("myplaceonline.hospitals.location"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    autofocus: true,
+    expanded_if_nil: true
+  }
+%>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :health_insurance,
+    existingobj: obj.health_insurance,
+    heading: t("myplaceonline.hospitals.health_insurance"),
+    objform: "health_insurances/form",
+    existingobjurl: "health_insurance_path",
+    searchurl: "/health_insurances.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>

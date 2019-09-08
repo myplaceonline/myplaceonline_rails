@@ -206,7 +206,8 @@ Category.create!([
   {id: 206, name: "dealbreakers", link: "drom_match/dealbreakers", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/heart_half.png", explicit: nil, user_type_mask: 1, experimental: nil, simple: nil, internal: nil},
   {id: 207, name: "videos", link: "videos", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/video.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 240, name: "notifications", link: "notifications", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/mail_box.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
-  {id: 241, name: "notification_preferences", link: "notification_preferences", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/email_setting.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
+  {id: 241, name: "notification_preferences", link: "notification_preferences", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/email_setting.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 242, name: "hospitals", link: "hospitals", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/hospital.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
 ])
 
 # Reinitialize to cache the categories created above

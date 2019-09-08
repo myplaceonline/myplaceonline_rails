@@ -140,6 +140,7 @@ en:
       heights: "Height Measurements"
       hobbies: "Hobbies"
       hospital_visits: "Hospital Visits"
+      hospitals: "Hospitals"
       hotels: "Hotels"
       ideas: "Ideas"
       identities: "Identities"
@@ -4391,3 +4392,6 @@ en:
         app: "Phone Application"
     notification_preferences:
       notifications_enabled: "Enabled"
+    hospitals:
+      location: "Location"
+      health_insurance: "Health Insurance"

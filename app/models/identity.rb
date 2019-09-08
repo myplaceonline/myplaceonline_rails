@@ -318,6 +318,7 @@ class Identity < ApplicationRecord
   has_many :videos, :dependent => :destroy
   has_many :notifications, :dependent => :destroy
   has_many :notification_preferences, :dependent => :destroy
+  has_many :hospitals, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 
@@ -579,6 +580,7 @@ class Identity < ApplicationRecord
       :parking_locations => parking_locations.to_a.map{|x| x.as_json},
       :notifications => notifications.to_a.map{|x| x.as_json},
       :notification_preferences => notification_preferences.to_a.map{|x| x.as_json},
+      :hospitals => hospitals.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json},
     })
   end
