@@ -19,16 +19,7 @@
   
   <%=
     render(partial: "shared/footer", locals: {
-      items: [
-        {
-          content: submit_tag(t("myplaceonline.general.update"), "data-icon" => "action", "data-iconpos" => "top")
-        },
-        {
-          title: I18n.t("myplaceonline.general.back"),
-          link: controller.index_path,
-          icon: "back"
-        }
-      ]
+      items: controller.footer_items_map
     })
   %>
 <% end %>

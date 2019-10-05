@@ -979,6 +979,30 @@ class MyplaceonlineController < ApplicationController
     result
   end
   
+  def footer_items_map
+    result = []
+
+    result << {
+      content: ActionController::Base.helpers.submit_tag(I18n.t("myplaceonline.general.update"), "data-icon" => "action", "data-iconpos" => "top")
+    }
+    
+    if self.show_index_add
+      result << {
+        title: I18n.t("myplaceonline.general.add") + " " + (category.nil? ? I18n.t("myplaceonline.category." + category_name).singularize : category.human_title_singular),
+        link: self.new_path,
+        icon: "plus"
+      }
+    end
+
+    result << {
+      title: I18n.t("myplaceonline.general.list", category: category.nil? ? I18n.t("myplaceonline.category." + category_name) : category.human_title),
+      link: index_path,
+      icon: "bars"
+    }
+
+    result
+  end
+  
   def footer_items_show
     result = []
     if show_edit && !obj_locked?
@@ -994,6 +1018,9 @@ class MyplaceonlineController < ApplicationController
         link: self.back_to_all_path,
         icon: "back"
       }
+    end
+    if self.show_map? && !MyplaceonlineExecutionContext.offline?
+      result << map_link
     end
     if @obj.respond_to?("is_archived?") && (!nested || !parent_model.is_a?(Array)) && !obj_locked? && self.show_archive_button && !MyplaceonlineExecutionContext.offline?
       if @obj.is_archived?
@@ -1194,6 +1221,7 @@ class MyplaceonlineController < ApplicationController
         :display => "myplaceonline.#{category_name}.#{simple_index_filter[:name].to_s}"
       }
     end
+    
     result
   end
   
