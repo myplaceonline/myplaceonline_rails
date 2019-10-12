@@ -163,8 +163,10 @@ class Notification < ApplicationRecord
           end
           
           if notifications.length > 0
-            client = Exponent::Push::Client.new(gzip: false)
-            client.publish(notifications)
+            if ENV["SKIP_NOTIFICATIONS"] != "true"
+              client = Exponent::Push::Client.new(gzip: false)
+              client.publish(notifications)
+            end
           end
           
           ::Rails.logger.debug{"Notification.try_send_notification sending app: #{Myp.debug_print(notifications)}"}
