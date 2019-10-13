@@ -13,14 +13,12 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 
-# Rails.application.config.assets.precompile += %w(
-#   jquery-mobile/icons-png/*.png
-#   jquery-mobile/ajax-loader.gif
-#   application_extra.js
-#   *.css
-#   ckeditor/*
-#   markerclusterer.js
-#   dygraph.js
-# )
-
-Rails.application.config.assets.precompile = ["manifest.js"]
+Rails.application.config.assets.precompile += %w(
+  jquery-mobile/icons-png/*.png
+  jquery-mobile/ajax-loader.gif
+  application_extra.js
+  *.css
+  ckeditor/*
+  markerclusterer.js
+  dygraph.js
+)
