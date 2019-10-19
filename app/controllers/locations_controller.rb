@@ -14,6 +14,7 @@ class LocationsController < MyplaceonlineController
       :notes,
       :latitude,
       :longitude,
+      :bathroom_code,
       location_phones_attributes: [:id, :number, :_destroy],
       location_pictures_attributes: FilesController.multi_param_names
     ], include_website) {[

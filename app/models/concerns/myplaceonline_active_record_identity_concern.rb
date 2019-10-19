@@ -16,7 +16,7 @@ module MyplaceonlineActiveRecordIdentityConcern
 
     def identity_record_set
       
-      #Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set saving #{self.inspect}"}
+      Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set saving #{self.inspect}"}
       
       if self.respond_to?("identity=")
 
@@ -30,6 +30,9 @@ module MyplaceonlineActiveRecordIdentityConcern
           #Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set identity_target: #{identity_target.inspect}"}
           
           if !self.identity_id.nil?
+            
+            Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set Permission.current_target_identity: #{identity_target.id}"}
+          
             if self.identity_id != identity_target.id
               
               if MyplaceonlineExecutionContext.allow_cross_identity.nil?

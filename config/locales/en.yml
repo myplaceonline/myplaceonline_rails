@@ -1123,6 +1123,7 @@ en:
       add_picture: "Add Picture"
       delete_picture: "Delete Picture"
       looked_up_postal_code: "Found %{sub_region2}, %{sub_region1} from %{postal_code}"
+      bathroom_code: "Bathroom Code"
     activities:
       name: "Name"
     apartments:

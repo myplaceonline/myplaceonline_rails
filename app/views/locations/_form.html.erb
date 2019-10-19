@@ -124,6 +124,15 @@ $("#<%= extract_id(name_field) %>,#<%= extract_id(address1_field) %>").on("input
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_TEXT,
+    name: :bathroom_code,
+    value: obj.bathroom_code,
+    placeholder: "myplaceonline.locations.bathroom_code"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,
