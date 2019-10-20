@@ -13,3 +13,4 @@
 #= require ckeditor/plugins/markdown/js/marked
 #= require ckeditor/plugins/markdown/js/to-markdown
 #= require jstz
+#= require clipboard.min.js

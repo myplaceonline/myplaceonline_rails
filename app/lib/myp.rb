@@ -1762,7 +1762,8 @@ module Myp
   CLIPBOARD_INTEGRATIONS = [
     ["myplaceonline.clipboard.none", 0],
     ["myplaceonline.clipboard.zeroclipboard", 1],
-    ["myplaceonline.clipboard.ffclipboard", 2]
+    #["myplaceonline.clipboard.ffclipboard", 2],
+    ["myplaceonline.clipboard.clipboardjs", 3],
   ]
   
   def self.images_for_points(points)
