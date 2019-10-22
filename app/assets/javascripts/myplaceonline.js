@@ -1141,13 +1141,13 @@ var myplaceonline = function(mymodule) {
         var clipboard = new ZeroClipboard(objects);
         clipboard.on("ready", function(readyEvent) {
           clipboard.on("aftercopy", function(event) {
-            myplaceonline.createSuccessNotification("Copied '" + event.data["text/plain"] + "' to clipboard.", null, true);
+            myplaceonline.createSuccessNotification("Copied " + event.data["text/plain"] + " to clipboard.", null, true);
           });
         });
       } else if (clipboard_integration == 2) {
         $("[data-clipboard-text]").click( function(e) {
           window.ffclipboard.setText($(this).data("clipboard-text"));
-          myplaceonline.createSuccessNotification("Copied '" + $(this).data("clipboard-text") + "' to clipboard.", null, true);
+          myplaceonline.createSuccessNotification("Copied " + $(this).data("clipboard-text") + " to clipboard.", null, true);
           return $(this).data("clipboard-clickthrough") == "yes" ? true : false;
         });
       } else if (clipboard_integration == 3) {
@@ -1159,7 +1159,7 @@ var myplaceonline = function(mymodule) {
 
           //e.clearSelection();
           
-          myplaceonline.createSuccessNotification("Copied '" + e.text + "' to clipboard.", null, true);
+          myplaceonline.createSuccessNotification("Copied " + e.text + " to clipboard.", null, true);
         });
         
         clipboard.on("error", function(e) {
