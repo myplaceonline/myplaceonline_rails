@@ -332,7 +332,7 @@ class IdentityFile < ApplicationRecord
           if !file_type.blank? && !file_type.rindex("/").nil?
             file_type = clean_filename(file_type[file_type.rindex("/")+1..-1])
             if !file_type.blank?
-              input_file << ".#{file_type}"
+              input_file = "#{file_type}:" + input_file
             end
           end
         end
