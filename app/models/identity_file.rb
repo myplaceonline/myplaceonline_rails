@@ -325,7 +325,18 @@ class IdentityFile < ApplicationRecord
         #   "libgomp: Thread creation failed: Resource temporarily unavailable"
         success = false
         
-        command_line = "convert #{self.evaluated_path}#{index} -auto-orient -thumbnail '#{max_width}>' #{thumbnail_path}"
+        input_file = self.evaluated_path
+        if input_file.index(".").nil? && !self.file_content_type.blank?
+          # "To specify a particular image format, precede the filename with an image format name and a colon (i.e. ps:image) or specify the image type as the filename suffix (i.e. image.ps)."
+          file_type = self.file_content_type
+          if !file_type.blank? && !file_type.rindex("/").nil?
+            file_type = clean_filename(file_type[file_type.rindex("/")+1..-1])
+            if !file_type.blank?
+              input_file << ".#{file_type}"
+            end
+          end
+        end
+        command_line = "convert #{input_file}#{index} -auto-orient -thumbnail '#{max_width}>' #{thumbnail_path}"
         
         child = Myp.spawn(
           command_line: command_line,
@@ -334,7 +345,7 @@ class IdentityFile < ApplicationRecord
         if child.status.exitstatus == 0
           success = true
         else
-          Myp.warn("Thumbnail id: #{self.id}, content_type: #{self.file_content_type}, name: #{self.file_file_name}, path: #{self.evaluated_path}, exit status #{child.status.exitstatus}, command line: #{command_line}, stdout: #{child.out}, stderr: #{child.err}")
+          Myp.warn("Thumbnail id: #{self.id}, content_type: #{self.file_content_type}, name: #{self.file_file_name}, path: #{self.evaluated_path}, input_file: #{input_file}, exit status #{child.status.exitstatus}, command line: #{command_line}, stdout: #{child.out}, stderr: #{child.err}")
         end
         
         if success
@@ -349,6 +360,11 @@ class IdentityFile < ApplicationRecord
     end
   end
   
+  def clean_filename(name)
+    # Only allow certain characters and filter all others
+    name.gsub(/[^a-zA-Z0-9,_\- ]/, "")
+  end
+
   def ensure_thumbnail2(max_width: THUMBNAIL2_MAX_WIDTH)
     self.ensure_thumbnail(max_width: max_width)
   end
