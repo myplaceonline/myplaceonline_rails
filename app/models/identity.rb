@@ -719,12 +719,14 @@ class Identity < ApplicationRecord
   @@destroy_callbacks = []
   
   def self.register_destroy_callback(destroy_callback)
+    Rails.logger.debug{"Identity.register_destroy_callback #{destroy_callback}"}
     @@destroy_callbacks.push(destroy_callback)
   end
   
   before_destroy :on_before_destroy
   
   def on_before_destroy
+    Rails.logger.debug{"Identity.on_before_destroy callbacks: #{@@destroy_callbacks.size}"}
     @@destroy_callbacks.each do |destroy_callback|
       destroy_callback.call(self)
     end

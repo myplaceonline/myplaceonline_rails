@@ -1034,10 +1034,19 @@ class ApiController < ApplicationController
           new_main_identity = nil
           new_main_identity_id = nil
           if current_user.identities.size > 1
-            j = current_user.identities.index{|x| x.id != identity_id}
-            new_main_identity = current_user.identities[j]
-            new_main_identity_id = new_main_identity.id
-            current_user.change_default_identity(new_main_identity)
+            
+            domain_id = Myp.website_domain.id
+            
+            j = current_user.identities.index{|x| x.website_domain_id == domain_id && x.id != identity_id}
+            
+            if !j.nil?
+              new_main_identity = current_user.identities[j]
+              new_main_identity_id = new_main_identity.id
+              
+              Rails.logger.debug{"ApiController.delete_identity changing main identity to: #{new_main_identity}"}
+              
+              current_user.change_default_identity(new_main_identity)
+            end
           end
           ExecutionContext.stack(allow_identity_delete: true) do
             # This identity may have created other identities
