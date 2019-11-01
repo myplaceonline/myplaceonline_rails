@@ -13,7 +13,6 @@
  *= require_self
  *= require jquery.mobile
  *= require jtsage-datebox.min
- *= require welcome
  *= require magnific-popup
  */
 
@@ -228,4 +227,8 @@ label[title], .tooltipable[title] {
 
 .itemdivider {
   border-top: 1px dotted #000000;
+}
+
+.myplaceonline_welcome_headergrid .ui-block-a {
+  text-align: right;
 }
