@@ -1119,7 +1119,7 @@ var myplaceonline = function(mymodule) {
   function ensureClipboard(objects) {
     // If we're in PhoneGap, use the clipboard plugin; otherwise,
     // check if the user has overriden clipboard integration and use that
-    // option or fall back to ZeroClipboard
+    // option or fall back
     
     // See Myp::CLIPBOARD_INTEGRATIONS
     
@@ -1137,20 +1137,7 @@ var myplaceonline = function(mymodule) {
         clipboard_integration = 1;
       }
 
-      if (clipboard_integration == 1) {
-        var clipboard = new ZeroClipboard(objects);
-        clipboard.on("ready", function(readyEvent) {
-          clipboard.on("aftercopy", function(event) {
-            myplaceonline.createSuccessNotification("Copied " + event.data["text/plain"] + " to clipboard.", null, true);
-          });
-        });
-      } else if (clipboard_integration == 2) {
-        $("[data-clipboard-text]").click( function(e) {
-          window.ffclipboard.setText($(this).data("clipboard-text"));
-          myplaceonline.createSuccessNotification("Copied " + $(this).data("clipboard-text") + " to clipboard.", null, true);
-          return $(this).data("clipboard-clickthrough") == "yes" ? true : false;
-        });
-      } else if (clipboard_integration == 3) {
+      if (clipboard_integration >= 1 && clipboard_integration <= 3) {
         var clipboard = new ClipboardJS(".clipboardable");
         clipboard.on("success", function(e) {
           console.info("Clipboard Success Action:", e.action);

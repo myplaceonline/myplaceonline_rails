@@ -1454,12 +1454,6 @@ var myplaceonline = function(mymodule) {
       //   at eval (eval at <anonymous> (file:///android_asset/www/js/jquery-1.11.2.min.js:2:2622), <anonymous>:10367:472)
       blacklist.push("Cannot read property 'getComputedStyle' of undefined");
       
-      // https://github.com/zeroclipboard/zeroclipboard/issues/661
-      blacklist.push("Bad NPObject as private data!");
-
-      // https://github.com/zeroclipboard/zeroclipboard/issues/676
-      blacklist.push("Error calling method on NPObject!");
-      
       // Seems to happen when CKEditor is loading and user navigates away. Stack:
       // d@https://myplaceonline.com/assets/application_extra-f8446fb91c0259c83dc5ce1b5bb575d85b7d12c1c3bea82849e94b396f29139b.js:8230:46
       // f@https://myplaceonline.com/assets/application_extra-f8446fb91c0259c83dc5ce1b5bb575d85b7d12c1c3bea82849e94b396f29139b.js:8231:175
@@ -1602,26 +1596,6 @@ var myplaceonline = function(mymodule) {
   mymodule.handleAjaxFailure = handleAjaxFailure;
   mymodule.deleteAllCookies = deleteAllCookies;
   
-  myplaceonline.onPageLoad(function() {
-    if (typeof ZeroClipboard !== 'undefined') {
-      ZeroClipboard.on("error", function(e) {
-        myplaceonline.consoleLog("ZeroClipboard error: " + e);
-        //if (Error) {
-        //  myplaceonline.consoleLog("Handler stack:");
-        //  myplaceonline.consoleLog(new Error().stack);
-        //}
-        if (e && e.stack) {
-         myplaceonline.consoleLog("Error stack:");
-         myplaceonline.consoleLog(e.stack);
-        }
-        myplaceonline.consoleLog("Console dir of error object:");
-        myplaceonline.consoleDir(e);
-        myplaceonline.consoleLog("ZC state:");
-        myplaceonline.consoleLog(JSON.stringify(ZeroClipboard.state(), null, 2));
-      });
-    }
-  });
-
   return mymodule;
 
 }(myplaceonline || {});

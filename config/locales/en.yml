@@ -2078,8 +2078,6 @@ en:
       slidedown: "Slide Down"
     clipboard:
       none: "None"
-      zeroclipboard: "ZeroClipboard"
-      ffclipboard: "ffclipboard"
       clipboardjs: "clipboard.js"
     points_image:
       n42: "DON'T PANIC!"
