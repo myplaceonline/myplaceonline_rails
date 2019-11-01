@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gem "rake"
 gem "rails", ">=5.1.5"
-gem "sprockets", "~>3.0"
+gem "sprockets"
 gem "pg"
 gem "sass-rails"
 gem "uglifier"
