@@ -1,10 +1,10 @@
 <%= attribute_table_row(t("myplaceonline.medical_conditions.medical_condition_name"), obj.medical_condition_name) %>
-<%= attribute_table_row_markdown(t("myplaceonline.medical_conditions.notes"), obj.notes) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <% obj.medical_condition_instances.each do |medical_condition_instance| %>
   <%= table_row_heading(t("myplaceonline.medical_conditions.instance")) %>
   <%= attribute_table_row_date(t("myplaceonline.medical_condition_instances.condition_start"), medical_condition_instance.condition_start) %>
   <%= attribute_table_row_date(t("myplaceonline.medical_condition_instances.condition_end"), medical_condition_instance.condition_end) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.medical_condition_instances.notes"), medical_condition_instance.notes) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), medical_condition_instance.notes) %>
 <% end %>
 <% obj.medical_condition_treatments.each do |x| %>
   <%= table_row_heading(t("myplaceonline.medical_conditions.treatment")) %>

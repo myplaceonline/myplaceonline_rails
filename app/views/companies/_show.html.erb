@@ -1,5 +1,5 @@
 <%= attribute_table_row(t("myplaceonline.companies.name"), obj.company_identity.name) %>
-<%= attribute_table_row_markdown(t("myplaceonline.contacts.notes"), obj.company_identity.notes) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.company_identity.notes) %>
 <% obj.company_identity.identity_emails.each do |email| %>
   <%= attribute_table_row_email(t("myplaceonline.identities.email"), email.email) %>
 <% end %>

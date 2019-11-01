@@ -13,7 +13,7 @@
 <%= attribute_table_row(t("myplaceonline.vehicles.license_plate"), obj.license_plate) %>
 <%= attribute_table_row(t("myplaceonline.general.region"), obj.region) %>
 <%= attribute_table_row(t("myplaceonline.general.sub_region1"), obj.sub_region1) %>
-<%= attribute_table_row_markdown(t("myplaceonline.vehicles.notes"), obj.notes) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <%= attribute_table_row t("myplaceonline.vehicles.horsepower"), obj.horsepower %>
 <%= attribute_table_row t("myplaceonline.vehicles.trim_name"), obj.trim_name %>
 <%= attribute_table_row_select t("myplaceonline.vehicles.engine_type"), obj.engine_type, Vehicle::ENGINE_TYPES %>
@@ -95,7 +95,7 @@
   <%= table_row_heading(t("myplaceonline.vehicle_insurances.insurance")) %>
   <%= attribute_table_row(t("myplaceonline.vehicle_insurances.insurance_name"), insurance.insurance_name) %>
   <%= attribute_table_row_date(t("myplaceonline.vehicle_insurances.date_due"), insurance.started) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.vehicle_insurances.notes"), insurance.notes) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), insurance.notes) %>
   <%= attribute_table_row_reference(t("myplaceonline.vehicle_insurances.company"), "company_path", insurance.company) %>
   <%= attribute_table_row_reference(t("myplaceonline.vehicle_insurances.periodic_payment"), "periodic_payment_path", insurance.periodic_payment) %>
 <% end %>
@@ -112,7 +112,7 @@
   <%= attribute_table_row_date(t("myplaceonline.warranties.warranty_start"), wrapper.warranty.warranty_start) %>
   <%= attribute_table_row_date(t("myplaceonline.warranties.warranty_end"), wrapper.warranty.warranty_end) %>
   <%= attribute_table_row(t("myplaceonline.warranties.warranty_condition"), wrapper.warranty.warranty_condition) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.warranties.notes"), wrapper.warranty.notes) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), wrapper.warranty.notes) %>
 <% end %>
 <% obj.vehicle_registrations.each do |x| %>
   <%= table_row_heading(t("myplaceonline.vehicles.registration")) %>

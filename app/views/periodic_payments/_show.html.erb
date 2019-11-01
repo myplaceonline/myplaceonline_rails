@@ -5,7 +5,7 @@
 <%= attribute_table_row_select(t("myplaceonline.periodic_payments.date_period"), obj.date_period, Myp::PERIODS) %>
 <%= attribute_table_row_boolean(t("myplaceonline.periodic_payments.suppress_reminder"), obj.suppress_reminder) %>
 <%= attribute_table_row_date(t("myplaceonline.periodic_payments.next_payment"), obj.next_payment) %>
-<%= attribute_table_row_markdown(t("myplaceonline.periodic_payments.notes"), obj.notes) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <%= attribute_table_row_reference(t("myplaceonline.periodic_payments.password"), "password_path", obj.password) %>
 <% obj.periodic_payment_instances.each do |x| %>
   <%= table_row_heading(t("myplaceonline.periodic_payments.instance")) %>

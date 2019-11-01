@@ -1,5 +1,5 @@
 <%= attribute_table_row(t("myplaceonline.favorite_products.product_name"), obj.product_name) %>
-<%= attribute_table_row_markdown(t("myplaceonline.favorite_products.notes"), obj.notes) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <% obj.favorite_product_links.each do |link| %>
   <%= attribute_table_row_url(t("myplaceonline.favorite_products.link"), link.link, false, nil, nil, nil, true, true) %>
 <% end %>

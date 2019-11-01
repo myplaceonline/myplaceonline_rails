@@ -5,7 +5,7 @@
 <%= attribute_table_row(t("myplaceonline.guns.max_bullets"), obj.max_bullets) %>
 <%= attribute_table_row_currency(t("myplaceonline.guns.price"), obj.price) %>
 <%= attribute_table_row_date(t("myplaceonline.guns.purchased"), obj.purchased) %>
-<%= attribute_table_row_markdown(t("myplaceonline.guns.notes"), obj.notes) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <% obj.gun_registrations.each do |x| %>
   <%= table_row_heading(t("myplaceonline.guns.registration")) %>
   <%= render partial: "gun_registrations/show", locals: { obj: x } %>

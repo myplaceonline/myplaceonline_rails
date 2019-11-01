@@ -2,7 +2,7 @@
 <%= attribute_table_row_select t("myplaceonline.bars.rating"), obj.rating, Myp::RATINGS %>
 <%= data_row(heading: t("myplaceonline.bars.rooftop"), content: obj.rooftop) %>
 <%= data_row(heading: t("myplaceonline.bars.secretive"), content: obj.secretive) %>
-<%= attribute_table_row_markdown(t("myplaceonline.bars.notes"), obj.notes) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <%=
   render partial: "myplaceonline/pictures", locals: {
     pics: obj.bar_pictures,

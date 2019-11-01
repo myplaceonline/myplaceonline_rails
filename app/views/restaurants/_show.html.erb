@@ -2,7 +2,7 @@
 <%= attribute_table_row_select(t("myplaceonline.restaurants.rating"), obj.rating, Myp::RATINGS) %>
 <%= attribute_table_row_boolean(t("myplaceonline.restaurants.visited"), obj.visited) %>
 <%= data_row(heading: t("myplaceonline.restaurants.ethical_meat"), content: obj.ethical_meat) %>
-<%= attribute_table_row_markdown(t("myplaceonline.restaurants.notes"), obj.notes) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <%=
   render partial: "myplaceonline/pictures", locals: {
       pics: obj.restaurant_pictures,

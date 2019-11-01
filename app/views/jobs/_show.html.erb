@@ -24,7 +24,7 @@
 <%= attribute_table_row(t("myplaceonline.jobs.internal_mail_id"), obj.internal_mail_id) %>
 <%= attribute_table_row(t("myplaceonline.jobs.internal_mail_server"), obj.internal_mail_server) %>
 <%= attribute_table_row(t("myplaceonline.jobs.personnel_code"), obj.personnel_code) %>
-<%= attribute_table_row_markdown(t("myplaceonline.jobs.notes"), obj.notes) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <%= attribute_table_row_reference(t("myplaceonline.jobs.company"), "company_path", obj.company) %>
 <% obj.job_managers.each do |wrapper| %>
   <%= table_row_heading(t("myplaceonline.jobs.manager")) %>

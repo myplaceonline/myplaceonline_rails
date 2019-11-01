@@ -5,5 +5,5 @@
   <%= attribute_table_row(t("myplaceonline.stocks.until_vest"), Myp.time_difference_in_general_from_now(obj.vest_date)) %>
 <% end %>
 <%= attribute_table_row_reference(t("myplaceonline.stocks.password"), "password_path", obj.password) %>
-<%= attribute_table_row_markdown(t("myplaceonline.stocks.notes"), obj.notes) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.stock_files) %>

@@ -7,6 +7,6 @@
   <%= attribute_table_row_url(t("myplaceonline.files.download"), file_download_name_url(obj, obj.urlname, t: obj.updated_at.to_i), false, obj.urlname, nil, "externallink", true) %>
   <%= attribute_table_row_url(t("myplaceonline.files.view"), file_view_name_url(obj, obj.urlname, t: obj.updated_at.to_i), false, obj.urlname, nil, "externallink", true) %>
 <% end %>
-<%= attribute_table_row_markdown(t("myplaceonline.files.notes"), obj.notes) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <%= attribute_table_row(t("myplaceonline.files.content_type"), obj.file_content_type) %>
 <%= attribute_table_row_image(t("myplaceonline.files.inline_image"), obj) %>

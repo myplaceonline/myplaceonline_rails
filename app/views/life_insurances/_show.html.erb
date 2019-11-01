@@ -4,7 +4,7 @@
 <%= attribute_table_row_select t("myplaceonline.life_insurances.life_insurance_type"), obj.life_insurance_type, LifeInsurance::LIFE_INSURANCE_TYPES %>
 <%= attribute_table_row_currency(t("myplaceonline.life_insurances.cash_value"), obj.cash_value) %>
 <%= attribute_table_row(t("myplaceonline.life_insurances.loan_interest_rate"), obj.loan_interest_rate) %>
-<%= attribute_table_row_markdown(t("myplaceonline.life_insurances.notes"), obj.notes) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <%= attribute_table_row_reference(t("myplaceonline.life_insurances.company"), "company_path", obj.company) %>
 <%= attribute_table_row_reference(t("myplaceonline.life_insurances.periodic_payment"), "periodic_payment_path", obj.periodic_payment) %>
 <%= attribute_table_row_reference(t("myplaceonline.life_insurances.beneficiary"), "contact_path", obj.beneficiary) %>

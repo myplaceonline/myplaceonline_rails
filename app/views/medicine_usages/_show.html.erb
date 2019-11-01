@@ -4,6 +4,6 @@
   <%= attribute_table_row_reference(t("myplaceonline.medicines.medicine_name"), "medicine_path", wrapper.medicine) %>
   <%= attribute_table_row(t("myplaceonline.medicines.dosage"), wrapper.medicine.dosage) %>
   <%= attribute_table_row_select(t("myplaceonline.medicines.dosage_type"), wrapper.medicine.dosage_type, Myp::DOSAGES) %>
-  <%= attribute_table_row_markdown(t("myplaceonline.medicines.notes"), wrapper.medicine.notes) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), wrapper.medicine.notes) %>
 <% end %>
 <%= attribute_table_row_markdown(t("myplaceonline.medicine_usages.usage_notes"), obj.usage_notes) %>

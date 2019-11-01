@@ -28,7 +28,7 @@
   )
 %>
 <%= data_row(heading: t("myplaceonline.passwords.account_number"), content: obj.account_number) %>
-<%= data_row(heading: t("myplaceonline.passwords.notes"), content: obj.notes, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
 
 <% obj.password_secrets.each do |secret| %>
   <%= data_row(heading: secret.question, content: secret.answer) %>

@@ -2,7 +2,7 @@
 <%= attribute_table_row(t("myplaceonline.recreational_vehicle_services.date_serviced"), Myp.display_date(obj.date_serviced, current_user)) %>
 <%= attribute_table_row(t("myplaceonline.recreational_vehicle_services.service_location"), obj.service_location) %>
 <%= attribute_table_row(t("myplaceonline.recreational_vehicle_services.cost"), obj.cost) %>
-<%= attribute_table_row_markdown(t("myplaceonline.recreational_vehicle_services.notes"), obj.notes) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <%=
   render partial: "myplaceonline/pictures", locals: {
     pics: @obj.recreational_vehicle_service_files,

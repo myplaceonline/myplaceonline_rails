@@ -25,11 +25,11 @@
   %>
   <% process_pics.each do |pic| %>
     <% if pic.identity_file.is_audio? %>
-      <%= attribute_table_row_file_audio(t(placeholder), pic.identity_file) %>
+      <%= attribute_table_row_file_audio(Myp.is_probably_i18n(placeholder) ? t(placeholder) : placeholder, pic.identity_file) %>
     <% elsif pic.identity_file.is_video? %>
-      <%= attribute_table_row_file_video(t(placeholder), pic.identity_file) %>
+      <%= attribute_table_row_file_video(Myp.is_probably_i18n(placeholder) ? t(placeholder) : placeholder, pic.identity_file) %>
     <% else %>
-      <%= attribute_table_row_image(t(placeholder), pic.identity_file, useThumbnail: !expanded) %>
+      <%= attribute_table_row_image(Myp.is_probably_i18n(placeholder) ? t(placeholder) : placeholder, pic.identity_file, useThumbnail: !expanded) %>
     <% end %>
   <% end %>
 
