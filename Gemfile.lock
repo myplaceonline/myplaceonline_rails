@@ -28,27 +28,6 @@ GIT
     composite_primary_keys (10.0.5)
       activerecord (~> 5.1.0, >= 5.1.6)
 
-GIT
-  remote: git://github.com/myplaceonline/jsTimezoneDetect-rails.git
-  revision: 35bea184b56e45ed19ba926389ba4c158fc475ef
-  specs:
-    jsTimezoneDetect-rails (1.0.5)
-      railties (>= 4)
-
-GIT
-  remote: git://github.com/myplaceonline/paperclip_database.git
-  revision: 6e0d688470ef2e1d40beaa4749fb145863384343
-  specs:
-    paperclip_database (2.3.1)
-      paperclip (>= 2.3.0)
-
-GIT
-  remote: git://github.com/myplaceonline/zeroclipboard-rails.git
-  revision: c351afe6fc19950e2c8da204534d595e9d197680
-  specs:
-    zeroclipboard-rails (0.1.3)
-      railties (>= 3.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -225,6 +204,8 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery_mobile_rails (1.4.5)
       railties (>= 3.1.0)
+    jsTimezoneDetect-rails (1.0.6)
+      railties (>= 4.0.0)
     json (2.2.0)
     json-jwt (1.10.2)
       activesupport (>= 4.2)
@@ -279,6 +260,8 @@ GEM
       mime-types
       mimemagic (~> 0.3.0)
       terrapin (~> 0.6.0)
+    paperclip_database (3.1.0)
+      paperclip (>= 2.3.0)
     parallel (1.18.0)
     parser (2.6.5.0)
       ast (~> 2.4.0)
@@ -474,7 +457,7 @@ DEPENDENCIES
   jquery-easing-rails
   jquery-rails
   jquery_mobile_rails
-  jsTimezoneDetect-rails!
+  jsTimezoneDetect-rails
   json
   kramdown
   letter_opener
@@ -487,7 +470,7 @@ DEPENDENCIES
   oauth2
   open_uri_redirections
   paperclip
-  paperclip_database!
+  paperclip_database
   paypal-sdk-rest
   pg
   pkg-config
@@ -517,7 +500,6 @@ DEPENDENCIES
   uglifier
   usda-nutrient-database
   yelp
-  zeroclipboard-rails!
 
 BUNDLED WITH
    1.17.2
