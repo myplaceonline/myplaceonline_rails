@@ -3751,11 +3751,21 @@ module Myp
       end
       
       if run
-        Rails.logger.info{"Myp.crontab running"}
-        
         if crontab.identity.user.admin?
+          Rails.logger.info{"Myp.crontab running"}
           
+          c = Object.const_get(crontab.run_class)
           
+          if !crontab.dblocker.nil?
+            executed = Myp.try_with_database_advisory_lock(crontab.dblocker, 1) do
+              c.send(crontab.run_method)
+            end
+            if !executed
+              Rails.logger.info("Myp.crontab running could not lock (#{crontab.dblocker}, 1)")
+            end
+          else
+            c.send(crontab.run_method)
+          end
           
           MyplaceonlineExecutionContext.do_full_context(crontab.identity.user, crontab.identity) do
             crontab.last_success = DateTime.now
