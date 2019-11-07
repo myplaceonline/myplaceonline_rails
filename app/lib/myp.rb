@@ -2302,6 +2302,12 @@ module Myp
   DB_LOCK_CALENDAR_ITEM_REMINDERS = 2
   DB_LOCK_LOAD_RSS_FEEDS = 3
   DB_LOCK_ENGINE_1 = 4
+  DB_LOCK_RESERVED1 = 5
+  DB_LOCK_RESERVED2 = 6
+  DB_LOCK_RESERVED3 = 7
+  DB_LOCK_RESERVED4 = 8
+  DB_LOCK_RESERVED5 = 9
+  DB_LOCK_RESERVED6 = 10
   
   def self.try_with_database_advisory_lock(key1, key2, &block)
     lock_successful = true
@@ -3719,12 +3725,48 @@ module Myp
     str
   end
   
-  def self.crontab
+  def self.crontab(run_calendar_reminders: true)
     Rails.logger.info{"Myp.crontab started"}
 
-    Rails.logger.info{"Myp.crontab CalendarItemReminder.ensure_pending_all_users started"}
-    CalendarItemReminder.ensure_pending_all_users
-    Rails.logger.info{"Myp.crontab CalendarItemReminder.ensure_pending_all_users finished"}
+    if run_calendar_reminders
+      Rails.logger.info{"Myp.crontab CalendarItemReminder.ensure_pending_all_users started"}
+      CalendarItemReminder.ensure_pending_all_users
+      Rails.logger.info{"Myp.crontab CalendarItemReminder.ensure_pending_all_users finished"}
+    end
+    
+    Crontab.all.each do |crontab|
+      Rails.logger.info{"Myp.crontab checking crontab #{crontab.inspect}"}
+      
+      run = false
+      
+      if !crontab.last_success.nil?
+        if !crontab.minutes.nil?
+          if DateTime.now >= crontab.last_success + crontab.minutes.to_i.minutes
+            run = true
+          end
+        end
+      else
+        # First run
+        run = true
+      end
+      
+      if run
+        Rails.logger.info{"Myp.crontab running"}
+        
+        if crontab.identity.user.admin?
+          
+          
+          
+          MyplaceonlineExecutionContext.do_full_context(crontab.identity.user, crontab.identity) do
+            crontab.last_success = DateTime.now
+            crontab.save!
+          end
+        end
+        
+      end
+      
+      Rails.logger.info{"Myp.crontab finished crontab #{crontab.id}"}
+    end
 
     Rails.logger.info{"Myp.crontab finished"}
   end

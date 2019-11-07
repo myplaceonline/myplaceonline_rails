@@ -107,6 +107,7 @@ Rails.application.routes.draw do
     admin/send_direct_email
     admin/send_direct_text_message
     admin/execute_command
+    admin/run_crontab
   ))
 
   match 'c/:id', :to => 'calendar_item_reminder_pendings#short', via: [:get], as: "calendar_item_reminder_short"

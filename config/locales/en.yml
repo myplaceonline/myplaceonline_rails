@@ -3224,6 +3224,9 @@ en:
       gc_collected: "Garbage Collection Started"
       execute_command: "Execute Command"
       command: "Command"
+      run_crontab: "Run Crontab"
+      run_crontab_without_calendar_reminders: "Run Crontab (without calendar reminders)"
+      crontab_run: "Crontab completed"
     share:
       link: "Link"
     trip_pictures:
@@ -4413,6 +4416,6 @@ en:
       dblocker: "DB Lock ID"
       run_class: "Run class"
       run_method: "Run method"
-      minutes: "Minutes"
+      minutes: "Every X Minutes"
       last_success: "Last Success"
       run_data: "Run Data"

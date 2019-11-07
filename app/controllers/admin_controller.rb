@@ -197,4 +197,18 @@ class AdminController < ApplicationController
     Myp.reinitialize
     render(json: { success: true })
   end
+
+  def run_crontab
+    Rails.logger.info{"AdminController.run_crontab"}
+    
+    run_calendar_reminders = true
+    if !params[:run_calendar_reminders].blank?
+      run_calendar_reminders = params[:run_calendar_reminders].to_bool
+    end
+    
+    Myp.crontab(run_calendar_reminders: run_calendar_reminders)
+
+    redirect_to admin_path,
+          :flash => { :notice => I18n.t("myplaceonline.admin.crontab_run") }
+  end
 end
