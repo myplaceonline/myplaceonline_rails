@@ -22,9 +22,9 @@ class AdminController < ApplicationController
     end
   end
   
-  def ensure_pending_all_users
-    Rails.logger.info{"AdminController ensure_pending_all_users"}
-    CalendarItemReminder.ensure_pending_all_users
+  def crontab
+    Rails.logger.info{"AdminController.crontab"}
+    Myp.crontab
     render(json: { success: true })
   end
   

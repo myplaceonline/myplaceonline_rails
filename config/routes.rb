@@ -42,7 +42,7 @@ Rails.application.routes.draw do
     api/postal_code_search
     api/distinct_values
     admin/test
-    admin/ensure_pending_all_users
+    admin/crontab
     admin/create_test_job
     admin/create_test_error_job
     admin/gc

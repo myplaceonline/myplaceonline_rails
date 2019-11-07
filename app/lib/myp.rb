@@ -3719,5 +3719,15 @@ module Myp
     str
   end
   
+  def self.crontab
+    Rails.logger.info{"Myp.crontab started"}
+
+    Rails.logger.info{"Myp.crontab CalendarItemReminder.ensure_pending_all_users started"}
+    CalendarItemReminder.ensure_pending_all_users
+    Rails.logger.info{"Myp.crontab CalendarItemReminder.ensure_pending_all_users finished"}
+
+    Rails.logger.info{"Myp.crontab finished"}
+  end
+  
   Rails.logger.info{"Myp static initialization ended"}
 end

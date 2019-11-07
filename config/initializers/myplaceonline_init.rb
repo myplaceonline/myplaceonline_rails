@@ -32,7 +32,7 @@ end
 
 if Myp.is_web_server? || Rails.env.test?
   if Myp.database_exists? && !Rails.env.test?
-    CalendarItemReminder.ensure_pending_all_users
+    Myp.crontab
   end
   
   ActiveSupport.on_load(:after_initialize) do
