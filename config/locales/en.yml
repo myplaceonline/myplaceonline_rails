@@ -91,6 +91,7 @@ en:
       credit_cards: "Credit Cards"
       credit_reports: "Credit Reports"
       credit_scores: "Credit Scores"
+      crontabs: "Crontabs"
       date_locations: "Date Locations"
       dating_profiles: "Dating Profiles"
       dental_insurances: "Dental Insurances"
@@ -4407,3 +4408,11 @@ en:
     hospitals:
       location: "Location"
       health_insurance: "Health Insurance"
+    crontabs:
+      crontab_name: "Name"
+      dblocker: "DB Lock ID"
+      run_class: "Run class"
+      run_method: "Run method"
+      minutes: "Minutes"
+      last_success: "Last Success"
+      run_data: "Run Data"

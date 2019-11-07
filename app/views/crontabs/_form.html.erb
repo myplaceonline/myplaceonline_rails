@@ -1,0 +1,76 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :crontab_name,
+    value: obj.crontab_name,
+    placeholder: "myplaceonline.crontabs.crontab_name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_NUMBER,
+    name: :dblocker,
+    value: obj.dblocker,
+    placeholder: "myplaceonline.crontabs.dblocker"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :run_class,
+    value: obj.run_class,
+    placeholder: "myplaceonline.crontabs.run_class",
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :run_method,
+    value: obj.run_method,
+    placeholder: "myplaceonline.crontabs.run_method",
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATETIME,
+    name: :last_success,
+    value: obj.last_success,
+    placeholder: "myplaceonline.crontabs.last_success"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :minutes,
+    value: obj.minutes,
+    placeholder: "myplaceonline.crontabs.minutes",
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :run_data,
+    value: obj.run_data,
+    placeholder: "myplaceonline.crontabs.run_data",
+    collapsed: obj.run_data.blank?,
+  )
+%>

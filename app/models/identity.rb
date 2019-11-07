@@ -319,6 +319,7 @@ class Identity < ApplicationRecord
   has_many :notifications, :dependent => :destroy
   has_many :notification_preferences, :dependent => :destroy
   has_many :hospitals, :dependent => :destroy
+  has_many :crontabs, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 
@@ -581,6 +582,7 @@ class Identity < ApplicationRecord
       :notifications => notifications.to_a.map{|x| x.as_json},
       :notification_preferences => notification_preferences.to_a.map{|x| x.as_json},
       :hospitals => hospitals.to_a.map{|x| x.as_json},
+      :crontabs => crontabs.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json},
     })
   end

@@ -750,7 +750,27 @@ class MyplaceonlineController < ApplicationController
   end
   
   def allow_add
-    !User.current_user.guest? && !MyplaceonlineExecutionContext.offline?
+    if !User.current_user.guest? && !MyplaceonlineExecutionContext.offline?
+      if category.nil?
+        true
+      else
+        if category.user_type_mask.nil?
+          true
+        else
+          if current_user.user_type.nil?
+            false
+          else
+            if (current_user.user_type & category.user_type_mask) == category.user_type_mask
+              true
+            else
+              false
+            end
+          end
+        end
+      end
+    else
+      false
+    end
   end
   
   def allow_edit

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191021042446) do
+ActiveRecord::Schema.define(version: 2019_11_07_034924) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1514,6 +1514,25 @@ ActiveRecord::Schema.define(version: 20191021042446) do
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_credit_scores_on_identity_id"
+  end
+
+  create_table "crontabs", force: :cascade do |t|
+    t.string "crontab_name"
+    t.integer "dblocker"
+    t.string "run_class"
+    t.string "run_method"
+    t.string "minutes"
+    t.datetime "last_success"
+    t.string "run_data"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_crontabs_on_identity_id"
   end
 
   create_table "date_locations", id: :serial, force: :cascade do |t|
@@ -7674,6 +7693,7 @@ ActiveRecord::Schema.define(version: 20191021042446) do
   add_foreign_key "credit_score_files", "identities"
   add_foreign_key "credit_score_files", "identity_files"
   add_foreign_key "credit_scores", "identities", name: "credit_scores_identity_id_fk"
+  add_foreign_key "crontabs", "identities"
   add_foreign_key "date_locations", "identities", name: "date_locations_identity_id_fk"
   add_foreign_key "date_locations", "locations", name: "date_locations_location_id_fk"
   add_foreign_key "dating_profile_files", "dating_profiles"
