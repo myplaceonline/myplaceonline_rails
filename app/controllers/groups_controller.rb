@@ -78,6 +78,7 @@ class GroupsController < MyplaceonlineController
       :id,
       :group_name,
       :notes,
+      :mailing_list,
       group_contacts_attributes: [
         :id,
         :_destroy,

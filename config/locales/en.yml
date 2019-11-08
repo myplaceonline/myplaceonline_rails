@@ -2522,6 +2522,7 @@ en:
       group_reference: "Group Reference"
       group_references: "Group References"
       add_group_reference: "Add Group Reference"
+      add_group_references: "Add Group References"
       delete_group_reference: "Delete Group Reference"
       missing: "Missing"
       contact: "Contact"
@@ -2529,6 +2530,7 @@ en:
       empty: "Empty"
       empty_intro: "Click Empty to clear %{count} contacts from this group."
       emptied: "Group Emptied"
+      mailing_list: "Mailing List"
     terms: !xml |
       <![CDATA[
       

@@ -2,6 +2,15 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :mailing_list,
+    value: obj.mailing_list,
+    placeholder: "myplaceonline.groups.mailing_list"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,

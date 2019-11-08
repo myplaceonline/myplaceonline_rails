@@ -11,15 +11,6 @@
 <%=
   input_field(
     form: f,
-    type: Myp::FIELD_NUMBER,
-    name: :dblocker,
-    value: obj.dblocker,
-    placeholder: "myplaceonline.crontabs.dblocker"
-  )
-%>
-<%=
-  input_field(
-    form: f,
     type: Myp::FIELD_TEXT,
     name: :run_class,
     value: obj.run_class,
@@ -38,19 +29,19 @@
 <%=
   input_field(
     form: f,
-    type: Myp::FIELD_DATETIME,
-    name: :last_success,
-    value: obj.last_success,
-    placeholder: "myplaceonline.crontabs.last_success"
+    type: Myp::FIELD_TEXT,
+    name: :minutes,
+    value: obj.minutes,
+    placeholder: "myplaceonline.crontabs.minutes",
   )
 %>
 <%=
   input_field(
     form: f,
-    type: Myp::FIELD_TEXT,
-    name: :minutes,
-    value: obj.minutes,
-    placeholder: "myplaceonline.crontabs.minutes",
+    type: Myp::FIELD_NUMBER,
+    name: :dblocker,
+    value: obj.dblocker,
+    placeholder: "myplaceonline.crontabs.dblocker"
   )
 %>
 <%=
@@ -72,5 +63,14 @@
     value: obj.run_data,
     placeholder: "myplaceonline.crontabs.run_data",
     collapsed: obj.run_data.blank?,
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATETIME,
+    name: :last_success,
+    value: obj.last_success,
+    placeholder: "myplaceonline.crontabs.last_success"
   )
 %>
