@@ -374,4 +374,17 @@
   %>
     <%= render partial: "website_domain_properties/form", locals: { obj: childproperty || WebsiteDomainProperty.build, edit: edit, autofocus: false, f: child_fields } %>
   <% end %>
+  <%=
+    render partial: "myplaceonline/select_or_create", locals: {
+      f: f,
+      name: :mailing_list,
+      existingobj: obj.mailing_list,
+      heading: t("myplaceonline.website_domains.mailing_list"),
+      objform: "groups/form",
+      existingobjurl: "group_path",
+      searchurl: "/groups.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
 </div>

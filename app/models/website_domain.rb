@@ -32,6 +32,8 @@ class WebsiteDomain < ApplicationRecord
 
   child_properties(name: :website_domain_properties, sort: "property_key ASC")
 
+  child_property(name: :mailing_list, model: Group)
+  
   def display
     domain_name
   end

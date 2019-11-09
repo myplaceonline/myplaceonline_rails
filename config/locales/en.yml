@@ -582,6 +582,7 @@ en:
       set_cleared: "Set Cleared"
       advanced: "Advanced"
       list: "List %{category}"
+      invalid_email: "Invalid email"
     site_contacts:
       name: "Name"
       email: "Email"
@@ -3122,6 +3123,7 @@ en:
       add_property: "Add Property"
       delete_property: "Delete Property"
       allow_public: "Allow Public Access without Invite Code"
+      mailing_list: "Mailing List"
     website_domain_myplets:
       title: "Title"
       border_type: "Border Type"
@@ -4168,6 +4170,8 @@ en:
     website_domain_properties:
       property_key: "Key"
       property_value: "Value"
+      delete_property: "Delete Property"
+      add_property: "Add Property"
     entered_invite_codes:
       code: "Code"
       not_valid: "is not valid"
@@ -4421,3 +4425,9 @@ en:
       minutes: "Every X Minutes"
       last_success: "Last Success"
       run_data: "Run Data"
+    subscribe:
+      title: "Subscribe"
+      email_not_specified: "Email not specified"
+      mailing_list_not_configured: "No mailing list for this website"
+      already_subscribed: "Already subscribed"
+      successfully_subscribed: "Successfully subscribed"

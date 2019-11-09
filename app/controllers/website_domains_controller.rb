@@ -76,6 +76,7 @@ class WebsiteDomainsController < MyplaceonlineController
         default_header_icon_identity_file_attributes: FilesController.param_names,
         website_domain_myplets_attributes: WebsiteDomainMyplet.params,
         website_domain_properties_attributes: WebsiteDomainProperty.params,
+        mailing_list_attributes: GroupsController.param_names,
       )
     end
 end

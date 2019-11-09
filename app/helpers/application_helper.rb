@@ -1866,7 +1866,7 @@ module ApplicationHelper
           elsif options[:type] == Myp::FIELD_HIDDEN
             result = Myp.appendstr(
               result,
-              hidden_field_tag(name, value: options[:value])
+              hidden_field_tag(name, options[:value])
             )
           else
             result = Myp.appendstr(
