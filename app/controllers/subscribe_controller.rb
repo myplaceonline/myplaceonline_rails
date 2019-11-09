@@ -20,7 +20,7 @@ class SubscribeController < ApplicationController
         if !domain.mailing_list.nil?
           if !domain.mailing_list.has_email?(@email)
             MyplaceonlineExecutionContext.do_full_context(domain.identity.user, domain.identity) do
-              GroupContact.create!(
+              domain.mailing_list.group_contacts << GroupContact.create!(
                 group: domain.mailing_list,
                 contact: Contact.new(
                   contact_identity: Identity.new(
