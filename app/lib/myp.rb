@@ -2531,7 +2531,7 @@ module Myp
             if display_category_prefix
               final_display = "#{prefix_text}#{category.human_title_singular}: #{search_result.display}"
             else
-              final_display = prefix_text + search_result.display
+              final_display = "#{prefix_text}#{search_result.display}"
             end
             if final_display.length > 100
               final_display = final_display[0..97] + "..."
