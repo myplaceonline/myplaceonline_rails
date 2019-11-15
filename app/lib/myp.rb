@@ -2529,7 +2529,7 @@ module Myp
           end
           if !category.nil?
             if display_category_prefix
-              final_display = prefix_text + category.human_title_singular + ": " + search_result.display
+              final_display = "#{prefix_text}#{category.human_title_singular}: #{search_result.display}"
             else
               final_display = prefix_text + search_result.display
             end
