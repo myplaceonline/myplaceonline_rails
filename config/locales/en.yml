@@ -297,6 +297,7 @@ en:
       vaccines: "Vaccines"
       vehicle_registrations: "Vehicle Registrations"
       vehicle_services: "Vehicle Services"
+      vehicle_washes: "Vehicle Washes"
       vehicles: "Vehicles"
       videos: "Videos"
       vitamins: "Vitamins"
@@ -1137,6 +1138,7 @@ en:
       delete_picture: "Delete Picture"
       looked_up_postal_code: "Found %{sub_region2}, %{sub_region1} from %{postal_code}"
       bathroom_code: "Bathroom Code"
+      allhours: "24 Hours"
     activities:
       name: "Name"
     apartments:
@@ -4431,3 +4433,6 @@ en:
       mailing_list_not_configured: "No mailing list for this website"
       already_subscribed: "Already subscribed"
       successfully_subscribed: "Successfully subscribed"
+    vehicle_washes:
+      location: "Location"
+      rating: "Rating"

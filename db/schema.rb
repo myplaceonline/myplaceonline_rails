@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_11_015138) do
+ActiveRecord::Schema.define(version: 2019_11_16_175833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3889,6 +3889,7 @@ ActiveRecord::Schema.define(version: 2019_11_11_015138) do
     t.integer "time_from_home"
     t.boolean "is_public"
     t.text "bathroom_code"
+    t.boolean "allhours"
     t.index ["identity_id"], name: "index_locations_on_identity_id"
     t.index ["website_id"], name: "index_locations_on_website_id"
   end
@@ -6995,6 +6996,20 @@ ActiveRecord::Schema.define(version: 2019_11_11_015138) do
     t.index ["warranty_id"], name: "index_vehicle_warranties_on_warranty_id"
   end
 
+  create_table "vehicle_washes", force: :cascade do |t|
+    t.bigint "location_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_vehicle_washes_on_identity_id"
+    t.index ["location_id"], name: "index_vehicle_washes_on_location_id"
+  end
+
   create_table "vehicles", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.text "notes"
@@ -8461,6 +8476,8 @@ ActiveRecord::Schema.define(version: 2019_11_11_015138) do
   add_foreign_key "vehicle_warranties", "identities", name: "vehicle_warranties_identity_id_fk"
   add_foreign_key "vehicle_warranties", "vehicles", name: "vehicle_warranties_vehicle_id_fk"
   add_foreign_key "vehicle_warranties", "warranties", name: "vehicle_warranties_warranty_id_fk"
+  add_foreign_key "vehicle_washes", "identities"
+  add_foreign_key "vehicle_washes", "locations"
   add_foreign_key "vehicles", "identities", name: "vehicles_identity_id_fk"
   add_foreign_key "vehicles", "recreational_vehicles", name: "vehicles_recreational_vehicle_id_fk"
   add_foreign_key "video_files", "identities"
