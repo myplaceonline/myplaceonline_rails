@@ -19,4 +19,8 @@ class VehicleWash < ApplicationRecord
   def self.category_split_button_icon
     "navigation"
   end
+
+  def self.skip_check_attributes
+    ["rvs"]
+  end
 end

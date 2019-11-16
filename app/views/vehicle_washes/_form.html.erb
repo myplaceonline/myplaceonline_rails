@@ -22,3 +22,12 @@
     select_options: Myp::RATINGS,
   )
 %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :rvs,
+    value: obj.rvs,
+    placeholder: "myplaceonline.vehicle_washes.rvs"
+  )
+%>

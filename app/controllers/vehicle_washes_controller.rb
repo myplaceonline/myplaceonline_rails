@@ -15,6 +15,7 @@ class VehicleWashesController < MyplaceonlineController
     def obj_params
       params.require(:vehicle_wash).permit(
         :rating,
+        :rvs,
         location_attributes: LocationsController.param_names
       )
     end
@@ -39,5 +40,11 @@ class VehicleWashesController < MyplaceonlineController
 
     def show_map?
       true
+    end
+
+    def simple_index_filters
+      [
+        { name: :rvs, column: :rvs }
+      ]
     end
 end
