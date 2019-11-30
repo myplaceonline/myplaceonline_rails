@@ -445,7 +445,11 @@ class CalendarItemReminder < ApplicationRecord
   end
   
   def threshold
-    self.calendar_item.calendar_item_time - self.threshold_in_seconds.seconds
+    if !self.calendar_item.nil? && !self.calendar_item.calendar_item_time.nil? && !self.threshold_in_seconds.nil?
+      self.calendar_item.calendar_item_time - self.threshold_in_seconds.seconds
+    else
+      nil
+    end
   end
   
   def calendar_item_reminder_pendings_unarchived

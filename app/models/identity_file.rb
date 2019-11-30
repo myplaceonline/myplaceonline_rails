@@ -497,7 +497,7 @@ class IdentityFile < ApplicationRecord
     if pics.nil?
       nil
     else
-      pics.delete_if{|x| x.urlname.blank? }
+      pics.to_a.delete_if{|x| x.urlname.blank? }
     end
   end
 end
