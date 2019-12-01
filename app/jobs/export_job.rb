@@ -80,47 +80,51 @@ class ExportJob < ApplicationJob
       uploads_path = IdentityFile.uploads_path
 
       Rails.logger.debug{"ExportJob uploads_path: #{uploads_path}"}
-      append_message(export, "Exporting website. This may take hours or days. Refresh this page to check the status.")
+      append_message(export, I18n.t("myplaceonline.exports.export_started"))
       
       export.identity.user.identities.each do |i|
-        website_domain_name = clean_filename(i.website_domain.display)
-        domain_dir = dir_path.join(website_domain_name)
-        if !Dir.exists?(domain_dir.to_s)
-          Dir.mkdir(domain_dir.to_s)
-        end
-        
-        identity_name = clean_filename(i.display)
-        identity_dir = domain_dir.join(identity_name)
-        if Dir.exists?(identity_dir.to_s)
-          identity_dir = domain_dir.join(i.id.to_s)
-          Dir.mkdir(identity_dir.to_s)
+        if !i.website_domain.display.blank?
+          website_domain_name = clean_filename(i.website_domain.display)
+          domain_dir = dir_path.join(website_domain_name)
+          if !Dir.exists?(domain_dir.to_s)
+            Dir.mkdir(domain_dir.to_s)
+          end
+          
+          identity_name = clean_filename(i.display)
+          identity_dir = domain_dir.join(identity_name)
+          if Dir.exists?(identity_dir.to_s)
+            identity_dir = domain_dir.join(i.id.to_s)
+            Dir.mkdir(identity_dir.to_s)
+          else
+            Dir.mkdir(identity_dir.to_s)
+          end
+          
+          urlprefix = Rails.application.routes.url_helpers.root_url(
+            protocol: Rails.configuration.default_url_options[:protocol],
+            host: Rails.env.production? ? i.website_domain.main_domain : Rails.configuration.default_url_options[:host],
+            port: Rails.configuration.default_url_options[:port]
+          ).chomp("/")
+          
+          Rails.logger.debug{"ExportJob scraping identity: #{i.id}, domain: #{urlprefix}"}
+          
+          processed_links = { "/": true }
+          process = [
+            {
+              dir: identity_dir.to_s,
+              link: "/",
+              path: "",
+            }
+          ]
+          while process.length > 0
+            to_scrape = process.pop
+            scrape(export, urlprefix, to_scrape[:dir], to_scrape[:link], i, processed_links, to_scrape[:path], process)
+          end
         else
-          Dir.mkdir(identity_dir.to_s)
-        end
-        
-        urlprefix = Rails.application.routes.url_helpers.root_url(
-          protocol: Rails.configuration.default_url_options[:protocol],
-          host: Rails.env.production? ? i.website_domain.main_domain : Rails.configuration.default_url_options[:host],
-          port: Rails.configuration.default_url_options[:port]
-        ).chomp("/")
-        
-        Rails.logger.debug{"ExportJob scraping identity: #{i.id}, domain: #{urlprefix}"}
-        
-        processed_links = { "/": true }
-        process = [
-          {
-            dir: identity_dir.to_s,
-            link: "/",
-            path: "",
-          }
-        ]
-        while process.length > 0
-          to_scrape = process.pop
-          scrape(export, urlprefix, to_scrape[:dir], to_scrape[:link], i, processed_links, to_scrape[:path], process)
+          Myp.warn("Blank website domain name: #{i} ; #{i.website_domain}")
         end
       end
       
-      append_message(export, "Export complete. Compressing files...")
+      append_message(export, I18n.t("myplaceonline.exports.export_complete"))
       
       output_name = "export_#{User.current_user.time_now.strftime("%Y%m%dT%H%M%S")}_"
       
@@ -138,7 +142,7 @@ class ExportJob < ApplicationJob
       
       output_path = uploads_path + output_name
 
-      Rails.logger.debug{"ExportJob output_path: #{output_path}"}
+      Rails.logger.debug{"ExportJob output_path: #{output_path} with #{dir}"}
       
       case export.compression_type
       when Export::COMPRESSION_TYPE_ZIP
@@ -169,7 +173,7 @@ class ExportJob < ApplicationJob
           "--force-mdc --cipher-algo AES256 --s2k-digest-algo #{OpenSSL::Digest::SHA512.new.name} " +
           "-o #{new_output_path} --symmetric #{output_path}"
         
-        append_message(export, "Compression complete. Encrypting files...")
+        append_message(export, I18n.t("myplaceonline.exports.compression_complete"))
         
         stdout = execute_command(command_line: command, current_directory: dir, input: export.security_token.password)
         
@@ -178,7 +182,7 @@ class ExportJob < ApplicationJob
         # Delete the original file
         File.delete(output_path)
         
-        append_message(export, "Encryption complete. Use the free [gpg](https://gnupg.org/download/index.html) program to decrypt: gpg --output #{output_name.gsub(/_/, "\\_")} --decrypt #{output_name.gsub(/_/, "\\_")}.gpg")
+        append_message(export, I18n.t("myplaceonline.exports.encryption_complete", file: output_name.gsub(/_/, "\\_")))
 
         output_path = new_output_path
         output_name = output_name + ".gpg"
@@ -191,7 +195,7 @@ class ExportJob < ApplicationJob
         content_type: IdentityFile.infer_content_type(path: output_path),
       }
       newfile = IdentityFile.create_for_path!(file_hash: file_hash)
-      append_message(export, "Created downloadable file: <a href=\"#{newfile.download_name_path(url: true)}\" class=\"externallink\" data-ajax=\"false\">#{output_name.gsub(/_/, "\\_")}</a>")
+      append_message(export, I18n.t("myplaceonline.exports.created_file", link: newfile.download_name_path(url: true), name: output_name.gsub(/_/, "\\_")))
       newwrappedfile = ExportFile.create!(
         identity_file: newfile
       )

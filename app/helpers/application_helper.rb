@@ -1707,7 +1707,7 @@ module ApplicationHelper
           })
         )
         
-        if options[:collapsible]
+        if options[:collapsible] && !result.nil?
           result = "<div data-role=\"collapsible\" data-collapsed=\"#{options[:collapsed]}\"><h4>#{options[:placeholder]}</h4>".html_safe + result.html_safe + "</div>".html_safe
         end
       else

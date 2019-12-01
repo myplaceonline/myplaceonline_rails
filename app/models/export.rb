@@ -61,7 +61,7 @@ class Export < ApplicationRecord
   def start
     if self.export_status != Export::EXPORT_STATUS_WAITING_FOR_WORKER && self.export_status != Export::EXPORT_STATUS_EXPORTING
       self.export_status = Export::EXPORT_STATUS_WAITING_FOR_WORKER
-      self.export_progress = "* _#{User.current_user.time_now}_: Waiting for worker"
+      self.export_progress = "* _#{User.current_user.time_now}_: #{I18n.t("myplaceonline.exports.progress_waiting_for_worker")}"
       self.save!
       
       # Always perform async because sync execution of curl doesn't work

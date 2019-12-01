@@ -50,7 +50,13 @@ class ExportsController < MyplaceonlineController
   
   def after_create_redirect
     @obj.start
-    super
+    
+    respond_to do |format|
+      format.html {
+        redirect_to(export_export_path(@obj))
+      }
+      format.js { render :saved_export }
+    end
   end
   
   protected

@@ -1783,7 +1783,7 @@ class MyplaceonlineController < ApplicationController
     end
     
     def self.increment_visit_count(obj)
-      if obj.respond_to?("visit_count")
+      if obj.respond_to?("visit_count") && !MyplaceonlineExecutionContext.offline?
         if obj.visit_count?
           obj.update_column(:visit_count, obj.visit_count + 1)
         else

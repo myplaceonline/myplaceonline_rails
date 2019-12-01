@@ -341,6 +341,15 @@ class User < ApplicationRecord
     self.domain_identity.send_sms(body: body)
   end
   
+  def update_tracked_fields!(request)
+    ::Rails.logger.debug{"User.update_tracked_fields! #{self.id} offline: #{MyplaceonlineExecutionContext.offline?}"}
+    if !MyplaceonlineExecutionContext.offline?
+      super(request)
+    else
+      nil
+    end
+  end
+  
   protected
     def confirmation_required?
       ::Rails.env.production?

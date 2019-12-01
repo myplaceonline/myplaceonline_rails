@@ -47,6 +47,18 @@ module Myplaceonline
         
         Rails.logger.debug{"application.rb parsed_query_string: #{parsed_query_string}"}
         
+        user_agent = env["HTTP_USER_AGENT"]
+        if !user_agent.blank?
+          user_agent = user_agent.downcase
+          if user_agent.include?("myplaceonline bot (read-only)")
+            MyplaceonlineExecutionContext.offline = true
+          end
+        end
+        
+        if parsed_query_string["display_offline"].is_true?
+          MyplaceonlineExecutionContext.offline = true
+        end
+        
         if !security_token.blank?
           
           Rails.logger.debug{"application.rb call security_token: #{security_token}"}
@@ -160,6 +172,7 @@ module Myplaceonline
           env["rack.session.options"][:domain] = DynamicCookieOptions.cookie_domain
           
           if parsed_query_string["current_identity_id"] != "-1"
+            
             if !parsed_query_string["current_identity_id"].blank?
               cii = parsed_query_string["current_identity_id"].to_i
               user = env["warden"].user
@@ -182,18 +195,6 @@ module Myplaceonline
               end
             end
 
-            user_agent = env["HTTP_USER_AGENT"]
-            if !user_agent.blank?
-              user_agent = user_agent.downcase
-              if user_agent.include?("myplaceonline bot (read-only)")
-                MyplaceonlineExecutionContext.offline = true
-              end
-            end
-            
-            if parsed_query_string["display_offline"].is_true?
-              MyplaceonlineExecutionContext.offline = true
-            end
-            
             #Rails.logger.debug{"MyplaceonlineRack.call setting context host: #{MyplaceonlineExecutionContext.host}, query_string: #{MyplaceonlineExecutionContext.query_string}, cookie_hash: #{Myp.debug_print(MyplaceonlineExecutionContext.cookie_hash)}"}
             
             @app.call(env)

@@ -675,6 +675,7 @@ en:
       decrypt_id: "Encrypted Value Identifier"
       decrypt_password: "Password"
       dovecot_password: "Generate Dovecot Password"
+      clear_cookies: "Clear Cookies"
     help:
       title: "Help"
       features: "Features"
@@ -1100,7 +1101,7 @@ en:
       random_feed: "Random Feed"
       items_hidden: "Note: %{count} read items have been hidden. Click the %{items_link} button for all items."
       all_items: "All Items"
-      new_notify: "Notify for New Items"
+      new_notify: "Email Me for New Items"
       notify_new_items_subject: "New Feed Items for %{name}"
       raw_feed: "Raw Feed"
       password: "Password"
@@ -4169,6 +4170,7 @@ en:
       accusations: "Public Accusations Link"
       accusations: "Accusations"
       accusations_intro: "Below are the accusations against you:"
+      accusations_link: "Accusations"
     website_domain_properties:
       property_key: "Key"
       property_value: "Value"
@@ -4269,6 +4271,12 @@ en:
         tar_gz: ".tar.gz"
       encrypt_output: "Encrypt"
       finished_subject: "Export Finished"
+      progress_waiting_for_worker: "Waiting for worker. Refresh to check status."
+      export_started: "Exporting website. This may take hours or days. Refresh this page to check the status. You'll receive an email when it's finished."
+      export_complete: "Export complete. Compressing files..."
+      compression_complete: "Compression complete. Encrypting files..."
+      encryption_complete: "Encryption complete. Use the free [gpg](https://gnupg.org/download/index.html) program to decrypt: gpg --output %{file} --decrypt %{file}.gpg"
+      created_file: "Created downloadable file: <a href=\"%{link}\" class=\"externallink\" data-ajax=\"false\">%{name}</a>"
     wallets:
       wallet_name: "Wallet Name"
       currency_type: "Currency"

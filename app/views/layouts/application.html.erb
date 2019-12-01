@@ -163,7 +163,7 @@
           <% if !MyplaceonlineExecutionContext.offline? %>
             <a href="#menuPopup<%= request.uuid %>" data-icon="bars" class="ui-btn-right" data-rel="popup" data-iconpos="notext" title="<%= t("myplaceonline.menu.name") %>" id="headerMenuPopup"><%= t("myplaceonline.menu.name") %></a>
           <% else %>
-            <a href="<%= info_path %>" data-icon="info" class="ui-btn-right" data-iconpos="notext" title="<%= t("myplaceonline.info.title") %>"><%= t("myplaceonline.info.title") %></a>
+            <a href="<%= main_app.info_path %>" data-icon="info" class="ui-btn-right" data-iconpos="notext" title="<%= t("myplaceonline.info.title") %>"><%= t("myplaceonline.info.title") %></a>
           <% end %>
         </div>
       <% end %>

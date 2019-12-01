@@ -1175,22 +1175,24 @@ module Myp
   end
   
   def self.visit(user, categoryName)
-    category = Myp.all_categories[categoryName]
-    
-    if category.nil?
-      raise "Could not find category " + categoryName
+    if !MyplaceonlineExecutionContext.offline?
+      category = Myp.all_categories[categoryName]
+      
+      if category.nil?
+        raise "Could not find category " + categoryName
+      end
+      
+      cpa = CategoryPointsAmount.find_or_create_by(
+        identity: user.current_identity,
+        category: category
+      )
+      if cpa.visits.nil?
+        cpa.visits = 0
+      end
+      cpa.visits += 1
+      cpa.last_visit = DateTime.now
+      cpa.save
     end
-    
-    cpa = CategoryPointsAmount.find_or_create_by(
-      identity: user.current_identity,
-      category: category
-    )
-    if cpa.visits.nil?
-      cpa.visits = 0
-    end
-    cpa.visits += 1
-    cpa.last_visit = DateTime.now
-    cpa.save
   end
   
   def self.add_point(user, categoryName, session = nil)
