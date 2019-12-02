@@ -1995,13 +1995,17 @@ module ApplicationHelper
       end
     end
     
-    if !options[:wrapper_tag].nil?
-      result = content_tag(options[:wrapper_tag], result.html_safe)
-    end
-    
-    result = content_tag(:div, result.html_safe, options[:container_attributes])
+    if !result.nil?
+      if !options[:wrapper_tag].nil?
+        result = content_tag(options[:wrapper_tag], result.html_safe)
+      end
+      
+      result = content_tag(:div, result.html_safe, options[:container_attributes])
 
-    result.html_safe
+      result.html_safe
+    else
+      nil
+    end
   end
   
   def myp_number_field_tag(name, placeholder, value, autofocus = false, input_classes = nil, step = nil, options = {})

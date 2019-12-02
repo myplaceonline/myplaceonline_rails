@@ -53,7 +53,7 @@ class Users::SessionsController < Devise::SessionsController
     
     @redirect = nil
     if params.has_key?(:redirect)
-      @redirect = URI.parse(URI.decode(params[:redirect])).to_s
+      @redirect = URI.parse(URI.decode(params[:redirect].scrub)).to_s
     end
     
     if !session[:password].blank? && current_user.valid_password?(session[:password])

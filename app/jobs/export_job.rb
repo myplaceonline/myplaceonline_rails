@@ -229,11 +229,14 @@ class ExportJob < ApplicationJob
   end
   
   def scrape(export, urlprefix, dir, link, identity, processed_links, referer, process)
+    
     path = "#{urlprefix}#{link}?security_token=#{export.security_token.security_token_value}&temp_identity_id=#{identity.id}"
     
     if !Rails.env.production?
       path = "#{path}&emulate_host=#{identity.website_domain.main_domain}"
     end
+    
+    Rails.logger.debug{"ExportJob scrape #{export}, #{urlprefix}, #{dir}, #{link}, #{referer}, #{path}"}
     
     target_dir = Pathname.new(dir)
     
@@ -310,7 +313,17 @@ class ExportJob < ApplicationJob
       
       mime_type = FileMagic.new(FileMagic::MAGIC_MIME).file(outfile, true)
       
-      if mime_type == "text/html"
+      is_file_view = false
+      if link.start_with?("/files/") && !link.end_with?("/")
+        
+        # If they upload an .html file, we don't want to look for links
+        # inside of it to process.
+        
+        Rails.logger.debug{"ExportJob scrape setting is_file_view"}
+        is_file_view = true
+      end
+      
+      if mime_type == "text/html" && !is_file_view
         data = File.read(outfile)
 
         changed = false

@@ -517,7 +517,11 @@ class ApiController < ApplicationController
   end
   
   def newitem
-    redirect_to params[:newitemcategory] + "?prefill=" + params[:q]
+    if !current_user.guest?
+      redirect_to params[:newitemcategory] + "?prefill=" + params[:q]
+    else
+      head 403
+    end
   end
   
   def postal_code_search

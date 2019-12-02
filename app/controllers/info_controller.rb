@@ -101,7 +101,7 @@ class InfoController < ApplicationController
       if body.nil?
         body = ""
       end
-      @obj.body = body.strip
+      @obj.body = body.strip.scrub
       
       if @obj.save
         email_prefix = "#{@obj.name} (#{@obj.email}) submitted the contact form:\n\n"
