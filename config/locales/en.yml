@@ -1105,6 +1105,7 @@ en:
       notify_new_items_subject: "New Feed Items for %{name}"
       raw_feed: "Raw Feed"
       password: "Password"
+      disabled: "Disabled"
     feed_items:
       feed_title: "Title"
       feed_link: "Link"

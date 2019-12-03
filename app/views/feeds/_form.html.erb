@@ -20,6 +20,15 @@
   )
 %>
 <%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :disabled,
+    value: obj.disabled,
+    placeholder: "myplaceonline.feeds.disabled"
+  )
+%>
+<%=
   render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :password,

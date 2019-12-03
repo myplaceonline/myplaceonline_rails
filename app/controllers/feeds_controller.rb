@@ -18,6 +18,7 @@ class FeedsController < MyplaceonlineController
       :name,
       :url,
       :new_notify,
+      :disabled,
       password_attributes: PasswordsController.param_names
     ]
   end

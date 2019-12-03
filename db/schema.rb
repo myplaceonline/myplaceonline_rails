@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_30_225759) do
+ActiveRecord::Schema.define(version: 2019_12_03_073543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2608,6 +2608,7 @@ ActiveRecord::Schema.define(version: 2019_11_30_225759) do
     t.boolean "new_notify"
     t.boolean "is_public"
     t.bigint "password_id"
+    t.boolean "disabled"
     t.index ["identity_id"], name: "index_feeds_on_identity_id"
     t.index ["password_id"], name: "index_feeds_on_password_id"
   end
