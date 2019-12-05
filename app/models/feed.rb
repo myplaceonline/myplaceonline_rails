@@ -4,6 +4,7 @@ require 'open_uri_redirections'
 require 'rss'
 require 'awesome_print'
 
+# select fi.feed_id, f.url, count(*) as cnt from feed_items fi inner join feeds f on fi.feed_id = f.id group by fi.feed_id, f.url order by cnt desc limit 10;
 class Feed < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include ActionView::Helpers

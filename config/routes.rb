@@ -212,6 +212,9 @@ Rails.application.routes.draw do
       { instance: false, link: "total_credit" },
       { instance: false, link: "listcashback" },
     ],
+    crontabs: [
+      { instance: false, link: "maxdblockid" },
+    ],
     diets: [
       { instance: true, link: "evaluate" },
       { instance: true, link: "consume" },

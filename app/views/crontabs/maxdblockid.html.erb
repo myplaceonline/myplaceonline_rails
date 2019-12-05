@@ -1,0 +1,19 @@
+<% content_for :heading do -%><%= t("myplaceonline.crontabs.maxdblockid") %><% end -%>
+
+<h1><%= t("myplaceonline.crontabs.maxdblockid") %></h1>
+
+<%= flashes! %>
+
+<%= data_row(heading: t("myplaceonline.crontabs.maxdblockid"), prefix_heading: true, content: @maxid, wrap: false) %>
+
+<%=
+  render(partial: "shared/footer", locals: {
+    items: [
+      {
+        title: I18n.t("myplaceonline.general.back"),
+        link: controller.index_path,
+        icon: "back"
+      },
+    ]
+  })
+%>

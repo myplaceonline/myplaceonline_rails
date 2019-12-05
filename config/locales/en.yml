@@ -4436,6 +4436,7 @@ en:
       minutes: "Every X Minutes"
       last_success: "Last Success"
       run_data: "Run Data"
+      maxdblockid: "Max DB Lock ID"
     subscribe:
       title: "Subscribe"
       email_not_specified: "Email not specified"
