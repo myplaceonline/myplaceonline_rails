@@ -48,164 +48,166 @@ class Feed < ApplicationRecord
       
       all_feed_items = feed_items.to_a
       
-      ApplicationRecord.transaction do
-        rss.items.each do |item|
-          #Rails.logger.debug{"Processing RSS item #{ap(item)}"}
-          
-          parsedxml = nil
-          
-          title = nil
-          if title.blank? && item.respond_to?("title")
-            if item.title.respond_to?("content")
-              title = sanitize(item.title.content).strip
-            else
-              title = sanitize(item.title).strip
-            end
-          end
-          
-          feed_link = nil
-          if feed_link.blank? && item.respond_to?("enclosure") && !item.enclosure.nil?
-            feed_link = item.enclosure.url
-          end
-          if feed_link.blank? && item.respond_to?("link")
-            if item.link.respond_to?("href")
-              
-              # If there is more than one link, pick the alternate first
-              if parsedxml.nil?
-                parsedxml = Nokogiri::XML(item.to_s)
-              end
-              
-              alternate_link = parsedxml.root.xpath("/entry/link[@rel='alternate']")
-              if alternate_link.length == 1
-                feed_link = alternate_link[0]["href"]
+      if rss.respond_to?("items") && rss.items.count > 0
+        ApplicationRecord.transaction do
+          rss.items.each do |item|
+            #Rails.logger.debug{"Processing RSS item #{ap(item)}"}
+            
+            parsedxml = nil
+            
+            title = nil
+            if title.blank? && item.respond_to?("title")
+              if item.title.respond_to?("content")
+                title = sanitize(item.title.content).strip
               else
-                feed_link = item.link.href
+                title = sanitize(item.title).strip
               end
-            else
-              feed_link = item.link
             end
-          end
-          if feed_link.blank? && item.respond_to?("feed_link")
-            feed_link = item.feed_link
-          end
-          if feed_link.blank? && item.respond_to?("enclosure") & !item.guid.nil?
-            if !URI.regexp.match(item.guid.content).nil?
-              feed_link = item.guid.content
+            
+            feed_link = nil
+            if feed_link.blank? && item.respond_to?("enclosure") && !item.enclosure.nil?
+              feed_link = item.enclosure.url
             end
-          end
-          
-          date = nil
-          if date.blank? && item.respond_to?("published")
-            if item.published.respond_to?("content")
-              date = item.published.content
-            else
-              date = item.published
+            if feed_link.blank? && item.respond_to?("link")
+              if item.link.respond_to?("href")
+                
+                # If there is more than one link, pick the alternate first
+                if parsedxml.nil?
+                  parsedxml = Nokogiri::XML(item.to_s)
+                end
+                
+                alternate_link = parsedxml.root.xpath("/entry/link[@rel='alternate']")
+                if alternate_link.length == 1
+                  feed_link = alternate_link[0]["href"]
+                else
+                  feed_link = item.link.href
+                end
+              else
+                feed_link = item.link
+              end
             end
-          end
-          if date.blank? && item.respond_to?("pubDate")
-            date = item.pubDate
-          end
-          if date.blank? && item.respond_to?("dc_date")
-            date = item.dc_date
-          end
-          if date.blank? && item.respond_to?("updated")
-            if item.updated.respond_to?("content")
-              date = item.updated.content
-            else
-              date = item.updated
+            if feed_link.blank? && item.respond_to?("feed_link")
+              feed_link = item.feed_link
             end
-          end
-          if date.blank? && item.respond_to?("modified")
-            date = item.modified
-          end
-          if date.blank? && item.respond_to?("expirationDate")
-            date = item.expirationDate
-          end
-          
-          guid = nil
-          if guid.blank? && item.respond_to?("guid") && !item.guid.nil?
-            guid = item.guid.content
-          end
-          if guid.blank? && item.respond_to?("id")
-            if item.id.respond_to?("content")
-              guid = item.id.content
-            else
-              guid = item.id
+            if feed_link.blank? && item.respond_to?("enclosure") & !item.guid.nil?
+              if !URI.regexp.match(item.guid.content).nil?
+                feed_link = item.guid.content
+              end
             end
-          end
-          if guid.blank? && !feed_link.nil?
-            guid = feed_link
-          end
-          if guid.blank? && !date.nil?
-            guid = date.to_s
-          end
+            
+            date = nil
+            if date.blank? && item.respond_to?("published")
+              if item.published.respond_to?("content")
+                date = item.published.content
+              else
+                date = item.published
+              end
+            end
+            if date.blank? && item.respond_to?("pubDate")
+              date = item.pubDate
+            end
+            if date.blank? && item.respond_to?("dc_date")
+              date = item.dc_date
+            end
+            if date.blank? && item.respond_to?("updated")
+              if item.updated.respond_to?("content")
+                date = item.updated.content
+              else
+                date = item.updated
+              end
+            end
+            if date.blank? && item.respond_to?("modified")
+              date = item.modified
+            end
+            if date.blank? && item.respond_to?("expirationDate")
+              date = item.expirationDate
+            end
+            
+            guid = nil
+            if guid.blank? && item.respond_to?("guid") && !item.guid.nil?
+              guid = item.guid.content
+            end
+            if guid.blank? && item.respond_to?("id")
+              if item.id.respond_to?("content")
+                guid = item.id.content
+              else
+                guid = item.id
+              end
+            end
+            if guid.blank? && !feed_link.nil?
+              guid = feed_link
+            end
+            if guid.blank? && !date.nil?
+              guid = date.to_s
+            end
 
-          content = nil
-          if content.blank? && item.respond_to?("content_encoded")
-            content = item.content_encoded
-          end
-          if content.blank? && item.respond_to?("content")
-            if item.content.respond_to?("content")
-              content = item.content.content
-            else
-              content = item.content
+            content = nil
+            if content.blank? && item.respond_to?("content_encoded")
+              content = item.content_encoded
+            end
+            if content.blank? && item.respond_to?("content")
+              if item.content.respond_to?("content")
+                content = item.content.content
+              else
+                content = item.content
+              end
+            end
+            
+            existing_item = all_feed_items.index do |existing_item|
+              (!existing_item.guid.blank? && existing_item.guid == guid) ||
+                  (!existing_item.feed_link.blank? && existing_item.feed_link == feed_link)
+            end
+            
+            #if !existing_item.nil?
+            #  existing_item = all_feed_items[existing_item]
+            #end
+            
+            #Rails.logger.debug{"existing_item: #{existing_item.inspect}"}
+            
+            if existing_item.nil?
+              new_feed_item = FeedItem.create!({
+                feed_id: self.id,
+                feed_link: feed_link,
+                feed_title: title,
+                content: content,
+                publication_date: date,
+                guid: guid,
+              })
+              new_feed_items << new_feed_item
+              new_items += 1
+            #elsif existing_item.publication_date.blank? && !date.blank?
+              #Rails.logger.debug{"Updating publication date to #{date}"}
+              #existing_item.update_column(:publication_date, date)
             end
           end
           
-          existing_item = all_feed_items.index do |existing_item|
-            (!existing_item.guid.blank? && existing_item.guid == guid) ||
-                (!existing_item.feed_link.blank? && existing_item.feed_link == feed_link)
-          end
-          
-          #if !existing_item.nil?
-          #  existing_item = all_feed_items[existing_item]
-          #end
-          
-          #Rails.logger.debug{"existing_item: #{existing_item.inspect}"}
-          
-          if existing_item.nil?
-            new_feed_item = FeedItem.create!({
-              feed_id: self.id,
-              feed_link: feed_link,
-              feed_title: title,
-              content: content,
-              publication_date: date,
-              guid: guid,
-            })
-            new_feed_items << new_feed_item
-            new_items += 1
-          #elsif existing_item.publication_date.blank? && !date.blank?
-            #Rails.logger.debug{"Updating publication date to #{date}"}
-            #existing_item.update_column(:publication_date, date)
-          end
-        end
-        
-        if self.unread_items.nil?
-          total_count = FeedItem.where(feed_id: self.id).count
-          total_unread_count = FeedItem.where(feed_id: self.id, read: nil).count
-          ApplicationRecord.connection.update(
-            "update feeds set total_items = #{total_count}, unread_items = #{total_unread_count} where id = #{self.id}"
-          )
-        elsif new_items > 0
-          ApplicationRecord.connection.update(
-            "update feeds set total_items = total_items + #{new_items}, unread_items = unread_items + #{new_items} where id = #{self.id}"
-          )
-          
-          if self.new_notify
-            
-            markdown = new_feed_items.reverse.map{|x| "[#{x.display}](#{LinkCreator.url("feed_feed_item_read_and_redirect", x.feed, x)}) @ #{x.publication_date}" }.join("\n\n")
-            
-            markdown = "#{markdown}\n\n- - -\n\n#{I18n.t("myplaceonline.category.feeds").singularize}: [#{LinkCreator.url("feed", self)}](#{LinkCreator.url("feed", self)})\n\n#{I18n.t("myplaceonline.feeds.raw_feed").singularize}: [#{url}](#{url})"
-            
-            body = Myp.markdown_to_html(markdown)
-            body_plain = Myp.markdown_for_plain_email(markdown)
-            User.current_user.current_identity.send_email(
-              I18n.t("myplaceonline.feeds.notify_new_items_subject", name: self.display),
-              body,
-              nil,
-              nil,
-              body_plain
+          if self.unread_items.nil?
+            total_count = FeedItem.where(feed_id: self.id).count
+            total_unread_count = FeedItem.where(feed_id: self.id, read: nil).count
+            ApplicationRecord.connection.update(
+              "update feeds set total_items = #{total_count}, unread_items = #{total_unread_count} where id = #{self.id}"
             )
+          elsif new_items > 0
+            ApplicationRecord.connection.update(
+              "update feeds set total_items = total_items + #{new_items}, unread_items = unread_items + #{new_items} where id = #{self.id}"
+            )
+            
+            if self.new_notify
+              
+              markdown = new_feed_items.reverse.map{|x| "[#{x.display}](#{LinkCreator.url("feed_feed_item_read_and_redirect", x.feed, x)}) @ #{x.publication_date}" }.join("\n\n")
+              
+              markdown = "#{markdown}\n\n- - -\n\n#{I18n.t("myplaceonline.category.feeds").singularize}: [#{LinkCreator.url("feed", self)}](#{LinkCreator.url("feed", self)})\n\n#{I18n.t("myplaceonline.feeds.raw_feed").singularize}: [#{url}](#{url})"
+              
+              body = Myp.markdown_to_html(markdown)
+              body_plain = Myp.markdown_for_plain_email(markdown)
+              User.current_user.current_identity.send_email(
+                I18n.t("myplaceonline.feeds.notify_new_items_subject", name: self.display),
+                body,
+                nil,
+                nil,
+                body_plain
+              )
+            end
           end
         end
       end
