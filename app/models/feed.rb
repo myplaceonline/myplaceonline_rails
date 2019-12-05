@@ -4,7 +4,12 @@ require 'open_uri_redirections'
 require 'rss'
 require 'awesome_print'
 
-# select fi.feed_id, f.url, count(*) as cnt from feed_items fi inner join feeds f on fi.feed_id = f.id group by fi.feed_id, f.url order by cnt desc limit 10;
+#
+# Get status of feed reloads per identity:
+# SELECT identity_id, items_total - items_complete - items_error AS remaining, round(((1.0 * items_complete + items_error) / items_total) * 100.0, 2) AS progress, now() at time zone 'utc', * FROM feed_load_statuses ORDER BY progress;
+#
+# SELECT fi.feed_id, f.url, count(*) AS cnt FROM feed_items fi INNER JOIN feeds f ON fi.feed_id = f.id GROUP BY fi.feed_id, f.url ORDER BY cnt DESC LIMIT 10;
+#
 class Feed < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include ActionView::Helpers
@@ -281,5 +286,30 @@ class Feed < ApplicationRecord
 
   def self.skip_check_attributes
     ["new_notify"]
+  end
+  
+  def self.refresh_all_feeds
+    Rails.logger.info("Feed.refresh_all_feeds start")
+    
+    if Rails.env.production? || ENV["CRONTAB_RSS"] == "true"
+      User.all.each do |user|
+        user.identities.each do |identity|
+          
+          feeds_count = Feed.where(identity_id: identity.id).count
+          
+          if feeds_count > 0
+            MyplaceonlineExecutionContext.do_full_context(user, identity) do
+              begin
+                Feed.load_all(feeds_count)
+              rescue => e
+                Myp.warn("Failed to refresh feeds for #{identity.id}: #{Myp.error_details(e)}", e)
+              end
+            end
+          end
+        end
+      end
+    end
+
+    Rails.logger.info("Feed.refresh_all_feeds end")
   end
 end

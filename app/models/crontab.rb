@@ -26,7 +26,11 @@ class Crontab < ApplicationRecord
 
     if run_calendar_reminders
       Rails.logger.info{"Crontab.run_crontabs CalendarItemReminder.ensure_pending_all_users started"}
-      CalendarItemReminder.ensure_pending_all_users
+      
+      if Rails.env.production? || ENV["CRONTAB_CALENDARS"] == "true"
+        CalendarItemReminder.ensure_pending_all_users
+      end
+      
       Rails.logger.info{"Crontab.run_crontabs CalendarItemReminder.ensure_pending_all_users finished"}
     end
     
