@@ -10,6 +10,7 @@ class LoadRssFeedsJob < ApplicationJob
       Chewy.strategy(:urgent) do
 
         user = args[0]
+        destroy_status_on_complete = args[1]
         
         Rails.logger.info{"Started LoadRssFeedsJob user: #{user.id}"}
 
@@ -60,6 +61,10 @@ class LoadRssFeedsJob < ApplicationJob
                   ApplicationRecord.transaction(requires_new: true) do
                     status.save!
                   end
+                end
+                
+                if destroy_status_on_complete
+                  status.destroy
                 end
               end
             end

@@ -52,7 +52,7 @@ class Crontab < ApplicationRecord
       
       if run
         if crontab.identity.user.admin?
-          Rails.logger.info{"Crontab.run_crontabs running"}
+          Rails.logger.info{"Crontab.run_crontabs running #{crontab.inspect}"}
           
           c = Object.const_get(crontab.run_class)
           

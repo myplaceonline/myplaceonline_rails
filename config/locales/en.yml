@@ -3234,7 +3234,9 @@ en:
       command: "Command"
       run_crontab: "Run Crontab"
       run_crontab_without_calendar_reminders: "Run Crontab (without calendar reminders)"
+      run_load_feeds: "Load Feeds"
       crontab_run: "Crontab completed"
+      load_feeds_run: "Feeds Run Started"
     share:
       link: "Link"
     trip_pictures:

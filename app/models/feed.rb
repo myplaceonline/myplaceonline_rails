@@ -234,25 +234,33 @@ class Feed < ApplicationRecord
     self.unread_items
   end
   
-  def self.load_all(all_count)
-    status = FeedLoadStatus.where(identity_id: User.current_user.current_identity_id).first
+  def self.load_all(all_count, destroy_status_on_complete: false)
+    
+    user = User.current_user
+    identity = User.current_user.current_identity
+    
+    status = FeedLoadStatus.where(identity_id: identity.id).first
+    
+    Rails.logger.info("Feed.refresh_all_feeds identity #{identity}, user: #{user}, status: #{status.inspect}, now: #{Time.now.utc}, diff: #{Time.now.utc - 1.day}")
+    
     do_reload = status.nil?
     if !do_reload
+      
       # If the status is more than a day old, there was probably an error
-      if Time.now - 1.day.minutes >= status.updated_at
+      if Time.now.utc - 1.day >= status.updated_at
         do_reload = true
-        FeedLoadStatus.where(identity_id: User.current_user.current_identity_id).destroy_all
-        Myp.warn("Found old feed load status for identity #{User.current_user.current_identity_id}")
+        FeedLoadStatus.where(identity_id: identity.id).destroy_all
+        Myp.warn("Found old feed load status for identity #{identity.id}")
       end
     end
     if do_reload
       FeedLoadStatus.create!(
-        identity_id: User.current_user.current_identity_id,
+        identity_id: identity.id,
         items_complete: 0,
         items_total: all_count,
         items_error: 0
       )
-      ApplicationJob.perform(LoadRssFeedsJob, User.current_user)
+      ApplicationJob.perform(LoadRssFeedsJob, user, destroy_status_on_complete)
     end
   end
   
@@ -302,7 +310,8 @@ class Feed < ApplicationRecord
           if feeds_count > 0
             MyplaceonlineExecutionContext.do_full_context(user, identity) do
               begin
-                Feed.load_all(feeds_count)
+                Rails.logger.info("Feed.refresh_all_feeds refreshing identity #{identity.id}")
+                Feed.load_all(feeds_count, destroy_status_on_complete: true)
               rescue => e
                 Myp.warn("Failed to refresh feeds for #{identity.id}: #{Myp.error_details(e)}", e)
               end

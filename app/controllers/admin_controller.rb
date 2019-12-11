@@ -211,4 +211,13 @@ class AdminController < ApplicationController
     redirect_to admin_path,
           :flash => { :notice => I18n.t("myplaceonline.admin.crontab_run") }
   end
+
+  def run_load_feeds
+    Rails.logger.info{"AdminController.run_load_feeds"}
+    
+    Feed.refresh_all_feeds
+
+    redirect_to admin_path,
+          :flash => { :notice => I18n.t("myplaceonline.admin.load_feeds_run") }
+  end
 end
