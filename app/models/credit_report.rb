@@ -16,11 +16,13 @@ class CreditReport < ApplicationRecord
   AGENCY_EQUIFAX = 0
   AGENCY_EXPERIAN = 1
   AGENCY_TRANSUNION = 2
+  AGENCY_OTHER = 3
 
   AGENCIES = [
     ["myplaceonline.credit_reports.agencies.equifax", AGENCY_EQUIFAX],
     ["myplaceonline.credit_reports.agencies.experian", AGENCY_EXPERIAN],
     ["myplaceonline.credit_reports.agencies.transunion", AGENCY_TRANSUNION],
+    ["myplaceonline.credit_reports.agencies.other", AGENCY_OTHER],
   ]
 
   validates :credit_report_date, presence: true

@@ -4403,6 +4403,7 @@ en:
         equifax: "Equifax"
         experian: "Experian"
         transunion: "TransUnion"
+        other: "Other"
     arts:
       art_name: "Name"
       art_source: "Creator(s)"
