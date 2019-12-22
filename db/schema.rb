@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_03_073543) do
+ActiveRecord::Schema.define(version: 2019_12_22_032413) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2105,6 +2105,7 @@ ActiveRecord::Schema.define(version: 2019_12_03_073543) do
     t.boolean "setting_explicit"
     t.boolean "asked_name"
     t.boolean "setting_controversial"
+    t.boolean "setting_multiple_profiles"
     t.index ["identity_id"], name: "index_drom_match_identity_infos_on_identity_id"
   end
 
@@ -2159,6 +2160,14 @@ ActiveRecord::Schema.define(version: 2019_12_03_073543) do
     t.bigint "other_trip_id"
     t.index ["identity_id"], name: "index_drom_match_trips_on_identity_id"
     t.index ["other_trip_id"], name: "index_drom_match_trips_on_other_trip_id"
+  end
+
+  create_table "drom_match_user_infos", force: :cascade do |t|
+    t.bigint "user_id"
+    t.boolean "setting_multiple_profiles"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_drom_match_user_infos_on_user_id"
   end
 
   create_table "due_items", id: :serial, force: :cascade do |t|
@@ -7828,6 +7837,7 @@ ActiveRecord::Schema.define(version: 2019_12_03_073543) do
   add_foreign_key "drom_match_profile_videos", "identity_files"
   add_foreign_key "drom_match_trips", "identities"
   add_foreign_key "drom_match_trips", "trips", column: "other_trip_id"
+  add_foreign_key "drom_match_user_infos", "users"
   add_foreign_key "due_items", "calendars", name: "due_items_calendar_id_fk"
   add_foreign_key "due_items", "identities", name: "due_items_identity_id_fk"
   add_foreign_key "education_files", "educations"

@@ -804,10 +804,13 @@ class Identity < ApplicationRecord
   
   def send_sms(body:)
     result = false
+    Rails.logger.info{"Identity.send_sms ID: #{self.id}"}
     self.mobile_phone_numbers.each do |phone_number|
+      Rails.logger.info{"Identity.send_sm phone: #{phone_number}"}
       Myp.send_sms(to: phone_number, body: body)
       result = true
     end
+    result
   end
   
   def final_search_result
