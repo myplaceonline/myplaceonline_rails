@@ -1243,6 +1243,8 @@ en:
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
       benefits: "Benefits"
+      list_benefits: "List All Benefits"
+      all_benefits: "All Benefits"
     bank_accounts:
       name: "Name"
       account_number: "Account Number"

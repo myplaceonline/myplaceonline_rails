@@ -1,0 +1,9 @@
+<% content_for :heading do -%><%= t('myplaceonline.credit_cards.all_benefits') %><% end -%>
+<h1><%= t('myplaceonline.credit_cards.all_benefits') %></h1>
+<ul>
+  <% @cards.each do |c| %>
+    <% if !c.benefits.blank? %>
+      <li><%= link_to c.display, credit_card_path(c) %><p><%= raw(Myp.markdown_to_html(c.benefits)) %></li>
+    <% end %>
+  <% end %>
+</ul>

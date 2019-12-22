@@ -1,8 +1,12 @@
 class CreditCardsController < MyplaceonlineController
-  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:listcashback, :total_credit]
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:listbenefits, :listcashback, :total_credit]
 
   def listcashback
     @cashbacks = CreditCardCashback.where(identity_id: current_user.current_identity.id).sort{ |x, y| y.cashback.cashback_percentage <=> x.cashback.cashback_percentage }.keep_if{|c| c.expiration_includes_today?}
+  end
+
+  def listbenefits
+    @cards = all
   end
 
   def total_credit
@@ -24,6 +28,11 @@ class CreditCardsController < MyplaceonlineController
 
   def footer_items_index
     super + [
+      {
+        title: I18n.t('myplaceonline.credit_cards.list_benefits'),
+        link: credit_cards_listbenefits_path,
+        icon: "bullets"
+      },
       {
         title: I18n.t('myplaceonline.credit_cards.list_cashbacks'),
         link: credit_cards_listcashback_path,

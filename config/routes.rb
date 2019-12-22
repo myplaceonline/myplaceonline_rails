@@ -211,6 +211,7 @@ Rails.application.routes.draw do
     ],
     credit_cards: [
       { instance: false, link: "total_credit" },
+      { instance: false, link: "listbenefits" },
       { instance: false, link: "listcashback" },
     ],
     crontabs: [
