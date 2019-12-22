@@ -65,6 +65,7 @@ class CreditCardsController < MyplaceonlineController
         :total_credit,
         :email_reminders,
         :start_date,
+        :benefits,
         password_attributes: PasswordsController.param_names,
         address_attributes: LocationsController.param_names,
         credit_card_files_attributes: FilesController.multi_param_names,

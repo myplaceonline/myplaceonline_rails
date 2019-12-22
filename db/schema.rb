@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_22_032413) do
+ActiveRecord::Schema.define(version: 2019_12_22_213354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1472,6 +1472,7 @@ ActiveRecord::Schema.define(version: 2019_12_22_032413) do
     t.integer "rating"
     t.date "start_date"
     t.boolean "is_public"
+    t.text "benefits"
     t.index ["address_id"], name: "index_credit_cards_on_address_id"
     t.index ["expires_encrypted_id"], name: "index_credit_cards_on_expires_encrypted_id"
     t.index ["identity_id"], name: "index_credit_cards_on_identity_id"
