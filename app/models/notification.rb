@@ -31,7 +31,9 @@ class Notification < ApplicationRecord
   
   def ready_for_another?
     # Exponential backoff of notifications
-    return DateTime.now.utc > self.updated_at + (2 ** self.count).days
+    result = DateTime.now.utc > self.updated_at + (2 ** self.count).days
+    ::Rails.logger.debug{"Notification.ready_for_another? checking now: #{DateTime.now.utc}, self.updated_at: #{self.updated_at}, days: #{(2 ** self.count).days}, added: #{self.updated_at + (2 ** self.count).days}, result: #{result}"}
+    return result
   end
   
   def self.try_send_notifications(
