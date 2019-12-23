@@ -255,4 +255,15 @@ class Notification < ApplicationRecord
       end
     end
   end
+  
+  def self.reset_notifications(identity, notification_category)
+    Notification.where(
+      identity: identity,
+      notification_category: notification_category,
+    ).destroy_all
+  end
+
+  def self.reset_notifications_wildcard(identity, notification_category_prefix)
+    Notification.where("identity_id = ? and notification_category like ?", identity.id, "#{notification_category_prefix}%").destroy_all
+  end
 end
