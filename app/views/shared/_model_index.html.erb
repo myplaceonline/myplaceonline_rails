@@ -122,7 +122,7 @@ end
   <script type="text/javascript">
     myplaceonline.onPageLoad(function() {
       myplaceonline.remoteDataListInitialize($(".searchable"), [
-        <% if Myp.full_text_search? %>
+        <% if Myp.full_text_search? && !controller.use_simple_search %>
           {title: "<%= controller.category_display %>", url: "/api/search.json?display_category_prefix=false&display_category_icon=false&category=<%= controller.search_index_name %>&parent_category=<%= controller.search_parent_category %>&search_filters_model=<%= controller.search_filters_model %>&public=<%= controller.search_public? %>"}
         <% else %>
           {title: "<%= controller.category_display %>", url: "<%= send("#{controller.paths_name}_path") %>.json<%= raw(@query_params_part_all) %>", static_list: true}

@@ -1526,6 +1526,10 @@ class MyplaceonlineController < ApplicationController
     self.all
   end
   
+  def use_simple_search
+    false
+  end
+  
   protected
   
     def deny_guest
