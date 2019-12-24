@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_22_213354) do
+ActiveRecord::Schema.define(version: 2019_12_24_052127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2066,6 +2066,7 @@ ActiveRecord::Schema.define(version: 2019_12_22_213354) do
     t.datetime "updated_at", null: false
     t.bigint "drom_match_dealbreaker1_id"
     t.bigint "drom_match_dealbreaker2_id"
+    t.datetime "archived"
     t.index ["drom_match_dealbreaker1_id"], name: "dmdr_on_dmd1"
     t.index ["drom_match_dealbreaker2_id"], name: "dmdr_on_dmd2"
     t.index ["identity_id"], name: "index_drom_match_dealbreaker_relationships_on_identity_id"

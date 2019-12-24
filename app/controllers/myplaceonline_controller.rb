@@ -498,7 +498,7 @@ class MyplaceonlineController < ApplicationController
     if !model.model_name.to_s.include?("::")
       model.model_name.singular.to_s.downcase
     else
-      model.model_name.to_s.split("::")[1].singularize.downcase
+      model.model_name.to_s.split("::")[1].underscore.singularize.downcase
     end
   end
   
@@ -511,7 +511,7 @@ class MyplaceonlineController < ApplicationController
     if !model.model_name.to_s.include?("::")
       engine_link_prefix + model.model_name.singular.to_s.downcase.pluralize
     else
-      engine_link_prefix + model.model_name.to_s.split("::")[1].downcase.pluralize
+      engine_link_prefix + model.model_name.to_s.split("::")[1].underscore.downcase.pluralize
     end
   end
   
