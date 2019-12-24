@@ -1,5 +1,9 @@
 class Users::ConfirmationsController < Devise::ConfirmationsController
   skip_authorization_check
+
+  skip_before_action :verify_authenticity_token, only: [
+    :create
+  ]
   
   # GET /resource/confirmation/new
   # def new

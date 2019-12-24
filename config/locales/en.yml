@@ -820,7 +820,7 @@ en:
       invite_invalid_detailed: "Invalid invite code"
       reenterpassword: "Re-enter Password"
       resendconfirmation: "Resend confirmation instructions"
-      pending_confirmation: "Check your email to confirm your account before continuing."
+      pending_confirmation: "You haven't confirmed your email yet. Please check your email (including spam) and click the link to confirm."
       resendunlock: "Resend unlock instructions"
       forgotpassword: "Forgot your password?"
       sendreset: "Send reset password instructions"
