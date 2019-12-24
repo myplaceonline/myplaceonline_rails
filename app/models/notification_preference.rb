@@ -19,8 +19,9 @@ class NotificationPreference < ApplicationRecord
   
   def self.can_send_notification?(identity, notification_type, notification_category)
     preference = NotificationPreference.where(identity: identity, notification_type: notification_type, notification_category: notification_category).take
-    ::Rails.logger.debug{"NotificationPreference.can_send_notification? identity: #{identity}, preference: #{preference}"}
-    return preference.nil? || preference.notifications_enabled?
+    result = preference.nil? || preference.notifications_enabled?
+    ::Rails.logger.debug{"NotificationPreference.can_send_notification? identity: #{identity}, preference: #{preference}, result: #{result}"}
+    return result
   end
   
   def self.update_settings(identity, settings)

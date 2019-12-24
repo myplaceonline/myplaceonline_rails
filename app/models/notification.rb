@@ -49,7 +49,7 @@ class Notification < ApplicationRecord
     
     some_sent = false
     
-    ::Rails.logger.debug{"Notification.try_send_notifications identity: #{identity}"}
+    ::Rails.logger.debug{"Notification.try_send_notifications identity: #{identity}, notification_category: #{notification_category}"}
     
     if Notification.try_send_notification(
           identity,
