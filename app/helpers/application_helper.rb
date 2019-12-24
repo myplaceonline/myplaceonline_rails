@@ -604,7 +604,7 @@ module ApplicationHelper
         options[:transform] = method(:display_date)
       elsif content.is_a?(TrueClass) || content.is_a?(FalseClass)
         options[:transform] = method(:display_boolean)
-      elsif content.is_a?(ApplicationRecord)
+      elsif content.is_a?(ActiveRecord::Base)
         options[:transform] = method(:display_reference)
       elsif content.is_a?(ActiveRecord::Associations::CollectionProxy) || content.is_a?(ActiveRecord::Relation) || content.is_a?(Array)
         options[:transform] = method(:display_collection)
