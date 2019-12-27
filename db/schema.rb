@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_24_052127) do
+ActiveRecord::Schema.define(version: 2019_12_27_025922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2049,14 +2049,14 @@ ActiveRecord::Schema.define(version: 2019_12_24_052127) do
     t.index ["identity_id"], name: "index_drom_match_chosen_dealbreakers_on_identity_id"
   end
 
-  create_table "drom_match_date_proposals", force: :cascade do |t|
-    t.bigint "drom_match_match_id"
+  create_table "drom_match_dates", force: :cascade do |t|
     t.bigint "identity_id"
-    t.integer "status"
+    t.integer "date_status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["drom_match_match_id"], name: "index_drom_match_date_proposals_on_drom_match_match_id"
-    t.index ["identity_id"], name: "index_drom_match_date_proposals_on_identity_id"
+    t.bigint "other_date_id"
+    t.index ["identity_id"], name: "index_drom_match_dates_on_identity_id"
+    t.index ["other_date_id"], name: "index_drom_match_dates_on_other_date_id"
   end
 
   create_table "drom_match_dealbreaker_relationships", force: :cascade do |t|
@@ -2152,16 +2152,6 @@ ActiveRecord::Schema.define(version: 2019_12_24_052127) do
     t.integer "status"
     t.index ["identity_file_id"], name: "index_drom_match_profile_videos_on_identity_file_id"
     t.index ["identity_id"], name: "index_drom_match_profile_videos_on_identity_id"
-  end
-
-  create_table "drom_match_trips", force: :cascade do |t|
-    t.bigint "identity_id"
-    t.integer "trip_status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "other_trip_id"
-    t.index ["identity_id"], name: "index_drom_match_trips_on_identity_id"
-    t.index ["other_trip_id"], name: "index_drom_match_trips_on_other_trip_id"
   end
 
   create_table "drom_match_user_infos", force: :cascade do |t|
@@ -7821,8 +7811,8 @@ ActiveRecord::Schema.define(version: 2019_12_24_052127) do
   add_foreign_key "driver_licenses", "locations", column: "address_id"
   add_foreign_key "drom_match_chosen_dealbreakers", "drom_match_dealbreakers"
   add_foreign_key "drom_match_chosen_dealbreakers", "identities"
-  add_foreign_key "drom_match_date_proposals", "drom_match_matches"
-  add_foreign_key "drom_match_date_proposals", "identities"
+  add_foreign_key "drom_match_dates", "identities"
+  add_foreign_key "drom_match_dates", "trips", column: "other_date_id"
   add_foreign_key "drom_match_dealbreaker_relationships", "drom_match_dealbreakers", column: "drom_match_dealbreaker1_id"
   add_foreign_key "drom_match_dealbreaker_relationships", "drom_match_dealbreakers", column: "drom_match_dealbreaker2_id"
   add_foreign_key "drom_match_dealbreaker_relationships", "identities"
@@ -7837,8 +7827,6 @@ ActiveRecord::Schema.define(version: 2019_12_24_052127) do
   add_foreign_key "drom_match_matches", "identities", column: "target_identity_id"
   add_foreign_key "drom_match_profile_videos", "identities"
   add_foreign_key "drom_match_profile_videos", "identity_files"
-  add_foreign_key "drom_match_trips", "identities"
-  add_foreign_key "drom_match_trips", "trips", column: "other_trip_id"
   add_foreign_key "drom_match_user_infos", "users"
   add_foreign_key "due_items", "calendars", name: "due_items_calendar_id_fk"
   add_foreign_key "due_items", "identities", name: "due_items_identity_id_fk"
