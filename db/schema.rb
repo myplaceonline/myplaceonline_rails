@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_27_025922) do
+ActiveRecord::Schema.define(version: 2019_12_27_214655) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2055,6 +2055,7 @@ ActiveRecord::Schema.define(version: 2019_12_27_025922) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "other_date_id"
+    t.integer "date_option"
     t.index ["identity_id"], name: "index_drom_match_dates_on_identity_id"
     t.index ["other_date_id"], name: "index_drom_match_dates_on_other_date_id"
   end
