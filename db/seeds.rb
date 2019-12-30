@@ -189,7 +189,7 @@ Category.create!([
   {id: 189, name: "computer_environments", link: "computer_environments", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/server.png", explicit: nil, user_type_mask: nil, experimental: true, simple: nil, internal: nil},
   {id: 190, name: "food_lists", link: "food_lists", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/text_list_numbers.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 191, name: "security_tokens", link: "security_tokens", position: 0, parent_id: 1, additional_filtertext: "api", icon: "FatCow_Icons16x16/security.png", explicit: nil, user_type_mask: nil, experimental: true, simple: nil, internal: nil},
-  {id: 192, name: "exports", link: "exports", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/saved_exports.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 192, name: "exports", link: "exports", position: 0, parent_id: 1, additional_filtertext: "backup offline archive save", icon: "FatCow_Icons16x16/saved_exports.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 193, name: "wallets", link: "wallets", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/wallet.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 194, name: "financial_assets", link: "financial_assets", position: 0, parent_id: 51, additional_filtertext: nil, icon: "FatCow_Icons16x16/moneybox.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 195, name: "boondockings", link: "boondockings", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/tree_red.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
@@ -208,8 +208,10 @@ Category.create!([
   {id: 208, name: "notifications", link: "notifications", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/mail_box.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 209, name: "notification_preferences", link: "notification_preferences", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/email_setting.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 210, name: "hospitals", link: "hospitals", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/hospital.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
-  {id: 243, name: "crontabs", link: "crontabs", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/time.png", explicit: nil, user_type_mask: 1, experimental: nil, simple: nil, internal: nil},
-  {id: 244, name: "vehicle_washes", link: "vehicle_washes", position: 0, parent_id: 1, additional_filtertext: "cars rvs trucks recreational", icon: "FatCow_Icons16x16/broom.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
+  {id: 211, name: "crontabs", link: "crontabs", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/time.png", explicit: nil, user_type_mask: 1, experimental: nil, simple: nil, internal: nil},
+  {id: 212, name: "vehicle_washes", link: "vehicle_washes", position: 0, parent_id: 1, additional_filtertext: "cars rvs trucks recreational", icon: "FatCow_Icons16x16/broom.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 213, name: "dealbreaker_relationships", link: "drom_match/dealbreaker_relationships", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/connect.png", explicit: nil, user_type_mask: 1, experimental: nil, simple: nil, internal: nil},
+  {id: 246, name: "haircuts", link: "haircuts", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/cut.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
 ])
 
 # Reinitialize to cache the categories created above

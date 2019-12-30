@@ -143,6 +143,7 @@ en:
       gas_stations: "Gas Stations"
       groups: "Groups"
       guns: "Guns"
+      haircuts: "Haircuts"
       happy_things: "Happy Things"
       headaches: "Headaches"
       health: "Health"
@@ -4453,3 +4454,8 @@ en:
       location: "Location"
       rating: "Rating"
       rvs: "Recreational Vehicles"
+    haircuts:
+      haircut_time: "Date/Time"
+      total_cost: "Total Cost"
+      cutter: "Hair Cutter"
+      location: "Location"

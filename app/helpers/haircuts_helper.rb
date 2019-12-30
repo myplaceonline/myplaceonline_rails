@@ -1,0 +1,2 @@
+module HaircutsHelper
+end

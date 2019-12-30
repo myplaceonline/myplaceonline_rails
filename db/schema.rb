@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_29_193736) do
+ActiveRecord::Schema.define(version: 2019_12_30_225955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2989,6 +2989,37 @@ ActiveRecord::Schema.define(version: 2019_12_29_193736) do
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_guns_on_identity_id"
+  end
+
+  create_table "haircut_files", force: :cascade do |t|
+    t.bigint "haircut_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["haircut_id"], name: "index_haircut_files_on_haircut_id"
+    t.index ["identity_file_id"], name: "index_haircut_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_haircut_files_on_identity_id"
+  end
+
+  create_table "haircuts", force: :cascade do |t|
+    t.datetime "haircut_time"
+    t.decimal "total_cost", precision: 10, scale: 2
+    t.bigint "cutter_id"
+    t.bigint "location_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cutter_id"], name: "index_haircuts_on_cutter_id"
+    t.index ["identity_id"], name: "index_haircuts_on_identity_id"
+    t.index ["location_id"], name: "index_haircuts_on_location_id"
   end
 
   create_table "happy_things", id: :serial, force: :cascade do |t|
@@ -7952,6 +7983,12 @@ ActiveRecord::Schema.define(version: 2019_12_29_193736) do
   add_foreign_key "gun_registrations", "identities", name: "gun_registrations_identity_id_fk"
   add_foreign_key "gun_registrations", "locations", name: "gun_registrations_location_id_fk"
   add_foreign_key "guns", "identities", name: "guns_identity_id_fk"
+  add_foreign_key "haircut_files", "haircuts"
+  add_foreign_key "haircut_files", "identities"
+  add_foreign_key "haircut_files", "identity_files"
+  add_foreign_key "haircuts", "contacts", column: "cutter_id"
+  add_foreign_key "haircuts", "identities"
+  add_foreign_key "haircuts", "locations"
   add_foreign_key "happy_things", "identities"
   add_foreign_key "headaches", "identities", name: "headaches_identity_id_fk"
   add_foreign_key "health_insurance_files", "health_insurances"
