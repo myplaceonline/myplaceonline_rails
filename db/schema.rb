@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_30_225955) do
+ActiveRecord::Schema.define(version: 2019_12_30_234856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2057,6 +2057,10 @@ ActiveRecord::Schema.define(version: 2019_12_30_225955) do
     t.bigint "other_date_id"
     t.integer "date_option"
     t.integer "substep"
+    t.integer "flyOutDay"
+    t.integer "flyOutTime"
+    t.integer "flyHomeDay"
+    t.integer "flyHomeTime"
     t.index ["identity_id"], name: "index_drom_match_dates_on_identity_id"
     t.index ["other_date_id"], name: "index_drom_match_dates_on_other_date_id"
   end
