@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_30_234856) do
+ActiveRecord::Schema.define(version: 2020_01_27_002643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2045,6 +2045,7 @@ ActiveRecord::Schema.define(version: 2019_12_30_234856) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "match_type"
+    t.integer "selection"
     t.index ["drom_match_dealbreaker_id"], name: "dmcd_on_dmd"
     t.index ["identity_id"], name: "index_drom_match_chosen_dealbreakers_on_identity_id"
   end
@@ -2091,7 +2092,7 @@ ActiveRecord::Schema.define(version: 2019_12_30_234856) do
   create_table "drom_match_dealbreakers", force: :cascade do |t|
     t.bigint "identity_id"
     t.datetime "archived"
-    t.integer "verb"
+    t.integer "prefix_positive"
     t.string "dealbreaker_name"
     t.integer "flags"
     t.datetime "created_at", null: false
@@ -2101,6 +2102,10 @@ ActiveRecord::Schema.define(version: 2019_12_30_234856) do
     t.integer "created_by"
     t.integer "dealbreaker_type"
     t.boolean "controversial"
+    t.integer "prefix_negative"
+    t.boolean "always_show_positive_verb"
+    t.string "alternate_search"
+    t.string "prefix_suffix"
     t.index ["identity_id"], name: "index_drom_match_dealbreakers_on_identity_id"
   end
 
