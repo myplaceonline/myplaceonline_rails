@@ -1,6 +1,6 @@
 <%
 if !defined?(fullshow)
-  fullshow = Myp.param_bool(params, :fullshow)
+  fullshow = Myp.param_bool(params, :fullshow) || !Myp.praise_or_shame?
 end
 %>
 
@@ -16,4 +16,8 @@ end
   <%= data_row(heading: t("myplaceonline.identities.location"), content: obj.agent_identity.identity_locations, max_nest: 2) %>
   <%= data_row(heading: t("myplaceonline.contacts.company"), content: obj.agent_identity.company, max_nest: 2, reference_display_heading: false) %>
   <%= data_row(heading: t("myplaceonline.contacts.picture"), content: obj.agent_identity.identity_pictures) %>
+  <% obj.agent_identity.identity_clothes.each do |clothes| %>
+    <%= data_row(heading: t("myplaceonline.identity_clothes.when_date"), content: clothes.when_date) %>
+    <%= data_row(heading: t("myplaceonline.identity_clothes.clothes"), content: clothes.clothes, markdown: true) %>
+  <% end %>
 <% end %>

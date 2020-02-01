@@ -170,7 +170,7 @@
       f: identity_fields,
       obj: obj.agent_identity,
       pictures_field: :identity_pictures,
-      heading: t("myplaceonline.agents.heading"),
+      heading: "myplaceonline.agents.heading",
     }
   %>
   
@@ -188,4 +188,51 @@
       simpleform: true,
     }
   %>
+  
+  <% if !Myp.praise_or_shame? %>
+    <%=
+      render(layout: "myplaceonline/childproperties", locals: {
+        f: identity_fields,
+        heading: t("myplaceonline.identity_clothes.clothes"),
+        childpropertiesname: :identity_clothes,
+        childproperties: obj.agent_identity.identity_clothes,
+        deletebutton: t("myplaceonline.general.delete"),
+        addbutton: t("myplaceonline.general.add"),
+        expanded: obj.agent_identity.identity_clothes.length > 0,
+        formjson: [
+          {
+            type: "date",
+            name: "when_date",
+            placeholder: t("myplaceonline.identity_clothes.when_date"),
+            autofocus: true,
+          },
+          {
+            type: "textarea",
+            name: "clothes",
+            placeholder: t("myplaceonline.identity_clothes.clothes"),
+          },
+        ]
+      }) do |child_fields, childproperty|
+    %>
+      <%=
+        input_field(
+          form: child_fields,
+          type: Myp::FIELD_DATE,
+          name: :when_date,
+          value: childproperty.when_date,
+          placeholder: "myplaceonline.identity_clothes.when_date"
+        )
+      %>
+      <%=
+        input_field(
+          form: child_fields,
+          type: Myp::FIELD_TEXT_AREA,
+          name: :clothes,
+          value: childproperty.clothes,
+          placeholder: "myplaceonline.identity_clothes.clothes",
+          collapsed: childproperty.clothes.blank?,
+        )
+      %>
+    <% end %>
+  <% end %>
 <% end %>

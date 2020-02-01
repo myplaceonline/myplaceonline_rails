@@ -3731,5 +3731,9 @@ module Myp
     Crontab.run_crontabs(run_calendar_reminders: run_calendar_reminders)
   end
   
+  def self.praise_or_shame?
+    return MyplaceonlineExecutionContext.host == "praiseorshame.com"
+  end
+  
   Rails.logger.info{"Myp static initialization ended"}
 end
