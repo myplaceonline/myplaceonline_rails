@@ -24,11 +24,11 @@ class AgentsController < MyplaceonlineController
   end
   
   def show_add
-    false
+    !Myp.praise_or_shame?
   end
   
   def show_back_to_list
-    false
+    !Myp.praise_or_shame?
   end
   
   protected
