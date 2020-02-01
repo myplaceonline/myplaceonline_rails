@@ -68,3 +68,7 @@
       placeholder: "myplaceonline.contacts.picture"
   }
 %>
+<% obj.contact_identity.identity_clothes.each do |clothes| %>
+  <%= data_row(heading: t("myplaceonline.identity_clothes.when_date"), content: clothes.when_date) %>
+  <%= data_row(heading: t("myplaceonline.identity_clothes.clothes"), content: clothes.clothes, markdown: true) %>
+<% end %>

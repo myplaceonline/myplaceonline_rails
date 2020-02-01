@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_27_002643) do
+ActiveRecord::Schema.define(version: 2020_02_01_222308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3295,6 +3295,20 @@ ActiveRecord::Schema.define(version: 2020_01_27_002643) do
     t.index ["identity_id"], name: "index_identities_on_identity_id"
     t.index ["user_id"], name: "index_identities_on_user_id"
     t.index ["website_domain_id"], name: "index_identities_on_website_domain_id"
+  end
+
+  create_table "identity_clothes", force: :cascade do |t|
+    t.bigint "identity_id"
+    t.bigint "parent_identity_id"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.date "when_date"
+    t.text "clothes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_identity_clothes_on_identity_id"
+    t.index ["parent_identity_id"], name: "index_identity_clothes_on_parent_identity_id"
   end
 
   create_table "identity_drivers_licenses", id: :serial, force: :cascade do |t|
@@ -8031,6 +8045,8 @@ ActiveRecord::Schema.define(version: 2020_01_27_002643) do
   add_foreign_key "identities", "identities"
   add_foreign_key "identities", "users", name: "identities_user_id_fk"
   add_foreign_key "identities", "website_domains"
+  add_foreign_key "identity_clothes", "identities"
+  add_foreign_key "identity_clothes", "identities", column: "parent_identity_id"
   add_foreign_key "identity_drivers_licenses", "identities", column: "parent_identity_id", name: "identity_drivers_licenses_parent_identity_id_fk"
   add_foreign_key "identity_drivers_licenses", "identities", name: "identity_drivers_licenses_identity_id_fk"
   add_foreign_key "identity_drivers_licenses", "identity_files", name: "identity_drivers_licenses_identity_file_id_fk"

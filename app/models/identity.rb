@@ -329,6 +329,8 @@ class Identity < ApplicationRecord
   
   child_properties(name: :identity_emails, foreign_key: "parent_identity_id")
   
+  child_properties(name: :identity_clothes, foreign_key: "parent_identity_id", sort: "when_date DESC")
+  
   def emails
     identity_emails.to_a.delete_if{|ie| ie.secondary }.map{|ie| ie.email }
   end
@@ -893,7 +895,13 @@ class Identity < ApplicationRecord
         :id,
         :_destroy,
         identity_file_attributes: FilesController.param_names
-      ]
+      ],
+      identity_clothes_attributes: [
+        :id,
+        :_destroy,
+        :clothes,
+        :when_date,
+      ],
     ], include_company) {[
       company_attributes: Company.param_names(include_website: include_website)
     ]}

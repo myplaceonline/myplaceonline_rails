@@ -30,7 +30,7 @@ class Company < ApplicationRecord
       :id,
       :_destroy,
       company_identity_attributes: Identity.param_names(include_website: include_website, recurse: recurse, include_company: false),
-      company_interactions_attributes: CompanyInteraction.params
+      company_interactions_attributes: CompanyInteraction.params,
     ]
   end
 

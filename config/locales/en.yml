@@ -4459,3 +4459,6 @@ en:
       total_cost: "Total Cost"
       cutter: "Hair Cutter"
       location: "Location"
+    identity_clothes:
+      clothes: "Clothes Worn"
+      when_date: "Date"
