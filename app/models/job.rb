@@ -29,4 +29,20 @@ class Job < ApplicationRecord
   child_properties(name: :job_accomplishments, sort: "accomplishment_time DESC")
 
   child_files
+  
+  def days_vacation_calculated
+    if self.work_time_percentage.nil?
+      return self.days_vacation
+    else
+      return (self.days_vacation*(self.work_time_percentage/100.0))
+    end
+  end
+  
+  def salary
+    if self.job_salaries.count > 0
+      return self.job_salaries[0]
+    else
+      return nil
+    end
+  end
 end

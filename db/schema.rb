@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_01_222308) do
+ActiveRecord::Schema.define(version: 2020_02_01_234523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3742,6 +3742,7 @@ ActiveRecord::Schema.define(version: 2020_02_01_222308) do
     t.integer "rating"
     t.decimal "hours_per_week", precision: 10, scale: 2
     t.boolean "is_public"
+    t.decimal "work_time_percentage", precision: 10, scale: 2
     t.index ["company_id"], name: "index_jobs_on_company_id"
     t.index ["identity_id"], name: "index_jobs_on_identity_id"
     t.index ["internal_address_id"], name: "index_jobs_on_internal_address_id"

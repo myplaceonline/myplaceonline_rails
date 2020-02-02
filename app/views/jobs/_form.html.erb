@@ -7,6 +7,15 @@
 <%= myp_text_field(f, :division_identifier, "myplaceonline.jobs.division_identifier", obj.division_identifier) %>
 <%= myp_date_field(f, :started, "myplaceonline.jobs.started", obj.started) %>
 <%= myp_date_field(f, :ended, "myplaceonline.jobs.ended", obj.ended) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :work_time_percentage,
+    value: obj.work_time_percentage,
+    placeholder: "myplaceonline.jobs.work_time_percentage"
+  )
+%>
 <%= myp_decimal_field(f, :hours_per_week, "myplaceonline.jobs.hours_per_week", obj.hours_per_week) %>
 <%= myp_integer_field(f, :days_vacation, "myplaceonline.jobs.days_vacation", obj.days_vacation) %>
 <%= myp_integer_field(f, :days_holiday, "myplaceonline.jobs.days_holiday", obj.days_holiday) %>

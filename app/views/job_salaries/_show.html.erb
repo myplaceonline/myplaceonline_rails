@@ -2,8 +2,9 @@
 <%= attribute_table_row_date(t("myplaceonline.job_salaries.ended"), obj.ended) %>
 <%= attribute_table_row_currency(t("myplaceonline.job_salaries.salary"), obj.salary) %>
 <%= attribute_table_row_select(t("myplaceonline.job_salaries.salary_period"), obj.salary_period, Myp::PERIODS) %>
-<%= attribute_table_row_currency(t("myplaceonline.job_salaries.salary_yearly"), obj.yearly_salary) %>
-<%= attribute_table_row_currency(t("myplaceonline.job_salaries.salary_hourly"), obj.yearly_hourly) %>
+<%= attribute_table_row(t("myplaceonline.job_salaries.salary_yearly"), obj.yearly_salary_display) %>
+<%= attribute_table_row(t("myplaceonline.job_salaries.salary_monthly"), obj.yearly_monthly_display) %>
+<%= attribute_table_row(t("myplaceonline.job_salaries.salary_hourly"), obj.yearly_hourly_display) %>
 <%= attribute_table_row(t("myplaceonline.jobs.hours_per_week"), obj.hours_per_week) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <%= attribute_table_row(t("myplaceonline.job_salaries.new_title"), obj.new_title) %>

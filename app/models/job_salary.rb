@@ -8,7 +8,23 @@ class JobSalary < ApplicationRecord
   validates :salary_period, presence: true
 
   def display
-    Myp.appendstrwrap(Myp.number_to_currency(yearly_salary) + " " + I18n.t("myplaceonline.periods.yearly"), self.new_title)
+    display_amount = 
+    if !self.job.work_time_percentage.nil?
+    end
+    
+    if self.job.work_time_percentage.nil?
+      Myp.appendstrwrap(Myp.number_to_currency(self.yearly_salary) + " " + I18n.t("myplaceonline.periods.yearly"), self.new_title)
+    else
+      Myp.appendstrwrap(Myp.number_to_currency((self.yearly_salary*(self.job.work_time_percentage/100.0))) + " " + I18n.t("myplaceonline.periods.yearly"), self.new_title) + " (#{Myp.number_to_currency(self.yearly_salary)} @ #{self.job.work_time_percentage}%)"
+    end
+  end
+  
+  def process_display(amount)
+    if self.job.work_time_percentage.nil?
+      return Myp.number_to_currency(amount)
+    else
+      return Myp.appendstrwrap(Myp.number_to_currency((amount*(self.job.work_time_percentage/100.0))), "#{Myp.number_to_currency(amount)} @ #{self.job.work_time_percentage}%")
+    end
   end
   
   def yearly_salary
@@ -23,6 +39,10 @@ class JobSalary < ApplicationRecord
       end
     end
     result
+  end
+  
+  def yearly_salary_display
+    return self.process_display(self.yearly_salary)
   end
   
   def get_hours_per_week
@@ -70,5 +90,17 @@ class JobSalary < ApplicationRecord
       end
     end
     result
+  end
+  
+  def yearly_hourly_display
+    return self.process_display(self.yearly_hourly)
+  end
+
+  def yearly_monthly
+    return self.yearly_salary / 12
+  end
+  
+  def yearly_monthly_display
+    return self.process_display(self.yearly_monthly)
   end
 end

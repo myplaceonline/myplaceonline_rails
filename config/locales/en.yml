@@ -1839,6 +1839,7 @@ en:
       job: "Job"
       awards: "Awards"
       add_award: "Add Award"
+      work_time_percentage: "Work Time (%)"
     resume:
       jobs: "Jobs"
       education: "Education"
@@ -1852,6 +1853,7 @@ en:
       salary: "Salary"
       salary_period: "Salary Period"
       salary_yearly: "Yearly Salary (Pre-Tax)"
+      salary_monthly: "Monthly Salary (Pre-Tax)"
       salary_hourly: "Hourly Salary (Pre-Tax)"
       new_title: "New Title"
     job_reviews:
