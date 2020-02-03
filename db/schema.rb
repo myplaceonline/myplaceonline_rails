@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_01_234523) do
+ActiveRecord::Schema.define(version: 2020_02_03_005616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2106,6 +2106,7 @@ ActiveRecord::Schema.define(version: 2020_02_01_234523) do
     t.boolean "always_show_positive_verb"
     t.string "alternate_search"
     t.string "prefix_suffix"
+    t.boolean "simple_toggle"
     t.index ["identity_id"], name: "index_drom_match_dealbreakers_on_identity_id"
   end
 
