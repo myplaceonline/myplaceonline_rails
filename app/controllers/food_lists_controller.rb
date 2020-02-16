@@ -25,7 +25,7 @@ class FoodListsController < MyplaceonlineController
     end
 
     def default_sort_direction
-      "desc"
+      "asc"
     end
 
     def additional_sorts
