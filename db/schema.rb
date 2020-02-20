@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_20_000054) do
+ActiveRecord::Schema.define(version: 2020_02_20_100959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -7883,8 +7883,8 @@ ActiveRecord::Schema.define(version: 2020_02_20_000054) do
   add_foreign_key "driver_licenses", "locations", column: "address_id"
   add_foreign_key "drom_match_chosen_dealbreakers", "drom_match_dealbreakers"
   add_foreign_key "drom_match_chosen_dealbreakers", "identities"
+  add_foreign_key "drom_match_dates", "drom_match_dates", column: "other_date_id"
   add_foreign_key "drom_match_dates", "identities"
-  add_foreign_key "drom_match_dates", "trips", column: "other_date_id"
   add_foreign_key "drom_match_dealbreaker_relationships", "drom_match_dealbreakers", column: "drom_match_dealbreaker1_id"
   add_foreign_key "drom_match_dealbreaker_relationships", "drom_match_dealbreakers", column: "drom_match_dealbreaker2_id"
   add_foreign_key "drom_match_dealbreaker_relationships", "identities"
