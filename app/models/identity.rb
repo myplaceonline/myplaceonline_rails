@@ -122,6 +122,23 @@ class Identity < ApplicationRecord
   # then Rails will try to delete :identity_files before model1, and this will
   # cause foreign reference violations because model2 still has rferences to
   # those files.
+
+  @@destroy_callbacks = []
+  
+  def self.register_destroy_callback(destroy_callback)
+    Rails.logger.debug{"Identity.register_destroy_callback #{destroy_callback}"}
+    @@destroy_callbacks.push(destroy_callback)
+  end
+  
+  before_destroy :on_before_destroy
+  
+  def on_before_destroy
+    Rails.logger.debug{"Identity.on_before_destroy callbacks: #{@@destroy_callbacks.size}"}
+    @@destroy_callbacks.each do |destroy_callback|
+      destroy_callback.call(self)
+    end
+  end
+  
   has_many :genotype_calls, :dependent => :destroy
   has_many :dna_analyses, :dependent => :destroy
   has_many :passwords, :dependent => :destroy
@@ -723,22 +740,6 @@ class Identity < ApplicationRecord
           end
         end
       end
-    end
-  end
-  
-  @@destroy_callbacks = []
-  
-  def self.register_destroy_callback(destroy_callback)
-    Rails.logger.debug{"Identity.register_destroy_callback #{destroy_callback}"}
-    @@destroy_callbacks.push(destroy_callback)
-  end
-  
-  before_destroy :on_before_destroy
-  
-  def on_before_destroy
-    Rails.logger.debug{"Identity.on_before_destroy callbacks: #{@@destroy_callbacks.size}"}
-    @@destroy_callbacks.each do |destroy_callback|
-      destroy_callback.call(self)
     end
   end
   
