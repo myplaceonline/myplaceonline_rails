@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_03_005616) do
+ActiveRecord::Schema.define(version: 2020_02_20_000054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4028,6 +4028,20 @@ ActiveRecord::Schema.define(version: 2020_02_03_005616) do
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_meals_on_identity_id"
     t.index ["location_id"], name: "index_meals_on_location_id"
+  end
+
+  create_table "mechanics", force: :cascade do |t|
+    t.bigint "location_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_mechanics_on_identity_id"
+    t.index ["location_id"], name: "index_mechanics_on_location_id"
   end
 
   create_table "media_dump_files", id: :serial, force: :cascade do |t|
@@ -8153,6 +8167,8 @@ ActiveRecord::Schema.define(version: 2020_02_03_005616) do
   add_foreign_key "meal_vitamins", "vitamins", name: "meal_vitamins_vitamin_id_fk"
   add_foreign_key "meals", "identities", name: "meals_identity_id_fk"
   add_foreign_key "meals", "locations", name: "meals_location_id_fk"
+  add_foreign_key "mechanics", "identities"
+  add_foreign_key "mechanics", "locations"
   add_foreign_key "media_dump_files", "identities"
   add_foreign_key "media_dump_files", "identity_files"
   add_foreign_key "media_dump_files", "media_dumps"

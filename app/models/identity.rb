@@ -322,6 +322,7 @@ class Identity < ApplicationRecord
   has_many :crontabs, :dependent => :destroy
   has_many :vehicle_washes, :dependent => :destroy
   has_many :haircuts, :dependent => :destroy
+  has_many :mechanics, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 
@@ -589,6 +590,7 @@ class Identity < ApplicationRecord
       :crontabs => crontabs.to_a.map{|x| x.as_json},
       :vehicle_washes => vehicle_washes.to_a.map{|x| x.as_json},
       :haircuts => haircuts.to_a.map{|x| x.as_json},
+      :mechanics => mechanics.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json},
     })
   end

@@ -211,7 +211,8 @@ Category.create!([
   {id: 211, name: "crontabs", link: "crontabs", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/time.png", explicit: nil, user_type_mask: 1, experimental: nil, simple: nil, internal: nil},
   {id: 212, name: "vehicle_washes", link: "vehicle_washes", position: 0, parent_id: 1, additional_filtertext: "cars rvs trucks recreational", icon: "FatCow_Icons16x16/broom.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 213, name: "dealbreaker_relationships", link: "drom_match/dealbreaker_relationships", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/connect.png", explicit: nil, user_type_mask: 1, experimental: nil, simple: nil, internal: nil},
-  {id: 246, name: "haircuts", link: "haircuts", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/cut.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
+  {id: 214, name: "haircuts", link: "haircuts", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/cut.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 247, name: "mechanics", link: "mechanics", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/construction.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
 ])
 
 # Reinitialize to cache the categories created above
