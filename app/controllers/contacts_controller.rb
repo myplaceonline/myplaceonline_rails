@@ -105,6 +105,14 @@ class ContactsController < MyplaceonlineController
       }
     end
     
+    if !@obj.contact_identity.primary_location.nil?
+      result << {
+        title: I18n.t("myplaceonline.contacts.location"),
+        link: @obj.contact_identity.primary_location.map_url(prefer_human_readable: true),
+        icon: "location"
+      }
+    end
+
     result << {
       title: I18n.t("myplaceonline.contacts.groups"),
       link: contact_groups_path(@obj),

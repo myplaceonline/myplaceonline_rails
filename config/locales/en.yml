@@ -1060,6 +1060,7 @@ en:
       combine_source: "Source Contact"
       combine_destination: "Destination Contact"
       combine_complete: "Contacts successfully combined"
+      location: "Location"
     files:
       name: "Name"
       download: "Download"
