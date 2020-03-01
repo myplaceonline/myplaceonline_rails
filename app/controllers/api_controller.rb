@@ -777,6 +777,7 @@ class ApiController < ApplicationController
     email = params[:email]
     password = params[:password]
     invite_code = params[:invite_code]
+    login_only = params[:login_only]
     
     if email.blank?
       result = false
@@ -790,7 +791,7 @@ class ApiController < ApplicationController
       user = User.where(email: email).take
       
       # Register a new user
-      if user.nil?
+      if user.nil? && !login_only
         if Myp.requires_invite_code && invite_code.blank?
           # Registration without an invite code
           result = false
@@ -827,6 +828,10 @@ class ApiController < ApplicationController
             messages = user.errors.full_messages
           end
         end
+      elsif user.nil? && login_only
+        result = false
+        status = 500
+        messages = [I18n.t("myplaceonline.errors.usernotfound")]
       else
         # Log in an existing user
         if user.valid_password?(password)

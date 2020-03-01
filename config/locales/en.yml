@@ -611,7 +611,8 @@ en:
     errors:
       nosessionpassword: "You must re-enter your password to continue"
       couldnotencrypt: "Could not generate encrypted value"
-      invalidpassword: "Invalid password"
+      usernotfound: "User not found. Click Sign Up to create a new account."
+      invalidpassword: "User exists but that's the wrong password"
       noemail: "Please enter your email"
       nopassword: "Please enter your password"
     buttons:
