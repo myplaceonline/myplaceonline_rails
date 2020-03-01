@@ -18,7 +18,7 @@ end
 
 <% if count > perpage %>
   <div class="horizontal_center small">
-    <%= count %> <%= t("myplaceonline.category." + category) %>, <%= perpage %> <%= t("myplaceonline.general.perpage") %>
+    <%= count %> <%= controller.category_display %>, <%= perpage %> <%= t("myplaceonline.general.perpage") %>
     <% if show_all %>
       (<%= link_to(t("myplaceonline.general.all"), items_all_link + query_params_part_all) %>)
     <% end %>
