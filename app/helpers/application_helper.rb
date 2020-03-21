@@ -249,6 +249,29 @@ module ApplicationHelper
     ).html_safe
   end
   
+  def get_content_display(content:, options:)
+    if (content.respond_to?("current_user_owns?") && content.current_user_owns?) || (User.current_user.admin? && options[:admin_details])
+      if options[:reference_url].nil?
+        if content.respond_to?("parent_context")
+          url = send(content.parent_context.class.name.underscore + "_" + content.class.name.underscore + "_path", content.parent_context, content)
+        else
+          url = send((options[:evaluated_class_name].nil? ? content.class.name : options[:evaluated_class_name]).underscore + "_path", content)
+        end
+      else
+        url = options[:reference_url]
+      end
+      result = display_url(
+        content: url,
+        format: :html,
+        options: {
+          url_innercontent: content.display
+        }
+      )
+    else
+      result = CGI::escapeHTML(content.display).html_safe
+    end
+  end
+  
   def display_reference(content:, format:, options:)
     options[:controller_name] ||= (options[:evaluated_class_name].nil? ? content.class.name : options[:evaluated_class_name]).pluralize + "Controller"
     options[:htmlencode_content] = false
@@ -274,26 +297,7 @@ module ApplicationHelper
     end
 
     if options[:reference_display_heading]
-      if (content.respond_to?("current_user_owns?") && content.current_user_owns?) || (User.current_user.admin? && options[:admin_details])
-        if options[:reference_url].nil?
-          if content.respond_to?("parent_context")
-            url = send(content.parent_context.class.name.underscore + "_" + content.class.name.underscore + "_path", content.parent_context, content)
-          else
-            url = send((options[:evaluated_class_name].nil? ? content.class.name : options[:evaluated_class_name]).underscore + "_path", content)
-          end
-        else
-          url = options[:reference_url]
-        end
-        result = display_url(
-          content: url,
-          format: :html,
-          options: {
-            url_innercontent: content_display
-          }
-        )
-      else
-        result = CGI::escapeHTML(content_display).html_safe
-      end
+      result = get_content_display(content: content, options: options)
     else
       if options[:show_reference_as_content] && !options[:second_row].blank?
         result = options[:second_row]
@@ -343,42 +347,55 @@ module ApplicationHelper
         ).html_safe
       else
         
-        if !options[:max_collection_items].nil? && options[:max_collection_items] > 0 && content.length > options[:max_collection_items]
-          content_list = content.first(options[:max_collection_items])
+        if options[:collection_items_simplified]
+          content.each do |item|
+            child_html = <<-HTML
+              <tr>
+                <td>#{CGI::escapeHTML(options[:heading])}</td>
+                <td>#{get_content_display(content: item, options: options)}</td>
+                <td>&nbsp;</td>
+              </tr>
+            HTML
+            result += child_html.html_safe
+          end
         else
-          content_list = content
-        end
-        
-        content_list.each do |item|
+          if !options[:max_collection_items].nil? && options[:max_collection_items] > 0 && content.length > options[:max_collection_items]
+            content_list = content.first(options[:max_collection_items])
+          else
+            content_list = content
+          end
           
-          Rails.logger.debug{"ApplicationHelper.display_collection: item: #{item}, path: #{path}, heading: #{options[:heading]}"}
-          
-          child_html = render(partial: "#{path}/show", locals: { obj: item }).html_safe
-          child_html = <<-HTML
-            <tr>
-              <td>#{CGI::escapeHTML(options[:heading])}</td>
-              <td colspan="2">
-                <div data-role="collapsible" data-collapsed="#{!options[:expanded]}">
-                  <h3>#{item.display}</h3>
-                  #{data_table_start(format: format)}
-                  #{child_html}
-                  #{data_table_end(format: format)}
-                </div>
-              </td>
-            </tr>
-          HTML
-          result += child_html.html_safe
-        end
-        if content.length > options[:max_collection_items] && options[:show_exceeded_max_collection_items_warning]
-          child_html = <<-HTML
-            <tr>
-              <td>#{CGI::escapeHTML(options[:heading])}</td>
-              <td colspan="2">
-                #{I18n.t("myplaceonline.application_helper.additional_items", count: content.length - options[:max_collection_items])}
-              </td>
-            </tr>
-          HTML
-          result += child_html.html_safe
+          content_list.each do |item|
+            
+            Rails.logger.debug{"ApplicationHelper.display_collection: item: #{item}, path: #{path}, heading: #{options[:heading]}"}
+            
+            child_html = render(partial: "#{path}/show", locals: { obj: item }).html_safe
+            child_html = <<-HTML
+              <tr>
+                <td>#{CGI::escapeHTML(options[:heading])}</td>
+                <td colspan="2">
+                  <div data-role="collapsible" data-collapsed="#{!options[:expanded]}">
+                    <h3>#{item.display}</h3>
+                    #{data_table_start(format: format)}
+                    #{child_html}
+                    #{data_table_end(format: format)}
+                  </div>
+                </td>
+              </tr>
+            HTML
+            result += child_html.html_safe
+          end
+          if content.length > options[:max_collection_items] && options[:show_exceeded_max_collection_items_warning]
+            child_html = <<-HTML
+              <tr>
+                <td>#{CGI::escapeHTML(options[:heading])}</td>
+                <td colspan="2">
+                  #{I18n.t("myplaceonline.application_helper.additional_items", count: content.length - options[:max_collection_items])}
+                </td>
+              </tr>
+            HTML
+            result += child_html.html_safe
+          end
         end
       end
     end
@@ -564,6 +581,7 @@ module ApplicationHelper
       non_wrap_container: :p,
       evaluated_class_name: nil,
       max_collection_items: 25,
+      collection_items_simplified: false,
       show_exceeded_max_collection_items_warning: true,
       show_reference: true,
       show_reference_as_content: false,

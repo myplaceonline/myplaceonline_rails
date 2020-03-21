@@ -1,6 +1,6 @@
 class FoodListsController < MyplaceonlineController
   def footer_items_show
-    result = super
+    result = []
     
     if !MyplaceonlineExecutionContext.offline?
       result << {
@@ -16,7 +16,11 @@ class FoodListsController < MyplaceonlineController
       icon: "bars"
     }
     
-    result
+    result + super
+  end
+  
+  def custom_sort(items)
+    return items.to_a.sort { |x, y| x.food.display <=> y.food.display }
   end
   
   protected

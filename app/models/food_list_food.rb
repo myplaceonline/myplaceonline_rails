@@ -23,4 +23,8 @@ class FoodListFood < ApplicationRecord
       food_attributes: Food.params
     ]
   end
+  
+  def parent_context
+    return self.food_list
+  end
 end
