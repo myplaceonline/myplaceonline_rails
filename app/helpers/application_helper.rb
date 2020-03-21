@@ -349,10 +349,19 @@ module ApplicationHelper
         
         if options[:collection_items_simplified]
           content.each do |item|
+            
+            additional_content = nil
+            if options[:collection_items_show_notes]
+              additional_content = options[:collection_items_show_notes_lambda].call(item)
+            end
+            
             child_html = <<-HTML
               <tr>
                 <td>#{CGI::escapeHTML(options[:heading])}</td>
-                <td>#{get_content_display(content: item, options: options)}</td>
+                <td>
+                  #{get_content_display(content: item, options: options)}
+                  #{additional_content}
+                </td>
                 <td>&nbsp;</td>
               </tr>
             HTML
@@ -582,6 +591,7 @@ module ApplicationHelper
       evaluated_class_name: nil,
       max_collection_items: 25,
       collection_items_simplified: false,
+      collection_items_show_notes: false,
       show_exceeded_max_collection_items_warning: true,
       show_reference: true,
       show_reference_as_content: false,

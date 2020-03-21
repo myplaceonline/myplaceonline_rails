@@ -1,3 +1,11 @@
 <%= data_row(heading: t("myplaceonline.food_lists.food_list_name"), content: obj.food_list_name) %>
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
-<%= data_row(heading: t("myplaceonline.food_lists.food"), content: controller.custom_sort(obj.food_list_foods), collection_items_simplified: true) %>
+<%=
+  data_row(
+    heading: t("myplaceonline.food_lists.food"),
+    content: controller.custom_sort(obj.food_list_foods),
+    collection_items_simplified: true,
+    collection_items_show_notes: true,
+    collection_items_show_notes_lambda: ->(item) { Myp.markdown_to_html(item.food.notes) }
+  )
+%>
