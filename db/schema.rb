@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_20_100959) do
+ActiveRecord::Schema.define(version: 2020_03_27_000843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -5535,6 +5535,7 @@ ActiveRecord::Schema.define(version: 2020_02_20_100959) do
     t.datetime "archived"
     t.integer "rating"
     t.boolean "is_public"
+    t.integer "recipe_type"
     t.index ["identity_id"], name: "index_recipes_on_identity_id"
   end
 

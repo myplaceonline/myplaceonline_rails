@@ -1238,11 +1238,15 @@ class MyplaceonlineController < ApplicationController
     simple_index_filters.each do |simple_index_filter|
       result << {
         :name => simple_index_filter[:name],
-        :display => "myplaceonline.#{category_name}.#{simple_index_filter[:name].to_s}"
+        :display => index_filter_translate(simple_index_filter[:name].to_s),
       }
     end
     
     result
+  end
+  
+  def index_filter_translate(name)
+    "myplaceonline.#{category_name}.#{name}"
   end
   
   def show_search
@@ -1586,6 +1590,35 @@ class MyplaceonlineController < ApplicationController
       true
     end
     
+    def additional_sql_simple_index_filters(result)
+      simple_index_filters.each do |simple_index_filter|
+        if !simple_index_filter[:column]
+          colname = simple_index_filter[:name].to_s
+        else
+          colname = simple_index_filter[:column].to_s
+        end
+        
+        Rails.logger.debug{"all_additional_sql simple_index_filter: #{colname}"}
+        
+        if instance_variable_get("@#{simple_index_filter[:name].to_s}")
+          if !simple_index_filter[:inverted]
+            sql = "#{model.table_name}.#{colname} = true"
+          else
+            sql = "#{model.table_name}.#{colname} is null or #{model.table_name}.#{colname} = false"
+          end
+          Rails.logger.debug{"all_additional_sql sql: #{sql}"}
+          result = Myp.appendstr(
+            result,
+            sql,
+            nil,
+            " and (",
+            ")"
+          )
+        end
+      end
+      return result
+    end
+    
     def all_additional_sql(strict)
       result = nil
       Rails.logger.debug{"all_additional_sql strict: #{strict}"}
@@ -1593,31 +1626,7 @@ class MyplaceonlineController < ApplicationController
         if check_archived && (@archived.blank? || !@archived)
           result = Myp.appendstr(result, "#{model.table_name}.archived is null", nil, " and (", ")")
         end
-        simple_index_filters.each do |simple_index_filter|
-          if !simple_index_filter[:column]
-            colname = simple_index_filter[:name].to_s
-          else
-            colname = simple_index_filter[:column].to_s
-          end
-          
-          Rails.logger.debug{"all_additional_sql simple_index_filter: #{colname}"}
-          
-          if instance_variable_get("@#{simple_index_filter[:name].to_s}")
-            if !simple_index_filter[:inverted]
-              sql = "#{model.table_name}.#{colname} = true"
-            else
-              sql = "#{model.table_name}.#{colname} is null or #{model.table_name}.#{colname} = false"
-            end
-            Rails.logger.debug{"all_additional_sql sql: #{sql}"}
-            result = Myp.appendstr(
-              result,
-              sql,
-              nil,
-              " and (",
-              ")"
-            )
-          end
-        end
+        result = additional_sql_simple_index_filters(result)
       end
       result
     end

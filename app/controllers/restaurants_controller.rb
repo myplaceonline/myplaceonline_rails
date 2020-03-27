@@ -21,10 +21,10 @@ class RestaurantsController < MyplaceonlineController
     if !@search.blank?
       max = 19
       parameters = { term: @search, limit: max, radius_filter: 1609 } # 1609 meters ~= 1 mile
-      @result = Yelp.client.search(@location, parameters)
-      if @result.businesses.length > max
-        max = @result.businesses.length
-      end
+      #@result = Yelp.client.search(@location, parameters)
+      #if @result.businesses.length > max
+      #  max = @result.businesses.length
+      #end
       @business = @result.businesses[rand(max)]
     end
   end

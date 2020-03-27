@@ -1563,6 +1563,7 @@ module Myp
     result
   end
   
+  # enum
   def self.get_select_name(val, select_values, default_value: nil, translate: true)
     if !val.nil?
       found = select_values.find{|x| x[1] == val}
@@ -1573,6 +1574,15 @@ module Myp
       end
     else
       default_value
+    end
+  end
+
+  def self.get_select_value(endswith, select_values)
+    found = select_values.find{|x| x[0].end_with?("." + endswith)}
+    if !found.nil?
+      return found[1]
+    else
+      return nil
     end
   end
 

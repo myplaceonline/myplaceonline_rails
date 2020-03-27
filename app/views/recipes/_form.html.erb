@@ -1,5 +1,15 @@
 <%= myp_text_field(f, :name, "myplaceonline.recipes.name", obj.name, autofocus) %>
 <%= myp_text_field(f, :recipe_category, "myplaceonline.recipes.recipe_category", obj.recipe_category, remote_autocomplete_model: obj.class, remote_autocomplete_all: true) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_SELECT,
+    name: :recipe_type,
+    value: obj.recipe_type,
+    placeholder: "myplaceonline.recipes.recipe_type",
+    select_options: Recipe::RECIPE_TYPES,
+  )
+%>
 <%= myp_text_area_markdown(f, :recipe, "myplaceonline.recipes.recipe", obj.recipe, collapsed: false) %>
 <%=
   render partial: "myplaceonline/pictures_form", locals: {

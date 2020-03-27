@@ -1,5 +1,6 @@
 <%= attribute_table_row(t("myplaceonline.recipes.name"), obj.name) %>
 <%= attribute_table_row(t("myplaceonline.recipes.recipe_category"), obj.recipe_category) %>
+<%= data_row(heading: t("myplaceonline.recipes.recipe_type"), content: obj.recipe_type, enumeration: Recipe::RECIPE_TYPES) %>
 <%= attribute_table_row_markdown(t("myplaceonline.recipes.recipe"), obj.recipe) %>
 <%=
   render partial: "myplaceonline/pictures", locals: {
