@@ -15,7 +15,7 @@ class WelcomeController < ApplicationController
         if !Myp.website_domain.feed_url.blank?
           redirect_to Myp.website_domain.feed_url
         else
-          raise "No feed found"
+          render plain: "404 not found", status: :not_found
         end
       }
       format.json {
@@ -27,6 +27,13 @@ class WelcomeController < ApplicationController
             keywords: website_domain.meta_keywords,
           }
         )
+      }
+      format.feed {
+        if !Myp.website_domain.feed_url.blank?
+          redirect_to Myp.website_domain.feed_url
+        else
+          render plain: "404 not found", status: :not_found
+        end
       }
     end
   end
