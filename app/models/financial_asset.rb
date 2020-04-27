@@ -17,7 +17,7 @@ class FinancialAsset < ApplicationRecord
   validates :asset_value, presence: true
   
   def display
-    asset_name
+    Myp.appendstrwrap(self.asset_name, self.asset_location)
   end
 
   child_files

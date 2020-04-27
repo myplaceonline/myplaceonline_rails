@@ -10,7 +10,7 @@ class FinancialAssetsController < MyplaceonlineController
   end
   
   def bubble_text(obj)
-    Myp.decimal_to_s(value: obj.asset_value)
+    Myp.display_currency(obj.asset_value)
   end
 
   def footer_items_index
@@ -27,17 +27,19 @@ class FinancialAssetsController < MyplaceonlineController
     total = 0
     @breakdown = {}
     self.all.order("asset_location ASC").each do |asset|
-      total = total + asset.asset_value
-      loc = asset.asset_location
-      if loc.blank?
-        loc = I18n.t("myplaceonline.financial_assets.no_location")
+      if !asset.archived?
+        total = total + asset.asset_value
+        loc = asset.asset_location
+        if loc.blank?
+          loc = I18n.t("myplaceonline.financial_assets.no_location")
+        end
+        items = @breakdown[loc]
+        if items.nil?
+          items = []
+        end
+        items << asset
+        @breakdown[loc] = items
       end
-      items = @breakdown[loc]
-      if items.nil?
-        items = []
-      end
-      items << asset
-      @breakdown[loc] = items
     end
     @total = total
   end
@@ -49,12 +51,12 @@ class FinancialAssetsController < MyplaceonlineController
 
     def additional_sorts
       [
-        [I18n.t("myplaceonline.financial_assets.asset_name"), default_sort_columns[0]]
+        [I18n.t("myplaceonline.financial_assets.asset_value"), default_sort_columns[0]]
       ]
     end
 
     def default_sort_columns
-      ["financial_assets.asset_name"]
+      ["financial_assets.asset_value"]
     end
 
     def obj_params

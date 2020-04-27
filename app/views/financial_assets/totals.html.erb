@@ -12,7 +12,7 @@
       <%= key %><br />
       <ul>
         <% value.each do |asset| %>
-          <li><%= asset.asset_name %> = <%= asset.asset_value %></li>
+          <li><%= asset.asset_name %> = <%= Myp.number_to_currency(asset.asset_value) %></li>
         <% end %>
       </ul>
     </li>
