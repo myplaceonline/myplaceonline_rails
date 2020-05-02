@@ -33,8 +33,22 @@ class CampLocationsController < MyplaceonlineController
       :near_busy_road,
       :level_ground,
       :nightly_cost,
+      :slideout_okay,
       location_attributes: LocationsController.param_names,
       membership_attributes: MembershipsController.param_names
+    ]
+  end
+  
+  def simple_index_filters
+    [
+      { name: :overnight_allowed },
+      { name: :slideout_okay },
+      { name: :free },
+      { name: :internet },
+      { name: :boondocking },
+      { name: :cell_phone_reception },
+      { name: :cell_phone_data },
+      { name: :level_ground },
     ]
   end
 
