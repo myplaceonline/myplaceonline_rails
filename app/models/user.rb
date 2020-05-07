@@ -3,6 +3,7 @@ class User < ApplicationRecord
 
   USER_TYPE_NORMAL = 0
   USER_TYPE_ADMIN = 1
+  USER_TYPE_DEMO = 2
   
   USER_TYPES = [
     ["myplaceonline.users.type_normal", USER_TYPE_NORMAL],

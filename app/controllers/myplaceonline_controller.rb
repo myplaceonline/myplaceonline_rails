@@ -93,7 +93,9 @@ class MyplaceonlineController < ApplicationController
   end
 
   def process_filters
+    Rails.logger.debug{"MyplaceonlineController.process_filters: #{simple_index_filters}"}
     simple_index_filters.each do |simple_index_filter|
+      Rails.logger.debug{"MyplaceonlineController.process_filters setting #{simple_index_filter[:name].to_s} = #{param_bool(simple_index_filter[:name])}"}
       instance_variable_set("@#{simple_index_filter[:name].to_s}", param_bool(simple_index_filter[:name]))
     end
   end
@@ -1238,7 +1240,7 @@ class MyplaceonlineController < ApplicationController
     simple_index_filters.each do |simple_index_filter|
       result << {
         :name => simple_index_filter[:name],
-        :display => index_filter_translate(simple_index_filter[:name].to_s),
+        :display => simple_index_filter[:display].blank? ? index_filter_translate(simple_index_filter[:name].to_s) : simple_index_filter[:display],
       }
     end
     
@@ -1600,20 +1602,36 @@ class MyplaceonlineController < ApplicationController
         
         Rails.logger.debug{"all_additional_sql simple_index_filter: #{colname}"}
         
-        if instance_variable_get("@#{simple_index_filter[:name].to_s}")
-          if !simple_index_filter[:inverted]
-            sql = "#{model.table_name}.#{colname} = true"
+        if !instance_variable_get("@#{simple_index_filter[:name].to_s}").nil?
+          if instance_variable_get("@#{simple_index_filter[:name].to_s}")
+            if !simple_index_filter[:inverted]
+              sql = "#{model.table_name}.#{colname} = true"
+            else
+              sql = "#{model.table_name}.#{colname} is null or #{model.table_name}.#{colname} = false"
+            end
+            Rails.logger.debug{"all_additional_sql sql: #{sql}"}
+            result = Myp.appendstr(
+              result,
+              sql,
+              nil,
+              " and (",
+              ")"
+            )
           else
-            sql = "#{model.table_name}.#{colname} is null or #{model.table_name}.#{colname} = false"
+            if !simple_index_filter[:inverted]
+              sql = "#{model.table_name}.#{colname} = false"
+            else
+              sql = "#{model.table_name}.#{colname} = true"
+            end
+            Rails.logger.debug{"all_additional_sql sql: #{sql}"}
+            result = Myp.appendstr(
+              result,
+              sql,
+              nil,
+              " and (",
+              ")"
+            )
           end
-          Rails.logger.debug{"all_additional_sql sql: #{sql}"}
-          result = Myp.appendstr(
-            result,
-            sql,
-            nil,
-            " and (",
-            ")"
-          )
         end
       end
       return result
