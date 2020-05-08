@@ -158,6 +158,7 @@ class User < ApplicationRecord
       )
       entered_invite_code.internal = true
       entered_invite_code.code = self.invite_code
+      entered_invite_code.saved_invite_code = self.invite_code
       entered_invite_code.save!
     end
   end
@@ -224,7 +225,7 @@ class User < ApplicationRecord
       
       code = EnteredInviteCode.where(user: self, website_domain: website_domain).take
 
-      ::Rails.logger.debug{"User has code: #{code}"}
+      ::Rails.logger.debug{"User has code: #{code.inspect}"}
 
       if code.nil?
         create_identity = false
@@ -234,6 +235,10 @@ class User < ApplicationRecord
           end
         end
       else
+        # Save off the code
+        self.used_invite_code = code.saved_invite_code
+        self.save!
+
         code.destroy!
       end
     end
