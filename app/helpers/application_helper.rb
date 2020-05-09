@@ -791,10 +791,24 @@ module ApplicationHelper
     token = share_token(context: identity_file)
     
     html = <<-HTML
-    <audio src="#{file_view_name_path(identity_file, identity_file.urlname, t: identity_file.updated_at.to_i, token: token)}" preload="none" controls>
-      <p>#{I18n.t("myplaceonline.html5.noaudio")}</p>
-    </audio>
-    #{ url_or_blank(file_download_path(identity_file, t: identity_file.updated_at.to_i, token: token), t("myplaceonline.files.download"), nil, "ui-btn ui-btn-inline", true) }
+      <audio src="#{file_view_name_path(identity_file, identity_file.urlname, t: identity_file.updated_at.to_i, token: token)}" preload="none" controls>
+        <p>#{I18n.t("myplaceonline.html5.noaudio")}</p>
+      </audio>
+      <p>
+      #{
+        url_or_blank(
+          file_path(
+            identity_file,
+            t: identity_file.updated_at.to_i,
+            token: token
+          ),
+          identity_file.file_file_name,
+          nil,
+          "",
+          true
+        )
+      } | #{ url_or_blank(file_download_path(identity_file, t: identity_file.updated_at.to_i, token: token), t("myplaceonline.files.download"), nil, "ui-btn ui-btn-inline", true) }
+      </p>
     HTML
   end
   
@@ -816,10 +830,24 @@ module ApplicationHelper
     token = share_token(context: identity_file)
     
     html = <<-HTML
-    <video style="max-width: 100%;" src="#{file_view_name_path(identity_file, identity_file.urlname, t: identity_file.updated_at.to_i, token: token)}" preload="none" loop="true" controls>
-      <p>#{I18n.t("myplaceonline.html5.novideo")}</p>
-    </video>
-    #{ url_or_blank(file_download_path(identity_file, t: identity_file.updated_at.to_i, token: token), t("myplaceonline.files.download"), nil, "ui-btn ui-btn-inline", true) }
+      <video style="max-width: 100%;" src="#{file_view_name_path(identity_file, identity_file.urlname, t: identity_file.updated_at.to_i, token: token)}" preload="none" loop="true" controls>
+        <p>#{I18n.t("myplaceonline.html5.novideo")}</p>
+      </video>
+      <p>
+      #{
+        url_or_blank(
+          file_path(
+            identity_file,
+            t: identity_file.updated_at.to_i,
+            token: token
+          ),
+          identity_file.file_file_name,
+          nil,
+          "",
+          true
+        )
+      } | #{ url_or_blank(file_download_path(identity_file, t: identity_file.updated_at.to_i, token: token), t("myplaceonline.files.download"), nil, "ui-btn ui-btn-inline", true) }
+      </p>
     HTML
   end
   
