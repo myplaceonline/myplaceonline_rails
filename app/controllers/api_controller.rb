@@ -22,6 +22,7 @@ class ApiController < ApplicationController
     :set_child_file,
     :update_notification_settings,
     :registerPushNotifications,
+    :sendgridevent,
   ]
   
   def index
@@ -1304,6 +1305,30 @@ class ApiController < ApplicationController
       },
       status: status,
     )
+  end
+  
+  def sendgridevent
+    Rails.logger.info{"sendgridevent: #{params}"}
+    begin
+      params_massaged = Myp.debug_print(params, plain: true)
+
+      Myp.send_support_email_safe(
+        "SendGrid Event Webhook",
+        CGI::escapeHTML(params_massaged).gsub("\n", "<br />\n"),
+        params_massaged,
+        request: request,
+        html_comment_details: true,
+      )
+
+      render json: {
+        :result => true
+      }
+    rescue Exception => e
+      render json: {
+        :result => false,
+        :error => e.to_s
+      }
+    end
   end
   
   protected

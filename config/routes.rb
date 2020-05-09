@@ -93,6 +93,7 @@ Rails.application.routes.draw do
     api/update_notification_settings
     api/set_child_file
     api/registerPushNotifications
+    api/sendgridevent
     subscribe/index
   ))
 
