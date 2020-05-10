@@ -260,16 +260,16 @@ class ApplicationController < ActionController::Base
               respond_type,
               identity_file.thumbnail_contents,
               identity_file.thumbnail_size_bytes,
-              identity_file.file_file_name,
-              identity_file.file_content_type
+              identity_file.thumbnail_name,
+              identity_file.thumbnail_content_type
             )
           elsif thumbnail2
             respond_data(
               respond_type,
               identity_file.thumbnail2_contents,
               identity_file.thumbnail2_size_bytes,
-              identity_file.file_file_name,
-              identity_file.file_content_type
+              identity_file.thumbnail_name,
+              identity_file.thumbnail_content_type
             )
           else
             respond_data(
@@ -289,6 +289,11 @@ class ApplicationController < ActionController::Base
           
           if content_type.nil?
             content_type = identity_file.file_content_type
+          end
+          
+          if thumbnail || thumbnail2
+            content_type = identity_file.thumbnail_content_type
+            filename = identity_file.thumbnail_name
           end
           
           if thumbnail
@@ -321,6 +326,7 @@ class ApplicationController < ActionController::Base
     
     # respond_type: [download, inline]
     def respond_data(respond_type, data, data_bytes, filename, content_type)
+      Rails.logger.debug{"ApplicationController.respond_data respond_type: #{respond_type}, filename: #{filename}, content_type: #{content_type}"}
       response.headers["Content-Length"] = data_bytes.to_s
       send_data(
         data,

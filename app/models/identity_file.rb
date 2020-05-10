@@ -52,6 +52,19 @@ class IdentityFile < ApplicationRecord
     file_file_name
   end
 
+  def thumbnail_name
+    if self.is_image?
+      self.file_file_name
+    elsif self.is_video?
+      i = self.file_file_name.index(".")
+      if !i.nil?
+        self.file_file_name[0..i] + "png"
+      else
+        self.file_file_name + ".png"
+      end
+    end
+  end
+
   def get_password(session)
     if !encrypted_password.nil?
       Myp.decrypt_with_user_password!(encrypted_password)
@@ -135,10 +148,10 @@ class IdentityFile < ApplicationRecord
     })
   end
   
-  def file_extension
+  def file_extension(include_period: true)
     i = file_file_name.index(".")
     if !i.nil?
-      file_file_name[i..-1]
+      file_file_name[i+(include_period ? 0 : 1)..-1]
     else
       nil
     end
@@ -275,7 +288,7 @@ class IdentityFile < ApplicationRecord
     
     Rails.logger.debug{"IdentityFile.ensure_thumbnail: thumbnail_property: #{thumbnail_property}, #{self.thumbnail_skip}, #{self.has_file?}"}
     
-    if self.is_image? && self.send("#{thumbnail_property}_contents").nil? && self.send("#{thumbnail_property}_filesystem_path").blank? && !self.thumbnail_skip && self.is_thumbnailable? && self.has_file?
+    if (self.is_image? || self.is_video?) && self.send("#{thumbnail_property}_contents").nil? && self.send("#{thumbnail_property}_filesystem_path").blank? && !self.thumbnail_skip && self.is_thumbnailable? && self.has_file?
       
       Rails.logger.debug{"IdentityFile.ensure_thumbnail: Generating #{thumbnail_property} for #{self.id}, type #{self.file_content_type}"}
       
@@ -284,68 +297,115 @@ class IdentityFile < ApplicationRecord
         fc = self.get_file_contents
         
         if !fc.nil? && fc.length > 0
-          image = Magick::Image::from_blob(fc)
           
-          Rails.logger.debug{"IdentityFile.ensure_thumbnail: Loaded image"}
-          
-          image = image.first
-          
-          Rails.logger.debug{"IdentityFile.ensure_thumbnail: Acquired first image cols #{image.columns}"}
-          
-          if image.columns > max_width
-            Rails.logger.debug{"IdentityFile.ensure_thumbnail: Requires thumbnailing"}
-            image.resize_to_fit!(max_width)
-            blob = image.to_blob
-            self.send("#{thumbnail_property}_contents=", blob)
-            self.send("#{thumbnail_property}_size_bytes=", blob.length)
-            self.save!
-            Rails.logger.debug{"IdentityFile.ensure_thumbnail: Saved thumbnail"}
-          else
-            Rails.logger.debug{"IdentityFile.ensure_thumbnail: Thumbnail not required"}
-            self.thumbnail_skip = true
-            self.save!
+          if self.is_image?
+            image = Magick::Image::from_blob(fc)
+            
+            Rails.logger.debug{"IdentityFile.ensure_thumbnail: Loaded image"}
+            
+            image = image.first
+            
+            Rails.logger.debug{"IdentityFile.ensure_thumbnail: Acquired first image cols #{image.columns}"}
+            
+            if image.columns > max_width
+              Rails.logger.debug{"IdentityFile.ensure_thumbnail: Requires thumbnailing"}
+              image.resize_to_fit!(max_width)
+              blob = image.to_blob
+              self.send("#{thumbnail_property}_contents=", blob)
+              self.send("#{thumbnail_property}_size_bytes=", blob.length)
+              self.save!
+              Rails.logger.debug{"IdentityFile.ensure_thumbnail: Saved thumbnail"}
+            else
+              Rails.logger.debug{"IdentityFile.ensure_thumbnail: Thumbnail not required"}
+              self.thumbnail_skip = true
+              self.save!
+            end
+          elsif self.is_video?
+            # Write it to a temporary file on disk
+            Myp.tmpfile("video", self.file_extension) do |tinputfile|
+              Myp.tmpfile("thumbnail", ".png") do |toutputfile|
+                Rails.logger.debug{"IdentityFile.ensure_thumbnail: Created temporary files: #{tinputfile.path} #{toutputfile.path}"}
+                
+                IO.binwrite(tinputfile.path, fc)
+                
+                command_line = get_ffmpeg_command(tinputfile.path, self.file_extension(include_period: false), toutputfile.path, max_width)
+                
+                child = Myp.spawn(
+                  command_line: command_line,
+                  process_error: false
+                )
+                if child.status.exitstatus == 0
+                  blob = IO.binread(toutputfile.path)
+                  
+                  self.send("#{thumbnail_property}_contents=", blob)
+                  self.send("#{thumbnail_property}_size_bytes=", blob.length)
+                  self.save!
+                  Rails.logger.debug{"IdentityFile.ensure_thumbnail: Saved video thumbnail"}
+                else
+                  Myp.warn("Could not extract thumbnail for video #{self.id}, exit status #{child.status.exitstatus}, command line: #{command_line}, stdout: #{child.out}, stderr: #{child.err}")
+                  self.thumbnail_skip = true
+                  self.save!
+                end
+              end
+            end
           end
         end
-        
       else
         Rails.logger.debug{"IdentityFile.ensure_thumbnail: creating thumbnail on disk"}
         
         thumbnail_path = self.evaluated_path + thumbnail_file_suffix
         index = ""
+        
         if !self.file_content_type.index("gif").nil? || !self.file_content_type.index("webm").nil?
           index = "[0]"
           thumbnail_path = thumbnail_path + ".jpg"
         end
         
-        # https://imagemagick.org/script/command-line-processing.php#geometry
-        # http://www.imagemagick.org/Usage/thumbnails/
-        # http://www.imagemagick.org/Usage/resize/
-        # Ulimit is in KB
-        # Too small of a ulimit will cause errors such as:
-        #   "libgomp: Thread creation failed: Resource temporarily unavailable"
         success = false
         
-        input_file = self.evaluated_path
-        if input_file.index(".").nil? && !self.file_content_type.blank?
-          # "To specify a particular image format, precede the filename with an image format name and a colon (i.e. ps:image) or specify the image type as the filename suffix (i.e. image.ps)."
-          file_type = self.file_content_type
-          if !file_type.blank? && !file_type.rindex("/").nil?
-            file_type = clean_filename(file_type[file_type.rindex("/")+1..-1])
-            if !file_type.blank?
-              input_file = "#{file_type}:" + input_file
+        if self.is_image?
+          input_file = self.evaluated_path
+          if input_file.index(".").nil? && !self.file_content_type.blank?
+            # "To specify a particular image format, precede the filename with an image format name and a colon (i.e. ps:image) or specify the image type as the filename suffix (i.e. image.ps)."
+            file_type = self.file_content_type
+            if !file_type.blank? && !file_type.rindex("/").nil?
+              file_type = clean_filename(file_type[file_type.rindex("/")+1..-1])
+              if !file_type.blank?
+                input_file = "#{file_type}:" + input_file
+              end
             end
           end
-        end
-        command_line = "convert #{input_file}#{index} -auto-orient -thumbnail '#{max_width}>' #{thumbnail_path}"
-        
-        child = Myp.spawn(
-          command_line: command_line,
-          process_error: false
-        )
-        if child.status.exitstatus == 0
-          success = true
-        else
-          Myp.warn("Thumbnail id: #{self.id}, content_type: #{self.file_content_type}, name: #{self.file_file_name}, path: #{self.evaluated_path}, input_file: #{input_file}, exit status #{child.status.exitstatus}, command line: #{command_line}, stdout: #{child.out}, stderr: #{child.err}")
+
+          # https://imagemagick.org/script/command-line-processing.php#geometry
+          # http://www.imagemagick.org/Usage/thumbnails/
+          # http://www.imagemagick.org/Usage/resize/
+          # Ulimit is in KB
+          # Too small of a ulimit will cause errors such as:
+          #   "libgomp: Thread creation failed: Resource temporarily unavailable"
+          command_line = "convert #{input_file}#{index} -auto-orient -thumbnail '#{max_width}>' #{thumbnail_path}"
+          
+          child = Myp.spawn(
+            command_line: command_line,
+            process_error: false
+          )
+          if child.status.exitstatus == 0
+            success = true
+          else
+            Myp.warn("Thumbnail id: #{self.id}, content_type: #{self.file_content_type}, name: #{self.file_file_name}, path: #{self.evaluated_path}, input_file: #{input_file}, exit status #{child.status.exitstatus}, command line: #{command_line}, stdout: #{child.out}, stderr: #{child.err}")
+          end
+        elsif self.is_video?
+          thumbnail_path = thumbnail_path + ".png"
+          command_line = get_ffmpeg_command(self.evaluated_path, self.file_extension(include_period: false), thumbnail_path, max_width)
+          
+          child = Myp.spawn(
+            command_line: command_line,
+            process_error: false
+          )
+          if child.status.exitstatus == 0
+            success = true
+          else
+            Myp.warn("Could not extract thumbnail for video #{self.id}, exit status #{child.status.exitstatus}, command line: #{command_line}, stdout: #{child.out}, stderr: #{child.err}")
+          end
         end
         
         if success
@@ -358,6 +418,31 @@ class IdentityFile < ApplicationRecord
         end
       end
     end
+  end
+  
+  def thumbnail_content_type
+    if self.is_image?
+      self.file_content_type
+    elsif self.is_video?
+      "image/png"
+    end
+  end
+  
+  def get_ffmpeg_command(inputpath, inputcontenttype, outputpath, max_width)
+    #"The -ss [and -sseof] parameter needs to be specified somewhere before -i"
+    #http://trac.ffmpeg.org/wiki/Seeking
+
+    #https://ffmpeg.org/ffmpeg-filters.html#scale
+    #https://trac.ffmpeg.org/wiki/Scaling
+
+    # First frame
+    #ffmpeg -y -ss 00:00:00.000 -i IMG_4176.mp4 -vframes 1 -q:v 5 -vf scale=640:-2 output.png
+    #ffmpeg -y -i IMG_4176.mp4 -vf "select=eq(n\,0)" -vframes 1 -q:v 5 -vf scale=640:-2 output.png
+
+    # Last frame
+    #ffmpeg -y -sseof -1 -i IMG_4176.mp4 -vframes 1 -q:v 5 -vf scale=640:-2 output.png
+    
+    command_line = "ffmpeg -y -ss 00:00:00.000 -f #{inputcontenttype} -i #{inputpath} -vframes 1 -q:v 5 -vf scale=#{max_width}:-2 #{outputpath}"
   end
   
   def clean_filename(name)

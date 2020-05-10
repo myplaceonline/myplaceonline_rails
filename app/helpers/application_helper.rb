@@ -887,7 +887,7 @@ module ApplicationHelper
   end
   
   def has_image(identity_file)
-    !identity_file.nil? && identity_file.is_image?
+    !identity_file.nil? && (identity_file.is_image? || identity_file.is_video?)
   end
   
   def has_thumbnail(identity_file)
@@ -909,7 +909,7 @@ module ApplicationHelper
               image_tag(
                 file_thumbnail_name_path(
                   identity_file,
-                  identity_file.urlname,
+                  identity_file.thumbnail_name,
                   t: identity_file.updated_at.to_i,
                   token: token
                 ),
@@ -922,7 +922,7 @@ module ApplicationHelper
               image_tag(
                 file_thumbnail_name_path(
                   identity_file,
-                  identity_file.urlname,
+                  identity_file.thumbnail_name,
                   t: identity_file.updated_at.to_i
                 ),
                 alt: identity_file.display,
