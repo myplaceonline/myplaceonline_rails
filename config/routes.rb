@@ -95,6 +95,7 @@ Rails.application.routes.draw do
     api/registerPushNotifications
     api/sendgridevent
     subscribe/index
+    api/update_video_thumbnail
   ))
 
   RouteHelpers.routes_get_post(self, %w(

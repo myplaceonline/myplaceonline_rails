@@ -272,7 +272,7 @@ class IdentityFile < ApplicationRecord
     !self.thumbnail_skip && (!self.thumbnail_contents.nil? || !self.thumbnail_filesystem_path.blank?)
   end
   
-  def ensure_thumbnail(max_width: THUMBNAIL1_MAX_WIDTH)
+  def ensure_thumbnail(max_width: THUMBNAIL1_MAX_WIDTH, timestr: "00:00:00.000")
     
     thumbnail_property = ""
     thumbnail_file_suffix = ""
@@ -328,7 +328,7 @@ class IdentityFile < ApplicationRecord
                 
                 IO.binwrite(tinputfile.path, fc)
                 
-                command_line = get_ffmpeg_command(tinputfile.path, self.file_extension(include_period: false), toutputfile.path, max_width)
+                command_line = get_ffmpeg_command(tinputfile.path, self.file_extension(include_period: false), toutputfile.path, max_width, timestr)
                 
                 child = Myp.spawn(
                   command_line: command_line,
@@ -395,7 +395,7 @@ class IdentityFile < ApplicationRecord
           end
         elsif self.is_video?
           thumbnail_path = thumbnail_path + ".png"
-          command_line = get_ffmpeg_command(self.evaluated_path, self.file_extension(include_period: false), thumbnail_path, max_width)
+          command_line = get_ffmpeg_command(self.evaluated_path, self.file_extension(include_period: false), thumbnail_path, max_width, timestr)
           
           child = Myp.spawn(
             command_line: command_line,
@@ -428,7 +428,7 @@ class IdentityFile < ApplicationRecord
     end
   end
   
-  def get_ffmpeg_command(inputpath, inputcontenttype, outputpath, max_width)
+  def get_ffmpeg_command(inputpath, inputcontenttype, outputpath, max_width, timestr)
     #"The -ss [and -sseof] parameter needs to be specified somewhere before -i"
     #http://trac.ffmpeg.org/wiki/Seeking
 
@@ -442,7 +442,7 @@ class IdentityFile < ApplicationRecord
     # Last frame
     #ffmpeg -y -sseof -1 -i IMG_4176.mp4 -vframes 1 -q:v 5 -vf scale=640:-2 output.png
     
-    command_line = "ffmpeg -y -ss 00:00:00.000 -f #{inputcontenttype} -i #{inputpath} -vframes 1 -q:v 5 -vf scale=#{max_width}:-2 #{outputpath}"
+    command_line = "ffmpeg -y -ss #{timestr} -f #{inputcontenttype} -i #{inputpath} -vframes 1 -q:v 5 -vf scale=#{max_width}:-2 #{outputpath}"
   end
   
   def clean_filename(name)

@@ -23,6 +23,7 @@ class ApiController < ApplicationController
     :update_notification_settings,
     :registerPushNotifications,
     :sendgridevent,
+    :update_video_thumbnail,
   ]
   
   def index
@@ -1329,6 +1330,44 @@ class ApiController < ApplicationController
         :error => e.to_s
       }
     end
+  end
+  
+  def millis_to_timestr(millis)
+    seconds = millis / 1000
+    millis = millis % 1000
+    result = Time.at(seconds).utc.strftime("%H:%M:%S")
+    result = result + "." + millis.to_s.rjust(3, "0")
+    return result
+  end
+  
+  def update_video_thumbnail
+    result = {
+      code: 500,
+      successful: false,
+      errors: [],
+    }
+    
+    video_id = params[:video_id]
+    if !video_id.blank?
+      video_id = video_id.to_i
+      video = IdentityFile.find(video_id)
+      authorize! :edit, video
+      
+      offsetms = params[:offsetms]
+      if !offsetms.blank?
+        offsetms = offsetms.to_i
+        timestr = millis_to_timestr(offsetms)
+        video.clear_thumbnail
+        video.ensure_thumbnail(timestr: timestr)
+        result[:code] = 200
+        result[:successful] = true
+      end
+    end
+    
+    render(
+      json: result,
+      status: result[:code],
+    )
   end
   
   protected
