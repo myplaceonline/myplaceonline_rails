@@ -1361,6 +1361,7 @@ class ApiController < ApplicationController
         video.ensure_thumbnail(timestr: timestr)
         result[:code] = 200
         result[:successful] = true
+        result[:updated_at] = video.updated_at.to_i
       end
     end
     
