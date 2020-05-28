@@ -884,6 +884,7 @@ en:
       not_confirmed: "Not Confirmed"
       type_normal: "Normal"
       type_admin: "Administrator"
+      type_demo: "Demo"
       agree_terms: "Do you agree to the terms?"
       must_agree_terms: "You must agree to the %{terms} to sign up."
       homepage: "Homepage"

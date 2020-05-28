@@ -7,7 +7,8 @@ class User < ApplicationRecord
   
   USER_TYPES = [
     ["myplaceonline.users.type_normal", USER_TYPE_NORMAL],
-    ["myplaceonline.users.type_admin", USER_TYPE_ADMIN]
+    ["myplaceonline.users.type_admin", USER_TYPE_ADMIN],
+    ["myplaceonline.users.type_demo", USER_TYPE_DEMO],
   ]
   
   # The guest user will not exist in the database
@@ -354,6 +355,10 @@ class User < ApplicationRecord
     else
       nil
     end
+  end
+  
+  def demo_user?
+    return self.user_type == USER_TYPE_DEMO
   end
   
   protected
