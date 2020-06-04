@@ -30,6 +30,15 @@
   )
 %>
 <%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :cost,
+    value: obj.cost,
+    placeholder: "myplaceonline.hospital_visits.cost"
+  )
+%>
+<%=
   render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :hospital,

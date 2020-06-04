@@ -3814,6 +3814,7 @@ en:
       hospital_visit_date: "Date"
       emergency_room: "Emergency Room"
       hospital: "Hospital"
+      cost: "Cost"
     paid_taxes:
       paid_tax_date: "Date Paid"
       donations: "Donations"

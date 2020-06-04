@@ -32,6 +32,7 @@ class HospitalVisitsController < MyplaceonlineController
         :hospital_visit_date,
         :emergency_room,
         :notes,
+        :cost,
         hospital_attributes: LocationsController.param_names,
         hospital_visit_files_attributes: FilesController.multi_param_names
       )
