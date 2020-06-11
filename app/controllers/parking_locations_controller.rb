@@ -13,6 +13,7 @@ class ParkingLocationsController < MyplaceonlineController
     [
       :id,
       :notes,
+      :rating,
       location_attributes: LocationsController.param_names,
     ]
   end

@@ -28,6 +28,7 @@ class FavoriteLocationsController < MyplaceonlineController
 
     def obj_params
       params.require(:favorite_location).permit(
+        :rating,
         location_attributes: LocationsController.param_names
       )
     end

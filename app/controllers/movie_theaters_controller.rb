@@ -10,6 +10,7 @@ class MovieTheatersController < MyplaceonlineController
   protected
     def obj_params
       params.require(:movie_theater).permit(
+        :rating,
         location_attributes: LocationsController.param_names
       )
     end

@@ -13,6 +13,7 @@ class MuseumsController < MyplaceonlineController
         :museum_id,
         :museum_type,
         :notes,
+        :rating,
         location_attributes: LocationsController.param_names,
         website_attributes: WebsitesController.param_names
       )

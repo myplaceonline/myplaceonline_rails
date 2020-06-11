@@ -2,6 +2,7 @@
 <%= attribute_table_row_datetime(t("myplaceonline.events.event_time"), obj.event_time) %>
 <%= attribute_table_row_datetime(t("myplaceonline.events.event_end_time"), obj.event_end_time) %>
 <%= data_row(heading: t("myplaceonline.events.cost"), content: obj.cost, currency: true) %>
+<%= data_row(heading: t("myplaceonline.general.rating"), content: obj.rating, enumeration: Myp::RATINGS) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <% if !obj.repeat.nil? %>
   <%=

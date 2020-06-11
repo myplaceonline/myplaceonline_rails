@@ -11,6 +11,7 @@ class AwesomeListsController < MyplaceonlineController
     def obj_params
       params.require(:awesome_list).permit(
         :notes,
+        :rating,
         location_attributes: LocationsController.param_names,
         awesome_list_items_attributes: [:id, :_destroy, :item_name]
       )

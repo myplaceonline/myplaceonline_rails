@@ -16,6 +16,7 @@ class BeachesController < MyplaceonlineController
       params.require(:beach).permit(
         :crowded,
         :notes,
+        :rating,
         location_attributes: LocationsController.param_names,
       )
     end

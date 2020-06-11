@@ -1,2 +1,3 @@
 <%= attribute_table_row_reference(t("myplaceonline.desired_locations.location"), "location_path", obj.location) %>
 <%= attribute_table_row_reference(t("myplaceonline.locations.website"), "website_path", obj.website) %>
+<%= data_row(heading: t("myplaceonline.general.rating"), content: obj.rating, enumeration: Myp::RATINGS) %>

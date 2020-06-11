@@ -3,6 +3,16 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_SELECT,
+    name: :rating,
+    value: obj.rating,
+    placeholder: "myplaceonline.general.rating",
+    select_options: Myp::RATINGS,
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,

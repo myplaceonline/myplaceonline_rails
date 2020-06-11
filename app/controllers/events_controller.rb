@@ -122,6 +122,7 @@ class EventsController < MyplaceonlineController
       :event_time,
       :event_end_time,
       :notes,
+      :rating,
       :cost,
       location_attributes: LocationsController.param_names,
       repeat_attributes: Repeat.params,

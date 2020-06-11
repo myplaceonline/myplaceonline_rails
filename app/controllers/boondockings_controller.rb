@@ -6,6 +6,8 @@ class BoondockingsController < MyplaceonlineController
 
     def obj_params
       params.require(:boondocking).permit(
+        :rating,
+        :notes,
         camp_location_attributes: CampLocationsController.param_names
       )
     end

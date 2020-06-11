@@ -1,5 +1,6 @@
 <%= attribute_table_row_reference(t("myplaceonline.museums.location"), "location_path", obj.location) %>
 <%= attribute_table_row(t("myplaceonline.museums.museum_id"), obj.museum_id) %>
 <%= attribute_table_row_select(t("myplaceonline.museums.museum_type"), obj.museum_type, Museum::MUSEUM_TYPES) %>
+<%= data_row(heading: t("myplaceonline.general.rating"), content: obj.rating, enumeration: Myp::RATINGS) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <%= attribute_table_row_reference(t("myplaceonline.museums.website"), "website_path", obj.website) %>

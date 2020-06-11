@@ -16,6 +16,7 @@ class GasStationsController < MyplaceonlineController
         :propane_fillup,
         :rv_dump_station,
         :notes,
+        :rating,
         location_attributes: LocationsController.param_names
       )
     end

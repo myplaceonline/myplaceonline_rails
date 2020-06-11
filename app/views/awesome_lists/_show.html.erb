@@ -2,4 +2,5 @@
 <% obj.awesome_list_items.each do |item| %>
   <%= attribute_table_row(t("myplaceonline.awesome_lists.item"), item.item_name) %>
 <% end %>
+<%= data_row(heading: t("myplaceonline.general.rating"), content: obj.rating, enumeration: Myp::RATINGS) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>

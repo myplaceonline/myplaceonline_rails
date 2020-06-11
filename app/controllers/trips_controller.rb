@@ -170,6 +170,7 @@ class TripsController < MyplaceonlineController
         :final_costs_transportation,
         :final_costs_food,
         :final_costs_additional,
+        :rating,
         location_attributes: LocationsController.param_names,
         trip_pictures_attributes: FilesController.multi_param_names,
         hotel_attributes: HotelsController.param_names,

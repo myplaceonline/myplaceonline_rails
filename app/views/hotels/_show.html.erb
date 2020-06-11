@@ -6,4 +6,5 @@
 <%= data_row(heading: t("myplaceonline.hotels.total_cost"), content: obj.total_cost, currency: true) %>
 <%= attribute_table_row_select(t("myplaceonline.hotels.overall_rating"), obj.overall_rating, Myp::RATINGS) %>
 <%= attribute_table_row_select(t("myplaceonline.hotels.breakfast_rating"), obj.breakfast_rating, Myp::RATINGS) %>
+<%= data_row(heading: t("myplaceonline.general.rating"), content: obj.rating, enumeration: Myp::RATINGS) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>

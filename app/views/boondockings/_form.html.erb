@@ -12,3 +12,13 @@
     collapsed: false,
   }
 %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_SELECT,
+    name: :rating,
+    value: obj.rating,
+    placeholder: "myplaceonline.general.rating",
+    select_options: Myp::RATINGS,
+  )
+%>

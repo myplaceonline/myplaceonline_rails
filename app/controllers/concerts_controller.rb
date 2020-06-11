@@ -27,6 +27,7 @@ class ConcertsController < MyplaceonlineController
         :concert_date,
         :concert_title,
         :notes,
+        :rating,
         location_attributes: LocationsController.param_names,
         concert_musical_groups_attributes: [
           :id,

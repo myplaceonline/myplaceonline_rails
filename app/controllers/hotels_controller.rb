@@ -11,6 +11,7 @@ class HotelsController < MyplaceonlineController
     [
       :id,
       :notes,
+      :rating,
       :overall_rating,
       :breakfast_rating,
       :room_number,

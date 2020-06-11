@@ -42,6 +42,7 @@ class ApartmentsController < MyplaceonlineController
     def obj_params
       params.require(:apartment).permit(
         :notes,
+        :rating,
         :total_square_footage,
         :master_bedroom_square_footage,
         :bedrooms,
