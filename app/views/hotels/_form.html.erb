@@ -49,7 +49,6 @@
     placeholder: "myplaceonline.hotels.total_cost"
   )
 %>
-<%= myp_select(f, :overall_rating, "myplaceonline.hotels.overall_rating", Myp.translate_options(Myp::RATINGS), obj.overall_rating) %>
 <%= myp_select(f, :breakfast_rating, "myplaceonline.hotels.breakfast_rating", Myp.translate_options(Myp::RATINGS), obj.breakfast_rating) %>
 <%=
   input_field(

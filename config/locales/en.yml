@@ -2964,7 +2964,6 @@ en:
       max_use_count: "Maximum Use Count"
     hotels:
       location: "Location"
-      overall_rating: "Overall Rating"
       breakfast_rating: "Breakfast Rating"
       room_number: "Room"
       checkin_date: "Check-in Date"
