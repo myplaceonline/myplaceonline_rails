@@ -340,6 +340,7 @@ class Identity < ApplicationRecord
   has_many :vehicle_washes, :dependent => :destroy
   has_many :haircuts, :dependent => :destroy
   has_many :mechanics, :dependent => :destroy
+  has_many :wireless_networks, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 

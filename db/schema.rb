@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_12_000250) do
+ActiveRecord::Schema.define(version: 2020_06_12_232431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -7560,6 +7560,23 @@ ActiveRecord::Schema.define(version: 2020_06_12_000250) do
     t.index ["identity_id"], name: "index_weights_on_identity_id"
   end
 
+  create_table "wireless_networks", force: :cascade do |t|
+    t.string "network_names"
+    t.bigint "password_id"
+    t.bigint "location_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_wireless_networks_on_identity_id"
+    t.index ["location_id"], name: "index_wireless_networks_on_location_id"
+    t.index ["password_id"], name: "index_wireless_networks_on_password_id"
+  end
+
   create_table "wisdom_files", id: :serial, force: :cascade do |t|
     t.integer "wisdom_id"
     t.integer "identity_file_id"
@@ -8627,6 +8644,9 @@ ActiveRecord::Schema.define(version: 2020_06_12_000250) do
   add_foreign_key "websites", "contacts", column: "recommender_id"
   add_foreign_key "websites", "identities", name: "websites_identity_id_fk"
   add_foreign_key "weights", "identities", name: "weights_identity_id_fk"
+  add_foreign_key "wireless_networks", "identities"
+  add_foreign_key "wireless_networks", "locations"
+  add_foreign_key "wireless_networks", "passwords"
   add_foreign_key "wisdom_files", "identities"
   add_foreign_key "wisdom_files", "identity_files"
   add_foreign_key "wisdom_files", "wisdoms"

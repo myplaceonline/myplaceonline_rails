@@ -316,6 +316,7 @@ en:
       website_scrapers: "Website Scrapers"
       websites: "Websites"
       weights: "Weight Measurements"
+      wireless_networks: "Wireless Networks"
       wisdoms: "Wisdom"
     default_domain:
       meta_description: "Myplaceonline: your digital home"
@@ -4487,3 +4488,7 @@ en:
     mechanics:
       location: "Location"
       rating: "Rating"
+    wireless_networks:
+      network_names: "Network Name(s)"
+      location: "Location"
+      password: "Password"
