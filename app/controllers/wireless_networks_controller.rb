@@ -36,7 +36,7 @@ class WirelessNetworksController < MyplaceonlineController
     end
 
     def all_joins
-      "INNER JOIN locations ON locations.id = wireless_networks.location_id"
+      "LEFT OUTER JOIN locations ON locations.id = wireless_networks.location_id"
     end
 
     def all_includes
