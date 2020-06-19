@@ -341,6 +341,7 @@ class Identity < ApplicationRecord
   has_many :haircuts, :dependent => :destroy
   has_many :mechanics, :dependent => :destroy
   has_many :wireless_networks, :dependent => :destroy
+  has_many :mrobbles, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 

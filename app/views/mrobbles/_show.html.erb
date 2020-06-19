@@ -1,0 +1,8 @@
+<%= data_row(heading: t("myplaceonline.mrobbles.mrobble_name"), content: obj.mrobble_name) %>
+<%= data_row(heading: t("myplaceonline.mrobbles.mrobble_link"), content: obj.mrobble_link, url: true, url_external: true, url_external_target_blank: true) %>
+<%= data_row(heading: t("myplaceonline.mrobbles.stopped_watching_time"), content: obj.stopped_watching_time) %>
+<%= data_row(heading: t("myplaceonline.mrobbles.restart_link"), content: obj.restart_link, url: true, url_external: true, url_external_target_blank: true) %>
+<%= data_row(heading: t("myplaceonline.mrobbles.finished"), content: obj.finished) %>
+<%= data_row(heading: t("myplaceonline.general.rating"), content: obj.rating, enumeration: Myp::RATINGS) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.mrobble_files) %>

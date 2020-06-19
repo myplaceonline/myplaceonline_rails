@@ -197,6 +197,7 @@ en:
       money_balances: "Money Balances"
       movie_theaters: "Movie Theaters"
       movies: "Movies"
+      mrobbles: "Mrobbles"
       museums: "Museums"
       music_albums: "Music Albums"
       musical_groups: "Musical Groups"
@@ -4493,3 +4494,9 @@ en:
       network_names: "Network Name(s)"
       location: "Location"
       password: "Password"
+    mrobbles:
+      mrobble_name: "Name"
+      mrobble_link: "Link"
+      stopped_watching_time: "Stopped Watching"
+      finished: "Finished"
+      restart_link: "Restart Link"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_12_232431) do
+ActiveRecord::Schema.define(version: 2020_06_19_144739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4415,6 +4415,35 @@ ActiveRecord::Schema.define(version: 2020_06_12_232431) do
     t.index ["recommender_id"], name: "index_movies_on_recommender_id"
   end
 
+  create_table "mrobble_files", force: :cascade do |t|
+    t.bigint "mrobble_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_mrobble_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_mrobble_files_on_identity_id"
+    t.index ["mrobble_id"], name: "index_mrobble_files_on_mrobble_id"
+  end
+
+  create_table "mrobbles", force: :cascade do |t|
+    t.string "mrobble_name"
+    t.string "mrobble_link"
+    t.string "stopped_watching_time"
+    t.boolean "finished"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_mrobbles_on_identity_id"
+  end
+
   create_table "museums", id: :serial, force: :cascade do |t|
     t.integer "location_id"
     t.string "museum_id", limit: 255
@@ -8246,6 +8275,10 @@ ActiveRecord::Schema.define(version: 2020_06_12_232431) do
   add_foreign_key "movies", "contacts", column: "lent_to_id"
   add_foreign_key "movies", "contacts", column: "recommender_id", name: "movies_recommender_id_fk"
   add_foreign_key "movies", "identities", name: "movies_identity_id_fk"
+  add_foreign_key "mrobble_files", "identities"
+  add_foreign_key "mrobble_files", "identity_files"
+  add_foreign_key "mrobble_files", "mrobbles"
+  add_foreign_key "mrobbles", "identities"
   add_foreign_key "museums", "identities", name: "museums_identity_id_fk"
   add_foreign_key "museums", "locations", name: "museums_location_id_fk"
   add_foreign_key "museums", "websites", name: "museums_website_id_fk"
