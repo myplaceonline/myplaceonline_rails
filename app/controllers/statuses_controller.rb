@@ -1,4 +1,7 @@
 class StatusesController < MyplaceonlineController
+
+  DISABLE_REMINDERS = :disable_reminders
+
   def footer_items_show
     [
       {
@@ -43,5 +46,23 @@ class StatusesController < MyplaceonlineController
         :stoic_improvement,
         :stoic_faults,
       )
+    end
+    
+    def settings_fields
+      super + [
+        {
+          type: Myp::FIELD_BOOLEAN,
+          name: DISABLE_REMINDERS,
+          options: {
+            value: @disable_reminders,
+            placeholder: "myplaceonline.statuses.setting_disable_reminders",
+          },
+        },
+      ]
+    end
+
+    def load_settings_params
+      super
+      @disable_reminders = settings_boolean(name: DISABLE_REMINDERS, default_value: false)
     end
 end

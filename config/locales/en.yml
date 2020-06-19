@@ -2285,6 +2285,7 @@ en:
       stoic_improvement: "Where can I show improvement?"
       stoic_faults: "Find fault with what was badly done and rejoice with what was good."
       need_help: "Need Ideas?"
+      setting_disable_reminders: "Disable Reminders"
       status_ideas: !xml |
         <![CDATA[
         Good things can be simple, such as:

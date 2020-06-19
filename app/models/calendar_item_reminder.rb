@@ -225,10 +225,20 @@ class CalendarItemReminder < ApplicationRecord
 
                       Rails.logger.debug{"CalendarItemReminder.ensure_pending_process created new pending item #{new_pending.inspect}"}
 
-                      # Send any notifications about the new reminder
-                      send_reminder_notifications(user, new_pending)
-                      
                       item_class = calendar_item_reminder.calendar_item.find_model_class
+                      
+                      should_send_reminder = true
+                      if item_class.respond_to?("should_send_reminder?")
+                        if !item_class.should_send_reminder?
+                          should_send_reminder = false
+                        end
+                      end
+
+                      # Send any notifications about the new reminder
+                      if should_send_reminder
+                        send_reminder_notifications(user, new_pending)
+                      end
+                      
                       if item_class.respond_to?("handle_new_reminder?")
                         item_obj = calendar_item_reminder.calendar_item.find_model_object
                         if !item_obj.nil?

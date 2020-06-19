@@ -108,4 +108,8 @@ class Status < ApplicationRecord
   def show_highly_visited?
     false
   end
+  
+  def self.should_send_reminder?
+    return !Setting.get_value_boolean(category: Myp.all_categories["statuses"], name: "disable_reminders")
+  end
 end
