@@ -4497,6 +4497,6 @@ en:
     mrobbles:
       mrobble_name: "Name"
       mrobble_link: "Link"
-      stopped_watching_time: "Stopped Watching"
+      stopped_watching_time: "Stopped Watching Time"
       finished: "Finished"
       restart_link: "Restart Link"
