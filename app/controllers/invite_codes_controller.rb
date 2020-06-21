@@ -23,6 +23,9 @@ class InviteCodesController < MyplaceonlineController
         :code,
         :current_uses,
         :max_uses,
+        :public_name,
+        :public_link,
+        :public_description,
         website_domain_attributes: [:id],
       )
     end

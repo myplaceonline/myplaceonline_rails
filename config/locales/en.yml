@@ -2954,6 +2954,9 @@ en:
       current_uses: "Current Uses"
       max_uses: "Maximum Uses"
       website_domain: "Website Domain"
+      public_name: "Public Name"
+      public_description: "Public Description"
+      public_link: "Public Link"
     happy_things:
       happy_thing_name: "Name"
       reminder: "Next Happy Thing %{name} %{delta}"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_20_214843) do
+ActiveRecord::Schema.define(version: 2020_06_21_185622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3548,6 +3548,9 @@ ActiveRecord::Schema.define(version: 2020_06_20_214843) do
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "website_domain_id"
+    t.string "public_name"
+    t.text "public_description"
+    t.string "public_link"
     t.index ["identity_id"], name: "index_invite_codes_on_identity_id"
     t.index ["website_domain_id"], name: "index_invite_codes_on_website_domain_id"
   end

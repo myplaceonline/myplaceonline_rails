@@ -2,6 +2,34 @@
 <%= myp_number_field(f, :max_uses, "myplaceonline.invite_codes.max_uses", obj.max_uses) %>
 <%= myp_number_field(f, :current_uses, "myplaceonline.invite_codes.current_uses", obj.current_uses) %>
 <%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :public_name,
+    value: obj.public_name,
+    placeholder: "myplaceonline.invite_codes.public_name"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :public_link,
+    value: obj.public_link,
+    placeholder: "myplaceonline.invite_codes.public_link"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :public_description,
+    value: obj.public_description,
+    placeholder: "myplaceonline.invite_codes.public_description",
+    collapsed: obj.public_description.blank?,
+  )
+%>
+<%=
   render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :website_domain,
