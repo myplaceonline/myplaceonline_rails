@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_22_003011) do
+ActiveRecord::Schema.define(version: 2020_07_02_212250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2049,6 +2049,10 @@ ActiveRecord::Schema.define(version: 2020_06_22_003011) do
     t.datetime "updated_at", null: false
     t.integer "match_type"
     t.integer "selection"
+    t.decimal "range_start", precision: 10, scale: 2
+    t.decimal "range_end", precision: 10, scale: 2
+    t.boolean "minimum_disabled"
+    t.boolean "maximum_disabled"
     t.index ["drom_match_dealbreaker_id"], name: "dmcd_on_dmd"
     t.index ["identity_id"], name: "index_drom_match_chosen_dealbreakers_on_identity_id"
   end
@@ -2110,6 +2114,10 @@ ActiveRecord::Schema.define(version: 2020_06_22_003011) do
     t.string "alternate_search"
     t.string "prefix_suffix"
     t.boolean "simple_toggle"
+    t.decimal "range_minimum", precision: 10, scale: 2
+    t.decimal "range_maximum", precision: 10, scale: 2
+    t.boolean "range_multi"
+    t.integer "range_type"
     t.index ["identity_id"], name: "index_drom_match_dealbreakers_on_identity_id"
   end
 
