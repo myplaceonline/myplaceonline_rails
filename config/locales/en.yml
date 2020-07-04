@@ -214,6 +214,7 @@ en:
       paid_taxes: "Paid Taxes"
       pains: "Pains"
       parking_locations: "Parking Locations"
+      parks: "Parks"
       passports: "Passports"
       password_shares: "Password Shares"
       passwords: "Passwords"
@@ -4503,3 +4504,7 @@ en:
       stopped_watching_time: "Stopped Watching Time"
       finished: "Finished"
       restart_link: "Restart Link"
+    parks:
+      location: "Location"
+      allows_drinking: "Allows Drinking Alcohol"
+      drinking_times: "Alcohol Drinking Times"

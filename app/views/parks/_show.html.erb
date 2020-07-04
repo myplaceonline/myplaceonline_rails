@@ -1,0 +1,5 @@
+<%= data_row(heading: t("myplaceonline.parks.location"), content: obj.location) %>
+<%= data_row(heading: t("myplaceonline.parks.allows_drinking"), content: obj.allows_drinking) %>
+<%= data_row(heading: t("myplaceonline.parks.drinking_times"), content: obj.drinking_times) %>
+<%= data_row(heading: t("myplaceonline.general.rating"), content: obj.rating, enumeration: Myp::RATINGS) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>

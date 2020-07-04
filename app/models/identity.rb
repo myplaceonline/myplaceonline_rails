@@ -342,6 +342,7 @@ class Identity < ApplicationRecord
   has_many :mechanics, :dependent => :destroy
   has_many :wireless_networks, :dependent => :destroy
   has_many :mrobbles, :dependent => :destroy
+  has_many :parks, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 
@@ -610,6 +611,7 @@ class Identity < ApplicationRecord
       :vehicle_washes => vehicle_washes.to_a.map{|x| x.as_json},
       :haircuts => haircuts.to_a.map{|x| x.as_json},
       :mechanics => mechanics.to_a.map{|x| x.as_json},
+      :parks => parks.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json},
     })
   end
