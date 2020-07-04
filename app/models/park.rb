@@ -3,6 +3,8 @@ class Park < ApplicationRecord
   include AllowExistingConcern
 
   child_property(name: :location, required: true)
+
+  child_files
   
   def display
     location.display

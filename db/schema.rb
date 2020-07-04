@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_04_005733) do
+ActiveRecord::Schema.define(version: 2020_07_04_021327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4786,6 +4786,19 @@ ActiveRecord::Schema.define(version: 2020_07_04_005733) do
     t.index ["identity_id"], name: "index_pains_on_identity_id"
   end
 
+  create_table "park_files", force: :cascade do |t|
+    t.bigint "park_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_park_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_park_files_on_identity_id"
+    t.index ["park_id"], name: "index_park_files_on_park_id"
+  end
+
   create_table "parking_locations", force: :cascade do |t|
     t.bigint "location_id"
     t.text "notes"
@@ -8380,6 +8393,9 @@ ActiveRecord::Schema.define(version: 2020_07_04_005733) do
   add_foreign_key "paid_taxes", "identities"
   add_foreign_key "paid_taxes", "passwords"
   add_foreign_key "pains", "identities", name: "pains_identity_id_fk"
+  add_foreign_key "park_files", "identities"
+  add_foreign_key "park_files", "identity_files"
+  add_foreign_key "park_files", "parks"
   add_foreign_key "parking_locations", "identities"
   add_foreign_key "parking_locations", "locations"
   add_foreign_key "parks", "identities"

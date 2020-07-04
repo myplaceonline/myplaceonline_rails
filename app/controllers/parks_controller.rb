@@ -23,6 +23,7 @@ class ParksController < MyplaceonlineController
         :notes,
         :rating,
         location_attributes: LocationsController.param_names,
+        park_files_attributes: FilesController.multi_param_names,
       )
     end
 
