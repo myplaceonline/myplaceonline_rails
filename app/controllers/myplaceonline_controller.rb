@@ -63,7 +63,7 @@ class MyplaceonlineController < ApplicationController
     @items_all_link = items_all_link
 
     Rails.logger.debug{"MyplaceonlineController.index getting @objs"}
-    @objs = cached_all.offset(@offset).limit(@perpage).order(sorts_wrapper)
+    @objs = cached_all.offset(@offset).limit(@perpage).order(Arel.sql(sorts_wrapper.join(", ")))
     
     # If the controller wants to show top items (`additional_items?` returns
     # true), then the only other thing we'll check is if there's more than

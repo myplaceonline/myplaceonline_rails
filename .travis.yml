@@ -1,12 +1,5 @@
-# https://docs.travis-ci.com/user/job-lifecycle
-# Ubuntu Xenial 16.04 is needed for the latest version of ImageMagick
-dist: xenial
 language: ruby
 sudo: false
-
-# https://docs.travis-ci.com/user/languages/ruby/
-rvm:
-  - 2.6
 
 # https://docs.travis-ci.com/user/database-setup/
 services:
@@ -30,7 +23,7 @@ install: true
 
 script:
   - bundle install --deployment
-  - RAILS_ENV=test SKIP_LARGE_UNNEEDED_IMPORTS=true SKIP_ZIP_CODE_IMPORTS=true travis_wait 30 bundle exec rake db:test:prepare test
+  - RAILS_ENV=test SKIP_LARGE_UNNEEDED_IMPORTS=true SKIP_ZIP_CODE_IMPORTS=true travis_wait 60 bundle exec rake db:test:prepare test -- --fail-fast --backtrace
 
 #after_failure:
 #  - cat /home/travis/build/myplaceonline/myplaceonline_rails/vendor/bundle/ruby/2.3.0/extensions/x86_64-linux/2.3.0/ruby-filemagic-0.7.2/mkmf.log
