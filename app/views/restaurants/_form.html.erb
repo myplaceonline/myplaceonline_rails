@@ -26,6 +26,15 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :rooftop,
+    value: obj.rooftop,
+    placeholder: "myplaceonline.restaurants.rooftop"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,

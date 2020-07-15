@@ -1990,6 +1990,7 @@ en:
       visited: "Visited"
       not_visited: "Not Visited"
       ethical_meat: "Ethical Meat"
+      rooftop: "Rooftop"
     promotions:
       promotion_name: "Description"
       started: "Started"

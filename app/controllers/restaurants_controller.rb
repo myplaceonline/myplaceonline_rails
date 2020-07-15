@@ -70,6 +70,7 @@ class RestaurantsController < MyplaceonlineController
         :visited,
         :rating,
         :ethical_meat,
+        :rooftop,
         location_attributes: LocationsController.param_names,
         restaurant_pictures_attributes: FilesController.multi_param_names
       )
@@ -96,7 +97,12 @@ class RestaurantsController < MyplaceonlineController
     def simple_index_filters
       [
         { name: :ethical_meat },
+        { name: :rooftop },
         { name: :not_visited, column: :visited, inverted: true },
       ]
+    end
+    
+    def show_map?
+      true
     end
 end

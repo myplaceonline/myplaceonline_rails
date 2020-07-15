@@ -13,7 +13,7 @@ class Restaurant < ApplicationRecord
   child_pictures
 
   def self.skip_check_attributes
-    ["visited"]
+    ["visited", "rooftop"]
   end
 
   def self.category_split_button_link
