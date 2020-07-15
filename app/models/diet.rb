@@ -18,7 +18,7 @@ class Diet < ApplicationRecord
 
   child_property(name: :dietary_requirements_collection)
   
-  child_properties(name: :diet_foods, has_many_lambda: lambda { joins(:food).order(["diet_foods.food_type NULLS LAST", "lower(foods.food_name) ASC"]) })
+  child_properties(name: :diet_foods, has_many_lambda: lambda { joins(:food).order(Arel.sql("diet_foods.food_type NULLS LAST, lower(foods.food_name) ASC")) })
 
   def action_link
     if !MyplaceonlineExecutionContext.offline?
