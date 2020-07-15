@@ -8,7 +8,7 @@ class Playlist < ApplicationRecord
   has_many :playlist_shares
 
   # zip file of all songs
-  child_file(parent: :identity_file, destroy_dependent: true)
+  child_file(parent: :identity_file, destroy_dependent: true, required: false)
 
   def display
     playlist_name

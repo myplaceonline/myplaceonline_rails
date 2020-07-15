@@ -169,14 +169,14 @@ module MyplaceonlineActiveRecordBaseConcern
       child_files(name: name, suffix: "pictures")
     end
     
-    def child_file(parent:, class_name: nil, destroy_dependent: nil)
+    def child_file(parent:, class_name: nil, destroy_dependent: nil, required: true)
       if class_name.nil?
         belongs_to parent
       else
         belongs_to parent, class_name: class_name
       end
 
-      child_property(name: :identity_file, required: true, destroy_dependent: destroy_dependent)
+      child_property(name: :identity_file, required: required, destroy_dependent: destroy_dependent)
       
       define_method(:display) do
         self.identity_file.display

@@ -23,7 +23,7 @@ install: true
 
 script:
   - bundle install --deployment
-  - RAILS_ENV=test SKIP_LARGE_UNNEEDED_IMPORTS=true SKIP_ZIP_CODE_IMPORTS=true travis_wait 60 bundle exec rake db:test:prepare test -- --fail-fast --backtrace
+  - RAILS_ENV=test SKIP_LARGE_UNNEEDED_IMPORTS=true SKIP_ZIP_CODE_IMPORTS=true travis_wait 60 bundle exec rake db:test:prepare test -- --fail-fast --backtrace --verbose
 
 #after_failure:
 #  - cat /home/travis/build/myplaceonline/myplaceonline_rails/vendor/bundle/ruby/2.3.0/extensions/x86_64-linux/2.3.0/ruby-filemagic-0.7.2/mkmf.log
