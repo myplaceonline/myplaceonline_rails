@@ -50,9 +50,9 @@ Rails.application.configure do
   logger = ActiveSupport::Logger.new(STDOUT)
   logger.formatter = config.log_formatter
   config.logger = ActiveSupport::TaggedLogging.new(logger)
-  config.log_level = :warn
-  # Uncomment the following to enable full debugging in test:
-  #config.log_level = :debug
+  
+  # debug, info, warn, error
+  config.log_level = ENV["LOGLEVEL"].blank? ? :warn : ENV["LOGLEVEL"].to_sym
   
   # https://github.com/rails/rails/pull/27947/files#diff-dfe09551f2188457e7e1891d86047c57
   config.active_record.allow_unsafe_raw_sql = false
