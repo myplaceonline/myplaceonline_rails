@@ -213,19 +213,21 @@ class Notification < ApplicationRecord
         max_notifications: nil,
         exponential_backoff: false
       )
-    MyplaceonlineExecutionContext.do_permission_target(identity) do
-      MyplaceonlineExecutionContext.do_allow_cross_identity(identity) do
-        return Notification.try_send_notification(
-                identity,
-                notification_type,
-                notification_category,
-                subject,
-                body_short_markdown,
-                body_long_markdown,
-                body_app_markdown,
-                max_notifications: max_notifications,
-                exponential_backoff: exponential_backoff
-              )
+    MyplaceonlineExecutionContext.do_user(identity.user) do
+      MyplaceonlineExecutionContext.do_permission_target(identity) do
+        MyplaceonlineExecutionContext.do_allow_cross_identity(identity) do
+          return Notification.try_send_notification(
+                  identity,
+                  notification_type,
+                  notification_category,
+                  subject,
+                  body_short_markdown,
+                  body_long_markdown,
+                  body_app_markdown,
+                  max_notifications: max_notifications,
+                  exponential_backoff: exponential_backoff
+                )
+        end
       end
     end
   end
@@ -240,18 +242,20 @@ class Notification < ApplicationRecord
         max_notifications: nil,
         exponential_backoff: false
       )
-    MyplaceonlineExecutionContext.do_permission_target(identity) do
-      MyplaceonlineExecutionContext.do_allow_cross_identity(identity) do
-        return Notification.try_send_notifications(
-                identity,
-                notification_category,
-                subject,
-                body_short_markdown,
-                body_long_markdown,
-                body_app_markdown,
-                max_notifications: max_notifications,
-                exponential_backoff: exponential_backoff
-              )
+    MyplaceonlineExecutionContext.do_user(identity.user) do
+      MyplaceonlineExecutionContext.do_permission_target(identity) do
+        MyplaceonlineExecutionContext.do_allow_cross_identity(identity) do
+          return Notification.try_send_notifications(
+                  identity,
+                  notification_category,
+                  subject,
+                  body_short_markdown,
+                  body_long_markdown,
+                  body_app_markdown,
+                  max_notifications: max_notifications,
+                  exponential_backoff: exponential_backoff
+                )
+        end
       end
     end
   end
