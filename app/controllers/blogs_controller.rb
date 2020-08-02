@@ -60,7 +60,7 @@ class BlogsController < MyplaceonlineController
   end
 
   def default_items_per_page
-    @obj.posts_per_page.nil? ? 5 : @obj.posts_per_page
+    !@obj.nil? && !@obj.posts_per_page.nil? ? @obj.posts_per_page : 5
   end
   
   def upload
