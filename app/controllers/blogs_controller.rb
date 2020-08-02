@@ -60,7 +60,7 @@ class BlogsController < MyplaceonlineController
   end
 
   def default_items_per_page
-    5
+    @obj.posts_per_page.nil? ? 5 : @obj.posts_per_page
   end
   
   def upload
@@ -144,6 +144,7 @@ class BlogsController < MyplaceonlineController
         :blog_name,
         :notes,
         :reverse,
+        :posts_per_page,
         blog_files_attributes: FilesController.multi_param_names,
         main_post_attributes: BlogPost.params,
       )

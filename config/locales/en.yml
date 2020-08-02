@@ -4040,6 +4040,7 @@ en:
       main_post: "Main Post"
       rss: "RSS"
       reverse: "Reverse Posts"
+      posts_per_page: "Posts per Page"
     blog_posts:
       blog_post_title: "Title"
       post: "Post"

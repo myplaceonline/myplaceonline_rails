@@ -43,6 +43,15 @@
     placeholder: "myplaceonline.blogs.reverse"
   )
 %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_NUMBER,
+    name: :posts_per_page,
+    value: obj.posts_per_page,
+    placeholder: "myplaceonline.blogs.posts_per_page"
+  )
+%>
 <%#
   render partial: "myplaceonline/pictures_form", locals: {
     f: f,

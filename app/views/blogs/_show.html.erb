@@ -4,6 +4,7 @@
   <%= data_row(heading: t("myplaceonline.blogs.main_post"), content: obj.main_post, show_reference: false, reference_url: blog_blog_post_path(obj, obj.main_post)) %>
 <% end %>
 <%= data_row(heading: t("myplaceonline.blogs.reverse"), content: obj.reverse) %>
+<%= data_row(heading: t("myplaceonline.blogs.posts_per_page"), content: obj.posts_per_page) %>
 <% if obj.blog_files.count < 100 %>
   <%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.blog_files) %>
 <% end %>
