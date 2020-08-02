@@ -43,6 +43,9 @@ class BlogsController < MyplaceonlineController
     set_obj
 
     offset = Myp.param_integer(params, MyplaceonlineController::PARAM_OFFSET, default_value: 0)
+    if offset < 0
+      offset = 0
+    end
     perpage = Myp.param_integer(params, MyplaceonlineController::PARAM_PER_PAGE, default_value: default_items_per_page)
     perpage = update_items_per_page(perpage, @obj.sorted_blog_posts.count)
     
