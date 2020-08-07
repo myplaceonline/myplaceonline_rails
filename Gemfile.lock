@@ -195,7 +195,7 @@ GEM
       aes_key_wrap
       bindata
     jwt (2.2.1)
-    kramdown (2.2.1)
+    kramdown (2.3.0)
       rexml
     listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
