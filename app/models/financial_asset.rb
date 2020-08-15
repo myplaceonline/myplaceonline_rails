@@ -6,6 +6,7 @@ class FinancialAsset < ApplicationRecord
     [
       { name: :asset_name, type: ApplicationRecord::PROPERTY_TYPE_STRING },
       { name: :asset_value, type: ApplicationRecord::PROPERTY_TYPE_DECIMAL },
+      { name: :quantity, type: ApplicationRecord::PROPERTY_TYPE_NUMBER },
       { name: :asset_location, type: ApplicationRecord::PROPERTY_TYPE_STRING },
       { name: :asset_received, type: ApplicationRecord::PROPERTY_TYPE_DATETIME },
       { name: :notes, type: ApplicationRecord::PROPERTY_TYPE_MARKDOWN },
@@ -18,6 +19,14 @@ class FinancialAsset < ApplicationRecord
   
   def display
     Myp.appendstrwrap(self.asset_name, self.asset_location)
+  end
+  
+  def total_asset_value
+    result = self.asset_value
+    if !self.quantity.nil?
+      result = result * self.quantity
+    end
+    return result
   end
 
   child_files

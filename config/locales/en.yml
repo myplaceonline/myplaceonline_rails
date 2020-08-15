@@ -4356,6 +4356,7 @@ en:
       wallet_assets: "Wallet Assets"
       error: "Calculation Error"
       no_location: "No Location"
+      quantity: "Quantity"
     boondockings:
       camp_location: "Camp Location"
     allergies:

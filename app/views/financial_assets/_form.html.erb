@@ -20,6 +20,15 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_NUMBER,
+    name: :quantity,
+    value: obj.quantity,
+    placeholder: "myplaceonline.financial_assets.quantity"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT,
     name: :asset_location,
     value: obj.asset_location,

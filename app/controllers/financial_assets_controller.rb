@@ -10,7 +10,7 @@ class FinancialAssetsController < MyplaceonlineController
   end
   
   def bubble_text(obj)
-    Myp.display_currency(obj.asset_value)
+    Myp.display_currency(obj.total_asset_value)
   end
 
   def footer_items_index
@@ -28,7 +28,7 @@ class FinancialAssetsController < MyplaceonlineController
     @breakdown = {}
     self.all.order("asset_location ASC").each do |asset|
       if !asset.archived?
-        total = total + asset.asset_value
+        total = total + asset.total_asset_value
         loc = asset.asset_location
         if loc.blank?
           loc = I18n.t("myplaceonline.financial_assets.no_location")
@@ -65,6 +65,7 @@ class FinancialAssetsController < MyplaceonlineController
         :asset_value,
         :asset_location,
         :asset_received,
+        :quantity,
         :notes,
         financial_asset_files_attributes: FilesController.multi_param_names,
       )
