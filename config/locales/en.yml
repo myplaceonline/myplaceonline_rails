@@ -51,6 +51,7 @@ en:
       awesome_lists: "Awesome Lists"
       bank_accounts: "Bank Accounts"
       bars: "Bars"
+      basketball_courts: "Basketball Courts"
       beaches: "Beaches"
       bets: "Bets"
       bills: "Bills"
@@ -271,6 +272,7 @@ en:
       skin_treatments: "Skin Treatments"
       sleep_measurements: "Sleep Measurements"
       snoozed_due_items: "Snoozed Due Items"
+      soccer_fields: "Soccer Fields"
       software_licenses: "Software Licenses"
       songs: "Songs"
       ssh_keys: "SSH Keys"
@@ -281,6 +283,7 @@ en:
       surgeries: "Surgeries"
       tax_documents: "Tax Documents"
       temperatures: "Temperatures"
+      tennis_courts: "Tennis Courts"
       test_object_instances: "Test Object Instance"
       test_objects: "Test Objects"
       test_scores: "Test Scores"
@@ -4511,3 +4514,9 @@ en:
       location: "Location"
       allows_drinking: "Allows Drinking Alcohol"
       drinking_times: "Alcohol Drinking Times"
+    basketball_courts:
+      location: "Location"
+    tennis_courts:
+      location: "Location"
+    soccer_fields:
+      location: "Location"

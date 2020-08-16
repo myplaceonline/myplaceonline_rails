@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_15_212909) do
+ActiveRecord::Schema.define(version: 2020_08_16_014619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -381,6 +381,33 @@ ActiveRecord::Schema.define(version: 2020_08_15_212909) do
     t.boolean "secretive"
     t.index ["identity_id"], name: "index_bars_on_identity_id"
     t.index ["location_id"], name: "index_bars_on_location_id"
+  end
+
+  create_table "basketball_court_files", force: :cascade do |t|
+    t.bigint "basketball_court_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["basketball_court_id"], name: "index_basketball_court_files_on_basketball_court_id"
+    t.index ["identity_file_id"], name: "index_basketball_court_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_basketball_court_files_on_identity_id"
+  end
+
+  create_table "basketball_courts", force: :cascade do |t|
+    t.bigint "location_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_basketball_courts_on_identity_id"
+    t.index ["location_id"], name: "index_basketball_courts_on_location_id"
   end
 
   create_table "beaches", force: :cascade do |t|
@@ -6262,6 +6289,33 @@ ActiveRecord::Schema.define(version: 2020_08_15_212909) do
     t.index ["snp_uid"], name: "index_snps_on_snp_uid"
   end
 
+  create_table "soccer_field_files", force: :cascade do |t|
+    t.bigint "soccer_field_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_soccer_field_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_soccer_field_files_on_identity_id"
+    t.index ["soccer_field_id"], name: "index_soccer_field_files_on_soccer_field_id"
+  end
+
+  create_table "soccer_fields", force: :cascade do |t|
+    t.bigint "location_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_soccer_fields_on_identity_id"
+    t.index ["location_id"], name: "index_soccer_fields_on_location_id"
+  end
+
   create_table "software_license_files", id: :serial, force: :cascade do |t|
     t.integer "software_license_id"
     t.integer "identity_file_id"
@@ -6504,6 +6558,33 @@ ActiveRecord::Schema.define(version: 2020_08_15_212909) do
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_temperatures_on_identity_id"
+  end
+
+  create_table "tennis_court_files", force: :cascade do |t|
+    t.bigint "tennis_court_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_tennis_court_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_tennis_court_files_on_identity_id"
+    t.index ["tennis_court_id"], name: "index_tennis_court_files_on_tennis_court_id"
+  end
+
+  create_table "tennis_courts", force: :cascade do |t|
+    t.bigint "location_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_tennis_courts_on_identity_id"
+    t.index ["location_id"], name: "index_tennis_courts_on_location_id"
   end
 
   create_table "test_object_files", id: :serial, force: :cascade do |t|
@@ -7773,6 +7854,11 @@ ActiveRecord::Schema.define(version: 2020_08_15_212909) do
   add_foreign_key "bar_pictures", "identity_files"
   add_foreign_key "bars", "identities"
   add_foreign_key "bars", "locations"
+  add_foreign_key "basketball_court_files", "basketball_courts"
+  add_foreign_key "basketball_court_files", "identities"
+  add_foreign_key "basketball_court_files", "identity_files"
+  add_foreign_key "basketball_courts", "identities"
+  add_foreign_key "basketball_courts", "locations"
   add_foreign_key "beaches", "identities"
   add_foreign_key "beaches", "locations"
   add_foreign_key "bet_contacts", "bets"
@@ -8597,6 +8683,11 @@ ActiveRecord::Schema.define(version: 2020_08_15_212909) do
   add_foreign_key "sleep_measurements", "identities", name: "sleep_measurements_identity_id_fk"
   add_foreign_key "snoozed_due_items", "calendars", name: "snoozed_due_items_calendar_id_fk"
   add_foreign_key "snoozed_due_items", "identities", name: "snoozed_due_items_identity_id_fk"
+  add_foreign_key "soccer_field_files", "identities"
+  add_foreign_key "soccer_field_files", "identity_files"
+  add_foreign_key "soccer_field_files", "soccer_fields"
+  add_foreign_key "soccer_fields", "identities"
+  add_foreign_key "soccer_fields", "locations"
   add_foreign_key "software_license_files", "identities"
   add_foreign_key "software_license_files", "identity_files"
   add_foreign_key "software_license_files", "software_licenses"
@@ -8630,6 +8721,11 @@ ActiveRecord::Schema.define(version: 2020_08_15_212909) do
   add_foreign_key "tax_document_files", "tax_documents"
   add_foreign_key "tax_documents", "identities"
   add_foreign_key "temperatures", "identities", name: "temperatures_identity_id_fk"
+  add_foreign_key "tennis_court_files", "identities"
+  add_foreign_key "tennis_court_files", "identity_files"
+  add_foreign_key "tennis_court_files", "tennis_courts"
+  add_foreign_key "tennis_courts", "identities"
+  add_foreign_key "tennis_courts", "locations"
   add_foreign_key "test_object_files", "identities"
   add_foreign_key "test_object_files", "identity_files"
   add_foreign_key "test_object_files", "test_objects"
