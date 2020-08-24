@@ -444,7 +444,7 @@ class IdentityFile < ApplicationRecord
       raise "Unauthorized"
     end
     
-    self.thumbnail_filesystem_path = file_hash[:path])
+    self.thumbnail_filesystem_path = file_hash[:path]
     self.thumbnail_filesystem_size = File.size(file_hash[:path])
     
     self.save!
