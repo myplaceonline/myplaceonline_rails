@@ -420,6 +420,36 @@ class IdentityFile < ApplicationRecord
     end
   end
   
+  def set_thumbnail_image(filename)
+    image = Magick::Image::read(filename)
+    image = image.first
+    blob = image.to_blob
+    self.thumbnail_contents = blob
+    self.thumbnail_size_bytes = blob.length
+    self.save!
+  end
+  
+  def set_thumbnail_file(file_hash)
+    # Potential attempt at accessing incorrect files
+    if !File.exist?(file_hash[:path])
+      Myp.warn("Attempt to create IdentityFile without underlying file: #{file_hash[:path]}, identity: #{MyplaceonlineExecutionContext.identity}, original_filename: #{file_hash[:original_filename]}")
+      raise "File does not exist"
+    end
+    
+    # Somebody could guess file names to try to download them,
+    # so given that nginx will generate a random filename,
+    # first check the file doesn't already exist
+    if !IdentityFile.where(filesystem_path: file_hash[:path]).take.nil? || !IdentityFile.where(thumbnail_filesystem_path: file_hash[:path]).take.nil?
+      Myp.warn("Attempt to create IdentityFile pointing to existing file: #{file_hash[:path]}, identity: #{MyplaceonlineExecutionContext.identity}, original_filename: #{file_hash[:original_filename]}")
+      raise "Unauthorized"
+    end
+    
+    self.thumbnail_filesystem_path = file_hash[:path])
+    self.thumbnail_filesystem_size = File.size(file_hash[:path]))
+    
+    self.save!
+  end
+  
   def thumbnail_content_type
     if self.is_image?
       self.file_content_type

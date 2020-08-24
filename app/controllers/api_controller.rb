@@ -488,24 +488,41 @@ class ApiController < ApplicationController
     }
     
     c = params[:class]
+    Rails.logger.debug{"ApiController.set_child_file class: #{c}"}
     if !c.blank?
       id = params[:id]
+      Rails.logger.debug{"ApiController.set_child_file id: #{id}"}
       if !id.blank?
         obj = Myp.find_existing_object(c, id, false)
+        Rails.logger.debug{"ApiController.set_child_file obj: #{obj}"}
         if !obj.nil?
           authorize! :edit, obj
+          Rails.logger.debug{"ApiController.set_child_file authorized"}
           if !params[:identity_file].nil?
+            Rails.logger.debug{"ApiController.set_child_file has file"}
             ActiveRecord::Base.transaction do
-              if params[:identity_file][:file].is_a?(ActionDispatch::Http::UploadedFile)
-                newfile = IdentityFile.create!(params.require(:identity_file).permit(FilesController.param_names))
+              if params[:thumbnail].blank?
+                if params[:identity_file][:file].is_a?(ActionDispatch::Http::UploadedFile)
+                  newfile = IdentityFile.create!(params.require(:identity_file).permit(FilesController.param_names))
+                else
+                  newfile = IdentityFile.create_for_path!(file_hash: params[:identity_file][:file])
+                end
+                obj.identity_file = newfile
+                obj.save!
+                
+                result[:code] = 200
+                result[:identity_file_id] = newfile.id
               else
-                newfile = IdentityFile.create_for_path!(file_hash: params[:identity_file][:file])
+                obj.clear_thumbnail
+                if params[:identity_file][:file].is_a?(ActionDispatch::Http::UploadedFile)
+                  Rails.logger.debug{"ApiController.set_child_file tempfile: #{params[:identity_file][:file].tempfile.inspect}"}
+                  obj.set_thumbnail_image(params[:identity_file][:file].tempfile.path)
+                else
+                  Rails.logger.debug{"ApiController.set_child_file file: #{params[:identity_file][:file].inspect}"}
+                  obj.set_thumbnail_file(params[:identity_file][:file])
+                end
+                result[:code] = 200
               end
-              obj.identity_file = newfile
-              obj.save!
-
-              result[:code] = 200
-              result[:identity_file_id] = newfile.id
             end
           end
         end
