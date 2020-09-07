@@ -23,6 +23,7 @@ class ApiController < ApplicationController
     :update_notification_settings,
     :registerPushNotifications,
     :sendgridevent,
+    :postsupport,
     :update_video_thumbnail,
   ]
   
@@ -1325,13 +1326,13 @@ class ApiController < ApplicationController
     )
   end
   
-  def sendgridevent
-    Rails.logger.info{"sendgridevent: #{params}"}
+  def postsupport
+    Rails.logger.info{"postsupport: #{params}"}
     begin
       params_massaged = Myp.debug_print(params, plain: true)
 
       Myp.send_support_email_safe(
-        "SendGrid Event Webhook",
+        "PostSupport Event",
         CGI::escapeHTML(params_massaged).gsub("\n", "<br />\n"),
         params_massaged,
         request: request,
@@ -1347,6 +1348,10 @@ class ApiController < ApplicationController
         :error => e.to_s
       }
     end
+  end
+  
+  def sendgridevent
+    postsupport
   end
   
   def millis_to_timestr(millis)

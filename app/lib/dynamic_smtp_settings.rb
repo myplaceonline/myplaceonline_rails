@@ -1,7 +1,7 @@
 class DynamicSmtpSettings
   def initialize(params = {})
     @params = params.merge({
-      address: "smtp.sendgrid.net",
+      address: ENV["SMTP_HOST"],
       port: 587,
       user_name: ENV["SMTP_USER"],
       password: ENV["SMTP_PASSWORD"],

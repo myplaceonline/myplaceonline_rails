@@ -94,6 +94,7 @@ Rails.application.routes.draw do
     api/set_child_file
     api/registerPushNotifications
     api/sendgridevent
+    api/postsupport
     subscribe/index
     api/update_video_thumbnail
   ))
