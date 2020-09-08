@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_16_185903) do
+ActiveRecord::Schema.define(version: 2020_09_08_041210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2068,6 +2068,26 @@ ActiveRecord::Schema.define(version: 2020_08_16_185903) do
     t.boolean "is_public"
     t.index ["address_id"], name: "index_driver_licenses_on_address_id"
     t.index ["identity_id"], name: "index_driver_licenses_on_identity_id"
+  end
+
+  create_table "drom_match_airports", force: :cascade do |t|
+    t.integer "oaid"
+    t.string "ident"
+    t.integer "airport_type"
+    t.string "name"
+    t.decimal "latitude", precision: 24, scale: 20
+    t.decimal "longitude", precision: 24, scale: 20
+    t.string "continent"
+    t.string "iso_country"
+    t.string "iso_region"
+    t.string "municipality"
+    t.string "icao_code"
+    t.string "iata_code"
+    t.string "link"
+    t.string "extra_link"
+    t.string "keywords"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "drom_match_chosen_dealbreakers", force: :cascade do |t|
