@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_11_043733) do
+ActiveRecord::Schema.define(version: 2020_09_12_200405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2195,6 +2195,8 @@ ActiveRecord::Schema.define(version: 2020_09_11_043733) do
     t.datetime "date_end_max"
     t.integer "stops"
     t.boolean "for_me"
+    t.boolean "checked"
+    t.string "title"
     t.index ["drom_match_date_id"], name: "index_drom_match_flight_packages_on_drom_match_date_id"
     t.index ["identity_id"], name: "index_drom_match_flight_packages_on_identity_id"
   end
