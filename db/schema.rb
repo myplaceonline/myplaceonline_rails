@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_08_041210) do
+ActiveRecord::Schema.define(version: 2020_09_11_043733) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2189,6 +2189,12 @@ ActiveRecord::Schema.define(version: 2020_09_08_041210) do
     t.string "context"
     t.string "depart_airport_code"
     t.string "arrival_airport_code"
+    t.datetime "date_start_min"
+    t.datetime "date_start_max"
+    t.datetime "date_end_min"
+    t.datetime "date_end_max"
+    t.integer "stops"
+    t.boolean "for_me"
     t.index ["drom_match_date_id"], name: "index_drom_match_flight_packages_on_drom_match_date_id"
     t.index ["identity_id"], name: "index_drom_match_flight_packages_on_identity_id"
   end

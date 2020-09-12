@@ -151,9 +151,22 @@ module MyplaceonlineActiveRecordBaseConcern
       end
       
       if foreign_key.nil?
-        has_many(name, has_many_lambda, autosave: autosave, dependent: dependent)
+        has_many(
+          name,
+          has_many_lambda,
+          autosave: autosave,
+          dependent: dependent,
+          class_name: model.name,
+        )
       else
-        has_many(name, has_many_lambda, autosave: autosave, dependent: dependent, foreign_key: foreign_key)
+        has_many(
+          name,
+          has_many_lambda,
+          autosave: autosave,
+          dependent: dependent,
+          foreign_key: foreign_key,
+          class_name: model.name,
+        )
       end
       
       accepts_nested_attributes_for(
