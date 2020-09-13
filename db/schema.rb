@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_13_001212) do
+ActiveRecord::Schema.define(version: 2020_09_13_160253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2217,6 +2217,7 @@ ActiveRecord::Schema.define(version: 2020_09_13_001212) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "stop_number"
+    t.integer "segment_type"
     t.index ["drom_match_flight_package_id"], name: "dmfs_on_dmfp"
     t.index ["identity_id"], name: "index_drom_match_flight_segments_on_identity_id"
   end
