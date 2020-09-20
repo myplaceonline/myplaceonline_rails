@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_20_143151) do
+ActiveRecord::Schema.define(version: 2020_09_20_175535) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2173,6 +2173,22 @@ ActiveRecord::Schema.define(version: 2020_09_20_143151) do
     t.index ["identity_id"], name: "index_drom_match_dealbreakers_on_identity_id"
   end
 
+  create_table "drom_match_flight_components", force: :cascade do |t|
+    t.bigint "drom_match_flight_package_id"
+    t.bigint "identity_id"
+    t.string "name"
+    t.integer "stops"
+    t.datetime "depart"
+    t.string "depart_code"
+    t.datetime "arrive"
+    t.string "arrive_code"
+    t.string "context"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["drom_match_flight_package_id"], name: "dmfc_dmfp_id"
+    t.index ["identity_id"], name: "index_drom_match_flight_components_on_identity_id"
+  end
+
   create_table "drom_match_flight_packages", force: :cascade do |t|
     t.bigint "drom_match_date_id"
     t.bigint "identity_id"
@@ -2191,7 +2207,6 @@ ActiveRecord::Schema.define(version: 2020_09_20_143151) do
     t.datetime "date_start_max"
     t.datetime "date_end_min"
     t.datetime "date_end_max"
-    t.integer "stops"
     t.boolean "for_me"
     t.boolean "checked"
     t.string "title"
@@ -2202,7 +2217,6 @@ ActiveRecord::Schema.define(version: 2020_09_20_143151) do
   end
 
   create_table "drom_match_flight_segments", force: :cascade do |t|
-    t.bigint "drom_match_flight_package_id"
     t.bigint "identity_id"
     t.integer "airline"
     t.string "flight_number"
@@ -2218,7 +2232,8 @@ ActiveRecord::Schema.define(version: 2020_09_20_143151) do
     t.datetime "updated_at", null: false
     t.integer "stop_number"
     t.integer "segment_type"
-    t.index ["drom_match_flight_package_id"], name: "dmfs_on_dmfp"
+    t.bigint "drom_match_flight_component_id"
+    t.index ["drom_match_flight_component_id"], name: "dmfs_dmfc_id"
     t.index ["identity_id"], name: "index_drom_match_flight_segments_on_identity_id"
   end
 
@@ -8172,10 +8187,12 @@ ActiveRecord::Schema.define(version: 2020_09_20_143151) do
   add_foreign_key "drom_match_dealbreaker_reports", "drom_match_dealbreakers"
   add_foreign_key "drom_match_dealbreaker_reports", "identities"
   add_foreign_key "drom_match_dealbreakers", "identities"
+  add_foreign_key "drom_match_flight_components", "drom_match_flight_packages"
+  add_foreign_key "drom_match_flight_components", "identities"
   add_foreign_key "drom_match_flight_packages", "drom_match_dates"
   add_foreign_key "drom_match_flight_packages", "drom_match_flight_packages", column: "related_id"
   add_foreign_key "drom_match_flight_packages", "identities"
-  add_foreign_key "drom_match_flight_segments", "drom_match_flight_packages"
+  add_foreign_key "drom_match_flight_segments", "drom_match_flight_components"
   add_foreign_key "drom_match_flight_segments", "identities"
   add_foreign_key "drom_match_identity_infos", "identities"
   add_foreign_key "drom_match_match_messages", "drom_match_matches"
