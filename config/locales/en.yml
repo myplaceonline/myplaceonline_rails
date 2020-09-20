@@ -148,6 +148,7 @@ en:
       happy_things: "Happy Things"
       headaches: "Headaches"
       health: "Health"
+      health_changes: "Health Changes"
       health_insurances: "Health Insurances"
       heart_rates: "Heart Rate Measurements"
       heights: "Height Measurements"
@@ -4520,3 +4521,6 @@ en:
       location: "Location"
     soccer_fields:
       location: "Location"
+    health_changes:
+      change_name: "Description"
+      change_date: "Date"

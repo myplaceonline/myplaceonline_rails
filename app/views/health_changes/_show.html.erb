@@ -1,0 +1,5 @@
+<%= data_row(heading: t("myplaceonline.health_changes.change_name"), content: obj.change_name) %>
+<%= data_row(heading: t("myplaceonline.health_changes.change_date"), content: obj.change_date) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.general.rating"), content: obj.rating, enumeration: Myp::RATINGS) %>
+<%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.health_change_files) %>

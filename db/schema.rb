@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_14_061752) do
+ActiveRecord::Schema.define(version: 2020_09_20_143151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3172,6 +3172,33 @@ ActiveRecord::Schema.define(version: 2020_09_14_061752) do
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_headaches_on_identity_id"
+  end
+
+  create_table "health_change_files", force: :cascade do |t|
+    t.bigint "health_change_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["health_change_id"], name: "index_health_change_files_on_health_change_id"
+    t.index ["identity_file_id"], name: "index_health_change_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_health_change_files_on_identity_id"
+  end
+
+  create_table "health_changes", force: :cascade do |t|
+    t.string "change_name"
+    t.date "change_date"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_health_changes_on_identity_id"
   end
 
   create_table "health_insurance_files", id: :serial, force: :cascade do |t|
@@ -8289,6 +8316,10 @@ ActiveRecord::Schema.define(version: 2020_09_14_061752) do
   add_foreign_key "haircuts", "locations"
   add_foreign_key "happy_things", "identities"
   add_foreign_key "headaches", "identities", name: "headaches_identity_id_fk"
+  add_foreign_key "health_change_files", "health_changes"
+  add_foreign_key "health_change_files", "identities"
+  add_foreign_key "health_change_files", "identity_files"
+  add_foreign_key "health_changes", "identities"
   add_foreign_key "health_insurance_files", "health_insurances"
   add_foreign_key "health_insurance_files", "identities"
   add_foreign_key "health_insurance_files", "identity_files"

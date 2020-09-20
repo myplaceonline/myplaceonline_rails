@@ -215,10 +215,11 @@ Category.create!([
   {id: 215, name: "mechanics", link: "mechanics", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/construction.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 216, name: "wireless_networks", link: "wireless_networks", position: 0, parent_id: 1, additional_filtertext: "wifi", icon: "FatCow_Icons16x16/wi_fi.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 217, name: "mrobbles", link: "mrobbles", position: 0, parent_id: 2, additional_filtertext: "scrobble video audio podcast mp3 media", icon: "FatCow_Icons16x16/sound_wave.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
-  {id: 250, name: "parks", link: "parks", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/tree.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
-  {id: 251, name: "basketball_courts", link: "basketball_courts", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/sport_basketball.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
-  {id: 252, name: "tennis_courts", link: "tennis_courts", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/sport_tennis.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
-  {id: 253, name: "soccer_fields", link: "soccer_fields", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/sport_soccer.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
+  {id: 218, name: "parks", link: "parks", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/tree.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 219, name: "basketball_courts", link: "basketball_courts", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/sport_basketball.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 220, name: "tennis_courts", link: "tennis_courts", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/sport_tennis.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 221, name: "soccer_fields", link: "soccer_fields", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/sport_soccer.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 252, name: "health_changes", link: "health_changes", position: 0, parent_id: 29, additional_filtertext: nil, icon: "FatCow_Icons16x16/report_user.png.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
 ])
 
 # Reinitialize to cache the categories created above
