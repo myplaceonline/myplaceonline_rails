@@ -22,6 +22,8 @@ class MedicineUsagesController < MyplaceonlineController
       params.require(:medicine_usage).permit(
         :usage_time,
         :usage_notes,
+        :description,
+        :usage_end,
         medicine_usage_medicines_attributes: [
           :id,
           :_destroy,

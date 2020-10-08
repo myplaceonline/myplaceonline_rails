@@ -1,4 +1,6 @@
 <%= attribute_table_row_datetime(t("myplaceonline.medicine_usages.usage_time"), obj.usage_time) %>
+<%= data_row(heading: t("myplaceonline.medicine_usages.usage_end"), content: obj.usage_end) %>
+<%= data_row(heading: t("myplaceonline.medicine_usages.description"), content: obj.description) %>
 <% obj.medicine_usage_medicines.each do |wrapper| %>
   <%= table_row_heading(t("myplaceonline.medicines.medicine")) %>
   <%= attribute_table_row_reference(t("myplaceonline.medicines.medicine_name"), "medicine_path", wrapper.medicine) %>
@@ -6,4 +8,4 @@
   <%= attribute_table_row_select(t("myplaceonline.medicines.dosage_type"), wrapper.medicine.dosage_type, Myp::DOSAGES) %>
   <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), wrapper.medicine.notes) %>
 <% end %>
-<%= attribute_table_row_markdown(t("myplaceonline.medicine_usages.usage_notes"), obj.usage_notes) %>
+<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.usage_notes) %>

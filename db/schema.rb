@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_20_175535) do
+ActiveRecord::Schema.define(version: 2020_10_08_055127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4348,6 +4348,8 @@ ActiveRecord::Schema.define(version: 2020_09_20_175535) do
     t.datetime "archived"
     t.integer "rating"
     t.boolean "is_public"
+    t.string "description"
+    t.datetime "usage_end"
     t.index ["identity_id"], name: "index_medicine_usages_on_identity_id"
     t.index ["medicine_id"], name: "index_medicine_usages_on_medicine_id"
   end

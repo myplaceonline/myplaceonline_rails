@@ -7,7 +7,12 @@ class MedicineUsage < ApplicationRecord
   child_properties(name: :medicine_usage_medicines)
   
   def display
-    Myp.display_datetime_short(usage_time, User.current_user)
+    result = Myp.display_datetime_short(usage_time, User.current_user)
+    if !self.usage_end.nil?
+        result += " - " + Myp.display_datetime_short(self.usage_end, User.current_user)
+    end
+    result = Myp.appendstrwrap(result, self.description)
+    return result
   end
 
   def self.build(params = nil)

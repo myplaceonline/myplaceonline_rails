@@ -1649,7 +1649,9 @@ en:
       uncovered_body_parts: "Uncovered Body Parts"
       sunscreen_type: "Sunscreen Type"
     medicine_usages:
-      usage_time: "Time"
+      usage_time: "Started"
+      description: "Description"
+      usage_end: "Ended"
     medicines:
       heading: "Medicines"
       medicine: "Medicine"

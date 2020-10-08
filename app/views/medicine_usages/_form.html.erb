@@ -1,5 +1,23 @@
 <%= myp_datetime_field(f, :usage_time, "myplaceonline.medicine_usages.usage_time", obj.usage_time) %>
 <%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATETIME,
+    name: :usage_end,
+    value: obj.usage_end,
+    placeholder: "myplaceonline.medicine_usages.usage_end"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :description,
+    value: obj.description,
+    placeholder: "myplaceonline.medicine_usages.description"
+  )
+%>
+<%=
   render layout: "myplaceonline/childproperties", locals: {
     f: f,
     heading: t("myplaceonline.medicines.heading"),
@@ -37,4 +55,4 @@
     }
   %>
 <% end %>
-<%= myp_text_area_markdown(f, :usage_notes, "myplaceonline.medicine_usages.usage_notes", obj.usage_notes) %>
+<%= myp_text_area_markdown(f, :usage_notes, "myplaceonline.general.notes", obj.usage_notes) %>
