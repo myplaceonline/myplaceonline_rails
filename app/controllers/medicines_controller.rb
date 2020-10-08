@@ -1,4 +1,8 @@
 class MedicinesController < MyplaceonlineController
+  def may_upload
+    true
+  end
+  
   protected
     def additional_sorts
       [

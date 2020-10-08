@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_08_055127) do
+ActiveRecord::Schema.define(version: 2020_10_08_140244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4323,6 +4323,19 @@ ActiveRecord::Schema.define(version: 2020_10_08_055127) do
     t.index ["identity_id"], name: "index_medical_conditions_on_identity_id"
   end
 
+  create_table "medicine_files", force: :cascade do |t|
+    t.bigint "medicine_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_medicine_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_medicine_files_on_identity_id"
+    t.index ["medicine_id"], name: "index_medicine_files_on_medicine_id"
+  end
+
   create_table "medicine_usage_medicines", id: :serial, force: :cascade do |t|
     t.integer "identity_id"
     t.integer "medicine_usage_id"
@@ -8499,6 +8512,9 @@ ActiveRecord::Schema.define(version: 2020_10_08_055127) do
   add_foreign_key "medical_condition_treatments", "locations"
   add_foreign_key "medical_condition_treatments", "medical_conditions"
   add_foreign_key "medical_conditions", "identities", name: "medical_conditions_identity_id_fk"
+  add_foreign_key "medicine_files", "identities"
+  add_foreign_key "medicine_files", "identity_files"
+  add_foreign_key "medicine_files", "medicines"
   add_foreign_key "medicine_usage_medicines", "identities", name: "medicine_usage_medicines_identity_id_fk"
   add_foreign_key "medicine_usage_medicines", "medicine_usages", name: "medicine_usage_medicines_medicine_usage_id_fk"
   add_foreign_key "medicine_usage_medicines", "medicines", name: "medicine_usage_medicines_medicine_id_fk"

@@ -1,6 +1,8 @@
 class Medicine < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
+  child_files
+  
   validates :medicine_name, presence: true
   
   def display
@@ -14,7 +16,8 @@ class Medicine < ApplicationRecord
       :medicine_name,
       :notes,
       :dosage,
-      :dosage_type
+      :dosage_type,
+      medicine_files_attributes: FilesController.multi_param_names,
     ]
   end
 end

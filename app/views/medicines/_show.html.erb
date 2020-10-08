@@ -2,3 +2,4 @@
 <%= attribute_table_row(t("myplaceonline.medicines.dosage"), obj.dosage) %>
 <%= attribute_table_row_select(t("myplaceonline.medicines.dosage_type"), obj.dosage_type, Myp::DOSAGES) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.medicine_files) %>
