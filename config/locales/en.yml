@@ -3419,6 +3419,8 @@ en:
       add_file: "Add File/Picture"
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
+      problem_started: "Started"
+      problem_resolved: "Resolved"
     connections:
       user: "User (by email)"
       with_self: "You're already connected with yourself :-)"

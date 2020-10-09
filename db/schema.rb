@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_08_140244) do
+ActiveRecord::Schema.define(version: 2020_10_09_183243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -5463,6 +5463,8 @@ ActiveRecord::Schema.define(version: 2020_10_08_140244) do
     t.datetime "archived"
     t.integer "rating"
     t.boolean "is_public"
+    t.datetime "problem_started"
+    t.datetime "problem_resolved"
     t.index ["identity_id"], name: "index_problem_reports_on_identity_id"
   end
 

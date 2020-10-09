@@ -2,6 +2,24 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_DATETIME,
+    name: :problem_started,
+    value: obj.problem_started,
+    placeholder: "myplaceonline.problem_reports.problem_started"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DATETIME,
+    name: :problem_resolved,
+    value: obj.problem_resolved,
+    placeholder: "myplaceonline.problem_reports.problem_resolved"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,
