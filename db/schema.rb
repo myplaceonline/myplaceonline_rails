@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_09_183243) do
+ActiveRecord::Schema.define(version: 2020_10_11_211951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2118,6 +2118,13 @@ ActiveRecord::Schema.define(version: 2020_10_09_183243) do
     t.integer "flyOutTime"
     t.integer "flyHomeDay"
     t.integer "flyHomeTime"
+    t.boolean "localMondays"
+    t.boolean "localTuesdays"
+    t.boolean "localWednesdays"
+    t.boolean "localThursdays"
+    t.boolean "localFridays"
+    t.boolean "localSaturdays"
+    t.boolean "localSundays"
     t.index ["identity_id"], name: "index_drom_match_dates_on_identity_id"
     t.index ["other_date_id"], name: "index_drom_match_dates_on_other_date_id"
   end
