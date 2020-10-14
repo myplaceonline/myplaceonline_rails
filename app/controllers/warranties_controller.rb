@@ -7,7 +7,7 @@ class WarrantiesController < MyplaceonlineController
     end
 
     def default_sort_columns
-      ["lower(warranties.warranty_name) ASC"]
+      ["lower(warranties.warranty_name)"]
     end
 
     def obj_params
