@@ -17,6 +17,8 @@ class GasStationsController < MyplaceonlineController
         :rv_dump_station,
         :notes,
         :rating,
+        :detour_time,
+        :detour_from,
         location_attributes: LocationsController.param_names
       )
     end

@@ -2750,6 +2750,8 @@ en:
       propane_replacement: "Propane Tank Replacement"
       propane_fillup: "Propane Fillup"
       rv_dump_station: "RV Dump Station"
+      detour_time: "Detour Time"
+      detour_from: "Detour From"
     repeats:
       heading_singular: "Repeat"
       start_date: "Start Date"

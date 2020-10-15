@@ -4,5 +4,7 @@
 <%= attribute_table_row_boolean(t("myplaceonline.gas_stations.propane_fillup"), obj.propane_fillup) %>
 <%= attribute_table_row_boolean(t("myplaceonline.gas_stations.propane_replacement"), obj.propane_replacement) %>
 <%= attribute_table_row_boolean(t("myplaceonline.gas_stations.rv_dump_station"), obj.rv_dump_station) %>
+<%= data_row(heading: t("myplaceonline.gas_stations.detour_time"), content: obj.detour_time) %>
+<%= data_row(heading: t("myplaceonline.gas_stations.detour_from"), content: obj.detour_from) %>
 <%= data_row(heading: t("myplaceonline.general.rating"), content: obj.rating, enumeration: Myp::RATINGS) %>
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>

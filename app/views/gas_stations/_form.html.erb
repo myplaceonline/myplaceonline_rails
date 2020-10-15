@@ -20,6 +20,24 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_TEXT,
+    name: :detour_time,
+    value: obj.detour_time,
+    placeholder: "myplaceonline.gas_stations.detour_time"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :detour_from,
+    value: obj.detour_from,
+    placeholder: "myplaceonline.gas_stations.detour_from"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_SELECT,
     name: :rating,
     value: obj.rating,

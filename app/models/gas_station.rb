@@ -5,7 +5,11 @@ class GasStation < ApplicationRecord
   child_property(name: :location, required: true)
 
   def display
-    location.display
+    result = location.display
+    if !self.detour_time.blank? && !self.detour_from.blank?
+      result = Myp.appendstrwrap(result, "#{self.detour_time} from #{self.detour_from}")
+    end
+    return result
   end
 
   def self.build(params = nil)
