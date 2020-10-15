@@ -212,7 +212,7 @@ class ApplicationController < ActionController::Base
   def set_time_zone
     if !current_user.nil? && !current_user.timezone.blank?
       begin
-        Time.zone = current_user.timezone
+        #Time.zone = current_user.timezone
       rescue Exception => e
         Myp.warn("Invalid time zone #{Myp.error_details(e)}", e, request: request)
       end
