@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_15_110702) do
+ActiveRecord::Schema.define(version: 2020_10_16_173105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2106,6 +2106,25 @@ ActiveRecord::Schema.define(version: 2020_10_15_110702) do
     t.index ["identity_id"], name: "index_drom_match_chosen_dealbreakers_on_identity_id"
   end
 
+  create_table "drom_match_cities", force: :cascade do |t|
+    t.string "name"
+    t.decimal "center_latitude", precision: 24, scale: 20
+    t.decimal "center_longitude", precision: 24, scale: 20
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "picture"
+  end
+
+  create_table "drom_match_city_regions", force: :cascade do |t|
+    t.bigint "drom_match_city_id"
+    t.string "region_name"
+    t.string "key"
+    t.string "picture"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["drom_match_city_id"], name: "index_drom_match_city_regions_on_drom_match_city_id"
+  end
+
   create_table "drom_match_dates", force: :cascade do |t|
     t.bigint "identity_id"
     t.integer "date_status"
@@ -2163,6 +2182,7 @@ ActiveRecord::Schema.define(version: 2020_10_15_110702) do
     t.boolean "restaurantPrice2"
     t.boolean "restaurantPrice3"
     t.boolean "restaurantPrice4"
+    t.string "regionsRestaurants"
     t.index ["identity_id"], name: "index_drom_match_dates_on_identity_id"
     t.index ["other_date_id"], name: "index_drom_match_dates_on_other_date_id"
   end
@@ -8243,6 +8263,7 @@ ActiveRecord::Schema.define(version: 2020_10_15_110702) do
   add_foreign_key "driver_licenses", "locations", column: "address_id"
   add_foreign_key "drom_match_chosen_dealbreakers", "drom_match_dealbreakers"
   add_foreign_key "drom_match_chosen_dealbreakers", "identities"
+  add_foreign_key "drom_match_city_regions", "drom_match_cities"
   add_foreign_key "drom_match_dates", "drom_match_dates", column: "other_date_id"
   add_foreign_key "drom_match_dates", "identities"
   add_foreign_key "drom_match_dealbreaker_relationships", "drom_match_dealbreakers", column: "drom_match_dealbreaker1_id"
