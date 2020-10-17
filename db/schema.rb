@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_16_173105) do
+ActiveRecord::Schema.define(version: 2020_10_16_200321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2113,6 +2113,8 @@ ActiveRecord::Schema.define(version: 2020_10_16_173105) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "picture"
+    t.string "timezone"
+    t.string "short_name"
   end
 
   create_table "drom_match_city_regions", force: :cascade do |t|
