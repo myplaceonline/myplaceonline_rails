@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_17_201017) do
+ActiveRecord::Schema.define(version: 2020_10_19_033321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2341,6 +2341,7 @@ ActiveRecord::Schema.define(version: 2020_10_17_201017) do
     t.boolean "checked"
     t.string "tripAdvisorLink"
     t.string "mapsLink"
+    t.boolean "otherChecked"
     t.index ["drom_match_city_id"], name: "index_drom_match_restaurant_packages_on_drom_match_city_id"
     t.index ["drom_match_city_region_id"], name: "dmrp_dmcri"
     t.index ["drom_match_date_id"], name: "index_drom_match_restaurant_packages_on_drom_match_date_id"
