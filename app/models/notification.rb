@@ -44,7 +44,8 @@ class Notification < ApplicationRecord
         body_long_markdown,
         body_app_markdown,
         max_notifications: nil,
-        exponential_backoff: false
+        exponential_backoff: false,
+        data: {}
       )
     
     some_sent = false
@@ -60,7 +61,8 @@ class Notification < ApplicationRecord
           body_long_markdown,
           body_app_markdown,
           max_notifications: max_notifications,
-          exponential_backoff: exponential_backoff
+          exponential_backoff: exponential_backoff,
+          data: data,
         )
       some_sent = true
     end
@@ -74,7 +76,8 @@ class Notification < ApplicationRecord
         body_long_markdown,
         body_app_markdown,
         max_notifications: max_notifications,
-        exponential_backoff: exponential_backoff
+        exponential_backoff: exponential_backoff,
+        data: data,
       )
       some_sent = true
     end
@@ -88,7 +91,8 @@ class Notification < ApplicationRecord
         body_long_markdown,
         body_app_markdown,
         max_notifications: max_notifications,
-        exponential_backoff: exponential_backoff
+        exponential_backoff: exponential_backoff,
+        data: data,
       )
       some_sent = true
     end
@@ -107,10 +111,17 @@ class Notification < ApplicationRecord
         body_long_markdown,
         body_app_markdown,
         max_notifications: nil,
-        exponential_backoff: false
+        exponential_backoff: false,
+        data: {}
       )
+      
+    data.merge!({ # max 4KB
+      identity: identity.id,
+      notification_category: notification_category,
+      subject: subject,
+    })
     
-    ::Rails.logger.debug{"Notification.try_send_notification identity: #{identity}, type: #{notification_type}"}
+    ::Rails.logger.debug{"Notification.try_send_notification identity: #{identity}, type: #{notification_type}, data: #{Myp.debug_print(data)}"}
 
     if NotificationPreference.can_send_notification?(identity, notification_type, notification_category)
       
@@ -162,11 +173,7 @@ class Notification < ApplicationRecord
               sound: "default",
               badge: 0,
               priority: "high",
-              data: { # max 4KiB
-                identity: identity.id,
-                notification_category: notification_category,
-                subject: subject,
-              }
+              data: data,
             }
           end
           
@@ -219,7 +226,8 @@ class Notification < ApplicationRecord
         body_long_markdown,
         body_app_markdown,
         max_notifications: nil,
-        exponential_backoff: false
+        exponential_backoff: false,
+        data: {}
       )
     MyplaceonlineExecutionContext.do_user(identity.user) do
       MyplaceonlineExecutionContext.do_permission_target(identity) do
@@ -233,7 +241,8 @@ class Notification < ApplicationRecord
                   body_long_markdown,
                   body_app_markdown,
                   max_notifications: max_notifications,
-                  exponential_backoff: exponential_backoff
+                  exponential_backoff: exponential_backoff,
+                  data: data,
                 )
         end
       end
@@ -248,7 +257,8 @@ class Notification < ApplicationRecord
         body_long_markdown,
         body_app_markdown,
         max_notifications: nil,
-        exponential_backoff: false
+        exponential_backoff: false,
+        data: {}
       )
     MyplaceonlineExecutionContext.do_user(identity.user) do
       MyplaceonlineExecutionContext.do_permission_target(identity) do
@@ -261,7 +271,8 @@ class Notification < ApplicationRecord
                   body_long_markdown,
                   body_app_markdown,
                   max_notifications: max_notifications,
-                  exponential_backoff: exponential_backoff
+                  exponential_backoff: exponential_backoff,
+                  data: data,
                 )
         end
       end
