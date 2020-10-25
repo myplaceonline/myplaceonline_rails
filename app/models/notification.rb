@@ -161,17 +161,25 @@ class Notification < ApplicationRecord
               body: body_app_markdown,
               sound: "default",
               badge: 0,
+              priority: "high",
+              data: { # max 4KiB
+                identity: identity.id,
+                notification_category: notification_category,
+                subject: subject,
+              }
             }
           end
           
           if notifications.length > 0
+            ::Rails.logger.debug{"Notification.try_send_notification sending app: #{Myp.debug_print(notifications)}"}
+            
             if ENV["SKIP_NOTIFICATIONS"] != "true"
               client = Exponent::Push::Client.new(gzip: false)
-              client.publish(notifications)
+              handler = client.send_messages(notifications)
+              
+              ::Rails.logger.debug{"Notification.try_send_notification expo responses: #{Myp.debug_print(handler.errors)}"}
             end
           end
-          
-          ::Rails.logger.debug{"Notification.try_send_notification sending app: #{Myp.debug_print(notifications)}"}
           
         else
           raise "TODO #{notification_type}"
