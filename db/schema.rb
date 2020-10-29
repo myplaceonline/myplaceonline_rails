@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_25_203517) do
+ActiveRecord::Schema.define(version: 2020_10_29_043057) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2115,6 +2115,8 @@ ActiveRecord::Schema.define(version: 2020_10_25_203517) do
     t.string "picture"
     t.string "timezone"
     t.string "short_name"
+    t.string "placeid"
+    t.string "formatted_address"
   end
 
   create_table "drom_match_city_regions", force: :cascade do |t|
@@ -2124,6 +2126,11 @@ ActiveRecord::Schema.define(version: 2020_10_25_203517) do
     t.string "picture"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "center_latitude", precision: 24, scale: 20
+    t.decimal "center_longitude", precision: 24, scale: 20
+    t.string "placeid"
+    t.string "formatted_address"
+    t.string "short_name"
     t.index ["drom_match_city_id"], name: "index_drom_match_city_regions_on_drom_match_city_id"
   end
 
@@ -2345,6 +2352,7 @@ ActiveRecord::Schema.define(version: 2020_10_25_203517) do
     t.string "mapsLink"
     t.boolean "otherChecked"
     t.boolean "selected"
+    t.integer "google_rating"
     t.index ["drom_match_city_id"], name: "index_drom_match_restaurant_packages_on_drom_match_city_id"
     t.index ["drom_match_city_region_id"], name: "dmrp_dmcri"
     t.index ["drom_match_date_id"], name: "index_drom_match_restaurant_packages_on_drom_match_date_id"
