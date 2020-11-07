@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_29_043057) do
+ActiveRecord::Schema.define(version: 2020_11_07_195737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2353,6 +2353,8 @@ ActiveRecord::Schema.define(version: 2020_10_29_043057) do
     t.boolean "otherChecked"
     t.boolean "selected"
     t.integer "google_rating"
+    t.string "phone_number"
+    t.string "website"
     t.index ["drom_match_city_id"], name: "index_drom_match_restaurant_packages_on_drom_match_city_id"
     t.index ["drom_match_city_region_id"], name: "dmrp_dmcri"
     t.index ["drom_match_date_id"], name: "index_drom_match_restaurant_packages_on_drom_match_date_id"
