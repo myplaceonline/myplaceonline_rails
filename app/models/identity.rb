@@ -139,6 +139,7 @@ class Identity < ApplicationRecord
     end
   end
   
+  has_many :point_displays, :dependent => :destroy
   has_many :genotype_calls, :dependent => :destroy
   has_many :dna_analyses, :dependent => :destroy
   has_many :passwords, :dependent => :destroy

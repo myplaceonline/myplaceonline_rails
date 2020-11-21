@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_07_195737) do
+ActiveRecord::Schema.define(version: 2020_11_21_012201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2314,6 +2314,7 @@ ActiveRecord::Schema.define(version: 2020_11_07_195737) do
     t.bigint "target_identity_id"
     t.boolean "chat_unread"
     t.datetime "last_read"
+    t.integer "chat_status"
     t.index ["identity_id"], name: "index_drom_match_matches_on_identity_id"
     t.index ["target_identity_id"], name: "index_drom_match_matches_on_target_identity_id"
   end

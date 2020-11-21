@@ -77,19 +77,21 @@ class User < ApplicationRecord
   
   # This should only be called if the currently logged in user is this user
   def current_identity
-    #Rails.logger.debug{"User.current_identity user_id: #{self.id}"}
+    ::Rails.logger.debug{"User.current_identity user_id: #{self.id}"}
     result = nil
     if ExecutionContext.available?
+      ::Rails.logger.debug{"User.current_identity getting execution context identity"}
       result = MyplaceonlineExecutionContext.identity
     end
     if result.nil?
+      ::Rails.logger.debug{"User.current_identity getting domain_identity"}
       result = self.domain_identity
     else
       if result.user_id != self.id
         # This can happen if an identity is emulated (e.g. website domain homepage)
       end
     end
-    #Rails.logger.debug{"User.current_identity returning: #{result.nil? ? nil : result.id}"}
+    ::Rails.logger.debug{"User.current_identity returning: #{result.nil? ? nil : result.id}"}
     result
   end
   
@@ -98,25 +100,30 @@ class User < ApplicationRecord
     if self.id != GUEST_USER_ID
       domain = Myp.website_domain
       if !domain.nil?
+        ::Rails.logger.debug{"User.domain_identity checking domain #{domain.id}"}
         domain_id = domain.id
         temp_identity_id = nil
         if ExecutionContext.available?
           temp_identity_id = MyplaceonlineExecutionContext[:temp_identity_id]
         end
         if temp_identity_id.nil?
+          ::Rails.logger.debug{"User.domain_identity checking user identities"}
           identity_index = self.identities.find_index do |identity|
             identity.website_domain_id == domain_id && identity.website_domain_default
           end
         else
+          ::Rails.logger.debug{"User.domain_identity checking for temp identity"}
           identity_index = self.identities.find_index do |identity|
             identity.website_domain_id == domain_id && identity.id == temp_identity_id
           end
         end
         if !identity_index.nil?
+          ::Rails.logger.debug{"User.domain_identity getting based on index"}
           result = self.identities[identity_index]
         end
       end
     else
+      ::Rails.logger.debug{"User.domain_identity creating guest identity"}
       result = Identity.new(
         id: GUEST_USER_IDENTITY_ID,
         user_id: GUEST_USER_ID,
