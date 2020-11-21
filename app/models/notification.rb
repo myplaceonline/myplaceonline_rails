@@ -229,23 +229,20 @@ class Notification < ApplicationRecord
         exponential_backoff: false,
         data: {}
       )
-    MyplaceonlineExecutionContext.do_user(identity.user) do
-      MyplaceonlineExecutionContext.do_permission_target(identity) do
-        MyplaceonlineExecutionContext.do_allow_cross_identity(identity) do
-          return Notification.try_send_notification(
-                  identity,
-                  notification_type,
-                  notification_category,
-                  subject,
-                  body_short_markdown,
-                  body_long_markdown,
-                  body_app_markdown,
-                  max_notifications: max_notifications,
-                  exponential_backoff: exponential_backoff,
-                  data: data,
-                )
-        end
-      end
+
+    MyplaceonlineExecutionContext.do_full_identity_context(identity) do
+        return Notification.try_send_notification(
+            identity,
+            notification_type,
+            notification_category,
+            subject,
+            body_short_markdown,
+            body_long_markdown,
+            body_app_markdown,
+            max_notifications: max_notifications,
+            exponential_backoff: exponential_backoff,
+            data: data,
+        )
     end
   end
   
@@ -260,22 +257,19 @@ class Notification < ApplicationRecord
         exponential_backoff: false,
         data: {}
       )
-    MyplaceonlineExecutionContext.do_user(identity.user) do
-      MyplaceonlineExecutionContext.do_permission_target(identity) do
-        MyplaceonlineExecutionContext.do_allow_cross_identity(identity) do
-          return Notification.try_send_notifications(
-                  identity,
-                  notification_category,
-                  subject,
-                  body_short_markdown,
-                  body_long_markdown,
-                  body_app_markdown,
-                  max_notifications: max_notifications,
-                  exponential_backoff: exponential_backoff,
-                  data: data,
-                )
-        end
-      end
+      
+    MyplaceonlineExecutionContext.do_full_identity_context(identity) do
+        return Notification.try_send_notifications(
+            identity,
+            notification_category,
+            subject,
+            body_short_markdown,
+            body_long_markdown,
+            body_app_markdown,
+            max_notifications: max_notifications,
+            exponential_backoff: exponential_backoff,
+            data: data,
+        )
     end
   end
   

@@ -22,12 +22,12 @@ module MyplaceonlineActiveRecordIdentityConcern
 
         current_user = User.current_user
 
-        #Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set current_user: #{current_user.inspect}"}
+        Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set current_user: #{current_user.inspect}"}
 
         if !current_user.nil?
           identity_target = Permission.current_target_identity
           
-          #Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set identity_target: #{identity_target.inspect}"}
+          Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set identity_target: #{identity_target.inspect}"}
           
           if !self.identity_id.nil?
             

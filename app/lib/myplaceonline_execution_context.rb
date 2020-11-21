@@ -194,6 +194,18 @@ class MyplaceonlineExecutionContext
     end
   end
 
+  def self.do_full_identity_context(identity, &block)
+    ExecutionContext.push
+    begin
+      self.identity = identity
+      self.user = identity.user
+      self.permission_target = nil
+      block.call
+    ensure
+      ExecutionContext.pop
+    end
+  end
+
   # This should mostly be used only for debugging since the context is not unset
   def self.set(user: nil, identity: nil, context: nil)
     ExecutionContext.push

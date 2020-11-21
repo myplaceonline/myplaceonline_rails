@@ -82,6 +82,7 @@ class Permission < ApplicationRecord
 
   def self.current_target_identity
     target = Permission.current_target
+    Rails.logger.debug{"Permission.current_target_identity target: #{target}"}
     if target.nil?
       target_identity = User.current_user.current_identity
     else
