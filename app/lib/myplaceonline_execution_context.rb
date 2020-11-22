@@ -159,11 +159,13 @@ class MyplaceonlineExecutionContext
   def self.initialize(request:, session:, user:, persistent_user_store:)
     MyplaceonlineExecutionContext.request = request
     
-    Rails.logger.debug{"MyplaceonlineExecutionContext.initialize user: #{user.nil? ? "nil" : user.id}"}
-
     MyplaceonlineExecutionContext.user = user
-    MyplaceonlineExecutionContext.identity = user.domain_identity
     
+    current_identity = user.domain_identity
+    MyplaceonlineExecutionContext.identity = current_identity
+    
+    Rails.logger.debug{"MyplaceonlineExecutionContext.initialize user: #{user.nil? ? "nil" : user.id}, identity: #{current_identity.nil? ? "nil" : current_identity.id}"}
+
     if !user.nil?
       session[:myp_email] = user.email
     end
