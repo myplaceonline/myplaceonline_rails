@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_21_012201) do
+ActiveRecord::Schema.define(version: 2020_11_23_025603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2153,7 +2153,7 @@ ActiveRecord::Schema.define(version: 2020_11_21_012201) do
     t.boolean "localFridays"
     t.boolean "localSaturdays"
     t.boolean "localSundays"
-    t.string "regionsRestaurants"
+    t.string "cityRegions"
     t.string "restaurantTypes"
     t.bigint "drom_match_match_id"
     t.index ["drom_match_match_id"], name: "index_drom_match_dates_on_drom_match_match_id"

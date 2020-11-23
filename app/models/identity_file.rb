@@ -337,6 +337,11 @@ class IdentityFile < ApplicationRecord
                 if child.status.exitstatus == 0
                   blob = IO.binread(toutputfile.path)
                   
+                  image = Magick::Image::from_blob(blob).first
+                  dimension = image.columns > image.rows ? image.rows : image.columns
+                  image.crop!(Magick::CenterGravity, dimension, dimension)
+                  blob = image.to_blob
+                  
                   self.send("#{thumbnail_property}_contents=", blob)
                   self.send("#{thumbnail_property}_size_bytes=", blob.length)
                   self.save!
@@ -402,6 +407,13 @@ class IdentityFile < ApplicationRecord
             process_error: false
           )
           if child.status.exitstatus == 0
+            
+            blob = IO.binread(thumbnail_path)
+            image = Magick::Image::from_blob(blob).first
+            dimension = image.columns > image.rows ? image.rows : image.columns
+            image.crop!(Magick::CenterGravity, dimension, dimension)
+            image.write(thumbnail_path)
+              
             success = true
           else
             Myp.warn("Could not extract thumbnail for video #{self.id}, exit status #{child.status.exitstatus}, command line: #{command_line}, stdout: #{child.out}, stderr: #{child.err}")
