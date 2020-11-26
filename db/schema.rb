@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_23_025603) do
+ActiveRecord::Schema.define(version: 2020_11_26_031206) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2154,7 +2154,7 @@ ActiveRecord::Schema.define(version: 2020_11_23_025603) do
     t.boolean "localSaturdays"
     t.boolean "localSundays"
     t.string "cityRegions"
-    t.string "restaurantTypes"
+    t.string "placeTypes"
     t.bigint "drom_match_match_id"
     t.index ["drom_match_match_id"], name: "index_drom_match_dates_on_drom_match_match_id"
     t.index ["identity_id"], name: "index_drom_match_dates_on_identity_id"
@@ -2319,26 +2319,12 @@ ActiveRecord::Schema.define(version: 2020_11_23_025603) do
     t.index ["target_identity_id"], name: "index_drom_match_matches_on_target_identity_id"
   end
 
-  create_table "drom_match_profile_videos", force: :cascade do |t|
-    t.bigint "identity_id"
-    t.bigint "identity_file_id"
-    t.integer "position"
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "expectedbytes"
-    t.string "cacheuri"
-    t.integer "status"
-    t.index ["identity_file_id"], name: "index_drom_match_profile_videos_on_identity_file_id"
-    t.index ["identity_id"], name: "index_drom_match_profile_videos_on_identity_id"
-  end
-
-  create_table "drom_match_restaurant_packages", force: :cascade do |t|
+  create_table "drom_match_place_packages", force: :cascade do |t|
     t.bigint "drom_match_date_id"
     t.bigint "drom_match_city_id"
-    t.string "restaurant_name"
-    t.string "restaurant_cost"
-    t.string "restaurant_location"
+    t.string "place_name"
+    t.string "cost"
+    t.string "location_address"
     t.string "reservation_link"
     t.datetime "start_time"
     t.datetime "created_at", null: false
@@ -2356,10 +2342,24 @@ ActiveRecord::Schema.define(version: 2020_11_23_025603) do
     t.integer "google_rating"
     t.string "phone_number"
     t.string "website"
-    t.index ["drom_match_city_id"], name: "index_drom_match_restaurant_packages_on_drom_match_city_id"
+    t.index ["drom_match_city_id"], name: "index_drom_match_place_packages_on_drom_match_city_id"
     t.index ["drom_match_city_region_id"], name: "dmrp_dmcri"
-    t.index ["drom_match_date_id"], name: "index_drom_match_restaurant_packages_on_drom_match_date_id"
-    t.index ["identity_id"], name: "index_drom_match_restaurant_packages_on_identity_id"
+    t.index ["drom_match_date_id"], name: "index_drom_match_place_packages_on_drom_match_date_id"
+    t.index ["identity_id"], name: "index_drom_match_place_packages_on_identity_id"
+  end
+
+  create_table "drom_match_profile_videos", force: :cascade do |t|
+    t.bigint "identity_id"
+    t.bigint "identity_file_id"
+    t.integer "position"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "expectedbytes"
+    t.string "cacheuri"
+    t.integer "status"
+    t.index ["identity_file_id"], name: "index_drom_match_profile_videos_on_identity_file_id"
+    t.index ["identity_id"], name: "index_drom_match_profile_videos_on_identity_id"
   end
 
   create_table "drom_match_user_infos", force: :cascade do |t|
@@ -8290,12 +8290,12 @@ ActiveRecord::Schema.define(version: 2020_11_23_025603) do
   add_foreign_key "drom_match_match_messages", "identity_files"
   add_foreign_key "drom_match_matches", "identities"
   add_foreign_key "drom_match_matches", "identities", column: "target_identity_id"
+  add_foreign_key "drom_match_place_packages", "drom_match_cities"
+  add_foreign_key "drom_match_place_packages", "drom_match_city_regions"
+  add_foreign_key "drom_match_place_packages", "drom_match_dates"
+  add_foreign_key "drom_match_place_packages", "identities"
   add_foreign_key "drom_match_profile_videos", "identities"
   add_foreign_key "drom_match_profile_videos", "identity_files"
-  add_foreign_key "drom_match_restaurant_packages", "drom_match_cities"
-  add_foreign_key "drom_match_restaurant_packages", "drom_match_city_regions"
-  add_foreign_key "drom_match_restaurant_packages", "drom_match_dates"
-  add_foreign_key "drom_match_restaurant_packages", "identities"
   add_foreign_key "drom_match_user_infos", "users"
   add_foreign_key "due_items", "calendars", name: "due_items_calendar_id_fk"
   add_foreign_key "due_items", "identities", name: "due_items_identity_id_fk"
