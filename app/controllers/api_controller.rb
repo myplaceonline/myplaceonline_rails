@@ -170,12 +170,23 @@ class ApiController < ApplicationController
       user_input = params[:user_input]
       begin
         
-        params_massaged = Myp.debug_print(params.except(:user_input), plain: true)
+        params_massaged = Myp.debug_print(params.except(:user_input, :accumulatedDebug, :api), plain: true)
+        
+        plain_text = user_input
+        html_body = CGI::escapeHTML(user_input)
+
+        if !params[:accumulatedDebug].blank?
+          plain_text = plain_text + "\n\nLog:\n\n" + params[:accumulatedDebug]
+          html_body = html_body + "<p />Log:<p />" + params[:accumulatedDebug].gsub("\n", "<br />\n")
+        end
+
+        plain_text = plain_text + "\n\n" + params_massaged
+        html_body = html_body + "\n\n<!-- " + CGI::escapeHTML(params_massaged).gsub("\n", "<br />\n") + " -->"
 
         Myp.send_support_email_safe(
           "Quick Feedback",
-          CGI::escapeHTML(user_input) + "\n\n<!-- " + CGI::escapeHTML(params_massaged).gsub("\n", "<br />\n") + " -->",
-          user_input + "\n\n" + params_massaged,
+          html_body,
+          plain_text,
           email: current_user.email,
           request: request,
           html_comment_details: true,
