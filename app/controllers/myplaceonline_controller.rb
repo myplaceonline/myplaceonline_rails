@@ -1467,7 +1467,7 @@ class MyplaceonlineController < ApplicationController
             label = (loc.time_from_home/60.0).ceil.to_s
           end
           
-          popupHtml = "<p>#{ActionController::Base.helpers.link_to(x.display, obj_path(x))}</p><ul><li>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.maps.full_map"), loc.map_url(prefer_human_readable: true), target: "_blank", class: "externallink")}</li><li>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.maps.directions"), loc.map_directions_url(from_current_location: true, autostart: true), target: "_blank", class: "externallink")}</li></ul>"
+          popupHtml = "<p>#{ActionController::Base.helpers.link_to(x.display, obj_path(x))}</p><ul><li>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.maps.full_map"), loc.map_url(prefer_human_readable: false), target: "_blank", class: "externallink")}</li><li>#{ActionController::Base.helpers.link_to(I18n.t("myplaceonline.maps.directions"), loc.map_directions_url(from_current_location: true, autostart: true), target: "_blank", class: "externallink")}</li></ul>"
           
           dotless = true
           icon = "red"
