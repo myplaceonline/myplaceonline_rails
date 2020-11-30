@@ -14,6 +14,8 @@ class SubscribeController < ApplicationController
       end
     end
     
+    @redirectto = params[:redirect]
+    
     @email = params[:email]
     if !@email.blank?
       if !(@email =~ Devise.email_regexp).nil?
@@ -46,6 +48,9 @@ class SubscribeController < ApplicationController
         end
       else
         flash[:error] = t("myplaceonline.general.invalid_email")
+      end
+      if !@redirectto.blank?
+        redirect_to @redirectto
       end
     elsif request.post?
       flash[:error] = t("myplaceonline.subscribe.email_not_specified")
