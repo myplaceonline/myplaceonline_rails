@@ -50,7 +50,7 @@ class SubscribeController < ApplicationController
         flash[:error] = t("myplaceonline.general.invalid_email")
       end
       if !@redirectto.blank?
-        redirect_to @redirectto
+        return redirect_to @redirectto
       end
     elsif request.post?
       flash[:error] = t("myplaceonline.subscribe.email_not_specified")
