@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_26_031206) do
+ActiveRecord::Schema.define(version: 2020_12_02_224845) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2117,6 +2117,13 @@ ActiveRecord::Schema.define(version: 2020_11_26_031206) do
     t.string "short_name"
     t.string "placeid"
     t.string "formatted_address"
+    t.bigint "identity_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.index ["identity_id"], name: "index_drom_match_cities_on_identity_id"
   end
 
   create_table "drom_match_city_regions", force: :cascade do |t|
@@ -8267,6 +8274,7 @@ ActiveRecord::Schema.define(version: 2020_11_26_031206) do
   add_foreign_key "driver_licenses", "locations", column: "address_id"
   add_foreign_key "drom_match_chosen_dealbreakers", "drom_match_dealbreakers"
   add_foreign_key "drom_match_chosen_dealbreakers", "identities"
+  add_foreign_key "drom_match_cities", "identities"
   add_foreign_key "drom_match_city_regions", "drom_match_cities"
   add_foreign_key "drom_match_dates", "drom_match_dates", column: "other_date_id"
   add_foreign_key "drom_match_dates", "drom_match_matches"
