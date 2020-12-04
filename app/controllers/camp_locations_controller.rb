@@ -35,6 +35,7 @@ class CampLocationsController < MyplaceonlineController
       :nightly_cost,
       :slideout_okay,
       :limited_time_parking,
+      :unlimited_time_parking,
       location_attributes: LocationsController.param_names,
       membership_attributes: MembershipsController.param_names
     ]
@@ -51,6 +52,7 @@ class CampLocationsController < MyplaceonlineController
       { name: :cell_phone_data },
       { name: :level_ground },
       { name: :limited_time_parking },
+      { name: :unlimited_time_parking },
     ]
   end
 

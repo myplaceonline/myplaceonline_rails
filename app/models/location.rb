@@ -321,32 +321,37 @@ class Location < ApplicationRecord
         mlc = location.map_link_component
         
         if !mlc.blank?
-          client = GoogleClient.new(key: ENV["GOOGLE_MAPS_API_SERVER_KEY"], response_format: :json, read_timeout: 5)
-          # https://developers.google.com/maps/documentation/directions/intro
-          directions = Directions.new(client)
+          begin
+            client = GoogleClient.new(key: ENV["GOOGLE_MAPS_API_SERVER_KEY"], response_format: :json, read_timeout: 5)
+            # https://developers.google.com/maps/documentation/directions/intro
+            directions = Directions.new(client)
 
-          Rails.logger.debug{"Directions Origin: #{mlc}, Destination: #{self.map_link_component}"}
+            Rails.logger.debug{"Directions Origin: #{mlc}, Destination: #{self.map_link_component}"}
 
-          result = directions.query(
-            origin: mlc,
-            destination: self.map_link_component,
-            mode: "driving",
-            departure_time: Time.now,
-            alternatives: false
-          )
+            result = directions.query(
+                origin: mlc,
+                destination: self.map_link_component,
+                mode: "driving",
+                departure_time: Time.now,
+                alternatives: false
+            )
 
-          Rails.logger.debug{"Directions Result: #{Myp.debug_print(result)}"}
-          
-          if result.length > 0
-            # "For routes that contain no waypoints, the route will consist of a single "leg,""
-            # https://developers.google.com/maps/documentation/directions/intro#Legs
-            duration = result[0]["legs"][0]["duration_in_traffic"]
-            if duration.nil?
-              duration = result[0]["legs"][0]["duration"]
+            Rails.logger.debug{"Directions Result: #{Myp.debug_print(result)}"}
+            
+            if result.length > 0
+                # "For routes that contain no waypoints, the route will consist of a single "leg,""
+                # https://developers.google.com/maps/documentation/directions/intro#Legs
+                duration = result[0]["legs"][0]["duration_in_traffic"]
+                if duration.nil?
+                duration = result[0]["legs"][0]["duration"]
+                end
+                # value indicates the duration in seconds.
+                self.time_from_home = duration["value"]
+                self.save!
             end
-            # value indicates the duration in seconds.
-            self.time_from_home = duration["value"]
-            self.save!
+          rescue => e
+            # https://github.com/elastic/elasticsearch-ruby/issues/726
+            Myp.warn("Error calling estimate_driving_time", e)
           end
         end
       end

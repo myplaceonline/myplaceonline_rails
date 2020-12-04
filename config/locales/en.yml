@@ -2098,6 +2098,7 @@ en:
       nightly_cost: "Nightly Cost"
       slideout_okay: "Slideout Okay"
       limited_time_parking: "Limited-Time Parking"
+      unlimited_time_parking: "Unlimited-Time Parking"
     noise_levels:
       quiet: "Quiet"
       nature: "Nature"
