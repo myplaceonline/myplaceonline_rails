@@ -7,7 +7,7 @@ class InviteCode < ApplicationRecord
   validates :max_uses, presence: true
   
   def display
-    code + " (" + current_uses.to_s + "/" + max_uses.to_s + ")"
+    Myp.appendstrwrap(Myp.appendstrwrap(code, current_uses.to_s + "/" + max_uses.to_s), self.public_name)
   end
 
   def self.build(params = nil)
