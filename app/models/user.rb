@@ -55,6 +55,8 @@ class User < ApplicationRecord
          :confirmable, :lockable, :doorkeeper
 
   has_many :identities, :dependent => :destroy
+
+  has_many :entered_invite_codes, :dependent => :destroy
   
   def domain_identities
     domain = Myp.website_domain
