@@ -1,4 +1,19 @@
 class AirlineProgramsController < MyplaceonlineController
+  def split_link(obj)
+    if !obj.password.nil? && !obj.password.url.blank?
+      ActionController::Base.helpers.link_to(
+        I18n.t("myplaceonline.airline_programs.website"),
+        obj.password.url,
+      )
+    else
+      nil
+    end
+  end
+  
+  def data_split_icon
+    "action"
+  end
+  
   protected
     def default_sort_direction
       "desc"
