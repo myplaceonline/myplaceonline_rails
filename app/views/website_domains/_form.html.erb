@@ -279,6 +279,15 @@
     )
   %>
   <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_TEXT,
+      name: :confirm_redirect,
+      value: obj.confirm_redirect,
+      placeholder: "myplaceonline.website_domains.confirm_redirect",
+    )
+  %>
+  <%=
     render partial: "myplaceonline/select_or_create", locals: {
       f: f,
       name: :favicon_ico_identity_file,

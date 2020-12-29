@@ -831,7 +831,7 @@ en:
       invite_invalid_detailed: "Invalid invite code"
       reenterpassword: "Re-enter Password"
       resendconfirmation: "Resend confirmation instructions"
-      pending_confirmation: "You haven't confirmed your email yet. Please check your email (including spam) and click the link to confirm."
+      pending_confirmation: "You haven't confirmed your email yet. Please check your email (including spam) and click the link in the email to confirm."
       resendunlock: "Resend unlock instructions"
       forgotpassword: "Forgot your password?"
       sendreset: "Send reset password instructions"
@@ -3170,6 +3170,7 @@ en:
       delete_property: "Delete Property"
       allow_public: "Allow Public Access without Invite Code"
       mailing_list: "Mailing List"
+      confirm_redirect: "Confirm redirect"
     website_domain_myplets:
       title: "Title"
       border_type: "Border Type"

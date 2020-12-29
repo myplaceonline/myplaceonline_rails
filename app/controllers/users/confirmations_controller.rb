@@ -20,15 +20,22 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   #   super
   # end
 
-  # protected
+  protected
 
-  # The path used after resending confirmation instructions.
-  # def after_resending_confirmation_instructions_path_for(resource_name)
-  #   super(resource_name)
-  # end
+    # The path used after resending confirmation instructions.
+    # def after_resending_confirmation_instructions_path_for(resource_name)
+    #   super(resource_name)
+    # end
 
-  # The path used after confirmation.
-  # def after_confirmation_path_for(resource_name, resource)
-  #   super(resource_name, resource)
-  # end
+    # The path used after confirmation.
+    def after_confirmation_path_for(resource_name, resource)
+      Rails.logger.debug{"ConfirmationsController.after_confirmation_path_for domain: #{Myp.website_domain}"}
+      
+      domain = Myp.website_domain
+      if !domain.nil? && !domain.confirm_redirect.blank?
+        domain.confirm_redirect
+      else
+        super(resource_name, resource)
+      end
+    end
 end
