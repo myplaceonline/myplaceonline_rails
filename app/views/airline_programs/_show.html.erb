@@ -1,0 +1,6 @@
+<%= data_row(heading: t("myplaceonline.airline_programs.program_name"), content: obj.program_name) %>
+<%= data_row(heading: t("myplaceonline.airline_programs.status"), content: obj.status) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.general.rating"), content: obj.rating, enumeration: Myp::RATINGS) %>
+<%= data_row(heading: t("myplaceonline.airline_programs.password"), content: obj.password) %>
+<%= data_row(heading: t("myplaceonline.airline_programs.membership"), content: obj.membership) %>

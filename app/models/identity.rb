@@ -348,6 +348,7 @@ class Identity < ApplicationRecord
   has_many :tennis_courts, :dependent => :destroy
   has_many :soccer_fields, :dependent => :destroy
   has_many :health_changes, :dependent => :destroy
+  has_many :airline_programs, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 

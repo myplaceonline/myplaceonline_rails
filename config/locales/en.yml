@@ -42,6 +42,7 @@ en:
       acne_measurements: "Acne Measurements"
       activities: "Activities"
       agents: "People or Groups"
+      airline_programs: "Airline Programs"
       alerts_displays: "Alerts Displays"
       allergies: "Allergies"
       annuities: "Annuities"
@@ -4532,3 +4533,8 @@ en:
     health_changes:
       change_name: "Description"
       change_date: "Date"
+    airline_programs:
+      program_name: "Name"
+      status: "Status"
+      password: "Password"
+      membership: "Membership"

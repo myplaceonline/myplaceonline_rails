@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_29_183745) do
+ActiveRecord::Schema.define(version: 2020_12_29_215353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,6 +133,24 @@ ActiveRecord::Schema.define(version: 2020_12_29_183745) do
     t.bigint "agent_identity_id"
     t.index ["agent_identity_id"], name: "index_agents_on_agent_identity_id"
     t.index ["identity_id"], name: "index_agents_on_identity_id"
+  end
+
+  create_table "airline_programs", force: :cascade do |t|
+    t.string "program_name"
+    t.bigint "password_id"
+    t.bigint "membership_id"
+    t.string "status"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_id"], name: "index_airline_programs_on_identity_id"
+    t.index ["membership_id"], name: "index_airline_programs_on_membership_id"
+    t.index ["password_id"], name: "index_airline_programs_on_password_id"
   end
 
   create_table "alerts_displays", id: :serial, force: :cascade do |t|
@@ -7995,6 +8013,9 @@ ActiveRecord::Schema.define(version: 2020_12_29_183745) do
   add_foreign_key "admin_text_messages", "text_messages"
   add_foreign_key "agents", "identities"
   add_foreign_key "agents", "identities", column: "agent_identity_id"
+  add_foreign_key "airline_programs", "identities"
+  add_foreign_key "airline_programs", "memberships"
+  add_foreign_key "airline_programs", "passwords"
   add_foreign_key "alerts_displays", "identities"
   add_foreign_key "allergies", "identities"
   add_foreign_key "allergy_files", "allergies"

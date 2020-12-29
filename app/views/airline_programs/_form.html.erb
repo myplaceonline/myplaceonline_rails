@@ -1,0 +1,66 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :program_name,
+    value: obj.program_name,
+    placeholder: "myplaceonline.airline_programs.program_name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :status,
+    value: obj.status,
+    placeholder: "myplaceonline.airline_programs.status"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_SELECT,
+    name: :rating,
+    value: obj.rating,
+    placeholder: "myplaceonline.general.rating",
+    select_options: Myp::RATINGS,
+  )
+%>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :password,
+    existingobj: obj.password,
+    heading: t("myplaceonline.airline_programs.password"),
+    objform: "passwords/form",
+    existingobjurl: "password_path",
+    searchurl: "/passwords.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :membership,
+    existingobj: obj.membership,
+    heading: t("myplaceonline.airline_programs.membership"),
+    objform: "memberships/form",
+    existingobjurl: "membership_path",
+    searchurl: "/memberships.json?perpage=0",
+    edit: edit,
+    autofocus: false
+  }
+%>
