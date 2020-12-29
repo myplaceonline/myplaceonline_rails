@@ -7,6 +7,7 @@ class SshKeysController < MyplaceonlineController
       :ssh_public_key,
       :ssh_private_key,
       :encrypt,
+      :notes,
       password_attributes: PasswordsController.param_names
     ]
   end

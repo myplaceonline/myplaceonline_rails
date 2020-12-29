@@ -1,5 +1,6 @@
 <%= attribute_table_row(t("myplaceonline.ssh_keys.ssh_key_name"), obj.ssh_key_name) %>
-<%= attribute_table_row_markdown(t("myplaceonline.ssh_keys.ssh_public_key"), obj.ssh_public_key) %>
 <%= data_row(heading: t("myplaceonline.ssh_keys.password"), content: obj.password, expanded: true) %>
+<%= attribute_table_row_markdown(t("myplaceonline.ssh_keys.ssh_public_key"), obj.ssh_public_key) %>
 <%= attribute_table_row_markdown(t("myplaceonline.ssh_keys.ssh_private_key"), obj.ssh_private_key) %>
 <%= attribute_table_row_boolean(t("myplaceonline.ssh_keys.is_encrypted"), obj.ssh_private_key_encrypted?) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>

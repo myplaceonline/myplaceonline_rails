@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_29_171104) do
+ActiveRecord::Schema.define(version: 2020_12_29_183745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6559,6 +6559,7 @@ ActiveRecord::Schema.define(version: 2020_12_29_171104) do
     t.datetime "archived"
     t.integer "rating"
     t.boolean "is_public"
+    t.text "notes"
     t.index ["identity_id"], name: "index_ssh_keys_on_identity_id"
     t.index ["password_id"], name: "index_ssh_keys_on_password_id"
     t.index ["ssh_private_key_encrypted_id"], name: "index_ssh_keys_on_ssh_private_key_encrypted_id"
