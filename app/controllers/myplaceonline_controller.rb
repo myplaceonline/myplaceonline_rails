@@ -462,7 +462,7 @@ class MyplaceonlineController < ApplicationController
     obj_to_destroy = self.object_to_destroy(@obj)
     
     ApplicationRecord.transaction do
-      obj_to_destroy.destroy
+      perform_destroy(obj_to_destroy)
       if has_category
         Myp.subtract_point(User.current_user, category_name, session)
       end
@@ -1590,6 +1590,10 @@ class MyplaceonlineController < ApplicationController
     
     def check_archived
       true
+    end
+    
+    def perform_destroy(obj)
+      obj.destroy!
     end
     
     def additional_sql_simple_index_filters(result)
