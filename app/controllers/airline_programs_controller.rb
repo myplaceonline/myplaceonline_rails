@@ -16,7 +16,7 @@ class AirlineProgramsController < MyplaceonlineController
   
   protected
     def default_sort_direction
-      "desc"
+      "asc"
     end
 
     def default_sort_columns
