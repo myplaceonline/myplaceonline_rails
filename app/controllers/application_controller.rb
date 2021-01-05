@@ -254,7 +254,7 @@ class ApplicationController < ActionController::Base
         end
         
         if send_from_memory
-          Rails.logger.debug{"ApplicationController.respond_identity_file: #{identity_file.id} Not on the filesystem"}
+          Rails.logger.debug{"ApplicationController.respond_identity_file: #{identity_file.id} sending from memory"}
           
           if thumbnail
             respond_data(

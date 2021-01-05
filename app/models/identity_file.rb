@@ -339,7 +339,7 @@ class IdentityFile < ApplicationRecord
                   
                   image = Magick::Image::from_blob(blob).first
                   dimension = image.columns > image.rows ? image.rows : image.columns
-                  image.crop!(Magick::CenterGravity, dimension, dimension)
+                  #image.crop!(Magick::CenterGravity, dimension, dimension)
                   blob = image.to_blob
                   
                   self.send("#{thumbnail_property}_contents=", blob)
@@ -411,7 +411,7 @@ class IdentityFile < ApplicationRecord
             blob = IO.binread(thumbnail_path)
             image = Magick::Image::from_blob(blob).first
             dimension = image.columns > image.rows ? image.rows : image.columns
-            image.crop!(Magick::CenterGravity, dimension, dimension)
+            #image.crop!(Magick::CenterGravity, dimension, dimension)
             image.write(thumbnail_path)
               
             success = true
