@@ -372,6 +372,7 @@ class User < ApplicationRecord
   
   protected
     def confirmation_required?
-      ::Rails.env.production? && !self.demo_user?
+      #::Rails.env.production? && !self.demo_user?
+      false
     end
 end
