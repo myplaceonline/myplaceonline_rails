@@ -17,10 +17,34 @@ class NotificationPreference < ApplicationRecord
     Myp.appendstrwrap(Myp.get_select_name(self.notification_type, Notification::NOTIFICATION_TYPES), self.notification_category)
   end
   
-  def self.can_send_notification?(identity, notification_type, notification_category)
+  def self.can_send_notification?(
+        identity,
+        notification_type,
+        notification_category,
+        default_email: Notification::DEFAULT_EMAIL,
+        default_sms: Notification::DEFAULT_SMS,
+        default_app: Notification::DEFAULT_APP
+  )
     preference = NotificationPreference.where(identity: identity, notification_type: notification_type, notification_category: notification_category).take
-    result = preference.nil? || preference.notifications_enabled?
-    ::Rails.logger.debug{"NotificationPreference.can_send_notification? identity: #{identity}, preference: #{preference}, result: #{result}"}
+    
+    result = true
+    
+    if preference.nil?
+      case notification_type
+      when Notification::NOTIFICATION_TYPE_EMAIL
+        result = default_email
+      when Notification::NOTIFICATION_TYPE_SMS
+        result = default_sms
+      when Notification::NOTIFICATION_TYPE_APP
+        result = default_app
+      else
+        raise "TODO #{notification_type}"
+      end
+    else
+      result = preference.notifications_enabled?
+    end
+    
+    ::Rails.logger.debug{"NotificationPreference.can_send_notification? identity: #{identity}, notification_type: #{notification_type}, preference: #{preference}, result: #{result}"}
     return result
   end
   

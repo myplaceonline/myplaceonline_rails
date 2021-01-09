@@ -10,6 +10,10 @@ class Notification < ApplicationRecord
       { name: :notes, type: ApplicationRecord::PROPERTY_TYPE_MARKDOWN },
     ]
   end
+  
+  DEFAULT_EMAIL = true
+  DEFAULT_SMS = true
+  DEFAULT_APP = true
 
   NOTIFICATION_TYPE_EMAIL = 0
   NOTIFICATION_TYPE_SMS = 1
@@ -45,7 +49,10 @@ class Notification < ApplicationRecord
         body_app_markdown,
         max_notifications: nil,
         exponential_backoff: false,
-        data: {}
+        data: {},
+        default_email: DEFAULT_EMAIL,
+        default_sms: DEFAULT_SMS,
+        default_app: DEFAULT_APP
       )
     
     some_sent = false
@@ -63,6 +70,9 @@ class Notification < ApplicationRecord
           max_notifications: max_notifications,
           exponential_backoff: exponential_backoff,
           data: data,
+          default_email: default_email,
+          default_sms: default_sms,
+          default_app: default_app,
         )
       some_sent = true
     end
@@ -78,6 +88,9 @@ class Notification < ApplicationRecord
         max_notifications: max_notifications,
         exponential_backoff: exponential_backoff,
         data: data,
+        default_email: default_email,
+        default_sms: default_sms,
+        default_app: default_app,
       )
       some_sent = true
     end
@@ -93,6 +106,9 @@ class Notification < ApplicationRecord
         max_notifications: max_notifications,
         exponential_backoff: exponential_backoff,
         data: data,
+        default_email: default_email,
+        default_sms: default_sms,
+        default_app: default_app,
       )
       some_sent = true
     end
@@ -112,7 +128,10 @@ class Notification < ApplicationRecord
         body_app_markdown,
         max_notifications: nil,
         exponential_backoff: false,
-        data: {}
+        data: {},
+        default_email: DEFAULT_EMAIL,
+        default_sms: DEFAULT_SMS,
+        default_app: DEFAULT_APP
       )
       
     data.merge!({ # max 4KB
@@ -123,7 +142,14 @@ class Notification < ApplicationRecord
     
     ::Rails.logger.debug{"Notification.try_send_notification identity: #{identity}, type: #{notification_type}, data: #{Myp.debug_print(data)}"}
 
-    if NotificationPreference.can_send_notification?(identity, notification_type, notification_category)
+    if NotificationPreference.can_send_notification?(
+         identity,
+         notification_type,
+         notification_category,
+         default_email: default_email,
+         default_sms: default_sms,
+         default_app: default_app
+       )
       
       notification = Notification.where(
         identity: identity,
@@ -227,7 +253,10 @@ class Notification < ApplicationRecord
         body_app_markdown,
         max_notifications: nil,
         exponential_backoff: false,
-        data: {}
+        data: {},
+        default_email: DEFAULT_EMAIL,
+        default_sms: DEFAULT_SMS,
+        default_app: DEFAULT_APP
       )
 
     MyplaceonlineExecutionContext.do_full_identity_context(identity) do
@@ -242,6 +271,9 @@ class Notification < ApplicationRecord
             max_notifications: max_notifications,
             exponential_backoff: exponential_backoff,
             data: data,
+            default_email: default_email,
+            default_sms: default_sms,
+            default_app: default_app,
         )
     end
   end
@@ -255,7 +287,10 @@ class Notification < ApplicationRecord
         body_app_markdown,
         max_notifications: nil,
         exponential_backoff: false,
-        data: {}
+        data: {},
+        default_email: DEFAULT_EMAIL,
+        default_sms: DEFAULT_SMS,
+        default_app: DEFAULT_APP
       )
       
     MyplaceonlineExecutionContext.do_full_identity_context(identity) do
@@ -269,6 +304,9 @@ class Notification < ApplicationRecord
             max_notifications: max_notifications,
             exponential_backoff: exponential_backoff,
             data: data,
+            default_email: default_email,
+            default_sms: default_sms,
+            default_app: default_app,
         )
     end
   end
