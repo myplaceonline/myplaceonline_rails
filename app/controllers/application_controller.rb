@@ -308,6 +308,7 @@ class ApplicationController < ActionController::Base
           end
           
           if File.exist?(path)
+            response.headers['Content-Length'] = File.size(filename)
             send_file(
               path,
               type: content_type,
