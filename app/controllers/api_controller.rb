@@ -782,7 +782,7 @@ class ApiController < ApplicationController
       else
         file = Rails.root.join("app/assets/images/#{default_file_name}")
       end
-      response.headers['Content-Length'] = File.size(file)
+      response.set_header('Content-Length', "#{File.size(file)}")
       send_file(
         file,
         filename: target_file_name,
