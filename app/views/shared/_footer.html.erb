@@ -24,6 +24,7 @@
                   data: item[:data],
                   class: "ui-btn ui-btn-icon-left ui-icon-" + item[:icon],
                   onclick: item[:onclick],
+                  "data-ajax" => item[:ajax] == "no" ? false : true,
                 )
               %>
             <% else %>
@@ -49,6 +50,7 @@
                   data: item[:data],
                   "data-icon" => item[:icon],
                   onclick: item[:onclick],
+                  "data-ajax" => item[:ajax] == "no" ? false : true,
                 )
               %>
             <% else %>
