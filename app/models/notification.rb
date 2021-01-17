@@ -140,7 +140,7 @@ class Notification < ApplicationRecord
       subject: subject,
     })
     
-    ::Rails.logger.debug{"Notification.try_send_notification identity: #{identity}, type: #{notification_type}, data: #{Myp.debug_print(data)}"}
+    ::Rails.logger.info{"Notification.try_send_notification identity: #{identity}, type: #{notification_type}, data: #{Myp.debug_print(data)}"}
 
     if NotificationPreference.can_send_notification?(
          identity,
@@ -203,7 +203,7 @@ class Notification < ApplicationRecord
             }
           end
           
-          ::Rails.logger.info{"Notification.try_send_notification user: #{identity.user_id)}"}
+          ::Rails.logger.info{"Notification.try_send_notification user: #{identity.user_id}"}
   
           if notifications.length > 0
             ::Rails.logger.info{"Notification.try_send_notification sending app: #{Myp.debug_print(notifications)}"}
