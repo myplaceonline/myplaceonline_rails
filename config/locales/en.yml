@@ -4066,6 +4066,7 @@ en:
       about_comment: "By %{name} on %{date}"
       edit_type: "Edit Type"
       post_date: "Post Date"
+      requireslogin: "Requires login?"
       edit_types:
         default: "Default"
         text: "Text"

@@ -26,9 +26,17 @@ class Blog < ApplicationRecord
   
   def sorted_blog_posts
     if self.reverse
-      self.blog_posts.order("post_date ASC NULLS LAST")
+      self.get_posts.order("post_date ASC NULLS LAST")
     else
-      self.blog_posts.order("post_date DESC NULLS LAST")
+      self.get_posts.order("post_date DESC NULLS LAST")
+    end
+  end
+  
+  def get_posts
+    if User.current_user.guest?
+      self.blog_posts.where("requireslogin = false OR requireslogin IS NULL")
+    else
+      self.blog_posts
     end
   end
 

@@ -28,3 +28,12 @@
     placeholder: "myplaceonline.blog_posts.post_date"
   )
 %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :requireslogin,
+    value: obj.requireslogin,
+    placeholder: "myplaceonline.blog_posts.requireslogin"
+  )
+%>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_24_162748) do
+ActiveRecord::Schema.define(version: 2021_01_24_164229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -553,6 +553,7 @@ ActiveRecord::Schema.define(version: 2021_01_24_162748) do
     t.boolean "last_updated_bottom"
     t.datetime "post_date"
     t.boolean "is_public"
+    t.boolean "requireslogin"
     t.index ["blog_id"], name: "index_blog_posts_on_blog_id"
     t.index ["identity_id"], name: "index_blog_posts_on_identity_id"
   end
