@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_24_162314) do
+ActiveRecord::Schema.define(version: 2021_01_24_162748) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -5649,6 +5649,19 @@ ActiveRecord::Schema.define(version: 2021_01_24_162314) do
     t.index ["identity_id"], name: "index_promises_on_identity_id"
   end
 
+  create_table "promotion_files", force: :cascade do |t|
+    t.bigint "promotion_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_promotion_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_promotion_files_on_identity_id"
+    t.index ["promotion_id"], name: "index_promotion_files_on_promotion_id"
+  end
+
   create_table "promotions", id: :serial, force: :cascade do |t|
     t.string "promotion_name", limit: 255
     t.date "started"
@@ -8796,6 +8809,9 @@ ActiveRecord::Schema.define(version: 2021_01_24_162314) do
   add_foreign_key "project_issues", "projects"
   add_foreign_key "projects", "identities"
   add_foreign_key "promises", "identities", name: "promises_identity_id_fk"
+  add_foreign_key "promotion_files", "identities"
+  add_foreign_key "promotion_files", "identity_files"
+  add_foreign_key "promotion_files", "promotions"
   add_foreign_key "promotions", "identities", name: "promotions_identity_id_fk"
   add_foreign_key "psychological_evaluation_files", "identities"
   add_foreign_key "psychological_evaluation_files", "identity_files"

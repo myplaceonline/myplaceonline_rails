@@ -1,4 +1,8 @@
 class PromotionsController < MyplaceonlineController
+  def may_upload
+    true
+  end
+
   protected
     def insecure
       true
@@ -20,7 +24,8 @@ class PromotionsController < MyplaceonlineController
         :started,
         :expires,
         :promotion_amount,
-        :notes
+        :notes,
+        promotion_files_attributes: FilesController.multi_param_names
       )
     end
 end

@@ -5,6 +5,8 @@ class Promotion < ApplicationRecord
 
   validates :promotion_name, presence: true
   
+  child_files
+  
   def display
     result = promotion_name
     if !promotion_amount.nil?

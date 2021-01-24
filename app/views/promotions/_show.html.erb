@@ -3,3 +3,4 @@
 <%= attribute_table_row_date(t("myplaceonline.promotions.expires"), obj.expires) %>
 <%= attribute_table_row_currency(t("myplaceonline.promotions.promotion_amount"), obj.promotion_amount) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.promotion_files) %>
