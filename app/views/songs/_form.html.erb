@@ -18,6 +18,17 @@
 <%= myp_check_box(f, :secret, "myplaceonline.songs.secret") %>
 <%= myp_check_box(f, :awesome, "myplaceonline.songs.awesome") %>
 <%= myp_text_area_markdown(f, :lyrics, "myplaceonline.songs.lyrics", obj.lyrics) %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
+  )
+%>
 <%= f.fields_for(:identity_file, obj.identity_file || IdentityFile.new) do |file_fields| %>
   <%= myp_file_field(file_fields, :file, "myplaceonline.songs.file", obj.identity_file.nil? ? IdentityFile.new : obj.identity_file.file) %>
 <% end %>

@@ -12,6 +12,7 @@ class SongsController < MyplaceonlineController
       :lastplay,
       :secret,
       :awesome,
+      :notes,
       musical_group_attributes: MusicalGroup.params,
       identity_file_attributes: FilesController.param_names
     ]

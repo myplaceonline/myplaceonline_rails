@@ -6,4 +6,5 @@
 <%= attribute_table_row_boolean(t("myplaceonline.songs.secret"), obj.secret) %>
 <%= attribute_table_row_boolean(t("myplaceonline.songs.awesome"), obj.awesome) %>
 <%= attribute_table_row_markdown(t("myplaceonline.songs.lyrics"), obj.lyrics) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
 <%= attribute_table_row_file_audio(t("myplaceonline.songs.file"), obj.identity_file) %>
