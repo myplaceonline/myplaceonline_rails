@@ -4,4 +4,7 @@
 <%= data_row(heading: t("myplaceonline.invite_codes.public_name"), content: obj.public_name) %>
 <%= data_row(heading: t("myplaceonline.invite_codes.public_link"), content: obj.public_link, url: true, url_external: true, url_external_target_blank: true) %>
 <%= data_row(heading: t("myplaceonline.invite_codes.public_description"), content: obj.public_description, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.invite_codes.hidesuggestion"), content: obj.hidesuggestion) %>
 <%= data_row(heading: t("myplaceonline.invite_codes.website_domain"), content: obj.website_domain) %>
+<%= data_row(heading: t("myplaceonline.invite_codes.parent"), content: obj.get_parent) %>
+<%= data_row(heading: t("myplaceonline.invite_codes.parent_and_sibling_codes"), content: obj.parent_and_sibling_codes.join(", ")) %>

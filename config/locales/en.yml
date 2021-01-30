@@ -2970,6 +2970,9 @@ en:
       public_name: "Public Name"
       public_description: "Public Description"
       public_link: "Public Link"
+      hidesuggestion: "Hide in Suggestions"
+      parent: "Parent Invite Code"
+      parent_and_sibling_codes: "Parent and Sibling Codes"
     happy_things:
       happy_thing_name: "Name"
       reminder: "Next Happy Thing %{name} %{delta}"

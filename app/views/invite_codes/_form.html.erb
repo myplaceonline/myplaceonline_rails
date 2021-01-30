@@ -30,6 +30,15 @@
   )
 %>
 <%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :hidesuggestion,
+    value: obj.hidesuggestion,
+    placeholder: "myplaceonline.invite_codes.hidesuggestion"
+  )
+%>
+<%=
   render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :website_domain,
@@ -41,6 +50,22 @@
     autofocus: false,
     allow_new: false,
     model: WebsiteDomain,
+    expanded_if_nil: true,
+    existingcollapsed: false,
+  }
+%>
+<%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :parent,
+    existingobj: obj.get_parent,
+    heading: t("myplaceonline.invite_codes.parent"),
+    existingobjurl: "invite_code_path",
+    searchurl: "/invite_codes.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+    allow_new: false,
+    model: InviteCode,
     expanded_if_nil: true,
     existingcollapsed: false,
   }

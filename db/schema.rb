@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_24_164229) do
+ActiveRecord::Schema.define(version: 2021_01_30_023114) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3811,7 +3811,10 @@ ActiveRecord::Schema.define(version: 2021_01_24_164229) do
     t.string "public_name"
     t.text "public_description"
     t.string "public_link"
+    t.bigint "parent_id"
+    t.boolean "hidesuggestion"
     t.index ["identity_id"], name: "index_invite_codes_on_identity_id"
+    t.index ["parent_id"], name: "index_invite_codes_on_parent_id"
     t.index ["website_domain_id"], name: "index_invite_codes_on_website_domain_id"
   end
 
@@ -8557,6 +8560,7 @@ ActiveRecord::Schema.define(version: 2021_01_24_164229) do
   add_foreign_key "insurance_card_files", "insurance_cards"
   add_foreign_key "insurance_cards", "identities"
   add_foreign_key "invite_codes", "identities"
+  add_foreign_key "invite_codes", "invite_codes", column: "parent_id"
   add_foreign_key "invite_codes", "website_domains"
   add_foreign_key "invites", "users"
   add_foreign_key "item_files", "identities"

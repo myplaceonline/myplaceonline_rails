@@ -6,6 +6,20 @@ class InviteCodesController < MyplaceonlineController
   def bubble_text(obj)
     obj.website_domain.nil? ? nil : obj.website_domain.display
   end
+  
+  def do_update_before_save
+    pid = params.dig(:invite_code, :parent, :id)
+    if !pid.blank?
+      parent_invite_code = Myp.find_existing_object(InviteCode, pid.to_i)
+      if !parent_invite_code.nil?
+        @obj.parent_id = parent_invite_code.id
+      end
+    end
+  end
+  
+  def precreate
+    do_update_before_save
+  end
 
   protected
     def additional_sorts
@@ -26,7 +40,9 @@ class InviteCodesController < MyplaceonlineController
         :public_name,
         :public_link,
         :public_description,
+        :hidesuggestion,
         website_domain_attributes: [:id],
+        parent_attributes: [:id],
       )
     end
 

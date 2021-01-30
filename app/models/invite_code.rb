@@ -35,4 +35,19 @@ class InviteCode < ApplicationRecord
     code_obj = get_code(code)
     code_obj.update_column(:current_uses, code_obj.current_uses + 1)
   end
+  
+  def get_parent
+    if !self.parent_id.nil?
+      return Myp.find_existing_object(InviteCode, self.parent_id)
+    end
+    return nil
+  end
+  
+  def parent_and_sibling_codes
+    result = [self.code]
+    if !self.parent_id.nil?
+      result = InviteCode.where("parent_id = ? or id = ?", self.parent_id, self.parent_id).map{|ic| ic.code}
+    end
+    return result
+  end
 end

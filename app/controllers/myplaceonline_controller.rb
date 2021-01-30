@@ -305,6 +305,8 @@ class MyplaceonlineController < ApplicationController
           @obj.send("#{parent_name}=", new_parent)
         end
         
+        precreate
+        
         save_result = @obj.save
         
         Rails.logger.debug{"Saved #{save_result.to_s} for #{@obj.inspect}"}
@@ -423,6 +425,9 @@ class MyplaceonlineController < ApplicationController
   end
   
   def do_update_before_save
+  end
+  
+  def precreate
   end
   
   def after_create_redirect
