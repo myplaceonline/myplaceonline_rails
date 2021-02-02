@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_30_023114) do
+ActiveRecord::Schema.define(version: 2021_02_02_215929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3813,6 +3813,7 @@ ActiveRecord::Schema.define(version: 2021_01_30_023114) do
     t.string "public_link"
     t.bigint "parent_id"
     t.boolean "hidesuggestion"
+    t.string "context_ids"
     t.index ["identity_id"], name: "index_invite_codes_on_identity_id"
     t.index ["parent_id"], name: "index_invite_codes_on_parent_id"
     t.index ["website_domain_id"], name: "index_invite_codes_on_website_domain_id"

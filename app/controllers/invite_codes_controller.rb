@@ -41,6 +41,7 @@ class InviteCodesController < MyplaceonlineController
         :public_link,
         :public_description,
         :hidesuggestion,
+        :context_ids,
         website_domain_attributes: [:id],
         parent_attributes: [:id],
       )

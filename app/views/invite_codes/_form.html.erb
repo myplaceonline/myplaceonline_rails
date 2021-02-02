@@ -32,6 +32,15 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_TEXT,
+    name: :context_ids,
+    value: obj.context_ids,
+    placeholder: "myplaceonline.invite_codes.context_ids"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_BOOLEAN,
     name: :hidesuggestion,
     value: obj.hidesuggestion,
