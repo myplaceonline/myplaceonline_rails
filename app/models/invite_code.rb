@@ -43,10 +43,26 @@ class InviteCode < ApplicationRecord
     return nil
   end
   
-  def parent_and_sibling_codes
+  def parent_and_child_codes
     result = [self.code]
     if !self.parent_id.nil?
       result = InviteCode.where("parent_id = ? or id = ?", self.parent_id, self.parent_id).map{|ic| ic.code}
+    end
+    return result
+  end
+  
+  def context_ids_array
+    if !self.context_ids.blank?
+      return self.context_ids.split(",")
+    else
+      return []
+    end
+  end
+  
+  def parent_and_child_context_ids
+    result = self.context_ids_array
+    if !self.parent_id.nil?
+      result = InviteCode.where("parent_id = ? or id = ?", self.parent_id, self.parent_id).map{|ic| ic.context_ids_array }.flatten
     end
     return result
   end

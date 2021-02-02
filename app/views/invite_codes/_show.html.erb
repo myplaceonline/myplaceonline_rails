@@ -8,4 +8,5 @@
 <%= data_row(heading: t("myplaceonline.invite_codes.hidesuggestion"), content: obj.hidesuggestion) %>
 <%= data_row(heading: t("myplaceonline.invite_codes.website_domain"), content: obj.website_domain) %>
 <%= data_row(heading: t("myplaceonline.invite_codes.parent"), content: obj.get_parent) %>
-<%= data_row(heading: t("myplaceonline.invite_codes.parent_and_sibling_codes"), content: obj.parent_and_sibling_codes.join(", ")) %>
+<%= data_row(heading: t("myplaceonline.invite_codes.parent_and_child_codes"), content: obj.parent_and_child_codes.join(", ")) %>
+<%= data_row(heading: t("myplaceonline.invite_codes.parent_and_child_context_ids"), content: obj.parent_and_child_context_ids.join(", ")) %>
