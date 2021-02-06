@@ -206,11 +206,13 @@ class Notification < ApplicationRecord
           ::Rails.logger.debug{"Notification.try_send_notification user: #{identity.user_id}"}
   
           if notifications.length > 0
-            ::Rails.logger.debug{"Notification.try_send_notification sending app: #{Myp.debug_print(notifications)}"}
+            ::Rails.logger.info{"Notification.try_send_notification for identity #{identity.id}: #{Myp.debug_print(notifications)}"}
             
             if ENV["SKIP_NOTIFICATIONS"] != "true"
               client = Exponent::Push::Client.new(gzip: false)
               handler = client.send_messages(notifications)
+              
+              ::Rails.logger.info{"Notification.try_send_notification send_messages returned"}
               
               if !handler.nil? && !handler.errors.nil? && handler.errors.size > 0
                 ::Rails.logger.info{"Notification.try_send_notification expo responses: #{Myp.debug_print(handler.errors)}"}
