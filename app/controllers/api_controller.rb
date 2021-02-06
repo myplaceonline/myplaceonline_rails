@@ -844,7 +844,7 @@ class ApiController < ApplicationController
               
               Myp.send_support_email_safe(
                 "New User #{user.email}",
-                "New User #{user.email}",
+                "New User #{user.email} with code #{invite_code}",
                 request: request,
               )
             else
