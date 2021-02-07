@@ -1984,7 +1984,7 @@ module Myp
         UserMailer.send_support_email(from, to, subject, body_html, body_plain).deliver_now
       else
         # Maybe somebody trying to use this mechanism to send malicious emails
-        Rails.logger.debug{"Myp.send_support_email_safe suppressing email to : #{to}"}
+        Rails.logger.info{"Myp.send_support_email_safe suppressing email to : #{to}"}
       end
       
     rescue Exception => e
