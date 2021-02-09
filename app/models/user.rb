@@ -159,8 +159,7 @@ class User < ApplicationRecord
   
   def on_after_create
     if Myp.requires_invite_code && !invite_code.nil? # Users can be created outside the web process
-      InviteCode.increment_code(invite_code)
-      
+
       # Save off the entered invite code for post_initialize
       entered_invite_code = EnteredInviteCode.new(
         user_id: self.id,
@@ -170,6 +169,17 @@ class User < ApplicationRecord
       entered_invite_code.code = self.invite_code
       entered_invite_code.saved_invite_code = self.invite_code
       entered_invite_code.save!
+      
+      InviteCode.increment_code(invite_code)
+      
+      if !InviteCode.valid_code?(invite_code)
+        # Invite code has reached the maximum
+        Myp.send_support_email_safe(
+          "Invite code #{invite_code} has been exhausted",
+          "Invite code #{invite_code} has been exhausted",
+          "Invite code #{invite_code} has been exhausted",
+        )
+      end
     end
   end
   

@@ -27,6 +27,17 @@ class InviteCode < ApplicationRecord
     ).first
   end
   
+  def self.find_code(code)
+    if code.nil?
+      code = ""
+    end
+    InviteCode.where(
+      "LOWER(code) = ? AND (website_domain_id IS NULL OR website_domain_id = ?)",
+      code.downcase,
+      Myp.website_domain
+    ).first
+  end
+  
   def self.valid_code?(code)
     !get_code(code).nil?
   end
