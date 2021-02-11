@@ -182,6 +182,7 @@ en:
       lists: "Lists"
       loans: "Loans"
       locations: "Locations"
+      locks: "Locks"
       meadows: "Meadows"
       meals: "Meals"
       meaning: "Meaning"
@@ -4546,3 +4547,7 @@ en:
       password: "Password"
       membership: "Membership"
       website: "Website"
+    locks:
+      lock_name: "Short Description"
+      location: "Location"
+      password: "Password"

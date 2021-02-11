@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_02_215929) do
+ActiveRecord::Schema.define(version: 2021_02_11_184404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4223,6 +4223,36 @@ ActiveRecord::Schema.define(version: 2021_02_02_215929) do
     t.boolean "allhours"
     t.index ["identity_id"], name: "index_locations_on_identity_id"
     t.index ["website_id"], name: "index_locations_on_website_id"
+  end
+
+  create_table "lock_files", force: :cascade do |t|
+    t.bigint "lock_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identity_file_id"], name: "index_lock_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_lock_files_on_identity_id"
+    t.index ["lock_id"], name: "index_lock_files_on_lock_id"
+  end
+
+  create_table "locks", force: :cascade do |t|
+    t.string "lock_name"
+    t.bigint "location_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "password_id"
+    t.index ["identity_id"], name: "index_locks_on_identity_id"
+    t.index ["location_id"], name: "index_locks_on_location_id"
+    t.index ["password_id"], name: "index_locks_on_password_id"
   end
 
   create_table "meadows", id: :serial, force: :cascade do |t|
@@ -8618,6 +8648,12 @@ ActiveRecord::Schema.define(version: 2021_02_02_215929) do
   add_foreign_key "location_pictures", "locations"
   add_foreign_key "locations", "identities", name: "locations_identity_id_fk"
   add_foreign_key "locations", "websites"
+  add_foreign_key "lock_files", "identities"
+  add_foreign_key "lock_files", "identity_files"
+  add_foreign_key "lock_files", "locks"
+  add_foreign_key "locks", "identities"
+  add_foreign_key "locks", "locations"
+  add_foreign_key "locks", "passwords"
   add_foreign_key "meadows", "identities"
   add_foreign_key "meadows", "treks"
   add_foreign_key "meal_drinks", "drinks", name: "meal_drinks_drink_id_fk"
