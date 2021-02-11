@@ -36,6 +36,7 @@ class CampLocationsController < MyplaceonlineController
       :slideout_okay,
       :limited_time_parking,
       :unlimited_time_parking,
+      :maxhours,
       location_attributes: LocationsController.param_names,
       membership_attributes: MembershipsController.param_names
     ]

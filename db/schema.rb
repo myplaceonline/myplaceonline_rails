@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_11_184404) do
+ActiveRecord::Schema.define(version: 2021_02_11_203357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1015,6 +1015,7 @@ ActiveRecord::Schema.define(version: 2021_02_11_184404) do
     t.boolean "slideout_okay"
     t.boolean "limited_time_parking"
     t.boolean "unlimited_time_parking"
+    t.decimal "maxhours", precision: 10, scale: 2
     t.index ["identity_id"], name: "index_camp_locations_on_identity_id"
     t.index ["location_id"], name: "index_camp_locations_on_location_id"
     t.index ["membership_id"], name: "index_camp_locations_on_membership_id"

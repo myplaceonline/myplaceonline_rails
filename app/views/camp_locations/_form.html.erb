@@ -36,6 +36,15 @@
   input_field(
     form: f,
     type: Myp::FIELD_DECIMAL,
+    name: :maxhours,
+    value: obj.maxhours,
+    placeholder: "myplaceonline.camp_locations.maxhours"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
     name: :nightly_cost,
     value: obj.nightly_cost,
     placeholder: "myplaceonline.camp_locations.nightly_cost"

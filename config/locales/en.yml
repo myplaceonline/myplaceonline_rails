@@ -2102,6 +2102,7 @@ en:
       slideout_okay: "Slideout Okay"
       limited_time_parking: "Limited-Time Parking"
       unlimited_time_parking: "Unlimited-Time Parking"
+      maxhours: "Max Hours"
     noise_levels:
       quiet: "Quiet"
       nature: "Nature"
