@@ -19,6 +19,8 @@ class PicnicLocationsController < MyplaceonlineController
     def obj_params
       params.require(:picnic_location).permit(
         :rating,
+        :shadedareas,
+        :treeshade,
         location_attributes: LocationsController.param_names
       )
     end

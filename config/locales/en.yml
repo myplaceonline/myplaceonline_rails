@@ -3893,6 +3893,8 @@ en:
       sore_throat: "Sore Throat"
     picnic_locations:
       location: "Location"
+      shadedareas: "Shaded Areas"
+      treeshade: "Tree Shade"
     maps:
       map: "Map"
       full_map: "Full Map"

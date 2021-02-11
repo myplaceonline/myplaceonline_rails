@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_11_203357) do
+ActiveRecord::Schema.define(version: 2021_02_11_210003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -5430,6 +5430,8 @@ ActiveRecord::Schema.define(version: 2021_02_11_203357) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_public"
+    t.boolean "shadedareas"
+    t.boolean "treeshade"
     t.index ["identity_id"], name: "index_picnic_locations_on_identity_id"
     t.index ["location_id"], name: "index_picnic_locations_on_location_id"
   end

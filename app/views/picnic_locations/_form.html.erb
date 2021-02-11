@@ -22,3 +22,21 @@
     select_options: Myp::RATINGS,
   )
 %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :shadedareas,
+    value: obj.shadedareas,
+    placeholder: "myplaceonline.picnic_locations.shadedareas"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :treeshade,
+    value: obj.treeshade,
+    placeholder: "myplaceonline.picnic_locations.treeshade"
+  )
+%>
