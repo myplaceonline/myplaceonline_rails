@@ -257,6 +257,7 @@ class User < ApplicationRecord
       else
         # Save off the code
         self.used_invite_code = code.saved_invite_code
+        self.origcode = code.saved_invite_code
         self.save!
 
         code.destroy!
