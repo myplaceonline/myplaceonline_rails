@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_14_213426) do
+ActiveRecord::Schema.define(version: 2021_02_15_005532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2123,6 +2123,11 @@ ActiveRecord::Schema.define(version: 2021_02_14_213426) do
     t.boolean "minimum_disabled"
     t.boolean "maximum_disabled"
     t.boolean "disabled"
+    t.decimal "location_latitude", precision: 24, scale: 20
+    t.decimal "location_longitude", precision: 24, scale: 20
+    t.decimal "location_radius", precision: 8, scale: 2
+    t.integer "location_matchtype"
+    t.string "location_name"
     t.index ["drom_match_dealbreaker_id"], name: "dmcd_on_dmd"
     t.index ["identity_id"], name: "index_drom_match_chosen_dealbreakers_on_identity_id"
   end
