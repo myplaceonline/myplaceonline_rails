@@ -153,6 +153,8 @@ Rails.application.routes.draw do
 
   match 'person_or_group/:id', :to => 'agents#show', via: [:get], as: "agent_alias"
 
+  match 'urlmappings', :to => 'welcome#urlmappings', via: [:get], as: "welcome_urlmappings"
+
   additions = {
     bets: [
       { instance: true, link: "update_status" },

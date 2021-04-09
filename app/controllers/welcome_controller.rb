@@ -37,4 +37,19 @@ class WelcomeController < ApplicationController
       }
     end
   end
+  
+  def urlmappings
+    respond_to do |format|
+      format.json {
+        json = {}
+        website_domain = Myp.website_domain
+        if !website_domain.nil? && !website_domain.url_mappings_json.blank?
+          json = JSON.parse(website_domain.url_mappings_json)
+        end
+        render(
+          json: json
+        )
+      }
+    end
+  end
 end

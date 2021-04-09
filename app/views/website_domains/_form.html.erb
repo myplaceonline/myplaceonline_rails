@@ -288,6 +288,16 @@
     )
   %>
   <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_TEXT_AREA,
+      name: :url_mappings_json,
+      value: obj.url_mappings_json,
+      placeholder: "myplaceonline.website_domains.url_mappings_json",
+      text_area_rich: false,
+    )
+  %>
+  <%=
     render partial: "myplaceonline/select_or_create", locals: {
       f: f,
       name: :favicon_ico_identity_file,

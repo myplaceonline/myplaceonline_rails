@@ -3180,6 +3180,7 @@ en:
       allow_public: "Allow Public Access without Invite Code"
       mailing_list: "Mailing List"
       confirm_redirect: "Confirm redirect"
+      url_mappings_json: "URL Mappings JSON"
     website_domain_myplets:
       title: "Title"
       border_type: "Border Type"
