@@ -869,12 +869,17 @@ class ApiController < ApplicationController
         if user.valid_password?(password)
           if user.active_for_authentication?
             authorization_result = get_oauth_token(user)
-            token = authorization_result.token.plaintext_token
-            refresh_token = authorization_result.token.plaintext_refresh_token
-            expires_in = authorization_result.token.expires_in_seconds
-            result = true
-            status = 200
-            messages = [I18n.t("myplaceonline.general.login_successful") + " #{DateTime.now}"]
+            if !authorization_result.is_a?(Doorkeeper::OAuth::ErrorResponse)
+              token = authorization_result.token.plaintext_token
+              refresh_token = authorization_result.token.plaintext_refresh_token
+              expires_in = authorization_result.token.expires_in_seconds
+              result = true
+              status = 200
+              messages = [I18n.t("myplaceonline.general.login_successful") + " #{DateTime.now}"]
+            else
+              result = false
+              status = 403
+            end
           else
             result = false
             status = 409
