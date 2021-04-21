@@ -109,7 +109,7 @@ class CalendarItemReminder < ApplicationRecord
                 nil
               end
             else
-              raise "TODO"
+              raise "TODO #{calendar_item.id}"
             end
           
           if !new_time.nil?
