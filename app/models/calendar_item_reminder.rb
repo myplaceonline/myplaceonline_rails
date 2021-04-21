@@ -72,45 +72,49 @@ class CalendarItemReminder < ApplicationRecord
           
           Rails.logger.debug{"CalendarItemReminder.ensure_pending_process loop processing #{timesource.inspect}"}
           
-          new_time = case calendar_item.repeat_type
-            when Myp::TIME_DURATION_SECONDS
-              timesource + calendar_item.repeat_amount.seconds
-            when Myp::TIME_DURATION_MINUTES
-              timesource + calendar_item.repeat_amount.minutes
-            when Myp::TIME_DURATION_HOURS
-              timesource + calendar_item.repeat_amount.hours
-            when Myp::TIME_DURATION_DAYS
-              timesource + calendar_item.repeat_amount.days
-            when Myp::TIME_DURATION_WEEKS
-              timesource + calendar_item.repeat_amount.weeks
-            when Myp::TIME_DURATION_MONTHS
-              timesource + calendar_item.repeat_amount.months
-            when Myp::TIME_DURATION_YEARS
-              timesource + calendar_item.repeat_amount.years
-            when Myp::TIME_DURATION_6MONTHS
-              timesource + (calendar_item.repeat_amount * 6).months
-            when Myp::TIME_DURATION_YEARS
-              timesource + calendar_item.repeat_amount.years
-            when Myp::TIME_DURATION_NTH_MONDAY, Myp::TIME_DURATION_NTH_TUESDAY, Myp::TIME_DURATION_NTH_WEDNESDAY, Myp::TIME_DURATION_NTH_THURSDAY, Myp::TIME_DURATION_NTH_FRIDAY, Myp::TIME_DURATION_NTH_SATURDAY, Myp::TIME_DURATION_NTH_SUNDAY
-              wday = Myp.repeat_type_nth_to_wday(calendar_item.repeat_type)
-              x = Myp.find_nth_weekday(timesource.year, timesource.month, wday, calendar_item.repeat_amount)
-              if x.nil? || x <= timesource
-                if timesource.month == 12
-                  x = Myp.find_nth_weekday(timesource.year + 1, 1, wday, calendar_item.repeat_amount)
-                else
-                  x = Myp.find_nth_weekday(timesource.year, timesource.month + 1, wday, calendar_item.repeat_amount)
+          new_time = nil
+          
+          if !calendar_item.repeat_type.nil?
+            new_time = case calendar_item.repeat_type
+                when Myp::TIME_DURATION_SECONDS
+                timesource + calendar_item.repeat_amount.seconds
+                when Myp::TIME_DURATION_MINUTES
+                timesource + calendar_item.repeat_amount.minutes
+                when Myp::TIME_DURATION_HOURS
+                timesource + calendar_item.repeat_amount.hours
+                when Myp::TIME_DURATION_DAYS
+                timesource + calendar_item.repeat_amount.days
+                when Myp::TIME_DURATION_WEEKS
+                timesource + calendar_item.repeat_amount.weeks
+                when Myp::TIME_DURATION_MONTHS
+                timesource + calendar_item.repeat_amount.months
+                when Myp::TIME_DURATION_YEARS
+                timesource + calendar_item.repeat_amount.years
+                when Myp::TIME_DURATION_6MONTHS
+                timesource + (calendar_item.repeat_amount * 6).months
+                when Myp::TIME_DURATION_YEARS
+                timesource + calendar_item.repeat_amount.years
+                when Myp::TIME_DURATION_NTH_MONDAY, Myp::TIME_DURATION_NTH_TUESDAY, Myp::TIME_DURATION_NTH_WEDNESDAY, Myp::TIME_DURATION_NTH_THURSDAY, Myp::TIME_DURATION_NTH_FRIDAY, Myp::TIME_DURATION_NTH_SATURDAY, Myp::TIME_DURATION_NTH_SUNDAY
+                wday = Myp.repeat_type_nth_to_wday(calendar_item.repeat_type)
+                x = Myp.find_nth_weekday(timesource.year, timesource.month, wday, calendar_item.repeat_amount)
+                if x.nil? || x <= timesource
+                    if timesource.month == 12
+                    x = Myp.find_nth_weekday(timesource.year + 1, 1, wday, calendar_item.repeat_amount)
+                    else
+                    x = Myp.find_nth_weekday(timesource.year, timesource.month + 1, wday, calendar_item.repeat_amount)
+                    end
                 end
-              end
-              if !x.nil? && x < target
-                Rails.logger.debug{"CalendarItemReminder.ensure_pending_process repeat nth returning #{x.inspect}"}
-                x
-              else
-                Rails.logger.debug{"CalendarItemReminder.ensure_pending_process repeat nth returning nil"}
-                nil
-              end
-            else
-              raise "TODO #{calendar_item.id}"
-            end
+                if !x.nil? && x < target
+                    Rails.logger.debug{"CalendarItemReminder.ensure_pending_process repeat nth returning #{x.inspect}"}
+                    x
+                else
+                    Rails.logger.debug{"CalendarItemReminder.ensure_pending_process repeat nth returning nil"}
+                    nil
+                end
+                else
+                raise "TODO #{calendar_item.id}"
+                end
+          end
           
           if !new_time.nil?
             repeated_calendar_item = calendar_item.dup
