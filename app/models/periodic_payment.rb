@@ -52,22 +52,24 @@ class PeriodicPayment < ApplicationRecord
 
   def next_payment
     result = nil
-    today = Date.today
-    if !started.nil?
-      result = started
-    elsif date_period == Myp::PERIOD_MONTHLY
-      result = Date.new(today.year, today.month)
-    elsif date_period == Myp::PERIOD_YEARLY || date_period == Myp::PERIOD_SIX_MONTHS
-      result = Date.new(today.year)
-    end
-    if !result.nil?
-      while result < today
-        if date_period == Myp::PERIOD_MONTHLY
-          result = result.advance(months: 1)
-        elsif date_period == Myp::PERIOD_YEARLY
-          result = result.advance(years: 1)
-        elsif date_period == Myp::PERIOD_SIX_MONTHS
-          result = result.advance(months: 6)
+    if !date_period.nil?
+      today = Date.today
+      if !started.nil?
+        result = started
+      elsif date_period == Myp::PERIOD_MONTHLY
+        result = Date.new(today.year, today.month)
+      elsif date_period == Myp::PERIOD_YEARLY || date_period == Myp::PERIOD_SIX_MONTHS
+        result = Date.new(today.year)
+      end
+      if !result.nil?
+        while result < today
+            if date_period == Myp::PERIOD_MONTHLY
+            result = result.advance(months: 1)
+            elsif date_period == Myp::PERIOD_YEARLY
+            result = result.advance(years: 1)
+            elsif date_period == Myp::PERIOD_SIX_MONTHS
+            result = result.advance(months: 6)
+            end
         end
       end
     end
