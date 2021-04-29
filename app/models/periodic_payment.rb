@@ -63,13 +63,13 @@ class PeriodicPayment < ApplicationRecord
       end
       if !result.nil?
         while result < today
-            if date_period == Myp::PERIOD_MONTHLY
+          if date_period == Myp::PERIOD_MONTHLY
             result = result.advance(months: 1)
-            elsif date_period == Myp::PERIOD_YEARLY
+          elsif date_period == Myp::PERIOD_YEARLY
             result = result.advance(years: 1)
-            elsif date_period == Myp::PERIOD_SIX_MONTHS
+          elsif date_period == Myp::PERIOD_SIX_MONTHS
             result = result.advance(months: 6)
-            end
+          end
         end
       end
     end

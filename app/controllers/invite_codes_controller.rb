@@ -42,6 +42,8 @@ class InviteCodesController < MyplaceonlineController
         :public_description,
         :hidesuggestion,
         :context_ids,
+        :sexual,
+        :controversial,
         website_domain_attributes: [:id],
         parent_attributes: [:id],
       )

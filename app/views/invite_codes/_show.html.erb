@@ -6,6 +6,8 @@
 <%= data_row(heading: t("myplaceonline.invite_codes.public_description"), content: obj.public_description, markdown: true) %>
 <%= data_row(heading: t("myplaceonline.invite_codes.context_ids"), content: obj.context_ids) %>
 <%= data_row(heading: t("myplaceonline.invite_codes.hidesuggestion"), content: obj.hidesuggestion) %>
+<%= data_row(heading: t("myplaceonline.invite_codes.sexual"), content: obj.sexual) %>
+<%= data_row(heading: t("myplaceonline.invite_codes.controversial"), content: obj.controversial) %>
 <%= data_row(heading: t("myplaceonline.invite_codes.website_domain"), content: obj.website_domain) %>
 <%= data_row(heading: t("myplaceonline.invite_codes.parent"), content: obj.get_parent) %>
 <%= data_row(heading: t("myplaceonline.invite_codes.parent_and_child_codes"), content: obj.parent_and_child_codes.join(", ")) %>

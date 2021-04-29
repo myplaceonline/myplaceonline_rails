@@ -2977,6 +2977,8 @@ en:
       parent_and_child_codes: "Parent and Child Codes"
       parent_and_child_context_ids: "Parent and Child Context IDs"
       context_ids: "Context IDs"
+      sexual: "Sexual"
+      controversial: "Controversial"
     happy_things:
       happy_thing_name: "Name"
       reminder: "Next Happy Thing %{name} %{delta}"

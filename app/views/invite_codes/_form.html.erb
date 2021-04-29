@@ -48,6 +48,24 @@
   )
 %>
 <%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :controversial,
+    value: obj.controversial,
+    placeholder: "myplaceonline.invite_codes.controversial"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :sexual,
+    value: obj.sexual,
+    placeholder: "myplaceonline.invite_codes.sexual"
+  )
+%>
+<%=
   render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :website_domain,
