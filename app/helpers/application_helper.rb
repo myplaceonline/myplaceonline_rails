@@ -2190,7 +2190,7 @@ module ApplicationHelper
         "data-datebox-use-modal" => "false",
         "data-datebox-cal-use-pickers" => "true",
         "data-datebox-cal-year-pick-min" => "-100",
-        "data-datebox-cal-year-pick-max" => "10",
+        "data-datebox-cal-year-pick-max" => "20",
         "data-datebox-cal-no-header" => "true",
         "data-datebox-close-callback" => close_callback,
         "data-datetime-id" => random_name,
