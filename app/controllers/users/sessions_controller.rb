@@ -9,7 +9,7 @@ class Users::SessionsController < Devise::SessionsController
     self.resource.remember_me = true
     @redirect = nil
     if !params[:redirect].blank?
-      @redirect = URI.parse(URI.decode(params[:redirect])).to_s
+      @redirect = URI.parse(CGI.unescape(params[:redirect])).to_s
     end
     clean_up_passwords(resource)
     respond_with(resource, serialize_options(resource))
@@ -41,7 +41,7 @@ class Users::SessionsController < Devise::SessionsController
     if params[:redirect].blank?
       logged_in_path = after_sign_in_path_for(resource)
     else
-      logged_in_path = URI.parse(URI.decode(params[:redirect])).to_s
+      logged_in_path = URI.parse(CGI.unescape(params[:redirect])).to_s
     end
     respond_with resource, location: logged_in_path
   end
@@ -53,7 +53,7 @@ class Users::SessionsController < Devise::SessionsController
     
     @redirect = nil
     if params.has_key?(:redirect)
-      @redirect = URI.parse(URI.decode(params[:redirect].scrub)).to_s
+      @redirect = URI.parse(CGI.unescape(params[:redirect].scrub)).to_s
     end
     
     if !session[:password].blank? && current_user.valid_password?(session[:password])
