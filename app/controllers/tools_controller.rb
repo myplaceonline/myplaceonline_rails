@@ -11,7 +11,7 @@ class ToolsController < MyplaceonlineController
     @toencode = params[:toencode]
     @encoded = ""
     if !@toencode.blank?
-      @encoded = URI.encode(@toencode, /\W/)
+      @encoded = CGI.escape(@toencode)
     end
   end
   
@@ -19,7 +19,7 @@ class ToolsController < MyplaceonlineController
     @todecode = params[:todecode]
     @decoded = ""
     if !@todecode.blank?
-      @decoded = URI.decode(@todecode)
+      @decoded = CGI.unescape(@todecode)
     end
   end
 end

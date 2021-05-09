@@ -922,8 +922,22 @@ module Myp
       )
     }
   end
+  
+  class JSONable
+    def as_json(*)
+      hash = {}
+      self.instance_variables.each do |name|
+        hash[name[1..-1]] = self.instance_variable_get("#{name}")
+      end
+      return hash
+    end
 
-  class ListItemRow
+    def to_json(*)
+      as_json.to_json()
+    end
+  end
+
+  class ListItemRow < JSONable
     def initialize(title, link, count = nil, id = nil, parent_id = nil, filtertext = nil, icon = nil, splitLink = nil, splitLinkTitle = nil, splitLinkButton = nil)
       @title = title
       @link = link
@@ -1295,8 +1309,7 @@ module Myp
   end
   
   def self.encoded_fullpath(request)
-    # https://stackoverflow.com/a/39645048/4135310
-    URI.encode(request.fullpath, /\W/)
+    CGI.escape(request.fullpath)
   end
   
   def self.error_details(error)
@@ -1709,7 +1722,7 @@ module Myp
   end
   
   def self.query_parameters_uri_part(request, excludes = [])
-    request.query_parameters().dup.delete_if{|k,v| !excludes.index(k.to_sym).nil? || (!v.is_a?(String) && !v.is_a?(Symbol)) }.map{|k,v| URI.encode(k) + "=" + URI.encode(v)}.join("&")
+    request.query_parameters().dup.delete_if{|k,v| !excludes.index(k.to_sym).nil? || (!v.is_a?(String) && !v.is_a?(Symbol)) }.map{|k,v| CGI.escape(k) + "=" + CGI.escape(v)}.join("&")
   end
 
   PAGE_TRANSITIONS = [
