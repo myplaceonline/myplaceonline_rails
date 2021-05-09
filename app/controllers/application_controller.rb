@@ -56,92 +56,101 @@ class ApplicationController < ActionController::Base
   def catchall(exception)
     Rails.logger.warn{"ApplicationController.catchall: #{exception.inspect}".red}
     
-    if exception.is_a?(ActionView::Template::Error)
-      exception = exception.cause
-    end
-    
-    begin
-      Rails.logger.warn{"ApplicationController.catchall exception details: #{Myp.error_details(exception)}"}
-    rescue => e
-    end
-    
-    if exception.is_a?(Myp::DecryptionKeyUnavailableError)
-      reentry_url = Myp.reentry_url(request)
-      Rails.logger.debug{"ApplicationController.catchall redirecting to: #{reentry_url}".red}
-      respond_to do |format|
-        format.html {
-          Rails.logger.debug{"ApplicationController.catchall format html".red}
-          redirect_to reentry_url
-        }
-        format.js {
-          Rails.logger.debug{"ApplicationController.catchall format js".red}
-          render js: "myplaceonline.navigate(\"#{reentry_url}\");"
-        }
-      end
-    elsif exception.is_a?(CanCan::AccessDenied)
-      Rails.logger.debug{"ApplicationController.catchall access denied #{exception.message} for #{User.current_user.inspect}".red}
-      if User.current_user.nil? || User.current_user.guest?
-        reentry_url = Myp.encoded_fullpath(request)
-        Rails.logger.debug{"ApplicationController.catchall redirecting to #{reentry_url}".red}
-        respond_to do |format|
-          # curl -H "Accept: application/json"
-          format.any(:js, :json) {
-            render(
-              json: {
-                status: I18n.t("myplaceonline.general.access_denied_guest"),
-                location: main_app.new_user_session_url(redirect: reentry_url),
-              },
-              status: 403,
-            )
-          }
-          format.all {
-            redirect_to(main_app.new_user_session_url(redirect: reentry_url), alert: I18n.t("myplaceonline.general.access_denied_guest"))
-          }
-        end
-      else
-        respond_to do |format|
-          # curl -H "Accept: application/json"
-          format.any(:js, :json) {
-            render(
-              json: {
-                status: I18n.t("myplaceonline.general.access_denied", resource: request.path),
-                location: main_app.root_url,
-              },
-              status: 403,
-            )
-          }
-          format.all {
-            redirect_to(main_app.root_url, alert: I18n.t("myplaceonline.general.access_denied", resource: request.path))
-          }
-        end
-      end
-    elsif exception.is_a?(Myp::SuddenRedirectError)
-      Rails.logger.debug{"ApplicationController.catchall sudden redirect #{exception.path}".red}
-      
-      new_path = exception.path
-      
-      if !request.params[:emulate_host].blank?
-        new_path << "?emulate_host=" + request.params[:emulate_host]
-      end
-      
-      if exception.notice.blank?
-        redirect_to(new_path)
-      else
-        redirect_to(new_path, :flash => { :notice => exception.notice })
-      end
+    # https://github.com/rails/rails/issues/41783
+    if request.format.html? && exception.message == "invalid base64"
+      request.reset_session
+      redirect_to "/users/sign_in"
+    elsif request.xhr? && exception.message == "invalid base64"
+      request.reset_session
+      render js: "window.location = '/users/sign_in'"
     else
-      Rails.logger.debug{"ApplicationController.catchall unknown".red}
-      Myp.handle_exception(exception, session[:myp_email], request)
-      if Rails.env.test?
-        raise exception
+      if exception.is_a?(ActionView::Template::Error)
+        exception = exception.cause
       end
-      respond_to do |type|
-        #type.html { render :template => "errors/500", :status => 500 }
-        #type.html { render :html => exception.to_s, :status => 500 }
-        #type.all { render :plain => exception.to_s + (Rails.env.production? ? "" : "\n#{Myp.error_details(exception)}"), :status => 500 }
-        type.all { render :plain => exception.to_s, :status => 500 }
+    
+      begin
+        Rails.logger.warn{"ApplicationController.catchall exception details: #{Myp.error_details(exception)}"}
+      rescue => e
       end
-      true
+    
+      if exception.is_a?(Myp::DecryptionKeyUnavailableError)
+        reentry_url = Myp.reentry_url(request)
+        Rails.logger.debug{"ApplicationController.catchall redirecting to: #{reentry_url}".red}
+        respond_to do |format|
+          format.html {
+            Rails.logger.debug{"ApplicationController.catchall format html".red}
+            redirect_to reentry_url
+          }
+          format.js {
+            Rails.logger.debug{"ApplicationController.catchall format js".red}
+            render js: "myplaceonline.navigate(\"#{reentry_url}\");"
+          }
+        end
+      elsif exception.is_a?(CanCan::AccessDenied)
+        Rails.logger.debug{"ApplicationController.catchall access denied #{exception.message} for #{User.current_user.inspect}".red}
+        if User.current_user.nil? || User.current_user.guest?
+          reentry_url = Myp.encoded_fullpath(request)
+          Rails.logger.debug{"ApplicationController.catchall redirecting to #{reentry_url}".red}
+          respond_to do |format|
+            # curl -H "Accept: application/json"
+            format.any(:js, :json) {
+              render(
+                json: {
+                  status: I18n.t("myplaceonline.general.access_denied_guest"),
+                  location: main_app.new_user_session_url(redirect: reentry_url),
+                },
+                status: 403,
+              )
+            }
+            format.all {
+              redirect_to(main_app.new_user_session_url(redirect: reentry_url), alert: I18n.t("myplaceonline.general.access_denied_guest"))
+            }
+          end
+        else
+          respond_to do |format|
+            # curl -H "Accept: application/json"
+            format.any(:js, :json) {
+              render(
+                json: {
+                  status: I18n.t("myplaceonline.general.access_denied", resource: request.path),
+                  location: main_app.root_url,
+                },
+                status: 403,
+              )
+            }
+            format.all {
+              redirect_to(main_app.root_url, alert: I18n.t("myplaceonline.general.access_denied", resource: request.path))
+            }
+          end
+        end
+      elsif exception.is_a?(Myp::SuddenRedirectError)
+        Rails.logger.debug{"ApplicationController.catchall sudden redirect #{exception.path}".red}
+      
+        new_path = exception.path
+      
+        if !request.params[:emulate_host].blank?
+          new_path << "?emulate_host=" + request.params[:emulate_host]
+        end
+      
+        if exception.notice.blank?
+          redirect_to(new_path)
+        else
+          redirect_to(new_path, :flash => { :notice => exception.notice })
+        end
+      else
+        Rails.logger.debug{"ApplicationController.catchall unknown".red}
+        Myp.handle_exception(exception, session[:myp_email], request)
+        if Rails.env.test?
+          raise exception
+        end
+        respond_to do |type|
+          #type.html { render :template => "errors/500", :status => 500 }
+          #type.html { render :html => exception.to_s, :status => 500 }
+          #type.all { render :plain => exception.to_s + (Rails.env.production? ? "" : "\n#{Myp.error_details(exception)}"), :status => 500 }
+          type.all { render :plain => exception.to_s, :status => 500 }
+        end
+        true
+      end
     end
   end
 
