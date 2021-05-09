@@ -1,4 +1,4 @@
-class MapLocation
+class MapLocation < Myp::JSONable
   def initialize(latitude:, longitude:, label: nil, tooltip: nil, popupHtml: nil, icon: nil, labelColor: nil, ontop: false)
     @latitude = latitude
     @longitude = longitude
