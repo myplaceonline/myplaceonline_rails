@@ -222,9 +222,11 @@ class AdminController < ApplicationController
   end
 
   def reset_user_index
-    Rails.logger.info{"AdminController.reset_user_index"}
+    Rails.logger.info{"AdminController.reset_user_index started"}
     
     UserIndex.reset!
+
+    Rails.logger.info{"AdminController.reset_user_index finished"}
 
     redirect_to admin_path,
           :flash => { :notice => "Reset successful" }
