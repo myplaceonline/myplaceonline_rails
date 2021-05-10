@@ -220,4 +220,13 @@ class AdminController < ApplicationController
     redirect_to admin_path,
           :flash => { :notice => I18n.t("myplaceonline.admin.load_feeds_run") }
   end
+
+  def reset_user_index
+    Rails.logger.info{"AdminController.reset_user_index"}
+    
+    UserIndex.reset!
+
+    redirect_to admin_path,
+          :flash => { :notice => "Reset successful" }
+  end
 end

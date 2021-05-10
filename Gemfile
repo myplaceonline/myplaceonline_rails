@@ -1,7 +1,8 @@
 source "https://rubygems.org"
 
+gem "irb"
 gem "rake"
-gem "rails", ">=6.0"
+gem "rails", ">=6.1"
 gem "sprockets"
 gem "pg"
 gem "sass-rails"
@@ -64,7 +65,7 @@ gem "faraday_middleware"
 gem "google-api-client"
 gem "googlemaps-services"
 # When updating rails, update the major version of composite_primary_keys: https://github.com/composite-primary-keys/composite_primary_keys
-gem "composite_primary_keys", "~> 12"
+gem "composite_primary_keys", "~> 13"
 gem "usda-nutrient-database"
 gem "activerecord-import"
 gem "reverse_markdown"
