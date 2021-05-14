@@ -66,6 +66,15 @@
   )
 %>
 <%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :disable_signup_extras,
+    value: obj.disable_signup_extras,
+    placeholder: "myplaceonline.invite_codes.disable_signup_extras"
+  )
+%>
+<%=
   render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :website_domain,

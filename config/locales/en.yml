@@ -2979,6 +2979,7 @@ en:
       context_ids: "Context IDs"
       sexual: "Sexual"
       controversial: "Controversial"
+      disable_signup_extras: "Disable signup extras"
     happy_things:
       happy_thing_name: "Name"
       reminder: "Next Happy Thing %{name} %{delta}"
