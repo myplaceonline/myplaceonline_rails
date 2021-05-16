@@ -12,6 +12,19 @@
   )
 %>
 <%=
+  render partial: "myplaceonline/select_or_create", locals: {
+    f: f,
+    name: :location,
+    existingobj: obj.location,
+    heading: t("myplaceonline.vaccines.location"),
+    objform: "locations/form",
+    existingobjurl: "location_path",
+    searchurl: "/locations.json?perpage=0",
+    edit: edit,
+    autofocus: false,
+  }
+%>
+<%=
   render partial: "myplaceonline/pictures_form", locals: {
     f: f,
     obj: obj,

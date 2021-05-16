@@ -3683,6 +3683,7 @@ en:
       add_file: "Add File/Picture"
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
+      location: "Location"
     tax_documents:
       tax_document_form_name: "Form Name"
       tax_document_description: "Short Description"

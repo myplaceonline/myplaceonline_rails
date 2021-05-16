@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_14_223729) do
+ActiveRecord::Schema.define(version: 2021_05_16_231321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -7406,7 +7406,9 @@ ActiveRecord::Schema.define(version: 2021_05_14_223729) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_public"
+    t.bigint "location_id"
     t.index ["identity_id"], name: "index_vaccines_on_identity_id"
+    t.index ["location_id"], name: "index_vaccines_on_location_id"
   end
 
   create_table "vehicle_insurances", id: :serial, force: :cascade do |t|
@@ -9076,6 +9078,7 @@ ActiveRecord::Schema.define(version: 2021_05_14_223729) do
   add_foreign_key "vaccine_files", "identity_files"
   add_foreign_key "vaccine_files", "vaccines"
   add_foreign_key "vaccines", "identities"
+  add_foreign_key "vaccines", "locations"
   add_foreign_key "vehicle_insurances", "companies", name: "vehicle_insurances_company_id_fk"
   add_foreign_key "vehicle_insurances", "identities", name: "vehicle_insurances_identity_id_fk"
   add_foreign_key "vehicle_insurances", "periodic_payments", name: "vehicle_insurances_periodic_payment_id_fk"

@@ -7,6 +7,8 @@ class Vaccine < ApplicationRecord
   def display
     vaccine_name
   end
+  
+  child_property(name: :location)
 
   child_files
 end

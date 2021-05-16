@@ -35,7 +35,8 @@ class VaccinesController < MyplaceonlineController
         :vaccine_name,
         :vaccine_date,
         :notes,
-        vaccine_files_attributes: FilesController.multi_param_names
+        vaccine_files_attributes: FilesController.multi_param_names,
+        location_attributes: LocationsController.param_names,
       )
     end
 end
