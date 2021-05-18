@@ -2778,7 +2778,7 @@ module Myp
     result = false
     if !link.blank?
       begin
-        link_uri = URI.parse(URI.escape(link))
+        link_uri = URI.parse(link)
         if !link_uri.scheme.nil?
           if Rails.env.production?
             # Don't allow IP addresses for now - need to blacklist myplaceonline IPs
