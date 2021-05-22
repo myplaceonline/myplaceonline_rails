@@ -119,7 +119,11 @@ class PerishableFoodsController < MyplaceonlineController
         link: perishable_food_consume_all_path(@obj),
         icon: "bullets"
       }
-      
+    end
+    
+    result = result + super
+    
+    if !MyplaceonlineExecutionContext.offline?
       result << {
         title: I18n.t("myplaceonline.perishable_foods.move"),
         link: perishable_food_move_path(@obj),
@@ -127,7 +131,7 @@ class PerishableFoodsController < MyplaceonlineController
       }
     end
     
-    result + super
+    return result
   end
   
   def use_bubble?
@@ -157,6 +161,26 @@ class PerishableFoodsController < MyplaceonlineController
     [
       [I18n.t("myplaceonline.perishable_foods.expires"), "perishable_foods.expires"],
     ] + super
+  end
+  
+  def footer_items_index
+    result = super
+    
+    if params[:without_location].blank?
+      result << {
+        title: I18n.t("myplaceonline.perishable_foods.without_location"),
+        link: perishable_foods_path(without_location: true),
+        icon: "alert"
+      }
+    else
+      result << {
+        title: I18n.t("myplaceonline.general.all"),
+        link: perishable_foods_path,
+        icon: "bullets"
+      }
+    end
+
+    result
   end
   
   protected
@@ -192,5 +216,16 @@ class PerishableFoodsController < MyplaceonlineController
 
     def all_includes
       :food
+    end
+    
+    def all_additional_sql(strict)
+      result = super(strict)
+      if result.nil?
+        result = ""
+      end
+      if params[:without_location] == "true"
+        result << " AND (perishable_foods.storage_location IS NULL OR perishable_foods.storage_location = '')"
+      end
+      return result
     end
 end

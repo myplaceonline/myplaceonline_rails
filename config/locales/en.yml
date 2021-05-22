@@ -3665,6 +3665,7 @@ en:
       moved_all: "Moved all %{name} items."
       moved_some: "Moved %{quantity} %{name} items."
       nothing_updated: "Nothing was updated."
+      without_location: "Without location"
     items:
       item_name: "Name"
       item_location: "Location"

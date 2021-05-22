@@ -63,4 +63,10 @@ class PerishableFood < ApplicationRecord
   def on_after_destroy
     CalendarItem.destroy_calendar_items(User.current_user.current_identity, self.class, model_id: self.id)
   end
+  
+  def self.build(params = nil)
+    result = self.dobuild(params)
+    result.quantity = 1
+    result
+  end
 end
