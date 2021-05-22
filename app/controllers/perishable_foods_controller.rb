@@ -15,9 +15,25 @@ class PerishableFoodsController < MyplaceonlineController
       @obj.update_column(:quantity, @obj.quantity - 1)
       redirect_to(
         obj_path,
-        :flash => {:notice => I18n.t("myplaceonline.perishable_foods.one_consumed", name: @obj.display) }
+        :flash => {:notice => I18n.t("myplaceonline.perishable_foods.one_consumed", name: @obj.display(show_quantity: false)) }
       )
     end
+  end
+
+  def regurgitate_one
+    set_obj
+    if @obj.archived?
+      @obj.update_column(:archived, nil)
+      @obj.update_column(:quantity, 1)
+    elsif @obj.quantity.nil? || @obj.quantity <= 1
+      @obj.update_column(:quantity, 2)
+    else
+      @obj.update_column(:quantity, @obj.quantity + 1)
+    end
+    redirect_to(
+      obj_path,
+      :flash => {:notice => I18n.t("myplaceonline.perishable_foods.one_regurgitated", name: @obj.display(show_quantity: false)) }
+    )
   end
 
   def consume_all
@@ -25,7 +41,7 @@ class PerishableFoodsController < MyplaceonlineController
     # Do a full save with callbacks so that any reminders are deleted
     @obj.quantity = 0
     @obj.save!
-    archive(notice: I18n.t("myplaceonline.perishable_foods.all_consumed", name: @obj.display))
+    archive(notice: I18n.t("myplaceonline.perishable_foods.all_consumed", name: @obj.display(show_quantity: false)))
   end
   
   def move
@@ -93,6 +109,12 @@ class PerishableFoodsController < MyplaceonlineController
       }
       
       result << {
+        title: I18n.t("myplaceonline.perishable_foods.regurgitate_one"),
+        link: perishable_food_regurgitate_one_path(@obj),
+        icon: "check"
+      }
+      
+      result << {
         title: I18n.t("myplaceonline.perishable_foods.consume_all"),
         link: perishable_food_consume_all_path(@obj),
         icon: "bullets"
@@ -155,12 +177,13 @@ class PerishableFoodsController < MyplaceonlineController
 
     def additional_sorts
       [
-        [I18n.t("myplaceonline.foods.food_name"), default_sort_columns[0]]
+        [I18n.t("myplaceonline.foods.food_name"), "lower(foods.food_name)"],
+        [I18n.t("myplaceonline.perishable_foods.storage_location"), "lower(perishable_foods.storage_location)"],
       ]
     end
 
     def default_sort_columns
-      ["lower(foods.food_name)", "perishable_foods.quantity ASC"]
+      ["perishable_foods.expires ASC"]
     end
     
     def all_joins
