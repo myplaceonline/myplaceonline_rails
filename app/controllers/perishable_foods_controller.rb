@@ -199,8 +199,8 @@ class PerishableFoodsController < MyplaceonlineController
           if item.storage_location.blank?
             item.storage_location = params[:new_location]
             item.save!
+            updated_count = updated_count + 1
           end
-          updated_count = updated_count + 1
         end
       end
       redirect_to(
