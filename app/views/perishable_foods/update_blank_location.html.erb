@@ -1,0 +1,35 @@
+<% content_for :heading do -%><%= t('myplaceonline.perishable_foods.update_blank_location') %><% end -%>
+<h1><%= t('myplaceonline.perishable_foods.update_blank_location') %></h1>
+
+<%= form_tag(perishable_foods_update_blank_location_path, method: :post) do %>
+  <%=
+    input_field(
+      type: Myp::FIELD_TEXT,
+      name: :new_location,
+      value: "",
+      placeholder: "myplaceonline.perishable_foods.update_new_location",
+      collapsed: false,
+      autofocus: true,
+    )
+  %>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.general.update"), "data-icon" => "action", "data-iconpos" => "top", style: "background-color: green")
+        },
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: controller.index_path,
+          icon: "back"
+        },
+      ]
+    })
+  %>
+<% end %>
+
+<script type="text/javascript">
+  myplaceonline.onPageLoad(function() {
+    myplaceonline.maybeFocus(".autofocus");
+  });
+</script>

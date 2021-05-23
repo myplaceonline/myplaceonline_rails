@@ -1,4 +1,6 @@
 class PerishableFoodsController < MyplaceonlineController
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:update_blank_location]
+
   def search_index_name
     Food.table_name
   end
@@ -179,8 +181,33 @@ class PerishableFoodsController < MyplaceonlineController
         icon: "bullets"
       }
     end
+    
+    result << {
+      title: I18n.t("myplaceonline.perishable_foods.update_blank_location"),
+      link: perishable_foods_update_blank_location_path,
+      icon: "location"
+    }
 
     result
+  end
+  
+  def update_blank_location
+    if request.post? && !params[:new_location].blank?
+      updated_count = 0
+      ActiveRecord::Base.transaction do
+        all.each do |item|
+          if item.storage_location.blank?
+            item.storage_location = params[:new_location]
+            item.save!
+          end
+          updated_count = updated_count + 1
+        end
+      end
+      redirect_to(
+        index_path,
+        :flash => {:notice => I18n.t("myplaceonline.perishable_foods.blank_location_updated", count: updated_count, location: params[:new_location]) }
+      )
+    end
   end
   
   protected

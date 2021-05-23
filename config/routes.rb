@@ -381,6 +381,7 @@ Rails.application.routes.draw do
       { instance: true, link: "regurgitate_one" },
       { instance: true, link: "consume_all" },
       { instance: true, link: "move" },
+      { instance: false, link: "update_blank_location" },
     ],
     permission_shares: [
       { instance: true, link: "personalize" }
