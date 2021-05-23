@@ -384,11 +384,32 @@ class CalendarItemReminder < ApplicationRecord
         link = "http://localhost:3000/c/" + pending_item.id.to_s
       end
       
+      email_subject = I18n.t(
+        "myplaceonline.calendar_item_reminders.email_subject",
+        display: pending_item.calendar_item.display,
+      )
+      email_body_markdown = I18n.t(
+        "myplaceonline.calendar_item_reminders.email_body_markdown",
+        time: Myp.display_datetime_short(pending_item.calendar_item.calendar_item_time, user),
+        display: pending_item.calendar_item.display,
+        link: link,
+      )
+      
+      email_body = Myp.markdown_to_html(email_body_markdown)
+      email_body_plain = Myp.markdown_for_plain_email(email_body_markdown)
+      pending_item.calendar_item.identity.send_email(
+        email_subject,
+        email_body,
+        nil,
+        nil,
+        email_body_plain
+      )
+      
       chars_available = (MAX_MESSAGE_LENGTH * MAX_NUM_MESSAGES) - link.length - 4 # 1 for a space before the link, and 3 for an ellipses
       
       message = I18n.t(
         "myplaceonline.calendar_item_reminders.text_message",
-        time: Myp.display_datetime_short(pending_item.calendar_item.calendar_item_time, User.current_user),
+        time: Myp.display_datetime_short(pending_item.calendar_item.calendar_item_time, user),
         display: pending_item.calendar_item.display
       )
       
