@@ -3092,7 +3092,7 @@ en:
       threshold: "Threshold"
       pending: "Pending Reminder"
       email_subject: "Reminder: %{display}"
-      email_body_markdown: "Reminder for %{time}: %{display}\n\n%{link}"
+      email_body_markdown: "Reminder for %{time}: %{display}\n\n[%{link}](%{link})"
     calendar_item_reminder_pendings:
       calendar_item_reminder: "Item"
       display: "Pending Reminder"
