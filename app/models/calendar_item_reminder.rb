@@ -397,13 +397,16 @@ class CalendarItemReminder < ApplicationRecord
       
       email_body = Myp.markdown_to_html(email_body_markdown)
       email_body_plain = Myp.markdown_for_plain_email(email_body_markdown)
-      pending_item.calendar_item.identity.send_email(
-        email_subject,
-        email_body,
-        nil,
-        nil,
-        email_body_plain
-      )
+      
+      if !email_subject.include?("Enter Three Good Things Today")
+        pending_item.calendar_item.identity.send_email(
+          email_subject,
+          email_body,
+          nil,
+          nil,
+          email_body_plain
+        )
+      end
       
       chars_available = (MAX_MESSAGE_LENGTH * MAX_NUM_MESSAGES) - link.length - 4 # 1 for a space before the link, and 3 for an ellipses
       
