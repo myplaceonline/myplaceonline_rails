@@ -298,25 +298,23 @@ class Trip < ApplicationRecord
             end
           end
           
-          body_long_markdown = I18n.t("myplaceonline.trips.emergency_contact_email",
-            {
-              contact: identity.display_short,
-              location: location_display,
-              start_date: Myp.display_date_short_year(started, User.current_user),
-              end_date: ended.nil? ? I18n.t("myplaceonline.general.unknown") : Myp.display_date_short_year(ended, User.current_user),
-              map: location.map_url(prefer_human_readable: true),
-              verb: verb
-            }
+          body_long_markdown = I18n.t(
+            "myplaceonline.trips.emergency_contact_email",
+            contact: identity.display_short,
+            location: location_display,
+            start_date: Myp.display_date_short_year(started, User.current_user),
+            end_date: ended.nil? ? I18n.t("myplaceonline.general.unknown") : Myp.display_date_short_year(ended, User.current_user),
+            map: location.map_url(prefer_human_readable: true),
+            verb: verb
           )
           
-          body_short_markdown = I18n.t("myplaceonline.trips.emergency_contact_sms",
-            {
-              contact: identity.display_short,
-              location: location_display,
-              start_date: Myp.display_date_short_year(started, User.current_user),
-              end_date: ended.nil? ? I18n.t("myplaceonline.general.unknown") : Myp.display_date_short_year(ended, User.current_user),
-              verb: verb
-            }
+          body_short_markdown = I18n.t(
+            "myplaceonline.trips.emergency_contact_sms",
+            contact: identity.display_short,
+            location: location_display,
+            start_date: Myp.display_date_short_year(started, User.current_user),
+            end_date: ended.nil? ? I18n.t("myplaceonline.general.unknown") : Myp.display_date_short_year(ended, User.current_user),
+            verb: verb
           )
           
           tfs = self.trip_flights.to_a
@@ -373,10 +371,8 @@ class Trip < ApplicationRecord
       
       body_short_markdown = I18n.t(
         "myplaceonline.trips.emergency_contact_email_trip_completed",
-        {
-          contact: identity.display_short,
-          location: location.display(use_full_region_name: true)
-        }
+        contact: identity.display_short,
+        location: location.display(use_full_region_name: true)
       )
       body_long_markdown = body_short_markdown
       
