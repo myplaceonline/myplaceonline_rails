@@ -143,6 +143,7 @@ en:
       food_nutrition_informations: "Food Nutrition Informations"
       foods: "Foods"
       gas_stations: "Gas Stations"
+      gift_stores: "Gift Stores"
       groups: "Groups"
       guns: "Guns"
       haircuts: "Haircuts"
@@ -4571,3 +4572,5 @@ en:
       password: "Password"
     memes:
       meme_name: "Name"
+    gift_stores:
+      location: "Location"

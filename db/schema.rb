@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_28_201041) do
+ActiveRecord::Schema.define(version: 2021_05_28_221805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3127,6 +3127,20 @@ ActiveRecord::Schema.define(version: 2021_05_28_201041) do
     t.index ["dna_analysis_id"], name: "index_genotype_calls_on_dna_analysis_id"
     t.index ["identity_id"], name: "index_genotype_calls_on_identity_id"
     t.index ["snp_id"], name: "index_genotype_calls_on_snp_id"
+  end
+
+  create_table "gift_stores", force: :cascade do |t|
+    t.bigint "location_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_gift_stores_on_identity_id"
+    t.index ["location_id"], name: "index_gift_stores_on_location_id"
   end
 
   create_table "group_contacts", id: :serial, force: :cascade do |t|
@@ -8533,6 +8547,8 @@ ActiveRecord::Schema.define(version: 2021_05_28_201041) do
   add_foreign_key "genotype_calls", "dna_analyses"
   add_foreign_key "genotype_calls", "identities"
   add_foreign_key "genotype_calls", "snps"
+  add_foreign_key "gift_stores", "identities"
+  add_foreign_key "gift_stores", "locations"
   add_foreign_key "group_contacts", "contacts", name: "group_contacts_contact_id_fk"
   add_foreign_key "group_contacts", "groups", name: "group_contacts_group_id_fk"
   add_foreign_key "group_contacts", "identities", name: "group_contacts_identity_id_fk"

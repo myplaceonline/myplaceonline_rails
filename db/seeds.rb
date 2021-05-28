@@ -226,7 +226,8 @@ Category.create!([
   {id: 226, name: "city_regions", link: "drom_match/city_regions", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/building.png", explicit: nil, user_type_mask: 1, experimental: nil, simple: nil, internal: nil},
   {id: 227, name: "airline_programs", link: "airline_programs", position: 0, parent_id: 1, additional_filtertext: "flights rewards points", icon: "FatCow_Icons16x16/plane.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 228, name: "locks", link: "locks", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/lock.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
-  {id: 261, name: "memes", link: "memes", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/user_wicket.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
+  {id: 261, name: "memes", link: "memes", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/user_wicket.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 262, name: "gift_stores", link: "gift_stores", position: 0, parent_id: 2, additional_filtertext: "cabinet curiosity curiosities antique macabre morbid interesting present", icon: "FatCow_Icons16x16/gift_add.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
 ])
 
 # Reinitialize to cache the categories created above
