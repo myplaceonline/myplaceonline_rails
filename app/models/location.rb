@@ -314,7 +314,7 @@ class Location < ApplicationRecord
   end
   
   def estimate_driving_time
-    if self.time_from_home.nil? && self.current_user_owns?
+    if self.time_from_home.nil? && self.current_user_owns? && false
       location = User.current_user.current_identity.primary_location
       if !location.nil?
         
