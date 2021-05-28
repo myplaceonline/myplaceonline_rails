@@ -70,7 +70,7 @@ class MoneyBalanceItemTemplatesController < MyplaceonlineController
       }
       
       result << {
-        title: I18n.t("myplaceonline.money_balance_item_templates.add_other_paid", { other: self.other_display }),
+        title: I18n.t("myplaceonline.money_balance_item_templates.add_other_paid", other: self.other_display),
         link: new_money_balance_money_balance_item_template_path(owner_paid: @parent.current_user_owns? ? "false" : "true"),
         icon: "user"
       }

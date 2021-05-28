@@ -24,14 +24,16 @@ class PermissionsController < MyplaceonlineController
         PermissionsController.param_names
       )
     )
-    @subject = I18n.t("myplaceonline.permissions.default_subject", {
+    @subject = I18n.t(
+      "myplaceonline.permissions.default_subject",
       subject_class: @permission.category_display.singularize
-    })
-    @body = I18n.t("myplaceonline.permissions.default_body", {
+    )
+    @body = I18n.t(
+      "myplaceonline.permissions.default_body",
       subject_class: @permission.category_display.singularize,
       contact: User.current_user.display,
       link: @permission.url
-    })
+    )
     if request.post?
       save_result = @permission.save
       if save_result

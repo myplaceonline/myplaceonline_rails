@@ -130,11 +130,11 @@ class MoneyBalancesController < MyplaceonlineController
       if obj.current_user_owns?
         I18n.t("myplaceonline.money_balances.i_paid")
       else
-        I18n.t("myplaceonline.money_balances.other_paid", { other: obj.identity.display })
+        I18n.t("myplaceonline.money_balances.other_paid", other: obj.identity.display)
       end
     else
       if obj.current_user_owns?
-        I18n.t("myplaceonline.money_balances.other_paid", { other: obj.contact.display(simple: true) })
+        I18n.t("myplaceonline.money_balances.other_paid", other: obj.contact.display(simple: true))
       else
         I18n.t("myplaceonline.money_balances.i_paid")
       end
@@ -148,7 +148,7 @@ class MoneyBalancesController < MyplaceonlineController
   def self.other_owed_name(obj, owner_paid)
     if owner_paid
       if obj.current_user_owns?
-        I18n.t("myplaceonline.money_balances.x_owes", { x: obj.contact.display(simple: true) })
+        I18n.t("myplaceonline.money_balances.x_owes", x: obj.contact.display(simple: true))
       else
         I18n.t("myplaceonline.money_balances.i_owe")
       end
@@ -156,7 +156,7 @@ class MoneyBalancesController < MyplaceonlineController
       if obj.current_user_owns?
         I18n.t("myplaceonline.money_balances.i_owe")
       else
-        I18n.t("myplaceonline.money_balances.x_owes", { x: obj.identity.display })
+        I18n.t("myplaceonline.money_balances.x_owes", x: obj.identity.display)
       end
     end
   end
@@ -184,7 +184,7 @@ class MoneyBalancesController < MyplaceonlineController
       }
       
       result << {
-        title: I18n.t("myplaceonline.money_balances.other_paid", { other: self.other_display }),
+        title: I18n.t("myplaceonline.money_balances.other_paid", other: self.other_display),
         link: money_balance_add_path(@obj, owner_paid: @obj.current_user_owns? ? "false" : "true"),
         icon: "user"
       }
