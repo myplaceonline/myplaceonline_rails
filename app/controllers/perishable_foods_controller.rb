@@ -234,7 +234,7 @@ class PerishableFoodsController < MyplaceonlineController
     end
 
     def default_sort_columns
-      ["perishable_foods.expires ASC"]
+      ["perishable_foods.expires"]
     end
     
     def all_joins
