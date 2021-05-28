@@ -35,11 +35,9 @@ class EmergencyContact < ApplicationRecord
     if subject.nil?
       subject = I18n.t(
         is_new ? "myplaceonline.emergency_contacts.subject_new" : "myplaceonline.emergency_contacts.subject_edit",
-        {
-          contact: identity.display_short,
-          subject: "#{category.human_title_singular}#{subject_append}",
-          verb: I18n.t(verb)
-        }
+        contact: identity.display_short,
+        subject: "#{category.human_title_singular}#{subject_append}",
+        verb: I18n.t(verb)
       )
     end
     
