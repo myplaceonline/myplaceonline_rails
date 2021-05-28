@@ -447,6 +447,7 @@ en:
       email: "E-mail"
       access_denied: "You are not authorized to access %{resource}"
       access_denied_guest: "Please login or sign up to access this resource"
+      seeing_as_guest: "You are viewing this is as a non-logged in, guest user."
       password: "Password"
       newpassword: "New Password"
       passwordwithmin: "Password (min %{minchars} characters)"
