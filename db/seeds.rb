@@ -128,7 +128,7 @@ Category.create!([
   {id: 128, name: "myreferences", link: "myreferences", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/client_account_template.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 129, name: "dreams", link: "dreams", position: 0, parent_id: 3, additional_filtertext: nil, icon: "FatCow_Icons16x16/brain_trainer.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 130, name: "messages", link: "messages", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/envelopes.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
-  {id: 131, name: "media_dumps", link: "media_dumps", position: 0, parent_id: 2, additional_filtertext: "music", icon: "FatCow_Icons16x16/bin_empty.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 131, name: "media_dumps", link: "media_dumps", position: 0, parent_id: 2, additional_filtertext: "music memes", icon: "FatCow_Icons16x16/bin_empty.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 132, name: "website_lists", link: "website_lists", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/domain_template.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 133, name: "exercise_regimens", link: "exercise_regimens", position: 0, parent_id: 29, additional_filtertext: "workouts", icon: "FatCow_Icons16x16/walk.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 134, name: "favorite_locations", link: "favorite_locations", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/earth_night.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
@@ -225,7 +225,8 @@ Category.create!([
   {id: 225, name: "cities", link: "drom_match/cities", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/building.png", explicit: nil, user_type_mask: 1, experimental: nil, simple: nil, internal: nil},
   {id: 226, name: "city_regions", link: "drom_match/city_regions", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/building.png", explicit: nil, user_type_mask: 1, experimental: nil, simple: nil, internal: nil},
   {id: 227, name: "airline_programs", link: "airline_programs", position: 0, parent_id: 1, additional_filtertext: "flights rewards points", icon: "FatCow_Icons16x16/plane.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
-  {id: 260, name: "locks", link: "locks", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/lock.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
+  {id: 228, name: "locks", link: "locks", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/lock.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 261, name: "memes", link: "memes", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/user_wicket.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
 ])
 
 # Reinitialize to cache the categories created above

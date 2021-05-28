@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_28_195549) do
+ActiveRecord::Schema.define(version: 2021_05_28_201041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4569,6 +4569,32 @@ ActiveRecord::Schema.define(version: 2021_05_28_195549) do
     t.index ["periodic_payment_id"], name: "index_memberships_on_periodic_payment_id"
   end
 
+  create_table "meme_files", force: :cascade do |t|
+    t.bigint "meme_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_file_id"], name: "index_meme_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_meme_files_on_identity_id"
+    t.index ["meme_id"], name: "index_meme_files_on_meme_id"
+  end
+
+  create_table "memes", force: :cascade do |t|
+    t.string "meme_name"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_memes_on_identity_id"
+  end
+
   create_table "memories", id: :serial, force: :cascade do |t|
     t.string "memory_name"
     t.date "memory_date"
@@ -8720,6 +8746,10 @@ ActiveRecord::Schema.define(version: 2021_05_28_195549) do
   add_foreign_key "memberships", "identities", name: "memberships_identity_id_fk"
   add_foreign_key "memberships", "passwords"
   add_foreign_key "memberships", "periodic_payments", name: "memberships_periodic_payment_id_fk"
+  add_foreign_key "meme_files", "identities"
+  add_foreign_key "meme_files", "identity_files"
+  add_foreign_key "meme_files", "memes"
+  add_foreign_key "memes", "identities"
   add_foreign_key "memories", "identities"
   add_foreign_key "memory_files", "identities"
   add_foreign_key "memory_files", "identity_files"

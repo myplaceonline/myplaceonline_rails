@@ -350,6 +350,7 @@ class Identity < ApplicationRecord
   has_many :health_changes, :dependent => :destroy
   has_many :airline_programs, :dependent => :destroy
   has_many :locks, :dependent => :destroy
+  has_many :memes, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 

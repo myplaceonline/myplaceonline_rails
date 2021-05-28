@@ -194,6 +194,7 @@ en:
       medicine_usages: "Medicine Usages"
       medicines: "Medicines"
       memberships: "Memberships"
+      memes: "Memes"
       memories: "Memories"
       messages: "Messages"
       money_balance_item_templates: "Balance Templates"
@@ -4568,3 +4569,5 @@ en:
       lock_name: "Short Description"
       location: "Location"
       password: "Password"
+    memes:
+      meme_name: "Name"
