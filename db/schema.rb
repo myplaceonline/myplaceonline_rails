@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_28_221805) do
+ActiveRecord::Schema.define(version: 2021_06_04_214844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -383,6 +383,20 @@ ActiveRecord::Schema.define(version: 2021_05_28_221805) do
     t.index ["bar_id"], name: "index_bar_pictures_on_bar_id"
     t.index ["identity_file_id"], name: "index_bar_pictures_on_identity_file_id"
     t.index ["identity_id"], name: "index_bar_pictures_on_identity_id"
+  end
+
+  create_table "barbecues", force: :cascade do |t|
+    t.bigint "location_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_barbecues_on_identity_id"
+    t.index ["location_id"], name: "index_barbecues_on_location_id"
   end
 
   create_table "bars", id: :serial, force: :cascade do |t|
@@ -8159,6 +8173,8 @@ ActiveRecord::Schema.define(version: 2021_05_28_221805) do
   add_foreign_key "bar_pictures", "bars"
   add_foreign_key "bar_pictures", "identities"
   add_foreign_key "bar_pictures", "identity_files"
+  add_foreign_key "barbecues", "identities"
+  add_foreign_key "barbecues", "locations"
   add_foreign_key "bars", "identities"
   add_foreign_key "bars", "locations"
   add_foreign_key "basketball_court_files", "basketball_courts"

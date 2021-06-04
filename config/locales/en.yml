@@ -51,6 +51,7 @@ en:
       arts: "Arts"
       awesome_lists: "Awesome Lists"
       bank_accounts: "Bank Accounts"
+      barbecues: "Barbecues"
       bars: "Bars"
       basketball_courts: "Basketball Courts"
       beaches: "Beaches"
@@ -4573,4 +4574,6 @@ en:
     memes:
       meme_name: "Name"
     gift_stores:
+      location: "Location"
+    barbecues:
       location: "Location"
