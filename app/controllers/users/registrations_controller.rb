@@ -528,9 +528,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # DELETE /resource
-  # def destroy
-  #   super
-  # end
+  def destroy
+     Rails.logger.info{"RegistrationsController.destroy"}
+     ExecutionContext.stack(allow_identity_delete: true) do
+       super
+     end
+  end
   
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign
