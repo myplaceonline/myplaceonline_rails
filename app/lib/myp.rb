@@ -1153,10 +1153,13 @@ module Myp
   end
   
   def self.decrypt(encrypted_value, key)
+    
     cipher = Myp.map_cipher(encrypted_value.encryption_type)
     
     cipher_key_length = Myp.cipher_key_length(encrypted_value.encryption_type)
     
+    #Rails.logger.debug{"Myp.decrypt #{encrypted_value.id} with #{key} cipher #{cipher} len #{cipher_key_length}"}
+
     generated_key = ActiveSupport::KeyGenerator.new(key).generate_key(encrypted_value.salt, cipher_key_length)
     
     crypt = ActiveSupport::MessageEncryptor.new(
