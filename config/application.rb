@@ -282,7 +282,8 @@ module Myplaceonline
       FileUtils.mkdir_p(config.filetmpdir)
     end
 
-    config.active_job.queue_adapter = :delayed_job
+    #config.active_job.queue_adapter = :delayed_job
+    config.active_job.queue_adapter = :async
     
     # http://ruby-doc.org/core-2.2.0/Time.html#method-i-strftime
     # http://api.rubyonrails.org/classes/Time.html
