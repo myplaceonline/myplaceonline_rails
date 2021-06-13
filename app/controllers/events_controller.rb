@@ -161,4 +161,8 @@ class EventsController < MyplaceonlineController
     def show_map?
       true
     end
+
+    def show_map?
+      true
+    end
 end
