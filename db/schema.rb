@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_04_214844) do
+ActiveRecord::Schema.define(version: 2021_06_16_010109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6721,6 +6721,20 @@ ActiveRecord::Schema.define(version: 2021_06_04_214844) do
     t.index ["identity_id"], name: "index_statuses_on_identity_id"
   end
 
+  create_table "steakhouses", force: :cascade do |t|
+    t.bigint "location_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_steakhouses_on_identity_id"
+    t.index ["location_id"], name: "index_steakhouses_on_location_id"
+  end
+
   create_table "stock_files", force: :cascade do |t|
     t.bigint "stock_id"
     t.bigint "identity_file_id"
@@ -9055,6 +9069,8 @@ ActiveRecord::Schema.define(version: 2021_06_04_214844) do
   add_foreign_key "ssh_keys", "identities"
   add_foreign_key "ssh_keys", "passwords"
   add_foreign_key "statuses", "identities", name: "statuses_identity_id_fk"
+  add_foreign_key "steakhouses", "identities"
+  add_foreign_key "steakhouses", "locations"
   add_foreign_key "stock_files", "identities"
   add_foreign_key "stock_files", "identity_files"
   add_foreign_key "stock_files", "stocks"

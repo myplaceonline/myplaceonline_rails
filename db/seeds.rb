@@ -228,7 +228,8 @@ Category.create!([
   {id: 228, name: "locks", link: "locks", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/lock.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 261, name: "memes", link: "memes", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/user_wicket.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 262, name: "gift_stores", link: "gift_stores", position: 0, parent_id: 2, additional_filtertext: "cabinet curiosity curiosities antique macabre morbid interesting present", icon: "FatCow_Icons16x16/gift_add.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
-  {id: 263, name: "barbecues", link: "barbecues", position: 0, parent_id: 2, additional_filtertext: "restaurant food bbq", icon: "FatCow_Icons16x16/steak_meat.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
+  {id: 263, name: "barbecues", link: "barbecues", position: 0, parent_id: 2, additional_filtertext: "restaurant food bbq", icon: "FatCow_Icons16x16/steak_meat.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 264, name: "steakhouses", link: "steakhouses", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/steak_fish.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
 ])
 
 # Reinitialize to cache the categories created above

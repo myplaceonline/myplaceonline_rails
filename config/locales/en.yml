@@ -283,6 +283,7 @@ en:
       songs: "Songs"
       ssh_keys: "SSH Keys"
       statuses: "Statuses"
+      steakhouses: "Steakhouses"
       stocks: "Stocks"
       stories: "Stories"
       sun_exposures: "Sun Exposures"
@@ -4576,4 +4577,6 @@ en:
     gift_stores:
       location: "Location"
     barbecues:
+      location: "Location"
+    steakhouses:
       location: "Location"
